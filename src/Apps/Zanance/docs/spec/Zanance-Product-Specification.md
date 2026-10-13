@@ -4070,3 +4070,51 @@ D-231 final signed complete Release APK: artifacts/android-d231-delivery/pro.vaf
 pro.vafadar.zanance, API 24/36 and both arm64-v8a/x86_64 embedded assembly stores were checked.
 Test outputs were cleaned after terminal builds/tests. This is not phone installation, native
 retirement integration, encrypted main registration, store signing or product release acceptance.
+
+### D-232 — Exact stable identity retirement after verified references
+
+SqliteDatabaseIdentityCatalogue now removes only the reviewed non-main binding after the existing
+retirement journal has reached ArtifactsRemoved and been natively requalified. It verifies the
+installation/profile bindings before the host inspects financial/key references, then rechecks the
+complete captured identity catalogue inside the write transaction. Foreign installations, replaced
+same-legacy identities, stale journal state, changed catalogue and retained references fail closed.
+The deletion compares both legacy and stable profile identifiers. Main and every other complete
+binding must survive exact readback after native file/directory synchronization. A prior deletion
+visible after failed flush may resume with the same journal/reference verification and synchronization;
+absence alone never authorizes retirement or creates replacement keys. The journal is left at its
+artifact barrier until the coordinator accepts completion. No EF model/schema change is introduced.
+
+The independent Windows retirement caller now uses an actual two-profile identity SQLite catalogue,
+not a placeholder identity file. It records the main binding, preserves work identity and its captured
+fictitious artifact through the injected catalogue-barrier flush failure, then a cold process uses the
+actual RetireAsync and coordinator to remove exactly work identity and verify main unchanged. Its
+preference/artifact files remain fictitious; this is not a complete final MAUI/native key inventory.
+Proofs: artifacts/native-sqlcipher/d232-native-create.log and d232-native-resume.log; its fresh retained
+owned folder is recorded in d232-owned-retirement-path.txt. Final managed/native evidence follows below.
+
+This closes the missing exact identity-removal operation, not the whole protected retirement feature.
+Main remains plaintext. Final catalogue preference persistence, durable complete artifact/key inventory,
+uncommitted creation reconciliation, optional recovery, reference-aware retention, coupled OS exclusion
+and native/platform/device acceptance remain open. Unchanged UI and upstream producer suites are not
+repeated. No app source algorithm is duplicated by the independent native caller.
+
+D-232 terminal verification: the full solution passed 3,400 cases, zero failures/skips (3m11.526s).
+Final pre-inspection binding validation and changed-catalogue rejection were then tightened with
+one additional regression; all 199 Data-library cases pass (1.955s), including all eight AT-232
+retirement scenarios. Other unchanged application/UI scenarios were not repeated for that boundary.
+The final independent Windows build has zero warnings/errors (1.76s), and both actual fixture
+processes pass again: target identity is retained through failed synchronization, then removed on
+cold continuation with exact main binding preserved. Final strict main Windows build has zero
+warnings/errors (17.41s). Android/package evidence follows below. This is not final MAUI preference,
+complete native key-reference inventory, Android/iOS retirement or main encryption acceptance.
+
+D-232 final strict Android main build has zero warnings/errors (39.36s). The repository now
+contains 3,401 test cases; the final changed library's 199 cases were actually rerun. No physical
+phone, iOS, complete protected retirement, recovery or product release acceptance is implied.
+
+D-232 complete signed Release artifact: artifacts/android-d232-delivery/pro.vafadar.zanance-Signed.apk
+(82,979,376 bytes), local test certificate. apksigner verification succeeds; package
+pro.vafadar.zanance, API 24/36 and both arm64-v8a/x86_64 embedded assembly stores were verified.
+The native Windows candidate retains its reviewed SHA-256 3c842f12049684bc854d6e89bdda207f80b768b43ccdf27f7760ce8f303eedbf.
+Test outputs were cleaned after terminal builds/tests. Main encryption registration, complete
+profile/key-reference lifecycle, physical devices/iOS/store signing and product release remain open.

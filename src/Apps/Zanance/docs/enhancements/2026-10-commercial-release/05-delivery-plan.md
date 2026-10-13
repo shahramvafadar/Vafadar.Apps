@@ -1278,3 +1278,12 @@ including a phase visible after a failed flush. Nine focused cases and a two-pro
 file fixture pass. This is not complete native profile retirement: final catalogue/key-reference
 inventory and application registration remain open, with recovery/retention/OS/platform gates.
 See D-231 in the decision log for the observed evidence and its limits.
+
+### D-232 — Exact identity removal after retirement reference checks
+
+SEC remains in progress. Stable identities can now be retired only for the exact non-main request
+at its natively requalified artifact barrier, after reference verification and transactional full
+catalogue recheck. Other bindings are preserved; observable deletion/flush failure resumes without
+replacement identities. Actual two-profile SQLite removal runs in the independent Windows caller.
+Final native preference/artifact/key retirement and main registration remain pending. See D-232
+in the decision log for exact evidence and remaining recovery/retention/OS/platform boundaries.

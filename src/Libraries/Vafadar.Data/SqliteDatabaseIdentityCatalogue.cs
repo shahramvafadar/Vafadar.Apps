@@ -94,6 +94,62 @@ public sealed class SqliteDatabaseIdentityCatalogue
         return readback.Single(row => row.LegacyProfileId == legacyProfile);
     }
 
+    /// <summary>Retires only the exact non-main identity after the existing retirement journal and native references are verified.</summary>
+    /// <remarks>The host holds exclusive maintenance ownership and supplies actual complete artifact/key-reference
+    /// reconciliation. A visible deletion after failed synchronization can be resumed without changing other rows;
+    /// neither an absent identity nor this API permits creation of replacement keys or inferred retirement intent.</remarks>
+    public async Task RetireAsync(ProfileRetirementCheckpoint expected, SqliteProfileRetirementJournal retirement,
+        IDatabaseGenerationFileDurability durability, Func<CancellationToken, Task> verifyReferencesRemoved,
+        CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(expected); ArgumentNullException.ThrowIfNull(retirement);
+        ArgumentNullException.ThrowIfNull(durability); ArgumentNullException.ThrowIfNull(verifyReferencesRemoved);
+        if (expected.Phase != ProfileRetirementPhase.ArtifactsRemoved)
+            throw new InvalidOperationException("Identity retirement requires the completed artifact barrier.");
+        Check(ct);
+        if (await retirement.SynchronizeAndReadAsync(durability, ct).ConfigureAwait(false) != expected)
+            throw new InvalidOperationException("Retirement request changed before identity reconciliation.");
+        // Verify non-secret bindings before the host inspects any financial/key reference for this request.
+        var captured = await ReadAsync(ct).ConfigureAwait(false);
+        RequireRetirementIdentity(captured, expected);
+        await verifyReferencesRemoved(ct).ConfigureAwait(false); Check(ct);
+        if (await retirement.ReadAsync(ct).ConfigureAwait(false) != expected)
+            throw new InvalidOperationException("Retirement changed during reference reconciliation.");
+        IReadOnlyList<DatabaseProfileIdentity> retained;
+        await using (var connection = await OpenAsync(false, ct).ConfigureAwait(false))
+        {
+            using var transaction = connection.BeginTransaction(deferred: false);
+            var rows = await ReadCoreAsync(connection, transaction, ct).ConfigureAwait(false);
+            RequireRetirementIdentity(rows, expected);
+            if (!rows.SequenceEqual(captured)) throw new InvalidOperationException("Identity catalogue changed during reference reconciliation.");
+            var target = rows.SingleOrDefault(row => row.LegacyProfileId == expected.LegacyProfileId);
+            retained = rows.Where(row => row.LegacyProfileId != expected.LegacyProfileId).ToArray();
+            if (target is not null)
+            {
+                using var command = connection.CreateCommand(); command.Transaction = transaction;
+                command.CommandText = "DELETE FROM profile_identity WHERE legacy=$legacy AND profile=$profile";
+                command.Parameters.AddWithValue("$legacy", expected.LegacyProfileId);
+                command.Parameters.AddWithValue("$profile", expected.ProfileId.ToString("N"));
+                if (await command.ExecuteNonQueryAsync(ct).ConfigureAwait(false) != 1)
+                    throw new IOException("Exact profile identity retirement differs.");
+            }
+            Check(ct); transaction.Commit();
+        }
+        // Even an already absent target needs requalification after a prior observable commit/flush failure.
+        await durability.SynchronizeFileAsync(path, ct).ConfigureAwait(false);
+        await durability.SynchronizeDirectoryAsync(ct).ConfigureAwait(false); Check(ct);
+        if (!(await ReadAsync(ct).ConfigureAwait(false)).SequenceEqual(retained))
+            throw new IOException("Identity retirement changed retained profile bindings.");
+    }
+
+    private static void RequireRetirementIdentity(IReadOnlyList<DatabaseProfileIdentity> rows, ProfileRetirementCheckpoint expected)
+    {
+        if (rows.Any(row => row.InstallationId != expected.InstallationId))
+            throw new InvalidOperationException("Retirement belongs to another installation.");
+        if (rows.SingleOrDefault(row => row.LegacyProfileId == expected.LegacyProfileId) is { } target && target.ProfileId != expected.ProfileId)
+            throw new InvalidOperationException("The reviewed profile identity was replaced.");
+    }
+
     private async Task InsertAsync(SqliteConnection connection, SqliteTransaction transaction, string legacy, CancellationToken ct)
     {
         Check(ct); using var command = connection.CreateCommand(); command.Transaction = transaction;

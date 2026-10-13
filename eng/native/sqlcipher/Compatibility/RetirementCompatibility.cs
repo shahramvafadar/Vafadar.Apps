@@ -4,7 +4,7 @@ using Vafadar.Data;
 
 namespace Vafadar.SqlCipher.Compatibility;
 
-/// <summary>Checks retirement ordering with actual private Windows file effects in two independent processes.</summary>
+/// <summary>Checks retirement ordering and real identity-catalogue removal in two independent Windows processes.</summary>
 /// <remarks>The catalogue/artifacts are fictitious files, not final MAUI preferences or live profile references.</remarks>
 [SupportedOSPlatform("windows")]
 internal static class RetirementCompatibility
@@ -19,12 +19,16 @@ internal static class RetirementCompatibility
         {
             if (Directory.Exists(folder)) throw new IOException("Retirement proof requires a new independently owned directory.");
             Directory.CreateDirectory(folder);
-            request = new(Guid.NewGuid().ToString("N"), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+            var legacy = Guid.NewGuid().ToString("N");
+            var catalogue = new SqliteDatabaseIdentityCatalogue(Path.Combine(folder, "identities.sqlite"), () => { });
+            await catalogue.CreateNewAsync(["", legacy], new WindowsGenerationFileDurability(folder));
+            var rows = await catalogue.ReadAsync(); var target = rows.Single(row => row.LegacyProfileId == legacy);
+            request = new(legacy, target.ProfileId, target.InstallationId, Guid.NewGuid());
             await File.WriteAllTextAsync(context, JsonSerializer.Serialize(new[] { request.LegacyProfileId,
                 request.ProfileId.ToString("N"), request.InstallationId.ToString("N"), request.OperationId.ToString("N") }));
             await File.WriteAllTextAsync(Path.Combine(folder, "catalogue.txt"), request.LegacyProfileId);
             await File.WriteAllTextAsync(Path.Combine(folder, "fictitious-artifact.bin"), "Independent non-financial retirement fixture.");
-            await File.WriteAllTextAsync(Path.Combine(folder, "identity.txt"), request.ProfileId.ToString("N"));
+            await File.WriteAllTextAsync(Path.Combine(folder, "main.json"), JsonSerializer.Serialize(rows.Single(row => row.LegacyProfileId == "")));
         }
         else
         {
@@ -33,8 +37,8 @@ internal static class RetirementCompatibility
         }
         var native = new WindowsGenerationFileDurability(folder);
         var durability = new FaultAfterCatalogue(native);
-        var host = new FileEffects(folder, native, durability, create);
         var journal = new SqliteProfileRetirementJournal(Path.Combine(folder, "retirement.sqlite"), request, () => { });
+        var host = new FileEffects(folder, native, durability, create, journal);
         if (create) await journal.CreateNewAsync(native);
         var coordinator = new ProfileRetirementCoordinator(journal, durability, host);
         if (create)
@@ -42,14 +46,16 @@ internal static class RetirementCompatibility
             try { await coordinator.ResumeAsync(); throw new IOException("Expected explicit synchronization failure."); }
             catch (IOException error) when (error.Message == FaultAfterCatalogue.Failure) { }
             if ((await journal.ReadAsync()).Phase != ProfileRetirementPhase.CatalogueRemoved
-                || !File.Exists(Path.Combine(folder, "fictitious-artifact.bin")) || !File.Exists(Path.Combine(folder, "identity.txt")))
+                || !File.Exists(Path.Combine(folder, "fictitious-artifact.bin"))
+                || !(await new SqliteDatabaseIdentityCatalogue(Path.Combine(folder, "identities.sqlite"), () => { }).ReadAsync())
+                    .Any(row => row.ProfileId == request.ProfileId))
                 throw new IOException("Failed native barrier allowed cleanup.");
             return "{\"CatalogueCommitted\":true,\"InjectedFlushFailure\":true,\"ArtifactsRetained\":true}";
         }
         await coordinator.ResumeAsync(); await coordinator.ResumeAsync();
         if ((await journal.ReadAsync()).Phase != ProfileRetirementPhase.Completed)
             throw new IOException("Cold retirement did not complete.");
-        return "{\"ColdResume\":true,\"NativeBarriersRequalified\":true,\"CapturedFictitiousFilesRemoved\":true}";
+        return "{\"ColdResume\":true,\"NativeBarriersRequalified\":true,\"CapturedFictitiousFilesRemoved\":true,\"ExactIdentityRetired\":true,\"MainBindingPreserved\":true}";
     }
 
     private sealed class FaultAfterCatalogue(IDatabaseGenerationFileDurability native) : IDatabaseGenerationFileDurability
@@ -63,11 +69,11 @@ internal static class RetirementCompatibility
     }
 
     private sealed class FileEffects(string folder, IDatabaseGenerationFileDurability native,
-        FaultAfterCatalogue fault, bool inject) : IProfileRetirementEffects
+        FaultAfterCatalogue fault, bool inject, SqliteProfileRetirementJournal journal) : IProfileRetirementEffects
     {
         private string Catalogue => Path.Combine(folder, "catalogue.txt");
         private string Artifact => Path.Combine(folder, "fictitious-artifact.bin");
-        private string Identity => Path.Combine(folder, "identity.txt");
+        private SqliteDatabaseIdentityCatalogue Identities => new(Path.Combine(folder, "identities.sqlite"), () => { });
         public async Task ValidateAsync(ProfileRetirementCheckpoint checkpoint, CancellationToken ct)
         {
             using var root = new WindowsPrivateFiles(folder);
@@ -77,7 +83,11 @@ internal static class RetirementCompatibility
                 throw new IOException("Fictitious catalogue does not match the recorded retirement barrier.");
             if (checkpoint.Phase >= ProfileRetirementPhase.ArtifactsRemoved && File.Exists(Artifact))
                 throw new IOException("Recorded artifact removal did not occur.");
-            if (checkpoint.Phase == ProfileRetirementPhase.Completed && File.Exists(Identity))
+            var rows = await Identities.ReadAsync(ct);
+            var main = JsonSerializer.Deserialize<DatabaseProfileIdentity>(await File.ReadAllTextAsync(Path.Combine(folder, "main.json"), ct));
+            if (rows.Single(row => row.LegacyProfileId == "") != main)
+                throw new IOException("Retirement changed the retained main binding.");
+            if (checkpoint.Phase == ProfileRetirementPhase.Completed && rows.Any(row => row.ProfileId == checkpoint.ProfileId))
                 throw new IOException("Recorded identity retirement did not occur.");
         }
         public async Task RemoveCatalogueAsync(ProfileRetirementCheckpoint checkpoint, CancellationToken ct)
@@ -87,7 +97,13 @@ internal static class RetirementCompatibility
             fault.Fail = inject;
         }
         public Task RemoveArtifactsAsync(ProfileRetirementCheckpoint checkpoint, CancellationToken ct) => RemoveAsync(Artifact, ct);
-        public Task RetireIdentityAsync(ProfileRetirementCheckpoint checkpoint, CancellationToken ct) => RemoveAsync(Identity, ct);
+        public Task RetireIdentityAsync(ProfileRetirementCheckpoint checkpoint, CancellationToken ct) =>
+            Identities.RetireAsync(checkpoint, journal, native, token =>
+            {
+                token.ThrowIfCancellationRequested();
+                if (File.Exists(Artifact)) throw new IOException("Captured fictitious artifact still references the profile.");
+                return Task.CompletedTask;
+            }, ct);
         private async Task RemoveAsync(string path, CancellationToken ct)
         {
             ct.ThrowIfCancellationRequested();

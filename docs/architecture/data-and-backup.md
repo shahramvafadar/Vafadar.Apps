@@ -1837,3 +1837,12 @@ complete artifact inventory and reference-aware key/identity retirement. Main re
 Independent Windows modes retirement-create and retirement-resume use the same retained fixture path,
 under artifacts/native-sqlcipher only. They demonstrate explicit flush-failure ordering and cold
 continuation with actual Windows synchronization, not forced-kill/power-loss or final MAUI effects.
+
+### D-232 — Retire exact identities only after artifact reconciliation
+
+SqliteDatabaseIdentityCatalogue.RetireAsync requires an existing exact ArtifactsRemoved request,
+native journal requalification and verified complete reference removal under host maintenance
+ownership. Non-secret bindings are checked before host inspection; the full catalogue is rechecked
+in the deletion transaction. Native file/directory sync and exact retained-row readback follow even
+when resuming an already absent target after a failed flush. No main retirement or replacement-key
+fallback is admitted. Final preference/native artifact/key effects remain separate host integration.

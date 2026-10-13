@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Verified encrypted-profile identity retirement (D-232)
+
+- Remove only the reviewed inactive profile identity after verified storage cleanup.
+- Preserve other identities and resume a failed storage flush without generating replacements.
+- Final profile deletion and main encryption activation remain pending native integration.
+
 ### Added - Resumable encrypted-profile retirement infrastructure (D-231)
 
 - Record a reviewed deletion request before its ordered catalogue, file and identity stages.
