@@ -215,11 +215,48 @@ public sealed class ProfileTests
         Assert.Equal(main.Id, profiles.Current.Id);
     }
 
+    [Fact, Trait("AT", "AT-220")]
+    public async Task New_profile_is_not_published_until_preparation_finishes_and_existing_context_drains()
+    {
+        using var f = new FlowFixture(); var runtime = new ProfileRuntime(f); var profiles = Create(f, runtime);
+        var ready = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        runtime.DuringPreparation = async () => { Assert.Single(profiles.All); ready.SetResult(); await release.Task; };
+        var factory = f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>();
+        await using var existing = await factory.CreateDbContextAsync(Ct);
+        var originalPath = Location(f).Path;
+        var create = profiles.CreateReviewedAsync(profiles.ReadWorkReview(), "Fictitious prepared", Ct);
+        Assert.False(create.IsCompleted); Assert.Single(profiles.All); Assert.False(ready.Task.IsCompleted);
+        await existing.DisposeAsync(); await ready.Task.WaitAsync(Ct);
+        Assert.Single(profiles.All); Assert.Equal(originalPath, Location(f).Path);
+        release.SetResult(); var profile = await create;
+        Assert.Contains(profile, profiles.All); Assert.True(profiles.Current.IsMain);
+        Assert.Equal(originalPath, Location(f).Path);
+    }
+
+    [Theory, InlineData(false), InlineData(true), Trait("AT", "AT-220")]
+    public async Task Failed_preparation_or_changed_catalogue_never_publishes_the_new_profile(bool changedCatalogue)
+    {
+        using var f = new FlowFixture(); var runtime = new ProfileRuntime(f); var profiles = Create(f, runtime);
+        var originalPath = Location(f).Path;
+        runtime.DuringPreparation = () =>
+        {
+            if (changedCatalogue) { profiles.Rename(profiles.Current, "Fictitious changed review"); return Task.CompletedTask; }
+            throw new IOException("Fictitious preparation failure.");
+        };
+        var review = profiles.ReadWorkReview();
+        if (changedCatalogue) await Assert.ThrowsAsync<InvalidOperationException>(() => profiles.CreateReviewedAsync(review, "Fictitious rejected", Ct));
+        else await Assert.ThrowsAsync<IOException>(() => profiles.CreateReviewedAsync(review, "Fictitious rejected", Ct));
+        Assert.Single(profiles.All); Assert.True(profiles.Current.IsMain); Assert.Equal(originalPath, Location(f).Path);
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+    }
+
     private sealed class ProfileRuntime(FlowFixture fixture) : IProfileRuntime
     {
         internal int ExclusiveRuns, LockReloads, AuthenticationCalls, UndoDismissals;
         internal bool AuthenticationAllowed = true, FailMigration;
         internal Action? DuringAuthentication;
+        internal Func<Task>? DuringPreparation;
         private bool _exclusive;
         public async Task RunExclusiveAsync(Func<Task> action) { Assert.False(_exclusive); ExclusiveRuns++; _exclusive = true; try { await action(); } finally { _exclusive = false; } }
         public Task MigrateAsync(Vafadar.Data.DatabaseAccessGate.ExclusiveLease owner)
@@ -227,6 +264,12 @@ public sealed class ProfileTests
             Assert.True(_exclusive);
             if (FailMigration) { throw new IOException("Fictitious migration failure."); }
             return fixture.Services.MigrateLocalDatabaseForMaintenanceAsync<ZananceDbContext>(owner, Ct);
+        }
+        public async Task PrepareNewDatabaseAsync(LocalDatabaseLocation<ZananceDbContext> location, string profileId, string originalPath,
+            DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct)
+        {
+            Assert.True(_exclusive); _ = location.CapturePublication(owner); ct.ThrowIfCancellationRequested();
+            if (DuringPreparation is not null) await DuringPreparation();
         }
         public Task<bool> AuthenticateAsync(string reason) { Assert.True(_exclusive); AuthenticationCalls++; DuringAuthentication?.Invoke(); return Task.FromResult(AuthenticationAllowed); }
         public Task ReloadLockAsync() { Assert.False(_exclusive); LockReloads++; return Task.CompletedTask; }

@@ -157,7 +157,7 @@ public sealed partial class ProfilesViewModel(ProfileService profiles, Translato
             var name = await interaction.PromptAsync(translator["Profile_Add"], translator["Profile_NamePrompt"], translator["Common_Save"], translator["Common_Cancel"], maxLength: ProfileService.MaxNameLength);
             profiles.ValidateWorkReview(review); if (string.IsNullOrWhiteSpace(name)) return;
             if (IsTaken(review, name, null)) { SetError("Profile_NameTaken"); return; }
-            var original = profiles.CreateReviewed(review, name); _retired = true; Refresh(); await LoadCoreAsync();
+            var original = await profiles.CreateReviewedAsync(review, name); _retired = true; Refresh(); await LoadCoreAsync();
             if (_review is null || _retired) return;
             var createdReview = _review;
             if (await interaction.ConfirmAsync(translator["Profile_Add"], translator.Format("Profile_OpenNew", profiles.NameOf(original)), translator["Profile_OpenAction"], translator["Common_Cancel"]))

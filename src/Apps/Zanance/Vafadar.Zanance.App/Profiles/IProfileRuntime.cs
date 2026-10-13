@@ -9,6 +9,15 @@ public interface IProfileRuntime
     /// <summary>Migrates the selected database through contexts owned by the current maintenance lease.</summary>
     Task MigrateAsync(Vafadar.Data.DatabaseAccessGate.ExclusiveLease owner);
 
+    /// <summary>Prepares a new protected database without moving the active endpoint or publishing the profile catalogue.</summary>
+    Task PrepareNewDatabaseAsync(Vafadar.Data.LocalDatabaseLocation<Vafadar.Zanance.Data.ZananceDbContext> location,
+        string profileId, string originalPath, Vafadar.Data.DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct)
+    {
+        ct.ThrowIfCancellationRequested(); _ = location.CapturePublication(owner);
+        if (location.IsProtected) throw new InvalidOperationException("Protected profile preparation requires the native host.");
+        return Task.CompletedTask;
+    }
+
     /// <summary>Opens the captured destination under maintenance ownership; protected hosts publish its verified key owner.</summary>
     /// <remarks>The default handles existing plaintext storage only. A protected location refuses that path;
     /// final native hosts override this effect rather than stripping protection or recreating a plaintext database.</remarks>

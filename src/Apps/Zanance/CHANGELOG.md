@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Development - Prepare profiles before publishing (2026-10-13, D-220)
+
+- Profile creation now awaits database preparation before adding the profile to the list.
+- Preparation failures and changed reviews retain the current profile and do not publish an incomplete one.
+- Native encrypted integration remains unactivated in the main app.
+
 ### Development - Encrypted new-profile initialization (2026-10-13, D-219)
 
 - Added new-profile schema creation entirely in memory, with encrypted files from the first disk write.

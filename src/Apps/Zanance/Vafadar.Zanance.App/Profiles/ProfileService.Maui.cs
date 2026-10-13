@@ -35,6 +35,16 @@ internal sealed class MauiProfileRuntime(IServiceProvider services, AutoPostProc
     /// <inheritdoc />
     public Task MigrateAsync(DatabaseAccessGate.ExclusiveLease owner) => services.MigrateLocalDatabaseForMaintenanceAsync<ZananceDbContext>(owner);
     /// <inheritdoc />
+    public Task PrepareNewDatabaseAsync(LocalDatabaseLocation<ZananceDbContext> location, string profileId, string originalPath,
+        DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct)
+    {
+        if (services.GetService<SqlCipherProfileSession<ZananceDbContext>>() is { } session)
+            return session.PrepareNewAsync(profileId, originalPath, owner, ct);
+        ct.ThrowIfCancellationRequested(); _ = location.CapturePublication(owner);
+        if (location.IsProtected) throw new InvalidOperationException("Protected profile preparation is unavailable.");
+        return Task.CompletedTask;
+    }
+    /// <inheritdoc />
     public async Task OpenDatabaseAsync(LocalDatabaseLocation<ZananceDbContext> location, string originalPath, DatabaseAccessGate.ExclusiveLease owner)
     {
         if (services.GetService<SqlCipherProfileSession<ZananceDbContext>>() is { } protectedSession)

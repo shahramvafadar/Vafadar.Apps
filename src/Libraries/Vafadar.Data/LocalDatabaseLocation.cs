@@ -34,6 +34,9 @@ public sealed class LocalDatabaseLocation<TContext>
     /// <summary>Gets the full path of the database file in use.</summary>
     public string Path { get { lock (_gate) return _endpoint.Path; } }
 
+    /// <summary>Gets whether the active publication requires its retained verified native key owner.</summary>
+    public bool IsProtected { get { lock (_gate) return _endpoint.CreateConnection is not null; } }
+
     /// <summary>Captures the complete current publication for rollback under this exact maintenance owner.</summary>
     /// <remarks>The host retains underlying key owners until the transition commits or rolls back.</remarks>
     public Publication CapturePublication(DatabaseAccessGate.ExclusiveLease owner)

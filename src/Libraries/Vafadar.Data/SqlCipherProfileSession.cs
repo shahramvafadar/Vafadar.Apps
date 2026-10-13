@@ -4,12 +4,28 @@ namespace Vafadar.Data;
 /// <remarks>Hosts serialize native work, keep UI covered and resolve through actual identity/history sources.
 /// Initial activation and filesystem/key retention policy are separate; this class never deletes a file or key envelope.</remarks>
 public sealed class SqlCipherProfileSession<TContext>(LocalDatabaseLocation<TContext> location,
-    Func<string, DatabaseAccessGate.ExclusiveLease, CancellationToken, Task<SqlCipherProfileGeneration>> resolve)
+    Func<string, DatabaseAccessGate.ExclusiveLease, CancellationToken, Task<SqlCipherProfileGeneration>> resolve,
+    Func<string, string, DatabaseAccessGate.ExclusiveLease, CancellationToken, Task>? prepareNew = null)
     where TContext : LocalDbContext
 {
     private readonly SemaphoreSlim operations = new(1, 1);
     private SqlCipherProfileGeneration? current;
     private SqlCipherProfileGeneration? pending;
+
+    /// <summary>Prepares a verified unpublished new profile while retaining the active endpoint and key.</summary>
+    public async Task PrepareNewAsync(string profileId, string originalPath, DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct = default)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(profileId); ArgumentException.ThrowIfNullOrWhiteSpace(originalPath);
+        await operations.WaitAsync(ct).ConfigureAwait(false);
+        try
+        {
+            location.Access.RequireDrainedOwner(owner); RequireCurrent();
+            if (pending is not null || prepareNew is null) throw new InvalidOperationException("Protected new-profile preparation is unavailable.");
+            await prepareNew(profileId, originalPath, owner, ct).ConfigureAwait(false);
+            ct.ThrowIfCancellationRequested(); location.Access.RequireDrainedOwner(owner); RequireCurrent();
+        }
+        finally { operations.Release(); }
+    }
 
     /// <summary>Opens and publishes the initial active owner after existing bootstrap prerequisites are complete.</summary>
     public async Task StartAsync(string originalPath, DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct = default)

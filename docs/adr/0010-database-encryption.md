@@ -467,3 +467,22 @@ This infrastructure is not yet registered in the main product's profile creation
 storage remains plaintext; provider adoption, lifecycle/catalogue registration, optional recovery,
 retention and coupled final OS backup policy remain unfinished. No new owner decision is required
 for this step; OD-04 and OD-10 remain the approved final policy.
+
+### D-220 — Prepare new protected profiles before catalogue publication
+
+The real Profiles Add command now awaits ProfileService.CreateReviewedAsync. Automatic posting is
+serialized, existing contexts drain, native preparation finishes without moving the active endpoint,
+and the original catalogue/rights are rechecked before publishing the new profile and selected slot.
+No await holds the synchronous catalogue gate. Failed preparation, cancellation or a retired review
+cannot publish the proposed profile. The synchronous legacy creation API refuses protected storage.
+
+SqlCipherProfileSession retains its current key while an explicit native new-profile callback prepares
+an unpublished destination; pending transitions or unavailable callbacks fail closed. MAUI forwards
+to this path only when the protected session is registered. Existing plaintext hosts preserve lazy
+creation. LocalDatabaseLocation exposes protection status without exposing credentials or creators.
+No page layout, strings or financial algorithm changed.
+
+The final native host must retain/reconcile uncommitted identity/creation artifacts after a rejected
+publication, rather than deleting referenced keys or treating missing history as a fresh profile.
+This step does not register that host, activate main encryption, implement orphan reconciliation,
+optional recovery, retention or coupled OS policy. These remain in the full SEC scope.

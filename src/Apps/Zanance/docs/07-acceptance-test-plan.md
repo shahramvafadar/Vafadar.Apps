@@ -2342,3 +2342,28 @@ D-219 managed verification covers 3,340 cases: the full solution run passed all 
 and reported only the two new fixture-path failures (3m02s). After the fixture-only correction,
 all 166 Data cases pass with zero skips/failures. No unresolved failure remains; the unchanged
 assemblies were not rerun. Test output cleaned only after all builds/tests became terminal.
+D-220 verification: all 3,343 solution tests pass, zero failures/skips (3m03s), including three new
+actual-flow cases for context drain/unpublished preparation, failure and catalogue retirement.
+Strict final Windows 24.34s, Android 18.90s and independent Release 57.27s builds have zero warnings/errors.
+The first Windows attempt exposed use of an internal ownership helper across assembly boundaries;
+the final adapter uses the public captured-publication ownership check. Intermediate builds are not
+final evidence. The session itself still enforces the real drained owner and retained publication.
+
+Independent signed Release AOT/trim Android x64 API36/4 KiB runs actual ProfileService creation and
+switching, native key preparation, identity registration, in-memory 32-migration schema and protected
+session publication. New profiles are absent from product preferences until their encrypted files
+verify; creation leaves the main endpoint unchanged. Distinct opening balances 250/880 survive a
+cold process and a real product switch. Native MAUI preferences are explicitly durably persisted.
+Proof: artifacts/native-sqlcipher/build/android-d/d220-profile-creation-proof.json,
+run f036ded6af784345bf6047ebc3f8b39e. The runner advanced from successful creation to cold reopening,
+then its bounded observation expired. PID 6074 remained live and its exact later cold-result JSON
+passed all three checks. No process/scenario restart or fixture recreation was performed. The
+observation failure is retained as negative harness evidence, not described as an application failure.
+Both APK ABI hashes/signature verified; independent package uninstalled. No layout/strings changed;
+this runtime proof does not certify main UI rendering, phone, arm64/API24/16KiB, iOS or main encryption.
+
+Main Release APK built once with Build-AndroidApk.ps1: artifacts/android-d220/pro.vafadar.zanance-Signed.apk
+(83,294,522 bytes). Signature, exact pro.vafadar.zanance package, API24/36 and both ABI embedded
+libassembly-store.so plus application AOT libraries verified. This uses the local test certificate,
+not Store signing; no main/owner database was read or installed over for this step. It still contains
+the unactivated plaintext main provider. Test cleanup follows terminal builds/tests only.

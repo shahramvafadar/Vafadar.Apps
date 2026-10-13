@@ -72,19 +72,44 @@ public sealed partial class ProfileService
     public LocalProfile CreateReviewed(ProfileCatalogueReview review, string name)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        if (location.IsProtected)
+            throw new InvalidOperationException("Protected profiles require asynchronous verified preparation.");
         lock (CatalogueGate)
         {
-            ValidateWorkCore(review, true);
-            if (!review.CanCreate)
-                throw new CommercialWriteRejectedException(CommercialFeature.LocalProfiles, QuotaKind.LocalProfiles,
-                    review.Maximum ?? 0, review.SelectedIds.Count, 1);
             var profile = new LocalProfile(Guid.NewGuid().ToString("N"), Clean(name));
-            var state = ReadCatalogue(preferences) with { List = EncodeProfiles(review.Profiles.Where(p => !p.IsMain).Append(profile)) };
-            if (review.Maximum is not null)
-                state = state with { Path = EncodeField(review.CataloguePath), Scope = review.Access.DeviceScope!.Id.ToString("N"),
-                    Choice = EncodeField(string.Join(';', review.SelectedIds.Append(profile.Id).Order(StringComparer.Ordinal).Select(id => id.Length == 0 ? "~" : id))), ChoiceRevision = Guid.NewGuid().ToString("N") };
-            PublishCatalogue(state); Changed?.Invoke(this, EventArgs.Empty); return profile;
+            return PublishNewProfile(review, profile);
         }
+    }
+
+    /// <summary>Prepares a new database under drained maintenance, then rechecks the reviewed catalogue before publication.</summary>
+    public async Task<LocalProfile> CreateReviewedAsync(ProfileCatalogueReview review, string name, CancellationToken ct = default)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name); ValidateWorkReview(review);
+        if (!review.CanCreate) throw new CommercialWriteRejectedException(CommercialFeature.LocalProfiles, QuotaKind.LocalProfiles,
+            review.Maximum ?? 0, review.SelectedIds.Count, 1);
+        var profile = new LocalProfile(Guid.NewGuid().ToString("N"), Clean(name));
+        await runtime.RunExclusiveAsync(async () =>
+        {
+            using var owner = await location.Access.AcquireExclusiveAsync(ct);
+            ValidateWorkReview(review); ct.ThrowIfCancellationRequested();
+            await runtime.PrepareNewDatabaseAsync(location, profile.Id, PathOf(MainPath(), profile.Id), owner, ct);
+            ct.ThrowIfCancellationRequested();
+            lock (CatalogueGate) PublishNewProfile(review, profile);
+        });
+        return profile;
+    }
+
+    private LocalProfile PublishNewProfile(ProfileCatalogueReview review, LocalProfile profile)
+    {
+        ValidateWorkCore(review, true);
+        if (!review.CanCreate)
+            throw new CommercialWriteRejectedException(CommercialFeature.LocalProfiles, QuotaKind.LocalProfiles,
+                review.Maximum ?? 0, review.SelectedIds.Count, 1);
+        var state = ReadCatalogue(preferences) with { List = EncodeProfiles(review.Profiles.Where(p => !p.IsMain).Append(profile)) };
+        if (review.Maximum is not null)
+            state = state with { Path = EncodeField(review.CataloguePath), Scope = review.Access.DeviceScope!.Id.ToString("N"),
+                Choice = EncodeField(string.Join(';', review.SelectedIds.Append(profile.Id).Order(StringComparer.Ordinal).Select(id => id.Length == 0 ? "~" : id))), ChoiceRevision = Guid.NewGuid().ToString("N") };
+        PublishCatalogue(state); Changed?.Invoke(this, EventArgs.Empty); return profile;
     }
 
     /// <summary>Corrects only the reviewed original name; same-id replacements and retired prompts require a fresh read.</summary>
