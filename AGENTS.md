@@ -1454,3 +1454,14 @@ must cancel its earlier pending queue too, rather than retaining unavailable old
   closed encrypted files and directory through actual platform effects, not a managed rename claim.
 * Independent original-model Android process interruption evidence does not activate main profiles,
   final backup/recovery UI, OS exclusion or certify power loss/other platforms.
+
+## 129. Atomic protected context publication (D-197)
+
+* Publish verified encrypted path and captured connection creator together; never cache key-bearing
+  EF options by path. Key owners validate authorization and own mutable credential lifetime.
+* Protected creators return closed unpooled keyed ReadWrite connections to the exact existing file,
+  never Create mode. Verify ciphertext and reviewed provider before EF work; no plaintext fallback.
+* Retire protected publications even at the same path; already-open EF contexts reject commands.
+  This does not replace a global exclusive reader/writer lease or guard arbitrary direct native SQL.
+* The legacy online-copy backup source remains permanently plaintext-only and refuses keyed contexts
+  before stream/temp work. Final generation-aware portable backup/restore is a separate composition.

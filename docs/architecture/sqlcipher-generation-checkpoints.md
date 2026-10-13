@@ -163,3 +163,10 @@ D-196 final managed results: all 3,255 tests pass with zero failures/skips and o
 Main strict Windows/Android builds have zero errors/warnings. Evidence under artifacts/native-sqlcipher:
 d196-{session-tests,full-tests,test-clean,main-windows,main-android}.log. Independent signed Release
 native build/three actual migration scenarios pass; unrelated upstream/Windows key/UI suites not rerun.
+
+## Actual EF access after selected migration (D-197)
+
+The independent -Factory route now publishes the verified candidate through the original local
+location/DI context factory, reads/writes/audits actual model data, and rejects stale already-open
+contexts, same-path unkeyed movement and legacy backup work. This closes the protected EF adapter
+proof, not main provider/profile/backup/recovery activation. See data architecture for exact scope.

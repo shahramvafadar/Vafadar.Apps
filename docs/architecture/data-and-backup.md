@@ -821,3 +821,37 @@ Concrete session connects native Android keys, original coherent memory exporter
 candidate/rollback, transactional selector and exact obsolete plaintext cleanup. Separate actual-model
 Release process interruption/resume proves these effects together. No main adoption or EF model
 change; provider/startup/catalogue/all-profile backup/recovery/OS exclusion remain. See generation guide.
+
+## Protected EF factory publication (D-197)
+
+LocalDatabaseLocation.MoveToProtected publishes verified path, captured connection creator and
+reviewed cipher version atomically. After this publication MoveTo cannot return to unkeyed mode.
+The creator supplies a new closed unpooled ReadWrite keyed connection to the exact existing path;
+it owns key acquisition/access checks and mutable credential lifetime. Protected options are not
+cached by path. Every context owns its connection. Async factory captures before scheduling key
+work, so a retired callback cannot silently bind to another publication.
+
+Before EF opening, guard requires an existing nonredirected ciphertext file; after native open,
+reviewed cipher identity must match. EF commands validate current publication, including old
+already-open contexts and same-path credential rotation. Callers still need an exclusive access/
+profile lifecycle gate. Interceptors do not guard direct commands on an exposed native connection
+or promise cancellation/rollback of a command already executing when external authority retires.
+Native immutable password strings cannot be completely wiped. No plaintext/default-provider fallback.
+
+SqliteDatabaseBackupSource is permanently plaintext-only: keyed context export/restore refuses
+before consuming input, opening snapshot or writing output. Online BackupDatabase does not convert
+cipher/plain formats. Generation-aware portable memory export and encrypted restore/selector commit
+must be composed before main activation; no interim OS exclusion or silently broken backup delivery.
+
+Ten actual factory refusal tests/focused 102 pass. One independent Android signed Release actual
+model/32-migration profile then uses original DI factory for protected reads, audited metadata write,
+fresh readback, already-open context retirement and no unkeyed/legacy-backup fallback. Native proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-407bd18c090c4264b903d5949db8988d.json.
+Runtime: d197-native-factory-runtime.log; native strict build passes. ZIP/v2/v3 signature and original
+reviewed arm64/x64 native hashes match; only independent package removed. Main provider remains
+unadopted/plaintext; all-profile startup/backup/recovery and broader platform acceptance remain.
+
+D-197 final results: all 3,265 tests pass with zero failures/skips; output cleaned. Main strict
+Windows/Android builds have zero errors/warnings. Evidence: artifacts/native-sqlcipher/d197-
+{factory-tests,full-tests,test-clean,main-windows,main-android}.log and native factory proof above.
+No unchanged migration/crypto/Windows-key/UI matrices or main phone APK were repeated.

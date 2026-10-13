@@ -40,6 +40,7 @@ public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TCont
         {
             await using var context = await contextFactory.CreateDbContextAsync(cancellationToken);
             verifyAccess?.Invoke(context);
+            RequirePlainBackupAdapter(context);
             await using (var snapshot = OpenUnpooled(snapshotPath))
             {
                 await context.Database.OpenConnectionAsync(cancellationToken);
@@ -73,6 +74,7 @@ public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TCont
             // D-124: bind the destination before reading the package. The current profile may move during that await.
             await using var context = await contextFactory.CreateDbContextAsync(cancellationToken);
             verifyAccess?.Invoke(context);
+            RequirePlainBackupAdapter(context);
             await using (var file = new FileStream(snapshotPath, FileMode.CreateNew, FileAccess.Write, FileShare.None, 81920, useAsync: true))
             {
                 await source.CopyToAsync(file, cancellationToken);
@@ -121,6 +123,14 @@ public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TCont
 
     private static SqliteConnection OpenUnpooled(string path) =>
         new(new SqliteConnectionStringBuilder { DataSource = path, Pooling = false }.ToString());
+
+    private static void RequirePlainBackupAdapter(TContext context)
+    {
+        // D-197: online BackupDatabase cannot convert between portable plaintext and keyed live generations.
+        // This adapter remains plaintext-only; generation-aware sources own keyed restore/export.
+        if (!string.IsNullOrEmpty(new SqliteConnectionStringBuilder(context.Database.GetDbConnection().ConnectionString).Password))
+            throw new InvalidOperationException("Protected databases require the generation-aware portable backup adapter.");
+    }
 
     private static string CreateTemporaryPath() =>
         Path.Combine(Path.GetTempPath(), $"vafadar-{Guid.NewGuid():N}.sqlite");

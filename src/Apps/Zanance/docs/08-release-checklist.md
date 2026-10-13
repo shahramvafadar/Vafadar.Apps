@@ -958,3 +958,10 @@ using actual compiled model/32 migrations and typed financial content. Encrypted
 plaintext cleanup verified; original main profiles untouched/plaintext. All-profile lifecycle,
 provider packaging/activation, backup/attachments/safety/recovery/OS exclusion, Windows/iOS and
 broader physical/power/disk crash gates remain. No whole-product security/release acceptance.
+
+## D-197 protected EF access evidence
+
+Original factory performs keyed native real-model read/write and stale/unkeyed/legacy-backup
+refusal in separate signed Release Android package. Main provider/lifecycle/all-profile/portable
+backup/recovery/OS exclusion adoption still open; no physical/iOS/whole-product acceptance.
+Permanent legacy format guard is not a temporary restriction on current main backups.

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Development - Protected data-layer connections (2026-10-13, D-197)
+
+- Added bound encrypted context publication, read/write checks and retirement of old profile contexts.
+- Prevented use of plaintext-only backup copying for keyed databases.
+- Existing app data and backups are unchanged; final encrypted profile/backup activation remains unfinished.
+
 ### Development - Complete database migration foundation (2026-10-13, D-196)
 
 - Connected protected keys, encrypted database and rollback creation, verified selection and exact cleanup.

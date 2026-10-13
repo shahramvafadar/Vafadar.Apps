@@ -24,7 +24,7 @@ public sealed class MainActivity : Activity
             var keyPhase = Intent?.GetStringExtra("key_phase");
             var journalPhase = Intent?.GetStringExtra("journal_phase");
             var migrationPhase = Intent?.GetStringExtra("migration_phase");
-            if (migrationPhase is not null && (keyPhase is not null || journalPhase is not null || migrationPhase is not ("migration-create" or "migration-key-prepare" or "migration-export-kill" or "migration-check-interruption" or "migration-selected-kill" or "migration-missing-key" or "migration-resume")))
+            if (migrationPhase is not null && (keyPhase is not null || journalPhase is not null || migrationPhase is not ("migration-create" or "migration-key-prepare" or "migration-export-kill" or "migration-check-interruption" or "migration-selected-kill" or "migration-missing-key" or "migration-resume" or "migration-factory")))
                 throw new ArgumentException("Unknown or combined independent migration phase.");
             if (journalPhase is not null && (keyPhase is not null || journalPhase is not ("journal-create" or "journal-uncommitted" or "journal-reopen-rollback" or "journal-committed" or "journal-reopen-selected")))
                 throw new ArgumentException("Unknown or combined independent journal phase.");

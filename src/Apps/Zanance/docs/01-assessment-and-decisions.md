@@ -2543,3 +2543,32 @@ D-196 final managed results: all 3,255 tests pass with zero failures/skips and o
 Main strict Windows/Android builds have zero errors/warnings. Evidence under artifacts/native-sqlcipher:
 d196-{session-tests,full-tests,test-clean,main-windows,main-android}.log. Independent signed Release
 native build/three actual migration scenarios pass; unrelated upstream/Windows key/UI suites not rerun.
+
+## D-197 - Atomic protected EF factory publication
+
+Extend actual LocalDatabaseLocation/factory with immutable atomic path/connection-creator/version
+publications. A verified encrypted publication latches protected-only movement; no unkeyed fallback.
+Same-path re-publication retires old contexts. Key-bearing options are never put in the path cache:
+create one owned closed unpooled ReadWrite exact-path keyed connection per protected context, with
+before/after creator validation. Async factory captures publication before scheduling native key
+work off UI. Connection interception rejects missing/redirected/plaintext file and wrong native
+cipher before EF use; command interception rejects retired already-open contexts. Caller still
+owns captured key/access lifetime and global exclusive lease; direct native SQL bypass is not
+claimed protected by EF interception. Native password strings are not completely erasable.
+
+Legacy online BackupDatabase helper is permanently plaintext-only; keyed contexts refuse before
+stream consumption/temp creation. This final format constraint is not a temporary OS-backup policy.
+Generation-aware portable export/restore and final main activation remain required. No financial
+model/schema/ledger or visible UI change. Ten new real-factory guard cases pass (focused 102).
+Independent signed Release AOT/trimmed Android migrates one real-model/32-migration fictitious profile,
+then uses actual AddZananceData/IDbContextFactory for keyed reads, an audited metadata write and
+fresh readback. Already-open context query after same-path publication and unkeyed move refuse;
+actual legacy backup emits no data. No unchanged three-scenario migration/upstream/Windows-key/UI
+matrix repeated. APK signature/ZIP/reviewed ABI bytes and exact package removal pass. AT-196 records
+final suite/build evidence. Main application remains plaintext pending lifecycle/catalogue/provider/
+backup/recovery/all-profile adoption and remaining platform/runtime gates.
+
+D-197 final results: all 3,265 tests pass with zero failures/skips; output cleaned. Main strict
+Windows/Android builds have zero errors/warnings. Evidence: artifacts/native-sqlcipher/d197-
+{factory-tests,full-tests,test-clean,main-windows,main-android}.log and native factory proof above.
+No unchanged migration/crypto/Windows-key/UI matrices or main phone APK were repeated.

@@ -2,7 +2,7 @@
 [CmdletBinding()]
 param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'android-x64',
     [ValidatePattern('^[a-zA-Z0-9.:-]+$')][string]$DeviceSerial = '127.0.0.1:5571',
-    [ValidateRange(1,65535)][int]$AdbPort = 5038)
+    [ValidateRange(1,65535)][int]$AdbPort = 5038, [switch]$Factory)
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
@@ -55,13 +55,19 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
     return $report
 }
 $proofs = @()
-foreach ($scenario in @('interrupted-export','selected-restart','missing-selected-key')) {
+$scenarios = if ($Factory) { @('factory-layer') } else { @('interrupted-export','selected-restart','missing-selected-key') }
+foreach ($scenario in $scenarios) {
     $identity = [Guid]::NewGuid().ToString('N')
     $created = Invoke-OwnedMigration 'migration-create' $identity
     if (-not $created.OriginalModelCreated -or $created.Migrations -ne 32) { throw 'Actual original model fixture missing.' }
     $prepared = Invoke-OwnedMigration 'migration-key-prepare' $identity
     if (-not $prepared.KeyDurablyPrepared) { throw 'Actual native protected key preparation missing.' }
-    if ($scenario -eq 'interrupted-export') {
+    if ($scenario -eq 'factory-layer') {
+        $finished = Invoke-OwnedMigration 'migration-factory' $identity
+        if (-not $finished.ProtectedFactoryReadWriteAndRetirement -or -not $finished.LegacyBackupRefusedBeforeData) { throw 'Actual protected factory evidence missing.' }
+        $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; Result = $finished }
+        continue
+    } elseif ($scenario -eq 'interrupted-export') {
         $killed = Invoke-OwnedMigration 'migration-export-kill' $identity 'export'
         $retained = Invoke-OwnedMigration 'migration-check-interruption' $identity
         if (-not $retained.InterruptedExportBeforeSelection -or -not $retained.OriginalAndKeyPreserved) { throw 'Actual export interruption did not preserve source/key.' }

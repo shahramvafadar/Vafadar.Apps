@@ -554,3 +554,12 @@ bounded cleared owned memory, never a plaintext temporary file. Native password 
 fully wiped; same-UID malicious code/flash erasure/hardware power-loss protection is not claimed.
 Independent fixture only currently; no main data/key/provider/OS policy activation. No permission,
 network, SDK or portable credential. Real backup/safety/attachments/recovery integration remains.
+
+## Protected factory access and permanent backup-format guard (D-197)
+
+Captured creator supplies owned keyed connection; credentials never enter path-only EF options
+cache or portable preferences. Provider/plaintext/stale EF access refuses. Caller owns mutable key
+and access lifetime; native connection password strings cannot be completely erased. Direct raw
+SQL/in-flight commands are not covered by EF retirement. Legacy backup refuses keyed data before
+stream/temp work; final generation-aware portable backup remains pending. Independent fixture only;
+no main credential/data/permission/network/OS-backup policy activation.

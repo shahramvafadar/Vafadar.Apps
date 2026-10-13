@@ -2949,3 +2949,18 @@ D-196 final managed results: all 3,255 tests pass with zero failures/skips and o
 Main strict Windows/Android builds have zero errors/warnings. Evidence under artifacts/native-sqlcipher:
 d196-{session-tests,full-tests,test-clean,main-windows,main-android}.log. Independent signed Release
 native build/three actual migration scenarios pass; unrelated upstream/Windows key/UI suites not rerun.
+
+### 31.110 Protected EF factory publication (D-197 / AT-196)
+
+Original location/factory now publishes path/credential creator atomically, avoids path-only keyed
+options cache, uses exact-path noncreating/unpooled connection, validates ciphertext/provider and
+retires old EF commands. Legacy backup remains plaintext-only and refuses keyed work before data
+consumption; generation-aware portable backup/restore is pending composition. Ten guards/focused
+102 and actual signed Release Android real-model factory reads/writes/retirement pass. No financial
+schema/UI change or main activation: main is plaintext, lifecycle/provider/all-profile/recovery/
+backup/OS policy and remaining platform/runtime gates are still open.
+
+D-197 final results: all 3,265 tests pass with zero failures/skips; output cleaned. Main strict
+Windows/Android builds have zero errors/warnings. Evidence: artifacts/native-sqlcipher/d197-
+{factory-tests,full-tests,test-clean,main-windows,main-android}.log and native factory proof above.
+No unchanged migration/crypto/Windows-key/UI matrices or main phone APK were repeated.

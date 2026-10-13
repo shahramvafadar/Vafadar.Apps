@@ -16,7 +16,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-GOV-01 | Audit, plan matrix, architecture, backlog and delivery plan | 0 | P1 | M | Done | – |
 | ZCR-GOV-02 | Refresh spec §31, AGENTS.md §12 and outdated statements | 0/2 | P2 | S | Done (D-88; external confirmation/acceptance still open) | GOV-01 |
 | ZCR-SEC-01 | Threat model and encryption decision record + feasibility proof | 1 | P1 | M | In progress (D-180 official Community direction and Windows C/.NET proof; native Linux CI accepted D-191; final key/recovery/migration/platform integration remains) | OD-04 approved |
-| ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | Proposed | SEC-01 |
+| ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | In progress (D-197 protected EF factory; main provider/lifecycle/backup adoption remains) | SEC-01 |
 | ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-193 Android / D-192 Windows protectors; durable storage/iOS remain) | SEC-01 |
 | ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | Proposed | SEC-03, OD-04 |
 | ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-196 concrete Android session and restart proof; main/all-profile lifecycle and broader crash/platform matrix open) | SEC-02, SEC-03 |
@@ -1528,3 +1528,12 @@ Release three-profile process sequences pass export/Selected interruption and mi
 key refusal. Ten guards/focused 92 pass. Main remains plaintext: lifecycle/catalogue/all-profile,
 backup/recovery/OS exclusion, other platform effects and broader crash/disk acceptance remain.
 SEC-08 is not closed by an encrypted migration rollback alone; actual restore safety remains.
+
+## Protected EF publication (D-197)
+
+SEC-02 has an original actual-factory protected connection adapter: atomic bound publication,
+noncreating exact path, no path-only key cache, provider/ciphertext checks and stale EF retirement.
+Actual native original-model factory read/write and ten guards pass (focused 102). Main remains
+plaintext; reviewed provider packaging/lifecycle/catalogue/all-profile and generation-aware backup/
+restore/recovery composition remain. Plain legacy backup format guard is permanent, not interim
+OS policy. All other security/physical/platform release gates remain.

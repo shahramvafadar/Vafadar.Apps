@@ -42,3 +42,13 @@ Memory-only portable staging, complete typed verification and explicit immutable
 checkpoints are independent infrastructure; current application provider remains unchanged.
 See [generation protocol](../../../docs/architecture/sqlcipher-generation-checkpoints.md).
 Keys, durable selector/cleanup/restart and recovery policy remain separate integration obligations.
+
+## Protected generation publication
+
+After actual migration/keyed verification, MoveToProtected(path, capturedConnectionCreator,
+reviewedCipherVersion) atomically publishes protected access. Creator returns a new closed,
+unpooled, keyed ReadWrite connection to the exact existing path. It owns key/access lifetime;
+protected EF options are not cached by path. Old EF contexts retire after every re-publication.
+Legacy MoveTo and plaintext online-copy backup cannot be used for protected generations. Compose
+native generation-aware backup/restore and application lifecycle before enabling this on live data.
+See [data architecture](../../../docs/architecture/data-and-backup.md) for evidence and limits.

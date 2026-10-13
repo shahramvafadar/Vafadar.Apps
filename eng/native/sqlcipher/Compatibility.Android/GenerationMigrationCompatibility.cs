@@ -79,11 +79,11 @@ internal static class GenerationMigrationCompatibility
                 throw new IOException("Missing selected key was replaced or original was cleaned/fallback selected.");
             return "{\"MissingSelectedKeyRefused\":true,\"NoReplacementOrPlaintextFallback\":true}";
         }
-        if (phase is not ("migration-resume" or "migration-export-kill" or "migration-selected-kill"))
+        if (phase is not ("migration-resume" or "migration-factory" or "migration-export-kill" or "migration-selected-kill"))
             throw new ArgumentException("Unknown complete migration phase.");
         var port = phase == "migration-selected-kill" ? (IDatabaseGenerationMigrationSession)new SelectionBarrier(session, folder) : session;
         var selectedGeneration = await DatabaseGenerationMigration.ResumeAsync(initial, port);
-        if (phase != "migration-resume") throw new IOException("Runner did not interrupt its live migration at the required boundary.");
+        if (phase is not ("migration-resume" or "migration-factory")) throw new IOException("Runner did not interrupt its live migration at the required boundary.");
         var stateAfter = await journal.ReadAsync();
         if (selectedGeneration != initial.CandidateGeneration || stateAfter.Phase != DatabaseGenerationPhase.Completed ||
             new[] { "", "-wal", "-shm", "-journal" }.Any(suffix => File.Exists(original + suffix)) ||
@@ -93,12 +93,13 @@ internal static class GenerationMigrationCompatibility
         var key = await keys.ReadAsync(binding, CancellationToken.None);
         try
         {
+            if (phase == "migration-factory") await CheckProtectedFactoryAsync(session.CandidatePath, key);
             _ = new ServiceCollection().AddZananceData(session.CandidatePath);
             var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(new SqliteConnectionStringBuilder
             { DataSource = session.CandidatePath, Password = Convert.ToBase64String(key), Pooling = false }.ToString()).UseModel(ZananceDbContextModel.Instance).Options;
             await using var db = new ZananceDbContext(options);
             var account = await db.Accounts.SingleAsync(); var entry = await db.Entries.SingleAsync();
-            if (account.Name != "Fictitious بانک Ü" || account.OpeningBalance != 1000 || account.CurrencyCode != "EUR" ||
+            if (account.Name != (phase == "migration-factory" ? "Fictitious protected factory" : "Fictitious بانک Ü") || account.OpeningBalance != 1000 || account.CurrencyCode != "EUR" ||
                 entry.Amount != 250 || entry.Date != new DateOnly(2026, 2, 1) || (await db.Database.GetPendingMigrationsAsync()).Any())
                 throw new IOException("Selected actual model changed financial packets or migrations.");
         }
@@ -109,7 +110,37 @@ internal static class GenerationMigrationCompatibility
             if (content.AsSpan().StartsWith("SQLite format 3\0"u8) || content.AsSpan().IndexOf(System.Text.Encoding.UTF8.GetBytes("Fictitious بانک Ü")) >= 0)
                 throw new IOException("Selected or rollback file leaked the fictitious marker.");
         }
+        if (phase == "migration-factory") return "{\"ProtectedFactoryReadWriteAndRetirement\":true,\"LegacyBackupRefusedBeforeData\":true}";
         return "{\"CompleteMigration\":true,\"OriginalModelAndMoneyPreserved\":true,\"EncryptedRollbackRetained\":true,\"ExactPlaintextCleanup\":true}";
+    }
+
+    private static async Task CheckProtectedFactoryAsync(string path, byte[] key)
+    {
+        using var services = new ServiceCollection().AddZananceData(path).BuildServiceProvider();
+        var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
+        SqliteConnection Create() => new(new SqliteConnectionStringBuilder
+        { DataSource = path, Password = Convert.ToBase64String(key), Mode = SqliteOpenMode.ReadWrite, Pooling = false, ForeignKeys = true }.ToString());
+        location.MoveToProtected(path, Create, "4.19.0");
+        var factory = services.GetRequiredService<IDbContextFactory<ZananceDbContext>>();
+        await using var first = await factory.CreateDbContextAsync();
+        var account = await first.Accounts.SingleAsync(); var entry = await first.Entries.SingleAsync();
+        if (account.OpeningBalance != 1000 || entry.Amount != 250) throw new IOException("Actual factory changed financial packets.");
+        account.Name = "Fictitious protected factory";
+        await first.SaveChangesAsync();
+        await using (var second = await factory.CreateDbContextAsync())
+            if ((await second.Accounts.SingleAsync()).Name != "Fictitious protected factory") throw new IOException("Actual protected factory write lost.");
+        location.MoveToProtected(path, Create, "4.19.0");
+        var refused = false;
+        try { await first.Accounts.SingleAsync(); } catch (InvalidOperationException) { refused = true; }
+        if (!refused) throw new IOException("Already-open retired protected context still queried.");
+        refused = false;
+        try { location.MoveTo(path); } catch (InvalidOperationException) { refused = true; }
+        if (!refused) throw new IOException("Protected location fell back to unkeyed access.");
+        using var output = new MemoryStream();
+        refused = false;
+        try { await services.GetRequiredService<Vafadar.Backup.IBackupSource>().WriteAsync(output, CancellationToken.None); }
+        catch (InvalidOperationException) { refused = true; }
+        if (!refused || output.Length != 0) throw new IOException("Legacy keyed backup consumed or wrote data.");
     }
 
     private static async Task CreateOriginalAsync(string original)

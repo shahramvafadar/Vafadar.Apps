@@ -1126,3 +1126,9 @@ optional recovery and all-profile/physical/iOS acceptance remain. Main remains p
 Original-model Android session now performs actual protected keys, encrypted candidate/rollback,
 verified selection/reopen and exact cleanup, including real process interruption and missing-key
 refusal. No main/provider/all-profile adoption; backup/recovery and broader acceptance remain.
+
+## D-197 protected EF factory
+
+Atomic path/credential publication and original factory actual native read/write/retirement pass.
+Permanent legacy plaintext backup constraint enforced. Main remains plaintext pending complete
+provider/lifecycle/all-profile/portable backup/recovery composition; no temporary OS policy.
