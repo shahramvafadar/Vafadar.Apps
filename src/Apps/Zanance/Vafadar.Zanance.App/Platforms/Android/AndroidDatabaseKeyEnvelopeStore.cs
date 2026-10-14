@@ -37,7 +37,14 @@ public sealed partial class AndroidDatabaseKeyEnvelopeStore
         ArgumentNullException.ThrowIfNull(binding);
         ValidateDirectory();
         var recovered = GetPath(binding) + ".recovered";
-        return ReadEntry(HasEntry(recovered) ? recovered : GetPath(binding), binding, HasEntry(recovered));
+        var selected = HasEntry(recovered);
+        var key = ReadEntry(selected ? recovered : GetPath(binding), binding, selected);
+        try
+        {
+            if (selected) Receipts().VerifyAsync(binding, key, Path.GetFileName(recovered), default).GetAwaiter().GetResult();
+            return key;
+        }
+        catch { CryptographicOperations.ZeroMemory(key); throw; }
     }
     private byte[] ReadEntry(string path, DatabaseKeyBinding binding, bool recovered)
     {

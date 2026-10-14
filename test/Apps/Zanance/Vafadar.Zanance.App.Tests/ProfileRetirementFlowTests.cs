@@ -84,6 +84,17 @@ public sealed class ProfileRetirementFlowTests
         Assert.DoesNotContain(await fixture.Identities.ReadAsync(Ct), row => row.ProfileId == fixture.Identity.ProfileId);
     }
 
+    [Fact, Trait("AT", "AT-241")]
+    public async Task Actual_retirement_discovers_and_removes_authenticated_original_recovered_entry_and_receipt()
+    {
+        if (!OperatingSystem.IsWindows()) return;
+        using var fixture = new Fixture(); await fixture.InitializeAsync(withRecovery: true, withRecoveredEntry: true);
+        Assert.True(File.Exists(fixture.TargetKey + ".recovered.receipt"));
+        await fixture.Profiles.DeleteAsync(fixture.Work, Ct);
+        Assert.False(File.Exists(fixture.TargetKey)); Assert.False(File.Exists(fixture.TargetKey + ".recovered"));
+        Assert.False(File.Exists(fixture.TargetKey + ".recovered.receipt")); Assert.Single(fixture.Profiles.All);
+    }
+
     private sealed class Fixture : IDisposable
     {
         private readonly FlowFixture flow = new();
@@ -97,7 +108,7 @@ public sealed class ProfileRetirementFlowTests
         internal string Candidate = null!, TargetKey = null!;
         internal readonly Runtime Runtime = new();
         internal readonly Persistence Persistence = new();
-        internal async Task InitializeAsync(bool withRecovery = false)
+        internal async Task InitializeAsync(bool withRecovery = false, bool withRecoveredEntry = false)
         {
             if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException();
             var roots = new Dictionary<string, string> { ["database"] = flow.Directory.Path };
@@ -118,6 +129,12 @@ public sealed class ProfileRetirementFlowTests
             Candidate = original + "." + Identity.CandidateGeneration.ToString("N") + ".cipher.db";
             TargetKey = Path.Combine(roots["keys"], $"{Identity.ProfileId:N}-{Identity.CandidateGeneration:N}.key");
             await File.WriteAllTextAsync(Candidate, "Fictitious owned candidate bytes.", Ct);
+            if (withRecoveredEntry)
+            {
+                var retained = await keys.ReadAsync(Identity.InitialCandidateKey, Ct);
+                try { await keys.ImportRecoveredAsync(Identity.InitialCandidateKey, retained, (_, _) => Task.CompletedTask, Ct); }
+                finally { System.Security.Cryptography.CryptographicOperations.ZeroMemory(retained); }
+            }
             if (withRecovery)
             {
                 RecoveryMaterial = DatabaseRecoveryMaterial.Create(Identity.InstallationId);

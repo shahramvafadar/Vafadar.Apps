@@ -1521,3 +1521,6 @@ Prepared one verified initialization path for all existing local profiles before
 - Prepared native storage of a verified recovered database key so later cold reads can use device
   protection again, retaining the original key entry. Product recovery UI and main encryption are
   not enabled yet.
+
+- Prepared authenticated ownership and safe retirement of recovered device-key entries, retaining
+  other profiles and refusing changed or missing file authority. Main encryption is not enabled yet.

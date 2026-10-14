@@ -81,4 +81,41 @@ public sealed class WindowsKeyRecoveryTests
         }
         finally { CryptographicOperations.ZeroMemory(key); }
     }
+
+    [Fact, Trait("AT", "AT-241")]
+    public async Task Same_content_original_replacement_invalidates_native_recovery_receipt()
+    {
+        if (!OperatingSystem.IsWindows()) return;
+        using var directory = new TemporaryDirectory(); var store = new WindowsGenerationKeyStore(directory.Path, () => { });
+        var binding = new DatabaseKeyBinding(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        await store.PrepareAsync(binding, Ct); var key = await store.ReadAsync(binding, Ct);
+        var original = directory.Combine($"{binding.ProfileId:N}-{binding.GenerationId:N}.key");
+        try
+        {
+            await store.ImportRecoveredAsync(binding, key, (_, _) => Task.CompletedTask, Ct);
+            var bytes = await File.ReadAllBytesAsync(original, Ct);
+            File.Move(original, original + ".retained"); await File.WriteAllBytesAsync(original, bytes, Ct);
+            await Assert.ThrowsAsync<CryptographicException>(() => ((IDatabaseGenerationKeyStore)store).ReadAsync(binding, Ct));
+            Assert.True(File.Exists(original + ".recovered"));
+        }
+        finally { CryptographicOperations.ZeroMemory(key); }
+    }
+
+    [Fact, Trait("AT", "AT-241")]
+    public async Task Missing_receipt_cannot_fall_back_to_valid_original_key_or_regenerate_authority()
+    {
+        if (!OperatingSystem.IsWindows()) return;
+        using var directory = new TemporaryDirectory(); var store = new WindowsGenerationKeyStore(directory.Path, () => { });
+        var binding = new DatabaseKeyBinding(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+        await store.PrepareAsync(binding, Ct); var key = await store.ReadAsync(binding, Ct);
+        try
+        {
+            await store.ImportRecoveredAsync(binding, key, (_, _) => Task.CompletedTask, Ct);
+            var receipt = directory.Combine($"{binding.ProfileId:N}-{binding.GenerationId:N}.key.recovered.receipt");
+            File.Delete(receipt);
+            await Assert.ThrowsAsync<IOException>(() => ((IDatabaseGenerationKeyStore)store).ReadAsync(binding, Ct));
+            Assert.False(File.Exists(receipt));
+        }
+        finally { CryptographicOperations.ZeroMemory(key); }
+    }
 }

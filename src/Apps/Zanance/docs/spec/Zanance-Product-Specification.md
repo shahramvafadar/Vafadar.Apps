@@ -4615,3 +4615,56 @@ D-240 complete signed Release APK: artifacts/android-d240-delivery/pro.vafadar.z
 embedded assembly stores verified. Test outputs were cleaned after all terminal checks. The APK
 uses local test signing and does not activate main encryption/recovery UI or establish phone/iOS/
 hardware power-loss/store acceptance. Recovered-entry reference/lifecycle integration remains open.
+
+### D-241 — Authenticated native recovered-key references and retirement
+
+KeyRecoveryReceipt records exact original/recovered native file identity, root identity, length and
+SHA-256 under standard DEK-keyed HMAC-SHA256 and the existing profile/install/generation context.
+It contains no plaintext key. The original object may explicitly be absent; missing receipt is never
+inferred as empty authority. Same-content file/root replacement and changed bytes invalidate the
+confirmation. A staged recovered object is normalized only to its final bound filename, retaining
+its actual inode/file identity through no-replace rename.
+
+Native import now publishes/resumes an immutable bounded receipt after actual finance verification
+and recovered-envelope authentication, before final recovered-key publication. Native private file
+creation and file/directory synchronization qualify the receipt. Existing and cold recovered reads
+require exact authenticated receipt/current objects, without fallback or manufactured confirmation.
+Explicit re-import can requalify the existing exact verified objects; ordinary reads never create
+authority. Windows uses real owner-only native files; Android uses actual app-private no-follow
+capture/fsync and the existing fresh wrapping alias. Original unavailable envelopes remain immutable.
+
+ProfileRetirementReferenceDiscovery recognizes only exact recovered entry/receipt names, verifies
+receipt HMAC and exact native originals/recovered objects with the actual DEK, then captures each
+file for the existing native removal algorithm. Unknown or uncommitted staged recovery namespaces
+still fail before catalogue publication. After catalogue removal the existing host removes captured
+public recovery mappings, all original/recovered/receipt objects and finally the exact identity.
+Other profiles and their shared private vault remain. RecoveryGenerationKeyStore forwards explicit
+native import only after the same finance verification, then requalifies recovery mapping before
+native publication; no public recovery write follows rejected finance verification.
+
+Two new native Windows cases prove same-content original replacement refusal and missing receipt
+refusal without fallback. Actual ProfileService source additionally discovers/removes original,
+recovered entry and receipt alongside target recovery mappings. Existing native recovery/profile
+cases pass. Independent actual Android finance/import/cold retirement evidence follows below.
+No financial model/migration or visible UI changed. Main registration stays plaintext; final recovery
+UX/all-profile orchestration, alias invalidation/future generation lifecycle, malformed-stage repair,
+retention/OS/provider/platform acceptance remain in the full scope. No temporary OS policy or new SDK.
+
+D-241 terminal verification: all 3452 solution tests pass, zero failures/skips (2m54.985s).
+Six native Windows key/receipt cases and six actual app retirement cases pass. Final independent
+Android strict Release AOT/trim build has zero warnings/errors (70.21s). The actual original
+ProfileService/native recovery decorator imports the work profile's DEK after existing encrypted
+finance verification, retains original/recovered/receipt objects during injected native preference
+failure, and completes their captured cold retirement on the same fictitious run
+40526ade78094cf3bcda86a7983ad21e. Main balance 250, its native identity and actual recovery through
+the shared private vault remain. Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-e36f0b4cd43349f4b243acfeca472b6a.json.
+The first compile exposed a local name collision; final source uses a distinct original-key reference.
+Unchanged producer suites/UI were not repeated. Main/recovery UX/all-profile/alias lifecycle/
+retention/OS/platform gates remain open. Final main build/package evidence follows below.
+
+D-241 strict main builds complete with zero warnings/errors: Windows 17.76s, Android 39.04s.
+
+D-241 complete signed Release APK: artifacts/android-d241-delivery/pro.vafadar.zanance-Signed.apk
+(83,671,770 bytes). Signature, pro.vafadar.zanance package, API 24/36 and both arm64-v8a/x86_64
+embedded assembly stores verified. Test outputs cleaned after all terminal checks. The local
+signed APK does not activate main encryption/recovery UI or establish phone/iOS/store acceptance.

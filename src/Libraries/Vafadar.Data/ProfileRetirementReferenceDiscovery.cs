@@ -57,12 +57,31 @@ public static class ProfileRetirementReferenceDiscovery
         var keyPrefix = request.ProfileId.ToString("N") + "-";
         foreach (var name in observed["keys"].Where(name => name.StartsWith(keyPrefix, StringComparison.Ordinal)))
         {
-            if (name.Length != 69 || !name.EndsWith(".key", StringComparison.Ordinal)
-                || !Guid.TryParseExact(name.AsSpan(33, 32), "N", out var generation) || generation == Guid.Empty)
+            var baseName = name.EndsWith(".key.recovered.receipt.creating", StringComparison.Ordinal) ? name[..^".recovered.receipt.creating".Length]
+                : name.EndsWith(".key.recovered.receipt", StringComparison.Ordinal) ? name[..^".recovered.receipt".Length]
+                : name.EndsWith(".key.recovered.creating", StringComparison.Ordinal) ? name[..^".recovered.creating".Length]
+                : name.EndsWith(".key.recovered", StringComparison.Ordinal) ? name[..^".recovered".Length] : name;
+            if (baseName.Length != 69 || !baseName.EndsWith(".key", StringComparison.Ordinal)
+                || !Guid.TryParseExact(baseName.AsSpan(33, 32), "N", out var generation) || generation == Guid.Empty)
                 throw new IOException("Unknown profile key namespace artifact requires reconciliation.");
             var keyArtifact = await files.CaptureAsync("keys", name, ct).ConfigureAwait(false);
             var key = await keys.ReadAsync(new(request.ProfileId, request.InstallationId, generation), ct).ConfigureAwait(false);
-            try { if (key.Length != 32) throw new CryptographicException("Native retirement key binding differs."); Check(); }
+            try
+            {
+                if (key.Length != 32) throw new CryptographicException("Native retirement key binding differs.");
+                if (name != baseName || observed["keys"].Contains(baseName + ".recovered", StringComparer.Ordinal))
+                {
+                    if (!observed["keys"].Contains(baseName + ".recovered", StringComparer.Ordinal))
+                        throw new IOException("Unpublished recovered artifacts require explicit reconciliation.");
+                    var binding = new DatabaseKeyBinding(request.ProfileId, request.InstallationId, generation);
+                    var originalKey = observed["keys"].Contains(baseName, StringComparer.Ordinal) ? await files.CaptureAsync("keys", baseName, ct).ConfigureAwait(false) : null;
+                    var recovered = await files.CaptureAsync("keys", baseName + ".recovered", ct).ConfigureAwait(false);
+                    var receipt = await files.ReadAsync("keys", baseName + ".recovered.receipt", KeyRecoveryReceipt.MaximumBytes, prefix: false, ct).ConfigureAwait(false);
+                    KeyRecoveryReceipt.Verify(receipt, binding, originalKey, recovered, key);
+                    if (name.EndsWith(".creating", StringComparison.Ordinal)) throw new IOException("Staged recovery artifacts require explicit reconciliation.");
+                }
+                Check();
+            }
             finally { CryptographicOperations.ZeroMemory(key); }
             if (await files.CaptureAsync("keys", name, ct).ConfigureAwait(false) != keyArtifact)
                 throw new IOException("Native key reference changed during binding authentication.");

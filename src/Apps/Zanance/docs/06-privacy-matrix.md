@@ -663,3 +663,8 @@ D-240 recovered DEKs are stored only as separately protected native recovery ent
 mutable buffers cleared and originals/old aliases preserved. Existing finance verification precedes
 publication; the caller must enforce explicit app/device authorization. Recovery secrets are not
 saved or used by ordinary cold reads. No permission/SDK/export or interim OS exclusion is introduced.
+
+D-241 receipts contain non-secret bound file/root identities, lengths, SHA-256 and HMAC confirmation,
+without DEKs/recovery secrets. Originals remain immutable until explicit target retirement; exact
+native receipts authorize only the captured target objects. Other profiles are retained. No new
+permission, export, SDK or interim OS-backup exclusion is activated.

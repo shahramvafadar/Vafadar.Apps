@@ -23,7 +23,7 @@ namespace Vafadar.SqlCipher.Compatibility.Android;
 internal static class ProfileCreationCompatibility
 {
     /// <summary>Prepares a new original through the product flow or verifies both originals after a cold restart.</summary>
-    internal static async Task<string> RunAsync(string folder, bool create, bool retirement = false, bool creationResume = false, bool retirementRecovery = false)
+    internal static async Task<string> RunAsync(string folder, bool create, bool retirement = false, bool creationResume = false, bool retirementRecovery = false, bool recoveredRetirement = false)
     {
         if (create) { if (Directory.Exists(folder)) throw new IOException("Use a fresh profile-creation fixture."); Directory.CreateDirectory(folder); }
         var main = Path.Combine(folder, ZananceApp.DatabaseFileName);
@@ -153,6 +153,24 @@ internal static class ProfileCreationCompatibility
             if (location.Capture() != endpoint || !profiles.Current.IsMain || profiles.All.Count != 2) throw new IOException("Creation changed active finance context.");
             if (!await profiles.SwitchToAsync(work) || (await store.GetAccountsAsync()).Count != 0) throw new IOException("New profile was not empty.");
             await store.SaveAccountAsync(new Account { Name = "Fictitious retained work", CurrencyCode = "EUR", OpeningDate = new(2026, 1, 1), OpeningBalance = 880 });
+            if (recoveredRetirement)
+            {
+                using var recoveryOwner = await location.Access.AcquireExclusiveAsync();
+                var catalogue = new SqliteDatabaseIdentityCatalogue(identityPath, recoveryOwner.Validate);
+                var target = (await catalogue.ReadAsync()).Single(row => row.LegacyProfileId == work.Id);
+                var key = await keys.ReadAsync(target.InitialCandidateKey, default);
+                try
+                {
+                    await ((IDatabaseGenerationKeyRecovery)keys).ImportRecoveredAsync(target.InitialCandidateKey, key, async (candidate, ct) =>
+                    {
+                        using var verified = await SqlCipherNewProfile.OpenAsync(location, catalogue, work.Id,
+                            Path.Combine(folder, "zanance-" + work.Id + ".db"), false, new VerifiedKeys(target.InitialCandidateKey, candidate), durability,
+                            BuildSchema, recoveryOwner, recoveryOwner.Validate, 16 * 1024 * 1024, "4.19.0", ct);
+                        if (verified.Binding != target.InitialCandidateKey) throw new IOException("Verified retirement recovery binding differs.");
+                    }, default);
+                }
+                finally { CryptographicOperations.ZeroMemory(key); }
+            }
             if (!await profiles.SwitchToAsync(profiles.All.Single(p => p.IsMain))) throw new IOException("Return to original failed.");
             await new AndroidSettingsPersistence(Preferences.Default).PersistAsync();
             if (retirement)
@@ -203,6 +221,12 @@ internal static class ProfileCreationCompatibility
                 : "{\"ColdCatalogueRetirementResumed\":true,\"OnlyMainIdentityRemains\":true,\"MainBalance\":250,\"ActualNativeSettings\":true}";
         }
         return "{\"CatalogueAfterEncryptedPreparation\":true,\"ActiveProfileUnchangedDuringCreation\":true,\"RealSwitchAndFinancialPacketsPreserved\":true}";
+    }
+
+    private sealed class VerifiedKeys(DatabaseKeyBinding expected, ReadOnlyMemory<byte> key) : IDatabaseGenerationKeyStore
+    {
+        public Task PrepareAsync(DatabaseKeyBinding binding, CancellationToken ct) => throw new IOException("Verification cannot prepare keys.");
+        public Task<byte[]> ReadAsync(DatabaseKeyBinding binding, CancellationToken ct) => binding == expected ? Task.FromResult(key.ToArray()) : throw new IOException("Verification belongs to another generation.");
     }
 
     private sealed class ExistingKeys(IDatabaseGenerationKeyStore inner) : IDatabaseGenerationKeyStore

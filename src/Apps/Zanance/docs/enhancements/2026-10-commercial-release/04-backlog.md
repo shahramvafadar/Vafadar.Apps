@@ -2037,3 +2037,8 @@ D-240 adds explicit verified native re-enrollment and cold device-key read witho
 secret, preserving the original envelope and financial ciphertext. Missing/corrupt entries never
 regenerate keys. Final recovery UX/all-profile orchestration, recovered-entry lifecycle/reference/
 retention/OS/platform adoption remain open; main encryption stays inactive. See decision log evidence.
+
+D-241 authenticates recovered-key native references with a DEK-keyed exact-object receipt and
+connects original/recovered/receipt removal to actual protected ProfileService retirement. Missing/
+changed/staged references refuse cleanup. See terminal evidence in decision log; main encryption,
+final UX/all-profile recovery/alias lifecycle/retention/OS/platform adoption remain open.

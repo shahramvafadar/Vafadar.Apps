@@ -1925,3 +1925,9 @@ recovery entries are staged/authenticated/no-replace and ordinary reads never in
 Android independent check: Test-AndroidGenerationMigration.ps1 -RunName android-d -KeyReEnrollment
 -UseExistingBuild (three separate processes). Windows Compatibility recovery-create/recovery-import/
 recovery-native modes use only owned fictitious artifacts. Final reference/lifecycle/UX adoption is open.
+
+D-241 recovered native entries require immutable DEK-authenticated exact-object receipts before
+publication and ordinary reads. Discovery verifies original/recovered/receipt ownership before
+captured retirement; staged/unknown state never supplies guessed cleanup authority. Android actual
+combined check: Test-AndroidGenerationMigration.ps1 -RunName android-d -RecoveredKeyRetirement
+-UseExistingBuild, using independent original finance/native effects only. See device-key guide.
