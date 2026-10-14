@@ -14,6 +14,7 @@
     <Description>Independent compatibility checks of official source-built SQLCipher with original data sources.</Description>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/ProtectedBackupRestoreReceiver.cs" Link="ProtectedBackupRestoreReceiver.cs" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedProfileStorage.cs" Link="ProtectedProfileStorage.cs" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Startup/IAppDatabaseStartup.cs" Link="IAppDatabaseStartup.cs" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedProfileRecovery.cs" Link="ProtectedProfileRecovery.cs" />

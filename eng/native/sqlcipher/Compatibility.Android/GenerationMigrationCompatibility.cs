@@ -17,6 +17,8 @@ internal static class GenerationMigrationCompatibility
     /// <summary>Creates a real original model or resumes/interrupts its captured native migration.</summary>
     internal static async Task<string> RunAsync(string folder, string phase)
     {
+        if (phase is "validated-restore-create" or "validated-restore-reopen")
+            return await RetainedRestoreCompatibility.RunAsync(folder, phase.EndsWith("-create", StringComparison.Ordinal), false, validatedDelivery: true);
         if (phase is "retained-preselect-create" or "retained-preselect-reopen" or "retained-preferences-create" or "retained-preferences-reopen")
             return await RetainedRestoreCompatibility.RunAsync(folder, phase.EndsWith("-create", StringComparison.Ordinal), phase.StartsWith("retained-preferences", StringComparison.Ordinal));
         if (phase is "recovery-chain-create" or "recovery-chain-reopen" or "recovery-chain-repair") return await RecoveryRestoreChainCompatibility.RunAsync(folder, phase == "recovery-chain-create", repairFixtureCatalogue: phase == "recovery-chain-repair");

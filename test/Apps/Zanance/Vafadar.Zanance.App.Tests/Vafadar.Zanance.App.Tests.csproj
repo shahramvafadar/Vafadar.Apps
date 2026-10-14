@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/ProtectedBackupRestoreReceiver.cs" Link="ProtectedBackupRestoreReceiver.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedProfileStorage.cs" Link="ProtectedProfileStorage.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedProfileRecovery.cs" Link="ProtectedProfileRecovery.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedDatabaseStartup.cs" Link="Application/ProtectedDatabaseStartup.cs" />

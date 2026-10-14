@@ -9,6 +9,7 @@ using Vafadar.Data;
 using Vafadar.Localization;
 using Vafadar.Maui.Hosting;
 using Vafadar.Zanance.App.Profiles;
+using Vafadar.Zanance.App.Features.Backup;
 using Vafadar.Zanance.App.Startup;
 using Vafadar.Zanance.App.Security;
 using Vafadar.Zanance.Core.Accounts;
@@ -19,7 +20,7 @@ namespace Vafadar.SqlCipher.Compatibility.Android;
 /// <summary>Checks actual composed receiver continuation before selection and after native preference persistence.</summary>
 internal static class RetainedRestoreCompatibility
 {
-    internal static async Task<string> RunAsync(string folder, bool create, bool afterPreferences)
+    internal static async Task<string> RunAsync(string folder, bool create, bool afterPreferences, bool validatedDelivery = false)
     {
         SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
         if (create) { if (Directory.Exists(folder)) throw new IOException("Use a fresh retained restore fixture."); Directory.CreateDirectory(folder); }
@@ -51,6 +52,52 @@ internal static class RetainedRestoreCompatibility
             {
                 var account = (await store.GetAccountsAsync()).Single(); account.OpeningBalance = 777; await store.SaveAccountAsync(account);
                 settings.Set("localization.language", "de"); await persistence.PersistAsync();
+                if (validatedDelivery)
+                {
+                    var adapter = new ProtectedBackupRestoreReceiver(location, host);
+                    var restore = new BackupService(sources, environment, settings, TimeProvider.System, new BackupOptions(), adapter);
+                    var damaged = package.ToArray(); damaged[0] ^= 1;
+                    try
+                    {
+                        var rejected = false;
+                        try { await restore.RestorePackageAsync(damaged); } catch (BackupException) { rejected = true; }
+                        if (!rejected) throw new IOException("Malformed ZIP was accepted.");
+                    }
+                    finally { CryptographicOperations.ZeroMemory(damaged); }
+                    foreach (var invalidPreferences in new[] { false, true })
+                    {
+                        var badSources = invalidPreferences
+                            ? new IBackupSource[] { sources[0], new InvalidSource("display-settings.json", "[]"u8.ToArray()) }
+                            : new IBackupSource[] { new InvalidSource("database.sqlite", "not a SQLite snapshot"u8.ToArray()) };
+                        var bad = await new BackupService(badSources, environment, settings, TimeProvider.System, new BackupOptions()).CreatePackageAsync();
+                        try
+                        {
+                            var rejected = false;
+                            try { await restore.RestorePackageAsync(bad); }
+                            catch (Exception error) when (error is IOException or InvalidDataException or System.Text.Json.JsonException or BackupException) { rejected = true; }
+                            if (!rejected) throw new IOException("Malformed borrowed source was accepted.");
+                        }
+                        finally { CryptographicOperations.ZeroMemory(bad); }
+                    }
+                    DatabaseProfileIdentity validatedIdentity;
+                    using (var inspected = await location.Access.AcquireExclusiveAsync())
+                    {
+                        validatedIdentity = (await new SqliteDatabaseIdentityCatalogue(identityPath, inspected.Validate).ReadAsync()).Single();
+                        var unchanged = await new SqliteProfileRestoreHistory(original + ".restore-history.sqlite", validatedIdentity.InitialCandidateKey, inspected.Validate).ReadAsync();
+                        if (unchanged.Count != 1 || keys.Preparations != 1 || settings.Get("localization.language") != "de")
+                            throw new IOException("Rejected package created an intent, key or preference effect.");
+                    }
+                    if ((await store.GetAccountsAsync()).Single().OpeningBalance != 777) throw new IOException("Rejected package changed current finance.");
+                    keys.RefuseRead = validatedIdentity.InitialCandidateKey;
+                    var deliveryFailed = false;
+                    try { await restore.RestorePackageAsync(package); } catch (IOException) { deliveryFailed = true; }
+                    using var retained = await location.Access.AcquireExclusiveAsync();
+                    var validatedHistory = await new SqliteProfileRestoreHistory(original + ".restore-history.sqlite", validatedIdentity.InitialCandidateKey, retained.Validate).ReadAsync();
+                    if (!deliveryFailed || validatedHistory.Count != 2 || validatedHistory[^1].Selected || keys.Preparations != 2)
+                        throw new IOException("Validated delivery did not retain its exact interrupted intent.");
+                    host.Session.Close(retained);
+                    return "{\"ActualComposedReceiver\":true,\"InterruptedBeforePublication\":true,\"ExactlyTwoPreparedKeys\":true,\"InvalidPackagesCreatedNoIntentOrKey\":true,\"CurrentFinancePreserved\":true}";
+                }
                 using var owner = await location.Access.AcquireExclusiveAsync();
                 var identity = (await new SqliteDatabaseIdentityCatalogue(identityPath, owner.Validate).ReadAsync()).Single();
                 var before = location.Path;
@@ -82,6 +129,12 @@ internal static class RetainedRestoreCompatibility
         return "{\"ActualComposedColdStartup\":true,\"ExistingKeysOnly\":true,\"NativePreferencesPersistedOnce\":true,\"DeviceChoicePreserved\":true,\"RestoredBalance\":321}";
     }
 
+    private sealed class InvalidSource(string name, byte[] content) : IBackupSource
+    {
+        public string Name => name;
+        public Task WriteAsync(Stream destination, CancellationToken ct) => destination.WriteAsync(content, ct).AsTask();
+        public Task RestoreAsync(Stream source, CancellationToken ct) => throw new IOException("Rejected packages must never invoke a legacy source.");
+    }
     private sealed class Keys(IDatabaseGenerationKeyStore inner, bool allowPreparation) : IDatabaseGenerationKeyStore
     {
         internal int Preparations;

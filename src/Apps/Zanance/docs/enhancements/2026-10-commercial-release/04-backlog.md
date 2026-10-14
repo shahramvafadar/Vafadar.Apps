@@ -2130,3 +2130,9 @@ replay and settled-session intent capture. Five added metadata cases/all 3481 te
 Android cold continuations pass. Main remains plaintext; final native registration/restore UI/recovery
 UI/retention/reconciliation/OS/device acceptance remain open. Pre-staging package/capsule loss is not
 covered by these prepared/selected continuations and must not be completed by guessed fallback.
+
+D-256 defers financial restore intent until whole-package validation and memory-only integrity/known
+migration-prefix/portable JSON preflight. The actual app adapter holds the drained owner and never
+falls back to sequential restore. All 3482 tests pass. Native fixture exception-catch failure is
+preserved without reset; final runtime qualification is recorded in the decision log. Main remains
+plaintext; final native registration, restore/recovery UI, retention/reconciliation/OS/device gates remain open.

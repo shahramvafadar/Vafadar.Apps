@@ -5208,3 +5208,50 @@ D-255 signed delivery: artifacts/android-d255-delivery/pro.vafadar.zanance-Signe
 Signature, pro.vafadar.zanance package, API24/36 and both complete assembly stores verified. Test outputs
 cleaned after all managed/native/build processes were terminal. Main still uses standard SQLite;
 this APK does not claim main encryption, phone/iOS/provider, full retention/OS or product release acceptance.
+
+### D-256 — Deliver validated backup packages without premature restore intent
+
+ProtectedBackupRestoreReceiver now connects BackupService's validated whole-package callback to the
+actual protected host under its drained application lease. Construction/preview/password/ZIP/checksum
+failure cannot reserve a financial restore intent. The host first checks supported sources/bounds,
+opens the complete portable database read-only in bounded memory, requires a known ordered application
+migration prefix and parses the allowlisted portable preferences without writing a capsule. Only after
+that preflight does it reserve the existing-generation restore and invoke the original receiver.
+Owned preflight buffers are cleared. No fallback to legacy sequential sources is introduced.
+
+This is integrity/history/JSON preflight, not a claim that a forged matching migration history proves
+every table's complete application semantics. Actual candidate migrations/full integrity checks remain
+required. A later staging/persistence failure still needs the recorded recovery route; this change does
+not abandon a committed intent or permit navigation past an unresolved selected generation.
+
+The added actual app-source case verifies refusal before startup and release of the adapter's exclusive
+lease with no metadata. All 3482 solution tests pass, zero failures/skips (3m0.101s); strict Windows
+46.07s and Android40.48s builds are warning/error-free. No visible UI change or unchanged producer/layout
+matrix replay. Native validation also exercises the actual whole-package receiver, not a fake MAUI UI.
+
+Initial independent native compile failed with CS0136 in three fixture locals; explicit names corrected
+only the fixture. The first runtime correctly rejected its invalid SQLite source, but the fixture caught
+IOException without InvalidDataException. Its negative log d256-native-runtime.log and unchanged existing
+run 18916586e9e9424f97020fd261bff73f are retained. The catch was corrected; that run's original database/
+keys were not reset. Its earlier valid portable package existed only in memory and was cleared on failure,
+so a distinct fresh fictitious dataset is required to complete positive delivery/cold continuation.
+Main native registration and full restore/recovery UI/retention/reconciliation/OS adoption remain open.
+
+D-256 terminal native qualification: original BackupService plus ProtectedBackupRestoreReceiver/host
+reject damaged ZIP, valid-checksum invalid SQLite and valid-database malformed preferences before
+adding a restore-history row or preparing another database generation key. Existing balance777 and
+de preference remain. A valid package then records one intent, retains interrupted pre-selection
+state and cold-restores balance321/en exactly once with existing keys and preserved scoped device
+choice. This exercises actual native Android x64/API36/4KiB Release AOT/trim and ordinary app source.
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-ee31c9650b864f1fbe7566b4d916ecba.json,
+run73b022e4bc534359a84d8c8f4ade4c6b. The corrected native build is clean (57.23s). Old failure evidence
+and its independent fixture remain. No main source changed after the passed 3482-test/strict-build
+baseline; general tests/builds were not repeated for this fixture-only catch correction. Safety-copy
+creation/keys belong to the separate UI consent path; this proof concerns financial-generation intent
+and key effects, not a claim that every UI safety effect is absent. Main native registration remains
+inactive; final UI/recovery/retention/OS and platform/device/release acceptance are still unfinished.
+
+D-256 signed delivery: artifacts/android-d256-delivery/pro.vafadar.zanance-Signed.apk,83,315,248 bytes.
+Signature, pro.vafadar.zanance package, API24/36 and both complete assembly stores verified. All managed,
+native and build processes completed before successful test-output cleanup. Main remains plaintext;
+this APK does not claim whole-app encryption, phone/iOS/provider/retention/OS or product release acceptance.

@@ -57,6 +57,24 @@ public sealed class ProtectedProfileStorageTests
         Assert.False(File.Exists(f.Directory.Combine("identities.sqlite")));
     }
 
+    [Fact, Trait("AT", "AT-256")]
+    public async Task Backup_adapter_refuses_unstarted_storage_and_releases_its_exclusive_lease_without_metadata()
+    {
+        using var f = new FlowFixture();
+        var location = new LocalDatabaseLocation<ZananceDbContext>(f.Directory.Combine("zanance.db"), protectionRequired: true);
+        var profiles = new ProfileService(location, f.Store, f.Preferences, new Runtime(), f.Translator);
+        var host = Create(f, location, () => profiles);
+        var adapter = new Vafadar.Zanance.App.Features.Backup.ProtectedBackupRestoreReceiver(location, host);
+        var manifest = new Vafadar.Backup.BackupManifest { FormatVersion = 1, AppId = "pro.vafadar.zanance",
+            AppVersion = "0.1", CreatedAt = DateTimeOffset.UnixEpoch, Entries = [] };
+        await Assert.ThrowsAsync<InvalidOperationException>(() => adapter.RestoreAsync(manifest,
+            new Dictionary<string, ReadOnlyMemory<byte>>(), Ct));
+        using var owner = await location.Access.AcquireExclusiveAsync(Ct);
+        location.Access.RequireDrainedOwner(owner);
+        Assert.False(File.Exists(f.Directory.Combine("identities.sqlite")));
+        Assert.False(location.IsProtected);
+    }
+
     private static ProtectedProfileStorage Create(FlowFixture f, LocalDatabaseLocation<ZananceDbContext> location, Func<ProfileService> profiles) =>
         new(location, profiles, f.Directory.Combine("identities.sqlite"), new Keys(), new Durability(), () => { },
             (_, _, _) => throw new IOException("Unexpected restore."), 16 * 1024 * 1024, "4.19.0");

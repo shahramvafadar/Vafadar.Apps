@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Validate protected restore sources before recording replacement (D-256)
+
+- Prepared rejection of corrupt portable databases or preferences before a new restore is recorded.
+- Preserve the current data and database key when those package checks fail.
+- Final main encryption and recovery interface activation remain pending.
+
 ### Added - Continue prepared encrypted restores (D-255)
 
 - Prepared continuation after interruption before database selection or preference replay completion.

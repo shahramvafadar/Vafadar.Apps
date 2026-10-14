@@ -2,6 +2,8 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Vafadar.Data;
 using Vafadar.Core.Settings;
+using Vafadar.Backup;
+using System.Security.Cryptography;
 using Vafadar.Zanance.App.Profiles;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.CompiledModel;
@@ -21,6 +23,8 @@ public sealed class ProtectedProfileStorage
     private readonly Action validateDirectory;
     private readonly Func<string, ProfileRestoreReference, DatabaseAccessGate.ExclusiveLease, SqlCipherPackageRestoreReceiver> createReceiver;
     private readonly Func<DatabaseProfileIdentity, string, ProfileRestoreReference, DatabaseAccessGate.ExclusiveLease, SqlCipherPackageRestoreReceiver>? createBoundReceiver;
+    private readonly ISettingsStore? restoreSettings;
+    private readonly IReadOnlyList<string>? restoreKeys;
     private readonly int maximumBytes;
     private readonly string cipherVersion;
 
@@ -55,6 +59,7 @@ public sealed class ProtectedProfileStorage
     {
         ArgumentNullException.ThrowIfNull(settings); ArgumentNullException.ThrowIfNull(persistence); ArgumentNullException.ThrowIfNull(portableKeys);
         var allowlist = portableKeys.ToArray();
+        restoreSettings = settings; restoreKeys = allowlist;
         createBoundReceiver = (identity, original, reference, owner) =>
         {
             void Validate()
@@ -82,6 +87,43 @@ public sealed class ProtectedProfileStorage
         return new ProtectedDatabaseStartup(location, profiles(), Session, identityPath, initialization, keys, durability,
             (_, _) => throw new InvalidOperationException("Protected restore requires the current drained startup owner."),
             maximumBytes, cipherVersion, UpgradeAsync, retirement, creation, createReceiver, createBoundReceiver);
+    }
+
+    /// <summary>Validates complete borrowed package sources in memory before recording the active-profile restore.</summary>
+    public async Task RestorePackageAsync(BackupManifest manifest, IReadOnlyDictionary<string, ReadOnlyMemory<byte>> entries,
+        DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(manifest); ArgumentNullException.ThrowIfNull(entries);
+        Session.RequireStable(owner); validateDirectory();
+        if (restoreSettings is null || restoreKeys is null) throw new InvalidOperationException("Protected restore preflight is not composed.");
+        var capture = profiles().CaptureStorage(); capture.Validate();
+        void Check() { ct.ThrowIfCancellationRequested(); Session.RequireStable(owner); validateDirectory(); capture.Validate(); }
+        if (!entries.TryGetValue("database.sqlite", out var database) || entries.Keys.Any(name => name is not "database.sqlite" and not "display-settings.json"))
+            throw new InvalidDataException("Protected restore requires complete supported sources.");
+        if (database.Length > maximumBytes) throw new InvalidDataException("Portable database exceeds the restore bound.");
+        var owned = database.ToArray();
+        try
+        {
+            using var input = new MemoryStream(owned, writable: false);
+            await using var snapshot = await SqliteMemorySnapshot.OpenAsync(input, maximumBytes, ct).ConfigureAwait(false); Check();
+            await using var db = new ZananceDbContext(new DbContextOptionsBuilder<ZananceDbContext>()
+                .UseSqlite(snapshot.Connection, contextOwnsConnection: false).UseModel(ZananceDbContextModel.Instance).Options);
+            var recorded = (await db.Database.GetAppliedMigrationsAsync(ct).ConfigureAwait(false)).ToArray();
+            var known = db.Database.GetMigrations().ToArray();
+            if (recorded.Length == 0 || recorded.Length > known.Length || !recorded.SequenceEqual(known.Take(recorded.Length), StringComparer.Ordinal))
+                throw new InvalidDataException("Portable schema history does not match supported application migrations.");
+            Check();
+        }
+        finally { CryptographicOperations.ZeroMemory(owned); }
+        var original = capture.CurrentOriginalPath;
+        var legacy = capture.OriginalPaths.Single(pair => pair.Value == original).Key;
+        var identity = (await new SqliteDatabaseIdentityCatalogue(identityPath, Check).ReadAsync(ct).ConfigureAwait(false)).Single(row => row.LegacyProfileId == legacy);
+        // Capture performs portable JSON/allowlist validation only; this path is never created or opened.
+        var preferences = new SqlCipherRestorePreferences(original + ".preflight.preferences.cipher.db", identity.InitialCandidateKey,
+            keys, durability, cipherVersion, restoreKeys);
+        _ = preferences.Capture(entries.TryGetValue("display-settings.json", out var display) ? display : null, restoreSettings); Check();
+        var receiver = await PrepareRestoreAsync(owner, ct).ConfigureAwait(false);
+        await receiver.RestoreAsync(manifest, entries, ct).ConfigureAwait(false);
     }
 
     /// <summary>Records an explicit active-profile restore before staging, retaining exact history and native synchronization.</summary>
