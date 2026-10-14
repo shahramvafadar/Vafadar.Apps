@@ -11,7 +11,8 @@ public sealed class ProtectedProfileRetirementHost(
     string directory, string identityPath, ISettingsPersistence persistence, IDatabaseGenerationKeyStore keys,
     IDatabaseGenerationFileDurability durability, IProfileRetirementReferenceFiles files,
     Func<ProfileRetirementCheckpoint, SqliteProfileRetirementJournal, CancellationToken, Task> removeFiles,
-    Func<SqliteProfileRetirementJournal, CancellationToken, Task> verifyFilesRemoved) : IProfileRetirementHost
+    Func<SqliteProfileRetirementJournal, CancellationToken, Task> verifyFilesRemoved,
+    SqliteRecoveryEnvelopeCatalogue? recovery = null) : IProfileRetirementHost
 {
     private const string Prefix = "profile-retirement-";
 
@@ -83,8 +84,20 @@ public sealed class ProtectedProfileRetirementHost(
             await ProfileRetirementReferenceDiscovery.CaptureAsync(journal, identities, profiles.RetirementOriginalPath(request.LegacyProfileId),
                 "pro.vafadar.zanance", files, keys, durability, owner.Validate, ct);
         }
+        if (recovery is not null)
+        {
+            var state = await journal.ReadAsync(ct);
+            var hasRecovery = await journal.HasRecoveryInventoryAsync(ct);
+            if (!hasRecovery && (state != request || profiles.ValidateRetirementCatalogue(request, captured, owner)))
+                throw new IOException("Missing recovery capture cannot resume after publication.");
+            if (state.Phase == ProfileRetirementPhase.Authorized)
+                await recovery.CaptureRetirementAsync(state, journal, keys, ct);
+            else _ = await journal.ReadRecoveryAsync(ct);
+        }
+        if (recovery is null && await journal.HasRecoveryInventoryAsync(ct))
+            throw new IOException("Captured recovery references require their original native host.");
         var effects = new Effects(profiles, location, owner, persistence, identityPath, durability,
-            journal, captured, removeFiles, verifyFilesRemoved);
+            journal, captured, removeFiles, verifyFilesRemoved, recovery);
         await new ProfileRetirementCoordinator(journal, durability, effects).ResumeAsync(ct);
     }
     private string RequestPath(ProfileRetirementCheckpoint request)
@@ -109,7 +122,7 @@ public sealed class ProtectedProfileRetirementHost(
         DatabaseAccessGate.ExclusiveLease owner, ISettingsPersistence persistence, string identityPath,
         IDatabaseGenerationFileDurability durability, SqliteProfileRetirementJournal journal, ProfileRetirementCatalogueDigest captured,
         Func<ProfileRetirementCheckpoint, SqliteProfileRetirementJournal, CancellationToken, Task> remove,
-        Func<SqliteProfileRetirementJournal, CancellationToken, Task> verify) : IProfileRetirementEffects
+        Func<SqliteProfileRetirementJournal, CancellationToken, Task> verify, SqliteRecoveryEnvelopeCatalogue? recovery) : IProfileRetirementEffects
     {
         public async Task ValidateAsync(ProfileRetirementCheckpoint state, CancellationToken ct)
         {
@@ -117,7 +130,11 @@ public sealed class ProtectedProfileRetirementHost(
             var removed = profiles.ValidateRetirementCatalogue(state, captured, owner);
             if (state.Phase >= ProfileRetirementPhase.CatalogueRemoved && !removed)
                 throw new IOException("Recorded catalogue removal did not occur.");
-            if (state.Phase >= ProfileRetirementPhase.ArtifactsRemoved) await verify(journal, ct);
+            if (state.Phase >= ProfileRetirementPhase.ArtifactsRemoved)
+            {
+                if (recovery is not null) await recovery.VerifyRetiredAsync(state, journal, ct);
+                await verify(journal, ct);
+            }
             if (state.Phase == ProfileRetirementPhase.Completed)
             {
                 var rows = await new SqliteDatabaseIdentityCatalogue(identityPath, owner.Validate).ReadAsync(ct);
@@ -125,8 +142,16 @@ public sealed class ProtectedProfileRetirementHost(
             }
         }
         public Task RemoveCatalogueAsync(ProfileRetirementCheckpoint state, CancellationToken ct) => profiles.RemoveRetirementCatalogueAsync(state, journal, persistence, owner, ct);
-        public Task RemoveArtifactsAsync(ProfileRetirementCheckpoint state, CancellationToken ct) => remove(state, journal, ct);
+        public async Task RemoveArtifactsAsync(ProfileRetirementCheckpoint state, CancellationToken ct)
+        {
+            if (recovery is not null) await recovery.RemoveRetiredAsync(state, journal, ct);
+            await remove(state, journal, ct);
+        }
         public Task RetireIdentityAsync(ProfileRetirementCheckpoint state, CancellationToken ct) =>
-            new SqliteDatabaseIdentityCatalogue(identityPath, owner.Validate).RetireAsync(state, journal, durability, token => verify(journal, token), ct);
+            new SqliteDatabaseIdentityCatalogue(identityPath, owner.Validate).RetireAsync(state, journal, durability, async token =>
+            {
+                if (recovery is not null) await recovery.VerifyRetiredAsync(state, journal, token);
+                await verify(journal, token);
+            }, ct);
     }
 }

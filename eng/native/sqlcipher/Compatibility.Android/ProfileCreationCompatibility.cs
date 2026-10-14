@@ -1,4 +1,7 @@
 using Microsoft.Data.Sqlite;
+using System.Security.Cryptography;
+using System.Text.Json;
+using Vafadar.SqlCipher.Compatibility;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.Storage;
@@ -20,7 +23,7 @@ namespace Vafadar.SqlCipher.Compatibility.Android;
 internal static class ProfileCreationCompatibility
 {
     /// <summary>Prepares a new original through the product flow or verifies both originals after a cold restart.</summary>
-    internal static async Task<string> RunAsync(string folder, bool create, bool retirement = false, bool creationResume = false)
+    internal static async Task<string> RunAsync(string folder, bool create, bool retirement = false, bool creationResume = false, bool retirementRecovery = false)
     {
         if (create) { if (Directory.Exists(folder)) throw new IOException("Use a fresh profile-creation fixture."); Directory.CreateDirectory(folder); }
         var main = Path.Combine(folder, ZananceApp.DatabaseFileName);
@@ -31,6 +34,8 @@ internal static class ProfileCreationCompatibility
         var durability = new AndroidGenerationFileDurability(folder);
         var preferences = new MauiSettingsStore(Preferences.Default);
         var identityPath = Path.Combine(folder, "identities.sqlite");
+        SqliteRecoveryEnvelopeCatalogue? recoveryCatalogue = null;
+        DatabaseRecoveryIdentity? recoveryIdentity = null;
         var runtime = new Runtime(services);
         var store = services.GetRequiredService<ZananceStore>();
         ProtectedProfileRetirementHost? retirementHost = null;
@@ -80,6 +85,41 @@ internal static class ProfileCreationCompatibility
                 var identities = new SqliteDatabaseIdentityCatalogue(identityPath, owner.Validate); await identities.CreateNewAsync([""], durability);
                 using var prepared = await SqlCipherNewProfile.OpenAsync(location, identities, "", main, true, keys, durability,
                     BuildSchema, owner, () => { }, 16 * 1024 * 1024, "4.19.0");
+            }
+            if (retirementRecovery)
+            {
+                var installation = (await new SqliteDatabaseIdentityCatalogue(identityPath, owner.Validate).ReadAsync()).Single(row => row.LegacyProfileId.Length == 0);
+                var publicPath = Path.Combine(folder, "recovery-public.json");
+                if (create)
+                {
+                    using var material = DatabaseRecoveryMaterial.Create(installation.InstallationId);
+                    recoveryIdentity = material.Identity;
+                    var secret = Enumerable.Range(1, 32).Select(value => (byte)value).ToArray();
+                    try { await new SqlCipherRecoveryVault(Path.Combine(folder, "recovery-private.cipher.db"), recoveryIdentity, "4.19.0", durability, owner.Validate).CreateNewAsync(material, secret); }
+                    finally { CryptographicOperations.ZeroMemory(secret); }
+                    await File.WriteAllTextAsync(publicPath, JsonSerializer.Serialize(new[] { recoveryIdentity.InstallationId.ToString("N"), recoveryIdentity.RecoveryId.ToString("N"), Convert.ToBase64String(recoveryIdentity.ExportPublicKey()) }, RetirementJsonContext.Default.StringArray));
+                    await durability.SynchronizeFileAsync(publicPath, default); await durability.SynchronizeDirectoryAsync(default);
+                }
+                else
+                {
+                    var values = JsonSerializer.Deserialize(await File.ReadAllTextAsync(publicPath), RetirementJsonContext.Default.StringArray) ?? throw new IOException("Missing fixture recovery public identity.");
+                    if (values.Length != 3 || Guid.ParseExact(values[0], "N") != installation.InstallationId) throw new IOException("Recovery installation differs.");
+                    recoveryIdentity = new(installation.InstallationId, Guid.ParseExact(values[1], "N"), Convert.FromBase64String(values[2]));
+                }
+                recoveryCatalogue = new(Path.Combine(folder, "recovery-envelopes.sqlite"), recoveryIdentity, durability, () => { });
+                if (create)
+                {
+                    await recoveryCatalogue.CreateNewAsync();
+                    var key = await keys.ReadAsync(installation.InitialCandidateKey, default);
+                    try { await recoveryCatalogue.CaptureAsync(installation.InitialCandidateKey, key); }
+                    finally { CryptographicOperations.ZeroMemory(key); }
+                }
+                keys = new RecoveryGenerationKeyStore(keys, recoveryCatalogue);
+                var roots = new Dictionary<string, string> { ["database"] = folder, ["keys"] = folder, ["portable"] = Path.Combine(folder, "retirement-portable"), ["safety"] = Path.Combine(folder, "retirement-safety") };
+                var nativeFiles = new AndroidProfileRetirementFiles(roots, () => { });
+                retirementHost = new(folder, identityPath, persistence, keys, durability, nativeFiles,
+                    (state, journal, ct) => nativeFiles.RemoveAsync(state, journal, durability, ct), (journal, ct) => nativeFiles.VerifyRemovedAsync(journal, ct), recoveryCatalogue);
+                profiles = new(location, store, preferences, runtime, Translator.Instance, profileRetirement: retirementHost);
             }
             if (!create && retirement) await retirementHost!.ResumePendingAsync(profiles, location, owner, CancellationToken.None);
             if (create || !creationResume) await runtime.Session.StartAsync(main, owner);
@@ -146,6 +186,19 @@ internal static class ProfileCreationCompatibility
             if (!profiles.Current.IsMain || profiles.All.Count != 1) throw new IOException("Retirement changed main catalogue selection.");
             var rows = await new SqliteDatabaseIdentityCatalogue(identityPath, () => { }).ReadAsync();
             if (rows.Count != (create ? 2 : 1)) throw new IOException("Retirement identity barrier differs from actual completion.");
+            if (!create && retirementRecovery)
+            {
+                var mainIdentity = rows.Single();
+                var secret = Enumerable.Range(1, 32).Select(value => (byte)value).ToArray();
+                try
+                {
+                    using var unlocked = await new SqlCipherRecoveryVault(Path.Combine(folder, "recovery-private.cipher.db"), recoveryIdentity!, "4.19.0", durability, () => { }).OpenAsync(secret);
+                    var key = await recoveryCatalogue!.RecoverAsync(mainIdentity.InitialCandidateKey, unlocked);
+                    CryptographicOperations.ZeroMemory(key);
+                }
+                finally { CryptographicOperations.ZeroMemory(secret); }
+                return "{\"ColdCatalogueRetirementResumed\":true,\"OnlyMainIdentityRemains\":true,\"MainBalance\":250,\"ActualNativeSettings\":true,\"RecoveryMappingsRetired\":true,\"MainRecoveryPreserved\":true}";
+            }
             return create ? "{\"ActualCataloguePersisted\":true,\"NativeFailureRetainedProfileFiles\":true,\"MainBalance\":250}"
                 : "{\"ColdCatalogueRetirementResumed\":true,\"OnlyMainIdentityRemains\":true,\"MainBalance\":250,\"ActualNativeSettings\":true}";
         }

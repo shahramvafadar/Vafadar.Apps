@@ -2026,3 +2026,9 @@ a SQLCipher-encrypted private vault and exact durable public recovery metadata. 
 never silently fall back. Actual native recovery uses fictitious original-model finance and keeps
 ciphertext unchanged. See decision log for terminal scope/evidence; final UX/re-enrollment/reference/
 retirement/OS/provider adoption remain open, and main storage remains plaintext. SEC-06 is in progress.
+
+D-239 connects exact recovery mapping capture/removal to actual protected ProfileService retirement.
+Target keys are authenticated before catalogue publication, only captured target mappings are removed
+before native key files, and other-profile recovery/private vault remain. Missing/changed references
+refuse cleanup. See decision log for terminal evidence; main encryption, final recovery UI/re-enrollment/
+rotation/reference-retention/OS/platform gates remain open. No whole-SEC completion is implied.

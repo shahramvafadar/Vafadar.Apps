@@ -4515,3 +4515,49 @@ D-238 complete signed Release APK: artifacts/android-d238-delivery/pro.vafadar.z
 arm64-v8a/x86_64 embedded assembly stores are verified. Test output was cleaned after all terminal
 checks. This APK does not activate the recovery host or main database encryption and uses local
 test signing, not store release acceptance.
+
+### D-239 — Retire captured per-profile recovery mappings before native key removal
+
+ProtectedProfileRetirementHost accepts an explicitly configured recovery catalogue. While Authorized,
+it authenticates each target recovery mapping with the actual retained native DEK and records a bounded
+immutable recovery-id/count/SHA-256 reference fingerprint in the existing retirement journal. This
+contains no private material or plaintext key. Strict journal validation permits only the exact new
+optional schema; unknown tables, malformed/missing captures and another recovery identity fail.
+Retries requalify an existing Authorized capture before publishing catalogue removal. Missing recovery
+capture cannot be inferred as empty after publication, and a host lacking recorded recovery effects
+cannot continue a recovery-bearing request.
+
+After actual catalogue persistence, the native host removes only the captured target profile mappings
+before deleting its captured device envelopes/files. The recovery transaction rechecks target bytes,
+refuses new/changed target generations, preserves every other profile's complete ciphertext/confirmation
+rows, synchronizes and reopens actual removal. A delete visible after failed flush can requalify under
+the same retained request without replacing keys or touching other profiles. Empty captures remain
+explicit authority. Artifact and identity retirement both require actual recovery target absence and
+the original recovery identity; the shared encrypted private vault is retained for other profiles.
+
+Five actual SQLite/recovery cases cover exact target removal with other-profile recovery, failure
+after delete followed by native requalification, added target generation refusal, wrong native key
+capture refusal, and missing/wrong-phase/wrong-request cleanup refusal. One actual ProfileService
+flow uses native Windows DPAPI/files and proves target recovery removal before identity retirement.
+Existing four profile-retirement application cases still pass. Full/native/build/APK evidence follows.
+No financial model or EF migration changed. Main registration remains plaintext; final recovery UX,
+native re-enrollment/rotation, broader retained-reference/retention policy and coupled OS/platform
+adoption remain in the full scope. Unchanged upstream native suites/UI are not repeated.
+
+D-239 terminal test/native evidence: all 3445 solution tests pass, zero failures/skips
+(2m48.472s). The separate strict Android Release AOT/trim build has zero warnings/errors
+(55.62s). Actual ProfileService/native settings interruption followed by cold retirement succeeds
+on the same fictitious run d367dc82b37c4c1299e987a33e379cfb. Target recovery mappings and identity
+are retired, main balance remains 250, and the retained shared encrypted vault still recovers
+main's exact key. Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-5316e6f94cdc45a8b1af58468e1dd032.json.
+This confirms actual Android catalogue/key/file/recovery composition, not product recovery UI,
+physical phone/iOS or main encryption activation. Final main build/package evidence follows below.
+
+D-239 main strict builds: Windows zero warnings/errors in 18.87s, Android zero warnings/errors
+in 39.16s. No changed screen or upstream native producer required another layout/producer run.
+
+D-239 complete signed Release APK: artifacts/android-d239-delivery/pro.vafadar.zanance-Signed.apk
+(83,639,002 bytes). Signature, pro.vafadar.zanance package, API 24/36 and both arm64-v8a/x86_64
+embedded assembly stores verified. Test outputs were cleaned after all terminal checks. Local test
+signing and independent recovery retirement proof do not activate main encryption or constitute
+physical phone/iOS, recovery UX or store/release acceptance.

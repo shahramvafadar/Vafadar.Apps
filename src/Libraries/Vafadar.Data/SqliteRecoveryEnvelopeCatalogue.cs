@@ -6,7 +6,7 @@ namespace Vafadar.Data;
 /// <summary>Durably stores optional public recovery identity and RSA-wrapped generation keys, never private/recovery/plain data keys.</summary>
 /// <remarks>Each immutable entry has DEK-keyed HMAC confirmation, allowing device-key validation of stored ciphertext
 /// without unlocking the optional recovery secret. Missing/corrupt state never authorizes replacement or bootstrap.</remarks>
-public sealed class SqliteRecoveryEnvelopeCatalogue
+public sealed partial class SqliteRecoveryEnvelopeCatalogue
 {
     private const int ApplicationId = 0x565a5245;
     private const string IdentitySchema = "CREATE TABLE recovery_identity (id INTEGER PRIMARY KEY CHECK(id=1), installation TEXT NOT NULL, recovery TEXT NOT NULL, public BLOB NOT NULL)";

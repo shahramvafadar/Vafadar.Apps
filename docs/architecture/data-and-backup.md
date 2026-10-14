@@ -1911,3 +1911,10 @@ and unfinished host/ref/UX/OS scope. Native Android check: Test-AndroidGeneratio
 -RunName android-d -KeyRecovery -UseExistingBuild; -ResumeRecoveryRun continues an exact retained
 fixture after diagnosed failure, without recreating profiles/keys. Windows Compatibility modes are
 recovery-create/recovery-reopen under independently owned artifacts only.
+
+D-239 final retirement host optionally receives its actual SqliteRecoveryEnvelopeCatalogue.
+Authenticate/capture every target mapping while Authorized; remove only exact captured target rows
+while CatalogueRemoved before native file/key cleanup. ArtifactsRemoved/identity retirement require
+actual target recovery absence. Recorded recovery cannot continue with a host missing that effect.
+Android check: Test-AndroidGenerationMigration.ps1 -RunName android-d -RecoveryRetirement
+-UseExistingBuild, using independent actual protected profile flows and fictitious native finance only.

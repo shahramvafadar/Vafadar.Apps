@@ -1514,3 +1514,6 @@ Prepared one verified initialization path for all existing local profiles before
 - Prepared optional recovery-key protection for database keys, including an encrypted private vault
   and refusal of wrong or damaged recovery material. Product recovery controls and main encryption
   are not enabled yet.
+
+- Prepared exact removal of a deleted protected profile's recovery keys while preserving recovery
+  for other profiles. Main encryption and product recovery controls are not enabled yet.

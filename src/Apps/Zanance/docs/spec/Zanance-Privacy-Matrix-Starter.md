@@ -666,3 +666,8 @@ HMAC confirmations live in bounded private operational metadata, without financi
 Owned mutable private/key buffers are cleared; managed connection-password strings cannot be fully
 erased. Final explicit UX/authentication/reference and coupled OS policy are not activated yet.
 No new SDK, permission, network, backup password requirement or plaintext recovery-key file is added.
+
+D-239 retirement captures only recovery id, target count and SHA-256 fingerprint of authenticated
+ciphertext/confirmations; no recovery secret, private material or plaintext DEK enters the journal.
+Target mappings are removed before native device key files, with other profiles and shared encrypted
+private vault preserved. No new permission/export/SDK or interim OS-backup policy is introduced.

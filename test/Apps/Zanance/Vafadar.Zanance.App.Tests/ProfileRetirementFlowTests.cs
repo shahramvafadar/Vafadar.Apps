@@ -73,6 +73,17 @@ public sealed class ProfileRetirementFlowTests
         Assert.Single(fixture.Profiles.All); Assert.False(File.Exists(fixture.Candidate));
     }
 
+    [Fact, Trait("AT", "AT-239")]
+    public async Task Actual_profile_delete_removes_captured_recovery_mapping_before_native_key_retirement()
+    {
+        if (!OperatingSystem.IsWindows()) return;
+        using var fixture = new Fixture(); await fixture.InitializeAsync(withRecovery: true);
+        await fixture.Profiles.DeleteAsync(fixture.Work, Ct);
+        Assert.Single(fixture.Profiles.All); Assert.False(File.Exists(fixture.TargetKey));
+        await Assert.ThrowsAsync<IOException>(() => fixture.Recovery!.RecoverAsync(fixture.Identity.InitialCandidateKey, fixture.RecoveryMaterial!, Ct));
+        Assert.DoesNotContain(await fixture.Identities.ReadAsync(Ct), row => row.ProfileId == fixture.Identity.ProfileId);
+    }
+
     private sealed class Fixture : IDisposable
     {
         private readonly FlowFixture flow = new();
@@ -86,7 +97,7 @@ public sealed class ProfileRetirementFlowTests
         internal string Candidate = null!, TargetKey = null!;
         internal readonly Runtime Runtime = new();
         internal readonly Persistence Persistence = new();
-        internal async Task InitializeAsync()
+        internal async Task InitializeAsync(bool withRecovery = false)
         {
             if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException();
             var roots = new Dictionary<string, string> { ["database"] = flow.Directory.Path };
@@ -107,8 +118,23 @@ public sealed class ProfileRetirementFlowTests
             Candidate = original + "." + Identity.CandidateGeneration.ToString("N") + ".cipher.db";
             TargetKey = Path.Combine(roots["keys"], $"{Identity.ProfileId:N}-{Identity.CandidateGeneration:N}.key");
             await File.WriteAllTextAsync(Candidate, "Fictitious owned candidate bytes.", Ct);
+            if (withRecovery)
+            {
+                RecoveryMaterial = DatabaseRecoveryMaterial.Create(Identity.InstallationId);
+                Recovery = new(flow.Directory.Combine("recovery.sqlite"), RecoveryMaterial.Identity, native, () => { });
+                await Recovery.CreateNewAsync(Ct);
+                var key = await keys.ReadAsync(Identity.InitialCandidateKey, Ct);
+                try { await Recovery.CaptureAsync(Identity.InitialCandidateKey, key, Ct); }
+                finally { System.Security.Cryptography.CryptographicOperations.ZeroMemory(key); }
+                Host = new(flow.Directory.Path, flow.Directory.Combine("identities.sqlite"), Persistence, keys, native, files,
+                    (state, journal, ct) => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return files.RemoveAsync(state, journal, native, ct); },
+                    (journal, ct) => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return files.VerifyRemovedAsync(journal, ct); }, Recovery);
+                Profiles = new(Location, flow.Store, flow.Preferences, Runtime, flow.Translator, profileRetirement: Host);
+            }
         }
-        public void Dispose() => flow.Dispose();
+        internal DatabaseRecoveryMaterial? RecoveryMaterial;
+        internal SqliteRecoveryEnvelopeCatalogue? Recovery;
+        public void Dispose() { RecoveryMaterial?.Dispose(); flow.Dispose(); }
     }
     private sealed class Persistence : ISettingsPersistence
     {

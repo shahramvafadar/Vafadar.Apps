@@ -141,9 +141,9 @@ public sealed partial class SqliteProfileRetirementJournal
         // GLOB keeps the underscore literal; LIKE would also hide an unrelated table named sqliteAlias.
         command.CommandText = "SELECT count(*) FROM sqlite_schema WHERE name NOT GLOB 'sqlite_*'";
         var schemaCount = Convert.ToInt64(await command.ExecuteScalarAsync(ct).ConfigureAwait(false));
-        if (schemaCount is < 1 or > 3) throw new IOException("Unexpected retirement schema.");
+        if (schemaCount is < 1 or > 4) throw new IOException("Unexpected retirement schema.");
         long expectedCount = 1;
-        foreach (var optional in new[] { ("retirement_artifacts", ArtifactSchema), ("retirement_catalogue", CatalogueSchema) })
+        foreach (var optional in new[] { ("retirement_artifacts", ArtifactSchema), ("retirement_catalogue", CatalogueSchema), ("retirement_recovery", RecoverySchema) })
         {
             command.CommandText = "SELECT sql FROM sqlite_schema WHERE name=$table";
             command.Parameters.Clear(); command.Parameters.AddWithValue("$table", optional.Item1);
