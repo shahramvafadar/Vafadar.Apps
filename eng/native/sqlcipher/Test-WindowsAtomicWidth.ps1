@@ -3,6 +3,7 @@
 param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'windows-d')
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
+Import-Module (Join-Path $PSScriptRoot 'WindowsToolchain.psm1') -Force
 $lock = Get-Content (Join-Path $PSScriptRoot 'inputs.lock.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
 $manifest = Get-Content (Join-Path $root 'candidate/manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json
@@ -12,10 +13,9 @@ $source = Join-Path $root 'openssl/include/internal/tsan_assist.h'
 $gitRoot = Join-Path (Get-NativeInputRoot) ('source-git/openssl-' + $lock.sources.openssl.commit)
 $official = & git -C $gitRoot show ($lock.sources.openssl.commit + ':include/internal/tsan_assist.h')
 if ($LASTEXITCODE -ne 0 -or [IO.File]::ReadAllText($source).Replace("`r`n","`n") -ne (($official -join "`n") + "`n")) { throw 'Atomic header differs from locked official source.' }
-$vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio/Installer/vswhere.exe'
-$installation = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -format json | ConvertFrom-Json
-if ($installation.installationVersion -ne $lock.windowsCompiler.installationVersion) { throw 'Pinned compiler is unavailable.' }
-$vcvars = Join-Path $installation.installationPath 'VC/Auxiliary/Build/vcvarsall.bat'
+$toolchain = Get-ReviewedWindowsToolchain
+$installation = $toolchain.Installation
+$vcvars = $toolchain.VcVars
 $evidence = Join-Path $root ('atomic-width-' + [Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory $evidence | Out-Null
 $probe = Join-Path $PSScriptRoot 'Windows/atomic-width.c'

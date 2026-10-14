@@ -6,16 +6,14 @@
 param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'windows-x64')
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
+Import-Module (Join-Path $PSScriptRoot 'WindowsToolchain.psm1') -Force
 $principal = [Security.Principal.WindowsPrincipal]::new([Security.Principal.WindowsIdentity]::GetCurrent())
 if ($principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     throw 'Upstream requires tests under an unprivileged account; do not elevate this process.'
 }
 $inputLock = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'inputs.lock.json') -Raw -Encoding UTF8 | ConvertFrom-Json
-$vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio/Installer/vswhere.exe'
-$installation = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -format json | ConvertFrom-Json
-if (-not $installation -or $installation.installationVersion -ne $inputLock.windowsCompiler.installationVersion) {
-    throw 'Installed compiler differs from the reviewed test toolchain.'
-}
+$toolchain = Get-ReviewedWindowsToolchain
+$installation = $toolchain.Installation
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
 $manifest = Get-Content -LiteralPath (Join-Path $root 'candidate/manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $library = Join-Path $root 'candidate/runtimes/win-x64/native/sqlcipher.dll'
@@ -26,7 +24,7 @@ if ($manifest.inputLockSha256 -ne (Get-FileHash -LiteralPath (Join-Path $PSScrip
 $stamp = [Guid]::NewGuid().ToString('N')
 $command = Join-Path $root ('upstream-' + $stamp + '.cmd')
 $log = Join-Path $root ('upstream-' + $stamp + '.log')
-$vcvars = Join-Path $installation.installationPath 'VC/Auxiliary/Build/vcvarsall.bat'
+$vcvars = $toolchain.VcVars
 $perlRoot = & (Join-Path $PSScriptRoot 'Restore-WindowsBuildTools.ps1')
 $nasmRoot = Restore-NativeZipTool -Tool $inputLock.windowsNasm -Executable $inputLock.windowsNasm.executable
 $nasmDirectory = Split-Path (Join-Path $nasmRoot $inputLock.windowsNasm.executable)

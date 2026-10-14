@@ -5245,3 +5245,25 @@ D-268 final permanent Windows build passed with zero warnings/errors (18.88s); t
 ## D-269 costed OD-02 backend proposal
 
 Official provider prices and the 2026-10-15 PostgreSQL availability change inform three bounded USD scenarios and a complete first backend delivery/restore boundary. Arithmetic/overage checks pass; see docs/enhancements/2026-10-commercial-release/07-backend-cost-and-decision.md. Provider, region and test-environment budget remain owner choices. No backend, account, mail, hosted resource, SDK, app code or publication changes; ZCR-ID-01 and the full development objective remain incomplete. Application tests/build/native/APK evidence is unchanged D-268 and was not repeated.
+
+
+## D-270 shared Windows native toolchain qualification
+
+Build, upstream validation and atomic-width validation now use one reviewed toolchain resolver.
+Previously the build accepted both reviewed installer patch versions while the checks accepted
+only the original installer and did not qualify compiler bytes. All three consumers now require
+the same pinned MSVC, SDK, installer allowlist and exact compiler executable hash before execution.
+Windows CI runs the qualification check before native preparation; its dependency cache includes
+the shared resolver. No compiler installation, source fork, cryptographic flag or binary changed.
+
+Eleven qualification cases passed, including both allowed installer metadata versions and refused
+unreviewed versions, paths, SDK/tools, policy and compiler bytes. Actual installation remains
+18.10.12201.205: the other patch version was tested as metadata only. The current candidate's
+original upstream atomic operations passed the sentinel, 64-bit carry, four-thread update and
+disassembly checks; native SHA256 remains
+6455496953d402c7764693c2c2db60179ac9baf4ee3c5e6f5d6a405fdd17ec21.
+The 704 upstream diagnostics remain recorded and broader warning/security qualification remains
+open. This tooling delivery does not imply hosted Windows acceptance or device/iOS/publication
+acceptance. App code, the 3,526-test baseline and signed APK remain D-268; unrelated checks were
+not repeated. Evidence: eng/native/sqlcipher/Test-WindowsToolchain.ps1 and
+artifacts/native-sqlcipher/build/windows-storage-d260-ec/atomic-width-51c7a432ac70474da3e3206c04cd5e5a/proof.json.

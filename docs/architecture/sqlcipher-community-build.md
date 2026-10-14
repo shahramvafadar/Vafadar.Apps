@@ -354,3 +354,13 @@ cold behavior pass. Two packages share SHA256
 a33d8539973950671b88417feb36130e64fda502ef09b7450be00cb82fd3d8fe. Proof directory:
 artifacts/native-sqlcipher/binary-host/ae271a43b8984c5c8eced8afcbdad0d9. Original native producer,
 OpenSSL suite and main APK are unchanged; this does not activate main encryption.
+
+
+### Shared Windows qualification (D-270)
+
+Run `./eng/native/sqlcipher/Test-WindowsToolchain.ps1` before native preparation. Build-Windows,
+Test-UpstreamWindows and Test-WindowsAtomicWidth use WindowsToolchain.psm1 to qualify the same
+installer allowlist, pinned MSVC/SDK and actual compiler SHA256. CI applies the check even on a
+native dependency cache hit. Eleven policy cases and the current candidate atomic-width check
+passed locally; the second installer patch was metadata-only, not installed-host evidence.
+Unchanged upstream warnings remain open. App builds/UI/tests/APK were not repeated.

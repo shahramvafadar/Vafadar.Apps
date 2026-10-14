@@ -181,3 +181,13 @@ first verifier evidence retained in atomic-width-77cc4e16c9904d2ca91fda28fa00f25
 Full 749-occurrence inventory: artifacts/native-sqlcipher/d221-warning-inventory.json.
 Native hash remains 3c842f12049684bc854d6e89bdda207f80b768b43ccdf27f7760ce8f303eedbf.
 Review records source-header and both original-object hashes; the harness parser passes.
+
+
+### Shared Windows qualification (D-270)
+
+Run `./eng/native/sqlcipher/Test-WindowsToolchain.ps1` before native preparation. Build-Windows,
+Test-UpstreamWindows and Test-WindowsAtomicWidth use WindowsToolchain.psm1 to qualify the same
+installer allowlist, pinned MSVC/SDK and actual compiler SHA256. CI applies the check even on a
+native dependency cache hit. Eleven policy cases and the current candidate atomic-width check
+passed locally; the second installer patch was metadata-only, not installed-host evidence.
+Unchanged upstream warnings remain open. App builds/UI/tests/APK were not repeated.

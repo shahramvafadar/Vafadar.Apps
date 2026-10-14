@@ -123,13 +123,17 @@ jobs:
       - name: Install MAUI Windows workload
         run: dotnet workload install maui-windows
 
+      - name: Review Windows native toolchain
+        shell: pwsh
+        run: ./eng/native/sqlcipher/Test-WindowsToolchain.ps1
+
       - name: Cache reviewed Windows source-built dependency
         uses: actions/cache@v4
         with:
           path: |
             artifacts/native-sqlcipher/build/application-windows/candidate
             artifacts/native-sqlcipher/build/application-windows/compatibility-proof.json
-          key: windows-cipher-${{ hashFiles('eng/native/sqlcipher/inputs.lock.json', 'eng/native/sqlcipher/windows.crypto.profile.json', 'eng/native/sqlcipher/windows.compiler.acceptance.json', 'eng/native/sqlcipher/Build-Windows.ps1', 'eng/native/sqlcipher/Windows/**') }}
+          key: windows-cipher-${{ hashFiles('eng/native/sqlcipher/inputs.lock.json', 'eng/native/sqlcipher/windows.crypto.profile.json', 'eng/native/sqlcipher/windows.compiler.acceptance.json', 'eng/native/sqlcipher/Build-Windows.ps1', 'eng/native/sqlcipher/WindowsToolchain.psm1', 'eng/native/sqlcipher/Windows/**') }}
 
       - name: Prepare reviewed Windows native dependency
         shell: pwsh

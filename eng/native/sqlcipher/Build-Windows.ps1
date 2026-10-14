@@ -10,6 +10,7 @@
 param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'windows-x64', [switch]$Resume)
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
+Import-Module (Join-Path $PSScriptRoot 'WindowsToolchain.psm1') -Force
 $inputLockPath = Join-Path $PSScriptRoot 'inputs.lock.json'
 $inputLock = Get-Content -LiteralPath $inputLockPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $cryptoProfilePath = Join-Path $PSScriptRoot 'windows.crypto.profile.json'
@@ -25,20 +26,11 @@ if (@($cryptoProfile.opensslConfigureOptions | Where-Object { $_ -notin $allowed
 }
 $cryptoOptions = $cryptoProfile.opensslConfigureOptions -join ' '
 if ($inputLock.schemaVersion -ne 1) { throw 'Unsupported native input schema.' }
-$vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio/Installer/vswhere.exe'
-$installation = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -format json | ConvertFrom-Json
-$compilerAcceptance = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'windows.compiler.acceptance.json') -Raw -Encoding UTF8 | ConvertFrom-Json
-if ($compilerAcceptance.schemaVersion -ne 1 -or $compilerAcceptance.toolsVersion -ne $inputLock.windowsCompiler.toolsVersion -or
-    $compilerAcceptance.compilerExecutableSha256 -notmatch '^[a-f0-9]{64}$') { throw 'Unsupported Windows compiler acceptance.' }
-if (-not $installation -or $installation.installationVersion -notin $compilerAcceptance.installationVersions) {
-    throw 'The installed compiler differs from the reviewed native toolchain; review the lock before adoption.'
-}
-$vcvars = Join-Path $installation.installationPath 'VC/Auxiliary/Build/vcvarsall.bat'
-$compiler = Join-Path $installation.installationPath ('VC/Tools/MSVC/' + $inputLock.windowsCompiler.toolsVersion + '/bin/Hostx64/x64/cl.exe')
-if (-not (Test-Path -LiteralPath $compiler)) { throw 'Pinned native compiler is unavailable.' }
-if ((Get-FileHash -LiteralPath $compiler -Algorithm SHA256).Hash.ToLowerInvariant() -ne $compilerAcceptance.compilerExecutableSha256) {
-    throw 'Installed compiler bytes differ from the reviewed native toolchain.'
-}
+$toolchain = Get-ReviewedWindowsToolchain
+$installation = $toolchain.Installation
+$compilerAcceptance = $toolchain.Acceptance
+$vcvars = $toolchain.VcVars
+$compiler = $toolchain.Compiler
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
 if ((Test-Path -LiteralPath $root) -and -not $Resume) { throw 'Use a fresh native run name; preserve previous build evidence.' }
 if ($Resume -and -not (Test-Path -LiteralPath $root)) { throw 'No owned native run exists to resume.' }
