@@ -3,7 +3,8 @@
 .DESCRIPTION Creates a local prerelease NuGet package with stable ordering and timestamps. Does not publish.
 #>
 [CmdletBinding()]
-param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'windows-x64')
+param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'windows-x64',
+    [ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$PackageName = 'package')
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
@@ -37,7 +38,7 @@ if ($pe -lt 0 -or $pe + 96 -ge $bytes.Length -or [BitConverter]::ToUInt32($bytes
 $notices = 'Owner-written Zanance source remains all rights reserved. The following notices apply only to the bundled components.' + "`n`n" +
     (Get-Content -LiteralPath (Join-Path $candidate 'licenses/SQLCipher.txt') -Raw -Encoding UTF8) + "`n`n" +
     (Get-Content -LiteralPath (Join-Path $candidate 'licenses/OpenSSL.txt') -Raw -Encoding UTF8)
-$version = $inputLock.sources.sqlcipher.tag.TrimStart('v') + '-candidate.2'
+$version = $inputLock.sources.sqlcipher.tag.TrimStart('v') + '-candidate.3'
 $packageId = 'Vafadar.Native.SqlCipher.Windows'
 $nuspec = @"
 <?xml version="1.0" encoding="utf-8"?>
@@ -50,7 +51,10 @@ $nuspec = @"
   </metadata>
 </package>
 "@
-$package = Join-Path $root ($packageId + '.' + $version + '.nupkg')
+$output = Join-Path $root $PackageName
+if (Test-Path -LiteralPath $output) { throw 'Use a fresh package directory; preserve earlier evidence.' }
+New-Item -ItemType Directory $output | Out-Null
+$package = Join-Path $output ($packageId + '.' + $version + '.nupkg')
 if (Test-Path -LiteralPath $package) { throw 'Preserve previous candidate packages; use a fresh run or remove only your own package deliberately.' }
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 $archive = [IO.Compression.ZipFile]::Open($package,[IO.Compression.ZipArchiveMode]::Create)
@@ -60,6 +64,7 @@ try {
         ($packageId + '.nuspec')=[Text.Encoding]::UTF8.GetBytes($nuspec.Replace("`r`n","`n"))
         'licenses/ThirdPartyNotices.txt'=[Text.Encoding]::UTF8.GetBytes($notices.Replace("`r`n","`n"))
         'manifest.json'=[IO.File]::ReadAllBytes((Join-Path $candidate 'manifest.json'))
+        ('buildTransitive/' + $packageId + '.targets')=[IO.File]::ReadAllBytes((Join-Path $PSScriptRoot 'windows-package.targets'))
         'runtimes/win-x64/native/sqlcipher.dll'=$bytes
     }
     foreach ($name in $entries.Keys) {
@@ -72,5 +77,5 @@ try {
 }
 finally { $archive.Dispose() }
 [ordered]@{ package=$package; packageSha256=(Get-FileHash -LiteralPath $package -Algorithm SHA256).Hash.ToLowerInvariant(); nativeSha256=$manifest.librarySha256; candidateOnly=$true } |
-    ConvertTo-Json | Set-Content -LiteralPath (Join-Path $root 'package-proof.json') -Encoding UTF8
+    ConvertTo-Json | Set-Content -LiteralPath (Join-Path $output 'package-proof.json') -Encoding UTF8
 Write-Output $package

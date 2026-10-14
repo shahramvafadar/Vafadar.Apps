@@ -5406,3 +5406,8 @@ Main registration remains inactive/plaintext. Main code,3482-test baseline and s
 D-256; unrelated main builds/tests/UI/APK and unchanged Android producers were not repeated.
 Final provider/bootstrap/recovery/retention/reconciliation and coupled OS exclusion, remaining native
 platform/device acceptance and the original full goal remain unfinished.
+
+D-261 completes local Windows candidate package consumption for the existing production-assembly host:
+immutable native package/provider, win-x64 runtime resolution, exact notices/provenance and clean
+strict build. Original32 migrations/keyed financial/portable/cold cases pass. Main storage is still
+plaintext/D-256 with3482-test baseline; app host/recovery/retention/OS/platform acceptance remains open.

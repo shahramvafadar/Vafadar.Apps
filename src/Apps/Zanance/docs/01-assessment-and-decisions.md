@@ -5102,3 +5102,21 @@ Main registration remains inactive/plaintext. Main code,3482-test baseline and s
 D-256; unrelated main builds/tests/UI/APK and unchanged Android producers were not repeated.
 Final provider/bootstrap/recovery/retention/reconciliation and coupled OS exclusion, remaining native
 platform/device acceptance and the original full goal remain unfinished.
+
+### D-261 — Consume the Windows cipher through its immutable native package
+
+The existing actual-assembly Windows host now restores Vafadar.Native.SqlCipher.Windows
+4.19.0-candidate.3 from the explicitly mapped local feed, with win-x64 RID. Manual DLL content and
+NativeSqlCipherPath are removed. SDK runtime resolution supplies the native library; buildTransitive
+targets preserve exact manifest/component notices in build and publish output, without duplicate DLL
+items. Pack-Windows accepts a fresh owned PackageName directory and preserves each package proof.
+Two packages are byte-identical:SHA256 a33d8539973950671b88417feb36130e64fda502ef09b7450be00cb82fd3d8fe.
+The local feed refuses different bytes at an existing immutable version.
+
+Explicit restore and strict Release build pass with zero warnings/errors; actual dependency graph
+contains the source-built package/provider3.0.5 and no standard native engine. Existing32 migrations,
+negative money, portable memory snapshot and wrong-key rejection pass in create/cold processes.
+Proof:artifacts/native-sqlcipher/binary-host/ae271a43b8984c5c8eced8afcbdad0d9. Native DLL, manifest and
+notices match the package byte-for-byte. The strengthened notice check was run on the existing output,
+without replaying financial scenarios. No native producer/upstream/main/UI/APK suite was repeated.
+Main remains plaintext/D-256; final application host/recovery/retention/OS and external gates remain open.

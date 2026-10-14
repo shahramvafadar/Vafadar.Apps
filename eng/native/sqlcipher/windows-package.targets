@@ -1,0 +1,7 @@
+<Project>
+  <!-- The SDK resolves the native library from runtimes/win-x64/native using the host RID. -->
+  <ItemGroup Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+    <Content Include="$(MSBuildThisFileDirectory)../licenses/ThirdPartyNotices.txt" Link="native/sqlcipher/ThirdPartyNotices.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="$(MSBuildThisFileDirectory)../manifest.json" Link="native/sqlcipher/manifest.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

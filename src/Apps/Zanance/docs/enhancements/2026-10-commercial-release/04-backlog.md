@@ -2160,3 +2160,8 @@ required primitives retained. Actual production-assembly migration/persistence/c
 initial reduced profile failed TLS tests; the revised EC-retaining native inventory704 is not
 blanket approval. Official suite result is recorded in the
 D-260 decision. Main remains plaintext/D-256; final integration and full planned work remain open.
+
+D-261 replaces the Windows actual-assembly host's manual DLL path with the immutable source-built
+NuGet package, runtime resolution and exact bundled notices/provenance. Strict build and original
+32-migration/cold cases pass; no native producer/main/UI/APK replay. This closes package consumption,
+not main encryption: final startup/recovery/retention/OS and external acceptance remain unfinished.

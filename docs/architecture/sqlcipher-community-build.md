@@ -334,3 +334,23 @@ Main registration remains inactive/plaintext. Main code,3482-test baseline and s
 D-256; unrelated main builds/tests/UI/APK and unchanged Android producers were not repeated.
 Final provider/bootstrap/recovery/retention/reconciliation and coupled OS exclusion, remaining native
 platform/device acceptance and the original full goal remain unfinished.
+
+## Windows package consumption (D-261)
+
+Pack-Windows.ps1 now creates candidate.3 beneath a fresh -PackageName directory in the reviewed run;
+it retains the manifest/profile/native checks and writes package-proof.json beside that exact package.
+The package contains standard runtimes/win-x64/native/sqlcipher.dll and buildTransitive targets copying
+component notices and provenance into native/sqlcipher in output/publish. The consuming project needs
+RuntimeIdentifier=win-x64; do not add another native Content item.
+
+Test-BinaryWindows.ps1 packs the existing qualified run, copies only matching immutable bytes to the
+owned feed, explicitly restores with native-package.nuget.config, builds strictly without restore and
+checks actual native/notice/provenance bytes before its existing create/cold financial cases. Windows
+and Android package IDs are source-mapped to the local feed; other dependencies retain nuget.org.
+The configuration is explicit, so ordinary main builds do not silently inherit a local candidate feed.
+
+D-261: build0 warnings/errors, actual restored graph has no standard native engine,32 migrations and
+cold behavior pass. Two packages share SHA256
+a33d8539973950671b88417feb36130e64fda502ef09b7450be00cb82fd3d8fe. Proof directory:
+artifacts/native-sqlcipher/binary-host/ae271a43b8984c5c8eced8afcbdad0d9. Original native producer,
+OpenSSL suite and main APK are unchanged; this does not activate main encryption.
