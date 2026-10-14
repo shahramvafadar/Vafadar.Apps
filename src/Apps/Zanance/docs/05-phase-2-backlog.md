@@ -1873,3 +1873,25 @@ Customer activation and announcement remain explicit owner/BIL gates. Do not tur
 enforcement into permanent paid facts or announce future limits as already enabled. LOC-09's
 final unattended protection choice and separate local personal-sync approval are pending;
 none follows from backend foundation approval. The full development goal remains active.
+
+
+## D-278 protected reference and tenfold workload evidence
+
+An independent Windows executable now measures the actual protected generation/bootstrap and
+production store/validation/calculation paths on deterministic 10,000-entry / 20-account / 100-plan
+and tenfold workloads. Complete original schema/header/integrity/typed rows match the authenticated
+pre-migration encrypted rollback after measurements, and both plaintext originals are removed.
+Warm medians: all-entry reads 158.617 / 1191.737 ms; Plan read/validation 131.983 / 138.041 ms;
+quick resources 127.675 / 126.937 ms; original balances/totals 1.487 / 19.066 ms.
+
+Fresh tenfold protected preparation is 27,561.853 ms. Reference 439.797 ms is explicitly a resumed
+revalidation, not fresh migration time: the original run terminated on an invalid raw export-byte
+comparison, and the corrected complete logical verifier resumed the same generation/keys. The
+terminal corrected run passed both workloads; strict Release compilation has no errors/warnings.
+No app code/UI/schema change, unrelated test replay or new APK. Application coverage remains
+3,574 behaviors (D-276 full 3,573 plus D-277 focused one), not a new complete suite run.
+
+See quality/protected-workload-performance.md and the executable README for samples, failures,
+resume ownership and exact scope. QA-06 remains partial: actual loaded Home/search/save, cold/ANR,
+reference phone, Android/iOS and the two-second objective are not established by store timings.
+The current signed installable APK remains artifacts/android-work-read-final/pro.vafadar.zanance-Signed.apk.

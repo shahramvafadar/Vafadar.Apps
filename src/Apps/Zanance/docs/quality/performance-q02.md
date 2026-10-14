@@ -196,3 +196,10 @@ original calculator results match exactly, including construction (226.2461 vers
 bounded local Core Release process). Per-type slices still use the original quantity formula.
 Ten cases and main 3,179 pass; six native Windows caption contexts pass. Six normal Release Android caption/return cases pass; original Main/fixture/display restored. This is not whole-Home/cold-start/device/ANR/target acceptance.
 [Evidence](asset-event-index.md).
+
+
+## Protected Windows workload follow-up (D-278)
+
+See [protected-workload-performance.md](protected-workload-performance.md) for current protected
+reference/tenfold production-store measurements, complete logical preservation and exact resume
+limitations. Historical plaintext search/save measurements above are not current cipher evidence.

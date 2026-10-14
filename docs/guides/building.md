@@ -795,3 +795,11 @@ and failure at en/fa/de, both themes and 360/412/wide. A caption defect invalida
 run; finish the affected corrected matrix before handoff. Restore the normal ApplicationId and
 verify PackageName after review. Signed Release cold UI uses fresh emulator XML only, with one
 confirmed live process; missing hierarchy is not stale-tree evidence or permission to restart.
+
+
+## Protected workload benchmark (D-278)
+
+The independent Windows executable and new/resume commands are documented in
+eng/benchmarks/Zanance.ProtectedPerformance/README.md. It requires the reviewed Windows native
+package and uses only marked fictitious artifacts roots. Never use app data. It measures store
+operations, not native UI/device acceptance; no application rebuild is needed for this executable.

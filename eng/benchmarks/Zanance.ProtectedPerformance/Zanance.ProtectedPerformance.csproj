@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <Description>Independent fictitious protected workload performance.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/Vafadar.Zanance.Data.csproj" />
+    <PackageReference Include="Vafadar.Native.SqlCipher.Windows" />
+    <Compile Include="../Zanance.Performance/PerformanceFixture.cs" Link="PerformanceFixture.cs" />
+  </ItemGroup>
+</Project>
