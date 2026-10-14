@@ -63,3 +63,8 @@ Actual loaded Home/search/save on the identified reference phone, cold startup/A
 the approximate two-second experience objective remain separate. Historical D-75 search/save data
 must not be relabeled as current protected runtime acceptance. No CI execution is claimed here;
 Native cipher candidates currently runs Linux/Android upstream candidates, not this DPAPI executable.
+
+
+D-279 subsequently adds this executable to a dedicated Windows Native cipher candidates lane.
+That configuration does not retroactively turn the local D-278 observations into hosted results.
+See [windows-native-ci.md](windows-native-ci.md) for scope and the pending final-commit check.

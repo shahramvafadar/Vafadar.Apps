@@ -41,5 +41,7 @@ Its reference preparation time is therefore reopening, not fresh migration perfo
 
 These Windows native store/calculation measurements do not measure MAUI rendering, Home startup,
 search, saving, physical hardware, Android/iOS or Q-02's two-second objective. This independent
-Windows benchmark is not part of the Linux-only Native cipher candidates workflow. See
+Windows benchmark runs in the dedicated Windows lane of Native cipher candidates (D-279). Its
+fresh runner uses the same reviewed toolchain and immutable package checks; it does not run MAUI.
+Only measurement JSON is uploaded, never DPAPI envelopes or financial fixture files. See
 [the evidence report](../../../src/Apps/Zanance/docs/quality/protected-workload-performance.md).

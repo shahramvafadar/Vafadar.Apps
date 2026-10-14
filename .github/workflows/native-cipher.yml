@@ -5,10 +5,14 @@ on:
     branches: [main]
     paths:
       - 'eng/native/sqlcipher/**'
+      - 'eng/benchmarks/Zanance.ProtectedPerformance/**'
+      - 'eng/benchmarks/Zanance.Performance/PerformanceFixture.cs'
       - '.github/workflows/native-cipher.yml'
   pull_request:
     paths:
       - 'eng/native/sqlcipher/**'
+      - 'eng/benchmarks/Zanance.ProtectedPerformance/**'
+      - 'eng/benchmarks/Zanance.Performance/PerformanceFixture.cs'
       - '.github/workflows/native-cipher.yml'
   workflow_dispatch:
 
@@ -20,6 +24,67 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  windows:
+    name: Windows reproducibility and actual protected persistence
+    runs-on: windows-2025-vs2026
+    timeout-minutes: 60
+    env:
+      ContinuousIntegrationBuild: true
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+      - name: Qualify exact installed Windows compiler
+        shell: pwsh
+        run: ./eng/native/sqlcipher/Test-WindowsToolchain.ps1
+      # No candidate cache: this lane proves two fresh outputs, not a reused local artifact.
+      - name: Build two fresh reviewed Windows candidates
+        shell: pwsh
+        run: |
+          ./eng/native/sqlcipher/Build-Windows.ps1 -RunName windows-ci-a
+          ./eng/native/sqlcipher/Build-Windows.ps1 -RunName windows-ci-b
+          $first = Get-FileHash artifacts/native-sqlcipher/build/windows-ci-a/candidate/runtimes/win-x64/native/sqlcipher.dll
+          $second = Get-FileHash artifacts/native-sqlcipher/build/windows-ci-b/candidate/runtimes/win-x64/native/sqlcipher.dll
+          if ($first.Hash -ne $second.Hash) { throw 'Fresh Windows native outputs differ.' }
+      - name: Verify original schema and immutable package entries
+        shell: pwsh
+        run: |
+          ./eng/native/sqlcipher/Ensure-WindowsPackage.ps1 -RunName windows-ci-b
+      - name: Verify production assemblies across fresh process reopening
+        shell: pwsh
+        run: ./eng/native/sqlcipher/Test-BinaryWindows.ps1 -RunName windows-ci-b
+      - name: Measure protected reference and tenfold workloads
+        shell: pwsh
+        run: |
+          dotnet build eng/benchmarks/Zanance.ProtectedPerformance -c Release -p:ContinuousIntegrationBuild=true
+          if ($LASTEXITCODE -ne 0) { throw 'Protected workload build failed; do not execute stale output.' }
+          dotnet run --project eng/benchmarks/Zanance.ProtectedPerformance -c Release --no-build -- artifacts/protected-ci-workloads
+          if ($LASTEXITCODE -ne 0) { throw 'Protected workload failed; preserve the original evidence.' }
+      # Export only logs, public native provenance and measurements. DPAPI/key/database fixtures stay private.
+      - name: Preserve Windows qualification evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: windows-native-qualification
+          path: |
+            artifacts/native-sqlcipher/toolchain-review-*/proof.json
+            artifacts/native-sqlcipher/build/windows-ci-*/build.log
+            artifacts/native-sqlcipher/build/windows-ci-*/exports.txt
+            artifacts/native-sqlcipher/build/windows-ci-*/dependents.txt
+            artifacts/native-sqlcipher/build/windows-ci-*/candidate/manifest.json
+            artifacts/native-sqlcipher/build/windows-ci-*/compatibility-proof.json
+            artifacts/native-sqlcipher/build/windows-ci-*/compatibility-*/ef-proof.json
+            artifacts/native-sqlcipher/build/windows-ci-*/consumer-*/package-proof.json
+            artifacts/native-sqlcipher/binary-host/*/restore.log
+            artifacts/native-sqlcipher/binary-host/*/build.log
+            artifacts/native-sqlcipher/binary-host/*/create.log
+            artifacts/native-sqlcipher/binary-host/*/reopen.log
+            artifacts/protected-ci-workloads/measurements.json
+          if-no-files-found: warn
+          retention-days: 14
   linux:
     name: Official Android slices and stock cipher suite
     runs-on: ubuntu-24.04

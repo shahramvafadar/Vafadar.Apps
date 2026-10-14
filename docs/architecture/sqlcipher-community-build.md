@@ -364,3 +364,12 @@ installer allowlist, pinned MSVC/SDK and actual compiler SHA256. CI applies the 
 native dependency cache hit. Eleven policy cases and the current candidate atomic-width check
 passed locally; the second installer patch was metadata-only, not installed-host evidence.
 Unchanged upstream warnings remain open. App builds/UI/tests/APK were not repeated.
+
+
+## Hosted Windows qualification (D-279)
+
+Native cipher candidates now runs fresh Windows reproducibility, immutable package checks, actual
+production-assembly create/cold reopening and protected reference/tenfold workloads. Exact compiler
+policy remains mandatory. Upload only allowlisted public logs/proofs/measurements, never fixture/key
+roots. Windows upstream OpenSSL is not claimed under an elevated runner. See
+src/Apps/Zanance/docs/quality/windows-native-ci.md for orchestration evidence and pending hosted result.

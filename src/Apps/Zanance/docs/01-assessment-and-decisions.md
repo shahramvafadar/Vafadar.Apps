@@ -5454,3 +5454,19 @@ See quality/protected-workload-performance.md and the executable README for samp
 resume ownership and exact scope. QA-06 remains partial: actual loaded Home/search/save, cold/ANR,
 reference phone, Android/iOS and the two-second objective are not established by store timings.
 The current signed installable APK remains artifacts/android-work-read-final/pro.vafadar.zanance-Signed.apk.
+
+
+## D-279 hosted Windows native qualification
+
+Native cipher candidates now includes a Windows lane using the existing exact compiler qualification,
+two fresh native builds with matching DLL bytes, original schema/tamper checks, immutable package
+entries, actual production-assembly create/cold reopening and protected reference/tenfold workloads.
+Only allowlisted public logs/proofs/measurements are uploaded; databases and DPAPI/key material stay
+private. No candidate cache, weaker package/compiler policy, new native dependency or app change.
+
+Actual YAML and all five Windows PowerShell bodies parse. Hosted success is not inferred from syntax
+or the existing local D-278 workloads; check the final pushed commit once after the normal delay.
+Existing native warnings and the separate unprivileged Windows OpenSSL-suite scope remain explicit.
+No unrelated successful app/UI/full-suite/APK replay: application coverage remains 3,574 behaviors
+(3,573 full plus one focused), signed APK remains D-276. See quality/windows-native-ci.md for the
+exact path, artifact policy and remaining platform/security/device/release gates. Full goal remains open.
