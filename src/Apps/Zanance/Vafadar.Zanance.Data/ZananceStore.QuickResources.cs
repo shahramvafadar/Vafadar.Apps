@@ -50,6 +50,7 @@ public sealed partial class ZananceStore
     public async Task ValidateQuickResourceReviewAsync(QuickResourceReview review, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await db.Database.OpenConnectionAsync(cancellationToken);
         await ValidateQuickResourceReviewAsync(review, db, cancellationToken);
     }
 

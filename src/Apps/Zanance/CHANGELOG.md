@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Protected plan, goal and budget reads
+
+- Avoid repeated encrypted database opening within complete plan, goal and budget operations.
+- Keep budget form choices and inputs together, while later actions still validate fresh data.
+- Preserve every access check, financial calculation and encryption setting.
+
 ### Fixed - Home loading and retry
 
 - Show a clear loading state instead of briefly claiming there are no accounts during startup.

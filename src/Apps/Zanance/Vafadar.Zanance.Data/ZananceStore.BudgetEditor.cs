@@ -9,8 +9,10 @@ public sealed partial class ZananceStore
     public async Task<BudgetEditorReview> GetBudgetEditorReviewAsync(CancellationToken cancellationToken = default)
     {
         var choices = new BudgetChoiceStore(contextFactory, commercialAccess, time);
-        var periods = await choices.ReadAsync(cancellationToken);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        // D-276: choices and form inputs keep the same captured file and keyed connection until validation ends.
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var periods = await choices.ReadAsync(db, cancellationToken);
         var accounts = await db.Accounts.AsNoTracking().OrderBy(item => item.Id).ToListAsync(cancellationToken);
         var categories = await db.Categories.AsNoTracking().OrderBy(item => item.Id).ToListAsync(cancellationToken);
         var settings = await db.Settings.AsNoTracking().FirstOrDefaultAsync(cancellationToken);
@@ -23,6 +25,7 @@ public sealed partial class ZananceStore
     public async Task ValidateBudgetEditorReviewAsync(BudgetEditorReview review, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await db.Database.OpenConnectionAsync(cancellationToken);
         await ValidateBudgetEditorReviewAsync(review, db, cancellationToken);
     }
 

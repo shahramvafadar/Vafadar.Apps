@@ -13,6 +13,31 @@ namespace Vafadar.Zanance.Data.Tests.Commerce;
 public sealed class QuickReviewConnectionTests
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
+
+    [Fact, Trait("AT", "AT-276")]
+    public async Task Budget_form_choices_and_inputs_share_one_original_context_then_revalidate_fresh()
+    {
+        using var directory = new TemporaryDirectory();
+        await using var services = new ServiceCollection().AddZananceData(directory.Combine("budget-review.db")).BuildServiceProvider();
+        await services.MigrateLocalDatabaseAsync<ZananceDbContext>(Ct);
+        var original = services.GetRequiredService<IDbContextFactory<ZananceDbContext>>();
+        var counted = new CountedFactory(original);
+        var store = new ZananceStore(counted, TimeProvider.System, services.GetRequiredService<ICommercialWriteAccessSource>());
+        var review = await store.GetBudgetEditorReviewAsync(Ct);
+        Assert.Equal(1, counted.Created);
+        Assert.Empty(review.Accounts); Assert.Empty(review.Categories); Assert.Null(review.Settings);
+        await store.ValidateBudgetEditorReviewAsync(review, Ct);
+        Assert.Equal(2, counted.Created);
+        await using (var db = await original.CreateDbContextAsync(Ct))
+        {
+            Assert.False(await db.Budgets.AnyAsync(Ct)); Assert.False(await db.Settings.AnyAsync(Ct));
+            Assert.False(await db.ResourceSelections.AnyAsync(Ct));
+        }
+        var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
+        using var deadline = CancellationTokenSource.CreateLinkedTokenSource(Ct); deadline.CancelAfter(TimeSpan.FromSeconds(5));
+        using var owner = await location.Access.AcquireExclusiveAsync(deadline.Token);
+        location.Access.RequireDrainedOwner(owner); LocalDatabasePools.ClearFile(location.Path);
+    }
     [Theory, InlineData(false), InlineData(true)]
     public async Task Complete_review_uses_one_captured_context_and_preserves_original_rows(bool includeSource)
     {

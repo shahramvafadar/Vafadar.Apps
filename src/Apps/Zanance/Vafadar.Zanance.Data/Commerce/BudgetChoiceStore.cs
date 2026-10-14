@@ -15,6 +15,13 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
     public async Task<BudgetChoiceSnapshot> ReadAsync(CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        return await ReadAsync(db, cancellationToken);
+    }
+
+    /// <summary>Reads and rechecks complete original budget choices in the caller's captured context.</summary>
+    internal async Task<BudgetChoiceSnapshot> ReadAsync(ZananceDbContext db, CancellationToken cancellationToken)
+    {
         var path = FilePath(db);
         var access = new CommercialFileAccess(commercialAccess, path);
         access.DemandFeature(CommercialFeature.History);
@@ -50,6 +57,7 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
     public async Task ValidateAsync(BudgetChoiceSnapshot reviewed, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await db.Database.OpenConnectionAsync(cancellationToken);
         await ValidateAsync(reviewed, db, cancellationToken);
     }
 

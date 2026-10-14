@@ -32,6 +32,8 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     public async Task<PlanWorkSnapshot> GetWorkSnapshotAsync(CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        // D-276: retain this operation's non-pooled keyed handle across its complete guarded snapshot.
+        await db.Database.OpenConnectionAsync(cancellationToken);
         var access = new CommercialFileAccess(commercialAccess, DatabaseFileIdentity.ConfiguredPath(db));
         access.DemandFeature(CommercialFeature.History);
         var stored = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.RecurringPlans, cancellationToken);
@@ -60,6 +62,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await db.Database.OpenConnectionAsync(cancellationToken);
         await ValidateWorkSnapshotAsync(snapshot, db, cancellationToken);
     }
 

@@ -2335,3 +2335,20 @@ APK signature/package/payload and exact artifact are recorded in quality/home-lo
 This closes the observed publication defect, not the two-second performance objective, Android
 fault injection, physical device, spoken screen-reader, OS scaling, iOS or release acceptance.
 The development goal remains active; independent owner/provider gates remain unchosen.
+
+## D-276 complete protected work-read performance batch
+
+Complete Plan/Goal reads and fresh validation, budget choice/form reads and validation,
+quick-resource validation and bounded budget-alert inputs keep their own non-pooled connection
+open through the original operation. Budget form choices and inputs capture the same original
+context/file. Every existing rights/stale/current-file check and writer/financial formula stays;
+there is no global key-bearing pool, KDF reduction, schema or commercial activation change.
+
+Actual production-assembly native comparison on the same encrypted fixture measures complete
+read plus fresh validation: Plan 251.36 to 140.24 ms, Goal 624.61 to 180.53 ms, budget form
+1298.93 to 155.51 ms, budget alerts 2281.44 to 653.78 ms, quick resources 788.64 to 146.29 ms
+(three warmed medians; first use separate). Negative balance, 32 migrations, portable read-back
+and wrong-key refusal pass. These are operation timings, not full loaded Home or device acceptance.
+All 3,573 app tests pass with one new actual-SQLite budget context/lifetime case; strict builds,
+original native Home and signed Release evidence are in quality/work-snapshot-read-performance.md.
+The whole development objective and physical/iOS/reference-workload gates remain open.

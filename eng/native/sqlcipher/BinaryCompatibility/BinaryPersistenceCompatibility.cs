@@ -63,6 +63,29 @@ internal static class BinaryPersistenceCompatibility
             await File.WriteAllTextAsync(Path.Combine(root, create ? "quick-review-create.json" : "quick-review-reopen.json"),
                 System.Text.Json.JsonSerializer.Serialize(new { FirstThenFourWarmMilliseconds = quickReadMilliseconds,
                     ActualProductionOperation = true, CipherVersion = "4.19.0", KeyDerivationUnchanged = true }));
+            // D-276: each timed operation includes its actual original packet and later-action stale/access recheck.
+            var workMilliseconds = new Dictionary<string, List<double>>();
+            var plans = services.GetRequiredService<PlanStore>(); var goals = services.GetRequiredService<GoalStore>();
+            async Task MeasureWork(string name, Func<Task> originalOperation)
+            {
+                var times = new List<double>();
+                for (var sample = 0; sample < 4; sample++)
+                { var clock = System.Diagnostics.Stopwatch.StartNew(); await originalOperation(); clock.Stop(); times.Add(clock.Elapsed.TotalMilliseconds); }
+                workMilliseconds.Add(name, times);
+            }
+            await MeasureWork("PlanReadAndValidate", async () =>
+            { var packet = await plans.GetWorkSnapshotAsync(); await plans.ValidateWorkSnapshotAsync(packet); });
+            await MeasureWork("GoalReadAndValidate", async () =>
+            { var packet = await goals.GetWorkSnapshotAsync(); await goals.ValidateWorkSnapshotAsync(packet); });
+            await MeasureWork("BudgetFormReadAndValidate", async () =>
+            { var packet = await store.GetBudgetEditorReviewAsync(); await store.ValidateBudgetEditorReviewAsync(packet); });
+            await MeasureWork("BudgetAlertReadAndValidate", async () =>
+            { var packet = await store.GetBudgetAlertSnapshotAsync(); await store.ValidateBudgetAlertSnapshotAsync(packet); });
+            await MeasureWork("QuickReadAndValidate", async () =>
+            { var packet = await store.GetQuickResourceReviewAsync(); await store.ValidateQuickResourceReviewAsync(packet); });
+            await File.WriteAllTextAsync(Path.Combine(root, create ? "work-read-create.json" : "work-read-reopen.json"),
+                System.Text.Json.JsonSerializer.Serialize(new { FirstThenThreeWarmMilliseconds = workMilliseconds,
+                    ActualProductionReadAndValidation = true, NoGlobalPool = true, KeyDerivationUnchanged = true }));
             await using (var db = await services.GetRequiredService<ILocalDbContextFactory<ZananceDbContext>>().CreateDbContextAsync())
             {
                 if ((await db.Accounts.SingleAsync()).OpeningBalance != -321 || (await db.Database.GetAppliedMigrationsAsync()).Count() != 32)

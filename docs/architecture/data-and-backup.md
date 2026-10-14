@@ -2034,3 +2034,13 @@ choice reads keep their connection open only through that operation. EF's per-co
 otherwise repeats the unchanged SQLCipher KDF. Context disposal still releases connection/read lease;
 all per-command publication/current-access checks remain. Do not substitute global key-bearing pools,
 weaken KDF parameters or retain a reviewed connection across later actions or profile transitions.
+
+## Complete protected work reads (D-276)
+
+Plan/Goal snapshots and fresh validation, budget choice/form reads and validation, quick-resource
+validation and bounded budget-alert inputs retain one explicitly opened non-pooled connection per
+operation. Budget form choices use the same original context as the form packet. Existing readers
+that already open/join a deferred transaction remain unchanged. Writer overloads still execute in
+their original write transaction; never open a second context in those validators or retain a
+key-bearing handle across independent actions/profile changes. The native comparison times actual
+read plus fresh validation against the same encrypted fixture and production assemblies.

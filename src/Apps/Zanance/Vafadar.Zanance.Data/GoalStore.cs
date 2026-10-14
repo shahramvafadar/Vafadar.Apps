@@ -19,6 +19,8 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     public async Task<GoalWorkSnapshot> GetWorkSnapshotAsync(CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        // D-276: all original rules, references and access checks share one operation-scoped keyed handle.
+        await db.Database.OpenConnectionAsync(cancellationToken);
         var access = new CommercialFileAccess(commercialAccess, ProfileFilePath(db));
         access.DemandFeature(CommercialFeature.History);
         var stored = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.Goals, cancellationToken);
@@ -49,6 +51,7 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await db.Database.OpenConnectionAsync(cancellationToken);
         await ValidateWorkSnapshotAsync(snapshot, db, cancellationToken);
     }
 

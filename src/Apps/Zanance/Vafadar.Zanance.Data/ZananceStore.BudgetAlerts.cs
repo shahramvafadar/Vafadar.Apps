@@ -55,6 +55,8 @@ public sealed partial class ZananceStore
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         return await Task.Run(async () =>
         {
+            // D-276: the existing worker owns the open handle through every bounded input and privacy read.
+            await db.Database.OpenConnectionAsync(cancellationToken);
             var accounts = await db.Accounts.AsNoTracking().OrderBy(account => account.Id).ToListAsync(cancellationToken);
             var categories = await db.Categories.AsNoTracking().OrderBy(category => category.Id).ToListAsync(cancellationToken);
             var entries = from is null || to is null ? [] : await db.Entries.AsNoTracking()
