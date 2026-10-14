@@ -126,18 +126,17 @@ internal sealed class LockPage : ContentPage
                 return;
             }
 
-            switch (await _lock.Authenticator.AuthenticateAsync(_translator["Lock_Reason"]))
+            if (await _lock.AuthenticateDeviceUnlockAsync())
             {
-                // No device lock any more: removing it required the device credential, and the app lock can never be
-                // stronger than the device lock, so the owner must not be locked out for good (SEC-01 recovery path).
-                case AuthenticationOutcome.Success or AuthenticationOutcome.NotAvailable:
-                    await CompleteAsync(true);
-                    break;
-                default:
-                    // Cancelled or not recognised: say so, so the cover does not look as if nothing happened.
-                    _message.Text = _translator["Lock_NotUnlocked"];
-                    SemanticScreenReader.Announce(_message.Text);
-                    break;
+                await CompleteAsync(true);
+            }
+            else
+            {
+                // D-266: a removed/unavailable device credential is not proof of ownership.
+                // Keep the original cover and pending destinations until authentication succeeds.
+                _message.Text = _translator[_lock.LastDeviceUnlockOutcome == AuthenticationOutcome.NotAvailable
+                    ? "Lock_NotAvailableHint" : "Lock_NotUnlocked"];
+                SemanticScreenReader.Announce(_message.Text);
             }
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)

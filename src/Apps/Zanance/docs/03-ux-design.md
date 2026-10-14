@@ -1164,3 +1164,12 @@ Windows uses the same explicit optional recovery setup and covered startup backu
 ## Holding actions and original page lifetimes (D-265)
 
 Holding commands use growing native surfaces with complete semantic names and hints; history identities/date and quantity occupy separate rows with the same full-row overlay command. Descriptive valuation sentences wrap. An old Home cannot publish awaited reads after its Shell retires; register actual appearing instances rather than assuming lazy ShellContent.Content exposes them. Review off-viewport pickers only after native scrolling realizes their captions.
+
+
+## D-266 device-only authentication requires success
+
+The owner approved keeping the original lock cover when system authentication is unavailable on 2026-10-14. Only AuthenticationOutcome.Success authorizes device-only entry. Failed, unavailable, unknown and throwing responses preserve the original cover and queued destinations. The existing translated unavailable-device guidance explains restoring a device screen lock. PIN verification/recovery and the previously authenticated return grace remain separate and unchanged. No new stored data, permission, SDK or portable preference is introduced.
+
+Actual Windows LockPage/native Invoke checks covered 18 language/theme/width contexts with an explicit authentication response port; a separate feedback pass checked the translated guidance. The independent Android package used the actual native adapter: NotAvailable after automatic prompting and Unlock, with Back unable to dismiss the cover and zero queued destinations opened. Neither review changes system credentials or native PIN storage. These checks do not accept configured biometrics, Windows Hello, physical devices or iOS.
+
+An unrelated Home collection rendering COM exception remains observed during language/theme review. The lock assertions and unchanged financial fingerprint completed, but this is not a clean whole-application rendering result. SEC-04 remains in progress for its remaining platform and biometric transitions.

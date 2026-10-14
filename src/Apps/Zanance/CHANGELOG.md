@@ -1618,3 +1618,7 @@ and external gates remain open. Main stays plaintext.
 - Keep holding actions and editor Save/Cancel captions readable at large text sizes.
 - Give history quantities, valuation dates and Undo their own space.
 - Preserve spoken action hints and stop an old Home from updating disconnected controls after changing language.
+
+### Device authentication (D-266)
+
+- An unavailable or failed device authentication no longer opens a locked app. Restore the device screen lock and authenticate successfully; the existing PIN path remains separate.

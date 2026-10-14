@@ -56,6 +56,17 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     /// <summary>Gets the authenticator.</summary>
     public IDeviceAuthenticator Authenticator => authenticator;
 
+    /// <summary>Gets the last device-only result so the existing unavailable-credential guidance can be shown accurately.</summary>
+    internal AuthenticationOutcome LastDeviceUnlockOutcome { get; private set; } = AuthenticationOutcome.Failed;
+
+    /// <summary>Authenticates a device-only unlock; unavailable authentication never authorizes removal of the cover.</summary>
+    internal async Task<bool> AuthenticateDeviceUnlockAsync()
+    {
+        if (PinUnavailable || PinEnabled) { LastDeviceUnlockOutcome = AuthenticationOutcome.Failed; return false; }
+        LastDeviceUnlockOutcome = await authenticator.AuthenticateAsync(translator["Lock_Reason"]);
+        return LastDeviceUnlockOutcome == AuthenticationOutcome.Success;
+    }
+
     /// <summary>Reads the setting and locks the app if it is enabled (app start).</summary>
     public async Task StartAsync()
     {

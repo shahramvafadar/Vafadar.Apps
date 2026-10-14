@@ -150,6 +150,7 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data 
 * App access (D-63): optional four-digit PIN across all profiles on this device; salted verifier and durable growing
   attempt delays only in platform SecureStorage, never portable backups. Current PIN required to change/remove;
   recovery only after successful device authentication plus confirmation. No NotAvailable fallback for a PIN lock.
+  Device-only authentication prompts also require Success: NotAvailable or Failed must not remove the cover or release pending work (owner decision 2026-10-14, D-266).
   Keep the startup frame covered until secure state is read. This gate does not encrypt the database.
 * SEC-01 research (D-68): encryption probes use independent projects, fictitious directories and a distinct Android
   package; never reference them from the app or touch its database. The owner selected current official Community

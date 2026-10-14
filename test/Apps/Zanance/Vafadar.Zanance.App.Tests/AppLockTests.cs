@@ -9,6 +9,56 @@ namespace Vafadar.Zanance.App.Tests;
 /// <summary>Actual access policy with real profile settings and PIN verification, behind explicit native ports.</summary>
 public sealed class AppLockTests
 {
+    [Theory, Trait("AT", "AT-80")]
+    [InlineData(AuthenticationOutcome.NotAvailable)]
+    [InlineData(AuthenticationOutcome.Failed)]
+    public async Task Unavailable_or_failed_device_unlock_keeps_the_cover_and_queued_destination(AuthenticationOutcome outcome)
+    {
+        using var f = new FlowFixture(); await EnableDeviceAsync(f); var setup = Create(f);
+        await setup.Lock.StartAsync(); var opened = false;
+        await setup.Lock.RunWhenUnlockedAsync(() => { opened = true; return Task.CompletedTask; });
+        setup.Auth.Outcome = outcome;
+        Assert.False(await setup.Lock.AuthenticateDeviceUnlockAsync());
+        Assert.True(setup.Lock.IsLocked); Assert.False(opened); Assert.Equal(0, setup.Host.Covers.Single().Closed);
+        Assert.True((await f.Store.GetSettingsAsync(TestContext.Current.CancellationToken)).AppLockEnabled);
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: TestContext.Current.CancellationToken));
+    }
+
+    [Fact, Trait("AT", "AT-80")]
+    public async Task Successful_device_authentication_waits_for_the_original_cover_completion_before_opening_a_destination()
+    {
+        using var f = new FlowFixture(); await EnableDeviceAsync(f); var setup = Create(f);
+        await setup.Lock.StartAsync(); var opened = false;
+        await setup.Lock.RunWhenUnlockedAsync(() => { opened = true; return Task.CompletedTask; });
+        Assert.True(await setup.Lock.AuthenticateDeviceUnlockAsync());
+        Assert.True(setup.Lock.IsLocked); Assert.False(opened);
+        await setup.Lock.UnlockedAsync();
+        Assert.False(setup.Lock.IsLocked); Assert.True(opened); Assert.Equal(1, setup.Host.Covers.Single().Closed);
+    }
+
+    [Fact, Trait("AT", "AT-80")]
+    public async Task Device_unlock_cannot_bypass_an_existing_PIN_or_unreadable_PIN_state()
+    {
+        using var f = new FlowFixture(); var setup = Create(f);
+        await setup.Lock.Pin.SetAsync("", "0137"); await setup.Lock.StartAsync();
+        Assert.False(await setup.Lock.AuthenticateDeviceUnlockAsync()); Assert.Equal(0, setup.Auth.Calls);
+        setup.Storage.FailReads = true;
+        Assert.False(await setup.Lock.ConfirmStartupRecoveryAsync("Fictitious recovery"));
+        Assert.False(await setup.Lock.AuthenticateDeviceUnlockAsync()); Assert.Equal(0, setup.Auth.Calls);
+        Assert.True(setup.Lock.IsLocked);
+    }
+
+    [Fact, Trait("AT", "AT-80")]
+    public async Task Device_authentication_exception_preserves_the_cover_and_pending_work()
+    {
+        using var f = new FlowFixture(); await EnableDeviceAsync(f); var setup = Create(f);
+        await setup.Lock.StartAsync(); var opened = false;
+        await setup.Lock.RunWhenUnlockedAsync(() => { opened = true; return Task.CompletedTask; });
+        setup.Auth.Fail = true;
+        await Assert.ThrowsAsync<IOException>(() => setup.Lock.AuthenticateDeviceUnlockAsync());
+        Assert.True(setup.Lock.IsLocked); Assert.False(opened); Assert.Equal(0, setup.Host.Covers.Single().Closed);
+    }
+
     [Fact, Trait("AT", "AT-238")]
     public async Task Covered_recovery_loads_existing_PIN_without_opening_unavailable_finance_or_unlocking_startup()
     {
@@ -176,8 +226,12 @@ internal sealed class AuthPlatform : IDeviceAuthenticator
 {
     internal AuthenticationOutcome Outcome = AuthenticationOutcome.Success;
     internal int Calls;
+    internal bool Fail;
     public Task<bool> IsAvailableAsync() => Task.FromResult(Outcome != AuthenticationOutcome.NotAvailable);
-    public Task<AuthenticationOutcome> AuthenticateAsync(string reason) { Calls++; return Task.FromResult(Outcome); }
+    public Task<AuthenticationOutcome> AuthenticateAsync(string reason)
+    {
+        Calls++; return Fail ? Task.FromException<AuthenticationOutcome>(new IOException("Fictitious authentication failure.")) : Task.FromResult(Outcome);
+    }
 }
 
 /// <summary>Window and dialog lifetimes as native ports, rather than fake MAUI pages.</summary>

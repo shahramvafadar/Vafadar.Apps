@@ -33,6 +33,7 @@ internal static partial class DebugSnapshots
     public static void StartIfRequested(App app, IServiceProvider services, Window window)
     {
 #if ANDROID
+        if (DebugDeviceUnlockAndroid.StartIfRequested(app, services)) { return; }
         if (DebugImportLinks.StartIfRequested(app, services)) { return; }
         if (DebugReviewReminders.StartIfRequested(app, services)) { return; }
         if (DebugGoalReminders.StartIfRequested(app, services)) { return; }
@@ -252,6 +253,14 @@ internal static partial class DebugSnapshots
     private static async Task RunCoreAsync(App app, IServiceProvider services, string folder)
     {
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "device-unlock-feedback")
+        {
+            await ReviewDeviceUnlockPolicyAsync(app, services, folder, feedbackOnly: true); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "device-unlock-policy")
+        {
+            await ReviewDeviceUnlockPolicyAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "home-retirement-read")
         {
             await ReviewRetiredHomeReadAsync(app, services, folder); return;

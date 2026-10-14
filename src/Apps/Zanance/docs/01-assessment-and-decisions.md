@@ -5208,3 +5208,16 @@ D-264 final local verification: 3521 tests passed, zero failures/skips (3m45.293
 ### D-265 — Complete scaled holding actions and stop retired Home publication
 
 Holding detail/type/change actions retain commands and native scaling through the existing growing surface. History quantity and valuation date use separate rows; Undo grows separately. Original semantic hints reach the native command owner. Eighteen three-page contexts and eighteen separate bottom contexts verify names, targets, original row identities and unchanged typed storage on an independent marked installation. An actual COM failure exposed late Home publication into disconnected controls; actual appearing Home instances register with their Shell and invalidate awaited publication before root disconnection. A native blocked-SQLite-read regression verifies zero retired balance changes and working replacement Home. [Evidence and limits](quality/holdings-readable.md). No financial algorithm, permission, schema or commercial activation changes.
+
+
+## D-266 device-only authentication requires success
+
+The owner approved keeping the original lock cover when system authentication is unavailable on 2026-10-14. Only AuthenticationOutcome.Success authorizes device-only entry. Failed, unavailable, unknown and throwing responses preserve the original cover and queued destinations. The existing translated unavailable-device guidance explains restoring a device screen lock. PIN verification/recovery and the previously authenticated return grace remain separate and unchanged. No new stored data, permission, SDK or portable preference is introduced.
+
+Actual Windows LockPage/native Invoke checks covered 18 language/theme/width contexts with an explicit authentication response port; a separate feedback pass checked the translated guidance. The independent Android package used the actual native adapter: NotAvailable after automatic prompting and Unlock, with Back unable to dismiss the cover and zero queued destinations opened. Neither review changes system credentials or native PIN storage. These checks do not accept configured biometrics, Windows Hello, physical devices or iOS.
+
+An unrelated Home collection rendering COM exception remains observed during language/theme review. The lock assertions and unchanged financial fingerprint completed, but this is not a clean whole-application rendering result. SEC-04 remains in progress for its remaining platform and biometric transitions.
+
+D-266 final domain/application suite: 3,526 passed, zero failures/skips, 3m24.408s. Permanent-identity strict Windows build: zero warnings/errors, 23.49s. No unchanged cipher producer or upstream corpus was repeated.
+
+Final D-266 signed Release upgrade/cold Home passed on the owned emulator; test outputs cleaned. APK signature/payload and the open Home renderer finding are recorded in docs/quality/device-unlock-policy.md. This does not complete SEC-04 platform acceptance.

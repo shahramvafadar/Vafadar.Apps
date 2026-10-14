@@ -18,6 +18,10 @@ public class MainActivity : MauiAppCompatActivity
     // Start protected before the first frame, then apply the saved foreground choice (D-63).
     protected override void OnCreate(Bundle? savedInstanceState)
     {
+#if DEBUG
+        if (PackageName == "pro.vafadar.zanance.accessacceptance" && Intent?.GetBooleanExtra("device_unlock_review", false) == true)
+            System.Environment.SetEnvironmentVariable("VAFADAR_DEVICE_UNLOCK_REVIEW", "1");
+#endif
         Window?.AddFlags(WindowManagerFlags.Secure);
         base.OnCreate(savedInstanceState);
         if (OperatingSystem.IsAndroidVersionAtLeast(33)) { SetRecentsScreenshotEnabled(false); }

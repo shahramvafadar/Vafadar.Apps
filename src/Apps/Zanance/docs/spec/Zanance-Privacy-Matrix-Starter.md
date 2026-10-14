@@ -723,3 +723,7 @@ Historical plaintext/probe statements above describe their original commits, not
 ## Windows protected storage (D-264)
 
 Financial profile/rollback files and internal safety packages are device-encrypted on Windows as well as Android. CurrentUser DPAPI protects Windows key envelopes; optional recovery vaults remain separate and portable backup file encryption remains user-selectable. Recovery secrets never enter portable preference sources. Private directory/native identity controls refuse redirected or replaced authority. No permission, telemetry or network SDK was added. iOS implementation and physical-device/provider/Store acceptance remain open.
+
+## D-266 device authentication boundary
+
+Device-only unlock requires successful native authentication. An unavailable credential retains the cover and pending destinations. The last outcome exists in memory only; no new data flow, permission, credential storage or backup field is added. Independent diagnostic fixtures never change device credentials or native PIN storage.
