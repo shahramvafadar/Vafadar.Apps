@@ -236,3 +236,12 @@ names, with real isolated data/localization and fake native-effect ports. It nev
 reimplements its algorithms. BulkTransactionsViewModel owns selection and write decisions; the existing transaction
 view model forwards its bindings and commands. Shell aliases AppRoutes so routing constants have one source of truth.
 Native adapters and rendering still require running-app/device evidence, separate from this executable test project.
+
+
+## Optional local Zanance service (D-272)
+
+`Vafadar.Zanance.Api` owns an independent PostgreSQL identity/session/challenge/object schema; it
+references neither MAUI nor local financial SQLite. Its actual HTTP/DB acceptance suite is a
+separate PostgreSQL-dependent test project, outside Vafadar.Tests.slnf and in the full solution.
+See the API README for private roots, maintained authentication, migration/runtime roles, durable
+limits/outbox, operations and isolated restore. The mobile app has no service connection yet.

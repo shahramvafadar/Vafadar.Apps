@@ -716,3 +716,21 @@ Financial profile/rollback files and internal safety packages are device-encrypt
 Device-only unlock requires successful native authentication. An unavailable credential retains the cover and pending destinations. The last outcome exists in memory only; no new data flow, permission, credential storage or backup field is added. Independent diagnostic fixtures never change device credentials or native PIN storage.
 
 D-268 updates explanations and store drafts to the existing optional backup protection and Android encrypted-storage/OS-exclusion policy. No new data, export, credential storage, SDK or permission is introduced.
+
+
+## D-272 isolated local service data boundary
+
+The optional service holds fictional identity email, maintained password verifier/security stamp,
+one-use challenges, protected mail envelopes, absolute device grants, hashed-IP request windows
+and private opaque object manifests/bytes in its own PostgreSQL/private root. Requests carry
+credentials/tokens in bounded bodies/headers, never URLs or logs. Files and outbox use framework
+Data Protection; Windows wrapping is CurrentUser DPAPI. Identity metadata in PostgreSQL and
+quiesced pg_dump is access-restricted, not represented as encrypted financial SQLite or E2EE.
+
+No app SDK, permission, device credential, cloud provider client or mobile transport was added.
+No real recipient mail, personal data upload, hosting resource or support ledger access exists.
+Local backup includes the private key ring and objects; it is not a portable Zanance user backup.
+Do not copy purchase/identity authority into financial backups. Hosted processors, TLS, certificate
+provisioning, off-host encrypted snapshots/retention and a real sender require separate acceptance.
+Current mobile privacy policy/Data Safety submission status is unchanged; see API README and
+quality/local-identity-backend.md for the actual fictional test/restore boundaries.

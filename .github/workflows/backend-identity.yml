@@ -1,0 +1,65 @@
+name: Local identity backend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/Apps/Zanance/Vafadar.Zanance.Api/**'
+      - 'test/Apps/Zanance/Vafadar.Zanance.Api.Tests/**'
+      - 'eng/backend/**'
+      - 'Directory.Packages.props'
+      - '.github/workflows/backend-identity.yml'
+  pull_request:
+    paths:
+      - 'src/Apps/Zanance/Vafadar.Zanance.Api/**'
+      - 'test/Apps/Zanance/Vafadar.Zanance.Api.Tests/**'
+      - 'eng/backend/**'
+      - 'Directory.Packages.props'
+      - '.github/workflows/backend-identity.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: identity-backend-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  identity:
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      DOTNET_NOLOGO: true
+      ZANANCE_TEST_DB: Host=127.0.0.1;Port=55473;Database=zanance_identity_ci;Username=postgres
+      ZANANCE_TEST_CONTAINER: zanance-backend-ci
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+      - name: Prepare isolated PostgreSQL build dependency
+        run: |
+          docker run -d --name zanance-backend-ci -p 127.0.0.1:55473:5432 --tmpfs /var/lib/postgresql -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_DB=zanance_identity_ci postgres@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15
+          for attempt in $(seq 1 30); do
+            if docker exec zanance-backend-ci pg_isready -U postgres; then break; fi
+            sleep 1
+          done
+          docker exec zanance-backend-ci pg_isready -U postgres
+          docker exec zanance-backend-ci psql -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE ROLE zanance_runtime LOGIN'
+      - name: Publish security-patched independent test runtime
+        run: dotnet publish test/Apps/Zanance/Vafadar.Zanance.Api.Tests/Vafadar.Zanance.Api.Tests.csproj --configuration Release -r linux-x64 --self-contained true -p:RuntimeFrameworkVersion=10.0.13 -p:ContinuousIntegrationBuild=true --output artifacts/identity-test-runtime
+      - name: Verify actual identity, private storage and isolated restore
+        run: |
+          mkdir -p TestResults
+          ./artifacts/identity-test-runtime/Vafadar.Zanance.Api.Tests -failSkips -result-xml TestResults/identity.xml
+      - name: Upload bounded test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: identity-test-results
+          path: TestResults/*.xml
+          retention-days: 14
+      - name: Remove only the test container
+        if: always()
+        run: docker rm -f zanance-backend-ci

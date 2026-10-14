@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Local optional service foundation
+
+- Add an independent local identity service with verified accounts, revocable device sessions and private encrypted objects.
+- Provide isolated PostgreSQL migrations, durable request limits and local snapshot/restore operations.
+- Keep mobile finances offline and independent; no hosted service, external email or paid feature is activated.
+
 ### Added - Android protected local storage
 
 - Encrypt Android financial databases and internal restore safety data with device-bound keys.

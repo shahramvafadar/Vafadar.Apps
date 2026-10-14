@@ -1722,3 +1722,31 @@ Store drafts now name all six existing languages and describe optional password 
 ## D-269 costed OD-02 backend proposal
 
 Official provider prices and the 2026-10-15 PostgreSQL availability change inform three bounded USD scenarios and a complete first backend delivery/restore boundary. Arithmetic/overage checks pass; see docs/enhancements/2026-10-commercial-release/07-backend-cost-and-decision.md. Provider, region and test-environment budget remain owner choices. No backend, account, mail, hosted resource, SDK, app code or publication changes; ZCR-ID-01 and the full development objective remain incomplete. Application tests/build/native/APK evidence is unchanged D-268 and was not repeated.
+
+
+## D-272 complete local identity and private service foundation
+
+Implemented the approved optional ASP.NET Core/PostgreSQL/private-storage backend as an independent
+Zanance API project. Maintained Identity password/token providers, protected bearer tickets,
+transactional one-use challenges, absolute device grants, atomic refresh generation, immediate
+stamp/session revocation, shared durable request limits and private encrypted immutable objects
+are connected end to end. Capacity is serialized by real owner in PostgreSQL. No local profile id
+or opaque object id establishes ownership. No financial sync/sharing/billing route is implemented.
+
+The separate migration operator and runtime role, persisted wrapped Data Protection key ring,
+leased encrypted fictional outbox, resumable deletion/cleanup, content-free readiness and hidden
+local start/drain/snapshot/fresh restore operations are implemented. Missing service keys keep the
+original installation closed; no replacement key authority is accepted. No real email, account,
+paid hosting, app connection, entitlement enforcement or publication was enabled.
+
+Final server Release build has zero warnings/errors. Four actual-host/PostgreSQL scenarios pass
+with zero errors/failures/skips on the private .NET/ASP.NET 10.0.13 runtime (6.355 seconds); they cover concurrency,
+expiry/replay, ownership, quota, protected delivery, corruption, revocation, cold key loss/recovery
+and real pg_dump/pg_restore. Fictional restore was about 0.7 seconds with its committed object and
+revocation state preserved. Windows Kestrel and the operator's independently restored destination
+returned readiness 200; exact scopes and observed failures are in quality/local-identity-backend.md.
+
+The existing 3,526 app-test baseline and complete signed mobile APK remain D-268; no unchanged app
+build, native visual matrix or cipher corpus was replayed. Local ID-01 foundation is delivered;
+external sender, hosted certificate/key/backup operations, provider/legal acceptance and mobile
+service adoption remain separate gates. The whole development objective remains active.

@@ -62,7 +62,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-BIL-03 | Secure entitlement cache, offline window, clock changes | 6 | P1 | M | Proposed | BIL-02 |
 | ZCR-BIL-04 | Plus Lifetime, Lifetime-owner Pro discount, campaigns, trial | 6 | P1 | M | Proposed | BIL-02, OD-06, OD-07 |
 | ZCR-BIL-05 | Sandbox test matrix; production activation (owner only) | 6 | P1 | M | Proposed | BIL-01..04 |
-| ZCR-ID-01 | Optional identity, backend foundation, operations | 3 | P1 | L | Approved local implementation (D-271 ASP.NET Core/PostgreSQL/private storage; implementation and restore drill remain) | OD-02 |
+| ZCR-ID-01 | Optional identity, backend foundation, operations | 3 | P1 | L | Local foundation delivered (D-272 actual service/PostgreSQL/private restore; hosted/sender/mobile gates remain) | OD-02 |
 | ZCR-SYNC-01 | Change log, outbox, versions, tombstones | 4 | P1 | L | Proposed | ID-01 |
 | ZCR-SYNC-02 | Conflicts, idempotent posting, restore into a synced profile | 4 | P1 | L | Proposed | SYNC-01 |
 | ZCR-SYNC-03 | Sync status UI and device management | 4 | P2 | M | Proposed | SYNC-01 |
@@ -2221,3 +2221,31 @@ open. This tooling delivery does not imply hosted Windows acceptance or device/i
 acceptance. App code, the 3,526-test baseline and signed APK remain D-268; unrelated checks were
 not repeated. Evidence: eng/native/sqlcipher/Test-WindowsToolchain.ps1 and
 artifacts/native-sqlcipher/build/windows-storage-d260-ec/atomic-width-51c7a432ac70474da3e3206c04cd5e5a/proof.json.
+
+
+## D-272 complete local identity and private service foundation
+
+Implemented the approved optional ASP.NET Core/PostgreSQL/private-storage backend as an independent
+Zanance API project. Maintained Identity password/token providers, protected bearer tickets,
+transactional one-use challenges, absolute device grants, atomic refresh generation, immediate
+stamp/session revocation, shared durable request limits and private encrypted immutable objects
+are connected end to end. Capacity is serialized by real owner in PostgreSQL. No local profile id
+or opaque object id establishes ownership. No financial sync/sharing/billing route is implemented.
+
+The separate migration operator and runtime role, persisted wrapped Data Protection key ring,
+leased encrypted fictional outbox, resumable deletion/cleanup, content-free readiness and hidden
+local start/drain/snapshot/fresh restore operations are implemented. Missing service keys keep the
+original installation closed; no replacement key authority is accepted. No real email, account,
+paid hosting, app connection, entitlement enforcement or publication was enabled.
+
+Final server Release build has zero warnings/errors. Four actual-host/PostgreSQL scenarios pass
+with zero errors/failures/skips on the private .NET/ASP.NET 10.0.13 runtime (6.355 seconds); they cover concurrency,
+expiry/replay, ownership, quota, protected delivery, corruption, revocation, cold key loss/recovery
+and real pg_dump/pg_restore. Fictional restore was about 0.7 seconds with its committed object and
+revocation state preserved. Windows Kestrel and the operator's independently restored destination
+returned readiness 200; exact scopes and observed failures are in quality/local-identity-backend.md.
+
+The existing 3,526 app-test baseline and complete signed mobile APK remain D-268; no unchanged app
+build, native visual matrix or cipher corpus was replayed. Local ID-01 foundation is delivered;
+external sender, hosted certificate/key/backup operations, provider/legal acceptance and mobile
+service adoption remain separate gates. The whole development objective remains active.

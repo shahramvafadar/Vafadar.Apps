@@ -1971,3 +1971,14 @@ separate gates. Use independent repository-owned local resources, never another 
 LOC-07/08 target Germany and other Western European countries, USA, Canada and Australia, with
 extensible countries independent of UI language and official jurisdiction/year sources. Iran and
 its holidays belong to a later separate variant. These decisions do not claim implementation.
+
+
+### Local identity service boundary (D-272)
+
+The local backend uses independent PostgreSQL/private roots and maintained ASP.NET Core Identity,
+with per-request stamp/session ownership, durable one-use grants/rate limits/outbox and wrapped
+persistent protection keys. Hosted/production activation remains refused. Never send real mail or
+connect app finances under this local foundation scope. Stop its exact hidden owned worker before
+building/replacing the binary or taking a quiesced snapshot; PID alone is insufficient ownership.
+Service tests require an explicitly isolated PostgreSQL fixture and run in their dedicated workflow,
+not the local SQLite filter. Never substitute mocks or the mobile test baseline for service restore.
