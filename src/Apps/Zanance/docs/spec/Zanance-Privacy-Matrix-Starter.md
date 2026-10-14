@@ -681,3 +681,9 @@ D-241 receipts contain non-secret bound file/root identities, lengths, SHA-256 a
 without DEKs/recovery secrets. Originals remain immutable until explicit target retirement; exact
 native receipts authorize only the captured target objects. Other profiles are retained. No new
 permission, export, SDK or interim OS-backup exclusion is activated.
+
+D-242 complete recovery retains bounded owned DEK buffers only through verification/native import,
+clears them on all exits and disposes private material. Actual original catalogue/identity/binding
+facts are rechecked without portable preference writes or new profiles. Explicit user/device
+authorization and full native reference verification remain final host duties. No secret logging,
+new SDK/permission or interim OS exclusion is added.

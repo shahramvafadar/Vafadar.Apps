@@ -2042,3 +2042,9 @@ D-241 authenticates recovered-key native references with a DEK-keyed exact-objec
 connects original/recovered/receipt removal to actual protected ProfileService retirement. Missing/
 changed/staged references refuse cleanup. See terminal evidence in decision log; main encryption,
 final UX/all-profile recovery/alias lifecycle/retention/OS/platform adoption remain open.
+
+D-242 composes complete captured-profile recovery preflight and immutable native imports before
+actual covered startup, without quota filtering, session publication or catalogue writes. Unknown/
+missing/changed authority fails; original buffers are cleared. See decision log for terminal proof;
+main encryption, concrete full retained-reference verification, recovery UX/alias/retention/OS/
+platform acceptance remain open. Whole SEC/goal scope is not declared complete.

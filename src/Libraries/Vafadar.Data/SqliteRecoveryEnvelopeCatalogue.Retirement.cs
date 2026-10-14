@@ -6,6 +6,10 @@ namespace Vafadar.Data;
 
 public sealed partial class SqliteRecoveryEnvelopeCatalogue
 {
+    /// <summary>Reads all existing canonical recovery bindings without unwrapping keys or inferring omitted profiles.</summary>
+    public async Task<IReadOnlyList<DatabaseKeyBinding>> ReadBindingsAsync(CancellationToken ct = default) =>
+        (await ReadRecoveryRowsAsync(ct).ConfigureAwait(false)).Select(row => new DatabaseKeyBinding(row.Profile, identity.InstallationId, row.Generation)).ToArray();
+
     /// <summary>Authenticates every target recovery mapping with its retained native key before capturing removal authority.</summary>
     public async Task CaptureRetirementAsync(ProfileRetirementCheckpoint request, SqliteProfileRetirementJournal journal,
         IDatabaseGenerationKeyStore keys, CancellationToken ct = default)

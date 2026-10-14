@@ -15,6 +15,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Startup/IAppDatabaseStartup.cs" Link="IAppDatabaseStartup.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedProfileRecovery.cs" Link="ProtectedProfileRecovery.cs" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedDatabaseStartup.cs" Link="ProtectedDatabaseStartup.cs" />
     <PackageReference Include="Microsoft.Maui.Essentials" />
     <Using Include="Microsoft.Maui.Storage" />

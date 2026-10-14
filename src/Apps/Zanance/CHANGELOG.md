@@ -1524,3 +1524,6 @@ Prepared one verified initialization path for all existing local profiles before
 
 - Prepared authenticated ownership and safe retirement of recovered device-key entries, retaining
   other profiles and refusing changed or missing file authority. Main encryption is not enabled yet.
+
+- Prepared recovery of every original local profile before startup, checking all keys before native
+  storage writes and preserving names/selections. Product recovery UI/main encryption remain disabled.

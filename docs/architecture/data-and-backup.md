@@ -1931,3 +1931,10 @@ publication and ordinary reads. Discovery verifies original/recovered/receipt ow
 captured retirement; staged/unknown state never supplies guessed cleanup authority. Android actual
 combined check: Test-AndroidGenerationMigration.ps1 -RunName android-d -RecoveredKeyRetirement
 -UseExistingBuild, using independent original finance/native effects only. See device-key guide.
+
+D-242 ProtectedProfileRecovery receives actual private-vault unlock, complete reference verification
+and native import effects under covered/unpublished drained startup ownership. Preflight every
+captured original/binding before first native write; recheck catalogue/inventory before each import.
+Run protected bootstrap/session only after recovery completes. Android independent scenario:
+Test-AndroidGenerationMigration.ps1 -RunName android-d -AllProfileRecovery -UseExistingBuild.
+The caller uses real original generations; full retained-reference/UX/OS adoption remains unfinished.

@@ -23,7 +23,7 @@ namespace Vafadar.SqlCipher.Compatibility.Android;
 internal static class ProfileCreationCompatibility
 {
     /// <summary>Prepares a new original through the product flow or verifies both originals after a cold restart.</summary>
-    internal static async Task<string> RunAsync(string folder, bool create, bool retirement = false, bool creationResume = false, bool retirementRecovery = false, bool recoveredRetirement = false)
+    internal static async Task<string> RunAsync(string folder, bool create, bool retirement = false, bool creationResume = false, bool retirementRecovery = false, bool recoveredRetirement = false, bool allProfileRecovery = false)
     {
         if (create) { if (Directory.Exists(folder)) throw new IOException("Use a fresh profile-creation fixture."); Directory.CreateDirectory(folder); }
         var main = Path.Combine(folder, ZananceApp.DatabaseFileName);
@@ -121,8 +121,33 @@ internal static class ProfileCreationCompatibility
                     (state, journal, ct) => nativeFiles.RemoveAsync(state, journal, durability, ct), (journal, ct) => nativeFiles.VerifyRemovedAsync(journal, ct), recoveryCatalogue);
                 profiles = new(location, store, preferences, runtime, Translator.Instance, profileRetirement: retirementHost);
             }
-            if (!create && retirement) await retirementHost!.ResumePendingAsync(profiles, location, owner, CancellationToken.None);
-            if (create || !creationResume) await runtime.Session.StartAsync(main, owner);
+            if (!create && allProfileRecovery)
+            {
+                var recoveryService = new ProtectedProfileRecovery(location, profiles, identityPath,
+                    (secret, ct) => new SqlCipherRecoveryVault(Path.Combine(folder, "recovery-private.cipher.db"), recoveryIdentity!, "4.19.0", durability, () => { }).OpenAsync(secret, ct),
+                    recoveryCatalogue!, (IDatabaseGenerationKeyRecovery)keys,
+                    async (binding, original, candidate, capturedOwner, ct) =>
+                    {
+                        var identities = new SqliteDatabaseIdentityCatalogue(identityPath, capturedOwner.Validate);
+                        var profile = (await identities.ReadAsync(ct)).Single(row => row.ProfileId == binding.ProfileId);
+                        var privateLocation = new LocalDatabaseLocation<ZananceDbContext>(original);
+                        using var privateOwner = await privateLocation.Access.AcquireExclusiveAsync(ct);
+                        using var verified = await SqlCipherNewProfile.OpenAsync(privateLocation, identities, profile.LegacyProfileId, original, false,
+                            new VerifiedKeys(binding, candidate), durability, (_, _) => throw new IOException("Recovery cannot create replacement schema."),
+                            privateOwner, capturedOwner.Validate, 16 * 1024 * 1024, "4.19.0", ct);
+                        if (verified.Binding != binding) throw new IOException("Recovery verification differs from captured binding.");
+                    });
+                var secret = Enumerable.Range(1, 32).Select(value => (byte)value).ToArray();
+                try { await recoveryService.RecoverAsync(secret, owner); }
+                finally { CryptographicOperations.ZeroMemory(secret); }
+            }
+            if (!create && retirement && !allProfileRecovery) await retirementHost!.ResumePendingAsync(profiles, location, owner, CancellationToken.None);
+            if ((create || !creationResume) && !(!create && allProfileRecovery)) await runtime.Session.StartAsync(main, owner);
+        }
+        if (!create && allProfileRecovery)
+        {
+            await new ProtectedDatabaseStartup(location, profiles, runtime.Session, identityPath, ProtectedStorageInitialization.ExistingInstallation,
+                keys, durability, (_, _) => throw new IOException("Fresh recovery fixture has no later restore."), 16 * 1024 * 1024, "4.19.0").PrepareAsync();
         }
         if (!create && creationResume)
         {
@@ -173,7 +198,7 @@ internal static class ProfileCreationCompatibility
             }
             if (!await profiles.SwitchToAsync(profiles.All.Single(p => p.IsMain))) throw new IOException("Return to original failed.");
             await new AndroidSettingsPersistence(Preferences.Default).PersistAsync();
-            if (retirement)
+            if (retirement && !allProfileRecovery)
             {
                 var refused = false;
                 try { await profiles.DeleteAsync(work); }
@@ -181,6 +206,27 @@ internal static class ProfileCreationCompatibility
                 if (!refused || profiles.All.Count != 1 || !File.Exists(Path.Combine(folder, "zanance-" + work.Id + ".db") + ".restore-history.sqlite"))
                     throw new IOException("Native retirement did not retain files after catalogue persistence failure.");
             }
+        }
+        if (allProfileRecovery)
+        {
+            if ((await store.GetAccountsAsync()).Single().OpeningBalance != 250 || profiles.All.Count != 2 || !profiles.Current.IsMain)
+                throw new IOException("All-profile recovery changed main finance/catalogue.");
+            if (!create)
+            {
+                if (!await profiles.SwitchToAsync(profiles.All.Single(p => !p.IsMain)) || (await store.GetAccountsAsync()).Single().OpeningBalance != 880)
+                    throw new IOException("Inactive profile recovery lost original money.");
+                if (!await profiles.SwitchToAsync(profiles.All.Single(p => p.IsMain))) throw new IOException("Return to recovered main failed.");
+            }
+            using var recoveryOwner = await location.Access.AcquireExclusiveAsync();
+            runtime.Session.Close(recoveryOwner);
+            if (create)
+            {
+                foreach (var row in await new SqliteDatabaseIdentityCatalogue(identityPath, recoveryOwner.Validate).ReadAsync())
+                    File.Delete(Path.Combine(folder, $"{row.ProfileId:N}-{row.CandidateGeneration:N}.key"));
+                await durability.SynchronizeDirectoryAsync(default);
+                return "{\"ActualTwoProfileFixture\":true,\"BothDeviceEnvelopesMissing\":true}";
+            }
+            return "{\"AllProfileRecoveryVerifiedBeforeStartup\":true,\"ActualCoveredStartup\":true,\"MainBalance\":250,\"WorkBalance\":880,\"NoExtraProfiles\":true}";
         }
         if ((await store.GetAccountsAsync()).Single().OpeningBalance != 250) throw new IOException("Main financial packet changed.");
         if (!create && creationResume)

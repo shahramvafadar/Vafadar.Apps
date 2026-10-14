@@ -4364,3 +4364,56 @@ D-241 complete signed Release APK: artifacts/android-d241-delivery/pro.vafadar.z
 (83,671,770 bytes). Signature, pro.vafadar.zanance package, API 24/36 and both arm64-v8a/x86_64
 embedded assembly stores verified. Test outputs cleaned after all terminal checks. The local
 signed APK does not activate main encryption/recovery UI or establish phone/iOS/store acceptance.
+
+### D-242 — Preflight complete captured-profile recovery before native writes
+
+ProtectedProfileRecovery captures the actual original profile catalogue independently of commercial
+selection and requires the unpublished covered startup endpoint plus its real drained database owner.
+Stable native identities must match every captured legacy profile and the existing recovery
+installation. All canonical recovery bindings are read from strict bounded metadata; unknown profiles
+and a missing original-profile mapping fail without inferring a fresh database or empty authority.
+
+An explicit native unlock port opens the existing private vault with the caller-owned recovery key.
+Each DEK is unwrapped/confirmed and passed to the host's complete actual reference verifier before
+the first native import. A failed profile preflight therefore writes no native recovered entry.
+All retained key buffers are bounded by the existing 4096-binding inventory and cleared in finally;
+private material is disposed. Before/within each import and after the batch, catalogue, identities,
+bindings and unpublished/drained access are rechecked. Later legitimate profile edits are preserved,
+not overwritten. Native imports remain immutable and verify their owned copies against existing
+references. Recovery does not publish a session, modify profiles/preferences or complete financial
+operations; only normal protected startup runs after the verified native batch.
+
+Four actual application-source cases with real isolated SQLite/RSA metadata prove full-profile
+preflight before first write, second-profile failure with zero imports, missing mapping refusal before
+unlock, and catalogue mutation refusal without name overwrite. Native unlock/reference/import effects
+are explicit ports in these cases, not fake MAUI controls or copied product algorithms.
+
+The independent Android caller uses actual native preferences/persistence, two encrypted original
+32-migration profiles, automatic/public recovery capture and actual ProtectedProfileRecovery. It
+removes only its fictitious native envelope files, verifies/imports all original profile keys and then
+runs actual ProtectedDatabaseStartup before real switching/financial reads. Terminal evidence follows.
+Initial strict fixture compilation exposed startup-call ordering before local declarations; the
+final caller invokes startup only after the owned recovery lease is released.
+
+Main registration remains plaintext. This composes captured recovery and startup prerequisites but
+does not finish product recovery/authentication UI, real alias invalidation/hardware acceptance,
+complete concrete retained safety/preference/abandoned-reference verification, retained-file policy,
+OS exclusion or platform/iOS/provider acceptance. The final host must verify every supplied referenced
+binding; the fixture has current initial generations only and does not prove a full retention corpus.
+No schema/model/permission/export/new SDK changes; unchanged UI/native producer suites are not repeated.
+
+D-242 terminal evidence: all 3456 solution tests pass, zero failures/skips (2m55.483s), including
+four actual application recovery cases. Final independent Android strict Release AOT/trim build
+has zero warnings/errors (81.99s). The same fictitious two-profile fixture
+4535123ccf8f4f2c8db30f79f4ea1f87 removes both native envelope files and, in a cold process, runs
+actual ProtectedProfileRecovery/native vault/import plus actual ProtectedDatabaseStartup and
+real switching. Original main/work balances remain 250/880 and no extra profile is created.
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-b977a43500c74666b1e93a0e3afe068b.json.
+The fixture proves current initial native generations; full retained safety/preferences/abandoned
+reference and real alias-loss corpus remain separate unfinished host acceptance. Final Windows
+strict build has zero warnings/errors (19.42s). Main encryption/recovery UI remain inactive;
+final Android/package evidence follows below. Unchanged native producer/UI checks were not repeated.
+
+D-242 main strict Android build has zero warnings/errors (38.31s).
+
+D-242 delivery APK: artifacts/android-d242-delivery/pro.vafadar.zanance-Signed.apk, 83,257,904 bytes. Signature verification passed; package pro.vafadar.zanance, API 24/36, arm64-v8a/x86_64 and both complete assembly stores were checked. Local test signing is not store or physical-device acceptance. Test output cleanup passed with zero warnings/errors. Main protection remains inactive.
