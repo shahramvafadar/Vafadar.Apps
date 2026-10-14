@@ -237,24 +237,6 @@ public static class MauiProgram
         return builder.Build();
     }
 
-    // The database was called finance.db before the rename to Zanance (D-24): an existing file and its SQLite side
-    // files are moved once, before anything opens the database. A newer zanance.db is never replaced.
-    private static string DatabasePath()
-    {
-        var folder = FileSystem.AppDataDirectory;
-        var path = Path.Combine(folder, ZananceApp.DatabaseFileName);
-        var legacy = Path.Combine(folder, ZananceApp.LegacyDatabaseFileName);
-        if (!File.Exists(path) && File.Exists(legacy))
-        {
-            foreach (var suffix in new[] { string.Empty, "-wal", "-shm", "-journal" })
-            {
-                if (File.Exists(legacy + suffix))
-                {
-                    File.Move(legacy + suffix, path + suffix);
-                }
-            }
-        }
-
-        return path;
-    }
+    // Resolve names only while DI is built. Legacy storage moves under the covered startup owner.
+    private static string DatabasePath() => Path.Combine(FileSystem.AppDataDirectory, ZananceApp.DatabaseFileName);
 }

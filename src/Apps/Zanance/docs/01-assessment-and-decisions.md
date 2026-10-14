@@ -5120,3 +5120,27 @@ Proof:artifacts/native-sqlcipher/binary-host/ae271a43b8984c5c8eced8afcbdad0d9. N
 notices match the package byte-for-byte. The strengthened notice check was run on the existing output,
 without replaying financial scenarios. No native producer/upstream/main/UI/APK suite was repeated.
 Main remains plaintext/D-256; final application host/recovery/retention/OS and external gates remain open.
+
+### D-262 — Move legacy database naming under covered maintenance ownership
+
+DatabasePath now resolves a name only; DI construction no longer renames finance.db or its sidecars.
+The actual LocalDatabaseStartup acquires the original factory's drained exclusive lease, then performs
+the existing D-24 naming upgrade and migrates through the maintenance-owned context. A configured
+protected session or protection-required unpublished location refuses this plaintext host before any
+rename. Destination sidecar conflicts and retained protected legacy identities are preflighted before
+any family member moves. This fixes ordering/ownership; it is not a new crash-safe rename journal or
+final cipher bootstrap, and interruption/power-loss acceptance is not inferred.
+
+Five added cases exercise actual startup source: a held real context prevents all rename work,
+release permits migration with the original negative balance/account, retry remains usable, and
+conflicting/protected states preserve files. Focused8 and all3487 tests pass with no skips. Strict
+Windows32.77s and Android62.29s builds have zero errors/warnings. Existing native startup route passes
+en/fa/de loading/failure/retry and off-window storage; complete review rows remain unchanged. Six
+own-window captures:artifacts/d262-startup-native. The snapshot script's prior development files were
+returned; newly generated review files/marker are retained separately in artifacts/d262-generated-startup-data.
+The marker is removed from restored original data so later reviews cannot mistake it for new sample data.
+Complete signed Release APK:artifacts/android-d262-delivery/pro.vafadar.zanance-Signed.apk,83765978 bytes.
+Signature v2/v3, permanent package pro.vafadar.zanance, API24/36 and nonempty arm64/x64 assembly stores
+are verified. Local test signing is not store signing, phone/iOS or release acceptance.
+No unchanged SQLCipher/native producer/upstream suite or unrelated UI matrix was repeated. Main remains
+plaintext; final encrypted host/recovery/retention/OS/platform integration and the full goal remain open.

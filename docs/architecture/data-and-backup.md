@@ -1997,3 +1997,12 @@ money, binary portable backup and wrong-key refusal pass across fresh process re
 inspection failure was corrected only in its distinct fixture package, preserving creation/result/data
 and continuing the same key. See decision/device-key guide for proof/scope. Main/APK remain D-251;
 final host/recovery/retention/OS/native platform and device acceptance remain open.
+
+### Legacy brand naming and startup ownership (D-262)
+
+MAUI path resolution is pure with respect to database files. The retained finance.db-to-zanance.db
+naming upgrade runs only in LocalDatabaseStartup, under the covered worker's exclusive factory lease,
+before maintenance-owned migration. Existing newer data is never replaced; conflicting destination
+sidecars and protected legacy metadata refuse before any move. Protection-required hosts never enter
+this legacy plaintext path. This preserves the existing naming behavior with corrected sequencing,
+not a crash-safe rename protocol or permission to rename encrypted generation identities.

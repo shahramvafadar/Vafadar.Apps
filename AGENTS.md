@@ -113,7 +113,9 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data 
   with raw SQL, so it keeps working when entities grow. **After every model change regenerate the compiled model**
   (`dotnet ef dbcontext optimize …`, command in `docs/architecture/data-and-backup.md`); a test fails when it is stale.
 * Startup: no database work while the app is built (`IMauiInitializeService`, Android `Application.onCreate`); the
-  database is prepared after window creation by the covered startup worker (D-222). Keep startup work small – measure before and after.
+  database is prepared after window creation by the covered startup worker (D-222). Database path
+  resolution must not move files; legacy naming upgrades run under drained maintenance ownership
+  in that worker (D-262). Keep startup work small – measure before and after.
 * UI strings: every key in **all** of `.resx` en/fa/de/es/fr/it (tests enforce it); a new string needs a real translation
   in every language – never copy English into a translation file. Spanish uses the informal `tú`, French the polite `vous`, Italian the informal `tu` – use `eng/scripts/Add-Strings.ps1`.
   App strings: `Vafadar.Zanance.App/Resources/Strings/AppResources`; shared strings:

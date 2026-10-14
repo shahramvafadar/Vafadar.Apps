@@ -2165,3 +2165,8 @@ D-261 replaces the Windows actual-assembly host's manual DLL path with the immut
 NuGet package, runtime resolution and exact bundled notices/provenance. Strict build and original
 32-migration/cold cases pass; no native producer/main/UI/APK replay. This closes package consumption,
 not main encryption: final startup/recovery/retention/OS and external acceptance remain unfinished.
+
+D-262 fixes an actual startup ownership gap: legacy filename movement no longer runs during DI.
+The covered worker owns a drained lease and refuses protected/conflicting states before changing files.
+Five new cases/all3487 tests, strict builds and native startup observations pass. This does not close
+SEC-02/05: final cipher registration, recovery/retention/OS and platform acceptance remain open.

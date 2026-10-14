@@ -5411,3 +5411,11 @@ D-261 completes local Windows candidate package consumption for the existing pro
 immutable native package/provider, win-x64 runtime resolution, exact notices/provenance and clean
 strict build. Original32 migrations/keyed financial/portable/cold cases pass. Main storage is still
 plaintext/D-256 with3482-test baseline; app host/recovery/retention/OS/platform acceptance remains open.
+
+D-262 removes database-file mutation from DI path resolution. Actual covered startup drains its
+factory, guards protection-required state and preflights legacy naming conflicts before migration.
+Five new cases and3487 tests pass; strict Windows/Android builds and existing native startup retry
+checks pass. Main encryption remains unactivated; no crash/power-loss/device/iOS acceptance is claimed.
+
+D-262 complete signed Release APK is artifacts/android-d262-delivery/pro.vafadar.zanance-Signed.apk
+(83765978 bytes); signature/package/API24-36 and both assembly stores verified. No device release acceptance.

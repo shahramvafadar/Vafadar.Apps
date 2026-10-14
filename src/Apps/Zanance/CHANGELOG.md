@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Older-installation startup ordering (D-262)
+
+- Existing data with the earlier app name is moved under covered startup after active database work
+  drains. Conflicting files are rejected before movement; protected storage never uses this legacy path.
+
 ### Added - Validate protected restore sources before recording replacement (D-256)
 
 - Prepared rejection of corrupt portable databases or preferences before a new restore is recorded.
