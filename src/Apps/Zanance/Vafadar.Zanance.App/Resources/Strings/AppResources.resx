@@ -6375,4 +6375,13 @@ Category limits:
   <data name="Holiday_YearUnverified" xml:space="preserve">
     <value>This year is outside the reviewed range. New calendars do not guess holidays; retained Germany/Iran rules remain unchanged.</value>
   </data>
+  <data name="Home_Loading" xml:space="preserve">
+    <value>Loading your overview…</value>
+  </data>
+  <data name="Home_LoadFailed" xml:space="preserve">
+    <value>Your overview could not be loaded. Try again; your recorded data has not been changed.</value>
+  </data>
+  <data name="Home_RetryLoad" xml:space="preserve">
+    <value>Load overview again</value>
+  </data>
 </root>

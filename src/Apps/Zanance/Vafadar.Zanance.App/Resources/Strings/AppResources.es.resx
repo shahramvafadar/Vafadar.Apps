@@ -6315,4 +6315,13 @@ Límites por categoría:
   <data name="Holiday_YearUnverified" xml:space="preserve">
     <value>Este año queda fuera del intervalo revisado. Los calendarios nuevos no adivinan fiestas; las reglas previas de Alemania e Irán se conservan.</value>
   </data>
+  <data name="Home_Loading" xml:space="preserve">
+    <value>Cargando tu resumen…</value>
+  </data>
+  <data name="Home_LoadFailed" xml:space="preserve">
+    <value>No se pudo cargar tu resumen. Inténtalo de nuevo; tus datos registrados no han cambiado.</value>
+  </data>
+  <data name="Home_RetryLoad" xml:space="preserve">
+    <value>Volver a cargar el resumen</value>
+  </data>
 </root>

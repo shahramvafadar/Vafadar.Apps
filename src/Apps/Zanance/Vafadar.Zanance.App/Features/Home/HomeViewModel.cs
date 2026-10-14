@@ -279,6 +279,13 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
 
     private bool _publicationRetired;
 
+    /// <summary>Keeps the original dashboard and its actions covered until the complete load has finished.</summary>
+    public SnapshotLoadState Loading { get; } = new();
+
+    /// <summary>Retries the complete original snapshot without creating an account or posting money.</summary>
+    [RelayCommand]
+    private Task RetryLoadAsync() => Presentation.Failures.GuardAsync(LoadAsync);
+
     /// <summary>Invalidates only this original Home lifetime before its native controls are disconnected.</summary>
     internal void RetirePublication() => _publicationRetired = true;
 
@@ -294,7 +301,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         {
             if (_publicationRetired) return;
             TemplateNavigation.BeginLoad();
-            try { await LoadCoreAsync(); }
+            try { await Loading.RunAsync(LoadCoreAsync, RequireCurrentPublication); }
             catch (OperationCanceledException) when (_publicationRetired) { /* The retired native graph receives no further state publication. */ }
             catch { TemplateNavigation.FailLoad(); throw; }
         }

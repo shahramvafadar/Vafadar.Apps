@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed - Home loading and retry
+
+- Show a clear loading state instead of briefly claiming there are no accounts during startup.
+- Keep dashboard actions unavailable until the complete overview is ready.
+- Offer translated Home retry feedback after a failed read without changing financial records.
+
 ### Improved - Protected dashboard and quick choices
 
 - Avoid repeatedly reopening the encrypted database during one complete template/filter review.

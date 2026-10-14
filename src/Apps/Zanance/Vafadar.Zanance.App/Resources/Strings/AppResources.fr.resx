@@ -6323,4 +6323,13 @@ Plafonds par catégorie :
   <data name="Holiday_YearUnverified" xml:space="preserve">
     <value>Cette année dépasse la plage vérifiée. Les nouveaux calendriers ne devinent pas les fêtes ; les règles existantes pour l’Allemagne et l’Iran sont conservées.</value>
   </data>
+  <data name="Home_Loading" xml:space="preserve">
+    <value>Chargement de votre aperçu…</value>
+  </data>
+  <data name="Home_LoadFailed" xml:space="preserve">
+    <value>Votre aperçu n’a pas pu être chargé. Réessayez ; vos données enregistrées n’ont pas été modifiées.</value>
+  </data>
+  <data name="Home_RetryLoad" xml:space="preserve">
+    <value>Recharger l’aperçu</value>
+  </data>
 </root>

@@ -19,7 +19,7 @@
          keeps (§21.5). One job per card; the first screen answers "where do I stand?" and "add an expense" without scrolling. -->
     <!-- D-78: reserve the Add action below the viewport so it never covers readable content. -->
     <Grid RowDefinitions="*,Auto">
-        <ScrollView x:Name="ContentViewport">
+        <ScrollView x:Name="ContentViewport" IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding Loading.IsReady}">
             <VerticalStackLayout x:Name="Sections" Padding="16,8,16,16" Spacing="12">
 
                 <!-- Welcome without accounts -->
@@ -553,7 +553,20 @@
         </ScrollView>
 
         <Button x:Name="AddAction" Grid.Row="1" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddEntryCommand}"
+                IsEnabled="{Binding Loading.IsReady}" IsVisible="{Binding Loading.IsReady}"
                 SemanticProperties.Description="{v:Translate Tx_Add}" />
+
+        <!-- The first empty defaults are not a financial snapshot; show them only after a successful complete load. -->
+        <VerticalStackLayout Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}"
+                               WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
+            <Label x:Name="LoadingCaption" Text="{v:Translate Home_Loading}" Style="{StaticResource Secondary}"
+                   HorizontalTextAlignment="Center" SemanticProperties.Description="{v:Translate Home_Loading}" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+            <Label x:Name="LoadFailureCaption" Text="{v:Translate Home_LoadFailed}" HorizontalTextAlignment="Center" />
+            <p:WrappingAction x:Name="RetryLoadAction" Text="{v:Translate Home_RetryLoad}" Appearance="Secondary" Command="{Binding RetryLoadCommand}" />
+        </VerticalStackLayout>
 
         <!-- Reading a receipt takes a moment on the device -->
         <ActivityIndicator Grid.RowSpan="2" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" VerticalOptions="Center"

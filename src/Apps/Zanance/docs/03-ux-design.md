@@ -1196,3 +1196,12 @@ shows coverage, source and reviewed Gregorian years. Unsupported years show an e
 never imply an empty unreviewed year has no holidays. Plan uses the start year and retains a
 saved country/weekend mask after device preference changes. New countries extend the registry,
 not the money model; no implicit conversion or payroll/bank-day assertion is allowed.
+
+## Complete Home publication (D-275)
+
+Cover the original dashboard and its actions until its complete first read or reload finishes.
+Do not show No accounts from default values while an existing account is still being read.
+Loading and failed-read states use growing translated captions and a real wrapping Home retry
+button; successful retry runs the original complete read, never account creation or money posting.
+An actually empty completed snapshot still offers the existing account setup. Preserve original
+rows/handlers during the cover and distinguish this publication gate from app lock and performance.

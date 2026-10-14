@@ -2852,3 +2852,26 @@ quality/quick-resource-read-performance.md. Earlier full 3,571-test pass precede
 refinement; final Data/App tests are repeated because their production dependency changed, while
 unchanged successful test projects retain that baseline. QA-06, full loaded-Home timing, large-data
 native publication, physical devices and iOS remain open. The development goal stays active.
+
+## D-275 complete Home loading and retry
+
+Original Home now uses the existing snapshot load state from its first frame through complete
+read/publication. Empty initial defaults and dashboard actions remain unavailable until ready;
+an actually empty completed snapshot retains its existing next step. Six-language loading,
+Home-specific failure/retry, original serialized reloads and retirement guards preserve data.
+No schema, permission, SDK, key, stored preference, commercial activation or money formula changes.
+
+All 3,572 app tests pass (zero failures/skips), with the new AT-275 final-retirement publication
+case and existing initial/reload failure/retry/cancellation coverage. The final caption refinement
+passes 242 localization tests without repeating unchanged successful projects. Strict Windows and
+Android builds have zero warnings/errors. Eighteen native language/theme/width contexts, 36 focused
+loading/failure captures, 18 actual native retries and unchanged complete financial fingerprint
+pass in an independent protected installation. The first partial review exposed a wrong reused
+transaction retry caption and was superseded by the corrected complete matrix.
+
+Complete signed Android Release cold launch on the owned emulator shows preparation, actual Home
+loading, then ready balance/actions in the same process; no false empty-account card appears.
+APK signature/package/payload and exact artifact are recorded in quality/home-loading-publication.md.
+This closes the observed publication defect, not the two-second performance objective, Android
+fault injection, physical device, spoken screen-reader, OS scaling, iOS or release acceptance.
+The development goal remains active; independent owner/provider gates remain unchosen.

@@ -266,6 +266,10 @@ internal static partial class DebugSnapshots
         {
             await ReviewSaleCopyAsync(app, services, folder); return;
         }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "home-loading")
+        {
+            await ReviewHomeLoadingAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "home-balance-reload")
         {
             await ReviewHomeBalanceReloadAsync(app, services, folder); return;

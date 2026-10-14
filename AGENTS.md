@@ -1998,3 +1998,11 @@ validation ends; later explicit actions use fresh context/current authority. Do 
 key-bearing pooling or lower cipher derivation cost to improve loading. Before native independent
 reviews verify compiled PackageName, not only requested ApplicationId. Touch/rebuild the manifest
 when metadata is stale; protected Home/holiday Debug reviews must reject main identity before startup.
+
+### Complete Home publication (D-275)
+
+The first dashboard defaults are not a financial snapshot. Keep original Home and its actions
+covered through complete read/publication and failed reads; retry only the original operation.
+Retirement cannot uncover an old page. Use Home-specific translated retry wording and the same
+native scaling/semantic action patterns. Debug home-loading review requires independent identity
+before storage startup and delegates all queries/data to the actual captured protected context.

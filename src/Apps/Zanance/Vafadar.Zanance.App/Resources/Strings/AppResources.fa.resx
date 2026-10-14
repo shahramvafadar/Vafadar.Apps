@@ -6346,4 +6346,13 @@
   <data name="Holiday_YearUnverified" xml:space="preserve">
     <value>این سال خارج از محدودهٔ بررسی‌شده است. تقویم‌های جدید تعطیلات را حدس نمی‌زنند؛ قواعد قبلی آلمان و ایران حفظ شده‌اند.</value>
   </data>
+  <data name="Home_Loading" xml:space="preserve">
+    <value>در حال بارگذاری نمای کلی شما…</value>
+  </data>
+  <data name="Home_LoadFailed" xml:space="preserve">
+    <value>نمای کلی بارگذاری نشد. دوباره تلاش کنید؛ اطلاعات ثبت‌شدهٔ شما تغییر نکرده است.</value>
+  </data>
+  <data name="Home_RetryLoad" xml:space="preserve">
+    <value>بارگذاری دوبارهٔ نمای کلی</value>
+  </data>
 </root>

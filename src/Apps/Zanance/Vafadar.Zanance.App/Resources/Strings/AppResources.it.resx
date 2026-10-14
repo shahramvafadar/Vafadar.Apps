@@ -6335,4 +6335,13 @@ Limiti per categoria:
   <data name="Holiday_YearUnverified" xml:space="preserve">
     <value>Questo anno è fuori dall’intervallo verificato. I nuovi calendari non indovinano le feste; le regole precedenti per Germania e Iran restano invariate.</value>
   </data>
+  <data name="Home_Loading" xml:space="preserve">
+    <value>Caricamento del tuo riepilogo…</value>
+  </data>
+  <data name="Home_LoadFailed" xml:space="preserve">
+    <value>Non è stato possibile caricare il tuo riepilogo. Riprova; i tuoi dati registrati non sono stati modificati.</value>
+  </data>
+  <data name="Home_RetryLoad" xml:space="preserve">
+    <value>Ricarica il riepilogo</value>
+  </data>
 </root>

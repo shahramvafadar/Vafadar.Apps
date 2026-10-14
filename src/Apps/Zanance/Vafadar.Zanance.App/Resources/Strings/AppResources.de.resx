@@ -6346,4 +6346,13 @@ Kategorielimits:
   <data name="Holiday_YearUnverified" xml:space="preserve">
     <value>Dieses Jahr liegt außerhalb des geprüften Bereichs. Neue Kalender raten keine Feiertage; bisherige Regeln für Deutschland und Iran bleiben erhalten.</value>
   </data>
+  <data name="Home_Loading" xml:space="preserve">
+    <value>Deine Übersicht wird geladen…</value>
+  </data>
+  <data name="Home_LoadFailed" xml:space="preserve">
+    <value>Deine Übersicht konnte nicht geladen werden. Versuche es erneut; deine gespeicherten Daten wurden nicht verändert.</value>
+  </data>
+  <data name="Home_RetryLoad" xml:space="preserve">
+    <value>Übersicht erneut laden</value>
+  </data>
 </root>

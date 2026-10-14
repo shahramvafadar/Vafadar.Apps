@@ -7,6 +7,22 @@ namespace Vafadar.Zanance.App.Tests;
 /// <summary>Actual snapshot publication/interaction boundary, including asynchronous, failed and repeated loads.</summary>
 public sealed class SnapshotLoadTests
 {
+    [Fact, Trait("AT", "AT-275")]
+    public async Task Retired_home_publication_cannot_uncover_after_the_last_read_finishes()
+    {
+        var load = new SnapshotLoadState();
+        var read = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var retired = false;
+        var operation = load.RunAsync(() => read.Task, () =>
+        {
+            if (retired) throw new OperationCanceledException("Original Home retired before final publication.");
+        });
+        retired = true; read.SetResult();
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => operation);
+        Assert.True(operation.IsCanceled);
+        Assert.False(load.HasLoaded); Assert.False(load.IsReady); Assert.True(load.HasFailed);
+    }
+
     [Fact, Trait("AT", "AT-83")]
     public void First_frame_cannot_show_results_or_accept_filter_input()
     {

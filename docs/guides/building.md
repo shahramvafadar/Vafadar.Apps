@@ -784,3 +784,14 @@ memory-only preferences in the independent storageacceptance identity. It captur
 own window and compares financial rows. Hidden RTL popup peer selection is unavailable; layout
 fixtures are not selection acceptance. Signed Android Settings XML checks cover actual selection
 separately. Restore the normal ApplicationId and rebuild after independent Windows review.
+
+### Original Home loading review (D-275)
+
+The Debug home-loading snapshot route requires the compiled storageacceptance identity and the
+independent protected fixture marker before startup. It forwards actual protected contexts, holds
+one captured read, injects one controlled later I/O failure and invokes the real native retry.
+It never substitutes queries or financial calculations. Own-window captures cover original loading
+and failure at en/fa/de, both themes and 360/412/wide. A caption defect invalidates that partial
+run; finish the affected corrected matrix before handoff. Restore the normal ApplicationId and
+verify PackageName after review. Signed Release cold UI uses fresh emulator XML only, with one
+confirmed live process; missing hierarchy is not stale-tree evidence or permission to restart.
