@@ -2410,3 +2410,20 @@ Existing native warnings and the separate unprivileged Windows OpenSSL-suite sco
 No unrelated successful app/UI/full-suite/APK replay: application coverage remains 3,574 behaviors
 (3,573 full plus one focused), signed APK remains D-276. See quality/windows-native-ci.md for the
 exact path, artifact policy and remaining platform/security/device/release gates. Full goal remains open.
+
+
+## D-280 current protected search and validated-save workloads
+
+The independent protected executable now exercises original complete search/group and validated entry
+Save on fresh reference/tenfold data. Focused ledger mode omits unchanged D-278 read/calculation cohorts;
+default hosted runs include all operations. Four searches per shape check unique transfer/missing/numeric/
+complete results; four actual saves per shape verify stored fields and delete exactly their own row.
+Complete schema/header/integrity/typed rows still match the pre-migration encrypted rollback afterward.
+
+Actual warmed unique search/group medians are 9.084 / 17.202 ms; validated saves 68.810 / 69.033 ms.
+Search timers include result checks and exclude initial read/native rendering. Both workloads finish,
+all eight temporary rows are read back/removed and both original plaintext files are absent. Strict
+Release builds have zero warnings/errors. See quality/protected-ledger-performance.md for all samples,
+result counts, preservation and timing limits. No unrelated app/UI/APK/full-test replay or new app
+change: 3,574 covered behaviors retain their qualified baseline. Native phone/Home/search/Save, cold/
+ANR, iOS, the approximate two-second objective and full goal acceptance remain open.

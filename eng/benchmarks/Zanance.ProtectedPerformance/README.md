@@ -12,6 +12,20 @@ dotnet build eng/benchmarks/Zanance.ProtectedPerformance -c Release -p:Continuou
 dotnet run --project eng/benchmarks/Zanance.ProtectedPerformance -c Release --no-build -- artifacts/protected-new-run
 ```
 
+For a focused search/save qualification after changing those benchmark operations, use a new
+root and `ledger`; it omits previously qualified resource-read/calculation timing cohorts:
+
+```powershell
+dotnet run --project eng/benchmarks/Zanance.ProtectedPerformance -c Release --no-build -- artifacts/protected-ledger-new ledger
+```
+
+The default/full run includes these ledger operations too. Four original search/group samples
+cover a known unique transfer, no match, a numeric query and the whole fixture; complete result
+and no-duplicate checks are inside that timer. Validated SaveEntryAsync has four separate timed
+transactions, each followed by actual stored-row read-back and deletion of exactly that row.
+Read-back/cleanup are outside the save timer. The final complete verifier must still match every
+original schema/header/typed value against the retained pre-migration encrypted rollback.
+
 The directory must not exist. Redirected ancestors and paths outside artifacts are refused.
 Only this executable's marked fictitious root can be resumed explicitly after an actual failure:
 

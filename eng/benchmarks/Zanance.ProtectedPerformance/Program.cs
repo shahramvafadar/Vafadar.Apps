@@ -10,13 +10,14 @@ using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Performance;
 
-if (!OperatingSystem.IsWindows() || args.Length is < 1 or > 2 || (args.Length == 2 && args[1] != "resume"))
-    throw new ArgumentException("One new Windows fictitious output directory, or its explicit resume, required.");
+if (!OperatingSystem.IsWindows() || args.Length is < 1 or > 2 || (args.Length == 2 && args[1] is not ("resume" or "ledger")))
+    throw new ArgumentException("Provide a new Windows fictitious output directory, or explicit resume/ledger mode.");
 var requested = Path.GetFullPath(args[0]);
 var allowed = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "artifacts"));
 if (!requested.StartsWith(allowed + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
     throw new IOException("Independent performance output must be inside repository artifacts.");
-var resume = args.Length == 2;
+var resume = args.Length == 2 && args[1] == "resume";
+var ledgerOnly = args.Length == 2 && args[1] == "ledger";
 var root = resume ? requested : FixtureDirectory.Create(requested);
 if (!File.Exists(Path.Combine(root, "fictitious-performance.marker"))) throw new IOException("Independent root marker missing.");
 for (var ancestor = new DirectoryInfo(root); ancestor is not null; ancestor = ancestor.Parent)
@@ -68,27 +69,70 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
             { var clock = Stopwatch.StartNew(); await operation(); clock.Stop(); times.Add(clock.Elapsed.TotalMilliseconds); }
             metrics.Add(name, times);
         }
-        await Measure("ReadAllEntries", async () =>
-        { if ((await store.GetEntriesAsync(cancellationToken: ct)).Count != shape.Entries) throw new IOException("Protected workload entry count changed."); });
-        await Measure("CompletePlanReadAndValidate", async () =>
+        if (!ledgerOnly)
         {
-            var packet = await plans.GetWorkSnapshotAsync(ct);
-            if (packet.Schedules.Count != shape.Schedules) throw new IOException("Protected schedule count changed.");
-            await plans.ValidateWorkSnapshotAsync(packet, ct);
-        });
-        await Measure("QuickPacketReadAndValidate", async () =>
-        {
-            var packet = await store.GetQuickResourceReviewAsync(cancellationToken: ct);
-            if (packet.Accounts.Count != shape.Accounts) throw new IOException("Protected account count changed.");
-            await store.ValidateQuickResourceReviewAsync(packet, ct);
-        });
+            await Measure("ReadAllEntries", async () =>
+            { if ((await store.GetEntriesAsync(cancellationToken: ct)).Count != shape.Entries) throw new IOException("Protected workload entry count changed."); });
+            await Measure("CompletePlanReadAndValidate", async () =>
+            {
+                var packet = await plans.GetWorkSnapshotAsync(ct);
+                if (packet.Schedules.Count != shape.Schedules) throw new IOException("Protected schedule count changed.");
+                await plans.ValidateWorkSnapshotAsync(packet, ct);
+            });
+            await Measure("QuickPacketReadAndValidate", async () =>
+            {
+                var packet = await store.GetQuickResourceReviewAsync(cancellationToken: ct);
+                if (packet.Accounts.Count != shape.Accounts) throw new IOException("Protected account count changed.");
+                await store.ValidateQuickResourceReviewAsync(packet, ct);
+            });
+        }
         var entries = await store.GetEntriesAsync(cancellationToken: ct); var accounts = await store.GetAccountsAsync(cancellationToken: ct);
-        await Measure("OriginalBalancesAndPeriodTotals", () =>
+        if (!ledgerOnly) await Measure("OriginalBalancesAndPeriodTotals", () =>
         {
             _ = LedgerCalculator.TotalBalances(accounts, entries, PerformanceFixture.Today);
             _ = LedgerCalculator.Totals(accounts, entries, new LedgerFilter(new(2026, 10, 1), PerformanceFixture.Today));
             return Task.CompletedTask;
         });
+        var byId = accounts.ToDictionary(account => account.Id);
+        var searchCounts = new Dictionary<string, int>();
+        foreach (var query in new[] { "QA06 item 000012", "not-present", "12.50", "QA06 item" })
+        {
+            await Measure("SearchAndGroup:" + query, () =>
+            {
+                // Execute the same complete Core filtering/grouping path as Transactions, without a result cap.
+                var matching = EntrySearch.Apply(entries, new EntryFilter(Text: query), _ => "Fictitious category", byId).ToList();
+                var groups = EntrySearch.ByDay(matching, byId);
+                if (groups.Sum(group => group.Entries.Count) != matching.Count
+                    || matching.Select(entry => entry.Id).Distinct().Count() != matching.Count
+                    || (query == "QA06 item 000012" && (matching.Count != 1 || matching[0].Id != PerformanceFixture.Id(2, 12)
+                        || matching[0].Kind != EntryKind.Transfer))
+                    || (query == "not-present" && matching.Count != 0)
+                    || (query == "QA06 item" && matching.Count != shape.Entries))
+                    throw new IOException("Protected search results differ from the complete known fixture.");
+                searchCounts[query] = matching.Count;
+                return Task.CompletedTask;
+            });
+        }
+        var savedTimes = new List<double>();
+        for (var sample = 0; sample < 4; sample++)
+        {
+            var entry = new LedgerEntry { AccountId = accounts[0].Id, Amount = 1234,
+                Date = PerformanceFixture.Today, Kind = EntryKind.Expense, Title = "QA06 protected save" };
+            // Time only the real validated transaction. Read-back and exact cleanup are outside this boundary.
+            var clock = Stopwatch.StartNew();
+            var saved = await store.SaveEntryAsync(entry, ct);
+            clock.Stop();
+            if (!saved.Succeeded) throw new IOException("Protected validated entry save failed.");
+            var actual = await store.GetEntryAsync(entry.Id, ct);
+            if (actual is null || actual.AccountId != entry.AccountId || actual.Amount != 1234
+                || actual.Date != entry.Date || actual.Kind != EntryKind.Expense || actual.Title != entry.Title)
+                throw new IOException("Protected saved row read-back differs.");
+            var removed = await store.DeleteEntryAsync(entry.Id, ct);
+            if (removed.Count != 1 || removed[0].Id != entry.Id || await store.GetEntryAsync(entry.Id, ct) is not null)
+                throw new IOException("Protected saved-row cleanup did not remove exactly its own row.");
+            savedTimes.Add(clock.Elapsed.TotalMilliseconds);
+        }
+        metrics.Add("SaveValidatedEntry", savedTimes);
         using var afterBytes = new MemoryStream(); await services.GetRequiredService<IBackupSource>().WriteAsync(afterBytes, ct);
         afterBytes.Position = 0;
         await using var portable = await SqliteMemorySnapshot.OpenAsync(afterBytes, 256 * 1024 * 1024, ct);
@@ -106,10 +150,11 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
         finally { CryptographicOperations.ZeroMemory(retainedKey); }
         results.Add(new { Shape = shape, ExistingFixtureResumed = existing, ProtectedPreparationMs = migrationMs,
             FirstThenThreeWarmMilliseconds = metrics, CompleteSchemaAndTypedRowsUnchanged = true,
+            SearchResultCounts = searchCounts, SavedRowsReadBackAndRemoved = savedTimes.Count,
             PlaintextOriginalRemoved = !File.Exists(original), CipherBytes = new FileInfo(generation.Path).Length });
     }
     await File.WriteAllTextAsync(Path.Combine(root, "measurements.json"), JsonSerializer.Serialize(new
-    { Results = results, CipherVersion = "4.19.0", ActualProductionAssemblies = true,
+    { Results = results, LedgerOnly = ledgerOnly, CipherVersion = "4.19.0", ActualProductionAssemblies = true,
         NativeUiOrDeviceAcceptance = false }, new JsonSerializerOptions { WriteIndented = true }), ct);
 }
 Console.WriteLine("Independent protected reference and tenfold workloads completed with unchanged financial data.");

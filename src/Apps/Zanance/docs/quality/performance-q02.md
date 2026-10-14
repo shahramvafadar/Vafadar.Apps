@@ -203,3 +203,11 @@ Ten cases and main 3,179 pass; six native Windows caption contexts pass. Six nor
 See [protected-workload-performance.md](protected-workload-performance.md) for current protected
 reference/tenfold production-store measurements, complete logical preservation and exact resume
 limitations. Historical plaintext search/save measurements above are not current cipher evidence.
+
+
+## Current protected search/save (D-280)
+
+[Protected ledger evidence](protected-ledger-performance.md) now supplies current Windows reference/
+tenfold original search/group and actual validated-save/read-back/cleanup measurements, with complete
+logical preservation. Historical D-75 UI/search/save observations above remain historical and do not
+become current protected native-device acceptance. See the report for exact timer boundaries.
