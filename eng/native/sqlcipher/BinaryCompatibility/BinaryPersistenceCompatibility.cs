@@ -75,14 +75,14 @@ internal static class BinaryPersistenceCompatibility
             finally { CryptographicOperations.ZeroMemory(key); }
         }
         Console.WriteLine("{\"ActualPersistenceAssemblies\":true,\"Original32Migrations\":true,\"NegativeMoneyPreserved\":true,\"ActualBinaryPortableSource\":true,\"WrongKeyRefused\":true}");
-        
+
         static async Task BuildSchema(SqliteConnection connection, CancellationToken ct)
         {
             await using var db = new ZananceDbContext(new DbContextOptionsBuilder<ZananceDbContext>()
                 .UseSqlite(connection, contextOwnsConnection: false).UseModel(ZananceDbContextModel.Instance).Options);
             await db.Database.MigrateAsync(ct);
         }
-        
+
     }
 }
 
