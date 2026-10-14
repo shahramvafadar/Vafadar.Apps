@@ -53,6 +53,8 @@
     <PackageVersion Include="SQLitePCLRaw.bundle_e_sqlcipher" Version="2.1.11" />
     <!-- Maintained managed bridge for our source-built candidate; does not contain a native crypto binary. -->
     <PackageVersion Include="SQLitePCLRaw.provider.sqlcipher" Version="3.0.5" />
+    <!-- Independent source-built package qualification; no application native adoption is implied. -->
+    <PackageVersion Include="Vafadar.Native.SqlCipher.Android" Version="4.19.0-candidate.3" />
     <PackageVersion Include="System.Security.Cryptography.ProtectedData" Version="10.0.12" />
   </ItemGroup>
 

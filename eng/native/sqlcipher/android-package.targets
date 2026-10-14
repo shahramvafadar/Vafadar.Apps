@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+    <AndroidAsset Include="$(MSBuildThisFileDirectory)../../licenses/ThirdPartyNotices.txt" Link="native/sqlcipher/ThirdPartyNotices.txt" />
+    <AndroidAsset Include="$(MSBuildThisFileDirectory)../../manifest.json" Link="native/sqlcipher/manifest.json" />
+  </ItemGroup>
+</Project>

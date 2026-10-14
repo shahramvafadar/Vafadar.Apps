@@ -39,7 +39,7 @@ $notices = 'Owner-written Zanance source remains all rights reserved. Component 
 foreach ($license in @('SQLCipher.txt','OpenSSL.txt','NDK-CompilerRuntime.txt')) {
     $notices += "`n`n" + (Get-Content -LiteralPath (Join-Path $candidate ('licenses/' + $license)) -Raw -Encoding UTF8)
 }
-$id = 'Vafadar.Native.SqlCipher.Android'; $version = $inputLock.sources.sqlcipher.tag.TrimStart('v') + '-candidate.1'
+$id = 'Vafadar.Native.SqlCipher.Android'; $version = $inputLock.sources.sqlcipher.tag.TrimStart('v') + '-candidate.3'
 $nuspec = @"
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd"><metadata>
@@ -49,6 +49,9 @@ $nuspec = @"
 <dependencies><group targetFramework="net10.0"><dependency id="SQLitePCLRaw.provider.sqlcipher" version="[$($inputLock.managedProviderReview.version)]" /></group></dependencies>
 </metadata></package>
 "@
+# Consumers receive exact ABI items and bundled notices from the package itself.
+$targets = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'android-package.targets') -Raw -Encoding UTF8
+$entries['buildTransitive/net10.0-android/' + $id + '.targets'] = [Text.Encoding]::UTF8.GetBytes($targets.Replace("`r`n","`n"))
 $entries[$id + '.nuspec'] = [Text.Encoding]::UTF8.GetBytes($nuspec.Replace("`r`n","`n"))
 $entries['licenses/ThirdPartyNotices.txt'] = [Text.Encoding]::UTF8.GetBytes($notices.Replace("`r`n","`n"))
 $entries['manifest.json'] = [IO.File]::ReadAllBytes($manifestPath)

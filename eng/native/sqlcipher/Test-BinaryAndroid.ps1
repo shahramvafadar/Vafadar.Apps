@@ -10,7 +10,17 @@ $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
 $candidate = Join-Path $root 'candidate'
 $project = Join-Path $PSScriptRoot 'BinaryCompatibility.Android'
 if (-not $UseExistingBuild) {
-    & dotnet build $project -c Release -p:ContinuousIntegrationBuild=true "-p:NativeCandidateDirectory=$candidate" *> (Join-Path $root 'binary-build.log')
+    $packageName = 'consumer-' + [Guid]::NewGuid().ToString('N')
+    $packed = & (Join-Path $PSScriptRoot 'Pack-Android.ps1') -RunName $RunName -PackageName $packageName
+    $feed = Join-Path (Get-NativeInputRoot) 'feed'
+    New-Item -ItemType Directory -Force $feed | Out-Null
+    $destination = Join-Path $feed ([IO.Path]::GetFileName($packed))
+    if (Test-Path -LiteralPath $destination) {
+        if ((Get-FileHash -LiteralPath $packed).Hash -ne (Get-FileHash -LiteralPath $destination).Hash) { throw 'Immutable local package version differs; bump its version.' }
+    } else { Copy-Item -LiteralPath $packed -Destination $destination }
+    & dotnet restore $project --configfile (Join-Path $PSScriptRoot 'native-package.nuget.config') *> (Join-Path $root 'binary-package-restore.log')
+    if ($LASTEXITCODE -ne 0) { throw 'Local source-built package restore failed.' }
+    & dotnet build $project -c Release -p:ContinuousIntegrationBuild=true -p:TreatWarningsAsErrors=true --no-restore *> (Join-Path $root 'binary-build.log')
     if ($LASTEXITCODE -ne 0) { throw 'Actual-assembly Android build failed.' }
 }
 $apk = Join-Path $project 'bin/Release/net10.0-android/pro.vafadar.zanance.binarycompatibility-Signed.apk'
@@ -18,6 +28,7 @@ $manifest = Get-Content (Join-Path $candidate 'manifest.json') -Raw -Encoding UT
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 $zip = [IO.Compression.ZipFile]::OpenRead($apk)
 try {
+    if (-not $zip.GetEntry('assets/native/sqlcipher/ThirdPartyNotices.txt') -or -not $zip.GetEntry('assets/native/sqlcipher/manifest.json')) { throw 'Source-built package notices or provenance are missing from APK.' }
     if ($zip.Entries.FullName -match '/libe_sqlite3\.so$') { throw 'Default native engine leaked into actual-assembly caller.' }
     foreach ($slice in $manifest.files) {
         $entry = $zip.GetEntry('lib/' + $slice.abi + '/libsqlcipher.so')

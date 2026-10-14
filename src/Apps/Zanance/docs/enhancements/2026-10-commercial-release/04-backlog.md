@@ -2136,3 +2136,9 @@ migration-prefix/portable JSON preflight. The actual app adapter holds the drain
 falls back to sequential restore. All 3482 tests pass. Native fixture exception-catch failure is
 preserved without reset; final runtime qualification is recorded in the decision log. Main remains
 plaintext; final native registration, restore/recovery UI, retention/reconciliation/OS/device gates remain open.
+
+D-257 qualifies actual production-assembly Android callers restored from the immutable source-built
+candidate NuGet package, including original runtime bytes and bundled notices/provenance. Initial
+XML and duplicate-asset warning evidence are retained; final cold same-key run is clean. Main remains
+D-256/plaintext; no unrelated producer/main/UI/test/APK replay. Native matrix/warning review and final
+registration/recovery/retention/OS/device/release acceptance remain open.

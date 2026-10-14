@@ -4951,3 +4951,43 @@ D-256 signed delivery: artifacts/android-d256-delivery/pro.vafadar.zanance-Signe
 Signature, pro.vafadar.zanance package, API24/36 and both complete assembly stores verified. All managed,
 native and build processes completed before successful test-output cleanup. Main remains plaintext;
 this APK does not claim whole-app encryption, phone/iOS/provider/retention/OS or product release acceptance.
+
+### D-257 — Qualify source-built Android package consumption
+
+Android candidate packaging now includes framework-specific buildTransitive assets for bundled
+component notices and source provenance. Native slices remain standard runtimes/android-arm64/native
+and runtimes/android-x64/native assets; the Android SDK imports these itself. The actual production-
+assembly caller now references Vafadar.Native.SqlCipher.Android rather than loose build-directory
+AndroidNativeLibrary items. Package version4.19.0-candidate.3 is centrally pinned; managed bridge3.0.5
+and official source-built native bytes remain unchanged. Candidate status is not changed to release
+acceptance. No package is published to a remote feed.
+
+The repeatable caller packs into a fresh owned output, populates an immutable local feed only when
+its version/hash matches, and restores with explicitly named native-package.nuget.config. Exact
+source mapping confines this package name to the local feed; other dependencies use the established
+public source. The config's explicit name avoids changing implicit restore configuration for other
+native/repository projects. Binary builds additionally require TreatWarningsAsErrors; APK inspection
+requires both original ABI hashes, packaged notices/provenance and no default e_sqlite3 leakage.
+
+The first edit damaged a LF project's closing XML while removing CRLF-counted text; restore refused
+before native execution. The exact project was repaired, retaining d257-package-consumer.log. Candidate.2
+then restored and ran correctly but explicit AndroidNativeLibrary items duplicated SDK runtime assets,
+producing two XA4301 warnings. Original runtime/build evidence is retained, not clean-build acceptance.
+Those duplicate items were removed from package targets and immutable version bumped to candidate.3;
+no warning was suppressed or package cache replaced.
+
+Final strict signed Release AOT/trim caller build has zero warnings/errors (50.72s). Only the cold
+phase of the same fictitious run331ce8fb80634664ab4e32ae4e716d84 continues through the new package;
+creation/database/native keys were not reset. Actual production persistence assemblies, 32 migrations,
+negative money, binary portable snapshot and wrong-key refusal pass. Proof:
+artifacts/native-sqlcipher/build/android-d/binary-runtime-proof-b1c72b1eee9241c7bc79453ed129afae.json.
+Earlier creation/runtime proof remains binary-runtime-proof-8999f5611cc04175a5e8ef4d3892ab5f.json.
+
+Two packages of the final version are byte-identical, hash
+a31d841fe87e14ed93d678b8d0b94baa72dffabfd5dae17949192416427aa1d8; both native slices exactly match
+reviewed candidate files. Explicit renamed-config restore and script parsers pass. The actual main
+asset graph contains the standard bundle and no Vafadar native cipher package. Main source/UI/engine/
+APK remain D-256, with its3482-test baseline; no unrelated tests/main builds/APK or unchanged producer
+suite was repeated. This qualifies package consumption on observed Android x64/API36/4KiB only;
+arm64/API24/16KiB OS/iOS, native warning review, main registration/recovery/retention/OS/device/release
+acceptance remain open. The full goal and SEC scope are not complete.
