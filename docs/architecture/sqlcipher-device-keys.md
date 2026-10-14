@@ -631,3 +631,38 @@ provider/release acceptance stay open. Unchanged UI and upstream producer suites
 D-249 strict main Android build is clean (39.64s), zero warnings/errors.
 
 D-249 complete signed Release APK: artifacts/android-d249-delivery/pro.vafadar.zanance-Signed.apk, 83,704,538 bytes. Signature, pro.vafadar.zanance package, API 24/36, arm64-v8a/x86_64 and both complete embedded assembly stores verified. Test outputs cleaned after terminal checks. Local signing is not phone/iOS/store acceptance; main protection remains inactive.
+
+### D-250 — Retire bounded temporary receipts under authenticated whole-profile authority
+
+Native profile reference discovery recognizes only the exact legacy receipt-stage name and the
+canonical lowercase nonempty GUID attempt suffix introduced in D-249. These are bounded temporary
+receipt metadata, never key or selector authority. A reviewed whole-profile retirement may capture
+them only after the actual final recovered key and its original/recovered native-object receipt pass
+authentication. Oversized stages, invalid names, missing final recovered authority and staged key
+envelopes remain refused. No age-based guess or directory-wide deletion is introduced.
+
+Each permitted stage enters the existing immutable native-object inventory with its root/file ids,
+length and full fingerprint. The existing durable catalogue-removal barrier and all-object preflight
+still precede exact native deletion. Replaced/changed stages cannot be silently removed. This allows
+receipt remnants preserved by successful explicit recovery to leave with their reviewed profile,
+without giving those remnants permission to open financial data or authorizing automatic key cleanup.
+
+Three actual application-source/native Windows cases cover removal of bounded legacy/unique stages,
+refusal without a published recovered entry and refusal of oversized metadata. Nine focused cases
+pass; all 3467 solution tests pass, zero failures/skips (2m53.771s).
+The independent signed Release AOT/trim Android caller creates both receipt-stage forms, performs
+actual finance-verified key recovery, captures real profile retirement and fails after actual native
+catalogue persistence. Cold actual host continuation removes only the captured target artifacts and
+recovery/identity mappings. Main balance 250 and its recovery material remain. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-150ac54a41354b7093e18671608572ad.json,
+run 21bea656d24e4c618f8fc38f0dc53772. Strict native build is clean (66.92s).
+
+This closes reviewed profile retirement of bounded receipt-only remnants. It does not classify or
+remove malformed key stages, unknown artifacts, historic pre-intent orphans or files still referenced
+by recovery/safety/history. Final automatic safety/generation/key/alias retention and main recovery/UI/
+provider/OS adoption remain open, as do physical-device/iOS/provider/release gates. No schema/model/
+permission/UI change; main registration remains plaintext. Unchanged UI/producer suites not repeated.
+
+D-250 strict main builds have zero warnings/errors: Windows 17.78s and Android 91.82s.
+
+D-250 complete signed Release APK: artifacts/android-d250-delivery/pro.vafadar.zanance-Signed.apk, 83,266,096 bytes. Signature, pro.vafadar.zanance package, API 24/36, arm64-v8a/x86_64 and both complete embedded assembly stores verified. Test outputs cleaned after terminal checks. Local signing is not phone/iOS/store acceptance; main protection remains inactive.

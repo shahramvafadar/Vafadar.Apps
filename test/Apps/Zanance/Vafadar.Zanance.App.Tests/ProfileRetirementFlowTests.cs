@@ -95,6 +95,31 @@ public sealed class ProfileRetirementFlowTests
         Assert.False(File.Exists(fixture.TargetKey + ".recovered.receipt")); Assert.Single(fixture.Profiles.All);
     }
 
+    [Fact, Trait("AT", "AT-250")]
+    public async Task Reviewed_profile_retirement_removes_bounded_non_authoritative_receipt_stages_after_final_authentication()
+    {
+        if (!OperatingSystem.IsWindows()) return;
+        using var fixture = new Fixture(); await fixture.InitializeAsync(withRecovery: true, withRecoveredEntry: true);
+        var legacy = fixture.TargetKey + ".recovered.receipt.creating";
+        var attempt = legacy + "." + Guid.NewGuid().ToString("N");
+        await File.WriteAllBytesAsync(legacy, [1, 2, 3], Ct); await File.WriteAllBytesAsync(attempt, [9], Ct);
+        await fixture.Profiles.DeleteAsync(fixture.Work, Ct);
+        Assert.False(File.Exists(legacy)); Assert.False(File.Exists(attempt)); Assert.Single(fixture.Profiles.All);
+    }
+
+    [Theory, Trait("AT", "AT-250")]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task Unqualified_receipt_stages_do_not_authorize_catalogue_or_file_removal(bool oversized)
+    {
+        if (!OperatingSystem.IsWindows()) return;
+        using var fixture = new Fixture(); await fixture.InitializeAsync(withRecovery: true, withRecoveredEntry: oversized);
+        var stage = fixture.TargetKey + ".recovered.receipt.creating";
+        await File.WriteAllBytesAsync(stage, new byte[oversized ? KeyRecoveryReceipt.MaximumBytes + 1 : 3], Ct);
+        await Assert.ThrowsAsync<IOException>(() => fixture.Profiles.DeleteAsync(fixture.Work, Ct));
+        Assert.Equal(2, fixture.Profiles.All.Count); Assert.True(File.Exists(stage)); Assert.True(File.Exists(fixture.TargetKey));
+    }
+
     private sealed class Fixture : IDisposable
     {
         private readonly FlowFixture flow = new();

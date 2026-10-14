@@ -181,6 +181,9 @@ internal static class ProfileCreationCompatibility
                 var catalogue = new SqliteDatabaseIdentityCatalogue(identityPath, recoveryOwner.Validate);
                 var target = (await catalogue.ReadAsync()).Single(row => row.LegacyProfileId == work.Id);
                 var key = await keys.ReadAsync(target.InitialCandidateKey, default);
+                var receiptStage = Path.Combine(folder, $"{target.ProfileId:N}-{target.CandidateGeneration:N}.key.recovered.receipt.creating");
+                await File.WriteAllBytesAsync(receiptStage, [1, 2, 3]);
+                await File.WriteAllBytesAsync(receiptStage + "." + Guid.NewGuid().ToString("N"), [9]);
                 try
                 {
                     await ((IDatabaseGenerationKeyRecovery)keys).ImportRecoveredAsync(target.InitialCandidateKey, key, async (candidate, ct) =>

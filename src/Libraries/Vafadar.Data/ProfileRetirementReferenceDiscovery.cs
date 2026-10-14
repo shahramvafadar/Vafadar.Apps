@@ -57,7 +57,16 @@ public static class ProfileRetirementReferenceDiscovery
         var keyPrefix = request.ProfileId.ToString("N") + "-";
         foreach (var name in observed["keys"].Where(name => name.StartsWith(keyPrefix, StringComparison.Ordinal)))
         {
-            var baseName = name.EndsWith(".key.recovered.receipt.creating", StringComparison.Ordinal) ? name[..^".recovered.receipt.creating".Length]
+            const string receiptStageSuffix = ".recovered.receipt.creating";
+            var receiptStage = name.Length >= 69 && name.AsSpan(69).StartsWith(receiptStageSuffix, StringComparison.Ordinal);
+            if (receiptStage && name.Length != 69 + receiptStageSuffix.Length)
+            {
+                var suffix = name[(69 + receiptStageSuffix.Length)..];
+                if (suffix.Length != 33 || suffix[0] != '.' || !Guid.TryParseExact(suffix.AsSpan(1), "N", out var attempt)
+                    || attempt == Guid.Empty || suffix[1..] != attempt.ToString("N"))
+                    throw new IOException("Unknown temporary receipt attempt requires reconciliation.");
+            }
+            var baseName = receiptStage ? name[..69] : name.EndsWith(".key.recovered.receipt.creating", StringComparison.Ordinal) ? name[..^".recovered.receipt.creating".Length]
                 : name.EndsWith(".key.recovered.receipt", StringComparison.Ordinal) ? name[..^".recovered.receipt".Length]
                 : name.EndsWith(".key.recovered.creating", StringComparison.Ordinal) ? name[..^".recovered.creating".Length]
                 : name.EndsWith(".key.recovered", StringComparison.Ordinal) ? name[..^".recovered".Length] : name;
@@ -78,7 +87,16 @@ public static class ProfileRetirementReferenceDiscovery
                     var recovered = await files.CaptureAsync("keys", baseName + ".recovered", ct).ConfigureAwait(false);
                     var receipt = await files.ReadAsync("keys", baseName + ".recovered.receipt", KeyRecoveryReceipt.MaximumBytes, prefix: false, ct).ConfigureAwait(false);
                     KeyRecoveryReceipt.Verify(receipt, binding, originalKey, recovered, key);
-                    if (name.EndsWith(".creating", StringComparison.Ordinal)) throw new IOException("Staged recovery artifacts require explicit reconciliation.");
+                    if (receiptStage)
+                    {
+                        // These bounded receipt-only temporary names are never read as key/selector
+                        // authority. A reviewed whole-profile retirement may capture them only after
+                        // the actual final recovered key and native-object receipt were authenticated.
+                        if (keyArtifact.Length > KeyRecoveryReceipt.MaximumBytes)
+                            throw new IOException("Temporary receipt exceeds its declared metadata bound.");
+                    }
+                    else if (name.EndsWith(".creating", StringComparison.Ordinal))
+                        throw new IOException("Staged recovery key artifacts require explicit reconciliation.");
                 }
                 Check();
             }

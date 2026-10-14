@@ -2094,3 +2094,10 @@ publish a separate read-back/synchronized receipt attempt without replacing fina
 Windows DPAPI and four Android staged-receipt recoveries pass; all old stages remain unchanged and
 main/work balances remain 250/880. All 3464 tests pass. Reconciliation/retention/final adoption remain
 open; published/oversized/unsafe receipt authority is not replaced and main registration remains plaintext.
+
+D-250 lets authenticated reviewed profile retirement capture/remove only bounded canonical receipt
+stage remnants through its existing immutable native inventory and durable barriers. Missing final
+authority, oversized/unknown names and key-envelope staging remain refused. Three added actual app/
+Windows cases, all 3467 tests and cold original Android profile retirement pass; main balance/recovery
+remain. This closes receipt-only profile cleanup; automatic retention/orphan/key-stage/final adoption
+and external gates remain open. Main stays plaintext.
