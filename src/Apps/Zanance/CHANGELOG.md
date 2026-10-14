@@ -1626,3 +1626,9 @@ and external gates remain open. Main stays plaintext.
 ### Home refresh (D-267)
 
 - Refresh recorded balances without first removing every amount control, avoiding the observed Windows refresh error.
+
+### Sale help and clearer messages (D-268)
+
+- Explain what a recorded sale result means and why it is not a tax calculation.
+- Browser return no longer claims a cloud connection succeeded before the app checks it.
+- English loan confirmations clearly identify the paying or receiving account.

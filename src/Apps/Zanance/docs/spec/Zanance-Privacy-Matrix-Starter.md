@@ -727,3 +727,5 @@ Financial profile/rollback files and internal safety packages are device-encrypt
 ## D-266 device authentication boundary
 
 Device-only unlock requires successful native authentication. An unavailable credential retains the cover and pending destinations. The last outcome exists in memory only; no new data flow, permission, credential storage or backup field is added. Independent diagnostic fixtures never change device credentials or native PIN storage.
+
+D-268 updates explanations and store drafts to the existing optional backup protection and Android encrypted-storage/OS-exclusion policy. No new data, export, credential storage, SDK or permission is introduced.

@@ -2796,7 +2796,7 @@
     <value>No se pudo iniciar sesión en {0}. Inténtalo de nuevo.</value>
   </data>
   <data name="Cloud_BrowserDone" xml:space="preserve">
-    <value>Sesión iniciada. Puedes cerrar esta pestaña y volver a Zanance.</value>
+    <value>El paso de inicio de sesión en el navegador ha terminado. Vuelve a Zanance para ver si la conexión se ha realizado.</value>
   </data>
   <data name="Cloud_Error_SignInAgain" xml:space="preserve">
     <value>Vuelve a conectar tu cuenta de {0}.</value>
@@ -6281,5 +6281,14 @@ Límites por categoría:
   </data>
   <data name="Recovery_BackupFailed" xml:space="preserve">
     <value>No se pudo completar la recuperación. Revisa la copia y su contraseña. Los archivos existentes se conservan. Si se interrumpió el guardado, cierra esta página y elige Reintentar en la pantalla de inicio para continuar la recuperación registrada.</value>
+  </data>
+  <data name="Help_HoldingSaleResult_Title" xml:space="preserve">
+    <value>Resultado de la venta</value>
+  </data>
+  <data name="Help_HoldingSaleResult_Text" xml:space="preserve">
+    <value>Zanance estima el resultado con el importe de la venta y el coste medio que has registrado para este bien. Si falta el coste o el importe de la venta, el resultado queda desconocido. No es un cálculo ni un documento fiscal; no se evalúan normas, exenciones ni obligaciones de declaración.</value>
+  </data>
+  <data name="Help_HoldingSaleResult_Example" xml:space="preserve">
+    <value>Si registras una venta de 120 y el coste medio de la parte vendida es 100, el resultado es +20 en la moneda del bien. Esto no significa que 20 estén sujetos a impuestos ni que debas pagar alguno.</value>
   </data>
 </root>

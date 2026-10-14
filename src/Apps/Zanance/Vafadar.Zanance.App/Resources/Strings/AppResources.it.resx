@@ -2815,7 +2815,7 @@
     <value>Impossibile accedere a {0}. Riprova.</value>
   </data>
   <data name="Cloud_BrowserDone" xml:space="preserve">
-    <value>Accesso completato. Puoi chiudere questa scheda e tornare a Zanance.</value>
+    <value>Il passaggio di accesso nel browser è terminato. Torna a Zanance per vedere se la connessione è riuscita.</value>
   </data>
   <data name="Cloud_Error_SignInAgain" xml:space="preserve">
     <value>Collega di nuovo {0}.</value>
@@ -6301,5 +6301,14 @@ Limiti per categoria:
   </data>
   <data name="Recovery_BackupFailed" xml:space="preserve">
     <value>Impossibile completare il ripristino. Controlla il backup e la sua password. I file esistenti vengono conservati. Se il salvataggio è stato interrotto, chiudi questa pagina e scegli Riprova nella schermata iniziale per continuare il ripristino registrato.</value>
+  </data>
+  <data name="Help_HoldingSaleResult_Title" xml:space="preserve">
+    <value>Risultato della vendita</value>
+  </data>
+  <data name="Help_HoldingSaleResult_Text" xml:space="preserve">
+    <value>Zanance stima il risultato dai proventi della vendita e dal costo medio registrati per questo bene. Se manca il costo o il ricavo, il risultato resta sconosciuto. Non è un calcolo delle imposte né un documento fiscale: non vengono valutate regole fiscali, esenzioni o obblighi di dichiarazione.</value>
+  </data>
+  <data name="Help_HoldingSaleResult_Example" xml:space="preserve">
+    <value>Con ricavi registrati di 120 e un costo medio della parte venduta di 100, il risultato è +20 nella valuta del bene. Questo non significa che 20 siano imponibili o che siano dovute imposte.</value>
   </data>
 </root>

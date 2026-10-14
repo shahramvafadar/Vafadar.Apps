@@ -2309,10 +2309,10 @@
     <value>Received into</value>
   </data>
   <data name="Loan_ConfirmPay" xml:space="preserve">
-    <value>Principal {0} is recorded as a transfer and interest {1} as an expense of {2}.</value>
+    <value>Principal {0} is recorded as a transfer and interest {1} as an expense from account “{2}”.</value>
   </data>
   <data name="Loan_ConfirmReceive" xml:space="preserve">
-    <value>Principal {0} is recorded as a transfer and interest {1} as income of {2}.</value>
+    <value>Principal {0} is recorded as a transfer and interest {1} as income into account “{2}”.</value>
   </data>
   <data name="Loan_InterestTitle" xml:space="preserve">
     <value>Interest – {0}</value>
@@ -2848,7 +2848,7 @@
     <value>Could not sign in to {0}. Try again.</value>
   </data>
   <data name="Cloud_BrowserDone" xml:space="preserve">
-    <value>Sign-in complete. You can close this tab and return to Zanance.</value>
+    <value>The browser sign-in step has ended. Return to Zanance to see whether the connection succeeded.</value>
     <comment>Windows: page in the browser after a Google sign-in (D-50).</comment>
   </data>
   <data name="Cloud_Error_SignInAgain" xml:space="preserve">
@@ -6341,5 +6341,14 @@ Category limits:
   </data>
   <data name="Recovery_BackupFailed" xml:space="preserve">
     <value>Recovery could not be completed. Check the backup and its password. Existing files are kept. If saving was interrupted, close this page and choose Retry on the startup screen to continue the recorded recovery.</value>
+  </data>
+  <data name="Help_HoldingSaleResult_Title" xml:space="preserve">
+    <value>Sale result</value>
+  </data>
+  <data name="Help_HoldingSaleResult_Text" xml:space="preserve">
+    <value>Zanance estimates the sale result from the proceeds and average cost recorded for this holding. Missing cost or proceeds leave the result unknown. This is not a tax calculation or a tax document; no tax rules, exemptions or filing obligations are evaluated.</value>
+  </data>
+  <data name="Help_HoldingSaleResult_Example" xml:space="preserve">
+    <value>If recorded proceeds are 120 and the removed average cost is 100, the recorded result is +20 in the holding currency. This does not mean 20 is taxable or that any tax is due.</value>
   </data>
 </root>

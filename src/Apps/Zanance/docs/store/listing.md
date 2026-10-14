@@ -1,8 +1,10 @@
 # Zanance – store listing (REL-03)
 
-Texts for Google Play (and later the App Store) in English, German and Persian. Every claim matches the release build
-and the privacy matrix (06): no account, no internet access, no ads, no tracking (the offline variant; see the end for
-the texts of a release with cloud backup, D-35). Re-check the limits in Play Console
+Draft texts for Google Play in English, Persian, German, Spanish, French and Italian. The offline variant has no
+INTERNET permission; the connected variant supports optional user-owned Google Drive/OneDrive backup. Local
+Android encryption and backup policy are implemented; real OAuth, physical-device and Store acceptance remain
+open. These drafts do not authorize publication. iOS texts require its separate implementation and acceptance.
+Re-check the limits in Play Console
 before publishing: title 30 characters, short description 80, full description 4,000.
 
 Screenshots: `eng/scripts/Run-Snapshots.ps1` with fictitious data, light and dark, one set per language
@@ -31,15 +33,14 @@ What you can do
 • Savings goals with earmarked money and suggested contributions
 • Reports with charts, a forecast of your balance, and a PDF of the month
 • Several currencies with your own exchange rates, and display units such as the toman
-• Gregorian, Persian (Solar Hijri) or lunar Hijri (Umm al-Qura) calendar, in English, German and Persian with right-to-left layout
+• Gregorian, Persian (Solar Hijri) or lunar Hijri (Umm al-Qura) calendar, in English, Persian, German, Spanish, French and Italian, with right-to-left Persian layout
 • Receipt photos and PDF invoices attached to entries; read the total, date and shop on the device
 • Separate profiles on one phone, e.g. personal and business
 • Quick add widget, dark theme, app lock with fingerprint or face
-• Encrypted backup files you keep yourself, CSV import and export
+• Backup files with optional password protection, CSV import and export
 
 Your data is yours
-Zanance stores everything in a database on your phone. Backups are encrypted with your password and go only where you
-share them. Android's own device backup may include the app data, depending on your settings.
+On Android, the financial database is encrypted with an automatic device-protected key. Password protection is optional for local and connected cloud backup files and is on by default. An unprotected portable file is readable by anyone who obtains it. Keep your backup password when you choose protection; Zanance never remembers it. Financial files are excluded from Android system backup and device transfer: restore a new device from a Zanance backup. The app PIN is separate from database encryption.
 
 ## Deutsch
 
@@ -65,15 +66,14 @@ Was Sie tun können
 • Sparziele mit zurückgelegtem Geld und vorgeschlagenen Beträgen
 • Berichte mit Diagrammen, eine Vorschau Ihres Kontostands und ein PDF des Monats
 • Mehrere Währungen mit eigenen Wechselkursen
-• Gregorianischer, persischer oder islamischer Mondkalender (Umm al-Qura), auf Deutsch, Englisch und Persisch
+• Gregorianischer, persischer oder islamischer Mondkalender (Umm al-Qura), auf Deutsch, Englisch, Persisch, Spanisch, Französisch und Italienisch
 • Belegfotos und PDF-Rechnungen an Buchungen; Betrag, Datum und Geschäft direkt auf dem Gerät auslesen
 • Getrennte Profile auf einem Handy, z. B. privat und geschäftlich
 • Schnellerfassungs-Widget, dunkles Design, App-Sperre mit Fingerabdruck oder Gesicht
-• Verschlüsselte Sicherungsdateien in Ihrer Hand, CSV-Import und -Export
+• Sicherungsdateien mit optionalem Passwortschutz, CSV-Import und -Export
 
 Ihre Daten gehören Ihnen
-Zanance speichert alles in einer Datenbank auf Ihrem Handy. Sicherungen werden mit Ihrem Passwort verschlüsselt und
-gehen nur dorthin, wohin Sie sie teilen. Die Android-Gerätesicherung kann die App-Daten je nach Einstellung einschließen.
+Auf Android ist die Finanzdatenbank mit einem automatisch erzeugten, gerätegeschützten Schlüssel verschlüsselt. Der Passwortschutz ist für lokale und verbundene Cloud-Sicherungsdateien optional und standardmäßig aktiviert. Eine ungeschützte portable Datei kann jeder lesen, der sie erhält. Bewahren Sie Ihr Sicherungspasswort auf, wenn Sie den Schutz wählen; Zanance speichert es nicht. Finanzdateien sind von Android-Systembackup und Geräteübertragung ausgeschlossen: Stellen Sie auf einem neuen Gerät eine Zanance-Sicherung wieder her. Die App-PIN ist von der Datenbankverschlüsselung unabhängig.
 
 ## فارسی
 
@@ -97,15 +97,14 @@ Zanance پول شما را جلوی چشم نگه می‌دارد – خصوصی
 • اهداف پس‌انداز با پول کنار گذاشته‌شده و مبلغ پیشنهادی
 • گزارش با نمودار، پیش‌بینی مانده و فایل PDF ماه
 • چند ارز با نرخ‌های خودتان و واحد نمایش مثل تومان
-• تقویم شمسی، میلادی یا قمری (ام‌القری)، به فارسی، انگلیسی و آلمانی با چیدمان راست‌به‌چپ و ارقام فارسی
+• تقویم شمسی، میلادی یا قمری (ام‌القری)، به فارسی، انگلیسی، آلمانی، اسپانیایی، فرانسوی و ایتالیایی؛ با چیدمان راست‌به‌چپ فارسی و انتخاب مستقل قالب اعداد
 • عکس رسید و فاکتور PDF کنار تراکنش؛ خواندن مبلغ، تاریخ و فروشگاه روی خود دستگاه
 • پروفایل‌های جدا روی یک گوشی، مثلاً شخصی و کاری
 • ویجت ثبت سریع، تم تیره، قفل اپ با اثر انگشت یا چهره
-• فایل پشتیبان رمزگذاری‌شده در دست خودتان، ورود و خروج CSV
+• فایل پشتیبان با حفاظت اختیاری رمز در دست خودتان، ورود و خروج CSV
 
 دادهٔ شما مال شماست
-Zanance همه‌چیز را در پایگاه‌داده‌ای روی گوشی شما نگه می‌دارد. پشتیبان‌ها با رمز شما رمزگذاری می‌شوند و فقط به جایی
-می‌روند که خودتان بفرستید. پشتیبان دستگاه اندروید، بسته به تنظیمات شما، ممکن است دادهٔ اپ را هم شامل شود.
+در Android، پایگاه‌دادهٔ مالی با کلید خودکار و محافظت‌شدهٔ دستگاه رمزگذاری می‌شود. حفاظت با رمز برای فایل پشتیبان محلی و پشتیبان فضای ابری متصل، اختیاری است و به‌طور پیش‌فرض فعال است. فایل قابل‌انتقال بدون حفاظت را هر کسی که به آن دسترسی پیدا کند می‌تواند بخواند. اگر حفاظت را انتخاب کردید، رمز پشتیبان را نگه دارید؛ Zanance آن را ذخیره نمی‌کند. فایل‌های مالی در پشتیبان سیستم Android و انتقال دستگاه قرار نمی‌گیرند؛ روی دستگاه جدید از پشتیبان Zanance بازیابی کنید. PIN برنامه از رمزگذاری پایگاه‌داده جداست.
 
 ## Español
 
@@ -139,7 +138,7 @@ EN TU IDIOMA
 Disponible en español, inglés, alemán y persa. La app no cambia la moneda de tus cuentas al cambiar de idioma.
 
 CONTROL SOBRE TUS DATOS
-No necesitas crear una cuenta en línea. Esta versión funciona sin acceso a internet y no muestra anuncios ni envía estadísticas de uso o informes de fallos automáticamente. Los datos se guardan en tu dispositivo. Tú eliges cuándo exportarlos o compartir una copia. Las copias locales se cifran cuando activas la protección con contraseña. Guarda la contraseña y una copia fuera del dispositivo.
+No necesitas una cuenta Zanance ni hay anuncios o seguimiento. Esta versión funciona sin acceso a internet. En Android, la base de datos financiera se cifra con una clave automática protegida por el dispositivo. La contraseña es opcional para las copias locales y las copias en la nube conectada, y está activada por defecto. Cualquiera que obtenga un archivo portátil sin protección puede leerlo. Si eliges protegerlo, conserva la contraseña: Zanance no la guarda. Los archivos financieros se excluyen de la copia del sistema Android y de la transferencia entre dispositivos; restaura una copia de Zanance en el nuevo dispositivo. El PIN de la app es independiente del cifrado de la base de datos.
 
 Zanance registra y organiza información: no realiza pagos ni transferencias bancarias. Los saldos y las previsiones dependen de tus registros; son estimaciones, no garantías ni asesoramiento de inversión. El bloqueo de la app y el cifrado de una copia de seguridad son protecciones distintas.
 
@@ -190,7 +189,7 @@ EN FRANÇAIS
 Utilisez Zanance en français. Changer de langue ne change pas la devise de vos comptes.
 
 VOS DONNÉES, VOS CHOIX
-Aucun compte Zanance à créer. Vos données sont stockées sur votre appareil et ne sont pas envoyées automatiquement au développeur. L’application n’affiche aucune publicité et n’envoie automatiquement ni statistiques d’utilisation ni rapports de plantage. Cette version fonctionne sans accès à Internet. Vous choisissez quand exporter vos données ou créer un fichier de sauvegarde, et où en conserver une copie. Les sauvegardes locales sont chiffrées lorsque vous activez la protection par mot de passe. Sans cette protection, le fichier peut être lu par toute personne qui en dispose.
+Aucun compte Zanance, publicité ou suivi. Cette version fonctionne sans accès à Internet. Sur Android, la base financière est chiffrée avec une clé automatique protégée par l’appareil. La protection par mot de passe est facultative pour les sauvegardes locales et cloud connectées, et activée par défaut. Toute personne disposant d’un fichier portable non protégé peut le lire. Si vous choisissez cette protection, conservez le mot de passe : Zanance ne le mémorise pas. Les fichiers financiers sont exclus de la sauvegarde système Android et du transfert entre appareils ; restaurez une sauvegarde Zanance sur le nouvel appareil. Le PIN de l’application est indépendant du chiffrement de la base.
 
 Zanance enregistre et organise vos informations : elle n’effectue aucun paiement ni virement bancaire. Les soldes dépendent de vos enregistrements ; les prévisions sont des estimations, sans garantie de résultat ni conseil en investissement. Le verrouillage de l’application ne chiffre pas sa base de données et reste distinct du chiffrement des sauvegardes.
 
@@ -247,7 +246,7 @@ UNA VISIONE PIÙ AMPIA
 PRIVACY E BACKUP
 Questa versione funziona senza internet, senza account Zanance e senza pubblicità. I dati finanziari vengono conservati sul dispositivo. Scegli tu quando esportarli o creare un backup e dove conservarne una copia.
 
-I backup locali sono crittografati quando attivi la protezione con password. Conservala al sicuro: lo sviluppatore non può recuperarla. Il blocco dell’app non equivale alla crittografia del database. I backup del dispositivo possono includere i dati dell’app in base alle impostazioni del sistema.
+Su Android, il database finanziario è crittografato con una chiave automatica protetta dal dispositivo. La protezione con password è facoltativa per i backup locali e nel cloud collegato ed è attiva per impostazione predefinita. Chiunque ottenga un file portatile non protetto può leggerlo. Se scegli la protezione, conserva la password: Zanance non la memorizza. I file finanziari sono esclusi dal backup di sistema Android e dal trasferimento tra dispositivi: ripristina un backup Zanance sul nuovo dispositivo. Il PIN dell’app è indipendente dalla crittografia del database.
 
 Zanance registra e organizza i dati: non esegue pagamenti o trasferimenti bancari, non disdice contratti e non fornisce documenti fiscali ufficiali.
 
@@ -274,13 +273,13 @@ Use these instead of the "no internet" sentences when the release is built with 
 | | Text |
 |---|---|
 | EN short | Private money manager: plans, budgets, reports. No account, no ads. |
-| EN sentence | Everything stays on your device: there is no account, no advertising and no tracking. The app goes online only if you connect your own Google Drive or OneDrive for encrypted backups. |
-| EN bullet | • Encrypted backup files you keep yourself or in your own Google Drive or OneDrive, CSV import and export |
-| DE Satz | Alles bleibt auf Ihrem Gerät: kein Konto, keine Werbung, kein Tracking. Online geht die App nur, wenn Sie Ihr eigenes Google Drive oder OneDrive für verschlüsselte Sicherungen verbinden. |
-| DE Punkt | • Verschlüsselte Sicherungen in Ihrer Hand oder in Ihrem eigenen Google Drive oder OneDrive, CSV-Import und -Export |
+| EN sentence | Everything stays on your device: there is no account, no advertising and no tracking. The app goes online only if you connect your own Google Drive or OneDrive for backup files with optional password protection. |
+| EN bullet | • Backup files with optional password protection, kept locally or in your own Google Drive or OneDrive, CSV import and export |
+| DE Satz | Alles bleibt auf Ihrem Gerät: kein Konto, keine Werbung, kein Tracking. Online geht die App nur, wenn Sie Ihr eigenes Google Drive oder OneDrive für Sicherungsdateien mit optionalem Passwortschutz verbinden. |
+| DE Punkt | • Sicherungen mit optionalem Passwortschutz lokal oder in Ihrem eigenen Google Drive oder OneDrive, CSV-Import und -Export |
 | FA کوتاه | مدیریت خصوصی پول: برنامه، بودجه و گزارش. بدون حساب، بدون تبلیغ. |
-| FA جمله | همه‌چیز روی دستگاه شما می‌ماند: حساب کاربری، تبلیغ و ردیابی ندارد. اپ فقط وقتی به اینترنت وصل می‌شود که Google Drive یا OneDrive خودتان را برای پشتیبان رمزگذاری‌شده متصل کنید. |
-| FA مورد | • پشتیبان رمزگذاری‌شده در دست خودتان یا در Google Drive یا OneDrive خودتان، ورود و خروج CSV |
+| FA جمله | همه‌چیز روی دستگاه شما می‌ماند: حساب کاربری، تبلیغ و ردیابی ندارد. اپ فقط وقتی به اینترنت وصل می‌شود که Google Drive یا OneDrive خودتان را برای پشتیبان با حفاظت اختیاری رمز متصل کنید. |
+| FA مورد | • پشتیبان با حفاظت اختیاری رمز در دستگاه یا Google Drive یا OneDrive خودتان، ورود و خروج CSV |
 
 **ES – full description of a release with cloud backup** (complete text, used instead of the offline description above):
 
@@ -306,7 +305,7 @@ EN TU IDIOMA
 Disponible en español, inglés, alemán y persa. La app no cambia la moneda de tus cuentas al cambiar de idioma.
 
 CONTROL SOBRE TUS DATOS
-No necesitas crear una cuenta de Zanance. Los datos se guardan en tu dispositivo y no se envían automáticamente al desarrollador. La app no muestra anuncios ni envía estadísticas de uso o informes de fallos automáticamente. Puedes conectar tu propia cuenta de Google Drive o OneDrive para guardar copias cifradas. Las copias locales se cifran cuando activas la protección con contraseña; las copias en la nube la requieren. Tú decides cuándo exportar los datos o crear una copia.
+No necesitas una cuenta Zanance ni hay anuncios o seguimiento. Puedes conectar tu propio Google Drive o OneDrive para guardar copias; la app usa internet para esta función opcional. En Android, la base de datos financiera se cifra con una clave automática protegida por el dispositivo. La contraseña es opcional para las copias locales y las copias en la nube conectada, y está activada por defecto. Cualquiera que obtenga un archivo portátil sin protección puede leerlo. Si eliges protegerlo, conserva la contraseña: Zanance no la guarda. Los archivos financieros se excluyen de la copia del sistema Android y de la transferencia entre dispositivos; restaura una copia de Zanance en el nuevo dispositivo. El PIN de la app es independiente del cifrado de la base de datos.
 
 Zanance registra y organiza información: no realiza pagos ni transferencias bancarias. Los saldos y las previsiones dependen de tus registros; son estimaciones, no garantías ni asesoramiento de inversión. El bloqueo de la app y el cifrado de una copia de seguridad son protecciones distintas.
 
@@ -334,7 +333,7 @@ EN FRANÇAIS
 Utilisez Zanance en français. Changer de langue ne change pas la devise de vos comptes.
 
 VOS DONNÉES, VOS CHOIX
-Aucun compte Zanance à créer. Vos données sont stockées sur votre appareil et ne sont pas envoyées automatiquement au développeur. L’application n’affiche aucune publicité et n’envoie automatiquement ni statistiques d’utilisation ni rapports de plantage. Vous pouvez connecter votre propre compte Google Drive ou OneDrive pour y conserver des sauvegardes chiffrées. Les sauvegardes locales sont chiffrées lorsque vous activez la protection par mot de passe ; les sauvegardes cloud exigent cette protection. Vous choisissez quand exporter vos données ou créer une sauvegarde.
+Aucun compte Zanance, publicité ou suivi. Vous pouvez connecter votre propre Google Drive ou OneDrive pour les sauvegardes ; Internet est utilisé pour cette fonction facultative. Sur Android, la base financière est chiffrée avec une clé automatique protégée par l’appareil. La protection par mot de passe est facultative pour les sauvegardes locales et cloud connectées, et activée par défaut. Toute personne disposant d’un fichier portable non protégé peut le lire. Si vous choisissez cette protection, conservez le mot de passe : Zanance ne le mémorise pas. Les fichiers financiers sont exclus de la sauvegarde système Android et du transfert entre appareils ; restaurez une sauvegarde Zanance sur le nouvel appareil. Le PIN de l’application est indépendant du chiffrement de la base.
 
 Zanance enregistre et organise vos informations : elle n’effectue aucun paiement ni virement bancaire. Les soldes dépendent de vos enregistrements ; les prévisions sont des estimations, sans garantie de résultat ni conseil en investissement. Le verrouillage de l’application ne chiffre pas sa base de données et reste distinct du chiffrement des sauvegardes.
 
@@ -366,9 +365,9 @@ UNA VISIONE PIÙ AMPIA
 • Importazione ed esportazione CSV. I file CSV e i report PDF non sono backup e non sono crittografati.
 
 PRIVACY E BACKUP
-Zanance funziona senza un account Zanance e senza pubblicità. I dati finanziari sono conservati sul dispositivo. Puoi scegliere di collegare il tuo Google Drive o OneDrive per conservare backup crittografati nel tuo spazio cloud. La connessione internet è usata per questa funzione facoltativa dopo il collegamento.
+Zanance funziona senza un account Zanance e senza pubblicità. I dati finanziari sono conservati sul dispositivo. Puoi scegliere di collegare il tuo Google Drive o OneDrive per conservare backup con protezione facoltativa nel tuo spazio cloud. La connessione internet è usata per questa funzione facoltativa dopo il collegamento.
 
-I backup nel cloud richiedono una password. I backup locali sono crittografati quando attivi la protezione con password. Conservala al sicuro: lo sviluppatore non può recuperarla. Il blocco dell’app non equivale alla crittografia del database. I backup del dispositivo possono includere i dati dell’app in base alle impostazioni del sistema.
+Su Android, il database finanziario è crittografato con una chiave automatica protetta dal dispositivo. La protezione con password è facoltativa per i backup locali e nel cloud collegato ed è attiva per impostazione predefinita. Chiunque ottenga un file portatile non protetto può leggerlo. Se scegli la protezione, conserva la password: Zanance non la memorizza. I file finanziari sono esclusi dal backup di sistema Android e dal trasferimento tra dispositivi: ripristina un backup Zanance sul nuovo dispositivo. Il PIN dell’app è indipendente dalla crittografia del database.
 
 Zanance registra e organizza i dati: non esegue pagamenti o trasferimenti bancari, non disdice contratti e non fornisce documenti fiscali ufficiali.
 

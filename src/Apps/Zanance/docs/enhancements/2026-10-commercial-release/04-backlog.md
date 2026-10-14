@@ -29,7 +29,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-02 | Goal contribution reminders (ZEX-S0306) | 2 | P2 | M | Done (local/emulator; physical-device gate remains) | – |
 | ZCR-LOC-03 | Optional period review reminder (ZEX-S0610) | 2 | P2 | S | Done (local/emulator; physical-device gate remains) | – |
 | ZCR-LOC-04 | Aggregated entries: import overlap handling (ZEX-S0611) | 2 | P2 | M | Done (local/emulator, D-72; phone/iOS acceptance open) | – |
-| ZCR-LOC-05 | "Not a tax calculation" help on sale results (ZEX-S0404) | 2 | P3 | S | Proposed | owner translations |
+| ZCR-LOC-05 | "Not a tax calculation" help on sale results (ZEX-S0404) | 2 | P3 | S | Done (D-268 original sale help, six-language copy and store drafts locally verified; publication/device gates remain) | D-69 continuous delivery |
 | ZCR-LOC-06 | Recurring payments easier to find (repeat option in the entry form or a clearer entry point) | 2 | P2 | S | Done (local/native, D-111; phone/iOS acceptance open) | – |
 | ZCR-LOC-07 | Currencies of the target markets (ISO list, minor digits) | 2/8 | P3 | S | Proposed | target markets |
 | ZCR-LOC-08 | More holiday regions with source, validity years and "uncertain" state | 8 | P3 | M | Proposed | target markets |
@@ -38,7 +38,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-15 | Independent saved filters after report navigation (D-109 / AT-114) | Maintenance | P1 | S | Done (local/native, D-109; device/iOS acceptance remains open) | D-69 ready-defect delivery |
 | ZCR-LOC-12 | Owner-requested receipt total detection and review (D-64) | Maintenance | P1 | M | Done (local; device/corpus gate remains QA-05) | owner request 2026-10-08 |
 | ZCR-LOC-11 | Owner-requested backup, onboarding and About corrections (D-62) | 2 | P2 | S | Done | owner approval 2026-10-08 |
-| ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Proposed | owner translations |
+| ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Done (D-268 browser/account copy and six-language drafts; real OAuth/publication remain open) | D-69 continuous delivery |
 | ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | Proposed | sample files |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
 | ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | Blocked (owner runs) | – |
@@ -189,7 +189,7 @@ screens are reviewed. Isolated API 36 x86_64 UI import keeps the 412 EUR sample 
 the same six IDs. Phone/iOS acceptance remains open. No SDK, permission or commercial limits added.
 
 ### ZCR-LOC-05 – Sale results help (from ZEX-S0404)
-Scope: one help topic on holding sale results stating it is not a tax calculation. Texts: owner. Done: help shown.
+Delivered D-268: original result-row help in six existing languages, explanation/example and native open/close checks. Recorded results are not tax calculations; no tax logic or financial posting was added.
 
 ### ZCR-LOC-06 – Recurring payments easier to find
 Value: the owner could not find recurring payments. OD-12 was approved on 2026-10-10: Repeat in a new transaction
@@ -216,7 +216,7 @@ layouts in en/fa/de, light/dark, 360/412 px and wide. Provider sign-in with real
 gates remain open. Evidence and policy: D-62, spec §31, acceptance plan and architecture/data-and-backup.
 
 ### ZCR-LOC-10 – Copy follow-ups
-Scope: D-53 "Sign-in complete", D-54 "as an expense of {2}", listing texts that name three languages. Texts: owner.
+Delivered D-268: truthful browser-step completion in all six languages, explicit English paying/receiving account wording, and all six store drafts aligned with current backup/encryption policy. Actual OAuth and publication remain separate.
 
 ### ZCR-IMP-01 – Moving in from other apps and banks
 Scope: CSV presets (mapping, date/number formats) for common apps and bank exports chosen from real samples; preview,
@@ -2193,3 +2193,5 @@ An unrelated Home collection rendering COM exception remains observed during lan
 Observed Windows Home refresh failed in BindableLayout's ContentView handler disconnection while Balances.Clear published an empty intermediate list. Currency totals now use the existing SnapshotCollection complete replacement, preserving existing amount rows during ordinary and covered reloads. Currency calculations, inclusion policy, formatting and current-page retirement guards remain unchanged. The native regression checks original Home and original amount-handler identities, including a real modal cover; financial storage is not edited.
 
 D-267 final native review passed all 18 contexts and 36 original Home reloads without the observed COM failure; amount handlers and complete financial rows remain unchanged. Canonical signed Release upgrade/cold/More-to-Home return passed. The unchanged 3,526-test D-266 baseline was retained; native publication is directly verified. Exact evidence and external limits: docs/quality/home-balance-reload.md.
+
+D-268 final affected checks: 3,526 tests passed, zero failures/skips; 18 original sale-help contexts and 12 English pay/receive native dialogs completed with Cancel and complete financial rows unchanged. Independent Android original sale-help open/close and complete signed Release upgrade/cold Home passed. See docs/quality/sale-and-connection-copy.md.

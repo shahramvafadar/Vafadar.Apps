@@ -19,6 +19,8 @@ public class MainActivity : MauiAppCompatActivity
     protected override void OnCreate(Bundle? savedInstanceState)
     {
 #if DEBUG
+        if (PackageName == "pro.vafadar.zanance.copyacceptance" && Intent?.GetBooleanExtra("sale_copy_review", false) == true)
+            System.Environment.SetEnvironmentVariable("VAFADAR_SALE_COPY_REVIEW", "1");
         if (PackageName == "pro.vafadar.zanance.accessacceptance" && Intent?.GetBooleanExtra("device_unlock_review", false) == true)
             System.Environment.SetEnvironmentVariable("VAFADAR_DEVICE_UNLOCK_REVIEW", "1");
 #endif

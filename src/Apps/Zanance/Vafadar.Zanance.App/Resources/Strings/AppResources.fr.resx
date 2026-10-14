@@ -2801,7 +2801,7 @@
     <value>Impossible de se connecter à {0}. Réessayez.</value>
   </data>
   <data name="Cloud_BrowserDone" xml:space="preserve">
-    <value>Connexion terminée. Vous pouvez fermer cet onglet et revenir à Zanance.</value>
+    <value>L’étape de connexion dans le navigateur est terminée. Revenez dans Zanance pour voir si la connexion a réussi.</value>
   </data>
   <data name="Cloud_Error_SignInAgain" xml:space="preserve">
     <value>Reconnectez-vous à {0}.</value>
@@ -6289,5 +6289,14 @@ Plafonds par catégorie :
   </data>
   <data name="Recovery_BackupFailed" xml:space="preserve">
     <value>La récupération n’a pas pu être terminée. Vérifiez la sauvegarde et son mot de passe. Les fichiers existants sont conservés. Si l’enregistrement a été interrompu, fermez cette page et choisissez Réessayer sur l’écran de démarrage pour poursuivre la récupération enregistrée.</value>
+  </data>
+  <data name="Help_HoldingSaleResult_Title" xml:space="preserve">
+    <value>Résultat de la vente</value>
+  </data>
+  <data name="Help_HoldingSaleResult_Text" xml:space="preserve">
+    <value>Zanance estime le résultat à partir du produit de la vente et du coût moyen enregistrés pour ce bien. Si le coût ou le produit manque, le résultat reste inconnu. Ce n’est ni un calcul d’impôt ni un document fiscal ; les règles fiscales, exonérations et obligations déclaratives ne sont pas évaluées.</value>
+  </data>
+  <data name="Help_HoldingSaleResult_Example" xml:space="preserve">
+    <value>Pour un produit enregistré de 120 et un coût moyen de la part vendue de 100, le résultat est de +20 dans la devise du bien. Cela ne signifie pas que 20 sont imposables ni qu’un impôt est dû.</value>
   </data>
 </root>

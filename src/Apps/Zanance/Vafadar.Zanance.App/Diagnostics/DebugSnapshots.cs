@@ -33,6 +33,7 @@ internal static partial class DebugSnapshots
     public static void StartIfRequested(App app, IServiceProvider services, Window window)
     {
 #if ANDROID
+        if (DebugSaleCopyAndroid.StartIfRequested(app, services)) { return; }
         if (DebugDeviceUnlockAndroid.StartIfRequested(app, services)) { return; }
         if (DebugImportLinks.StartIfRequested(app, services)) { return; }
         if (DebugReviewReminders.StartIfRequested(app, services)) { return; }
@@ -253,6 +254,14 @@ internal static partial class DebugSnapshots
     private static async Task RunCoreAsync(App app, IServiceProvider services, string folder)
     {
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "loan-copy")
+        {
+            await ReviewLoanCopyAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "sale-copy")
+        {
+            await ReviewSaleCopyAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "home-balance-reload")
         {
             await ReviewHomeBalanceReloadAsync(app, services, folder); return;

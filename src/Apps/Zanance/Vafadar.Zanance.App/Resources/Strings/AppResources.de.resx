@@ -2834,7 +2834,7 @@
     <value>Die Anmeldung bei {0} ist fehlgeschlagen. Versuchen Sie es erneut.</value>
   </data>
   <data name="Cloud_BrowserDone" xml:space="preserve">
-    <value>Anmeldung abgeschlossen. Sie können diesen Tab schließen und zu Zanance zurückkehren.</value>
+    <value>Der Anmeldeschritt im Browser ist beendet. Kehren Sie zu Zanance zurück, um das Ergebnis der Verbindung zu sehen.</value>
     <comment>Windows: page in the browser after a Google sign-in (D-50).</comment>
   </data>
   <data name="Cloud_Error_SignInAgain" xml:space="preserve">
@@ -6312,5 +6312,14 @@ Kategorielimits:
   </data>
   <data name="Recovery_BackupFailed" xml:space="preserve">
     <value>Die Wiederherstellung konnte nicht abgeschlossen werden. Prüfen Sie das Backup und dessen Passwort. Vorhandene Dateien bleiben erhalten. Wenn das Speichern unterbrochen wurde, schließen Sie diese Seite und wählen Sie auf dem Startbildschirm „Erneut versuchen“, um fortzufahren.</value>
+  </data>
+  <data name="Help_HoldingSaleResult_Title" xml:space="preserve">
+    <value>Verkaufsergebnis</value>
+  </data>
+  <data name="Help_HoldingSaleResult_Text" xml:space="preserve">
+    <value>Zanance schätzt das Verkaufsergebnis aus dem erfassten Erlös und den durchschnittlichen Kosten dieses Bestands. Fehlen Kosten oder Erlös, bleibt das Ergebnis unbekannt. Dies ist keine Steuerberechnung und kein Steuerbeleg; Steuerregeln, Freibeträge und Erklärungspflichten werden nicht geprüft.</value>
+  </data>
+  <data name="Help_HoldingSaleResult_Example" xml:space="preserve">
+    <value>Bei einem erfassten Erlös von 120 und anteiligen Durchschnittskosten von 100 beträgt das Ergebnis +20 in der Bestandswährung. Das bedeutet nicht, dass 20 steuerpflichtig sind oder Steuern anfallen.</value>
   </data>
 </root>

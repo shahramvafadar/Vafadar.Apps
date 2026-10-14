@@ -34,7 +34,10 @@
                             <Label Text="{v:Translate Holding_ValueUnknown}" TextColor="{DynamicResource WarningText}" FontAttributes="Bold" IsVisible="{Binding ValueUnknown}" />
                             <Label Text="{Binding AverageCostText}" Style="{StaticResource Secondary}" IsVisible="{Binding AverageCostText, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{Binding UnrealisedText}" Style="{StaticResource Secondary}" IsVisible="{Binding UnrealisedText, Converter={StaticResource IsNotNullConverter}}" />
-                            <Label Text="{Binding RealisedText}" Style="{StaticResource Secondary}" IsVisible="{Binding RealisedText, Converter={StaticResource IsNotNullConverter}}" />
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" IsVisible="{Binding RealisedText, Converter={StaticResource IsNotNullConverter}}">
+                                <Label Text="{Binding RealisedText}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                                <v:HelpButton Grid.Column="1" Topic="HoldingSaleResult" />
+                            </Grid>
                         </VerticalStackLayout>
                     </Grid>
                 </Border>
