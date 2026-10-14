@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
+    <ApplicationId>pro.vafadar.zanance.binarycompatibility</ApplicationId>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
+    <RunAOTCompilation Condition="'$(Configuration)' == 'Release'">true</RunAOTCompilation>
+    <PublishTrimmed Condition="'$(Configuration)' == 'Release'">true</PublishTrimmed>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/Vafadar.Zanance.Data.csproj" />
+    <PackageReference Include="SQLitePCLRaw.provider.sqlcipher" />
+    <Compile Include="../BinaryCompatibility/BinaryPersistenceCompatibility.cs" Link="BinaryPersistenceCompatibility.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidDatabaseKeyProtector.cs" Link="AndroidDatabaseKeyProtector.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidDatabaseKeyEnvelopeStore.cs" Link="AndroidDatabaseKeyEnvelopeStore.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidDatabaseKeyEnvelopeStore.Recovery.cs" Link="AndroidDatabaseKeyEnvelopeStore.Recovery.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidGenerationMigrationStorage.cs" Link="AndroidGenerationMigrationStorage.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidProfileRetirementFiles.cs" Link="AndroidProfileRetirementFiles.cs" />
+    <AndroidNativeLibrary Include="$(NativeCandidateDirectory)/arm64-v8a/libsqlcipher.so" Abi="arm64-v8a" />
+    <AndroidNativeLibrary Include="$(NativeCandidateDirectory)/x86_64/libsqlcipher.so" Abi="x86_64" />
+  </ItemGroup>
+  <Target Name="RequireCandidate" BeforeTargets="Build">
+    <Error Condition="'$(NativeCandidateDirectory)' == '' Or !Exists('$(NativeCandidateDirectory)/x86_64/libsqlcipher.so') Or !Exists('$(NativeCandidateDirectory)/arm64-v8a/libsqlcipher.so')" Text="Provide reviewed independently built native slices." />
+  </Target>
+</Project>

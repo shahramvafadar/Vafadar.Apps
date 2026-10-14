@@ -2107,3 +2107,10 @@ retain the existing standard bundle; the design-time bundle is private and canno
 Actual dependency graphs, real EF context tooling, all 3467 tests and strict Windows/Android builds
 pass. This is a final-provider integration prerequisite; current main engine/storage remain unchanged
 and cipher host/library compatibility, recovery/retention/OS/platform adoption are still unfinished.
+
+D-252 qualifies actual production persistence assemblies, not source copies, with SQLCipher bridge/core
+3.0.5 on Windows x64 and signed Release AOT/trim Android x64. Actual 32 migrations, encrypted negative
+money, binary portable backup and wrong-key refusal pass across fresh process reopen. Android sandbox
+inspection failure was corrected only in its distinct fixture package, preserving creation/result/data
+and continuing the same key. See decision/device-key guide for proof/scope. Main/APK remain D-251;
+final host/recovery/retention/OS/native platform and device acceptance remain open.

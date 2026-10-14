@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <Description>Independent native compatibility of actual production persistence assemblies.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/Vafadar.Zanance.Data.csproj" />
+    <PackageReference Include="SQLitePCLRaw.provider.sqlcipher" />
+    <Content Include="$(NativeSqlCipherPath)" Link="sqlcipher.dll" CopyToOutputDirectory="Always" Condition="'$(NativeSqlCipherPath)' != ''" />
+  </ItemGroup>
+  <Target Name="RequireNativeBinary" BeforeTargets="Build">
+    <Error Condition="'$(NativeSqlCipherPath)' == '' Or !Exists('$(NativeSqlCipherPath)')" Text="Provide the reviewed source-built native candidate path." />
+  </Target>
+</Project>

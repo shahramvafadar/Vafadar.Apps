@@ -4720,3 +4720,46 @@ and layout matrices were not repeated. Main still uses standard plaintext SQLite
 retention/OS adoption and native/platform/provider/device gates remain open.
 
 D-251 complete signed Release APK: artifacts/android-d251-delivery/pro.vafadar.zanance-Signed.apk, 83,692,250 bytes. Signature, pro.vafadar.zanance package, API 24/36 and both complete arm64-v8a/x86_64 assembly stores verified. Both embedded standard libe_sqlite3.so hashes equal D-250 exactly. Test outputs cleaned after terminal checks. No UI change/layout replay or native candidate adoption; local signing is not phone/iOS/store acceptance.
+
+### D-252 — Qualify actual persistence assemblies with the reviewed cipher bridge
+
+Two independent binary hosts now reference the actual Vafadar.Zanance.Data project (and its
+Vafadar.Data assembly) instead of compiling infrastructure/model/migration source copies. They
+explicitly select SQLitePCLRaw.provider.sqlcipher 3.0.5 with its core 3.0.5 and reviewed native slices.
+Restored graphs contain no default bundle/e_sqlite3. Runtime checks require the actual production
+assembly names, not merged caller-source types. No friend-assembly grant or production probe reference.
+
+Through public original APIs, each host creates encrypted storage with actual native keys and all
+32 migrations, publishes the protected factory, writes a fictitious negative EUR account, exports
+through the actual binary Zanance backup source and reopens the bounded portable snapshot in memory.
+A fresh process opens the same native storage with a key port forbidding creation. The actual model/
+negative money and binary raw snapshot APIs remain correct; a wrong DEK is refused. This qualifies
+managed binary compatibility, rather than extrapolating prior same-assembly source proofs.
+
+Windows strict host builds are clean (final shared-entry build 1.09s). Initial refactoring exposed
+CA1416 in deferred native callbacks; explicit platform checks fixed the entry point without analyzer
+suppression. The old output invoked after that failed build is retained as negative evidence, not
+final acceptance. The corrected build and same-fixture reopen passed; the repeatable Windows harness
+also passes creation/cold reopen under artifacts/native-sqlcipher/binary-host/40f965990678413cbb09246fe6581cd9.
+
+Android is a distinct pro.vafadar.zanance.binarycompatibility package using the actual .NET assemblies,
+original native effects, complete signed Release AOT/trim and two exact manifest-qualified native slices.
+The first build is clean (55.90s). The application behavior completed successfully but the harness
+could not read its sandbox because the independent manifest lacked debuggable=true. The process
+was confirmed live and its exact result observed in package PID output. Only this independent package
+was made inspectable/no-OS-backup; no product/device setting changed. Its existing creation result was
+read after install-r preserved data, then only the same fixture's cold phase continued. No database
+or key regeneration was used to hide this observation failure. Final manifest build is clean (9.99s).
+Creation evidence: artifacts/native-sqlcipher/d252-preserved-create-result.json. Cold proof:
+artifacts/native-sqlcipher/build/android-d/binary-runtime-proof-39a41a98321941e5aab2cf2016f86afa.json,
+run 5f3e7ed4ac08435090c499fd3bfec805; negative observation log remains d252-android-binary-runtime.log.
+The driver now refuses an uninspectable sandbox before launch and requires stopped ownership before
+cold launch. It validates embedded native hashes and refuses default engine leakage; script parsers pass.
+
+Product source/behavior, schema, UI, permissions and APK remain D-251. The 3467-test baseline, main
+builds/UI matrices and unchanged upstream producer suites were not repeated. Current signed product
+APK remains artifacts/android-d251-delivery/pro.vafadar.zanance-Signed.apk. This closes this binary
+bridge prerequisite on tested Windows x64 and Android x64 API36/4KiB; it does not validate arm64,
+API24/16KiB OS, iOS, every key/recovery/crash route or whole-app adoption. Final host/recovery UI,
+reference-aware retention/reconciliation, native warning review and coupled OS/platform/device/provider
+acceptance remain open. Main registration is still plaintext.
