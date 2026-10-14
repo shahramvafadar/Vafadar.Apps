@@ -5025,3 +5025,31 @@ previously reviewed atomic/shift occurrences. All original749 compiler diagnosti
 no warning-free native build, full Windows adoption or main encryption is claimed. No code/UI/APK,
 main suite or unchanged native producer suite was repeated. Main remains D-256/plaintext with its
 3482-test baseline. Full security/OS/platform/device/release and original goal scope remain open.
+
+### D-259 — Triage legacy AES conversion sites without blanket approval
+
+All16 C4267 occurrences in official OpenSSL crypto/evp/e_aes.c belong to GCM/TLS, CCM/TLS,
+AES Wrap or OCB handlers (lines2960,3007,3164,3565,3573,3606,3612,3631,3641,3721,3731,3738,
+4025,4041,4086,4093). The exact SQLCipher OpenSSL source chooses EVP_aes_256_cbc and calls
+EVP_CipherInit_ex/Update/Final; these warning lines are not its CBC handler. That direct binding
+observation is not proof that all compiled OpenSSL entry points are unreachable or safe.
+
+Do not approve these conversions merely because EVP update inputs use int. The legacy padded-Wrap
+output-length expression at3731 rounds input then adds8. At input2147483640 (itself within signed
+int range), ((inlen+7)/8)*8+8 is2147483648, outside Windows int. This is a source-expression
+counterexample to a blanket range proof, not a reproduced public-API vulnerability or exploit:
+actual provider dispatch, output-query rules, error propagation and contextual bounds still matter.
+EVP's ordinary block-update overflow guard is after the custom-cipher branch, so that later guard
+cannot by itself qualify all custom handlers. OCB partial-buffer additions have local block-size
+bounds, but this slice does not separately close them or infer whole handler safety.
+
+Immutable source hashes and all16 original occurrences are captured in
+artifacts/native-sqlcipher/d259-aes-warning-triage.json. e_aes.c hash:
+02b2fdbd8b105c55ac78805806c027f60fe5d42603a706fc5741d177a8f3ae40;
+SQLCipher provider hash:a429d5466fa3fe7bb7608c3f79e8e19ff5706b78f6251b44530171dc30e53f69.
+No upstream patch, warning suppression, binary rebuild, large-buffer allocation or user-data access
+was made. All16 remain unapproved inside the723 remaining narrowing occurrences. Further adoption
+must qualify actual reachable/provider input constraints or an officially supported reduced build
+profile, not equate unused-at-the-direct-call-site with full native acceptance. Windows/main encryption
+remain unactivated. Main code/APK and3482-test baseline remain D-256; unchanged producer, UI, main
+build/test/APK checks were not repeated. Full goal/security/platform/release scope remains open.

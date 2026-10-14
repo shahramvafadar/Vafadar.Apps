@@ -2148,3 +2148,9 @@ D-258 bounds20 secure-heap list-index narrowing occurrences in official Windows 
 This does not cover corrupted pointers/full allocator security.723 narrowing occurrences remain
 unreviewed; the original749 diagnostics are not suppressed. No main code/APK/native producer replay;
 main encryption, complete warning review and full adoption/security/platform acceptance remain open.
+
+D-259 triages16 legacy AES warnings: direct SQLCipher binding is CBC, while warning sites are other
+handlers. A padded-Wrap output-expression counterexample disproves blanket int-input range acceptance;
+it does not prove public-API exploitation. All16 remain unapproved within723 pending narrowing sites.
+No source/binary/app/APK or unchanged producer/main verification changed. Native adoption must qualify
+actual dispatch/bounds or a supported reduced profile; the original full goal remains unfinished.
