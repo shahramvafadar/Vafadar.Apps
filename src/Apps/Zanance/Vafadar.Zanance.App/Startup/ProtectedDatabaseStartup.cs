@@ -14,7 +14,8 @@ public sealed class ProtectedDatabaseStartup(LocalDatabaseLocation<ZananceDbCont
     ProtectedStorageInitialization initialization, IDatabaseGenerationKeyStore keys, IDatabaseGenerationFileDurability durability,
     Func<string, ProfileRestoreReference, SqlCipherPackageRestoreReceiver> createReceiver,
     int maximumBytes, string cipherVersion,
-    Func<SqliteConnection, CancellationToken, Task>? buildEmptySchema = null) : IAppDatabaseStartup
+    Func<SqliteConnection, CancellationToken, Task>? buildEmptySchema = null,
+    IProfileRetirementHost? retirement = null) : IAppDatabaseStartup
 {
     private readonly SemaphoreSlim operations = new(1, 1);
     private bool completed;
@@ -28,6 +29,8 @@ public sealed class ProtectedDatabaseStartup(LocalDatabaseLocation<ZananceDbCont
         {
             if (completed) return;
             using var owner = await location.Access.AcquireExclusiveAsync(cancellationToken).ConfigureAwait(false);
+            if (retirement is not null && preparedCapture is null)
+                await retirement.ResumePendingAsync(profiles, location, owner, cancellationToken).ConfigureAwait(false);
             var capture = profiles.CaptureStorage();
             capture.Validate();
             if (location.IsProtected && preparedCapture is not null)

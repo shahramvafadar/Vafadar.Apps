@@ -100,7 +100,7 @@ public sealed class DatabaseAccessGate
     }
 
     /// <summary>Requires complete context disposal before retiring a generation's retained key.</summary>
-    internal void RequireDrainedOwner(ExclusiveLease owner)
+    public void RequireDrainedOwner(ExclusiveLease owner)
     {
         lock (sync)
         {

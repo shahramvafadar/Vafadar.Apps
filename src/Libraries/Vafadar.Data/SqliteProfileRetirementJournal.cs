@@ -24,18 +24,29 @@ public sealed partial class SqliteProfileRetirementJournal
 
     /// <summary>Explicitly publishes or resumes the exact authorized request with native synchronization.</summary>
     public Task CreateNewAsync(IDatabaseGenerationFileDurability durability, CancellationToken ct = default)
+        => PublishNewAsync(null, durability, ct);
+
+    /// <summary>Atomically records reviewed catalogue digests with the initial request before final metadata publication.</summary>
+    public Task CreateNewAsync(ProfileRetirementCatalogueDigest catalogue, IDatabaseGenerationFileDurability durability, CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(catalogue); return PublishNewAsync(catalogue, durability, ct);
+    }
+
+    private Task PublishNewAsync(ProfileRetirementCatalogueDigest? catalogue, IDatabaseGenerationFileDurability durability, CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(durability);
         return SqliteMetadataPublication.CreateAsync(path,
-            stage => new SqliteProfileRetirementJournal(stage, identity, validate).CreateCoreAsync(ct),
+            stage => new SqliteProfileRetirementJournal(stage, identity, validate).CreateCoreAsync(ct, catalogue),
             async target =>
             {
                 if (await new SqliteProfileRetirementJournal(target, identity, validate).ReadAsync(ct).ConfigureAwait(false) != identity)
                     throw new IOException("Staged retirement is not the captured authorized request.");
+                if (catalogue is not null && await new SqliteProfileRetirementJournal(target, identity, validate).ReadCatalogueAsync(ct).ConfigureAwait(false) != catalogue)
+                    throw new IOException("Staged retirement catalogue differs from the reviewed request.");
             }, () => Check(ct), durability, ct);
     }
 
-    private async Task CreateCoreAsync(CancellationToken ct)
+    private async Task CreateCoreAsync(CancellationToken ct, ProfileRetirementCatalogueDigest? catalogue)
     {
         Check(ct);
         using (var reservation = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None)) reservation.Flush(true);
@@ -43,7 +54,14 @@ public sealed partial class SqliteProfileRetirementJournal
         using var transaction = connection.BeginTransaction(deferred: false);
         using var command = connection.CreateCommand(); command.Transaction = transaction;
         command.CommandText = $"PRAGMA application_id={ApplicationId}; PRAGMA user_version=1; {Schema}; INSERT INTO retirement_state VALUES(1,$legacy,$profile,$installation,$operation,0)";
-        Bind(command); await command.ExecuteNonQueryAsync(ct).ConfigureAwait(false); Check(ct); transaction.Commit();
+        Bind(command); await command.ExecuteNonQueryAsync(ct).ConfigureAwait(false);
+        if (catalogue is not null)
+        {
+            command.CommandText = CatalogueSchema + "; INSERT INTO retirement_catalogue VALUES(1,$before,$after)";
+            command.Parameters.Clear(); command.Parameters.AddWithValue("$before", catalogue.Original); command.Parameters.AddWithValue("$after", catalogue.Removed);
+            await command.ExecuteNonQueryAsync(ct).ConfigureAwait(false);
+        }
+        Check(ct); transaction.Commit();
     }
 
     /// <summary>Reopens only actual exact state; absent, modified or unrelated records fail without replacement.</summary>
@@ -123,13 +141,21 @@ public sealed partial class SqliteProfileRetirementJournal
         // GLOB keeps the underscore literal; LIKE would also hide an unrelated table named sqliteAlias.
         command.CommandText = "SELECT count(*) FROM sqlite_schema WHERE name NOT GLOB 'sqlite_*'";
         var schemaCount = Convert.ToInt64(await command.ExecuteScalarAsync(ct).ConfigureAwait(false));
-        if (schemaCount is not (1 or 2)) throw new IOException("Unexpected retirement schema.");
-        if (schemaCount == 2)
+        if (schemaCount is < 1 or > 3) throw new IOException("Unexpected retirement schema.");
+        long expectedCount = 1;
+        foreach (var optional in new[] { ("retirement_artifacts", ArtifactSchema), ("retirement_catalogue", CatalogueSchema) })
         {
-            command.CommandText = "SELECT sql FROM sqlite_schema WHERE name='retirement_artifacts'";
-            if (Convert.ToString(await command.ExecuteScalarAsync(ct).ConfigureAwait(false)) != ArtifactSchema)
-                throw new IOException("Retirement artifact schema differs.");
+            command.CommandText = "SELECT sql FROM sqlite_schema WHERE name=$table";
+            command.Parameters.Clear(); command.Parameters.AddWithValue("$table", optional.Item1);
+            var actual = await command.ExecuteScalarAsync(ct).ConfigureAwait(false);
+            if (actual is not null)
+            {
+                if (Convert.ToString(actual) != optional.Item2) throw new IOException("Retirement optional schema differs.");
+                expectedCount++;
+            }
         }
+        if (expectedCount != schemaCount) throw new IOException("Unexpected retirement schema.");
+        command.Parameters.Clear();
         command.CommandText = "SELECT sql FROM sqlite_schema WHERE name='retirement_state'";
         if (Convert.ToString(await command.ExecuteScalarAsync(ct).ConfigureAwait(false)) != Schema) throw new IOException("Retirement schema differs.");
         command.CommandText = "SELECT id,legacy,profile,installation,operation,phase FROM retirement_state";

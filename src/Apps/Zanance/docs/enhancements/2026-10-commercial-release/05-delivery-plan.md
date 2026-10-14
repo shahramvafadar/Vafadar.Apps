@@ -1314,3 +1314,13 @@ Unknown target namespace artifacts and changed snapshots fail closed; foreign sa
 are preserved. Actual Windows retained encrypted fixture capture succeeds without finance deletion.
 Final app catalogue/startup reconciliation, recovery/retention/OS and platform/device integration
 remain open. See D-235 in the decision log for exact observed coverage and limits.
+
+### D-236 — Actual profile catalogue retirement and pre-startup continuation
+
+SEC remains in progress. The explicitly configured native host now connects reviewed protected
+DeleteAsync to actual catalogue Set/persistence, verified inventory/files/identity retirement and
+pending reconciliation before startup capture. Digests protect exact complete catalogue inputs;
+no plaintext names/packets enter request metadata. Missing inventory resumes only before publication,
+retries reuse one request, and unrelated catalogue changes refuse overwrite. Normal plaintext behavior
+and the unconfigured protected guard remain. Final main/recovery/retention/OS/creation/platform gates
+are still open. See D-236 in the decision log for exact native and contract evidence.

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Protected profile catalogue retirement flow (D-236)
+
+- Prepared actual profile deletion with durable catalogue storage before file and key cleanup.
+- Continue the same pending request after failure without overwriting unrelated profile changes.
+- Final main encryption and recovery/retention/OS activation remain pending integration.
+
 ### Added - Verified encrypted-profile reference discovery (D-235)
 
 - Capture retained databases, restore files, local backups and their authenticated key references.

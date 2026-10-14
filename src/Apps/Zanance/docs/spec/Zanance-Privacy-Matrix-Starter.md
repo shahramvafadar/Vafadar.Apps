@@ -649,3 +649,8 @@ D-235: private retirement discovery authenticates generation envelopes and opaqu
 under maintenance ownership, clears its owned decrypted/key buffers and records only existing native
 reference fingerprints. Foreign safety headers do not authorize key access. Cloud/shared installation
 keys are outside removal. No new permission, network SDK or portable credential/preference is added.
+
+D-236: private retirement catalogue authority records only before/removed SHA-256 state fingerprints,
+not labels or replacement packets. Profile preferences stay in the existing device store and remain
+outside portable credential/security sources. No permission, network SDK or new secret input is added.
+The main native host is still unregistered; coupled OS policy/recovery adoption remains pending.

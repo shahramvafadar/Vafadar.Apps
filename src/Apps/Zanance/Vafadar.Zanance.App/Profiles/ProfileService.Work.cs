@@ -210,9 +210,10 @@ public sealed partial class ProfileService
     {
         // One preference Set publishes names, all original ids and device choice together. Legacy keys stay untouched;
         // startup, backup-set resolution and every catalogue reader use this packet after explicit first mutation.
-        preferences.Set(CatalogueKey, string.Join('|', "1", EncodeField(state.MainName), EncodeField(state.List), state.Path,
-            state.Scope, state.Choice, Guid.NewGuid().ToString("N"), state.ChoiceRevision));
+        preferences.Set(CatalogueKey, EncodeCatalogue(state, Guid.NewGuid()));
     }
+    private static string EncodeCatalogue(CatalogueState state, Guid mutation) => string.Join('|', "1", EncodeField(state.MainName), EncodeField(state.List), state.Path,
+        state.Scope, state.Choice, mutation.ToString("N"), state.ChoiceRevision);
     private static string EncodeField(string? value) => value is null ? "-" : "=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(value));
     private static string? DecodeField(string value) => value == "-" ? null : value.StartsWith('=')
         ? Encoding.UTF8.GetString(Convert.FromBase64String(value[1..])) : throw new FormatException("Invalid catalogue field.");

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.Storage;
 using Vafadar.Data;
+using Vafadar.Core.Settings;
 using Vafadar.Localization;
 using Vafadar.Maui.Hosting;
 using Vafadar.Zanance.App.Profiles;
@@ -18,7 +19,7 @@ namespace Vafadar.SqlCipher.Compatibility.Android;
 internal static class ProfileCreationCompatibility
 {
     /// <summary>Prepares a new original through the product flow or verifies both originals after a cold restart.</summary>
-    internal static async Task<string> RunAsync(string folder, bool create)
+    internal static async Task<string> RunAsync(string folder, bool create, bool retirement = false)
     {
         if (create) { if (Directory.Exists(folder)) throw new IOException("Use a fresh profile-creation fixture."); Directory.CreateDirectory(folder); }
         var main = Path.Combine(folder, ZananceApp.DatabaseFileName);
@@ -29,7 +30,18 @@ internal static class ProfileCreationCompatibility
         var identityPath = Path.Combine(folder, "identities.sqlite");
         var runtime = new Runtime(services);
         var store = services.GetRequiredService<ZananceStore>();
-        var profiles = new ProfileService(location, store, preferences, runtime, Translator.Instance);
+        ProtectedProfileRetirementHost? retirementHost = null;
+        var persistence = new RetirementPersistence(new AndroidSettingsPersistence(Preferences.Default), create && retirement);
+        if (retirement)
+        {
+            var roots = new Dictionary<string, string> { ["database"] = folder, ["keys"] = folder,
+                ["portable"] = Path.Combine(folder, "retirement-portable"), ["safety"] = Path.Combine(folder, "retirement-safety") };
+            if (create) { Directory.CreateDirectory(roots["portable"]); Directory.CreateDirectory(roots["safety"]); }
+            var files = new AndroidProfileRetirementFiles(roots, () => { });
+            retirementHost = new(folder, identityPath, persistence, keys, durability, files,
+                (state, journal, ct) => files.RemoveAsync(state, journal, durability, ct), (journal, ct) => files.VerifyRemovedAsync(journal, ct));
+        }
+        var profiles = new ProfileService(location, store, preferences, runtime, Translator.Instance, profileRetirement: retirementHost);
         async Task BuildSchema(SqliteConnection connection, CancellationToken ct)
         {
             var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(connection, contextOwnsConnection: false).UseModel(ZananceDbContextModel.Instance).Options;
@@ -62,6 +74,7 @@ internal static class ProfileCreationCompatibility
                 using var prepared = await SqlCipherNewProfile.OpenAsync(location, identities, "", main, true, keys, durability,
                     BuildSchema, owner, () => { }, 16 * 1024 * 1024, "4.19.0");
             }
+            if (!create && retirement) await retirementHost!.ResumePendingAsync(profiles, location, owner, CancellationToken.None);
             await runtime.Session.StartAsync(main, owner);
         }
         if (create)
@@ -74,15 +87,38 @@ internal static class ProfileCreationCompatibility
             await store.SaveAccountAsync(new Account { Name = "Fictitious retained work", CurrencyCode = "EUR", OpeningDate = new(2026, 1, 1), OpeningBalance = 880 });
             if (!await profiles.SwitchToAsync(profiles.All.Single(p => p.IsMain))) throw new IOException("Return to original failed.");
             await new AndroidSettingsPersistence(Preferences.Default).PersistAsync();
+            if (retirement)
+            {
+                var refused = false;
+                try { await profiles.DeleteAsync(work); }
+                catch (IOException error) when (error.Message == RetirementPersistence.Failure) { refused = true; }
+                if (!refused || profiles.All.Count != 1 || !File.Exists(Path.Combine(folder, "zanance-" + work.Id + ".db") + ".restore-history.sqlite"))
+                    throw new IOException("Native retirement did not retain files after catalogue persistence failure.");
+            }
         }
         if ((await store.GetAccountsAsync()).Single().OpeningBalance != 250) throw new IOException("Main financial packet changed.");
-        if (!create)
+        if (!create && !retirement)
         {
             if (!await profiles.SwitchToAsync(profiles.All.Single(p => !p.IsMain)) || (await store.GetAccountsAsync()).Single().OpeningBalance != 880)
                 throw new IOException("Cold new-profile switch lost financial data.");
         }
         using (var owner = await location.Access.AcquireExclusiveAsync()) runtime.Session.Close(owner);
+        if (retirement)
+        {
+            if (!profiles.Current.IsMain || profiles.All.Count != 1) throw new IOException("Retirement changed main catalogue selection.");
+            var rows = await new SqliteDatabaseIdentityCatalogue(identityPath, () => { }).ReadAsync();
+            if (rows.Count != (create ? 2 : 1)) throw new IOException("Retirement identity barrier differs from actual completion.");
+            return create ? "{\"ActualCataloguePersisted\":true,\"NativeFailureRetainedProfileFiles\":true,\"MainBalance\":250}"
+                : "{\"ColdCatalogueRetirementResumed\":true,\"OnlyMainIdentityRemains\":true,\"MainBalance\":250,\"ActualNativeSettings\":true}";
+        }
         return "{\"CatalogueAfterEncryptedPreparation\":true,\"ActiveProfileUnchangedDuringCreation\":true,\"RealSwitchAndFinancialPacketsPreserved\":true}";
+    }
+
+    private sealed class RetirementPersistence(ISettingsPersistence native, bool fail) : ISettingsPersistence
+    {
+        internal const string Failure = "Injected failure after actual native catalogue persistence.";
+        public async Task PersistAsync(CancellationToken cancellationToken = default)
+        { await native.PersistAsync(cancellationToken); if (fail) throw new IOException(Failure); }
     }
 
     private sealed class Runtime(IServiceProvider services) : IProfileRuntime

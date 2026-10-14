@@ -52,6 +52,14 @@ public sealed partial class SqliteProfileRetirementJournal
         return await ReadArtifactsCoreAsync(connection, transaction, ct).ConfigureAwait(false);
     }
 
+    /// <summary>Checks exact-table presence after full metadata validation, distinguishing missing capture from corruption.</summary>
+    public async Task<bool> HasArtifactInventoryAsync(CancellationToken ct = default)
+    {
+        await using var connection = await OpenAsync(false, ct).ConfigureAwait(false);
+        using var command = connection.CreateCommand(); command.CommandText = "SELECT count(*) FROM sqlite_schema WHERE name='retirement_artifacts'";
+        return Convert.ToInt64(await command.ExecuteScalarAsync(ct).ConfigureAwait(false)) == 1;
+    }
+
     private async Task<IReadOnlyList<ProfileRetirementArtifact>> ReadArtifactsCoreAsync(SqliteConnection connection,
         SqliteTransaction transaction, CancellationToken ct)
     {

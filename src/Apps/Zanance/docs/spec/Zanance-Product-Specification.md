@@ -4314,3 +4314,66 @@ pro.vafadar.zanance, API 24/36 and both arm64-v8a/x86_64 embedded assembly store
 Test outputs were cleaned after terminal checks. The original native model-init deadlock and
 failed observation are retained as negative evidence. Final app retirement/startup/recovery,
 retention/OS and main encryption registration remain unfinished; phone/iOS/store acceptance is not implied.
+
+### D-236 — Real catalogue retirement composition and startup continuation
+
+Protected profile DeleteReviewedAsync now enters the application's actual runtime exclusive boundary
+and drained database owner before invoking an explicitly supplied native retirement host. Without
+that host, the permanent legacy boundary still refuses protected deletion. Plaintext deletion keeps
+its existing behavior. The host captures the actual stable identity, reviewed inactive target and
+exact before/removed device catalogue state, discovers authenticated native references, publishes
+the actual atomic profile packet, requires ISettingsPersistence and unchanged readback, then removes
+captured files and retires only the exact identity through the existing coordinator.
+
+Catalogue authority stores SHA-256 fingerprints of complete preference inputs, not profile labels
+or plaintext replacement packets. The target removal packet is deterministic for its retained
+operation ID, preserves every other profile/name and current selection, and rechecks device choice
+projection before Set. Request identity and catalogue digests are committed atomically in the staged
+initial metadata transaction. A failed native preference persist retains the exact removal for
+idempotent persistence retry; no file/identity cleanup follows until its actual barrier is recorded.
+An unrelated catalogue change refuses continuation instead of overwriting that state.
+
+Before complete startup profile capture, an explicitly supplied retirement host resumes pending
+requests under the same drained owner. Missing inventory can be completed only while the exact
+original catalogue still matches an Authorized request; it cannot be inferred as empty after
+publication. Repeated Delete before publication finds the same pending request rather than creating
+conflicting operations. Completed records are synchronized/read but do not replay historical
+catalogue changes. Final completion notifies once for an actual resumed/deleted operation. Native
+file/identity/reference checks remain exact; main/current profiles are refused.
+
+Four actual non-UI app-source scenarios use real isolated SQLite catalogue/native Windows key/file
+effects: normal inactive retirement, failed preference persistence followed by exact pending resume,
+unrelated catalogue mutation refusal and missing-inventory retry without a second operation.
+Settings persistence in those contract tests is an explicit effect, not native platform acceptance.
+A real SQLite staged-publication test proves initial identity+digest atomicity and immutable retry.
+Existing 23 ProfileTests pass. Public RequireDrainedOwner exposes the actual context-disposal guard
+instead of weakening host checks. App tests explicitly compile the new production profile sources.
+Terminal native/main/test/package evidence follows below.
+
+The independent Android caller uses the actual ProfileService, ProtectedProfileRetirementHost,
+protected session, original compiled model, native generation keys/files, MauiSettingsStore and
+AndroidSettingsPersistence. A synthetic failure follows actual durable catalogue persistence so a
+cold process must reconcile before session publication. It verifies main balance remains 250 and
+only main identity remains; no fake MAUI control or copied product algorithm supplies this result.
+Main registration remains plaintext until final key/recovery/retention/OS/provider adoption is ready.
+Uncommitted creation reconciliation and other recovery/platform/device/release boundaries remain
+open; this does not declare SEC or the whole planned scope complete. Unchanged UI/upstream producer
+matrices are not repeated.
+
+D-236 terminal evidence: all 3420 tests pass, zero failures/skips (3m12.507s). The strict
+Windows build has zero warnings/errors (21.79s). The strict independent Android build
+has zero warnings/errors (52.70s). Actual native Android create/cold continuation completed
+on the same fictitious run 60623842398d490ba6f67fe015ffcb23: durable catalogue persistence
+followed by injected failure retained target files; cold startup completed retirement,
+kept main balance 250 and left only main identity. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-850fb67ec6bf4eca98e834b6aee50a25.json.
+No unchanged UI or upstream native producer suite was repeated. Main encryption remains inactive.
+
+The strict main Android build also completed with zero warnings/errors (39.69s).
+
+D-236 complete signed Release APK:
+artifacts/android-d236-delivery/pro.vafadar.zanance-Signed.apk (83,114,544 bytes).
+Signature verification succeeds; package pro.vafadar.zanance, API 24/36 and both arm64-v8a/x86_64
+embedded assembly stores are verified. The script requires a warning-free strict Release publish.
+Test outputs were cleaned after all terminal builds/checks. Local test signing and independent
+runtime evidence do not imply main encryption, physical phone/iOS, store or product acceptance.

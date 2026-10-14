@@ -27,7 +27,8 @@ public sealed partial class ProfileService(
     ISettingsStore preferences,
     IProfileRuntime runtime,
     Translator translator,
-    IProfileWorkAccessSource? workAccess = null) : IProfileCatalogueChanges
+    IProfileWorkAccessSource? workAccess = null,
+    IProfileRetirementHost? profileRetirement = null) : IProfileCatalogueChanges
 {
     private const string ListKey = "profiles.list";
     private const string CurrentKey = "profiles.current";
@@ -99,6 +100,15 @@ public sealed partial class ProfileService(
     public async Task DeleteReviewedAsync(ProfileCatalogueReview review, LocalProfile profile, CancellationToken cancellationToken = default)
     {
         ValidateWorkReview(review); RequireReviewedProfile(review, profile);
+        if (profileRetirement is not null && (location.IsProtected || HasProtectedProfileState(PathOf(MainPath(), profile.Id))))
+        {
+            await runtime.RunExclusiveAsync(async () =>
+            {
+                using var nativeOwner = await location.Access.AcquireExclusiveAsync(cancellationToken);
+                await profileRetirement.DeleteReviewedAsync(this, review, profile, location, nativeOwner, cancellationToken);
+            });
+            return;
+        }
         using var owner = await location.Access.AcquireExclusiveAsync(cancellationToken);
         cancellationToken.ThrowIfCancellationRequested(); DeleteCore(review, profile, owner);
     }

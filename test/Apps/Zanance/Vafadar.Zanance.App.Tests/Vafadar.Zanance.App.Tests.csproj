@@ -81,6 +81,9 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/DisplayUnitNote.cs" Link="Application/DisplayUnitNote.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileService.cs" Link="Application/ProfileService.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileService.Storage.cs" Link="Application/ProfileService.Storage.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileService.Retirement.cs" Link="Application/ProfileService.Retirement.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/IProfileRetirementHost.cs" Link="Application/IProfileRetirementHost.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProtectedProfileRetirementHost.cs" Link="Application/ProtectedProfileRetirementHost.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileService.Work.cs" Link="Application/ProfileService.Work.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileCatalogueReview.cs" Link="Application/ProfileCatalogueReview.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/ProfileWorkAccess.cs" Link="Application/ProfileWorkAccess.cs" />

@@ -65,6 +65,28 @@ public sealed class ProfileRetirementJournalTests
     public void Main_or_noncanonical_profile_cannot_be_a_retirement_request(string legacy) =>
         Assert.Throws<ArgumentException>(() => new ProfileRetirementCheckpoint(legacy, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()));
 
+    [Fact, Trait("AT", "AT-236")]
+    public async Task Reviewed_catalogue_digests_are_atomic_with_request_and_staged_retry_never_replaces_them()
+    {
+        using var folder = new TemporaryDirectory(); var identity = Identity(); var path = folder.Combine("retirement.sqlite");
+        var journal = new SqliteProfileRetirementJournal(path, identity, () => { });
+        var digest = new ProfileRetirementCatalogueDigest(new string('a', 64), new string('b', 64));
+        await Assert.ThrowsAsync<IOException>(() => journal.CreateNewAsync(digest, new AlwaysFailSync(), Ct));
+        Assert.False(File.Exists(path));
+        Assert.Equal(digest, await new SqliteProfileRetirementJournal(path + ".creating", identity, () => { }).ReadCatalogueAsync(Ct));
+        await Assert.ThrowsAsync<IOException>(() => journal.CreateNewAsync(new(new string('c', 64), new string('d', 64)), new Effects(), Ct));
+        await journal.CreateNewAsync(digest, new Effects(), Ct);
+        Assert.Equal(identity, await journal.ReadAsync(Ct)); Assert.Equal(digest, await journal.ReadCatalogueAsync(Ct));
+        Assert.False(await journal.HasArtifactInventoryAsync(Ct));
+    }
+
+    private sealed class AlwaysFailSync : IDatabaseGenerationFileDurability
+    {
+        public long AvailableBytes => long.MaxValue;
+        public Task SynchronizeFileAsync(string path, CancellationToken ct) => throw new IOException("Injected staged publication interruption.");
+        public Task SynchronizeDirectoryAsync(CancellationToken ct) => throw new IOException("Unexpected final publication.");
+    }
+
     private sealed class Effects : IDatabaseGenerationFileDurability
     {
         internal int Files, Directories;

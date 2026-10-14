@@ -1884,3 +1884,15 @@ key reads; matching headers still need complete GCM verification. Owned decrypte
 Cloud files/shared installation wrapping keys are excluded. The native host still supplies complete
 private-root mappings and real maintenance ownership; final catalogue/startup/recovery integration
 is separate. Main registration is not activated by this discovery operation.
+
+### D-236 — Catalogue barrier before native profile retirement
+
+The explicit protected retirement host uses the actual app runtime/drained owner, exact identity,
+atomic staged request+catalogue digest creation, authenticated file inventory, actual profile packet
+publication and ISettingsPersistence before native cleanup. Before/after fingerprints include main
+path, raw catalogue/legacy/name/current preferences with length-prefixed nullable encoding. The
+replacement packet uses the request operation ID for deterministic retry. Original matching pending
+requests may finish missing inventory; published requests cannot infer it. Startup reconciliation
+precedes complete storage capture, and completed historical requests do not replay preference changes.
+No default main native registration is introduced. Creation orphans, recovery/retention/OS and other
+native/platform/device acceptance still gate final integration.
