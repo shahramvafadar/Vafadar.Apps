@@ -1918,3 +1918,10 @@ while CatalogueRemoved before native file/key cleanup. ArtifactsRemoved/identity
 actual target recovery absence. Recorded recovery cannot continue with a host missing that effect.
 Android check: Test-AndroidGenerationMigration.ps1 -RunName android-d -RecoveryRetirement
 -UseExistingBuild, using independent actual protected profile flows and fictitious native finance only.
+
+D-240 native recovered entries require IDatabaseGenerationKeyRecovery.ImportRecoveredAsync and
+actual same-generation verification under host authorization/access. Originals remain immutable;
+recovery entries are staged/authenticated/no-replace and ordinary reads never initiate recovery.
+Android independent check: Test-AndroidGenerationMigration.ps1 -RunName android-d -KeyReEnrollment
+-UseExistingBuild (three separate processes). Windows Compatibility recovery-create/recovery-import/
+recovery-native modes use only owned fictitious artifacts. Final reference/lifecycle/UX adoption is open.

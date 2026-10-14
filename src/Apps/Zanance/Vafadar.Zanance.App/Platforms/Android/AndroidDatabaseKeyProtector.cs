@@ -56,6 +56,48 @@ public static class AndroidDatabaseKeyProtector
         finally { CryptographicOperations.ZeroMemory(owned); }
     }
 
+    /// <summary>Explicitly protects a verified recovered key under a fresh non-exportable alias, retaining old unavailable aliases.</summary>
+    public static byte[] ProtectRecovered(ReadOnlySpan<byte> key, DatabaseKeyBinding binding)
+    {
+        ArgumentNullException.ThrowIfNull(binding);
+        if (key.Length != 32) throw new CryptographicException("Recovery requires the exact 256-bit key.");
+        var wrapping = Guid.NewGuid(); PrepareWrappingKey(wrapping);
+        using var store = OpenStore(); using var wrappingKey = RequireKey(store, wrapping);
+        using var cipher = Cipher.GetInstance("AES/GCM/NoPadding")!;
+        cipher.Init(Javax.Crypto.CipherMode.EncryptMode, wrappingKey);
+        var header = new byte[22]; "ZKEY"u8.CopyTo(header); header[4] = 2; header[5] = 1;
+        wrapping.TryWriteBytes(header.AsSpan(6, 16), bigEndian: true, out _);
+        cipher.UpdateAAD([.. binding.GetAuthenticatedContext(), .. header]);
+        var owned = key.ToArray();
+        try
+        {
+            var encrypted = cipher.DoFinal(owned)!; var nonce = cipher.GetIV()!;
+            if (nonce.Length != 12 || encrypted.Length != 48) throw new CryptographicException("Unsupported recovery GCM envelope.");
+            return [.. header, .. nonce, .. encrypted];
+        }
+        finally { CryptographicOperations.ZeroMemory(owned); }
+    }
+
+    /// <summary>Authenticates an explicit recovered entry through its captured fresh alias, never the old installation alias.</summary>
+    public static byte[] UnprotectRecovered(ReadOnlySpan<byte> envelope, DatabaseKeyBinding binding)
+    {
+        ArgumentNullException.ThrowIfNull(binding);
+        if (envelope.Length != 82 || !envelope[..4].SequenceEqual("ZKEY"u8) || envelope[4] != 2 || envelope[5] != 1)
+            throw new CryptographicException("Unsupported recovery envelope.");
+        var wrapping = new Guid(envelope.Slice(6, 16), bigEndian: true);
+        if (wrapping == Guid.Empty) throw new CryptographicException("Recovery wrapping identity is missing.");
+        using var store = OpenStore(); using var key = RequireKey(store, wrapping);
+        using var cipher = Cipher.GetInstance("AES/GCM/NoPadding")!;
+        using var parameters = new GCMParameterSpec(128, envelope.Slice(22, 12).ToArray());
+        cipher.Init(Javax.Crypto.CipherMode.DecryptMode, key, parameters);
+        cipher.UpdateAAD([.. binding.GetAuthenticatedContext(), .. envelope[..22].ToArray()]);
+        byte[] restored;
+        try { restored = cipher.DoFinal(envelope[34..].ToArray())!; }
+        catch (AEADBadTagException) { throw new CryptographicException("Recovery envelope authentication failed."); }
+        if (restored.Length == 32) return restored;
+        CryptographicOperations.ZeroMemory(restored); throw new CryptographicException("Recovery envelope contains no data key.");
+    }
+
     /// <summary>Unwraps only the bound DEK; malformed data or a missing key cannot create a new alias.</summary>
     public static byte[] Unprotect(ReadOnlySpan<byte> envelope, DatabaseKeyBinding binding)
     {

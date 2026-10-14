@@ -2032,3 +2032,8 @@ Target keys are authenticated before catalogue publication, only captured target
 before native key files, and other-profile recovery/private vault remain. Missing/changed references
 refuse cleanup. See decision log for terminal evidence; main encryption, final recovery UI/re-enrollment/
 rotation/reference-retention/OS/platform gates remain open. No whole-SEC completion is implied.
+
+D-240 adds explicit verified native re-enrollment and cold device-key read without using the recovery
+secret, preserving the original envelope and financial ciphertext. Missing/corrupt entries never
+regenerate keys. Final recovery UX/all-profile orchestration, recovered-entry lifecycle/reference/
+retention/OS/platform adoption remain open; main encryption stays inactive. See decision log evidence.

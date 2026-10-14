@@ -1517,3 +1517,7 @@ Prepared one verified initialization path for all existing local profiles before
 
 - Prepared exact removal of a deleted protected profile's recovery keys while preserving recovery
   for other profiles. Main encryption and product recovery controls are not enabled yet.
+
+- Prepared native storage of a verified recovered database key so later cold reads can use device
+  protection again, retaining the original key entry. Product recovery UI and main encryption are
+  not enabled yet.

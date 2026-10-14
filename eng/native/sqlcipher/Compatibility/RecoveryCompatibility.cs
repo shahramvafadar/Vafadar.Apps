@@ -16,7 +16,7 @@ internal static class RecoveryCompatibility
 {
     internal static async Task<string> RunAsync(string folder, bool create,
         Func<string, IDatabaseGenerationKeyStore> createKeys, Func<string, IDatabaseGenerationFileDurability> createDurability,
-        Func<Exception, bool>? isNativeMissing = null)
+        Func<Exception, bool>? isNativeMissing = null, bool reEnroll = false, bool nativeReopen = false)
     {
         SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
         if (create) { if (Directory.Exists(folder)) throw new IOException("Use a fresh independently owned recovery fixture."); Directory.CreateDirectory(folder); }
@@ -85,6 +85,17 @@ internal static class RecoveryCompatibility
                 if (!missing || File.Exists(original)) throw new IOException("Missing native key simulation differs or plaintext was created.");
                 return "{\"PrivateVaultEncrypted\":true,\"DeviceEnvelopeMissing\":true,\"PublicOnlyGenerationCapture\":true}";
             }
+            if (nativeReopen)
+            {
+                using var native = await SqlCipherNewProfile.OpenAsync(location, identities, "", original, false, new ExistingKeys(nativeKeys), durability,
+                    (_, _) => throw new IOException("Native cold reopen cannot create replacement schema."), owner, owner.Validate, 16 * 1024 * 1024, "4.19.0");
+                native.Publish(location, owner);
+                await using (var db = await services.GetRequiredService<ILocalDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(owner))
+                    if ((await db.Accounts.AsNoTracking().SingleAsync()).OpeningBalance != -321) throw new IOException("Native re-enrollment lost financial data.");
+                LocalDatabasePools.ClearFile(native.Path);
+                if (Convert.ToHexStringLower(SHA256.HashData(await File.ReadAllBytesAsync(native.Path))) != await File.ReadAllTextAsync(Path.Combine(folder, "candidate.sha256"))) throw new IOException("Native reopen changed ciphertext.");
+                return "{\"NativeColdReadWithoutRecoverySecret\":true,\"OriginalMoneyPreserved\":true,\"CiphertextUnchanged\":true}";
+            }
             var missingDevice = false;
             try { var unexpected = await nativeKeys.ReadAsync(identity.InitialCandidateKey, default); CryptographicOperations.ZeroMemory(unexpected); }
             catch (Exception error) when (error is IOException or CryptographicException || isNativeMissing?.Invoke(error) == true) { missingDevice = true; }
@@ -120,9 +131,36 @@ internal static class RecoveryCompatibility
             if (Convert.ToHexStringLower(SHA256.HashData(await File.ReadAllBytesAsync(opened.Path))) != await File.ReadAllTextAsync(Path.Combine(folder, "candidate.sha256")))
                 throw new IOException("Recovery altered the existing encrypted financial database.");
             if (File.Exists(Path.Combine(folder, $"{identity.ProfileId:N}-{identity.CandidateGeneration:N}.key"))) throw new IOException("Recovery manufactured a device envelope.");
+            if (reEnroll)
+            {
+                var key = await explicitRecovery.ReadAsync(identity.InitialCandidateKey, default);
+                try
+                {
+                    if (nativeKeys is not IDatabaseGenerationKeyRecovery importer) throw new IOException("Native recovery importer is unavailable.");
+                    await importer.ImportRecoveredAsync(identity.InitialCandidateKey, key, async (candidate, ct) =>
+                    {
+                        using var verified = await SqlCipherNewProfile.OpenAsync(location, identities, "", original, false,
+                            new FixedKeys(identity.InitialCandidateKey, candidate), durability,
+                            (_, _) => throw new IOException("Recovery import cannot create replacement schema."), owner, owner.Validate, 16 * 1024 * 1024, "4.19.0", ct);
+                        if (verified.Binding != opened.Binding || verified.Path != opened.Path) throw new IOException("Verified recovery generation differs.");
+                    }, default);
+                }
+                finally { CryptographicOperations.ZeroMemory(key); }
+                return "{\"VerifiedNativeReEnrollment\":true,\"OriginalCiphertextPreserved\":true}";
+            }
             return "{\"DamagedPrivateVaultRefused\":true,\"WrongRecoveryKeyRefused\":true,\"ColdRecoveryWithoutDeviceKey\":true,\"ActualModelAndNegativeMoneyPreserved\":true,\"CiphertextUnchanged\":true,\"NoReplacementDeviceKey\":true}";
         }
         finally { CryptographicOperations.ZeroMemory(recoveryKey); }
+    }
+    private sealed class ExistingKeys(IDatabaseGenerationKeyStore inner) : IDatabaseGenerationKeyStore
+    {
+        public Task PrepareAsync(DatabaseKeyBinding binding, CancellationToken ct) => throw new IOException("Cold native reopen cannot prepare keys.");
+        public Task<byte[]> ReadAsync(DatabaseKeyBinding binding, CancellationToken ct) => inner.ReadAsync(binding, ct);
+    }
+    private sealed class FixedKeys(DatabaseKeyBinding expected, ReadOnlyMemory<byte> key) : IDatabaseGenerationKeyStore
+    {
+        public Task PrepareAsync(DatabaseKeyBinding binding, CancellationToken ct) => throw new IOException("Verification cannot prepare keys.");
+        public Task<byte[]> ReadAsync(DatabaseKeyBinding binding, CancellationToken ct) => binding == expected ? Task.FromResult(key.ToArray()) : throw new IOException("Verification belongs to another key.");
     }
     private sealed class RecoveryOnlyKeys(SqliteRecoveryEnvelopeCatalogue catalogue, DatabaseRecoveryMaterial material) : IDatabaseGenerationKeyStore
     {

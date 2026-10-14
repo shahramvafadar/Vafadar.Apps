@@ -4561,3 +4561,57 @@ D-239 complete signed Release APK: artifacts/android-d239-delivery/pro.vafadar.z
 embedded assembly stores verified. Test outputs were cleaned after all terminal checks. Local test
 signing and independent recovery retirement proof do not activate main encryption or constitute
 physical phone/iOS, recovery UX or store/release acceptance.
+
+### D-240 — Explicit native re-enrollment of verified recovered keys
+
+IDatabaseGenerationKeyRecovery requires an owned 32-byte recovered DEK and an explicit host callback
+that verifies the same existing financial generation before any key entry is published. The host
+remains responsible for app/device authorization and drained access. Native callers exercise actual
+SqlCipherNewProfile/current-generation verification with the exact owned candidate key, not an
+invented schema or a permissive financial check.
+
+Windows stores CurrentUser DPAPI recovery material in a separate immutable .key.recovered entry;
+Android stores a version-2 recovery envelope under a fresh non-exportable Keystore alias, with the
+version/purpose/wrapping identity and existing DatabaseKeyBinding context authenticated by native
+AES-GCM. Old aliases and original envelopes remain untouched, including unavailable originals.
+The separate entry is staged, authenticated against the verified DEK, synchronized, renamed without
+replacement and reopened before acceptance. An existing entry must match, with no replacement; a
+staged entry can only resume through explicit recovery. Owned key copies are cleared. Reads choose
+an existing recovery entry, fail on its corruption and never silently fall back or invoke recovery.
+Ordinary preparation cannot regenerate a binding with a pending recovered stage.
+
+Four native Windows contract cases verify original-envelope preservation and cold read, no writes
+before failed finance verification, refusal of a different replacement key, and damaged recovery
+entry refusal without fallback. The actual independent original-model caller runs create/key-loss,
+verified import and a separate native cold read that does not use the recovery secret, preserving
+signed finance and complete ciphertext. Android uses the same financial verification with actual
+Keystore/fsync effects; terminal evidence follows below.
+
+This is native re-enrollment, not a complete product recovery UI or authorization controller. Final
+all-profile recovery orchestration, interrupted malformed-stage reconciliation, wrapping-alias
+lifecycle for future new generations after invalidation, recovered-entry reference/retirement and
+retention integration remain open. Strict reference discovery still refuses unqualified recovered
+namespace artifacts before catalogue removal, rather than guessing ownership of an unavailable
+original. Main registration stays plaintext; no temporary OS-backup policy, new permission or SDK.
+Unchanged UI/native producer suites are not repeated. OD-04/OD-10 remain approved.
+
+D-240 terminal native/test evidence: all 3449 solution tests pass, zero failures/skips
+(2m54.750s). Final independent Android strict Release AOT/trim build has zero warnings/errors
+(62.01s). Three native Windows processes create, import and reopen without using the recovery
+secret; signed money and complete ciphertext remain unchanged. Three actual Android processes
+pass the same flow using the fresh version-2 Keystore recovery envelope on fictitious run
+7c24641d9fac425381bce1af3621ce25. Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-2817166d0a484a5bab73f02ef924cca1.json.
+Four Windows native contract cases also pass. The initial strict test compile exposed platform
+annotations across assertion lambdas; the assertions now call the platform-neutral ports after
+native Windows construction is explicitly guarded, without disabling diagnostics. Main Windows
+strict build is zero warnings/errors (17.70s); final main Android/package evidence follows.
+No full app recovery UI, alias invalidation matrix, hardware power-loss/device/iOS or main
+registration acceptance is claimed by these native controlled tests.
+
+D-240 main Android strict build completes with zero warnings/errors in 39.62s.
+
+D-240 complete signed Release APK: artifacts/android-d240-delivery/pro.vafadar.zanance-Signed.apk
+(83,216,944 bytes). Signature, pro.vafadar.zanance package, API 24/36 and both arm64-v8a/x86_64
+embedded assembly stores verified. Test outputs were cleaned after all terminal checks. The APK
+uses local test signing and does not activate main encryption/recovery UI or establish phone/iOS/
+hardware power-loss/store acceptance. Recovered-entry reference/lifecycle integration remains open.

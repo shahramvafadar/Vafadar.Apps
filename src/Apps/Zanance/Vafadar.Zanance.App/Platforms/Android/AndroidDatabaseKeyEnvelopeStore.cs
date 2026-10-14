@@ -8,7 +8,7 @@ namespace Vafadar.Zanance.App.Security;
 /// <remarks>The caller captures and holds the exclusive profile/access gate and owns the directory.
 /// This store never creates a wrapping key, selects a database or removes another generation.
 /// File and directory flushes do not establish physical-device power-loss acceptance.</remarks>
-public sealed class AndroidDatabaseKeyEnvelopeStore
+public sealed partial class AndroidDatabaseKeyEnvelopeStore
 {
     private readonly string directory;
 
@@ -25,6 +25,8 @@ public sealed class AndroidDatabaseKeyEnvelopeStore
     public bool ContainsEnvelope(DatabaseKeyBinding binding)
     {
         ArgumentNullException.ThrowIfNull(binding); ValidateDirectory();
+        if (HasEntry(GetPath(binding) + ".recovered")) return true;
+        if (HasEntry(GetPath(binding) + ".recovered.creating")) throw new IOException("Pending key recovery requires explicit continuation.");
         try { _ = File.GetAttributes(GetPath(binding)); return true; }
         catch (FileNotFoundException) { return false; }
     }
@@ -34,7 +36,13 @@ public sealed class AndroidDatabaseKeyEnvelopeStore
     {
         ArgumentNullException.ThrowIfNull(binding);
         ValidateDirectory();
-        var descriptor = Os.Open(GetPath(binding), OsConstants.ORdonly | OsConstants.ONofollow | OsConstants.ONonblock, 0)!;
+        var recovered = GetPath(binding) + ".recovered";
+        return ReadEntry(HasEntry(recovered) ? recovered : GetPath(binding), binding, HasEntry(recovered));
+    }
+    private byte[] ReadEntry(string path, DatabaseKeyBinding binding, bool recovered)
+    {
+        ValidateDirectory();
+        var descriptor = Os.Open(path, OsConstants.ORdonly | OsConstants.ONofollow | OsConstants.ONonblock, 0)!;
         Java.IO.FileInputStream input;
         try
         {
@@ -46,7 +54,7 @@ public sealed class AndroidDatabaseKeyEnvelopeStore
         using (input)
         using (descriptor)
         {
-            var envelope = new byte[65];
+            var envelope = new byte[recovered ? 82 : 65];
             var offset = 0;
             while (offset < envelope.Length)
             {
@@ -55,7 +63,7 @@ public sealed class AndroidDatabaseKeyEnvelopeStore
                 offset += count;
             }
             if (input.Read() != -1) throw new CryptographicException("Stored key envelope is oversized.");
-            return AndroidDatabaseKeyProtector.Unprotect(envelope, binding);
+            return recovered ? AndroidDatabaseKeyProtector.UnprotectRecovered(envelope, binding) : AndroidDatabaseKeyProtector.Unprotect(envelope, binding);
         }
     }
 
@@ -78,6 +86,8 @@ public sealed class AndroidDatabaseKeyEnvelopeStore
         FlushDirectory();
     }
 
+    private static bool HasEntry(string path)
+    { try { _ = File.GetAttributes(path); return true; } catch (FileNotFoundException) { return false; } }
     private string GetPath(DatabaseKeyBinding binding) => Path.Combine(directory,
         binding.ProfileId.ToString("N") + "-" + binding.GenerationId.ToString("N") + ".key");
 

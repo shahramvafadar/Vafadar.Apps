@@ -6,7 +6,7 @@ using Vafadar.Data;
 namespace Vafadar.Zanance.App.Security;
 
 /// <summary>Final generation-key effects using the original Android Keystore and immutable envelope store.</summary>
-public sealed class AndroidGenerationKeyStore(string privateDirectory) : IDatabaseGenerationKeyStore
+public sealed class AndroidGenerationKeyStore(string privateDirectory) : IDatabaseGenerationKeyStore, IDatabaseGenerationKeyRecovery
 {
     private readonly AndroidDatabaseKeyEnvelopeStore store = new(privateDirectory);
 
@@ -30,6 +30,11 @@ public sealed class AndroidGenerationKeyStore(string privateDirectory) : IDataba
         }
         finally { CryptographicOperations.ZeroMemory(key); }
     }, cancellationToken);
+
+    /// <inheritdoc />
+    public Task ImportRecoveredAsync(DatabaseKeyBinding binding, ReadOnlyMemory<byte> recoveredKey,
+        Func<ReadOnlyMemory<byte>, CancellationToken, Task> verifyExistingGeneration, CancellationToken ct) =>
+        store.ImportRecoveredAsync(binding, recoveredKey, verifyExistingGeneration, ct);
 
     /// <inheritdoc />
     public Task<byte[]> ReadAsync(DatabaseKeyBinding binding, CancellationToken cancellationToken) => Task.Run(() =>

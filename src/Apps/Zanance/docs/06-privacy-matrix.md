@@ -658,3 +658,8 @@ D-239 retirement captures only recovery id, target count and SHA-256 fingerprint
 ciphertext/confirmations; no recovery secret, private material or plaintext DEK enters the journal.
 Target mappings are removed before native device key files, with other profiles and shared encrypted
 private vault preserved. No new permission/export/SDK or interim OS-backup policy is introduced.
+
+D-240 recovered DEKs are stored only as separately protected native recovery entries, with owned
+mutable buffers cleared and originals/old aliases preserved. Existing finance verification precedes
+publication; the caller must enforce explicit app/device authorization. Recovery secrets are not
+saved or used by ordinary cold reads. No permission/SDK/export or interim OS exclusion is introduced.

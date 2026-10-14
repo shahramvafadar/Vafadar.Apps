@@ -32,6 +32,7 @@
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/**/*.cs"
              Exclude="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/bin/**;$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/obj/**" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidDatabaseKeyProtector.cs" Link="AndroidDatabaseKeyProtector.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidDatabaseKeyEnvelopeStore.Recovery.cs" Link="AndroidDatabaseKeyEnvelopeStore.Recovery.cs" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidDatabaseKeyEnvelopeStore.cs" Link="AndroidDatabaseKeyEnvelopeStore.cs" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidGenerationMigrationStorage.cs" Link="AndroidGenerationMigrationStorage.cs" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidProfileRetirementFiles.cs" Link="AndroidProfileRetirementFiles.cs" />

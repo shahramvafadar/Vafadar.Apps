@@ -4,7 +4,7 @@ using Vafadar.SqlCipher.Compatibility;
 if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "eng", "native", "sqlcipher", "inputs.lock.json")))
     throw new ArgumentException("Run from the repository root.");
 
-if (args.Length == 2 && args[0] is "recovery-create" or "recovery-reopen")
+if (args.Length == 2 && args[0] is "recovery-create" or "recovery-reopen" or "recovery-import" or "recovery-native")
 {
     if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException("Windows recovery requires Windows.");
     var owned = Path.GetFullPath(args[1]);
@@ -12,7 +12,7 @@ if (args.Length == 2 && args[0] is "recovery-create" or "recovery-reopen")
     if (!owned.StartsWith(root + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)) throw new ArgumentException("Recovery checks require independently owned artifacts.");
     Console.WriteLine(await RecoveryCompatibility.RunAsync(owned, args[0] == "recovery-create",
         path => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return new Vafadar.Data.WindowsGenerationKeyStore(path, () => { }); },
-        path => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return new Vafadar.Data.WindowsGenerationFileDurability(path); }));
+        path => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return new Vafadar.Data.WindowsGenerationFileDurability(path); }, reEnroll: args[0] == "recovery-import", nativeReopen: args[0] == "recovery-native"));
     return;
 }
 

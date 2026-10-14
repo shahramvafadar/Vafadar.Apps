@@ -22,10 +22,10 @@ internal static class GenerationMigrationCompatibility
             SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
             return await ProfileCreationCompatibility.RunAsync(folder, phase == "recovery-retirement-create", retirement: true, retirementRecovery: true);
         }
-        if (phase is "recovery-create" or "recovery-reopen")
+        if (phase is "recovery-create" or "recovery-reopen" or "recovery-import" or "recovery-native")
             return await Vafadar.SqlCipher.Compatibility.RecoveryCompatibility.RunAsync(folder, phase == "recovery-create",
                 path => new AndroidGenerationKeyStore(path), path => new AndroidGenerationFileDurability(path),
-                error => error is global::Android.Systems.ErrnoException native && native.Errno == global::Android.Systems.OsConstants.Enoent);
+                error => error is global::Android.Systems.ErrnoException native && native.Errno == global::Android.Systems.OsConstants.Enoent, reEnroll: phase == "recovery-import", nativeReopen: phase == "recovery-native");
         if (phase is "profile-creation-pending" or "profile-creation-resume")
         {
             SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
