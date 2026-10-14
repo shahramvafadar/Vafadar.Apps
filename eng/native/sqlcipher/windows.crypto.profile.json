@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "purpose": "SQLCipher symmetric database storage; platform recovery RSA remains outside this library",
+  "opensslConfigureOptions": [
+    "no-dsa",
+    "no-dh",
+    "no-cms",
+    "no-cmp",
+    "no-ocsp",
+    "no-ts",
+    "no-quic"
+  ],
+  "requiredPrimitives": [
+    "AES-256-CBC",
+    "SHA1",
+    "SHA256",
+    "SHA512",
+    "HMAC",
+    "PBKDF2",
+    "RAND/DRBG"
+  ],
+  "sourceForkOrWarningSuppression": false
+}

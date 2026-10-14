@@ -11,8 +11,10 @@ $candidate = Join-Path $root 'candidate'
 $manifest = Get-Content -LiteralPath (Join-Path $candidate 'manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $lockPath = Join-Path $PSScriptRoot 'inputs.lock.json'
 $inputLock = Get-Content -LiteralPath $lockPath -Raw -Encoding UTF8 | ConvertFrom-Json
+$profilePath = Join-Path $PSScriptRoot 'windows.crypto.profile.json'
 if ($manifest.schemaVersion -ne 1 -or $manifest.runtimeIdentifier -ne 'win-x64' -or
     $manifest.status -ne 'candidate-not-app-or-release-accepted' -or
+    $manifest.cryptoProfileSha256 -ne (Get-FileHash -LiteralPath $profilePath -Algorithm SHA256).Hash.ToLowerInvariant() -or
     $manifest.inputLockSha256 -ne (Get-FileHash -LiteralPath $lockPath -Algorithm SHA256).Hash.ToLowerInvariant()) {
     throw 'The candidate manifest does not match the current reviewed inputs.'
 }
@@ -35,7 +37,7 @@ if ($pe -lt 0 -or $pe + 96 -ge $bytes.Length -or [BitConverter]::ToUInt32($bytes
 $notices = 'Owner-written Zanance source remains all rights reserved. The following notices apply only to the bundled components.' + "`n`n" +
     (Get-Content -LiteralPath (Join-Path $candidate 'licenses/SQLCipher.txt') -Raw -Encoding UTF8) + "`n`n" +
     (Get-Content -LiteralPath (Join-Path $candidate 'licenses/OpenSSL.txt') -Raw -Encoding UTF8)
-$version = $inputLock.sources.sqlcipher.tag.TrimStart('v') + '-candidate.1'
+$version = $inputLock.sources.sqlcipher.tag.TrimStart('v') + '-candidate.2'
 $packageId = 'Vafadar.Native.SqlCipher.Windows'
 $nuspec = @"
 <?xml version="1.0" encoding="utf-8"?>

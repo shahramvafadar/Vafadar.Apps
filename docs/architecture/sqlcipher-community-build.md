@@ -2,15 +2,17 @@
 
 Status: owner direction accepted; independent Windows C/.NET feasibility verified. Production native
 build/packaging/update/security pipeline and app integration remain in progress. The app is unchanged
-and its databases remain plaintext. Current complete APK/test/build baseline is D-179.
+and its databases remain plaintext. Current complete main APK/test/build baseline is D-256.
 
 ## Owner constraints
 
 On 2026-10-12 the owner selected Community Edition from current official source. No custom
 cryptography or unnecessary fork; review security/maintenance before using native or managed
 dependencies. First prove architecture, platforms and long-term maintenance, then integrate final
-security, migration and CI. Recovery OD-04 and final OS-backup OD-10 remain separate decisions;
-no interim app policy or deprecated probe binary is introduced.
+security, migration and CI. Recovery OD-04 and final OS-backup OD-10 are approved: automatic device key, optional recovery
+key and Zanance backup recovery; permanent OS backup/transfer exclusion accompanies completed
+encryption. Their final implementation remains unfinished. No interim app policy or deprecated
+probe binary is introduced.
 
 ## Source and host-tool provenance
 
@@ -283,3 +285,52 @@ must qualify actual reachable/provider input constraints or an officially suppor
 profile, not equate unused-at-the-direct-call-site with full native acceptance. Windows/main encryption
 remain unactivated. Main code/APK and3482-test baseline remain D-256; unchanged producer, UI, main
 build/test/APK checks were not repeated. Full goal/security/platform/release scope remains open.
+
+### D-260 — Reduce the Windows crypto build with supported upstream options
+
+The Windows recipe now reads windows.crypto.profile.json and records its SHA256 with the actual
+Configure options. Only the explicitly reviewed no-dsa/no-dh/no-cms/no-cmp/no-ocsp/no-ts/no-quic
+options are allowed; arbitrary no-* removals and duplicate options are refused. The required SQLCipher
+AES-CBC, SHA/HMAC, PBKDF2 and random primitives remain enabled. No source fork, patch or additional
+warning suppression is introduced. Recovery RSA remains the platform implementation; native RSA
+is not removed. An initial no-rsa Configure option was rejected by upstream before any native output;
+that negative run is preserved and the supported profile used a fresh independent tree.
+
+The initial supported run windows-storage-d260-supported produced SQLCipher DLL
+SHA256 e9541bf30523f0c65126525c816d58863ffb0c8811d3509fed08f353af705ed9,4940800 bytes.
+Actual configdata confirms all eight removals and no required primitive disabled. The original
+production assemblies passed create/cold reopen, all32 migrations, original negative money,
+portable memory snapshot and wrong-key refusal. Binary proof directory:
+artifacts/native-sqlcipher/binary-host/d1f6b3bca79e4295af7037342df26008.
+The new native build emits646 warnings (570 C4267,72 C4244,2 C4319,2 C4133), versus749 in the prior
+profile. These are a new inventory, not transferred warning acceptance or a warning-free build.
+Profile/configuration evidence: artifacts/native-sqlcipher/d260-profile-proof.json.
+
+The first supported profile failed the official suite:347 files/2219 reported tests, failing
+80-test_ssl_new.t compressed-certificate configuration and90-test_sslapi.t group configuration.
+Official test source requires positive default supported groups; compressed-certificate fixtures
+require TLS1.3 success. Removing both EC and DH left that protocol without usable groups.
+No failed recipe is excluded or source-patched. The revised profile retains EC and removes only
+DSA,DH,CMS,CMP,OCSP,TS,QUIC. Fresh run windows-storage-d260-ec keeps old objects/results separate.
+Revised native output is5641216 bytes, SHA256
+6455496953d402c7764693c2c2db60179ac9baf4ee3c5e6f5d6a405fdd17ec21. Actual configdata confirms EC
+retained and all seven requested removals. All704 diagnostics are OpenSSL:628 C4267,72 C4244,
+2 C4319,2 C4133; they are not suppressed or blanket-approved. The actual production-assembly
+create/cold proof is artifacts/native-sqlcipher/binary-host/3a4d29d9ace8421d80b22a20dfe91bce,
+with zero managed build warnings/errors. The source-based schema/tamper/integrity suite also
+passes32 migrations; its expected negative HMAC errors are retained.
+
+Windows packaging now requires the current crypto-profile hash as well as source/native identity,
+and uses immutable4.19.0-candidate.2. The old profile is refused before packaging. Package native
+bytes, complete manifest and bundled component notices match; package SHA256:
+7cfac1cc7ed8bb5b187a75049ceee51fce95ce9541413ffe723cd3e81950a5c6.
+The revised official OpenSSL suite passes:347 files/3473 reported tests; 114 whole recipes
+are skipped and 775 explicit skip markers remain. Both previously failing TLS recipes now pass,
+including test_configuration_of_groups. Native DLL hash remains unchanged by the suite.
+Full log:artifacts/native-sqlcipher/build/windows-storage-d260-ec/upstream-f17bbb9c64f2407a9ffaff830f24107a.log.
+This qualifies the tested configuration; it is not full vulnerability, main encryption or release acceptance.
+
+Main registration remains inactive/plaintext. Main code,3482-test baseline and signed APK remain
+D-256; unrelated main builds/tests/UI/APK and unchanged Android producers were not repeated.
+Final provider/bootstrap/recovery/retention/reconciliation and coupled OS exclusion, remaining native
+platform/device acceptance and the original full goal remain unfinished.

@@ -2154,3 +2154,9 @@ handlers. A padded-Wrap output-expression counterexample disproves blanket int-i
 it does not prove public-API exploitation. All16 remain unapproved within723 pending narrowing sites.
 No source/binary/app/APK or unchanged producer/main verification changed. Native adoption must qualify
 actual dispatch/bounds or a supported reduced profile; the original full goal remains unfinished.
+
+D-260 implements an explicit supported reduced Windows OpenSSL profile with pinned provenance and
+required primitives retained. Actual production-assembly migration/persistence/cold checks pass;
+initial reduced profile failed TLS tests; the revised EC-retaining native inventory704 is not
+blanket approval. Official suite result is recorded in the
+D-260 decision. Main remains plaintext/D-256; final integration and full planned work remain open.

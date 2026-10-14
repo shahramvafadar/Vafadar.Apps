@@ -12,6 +12,18 @@ $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
 $inputLockPath = Join-Path $PSScriptRoot 'inputs.lock.json'
 $inputLock = Get-Content -LiteralPath $inputLockPath -Raw -Encoding UTF8 | ConvertFrom-Json
+$cryptoProfilePath = Join-Path $PSScriptRoot 'windows.crypto.profile.json'
+$cryptoProfile = Get-Content -LiteralPath $cryptoProfilePath -Raw -Encoding UTF8 | ConvertFrom-Json
+if ($cryptoProfile.schemaVersion -ne 1 -or $cryptoProfile.sourceForkOrWarningSuppression -ne $false -or
+    @($cryptoProfile.opensslConfigureOptions | Where-Object { $_ -notmatch '^no-[a-z0-9-]+$' }).Count) { throw 'Invalid reviewed Windows crypto profile.' }
+# SQLCipher requires AES, SHA/HMAC, PBKDF2 and the upstream random provider.
+# Keep the reviewed removals explicit rather than accepting arbitrary no-* options.
+$allowedCryptoOptions = @('no-dsa','no-dh','no-cms','no-cmp','no-ocsp','no-ts','no-quic')
+if (@($cryptoProfile.opensslConfigureOptions | Where-Object { $_ -notin $allowedCryptoOptions }).Count -or
+    @($cryptoProfile.opensslConfigureOptions | Select-Object -Unique).Count -ne @($cryptoProfile.opensslConfigureOptions).Count) {
+    throw 'Windows crypto profile removes an unreviewed facility or repeats an option.'
+}
+$cryptoOptions = $cryptoProfile.opensslConfigureOptions -join ' '
 if ($inputLock.schemaVersion -ne 1) { throw 'Unsupported native input schema.' }
 $vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio/Installer/vswhere.exe'
 $installation = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -format json | ConvertFrom-Json
@@ -62,7 +74,7 @@ set "PATH=$nasmDirectory;%PATH%"
 call "$vcvars" x64 $($inputLock.windowsCompiler.sdkVersion) -vcvars_ver=$($inputLock.windowsCompiler.toolsVersion)
 if errorlevel 1 exit /b 1
 cd /d "$opensslBuild"
-"$perl" "$opensslSource\Configure" VC-WIN64A no-shared no-module no-autoload-config no-filenames --prefix=C:\Vafadar\Sqlcipher /guard:cf
+"$perl" "$opensslSource\Configure" VC-WIN64A no-shared no-module no-autoload-config no-filenames $cryptoOptions --prefix=C:\Vafadar\Sqlcipher /guard:cf
 if errorlevel 1 exit /b 1
 nmake /NOLOGO build_generated libcrypto.lib
 if errorlevel 1 exit /b 1
@@ -116,7 +128,8 @@ $manifest = [ordered]@{ schemaVersion=1; status='candidate-not-app-or-release-ac
     inputLockSha256=(Get-FileHash -LiteralPath $inputLockPath -Algorithm SHA256).Hash.ToLowerInvariant();
     nativeDependencies=$dependencies; compiler=$inputLock.windowsCompiler; compilerExecutableSha256=(Get-FileHash -LiteralPath $compiler -Algorithm SHA256).Hash.ToLowerInvariant();
     perlVersion=$inputLock.windowsPerl.version; nasmVersion=$inputLock.windowsNasm.version; sourceDateEpoch=$sourceEpoch;
-    opensslOptions=@('VC-WIN64A','no-shared','no-module','no-autoload-config','no-filenames','assembly-enabled','/guard:cf');
+    opensslOptions=(@('VC-WIN64A','no-shared','no-module','no-autoload-config','no-filenames','assembly-enabled','/guard:cf') + @($cryptoProfile.opensslConfigureOptions));
+    cryptoProfileSha256=(Get-FileHash -LiteralPath $cryptoProfilePath -Algorithm SHA256).Hash.ToLowerInvariant();
     sqliteOptions=@('SQLITE_HAS_CODEC','SQLITE_TEMP_STORE=3','SQLITE_THREADSAFE=1','SQLITE_DEFAULT_FOREIGN_KEYS=1','SQLITE_EXTRA_INIT=sqlcipher_extra_init','SQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown','SQLCIPHER_CRYPTO_OPENSSL','SQLITE_ENABLE_COLUMN_METADATA','SQLITE_ENABLE_FTS5');
     linkerOptions=@('/Brepro','/guard:cf','/DYNAMICBASE','/NXCOMPAT','/HIGHENTROPYVA','/CETCOMPAT');
     libraryBytes=(Get-Item -LiteralPath $library).Length; librarySha256=(Get-FileHash -LiteralPath $library -Algorithm SHA256).Hash.ToLowerInvariant() }
