@@ -6322,4 +6322,28 @@
   <data name="Help_HoldingSaleResult_Example" xml:space="preserve">
     <value>اگر مبلغ فروش ثبت‌شده «۱۲۰» و بهای میانگین بخش فروخته‌شده «۱۰۰» باشد، نتیجهٔ ثبت‌شده در ارز دارایی «۲۰+» است. این به معنی مشمول مالیات بودن این مبلغ یا بدهکار بودن مالیات نیست.</value>
   </data>
+  <data name="Holiday_ChoiceFederal" xml:space="preserve">
+    <value>{0} · فدرال</value>
+  </data>
+  <data name="Holiday_ChoiceCommon" xml:space="preserve">
+    <value>{0} · تاریخ‌های مشترک</value>
+  </data>
+  <data name="Holiday_CoverageNationwide" xml:space="preserve">
+    <value>فقط تاریخ‌های تعطیل سراسری؛ تعطیلات محلی و روزهای جایگزین محل کار در این فهرست نیستند.</value>
+  </data>
+  <data name="Holiday_CoverageFederal" xml:space="preserve">
+    <value>فقط تاریخ‌های فدرال؛ تعطیلات استانی، ایالتی و کانتونی و روزهای جایگزین محل کار در این فهرست نیستند.</value>
+  </data>
+  <data name="Holiday_CoverageFederalObserved" xml:space="preserve">
+    <value>تاریخ‌های تعطیل فدرال آمریکا برای هفتهٔ کاری دوشنبه تا جمعه؛ تعطیلات ایالتی و تعطیلی‌های ویژه در این فهرست نیستند.</value>
+  </data>
+  <data name="Holiday_CoverageCommon" xml:space="preserve">
+    <value>فقط تاریخ‌های مشترک میان همهٔ مناطق؛ تاریخ‌های اضافی منطقه‌ای و قواعد محل کار در این فهرست نیستند.</value>
+  </data>
+  <data name="Holiday_ReviewedYears" xml:space="preserve">
+    <value>سال‌های بررسی‌شده: {0} تا {1}. منبع: {2}.</value>
+  </data>
+  <data name="Holiday_YearUnverified" xml:space="preserve">
+    <value>این سال خارج از محدودهٔ بررسی‌شده است. تقویم‌های جدید تعطیلات را حدس نمی‌زنند؛ قواعد قبلی آلمان و ایران حفظ شده‌اند.</value>
+  </data>
 </root>

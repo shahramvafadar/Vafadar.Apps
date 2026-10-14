@@ -31,8 +31,8 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-04 | Aggregated entries: import overlap handling (ZEX-S0611) | 2 | P2 | M | Done (local/emulator, D-72; phone/iOS acceptance open) | – |
 | ZCR-LOC-05 | "Not a tax calculation" help on sale results (ZEX-S0404) | 2 | P3 | S | Done (D-268 original sale help, six-language copy and store drafts locally verified; publication/device gates remain) | D-69 continuous delivery |
 | ZCR-LOC-06 | Recurring payments easier to find (repeat option in the entry form or a clearer entry point) | 2 | P2 | S | Done (local/native, D-111; phone/iOS acceptance open) | – |
-| ZCR-LOC-07 | Currencies of the target markets (ISO list, minor digits) | 2/8 | P3 | S | Approved targets (D-271); implementation remains | official currency sources |
-| ZCR-LOC-08 | More holiday regions with source, validity years and "uncertain" state | 8 | P3 | M | Approved targets (D-271); implementation remains | official jurisdiction/year sources |
+| ZCR-LOC-07 | Currencies of the target markets (ISO list, minor digits) | 2/8 | P3 | S | Target coverage delivered (D-273); additional jurisdictions/years remain | official currency sources |
+| ZCR-LOC-08 | More holiday regions with source, validity years and "uncertain" state | 8 | P3 | M | Target coverage delivered (D-273); additional jurisdictions/years remain | official jurisdiction/year sources |
 | ZCR-LOC-09 | Automatic local backup (interval exists, not wired) | 2 | P2 | S | Proposed | SEC-08 |
 | ZCR-LOC-13 | Owner-approved plan and debt UX (D-65) | Maintenance | P1 | M | Done (local; AT-72 device gate remains) | owner approval 2026-10-08 |
 | ZCR-LOC-15 | Independent saved filters after report navigation (D-109 / AT-114) | Maintenance | P1 | S | Done (local/native, D-109; device/iOS acceptance remains open) | D-69 ready-defect delivery |
@@ -2249,3 +2249,36 @@ The existing 3,526 app-test baseline and complete signed mobile APK remain D-268
 build, native visual matrix or cipher corpus was replayed. Local ID-01 foundation is delivered;
 external sender, hosted certificate/key/backup operations, provider/legal acceptance and mobile
 service adoption remain separate gates. The whole development objective remains active.
+
+## D-273 target currencies and source-qualified holiday calendars
+
+Deliver LOC-07/08 as one app batch. The working Western Europe scope is DE, AT, BE, FR, LI,
+LU, MC, NL, CH, GB and IE, plus US, CA and AU; the broader geographic boundary question
+remains open. Existing EUR, CHF, GBP, USD, CAD and AUD already have ISO minor digits of two.
+No stored amount, account currency or language is changed by selecting a country. Country
+registration is additive, independent of the interface language. Existing Iran dates remain
+compatible; an Iran release variant is future work.
+
+Offline holiday sources and regular dates are reviewed for Gregorian 2026-2027. Settings,
+onboarding and Plan display scope, authority, reviewed years and an unverified-year warning.
+Switzerland has only August 1 federal coverage; Canada uses federal nominal statutory dates;
+the US uses standard Monday-Friday observed federal dates. UK and Australia contain only dates
+shared by all constituent regions. Regional, workplace, extraordinary announced closures and
+bank-business-day guarantees are excluded explicitly. Legacy Germany/Iran calculations remain
+compatible outside the reviewed window; new country datasets do not invent future dates.
+Saved Plan country/weekend masks are retained when device regional preferences change.
+
+All 3,569 app tests pass, including 43 new cases; final Windows and signed Android Release builds
+have zero warnings/errors. The original regional view passed 18 hidden own-window layout checks
+(en/fa/de, light/dark, 360/412/1280 px, Debug text scale 2), complete captions and 44 px picker
+height, with unchanged financial rows. Eighteen actual native selections passed in the three
+English light contexts. Hidden RTL popup automation failed and is not counted as selection
+acceptance. Actual signed emulator Settings selections for Canada, US and Australia, live
+Persian/German/English captions, light/dark app choices and return to no holiday calendar were
+checked separately through native XML. No financial entry was posted. Emulator Home remains
+0.00 EUR; English, Gregorian and automatic digits/week start were restored; theme ends at
+Use device setting. This is not physical-device, spoken screen-reader or iOS acceptance.
+
+Detailed official sources, exact scope and observed verification failures are recorded in
+quality/target-holiday-calendars.md. No new SDK, network request, permission, schema, paid resource
+or commercial enforcement was introduced. The full development objective remains active.

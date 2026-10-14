@@ -1187,3 +1187,12 @@ The planned LOC-05 help sits beside an available realised holding result and exp
 LOC-10 corrects the browser-return message: it describes completion of the browser step and directs the user back to Zanance for the connection outcome, without claiming token exchange succeeded. English loan pay/receive confirmations identify the selected account explicitly, matching the original session argument and the other five translations.
 
 Store drafts now name all six existing languages and describe optional password protection for local/connected backups, readable unprotected files, Android device-protected database keys and final system-backup/device-transfer exclusion. Real OAuth, physical-device, iOS and publication acceptance are explicitly separate; no store text was published.
+
+## Source-qualified regional holiday choices (D-273)
+
+Country remains separate from language, number formatting, calendar, currency and week start.
+The existing Settings/onboarding regional view labels federal/shared-date choices directly and
+shows coverage, source and reviewed Gregorian years. Unsupported years show an explicit warning;
+never imply an empty unreviewed year has no holidays. Plan uses the start year and retains a
+saved country/weekend mask after device preference changes. New countries extend the registry,
+not the money model; no implicit conversion or payroll/bank-day assertion is allowed.

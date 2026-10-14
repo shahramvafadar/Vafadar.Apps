@@ -734,3 +734,10 @@ Do not copy purchase/identity authority into financial backups. Hosted processor
 provisioning, off-host encrypted snapshots/retention and a real sender require separate acceptance.
 Current mobile privacy policy/Data Safety submission status is unchanged; see API README and
 quality/local-identity-backend.md for the actual fictional test/restore boundaries.
+
+## D-273 offline country calendars
+
+Country choice and its existing portable preference remain unchanged in storage scope. The new
+registry contains public statutory dates and public authority URLs only; URLs are provenance,
+not runtime requests. No additional personal data, SDK, permission or network traffic. Existing
+Iran records remain compatible; the future separate variant is not introduced here.

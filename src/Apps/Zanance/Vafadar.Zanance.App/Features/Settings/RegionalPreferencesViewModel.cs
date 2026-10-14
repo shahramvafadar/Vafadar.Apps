@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Vafadar.Localization;
 using Vafadar.Localization.Formatting;
 using Vafadar.Zanance.Core.Plans;
+using Vafadar.Zanance.App.Presentation;
 
 namespace Vafadar.Zanance.App.Features.Settings;
 
@@ -111,7 +112,7 @@ public sealed partial class RegionalPreferencesViewModel(ILocalizationService lo
                 HolidayRegions =
                 [
                     new(null, translator["Regional_NoHolidays"]),
-                    .. PublicHolidays.Regions.Select(code => new RegionOption(code, Regions.DisplayName(code, uiCulture))),
+                    .. PublicHolidays.Regions.Select(code => new RegionOption(code, HolidayCalendarText.Choice(code, uiCulture, translator))),
                 ];
                 _labelsLanguage = uiCulture.Name;
             }
@@ -125,8 +126,7 @@ public sealed partial class RegionalPreferencesViewModel(ILocalizationService lo
             }
 
             SelectedHolidayRegion = HolidayRegions.FirstOrDefault(r => r.Code == localization.CurrentRegion) ?? HolidayRegions[0];
-            HolidayHint = translator[PublicHolidays.IsNationwideOnly(localization.CurrentRegion) ? "Regional_HolidaysGermany"
-                : PublicHolidays.HasApproximateDates(localization.CurrentRegion) ? "Regional_HolidaysIran" : "Regional_HolidaysHint"];
+            HolidayHint = HolidayCalendarText.Description(localization.CurrentRegion, time.GetUtcNow().Year, translator);
             var culture = localization.CurrentCulture;
             var automatic = Regions.FirstDayOfWeek(localization.CurrentRegion, culture);
             WeekStartOption[] weekStarts = [new(null, translator.Format("Settings_WeekStartAutomatic", culture.DateTimeFormat.GetDayName(automatic))),

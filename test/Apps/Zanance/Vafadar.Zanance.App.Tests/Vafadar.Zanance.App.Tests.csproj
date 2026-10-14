@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/HolidayCalendarText.cs" Link="Application/HolidayCalendarText.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/RecoveryCapturingGenerationKeyStore.cs" Link="Application/RecoveryCapturingGenerationKeyStore.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/IRetainedKeyAliases.cs" Link="Application/IRetainedKeyAliases.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedSafetyRetention.cs" Link="Application/ProtectedSafetyRetention.cs" />

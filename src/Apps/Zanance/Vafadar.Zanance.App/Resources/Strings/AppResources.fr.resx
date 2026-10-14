@@ -6299,4 +6299,28 @@ Plafonds par catégorie :
   <data name="Help_HoldingSaleResult_Example" xml:space="preserve">
     <value>Pour un produit enregistré de 120 et un coût moyen de la part vendue de 100, le résultat est de +20 dans la devise du bien. Cela ne signifie pas que 20 sont imposables ni qu’un impôt est dû.</value>
   </data>
+  <data name="Holiday_ChoiceFederal" xml:space="preserve">
+    <value>{0} · fédéral</value>
+  </data>
+  <data name="Holiday_ChoiceCommon" xml:space="preserve">
+    <value>{0} · dates communes</value>
+  </data>
+  <data name="Holiday_CoverageNationwide" xml:space="preserve">
+    <value>Dates nationales uniquement ; fêtes locales et jours de remplacement propres à votre travail exclus.</value>
+  </data>
+  <data name="Holiday_CoverageFederal" xml:space="preserve">
+    <value>Dates fédérales uniquement ; fêtes provinciales, régionales ou cantonales et remplacements propres à votre travail exclus.</value>
+  </data>
+  <data name="Holiday_CoverageFederalObserved" xml:space="preserve">
+    <value>Dates fédérales américaines observées pour une semaine du lundi au vendredi ; fêtes des États et fermetures exceptionnelles exclues.</value>
+  </data>
+  <data name="Holiday_CoverageCommon" xml:space="preserve">
+    <value>Dates communes à toutes les régions uniquement ; dates régionales supplémentaires et règles de votre travail exclues.</value>
+  </data>
+  <data name="Holiday_ReviewedYears" xml:space="preserve">
+    <value>Vérifié : {0}–{1}. Source : {2}.</value>
+  </data>
+  <data name="Holiday_YearUnverified" xml:space="preserve">
+    <value>Cette année dépasse la plage vérifiée. Les nouveaux calendriers ne devinent pas les fêtes ; les règles existantes pour l’Allemagne et l’Iran sont conservées.</value>
+  </data>
 </root>

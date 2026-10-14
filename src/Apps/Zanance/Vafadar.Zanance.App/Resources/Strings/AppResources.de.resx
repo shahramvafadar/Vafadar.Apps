@@ -6322,4 +6322,28 @@ Kategorielimits:
   <data name="Help_HoldingSaleResult_Example" xml:space="preserve">
     <value>Bei einem erfassten Erlös von 120 und anteiligen Durchschnittskosten von 100 beträgt das Ergebnis +20 in der Bestandswährung. Das bedeutet nicht, dass 20 steuerpflichtig sind oder Steuern anfallen.</value>
   </data>
+  <data name="Holiday_ChoiceFederal" xml:space="preserve">
+    <value>{0} · Bund</value>
+  </data>
+  <data name="Holiday_ChoiceCommon" xml:space="preserve">
+    <value>{0} · gemeinsame Tage</value>
+  </data>
+  <data name="Holiday_CoverageNationwide" xml:space="preserve">
+    <value>Nur landesweite Feiertage; örtliche Feiertage und betriebliche Ersatztermine fehlen.</value>
+  </data>
+  <data name="Holiday_CoverageFederal" xml:space="preserve">
+    <value>Nur Bundesfeiertage; Feiertage der Provinzen, Staaten und Kantone sowie betriebliche Ersatztermine fehlen.</value>
+  </data>
+  <data name="Holiday_CoverageFederalObserved" xml:space="preserve">
+    <value>US-Bundesfeiertage für eine Montag–Freitag-Woche; staatliche und besondere Schließtage fehlen.</value>
+  </data>
+  <data name="Holiday_CoverageCommon" xml:space="preserve">
+    <value>Nur gemeinsame Termine aller Regionen; weitere regionale Tage und betriebliche Regeln fehlen.</value>
+  </data>
+  <data name="Holiday_ReviewedYears" xml:space="preserve">
+    <value>Geprüft: {0}–{1}. Quelle: {2}.</value>
+  </data>
+  <data name="Holiday_YearUnverified" xml:space="preserve">
+    <value>Dieses Jahr liegt außerhalb des geprüften Bereichs. Neue Kalender raten keine Feiertage; bisherige Regeln für Deutschland und Iran bleiben erhalten.</value>
+  </data>
 </root>

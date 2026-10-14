@@ -776,3 +776,11 @@ this prerequisite before restore.
 Use the canonical eng/scripts/Build-AndroidApk.ps1 for the complete signed Release phone artifact;
 verify its signature, permanent package, both ABI native payloads and assembly stores. A successful
 Debug/Fast Deployment build or independent probe cannot substitute for that artifact.
+
+### Holiday catalog review (D-273)
+
+The Windows Debug holiday-catalog snapshot route uses the actual regional preferences view with
+memory-only preferences in the independent storageacceptance identity. It captures only its hidden
+own window and compares financial rows. Hidden RTL popup peer selection is unavailable; layout
+fixtures are not selection acceptance. Signed Android Settings XML checks cover actual selection
+separately. Restore the normal ApplicationId and rebuild after independent Windows review.

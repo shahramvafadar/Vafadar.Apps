@@ -1982,3 +1982,11 @@ connect app finances under this local foundation scope. Stop its exact hidden ow
 building/replacing the binary or taking a quiesced snapshot; PID alone is insufficient ownership.
 Service tests require an explicitly isolated PostgreSQL fixture and run in their dedicated workflow,
 not the local SQLite filter. Never substitute mocks or the mobile test baseline for service restore.
+
+### Offline holiday scope (D-273)
+
+Target holiday choices carry authority, Gregorian review years and explicit national/federal/common
+scope. Unsupported new-country years remain unverified; do not guess regional/workplace or announced
+substitutes or call these bank business days. Extend the registry from official sources without
+changing language, currency or stored amounts. Preserve saved Plan country and weekend masks.
+Legacy Iran/Germany calculations remain compatible; a separate Iran variant is not enabled here.

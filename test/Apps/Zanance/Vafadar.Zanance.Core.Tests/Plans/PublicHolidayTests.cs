@@ -41,9 +41,9 @@ public sealed class PublicHolidayTests
     [Fact]
     public void Regions_without_a_calendar_have_no_holidays()
     {
-        Assert.False(PublicHolidays.IsSupported("FR"));
+        Assert.False(PublicHolidays.IsSupported("ZZ"));
         Assert.False(PublicHolidays.IsHoliday(null, new DateOnly(2026, 1, 1)));
-        Assert.Empty(PublicHolidays.In("FR", 2026));
+        Assert.Empty(PublicHolidays.In("ZZ", 2026));
     }
 
     [Fact]

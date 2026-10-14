@@ -6291,4 +6291,28 @@ Límites por categoría:
   <data name="Help_HoldingSaleResult_Example" xml:space="preserve">
     <value>Si registras una venta de 120 y el coste medio de la parte vendida es 100, el resultado es +20 en la moneda del bien. Esto no significa que 20 estén sujetos a impuestos ni que debas pagar alguno.</value>
   </data>
+  <data name="Holiday_ChoiceFederal" xml:space="preserve">
+    <value>{0} · federal</value>
+  </data>
+  <data name="Holiday_ChoiceCommon" xml:space="preserve">
+    <value>{0} · fechas comunes</value>
+  </data>
+  <data name="Holiday_CoverageNationwide" xml:space="preserve">
+    <value>Solo fechas festivas nacionales; no incluye fiestas locales ni días sustitutorios de tu trabajo.</value>
+  </data>
+  <data name="Holiday_CoverageFederal" xml:space="preserve">
+    <value>Solo fechas federales; no incluye fiestas provinciales, estatales o cantonales ni días sustitutorios de tu trabajo.</value>
+  </data>
+  <data name="Holiday_CoverageFederalObserved" xml:space="preserve">
+    <value>Fechas federales de EE. UU. observadas en una semana de lunes a viernes; no incluye fiestas estatales ni cierres especiales.</value>
+  </data>
+  <data name="Holiday_CoverageCommon" xml:space="preserve">
+    <value>Solo fechas comunes a todas las regiones; no incluye fechas regionales adicionales ni reglas de tu trabajo.</value>
+  </data>
+  <data name="Holiday_ReviewedYears" xml:space="preserve">
+    <value>Revisado: {0}–{1}. Fuente: {2}.</value>
+  </data>
+  <data name="Holiday_YearUnverified" xml:space="preserve">
+    <value>Este año queda fuera del intervalo revisado. Los calendarios nuevos no adivinan fiestas; las reglas previas de Alemania e Irán se conservan.</value>
+  </data>
 </root>

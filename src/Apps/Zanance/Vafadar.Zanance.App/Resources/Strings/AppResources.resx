@@ -6351,4 +6351,28 @@ Category limits:
   <data name="Help_HoldingSaleResult_Example" xml:space="preserve">
     <value>If recorded proceeds are 120 and the removed average cost is 100, the recorded result is +20 in the holding currency. This does not mean 20 is taxable or that any tax is due.</value>
   </data>
+  <data name="Holiday_ChoiceFederal" xml:space="preserve">
+    <value>{0} · federal</value>
+  </data>
+  <data name="Holiday_ChoiceCommon" xml:space="preserve">
+    <value>{0} · shared dates</value>
+  </data>
+  <data name="Holiday_CoverageNationwide" xml:space="preserve">
+    <value>Nationwide public dates only; local holidays and workplace substitutes are excluded.</value>
+  </data>
+  <data name="Holiday_CoverageFederal" xml:space="preserve">
+    <value>Federal dates only; provincial, state or cantonal holidays and workplace substitutes are excluded.</value>
+  </data>
+  <data name="Holiday_CoverageFederalObserved" xml:space="preserve">
+    <value>US federal observed dates for a Monday–Friday week; state holidays and special closures are excluded.</value>
+  </data>
+  <data name="Holiday_CoverageCommon" xml:space="preserve">
+    <value>Only dates shared by every region; extra regional dates and workplace rules are excluded.</value>
+  </data>
+  <data name="Holiday_ReviewedYears" xml:space="preserve">
+    <value>Reviewed: {0}–{1}. Source: {2}.</value>
+  </data>
+  <data name="Holiday_YearUnverified" xml:space="preserve">
+    <value>This year is outside the reviewed range. New calendars do not guess holidays; retained Germany/Iran rules remain unchanged.</value>
+  </data>
 </root>

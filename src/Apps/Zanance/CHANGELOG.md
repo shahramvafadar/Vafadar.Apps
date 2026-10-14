@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Country holiday coverage
+
+- Add reviewed Western Europe, US, Canada and Australia holiday choices with clear federal or shared-date scope.
+- Show sources, reviewed years and warnings for years that have not been reviewed.
+- Keep saved Plan holiday countries and weekend rules when regional preferences change.
+- Reuse the existing currencies without changing account amounts or choosing a currency from the language.
+
 ### Added - Local optional service foundation
 
 - Add an independent local identity service with verified accounts, revocable device sessions and private encrypted objects.

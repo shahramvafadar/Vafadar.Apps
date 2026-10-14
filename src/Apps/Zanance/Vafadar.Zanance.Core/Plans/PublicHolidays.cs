@@ -5,7 +5,7 @@ namespace Vafadar.Zanance.Core.Plans;
 
 /// <summary>A public holiday.</summary>
 /// <param name="Date">The Gregorian date.</param>
-/// <param name="Key">A stable key for the name (translated as <c>Holiday_{Key}</c>).</param>
+/// <param name="Key">A stable provenance identifier, not a user-facing caption.</param>
 /// <param name="IsApproximate">
 /// <see langword="true"/> for holidays of the lunar Hijri calendar: they are calculated with the tabular Hijri calendar and
 /// can differ by a day or two from the official announcement, which depends on the sighting of the moon.
@@ -14,10 +14,10 @@ public sealed record PublicHoliday(DateOnly Date, string Key, bool IsApproximate
 
 /// <summary>
 /// Nationwide public holidays of the supported regions (F2-CON-05, D-29): Germany (rules around Easter and fixed dates;
-/// holidays of single states are not included) and Iran (Solar Hijri dates are exact, lunar Hijri dates approximate).
+/// holidays of single states are not included), Iran (lunar dates approximate) and source-qualified target calendars.
 /// Every date has a stated rule, so a moved due date is always explainable.
 /// </summary>
-public static class PublicHolidays
+public static partial class PublicHolidays
 {
     private static readonly ConcurrentDictionary<(string Region, int Year), IReadOnlyList<PublicHoliday>> Cache = new();
     private static readonly PersianCalendar Persian = new();
@@ -25,7 +25,7 @@ public static class PublicHolidays
     private static readonly HijriCalendar Hijri = new() { HijriAdjustment = 0 };
 
     /// <summary>Gets the regions (ISO 3166 codes) with a holiday calendar.</summary>
-    public static IReadOnlyList<string> Regions { get; } = ["DE", "IR"];
+    public static IReadOnlyList<string> Regions { get; } = ["DE", "IR", .. HolidayCalendars.All.Select(c => c.Region).Where(c => c != "DE").Order(StringComparer.Ordinal)];
 
     /// <summary>Returns whether a region has a holiday calendar.</summary>
     public static bool IsSupported(string? region) => region is not null && Regions.Contains(region.ToUpperInvariant());
@@ -53,7 +53,7 @@ public static class PublicHolidays
                 {
                     "DE" => Germany(k.Year),
                     "IR" => Iran(k.Year),
-                    _ => [],
+                    _ => HolidayCalendars.GetDates(k.Region, k.Year),
                 };
             }
             catch (ArgumentOutOfRangeException)

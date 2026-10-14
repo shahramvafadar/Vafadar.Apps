@@ -82,11 +82,6 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
         WeekendNames = [translator["Weekend_Keep"], translator["Weekend_Before"], translator["Weekend_After"]];
         _weekend = Regions.WeekendDays(localization.CurrentRegion, System.Globalization.CultureInfo.GetCultureInfo(localization.CurrentLanguage.CultureName));
         _holidayRegion = PublicHolidays.IsSupported(localization.CurrentRegion) ? localization.CurrentRegion!.ToUpperInvariant() : null;
-        HolidayHint = _holidayRegion is null ? null
-            : translator.Format("Holiday_Hint", Regions.DisplayName(_holidayRegion))
-              + (PublicHolidays.HasApproximateDates(_holidayRegion) ? " " + translator["Holiday_Approximate"] : string.Empty)
-              + (PublicHolidays.IsNationwideOnly(_holidayRegion) ? " " + translator["Holiday_NationwideOnly"] : string.Empty);
-        WeekendHint = translator.Format("Weekend_Hint", string.Join(translator["Reminder_ListSeparator"], _weekend.Select(d => localization.CurrentCulture.DateTimeFormat.GetDayName(d))));
         EndNames = [translator["End_Never"], translator["End_OnDate"], translator["End_AfterCount"]];
         PastNames = [translator["Past_FromToday"], translator["Past_Include"]];
         DayRuleNames = [];
@@ -205,7 +200,9 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
 
     public IReadOnlyList<string> WeekendNames { get; }
 
-    public string WeekendHint { get; }
+    public string WeekendHint => _translator.Format("Weekend_Hint", string.Join(_translator["Reminder_ListSeparator"],
+        Enum.GetValues<DayOfWeek>().Where(day => (HolidayCalendarText.WeekendMaskForDraft(_existing?.Rule, _weekend) & (1 << (int)day)) != 0)
+            .Select(day => _localization.CurrentCulture.DateTimeFormat.GetDayName(day))));
 
     [ObservableProperty]
     public partial int WeekendIndex { get; set; }
@@ -236,10 +233,14 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
     partial void OnSkipHolidaysChanged(bool value) => Update();
 
     /// <summary>Gets a value indicating whether holidays can be skipped: the region has a calendar and a weekend rule is chosen.</summary>
-    public bool CanSkipHolidays => _holidayRegion is not null && WeekendIndex != 0;
+    public bool CanSkipHolidays => EffectiveHolidayRegion is not null && WeekendIndex != 0;
 
     /// <summary>Gets the explanation of the holiday calendar, or <see langword="null"/> without a supported region.</summary>
-    public string? HolidayHint { get; }
+    public string? HolidayHint => EffectiveHolidayRegion is { } region
+        ? _translator.Format("Holiday_Hint", Regions.DisplayName(region)) + " " + HolidayCalendarText.Description(region, Start.Year, _translator) : null;
+
+    // D-273: display preferences cannot silently replace the calendar captured by an existing rule.
+    private string? EffectiveHolidayRegion => HolidayCalendarText.RegionForDraft(_existing?.Rule, _holidayRegion);
 
     public IReadOnlyList<string> EndNames { get; }
 
@@ -758,6 +759,9 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
     // Refreshes every dependent visibility and the preview of the next dates.
     private void Update()
     {
+        OnPropertyChanged(nameof(HolidayHint));
+        OnPropertyChanged(nameof(WeekendHint));
+        OnPropertyChanged(nameof(CanSkipHolidays));
         if (_loading)
         {
             return;
@@ -823,11 +827,11 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
         MissingDay = (MissingDayPolicy)MissingDayIndex,
         WeekendShift = (WeekendShift)Math.Clamp(WeekendIndex, 0, 2),
         SecondDay = HasSecondDay && Frequency == Frequency.Monthly && !SelectedDayRule.IsWeekday() && int.TryParse(Vafadar.Core.Text.Digits.ToAscii(SecondDayText), NumberStyles.None, CultureInfo.InvariantCulture, out var second) ? second : null,
-        WeekendDays = WeekendIndex == 0 ? 0 : RecurrenceRule.MaskOf(_weekend),
+        WeekendDays = WeekendIndex == 0 ? 0 : HolidayCalendarText.WeekendMaskForDraft(_existing?.Rule, _weekend),
 
         // Public holidays move a date like the weekend (F2-CON-05). The switch was read but never saved, so the option was
         // lost on every save; a plan keeps its holiday region when the device's region has no calendar.
-        HolidayRegion = SkipHolidays && WeekendIndex != 0 ? _holidayRegion ?? _existing?.Rule.HolidayRegion : null,
+        HolidayRegion = SkipHolidays && WeekendIndex != 0 ? EffectiveHolidayRegion : null,
         End = Frequency == Frequency.Once ? EndKind.Never : (EndKind)EndIndex,
         EndDate = EndIndex == 1 ? EndDate : null,
         Count = EndIndex == 2 && int.TryParse(Vafadar.Core.Text.Digits.ToAscii(CountText), NumberStyles.None, CultureInfo.InvariantCulture, out var count) ? count : null,

@@ -6311,4 +6311,28 @@ Limiti per categoria:
   <data name="Help_HoldingSaleResult_Example" xml:space="preserve">
     <value>Con ricavi registrati di 120 e un costo medio della parte venduta di 100, il risultato è +20 nella valuta del bene. Questo non significa che 20 siano imponibili o che siano dovute imposte.</value>
   </data>
+  <data name="Holiday_ChoiceFederal" xml:space="preserve">
+    <value>{0} · federale</value>
+  </data>
+  <data name="Holiday_ChoiceCommon" xml:space="preserve">
+    <value>{0} · date comuni</value>
+  </data>
+  <data name="Holiday_CoverageNationwide" xml:space="preserve">
+    <value>Solo date festive nazionali; escluse feste locali e giorni sostitutivi del tuo lavoro.</value>
+  </data>
+  <data name="Holiday_CoverageFederal" xml:space="preserve">
+    <value>Solo date federali; escluse feste provinciali, statali o cantonali e giorni sostitutivi del tuo lavoro.</value>
+  </data>
+  <data name="Holiday_CoverageFederalObserved" xml:space="preserve">
+    <value>Date federali statunitensi osservate per una settimana da lunedì a venerdì; escluse feste statali e chiusure speciali.</value>
+  </data>
+  <data name="Holiday_CoverageCommon" xml:space="preserve">
+    <value>Solo date comuni a tutte le regioni; escluse date regionali aggiuntive e regole del tuo lavoro.</value>
+  </data>
+  <data name="Holiday_ReviewedYears" xml:space="preserve">
+    <value>Verificato: {0}–{1}. Fonte: {2}.</value>
+  </data>
+  <data name="Holiday_YearUnverified" xml:space="preserve">
+    <value>Questo anno è fuori dall’intervallo verificato. I nuovi calendari non indovinano le feste; le regole precedenti per Germania e Iran restano invariate.</value>
+  </data>
 </root>
