@@ -2069,3 +2069,9 @@ Five native-file cases and all 3461 tests pass. Actual Android cold all-profile 
 two databases/rollbacks/capsules and two safety references after removal of all four fixture envelopes;
 see the decision/device-key guide for proof and corpus limits. Main protection remains inactive;
 full restore/crash/staged/orphan corpus, final recovery UI/retention/adoption/OS gates remain open.
+
+D-246 fixes required recovery candidate presence at the journal/history interruption boundary.
+CandidateVerified or Selected in the real journal requires the actual candidate even before history
+Selected is mirrored. Two new cases, all 3463 tests and the actual original verifier on native Android
+pass; journal/history remain unchanged and no replacement data/keys appear. See decision/device-key
+proof. Multi-restore financial corpus, reconciliation/UI/retention/adoption/OS remain open; main is plaintext.

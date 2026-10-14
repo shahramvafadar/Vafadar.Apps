@@ -55,6 +55,37 @@ public sealed class ProfileRecoveryReferenceTests
         await Assert.ThrowsAsync<IOException>(() => fixture.Verifier.VerifyAsync(fixture.Binding, fixture.Original, fixture.Key, Ct));
     }
 
+    [Theory, Trait("AT", "AT-246")]
+    [InlineData(DatabaseGenerationPhase.CandidateVerified)]
+    [InlineData(DatabaseGenerationPhase.Selected)]
+    public async Task Committed_candidate_is_required_before_history_selection_is_mirrored(DatabaseGenerationPhase phase)
+    {
+        if (!OperatingSystem.IsWindows()) return;
+        using var fixture = new Fixture(); await fixture.InitializeAsync(); await fixture.WriteSafetyAsync();
+        var history = new SqliteProfileRestoreHistory(fixture.Original + ".restore-history.sqlite", fixture.Initial, () => { });
+        var intent = new DatabaseGenerationCheckpoint(fixture.Binding.ProfileId, fixture.Initial.GenerationId, fixture.Binding.GenerationId);
+        await history.ReserveAsync(intent, Ct);
+        var candidate = fixture.Original + "." + fixture.Binding.GenerationId.ToString("N") + ".cipher.db";
+        var journal = new SqliteDatabaseGenerationJournal(candidate + ".restore.sqlite", intent);
+        await journal.CreateNewAsync(Ct); var state = intent;
+        while (state.Phase < phase)
+        {
+            var next = state.Advance(state.ProfileId, state.CandidateGeneration, state.Phase + 1);
+            await journal.CompareAndCommitAsync(state, next, Ct); state = next;
+        }
+        if (phase == DatabaseGenerationPhase.Selected)
+        {
+            // These deliberately unread files isolate the missing candidate gate; the verifier
+            // must refuse before any attempt to authenticate other retained cipher references.
+            await File.WriteAllTextAsync(candidate + ".before-restore.cipher.db", "Unopened fixture rollback", Ct);
+            await File.WriteAllTextAsync(candidate + ".preferences.cipher.db", "Unopened fixture preferences", Ct);
+        }
+        Assert.False((await history.ReadAsync(Ct))[^1].Selected);
+        var error = await Assert.ThrowsAsync<IOException>(() => fixture.Verifier.VerifyAsync(fixture.Binding, fixture.Original, fixture.Key, Ct));
+        Assert.Contains("Selected recovery generation is missing", error.Message, StringComparison.Ordinal);
+        Assert.False(File.Exists(candidate));
+    }
+
     private sealed class Fixture : IDisposable
     {
         private readonly TemporaryDirectory directory = new();

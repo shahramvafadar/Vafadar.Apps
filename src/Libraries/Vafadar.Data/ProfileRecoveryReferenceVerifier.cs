@@ -40,18 +40,22 @@ public sealed class ProfileRecoveryReferenceVerifier(SqliteDatabaseIdentityCatal
         if (ownReference is not null)
         {
             var candidateName = original + "." + binding.GenerationId.ToString("N") + ".cipher.db";
+            var requiresCandidate = ownReference.Selected;
             if (ownReference.Sequence != 0)
             {
                 var journalName = candidateName + ".restore.sqlite";
                 captures.Add(await files.CaptureAsync("database", journalName, ct).ConfigureAwait(false));
                 var capturedIntent = new DatabaseGenerationCheckpoint(binding.ProfileId, ownReference.OriginalGeneration, ownReference.CandidateGeneration);
                 var state = await new SqliteDatabaseGenerationJournal(Path.Combine(Path.GetDirectoryName(originalPath)!, journalName), capturedIntent).ReadAsync(ct).ConfigureAwait(false);
+                // A crash can leave history unselected after verification/selection committed in the
+                // journal. An unrelated authenticated safety reference cannot replace that candidate.
+                requiresCandidate |= state.Phase >= DatabaseGenerationPhase.CandidateVerified;
                 if (ownReference.Selected && !state.CandidateSelected) throw new IOException("Recovery history differs from its selected journal.");
                 if (state.CandidateSelected && (!names.Contains(candidateName + ".before-restore.cipher.db", StringComparer.Ordinal)
                     || !names.Contains(candidateName + ".preferences.cipher.db", StringComparer.Ordinal)))
                     throw new IOException("Selected restore recovery references are missing.");
             }
-            if (ownReference.Selected && !names.Contains(candidateName, StringComparer.Ordinal))
+            if (requiresCandidate && !names.Contains(candidateName, StringComparer.Ordinal))
                 throw new IOException("Selected recovery generation is missing.");
             foreach (var suffix in new[] { "", ".rollback.db", ".before-restore.cipher.db", ".preferences.cipher.db" })
             {

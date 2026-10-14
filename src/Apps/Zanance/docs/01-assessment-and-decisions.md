@@ -4519,3 +4519,35 @@ UI matrices and upstream native producer suites were not repeated.
 D-245 strict main Android build passed with zero warnings/errors (39.69s).
 
 D-245 complete signed Release APK: artifacts/android-d245-delivery/pro.vafadar.zanance-Signed.apk, 83,262,000 bytes. Signature, pro.vafadar.zanance package, API 24/36, arm64-v8a/x86_64 and both complete embedded assembly stores verified. Test outputs cleaned successfully after terminal checks. Local signing is not store/phone/iOS acceptance; main protection remains inactive.
+
+### D-246 — Require committed recovery candidates before history mirroring
+
+Review of the real journal/history interruption boundary found a concrete omission in D-245:
+required candidate presence followed only the history Selected flag. Verification/selection can
+already have committed in the restore journal when history mirroring has not run. The verifier now
+requires an actual candidate whenever the journal reached CandidateVerified or Selected/Completed,
+independently of that history flag. An authenticated safety reference cannot replace the required
+financial candidate. Existing selected rollback/preference requirements remain unchanged.
+
+Two additional actual SQLite/native-file cases exercise CandidateVerified and Selected while history
+remains unselected. Each requires the exact missing-candidate refusal before other reference reads,
+without inventing data or changing the journal/history. The Selected fixture's intentionally unread
+placeholder files isolate this ordering gate; they are not evidence of ciphertext/financial validation.
+Seven focused cases pass. All 3463 solution tests pass, zero failures/skips (2m56.718s).
+
+The independent signed Release AOT/trim Android caller executes the same original verifier with
+real native private roots and real strict metadata for both interrupted phases. Both refuse missing
+candidates, preserve journal/history and create no replacement data/key. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-363f2a58a6bb4a6a99ee8e25041a3305.json,
+run 61aa8a42f371446692208249ebb47aa9. Final strict native build has zero warnings/errors (58.82s).
+The independent entry point explicitly selects the reviewed native provider before metadata access.
+Script parsing and diff checks pass. Unchanged positive financial/UI/producer matrices were not repeated.
+
+This fixes a real missing-reference boundary; it does not complete the multi-restored financial corpus,
+malformed/staged/orphan reconciliation, final recovery UI, reference-aware retention or main provider/
+OS adoption. No schema/model/permission/UI change. Main storage registration remains plaintext.
+Physical devices, iOS, external providers and release acceptance remain separate gates.
+
+D-246 strict main builds have zero warnings/errors: Windows 17.06s and Android 38.94s.
+
+D-246 complete signed Release APK: artifacts/android-d246-delivery/pro.vafadar.zanance-Signed.apk, 83,704,538 bytes. Signature, pro.vafadar.zanance package, API 24/36, arm64-v8a/x86_64 and both complete embedded assembly stores verified. Test outputs cleaned after terminal checks. Local signing is not store/phone/iOS acceptance; main protection remains inactive.
