@@ -1622,3 +1622,7 @@ and external gates remain open. Main stays plaintext.
 ### Device authentication (D-266)
 
 - An unavailable or failed device authentication no longer opens a locked app. Restore the device screen lock and authenticate successfully; the existing PIN path remains separate.
+
+### Home refresh (D-267)
+
+- Refresh recorded balances without first removing every amount control, avoiding the observed Windows refresh error.

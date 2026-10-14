@@ -253,6 +253,10 @@ internal static partial class DebugSnapshots
     private static async Task RunCoreAsync(App app, IServiceProvider services, string folder)
     {
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "home-balance-reload")
+        {
+            await ReviewHomeBalanceReloadAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "device-unlock-feedback")
         {
             await ReviewDeviceUnlockPolicyAsync(app, services, folder, feedbackOnly: true); return;

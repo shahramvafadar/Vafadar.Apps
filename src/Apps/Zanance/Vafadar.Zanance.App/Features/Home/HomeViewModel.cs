@@ -86,7 +86,8 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
 
     public IReadOnlyList<string> PeriodNames { get; }
 
-    public ObservableCollection<CurrencyTotal> Balances { get; } = [];
+    /// <summary>Gets complete currency totals without disconnecting every native amount row during a reload.</summary>
+    public SnapshotCollection<CurrencyTotal> Balances { get; } = [];
 
     public ObservableCollection<PeriodSummary> Periods { get; } = [];
 
@@ -357,11 +358,9 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
 
         // Recorded balance (FIN-13) per currency; totals always follow the accounts included in totals.
         var balances = LedgerCalculator.TotalBalances(allAccounts, entries, today);
-        Balances.Clear();
-        foreach (var (currency, total) in balances)
-        {
-            Balances.Add(new CurrencyTotal(currency, MoneyText.Format(total, currency, culture)));
-        }
+        // D-267: clearing first disconnects ContentView handlers while Windows reopens covered Home pages.
+        // Publish the complete snapshot once so BindableLayout rebinds existing amount rows.
+        Balances.ReplaceAll(balances.Select(value => new CurrencyTotal(value.Key, MoneyText.Format(value.Value, value.Key, culture))));
 
         // With several currencies, a combined total only when every rate exists (FX-02, FX-05).
         CombinedText = null;
