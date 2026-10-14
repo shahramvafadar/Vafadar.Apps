@@ -2021,3 +2021,7 @@ Device replacement uses Zanance portable backup, while optional recorded-code re
 existing installation keys. Windows/iOS main registration is not adopted by this Android batch.
 See [device-key integration evidence](sqlcipher-device-keys.md) and the app quality evidence for the
 actual Release/native interruption corpus and remaining delivery/platform/device gates.
+
+## Protected Windows application adoption (D-264)
+
+Windows uses the shared protected installation/host/recovery/retention algorithms with CurrentUser DPAPI envelopes, no-replace private directories and captured native root identity. Covered startup selects SQLCipher before financial contexts and never recreates missing keys. Unpackaged MAUI preferences persist synchronously to their actual backend before replay acknowledgement. Retirement metadata uses SQLite win32-longpath and extended absolute paths because four immutable authority identifiers plus transaction suffixes exceed ordinary MAX_PATH. Source-built package contents are immutable and CI checks the reviewed compiler bytes. iOS remains pending; see the Windows quality record for actual runtime evidence and negative findings.

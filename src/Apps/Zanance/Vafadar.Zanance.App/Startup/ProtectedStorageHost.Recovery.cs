@@ -6,7 +6,7 @@ using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Security;
 
-internal sealed partial class AndroidProtectedStorageHost
+internal abstract partial class ProtectedStorageHost
 {
     private SqliteRecoveryEnvelopeCatalogue? recoveryCatalogue;
     /// <summary>Reports existing enrollment without exposing a secret or replacing its public identity.</summary>
@@ -24,7 +24,7 @@ internal sealed partial class AndroidProtectedStorageHost
         var identities = await new SqliteDatabaseIdentityCatalogue(identityPath!, Check).ReadAsync(ct).ConfigureAwait(false);
         if (identities.Count == 0 || identities.Any(row => row.InstallationId != catalogue.Identity.InstallationId))
             throw new IOException("Public recovery identity differs from the retained installation.");
-        var files = new AndroidProfileRetirementFiles(roots, Check);
+        var files = CreateFiles(roots, Check);
         var names = await files.ListNamesAsync("keys", ct).ConfigureAwait(false);
         var bindings = new HashSet<DatabaseKeyBinding>();
         foreach (var name in names.Where(name => name.EndsWith(".key", StringComparison.Ordinal)
@@ -77,7 +77,7 @@ internal sealed partial class AndroidProtectedStorageHost
                 var roots = new Dictionary<string, string>
                 { ["database"] = root, ["keys"] = Path.Combine(root, "database-keys"),
                     ["portable"] = Path.Combine(FileSystem.AppDataDirectory, "backups"), ["safety"] = Path.Combine(FileSystem.AppDataDirectory, "backups-safety") };
-                var files = new AndroidProfileRetirementFiles(roots, Check);
+                var files = CreateFiles(roots, Check);
                 var verifier = new ProfileRecoveryReferenceVerifier(new SqliteDatabaseIdentityCatalogue(identityPath!, Check),
                     files, sync, Vafadar.Localization.LocalizationService.PortableKeys, "4.19.0",
                     Vafadar.Backup.Security.DeviceSafetyEncryption.MaximumPackageBytes, Check);
@@ -94,7 +94,7 @@ internal sealed partial class AndroidProtectedStorageHost
     }
 
     /// <summary>Creates only an in-memory optional recovery draft; the user records its code before native publication.</summary>
-    internal async Task<AndroidRecoveryDraft> CreateRecoveryDraftAsync(CancellationToken ct)
+    internal async Task<ProtectedRecoveryDraft> CreateRecoveryDraftAsync(CancellationToken ct)
     {
         var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
         using var owner = await location.Access.AcquireExclusiveAsync(ct).ConfigureAwait(false);
@@ -112,7 +112,7 @@ internal sealed partial class AndroidProtectedStorageHost
     }
 
     /// <summary>Resumes the user's acknowledged setup draft from its exact encrypted vault after process interruption.</summary>
-    internal async Task<AndroidRecoveryDraft> ResumeRecoveryDraftAsync(string code, CancellationToken ct)
+    internal async Task<ProtectedRecoveryDraft> ResumeRecoveryDraftAsync(string code, CancellationToken ct)
     {
         if (!code.StartsWith("ZRK1-", StringComparison.Ordinal)) throw new CryptographicException("Recovery code format differs.");
         byte[] secret;
@@ -131,14 +131,14 @@ internal sealed partial class AndroidProtectedStorageHost
             if (!File.Exists(vaultPath)) vaultPath += ".creating";
             var material = await SqlCipherRecoveryVault.OpenExistingAsync(vaultPath, installation, secret, "4.19.0",
                 durability!, owner.Validate, ct).ConfigureAwait(false);
-            var draft = new AndroidRecoveryDraft(material, secret) { RecordedByUser = true };
+            var draft = new ProtectedRecoveryDraft(material, secret) { RecordedByUser = true };
             secret = []; return draft;
         }
         finally { CryptographicOperations.ZeroMemory(secret); }
     }
 
     /// <summary>Publishes acknowledged private/public material and wraps every existing recorded device key before enablement.</summary>
-    internal async Task SaveRecoveryDraftAsync(AndroidRecoveryDraft draft, CancellationToken ct)
+    internal async Task SaveRecoveryDraftAsync(ProtectedRecoveryDraft draft, CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(draft);
         if (!draft.RecordedByUser) throw new InvalidOperationException("Recovery code must be recorded before publishing private material.");
@@ -154,7 +154,7 @@ internal sealed partial class AndroidProtectedStorageHost
         var native = keys ?? throw new InvalidOperationException("Protected keys are unavailable.");
         var sync = durability ?? throw new InvalidOperationException("Protected durability is unavailable.");
         var keyRoot = Path.Combine(root, "database-keys");
-        var files = new AndroidProfileRetirementFiles(new Dictionary<string, string> { ["keys"] = keyRoot }, Validate);
+        var files = CreateFiles(new Dictionary<string, string> { ["keys"] = keyRoot }, Validate);
         var names = await files.ListNamesAsync("keys", ct).ConfigureAwait(false);
         var bindings = new HashSet<DatabaseKeyBinding>();
         foreach (var name in names.Where(name => name.EndsWith(".key", StringComparison.Ordinal) || name.EndsWith(".key.recovered", StringComparison.Ordinal)))
@@ -196,22 +196,19 @@ internal sealed partial class AndroidProtectedStorageHost
         // Retirement must now remove public mappings only after its durable catalogue-removal barrier.
         var roots = new Dictionary<string, string>
         { ["database"] = root, ["keys"] = keyRoot, ["portable"] = Path.Combine(FileSystem.AppDataDirectory, "backups"), ["safety"] = Path.Combine(FileSystem.AppDataDirectory, "backups-safety") };
-        var retirementFiles = new AndroidProfileRetirementFiles(roots, validateNative);
-        var aliasRetirement = new AndroidProfileAliasRetirement(root, roots, native, sync, validateNative);
-        retirement = new(root, identityPath!, services.GetRequiredService<Vafadar.Core.Settings.ISettingsPersistence>(),
-            native, sync, retirementFiles, aliasRetirement.RemoveAsync, aliasRetirement.VerifyAsync,
-            catalogue, aliasRetirement.CaptureAsync);
+        retirement = CreateRetirement(root, roots, identityPath!,
+            services.GetRequiredService<Vafadar.Core.Settings.ISettingsPersistence>(), native, sync, validateNative, catalogue);
     }
 }
 
 /// <summary>Owns only the current recovery setup secret/material; disposal clears its owned secret buffer.</summary>
-internal sealed class AndroidRecoveryDraft(DatabaseRecoveryMaterial material, byte[] secret) : IDisposable
+internal sealed class ProtectedRecoveryDraft(DatabaseRecoveryMaterial material, byte[] secret) : IDisposable
 {
     private bool disposed;
     /// <summary>The optional standard private/public recovery material, never portable or logged.</summary>
     internal DatabaseRecoveryMaterial Material { get; } = material;
     /// <summary>The owned ephemeral vault secret; the UI shows it only for explicit setup.</summary>
-    internal ReadOnlyMemory<byte> Secret => !disposed ? secret : throw new ObjectDisposedException(nameof(AndroidRecoveryDraft));
+    internal ReadOnlyMemory<byte> Secret => !disposed ? secret : throw new ObjectDisposedException(nameof(ProtectedRecoveryDraft));
     /// <summary>Whether the user explicitly acknowledged recording the displayed code before Save.</summary>
     internal bool RecordedByUser { get; set; }
     /// <summary>Formats the random code for the user; callers do not persist or log this string.</summary>

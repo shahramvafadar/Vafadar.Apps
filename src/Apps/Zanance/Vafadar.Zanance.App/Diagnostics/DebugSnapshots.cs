@@ -205,6 +205,27 @@ internal static partial class DebugSnapshots
 
     private static async Task RunAsync(App app, IServiceProvider services, string folder)
     {
+#if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "protected-profile-retirement")
+        {
+            await app.WaitForStartupAsync();
+            await ReviewProtectedProfileRetirementAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "protected-profile-backup")
+        {
+            await app.WaitForStartupAsync();
+            await ReviewProtectedProfileBackupAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "protected-key-recovery")
+        {
+            await ReviewProtectedKeyRecoveryAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "protected-cold-reopen")
+        {
+            await app.WaitForStartupAsync();
+            await ReviewProtectedColdReopenAsync(app, services, folder); return;
+        }
+#endif
         await app.WaitForStartupAsync();
         var settings = services.GetRequiredService<Vafadar.Core.Settings.ISettingsStore>();
         var saved = LocalizationService.PortableKeys.Append("ui.theme").ToDictionary(key => key, settings.Get);
@@ -230,6 +251,12 @@ internal static partial class DebugSnapshots
 
     private static async Task RunCoreAsync(App app, IServiceProvider services, string folder)
     {
+#if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "protected-storage")
+        {
+            await ReviewProtectedStorageAsync(app, services, folder); return;
+        }
+#endif
         var localization = services.GetRequiredService<ILocalizationService>();
         var languages = (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_LANGUAGES") ?? "en,fa").Split(',');
 

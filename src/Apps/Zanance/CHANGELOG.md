@@ -1606,3 +1606,9 @@ authority, oversized/unknown names and key-envelope staging remain refused. Thre
 Windows cases, all 3467 tests and cold original Android profile retirement pass; main balance/recovery
 remain. This closes receipt-only profile cleanup; automatic retention/orphan/key-stage/final adoption
 and external gates remain open. Main stays plaintext.
+
+### Windows protected storage (D-264)
+
+- Encrypt Windows financial profiles with device-protected keys; optional recovery and portable Zanance backups remain available.
+- Preserve profile isolation, encrypted safety-copy retention and explicit backup replacement through the same covered lifecycle as Android.
+- Fix long-path profile deletion and light-theme window-title contrast.

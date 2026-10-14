@@ -6,11 +6,11 @@ using Vafadar.Zanance.Core;
 
 namespace Vafadar.Zanance.App.Security;
 
-internal sealed partial class AndroidProtectedInstallation
+internal partial class ProtectedInstallation
 {
     /// <summary>Continues the recorded original SQLite family rename before any cipher identity or key is created.</summary>
-    private static async Task ResumeLegacyNameAsync(AndroidProfileRetirementFiles files,
-        AndroidGenerationFileDurability durability, string root, Action validate, CancellationToken ct)
+    private static async Task ResumeLegacyNameAsync(IProfileRetirementReferenceFiles files,
+        IDatabaseGenerationFileDurability durability, string root, Action validate, CancellationToken ct)
     {
         const string recordName = "legacy-database-name.json";
         var names = await files.ListNamesAsync("database", ct).ConfigureAwait(false);
@@ -99,6 +99,6 @@ internal sealed partial class AndroidProtectedInstallation
 /// <summary>Immutable original file identities used to resume the pre-encryption brand rename.</summary>
 internal sealed record LegacyNameIntent(int Schema, ProfileRetirementArtifact[] Files);
 
-/// <summary>Serializes recorded legacy naming authority without reflection in trimmed Android builds.</summary>
+/// <summary>Serializes recorded legacy naming authority without reflection in trimmed platform builds.</summary>
 [JsonSerializable(typeof(LegacyNameIntent))]
 internal partial class LegacyNameJson : JsonSerializerContext { }

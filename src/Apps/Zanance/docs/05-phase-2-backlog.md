@@ -1685,3 +1685,7 @@ file-picker cancellation. Financial hashes and exact fixture envelopes were pres
 [Complete evidence](quality/android-protected-storage.md) records the exact artifact/hash, observed
 failures, native process-loss corpus and limits. Windows/iOS encrypted adoption, fresh hosted CI,
 physical/OEM/provider/Store acceptance and the full canonical backlog remain open.
+
+## D-264 Windows protected storage status
+
+Windows main protected startup, DPAPI recovery enrollment/key-loss/cold reopen, isolated profile creation/switch/retirement, encrypted safety retention and explicit portable replacement have native application evidence on an independent fictional installation. Shared Android effects remain platform adapters to the same application algorithms. Final local verification: 3521 tests passed with zero failures/skips, strict Windows/Android builds without warnings/errors, complete signed APK and scoped emulator upgrade/cold reopening passed; see [Windows quality record](quality/windows-protected-storage.md). No iOS, physical-device, OAuth, Store or hosted fresh compiler acceptance is implied. The continuous-development objective remains open.

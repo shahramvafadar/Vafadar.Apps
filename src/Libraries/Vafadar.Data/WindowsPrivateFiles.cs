@@ -16,6 +16,7 @@ internal sealed class WindowsPrivateFiles : IDisposable
     private const uint Read = 0x80000000, Write = 0x40000000, OpenExisting = 3;
     private const uint NoFollow = 0x00200000, BackupSemantics = 0x02000000;
     private readonly string directory;
+    private readonly string nativeDirectory;
     private readonly SafeFileHandle root;
 
     /// <summary>Captures an existing local directory through a validated native handle.</summary>
@@ -24,11 +25,19 @@ internal sealed class WindowsPrivateFiles : IDisposable
         if (!Path.IsPathFullyQualified(directory) || directory.StartsWith("\\\\", StringComparison.Ordinal))
             throw new IOException("Private storage requires a local absolute directory.");
         this.directory = Path.TrimEndingDirectorySeparator(Path.GetFullPath(directory));
-        for (var path = this.directory; path is not null; path = Path.GetDirectoryName(Path.TrimEndingDirectorySeparator(path)))
-            if ((File.GetAttributes(path) & FileAttributes.ReparsePoint) != 0)
-                throw new IOException("Private storage ancestry is redirected.");
+        RequireLocalAncestry(this.directory);
         root = CreateFileW(this.directory, Read | Write, 3, IntPtr.Zero, OpenExisting, NoFollow | BackupSemantics, IntPtr.Zero);
-        try { RequireHandle(root, this.directory, isDirectory: true); }
+        try
+        {
+            RequireKind(root, isDirectory: true);
+            // Windows can virtualize a desktop application's LocalAppData namespace without a reparse point.
+            // Capture that actual root once; every child must still resolve within this same native root.
+            nativeDirectory = FinalPath(root);
+            RequireLocalAncestry(nativeDirectory);
+            if (!string.Equals(Path.GetFileName(nativeDirectory), Path.GetFileName(this.directory), StringComparison.OrdinalIgnoreCase))
+                throw new IOException("Private root name differs from its native object.");
+            RequireHandle(root, nativeDirectory, isDirectory: true);
+        }
         catch { root.Dispose(); throw; }
     }
 
@@ -37,7 +46,7 @@ internal sealed class WindowsPrivateFiles : IDisposable
     {
         RequireChild(path);
         var handle = CreateFileW(path, Read | (writable ? Write : 0), 1, IntPtr.Zero, OpenExisting, NoFollow, IntPtr.Zero);
-        try { RequireHandle(handle, path, isDirectory: false); return handle; }
+        try { RequireHandle(handle, NativeChild(path), isDirectory: false); return handle; }
         catch { handle.Dispose(); throw; }
     }
 
@@ -46,7 +55,7 @@ internal sealed class WindowsPrivateFiles : IDisposable
     {
         RequireChild(path);
         var handle = CreateFileW(path, Read | 0x00010000, 1, IntPtr.Zero, OpenExisting, NoFollow, IntPtr.Zero);
-        try { RequireHandle(handle, path, isDirectory: false); return handle; }
+        try { RequireHandle(handle, NativeChild(path), isDirectory: false); return handle; }
         catch { handle.Dispose(); throw; }
     }
 
@@ -59,6 +68,29 @@ internal sealed class WindowsPrivateFiles : IDisposable
 
     /// <summary>Reads the captured directory's native volume/file identity.</summary>
     internal string DirectoryIdentity => FileIdentity(root);
+
+    /// <summary>The captured physical root resolved by the native handle, including legitimate OS namespace virtualization.</summary>
+    internal string NativeDirectory => nativeDirectory;
+
+    /// <summary>Creates a direct no-replace child with owner-only inheritable ACL before any file is written.</summary>
+    internal void CreateNewDirectory(string path)
+    {
+        RequireChild(path);
+        using var identity = WindowsIdentity.GetCurrent();
+        var user = identity.User?.Value ?? throw new IOException("Current user identity unavailable.");
+        if (!ConvertStringSecurityDescriptorToSecurityDescriptorW($"O:{user}D:P(A;OICI;FA;;;{user})", 1, out var descriptor, out _))
+            throw Error("Private directory ACL creation failed.");
+        var attributes = new SecurityAttributes { Length = Marshal.SizeOf<SecurityAttributes>(), Descriptor = descriptor };
+        var pointer = Marshal.AllocHGlobal(attributes.Length);
+        try
+        {
+            Marshal.StructureToPtr(attributes, pointer, false);
+            if (!CreateDirectoryW(path, pointer)) throw Error("Private no-replace directory creation failed.");
+            using var child = new WindowsPrivateFiles(path);
+            child.FlushDirectory(); FlushDirectory();
+        }
+        finally { Marshal.FreeHGlobal(pointer); _ = LocalFree(descriptor); }
+    }
 
     /// <summary>Marks this same verified handle for deletion on close; never reopens an unchecked filename.</summary>
     internal static void DeleteOnClose(SafeFileHandle handle)
@@ -82,7 +114,7 @@ internal sealed class WindowsPrivateFiles : IDisposable
         {
             Marshal.StructureToPtr(attributes, pointer, false);
             var handle = CreateFileW(path, Read | Write, 0, pointer, 1, NoFollow | 0x80000000, IntPtr.Zero);
-            try { RequireHandle(handle, path, isDirectory: false); return handle; }
+            try { RequireHandle(handle, NativeChild(path), isDirectory: false); return handle; }
             catch { handle.Dispose(); throw; }
         }
         finally { Marshal.FreeHGlobal(pointer); _ = LocalFree(descriptor); }
@@ -91,7 +123,7 @@ internal sealed class WindowsPrivateFiles : IDisposable
     /// <summary>Flushes the actual directory handle; unsupported or denied effects fail instead of reporting success.</summary>
     internal void FlushDirectory()
     {
-        RequireHandle(root, directory, isDirectory: true);
+        RequireHandle(root, nativeDirectory, isDirectory: true);
         if (!FlushFileBuffers(root)) throw Error("Private directory flush failed.");
     }
 
@@ -104,22 +136,44 @@ internal sealed class WindowsPrivateFiles : IDisposable
 
     private void RequireChild(string path)
     {
-        RequireHandle(root, directory, isDirectory: true);
+        RequireHandle(root, nativeDirectory, isDirectory: true);
         if (!Path.IsPathFullyQualified(path) || !string.Equals(Path.GetDirectoryName(Path.GetFullPath(path)), directory, StringComparison.OrdinalIgnoreCase))
             throw new IOException("Private file belongs to another directory.");
     }
 
-    private static void RequireHandle(SafeFileHandle handle, string path, bool isDirectory)
+    private string NativeChild(string path) => Path.Combine(nativeDirectory, Path.GetFileName(path));
+
+    private static void RequireLocalAncestry(string directory)
+    {
+        if (!Path.IsPathFullyQualified(directory) || directory.StartsWith("\\\\", StringComparison.Ordinal))
+            throw new IOException("Private storage requires a local absolute directory.");
+        for (var path = directory; path is not null; path = Path.GetDirectoryName(Path.TrimEndingDirectorySeparator(path)))
+            if ((File.GetAttributes(path) & FileAttributes.ReparsePoint) != 0)
+                throw new IOException("Private storage ancestry is redirected.");
+    }
+
+    private static void RequireKind(SafeFileHandle handle, bool isDirectory)
     {
         if (handle.IsInvalid || !GetFileInformationByHandle(handle, out var info)) throw Error("Private handle unavailable.");
         var attributes = (FileAttributes)info.Attributes;
         if ((attributes & FileAttributes.ReparsePoint) != 0 || ((attributes & FileAttributes.Directory) != 0) != isDirectory
             || (!isDirectory && info.Links != 1)) throw new IOException("Private handle is redirected or linked.");
+    }
+
+    private static string FinalPath(SafeFileHandle handle)
+    {
         var name = new StringBuilder(32768);
         var length = GetFinalPathNameByHandleW(handle, name, (uint)name.Capacity, 0);
         if (length == 0 || length >= name.Capacity) throw Error("Private handle identity unavailable.");
         var actual = name.ToString();
         if (actual.StartsWith("\\\\?\\", StringComparison.Ordinal)) actual = actual[4..];
+        return Path.TrimEndingDirectorySeparator(Path.GetFullPath(actual));
+    }
+
+    private static void RequireHandle(SafeFileHandle handle, string path, bool isDirectory)
+    {
+        RequireKind(handle, isDirectory);
+        var actual = FinalPath(handle);
         if (!string.Equals(Path.TrimEndingDirectorySeparator(actual), Path.TrimEndingDirectorySeparator(Path.GetFullPath(path)), StringComparison.OrdinalIgnoreCase))
             throw new IOException("Private handle does not match its captured path.");
     }
@@ -147,6 +201,9 @@ internal sealed class WindowsPrivateFiles : IDisposable
     }
     [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
     private static extern SafeFileHandle CreateFileW(string path, uint access, uint share, IntPtr security, uint creation, uint flags, IntPtr template);
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool CreateDirectoryW(string path, IntPtr security);
     [DllImport("kernel32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
     private static extern bool GetFileInformationByHandle(SafeFileHandle handle, out FileInformation information);

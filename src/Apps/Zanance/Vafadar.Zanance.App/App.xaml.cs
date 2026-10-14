@@ -167,7 +167,7 @@ public partial class App : Application
         // Android builds the app in Application.onCreate, including notification-only process starts (D-46).
         // Window construction must not migrate or open a financial context on that thread.
         // D-222: the first window contains no financial page. Native key/migration work is deferred to a worker.
-#if ANDROID
+#if ANDROID || WINDOWS
         _startup = new Startup.StartupViewModel(PrepareStartupAsync, RecoverStartupKeysAsync, RecoverStartupBackupAsync);
 #else
         _startup = new Startup.StartupViewModel(PrepareStartupAsync);
@@ -183,6 +183,7 @@ public partial class App : Application
         // Windows theme: white on the light page when Windows is dark, black on the dark page when it is light.
         var titleBar = new TitleBar { Title = Translator.Instance["App_Name"], Icon = "zanance_symbol.png" };
         titleBar.SetDynamicResource(TitleBar.ForegroundColorProperty, "AmountText");
+        titleBar.SetDynamicResource(TitleBar.BackgroundColorProperty, "PageBackground");
         window.TitleBar = titleBar;
 
         // Never narrower than a small phone, the width every layout is made for (D-47).
@@ -201,13 +202,13 @@ public partial class App : Application
         Dispatcher.Dispatch(async () => { if (_startup is not null) await _startup.InitializeAsync(); });
     }
 
-#if ANDROID
+#if ANDROID || WINDOWS
     /// <summary>Opens device-local optional recovery setup from the unlocked Settings form.</summary>
     internal async Task ShowRecoverySetupAsync()
     {
         var page = Windows.FirstOrDefault()?.Page ?? throw new InvalidOperationException("Application window is unavailable.");
-        await page.Navigation.PushModalAsync(new AndroidRecoverySetupPage(
-            _services.GetRequiredService<AndroidProtectedStorageHost>(), Translator.Instance));
+        await page.Navigation.PushModalAsync(new RecoverySetupPage(
+            _services.GetRequiredService<ProtectedStorageHost>(), Translator.Instance));
     }
 
     /// <summary>Restores an explicitly chosen portable backup without removing unreadable original data or the device PIN.</summary>
@@ -215,7 +216,7 @@ public partial class App : Application
     {
         if (!await _services.GetRequiredService<AppLockService>().ConfirmStartupRecoveryAsync(Translator.Instance["Lock_ConfirmRestore"])) return false;
         var root = Windows.FirstOrDefault()?.Page ?? throw new InvalidOperationException("Startup cover is unavailable.");
-        var page = new AndroidStartupBackupPage(_services.GetRequiredService<AndroidBackupRecovery>(), Translator.Instance)
+        var page = new StartupBackupPage(_services.GetRequiredService<ProtectedBackupRecovery>(), Translator.Instance)
             { FlowDirection = root.FlowDirection };
         await root.Navigation.PushModalAsync(page, animated: false);
         var restored = await page.Completion;
@@ -238,7 +239,7 @@ public partial class App : Application
         if (code is null) return false;
         try
         {
-            await Task.Run(() => _services.GetRequiredService<AndroidProtectedStorageHost>()
+            await Task.Run(() => _services.GetRequiredService<ProtectedStorageHost>()
                 .RecoverDeviceKeysAsync(code, CancellationToken.None));
             return true;
         }

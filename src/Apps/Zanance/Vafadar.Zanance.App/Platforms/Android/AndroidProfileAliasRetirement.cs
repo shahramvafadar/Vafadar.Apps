@@ -8,7 +8,7 @@ namespace Vafadar.Zanance.App.Security;
 /// <summary>Records authenticated independent wrapping aliases before profile removal and retires them only after exact file cleanup.</summary>
 /// <remarks>Shared legacy aliases and unauthenticated unavailable aliases remain retained. No alias is inferred from its name.</remarks>
 internal sealed class AndroidProfileAliasRetirement(string root, IReadOnlyDictionary<string,string> roots,
-    AndroidRecoveryKeyStore keys, AndroidGenerationFileDurability durability, Action validate)
+    RecoveryCapturingGenerationKeyStore keys, IDatabaseGenerationFileDurability durability, Action validate)
 {
     private const int MaximumBytes = 2 * 1024 * 1024;
     private AndroidProfileRetirementFiles Files => new(roots, validate);

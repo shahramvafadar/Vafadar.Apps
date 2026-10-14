@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "packageId": "Vafadar.Native.SqlCipher.Windows",
+  "version": "4.19.0-candidate.3",
+  "entries": {
+    "Vafadar.Native.SqlCipher.Windows.nuspec": "b885d453813b798406ea376c4c028d7eb9cf39761e49ae205d2aaa67aae16a5a",
+    "buildTransitive/Vafadar.Native.SqlCipher.Windows.targets": "a24f78553a644d56697ad01108d19d044500bf69d3f36f6f7cc3551f72f72872",
+    "licenses/ThirdPartyNotices.txt": "bc6ff61372c8c7a98b0fce76dc7375026e5fd7076155323d8632534d4f62b22b",
+    "manifest.json": "badec0a0ccd07ee3b8aa0c78445faced7dd8a1c7396900cc77dfb517a9c3db72",
+    "runtimes/win-x64/native/sqlcipher.dll": "6455496953d402c7764693c2c2db60179ac9baf4ee3c5e6f5d6a405fdd17ec21"
+  }
+}

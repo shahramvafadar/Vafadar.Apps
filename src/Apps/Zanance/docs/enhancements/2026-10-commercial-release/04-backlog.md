@@ -15,14 +15,14 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 |---|---|---|---|---|---|---|
 | ZCR-GOV-01 | Audit, plan matrix, architecture, backlog and delivery plan | 0 | P1 | M | Done | – |
 | ZCR-GOV-02 | Refresh spec §31, AGENTS.md §12 and outdated statements | 0/2 | P2 | S | Done (D-88; external confirmation/acceptance still open) | GOV-01 |
-| ZCR-SEC-01 | Threat model and encryption decision record + feasibility proof | 1 | P1 | M | In progress (D-263 Android official Community integration locally verified; Windows/iOS/external gates remain) | OD-04 approved |
-| ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | In progress (D-263 Android main encryption delivered; Windows/iOS adoption and device gates remain) | SEC-01 |
-| ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-263 Android native per-generation keys delivered; Windows/iOS/device gates remain) | SEC-01 |
+| ZCR-SEC-01 | Threat model and encryption decision record + feasibility proof | 1 | P1 | M | In progress (D-264 Android/Windows official Community integration locally verified; iOS/external gates remain) | OD-04 approved |
+| ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | In progress (D-264 Android/Windows main encryption locally verified; iOS adoption and device gates remain) | SEC-01 |
+| ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-264 Android Keystore/Windows DPAPI per-generation keys locally verified; iOS/device gates remain) | SEC-01 |
 | ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | Proposed | SEC-03, OD-04 |
 | ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-263 Android all-profile migration/lifecycle and native interruption cases delivered; broader fault/platform acceptance remains) | SEC-02, SEC-03 |
-| ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | In progress (D-263 Android optional recovery and explicit portable recovery delivered; other platforms/device acceptance remain) | SEC-04, OD-04 approved |
+| ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | In progress (D-264 Android/Windows optional recovery and explicit portable recovery locally verified; iOS/device acceptance remain) | SEC-04, OD-04 approved |
 | ZCR-SEC-07 | Final OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | In progress (D-263 final coupled Android policy delivered; iOS exclusion/OEM acceptance remain) | OD-10 approved |
-| ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | In progress (D-263 Android encrypted safety and reference-aware retirement delivered; platform/device gates remain) | SEC-03 |
+| ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | In progress (D-264 Android/Windows encrypted safety and reference-aware retirement locally verified; iOS/device gates remain) | SEC-03 |
 | ZCR-SEC-10 | Owner-approved PIN, screenshot choice and ownership clarification (D-63) | Maintenance | P1 | M | Done | Owner request 2026-10-08 |
 | ZCR-SEC-09 | Network/SDK review of online builds; privacy texts | 1/3 | P2 | S | Done (current baseline; repeat for future SDKs) | – |
 | ZCR-LOC-01 | Release bug list from the owner's phone tests | 2 | P1 | M | Proposed | owner reports |
@@ -2170,3 +2170,7 @@ D-262 fixes an actual startup ownership gap: legacy filename movement no longer 
 The covered worker owns a drained lease and refuses protected/conflicting states before changing files.
 Five new cases/all3487 tests, strict builds and native startup observations pass. This does not close
 SEC-02/05: final cipher registration, recovery/retention/OS and platform acceptance remain open.
+
+## D-264 Windows protected storage status
+
+Windows main protected startup, DPAPI recovery enrollment/key-loss/cold reopen, isolated profile creation/switch/retirement, encrypted safety retention and explicit portable replacement have native application evidence on an independent fictional installation. Shared Android effects remain platform adapters to the same application algorithms. Final local verification: 3521 tests passed with zero failures/skips, strict Windows/Android builds without warnings/errors, complete signed APK and scoped emulator upgrade/cold reopening passed; see [Windows quality record](../../quality/windows-protected-storage.md). No iOS, physical-device, OAuth, Store or hosted fresh compiler acceptance is implied. The continuous-development objective remains open.

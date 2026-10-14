@@ -75,6 +75,34 @@ public sealed class WindowsProfileRetirementFiles : IProfileRetirementReferenceF
     /// <summary>Verifies every captured namespace entry is absent, propagating access and redirection failures.</summary>
     public Task VerifyRemovedAsync(SqliteProfileRetirementJournal journal, CancellationToken ct = default) => VerifyCoreAsync(journal, ct);
 
+    /// <summary>Removes one exact captured object only while its caller's immutable retention authority remains durable.</summary>
+    /// <remarks>DPAPI system master keys are outside these owned roots and are never removed.</remarks>
+    public async Task RemoveRetainedArtifactAsync(ProfileRetirementArtifact artifact,
+        Func<CancellationToken, Task> requireDurableAuthority, CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(requireDurableAuthority);
+        Check(ct); await requireDurableAuthority(ct).ConfigureAwait(false);
+        var path = Resolve(artifact);
+        using var directory = new WindowsPrivateFiles(roots[artifact.Root]);
+        if (directory.DirectoryIdentity != artifact.RootIdentity)
+            throw new IOException("Captured retention root was replaced.");
+        try
+        {
+            using var handle = directory.OpenForDeletion(path);
+            using var stream = new FileStream(handle, FileAccess.Read);
+            if (WindowsPrivateFiles.FileIdentity(handle) != artifact.NativeIdentity || stream.Length != artifact.Length)
+                throw new IOException("Captured retention file was replaced or changed.");
+            var digest = Convert.ToHexStringLower(await SHA256.HashDataAsync(stream, ct).ConfigureAwait(false));
+            if (digest != artifact.Sha256 || stream.Length != artifact.Length)
+                throw new IOException("Captured retention bytes changed.");
+            await requireDurableAuthority(ct).ConfigureAwait(false); Check(ct);
+            // Windows deletes the inspected handle's object rather than resolving its name again.
+            WindowsPrivateFiles.DeleteOnClose(handle);
+        }
+        catch (IOException error) when (MissingFile(error)) { }
+        directory.FlushDirectory(); Check(ct);
+    }
+
     private async Task VerifyCoreAsync(SqliteProfileRetirementJournal journal, CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(journal);

@@ -5198,3 +5198,9 @@ digit shapes; it excludes theme/PIN/device security/credentials. The description
 six languages through the resource script. Only affected About views were rechecked after this copy
 change, preserving the successful unchanged recovery/runtime/backend evidence. Final signed copy APK
 and strict Windows build passed; complete artifact/hash and scoped UI results are in the quality record.
+
+### D-264 — Adopt protected Windows application storage
+
+Windows composes the original protected startup/profile/backup/recovery algorithms with CurrentUser DPAPI and the qualified official SQLCipher package. Shared algorithms retain Android native effects; Windows never removes OS DPAPI master keys. Native root binding handles observed namespace virtualization without allowing root rebinding. Retirement preserves canonical authority filenames through SQLite's built-in long-path VFS. The actual independent Windows application verifies recovery enrollment/key-loss/cold reopen, profile isolation, authenticated safety retention, portable replacement and inactive retirement. [Evidence and limits](quality/windows-protected-storage.md). Final local checks and complete APK are recorded below; iOS/device/provider/Store gates are not closed.
+
+D-264 final local verification: 3521 tests passed, zero failures/skips (3m45.293s); strict Windows permanent identity 34.63s and Android 65.70s, zero warnings/errors. Canonical complete signed APK and scoped upgrade/cold/Settings runtime passed. Runtime/API/native hashes and retained negative findings are recorded in the Windows quality record. No unchanged upstream/native producer corpus was repeated. Hosted fresh compiler reproduction remains a post-push gate.

@@ -16,17 +16,13 @@ internal static class AndroidProtectedStorageRegistration
         ArgumentNullException.ThrowIfNull(services);
         services.AddSingleton<AndroidProtectedInstallation>();
         services.AddSingleton<AndroidBackupRecovery>();
+        services.AddSingleton<ProtectedBackupRecovery>(provider => provider.GetRequiredService<AndroidBackupRecovery>());
         services.AddSingleton(provider =>
         {
             var installation = provider.GetRequiredService<AndroidProtectedInstallation>();
             return new AndroidProtectedStorageHost(provider, installation.BeginAsync, installation.CompleteAsync);
         });
-        services.AddSingleton<IAppDatabaseStartup>(provider => provider.GetRequiredService<AndroidProtectedStorageHost>());
-        services.AddSingleton<IProfileCreationHost>(provider => provider.GetRequiredService<AndroidProtectedStorageHost>());
-        services.AddSingleton<IProfileRetirementHost>(provider => provider.GetRequiredService<AndroidProtectedStorageHost>());
-        services.AddSingleton<IBackupPackageRestoreReceiver>(provider => provider.GetRequiredService<AndroidProtectedStorageHost>());
-        services.AddSingleton<IBackupSafetyCopyProtection>(provider => provider.GetRequiredService<AndroidProtectedStorageHost>());
-        services.AddSingleton<IBackupSafetyCopyMaintenance>(provider => provider.GetRequiredService<AndroidProtectedStorageHost>());
-        services.AddSingleton<IProtectedProfileSessionSource>(provider => provider.GetRequiredService<AndroidProtectedStorageHost>());
+        services.AddSingleton<ProtectedStorageHost>(provider => provider.GetRequiredService<AndroidProtectedStorageHost>());
+        services.AddProtectedStorageContracts();
     }
 }

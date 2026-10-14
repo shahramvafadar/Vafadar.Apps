@@ -706,3 +706,7 @@ only captured authorized safety/profile objects. [Evidence](quality/android-prot
 
 Windows/iOS adoption, actual phone/OEM transfer, real provider and publication acceptance remain open.
 Historical plaintext/probe statements above describe their original commits, not current Android state.
+
+## Windows protected storage (D-264)
+
+Financial profile/rollback files and internal safety packages are device-encrypted on Windows as well as Android. CurrentUser DPAPI protects Windows key envelopes; optional recovery vaults remain separate and portable backup file encryption remains user-selectable. Recovery secrets never enter portable preference sources. Private directory/native identity controls refuse redirected or replaced authority. No permission, telemetry or network SDK was added. iOS implementation and physical-device/provider/Store acceptance remain open.

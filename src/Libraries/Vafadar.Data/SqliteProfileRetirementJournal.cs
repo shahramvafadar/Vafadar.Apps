@@ -116,7 +116,14 @@ public sealed partial class SqliteProfileRetirementJournal
         Check(ct);
         if (!File.Exists(path) || (File.GetAttributes(path) & (FileAttributes.Directory | FileAttributes.ReparsePoint)) != 0)
             throw new IOException("Retirement journal is missing or redirected.");
-        var connection = new SqliteConnection(new SqliteConnectionStringBuilder { DataSource = path, Mode = SqliteOpenMode.ReadWrite, Pooling = false }.ToString());
+        // Four immutable identities plus staging/journal suffixes can exceed Win32 MAX_PATH.
+        // SQLite's own long-path VFS preserves the exact authority filename without shortening it.
+        var connection = new SqliteConnection(new SqliteConnectionStringBuilder
+        {
+            DataSource = OperatingSystem.IsWindows() ? "\\\\?\\" + path : path,
+            Mode = SqliteOpenMode.ReadWrite, Pooling = false,
+            Vfs = OperatingSystem.IsWindows() ? "win32-longpath" : null
+        }.ToString());
         try
         {
             await connection.OpenAsync(ct).ConfigureAwait(false);

@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Vafadar.Core\Vafadar.Core.csproj" />
     <ProjectReference Include="..\Vafadar.Localization\Vafadar.Localization.csproj" />
+    <ProjectReference Include="..\Vafadar.Data\Vafadar.Data.csproj" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'" />
   </ItemGroup>
 
   <ItemGroup>

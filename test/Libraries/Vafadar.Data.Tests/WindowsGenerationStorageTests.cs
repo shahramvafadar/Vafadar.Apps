@@ -15,6 +15,50 @@ public sealed class WindowsGenerationStorageTests
     private static string KeyPath(string root, DatabaseKeyBinding binding) => Path.Combine(root, $"{binding.ProfileId:N}-{binding.GenerationId:N}.key");
 
     [Fact(Skip = "Requires actual Windows native storage.", SkipUnless = nameof(IsWindows)), Trait("AT", "AT-226")]
+    public async Task Local_application_data_namespace_binds_actual_owned_root_and_reopens_exact_key()
+    {
+        var parent = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Vafadar.NativeStorage.Tests");
+        Directory.CreateDirectory(parent);
+        var root = Path.Combine(parent, Guid.NewGuid().ToString("N"));
+        WindowsPrivateStorage.CreateNewDirectory(parent, root);
+        try
+        {
+            var binding = Binding(); var store = new WindowsGenerationKeyStore(root, () => { });
+            await store.PrepareAsync(binding, Ct);
+            var first = await store.ReadAsync(binding, Ct);
+            try
+            {
+                var second = await new WindowsGenerationKeyStore(root, () => { }).ReadAsync(binding, Ct);
+                try { Assert.Equal(first, second); }
+                finally { CryptographicOperations.ZeroMemory(second); }
+                var durability = new WindowsGenerationFileDurability(root);
+                await durability.SynchronizeFileAsync(KeyPath(root, binding), Ct);
+                await durability.SynchronizeDirectoryAsync(Ct);
+            }
+            finally { CryptographicOperations.ZeroMemory(first); }
+        }
+        finally
+        {
+            // Delete only the exact independently created GUID fixture, never its shared parent or app storage.
+            if (Path.GetDirectoryName(root) != parent || !Guid.TryParseExact(Path.GetFileName(root), "N", out _))
+                throw new IOException("Fixture cleanup root differs.");
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact(Skip = "Requires actual Windows native storage.", SkipUnless = nameof(IsWindows)), Trait("AT", "AT-226")]
+    public async Task Durability_refuses_replaced_directory_even_when_its_logical_path_is_unchanged()
+    {
+        using var folder = new TemporaryDirectory();
+        var root = folder.Combine("captured"); Directory.CreateDirectory(root);
+        var durability = new WindowsGenerationFileDurability(root);
+        Directory.Move(root, folder.Combine("retained")); Directory.CreateDirectory(root);
+        Assert.Throws<IOException>(() => durability.AvailableBytes);
+        await Assert.ThrowsAsync<IOException>(() => durability.SynchronizeDirectoryAsync(Ct));
+        Assert.True(Directory.Exists(folder.Combine("retained")));
+    }
+
+    [Fact(Skip = "Requires actual Windows native storage.", SkipUnless = nameof(IsWindows)), Trait("AT", "AT-226")]
     public async Task Prepared_envelope_reopens_and_repeat_preparation_preserves_exact_existing_file()
     {
         using var folder = new TemporaryDirectory(); var binding = Binding();

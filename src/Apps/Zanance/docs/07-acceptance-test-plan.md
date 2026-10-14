@@ -2702,3 +2702,7 @@ All 3509 final dependency tests pass with no failures/skips; outputs cleaned. St
 signed/non-debuggable APK/runtime13/native payloads are checked. [Evidence](quality/android-protected-storage.md)
 separates these observations from power-loss/all-crash-points, real phone/arm64/API24/16KiB, spoken
 accessibility, OEM transfer, OAuth, hosted fresh construction, Windows/iOS and Store/publication gates.
+
+## D-264 Windows protected storage status
+
+Windows main protected startup, DPAPI recovery enrollment/key-loss/cold reopen, isolated profile creation/switch/retirement, encrypted safety retention and explicit portable replacement have native application evidence on an independent fictional installation. Shared Android effects remain platform adapters to the same application algorithms. Final local verification: 3521 tests passed with zero failures/skips, strict Windows/Android builds without warnings/errors, complete signed APK and scoped emulator upgrade/cold reopening passed; see [Windows quality record](quality/windows-protected-storage.md). No iOS, physical-device, OAuth, Store or hosted fresh compiler acceptance is implied. The continuous-development objective remains open.

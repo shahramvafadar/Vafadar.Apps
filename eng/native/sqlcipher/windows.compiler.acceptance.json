@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "installationVersions": [
+    "18.10.12201.205",
+    "18.10.12217.157"
+  ],
+  "toolsVersion": "14.51.36231",
+  "compilerExecutableSha256": "315a654ea116864516a1674858e587e535e3bc3045ff32ed2f2739a2c1ec5640",
+  "hostedImage": "windows-2025-vs2026",
+  "hostedInventorySource": "https://github.com/actions/runner-images/blob/main/images/windows/Windows2025-VS2026-Readme.md",
+  "qualification": "Installer patch acceptance still requires the exact reviewed compiler bytes and complete immutable package entry verification."
+}

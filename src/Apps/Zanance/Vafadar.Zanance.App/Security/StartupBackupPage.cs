@@ -4,9 +4,9 @@ using Vafadar.Localization;
 namespace Vafadar.Zanance.App.Security;
 
 /// <summary>Explicit portable recovery input on a covered startup failure; no financial preview or device credential is exposed.</summary>
-internal sealed class AndroidStartupBackupPage : ContentPage
+internal sealed class StartupBackupPage : ContentPage
 {
-    private readonly AndroidBackupRecovery recovery;
+    private readonly ProtectedBackupRecovery recovery;
     private readonly Translator translator;
     private readonly TaskCompletionSource<bool> completion = new(TaskCreationOptions.RunContinuationsAsynchronously);
     private readonly Label heading = new();
@@ -23,7 +23,7 @@ internal sealed class AndroidStartupBackupPage : ContentPage
     private bool closing;
 
     /// <summary>Creates only the explicit picker/password/confirmation surface, without touching original data.</summary>
-    internal AndroidStartupBackupPage(AndroidBackupRecovery recovery, Translator translator)
+    internal StartupBackupPage(ProtectedBackupRecovery recovery, Translator translator)
     {
         this.recovery = recovery; this.translator = translator;
         heading.Style = (Style)Application.Current!.Resources["PageTitle"];

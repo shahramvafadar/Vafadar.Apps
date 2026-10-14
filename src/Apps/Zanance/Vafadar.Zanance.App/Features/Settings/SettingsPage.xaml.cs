@@ -14,16 +14,16 @@ public partial class SettingsPage : ContentPage
         _localization = localization;
         InitializeComponent();
         BindingContext = _viewModel = viewModel;
-#if ANDROID
+#if ANDROID || WINDOWS
         RecoverySetupGroup.IsVisible = true;
         RecoverySetupAction.Command = new CommunityToolkit.Mvvm.Input.AsyncRelayCommand(OpenRecoverySetupAsync);
 #endif
     }
 
-    /// <summary>Opens explicit device-local recovery enrollment only on the protected Android platform.</summary>
+    /// <summary>Opens explicit device-local recovery enrollment on protected platforms.</summary>
     private Task OpenRecoverySetupAsync()
     {
-#if ANDROID
+#if ANDROID || WINDOWS
         return Presentation.Failures.GuardAsync(() => ((App)Application.Current!).ShowRecoverySetupAsync());
 #else
         return Task.CompletedTask;

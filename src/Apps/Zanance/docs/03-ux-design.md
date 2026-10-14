@@ -1156,3 +1156,7 @@ Keep native text scaling, growing captions, direction-safe code inputs and at le
 The corrected Android Release hierarchy passed en/fa/de in light/dark at 360/412/wide widths.
 Growing startup/Settings/file-selection actions retain original commands and complete captions;
 spoken/pixel/device acceptance remains separately tracked in quality/android-protected-storage.md.
+
+## Windows protected recovery surfaces (D-264)
+
+Windows uses the same explicit optional recovery setup and covered startup backup/key-recovery flows as Android. Existing app lock remains independent and is never bypassed by key recovery. Native titlebar foreground and background both follow semantic palette resources. Eighteen native recovery views cover fa/en/de, light/dark and narrow/wide layouts; scoped titlebar captures do not constitute spoken accessibility acceptance.

@@ -10,6 +10,19 @@ public sealed class ProfileRetirementJournalTests
     private static ProfileRetirementCheckpoint Identity() => new(Guid.NewGuid().ToString("N"), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
 
     [Fact]
+    public async Task Windows_long_identity_path_commits_and_reopens_with_transaction_sidecars()
+    {
+        if (!OperatingSystem.IsWindows()) return;
+        using var folder = new TemporaryDirectory(); var captured = Identity();
+        var nested = folder.Combine(new string('a', 90)); Directory.CreateDirectory(nested);
+        var path = Path.Combine(nested, $"profile-retirement-{captured.LegacyProfileId}-{captured.ProfileId:N}-{captured.InstallationId:N}-{captured.OperationId:N}.sqlite");
+        Assert.True(path.Length > 260);
+        var journal = new SqliteProfileRetirementJournal(path, captured, () => { });
+        await journal.CreateNewAsync(new Effects(), Ct);
+        Assert.Equal(captured, await journal.ReadAsync(Ct));
+    }
+
+    [Fact]
     public async Task Exact_request_reopens_and_advances_each_actual_barrier_once()
     {
         using var folder = new TemporaryDirectory(); var captured = Identity(); var effects = new Effects();

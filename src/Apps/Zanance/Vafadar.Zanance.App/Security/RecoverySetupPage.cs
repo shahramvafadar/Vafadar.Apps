@@ -3,9 +3,9 @@ using Vafadar.Localization;
 namespace Vafadar.Zanance.App.Security;
 
 /// <summary>Displays an ephemeral recovery draft until its recorded-code acknowledgment is explicitly saved.</summary>
-internal sealed class AndroidRecoverySetupPage : ContentPage
+internal sealed class RecoverySetupPage : ContentPage
 {
-    private readonly AndroidProtectedStorageHost host;
+    private readonly ProtectedStorageHost host;
     private readonly Translator translator;
     private readonly Label heading = new();
     private readonly Label hint = new();
@@ -16,13 +16,13 @@ internal sealed class AndroidRecoverySetupPage : ContentPage
     private readonly Label failure = new() { IsVisible = false };
     private readonly Button save = new() { MinimumHeightRequest = 44 };
     private readonly Button back = new() { MinimumHeightRequest = 44 };
-    private AndroidRecoveryDraft? draft;
+    private ProtectedRecoveryDraft? draft;
     private bool busy;
     private bool loaded;
     private bool disappeared;
 
     /// <summary>Creates a financial-data-free setup page; native material is prepared only after appearing.</summary>
-    internal AndroidRecoverySetupPage(AndroidProtectedStorageHost host, Translator translator)
+    internal RecoverySetupPage(ProtectedStorageHost host, Translator translator)
     {
         this.host = host; this.translator = translator;
         FlowDirection = Application.Current?.Windows.FirstOrDefault()?.Page?.FlowDirection ?? FlowDirection.MatchParent;

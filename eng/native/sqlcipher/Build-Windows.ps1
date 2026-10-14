@@ -27,12 +27,18 @@ $cryptoOptions = $cryptoProfile.opensslConfigureOptions -join ' '
 if ($inputLock.schemaVersion -ne 1) { throw 'Unsupported native input schema.' }
 $vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio/Installer/vswhere.exe'
 $installation = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -format json | ConvertFrom-Json
-if (-not $installation -or $installation.installationVersion -ne $inputLock.windowsCompiler.installationVersion) {
+$compilerAcceptance = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'windows.compiler.acceptance.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+if ($compilerAcceptance.schemaVersion -ne 1 -or $compilerAcceptance.toolsVersion -ne $inputLock.windowsCompiler.toolsVersion -or
+    $compilerAcceptance.compilerExecutableSha256 -notmatch '^[a-f0-9]{64}$') { throw 'Unsupported Windows compiler acceptance.' }
+if (-not $installation -or $installation.installationVersion -notin $compilerAcceptance.installationVersions) {
     throw 'The installed compiler differs from the reviewed native toolchain; review the lock before adoption.'
 }
 $vcvars = Join-Path $installation.installationPath 'VC/Auxiliary/Build/vcvarsall.bat'
 $compiler = Join-Path $installation.installationPath ('VC/Tools/MSVC/' + $inputLock.windowsCompiler.toolsVersion + '/bin/Hostx64/x64/cl.exe')
 if (-not (Test-Path -LiteralPath $compiler)) { throw 'Pinned native compiler is unavailable.' }
+if ((Get-FileHash -LiteralPath $compiler -Algorithm SHA256).Hash.ToLowerInvariant() -ne $compilerAcceptance.compilerExecutableSha256) {
+    throw 'Installed compiler bytes differ from the reviewed native toolchain.'
+}
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
 if ((Test-Path -LiteralPath $root) -and -not $Resume) { throw 'Use a fresh native run name; preserve previous build evidence.' }
 if ($Resume -and -not (Test-Path -LiteralPath $root)) { throw 'No owned native run exists to resume.' }
@@ -135,3 +141,5 @@ $manifest = [ordered]@{ schemaVersion=1; status='candidate-not-app-or-release-ac
     libraryBytes=(Get-Item -LiteralPath $library).Length; librarySha256=(Get-FileHash -LiteralPath $library -Algorithm SHA256).Hash.ToLowerInvariant() }
 $manifest | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $packageRoot 'manifest.json') -Encoding UTF8
 Write-Output $packageRoot
+
+[ordered]@{ schemaVersion=1; observedInstallationVersion=$installation.installationVersion; reviewedCompilerExecutableSha256=$compilerAcceptance.compilerExecutableSha256; toolsVersion=$inputLock.windowsCompiler.toolsVersion; sdkVersion=$inputLock.windowsCompiler.sdkVersion } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $root 'compiler-host-proof.json') -Encoding utf8

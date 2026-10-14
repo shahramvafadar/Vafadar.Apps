@@ -23,6 +23,8 @@
 
     <!-- Windows: unpackaged .exe for development and personal use. -->
     <WindowsPackageType>None</WindowsPackageType>
+    <!-- Ship the serviced core runtime instead of requiring a matching global Windows installation. -->
+    <SelfContained Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">true</SelfContained>
   </PropertyGroup>
 
   <ItemGroup Label="MAUI resources">
@@ -59,9 +61,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Android adopts the reviewed native cipher; other platform hosts explicitly retain their existing engine. -->
-    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'android'" />
+    <!-- Protected platforms consume reviewed source-built native engines; iOS adoption remains separately gated. -->
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'android' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'windows'" />
     <PackageReference Include="Vafadar.Native.SqlCipher.Android" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
+    <PackageReference Include="Vafadar.Native.SqlCipher.Windows" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
     <PackageReference Include="Syncfusion.Maui.Charts" />
     <PackageReference Include="Syncfusion.Maui.Inputs" />
@@ -81,6 +84,10 @@
   <Target Name="PrepareAndroidCipherDependency" BeforeTargets="_GenerateRestoreGraphProjectEntry"
           Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
     <Exec Command="pwsh -NoProfile -File &quot;$(RepoRoot)eng/native/sqlcipher/Ensure-AndroidPackage.ps1&quot;" />
+  </Target>
+  <Target Name="PrepareWindowsCipherDependency" BeforeTargets="_GenerateRestoreGraphProjectEntry"
+          Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+    <Exec Command="pwsh -NoProfile -File &quot;$(RepoRoot)eng/native/sqlcipher/Ensure-WindowsPackage.ps1&quot;" />
   </Target>
 
   <!-- Local notifications on phones only: the Windows build of the plugin needs a newer Windows App SDK than MAUI. -->
