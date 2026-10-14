@@ -276,13 +276,25 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
     Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
 
+    private bool _publicationRetired;
+
+    /// <summary>Invalidates only this original Home lifetime before its native controls are disconnected.</summary>
+    internal void RetirePublication() => _publicationRetired = true;
+
+    private void RequireCurrentPublication()
+    {
+        if (_publicationRetired) throw new OperationCanceledException("Home publication is retired.");
+    }
+
     public async Task LoadAsync()
     {
         await _loading.WaitAsync();
         try
         {
+            if (_publicationRetired) return;
             TemplateNavigation.BeginLoad();
             try { await LoadCoreAsync(); }
+            catch (OperationCanceledException) when (_publicationRetired) { /* The retired native graph receives no further state publication. */ }
             catch { TemplateNavigation.FailLoad(); throw; }
         }
         finally
@@ -296,6 +308,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         var today = Today;
         var culture = _localization.CurrentCulture;
         var templateReview = await _store.GetQuickResourceReviewAsync();
+        RequireCurrentPublication();
         var settings = templateReview.Settings ?? new ZananceSettings();
         _reportCurrency = settings.ReportCurrencyCode;
         _startDay = settings.MonthStartDay;
@@ -313,12 +326,14 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             : _translator.Format("Home_QuickAddTarget", defaultAccount!.Name, MoneyText.UnitName(defaultAccount.CurrencyCode));
         var byId = allAccounts.ToDictionary(a => a.Id);
         var entries = await _store.GetEntriesAsync();
+        RequireCurrentPublication();
         var accountEntries = new AccountEntryIndex(entries);
         var categoryList = templateReview.Categories.OrderBy(c => c.Kind).ThenBy(c => c.SortOrder).ToList();
         var categories = new CategoryLookup(categoryList, _translator);
 
         // Plans are read once for the due items, the forecast and getting started.
         var planSnapshot = await _plans.GetWorkSnapshotAsync();
+        RequireCurrentPublication();
         var schedules = planSnapshot.Schedules;
         var states = planSnapshot.States;
 
@@ -357,6 +372,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             var (monthYear, monthNumber) = PeriodMath.MonthOf(today, settings.BudgetCalendar, _startDay);
             var freshness = new RateFreshness(settings.RateFreshnessDays, PeriodMath.MonthRange(monthYear, monthNumber, settings.BudgetCalendar, _startDay).First);
             var combined = new RateTable(await _store.GetRatesAsync()).Combine(balances, _reportCurrency, today, freshness);
+            RequireCurrentPublication();
             CombinedIncomplete = !combined.IsComplete || combined.IsOutdated;
             var rateDate = combined.OldestRateDate is { } oldest ? _dates.Format(oldest, DateFormatStyle.Short) : "-";
             CombinedText = !combined.IsComplete
@@ -389,8 +405,10 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         }
 
         await LoadBudgetAsync(settings.BudgetCalendar, allAccounts, entries, categoryList, today, culture);
+        RequireCurrentPublication();
         LoadPlans(byId, categories, schedules, states, today, planSnapshot.Work);
         await LoadGettingStartedAsync(entries.Count, schedules.Count);
+        RequireCurrentPublication();
         LoadForecast(settings.Shows(Feature.ForecastDetails), allAccounts, entries, schedules, states, today, culture);
         BuildSlices(allAccounts, entries, categories, from, to, culture);
 
@@ -422,9 +440,12 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         ReimbursementText = owed.Count == 0 ? null : _translator.Format("Home_Reimbursements", owed.Count);
         LoadDataAttention(settings, allAccounts, entries, today);
         await LoadGoalsAsync(allAccounts, entries, today);
+        RequireCurrentPublication();
         await LoadHoldingsAsync(today);
+        RequireCurrentPublication();
         HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null || ReimbursementText is not null || LowBalanceText is not null || GoalAttentionText is not null || ReviewText is not null || BackupText is not null;
         await _store.ValidateQuickResourceReviewAsync(templateReview);
+        RequireCurrentPublication();
         TemplateNavigation.Publish(templateReview);
         QuickTemplates.Clear();
         foreach (var template in TemplateNavigation.Items)
@@ -448,6 +469,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         }
 
         var budget = await _store.GetBudgetAsync(year, month, calendar, _homeCurrency);
+        RequireCurrentPublication();
         BudgetDailyText = null;
         HasBudget = budget?.TotalLimit is not null;
         if (budget?.TotalLimit is not { } ownLimit)
@@ -457,6 +479,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
 
         // The same limit as on the budget page, including rollover (§10.3, Q-05).
         var limit = ownLimit + (await _store.GetBudgetCarryAsync(budget)).Total;
+        RequireCurrentPublication();
         var (from, to) = PeriodMath.MonthRange(year, month, calendar, _startDay);
         var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, accounts, entries, categories, from, to));
         BudgetText = status.IsOver
@@ -540,6 +563,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     private async Task LoadHoldingsAsync(DateOnly today)
     {
         var types = (await _holdings.GetTypesAsync()).Where(t => !t.IsArchived).ToDictionary(t => t.Id);
+        RequireCurrentPublication();
         if (types.Count == 0)
         {
             HoldingsText = null;
@@ -547,6 +571,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         }
 
         var events = new AssetEventIndex(await _holdings.GetEventsAsync());
+        RequireCurrentPublication();
         var held = types.Values
             .Select(t => (Type: t, Quantity: HoldingsLedger.Quantity(events.For(t.Id), t.Id, today)))
             .Where(h => h.Quantity > 0)
@@ -564,6 +589,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     private async Task LoadGoalsAsync(List<Account> accounts, List<LedgerEntry> entries, DateOnly today)
     {
         var view = await Goals.GoalHomeProjection.ReadAsync(_goals, _goalPresenter, _translator, accounts, entries, today);
+        RequireCurrentPublication();
         PinnedGoals.Clear();
         foreach (var row in view.Pinned) PinnedGoals.Add(row);
         HasPinnedGoals = PinnedGoals.Count > 0;
@@ -718,7 +744,9 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     {
         FirstEntryDone = entryCount > 0;
         PlanDone = planCount > 0;
-        BudgetDone = (await _store.GetBudgetsAsync()).Count > 0;
+        var budgets = await _store.GetBudgetsAsync();
+        RequireCurrentPublication();
+        BudgetDone = budgets.Count > 0;
         ShowGettingStarted = HasAccounts && !Preferences.Default.Get(GettingStartedKey, false) && !(FirstEntryDone && PlanDone && BudgetDone);
     }
 

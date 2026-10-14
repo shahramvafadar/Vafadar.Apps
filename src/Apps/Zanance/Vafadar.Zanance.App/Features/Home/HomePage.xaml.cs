@@ -13,6 +13,9 @@ public partial class HomePage : ContentPage
     /// <summary>Gets the actual appearance publication so native review awaits this lifecycle rather than racing a second read.</summary>
     internal Task PendingPublication { get; private set; } = Task.CompletedTask;
 
+    /// <summary>Prevents pending reads from publishing into controls whose original Shell is being disconnected.</summary>
+    internal void RetirePublication() => _viewModel.RetirePublication();
+
     public HomePage(HomeViewModel viewModel, Vafadar.Zanance.Data.ZananceStore store)
     {
         _store = store;
@@ -49,6 +52,11 @@ public partial class HomePage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        // Register the actual lazy-created page, not a lookup through ShellContent.Content.
+        AppShell? owner = null;
+        for (Element? ancestor = Parent; ancestor is not null; ancestor = ancestor.Parent)
+            if (ancestor is AppShell shell) { owner = shell; break; }
+        (owner ?? Shell.Current as AppShell)?.RegisterHomePublication(this);
         ApplyLayout();
 
         // Language, calendar or data may have changed elsewhere.

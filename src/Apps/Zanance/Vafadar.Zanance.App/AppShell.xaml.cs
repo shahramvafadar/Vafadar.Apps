@@ -13,6 +13,15 @@ namespace Vafadar.Zanance.App;
 
 public partial class AppShell : Shell
 {
+    private readonly HashSet<Features.Home.HomePage> _publishedHomes = [];
+    private bool _navigationRetired;
+
+    /// <summary>Records actual published Home instances; lazy ShellContent.Content may not expose its cached page.</summary>
+    internal void RegisterHomePublication(Features.Home.HomePage home)
+    {
+        if (_navigationRetired) home.RetirePublication();
+        else _publishedHomes.Add(home);
+    }
     /// <summary>Route of the account list.</summary>
     public const string AccountsRoute = AppRoutes.AccountsRoute;
 
@@ -202,6 +211,8 @@ public partial class AppShell : Shell
     /// <summary>Stops translated navigation titles on a retired shell from reaching its disconnected native menu.</summary>
     internal void RetireNavigationBindings()
     {
+        _navigationRetired = true;
+        foreach (var home in _publishedHomes) home.RetirePublication();
         // D-82: Android's retired ShellItemRenderer can retain section events after its Shell handler is cleared.
         // A later translated title then reads a missing MauiContext and aborts the entire language notification.
         // Unsubscribe only this retired navigation graph; keep current titles and every active form unchanged.
@@ -211,7 +222,11 @@ public partial class AppShell : Shell
             foreach (var section in item.Items)
             {
                 section.RemoveBinding(BaseShellItem.TitleProperty);
-                foreach (var content in section.Items) { content.RemoveBinding(BaseShellItem.TitleProperty); }
+                foreach (var content in section.Items)
+                {
+                    if (content.Content is Features.Home.HomePage home) home.RetirePublication();
+                    content.RemoveBinding(BaseShellItem.TitleProperty);
+                }
             }
         }
     }

@@ -1612,3 +1612,9 @@ and external gates remain open. Main stays plaintext.
 - Encrypt Windows financial profiles with device-protected keys; optional recovery and portable Zanance backups remain available.
 - Preserve profile isolation, encrypted safety-copy retention and explicit backup replacement through the same covered lifecycle as Android.
 - Fix long-path profile deletion and light-theme window-title contrast.
+
+### Holding readability (D-265)
+
+- Keep holding actions and editor Save/Cancel captions readable at large text sizes.
+- Give history quantities, valuation dates and Undo their own space.
+- Preserve spoken action hints and stop an old Home from updating disconnected controls after changing language.

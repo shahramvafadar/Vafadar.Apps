@@ -252,6 +252,18 @@ internal static partial class DebugSnapshots
     private static async Task RunCoreAsync(App app, IServiceProvider services, string folder)
     {
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "home-retirement-read")
+        {
+            await ReviewRetiredHomeReadAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "holdings-readable-bottom")
+        {
+            await ReviewReadableHoldingsAsync(app, services, folder, bottomOnly: true); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "holdings-readable")
+        {
+            await ReviewReadableHoldingsAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "protected-storage")
         {
             await ReviewProtectedStorageAsync(app, services, folder); return;

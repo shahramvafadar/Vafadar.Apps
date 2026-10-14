@@ -71,6 +71,14 @@ public sealed class WrappingAction : ContentView
         RefreshAppearance();
     }
 
+    /// <summary>Keeps the existing action hint on the native command owner rather than its decorative surface.</summary>
+    protected override void OnPropertyChanged(string? propertyName = null)
+    {
+        base.OnPropertyChanged(propertyName);
+        if (propertyName == SemanticProperties.HintProperty.PropertyName && _button is not null)
+            SemanticProperties.SetHint(_button, SemanticProperties.GetHint(this));
+    }
+
     /// <summary>Gets or sets the complete translated caption.</summary>
     public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
 

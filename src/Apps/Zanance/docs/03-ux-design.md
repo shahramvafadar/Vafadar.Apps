@@ -1160,3 +1160,7 @@ spoken/pixel/device acceptance remains separately tracked in quality/android-pro
 ## Windows protected recovery surfaces (D-264)
 
 Windows uses the same explicit optional recovery setup and covered startup backup/key-recovery flows as Android. Existing app lock remains independent and is never bypassed by key recovery. Native titlebar foreground and background both follow semantic palette resources. Eighteen native recovery views cover fa/en/de, light/dark and narrow/wide layouts; scoped titlebar captures do not constitute spoken accessibility acceptance.
+
+## Holding actions and original page lifetimes (D-265)
+
+Holding commands use growing native surfaces with complete semantic names and hints; history identities/date and quantity occupy separate rows with the same full-row overlay command. Descriptive valuation sentences wrap. An old Home cannot publish awaited reads after its Shell retires; register actual appearing instances rather than assuming lazy ShellContent.Content exposes them. Review off-viewport pickers only after native scrolling realizes their captions.

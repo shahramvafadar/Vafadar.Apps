@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Holdings"
     x:DataType="local:AssetTypeEditorViewModel"
@@ -14,7 +15,7 @@
         <!-- D-98: whole title/action groups wrap at native text scale without adding a second modal header. -->
         <Grid Padding="8,8" BackgroundColor="{DynamicResource CardBackground}">
             <FlexLayout x:Name="ModalHeaderLayout" Direction="Row" Wrap="Wrap" AlignItems="Center">
-                <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" FlexLayout.Shrink="0" Margin="4,0" Style="{StaticResource TextButton}" />
+                <p:WrappingAction Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" FlexLayout.Shrink="0" Margin="4,0" Appearance="Text" />
                 <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" FlexLayout.Shrink="0" FlexLayout.Grow="1" MaximumWidthRequest="{Binding Width, Source={x:Reference ModalHeaderLayout}, x:DataType=FlexLayout}" />
             </FlexLayout>
         </Grid>
@@ -84,6 +85,6 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <Button Grid.Row="2" Margin="16" Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsNotBusy}" />
+        <p:WrappingAction Grid.Row="2" Margin="16" Appearance="Primary" Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsNotBusy}" />
     </Grid>
 </ContentPage>
