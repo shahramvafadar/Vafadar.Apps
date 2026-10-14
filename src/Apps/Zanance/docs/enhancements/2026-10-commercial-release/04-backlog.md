@@ -2114,3 +2114,8 @@ money, binary portable backup and wrong-key refusal pass across fresh process re
 inspection failure was corrected only in its distinct fixture package, preserving creation/result/data
 and continuing the same key. See decision/device-key guide for proof/scope. Main/APK remain D-251;
 final host/recovery/retention/OS/native platform and device acceptance remain open.
+
+D-253 adds host-required protection before initial publication: every factory route refuses without
+creating plaintext storage and releases its lease. Actual binary cipher hosts use the setting and
+verify refusal before encrypted startup. Final main/recovery/retention/OS adoption remains open;
+OD-04/OD-10 are approved and no new owner decision is needed for this implementation prerequisite.

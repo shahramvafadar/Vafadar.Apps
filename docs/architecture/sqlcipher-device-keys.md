@@ -736,3 +736,36 @@ bridge prerequisite on tested Windows x64 and Android x64 API36/4KiB; it does no
 API24/16KiB OS, iOS, every key/recovery/crash route or whole-app adoption. Final host/recovery UI,
 reference-aware retention/reconciliation, native warning review and coupled OS/platform/device/provider
 acceptance remain open. Main registration is still plaintext.
+
+### D-253 — Refuse plaintext contexts before protected startup publication
+
+Protected data registration now accepts protectionRequired from location construction through
+AddLocalDatabase and AddZananceData. The immutable original path remains available to maintenance
+bootstrap, but ordinary/owned synchronous/asynchronous factory calls refuse before the first verified
+protected publication. No directory, plaintext database or backup snapshot is created. Failed calls
+release their access leases; plaintext MoveTo and captured plaintext rollback are also refused.
+The flag is host authority, never inferred from missing keys/files or offered as a user setting.
+Existing standard hosts keep their explicit current registration; main encryption is not activated.
+
+Five new factory/location cases cover early refusal, no-write behavior and subsequent drained ownership.
+The actual production-assembly cipher hosts now register protectionRequired and check pre-publication
+refusal before their existing encrypted creation/cold reopen, typed money and portable snapshot checks.
+Windows native runtime passes at artifacts/native-sqlcipher/binary-host/66f872a9b3bf4a8a83766e8810ee008c.
+An initial test expectation used a mixed-separator path; canonical comparison corrected that fixture
+assertion. No producer suite, unchanged UI matrix or platform security setting was repeated.
+
+Final host/provider activation, optional recovery UI, reference-aware retention/reconciliation and
+coupled OS exclusion remain open. OD-04 and OD-10 are already approved; this slice needs no new owner
+decision. Native platform/device/provider/release acceptance remain separate from local verification.
+
+D-253 runtime: strict actual-binary Android Release build has zero warnings/errors (1m1.63s).
+Both fresh creation and cold same-key reopen pass with pre-publication refusal enforced:
+artifacts/native-sqlcipher/build/android-d/binary-runtime-proof-a97d94f80a684d3f85d7117741ecf846.json,
+run 0eb40c84818342eaa7492b409fe889b8. All 3472 solution tests pass with zero failures/skips
+(2m56.792s), including the five added boundary cases. Existing main registration remains plaintext.
+
+D-253 delivery: strict main Windows build 26.89s and Android build 40.34s have zero warnings/errors.
+Complete signed Release APK: artifacts/android-d253-delivery/pro.vafadar.zanance-Signed.apk,
+83,249,712 bytes; signature, pro.vafadar.zanance package, API24/36 and both embedded assembly stores
+verified. Test output cleanup completed successfully after terminal verification. Main provider remains
+standard SQLite; this APK is not a whole-app encryption, physical-device, iOS or release acceptance.

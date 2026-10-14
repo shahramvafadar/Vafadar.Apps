@@ -38,7 +38,8 @@ public static class ZananceDataServiceCollectionExtensions
     /// Adds the Zanance database at <paramref name="databasePath"/> (also registered as a backup source), the stores
     /// and the automatic posting processor.
     /// </summary>
-    public static IServiceCollection AddZananceData(this IServiceCollection services, string databasePath)
+    /// <param name="protectionRequired">Require a protected generation before any store or backup can construct a context.</param>
+    public static IServiceCollection AddZananceData(this IServiceCollection services, string databasePath, bool protectionRequired = false)
     {
         // The compiled model (CompiledModel/) builds itself on a second thread and waits for it inside its static
         // constructor; under Mono (Android, iOS) that thread waits for the same static constructor and the app hangs at
@@ -48,7 +49,7 @@ public static class ZananceDataServiceCollectionExtensions
         // D-118: no commercial limits in current test builds; this is not a customer entitlement.
         services.TryAddSingleton<ICommercialWriteAccessSource, InactiveCommercialWriteAccessSource>();
 
-        services.AddLocalDatabase<ZananceDbContext>(databasePath);
+        services.AddLocalDatabase<ZananceDbContext>(databasePath, protectionRequired);
         // D-124: replace only this database source; preserve display/settings and every other registered source.
         var databaseSource = services.Single(d => d.ServiceType == typeof(IBackupSource)
             && d.ImplementationType == typeof(SqliteDatabaseBackupSource<ZananceDbContext>));

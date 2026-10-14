@@ -17,8 +17,9 @@ public static class DataServiceCollectionExtensions
     /// the auditing interceptor, and the database as an <see cref="IBackupSource"/>. The file can be moved later through
     /// <see cref="LocalDatabaseLocation{TContext}"/> (local profiles).
     /// </summary>
+    /// <param name="protectionRequired">Refuse every context until protected startup publishes its verified native generation.</param>
     /// <remarks>Use the factory (short-lived contexts) in apps; there are no request scopes in a mobile app.</remarks>
-    public static IServiceCollection AddLocalDatabase<TContext>(this IServiceCollection services, string databasePath)
+    public static IServiceCollection AddLocalDatabase<TContext>(this IServiceCollection services, string databasePath, bool protectionRequired = false)
         where TContext : LocalDbContext
     {
         ArgumentNullException.ThrowIfNull(services);
@@ -26,7 +27,7 @@ public static class DataServiceCollectionExtensions
 
         services.TryAddSingleton(TimeProvider.System);
         services.TryAddSingleton<AuditingSaveChangesInterceptor>();
-        services.AddSingleton(new LocalDatabaseLocation<TContext>(databasePath));
+        services.AddSingleton(new LocalDatabaseLocation<TContext>(databasePath, protectionRequired));
         services.AddSingleton<IDbContextFactory<TContext>, LocalDbContextFactory<TContext>>();
         services.AddSingleton<ILocalDbContextFactory<TContext>>(provider =>
             (ILocalDbContextFactory<TContext>)provider.GetRequiredService<IDbContextFactory<TContext>>());

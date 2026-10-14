@@ -5,6 +5,56 @@ namespace Vafadar.Data.Tests;
 
 public sealed class LocalDatabaseLocationTests
 {
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public async Task Protected_registration_refuses_unpublished_contexts_without_creating_files_or_leaking_leases(bool asynchronous, bool maintenance)
+    {
+        using var directory = new Vafadar.Testing.TemporaryDirectory();
+        var path = directory.Combine("unpublished/data.db");
+        using var services = new ServiceCollection().AddLocalDatabase<TestDbContext>(path, protectionRequired: true).BuildServiceProvider();
+        var location = services.GetRequiredService<LocalDatabaseLocation<TestDbContext>>();
+        var factory = services.GetRequiredService<ILocalDbContextFactory<TestDbContext>>();
+        using (var owner = maintenance ? await location.Access.AcquireExclusiveAsync(TestContext.Current.CancellationToken) : null)
+        {
+            if (asynchronous)
+                await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                {
+                    await using var context = owner is null
+                        ? await factory.CreateDbContextAsync(TestContext.Current.CancellationToken)
+                        : await factory.CreateDbContextAsync(owner, TestContext.Current.CancellationToken);
+                });
+            else
+                Assert.Throws<InvalidOperationException>(() =>
+                {
+                    using var context = owner is null ? factory.CreateDbContext() : factory.CreateDbContext(owner);
+                });
+        }
+        // Refusal must release its context lease so covered startup can still drain the location.
+        using var nextOwner = await location.Access.AcquireExclusiveAsync(TestContext.Current.CancellationToken);
+        location.Access.RequireDrainedOwner(nextOwner);
+        Assert.False(File.Exists(path));
+        Assert.False(Directory.Exists(System.IO.Path.GetDirectoryName(path)));
+        Assert.Equal(System.IO.Path.GetFullPath(path), location.Path);
+    }
+
+    [Fact]
+    public async Task Protected_registration_refuses_plaintext_move_and_rollback_before_first_publication()
+    {
+        using var directory = new Vafadar.Testing.TemporaryDirectory();
+        var location = new LocalDatabaseLocation<TestDbContext>(directory.Combine("original.db"), protectionRequired: true);
+        using var owner = await location.Access.AcquireExclusiveAsync(TestContext.Current.CancellationToken);
+        var original = location.Path;
+        var publication = location.CapturePublication(owner);
+        Assert.Throws<InvalidOperationException>(() => location.MoveTo(directory.Combine("other.db"), owner));
+        Assert.Throws<InvalidOperationException>(() => publication.Restore(owner));
+        Assert.Equal(original, location.Path);
+        Assert.False(location.IsProtected);
+        Assert.False(File.Exists(original));
+    }
+
     [Fact]
     public async Task Moving_the_database_makes_new_contexts_use_the_other_file_and_back()
     {

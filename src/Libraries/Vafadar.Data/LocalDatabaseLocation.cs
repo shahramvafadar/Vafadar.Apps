@@ -21,11 +21,13 @@ public sealed class LocalDatabaseLocation<TContext>
     /// <summary>Shared by every context from this location, including all local profile publications.</summary>
     public DatabaseAccessGate Access { get; } = new();
 
-    /// <summary>Creates the location with its first file.</summary>
-    public LocalDatabaseLocation(string path)
+    /// <summary>Creates the original identity path, optionally refusing contexts until a verified protected publication.</summary>
+    /// <remarks>The protected host can still inspect/bootstrap the original under maintenance; construction never opens storage.</remarks>
+    public LocalDatabaseLocation(string path, bool protectionRequired = false)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
         _endpoint = new(System.IO.Path.GetFullPath(path), null, null);
+        _protectionRequired = protectionRequired;
     }
 
     /// <summary>Raised after the database moved to another file.</summary>
@@ -119,6 +121,17 @@ public sealed class LocalDatabaseLocation<TContext>
         Changed?.Invoke(this, EventArgs.Empty);
     }
 
+    /// <summary>Refuses context construction before the protected host publishes its verified native owner.</summary>
+    internal void RequireContextPublication(Endpoint captured)
+    {
+        lock (_gate)
+        {
+            if (!ReferenceEquals(captured, _endpoint)) throw new InvalidOperationException("Captured database publication retired.");
+            if (_protectionRequired && captured.CreateConnection is null)
+                throw new InvalidOperationException("Protected database startup has not published its verified generation.");
+        }
+    }
+
     /// <summary>Captures one atomic path/credential publication before context construction.</summary>
     internal Endpoint Capture() { lock (_gate) return _endpoint; }
     /// <summary>Retries failed startup observers for the exact retained endpoint without replacing credentials or retiring pools.</summary>
@@ -201,6 +214,7 @@ internal sealed class LocalDbContextFactory<TContext>(
     private TContext CreateCaptured(LocalDatabaseLocation<TContext>.Endpoint captured, DatabaseAccessGate.ExclusiveLease? owner)
     {
         if (owner is not null) location.Access.RequireOwner(owner);
+        location.RequireContextPublication(captured);
         if (captured.CreateConnection is null)
         {
             var options = _options.GetOrAdd(captured.Path, Build);

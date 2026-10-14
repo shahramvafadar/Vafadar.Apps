@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Protected startup storage boundary (D-253)
+
+- Prepared a protected host to refuse premature database access instead of creating an unencrypted file.
+- Main database encryption and the final recovery interface remain pending integration.
+
 ### Added - Protected profile catalogue retirement flow (D-236)
 
 - Prepared actual profile deletion with durable catalogue storage before file and key cleanup.

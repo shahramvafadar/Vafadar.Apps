@@ -21,12 +21,18 @@ internal static class BinaryPersistenceCompatibility
         if (typeof(LocalDbContext).Assembly.GetName().Name != "Vafadar.Data" || typeof(ZananceDbContext).Assembly.GetName().Name != "Vafadar.Zanance.Data")
             throw new IOException("The caller must load actual production assemblies, not source copies.");
         var original = Path.Combine(root, "zanance.db");
-        using var services = new ServiceCollection().AddZananceData(original).BuildServiceProvider();
+        using var services = new ServiceCollection().AddZananceData(original, protectionRequired: true).BuildServiceProvider();
         var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
         void Validate() { if (!Directory.Exists(root)) throw new IOException("Owned binary fixture root was retired."); }
         var identities = new SqliteDatabaseIdentityCatalogue(Path.Combine(root, "identities.sqlite"), Validate);
         var keys = createKeys(root); var durability = createDurability(root);
         SqlCipherProfileGeneration generation;
+        // D-253: actual protected host registration must refuse pre-bootstrap reads without creating plaintext.
+        var unpublishedFactory = services.GetRequiredService<ILocalDbContextFactory<ZananceDbContext>>();
+        var refusedBeforePublication = false;
+        try { await using var premature = await unpublishedFactory.CreateDbContextAsync(); }
+        catch (InvalidOperationException) { refusedBeforePublication = true; }
+        if (!refusedBeforePublication || File.Exists(original)) throw new IOException("Protected registration allowed a plaintext endpoint.");
         using (var owner = await location.Access.AcquireExclusiveAsync())
         {
             if (create) await identities.CreateNewAsync([""], durability);
