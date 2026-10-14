@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Continue prepared encrypted restores (D-255)
+
+- Prepared continuation after interruption before database selection or preference replay completion.
+- Preserve device-only choices and reuse the existing recorded keys during cold recovery.
+- Final main encryption and recovery interface activation remain pending.
+
 ### Added - Shared protected profile storage host (D-254)
 
 - Prepared a single encrypted-profile lifecycle for startup, switching and interrupted profile creation.

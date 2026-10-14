@@ -102,8 +102,10 @@ public sealed class SqlCipherPackageRestoreReceiver : IBackupPackageRestoreRecei
 
     private async Task ResumeCoreAsync(bool publishAccess, CancellationToken ct)
     {
-        Check(ct); var packet = await preferences.ReadAsync(validate, ct).ConfigureAwait(false); Check(ct);
+        Check(ct);
+        // Recorded ancestry is authority for key/capsule access, including a cold Resume call.
         if (history is not null) await history.RequireAsync(captured, ct).ConfigureAwait(false);
+        Check(ct); var packet = await preferences.ReadAsync(validate, ct).ConfigureAwait(false); Check(ct);
         var state = await journal.ReadAsync(ct).ConfigureAwait(false); Check(ct);
         // Before selection the actual current factory connection remains open/registered; after selection no old key is needed.
         await using var current = state.CandidateSelected ? new SqliteConnection() : await openCurrent(ct).ConfigureAwait(false);

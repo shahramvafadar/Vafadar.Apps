@@ -10,7 +10,8 @@ public static class SqlCipherProfileBootstrap
         DatabaseAccessGate.ExclusiveLease owner, string identityPath, IReadOnlyDictionary<string, string> originalPaths,
         bool initializeInstallation, IDatabaseGenerationKeyStore keys, IDatabaseGenerationFileDurability durability,
         Func<string, ProfileRestoreReference, SqlCipherPackageRestoreReceiver> createReceiver, Action validateAccess,
-        int maximumBytes, string cipherVersion, CancellationToken ct = default) where TContext : LocalDbContext
+        int maximumBytes, string cipherVersion, CancellationToken ct = default,
+        Func<DatabaseProfileIdentity, string, ProfileRestoreReference, SqlCipherPackageRestoreReceiver>? createBoundReceiver = null) where TContext : LocalDbContext
     {
         ArgumentNullException.ThrowIfNull(location); ArgumentNullException.ThrowIfNull(owner);
         ArgumentNullException.ThrowIfNull(originalPaths); ArgumentNullException.ThrowIfNull(keys);
@@ -75,7 +76,7 @@ public static class SqlCipherProfileBootstrap
             var history = new SqliteProfileRestoreHistory(historyPath, identity.InitialCandidateKey, CheckProfile);
             if (!File.Exists(historyPath)) await history.CreateInitialIntentAsync(identity.InitialMigration, journal, durability, ct).ConfigureAwait(false);
             using var generation = await SqlCipherProfileGeneration.OpenCurrentAsync(candidateLocation, identities, identity.LegacyProfileId,
-                original, history, reference => createReceiver(identity.LegacyProfileId, reference), keys, durability,
+                original, history, reference => createBoundReceiver is null ? createReceiver(identity.LegacyProfileId, reference) : createBoundReceiver(identity, original, reference), keys, durability,
                 candidateOwner, CheckProfile, maximumBytes, cipherVersion, ct).ConfigureAwait(false);
             // Verification owns a temporary retained read only. The host later publishes through its session,
             // using another existing key read; no profile becomes visible midway through the all-profile pass.

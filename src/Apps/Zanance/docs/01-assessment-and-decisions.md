@@ -4864,3 +4864,43 @@ artifacts/android-d254-delivery/pro.vafadar.zanance-Signed.apk, 83,278,384 bytes
 API24/36 and both embedded assembly stores were reverified after the callback fix. Final test-output
 cleanup completed successfully. Main encryption is still inactive; this is the final APK for this
 host-composition slice, not device/iOS/provider/retention/OS/release acceptance.
+
+### D-255 — Compose retained restore rollback and native preference replay
+
+SqlCipherRetainedRestore constructs an existing-record receiver from the captured stable identity,
+original namespace and latest restore reference. Before selection it verifies the actual prior
+selected ancestry, opens only its existing keyed ReadWrite/unpooled ciphertext, checks native version,
+full cipher authentication and SQLite integrity, and registers captured access for bounded rollback
+export. Missing/redirected prior storage, missing/wrong keys or foreign history refuse; no plaintext
+connection, history initialization or replacement-key preparation is a fallback. Owned key buffers
+are cleared. Already selected journals do not open the previous financial generation.
+
+ProtectedProfileStorage can compose this receiver with the actual settings store/persistence port,
+portable allowlist, real compiled-model migration and same-session restore adoption. Bootstrap now
+passes its actual DatabaseProfileIdentity as well as original path/owner, without synchronous metadata
+reads in the receiver builder. Explicit PrepareRestoreAsync requires a settled active session and
+its exact selected history endpoint before recording/synchronizing the new intent/journal. Missing
+package/capsule before staging remains a recovery UI/retry requirement, never inferred completion.
+RequireStable refuses a new request during tentative switching or failed publication.
+
+Resume checks recorded history before reading the preference capsule/key. Five added real metadata
+cases refuse invalid/unrecorded references before key effects. All 3481 solution tests pass with zero
+failures/skips (3m3.151s). Strict Windows 22.21s and Android 39.08s have zero warnings/errors. No schema,
+permission or visible layout changed; unchanged layout/producer matrices were not repeated.
+
+Two signed Release AOT Android x64/API36/4KiB scenarios use the actual composed application host,
+actual BackupService and Android keys/durability/preferences/persistence. One interrupts before prior
+key read/selection; the other after actual native preference persistence but before replay marking.
+Cold processes continue the same recorded generations with existing-only key ports, restore balance
+321, persist portable preferences once, retain a scoped device choice and make a completed startup
+callback idempotent. Each hot fixture prepared exactly two keys; neither cold process prepared one.
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-a348d8ec40184eaeba0b66a548f635b9.json,
+runs a3fe7db634254e1c98b205d9a75f9e76 and 04388ff64c29463c9e9f5b41d20a8e58.
+Final native build 72.83s is clean. This is real fault-port/cold-process evidence, not arbitrary
+power-loss, whole UI/provider or physical-device/iOS acceptance. Main registration stays plaintext;
+final native adoption/restore UI/recovery-key UI/retention/reconciliation/coupled OS policy remain open.
+
+D-255 signed delivery: artifacts/android-d255-delivery/pro.vafadar.zanance-Signed.apk, 83,737,306 bytes.
+Signature, pro.vafadar.zanance package, API24/36 and both complete assembly stores verified. Test outputs
+cleaned after all managed/native/build processes were terminal. Main still uses standard SQLite;
+this APK does not claim main encryption, phone/iOS/provider, full retention/OS or product release acceptance.

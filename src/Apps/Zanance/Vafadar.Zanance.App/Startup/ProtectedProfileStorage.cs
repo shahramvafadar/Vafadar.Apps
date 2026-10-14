@@ -1,6 +1,7 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Vafadar.Data;
+using Vafadar.Core.Settings;
 using Vafadar.Zanance.App.Profiles;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.CompiledModel;
@@ -19,6 +20,7 @@ public sealed class ProtectedProfileStorage
     private readonly IDatabaseGenerationFileDurability durability;
     private readonly Action validateDirectory;
     private readonly Func<string, ProfileRestoreReference, DatabaseAccessGate.ExclusiveLease, SqlCipherPackageRestoreReceiver> createReceiver;
+    private readonly Func<DatabaseProfileIdentity, string, ProfileRestoreReference, DatabaseAccessGate.ExclusiveLease, SqlCipherPackageRestoreReceiver>? createBoundReceiver;
     private readonly int maximumBytes;
     private readonly string cipherVersion;
 
@@ -43,6 +45,33 @@ public sealed class ProtectedProfileStorage
         Session = new(location, ResolveAsync, PrepareNewAsync);
     }
 
+    /// <summary>Composes recorded restore receivers with real settings persistence and this same publication session.</summary>
+    public ProtectedProfileStorage(LocalDatabaseLocation<ZananceDbContext> location, Func<ProfileService> profiles,
+        string identityPath, IDatabaseGenerationKeyStore keys, IDatabaseGenerationFileDurability durability,
+        Action validateDirectory, ISettingsStore settings, ISettingsPersistence persistence, IReadOnlyList<string> portableKeys,
+        int maximumBytes, string cipherVersion)
+        : this(location, profiles, identityPath, keys, durability, validateDirectory,
+            (_, _, _) => throw new InvalidOperationException("Recorded restore requires its captured stable identity."), maximumBytes, cipherVersion)
+    {
+        ArgumentNullException.ThrowIfNull(settings); ArgumentNullException.ThrowIfNull(persistence); ArgumentNullException.ThrowIfNull(portableKeys);
+        var allowlist = portableKeys.ToArray();
+        createBoundReceiver = (identity, original, reference, owner) =>
+        {
+            void Validate()
+            {
+                location.Access.RequireDrainedOwner(owner); validateDirectory();
+                var capture = profiles().CaptureStorage(); capture.Validate();
+                if (!capture.OriginalPaths.TryGetValue(identity.LegacyProfileId, out var path) || path != original)
+                    throw new InvalidOperationException("Restored profile differs from its captured original.");
+            }
+            var candidate = original + "." + reference.CandidateGeneration.ToString("N") + ".cipher.db";
+            var binding = new DatabaseKeyBinding(identity.ProfileId, identity.InstallationId, reference.CandidateGeneration);
+            return SqlCipherRetainedRestore.Create(identity, original, reference, keys, durability, settings, allowlist,
+                Validate, UpgradeAsync, ct => Session.AdoptRestoredAsync(original, candidate, binding, owner, ct),
+                persistence.PersistAsync, maximumBytes, cipherVersion);
+        };
+    }
+
     /// <summary>The single key owner shared by startup, switching and exact restored-generation adoption.</summary>
     public SqlCipherProfileSession<ZananceDbContext> Session { get; }
 
@@ -52,7 +81,33 @@ public sealed class ProtectedProfileStorage
     {
         return new ProtectedDatabaseStartup(location, profiles(), Session, identityPath, initialization, keys, durability,
             (_, _) => throw new InvalidOperationException("Protected restore requires the current drained startup owner."),
-            maximumBytes, cipherVersion, UpgradeAsync, retirement, creation, createReceiver);
+            maximumBytes, cipherVersion, UpgradeAsync, retirement, creation, createReceiver, createBoundReceiver);
+    }
+
+    /// <summary>Records an explicit active-profile restore before staging, retaining exact history and native synchronization.</summary>
+    public async Task<SqlCipherPackageRestoreReceiver> PrepareRestoreAsync(DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct = default)
+    {
+        Session.RequireStable(owner); validateDirectory();
+        if (createBoundReceiver is null) throw new InvalidOperationException("Protected package receiver is not composed.");
+        var capture = profiles().CaptureStorage(); capture.Validate();
+        var original = capture.CurrentOriginalPath;
+        var legacy = capture.OriginalPaths.Single(pair => pair.Value == original).Key;
+        void Check() { ct.ThrowIfCancellationRequested(); Session.RequireStable(owner); validateDirectory(); capture.Validate(); }
+        var identity = (await new SqliteDatabaseIdentityCatalogue(identityPath, Check).ReadAsync(ct).ConfigureAwait(false))
+            .Single(row => row.LegacyProfileId == legacy);
+        var historyPath = original + ".restore-history.sqlite";
+        var history = new SqliteProfileRestoreHistory(historyPath, identity.InitialCandidateKey, Check);
+        var latest = (await history.ReadAsync(ct).ConfigureAwait(false))[^1]; Check();
+        if (!latest.Selected || location.Path != original + "." + latest.CandidateGeneration.ToString("N") + ".cipher.db")
+            throw new InvalidOperationException("Active endpoint differs from the completed recorded generation.");
+        var next = new DatabaseGenerationCheckpoint(identity.ProfileId, latest.CandidateGeneration, Guid.NewGuid());
+        await history.ReserveAsync(next, ct).ConfigureAwait(false); Check();
+        await durability.SynchronizeFileAsync(historyPath, ct).ConfigureAwait(false);
+        var candidate = original + "." + next.CandidateGeneration.ToString("N") + ".cipher.db";
+        var journalPath = candidate + ".restore.sqlite";
+        await new SqliteDatabaseGenerationJournal(journalPath, next).CreateNewAsync(durability, ct).ConfigureAwait(false); Check();
+        var reference = (await history.ReadAsync(ct).ConfigureAwait(false))[^1]; Check();
+        return createBoundReceiver(identity, original, reference, owner);
     }
 
     /// <summary>Prepares only an explicitly requested new original without publishing or constructing plaintext contexts.</summary>
@@ -101,7 +156,7 @@ public sealed class ProtectedProfileStorage
         capture.Validate();
         var history = new SqliteProfileRestoreHistory(row.Value + ".restore-history.sqlite", identity.InitialCandidateKey, ValidateProfile);
         var generation = await SqlCipherProfileGeneration.OpenCurrentAsync(location, identities, row.Key, row.Value, history,
-            reference => createReceiver(row.Value, reference, owner), keys, durability, owner, ValidateProfile,
+            reference => createBoundReceiver is null ? createReceiver(row.Value, reference, owner) : createBoundReceiver(identity, row.Value, reference, owner), keys, durability, owner, ValidateProfile,
             maximumBytes, cipherVersion, ct).ConfigureAwait(false);
         try { capture.Validate(); return generation; }
         catch { generation.Dispose(); throw; }

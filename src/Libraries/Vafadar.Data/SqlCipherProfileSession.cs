@@ -158,6 +158,20 @@ public sealed class SqlCipherProfileSession<TContext>(LocalDatabaseLocation<TCon
         finally { operations.Release(); }
     }
 
+    /// <summary>Requires completed current publication before the host records another financial restore intent.</summary>
+    public void RequireStable(DatabaseAccessGate.ExclusiveLease owner)
+    {
+        if (!operations.Wait(0)) throw new InvalidOperationException("Protected session resolution is still running.");
+        try
+        {
+            location.Access.RequireDrainedOwner(owner);
+            if (pending is not null || failedStartupOriginal is not null)
+                throw new InvalidOperationException("Protected publication must finish before another restore intent.");
+            RequireCurrent();
+        }
+        finally { operations.Release(); }
+    }
+
     /// <summary>Closes the active owner only under drained maintenance; subsequent factory construction fails closed.</summary>
     public void Close(DatabaseAccessGate.ExclusiveLease owner)
     {

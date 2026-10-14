@@ -2124,3 +2124,9 @@ D-254 composes protected startup/current resolution/switching/new-profile prepar
 source, with one session and the actual reviewed durable Add request before identity/key work.
 Cold restore receivers receive the current startup owner. Final native registration, receiver,
 recovery UI, retention/reconciliation and coupled OS/platform acceptance remain open; main is plaintext.
+
+D-255 composes recorded restore receivers, actual prior-generation rollback access, native preference
+replay and settled-session intent capture. Five added metadata cases/all 3481 tests and two actual
+Android cold continuations pass. Main remains plaintext; final native registration/restore UI/recovery
+UI/retention/reconciliation/OS/device acceptance remain open. Pre-staging package/capsule loss is not
+covered by these prepared/selected continuations and must not be completed by guessed fallback.
