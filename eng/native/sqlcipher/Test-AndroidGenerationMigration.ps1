@@ -67,7 +67,7 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
     if ($LASTEXITCODE -ne 0) { throw 'Owned migration launch failed.' }
     $folder = 'files/native-compatibility/migration-proofs/' + $Identity
     $report = $null
-    $maximumAttempts = if ($Phase -in @('alias-loss-create','alias-loss-reopen','all-profile-recovery-create','all-profile-recovery-reopen','recovered-retirement-create','recovered-retirement-reopen','recovery-import','recovery-native','recovery-retirement-create','recovery-retirement-reopen','recovery-create','recovery-reopen','profile-creation-pending','profile-creation-resume','profile-retirement-create','profile-retirement-reopen','retirement-discovery-resume','retirement-discovery','retirement-negatives','retirement-create','retirement-reopen','fresh-startup-create','fresh-startup-reopen','fresh-startup-notification','restore-session','restore-session-reopen')) { 600 } elseif ($Barrier -in @('restore-selected','package-partial','identity-staged','metadata-staged','new-profile-key') -or $Phase -in @('profile-maintenance','bootstrap-intent','bootstrap-create','all-profiles-create','all-profiles-reopen','new-profile-create','new-profile-resume','new-profile-reopen','profile-create-flow','profile-create-cold','safety-create','safety-reopen','startup-create','startup-reopen','fresh-startup-create','fresh-startup-reopen')) { 300 } else { 100 }
+    $maximumAttempts = if ($Phase -in @('alias-loss-future','alias-loss-create','alias-loss-reopen','all-profile-recovery-create','all-profile-recovery-reopen','recovered-retirement-create','recovered-retirement-reopen','recovery-import','recovery-native','recovery-retirement-create','recovery-retirement-reopen','recovery-create','recovery-reopen','profile-creation-pending','profile-creation-resume','profile-retirement-create','profile-retirement-reopen','retirement-discovery-resume','retirement-discovery','retirement-negatives','retirement-create','retirement-reopen','fresh-startup-create','fresh-startup-reopen','fresh-startup-notification','restore-session','restore-session-reopen')) { 600 } elseif ($Barrier -in @('restore-selected','package-partial','identity-staged','metadata-staged','new-profile-key') -or $Phase -in @('profile-maintenance','bootstrap-intent','bootstrap-create','all-profiles-create','all-profiles-reopen','new-profile-create','new-profile-resume','new-profile-reopen','profile-create-flow','profile-create-cold','safety-create','safety-reopen','startup-create','startup-reopen','fresh-startup-create','fresh-startup-reopen')) { 300 } else { 100 }
     for ($attempt=0; $attempt -lt $maximumAttempts; $attempt++) {
         if ($Barrier -eq 'export') {
             $name = (& $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat ($folder + '/candidate-path.txt') | Out-String).Trim()
@@ -96,6 +96,11 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
         }
         Start-Sleep -Milliseconds 200
     }
+    if (-not $report -and -not $Barrier) {
+        # Re-read the same completion target at the observation boundary without restarting its process.
+        $finished = & $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat files/result.json 2>$null
+        if ($LASTEXITCODE -eq 0) { $report = ($finished | Out-String) | ConvertFrom-Json }
+    }
     if (-not $report -or $report.Failed) { throw 'Original migration phase failed or evidence expired; do not restart.' }
     if ($Barrier) {
         & $adb -P $AdbPort -s $DeviceSerial shell am force-stop $package
@@ -111,7 +116,9 @@ foreach ($scenario in $scenarios) {
         $created = Invoke-OwnedMigration 'alias-loss-create' $identity
         $reopened = Invoke-OwnedMigration 'alias-loss-reopen' $identity
         if (-not $created.NativeWrappingAliasRemoved -or -not $created.BothOriginalReadsRefused -or -not $created.OriginalEnvelopesRetained -or -not $reopened.NativeAliasLossRecovered -or -not $reopened.OriginalEnvelopeHashesPreserved -or -not $reopened.LostAliasNotRecreated -or -not $reopened.NoExtraProfiles -or $reopened.MainBalance -ne 250 -or $reopened.WorkBalance -ne 880) { throw 'Actual native wrapping alias loss recovery evidence missing.' }
-        $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; Created = $created; Reopened = $reopened }
+        $future = Invoke-OwnedMigration 'alias-loss-future' $identity
+        if (-not $future.FutureGenerationColdReopened -or -not $future.LostAliasNotRecreated -or -not $future.RecoveryPurposeConfusionRefused) { throw 'Future generation lifecycle evidence missing.' }
+        $proofs += [pscustomobject]@{ Scenario = $scenario; Run = $identity; Created = $created; Reopened = $reopened; Future = $future }
         continue
     }
     if ($scenario -eq 'all-profile-recovery') {

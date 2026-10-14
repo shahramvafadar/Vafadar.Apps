@@ -18,12 +18,11 @@ public sealed class AndroidGenerationKeyStore(string privateDirectory) : IDataba
         {
             var existing = store.ReadKey(binding); CryptographicOperations.ZeroMemory(existing); return;
         }
-        AndroidDatabaseKeyProtector.PrepareWrappingKey(binding.InstallationId);
         var key = RandomNumberGenerator.GetBytes(32);
         try
         {
             cancellationToken.ThrowIfCancellationRequested();
-            store.PublishNew(binding, AndroidDatabaseKeyProtector.Protect(key, binding));
+            store.PublishNew(binding, AndroidDatabaseKeyProtector.ProtectGeneration(key, binding));
             var reopened = store.ReadKey(binding);
             try { if (!CryptographicOperations.FixedTimeEquals(key, reopened)) throw new CryptographicException("Published generation key differs."); }
             finally { CryptographicOperations.ZeroMemory(reopened); }

@@ -229,6 +229,15 @@ internal static class ProfileCreationCompatibility
                     var installationId = captured[0].InstallationId;
                     if (captured.Any(row => row.InstallationId != installationId)) throw new IOException("Fixture installation differs.");
                     using var native = Java.Security.KeyStore.GetInstance("AndroidKeyStore")!; native.Load(null);
+                    // Exercise upgrade from actual legacy installation-bound envelopes, not only the new format.
+                    AndroidDatabaseKeyProtector.PrepareWrappingKey(installationId);
+                    foreach (var row in captured)
+                    {
+                        var existing = await keys.ReadAsync(row.InitialCandidateKey, default);
+                        try { await File.WriteAllBytesAsync(Path.Combine(folder, $"{row.ProfileId:N}-{row.CandidateGeneration:N}.key"), AndroidDatabaseKeyProtector.Protect(existing, row.InitialCandidateKey)); }
+                        finally { CryptographicOperations.ZeroMemory(existing); }
+                    }
+                    await durability.SynchronizeDirectoryAsync(default);
                     var alias = AndroidDatabaseKeyProtector.GetWrappingKeyAlias(installationId);
                     if (!native.ContainsAlias(alias)) throw new IOException("Fixture wrapping alias is missing before loss.");
                     native.DeleteEntry(alias);
@@ -261,6 +270,20 @@ internal static class ProfileCreationCompatibility
                 using var native = Java.Security.KeyStore.GetInstance("AndroidKeyStore")!; native.Load(null);
                 if (native.ContainsAlias(AndroidDatabaseKeyProtector.GetWrappingKeyAlias(rows[0].InstallationId)))
                     throw new IOException("Recovery silently recreated the lost installation alias.");
+                var future = new DatabaseKeyBinding(rows[0].ProfileId, rows[0].InstallationId, Guid.NewGuid());
+                await keys.PrepareAsync(future, default);
+                var futureKey = await keys.ReadAsync(future, default);
+                try
+                {
+                    await using var db = new SqliteConnection(new SqliteConnectionStringBuilder { DataSource = Path.Combine(folder, "future-fixture.cipher.db"), Password = Convert.ToBase64String(futureKey), Pooling = false }.ToString());
+                    await db.OpenAsync(); using var command = db.CreateCommand();
+                    command.CommandText = "CREATE TABLE packet(amount INTEGER); INSERT INTO packet VALUES(-9223372036854775808)";
+                    await command.ExecuteNonQueryAsync();
+                }
+                finally { CryptographicOperations.ZeroMemory(futureKey); }
+                await File.WriteAllTextAsync(Path.Combine(folder, "future-binding.txt"), string.Join("|", future.ProfileId.ToString("N"), future.InstallationId.ToString("N"), future.GenerationId.ToString("N")));
+                if (native.ContainsAlias(AndroidDatabaseKeyProtector.GetWrappingKeyAlias(rows[0].InstallationId)))
+                    throw new IOException("New generation recreated lost installation alias.");
                 return "{\"NativeAliasLossRecovered\":true,\"OriginalEnvelopeHashesPreserved\":true,\"LostAliasNotRecreated\":true,\"MainBalance\":250,\"WorkBalance\":880,\"NoExtraProfiles\":true}";
             }
             return "{\"AllProfileRecoveryVerifiedBeforeStartup\":true,\"ActualCoveredStartup\":true,\"MainBalance\":250,\"WorkBalance\":880,\"NoExtraProfiles\":true}";

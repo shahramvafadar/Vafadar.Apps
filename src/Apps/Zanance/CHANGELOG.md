@@ -1527,3 +1527,10 @@ Prepared one verified initialization path for all existing local profiles before
 
 - Prepared recovery of every original local profile before startup, checking all keys before native
   storage writes and preserving names/selections. Product recovery UI/main encryption remain disabled.
+
+D-244: new Android generation keys use independently wrapped purpose-0 envelopes instead of
+recreating an installation alias. Legacy reads and receipt-bound recovery remain distinct. Actual
+native alias-loss recovery plus a later cold generation read passed; the third observation expired
+before the same process's successful result was read without restart. All 3456 tests passed; see
+D-244/device-key guide for exact negative and positive evidence. Final protection/adoption and
+reference-aware alias retention remain open; main registration remains plaintext.

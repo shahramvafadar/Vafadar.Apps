@@ -61,16 +61,19 @@ public sealed partial class AndroidDatabaseKeyEnvelopeStore
         using (input)
         using (descriptor)
         {
-            var envelope = new byte[recovered ? 82 : 65];
+            var envelope = new byte[82];
             var offset = 0;
             while (offset < envelope.Length)
             {
                 var count = input.Read(envelope, offset, envelope.Length - offset);
-                if (count <= 0) throw new CryptographicException("Stored key envelope is truncated.");
+                if (count <= 0) break;
                 offset += count;
             }
             if (input.Read() != -1) throw new CryptographicException("Stored key envelope is oversized.");
-            return recovered ? AndroidDatabaseKeyProtector.UnprotectRecovered(envelope, binding) : AndroidDatabaseKeyProtector.Unprotect(envelope, binding);
+            // Ordinary immutable entries can be legacy installation-bound or independent generation-bound.
+            // Recovery entries retain a distinct authenticated purpose and their required native receipt.
+            return recovered ? AndroidDatabaseKeyProtector.UnprotectRecovered(envelope.AsSpan(0, offset), binding)
+                : AndroidDatabaseKeyProtector.Unprotect(envelope.AsSpan(0, offset), binding);
         }
     }
 

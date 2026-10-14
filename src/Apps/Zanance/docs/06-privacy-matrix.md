@@ -674,3 +674,10 @@ clears them on all exits and disposes private material. Actual original catalogu
 facts are rechecked without portable preference writes or new profiles. Explicit user/device
 authorization and full native reference verification remain final host duties. No secret logging,
 new SDK/permission or interim OS exclusion is added.
+
+D-244: new Android generation keys use independently wrapped purpose-0 envelopes instead of
+recreating an installation alias. Legacy reads and receipt-bound recovery remain distinct. Actual
+native alias-loss recovery plus a later cold generation read passed; the third observation expired
+before the same process's successful result was read without restart. All 3456 tests passed; see
+D-244/device-key guide for exact negative and positive evidence. Final protection/adoption and
+reference-aware alias retention remain open; main registration remains plaintext.

@@ -58,6 +58,13 @@ public static class AndroidDatabaseKeyProtector
 
     /// <summary>Explicitly protects a verified recovered key under a fresh non-exportable alias, retaining old unavailable aliases.</summary>
     public static byte[] ProtectRecovered(ReadOnlySpan<byte> key, DatabaseKeyBinding binding)
+        => ProtectIndependent(key, binding, purpose: 1);
+
+    /// <summary>Protects a new generation through its own immutable non-exportable alias, without recreating a lost installation alias.</summary>
+    public static byte[] ProtectGeneration(ReadOnlySpan<byte> key, DatabaseKeyBinding binding)
+        => ProtectIndependent(key, binding, purpose: 0);
+
+    private static byte[] ProtectIndependent(ReadOnlySpan<byte> key, DatabaseKeyBinding binding, byte purpose)
     {
         ArgumentNullException.ThrowIfNull(binding);
         if (key.Length != 32) throw new CryptographicException("Recovery requires the exact 256-bit key.");
@@ -65,7 +72,7 @@ public static class AndroidDatabaseKeyProtector
         using var store = OpenStore(); using var wrappingKey = RequireKey(store, wrapping);
         using var cipher = Cipher.GetInstance("AES/GCM/NoPadding")!;
         cipher.Init(Javax.Crypto.CipherMode.EncryptMode, wrappingKey);
-        var header = new byte[22]; "ZKEY"u8.CopyTo(header); header[4] = 2; header[5] = 1;
+        var header = new byte[22]; "ZKEY"u8.CopyTo(header); header[4] = 2; header[5] = purpose;
         wrapping.TryWriteBytes(header.AsSpan(6, 16), bigEndian: true, out _);
         cipher.UpdateAAD([.. binding.GetAuthenticatedContext(), .. header]);
         var owned = key.ToArray();
@@ -80,9 +87,12 @@ public static class AndroidDatabaseKeyProtector
 
     /// <summary>Authenticates an explicit recovered entry through its captured fresh alias, never the old installation alias.</summary>
     public static byte[] UnprotectRecovered(ReadOnlySpan<byte> envelope, DatabaseKeyBinding binding)
+        => UnprotectIndependent(envelope, binding, purpose: 1);
+
+    private static byte[] UnprotectIndependent(ReadOnlySpan<byte> envelope, DatabaseKeyBinding binding, byte purpose)
     {
         ArgumentNullException.ThrowIfNull(binding);
-        if (envelope.Length != 82 || !envelope[..4].SequenceEqual("ZKEY"u8) || envelope[4] != 2 || envelope[5] != 1)
+        if (envelope.Length != 82 || !envelope[..4].SequenceEqual("ZKEY"u8) || envelope[4] != 2 || envelope[5] != purpose)
             throw new CryptographicException("Unsupported recovery envelope.");
         var wrapping = new Guid(envelope.Slice(6, 16), bigEndian: true);
         if (wrapping == Guid.Empty) throw new CryptographicException("Recovery wrapping identity is missing.");
@@ -102,6 +112,9 @@ public static class AndroidDatabaseKeyProtector
     public static byte[] Unprotect(ReadOnlySpan<byte> envelope, DatabaseKeyBinding binding)
     {
         ArgumentNullException.ThrowIfNull(binding);
+        if (envelope.Length == 82) return UnprotectIndependent(envelope, binding, purpose: 0);
+        // Existing installation-bound version 1 entries remain readable. Neither format creates aliases.
+
         if (envelope.Length != EnvelopeLength || !envelope[..4].SequenceEqual("ZKEY"u8) || envelope[4] != 1)
             throw new CryptographicException("Unsupported platform key envelope.");
         using var store = OpenStore();

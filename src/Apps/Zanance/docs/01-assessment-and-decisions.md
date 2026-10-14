@@ -4440,3 +4440,38 @@ suites, main builds, UI matrices and native producer suites were not repeated. T
 D-242 delivery APK remains the current product package; main storage remains plaintext. Final
 recovery/authentication UI, complete retained-reference verification, lifecycle/retention, coupled
 OS backup exclusion and platform/provider/release acceptance remain open.
+
+### D-244 — Independent Android wrapping aliases for new generations
+
+New native generation preparation no longer recreates the installation wrapping alias. Every new
+DEK is wrapped by a fresh non-exportable Android Keystore AES-256-GCM alias. The existing version-2
+header authenticates purpose 0 for ordinary generations and purpose 1 for explicit receipt-bound
+recovery, along with the complete profile/installation/generation context. Reads accept immutable
+legacy version-1 entries and new purpose-0 entries; recovered reads still require purpose 1 and their
+native receipt. Ordinary and recovered entries cannot substitute for one another. Bounded native
+reads accept only exact authenticated formats up to 82 bytes, not a truncated legacy packet.
+
+The independent caller deliberately prepares legacy installation-bound envelopes for both fictitious
+profiles, removes their actual installation alias, verifies refused original reads, recovers through
+the actual application/native startup, then creates a new independent generation without recreating
+the old alias. A third cold process reads that generation using existing native storage only and
+reopens a SQLCipher packet containing Int64.MinValue; recovery-purpose confusion is refused.
+This is lifecycle creation/reopen evidence, not final reference-aware alias retirement or hardware acceptance.
+
+The initial fixture compile exposed local-name collisions; final strict native Release AOT/trim build
+passed with zero warnings/errors (64.51s). The first runtime observation of the third process expired.
+The same process subsequently returned successful completion, read without restart or regeneration:
+artifacts/native-sqlcipher/d244-same-process-future-proof.json. Negative observation evidence remains
+in d244-alias-runtime.log. Earlier phases passed the runner's actual assertions before its third
+launch; no synthesized Created/Reopened report is supplied. The runner now makes one final read of
+the same completion target before a non-barrier deadline failure; it never restarts to hide expiry.
+Script parsing passed. All 3456 solution tests passed, zero failures/skips (2m53.266s).
+
+Main protection registration remains inactive. No UI/schema/account/portable-password/permission
+change. Complete retained-reference validation, recovery/authentication UI, malformed staging,
+reference-aware key/alias retention, final provider/OS adoption and physical platform/iOS/provider
+acceptance remain open. Unchanged UI and upstream native producer suites were not repeated.
+
+D-244 strict main builds passed with zero warnings/errors: Windows 17.10s and Android 38.62s.
+
+D-244 complete signed Release APK: artifacts/android-d244-delivery/pro.vafadar.zanance-Signed.apk, 83,696,346 bytes. Signature, pro.vafadar.zanance package, API 24/36, arm64-v8a/x86_64 and both embedded assembly stores verified. Solution test outputs cleaned successfully after terminal checks. Local test signing is not phone/iOS/store acceptance; main protection registration stays inactive.

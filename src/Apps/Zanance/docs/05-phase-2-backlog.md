@@ -1609,3 +1609,10 @@ no alias recreation and balances 250/880. Strict native Release build is clean; 
 log and device-key guide for exact runtime proof. Product code/APK remain D-242/plaintext. Future
 alias lifecycle, retained-reference validation, final recovery UI/adoption/OS and device/iOS gates
 remain open; no unrelated test/build/UI suite was repeated.
+
+D-244: new Android generation keys use independently wrapped purpose-0 envelopes instead of
+recreating an installation alias. Legacy reads and receipt-bound recovery remain distinct. Actual
+native alias-loss recovery plus a later cold generation read passed; the third observation expired
+before the same process's successful result was read without restart. All 3456 tests passed; see
+D-244/device-key guide for exact negative and positive evidence. Final protection/adoption and
+reference-aware alias retention remain open; main registration remains plaintext.

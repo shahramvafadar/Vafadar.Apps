@@ -17,6 +17,28 @@ internal static class GenerationMigrationCompatibility
     /// <summary>Creates a real original model or resumes/interrupts its captured native migration.</summary>
     internal static async Task<string> RunAsync(string folder, string phase)
     {
+        if (phase == "alias-loss-future")
+        {
+            SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
+            var ids = (await File.ReadAllTextAsync(Path.Combine(folder, "future-binding.txt"))).Split('|');
+            var futureBinding = new DatabaseKeyBinding(Guid.ParseExact(ids[0], "N"), Guid.ParseExact(ids[1], "N"), Guid.ParseExact(ids[2], "N"));
+            var futureKey = await new AndroidGenerationKeyStore(folder).ReadAsync(futureBinding, default);
+            try
+            {
+                await using var db = new SqliteConnection(new SqliteConnectionStringBuilder { DataSource = Path.Combine(folder, "future-fixture.cipher.db"), Password = Convert.ToBase64String(futureKey), Pooling = false, Mode = SqliteOpenMode.ReadOnly }.ToString());
+                await db.OpenAsync(); using var command = db.CreateCommand(); command.CommandText = "SELECT amount FROM packet";
+                if ((long)(await command.ExecuteScalarAsync())! != long.MinValue) throw new IOException("Cold future generation data differs.");
+                using var native = Java.Security.KeyStore.GetInstance("AndroidKeyStore")!; native.Load(null);
+                if (native.ContainsAlias(AndroidDatabaseKeyProtector.GetWrappingKeyAlias(futureBinding.InstallationId))) throw new IOException("Cold future read recreated lost alias.");
+                var envelope = await File.ReadAllBytesAsync(Path.Combine(folder, $"{futureBinding.ProfileId:N}-{futureBinding.GenerationId:N}.key"));
+                var refused = false;
+                try { var wrong = AndroidDatabaseKeyProtector.UnprotectRecovered(envelope, futureBinding); CryptographicOperations.ZeroMemory(wrong); }
+                catch (CryptographicException) { refused = true; }
+                if (!refused) throw new IOException("New generation was accepted as receipt-bound recovery.");
+                return "{\"FutureGenerationColdReopened\":true,\"LostAliasNotRecreated\":true,\"RecoveryPurposeConfusionRefused\":true}";
+            }
+            finally { CryptographicOperations.ZeroMemory(futureKey); }
+        }
         if (phase is "alias-loss-create" or "alias-loss-reopen")
         {
             SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
