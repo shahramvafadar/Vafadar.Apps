@@ -4693,3 +4693,30 @@ permission/UI change; main registration remains plaintext. Unchanged UI/producer
 D-250 strict main builds have zero warnings/errors: Windows 17.78s and Android 91.82s.
 
 D-250 complete signed Release APK: artifacts/android-d250-delivery/pro.vafadar.zanance-Signed.apk, 83,266,096 bytes. Signature, pro.vafadar.zanance package, API 24/36, arm64-v8a/x86_64 and both complete embedded assembly stores verified. Test outputs cleaned after terminal checks. Local signing is not phone/iOS/store acceptance; main protection remains inactive.
+
+### D-251 — Let persistence hosts select their native SQLite engine
+
+Shared Vafadar.Data now references Microsoft.EntityFrameworkCore.Sqlite.Core instead of the package
+that transitively selects a default native engine. The current standard SQLite bundle is explicit in
+the Zanance app and the ordinary isolated test host. The Data project's design-time bundle has
+PrivateAssets=all, so EF context tooling still runs without leaking its engine into application hosts.
+The existing resolved bundle version 2.1.12 is pinned centrally; this is dependency ownership
+separation, not an upgrade, new cipher bundle or approval of candidate/native production adoption.
+
+Actual restored dependency graphs show only SQLitePCLRaw.core in shared Data. The app's referenced
+Zanance.Data node depends only on Vafadar.Data/Core, not the design-time native bundle. The current
+app explicitly retains its original standard engine. This makes final reviewed source-built provider
+selection possible at the app boundary instead of importing two default/native choices from shared
+persistence. Managed bridge/core compatibility still needs qualification when final cipher adoption
+changes the host's packages; isolated source-compilation evidence is not that library binary proof.
+
+All 3467 solution tests pass, zero failures/skips (2m48.982s), including actual isolated SQLite flows.
+Actual dotnet ef dbcontext info with the Data project as startup succeeds without MAUI; it reports
+the original context/provider and design-time datasource, without schema update or model generation.
+Windows/Android strict main builds pass, zero warnings/errors (27.46s/60.67s). Dependency graph,
+EF execution and test evidence are retained under artifacts/native-sqlcipher/d251-*.
+No schema/model, UI, financial behavior, permission or key lifecycle change. Unchanged native producer
+and layout matrices were not repeated. Main still uses standard plaintext SQLite; final host/recovery/
+retention/OS adoption and native/platform/provider/device gates remain open.
+
+D-251 complete signed Release APK: artifacts/android-d251-delivery/pro.vafadar.zanance-Signed.apk, 83,692,250 bytes. Signature, pro.vafadar.zanance package, API 24/36 and both complete arm64-v8a/x86_64 assembly stores verified. Both embedded standard libe_sqlite3.so hashes equal D-250 exactly. Test outputs cleaned after terminal checks. No UI change/layout replay or native candidate adoption; local signing is not phone/iOS/store acceptance.

@@ -2676,3 +2676,9 @@ authority, oversized/unknown names and key-envelope staging remain refused. Thre
 Windows cases, all 3467 tests and cold original Android profile retirement pass; main balance/recovery
 remain. This closes receipt-only profile cleanup; automatic retention/orphan/key-stage/final adoption
 and external gates remain open. Main stays plaintext.
+
+D-251 removes implicit native-engine selection from shared persistence. The app/test hosts explicitly
+retain the existing standard bundle; the design-time bundle is private and cannot flow to app hosts.
+Actual dependency graphs, real EF context tooling, all 3467 tests and strict Windows/Android builds
+pass. This is a final-provider integration prerequisite; current main engine/storage remain unchanged
+and cipher host/library compatibility, recovery/retention/OS/platform adoption are still unfinished.

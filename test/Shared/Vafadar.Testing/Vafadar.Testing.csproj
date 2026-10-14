@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Ordinary isolated SQLite tests explicitly own their standard native provider. -->
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" />
     <ProjectReference Include="..\..\..\src\Libraries\Vafadar.Authentication\Vafadar.Authentication.csproj" />
     <ProjectReference Include="..\..\..\src\Libraries\Vafadar.Data\Vafadar.Data.csproj" />
   </ItemGroup>

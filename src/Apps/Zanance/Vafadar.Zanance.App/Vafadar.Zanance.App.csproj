@@ -59,6 +59,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Explicit existing engine until reviewed native cipher host adoption; never chosen by shared Data. -->
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
     <PackageReference Include="Syncfusion.Maui.Charts" />
     <PackageReference Include="Syncfusion.Maui.Inputs" />

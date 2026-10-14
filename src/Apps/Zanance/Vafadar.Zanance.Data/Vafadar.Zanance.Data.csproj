@@ -13,6 +13,8 @@
   <ItemGroup>
     <!-- Design-time only (dotnet ef migrations ...); not shipped with the app. -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" PrivateAssets="all" />
+    <!-- Native design-time context execution only; this bundle must never flow to application hosts. -->
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>

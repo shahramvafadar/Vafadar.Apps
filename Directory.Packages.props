@@ -46,8 +46,8 @@
     <PackageVersion Include="Syncfusion.Maui.ProgressBar" Version="35.1.37" />
   </ItemGroup>
 
-  <!-- Used only by the isolated SEC-01 experiment, never by an application. -->
-  <ItemGroup Label="Encryption feasibility">
+  <!-- Managed core packages are shared; native cipher candidate/proof packages remain isolated until adoption. -->
+  <ItemGroup Label="SQLite infrastructure and encryption evaluation">
     <PackageVersion Include="Microsoft.Data.Sqlite.Core" Version="10.0.12" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="10.0.12" />
     <PackageVersion Include="SQLitePCLRaw.bundle_e_sqlcipher" Version="2.1.11" />
@@ -58,6 +58,8 @@
 
   <ItemGroup Label="Data">
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.12" />
+    <!-- Preserve the currently restored standard engine in explicit non-cipher hosts. -->
+    <PackageVersion Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.12" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.12" />
   </ItemGroup>
 

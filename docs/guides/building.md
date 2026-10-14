@@ -752,3 +752,9 @@ real controls with fictitious preparation outcomes, invokes the native retry tar
 stored table rows. Run-Snapshots.ps1 -UseExistingBuild reuses only a caller-owned verified Windows
 Debug executable for distinct layout cases; default behavior still builds and fails on build errors.
 Callers must not infer success from a stale LASTEXITCODE when no native build command was run.
+
+D-251 removes implicit native-engine selection from shared persistence. The app/test hosts explicitly
+retain the existing standard bundle; the design-time bundle is private and cannot flow to app hosts.
+Actual dependency graphs, real EF context tooling, all 3467 tests and strict Windows/Android builds
+pass. This is a final-provider integration prerequisite; current main engine/storage remain unchanged
+and cipher host/library compatibility, recovery/retention/OS/platform adoption are still unfinished.
