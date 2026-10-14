@@ -1959,3 +1959,15 @@ never reconstruct a missing capture after publication. Recheck current, archived
 references before deleting only the captured objects. Final Android OS backup/transfer exclusions are
 coupled to this protected runtime; new devices use Zanance backups. Preserve the distinctions between
 native process-loss evidence, physical power loss, device/OS/OEM/iOS acceptance and product publication.
+
+
+### Approved local backend and market scope (D-271)
+
+The owner approved complete local ASP.NET Core/PostgreSQL/private-storage backend development
+without hosting cost on 2026-10-14. Deliver its complete identity/authorization/operations/restore
+batch before final checks; paid hosting, provider accounts, mail sender and publication remain
+separate gates. Use independent repository-owned local resources, never another project's data.
+
+LOC-07/08 target Germany and other Western European countries, USA, Canada and Australia, with
+extensible countries independent of UI language and official jurisdiction/year sources. Iran and
+its holidays belong to a later separate variant. These decisions do not claim implementation.

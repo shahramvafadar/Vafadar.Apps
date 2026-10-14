@@ -1440,3 +1440,35 @@ Mac/Xcode/signing. Other approved ready canonical work continues afterward. Phys
 Store gates remain owner/external acceptance. Hosted CI is checked once for the final pushed commit;
 no green local check accepts physical power loss, full crash points, real devices or publication.
 The full continuous-development objective stays open.
+
+
+## Next complete delivery: approved local backend (D-271)
+
+Deliver ZCR-ID-01 as one end-to-end batch, then check and commit its final state. Implement the
+server in Zanance's own API project with its own PostgreSQL schema, independent of local financial
+SQLite/profile storage. Keep maintained ASP.NET Core identity infrastructure and explicit server
+ownership. Do not expose financial sync/sharing or billing routes under this foundation approval.
+
+1. Establish current supported authentication/database packages, threat boundaries and a separate
+   local deployment. Reuse an already installed PostgreSQL image in a new repository-owned
+   container/volume; never reuse another project's database, credentials or buckets. Additional
+   non-build downloads require approval under AGENTS.md. No paid hosting or actual mail sender.
+2. Complete identity verification/recovery, bounded device sessions, revocation, server ownership,
+   transactional one-use challenges and durable abuse limits. A fake client identifier is not an
+   ownership proof. Local fictional mail capture must be isolated from production configuration.
+3. Complete private object authorization and durable storage plus repeatable database migrations,
+   persisted protection keys, background outbox/leases, health/readiness and graceful shutdown.
+   No public object URLs or request-body/token/financial logging. Document operational limits.
+4. Check the whole delivered service against real isolated PostgreSQL: concurrent replay, expiry,
+   recovery, revocation, cross-user denial, invalid inputs and storage failures. Perform a real
+   backup/restore to a distinct fictional database/object destination, compare relationships and
+   object bytes, and measure restoration. Do not substitute mocked storage for this acceptance.
+5. Update architecture/privacy/runbooks and backlog, build server/tests strictly, clean their owned
+   output and push. Mobile UI/build/APK checks are needed only if this batch actually changes the
+   mobile app; unchanged D-268 evidence is retained. Hosted/device/store acceptance stays separate.
+
+The following regional batch implements LOC-07/08 for Germany, the other Western European markets,
+USA, Canada and Australia. Define an explicit country list and official jurisdiction/year sources;
+keep federal, provincial/state and national holidays distinct, bound supported years and show
+uncertain/unavailable data truthfully. Use an extensible country catalogue separate from language.
+Iran is a later separate variant, not implicitly enabled in this batch. New languages remain last.

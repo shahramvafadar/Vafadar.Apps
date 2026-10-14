@@ -5267,3 +5267,17 @@ open. This tooling delivery does not imply hosted Windows acceptance or device/i
 acceptance. App code, the 3,526-test baseline and signed APK remain D-268; unrelated checks were
 not repeated. Evidence: eng/native/sqlcipher/Test-WindowsToolchain.ps1 and
 artifacts/native-sqlcipher/build/windows-storage-d260-ec/atomic-width-51c7a432ac70474da3e3206c04cd5e5a/proof.json.
+
+
+## D-271 approved local backend and extensible target markets
+
+The owner selected complete local ASP.NET Core/PostgreSQL/private-storage development without
+hosting cost. Implement the whole ZCR-ID-01 boundary before final service checks, including actual
+isolated restore. Hosting/provider/mail/production spending remain separate gates. No server,
+account, purchased resource or deployment was created by this decision record.
+
+Germany and other Western European countries, USA, Canada and Australia are approved currency and
+holiday markets. Research an explicit country/jurisdiction/year catalogue with official sources;
+country choice stays independent from language and supports future additions. A separate later
+Iran variant will include Iranian holidays. Implementation and runtime acceptance remain open.
+The complete batch sequence is in enhancements/2026-10-commercial-release/05-delivery-plan.md.

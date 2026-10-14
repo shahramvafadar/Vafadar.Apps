@@ -128,3 +128,11 @@ reliably extracted, so account-level availability remains explicit. No benchmark
 security, service deployment or legal acceptance is inferred from this cost calculation.
 The application, 3,526-test result, native evidence and complete signed APK remain D-268;
 unrelated app builds/tests/native suites were not repeated for this documentation-only proposal.
+
+
+## Local path selected on 2026-10-14 (D-271)
+
+The owner approved complete local implementation with ASP.NET Core, PostgreSQL and private
+storage, with no hosting expense. The hosted scenarios above remain proposals only. Local
+service acceptance requires the complete identity, authorization, operations and actual restore
+boundary above; selecting this path does not mean any backend already exists.

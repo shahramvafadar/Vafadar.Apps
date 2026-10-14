@@ -6,7 +6,7 @@ as design values, languages last) are not asked again.
 | Id | Question | Proposal | Needed before |
 |---|---|---|---|
 | OD-01 | Tax: first country, tax year, user type, scope level | Germany, the current tax year, employees and freelancers (income-surplus calculation); level 1 (accountant export) in Plus first, level 2 after review by a German tax expert; no filing (level 3) in the first scope | ZCR-TAX-01 |
-| OD-02 | Hosting and backend for identity/sync/sharing; monthly budget | One modular ASP.NET Core service in an EU region with managed PostgreSQL and object storage; cost estimate for low/typical/high use before choosing a provider | ZCR-ID-01 |
+| OD-02 hosted gate | Local backend approved (D-271); hosted provider/region/monthly budget remain unchosen | No paid hosting, account creation or deployment until separately approved | Hosted ZCR-ID-01 |
 | OD-05 | After a Pro owner's subscription ends: grace period, read-only, server retention | 30 days read-only for all members with export, then 90 days retention before deletion, announced before sale | ZCR-SHR-03 |
 | OD-06 | Trial flow | Store introductory free trial of 14 days on Pro (auto-renews, store-enforced eligibility) | ZCR-BIL-04 |
 | OD-07 | Lifetime owners' 25 % on Pro: duration and stores | First year of Pro yearly at 25 % off via a store offer for verified Lifetime owners; renewal at the standard price; not combinable | ZCR-BIL-04 |
@@ -53,3 +53,15 @@ no temporary exclusion is introduced before final integration. Do not ask these 
 ## OD-02 costed proposal (2026-10-14, D-269)
 
 [The decision-ready model](07-backend-cost-and-decision.md) separates local implementation at no provider cost, a single-node test pilot (~$66.18/month with reserve), and managed HA (~$456.18/month with reserve). Growth scenario: ~$897.49/month. USD estimates exclude taxes/exchange/labor; ceilings are planning envelopes, not vendor caps. The 2026-10-15 Standard PostgreSQL standby restriction is included. Provider/region/test budget are still owner decisions; no resource/account was created and no spending authorized. ZCR-ID-01 remains open until actual implementation and restore qualification.
+
+
+## Owner approvals on 2026-10-14 (D-271)
+
+OD-02: implement the complete local modular ASP.NET Core backend with PostgreSQL and private
+storage, without hosting cost. This settles local implementation authority, not paid provider,
+mail sender, deployment, purchases, sync/sharing policy or production release.
+
+LOC-07/08: Germany and other Western European countries, the United States, Canada and Australia
+are the approved markets. Iran belongs to a later separate variant with Iranian holidays.
+Countries must remain extensible and independent of UI language. Exact holiday jurisdictions,
+official sources and validity years are implementation research, not completed acceptance.

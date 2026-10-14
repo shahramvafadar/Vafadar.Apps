@@ -31,8 +31,8 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-04 | Aggregated entries: import overlap handling (ZEX-S0611) | 2 | P2 | M | Done (local/emulator, D-72; phone/iOS acceptance open) | – |
 | ZCR-LOC-05 | "Not a tax calculation" help on sale results (ZEX-S0404) | 2 | P3 | S | Done (D-268 original sale help, six-language copy and store drafts locally verified; publication/device gates remain) | D-69 continuous delivery |
 | ZCR-LOC-06 | Recurring payments easier to find (repeat option in the entry form or a clearer entry point) | 2 | P2 | S | Done (local/native, D-111; phone/iOS acceptance open) | – |
-| ZCR-LOC-07 | Currencies of the target markets (ISO list, minor digits) | 2/8 | P3 | S | Proposed | target markets |
-| ZCR-LOC-08 | More holiday regions with source, validity years and "uncertain" state | 8 | P3 | M | Proposed | target markets |
+| ZCR-LOC-07 | Currencies of the target markets (ISO list, minor digits) | 2/8 | P3 | S | Approved targets (D-271); implementation remains | official currency sources |
+| ZCR-LOC-08 | More holiday regions with source, validity years and "uncertain" state | 8 | P3 | M | Approved targets (D-271); implementation remains | official jurisdiction/year sources |
 | ZCR-LOC-09 | Automatic local backup (interval exists, not wired) | 2 | P2 | S | Proposed | SEC-08 |
 | ZCR-LOC-13 | Owner-approved plan and debt UX (D-65) | Maintenance | P1 | M | Done (local; AT-72 device gate remains) | owner approval 2026-10-08 |
 | ZCR-LOC-15 | Independent saved filters after report navigation (D-109 / AT-114) | Maintenance | P1 | S | Done (local/native, D-109; device/iOS acceptance remains open) | D-69 ready-defect delivery |
@@ -62,7 +62,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-BIL-03 | Secure entitlement cache, offline window, clock changes | 6 | P1 | M | Proposed | BIL-02 |
 | ZCR-BIL-04 | Plus Lifetime, Lifetime-owner Pro discount, campaigns, trial | 6 | P1 | M | Proposed | BIL-02, OD-06, OD-07 |
 | ZCR-BIL-05 | Sandbox test matrix; production activation (owner only) | 6 | P1 | M | Proposed | BIL-01..04 |
-| ZCR-ID-01 | Optional identity, backend foundation, operations | 3 | P1 | L | Proposed (D-269 costed local/pilot/HA delivery plan; OD-02 decision and implementation remain) | OD-02 |
+| ZCR-ID-01 | Optional identity, backend foundation, operations | 3 | P1 | L | Approved local implementation (D-271 ASP.NET Core/PostgreSQL/private storage; implementation and restore drill remain) | OD-02 |
 | ZCR-SYNC-01 | Change log, outbox, versions, tombstones | 4 | P1 | L | Proposed | ID-01 |
 | ZCR-SYNC-02 | Conflicts, idempotent posting, restore into a synced profile | 4 | P1 | L | Proposed | SYNC-01 |
 | ZCR-SYNC-03 | Sync status UI and device management | 4 | P2 | M | Proposed | SYNC-01 |
