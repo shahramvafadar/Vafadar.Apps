@@ -7,6 +7,7 @@ param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'android-
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeFactoryRun = '',
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeBootstrapRun = '',
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeFreshStartupRun = '',
+    [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeRestoredSessionRun = '',
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeDiscoveryRun = '',
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeRecoveryRun = '',
     [ValidatePattern('^[0-9a-f]{32}$')][string]$ResumeRestoreChainRun = '')
@@ -18,6 +19,7 @@ if ($RetirementNegativeChecks -and -not $RetirementFiles) { throw 'Negative reti
 if ($ResumeRestoreSelectionRun -and -not $RestoreSelection) { throw 'Recorded selection resume requires the restore-selection mode.' }
 if ($ResumeFactoryRun -and (-not $Factory -or $ResumeRestoreSelectionRun)) { throw 'Recorded factory continuation requires only the factory mode.' }
 if ($ResumeBootstrapRun -and (-not $InitialBootstrap -or $ResumeFactoryRun -or $ResumeRestoreSelectionRun)) { throw 'Recorded bootstrap continuation requires only initial-bootstrap mode.' }
+if ($ResumeRestoredSessionRun -and (-not $FreshStartup -or -not $RestoreSession)) { throw 'Recorded restored session requires fresh-startup/restore-session mode.' }
 if ($ResumeFreshStartupRun -and -not $FreshStartup) { throw 'Recorded fresh startup requires fresh-startup mode.' }
 if ($StartupNotification -and -not $FreshStartup) { throw 'Startup notification check requires fresh-startup mode.' }
 if ($RestoreSession -and -not $FreshStartup) { throw 'Restore-session check requires fresh-startup mode.' }
@@ -113,7 +115,7 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
 $proofs = @()
 $scenarios = if ($RecoveryRestoreChain) { @('recovery-restore-chain') } elseif ($PendingRecoveryReferences) { @('pending-recovery-references') } elseif ($WrappingKeyLoss) { @('alias-loss') } elseif ($AllProfileRecovery) { @('all-profile-recovery') } elseif ($RecoveredKeyRetirement) { @('recovered-key-retirement') } elseif ($KeyReEnrollment) { @('key-re-enrollment') } elseif ($RecoveryRetirement) { @('recovery-retirement') } elseif ($KeyRecovery) { @('key-recovery') } elseif ($CreationContinuation) { @('creation-continuation') } elseif ($ApplicationRetirement) { @('application-retirement') } elseif ($RetirementDiscovery) { @('retirement-discovery') } elseif ($RetirementFiles) { @('retirement-files') } elseif ($FreshStartup) { @('fresh-startup') } elseif ($ProtectedStartup) { @('protected-startup') } elseif ($SafetyCopies) { @('safety-copies') } elseif ($ProfileCreation) { @('profile-creation') } elseif ($NewProfile) { @('new-profile') } elseif ($AllProfiles) { @('all-profiles') } elseif ($MetadataPublication) { @('metadata-publication') } elseif ($SettingsPersistence) { @('settings-persistence') } elseif ($InitialBootstrap) { @('initial-bootstrap') } elseif ($IdentityCatalogue) { @('identity-catalogue') } elseif ($ProfileMaintenance) { @('profile-maintenance') } elseif ($PackageRestore) { @('package-restore') } elseif ($RestoreSelection) { @('restore-selection') } elseif ($Restore) { @('restore-staging') } elseif ($Factory) { @('factory-layer') } else { @('interrupted-export','selected-restart','missing-selected-key') }
 foreach ($scenario in $scenarios) {
-    $identity = if ($ResumeRestoreChainRun) { $ResumeRestoreChainRun } elseif ($ResumeRecoveryRun) { $ResumeRecoveryRun } elseif ($ResumeDiscoveryRun) { $ResumeDiscoveryRun } elseif ($ResumeFreshStartupRun) { $ResumeFreshStartupRun } elseif ($ResumeBootstrapRun) { $ResumeBootstrapRun } elseif ($ResumeFactoryRun) { $ResumeFactoryRun } elseif ($ResumeRestoreSelectionRun) { $ResumeRestoreSelectionRun } else { [Guid]::NewGuid().ToString('N') }
+    $identity = if ($ResumeRestoredSessionRun) { $ResumeRestoredSessionRun } elseif ($ResumeRestoreChainRun) { $ResumeRestoreChainRun } elseif ($ResumeRecoveryRun) { $ResumeRecoveryRun } elseif ($ResumeDiscoveryRun) { $ResumeDiscoveryRun } elseif ($ResumeFreshStartupRun) { $ResumeFreshStartupRun } elseif ($ResumeBootstrapRun) { $ResumeBootstrapRun } elseif ($ResumeFactoryRun) { $ResumeFactoryRun } elseif ($ResumeRestoreSelectionRun) { $ResumeRestoreSelectionRun } else { [Guid]::NewGuid().ToString('N') }
     if ($scenario -eq 'recovery-restore-chain') {
         $created = if ($ResumeRestoreChainRun) { $null } else { Invoke-OwnedMigration 'recovery-chain-create' $identity }
         $reopened = Invoke-OwnedMigration $(if ($ResumeRestoreChainRun) { 'recovery-chain-repair' } else { 'recovery-chain-reopen' }) $identity
@@ -207,12 +209,12 @@ foreach ($scenario in $scenarios) {
     }
     if ($scenario -eq 'fresh-startup') {
         $created = $null
-        if (-not $ResumeFreshStartupRun) { $created = Invoke-OwnedMigration 'fresh-startup-create' $identity }
+        if (-not $ResumeFreshStartupRun -and -not $ResumeRestoredSessionRun) { $created = Invoke-OwnedMigration 'fresh-startup-create' $identity }
         if ($RestoreSession) {
-            $restored = Invoke-OwnedMigration 'restore-session' $identity
+            $restored = if ($ResumeRestoredSessionRun) { $null } else { Invoke-OwnedMigration 'restore-session' $identity }
             $restoreCold = Invoke-OwnedMigration 'restore-session-reopen' $identity
-            if (-not $restored.ActualBackupReceiverAndSession -or -not $restored.SelectedRestoreRetainedAfterObserverFailure -or
-                -not $restored.PreviousConnectionClosedBeforeAdoption -or -not $restoreCold.ExistingKeysOnly -or
+            if (($restored -and (-not $restored.ActualBackupReceiverAndSession -or -not $restored.SelectedRestoreRetainedAfterObserverFailure -or
+                -not $restored.PreviousConnectionClosedBeforeAdoption)) -or -not $restoreCold.ExistingKeysOnly -or
                 -not $restoreCold.LaterPreferencesPreserved) { throw 'Actual restored session adoption evidence missing.' }
             $proofs += [pscustomobject]@{ Scenario = 'restore-session'; Run = $identity; Created = $created; Restored = $restored; Cold = $restoreCold }
             continue

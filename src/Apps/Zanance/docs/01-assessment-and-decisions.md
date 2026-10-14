@@ -4796,3 +4796,71 @@ Complete signed Release APK: artifacts/android-d253-delivery/pro.vafadar.zanance
 83,249,712 bytes; signature, pro.vafadar.zanance package, API24/36 and both embedded assembly stores
 verified. Test output cleanup completed successfully after terminal verification. Main provider remains
 standard SQLite; this APK is not a whole-app encryption, physical-device, iOS or release acceptance.
+
+### D-254 — Compose the protected application profile lifecycle
+
+ProtectedProfileStorage now owns one SqlCipherProfileSession for covered all-profile startup,
+current-generation resolution, switching and reviewed new-profile preparation. Construction is lazy
+and requires the D-253 protected registration boundary; it performs no database/key/profile work.
+The host supplies anchored native directory/key/durability effects and an owner-bound restore receiver.
+ProtectedDatabaseStartup passes its actual drained lease to that receiver during cold bootstrap.
+No obsolete process callback or missing metadata can choose an installation/restore generation.
+
+The resolver reads actual identities/history and validates the retained profile-to-original mapping.
+Its key owner's validation outlives the maintenance lease and permits legitimate later catalogue
+Add/rename while refusing removal/redirection of that profile. New preparation requires the actual
+bounded reviewed Add intent and canonical matching id/path before any identity/key effect. Existing
+published-but-unfinished creation can resume its same identity. An independent unpublished protected
+location runs the real compiled model/migrations in memory without moving the active endpoint.
+
+Four original application-source cases cover lazy construction/plaintext-registration refusal,
+missing reviewed intent and mismatched id/path with unchanged intent/metadata. The native Android
+creation-continuation case now uses this actual host for preparation, cold startup and switching,
+instead of a fixture-owned resolver/schema implementation. Native production activation and the
+final receiver/recovery UI/retention/OS/platform acceptance remain unfinished; main remains plaintext.
+No unchanged producer suite or visible UI matrix was repeated.
+
+D-254 terminal baseline: all 3476 solution tests pass, zero failures/skips (3m4.576s). Strict main
+Windows 23.21s and Android 41.19s have zero warnings/errors. Signed Release AOT Android composition
+passes interrupted preparation, cold reviewed creation completion, exactly two identities, empty
+new profile, main balance 250 and switching back through the shared host. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-76db958872af45289ad147a189e575c4.json,
+run 865c036f665b4fdcae503257b800c050. Final creation host native build 65.54s is clean.
+
+The cold restored-session qualification now uses the original ProtectedProfileStorage/owned startup
+receiver rather than a fixture resolver. The old D-229 Android run 0b6bd586086d46a793e0f4e4ee0b6039
+was absent from the current sandbox: DirectoryNotFoundException before host entry is retained in
+artifacts/native-sqlcipher/d254-cold-restored-runtime.log. It is not a successful host test or a key
+replacement. A fresh independently owned restore fixture is required for this current qualification;
+unchanged general tests/main builds are not repeated. The driver permits an explicit cold-only
+recorded restore run; it never chooses missing-key generation or financial fallback. Script parser passes.
+
+Complete signed Release product APK: artifacts/android-d254-delivery/pro.vafadar.zanance-Signed.apk,
+83,716,826 bytes; signature, pro.vafadar.zanance package, API24/36 and both complete assembly stores
+verified. Test outputs cleaned successfully after terminal managed/build checks. Main remains
+plaintext: native library adoption/receiver registration/recovery UI/retention/OS/platform/device and
+release acceptance remain separate and unfinished. No new owner decision is required for this host.
+
+The fresh retained restore case exposed a real host callback mismatch: SqlCipherProfileBootstrap
+passes legacy profile ids, whereas the composed native receiver takes the exact original path.
+ProtectedDatabaseStartup now maps the id through its unchanged complete ProfileStorageCapture before
+passing the drained host owner. It never uses current selection or a filename guess. The failing
+fresh dataset/run 70edbddd953f4a8ebca26e50c60fafb1 and its negative log d254-restored-runtime.log
+are retained; only its cold restored-session phase resumes after this fix, without regenerating
+backup, finance, identities or keys. Earlier baseline build/test results preceded this production
+fix; final affected verification is recorded below rather than treating those old results as final.
+
+D-254 final post-fix verification: the same retained run 70edbddd953f4a8ebca26e50c60fafb1 cold-opens
+through actual composed startup with only existing keys, balance 321 and later fr preference preserved.
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-512dc37bb32c48b096c1f8db7abc2a7b.json;
+Created/Restored are explicitly null because those earlier effects were not repeated. Final Native
+Release AOT build 84.50s and strict main Windows 35.02s/Android 60.31s have zero warnings/errors.
+All 3476 solution tests pass, zero failures/skips (3m12.025s). The current original receiver path was
+verified only with already selected/applied restore state; pending pre-selection and unapplied native
+preferences remain receiver-integration work, not acceptance inferred from this cold read.
+
+D-254 final signed product APK replaces the earlier baseline at the same delivery path:
+artifacts/android-d254-delivery/pro.vafadar.zanance-Signed.apk, 83,278,384 bytes. Signature, package,
+API24/36 and both embedded assembly stores were reverified after the callback fix. Final test-output
+cleanup completed successfully. Main encryption is still inactive; this is the final APK for this
+host-composition slice, not device/iOS/provider/retention/OS/release acceptance.

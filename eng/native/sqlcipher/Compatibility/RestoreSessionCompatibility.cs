@@ -23,7 +23,7 @@ internal static class RestoreSessionCompatibility
         Func<string, IDatabaseGenerationFileDurability> createDurability)
     {
         var original = Path.Combine(folder, ZananceApp.DatabaseFileName);
-        using var services = new ServiceCollection().AddZananceData(original).BuildServiceProvider();
+        using var services = new ServiceCollection().AddZananceData(original, protectionRequired: true).BuildServiceProvider();
         var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
         var settings = new InMemorySettingsStore();
         var saved = JsonSerializer.Deserialize<string[]>(await File.ReadAllTextAsync(Path.Combine(folder, "fictitious-display.json")))!;
@@ -42,20 +42,24 @@ internal static class RestoreSessionCompatibility
                 _ => throw new IOException("Cold generation invoked old publication."), owner.Validate, 16 * 1024 * 1024, "4.19.0",
                 _ => throw new IOException("Applied preferences were persisted again."), history);
         }
-        using var owner = await location.Access.AcquireExclusiveAsync();
-        var identities = new SqliteDatabaseIdentityCatalogue(Path.Combine(folder, "identities.sqlite"), owner.Validate);
-        var identity = (await identities.ReadAsync()).Single();
-        var session = new SqlCipherProfileSession<ZananceDbContext>(location, async (path, lease, ct) =>
-        {
-            var history = new SqliteProfileRestoreHistory(original + ".restore-history.sqlite", identity.InitialCandidateKey, lease.Validate);
-            return await SqlCipherProfileGeneration.OpenCurrentAsync(location, identities, "", path, history,
-                reference => Receiver(reference, lease, identity), keys, durability, lease, () => { }, 16 * 1024 * 1024, "4.19.0", ct);
-        });
-        await session.StartAsync(original, owner);
-        await using (var db = await services.GetRequiredService<ILocalDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(owner))
+        var identityPath = Path.Combine(folder, "identities.sqlite");
+        DatabaseProfileIdentity capturedIdentity;
+        using (var identityOwner = await location.Access.AcquireExclusiveAsync())
+            capturedIdentity = (await new SqliteDatabaseIdentityCatalogue(identityPath, identityOwner.Validate).ReadAsync()).Single();
+        var profiles = new ProfileService(location, services.GetRequiredService<ZananceStore>(), settings, new Runtime(), Translator.Instance);
+        var host = new ProtectedProfileStorage(location, () => profiles, identityPath, keys, durability,
+            () => { if (!Directory.Exists(folder)) throw new IOException("Owned restored fixture disappeared."); },
+            (path, reference, owner) =>
+            {
+                if (path != original) throw new IOException("Cold composed receiver belongs to another original.");
+                return Receiver(reference, owner, capturedIdentity);
+            }, 16 * 1024 * 1024, "4.19.0");
+        await host.CreateStartup(ProtectedStorageInitialization.ExistingInstallation).PrepareAsync();
+        using var maintenance = await location.Access.AcquireExclusiveAsync();
+        await using (var db = await services.GetRequiredService<ILocalDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(maintenance))
             if ((await db.Accounts.SingleAsync()).OpeningBalance != 321 || settings.Get("localization.language") != "fr")
                 throw new IOException("Cold restore changed finance or reapplied old user preferences.");
-        session.Close(owner);
+        host.Session.Close(maintenance);
         return "{\"ColdRestoredSession\":true,\"ExistingKeysOnly\":true,\"LaterPreferencesPreserved\":true,\"RestoredBalance\":321}";
     }
     internal static async Task<string> RunAsync(string folder, Func<string, IDatabaseGenerationKeyStore> createKeys,

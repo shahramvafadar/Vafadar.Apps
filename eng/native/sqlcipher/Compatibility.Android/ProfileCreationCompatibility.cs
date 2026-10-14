@@ -27,7 +27,7 @@ internal static class ProfileCreationCompatibility
     {
         if (create) { if (Directory.Exists(folder)) throw new IOException("Use a fresh profile-creation fixture."); Directory.CreateDirectory(folder); }
         var main = Path.Combine(folder, ZananceApp.DatabaseFileName);
-        using var services = new ServiceCollection().AddZananceData(main).BuildServiceProvider();
+        using var services = new ServiceCollection().AddZananceData(main, protectionRequired: creationResume).BuildServiceProvider();
         var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
         IDatabaseGenerationKeyStore keys = new AndroidGenerationKeyStore(folder);
         if (!create && creationResume) keys = new ExistingKeys(keys);
@@ -50,7 +50,8 @@ internal static class ProfileCreationCompatibility
                 (state, journal, ct) => files.RemoveAsync(state, journal, durability, ct), (journal, ct) => files.VerifyRemovedAsync(journal, ct));
         }
         ProfileService profiles = null!;
-        var creationHost = creationResume ? new ProtectedProfileCreationHost(new AndroidSettingsPersistence(Preferences.Default), PrepareNew) : null;
+        ProtectedProfileStorage? composed = null;
+        var creationHost = creationResume ? new ProtectedProfileCreationHost(new AndroidSettingsPersistence(Preferences.Default), PrepareReviewedNew) : null;
         profiles = new ProfileService(location, store, preferences, runtime, Translator.Instance, profileRetirement: retirementHost, profileCreation: creationHost);
         async Task BuildSchema(SqliteConnection connection, CancellationToken ct)
         {
@@ -76,7 +77,19 @@ internal static class ProfileCreationCompatibility
             if (location.Path == prepared.Path || File.Exists(original)) throw new IOException("New profile changed active publication or created plaintext.");
             if (create && creationResume) throw new IOException("Injected interruption after native profile preparation.");
         }
-        runtime.Session = new SqlCipherProfileSession<ZananceDbContext>(location, Resolve, PrepareNew);
+        async Task PrepareReviewedNew(string id, string original, DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct)
+        {
+            await composed!.PrepareNewAsync(id, original, owner, ct);
+            if (create && creationResume) throw new IOException("Injected interruption after native profile preparation.");
+        }
+        if (creationResume)
+        {
+            composed = new(location, () => profiles, identityPath, keys, durability,
+                () => { if (!Directory.Exists(folder)) throw new IOException("Owned composition fixture disappeared."); },
+                (_, _, _) => throw new IOException("Creation fixture cannot invent a later restore."), 16 * 1024 * 1024, "4.19.0");
+            runtime.Session = composed.Session;
+        }
+        else runtime.Session = new SqlCipherProfileSession<ZananceDbContext>(location, Resolve, PrepareNew);
         using (var owner = await location.Access.AcquireExclusiveAsync())
         {
             if (create)
@@ -148,10 +161,7 @@ internal static class ProfileCreationCompatibility
         }
         if (!create && creationResume)
         {
-            var startup = new ProtectedDatabaseStartup(location, profiles, runtime.Session, identityPath,
-                ProtectedStorageInitialization.ExistingInstallation, keys, durability,
-                (_, _) => throw new IOException("Fresh creation cannot use a later restore receiver."),
-                16 * 1024 * 1024, "4.19.0", creation: creationHost);
+            var startup = composed!.CreateStartup(ProtectedStorageInitialization.ExistingInstallation, creation: creationHost);
             await startup.PrepareAsync();
             await startup.PrepareAsync(); // The completed callback must not repeat preparation or key publication.
         }

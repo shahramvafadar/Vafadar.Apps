@@ -16,7 +16,8 @@ public sealed class ProtectedDatabaseStartup(LocalDatabaseLocation<ZananceDbCont
     int maximumBytes, string cipherVersion,
     Func<SqliteConnection, CancellationToken, Task>? buildEmptySchema = null,
     IProfileRetirementHost? retirement = null,
-    IProfileCreationHost? creation = null) : IAppDatabaseStartup
+    IProfileCreationHost? creation = null,
+    Func<string, ProfileRestoreReference, DatabaseAccessGate.ExclusiveLease, SqlCipherPackageRestoreReceiver>? createOwnedReceiver = null) : IAppDatabaseStartup
 {
     private readonly SemaphoreSlim operations = new(1, 1);
     private bool completed;
@@ -72,8 +73,11 @@ public sealed class ProtectedDatabaseStartup(LocalDatabaseLocation<ZananceDbCont
                     keys, durability, buildEmptySchema, owner, capture.Validate,
                     maximumBytes, cipherVersion, cancellationToken).ConfigureAwait(false);
             }
+            // Bootstrap identifies profiles by legacy id; the host receiver owns an exact original path.
+            // Translate only through this unchanged complete capture, never through current selection.
             await SqlCipherProfileBootstrap.PrepareAsync(location, owner, identityPath, capture.OriginalPaths,
-                initialization == ProtectedStorageInitialization.LegacyPlaintextProfiles, keys, durability, createReceiver, capture.Validate,
+                initialization == ProtectedStorageInitialization.LegacyPlaintextProfiles, keys, durability,
+                (legacy, reference) => createOwnedReceiver is null ? createReceiver(legacy, reference) : createOwnedReceiver(capture.OriginalPaths[legacy], reference, owner), capture.Validate,
                 maximumBytes, cipherVersion, cancellationToken).ConfigureAwait(false);
             // No context is published midway through all-profile preparation, even for a non-main selection.
             capture.Validate(); cancellationToken.ThrowIfCancellationRequested();

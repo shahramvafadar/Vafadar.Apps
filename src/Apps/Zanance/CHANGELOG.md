@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Shared protected profile storage host (D-254)
+
+- Prepared a single encrypted-profile lifecycle for startup, switching and interrupted profile creation.
+- Require the saved reviewed Add request before preparing new encrypted profile data.
+- Final main encryption, recovery interface and retention activation remain pending.
+
 ### Added - Protected startup storage boundary (D-253)
 
 - Prepared a protected host to refuse premature database access instead of creating an unencrypted file.

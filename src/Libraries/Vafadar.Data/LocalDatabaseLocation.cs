@@ -36,6 +36,9 @@ public sealed class LocalDatabaseLocation<TContext>
     /// <summary>Gets the full path of the database file in use.</summary>
     public string Path { get { lock (_gate) return _endpoint.Path; } }
 
+    /// <summary>Gets whether every context must use a verified protected publication, including before startup.</summary>
+    public bool RequiresProtection { get { lock (_gate) return _protectionRequired; } }
+
     /// <summary>Gets whether the active publication requires its retained verified native key owner.</summary>
     public bool IsProtected { get { lock (_gate) return _endpoint.CreateConnection is not null; } }
 

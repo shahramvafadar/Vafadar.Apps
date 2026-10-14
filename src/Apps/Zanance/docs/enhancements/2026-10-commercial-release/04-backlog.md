@@ -2119,3 +2119,8 @@ D-253 adds host-required protection before initial publication: every factory ro
 creating plaintext storage and releases its lease. Actual binary cipher hosts use the setting and
 verify refusal before encrypted startup. Final main/recovery/retention/OS adoption remains open;
 OD-04/OD-10 are approved and no new owner decision is needed for this implementation prerequisite.
+
+D-254 composes protected startup/current resolution/switching/new-profile preparation in actual app
+source, with one session and the actual reviewed durable Add request before identity/key work.
+Cold restore receivers receive the current startup owner. Final native registration, receiver,
+recovery UI, retention/reconciliation and coupled OS/platform acceptance remain open; main is plaintext.
