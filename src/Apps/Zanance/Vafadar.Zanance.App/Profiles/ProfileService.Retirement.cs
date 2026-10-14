@@ -67,8 +67,8 @@ public sealed partial class ProfileService
         if (await journal.ReadAsync(ct) != request) throw new IOException("Retirement changed during catalogue persistence.");
     }
 
-    /// <summary>Publishes one completion notification after the native retirement transaction has finished.</summary>
-    public void NotifyRetirementCompleted(DatabaseAccessGate.ExclusiveLease owner)
+    /// <summary>Publishes one catalogue notification after an actual native catalogue operation finishes.</summary>
+    public void NotifyCatalogueChanged(DatabaseAccessGate.ExclusiveLease owner)
     { location.Access.RequireDrainedOwner(owner); Changed?.Invoke(this, EventArgs.Empty); }
 
     private void RequireRetirementTarget(ProfileRetirementCheckpoint request, DatabaseAccessGate.ExclusiveLease owner)

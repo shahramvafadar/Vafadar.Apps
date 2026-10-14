@@ -1896,3 +1896,10 @@ requests may finish missing inventory; published requests cannot infer it. Start
 precedes complete storage capture, and completed historical requests do not replay preference changes.
 No default main native registration is introduced. Creation orphans, recovery/retention/OS and other
 native/platform/device acceptance still gate final integration.
+
+D-237 protected Add: inject IProfileCreationHost into ProfileService and ProtectedDatabaseStartup.
+The host requires actual ISettingsPersistence and an idempotent native prepare callback usable before
+session startup. It retains device-only request before preparation and rechecks complete catalogue
+state before publication. Completed intent cannot replay later preference changes. No native host is
+registered by default. Android continuation: Test-AndroidGenerationMigration.ps1 -RunName android-d
+-CreationContinuation -UseExistingBuild (independent package/fictitious data only).

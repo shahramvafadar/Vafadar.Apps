@@ -28,7 +28,8 @@ public sealed partial class ProfileService(
     IProfileRuntime runtime,
     Translator translator,
     IProfileWorkAccessSource? workAccess = null,
-    IProfileRetirementHost? profileRetirement = null) : IProfileCatalogueChanges
+    IProfileRetirementHost? profileRetirement = null,
+    IProfileCreationHost? profileCreation = null) : IProfileCatalogueChanges
 {
     private const string ListKey = "profiles.list";
     private const string CurrentKey = "profiles.current";

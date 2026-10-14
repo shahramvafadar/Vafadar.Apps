@@ -38,7 +38,7 @@ public sealed class ProtectedProfileRetirementHost(
         if (pending.Count == 1)
         {
             await ResumeAsync(profiles, location, owner, pending[0].Request, pending[0].Journal, ct);
-            profiles.NotifyRetirementCompleted(owner); return;
+            profiles.NotifyCatalogueChanged(owner); return;
         }
         var request = new ProfileRetirementCheckpoint(profile.Id, identity.ProfileId, identity.InstallationId, Guid.NewGuid());
         var captured = profiles.CaptureRetirementCatalogue(review, profile, request, owner);
@@ -47,7 +47,7 @@ public sealed class ProtectedProfileRetirementHost(
         await ProfileRetirementReferenceDiscovery.CaptureAsync(journal, identities, profiles.RetirementOriginalPath(profile.Id),
             "pro.vafadar.zanance", files, keys, durability, Check, ct);
         await ResumeAsync(profiles, location, owner, request, journal, ct);
-        profiles.NotifyRetirementCompleted(owner);
+        profiles.NotifyCatalogueChanged(owner);
     }
 
     /// <inheritdoc />
@@ -67,7 +67,7 @@ public sealed class ProtectedProfileRetirementHost(
             // catalogue edits must not replay a historical removal or be compared with its old digest.
             if (state.Phase == ProfileRetirementPhase.Completed) continue;
             await ResumeAsync(profiles, location, owner, request, journal, ct);
-            profiles.NotifyRetirementCompleted(owner);
+            profiles.NotifyCatalogueChanged(owner);
         }
     }
 

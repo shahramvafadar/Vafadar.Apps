@@ -1568,3 +1568,9 @@ no plaintext names/packets enter request metadata. Missing inventory resumes onl
 retries reuse one request, and unrelated catalogue changes refuse overwrite. Normal plaintext behavior
 and the unconfigured protected guard remain. Final main/recovery/retention/OS/creation/platform gates
 are still open. See D-236 in the decision log for exact native and contract evidence.
+
+D-237 adds explicit durable device Add intent before native profile preparation and pending startup
+continuation with the same original identity. Catalogue persistence and completion precede request
+cleanup; unrelated catalogue changes refuse replay. Main encryption remains inactive; historical
+pre-intent orphan reconciliation, recovery/retention/OS and platform adoption remain open. See the
+decision log for terminal evidence. This does not close SEC or the full backlog.

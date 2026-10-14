@@ -4073,3 +4073,58 @@ Signature verification succeeds; package pro.vafadar.zanance, API 24/36 and both
 embedded assembly stores are verified. The script requires a warning-free strict Release publish.
 Test outputs were cleaned after all terminal builds/checks. Local test signing and independent
 runtime evidence do not imply main encryption, physical phone/iOS, store or product acceptance.
+
+### D-237 — Retain explicit profile creation before native preparation
+
+An explicitly supplied ProtectedProfileCreationHost records a bounded device-only Add request and
+requires actual native preference persistence before any identity/key/database preparation. The
+request retains the proposed canonical profile id, name, deterministic atomic catalogue packet,
+complete before/after preference fingerprints and original private catalogue path. Profile labels
+follow the existing device preference privacy, not an unencrypted financial SQLite journal; this
+key is not portable and contains no credentials, key bytes, balances or transaction data.
+
+Preparation resumes the same target through the actual native callback. Missing/corrupt intent,
+unrelated catalogue changes and changed choice projection refuse preparation/publication rather
+than replacing history or generating a second original. Catalogue publication follows verified
+preparation and is durably persisted before a completion marker. A retained completed marker only
+requalifies/cleans that device request, so later legitimate catalogue changes are never replayed.
+Covered startup resumes creation before capturing all profiles and before session publication.
+The current financial endpoint and main profile remain unchanged throughout Add.
+
+Cancellation or a native failure after durable Add intent retains that explicit request for exact
+startup continuation. The host does not delete unknown old orphan artifacts, infer Add from missing
+state or activate main encryption. Historical pre-intent orphans still require separate verified
+reconciliation; final recovery, retention, coupled OS exclusion and platform/provider adoption remain
+in the full scope. Existing hosts without this composition retain their current creation behavior.
+
+Six application-source contract cases cover persistence interruption before preparation, after
+catalogue publication, after completion, unrelated catalogue mutation, corrupt intent, and a native write that restores the original catalogue. Completion requires exact
+published-state readback, not merely either allowed pre/post state. Native
+settings effects are explicit ports in those cases, not platform acceptance. Actual Android native
+continuation and terminal build/test/APK evidence are recorded separately below. Unchanged UI,
+upstream native producer suites and unrelated device checks are not repeated.
+
+D-237 verification to date: the complete solution run passes 3425 tests, zero failures/skips
+(2m59.021s). After the final publication-readback guard, all six affected creation cases pass
+(3.053s), adding one scenario for 3426 covered behaviors. The final Windows build has zero
+warnings/errors (15.94s), main Android zero warnings/errors (42.98s). Independent Android
+Release native builds were repeated only after relevant source/test-caller changes, not producer
+or UI changes. The final caller uses actual ProtectedDatabaseStartup rather than manually duplicating
+its ordering. Terminal actual startup/runtime/package evidence follows below.
+
+D-237 final native startup evidence: independent strict Android Release AOT/trim build has zero
+warnings/errors (53.31s). The actual ProfileService/native prepare path retained durable Add intent
+when interrupted after encrypted schema/key preparation. Cold actual ProtectedDatabaseStartup
+resumed that exact request before all-profile bootstrap and session publication; its completed
+callback did not repeat resolution. Exactly two identities remain, new profile has no accounts,
+main balance remains 250 and a read-only key port forbids replacement preparation on cold resume.
+Same fictitious run: 943a0e349933421c8ed9693d3e0610fb. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-b60a776f761a4fabab8c6c2e93aa6bba.json.
+Earlier direct-host proofs are retained but do not substitute for this actual startup caller.
+
+Complete signed Release APK: artifacts/android-d237-delivery/pro.vafadar.zanance-Signed.apk
+(83,577,562 bytes). Signature, pro.vafadar.zanance package, API 24/36 and both arm64-v8a/x86_64
+embedded assembly stores verified. Test outputs were cleaned after all terminal checks. Native
+runtime proof uses actual device preferences/persistence and fictitious encrypted finance in an
+independent package; main application storage is still plaintext. This does not establish physical
+phone/iOS, optional key recovery, historical orphan reconciliation, retention/OS or release acceptance.

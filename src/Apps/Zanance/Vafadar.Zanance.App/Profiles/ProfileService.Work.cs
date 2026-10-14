@@ -92,6 +92,11 @@ public sealed partial class ProfileService
         {
             using var owner = await location.Access.AcquireExclusiveAsync(ct);
             ValidateWorkReview(review); ct.ThrowIfCancellationRequested();
+            if (profileCreation is not null)
+            {
+                await profileCreation.CreateReviewedAsync(this, review, profile, owner, ct);
+                return;
+            }
             await runtime.PrepareNewDatabaseAsync(location, profile.Id, PathOf(MainPath(), profile.Id), owner, ct);
             ct.ThrowIfCancellationRequested();
             lock (CatalogueGate) PublishNewProfile(review, profile);
@@ -105,11 +110,16 @@ public sealed partial class ProfileService
         if (!review.CanCreate)
             throw new CommercialWriteRejectedException(CommercialFeature.LocalProfiles, QuotaKind.LocalProfiles,
                 review.Maximum ?? 0, review.SelectedIds.Count, 1);
+        PublishCatalogue(NewProfileCatalogue(review, profile, Guid.NewGuid())); Changed?.Invoke(this, EventArgs.Empty); return profile;
+    }
+
+    private CatalogueState NewProfileCatalogue(ProfileCatalogueReview review, LocalProfile profile, Guid mutation)
+    {
         var state = ReadCatalogue(preferences) with { List = EncodeProfiles(review.Profiles.Where(p => !p.IsMain).Append(profile)) };
         if (review.Maximum is not null)
             state = state with { Path = EncodeField(review.CataloguePath), Scope = review.Access.DeviceScope!.Id.ToString("N"),
-                Choice = EncodeField(string.Join(';', review.SelectedIds.Append(profile.Id).Order(StringComparer.Ordinal).Select(id => id.Length == 0 ? "~" : id))), ChoiceRevision = Guid.NewGuid().ToString("N") };
-        PublishCatalogue(state); Changed?.Invoke(this, EventArgs.Empty); return profile;
+                Choice = EncodeField(string.Join(';', review.SelectedIds.Append(profile.Id).Order(StringComparer.Ordinal).Select(id => id.Length == 0 ? "~" : id))), ChoiceRevision = mutation.ToString("N") };
+        return state;
     }
 
     /// <summary>Corrects only the reviewed original name; same-id replacements and retired prompts require a fresh read.</summary>

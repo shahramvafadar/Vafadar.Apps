@@ -1506,3 +1506,7 @@ Prepared restartable publication of captured migration and initial recovery hist
 ### D-218 - Existing profile preparation
 
 Prepared one verified initialization path for all existing local profiles before their encrypted data becomes visible. Main encryption activation remains pending.
+
+- Prepared durable continuation of interrupted protected-profile creation, retaining the requested
+  profile and existing main data instead of creating a replacement identity. Main encryption is not
+  enabled yet.

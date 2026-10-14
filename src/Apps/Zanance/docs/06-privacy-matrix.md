@@ -641,3 +641,8 @@ D-236: private retirement catalogue authority records only before/removed SHA-25
 not labels or replacement packets. Profile preferences stay in the existing device store and remain
 outside portable credential/security sources. No permission, network SDK or new secret input is added.
 The main native host is still unregistered; coupled OS policy/recovery adoption remains pending.
+
+D-237: profiles.creation.pending is device-only operational Add metadata, bounded to 64 KiB.
+It retains proposed profile names with existing device-profile preference privacy and no financial
+rows, key material or credentials. It is outside the portable preference allowlist and is removed
+only after native catalogue persistence/completion. No new network SDK or permission is introduced.
