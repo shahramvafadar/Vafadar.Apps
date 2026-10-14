@@ -2142,3 +2142,9 @@ candidate NuGet package, including original runtime bytes and bundled notices/pr
 XML and duplicate-asset warning evidence are retained; final cold same-key run is clean. Main remains
 D-256/plaintext; no unrelated producer/main/UI/test/APK replay. Native matrix/warning review and final
 registration/recovery/retention/OS/device/release acceptance remain open.
+
+D-258 bounds20 secure-heap list-index narrowing occurrences in official Windows OpenSSL source to
+0..59 under valid allocator state, with immutable source/binary and complete occurrence qualification.
+This does not cover corrupted pointers/full allocator security.723 narrowing occurrences remain
+unreviewed; the original749 diagnostics are not suppressed. No main code/APK/native producer replay;
+main encryption, complete warning review and full adoption/security/platform acceptance remain open.

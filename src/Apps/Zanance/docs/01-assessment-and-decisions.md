@@ -4991,3 +4991,37 @@ APK remain D-256, with its3482-test baseline; no unrelated tests/main builds/APK
 suite was repeated. This qualifies package consumption on observed Android x64/API36/4KiB only;
 arm64/API24/16KiB OS/iOS, native warning review, main registration/recovery/retention/OS/device/release
 acceptance remain open. The full goal and SEC scope are not complete.
+
+### D-258 — Bound Windows secure-heap list-index narrowing
+
+The current unsuppressed Windows inventory contains749 OpenSSL occurrences, not direct SQLCipher
+warnings.20 C4244/C4267 sites in official crypto/mem_sec.c narrow only list/slist indices into int
+(or the sh_getlist return into int). Under valid allocator state their interval is0..59 on the
+reviewed Windows x64 ABI; this is expression/range review, not whole allocator security acceptance.
+
+SH_LIST has two x64 pointers, so effective power-of-two minsize is at least16. Accepted arena_size
+is a representable positive power of two, at most2^63; minsize cannot exceed it, and sh_init rejects
+bittables smaller than one byte. For arena=2^a and min=2^m, ratio=2^(a-m), bittable=2*ratio and
+freelist_size=(a-m)+1. Thus k=a-m<=59. sh_malloc starts list at k, only decreases it, checks negative
+list/slist before helper calls and splits back toward the bounded requested list. sh_getlist starts
+at k and shifts an initial ratio<=bit<2*ratio until a valid allocated ancestor, returning0..k.
+sh_free coalesces toward the root; its root buddy is bit0, never set by valid positive-node setbit
+calls, so no valid coalescing step decrements below0. sh_actual_size consumes the same bounded return.
+This reasoning assumes intact allocator metadata and valid pointers; it does not establish safety
+for arbitrary corrupted pointers, pointer arithmetic generally or all OpenSSL entry points.
+
+Review-WindowsSecureHeapRanges.py pins the exact official source SHA256, Windows/OpenSSL commit,
+matching native DLL and all20 original occurrence lines/codes, then checks1711 admitted power-of-two
+parameter classes. It refuses incomplete coverage rather than writing acceptance. It modifies no
+source/binary/compiler flag or suppression and never opens product storage. Positive proof:
+artifacts/native-sqlcipher/d258-accepted-secure-heap-ranges.json. Incomplete inventory is refused with
+no output acceptance file. The earlier conservative-class artifact is retained; the final calculation
+excludes tiny rejected bittables. Source hash:
+2406f86ebc633aa7cdf27ab9617a8a49b6ec238e6d9dd3792b749cf7257e5d5e.
+Native hash remains3c842f12049684bc854d6e89bdda207f80b768b43ccdf27f7760ce8f303eedbf.
+
+This bounds20 narrowing occurrences only:723 C4244/C4267 remain unreviewed in addition to the6
+previously reviewed atomic/shift occurrences. All original749 compiler diagnostics remain present;
+no warning-free native build, full Windows adoption or main encryption is claimed. No code/UI/APK,
+main suite or unchanged native producer suite was repeated. Main remains D-256/plaintext with its
+3482-test baseline. Full security/OS/platform/device/release and original goal scope remain open.
