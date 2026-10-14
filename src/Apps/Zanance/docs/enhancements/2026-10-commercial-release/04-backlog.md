@@ -62,7 +62,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-BIL-03 | Secure entitlement cache, offline window, clock changes | 6 | P1 | M | Proposed | BIL-02 |
 | ZCR-BIL-04 | Plus Lifetime, Lifetime-owner Pro discount, campaigns, trial | 6 | P1 | M | Proposed | BIL-02, OD-06, OD-07 |
 | ZCR-BIL-05 | Sandbox test matrix; production activation (owner only) | 6 | P1 | M | Proposed | BIL-01..04 |
-| ZCR-ID-01 | Optional identity, backend foundation, operations | 3 | P1 | L | Proposed | OD-02 |
+| ZCR-ID-01 | Optional identity, backend foundation, operations | 3 | P1 | L | Proposed (D-269 costed local/pilot/HA delivery plan; OD-02 decision and implementation remain) | OD-02 |
 | ZCR-SYNC-01 | Change log, outbox, versions, tombstones | 4 | P1 | L | Proposed | ID-01 |
 | ZCR-SYNC-02 | Conflicts, idempotent posting, restore into a synced profile | 4 | P1 | L | Proposed | SYNC-01 |
 | ZCR-SYNC-03 | Sync status UI and device management | 4 | P2 | M | Proposed | SYNC-01 |
@@ -2195,3 +2195,7 @@ Observed Windows Home refresh failed in BindableLayout's ContentView handler dis
 D-267 final native review passed all 18 contexts and 36 original Home reloads without the observed COM failure; amount handlers and complete financial rows remain unchanged. Canonical signed Release upgrade/cold/More-to-Home return passed. The unchanged 3,526-test D-266 baseline was retained; native publication is directly verified. Exact evidence and external limits: docs/quality/home-balance-reload.md.
 
 D-268 final affected checks: 3,526 tests passed, zero failures/skips; 18 original sale-help contexts and 12 English pay/receive native dialogs completed with Cancel and complete financial rows unchanged. Independent Android original sale-help open/close and complete signed Release upgrade/cold Home passed. See docs/quality/sale-and-connection-copy.md.
+
+## D-269 decision-ready backend cost model
+
+Completed the prerequisite cost/architecture proposal for OD-02 with official current price references, the dated PostgreSQL plan restriction, explicit bounded usage and independent arithmetic checks. [Proposal](07-backend-cost-and-decision.md) and [structured model](08-backend-cost-model.json). This is not ZCR-ID-01 implementation, hosted restore, provider/legal acceptance or spending authority. Main source/tests/APK remain D-268; no unchanged verification replay.

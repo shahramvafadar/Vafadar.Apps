@@ -49,3 +49,7 @@ OD-10: exclude databases and sensitive files from Android/iOS OS backup/device t
 permanent policy when encryption integration is completed. Restore a new device from Zanance
 backup into fresh device-protected storage. The declined interim policy (D-114) stays declined;
 no temporary exclusion is introduced before final integration. Do not ask these decisions again.
+
+## OD-02 costed proposal (2026-10-14, D-269)
+
+[The decision-ready model](07-backend-cost-and-decision.md) separates local implementation at no provider cost, a single-node test pilot (~$66.18/month with reserve), and managed HA (~$456.18/month with reserve). Growth scenario: ~$897.49/month. USD estimates exclude taxes/exchange/labor; ceilings are planning envelopes, not vendor caps. The 2026-10-15 Standard PostgreSQL standby restriction is included. Provider/region/test budget are still owner decisions; no resource/account was created and no spending authorized. ZCR-ID-01 remains open until actual implementation and restore qualification.

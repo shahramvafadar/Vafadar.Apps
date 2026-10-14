@@ -17,6 +17,8 @@ earlier monetization model of the specification (MON-02 one-time Pro purchase, M
 | [04-backlog.md](04-backlog.md) | **The canonical backlog** of all remaining work (ids `ZCR-*`) |
 | [05-delivery-plan.md](05-delivery-plan.md) | Waves, release gates, mandatory acceptance tests, section template, proposed first section, handoff |
 | [06-open-decisions.md](06-open-decisions.md) | Questions for the owner, each with a proposal |
+| [07-backend-cost-and-decision.md](07-backend-cost-and-decision.md) | Costed OD-02 proposal, complete backend delivery boundary and explicit owner gates (D-269) |
+| [08-backend-cost-model.json](08-backend-cost-model.json) | Source-linked monthly inputs, assumptions, overages and three recalculated scenarios |
 
 Ids: `ZCR-<area>-nn` for work items (areas GOV, SEC, LOC, IMP, QA, A11Y, ENT, BIL, ID, SYNC, SHR, TAX, AI, BANK, FX,
 LANG, REL) and `OD-nn` for open decisions. Open stories of enhancement ZEX continue under the ZCR ids named in the

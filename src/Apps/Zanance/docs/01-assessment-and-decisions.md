@@ -5241,3 +5241,7 @@ Store drafts now name all six existing languages and describe optional password 
 D-268 final tests: 3,526 passed with zero failures/skips (3m21.454s); 18 original sale-help contexts and 12 English confirmation dialogs completed without financial writes. Independent Android help and final signed Release cold Home passed. Exact scope and retained observer failure: docs/quality/sale-and-connection-copy.md.
 
 D-268 final permanent Windows build passed with zero warnings/errors (18.88s); test outputs cleaned after builds. The canonical complete Release artifact contains final production resources/XAML; later independent diagnostic-only hooks are excluded from Release.
+
+## D-269 costed OD-02 backend proposal
+
+Official provider prices and the 2026-10-15 PostgreSQL availability change inform three bounded USD scenarios and a complete first backend delivery/restore boundary. Arithmetic/overage checks pass; see docs/enhancements/2026-10-commercial-release/07-backend-cost-and-decision.md. Provider, region and test-environment budget remain owner choices. No backend, account, mail, hosted resource, SDK, app code or publication changes; ZCR-ID-01 and the full development objective remain incomplete. Application tests/build/native/APK evidence is unchanged D-268 and was not repeated.
