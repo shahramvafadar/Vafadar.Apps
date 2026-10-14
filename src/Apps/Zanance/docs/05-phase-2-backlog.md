@@ -1853,3 +1853,23 @@ and wrong-key refusal pass. These are operation timings, not full loaded Home or
 All 3,573 app tests pass with one new actual-SQLite budget context/lifetime case; strict builds,
 original native Home and signed Release evidence are in quality/work-snapshot-read-performance.md.
 The whole development objective and physical/iOS/reference-workload gates remain open.
+
+## D-277 existing-user upgrade and current test-build policy
+
+ENT-05's current policy is already implemented: the default commercial source is inactive,
+with no fake Plus/Pro right or permanent/portable test entitlement. The actual first-schema
+upgrade scenario writes four accounts above the approved Free quota and an expense, upgrades
+through original migrations, retains identities/balance, accepts an explicit fifth test account,
+and restores the real portable source into a separate fresh provider. Both original and restored
+providers remain unenforced with null paid context; no resource selections are invented.
+
+One focused AT-277 real-SQLite upgrade/restore scenario passes under strict compilation. It adds
+one behavior to D-276's 3,573-test baseline (3,574 covered behaviors, not a new full-suite run).
+No app/runtime/schema/dependency/UI change; no unrelated build/native matrix or new APK. The
+complete signed installable APK remains artifacts/android-work-read-final/pro.vafadar.zanance-Signed.apk.
+Exact evidence and scope: quality/test-build-upgrade-policy.md.
+
+Customer activation and announcement remain explicit owner/BIL gates. Do not turn disabled test
+enforcement into permanent paid facts or announce future limits as already enabled. LOC-09's
+final unattended protection choice and separate local personal-sync approval are pending;
+none follows from backend foundation approval. The full development goal remains active.

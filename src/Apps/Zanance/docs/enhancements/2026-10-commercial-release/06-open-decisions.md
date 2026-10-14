@@ -65,3 +65,15 @@ LOC-07/08: Germany and other Western European countries, the United States, Cana
 are the approved markets. Iran belongs to a later separate variant with Iranian holidays.
 Countries must remain extensible and independent of UI language. Exact holiday jurisdictions,
 official sources and validity years are implementation research, not completed acceptance.
+
+## Current unattended-backup and next-wave decisions (D-277)
+
+LOC-09's old password-in-keystore proposal is not authority to violate D-62: never remember a
+backup password. An owner choice is requested between device-encrypted automatic local copies
+with separate optional-password portable exports, and explicitly accepted readable portable
+automatic copies. Neither choice is inferred, scheduled or activated while unanswered.
+
+Separate approval for local personal Pro sync on the new backend was requested; backend
+foundation approval does not authorize financial sync/sharing. Purchase ownership/trial/discount,
+shared-space retention/storage/E2EE, tax scope and hosted/provider gates stay in the table above.
+Current ENT-05 test-build/upgrade evidence does not activate any customer commercial limit.
