@@ -546,3 +546,24 @@ real controls with fictitious preparation outcomes, invokes the native retry tar
 stored table rows. Run-Snapshots.ps1 -UseExistingBuild reuses only a caller-owned verified Windows
 Debug executable for distinct layout cases; default behavior still builds and fails on build errors.
 Callers must not infer success from a stale LASTEXITCODE when no native build command was run.
+
+### D-238 — Optional recovery without repeated secret entry for new generations
+
+Recovery public identity uses platform RSA-3072/OAEP-SHA256. The existing canonical profile/
+installation/generation context and recovery id are inside its authenticated payload. Standard
+DEK-keyed HMAC-SHA256 validates immutable stored ciphertext with the actual device key; public-only
+capture never unlocks private material. Optional private PKCS#8 is held in an exact bounded
+SQLCipher-encrypted vault under a caller-owned 256-bit recovery key that is never saved/logged.
+Staged native synchronization and integrity checks qualify its publication; missing/corrupt state
+cannot bootstrap replacements. Owned private/key buffers are cleared; managed strings cannot be
+fully erased. This introduces no custom cipher/KDF, old third-party binary or source fork.
+
+Actual independent Windows/Android cold recovery opens the original encrypted 32-migration model
+and signed finance with a missing fictitious device envelope, rejects wrong secret/damaged vault,
+and preserves the complete ciphertext hash. The failed Android ENOENT recognition is retained and
+the same fixture resumed without preparing keys. This does not establish final recovery UI,
+authentication/re-enrollment after wrapping-key loss, rotation/reference/retirement integration,
+OS policy, device/iOS or main encryption acceptance. Main registration remains inactive.
+
+Primary APIs: [RSA OAEP-SHA256](https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsaencryptionpadding.oaepsha256?view=net-10.0)
+and [SQLCipher keying/integrity](https://www.zetetic.net/sqlcipher/sqlcipher-api/).

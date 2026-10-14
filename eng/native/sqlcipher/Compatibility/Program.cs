@@ -4,6 +4,18 @@ using Vafadar.SqlCipher.Compatibility;
 if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "eng", "native", "sqlcipher", "inputs.lock.json")))
     throw new ArgumentException("Run from the repository root.");
 
+if (args.Length == 2 && args[0] is "recovery-create" or "recovery-reopen")
+{
+    if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException("Windows recovery requires Windows.");
+    var owned = Path.GetFullPath(args[1]);
+    var root = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "artifacts", "native-sqlcipher"));
+    if (!owned.StartsWith(root + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)) throw new ArgumentException("Recovery checks require independently owned artifacts.");
+    Console.WriteLine(await RecoveryCompatibility.RunAsync(owned, args[0] == "recovery-create",
+        path => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return new Vafadar.Data.WindowsGenerationKeyStore(path, () => { }); },
+        path => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return new Vafadar.Data.WindowsGenerationFileDurability(path); }));
+    return;
+}
+
 if (args.Length == 2 && args[0] is "--create-key-proof" or "--reopen-key-proof")
 {
     if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException("Windows DPAPI proof requires Windows.");

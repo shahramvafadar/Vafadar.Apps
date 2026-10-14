@@ -1510,3 +1510,7 @@ Prepared one verified initialization path for all existing local profiles before
 - Prepared durable continuation of interrupted protected-profile creation, retaining the requested
   profile and existing main data instead of creating a replacement identity. Main encryption is not
   enabled yet.
+
+- Prepared optional recovery-key protection for database keys, including an encrypted private vault
+  and refusal of wrong or damaged recovery material. Product recovery controls and main encryption
+  are not enabled yet.

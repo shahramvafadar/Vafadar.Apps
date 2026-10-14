@@ -20,7 +20,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-193 Android / D-192 Windows protectors; durable storage/iOS remain) | SEC-01 |
 | ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | Proposed | SEC-03, OD-04 |
 | ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-196 concrete Android session and restart proof; main/all-profile lifecycle and broader crash/platform matrix open) | SEC-02, SEC-03 |
-| ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | Proposed | SEC-04, OD-04 |
+| ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | In progress (D-238 standard recovery wrapping and native private-vault proof; final UX/re-enrollment/reference integration remains) | SEC-04, OD-04 approved |
 | ZCR-SEC-07 | Final OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | Policy approved D-192; final coupled integration pending, no interim exclusion | OD-10 approved |
 | ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | Proposed | SEC-03 |
 | ZCR-SEC-10 | Owner-approved PIN, screenshot choice and ownership clarification (D-63) | Maintenance | P1 | M | Done | Owner request 2026-10-08 |
@@ -2020,3 +2020,9 @@ continuation with the same original identity. Catalogue persistence and completi
 cleanup; unrelated catalogue changes refuse replay. Main encryption remains inactive; historical
 pre-intent orphan reconciliation, recovery/retention/OS and platform adoption remain open. See the
 decision log for terminal evidence. This does not close SEC or the full backlog.
+
+D-238 prepares standard RSA-OAEP-SHA256 optional generation recovery, DEK-keyed HMAC confirmation,
+a SQLCipher-encrypted private vault and exact durable public recovery metadata. Device key reads
+never silently fall back. Actual native recovery uses fictitious original-model finance and keeps
+ciphertext unchanged. See decision log for terminal scope/evidence; final UX/re-enrollment/reference/
+retirement/OS/provider adoption remain open, and main storage remains plaintext. SEC-06 is in progress.

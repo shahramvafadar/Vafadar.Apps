@@ -39,6 +39,7 @@
     <Compile Include="../Compatibility/FreshStartupCompatibility.cs" Link="FreshStartupCompatibility.cs" />
     <Compile Include="../Compatibility/RestoreSessionCompatibility.cs" Link="RestoreSessionCompatibility.cs" />
     <Compile Include="../Compatibility/ProtectedStartupCompatibility.cs" Link="ProtectedStartupCompatibility.cs" />
+    <Compile Include="../Compatibility/RecoveryCompatibility.cs" Link="RecoveryCompatibility.cs" />
     <Compile Include="../Compatibility/OriginalProfileFixture.cs" Link="OriginalProfileFixture.cs" />
     <Compile Include="../Compatibility/JournalCompatibility.cs" Link="JournalCompatibility.cs" />
     <Compile Include="../Compatibility/SharedRetirementCompatibility.cs" Link="SharedRetirementCompatibility.cs" />

@@ -1330,3 +1330,9 @@ continuation with the same original identity. Catalogue persistence and completi
 cleanup; unrelated catalogue changes refuse replay. Main encryption remains inactive; historical
 pre-intent orphan reconciliation, recovery/retention/OS and platform adoption remain open. See the
 decision log for terminal evidence. This does not close SEC or the full backlog.
+
+D-238 prepares standard RSA-OAEP-SHA256 optional generation recovery, DEK-keyed HMAC confirmation,
+a SQLCipher-encrypted private vault and exact durable public recovery metadata. Device key reads
+never silently fall back. Actual native recovery uses fictitious original-model finance and keeps
+ciphertext unchanged. See decision log for terminal scope/evidence; final UX/re-enrollment/reference/
+retirement/OS/provider adoption remain open, and main storage remains plaintext. SEC-06 is in progress.

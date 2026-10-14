@@ -646,3 +646,10 @@ D-237: profiles.creation.pending is device-only operational Add metadata, bounde
 It retains proposed profile names with existing device-profile preference privacy and no financial
 rows, key material or credentials. It is outside the portable preference allowlist and is removed
 only after native catalogue persistence/completion. No new network SDK or permission is introduced.
+
+D-238 optional recovery: the caller-owned 256-bit recovery key is never persisted/portable. Private
+RSA material exists only in a SQLCipher-encrypted local vault; public identity and RSA-wrapped DEKs/
+HMAC confirmations live in bounded private operational metadata, without financial rows or labels.
+Owned mutable private/key buffers are cleared; managed connection-password strings cannot be fully
+erased. Final explicit UX/authentication/reference and coupled OS policy are not activated yet.
+No new SDK, permission, network, backup password requirement or plaintext recovery-key file is added.

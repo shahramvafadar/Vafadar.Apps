@@ -17,6 +17,10 @@ internal static class GenerationMigrationCompatibility
     /// <summary>Creates a real original model or resumes/interrupts its captured native migration.</summary>
     internal static async Task<string> RunAsync(string folder, string phase)
     {
+        if (phase is "recovery-create" or "recovery-reopen")
+            return await Vafadar.SqlCipher.Compatibility.RecoveryCompatibility.RunAsync(folder, phase == "recovery-create",
+                path => new AndroidGenerationKeyStore(path), path => new AndroidGenerationFileDurability(path),
+                error => error is global::Android.Systems.ErrnoException native && native.Errno == global::Android.Systems.OsConstants.Enoent);
         if (phase is "profile-creation-pending" or "profile-creation-resume")
         {
             SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());

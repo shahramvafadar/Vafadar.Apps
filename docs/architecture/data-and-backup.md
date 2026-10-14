@@ -1903,3 +1903,11 @@ session startup. It retains device-only request before preparation and rechecks 
 state before publication. Completed intent cannot replay later preference changes. No native host is
 registered by default. Android continuation: Test-AndroidGenerationMigration.ps1 -RunName android-d
 -CreationContinuation -UseExistingBuild (independent package/fictitious data only).
+
+D-238 optional recovery uses standard RSA-OAEP/HMAC and an official SQLCipher private vault, not
+portable passwords or app PIN. Public-only wrapping handles newly prepared generations without
+requesting the recovery secret again. See sqlcipher-device-keys.md for owned buffers, native proof
+and unfinished host/ref/UX/OS scope. Native Android check: Test-AndroidGenerationMigration.ps1
+-RunName android-d -KeyRecovery -UseExistingBuild; -ResumeRecoveryRun continues an exact retained
+fixture after diagnosed failure, without recreating profiles/keys. Windows Compatibility modes are
+recovery-create/recovery-reopen under independently owned artifacts only.

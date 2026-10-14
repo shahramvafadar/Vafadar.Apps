@@ -101,3 +101,86 @@ prepare/reopen and existing-only reads; mutable returned keys are cleared by the
 StatFs and no-follow file/directory fsync provide concrete private-root durability effects. These
 ports are exercised in independent original-model complete migration/process interruption proof;
 main key creation and provider remain inactive. See generation guide for exact remaining scope.
+
+### D-238 — Standard optional recovery wrapping and encrypted private vault
+
+DatabaseRecoveryMaterial uses platform RSA-3072 with standard OAEP-SHA256. Each payload contains
+its recovery id and the existing canonical DatabaseKeyBinding context plus the exact 32-byte DEK.
+Public identity can wrap new generations after private material is disposed; private material is
+needed only for explicit recovery. No application cipher, KDF or source fork is introduced.
+Stored ciphertext has standard DEK-keyed HMAC-SHA256 confirmation over recovery id/context/ciphertext,
+so the current native DEK can requalify an immutable existing mapping without the recovery secret.
+Unwrap verifies both context and confirmation before returning an owned key. Inputs/exports/returned
+keys have explicit ownership; owned private/key payload buffers are cleared and private RSA owners
+are disposed. Managed connection-password strings cannot be completely erased.
+
+SqlCipherRecoveryVault stores private PKCS#8 only inside official native SQLCipher keyed by a
+caller-owned random 256-bit recovery key. It requires the reviewed cipher version, exact schema/
+installation/recovery/public identity, bounded typed rows, keyed schema access, cipher integrity
+and SQLite integrity. A staged no-replace metadata publication synchronizes and reopens exact
+private material before final acceptance. Wrong/missing keys, plaintext, foreign or damaged vaults
+fail without fallback or replacement. The recovery key itself is never persisted or logged.
+
+SqliteRecoveryEnvelopeCatalogue contains only public identity, RSA ciphertext and HMAC confirmation,
+with exact typed schema/identity and bounded immutable per-profile/generation mappings. Existing
+capture authenticates ciphertext using the actual native DEK and requalifies native synchronization
+after a visible commit/flush error. It refuses changed keys/ciphertext rather than overwriting them.
+RecoveryGenerationKeyStore wraps every explicitly prepared native key before caller readiness
+advances, while ordinary reads still require device keys. It never silently invokes recovery.
+This applies to future database/safety generations when the final host supplies the decorator.
+
+Thirteen focused cases verify standard encryption randomness, wrong profile/install/generation/
+private identity, corruption/truncation/disposal, weak/noncanonical public keys, immutable SQLite
+mapping/ciphertext/HMAC, failed synchronization without a replacement native key, absent authority
+and missing/invalid vault keys. The full solution run passes 3438 behaviors before the final added
+confirmation-tamper case; final affected suite passes 13 for 3439 covered behaviors. No financial
+EF schema changed; operational recovery metadata does not alter the compiled model/migrations.
+
+Independent native callers use the actual 32-migration model, native device envelope store and
+SQLCipher current-generation owner. They preserve a negative fictitious opening amount through
+cold recovery after deleting only the independently owned device envelope. A fixed synthetic key
+exists only in these independent callers, never the product, a file or output. This tests recovery
+material access, not a finished product recovery UI or durable device-key re-enrollment.
+
+Native Windows actual recovery succeeds with unchanged financial ciphertext; wrong recovery key
+and damaged private-vault copy fail authentication. Expected native HMAC failure diagnostics contain
+page metadata, not keys. Android initially returned ENOENT after the intended fake-envelope removal;
+the shared check failed to recognize that platform exception. Its explicit Android callback now
+accepts only native ENOENT, not arbitrary exceptions. The original fixture is retained and resumed;
+no replacement creation/key/schema is used to hide the failure. Terminal Android/build/APK evidence
+follows below. An intermediate namespace qualification build error is retained separately.
+
+Main storage remains plaintext. Final optional recovery enable/confirm UI, durable public/private
+registration, native re-enrollment after actual wrapping-key loss, complete retained-reference/retirement
+integration, key rotation, coupled OS exclusion and platform/device acceptance remain unfinished.
+The vault/protocol is not registered by default; no PIN/device-authentication recovery is bypassed.
+Zanance backup recovery and optional portable passwords remain unchanged. Owner OD-04/OD-10 stay
+approved and do not require another decision. Unchanged UI and native producer suites are not repeated.
+
+Primary API references: https://www.zetetic.net/sqlcipher/sqlcipher-api/ and
+https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsaencryptionpadding.oaepsha256?view=net-10.0.
+
+D-238 terminal evidence: independent strict Windows/Android callers have zero warnings/errors.
+Main strict Windows completes in 19.94s, Android in 65.11s, both zero warnings/errors. Full
+3438-test run has zero failures/skips (3m31.146s); final 13 affected tests pass (3.295s), including
+the added confirmation-tamper scenario, for 3439 covered behaviors. The Android corrected caller
+build completes in 62.11s with zero warnings/errors; the original namespace/error recognition
+failures are retained, not counted as acceptance.
+
+Windows cold reopen reuses the originally prepared fixture with its missing device envelope and
+verifies both wrong recovery key and damaged private-vault copy refusal, actual signed money and
+unchanged financial ciphertext. Android resumes the exact failed ENOENT fixture
+b8c6121b68604d0692ba13a6a75afb5c without creation or key preparation. Its proof intentionally records
+Created=null, not an invented successful initial phase. Cold existing-vault recovery succeeds,
+wrong key/damaged vault fail, actual 32-migration finance and -321 opening balance remain, full
+financial ciphertext hash is unchanged and no replacement device envelope is created. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-cfd01fd1aab141d9a6b3668efe90ed75.json.
+Original expected-native-missing negative stack: d238-android-missing-native-error.log. Windows
+final negative/positive log: d238-native-windows-final-reopen.log. Main encryption/recovery UX,
+native re-enrollment after wrapping-key loss and full retention/retirement/OS adoption remain open.
+
+D-238 complete signed Release APK: artifacts/android-d238-delivery/pro.vafadar.zanance-Signed.apk
+(83,167,792 bytes). Signature verification passes; pro.vafadar.zanance package, API 24/36 and both
+arm64-v8a/x86_64 embedded assembly stores are verified. Test output was cleaned after all terminal
+checks. This APK does not activate the recovery host or main database encryption and uses local
+test signing, not store release acceptance.
