@@ -448,3 +448,47 @@ acceptance remain open. Unchanged UI and upstream native producer suites were no
 D-244 strict main builds passed with zero warnings/errors: Windows 17.10s and Android 38.62s.
 
 D-244 complete signed Release APK: artifacts/android-d244-delivery/pro.vafadar.zanance-Signed.apk, 83,696,346 bytes. Signature, pro.vafadar.zanance package, API 24/36, arm64-v8a/x86_64 and both embedded assembly stores verified. Solution test outputs cleaned successfully after terminal checks. Local test signing is not phone/iOS/store acceptance; main protection registration stays inactive.
+
+### D-245 — Authenticate retained native references before recovery import
+
+ProfileRecoveryReferenceVerifier supplies the concrete read-only reference check for captured native
+recovery. It reads actual stable identities and strict restore ancestry, rejects unknown database
+namespace entries and missing selected candidates, and requires selected restored journals plus
+retained before-restore/preference references. Existing candidate, initial rollback, before-restore
+and preference databases are reopened with the owned recovered DEK, reviewed cipher version,
+cipher_integrity_check and full integrity_check. Preference capsules also pass their actual typed,
+bound allowlisted ReadAsync validation; no settings replay occurs during key verification.
+
+Matching device safety references require complete AES-GCM authentication, not only an untrusted
+header. Foreign headers never cause foreign native key access. Safety-only generations can prove
+authenticated retained reference without pretending to be financial database generations. Keys
+with no authenticated reference fail. All decoded package/key buffers are cleared; native file/root
+identities, lengths, fingerprints, SQLite sidecars, namespace listings, identities and ancestry are
+rechecked after validation. Caller-owned drained access and actual private-root effects remain mandatory.
+
+Five native Windows/private-file cases pass: genuine safety-only reference, tampered content refusal,
+foreign reference refusal, unknown namespace refusal and missing selected generation refusal. These
+cases use actual SQLite metadata and native file capture, not a copied verification algorithm.
+
+The independent signed Release Android caller now uses this verifier in actual ProtectedProfileRecovery.
+It creates two original encrypted profiles, two initial encrypted rollbacks, two real typed encrypted
+preference capsules and two authenticated safety envelopes with separate captured recovery keys. All
+four fixture device envelopes are removed. A cold process verifies every binding before native
+imports and then runs actual covered startup/switching. Main/work balances remain 250/880; no extra
+profile is created. Native file inventory confirms both capsules/rollbacks and safety references.
+Proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-6196395354e94738857ce12275c2ac91.json,
+run 66f9c0a865d041b68b450403a753785b; inventory: artifacts/native-sqlcipher/d245-native-reference-inventory.log.
+The safety fixture proves authenticated codec references, not ZIP manifest/restore acceptance. Its
+preference capsules exercise the existing capsule format on initial candidates; a full multi-restore
+history/pending-restoration corpus and staged/orphan reconciliation remain separate acceptance work.
+
+All 3461 solution tests pass with zero failures/skips (2m55.599s). Final independent Android strict
+Release AOT/trim build has zero warnings/errors (67.48s); Windows strict main build is clean (17.17s).
+No UI/schema/permission or portable backup behavior changed. Main registration remains plaintext.
+Final recovery UI/authentication, complete restore/crash corpus, reference-aware generation/alias
+retention, final provider/adoption/OS policy and platform/provider/device gates remain open. Unchanged
+UI matrices and upstream native producer suites were not repeated.
+
+D-245 strict main Android build passed with zero warnings/errors (39.69s).
+
+D-245 complete signed Release APK: artifacts/android-d245-delivery/pro.vafadar.zanance-Signed.apk, 83,262,000 bytes. Signature, pro.vafadar.zanance package, API 24/36, arm64-v8a/x86_64 and both complete embedded assembly stores verified. Test outputs cleaned successfully after terminal checks. Local signing is not store/phone/iOS acceptance; main protection remains inactive.

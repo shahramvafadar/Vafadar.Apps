@@ -128,14 +128,11 @@ internal static class ProfileCreationCompatibility
                     recoveryCatalogue!, (IDatabaseGenerationKeyRecovery)keys,
                     async (binding, original, candidate, capturedOwner, ct) =>
                     {
-                        var identities = new SqliteDatabaseIdentityCatalogue(identityPath, capturedOwner.Validate);
-                        var profile = (await identities.ReadAsync(ct)).Single(row => row.ProfileId == binding.ProfileId);
-                        var privateLocation = new LocalDatabaseLocation<ZananceDbContext>(original);
-                        using var privateOwner = await privateLocation.Access.AcquireExclusiveAsync(ct);
-                        using var verified = await SqlCipherNewProfile.OpenAsync(privateLocation, identities, profile.LegacyProfileId, original, false,
-                            new VerifiedKeys(binding, candidate), durability, (_, _) => throw new IOException("Recovery cannot create replacement schema."),
-                            privateOwner, capturedOwner.Validate, 16 * 1024 * 1024, "4.19.0", ct);
-                        if (verified.Binding != binding) throw new IOException("Recovery verification differs from captured binding.");
+                        var roots = new Dictionary<string, string> { ["database"] = folder, ["keys"] = folder,
+                            ["portable"] = Path.Combine(folder, "retirement-portable"), ["safety"] = Path.Combine(folder, "retirement-safety") };
+                        var verifier = new ProfileRecoveryReferenceVerifier(new(identityPath, capturedOwner.Validate),
+                            new AndroidProfileRetirementFiles(roots, capturedOwner.Validate), durability, ["fixture.culture"], "4.19.0", 16 * 1024 * 1024, capturedOwner.Validate);
+                        await verifier.VerifyAsync(binding, original, candidate, ct);
                     });
                 var secret = Enumerable.Range(1, 32).Select(value => (byte)value).ToArray();
                 try { await recoveryService.RecoverAsync(secret, owner); }
@@ -254,7 +251,20 @@ internal static class ProfileCreationCompatibility
                     return "{\"ActualTwoProfileFixture\":true,\"NativeWrappingAliasRemoved\":true,\"BothOriginalReadsRefused\":true,\"OriginalEnvelopesRetained\":true}";
                 }
                 foreach (var row in captured)
-                    File.Delete(Path.Combine(folder, $"{row.ProfileId:N}-{row.CandidateGeneration:N}.key"));
+                {
+                    var original = row.LegacyProfileId.Length == 0 ? main : Path.Combine(folder, "zanance-" + row.LegacyProfileId + ".db");
+                    var capsule = new SqlCipherRestorePreferences(original + "." + row.CandidateGeneration.ToString("N") + ".cipher.db.preferences.cipher.db",
+                        row.InitialCandidateKey, keys, durability, "4.19.0", ["fixture.culture"]);
+                    await capsule.CreateNewAsync(new(new() { ["fixture.culture"] = "en-GB" }, new() { ["fixture.culture"] = "de-DE" }), recoveryOwner.Validate);
+                    var safety = await new DeviceKeySafetyCopyProtection(row.ProfileId, row.InstallationId, keys, recoveryOwner.Validate)
+                        .ProtectAsync("Fictitious authenticated safety reference"u8.ToArray(), default);
+                    try { await File.WriteAllBytesAsync(Path.Combine(folder, "retirement-safety", row.ProfileId.ToString("N") + ".vbs"), safety); }
+                    finally { CryptographicOperations.ZeroMemory(safety); }
+                }
+                // Remove only the independent fixture's captured DB and safety envelopes, so cold
+                // reference authentication must use actual public/private recovery material for all keys.
+                foreach (var binding in await recoveryCatalogue!.ReadBindingsAsync())
+                    File.Delete(Path.Combine(folder, $"{binding.ProfileId:N}-{binding.GenerationId:N}.key"));
                 await durability.SynchronizeDirectoryAsync(default);
                 return "{\"ActualTwoProfileFixture\":true,\"BothDeviceEnvelopesMissing\":true}";
             }

@@ -681,3 +681,10 @@ native alias-loss recovery plus a later cold generation read passed; the third o
 before the same process's successful result was read without restart. All 3456 tests passed; see
 D-244/device-key guide for exact negative and positive evidence. Final protection/adoption and
 reference-aware alias retention remain open; main registration remains plaintext.
+
+D-245 adds concrete read-only recovery reference authentication for current/rollback/preference
+cipher databases and separately keyed safety references, with exact native object/namespace rechecks.
+Five native-file cases and all 3461 tests pass. Actual Android cold all-profile recovery now verifies
+two databases/rollbacks/capsules and two safety references after removal of all four fixture envelopes;
+see the decision/device-key guide for proof and corpus limits. Main protection remains inactive;
+full restore/crash/staged/orphan corpus, final recovery UI/retention/adoption/OS gates remain open.
