@@ -17,6 +17,11 @@ internal static class GenerationMigrationCompatibility
     /// <summary>Creates a real original model or resumes/interrupts its captured native migration.</summary>
     internal static async Task<string> RunAsync(string folder, string phase)
     {
+        if (phase is "alias-loss-create" or "alias-loss-reopen")
+        {
+            SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
+            return await ProfileCreationCompatibility.RunAsync(folder, phase == "alias-loss-create", retirement: true, retirementRecovery: true, allProfileRecovery: true, wrappingKeyLoss: true);
+        }
         if (phase is "all-profile-recovery-create" or "all-profile-recovery-reopen")
         {
             SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());

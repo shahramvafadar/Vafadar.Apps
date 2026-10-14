@@ -23,7 +23,7 @@ namespace Vafadar.SqlCipher.Compatibility.Android;
 internal static class ProfileCreationCompatibility
 {
     /// <summary>Prepares a new original through the product flow or verifies both originals after a cold restart.</summary>
-    internal static async Task<string> RunAsync(string folder, bool create, bool retirement = false, bool creationResume = false, bool retirementRecovery = false, bool recoveredRetirement = false, bool allProfileRecovery = false)
+    internal static async Task<string> RunAsync(string folder, bool create, bool retirement = false, bool creationResume = false, bool retirementRecovery = false, bool recoveredRetirement = false, bool allProfileRecovery = false, bool wrappingKeyLoss = false)
     {
         if (create) { if (Directory.Exists(folder)) throw new IOException("Use a fresh profile-creation fixture."); Directory.CreateDirectory(folder); }
         var main = Path.Combine(folder, ZananceApp.DatabaseFileName);
@@ -221,10 +221,47 @@ internal static class ProfileCreationCompatibility
             runtime.Session.Close(recoveryOwner);
             if (create)
             {
-                foreach (var row in await new SqliteDatabaseIdentityCatalogue(identityPath, recoveryOwner.Validate).ReadAsync())
+                var captured = await new SqliteDatabaseIdentityCatalogue(identityPath, recoveryOwner.Validate).ReadAsync();
+                if (wrappingKeyLoss)
+                {
+                    // Only this independent package's fictitious installation alias is removed. Original
+                    // envelopes stay byte-for-byte intact; device/global security settings are untouched.
+                    var installationId = captured[0].InstallationId;
+                    if (captured.Any(row => row.InstallationId != installationId)) throw new IOException("Fixture installation differs.");
+                    using var native = Java.Security.KeyStore.GetInstance("AndroidKeyStore")!; native.Load(null);
+                    var alias = AndroidDatabaseKeyProtector.GetWrappingKeyAlias(installationId);
+                    if (!native.ContainsAlias(alias)) throw new IOException("Fixture wrapping alias is missing before loss.");
+                    native.DeleteEntry(alias);
+                    if (native.ContainsAlias(alias)) throw new IOException("Fixture wrapping alias survived deletion.");
+                    foreach (var row in captured)
+                    {
+                        var refused = false;
+                        try { var key = await keys.ReadAsync(row.InitialCandidateKey, default); CryptographicOperations.ZeroMemory(key); }
+                        catch (CryptographicException) { refused = true; }
+                        if (!refused) throw new IOException("Unavailable native wrapping key did not refuse original read.");
+                        var path = Path.Combine(folder, $"{row.ProfileId:N}-{row.CandidateGeneration:N}.key");
+                        await File.WriteAllTextAsync(path + ".fixture.sha256", Convert.ToHexStringLower(SHA256.HashData(await File.ReadAllBytesAsync(path))));
+                    }
+                    return "{\"ActualTwoProfileFixture\":true,\"NativeWrappingAliasRemoved\":true,\"BothOriginalReadsRefused\":true,\"OriginalEnvelopesRetained\":true}";
+                }
+                foreach (var row in captured)
                     File.Delete(Path.Combine(folder, $"{row.ProfileId:N}-{row.CandidateGeneration:N}.key"));
                 await durability.SynchronizeDirectoryAsync(default);
                 return "{\"ActualTwoProfileFixture\":true,\"BothDeviceEnvelopesMissing\":true}";
+            }
+            if (wrappingKeyLoss)
+            {
+                var rows = await new SqliteDatabaseIdentityCatalogue(identityPath, recoveryOwner.Validate).ReadAsync();
+                foreach (var row in rows)
+                {
+                    var path = Path.Combine(folder, $"{row.ProfileId:N}-{row.CandidateGeneration:N}.key");
+                    if (Convert.ToHexStringLower(SHA256.HashData(await File.ReadAllBytesAsync(path))) != await File.ReadAllTextAsync(path + ".fixture.sha256"))
+                        throw new IOException("Native alias recovery changed an original envelope.");
+                }
+                using var native = Java.Security.KeyStore.GetInstance("AndroidKeyStore")!; native.Load(null);
+                if (native.ContainsAlias(AndroidDatabaseKeyProtector.GetWrappingKeyAlias(rows[0].InstallationId)))
+                    throw new IOException("Recovery silently recreated the lost installation alias.");
+                return "{\"NativeAliasLossRecovered\":true,\"OriginalEnvelopeHashesPreserved\":true,\"LostAliasNotRecreated\":true,\"MainBalance\":250,\"WorkBalance\":880,\"NoExtraProfiles\":true}";
             }
             return "{\"AllProfileRecoveryVerifiedBeforeStartup\":true,\"ActualCoveredStartup\":true,\"MainBalance\":250,\"WorkBalance\":880,\"NoExtraProfiles\":true}";
         }

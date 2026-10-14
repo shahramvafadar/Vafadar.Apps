@@ -4417,3 +4417,26 @@ final Android/package evidence follows below. Unchanged native producer/UI check
 D-242 main strict Android build has zero warnings/errors (38.31s).
 
 D-242 delivery APK: artifacts/android-d242-delivery/pro.vafadar.zanance-Signed.apk, 83,257,904 bytes. Signature verification passed; package pro.vafadar.zanance, API 24/36, arm64-v8a/x86_64 and both complete assembly stores were checked. Local test signing is not store or physical-device acceptance. Test output cleanup passed with zero warnings/errors. Main protection remains inactive.
+
+### D-243 — Recover after actual independent Android wrapping-alias loss
+
+The independent Android native caller now has a WrappingKeyLoss scenario. It removes only the
+Keystore alias for its freshly created fictitious installation in the distinct compatibility
+package. It preserves both original encrypted key envelopes and requires actual native reads
+of both bound DEKs to fail. It changes no global/device settings or product security data.
+
+A cold process then runs the actual ProtectedProfileRecovery and protected startup compositions
+from D-242, including native recovered-envelope/receipt publication and real profile switching.
+Both original envelope SHA-256 values remain unchanged, the unavailable installation alias is
+not recreated, no extra profile appears, and main/work balances remain 250/880. This proves actual
+alias absence rather than merely deleted envelope files. It does not establish hardware-backed
+invalidation, biometric change behavior, future-generation alias lifecycle or physical-device acceptance.
+
+Verified independent strict Release AOT/trim build: zero warnings/errors, 55.90s. Actual two-phase
+runtime proof: artifacts/native-sqlcipher/build/android-d/android-migration-proof-679ead1e4b7f46e699024d045d8a8a6d.json,
+run c12bdc1cb2d04abf88b7f9cf93593c31. Script parsing and diff checks passed. No application source,
+provider registration, UI, permission, financial schema or APK changed. Therefore unrelated solution
+suites, main builds, UI matrices and native producer suites were not repeated. The complete signed
+D-242 delivery APK remains the current product package; main storage remains plaintext. Final
+recovery/authentication UI, complete retained-reference verification, lifecycle/retention, coupled
+OS backup exclusion and platform/provider/release acceptance remain open.

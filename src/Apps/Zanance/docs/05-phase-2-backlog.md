@@ -1602,3 +1602,10 @@ actual covered startup, without quota filtering, session publication or catalogu
 missing/changed authority fails; original buffers are cleared. See decision log for terminal proof;
 main encryption, concrete full retained-reference verification, recovery UX/alias/retention/OS/
 platform acceptance remain open. Whole SEC/goal scope is not declared complete.
+
+D-243: actual Android wrapping-alias loss in the independent fictitious package is now verified,
+including refused original reads, cold all-profile recovery/startup, unchanged original envelopes,
+no alias recreation and balances 250/880. Strict native Release build is clean; see the decision
+log and device-key guide for exact runtime proof. Product code/APK remain D-242/plaintext. Future
+alias lifecycle, retained-reference validation, final recovery UI/adoption/OS and device/iOS gates
+remain open; no unrelated test/build/UI suite was repeated.
