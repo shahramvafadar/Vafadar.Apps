@@ -8,6 +8,25 @@ public sealed class WindowsKeyRecoveryTests
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
+    [Fact, Trait("AT", "AT-249")]
+    public async Task Verified_recovery_preserves_a_torn_receipt_stage_and_publishes_new_final_authority()
+    {
+        if (!OperatingSystem.IsWindows()) return;
+        using var directory = new TemporaryDirectory(); var store = new WindowsGenerationKeyStore(directory.Path, () => { });
+        var binding = new DatabaseKeyBinding(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()); var key = RandomNumberGenerator.GetBytes(32);
+        var stage = directory.Combine($"{binding.ProfileId:N}-{binding.GenerationId:N}.key.recovered.receipt.creating");
+        var torn = new byte[] { 1, 2, 3 }; await File.WriteAllBytesAsync(stage, torn, Ct);
+        try
+        {
+            await store.ImportRecoveredAsync(binding, key, (owned, _) => { Assert.Equal(key, owned.ToArray()); return Task.CompletedTask; }, Ct);
+            Assert.Equal(torn, await File.ReadAllBytesAsync(stage, Ct));
+            var reopened = await new WindowsGenerationKeyStore(directory.Path, () => { }).ReadAsync(binding, Ct);
+            try { Assert.Equal(key, reopened); } finally { CryptographicOperations.ZeroMemory(reopened); }
+            Assert.DoesNotContain(Directory.EnumerateFiles(directory.Path), file => file.StartsWith(stage + ".", StringComparison.Ordinal));
+        }
+        finally { CryptographicOperations.ZeroMemory(key); }
+    }
+
     [Fact, Trait("AT", "AT-240")]
     public async Task Verified_recovery_preserves_unavailable_original_and_cold_read_uses_same_key()
     {

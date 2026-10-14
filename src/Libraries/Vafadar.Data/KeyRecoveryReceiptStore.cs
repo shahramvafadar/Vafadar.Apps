@@ -17,7 +17,16 @@ public sealed class KeyRecoveryReceiptStore(string directory, IProfileRetirement
             var stage = receiptName + ".creating";
             if (!names.Contains(stage, StringComparer.Ordinal)) await createPrivateFile(stage, expected, ct).ConfigureAwait(false);
             var stored = await files.ReadAsync("keys", stage, KeyRecoveryReceipt.MaximumBytes, prefix: false, ct).ConfigureAwait(false);
-            if (!stored.AsSpan().SequenceEqual(expected)) throw new IOException("Staged recovery receipt differs and cannot be replaced.");
+            if (!stored.AsSpan().SequenceEqual(expected))
+            {
+                // Explicit native recovery already verified the owned DEK against retained finance.
+                // Preserve an interrupted receipt object; a fresh no-replace attempt cannot overwrite
+                // either that object or an already published receipt. Reads still require final authority.
+                stage = receiptName + ".creating." + Guid.NewGuid().ToString("N");
+                await createPrivateFile(stage, expected, ct).ConfigureAwait(false);
+                stored = await files.ReadAsync("keys", stage, KeyRecoveryReceipt.MaximumBytes, prefix: false, ct).ConfigureAwait(false);
+                if (!stored.AsSpan().SequenceEqual(expected)) throw new IOException("New recovery receipt readback differs.");
+            }
             await durability.SynchronizeFileAsync(Path.Combine(directory, stage), ct).ConfigureAwait(false);
             await durability.SynchronizeDirectoryAsync(ct).ConfigureAwait(false); ct.ThrowIfCancellationRequested();
             File.Move(Path.Combine(directory, stage), Path.Combine(directory, receiptName), overwrite: false);

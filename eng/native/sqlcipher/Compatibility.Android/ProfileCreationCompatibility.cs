@@ -264,7 +264,10 @@ internal static class ProfileCreationCompatibility
                 // Remove only the independent fixture's captured DB and safety envelopes, so cold
                 // reference authentication must use actual public/private recovery material for all keys.
                 foreach (var binding in await recoveryCatalogue!.ReadBindingsAsync())
+                {
                     File.Delete(Path.Combine(folder, $"{binding.ProfileId:N}-{binding.GenerationId:N}.key"));
+                    await File.WriteAllBytesAsync(Path.Combine(folder, $"{binding.ProfileId:N}-{binding.GenerationId:N}.key.recovered.receipt.creating"), [1, 2, 3]);
+                }
                 await durability.SynchronizeDirectoryAsync(default);
                 return "{\"ActualTwoProfileFixture\":true,\"BothDeviceEnvelopesMissing\":true}";
             }

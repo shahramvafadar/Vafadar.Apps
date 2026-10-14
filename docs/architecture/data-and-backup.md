@@ -1971,3 +1971,9 @@ current-UID file descriptors only. Actual normal/cold/negative key-store observa
 creation is denied by the emulator, explicitly not coverage of its read-refusal branch. Same-key
 negative continuation and failed harness evidence are retained. All 3463 tests pass. Final recovery/
 cleanup/retention/adoption/OS and external platform gates remain open; main remains plaintext.
+
+D-249 lets explicitly verified recovery preserve a mismatching bounded uncommitted receipt stage and
+publish a separate read-back/synchronized receipt attempt without replacing final authority. Actual
+Windows DPAPI and four Android staged-receipt recoveries pass; all old stages remain unchanged and
+main/work balances remain 250/880. All 3464 tests pass. Reconciliation/retention/final adoption remain
+open; published/oversized/unsafe receipt authority is not replaced and main registration remains plaintext.

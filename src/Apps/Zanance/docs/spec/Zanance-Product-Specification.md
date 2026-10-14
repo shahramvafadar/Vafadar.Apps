@@ -4927,3 +4927,38 @@ physical-device/iOS/provider/release acceptance. No unchanged UI or upstream pro
 D-248 strict main Android build has zero warnings/errors (40.62s).
 
 D-248 complete signed Release APK: artifacts/android-d248-delivery/pro.vafadar.zanance-Signed.apk, 83,266,096 bytes. Signature, pro.vafadar.zanance package, API 24/36, arm64-v8a/x86_64 and both complete embedded assembly stores verified. Test outputs cleaned after terminal checks. Local signing is not phone/iOS/store acceptance; main protection remains inactive.
+
+### D-249 — Continue verified recovery past an interrupted receipt stage
+
+Explicit native recovery verifies the owned DEK against retained finance before receipt preparation.
+When an existing uncommitted receipt stage has different bounded bytes, KeyRecoveryReceiptStore now
+preserves it and creates a separate unique no-replace receipt stage. The new stage is read back,
+synchronized and renamed without replacing final authority. Published receipts still require the
+same exact native object/MAC and are never overwritten. Correct legacy stages still resume normally.
+This does not infer ownership of or delete malformed objects, repair oversized/unsafe files or replace
+a published receipt. Cipher-key staging itself remains under its existing stricter continuation.
+
+One new actual Windows DPAPI/private-file case preserves torn stage bytes, publishes final authority,
+cold-reads the same DEK and leaves no new unique receipt stage. Seven focused cases pass. The first
+assertion used a Windows wildcard that also matched the retained legacy stage; an exact ordinal
+predicate fixed the test, then the required collection assertion was aligned with the strict analyzer.
+Original negative test/compile logs are retained; no cryptographic/provider code was changed for them.
+All 3464 solution tests pass, zero failures/skips (2m48.082s).
+
+The independent signed Release AOT/trim Android caller puts a three-byte interrupted receipt stage
+beside each of its four removed fixture envelopes. Actual all-profile recovery authenticates native
+references, imports the same keys, publishes valid receipts and opens original main/work balances
+250/880 through covered startup and real switching. All four old stages remain with the SHA-256 of
+bytes 1/2/3, verified from the same native private root after success. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-d60c0cd29ac9426d9008a60df6307368.json,
+run cf79bce63f8546939f2686cebd92a45a; retained stages: artifacts/native-sqlcipher/d249-retained-stage-proof.log.
+Independent strict native build is clean (59.44s); strict Windows main build is clean (21.99s).
+
+Preserved rejected staging still needs reference-aware reconciliation before retirement; this is
+functional explicit recovery continuation, not finished cleanup/retention. No schema/model/UI/permission
+change. Main protection remains inactive; final recovery UI/provider/OS adoption and platform/device/
+provider/release acceptance stay open. Unchanged UI and upstream producer suites were not repeated.
+
+D-249 strict main Android build is clean (39.64s), zero warnings/errors.
+
+D-249 complete signed Release APK: artifacts/android-d249-delivery/pro.vafadar.zanance-Signed.apk, 83,704,538 bytes. Signature, pro.vafadar.zanance package, API 24/36, arm64-v8a/x86_64 and both complete embedded assembly stores verified. Test outputs cleaned after terminal checks. Local signing is not phone/iOS/store acceptance; main protection remains inactive.
