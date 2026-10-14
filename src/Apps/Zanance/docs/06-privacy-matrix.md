@@ -688,3 +688,21 @@ Five native-file cases and all 3461 tests pass. Actual Android cold all-profile 
 two databases/rollbacks/capsules and two safety references after removal of all four fixture envelopes;
 see the decision/device-key guide for proof and corpus limits. Main protection remains inactive;
 full restore/crash/staged/orphan corpus, final recovery UI/retention/adoption/OS gates remain open.
+
+### D-263 — Android protected application and final OS transfer policy
+
+Original Android financial storage and internal restore safety use official SQLCipher with device-bound
+keys and optional recorded recovery. Recovery codes are ephemeral and never logged/portable preferences;
+PIN/device security/credentials remain outside the portable allowlist. Explicit backup recovery retains
+old financial files, activates a new private root and preserves device access requirements. Password
+protection of portable files remains optional, with the existing readable-file explanation.
+
+Final OD-10 disables Auto Backup and excludes all credential/device-protected app root/file/database/
+preferences and app external domains in legacy, cloud and device-transfer rules. Cache is already
+platform-excluded. The exact signed Release package's manifest/XML rules were checked. These exclusions
+are coupled to encrypted Android adoption, not the rejected interim restriction. New devices restore
+Zanance backups. Native retirement preserves unrelated/staged/financial-ancestry references and removes
+only captured authorized safety/profile objects. [Evidence](quality/android-protected-storage.md).
+
+Windows/iOS adoption, actual phone/OEM transfer, real provider and publication acceptance remain open.
+Historical plaintext/probe statements above describe their original commits, not current Android state.

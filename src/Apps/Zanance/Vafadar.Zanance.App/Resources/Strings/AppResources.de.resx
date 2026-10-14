@@ -5079,7 +5079,7 @@ Bestandsmenge: Gewicht oder Stückzahl zählt, nicht der Preis. Ein Preisanstieg
     <value>Sicherung</value>
   </data>
   <data name="About_FilesBackup" xml:space="preserve">
-    <value>Eine Sicherung enthält die Daten des aktuellen Profils, darunter Konten, Buchungen, Planungen, Budgets, Wechselkurse, Ziele, Bestände, gespeicherte Prognosen, Anzeigeeinheiten und das Layout der Startseite. Lokale und Cloud-Sicherungen sind bei aktiviertem Passwortschutz verschlüsselt; er ist für beide optional. Geräteweite Einstellungen wie Darstellung, Sprache und Ziffernanzeige sind nicht enthalten.</value>
+    <value>Ein Backup enthält die Daten des aktuellen Profils und übertragbare Anzeigeoptionen: Sprache, Kalender, regionales Format, Ziffernform, Wochenbeginn und Feiertagsregion. Der Passwortschutz ist für lokale und Cloud-Dateien optional. App-Design, PIN, Gerätesicherheit und Anmeldedaten bleiben auf diesem Gerät.</value>
   </data>
   <data name="About_FilesCsvTitle" xml:space="preserve">
     <value>CSV-Export</value>
@@ -6261,5 +6261,56 @@ Kategorielimits:
   </data>
   <data name="Startup_Retry" xml:space="preserve">
     <value>Erneut versuchen</value>
+  </data>
+  <data name="Recovery_Title" xml:space="preserve">
+    <value>Datenbankwiederherstellung</value>
+  </data>
+  <data name="Recovery_UseCode" xml:space="preserve">
+    <value>Mit Ihrem Wiederherstellungscode wiederherstellen</value>
+  </data>
+  <data name="Recovery_CodePrompt" xml:space="preserve">
+    <value>Geben Sie den bei der Einrichtung notierten Wiederherstellungscode ein. Ihre App-PIN wird dadurch nicht entfernt.</value>
+  </data>
+  <data name="Recovery_Confirm" xml:space="preserve">
+    <value>Wiederherstellen</value>
+  </data>
+  <data name="Recovery_Failed" xml:space="preserve">
+    <value>Die Wiederherstellung konnte nicht abgeschlossen werden. Prüfen Sie Ihren Code und behalten Sie Ihre vorhandenen Dateien.</value>
+  </data>
+  <data name="Recovery_Setup" xml:space="preserve">
+    <value>Optionalen Wiederherstellungscode einrichten</value>
+  </data>
+  <data name="Recovery_SetupHint" xml:space="preserve">
+    <value>Notieren Sie diesen Code vor dem Speichern an einem sicheren Ort außerhalb dieses Geräts. Er stellt diese Installation nach Verlust des Geräteschlüssels wieder her. Behalten Sie ein Zanance-Backup für ein neues Telefon; Backup-Passwörter bleiben optional.</value>
+  </data>
+  <data name="Recovery_Code" xml:space="preserve">
+    <value>Wiederherstellungscode</value>
+  </data>
+  <data name="Recovery_Recorded" xml:space="preserve">
+    <value>Ich habe diesen Code außerhalb dieses Geräts notiert</value>
+  </data>
+  <data name="Recovery_AlreadyEnabled" xml:space="preserve">
+    <value>Die Wiederherstellung ist bereits eingerichtet. Behalten Sie Ihren ursprünglichen Code; hier wird kein neuer erstellt.</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Title" xml:space="preserve">
+    <value>Datenbankwiederherstellung</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Text" xml:space="preserve">
+    <value>Notieren Sie diesen Code vor dem Speichern an einem sicheren Ort außerhalb dieses Geräts. Er stellt diese Installation nach Verlust des Geräteschlüssels wieder her. Behalten Sie ein Zanance-Backup für ein neues Telefon; Backup-Passwörter bleiben optional.</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Example" xml:space="preserve">
+    <value>Wenn der Geräteschlüssel verloren geht, verwenden Sie den notierten Code auf dem geschützten Startbildschirm. Stellen Sie auf einem neuen Telefon ein Zanance-Backup wieder her.</value>
+  </data>
+  <data name="Recovery_FromBackup" xml:space="preserve">
+    <value>Aus einem Zanance-Backup wiederherstellen</value>
+  </data>
+  <data name="Recovery_BackupWarning" xml:space="preserve">
+    <value>Dieses Backup stellt ein Profil in einer neuen verschlüsselten Installation wieder her. Vorhandene Dateien und andere alte Profile bleiben unverändert auf diesem Gerät archiviert. Die App-PIN bleibt gültig. Wählen Sie Ihre Zanance-Backupdatei; geben Sie nur bei einer geschützten Datei deren Passwort ein.</value>
+  </data>
+  <data name="Recovery_BackupPassword" xml:space="preserve">
+    <value>Passwort der Backupdatei, falls geschützt</value>
+  </data>
+  <data name="Recovery_BackupFailed" xml:space="preserve">
+    <value>Die Wiederherstellung konnte nicht abgeschlossen werden. Prüfen Sie das Backup und dessen Passwort. Vorhandene Dateien bleiben erhalten. Wenn das Speichern unterbrochen wurde, schließen Sie diese Seite und wählen Sie auf dem Startbildschirm „Erneut versuchen“, um fortzufahren.</value>
   </data>
 </root>

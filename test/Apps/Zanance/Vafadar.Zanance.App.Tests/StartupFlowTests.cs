@@ -10,6 +10,21 @@ public sealed class StartupFlowTests
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
+    [Fact, Trait("AT", "AT-238")]
+    public async Task Pending_backup_recovery_excludes_startup_and_other_recovery_until_its_explicit_result()
+    {
+        var held = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var calls = 0; var codes = 0;
+        var vm = new StartupViewModel(() => ++calls == 1 ? Task.FromException(new IOException("Fictitious missing key")) : Task.CompletedTask,
+            () => { codes++; return Task.FromResult(true); }, () => held.Task);
+        await vm.InitializeAsync(); Assert.True(vm.BackupRecoveryAvailable);
+        var restore = vm.RestoreBackupCommand.ExecuteAsync(null);
+        await vm.InitializeAsync(); await vm.RecoverCommand.ExecuteAsync(null);
+        Assert.Equal(1, calls); Assert.Equal(0, codes); Assert.True(vm.IsBusy);
+        held.SetResult(true); await restore;
+        Assert.Equal(2, calls); Assert.False(vm.HasFailed); Assert.False(vm.IsBusy);
+    }
+
     [Fact, Trait("AT", "AT-222")]
     public async Task Pending_startup_is_covered_and_cannot_start_another_attempt_or_repeat_completed_preparation()
     {
@@ -30,6 +45,30 @@ public sealed class StartupFlowTests
         await vm.InitializeAsync(); Assert.True(vm.HasFailed); Assert.False(vm.IsBusy); Assert.Equal(1, calls);
         await vm.InitializeCommand.ExecuteAsync(null);
         Assert.False(vm.HasFailed); Assert.False(vm.IsBusy); Assert.Equal(2, calls);
+    }
+
+    [Fact, Trait("AT", "AT-238")]
+    public async Task Recovery_is_available_only_after_failure_and_success_retries_original_preparation_once()
+    {
+        var calls = 0; var recoveries = 0;
+        var vm = new StartupViewModel(() => ++calls == 1 ? Task.FromException(new IOException("Missing fictitious key")) : Task.CompletedTask,
+            () => { recoveries++; return Task.FromResult(true); });
+        Assert.True(vm.RecoveryAvailable);
+        await vm.RecoverCommand.ExecuteAsync(null); Assert.Equal(0, recoveries);
+        await vm.InitializeAsync(); Assert.True(vm.HasFailed);
+        await vm.RecoverCommand.ExecuteAsync(null);
+        Assert.Equal(1, recoveries); Assert.Equal(2, calls); Assert.False(vm.HasFailed);
+        await vm.RecoverCommand.ExecuteAsync(null); Assert.Equal(1, recoveries);
+    }
+
+    [Theory, InlineData(false), InlineData(true), Trait("AT", "AT-238")]
+    public async Task Cancelled_or_failed_recovery_keeps_startup_covered_without_repeating_preparation(bool fail)
+    {
+        var calls = 0;
+        var vm = new StartupViewModel(() => { calls++; return Task.FromException(new IOException("Fictitious startup failure")); },
+            () => fail ? Task.FromException<bool>(new IOException("Fictitious recovery failure")) : Task.FromResult(false));
+        await vm.InitializeAsync(); await vm.RecoverCommand.ExecuteAsync(null);
+        Assert.True(vm.HasFailed); Assert.False(vm.IsBusy); Assert.Equal(1, calls);
     }
 
     [Fact, Trait("AT", "AT-222")]

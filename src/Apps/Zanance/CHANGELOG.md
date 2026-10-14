@@ -6,6 +6,18 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Android protected local storage
+
+- Encrypt Android financial databases and internal restore safety data with device-bound keys.
+- Offer an optional recorded recovery code and explicit recovery from a Zanance backup after key loss.
+- Preserve existing profiles and records through interrupted migration, recovery and profile cleanup.
+- Restore a new phone from a Zanance backup; sensitive Android app storage is excluded from automatic
+  system backup and device transfer. Backup-file password protection remains optional.
+- Show a clear explanation when recovery is already configured, without an empty code field or Save.
+- Grow long recovery actions and accurately explain which display choices are included in a backup.
+- Apply the October security fixes to the existing PDF cryptography dependencies and app runtime.
+
+
 ### Fixed - Older-installation startup ordering (D-262)
 
 - Existing data with the earlier app name is moved under covered startup after active database work

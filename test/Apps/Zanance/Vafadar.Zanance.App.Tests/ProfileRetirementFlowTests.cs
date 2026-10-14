@@ -120,6 +120,40 @@ public sealed class ProfileRetirementFlowTests
         Assert.Equal(2, fixture.Profiles.All.Count); Assert.True(File.Exists(stage)); Assert.True(File.Exists(fixture.TargetKey));
     }
 
+    [Fact, Trait("AT", "AT-236")]
+    public async Task Failed_native_reference_capture_preserves_catalogue_and_retries_the_same_authorized_inventory()
+    {
+        if (!OperatingSystem.IsWindows()) return;
+        using var fixture = new Fixture(); var attempts = 0; Guid operation = Guid.Empty;
+        fixture.NativeCapture = async (state, journal, mayCreate, ct) =>
+        {
+            Assert.True(mayCreate); Assert.Equal(ProfileRetirementPhase.Authorized, state.Phase);
+            Assert.Equal(state, await journal.ReadAsync(ct)); Assert.NotEmpty(await journal.ReadArtifactsAsync(ct));
+            if (operation == Guid.Empty) operation = state.OperationId; else Assert.Equal(operation, state.OperationId);
+            if (++attempts == 1) throw new IOException("Injected native alias capture failure.");
+        };
+        await fixture.InitializeAsync();
+        await Assert.ThrowsAsync<IOException>(() => fixture.Profiles.DeleteAsync(fixture.Work, Ct));
+        Assert.Equal(2, fixture.Profiles.All.Count); Assert.Equal(0, fixture.Persistence.Writes);
+        Assert.True(File.Exists(fixture.Candidate)); Assert.True(File.Exists(fixture.TargetKey));
+        await fixture.Profiles.DeleteAsync(fixture.Work, Ct);
+        Assert.Equal(2, attempts); Assert.Single(fixture.Profiles.All); Assert.False(File.Exists(fixture.TargetKey));
+    }
+
+    [Fact, Trait("AT", "AT-236")]
+    public async Task Native_capture_retry_after_failed_catalogue_persistence_cannot_create_missing_authority()
+    {
+        if (!OperatingSystem.IsWindows()) return;
+        using var fixture = new Fixture(); var permissions = new List<bool>();
+        fixture.NativeCapture = (_, _, mayCreate, _) => { permissions.Add(mayCreate); return Task.CompletedTask; };
+        await fixture.InitializeAsync(); fixture.Persistence.Fail = true;
+        await Assert.ThrowsAsync<IOException>(() => fixture.Profiles.DeleteAsync(fixture.Work, Ct));
+        fixture.Persistence.Fail = false;
+        using (var owner = await fixture.Location.Access.AcquireExclusiveAsync(Ct))
+            await fixture.Host.ResumePendingAsync(fixture.Profiles, fixture.Location, owner, Ct);
+        Assert.Equal(new[] { true, false }, permissions); Assert.False(File.Exists(fixture.TargetKey));
+    }
+
     private sealed class Fixture : IDisposable
     {
         private readonly FlowFixture flow = new();
@@ -133,6 +167,7 @@ public sealed class ProfileRetirementFlowTests
         internal string Candidate = null!, TargetKey = null!;
         internal readonly Runtime Runtime = new();
         internal readonly Persistence Persistence = new();
+        internal Func<ProfileRetirementCheckpoint, SqliteProfileRetirementJournal, bool, CancellationToken, Task>? NativeCapture;
         internal async Task InitializeAsync(bool withRecovery = false, bool withRecoveredEntry = false)
         {
             if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException();
@@ -143,7 +178,7 @@ public sealed class ProfileRetirementFlowTests
             var keys = new WindowsGenerationKeyStore(roots["keys"], () => { });
             Host = new(flow.Directory.Path, flow.Directory.Combine("identities.sqlite"), Persistence, keys, native, files,
                 (state, journal, ct) => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return files.RemoveAsync(state, journal, native, ct); },
-                (journal, ct) => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return files.VerifyRemovedAsync(journal, ct); });
+                (journal, ct) => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return files.VerifyRemovedAsync(journal, ct); }, captureNativeReferences: NativeCapture);
             Profiles = new(Location, flow.Store, flow.Preferences, Runtime, flow.Translator, profileRetirement: Host);
             Work = Profiles.Create("Fictitious reviewed work");
             Identities = new(flow.Directory.Combine("identities.sqlite"), () => { }); await Identities.CreateNewAsync(["", Work.Id], native, Ct);
@@ -170,7 +205,7 @@ public sealed class ProfileRetirementFlowTests
                 finally { System.Security.Cryptography.CryptographicOperations.ZeroMemory(key); }
                 Host = new(flow.Directory.Path, flow.Directory.Combine("identities.sqlite"), Persistence, keys, native, files,
                     (state, journal, ct) => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return files.RemoveAsync(state, journal, native, ct); },
-                    (journal, ct) => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return files.VerifyRemovedAsync(journal, ct); }, Recovery);
+                    (journal, ct) => { if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException(); return files.VerifyRemovedAsync(journal, ct); }, Recovery, NativeCapture);
                 Profiles = new(Location, flow.Store, flow.Preferences, Runtime, flow.Translator, profileRetirement: Host);
             }
         }

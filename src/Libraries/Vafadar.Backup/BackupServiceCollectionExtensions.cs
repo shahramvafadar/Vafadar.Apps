@@ -22,6 +22,8 @@ public static class BackupServiceCollectionExtensions
         services.TryAddSingleton(options);
         services.TryAddSingleton(TimeProvider.System);
         services.TryAddSingleton<IBackupService, BackupService>();
+        services.TryAddSingleton<IBackupPackageReader>(provider => provider.GetRequiredService<IBackupService>() as IBackupPackageReader
+            ?? throw new InvalidOperationException("The registered backup service does not provide bounded portable validation."));
 
         return services;
     }

@@ -1141,3 +1141,18 @@ The first page contains only the untranslated product name, native progress indi
 preparation status. A failed preparation shows generic wrapping feedback and a growing native retry
 button. Financial pages stay unpublished through storage/access preparation. No exception details,
 key values or filesystem instructions appear in this product flow. Native text scaling is retained.
+
+## Android protected recovery surfaces
+
+Covered startup offers recorded-code recovery and explicit Zanance backup recovery after independent
+app-access authorization. A backup form shows the selected file, optional password and an explicit
+confirmation; Cancel retains old data. Failures use translated generic feedback without filesystem,
+cryptographic or credential details. Never offer a new profile as implicit recovery for missing keys.
+
+Settings exposes optional recovery setup with a full help explanation. The user acknowledges recording
+the ephemeral code before Save. A completed enrollment shows only its original-code explanation,
+help and Back; it must not show an empty code field, acknowledgment or disabled Save button.
+Keep native text scaling, growing captions, direction-safe code inputs and at least 44 px native actions.
+The corrected Android Release hierarchy passed en/fa/de in light/dark at 360/412/wide widths.
+Growing startup/Settings/file-selection actions retain original commands and complete captions;
+spoken/pixel/device acceptance remains separately tracked in quality/android-protected-storage.md.

@@ -5046,7 +5046,7 @@ Cantidad de bienes: sigue un peso o número de unidades, no su precio. Una subid
     <value>Copia de seguridad</value>
   </data>
   <data name="About_FilesBackup" xml:space="preserve">
-    <value>La copia contiene los datos del perfil actual: cuentas, transacciones, planes, presupuestos, tipos de cambio, objetivos, bienes, previsiones guardadas, unidades y diseño de Inicio. Las copias locales y en la nube se cifran si activas la contraseña; es opcional para ambas. No incluye preferencias generales del dispositivo, como apariencia, idioma o dígitos.</value>
+    <value>Una copia contiene los datos del perfil actual y las opciones de visualización transferibles: idioma, calendario, formato regional, cifras, inicio de semana y región de festivos. La contraseña es opcional para archivos locales y en la nube. El tema, el PIN, la seguridad y las credenciales permanecen en este dispositivo.</value>
   </data>
   <data name="About_FilesCsvTitle" xml:space="preserve">
     <value>Exportación CSV</value>
@@ -6230,5 +6230,56 @@ Límites por categoría:
   </data>
   <data name="Startup_Retry" xml:space="preserve">
     <value>Volver a intentar</value>
+  </data>
+  <data name="Recovery_Title" xml:space="preserve">
+    <value>Recuperación de la base de datos</value>
+  </data>
+  <data name="Recovery_UseCode" xml:space="preserve">
+    <value>Recuperar con tu código de recuperación</value>
+  </data>
+  <data name="Recovery_CodePrompt" xml:space="preserve">
+    <value>Introduce el código que guardaste al configurar la recuperación. Esto no elimina el PIN de la aplicación.</value>
+  </data>
+  <data name="Recovery_Confirm" xml:space="preserve">
+    <value>Recuperar</value>
+  </data>
+  <data name="Recovery_Failed" xml:space="preserve">
+    <value>No se pudo completar la recuperación. Revisa tu código y conserva tus archivos.</value>
+  </data>
+  <data name="Recovery_Setup" xml:space="preserve">
+    <value>Configurar un código de recuperación opcional</value>
+  </data>
+  <data name="Recovery_SetupHint" xml:space="preserve">
+    <value>Guarda este código en un lugar seguro fuera del dispositivo antes de guardar. Permite recuperar esta instalación si se pierde la clave del dispositivo. Conserva una copia de Zanance para otro teléfono; la contraseña de la copia sigue siendo opcional.</value>
+  </data>
+  <data name="Recovery_Code" xml:space="preserve">
+    <value>Código de recuperación</value>
+  </data>
+  <data name="Recovery_Recorded" xml:space="preserve">
+    <value>He guardado este código fuera del dispositivo</value>
+  </data>
+  <data name="Recovery_AlreadyEnabled" xml:space="preserve">
+    <value>La recuperación ya está configurada. Conserva tu código original; aquí no se crea uno nuevo.</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Title" xml:space="preserve">
+    <value>Recuperación de la base de datos</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Text" xml:space="preserve">
+    <value>Guarda este código en un lugar seguro fuera del dispositivo antes de guardar. Permite recuperar esta instalación si se pierde la clave del dispositivo. Conserva una copia de Zanance para otro teléfono; la contraseña de la copia sigue siendo opcional.</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Example" xml:space="preserve">
+    <value>Si se pierde la clave del dispositivo, usa el código guardado en la pantalla de inicio protegida. En otro teléfono, restaura una copia de Zanance.</value>
+  </data>
+  <data name="Recovery_FromBackup" xml:space="preserve">
+    <value>Recuperar desde una copia de Zanance</value>
+  </data>
+  <data name="Recovery_BackupWarning" xml:space="preserve">
+    <value>Esta copia restaura un perfil en una nueva instalación cifrada. Los archivos existentes y otros perfiles anteriores quedan archivados sin cambios en este dispositivo. El PIN de la aplicación sigue activo. Elige tu archivo de copia de Zanance; introduce una contraseña solo si protegiste ese archivo.</value>
+  </data>
+  <data name="Recovery_BackupPassword" xml:space="preserve">
+    <value>Contraseña de la copia, si está protegida</value>
+  </data>
+  <data name="Recovery_BackupFailed" xml:space="preserve">
+    <value>No se pudo completar la recuperación. Revisa la copia y su contraseña. Los archivos existentes se conservan. Si se interrumpió el guardado, cierra esta página y elige Reintentar en la pantalla de inicio para continuar la recuperación registrada.</value>
   </data>
 </root>

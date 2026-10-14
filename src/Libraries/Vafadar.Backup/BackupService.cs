@@ -16,7 +16,7 @@ namespace Vafadar.Backup;
 /// Only one backup or restore runs at a time. The heavy work – the database snapshot, compression, checksums and the
 /// PBKDF2 key derivation (600,000 iterations) – runs on the thread pool, so a caller on the UI thread stays responsive.
 /// </remarks>
-public sealed class BackupService : IBackupService
+public sealed class BackupService : IBackupService, IBackupPackageReader
 {
     internal const string LastBackupKey = "backup.lastBackupAt";
 
@@ -219,6 +219,31 @@ public sealed class BackupService : IBackupService
     }
 
     /// <inheritdoc />
+    public async Task ReadValidatedPortableAsync(byte[] package, string? password, int maximumBytes,
+        Func<BackupManifest, IReadOnlyDictionary<string, ReadOnlyMemory<byte>>, CancellationToken, Task> consume,
+        CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(package); ArgumentNullException.ThrowIfNull(consume);
+        if (maximumBytes <= 0 || package.Length > (long)maximumBytes + 1024)
+            throw new BackupException(BackupError.InvalidFormat, "Portable recovery package exceeds its bound.");
+        if (DeviceSafetyEncryption.IsEncrypted(package))
+            throw new BackupException(BackupError.InvalidFormat, "Device-local safety copies are not portable key-loss recovery files.");
+        await _gate.WaitAsync(ct).ConfigureAwait(false);
+        try
+        {
+            var (manifest, entries) = await Task.Run(() => OpenCoreAsync(package, password, ct, maximumBytes), ct).ConfigureAwait(false);
+            try
+            {
+                var borrowed = new ReadOnlyDictionary<string, ReadOnlyMemory<byte>>(
+                    entries.ToDictionary(entry => entry.Key, entry => (ReadOnlyMemory<byte>)entry.Value, StringComparer.Ordinal));
+                await consume(manifest, borrowed, ct).ConfigureAwait(false);
+            }
+            finally { foreach (var content in entries.Values) CryptographicOperations.ZeroMemory(content); }
+        }
+        finally { _gate.Release(); }
+    }
+
+    /// <inheritdoc />
     public async Task<BackupManifest> InspectPackageAsync(byte[] package, string? password = null, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(package);
@@ -295,7 +320,7 @@ public sealed class BackupService : IBackupService
     private Task<(BackupManifest Manifest, IReadOnlyDictionary<string, byte[]> Entries)> OpenAsync(byte[] package, string? password, CancellationToken cancellationToken) =>
         Task.Run(() => OpenCoreAsync(package, password, cancellationToken), cancellationToken);
 
-    private async Task<(BackupManifest Manifest, IReadOnlyDictionary<string, byte[]> Entries)> OpenCoreAsync(byte[] package, string? password, CancellationToken cancellationToken)
+    private async Task<(BackupManifest Manifest, IReadOnlyDictionary<string, byte[]> Entries)> OpenCoreAsync(byte[] package, string? password, CancellationToken cancellationToken, int? maximumBytes = null)
     {
         byte[]? decoded = null;
         var originalPackage = package;
@@ -319,7 +344,7 @@ public sealed class BackupService : IBackupService
             }
 
             var result = await BackupPackage.ReadAsync(package, cancellationToken,
-                decoded is not null && DeviceSafetyEncryption.IsEncrypted(originalPackage) ? DeviceSafetyEncryption.MaximumPackageBytes : null);
+                maximumBytes ?? (decoded is not null && DeviceSafetyEncryption.IsEncrypted(originalPackage) ? DeviceSafetyEncryption.MaximumPackageBytes : null));
             try { Validate(result.Manifest); return result; }
             catch
             {

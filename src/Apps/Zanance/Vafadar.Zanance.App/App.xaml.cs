@@ -167,7 +167,11 @@ public partial class App : Application
         // Android builds the app in Application.onCreate, including notification-only process starts (D-46).
         // Window construction must not migrate or open a financial context on that thread.
         // D-222: the first window contains no financial page. Native key/migration work is deferred to a worker.
+#if ANDROID
+        _startup = new Startup.StartupViewModel(PrepareStartupAsync, RecoverStartupKeysAsync, RecoverStartupBackupAsync);
+#else
         _startup = new Startup.StartupViewModel(PrepareStartupAsync);
+#endif
         var cover = new Startup.StartupPage(_startup).WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
         var window = new Window(cover) { Title = Translator.Instance["App_Name"] };
         var startup = _startup;
@@ -196,6 +200,56 @@ public partial class App : Application
         base.OnStart();
         Dispatcher.Dispatch(async () => { if (_startup is not null) await _startup.InitializeAsync(); });
     }
+
+#if ANDROID
+    /// <summary>Opens device-local optional recovery setup from the unlocked Settings form.</summary>
+    internal async Task ShowRecoverySetupAsync()
+    {
+        var page = Windows.FirstOrDefault()?.Page ?? throw new InvalidOperationException("Application window is unavailable.");
+        await page.Navigation.PushModalAsync(new AndroidRecoverySetupPage(
+            _services.GetRequiredService<AndroidProtectedStorageHost>(), Translator.Instance));
+    }
+
+    /// <summary>Restores an explicitly chosen portable backup without removing unreadable original data or the device PIN.</summary>
+    private async Task<bool> RecoverStartupBackupAsync()
+    {
+        if (!await _services.GetRequiredService<AppLockService>().ConfirmStartupRecoveryAsync(Translator.Instance["Lock_ConfirmRestore"])) return false;
+        var root = Windows.FirstOrDefault()?.Page ?? throw new InvalidOperationException("Startup cover is unavailable.");
+        var page = new AndroidStartupBackupPage(_services.GetRequiredService<AndroidBackupRecovery>(), Translator.Instance)
+            { FlowDirection = root.FlowDirection };
+        await root.Navigation.PushModalAsync(page, animated: false);
+        var restored = await page.Completion;
+        if (restored)
+        {
+            _services.GetRequiredService<ILocalizationService>().Initialize();
+            _services.GetRequiredService<Presentation.ThemeService>().Initialize();
+        }
+        return restored;
+    }
+
+    /// <summary>Accepts the user's recorded code only in the covered startup surface; app access remains a separate gate.</summary>
+    private async Task<bool> RecoverStartupKeysAsync()
+    {
+        if (!await _services.GetRequiredService<AppLockService>().ConfirmStartupRecoveryAsync(Translator.Instance["Lock_ConfirmRestore"])) return false;
+        var page = Windows.FirstOrDefault()?.Page ?? throw new InvalidOperationException("Startup cover is unavailable.");
+        var text = Translator.Instance;
+        var code = await page.DisplayPromptAsync(text["Recovery_Title"], text["Recovery_CodePrompt"],
+            text["Recovery_Confirm"], text["Common_Cancel"], maxLength: 64);
+        if (code is null) return false;
+        try
+        {
+            await Task.Run(() => _services.GetRequiredService<AndroidProtectedStorageHost>()
+                .RecoverDeviceKeysAsync(code, CancellationToken.None));
+            return true;
+        }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            await page.DisplayAlertAsync(text["Recovery_Title"], text["Recovery_Failed"], text["Common_Ok"]);
+            return false;
+        }
+        finally { code = string.Empty; }
+    }
+#endif
 
     private async Task PrepareStartupAsync()
     {

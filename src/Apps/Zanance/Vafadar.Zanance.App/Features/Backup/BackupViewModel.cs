@@ -110,7 +110,8 @@ public sealed partial class BackupViewModel : ViewModelBase
         _local = new LocalFolderBackupStorage(Path.Combine(FileSystem.AppDataDirectory, "backups"));
         _safety = new LocalFolderBackupStorage(Path.Combine(FileSystem.AppDataDirectory, "backups-safety"));
         Restore = new BackupRestoreSession(backup, restoreRuntime ?? new MauiBackupRestoreRuntime(backup, autoPost, reminders, appLock, localization,
-            services.GetRequiredService<ZananceStore>(), _safety, () => DialogPage, () => _returnToOnboarding?.Invoke() ?? Task.CompletedTask),
+            services.GetRequiredService<ZananceStore>(), _safety, () => DialogPage, () => _returnToOnboarding?.Invoke() ?? Task.CompletedTask,
+                services.GetService<IBackupSafetyCopyMaintenance>()),
             translator, dates, localization, time, () => !IsBusy);
         Restore.PropertyChanged += (_, e) =>
         {

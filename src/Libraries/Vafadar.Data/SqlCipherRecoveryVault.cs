@@ -11,7 +11,8 @@ public sealed class SqlCipherRecoveryVault
     private const int ApplicationId = 0x565a5256;
     private const string Schema = "CREATE TABLE recovery_private (id INTEGER PRIMARY KEY CHECK(id=1), installation TEXT NOT NULL, recovery TEXT NOT NULL, public BLOB NOT NULL, private BLOB NOT NULL)";
     private readonly string path;
-    private readonly DatabaseRecoveryIdentity identity;
+    private readonly DatabaseRecoveryIdentity? identity;
+    private readonly Guid expectedInstallation;
     private readonly string version;
     private readonly IDatabaseGenerationFileDurability durability;
     private readonly Action validate;
@@ -24,8 +25,30 @@ public sealed class SqlCipherRecoveryVault
         ArgumentException.ThrowIfNullOrWhiteSpace(cipherVersion); ArgumentNullException.ThrowIfNull(durability);
         ArgumentNullException.ThrowIfNull(validateAccess);
         if (!Path.IsPathFullyQualified(path)) throw new ArgumentException("Recovery vault requires an absolute private path.");
-        this.path = Path.GetFullPath(path); this.identity = identity; version = cipherVersion;
+        this.path = Path.GetFullPath(path); this.identity = identity; expectedInstallation = identity.InstallationId; version = cipherVersion;
         this.durability = durability; validate = validateAccess;
+    }
+
+    /// <summary>Reads an existing encrypted vault when interrupted enrollment has not yet published public metadata.</summary>
+    /// <remarks>The captured installation is mandatory. This cannot create a vault or select another identity.</remarks>
+    public static Task<DatabaseRecoveryMaterial> OpenExistingAsync(string path, Guid installationId,
+        ReadOnlyMemory<byte> recoveryKey, string cipherVersion, IDatabaseGenerationFileDurability durability,
+        Action validateAccess, CancellationToken ct = default)
+    {
+        if (installationId == Guid.Empty) throw new ArgumentException("Existing installation identity is required.");
+        RequireKey(recoveryKey.Span);
+        var vault = new SqlCipherRecoveryVault(path, installationId, cipherVersion, durability, validateAccess);
+        return vault.ReadCoreAsync(vault.path, recoveryKey, ct);
+    }
+
+    private SqlCipherRecoveryVault(string path, Guid installationId, string cipherVersion,
+        IDatabaseGenerationFileDurability durability, Action validateAccess)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(path); ArgumentException.ThrowIfNullOrWhiteSpace(cipherVersion);
+        ArgumentNullException.ThrowIfNull(durability); ArgumentNullException.ThrowIfNull(validateAccess);
+        if (!Path.IsPathFullyQualified(path)) throw new ArgumentException("Recovery vault requires an absolute private path.");
+        this.path = Path.GetFullPath(path); expectedInstallation = installationId;
+        version = cipherVersion; this.durability = durability; validate = validateAccess;
     }
 
     /// <summary>Publishes or resumes an exact staged encrypted vault without replacing existing private material.</summary>
@@ -51,6 +74,7 @@ public sealed class SqlCipherRecoveryVault
     private async Task CreateCoreAsync(string target, DatabaseRecoveryMaterial material, ReadOnlyMemory<byte> key, CancellationToken ct)
     {
         Check(ct); ValidatePath(target);
+        var identity = this.identity ?? throw new InvalidOperationException("Existing-only recovery cannot create a vault.");
         var privateKey = material.ExportPrivateKey();
         try
         {
@@ -82,8 +106,10 @@ public sealed class SqlCipherRecoveryVault
         command.CommandText = "SELECT id,installation,recovery,length(public),length(private),public,private FROM recovery_private";
         await using var reader = await command.ExecuteReaderAsync(ct).ConfigureAwait(false);
         if (!await reader.ReadAsync(ct).ConfigureAwait(false) || reader.GetFieldType(0) != typeof(long) || reader.GetInt64(0) != 1
-            || reader.GetFieldType(1) != typeof(string) || reader.GetString(1) != identity.InstallationId.ToString("N")
-            || reader.GetFieldType(2) != typeof(string) || reader.GetString(2) != identity.RecoveryId.ToString("N")
+            || reader.GetFieldType(1) != typeof(string) || reader.GetString(1) != expectedInstallation.ToString("N")
+            || reader.GetFieldType(2) != typeof(string) || !Guid.TryParseExact(reader.GetString(2), "N", out var recoveryId)
+            || reader.GetString(2) != recoveryId.ToString("N")
+            || identity is not null && recoveryId != identity.RecoveryId
             || reader.GetInt64(3) is <= 0 or > 1024 || reader.GetInt64(4) is <= 0 or > 4096
             || reader.GetFieldType(5) != typeof(byte[]) || reader.GetFieldType(6) != typeof(byte[]))
             throw new InvalidDataException("Recovery identity/types/bounds differ.");
@@ -91,8 +117,9 @@ public sealed class SqlCipherRecoveryVault
         DatabaseRecoveryMaterial? result = null;
         try
         {
-            if (!publicKey.AsSpan().SequenceEqual(identity.ExportPublicKey())) throw new CryptographicException("Recovery public material differs.");
-            result = DatabaseRecoveryMaterial.Import(identity, privateKey);
+            var acceptedIdentity = identity ?? new DatabaseRecoveryIdentity(expectedInstallation, recoveryId, publicKey);
+            if (!publicKey.AsSpan().SequenceEqual(acceptedIdentity.ExportPublicKey())) throw new CryptographicException("Recovery public material differs.");
+            result = DatabaseRecoveryMaterial.Import(acceptedIdentity, privateKey);
             if (await reader.ReadAsync(ct).ConfigureAwait(false)) throw new InvalidDataException("Recovery vault is not unique.");
             await reader.DisposeAsync().ConfigureAwait(false);
             command.CommandText = "PRAGMA cipher_integrity_check";
@@ -138,7 +165,7 @@ public sealed class SqlCipherRecoveryVault
         }
         catch { await connection.DisposeAsync().ConfigureAwait(false); throw; }
     }
-    private bool SameIdentity(DatabaseRecoveryIdentity other) => other.InstallationId == identity.InstallationId
+    private bool SameIdentity(DatabaseRecoveryIdentity other) => identity is not null && other.InstallationId == identity.InstallationId
         && other.RecoveryId == identity.RecoveryId && other.ExportPublicKey().AsSpan().SequenceEqual(identity.ExportPublicKey());
     private static void RequireKey(ReadOnlySpan<byte> key)
     { if (key.Length != 32) throw new CryptographicException("Recovery requires a 256-bit caller-owned key."); }

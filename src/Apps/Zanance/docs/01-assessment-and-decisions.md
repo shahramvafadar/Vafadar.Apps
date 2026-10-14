@@ -5144,3 +5144,57 @@ Signature v2/v3, permanent package pro.vafadar.zanance, API24/36 and nonempty ar
 are verified. Local test signing is not store signing, phone/iOS or release acceptance.
 No unchanged SQLCipher/native producer/upstream suite or unrelated UI matrix was repeated. Main remains
 plaintext; final encrypted host/recovery/retention/OS/platform integration and the full goal remain open.
+
+### D-263 — Adopt protected storage across the original Android application
+
+Deliver the owner's approved Android encryption work as one complete application batch. Official
+SQLCipher is selected before MAUI construction; covered lazy startup owns legacy migration and all
+profile publication. The original profile, backup and safety contracts share one native owner. Missing
+protected authority never creates a replacement key/profile or plaintext fallback. Windows/iOS main
+adoption remains separate.
+
+Integrate automatic per-generation native keys, optional acknowledged recorded recovery, retained-vault
+enrollment continuation and independent PIN authorization. Bounded package/schema/preferences validation
+precedes recovery effects. Activation preserves old financial bytes, retains hash-bound native receipts
+and replays preferences once. Session consumers follow the current protected owner after root replacement.
+Capture immutable authenticated file/public-map/alias retirement authority before catalogue publication;
+recheck current, archived, recovered and staged roots and preserve financial ancestry/unrelated references.
+Final OD-10 exclusions are coupled to the encrypted Android runtime; new devices use Zanance backup.
+Portable passwords remain optional and exact component notices do not grant rights to owner source.
+
+Observed native results include original startup/lifecycle/restore paths, retained old data, key-loss
+recovery, retained-vault Save retry, process interruption at retirement/activation and exact enrolled
+safety expiration. The final permanent-package Release retains the account and encrypted financial/
+rollback/private-vault bytes through cold opening. Corrected 18 native contexts cover en/fa/de,
+light/dark and 360/412/wide widths, original enrollment commands, key-loss cover and actual picker
+cancellation without recovery/financial writes. Exact held envelopes and financial hashes are retained.
+
+Late review found an empty enrolled-code/disabled-Save surface and long native captions that violated
+D-80. The former is hidden when enrolled; existing growing actions preserve commands, scaling and
+complete names for startup, Settings and file selection. Narrow German targets now grow to 58px with
+two complete native text lines. No temporary review guard remains in production source.
+
+A strict restore then rejected five October13 Microsoft advisories affecting transitive Xml/Pkcs10.0.11
+from existing PDF libraries. Their standalone consumers explicitly reference central 10.0.13; audit is
+not suppressed. Core-only framework metadata selects10.0.13 while preserving Android platform 36.1.69.
+Actual package/Mono payloads are verified. Installed SDK/workload configuration was not changed.
+All 3509 final tests passed, zero failures/skips(3m04.254s), outputs cleaned. Strict Windows passed17.50s
+with zero errors/warnings; complete canonical Android Release succeeded. Final APK 88213830 bytes,
+SHA256 1f58420b304788fec0dbca7982128de3221b55a76d22fa9aa9d20a85f18c03b5; permanent package, v2/v3, API24/36, no debug, both cipher payloads, assembly
+stores and packaged OS exclusions checked. [Full evidence](quality/android-protected-storage.md).
+
+Earlier failed fixtures/observations remain historical; successful cases do not erase them. Repeat
+verification was limited to actual changes/failures, including security servicing and corrected actions.
+No unchanged producer/upstream suite or unrelated successful app checks were repeated. Native process
+termination is not hardware power-loss/all-crash-points; phone/arm64/API24/16KiB/OEM/spoken accessibility,
+fresh hosted CI, Windows/iOS, real OAuth, Store signing and publication remain open. This batch does not
+complete the continuous-development objective.
+Sources: [XML advisory](https://github.com/advisories/GHSA-c399-9853-6jmj),
+[PKCS advisory](https://github.com/advisories/GHSA-2fmv-rv2c-59x7).
+
+Final About review observed a stale claim that language/digits were excluded from backups. The
+actual six-key portable source includes language/calendar/holiday region/week start/regional format/
+digit shapes; it excludes theme/PIN/device security/credentials. The description was corrected in all
+six languages through the resource script. Only affected About views were rechecked after this copy
+change, preserving the successful unchanged recovery/runtime/backend evidence. Final signed copy APK
+and strict Windows build passed; complete artifact/hash and scoped UI results are in the quality record.

@@ -23,6 +23,9 @@ live in the linked guides. When the owner sets a new rule, add it here in the sa
 * **Everything in the repository is English**: code, comments, documentation, commit messages, file names.
 * Ask only when a decision is really the owner's (money, publishing, identities, third-party downloads, product
   direction, changes to an approved design). Otherwise choose sensibly, do the work and report what was decided.
+* On 2026-10-14 the owner requested one large end-to-end delivery at a time: plan the remaining
+  batches first, implement the whole batch, then perform its final checks. Do not finish another
+  isolated helper slice or repeat successful unrelated verification.
 * During approved continuous delivery, prioritize ready code changes and actual observed defects. Repeat or broaden
   verification only after a change, failure or unresolved concern; do not replace delivery with more planning.
 * Report honestly: what was verified and how, what was not, and what failed. Never call something fixed before it was
@@ -1936,3 +1939,22 @@ An observable retirement commit after failed native synchronization is not clean
 Resume synchronizes and rechecks the existing journal before the host's idempotent next effect.
 Missing metadata cannot authorize retirement. Final host catalogue publication, complete captured
 artifact/key references and identity reconciliation remain required before main integration.
+
+### Android protected application adoption
+
+Android main startup now requires the reviewed official source-built SQLCipher provider. Register one
+lazy covered storage host for profile creation/switching/retirement, package restore, safety protection
+and maintenance. Construction does not open financial storage. Windows/iOS adoption stays explicit;
+never infer it from Android success. Missing protected authority must remain covered without creating
+a replacement key, profile or plaintext fallback.
+
+Optional recovery enrollment retains the original vault after interruption and never generates a new
+code when already enrolled. App PIN authorization remains independent of inaccessible financial data.
+Backup recovery validates a bounded complete source before native effects, activates a retained new
+private root and replays portable preferences once. Keep the original unreadable financial bytes.
+
+Capture exact authenticated key/public-map/alias retirement authority before catalogue publication;
+never reconstruct a missing capture after publication. Recheck current, archived, recovered and staged
+references before deleting only the captured objects. Final Android OS backup/transfer exclusions are
+coupled to this protected runtime; new devices use Zanance backups. Preserve the distinctions between
+native process-loss evidence, physical power loss, device/OS/OEM/iOS acceptance and product publication.

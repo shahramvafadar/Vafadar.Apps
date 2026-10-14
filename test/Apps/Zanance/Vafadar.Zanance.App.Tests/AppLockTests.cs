@@ -1,3 +1,5 @@
+using Microsoft.Extensions.DependencyInjection;
+using Vafadar.Zanance.Data;
 using Vafadar.Maui.Security;
 using Vafadar.Zanance.App.Security;
 using Vafadar.Zanance.Core.Security;
@@ -7,6 +9,31 @@ namespace Vafadar.Zanance.App.Tests;
 /// <summary>Actual access policy with real profile settings and PIN verification, behind explicit native ports.</summary>
 public sealed class AppLockTests
 {
+    [Fact, Trait("AT", "AT-238")]
+    public async Task Covered_recovery_loads_existing_PIN_without_opening_unavailable_finance_or_unlocking_startup()
+    {
+        using var f = new FlowFixture();
+        using var protectedServices = new ServiceCollection().AddZananceData(f.Directory.Combine("covered.db"), protectionRequired: true).BuildServiceProvider();
+        var storage = new PinMemory(); var host = new LockPlatform(); var auth = new AuthPlatform();
+        var access = new AppLockService(auth, protectedServices.GetRequiredService<ZananceStore>(), f.Translator, f.Time,
+            new PinLock(storage, f.Time), host);
+        await access.Pin.SetAsync("", "0137"); host.PinAnswer = false;
+        Assert.False(await access.ConfirmStartupRecoveryAsync("Fictitious recovery"));
+        host.PinAnswer = true; Assert.True(await access.ConfirmStartupRecoveryAsync("Fictitious recovery"));
+        Assert.Equal(2, host.PinPrompts); Assert.Equal(0, auth.Calls); Assert.True(access.PinEnabled); Assert.True(access.IsLocked);
+        Assert.False(File.Exists(f.Directory.Combine("covered.db")));
+    }
+
+    [Fact, Trait("AT", "AT-238")]
+    public async Task Unreadable_secure_state_refuses_covered_recovery_without_device_fallback_or_verifier_replacement()
+    {
+        using var f = new FlowFixture(); var setup = Create(f); setup.Storage.FailReads = true;
+        setup.Auth.Outcome = AuthenticationOutcome.Success;
+        Assert.False(await setup.Lock.ConfirmStartupRecoveryAsync("Fictitious recovery"));
+        Assert.True(setup.Lock.PinUnavailable); Assert.True(setup.Lock.IsLocked);
+        Assert.Null(setup.Storage.State); Assert.Equal(0, setup.Auth.Calls); Assert.Equal(0, setup.Host.PinPrompts);
+    }
+
     [Fact, Trait("AT", "AT-80")]
     public async Task Startup_defers_links_until_secure_state_is_read_and_keeps_their_order_after_a_failed_link()
     {

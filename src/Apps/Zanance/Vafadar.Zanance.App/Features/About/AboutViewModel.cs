@@ -44,6 +44,16 @@ public sealed partial class AboutViewModel(Translator translator, IAppEnvironmen
             text = (await reader.ReadToEndAsync()).Replace("\r\n", "\n", StringComparison.Ordinal);
         }
 
+#if ANDROID
+        // The native package's own notices travel with its exact runtime bytes; do not duplicate
+        // upstream license texts in the app source or omit them from the existing compact link.
+        await using (var nativeStream = await FileSystem.OpenAppPackageFileAsync("native/sqlcipher/ThirdPartyNotices.txt"))
+        using (var nativeReader = new StreamReader(nativeStream))
+        {
+            text += "\n" + Separator + "\n" + (await nativeReader.ReadToEndAsync()).Replace("\r\n", "\n", StringComparison.Ordinal);
+        }
+#endif
+
         NoticesText = Reflow(text);
     }
 

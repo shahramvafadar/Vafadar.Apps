@@ -5065,7 +5065,7 @@ Quantità posseduta: segue un peso o un numero di unità, non il prezzo. Un aume
     <value>Backup</value>
   </data>
   <data name="About_FilesBackup" xml:space="preserve">
-    <value>Un backup contiene i dati del profilo attuale: conti, movimenti, piani, budget, tassi, obiettivi, beni, previsioni salvate, unità di visualizzazione e disposizione della Home. I backup locali e cloud sono crittografati se attivi la protezione con password, facoltativa per entrambi. Le preferenze generali del dispositivo, come tema, lingua e visualizzazione delle cifre, non sono incluse.</value>
+    <value>Un backup contiene i dati del profilo attuale e le opzioni di visualizzazione trasferibili: lingua, calendario, formato regionale, cifre, inizio settimana e regione delle festività. La password è facoltativa per i file locali e nel cloud. Il tema, il PIN, la sicurezza e le credenziali restano su questo dispositivo.</value>
   </data>
   <data name="About_FilesCsvTitle" xml:space="preserve">
     <value>Esportazione CSV</value>
@@ -6250,5 +6250,56 @@ Limiti per categoria:
   </data>
   <data name="Startup_Retry" xml:space="preserve">
     <value>Riprova</value>
+  </data>
+  <data name="Recovery_Title" xml:space="preserve">
+    <value>Ripristino del database</value>
+  </data>
+  <data name="Recovery_UseCode" xml:space="preserve">
+    <value>Ripristina con il tuo codice di recupero</value>
+  </data>
+  <data name="Recovery_CodePrompt" xml:space="preserve">
+    <value>Inserisci il codice conservato durante la configurazione del ripristino. Il PIN dell’app non verrà rimosso.</value>
+  </data>
+  <data name="Recovery_Confirm" xml:space="preserve">
+    <value>Ripristina</value>
+  </data>
+  <data name="Recovery_Failed" xml:space="preserve">
+    <value>Impossibile completare il ripristino. Controlla il codice e conserva i file esistenti.</value>
+  </data>
+  <data name="Recovery_Setup" xml:space="preserve">
+    <value>Configura un codice di recupero facoltativo</value>
+  </data>
+  <data name="Recovery_SetupHint" xml:space="preserve">
+    <value>Conserva questo codice in un luogo sicuro fuori dal dispositivo prima di salvare. Permette di ripristinare questa installazione se la chiave del dispositivo viene persa. Tieni un backup Zanance per un nuovo telefono; la password del backup resta facoltativa.</value>
+  </data>
+  <data name="Recovery_Code" xml:space="preserve">
+    <value>Codice di recupero</value>
+  </data>
+  <data name="Recovery_Recorded" xml:space="preserve">
+    <value>Ho conservato questo codice fuori dal dispositivo</value>
+  </data>
+  <data name="Recovery_AlreadyEnabled" xml:space="preserve">
+    <value>Il ripristino è già configurato. Conserva il codice originale; qui non viene creato un nuovo codice.</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Title" xml:space="preserve">
+    <value>Ripristino del database</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Text" xml:space="preserve">
+    <value>Conserva questo codice in un luogo sicuro fuori dal dispositivo prima di salvare. Permette di ripristinare questa installazione se la chiave del dispositivo viene persa. Tieni un backup Zanance per un nuovo telefono; la password del backup resta facoltativa.</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Example" xml:space="preserve">
+    <value>Se la chiave del dispositivo viene persa, usa il codice conservato nella schermata di avvio protetta. Su un nuovo telefono, ripristina un backup Zanance.</value>
+  </data>
+  <data name="Recovery_FromBackup" xml:space="preserve">
+    <value>Ripristina da un backup Zanance</value>
+  </data>
+  <data name="Recovery_BackupWarning" xml:space="preserve">
+    <value>Questo backup ripristina un profilo in una nuova installazione crittografata. I file esistenti e gli altri profili precedenti rimangono archiviati e invariati sul dispositivo. Il PIN dell’app resta attivo. Scegli il file di backup Zanance; inserisci una password solo se hai protetto quel file.</value>
+  </data>
+  <data name="Recovery_BackupPassword" xml:space="preserve">
+    <value>Password del backup, se protetto</value>
+  </data>
+  <data name="Recovery_BackupFailed" xml:space="preserve">
+    <value>Impossibile completare il ripristino. Controlla il backup e la sua password. I file esistenti vengono conservati. Se il salvataggio è stato interrotto, chiudi questa pagina e scegli Riprova nella schermata iniziale per continuare il ripristino registrato.</value>
   </data>
 </root>

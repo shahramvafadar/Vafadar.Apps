@@ -24,6 +24,39 @@ public sealed partial class SqliteRecoveryEnvelopeCatalogue
         if (!Path.IsPathFullyQualified(path)) throw new ArgumentException("Recovery metadata requires an absolute private path.");
         this.path = Path.GetFullPath(path); this.identity = identity; this.durability = durability; validate = validateAccess;
     }
+    /// <summary>Reads and validates existing public identity without creating metadata, keys or private material.</summary>
+    /// <remarks>The caller supplies native private-file validation. Returned identity is public; it does not unlock data.</remarks>
+    public static async Task<DatabaseRecoveryIdentity> ReadExistingIdentityAsync(string path,
+        IDatabaseGenerationFileDurability durability, Action validateAccess, CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(durability); ArgumentNullException.ThrowIfNull(validateAccess);
+        if (!Path.IsPathFullyQualified(path)) throw new ArgumentException("Recovery identity requires its private absolute path.");
+        validateAccess(); ct.ThrowIfCancellationRequested(); ValidateDirectory(path);
+        if (!File.Exists(path) || (File.GetAttributes(path) & (FileAttributes.ReparsePoint | FileAttributes.Directory)) != 0
+            || new FileInfo(path).Length > 8 * 1024 * 1024)
+            throw new IOException("Recovery public identity is missing, redirected or oversized.");
+        await using var connection = new SqliteConnection(new SqliteConnectionStringBuilder
+            { DataSource = path, Mode = SqliteOpenMode.ReadOnly, Pooling = false }.ToString());
+        await connection.OpenAsync(ct).ConfigureAwait(false);
+        DatabaseRecoveryIdentity identity;
+        using (var command = connection.CreateCommand())
+        {
+            command.CommandText = "SELECT installation,recovery,length(public),public FROM recovery_identity WHERE id=1";
+            await using var reader = await command.ExecuteReaderAsync(ct).ConfigureAwait(false);
+            if (!await reader.ReadAsync(ct).ConfigureAwait(false) || reader.GetFieldType(0) != typeof(string)
+                || reader.GetFieldType(1) != typeof(string) || reader.GetFieldType(2) != typeof(long)
+                || reader.GetInt64(2) is <= 0 or > 1024 || reader.GetFieldType(3) != typeof(byte[])
+                || !Guid.TryParseExact(reader.GetString(0), "N", out var installation)
+                || !Guid.TryParseExact(reader.GetString(1), "N", out var recovery))
+                throw new InvalidDataException("Recovery public identity types or bounds differ.");
+            identity = new(installation, recovery, reader.GetFieldValue<byte[]>(3));
+            if (await reader.ReadAsync(ct).ConfigureAwait(false)) throw new InvalidDataException("Recovery identity is not unique.");
+        }
+        var catalogue = new SqliteRecoveryEnvelopeCatalogue(path, identity, durability, validateAccess);
+        await catalogue.ValidateSchemaAsync(connection, ct).ConfigureAwait(false);
+        validateAccess(); return identity;
+    }
+
     /// <summary>The public installation recovery identity; it cannot unlock a data key.</summary>
     public DatabaseRecoveryIdentity Identity => identity;
 

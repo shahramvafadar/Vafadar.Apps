@@ -1424,3 +1424,19 @@ money, binary portable backup and wrong-key refusal pass across fresh process re
 inspection failure was corrected only in its distinct fixture package, preserving creation/result/data
 and continuing the same key. See decision/device-key guide for proof/scope. Main/APK remain D-251;
 final host/recovery/retention/OS/native platform and device acceptance remain open.
+
+### D-263 — Complete original Android protected storage batch
+
+Delivered the original Android provider, covered all-profile startup/lifecycle, legacy continuation,
+automatic native keys, optional acknowledged recovery, independent PIN authorization, retained portable
+recovery, encrypted safety and reference-aware retirement. Final OS exclusion is coupled to adoption.
+The final corrected APK and 3509-test suite, strict builds and 18 native language/theme/width cases pass.
+Observed long-caption and October cryptography-package failures were fixed; only affected checks were
+repeated. Exact owned envelopes/financial hashes and user data were preserved. No temporary review
+hooks or unrelated verification remain. [Full evidence](../../quality/android-protected-storage.md).
+
+Next ready large batch is explicit Windows main protected-runtime adoption; iOS requires verified
+Mac/Xcode/signing. Other approved ready canonical work continues afterward. Physical/provider/billing/
+Store gates remain owner/external acceptance. Hosted CI is checked once for the final pushed commit;
+no green local check accepts physical power loss, full crash points, real devices or publication.
+The full continuous-development objective stays open.

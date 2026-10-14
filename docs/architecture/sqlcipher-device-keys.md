@@ -964,3 +964,25 @@ APK remain D-256, with its3482-test baseline; no unrelated tests/main builds/APK
 suite was repeated. This qualifies package consumption on observed Android x64/API36/4KiB only;
 arm64/API24/16KiB OS/iOS, native warning review, main registration/recovery/retention/OS/device/release
 acceptance remain open. The full goal and SEC scope are not complete.
+
+### D-263 — Android original application integration
+
+The main Android host now explicitly selects official SQLCipher and requires protected publication.
+Construction is lazy; covered startup owns all profile migrations/lifecycle. Independent generation
+Keystore aliases and an optional encrypted private recovery vault integrate the approved recovery
+policy. Lost protected authority never creates fresh keys/profiles or plaintext fallback.
+
+Recorded-code recovery and explicit portable recovery retain device PIN authorization. Complete
+bounded package/schema validation precedes native effects. Recovered roots keep old financial files,
+retained receipts and one-time preference replay; session consumers follow the current protected owner.
+Profile/safety retirement captures exact authenticated native files/public mappings/aliases before
+catalogue effects and checks current/archived/recovered/staged references. Financial ancestry remains.
+Final Android OS backup/transfer exclusions are coupled; a new device restores Zanance backup.
+
+Actual original native startup/lifecycle/restore/retirement and interruption cases, corrected 18
+language/theme/width UI contexts, final3509-test suite, strict builds and complete signed runtime13
+APK are recorded in [application evidence](../../src/Apps/Zanance/docs/quality/android-protected-storage.md).
+Temporary review hooks are absent; exact keys/financial hashes were retained. No unchanged native
+producer/upstream or unrelated successful app checks were repeated. Windows/iOS encrypted adoption,
+physical power-loss/full crash matrix, phone/arm64/API24/16KiB/OEM/spoken/provider/Store and fresh hosted
+acceptance remain separate. Component package proof does not substitute for those gates.

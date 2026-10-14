@@ -105,6 +105,21 @@ public sealed class LocalDatabaseLocation<TContext>
         Changed?.Invoke(this, EventArgs.Empty);
     }
 
+    /// <summary>Rebinds only covered, unpublished protected startup after the host verifies an explicit recovery selection.</summary>
+    /// <remarks>This cannot open plaintext or move a live protected session. The protection requirement remains mandatory.</remarks>
+    public void RebindUnpublishedOriginal(string path, DatabaseAccessGate.ExclusiveLease owner)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(path); ArgumentNullException.ThrowIfNull(owner);
+        var full = System.IO.Path.GetFullPath(path);
+        lock (_gate)
+        {
+            Access.RequireDrainedOwner(owner);
+            if (!_protectionRequired || _endpoint.CreateConnection is not null)
+                throw new InvalidOperationException("Recovery selection requires covered unpublished protected startup.");
+            _endpoint = new(full, null, null);
+        }
+    }
+
     /// <summary>Atomically publishes a verified encrypted generation and its captured key/access connection creator.</summary>
     /// <remarks>Caller verifies the generation first and owns key lifetime/access validation. The creator returns a new
     /// closed, unpooled ReadWrite connection to this exact existing file, never a plaintext fallback or Create mode.</remarks>

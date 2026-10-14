@@ -30,6 +30,10 @@ internal sealed class ProfilePreferences : ISettingsStore
 /// <summary>Existing MAUI authentication and data services used by the platform-independent profile flow.</summary>
 internal sealed class MauiProfileRuntime(IServiceProvider services, AutoPostProcessor autoPost, AppLockService appLock, UndoService undo) : IProfileRuntime
 {
+    private SqlCipherProfileSession<ZananceDbContext>? ProtectedSession =>
+        services.GetService<Startup.IProtectedProfileSessionSource>()?.Session
+        ?? services.GetService<SqlCipherProfileSession<ZananceDbContext>>();
+
     /// <inheritdoc />
     public Task RunExclusiveAsync(Func<Task> action) => autoPost.RunExclusiveAsync(action);
     /// <inheritdoc />
@@ -38,7 +42,7 @@ internal sealed class MauiProfileRuntime(IServiceProvider services, AutoPostProc
     public Task PrepareNewDatabaseAsync(LocalDatabaseLocation<ZananceDbContext> location, string profileId, string originalPath,
         DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct)
     {
-        if (services.GetService<SqlCipherProfileSession<ZananceDbContext>>() is { } session)
+        if (ProtectedSession is { } session)
             return session.PrepareNewAsync(profileId, originalPath, owner, ct);
         ct.ThrowIfCancellationRequested(); _ = location.CapturePublication(owner);
         if (location.IsProtected) throw new InvalidOperationException("Protected profile preparation is unavailable.");
@@ -47,7 +51,7 @@ internal sealed class MauiProfileRuntime(IServiceProvider services, AutoPostProc
     /// <inheritdoc />
     public async Task OpenDatabaseAsync(LocalDatabaseLocation<ZananceDbContext> location, string originalPath, DatabaseAccessGate.ExclusiveLease owner)
     {
-        if (services.GetService<SqlCipherProfileSession<ZananceDbContext>>() is { } protectedSession)
+        if (ProtectedSession is { } protectedSession)
             await protectedSession.BeginSwitchAsync(originalPath, owner);
         else
         {
@@ -58,7 +62,7 @@ internal sealed class MauiProfileRuntime(IServiceProvider services, AutoPostProc
     }
     /// <inheritdoc />
     public void FinishDatabaseTransition(bool accepted, DatabaseAccessGate.ExclusiveLease owner) =>
-        services.GetService<SqlCipherProfileSession<ZananceDbContext>>()?.FinishSwitch(accepted, owner);
+        ProtectedSession?.FinishSwitch(accepted, owner);
     /// <inheritdoc />
     public async Task<bool> AuthenticateAsync(string reason) => await appLock.Authenticator.AuthenticateAsync(reason) == AuthenticationOutcome.Success;
     /// <inheritdoc />

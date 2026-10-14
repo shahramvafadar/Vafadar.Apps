@@ -41,6 +41,10 @@ public static class MauiProgram
 #endif
     public static MauiApp CreateMauiApp()
     {
+#if ANDROID
+        // The source-built provider is selected before any SQLite consumer; startup still owns all file/key work.
+        SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
+#endif
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
@@ -66,7 +70,7 @@ public static class MauiProgram
 
         builder.Services
             // The last open local profile (§3); the main profile is the original database.
-            .AddZananceData(Profiles.ProfileService.StartupDatabasePath(DatabasePath()))
+            .AddZananceData(Profiles.ProfileService.StartupDatabasePath(DatabasePath()), protectionRequired: OperatingSystem.IsAndroid())
             // Each local profile keeps its own backups, retention and last-backup time in shared folders (D-34).
             .AddVafadarBackup(options => options.FileSet = Profiles.ProfileService.CurrentBackupSet)
             .AddSingleton<Vafadar.Backup.IBackupSource>(services => new Vafadar.Backup.SettingsBackupSource(
@@ -105,6 +109,10 @@ public static class MauiProgram
             .SceneOnResignActivation(_ => PrivacyCover.Show())
             .OnActivated(_ => PrivacyCover.Hide())
             .SceneOnActivated(_ => PrivacyCover.Hide())));
+#endif
+
+#if ANDROID
+        builder.Services.AddAndroidProtectedStorage();
 #endif
 
         // Cloud backup to the user's own Google Drive or OneDrive, offered only when the OAuth clients are configured
@@ -238,5 +246,13 @@ public static class MauiProgram
     }
 
     // Resolve names only while DI is built. Legacy storage moves under the covered startup owner.
-    private static string DatabasePath() => Path.Combine(FileSystem.AppDataDirectory, ZananceApp.DatabaseFileName);
+    private static string DatabasePath()
+    {
+        var original = Path.Combine(FileSystem.AppDataDirectory, ZananceApp.DatabaseFileName);
+#if ANDROID
+        return AndroidBackupRecovery.MainPath(original, new Profiles.ProfilePreferences());
+#else
+        return original;
+#endif
+    }
 }

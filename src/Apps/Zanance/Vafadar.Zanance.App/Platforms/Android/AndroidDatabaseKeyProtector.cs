@@ -143,6 +143,37 @@ public static class AndroidDatabaseKeyProtector
         return (int)info.SecurityLevel;
     }
 
+    /// <summary>Captures an independent wrapping alias only after the full native envelope authenticates its exact binding.</summary>
+    internal static Guid CaptureIndependentAlias(ReadOnlySpan<byte> envelope, DatabaseKeyBinding binding, bool recovered)
+    {
+        if (envelope.Length != 82) throw new IOException("Shared legacy wrapping keys cannot be retired as individual safety aliases.");
+        var key = recovered ? UnprotectRecovered(envelope, binding) : Unprotect(envelope, binding);
+        try { return new Guid(envelope.Slice(6, 16), bigEndian: true); }
+        finally { CryptographicOperations.ZeroMemory(key); }
+    }
+
+    /// <summary>Deletes only a previously authenticated independent alias after durable intent and complete reference exclusion.</summary>
+    internal static void RemoveCapturedIndependentAlias(Guid alias, Action requireDurableUnreferencedAuthority)
+    {
+        ArgumentNullException.ThrowIfNull(requireDurableUnreferencedAuthority); requireDurableUnreferencedAuthority();
+        lock (CreationGate)
+        {
+            requireDurableUnreferencedAuthority(); using var store = OpenStore(); var name = GetWrappingKeyAlias(alias);
+            if (store.ContainsAlias(name)) store.DeleteEntry(name);
+            if (store.ContainsAlias(name)) throw new IOException("Retired native wrapping alias remains.");
+        }
+    }
+
+    /// <summary>Checks absence of an explicitly recorded owned alias without creating or deleting a key.</summary>
+    internal static void RequireIndependentAliasAbsent(Guid alias)
+    {
+        lock (CreationGate)
+        {
+            using var store = OpenStore();
+            if (store.ContainsAlias(GetWrappingKeyAlias(alias))) throw new IOException("Recorded retired alias is still present.");
+        }
+    }
+
     /// <summary>Names only the adapter-owned installation alias; used by independent fixture cleanup.</summary>
     internal static string GetWrappingKeyAlias(Guid installationId)
     {

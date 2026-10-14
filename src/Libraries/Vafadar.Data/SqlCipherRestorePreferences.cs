@@ -34,8 +34,16 @@ public sealed class SqlCipherRestorePreferences
     }
 
     /// <summary>Validates portable JSON and captures existing values without changing the preference store.</summary>
-    public RestorePreferencePacket Capture(ReadOnlyMemory<byte>? portable, ISettingsStore settings)
+    public RestorePreferencePacket Capture(ReadOnlyMemory<byte>? portable, ISettingsStore settings) =>
+        CapturePortable(portable, settings, allowed);
+
+    /// <summary>Validates and snapshots only explicit portable preferences before any native recovery effects.</summary>
+    public static RestorePreferencePacket CapturePortable(ReadOnlyMemory<byte>? portable, ISettingsStore settings,
+        IReadOnlyList<string> allowed)
     {
+        ArgumentNullException.ThrowIfNull(allowed);
+        if (allowed.Any(string.IsNullOrWhiteSpace) || allowed.Distinct(StringComparer.Ordinal).Count() != allowed.Count)
+            throw new ArgumentException("Portable preference allowlist is invalid.");
         ArgumentNullException.ThrowIfNull(settings);
         var imported = new Dictionary<string, string?>(StringComparer.Ordinal);
         if (portable is { } bytes)

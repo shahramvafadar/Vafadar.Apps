@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "packageId": "Vafadar.Native.SqlCipher.Android",
+  "version": "4.19.0-candidate.4",
+  "entries": {
+    "Vafadar.Native.SqlCipher.Android.nuspec": "26851a0c2356e68709935d1f39f8227a7332f247584b0151159d4c9893afbceb",
+    "buildTransitive/net10.0-android/Vafadar.Native.SqlCipher.Android.targets": "504a9b24d3af83b22a6867d0d96a8d0aa1c94ec23423cb964ddbfe8ad6ed3d1f",
+    "licenses/ThirdPartyNotices.txt": "39273f95279ed55feaa8e045fe4d0e8f6b43e0fab57f69a32e39c1a303107f20",
+    "manifest.json": "0bf92e6836455d5da0bbc65b6c3a39bfecda3140bd23a82c34d0e7f651b983a2",
+    "runtimes/android-arm64/native/libsqlcipher.so": "abc2c51b7b284672d8f6e86249847b962997d245720b50273531a1f85dbf1f56",
+    "runtimes/android-x64/native/libsqlcipher.so": "9579006cdaca361daba6b08cf5228319d605a60c84bfc33e6a1287a06e702644"
+  },
+  "nativeQualification": "android.runtime.qualification.json"
+}

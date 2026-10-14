@@ -5052,7 +5052,7 @@ Quantité détenue : suit un poids ou un nombre d’unités, pas leur prix. Une
     <value>Sauvegarde</value>
   </data>
   <data name="About_FilesBackup" xml:space="preserve">
-    <value>Une sauvegarde contient les données du profil actuel : comptes, opérations, planifications, budgets, taux, objectifs, biens, prévisions enregistrées, unités d’affichage et disposition de l’accueil. Les sauvegardes locales et cloud sont chiffrées lorsque la protection par mot de passe est activée ; elle est facultative pour les deux. Les préférences communes à l’appareil, comme le thème, la langue et l’affichage des chiffres, ne sont pas incluses.</value>
+    <value>Une sauvegarde contient les données du profil actuel et les choix d’affichage transférables : langue, calendrier, format régional, chiffres, début de semaine et région des jours fériés. Le mot de passe est facultatif pour les fichiers locaux et dans le cloud. Le thème, le PIN, la sécurité et les identifiants restent sur cet appareil.</value>
   </data>
   <data name="About_FilesCsvTitle" xml:space="preserve">
     <value>Exportation CSV</value>
@@ -6238,5 +6238,56 @@ Plafonds par catégorie :
   </data>
   <data name="Startup_Retry" xml:space="preserve">
     <value>Réessayer</value>
+  </data>
+  <data name="Recovery_Title" xml:space="preserve">
+    <value>Récupération de la base de données</value>
+  </data>
+  <data name="Recovery_UseCode" xml:space="preserve">
+    <value>Récupérer avec votre code de récupération</value>
+  </data>
+  <data name="Recovery_CodePrompt" xml:space="preserve">
+    <value>Saisissez le code conservé lors de la configuration de la récupération. Cela ne supprime pas le code PIN de l’application.</value>
+  </data>
+  <data name="Recovery_Confirm" xml:space="preserve">
+    <value>Récupérer</value>
+  </data>
+  <data name="Recovery_Failed" xml:space="preserve">
+    <value>La récupération n’a pas pu être terminée. Vérifiez votre code et conservez vos fichiers existants.</value>
+  </data>
+  <data name="Recovery_Setup" xml:space="preserve">
+    <value>Configurer un code de récupération facultatif</value>
+  </data>
+  <data name="Recovery_SetupHint" xml:space="preserve">
+    <value>Conservez ce code dans un lieu sûr hors de cet appareil avant d’enregistrer. Il permet de récupérer cette installation après la perte de la clé de l’appareil. Gardez une sauvegarde Zanance pour un nouveau téléphone ; son mot de passe reste facultatif.</value>
+  </data>
+  <data name="Recovery_Code" xml:space="preserve">
+    <value>Code de récupération</value>
+  </data>
+  <data name="Recovery_Recorded" xml:space="preserve">
+    <value>J’ai conservé ce code hors de cet appareil</value>
+  </data>
+  <data name="Recovery_AlreadyEnabled" xml:space="preserve">
+    <value>La récupération est déjà configurée. Conservez votre code original ; aucun nouveau code n’est créé ici.</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Title" xml:space="preserve">
+    <value>Récupération de la base de données</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Text" xml:space="preserve">
+    <value>Conservez ce code dans un lieu sûr hors de cet appareil avant d’enregistrer. Il permet de récupérer cette installation après la perte de la clé de l’appareil. Gardez une sauvegarde Zanance pour un nouveau téléphone ; son mot de passe reste facultatif.</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Example" xml:space="preserve">
+    <value>Si la clé de l’appareil est perdue, utilisez le code conservé sur l’écran de démarrage protégé. Sur un nouveau téléphone, restaurez une sauvegarde Zanance.</value>
+  </data>
+  <data name="Recovery_FromBackup" xml:space="preserve">
+    <value>Récupérer depuis une sauvegarde Zanance</value>
+  </data>
+  <data name="Recovery_BackupWarning" xml:space="preserve">
+    <value>Cette sauvegarde restaure un profil dans une nouvelle installation chiffrée. Les fichiers existants et les autres anciens profils restent archivés sans modification sur cet appareil. Le code PIN de l’application reste actif. Choisissez votre sauvegarde Zanance ; saisissez un mot de passe uniquement si vous avez protégé ce fichier.</value>
+  </data>
+  <data name="Recovery_BackupPassword" xml:space="preserve">
+    <value>Mot de passe du fichier, s’il est protégé</value>
+  </data>
+  <data name="Recovery_BackupFailed" xml:space="preserve">
+    <value>La récupération n’a pas pu être terminée. Vérifiez la sauvegarde et son mot de passe. Les fichiers existants sont conservés. Si l’enregistrement a été interrompu, fermez cette page et choisissez Réessayer sur l’écran de démarrage pour poursuivre la récupération enregistrée.</value>
   </data>
 </root>

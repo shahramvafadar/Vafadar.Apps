@@ -765,3 +765,14 @@ money, binary portable backup and wrong-key refusal pass across fresh process re
 inspection failure was corrected only in its distinct fixture package, preserving creation/result/data
 and continuing the same key. See decision/device-key guide for proof/scope. Main/APK remain D-251;
 final host/recovery/retention/OS/native platform and device acceptance remain open.
+
+## Android official native package prerequisite
+
+The Android app restores Vafadar.Native.SqlCipher.Android 4.19.0-candidate.4 from the repository-local
+feed. Run eng/native/sqlcipher/Ensure-AndroidPackage.ps1 to validate/reuse the exact qualified package
+or build/package it from the pinned official inputs before restoration. Incomplete producers never
+serve as package authority. CI and the manually dispatched Android release workflow share the qualified producer cache and run
+this prerequisite before restore.
+Use the canonical eng/scripts/Build-AndroidApk.ps1 for the complete signed Release phone artifact;
+verify its signature, permanent package, both ABI native payloads and assembly stores. A successful
+Debug/Fast Deployment build or independent probe cannot substitute for that artifact.

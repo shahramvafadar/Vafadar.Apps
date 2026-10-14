@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- D-63: secure-storage ciphertext is device-bound and must not be restored without its Android Keystore key. -->
+<!-- Final encrypted-installation policy (OD-10): device-bound keys and financial storage never transfer through OS backup. Restore new devices from a Zanance portable backup. -->
 <full-backup-content>
-    <exclude domain="sharedpref" path="pro.vafadar.zanance.microsoft.maui.essentials.preferences.xml" />
+    <exclude domain="root" path="." />
+    <exclude domain="file" path="." />
+    <exclude domain="database" path="." />
+    <exclude domain="sharedpref" path="." />
+    <exclude domain="external" path="." />
+    <exclude domain="device_root" path="." />
+    <exclude domain="device_file" path="." />
+    <exclude domain="device_database" path="." />
+    <exclude domain="device_sharedpref" path="." />
 </full-backup-content>

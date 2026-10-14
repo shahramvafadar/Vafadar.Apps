@@ -1058,3 +1058,22 @@ D-230 signed complete phone artifact: artifacts/android-d230-delivery/pro.vafada
 (79.5 MiB), existing local test certificate; apksigner verification succeeds. Actual package
 pro.vafadar.zanance, API 24/36 and complete arm64-v8a/x86_64 assembly stores verified.
 Main storage remains plaintext; this is not encrypted-main, device, iOS or release acceptance.
+
+### D-263 — Android encrypted application delivery
+
+- [x] Corrected 3509-test suite, zero failures/skips; test output cleaned.
+- [x] Strict Windows and canonical complete Android Release builds without errors/warnings.
+- [x] Signature v2/v3, permanent package, API24/36, non-debuggable and native engine exclusivity.
+- [x] Patched core runtime13 native payloads and Xml/Pkcs13 package selection.
+- [x] Original main encrypted startup/lifecycle/recovery/restore/safety and native continuation evidence.
+- [x] Corrected 18 native language/theme/width contexts, growing captions and actual picker cancellation.
+- [x] Exact fixture-key return and unchanged financial hashes; no review financial writes.
+- [x] Packaged final Android OS cloud/device-transfer exclusions.
+- [x] Canonical documentation and complete signed APK handoff prepared.
+- [ ] Fresh hosted CI result for the final commit.
+- [ ] Phone/arm64/API24/16KiB, spoken accessibility and OEM transfer acceptance.
+- [ ] Windows/iOS encrypted main adoption and iOS signing/device acceptance.
+- [ ] Real OAuth, Store signing and publication.
+
+[Artifact and evidence](quality/android-protected-storage.md). Local signing/build and emulator checks
+are not product publication; the full backlog and continuous-development objective remain open.

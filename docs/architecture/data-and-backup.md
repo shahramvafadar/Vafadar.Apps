@@ -2006,3 +2006,18 @@ before maintenance-owned migration. Existing newer data is never replaced; confl
 sidecars and protected legacy metadata refuse before any move. Protection-required hosts never enter
 this legacy plaintext path. This preserves the existing naming behavior with corrected sequencing,
 not a crash-safe rename protocol or permission to rename encrypted generation identities.
+
+## Current Android protected application adoption
+
+Android main registration requires the official SQLCipher provider and covered native startup. The
+existing profile/store contracts resolve through one protected lifecycle host; root replacement updates
+the unpublished original location and current session source before financial pages are published.
+Backup-package schema/preferences validation precedes any retained restore intent or new native key.
+Encrypted safety protection and authenticated reference-aware maintenance run through the same host.
+Portable preference allowlists exclude credentials/PIN/device security; backup passwords stay optional.
+
+Final Android OS backup/transfer rules exclude all app storage domains and allowBackup is false.
+Device replacement uses Zanance portable backup, while optional recorded-code recovery applies to
+existing installation keys. Windows/iOS main registration is not adopted by this Android batch.
+See [device-key integration evidence](sqlcipher-device-keys.md) and the app quality evidence for the
+actual Release/native interruption corpus and remaining delivery/platform/device gates.

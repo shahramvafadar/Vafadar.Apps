@@ -5079,7 +5079,7 @@
     <value>پشتیبان</value>
   </data>
   <data name="About_FilesBackup" xml:space="preserve">
-    <value>نسخهٔ پشتیبان شامل داده‌های پروفایل فعلی است؛ از جمله حساب‌ها، تراکنش‌ها، برنامه‌های مالی، بودجه‌ها، نرخ‌ها، هدف‌ها، دارایی‌های مقداری، پیش‌بینی‌های ذخیره‌شده، واحدهای نمایش و چیدمان خانه. نسخهٔ محلی و ابری با فعال کردن محافظت با رمز عبور رمزگذاری می‌شوند؛ این محافظت برای هر دو اختیاری است. تنظیمات سراسری دستگاه، مثل ظاهر، زبان و نمایش ارقام، در پشتیبان نیست.</value>
+    <value>بکاپ شامل داده‌های پروفایل فعلی و انتخاب‌های نمایشی قابل انتقال است: زبان، تقویم، قالب منطقه‌ای، شکل ارقام، شروع هفته و منطقهٔ تعطیلات. حفاظت با رمز برای فایل‌های محلی و ابری اختیاری است. تم برنامه، رمز ورود، تنظیمات امنیتی دستگاه و اطلاعات ورود در همین دستگاه باقی می‌مانند.</value>
   </data>
   <data name="About_FilesCsvTitle" xml:space="preserve">
     <value>خروجی CSV</value>
@@ -6261,5 +6261,56 @@
   </data>
   <data name="Startup_Retry" xml:space="preserve">
     <value>تلاش دوباره</value>
+  </data>
+  <data name="Recovery_Title" xml:space="preserve">
+    <value>بازیابی دیتابیس</value>
+  </data>
+  <data name="Recovery_UseCode" xml:space="preserve">
+    <value>بازیابی با کد بازیابی شما</value>
+  </data>
+  <data name="Recovery_CodePrompt" xml:space="preserve">
+    <value>کد بازیابی ذخیره‌شده هنگام تنظیم بازیابی دیتابیس را وارد کنید. این کار رمز ورود برنامه را حذف نمی‌کند.</value>
+  </data>
+  <data name="Recovery_Confirm" xml:space="preserve">
+    <value>بازیابی</value>
+  </data>
+  <data name="Recovery_Failed" xml:space="preserve">
+    <value>بازیابی انجام نشد. کد را بررسی کنید و فایل‌های موجود را نگه دارید.</value>
+  </data>
+  <data name="Recovery_Setup" xml:space="preserve">
+    <value>تنظیم کد بازیابی اختیاری</value>
+  </data>
+  <data name="Recovery_SetupHint" xml:space="preserve">
+    <value>پیش از ذخیره، این کد را در جای امنی خارج از این دستگاه یادداشت کنید. با آن می‌توانید پس از گم‌شدن کلید دستگاه، همین نصب را بازیابی کنید. برای گوشی جدید بکاپ Zanance نگه دارید؛ رمز بکاپ همچنان اختیاری است.</value>
+  </data>
+  <data name="Recovery_Code" xml:space="preserve">
+    <value>کد بازیابی</value>
+  </data>
+  <data name="Recovery_Recorded" xml:space="preserve">
+    <value>این کد را خارج از این دستگاه یادداشت کرده‌ام</value>
+  </data>
+  <data name="Recovery_AlreadyEnabled" xml:space="preserve">
+    <value>بازیابی قبلاً تنظیم شده است. کد اصلی را نگه دارید؛ در اینجا کد جدیدی ساخته نمی‌شود.</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Title" xml:space="preserve">
+    <value>بازیابی دیتابیس</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Text" xml:space="preserve">
+    <value>پیش از ذخیره، این کد را در جای امنی خارج از این دستگاه یادداشت کنید. با آن می‌توانید پس از گم‌شدن کلید دستگاه، همین نصب را بازیابی کنید. برای گوشی جدید بکاپ Zanance نگه دارید؛ رمز بکاپ همچنان اختیاری است.</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Example" xml:space="preserve">
+    <value>اگر کلید دستگاه گم شد، کد بازیابی یادداشت‌شده را در صفحهٔ راه‌اندازی وارد کنید. در گوشی جدید، بکاپ Zanance را بازیابی کنید.</value>
+  </data>
+  <data name="Recovery_FromBackup" xml:space="preserve">
+    <value>بازیابی از بکاپ Zanance</value>
+  </data>
+  <data name="Recovery_BackupWarning" xml:space="preserve">
+    <value>این بکاپ، یک پروفایل را در یک نصب رمزنگاری‌شدهٔ جدید بازیابی می‌کند. فایل‌های موجود و سایر پروفایل‌های قبلی در همین دستگاه، بایگانی و بدون تغییر باقی می‌مانند. رمز ورود دستگاهی برنامه همچنان برقرار است. فایل بکاپ Zanance را انتخاب کنید؛ تنها اگر فایل را رمزگذاری کرده‌اید، رمز آن را وارد کنید.</value>
+  </data>
+  <data name="Recovery_BackupPassword" xml:space="preserve">
+    <value>رمز فایل بکاپ، در صورت رمزگذاری</value>
+  </data>
+  <data name="Recovery_BackupFailed" xml:space="preserve">
+    <value>بازیابی انجام نشد. فایل بکاپ و رمز آن را بررسی کنید. فایل‌های موجود حفظ شده‌اند. اگر ذخیره قطع شده است، این صفحه را ببندید و برای ادامهٔ بازیابی ثبت‌شده، در صفحهٔ راه‌اندازی «تلاش دوباره» را انتخاب کنید.</value>
   </data>
 </root>

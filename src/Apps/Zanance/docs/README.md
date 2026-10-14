@@ -39,3 +39,7 @@ Occurrence command failures: [engineering evidence](quality/occurrence-command-f
 Actual goal work and scoped reminders: [engineering and native delivery evidence](quality/goal-work-reminders.md) (D-145 / AT-147). Goal-view contribution affordances and remaining ENT-02/03 bindings follow separately; current enforcement remains inactive.
 
 Original goal views and reviewed actions: [source/native/APK evidence](quality/goal-work-views.md) (D-146 / AT-148). Remaining goal editor/contribution draft and other ENT-02/03 bindings remain open; registration stays inactive.
+
+Current Android encrypted application delivery:
+[protected storage evidence](quality/android-protected-storage.md). This distinguishes original main
+Release evidence from the earlier independent probes and retains pending platform/device/CI gates.

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "sourceInputsSha256": "770688af8a3774f695f8a2119574376e8c2b5b34bc6af4d777f62654b2d07de6",
+  "androidInputsSha256": "48b473aa1b696dc7b8d51cd36e6f6249410bb8d0c45f282bed653e4373207df6",
+  "nativeByAbi": {
+    "arm64-v8a": "abc2c51b7b284672d8f6e86249847b962997d245720b50273531a1f85dbf1f56",
+    "x86_64": "9579006cdaca361daba6b08cf5228319d605a60c84bfc33e6a1287a06e702644"
+  },
+  "evidenceReference": "D-183; artifacts/native-sqlcipher/build/android-d/runtime-proof.json",
+  "evidenceSha256": "02065d0f3f8200190f9ba0bd490a6c3d4112571ff15bf8baac3440598d52c3ab",
+  "runtimeEvidence": {
+    "abi": "x86_64",
+    "nativeSha256": "9579006cdaca361daba6b08cf5228319d605a60c84bfc33e6a1287a06e702644",
+    "nativeProof": {
+      "nativeCipherAndProviderMatched": true,
+      "correctKeyReopenMinorUnitsCurrencyDate": true,
+      "wrongMissingKeyTamperRefused": true,
+      "fictitiousOnly": true
+    }
+  },
+  "arm64RuntimeAccepted": false,
+  "wholeApplicationAccepted": false
+}

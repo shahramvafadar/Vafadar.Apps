@@ -5097,7 +5097,7 @@ Holding quantity: follow a weight or number of items, not their price. A rise in
     <value>Backup</value>
   </data>
   <data name="About_FilesBackup" xml:space="preserve">
-    <value>A backup contains the current profile's data, including accounts, transactions, plans, budgets, rates, goals, holdings, saved forecasts, display units and the Home layout. Local and cloud backups are encrypted when password protection is enabled; it is optional for both. Device-wide preferences, such as theme, language and digit display, are not included.</value>
+    <value>A backup contains the current profile's data and portable display choices: language, calendar, regional format, digit shapes, week start and holiday region. Password protection is optional for local and cloud files. The app theme, PIN, device security and credentials stay on this device.</value>
   </data>
   <data name="About_FilesCsvTitle" xml:space="preserve">
     <value>CSV export</value>
@@ -6290,5 +6290,56 @@ Category limits:
   </data>
   <data name="Startup_Retry" xml:space="preserve">
     <value>Try again</value>
+  </data>
+  <data name="Recovery_Title" xml:space="preserve">
+    <value>Database recovery</value>
+  </data>
+  <data name="Recovery_UseCode" xml:space="preserve">
+    <value>Recover with your recovery code</value>
+  </data>
+  <data name="Recovery_CodePrompt" xml:space="preserve">
+    <value>Enter the recovery code you recorded when setting up database recovery. This does not remove your app PIN.</value>
+  </data>
+  <data name="Recovery_Confirm" xml:space="preserve">
+    <value>Recover</value>
+  </data>
+  <data name="Recovery_Failed" xml:space="preserve">
+    <value>Recovery could not be completed. Check your code and keep your existing files.</value>
+  </data>
+  <data name="Recovery_Setup" xml:space="preserve">
+    <value>Set up an optional recovery code</value>
+  </data>
+  <data name="Recovery_SetupHint" xml:space="preserve">
+    <value>Record this code somewhere safe outside this device before saving. It unlocks this installation after device-key loss. Keep a Zanance backup for a new phone; backup passwords remain optional.</value>
+  </data>
+  <data name="Recovery_Code" xml:space="preserve">
+    <value>Recovery code</value>
+  </data>
+  <data name="Recovery_Recorded" xml:space="preserve">
+    <value>I have recorded this code outside this device</value>
+  </data>
+  <data name="Recovery_AlreadyEnabled" xml:space="preserve">
+    <value>Recovery is already configured. Keep your original code; a new code is not created here.</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Title" xml:space="preserve">
+    <value>Database recovery</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Text" xml:space="preserve">
+    <value>Record this code somewhere safe outside this device before saving. It unlocks this installation after device-key loss. Keep a Zanance backup for a new phone; backup passwords remain optional.</value>
+  </data>
+  <data name="Help_DatabaseRecovery_Example" xml:space="preserve">
+    <value>If the device key is lost, use your recorded recovery code on the covered startup screen. On a new phone, restore a Zanance backup.</value>
+  </data>
+  <data name="Recovery_FromBackup" xml:space="preserve">
+    <value>Recover from a Zanance backup</value>
+  </data>
+  <data name="Recovery_BackupWarning" xml:space="preserve">
+    <value>This backup restores one profile into a new encrypted installation. Existing files and other old profiles stay on this device, archived and unchanged. The device PIN remains in effect. Choose your Zanance backup file; enter a password only if you protected that file.</value>
+  </data>
+  <data name="Recovery_BackupPassword" xml:space="preserve">
+    <value>Backup file password, if protected</value>
+  </data>
+  <data name="Recovery_BackupFailed" xml:space="preserve">
+    <value>Recovery could not be completed. Check the backup and its password. Existing files are kept. If saving was interrupted, close this page and choose Retry on the startup screen to continue the recorded recovery.</value>
   </data>
 </root>

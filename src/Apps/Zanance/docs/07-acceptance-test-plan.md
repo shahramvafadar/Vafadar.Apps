@@ -2689,3 +2689,16 @@ money, binary portable backup and wrong-key refusal pass across fresh process re
 inspection failure was corrected only in its distinct fixture package, preserving creation/result/data
 and continuing the same key. See decision/device-key guide for proof/scope. Main/APK remain D-251;
 final host/recovery/retention/OS/native platform and device acceptance remain open.
+
+### D-263 — Original Android protected application acceptance
+
+The corrected permanent-package Release passes original enrollment navigation, retained cold opening,
+covered key loss and actual backup-picker cancellation in18 en/fa/de light/dark contexts at actual
+360x800,412x800,1280x820. German recovery captions grow into complete two-line native surfaces.
+No review submits recovery or writes financial records; exact held envelopes and complete financial
+hashes are preserved. Earlier positive original restore/retirement/interruption cases remain recorded.
+
+All 3509 final dependency tests pass with no failures/skips; outputs cleaned. Strict builds and complete
+signed/non-debuggable APK/runtime13/native payloads are checked. [Evidence](quality/android-protected-storage.md)
+separates these observations from power-loss/all-crash-points, real phone/arm64/API24/16KiB, spoken
+accessibility, OEM transfer, OAuth, hosted fresh construction, Windows/iOS and Store/publication gates.

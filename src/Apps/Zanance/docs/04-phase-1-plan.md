@@ -950,3 +950,20 @@ inactive. Physical phone/iOS/OAuth/billing/Store/performance/full-product accept
 The confirmed D-168 report portion is delivered; finite ENT-02/03 completion review is next.
 Owner/external dependencies and full commercial-release acceptance remain open.
 [Evidence](quality/report-work.md).
+
+## Android protected storage delivery — D-263
+
+The complete Android main application batch is implemented and locally verified with official
+SQLCipher, automatic device keys, optional recorded recovery, all-profile lifecycle, retained portable
+recovery, encrypted restore safety and reference-aware retirement. Final Android OS backup/transfer
+exclusion is coupled to this runtime; portable passwords remain optional.
+
+All 3509 corrected dependency tests passed without failures/skips and outputs were cleaned. Strict
+Windows and complete Android Release builds passed. The final APK is signed, non-debuggable, uses
+core runtime 10.0.13 and both reviewed native cipher payloads. Eighteen corrected native contexts cover
+en/fa/de, light/dark and 360/412/wide layouts, original enrollment navigation, key-loss cover and actual
+file-picker cancellation. Financial hashes and exact fixture envelopes were preserved.
+
+[Complete evidence](quality/android-protected-storage.md) records the exact artifact/hash, observed
+failures, native process-loss corpus and limits. Windows/iOS encrypted adoption, fresh hosted CI,
+physical/OEM/provider/Store acceptance and the full canonical backlog remain open.

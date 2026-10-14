@@ -403,3 +403,12 @@ Actual date parts/calendar actions identify their original start/end/reference p
 raw dates and drafts. Main 3,169 and Windows/normal Release Android checks; full signed local test
 APK: artifacts/android/zanance-d175-release.apk. [Evidence](docs/quality/date-context-accessibility.md).
 Spoken screen-reader/device acceptance remains separate.
+
+## Android protected storage
+
+Android main Release uses official SQLCipher with device-bound keys, optional recorded-code recovery,
+explicit Zanance backup recovery and reference-aware encrypted safety retirement. Portable passwords
+remain optional. Sensitive Android app storage is excluded from OS backup/device transfer; a new phone
+restores a Zanance backup. PIN remains a separate gate. Windows/iOS adoption and device/provider/Store
+acceptance remain open. [Runtime evidence](docs/quality/android-protected-storage.md) records the final
+signed artifact, corrected native UI and remaining gates.

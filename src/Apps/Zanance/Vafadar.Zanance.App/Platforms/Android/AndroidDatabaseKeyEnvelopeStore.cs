@@ -49,7 +49,14 @@ public sealed partial class AndroidDatabaseKeyEnvelopeStore
     private byte[] ReadEntry(string path, DatabaseKeyBinding binding, bool recovered)
     {
         ValidateDirectory();
-        var descriptor = Os.Open(path, OsConstants.ORdonly | OsConstants.ONofollow | OsConstants.ONonblock, 0)!;
+        Java.IO.FileDescriptor descriptor;
+        try { descriptor = Os.Open(path, OsConstants.ORdonly | OsConstants.ONofollow | OsConstants.ONonblock, 0)!; }
+        catch (ErrnoException exception) when (exception.Errno == OsConstants.Enoent)
+        {
+            // Android reports missing native files as errno rather than managed IO exceptions.
+            // Preserve the recorded-key failure contract; this never authorizes key creation.
+            throw new FileNotFoundException("Recorded key envelope is missing.", path, exception);
+        }
         Java.IO.FileInputStream input;
         try
         {

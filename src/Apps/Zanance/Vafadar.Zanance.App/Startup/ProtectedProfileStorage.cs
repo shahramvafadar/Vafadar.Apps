@@ -98,6 +98,25 @@ public sealed class ProtectedProfileStorage
         if (restoreSettings is null || restoreKeys is null) throw new InvalidOperationException("Protected restore preflight is not composed.");
         var capture = profiles().CaptureStorage(); capture.Validate();
         void Check() { ct.ThrowIfCancellationRequested(); Session.RequireStable(owner); validateDirectory(); capture.Validate(); }
+        await ValidatePortableSourcesAsync(entries, maximumBytes, Check, ct).ConfigureAwait(false);
+        var original = capture.CurrentOriginalPath;
+        var legacy = capture.OriginalPaths.Single(pair => pair.Value == original).Key;
+        var identity = (await new SqliteDatabaseIdentityCatalogue(identityPath, Check).ReadAsync(ct).ConfigureAwait(false)).Single(row => row.LegacyProfileId == legacy);
+        // Capture performs portable JSON/allowlist validation only; this path is never created or opened.
+        var preferences = new SqlCipherRestorePreferences(original + ".preflight.preferences.cipher.db", identity.InitialCandidateKey,
+            keys, durability, cipherVersion, restoreKeys);
+        _ = preferences.Capture(entries.TryGetValue("display-settings.json", out var display) ? display : null, restoreSettings); Check();
+        var receiver = await PrepareRestoreAsync(owner, ct).ConfigureAwait(false);
+        await receiver.RestoreAsync(manifest, entries, ct).ConfigureAwait(false);
+    }
+
+    /// <summary>Checks actual application schema and supported sources entirely in memory before a recovery directory or key is created.</summary>
+    public static async Task ValidatePortableSourcesAsync(IReadOnlyDictionary<string, ReadOnlyMemory<byte>> entries,
+        int maximumBytes, Action validateAccess, CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(entries); ArgumentNullException.ThrowIfNull(validateAccess);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(maximumBytes);
+        void Check() { ct.ThrowIfCancellationRequested(); validateAccess(); }
         if (!entries.TryGetValue("database.sqlite", out var database) || entries.Keys.Any(name => name is not "database.sqlite" and not "display-settings.json"))
             throw new InvalidDataException("Protected restore requires complete supported sources.");
         if (database.Length > maximumBytes) throw new InvalidDataException("Portable database exceeds the restore bound.");
@@ -115,15 +134,6 @@ public sealed class ProtectedProfileStorage
             Check();
         }
         finally { CryptographicOperations.ZeroMemory(owned); }
-        var original = capture.CurrentOriginalPath;
-        var legacy = capture.OriginalPaths.Single(pair => pair.Value == original).Key;
-        var identity = (await new SqliteDatabaseIdentityCatalogue(identityPath, Check).ReadAsync(ct).ConfigureAwait(false)).Single(row => row.LegacyProfileId == legacy);
-        // Capture performs portable JSON/allowlist validation only; this path is never created or opened.
-        var preferences = new SqlCipherRestorePreferences(original + ".preflight.preferences.cipher.db", identity.InitialCandidateKey,
-            keys, durability, cipherVersion, restoreKeys);
-        _ = preferences.Capture(entries.TryGetValue("display-settings.json", out var display) ? display : null, restoreSettings); Check();
-        var receiver = await PrepareRestoreAsync(owner, ct).ConfigureAwait(false);
-        await receiver.RestoreAsync(manifest, entries, ct).ConfigureAwait(false);
     }
 
     /// <summary>Records an explicit active-profile restore before staging, retaining exact history and native synchronization.</summary>

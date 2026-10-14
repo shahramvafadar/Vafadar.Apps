@@ -17,7 +17,16 @@ if ($manifest.schemaVersion -ne 1 -or $manifest.files.Count -ne 2 -or
     $manifest.androidInputsSha256 -ne (Get-FileHash -LiteralPath (Join-Path $PSScriptRoot 'android.inputs.lock.json')).Hash.ToLowerInvariant()) {
     throw 'Android candidate differs from reviewed inputs.'
 }
-$runtime = Get-Content -LiteralPath (Join-Path $root 'runtime-proof.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+$runtimePath = Join-Path $root 'runtime-proof.json'
+$reusedRuntimeEvidence = -not (Test-Path -LiteralPath $runtimePath)
+$qualification = $null
+if ($reusedRuntimeEvidence) {
+    # An observed binary's exact bytes retain its prior scope; this is not a new emulator run.
+    $qualification = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'android.runtime.qualification.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+    if ($qualification.schemaVersion -ne 1 -or $qualification.sourceInputsSha256 -ne $manifest.sourceInputsSha256 -or
+        $qualification.androidInputsSha256 -ne $manifest.androidInputsSha256) { throw 'No matching observed native qualification.' }
+    $runtime = $qualification.runtimeEvidence
+} else { $runtime = Get-Content -LiteralPath $runtimePath -Raw -Encoding UTF8 | ConvertFrom-Json }
 $entries = [ordered]@{}
 foreach ($abi in @('arm64-v8a','x86_64')) {
     $file = $manifest.files | Where-Object abi -eq $abi
@@ -30,6 +39,7 @@ foreach ($abi in @('arm64-v8a','x86_64')) {
         throw 'Native Android slice differs from its verified evidence.'
     }
     if ($runtime.abi -eq $abi -and $runtime.nativeSha256 -ne $file.sha256) { throw 'Runtime-tested bytes differ.' }
+    if ($reusedRuntimeEvidence -and $qualification.nativeByAbi.$abi -ne $file.sha256) { throw 'Unobserved native bytes cannot reuse qualification.' }
     $rid = if ($abi -eq 'arm64-v8a') { 'android-arm64' } else { 'android-x64' }
     $entries['runtimes/' + $rid + '/native/libsqlcipher.so'] = [IO.File]::ReadAllBytes($library)
 }
@@ -39,7 +49,7 @@ $notices = 'Owner-written Zanance source remains all rights reserved. Component 
 foreach ($license in @('SQLCipher.txt','OpenSSL.txt','NDK-CompilerRuntime.txt')) {
     $notices += "`n`n" + (Get-Content -LiteralPath (Join-Path $candidate ('licenses/' + $license)) -Raw -Encoding UTF8)
 }
-$id = 'Vafadar.Native.SqlCipher.Android'; $version = $inputLock.sources.sqlcipher.tag.TrimStart('v') + '-candidate.3'
+$id = 'Vafadar.Native.SqlCipher.Android'; $version = $inputLock.sources.sqlcipher.tag.TrimStart('v') + '-candidate.4'
 $nuspec = @"
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd"><metadata>
@@ -54,7 +64,12 @@ $targets = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'android-package.ta
 $entries['buildTransitive/net10.0-android/' + $id + '.targets'] = [Text.Encoding]::UTF8.GetBytes($targets.Replace("`r`n","`n"))
 $entries[$id + '.nuspec'] = [Text.Encoding]::UTF8.GetBytes($nuspec.Replace("`r`n","`n"))
 $entries['licenses/ThirdPartyNotices.txt'] = [Text.Encoding]::UTF8.GetBytes($notices.Replace("`r`n","`n"))
-$entries['manifest.json'] = [IO.File]::ReadAllBytes($manifestPath)
+# Package identity is stable across independently reproduced hosts. Keep hostImageId in the
+# producer manifest/evidence, rather than changing immutable package bytes with each Docker image.
+$packageManifest = [ordered]@{ schemaVersion=$manifest.schemaVersion; status=$manifest.status; minimumApi=$manifest.minimumApi;
+    sourceInputsSha256=$manifest.sourceInputsSha256; androidInputsSha256=$manifest.androidInputsSha256;
+    sources=$manifest.sources; files=$manifest.files }
+$entries['manifest.json'] = [Text.Encoding]::UTF8.GetBytes(($packageManifest | ConvertTo-Json -Depth 8).Replace("`r`n","`n"))
 $packageDirectory = Join-Path $root ('packages/' + $PackageName)
 New-Item -ItemType Directory -Force $packageDirectory | Out-Null
 $path = Join-Path $packageDirectory ($id + '.' + $version + '.nupkg')
@@ -72,6 +87,7 @@ try {
 }
 finally { $zip.Dispose() }
 [ordered]@{ packageSha256=(Get-FileHash -LiteralPath $path).Hash.ToLowerInvariant(); candidateOnly=$true;
-    runtimeAbi=$runtime.abi; otherAbiRuntimeAndWholeAppNotAccepted=$true } | ConvertTo-Json |
+    runtimeAbi=$runtime.abi; priorRuntimeEvidenceReused=$reusedRuntimeEvidence; producerManifestSha256=(Get-FileHash -LiteralPath $manifestPath).Hash.ToLowerInvariant();
+    otherAbiRuntimeAndWholeAppNotAccepted=$true } | ConvertTo-Json |
     Set-Content -LiteralPath ($path + '.proof.json') -Encoding UTF8
 Write-Output $path

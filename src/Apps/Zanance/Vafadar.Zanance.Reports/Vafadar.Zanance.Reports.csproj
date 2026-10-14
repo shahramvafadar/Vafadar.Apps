@@ -7,6 +7,9 @@
 
   <ItemGroup>
     <PackageReference Include="Syncfusion.Pdf.Net.Core" />
+    <!-- Explicit patched dependencies also protect standalone document/report consumers. -->
+    <PackageReference Include="System.Security.Cryptography.Pkcs" />
+    <PackageReference Include="System.Security.Cryptography.Xml" />
   </ItemGroup>
 
   <ItemGroup Label="Vazirmatn (SIL Open Font License 1.1, see Fonts/Vazirmatn-OFL.txt)">

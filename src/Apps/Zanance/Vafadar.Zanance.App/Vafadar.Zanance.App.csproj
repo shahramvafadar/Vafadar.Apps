@@ -59,13 +59,29 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Explicit existing engine until reviewed native cipher host adoption; never chosen by shared Data. -->
-    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" />
+    <!-- Android adopts the reviewed native cipher; other platform hosts explicitly retain their existing engine. -->
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'android'" />
+    <PackageReference Include="Vafadar.Native.SqlCipher.Android" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
     <PackageReference Include="Syncfusion.Maui.Charts" />
     <PackageReference Include="Syncfusion.Maui.Inputs" />
     <PackageReference Include="Syncfusion.Maui.ProgressBar" />
   </ItemGroup>
+
+  <!-- Service the core runtime without assigning a .NET version to Android/iOS platform packs. -->
+  <Target Name="SelectPatchedCoreRuntime" BeforeTargets="ProcessFrameworkReferences">
+    <ItemGroup>
+      <FrameworkReference Condition="'%(FrameworkReference.Identity)' == 'Microsoft.NETCore.App'">
+        <RuntimeFrameworkVersion>$(VafadarSecurityRuntimeVersion)</RuntimeFrameworkVersion>
+      </FrameworkReference>
+    </ItemGroup>
+  </Target>
+
+  <!-- Prepare the exact source-built dependency before NuGet collects the Android restore graph. -->
+  <Target Name="PrepareAndroidCipherDependency" BeforeTargets="_GenerateRestoreGraphProjectEntry"
+          Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+    <Exec Command="pwsh -NoProfile -File &quot;$(RepoRoot)eng/native/sqlcipher/Ensure-AndroidPackage.ps1&quot;" />
+  </Target>
 
   <!-- Local notifications on phones only: the Windows build of the plugin needs a newer Windows App SDK than MAUI. -->
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' or $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">

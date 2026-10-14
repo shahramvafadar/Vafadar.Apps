@@ -14,6 +14,20 @@ public partial class SettingsPage : ContentPage
         _localization = localization;
         InitializeComponent();
         BindingContext = _viewModel = viewModel;
+#if ANDROID
+        RecoverySetupGroup.IsVisible = true;
+        RecoverySetupAction.Command = new CommunityToolkit.Mvvm.Input.AsyncRelayCommand(OpenRecoverySetupAsync);
+#endif
+    }
+
+    /// <summary>Opens explicit device-local recovery enrollment only on the protected Android platform.</summary>
+    private Task OpenRecoverySetupAsync()
+    {
+#if ANDROID
+        return Presentation.Failures.GuardAsync(() => ((App)Application.Current!).ShowRecoverySetupAsync());
+#else
+        return Task.CompletedTask;
+#endif
     }
 
     private async void OnLockToggled(object? sender, ToggledEventArgs e) => await Presentation.Failures.GuardAsync(() => _viewModel.SetLockAsync(e.Value));

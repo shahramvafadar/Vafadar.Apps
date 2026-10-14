@@ -10,7 +10,7 @@ namespace Vafadar.Zanance.App.Features.Backup;
 /// <summary>Original native consent, safety/source recovery and UI/security completion for one attached backup page.</summary>
 internal sealed class MauiBackupRestoreRuntime(IBackupService backup, AutoPostProcessor autoPost, ReminderService reminders,
     AppLockService appLock, ILocalizationService localization, ZananceStore store, LocalFolderBackupStorage safety,
-    Func<Page> page, Func<Task> returnOnboarding) : IBackupRestoreRuntime
+    Func<Page> page, Func<Task> returnOnboarding, IBackupSafetyCopyMaintenance? maintenance = null) : IBackupRestoreRuntime
 {
     private bool _returnedOnboarding;
     /// <inheritdoc />
@@ -19,7 +19,11 @@ internal sealed class MauiBackupRestoreRuntime(IBackupService backup, AutoPostPr
     /// <inheritdoc />
     public Task<bool> AuthenticateAsync() => appLock.ConfirmAsync(Vafadar.Localization.Translator.Instance["Lock_ConfirmRestore"]);
     /// <inheritdoc />
-    public async Task CreateSafetyCopyAsync() => await backup.CreateSafetyCopyAsync(safety);
+    public Task CreateSafetyCopyAsync() => autoPost.RunExclusiveAsync(async () =>
+    {
+        var file = await backup.CreateSafetyCopyAsync(safety);
+        if (maintenance is not null) await maintenance.AfterUploadAsync(file);
+    });
     /// <inheritdoc />
     public Task RestorePrimaryAsync(byte[] package, string? password) => autoPost.RunExclusiveAsync(() => backup.RestorePackageAsync(package, password));
     /// <inheritdoc />

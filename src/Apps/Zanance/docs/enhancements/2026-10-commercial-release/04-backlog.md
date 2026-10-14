@@ -15,14 +15,14 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 |---|---|---|---|---|---|---|
 | ZCR-GOV-01 | Audit, plan matrix, architecture, backlog and delivery plan | 0 | P1 | M | Done | – |
 | ZCR-GOV-02 | Refresh spec §31, AGENTS.md §12 and outdated statements | 0/2 | P2 | S | Done (D-88; external confirmation/acceptance still open) | GOV-01 |
-| ZCR-SEC-01 | Threat model and encryption decision record + feasibility proof | 1 | P1 | M | In progress (D-180 official Community direction and Windows C/.NET proof; native Linux CI accepted D-191; final key/recovery/migration/platform integration remains) | OD-04 approved |
-| ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | In progress (D-197 protected EF factory; main provider/lifecycle/backup adoption remains) | SEC-01 |
-| ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-193 Android / D-192 Windows protectors; durable storage/iOS remain) | SEC-01 |
+| ZCR-SEC-01 | Threat model and encryption decision record + feasibility proof | 1 | P1 | M | In progress (D-263 Android official Community integration locally verified; Windows/iOS/external gates remain) | OD-04 approved |
+| ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | In progress (D-263 Android main encryption delivered; Windows/iOS adoption and device gates remain) | SEC-01 |
+| ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-263 Android native per-generation keys delivered; Windows/iOS/device gates remain) | SEC-01 |
 | ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | Proposed | SEC-03, OD-04 |
-| ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-196 concrete Android session and restart proof; main/all-profile lifecycle and broader crash/platform matrix open) | SEC-02, SEC-03 |
-| ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | In progress (D-238 standard recovery wrapping and native private-vault proof; final UX/re-enrollment/reference integration remains) | SEC-04, OD-04 approved |
-| ZCR-SEC-07 | Final OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | Policy approved D-192; final coupled integration pending, no interim exclusion | OD-10 approved |
-| ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | Proposed | SEC-03 |
+| ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-263 Android all-profile migration/lifecycle and native interruption cases delivered; broader fault/platform acceptance remains) | SEC-02, SEC-03 |
+| ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | In progress (D-263 Android optional recovery and explicit portable recovery delivered; other platforms/device acceptance remain) | SEC-04, OD-04 approved |
+| ZCR-SEC-07 | Final OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | In progress (D-263 final coupled Android policy delivered; iOS exclusion/OEM acceptance remain) | OD-10 approved |
+| ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | In progress (D-263 Android encrypted safety and reference-aware retirement delivered; platform/device gates remain) | SEC-03 |
 | ZCR-SEC-10 | Owner-approved PIN, screenshot choice and ownership clarification (D-63) | Maintenance | P1 | M | Done | Owner request 2026-10-08 |
 | ZCR-SEC-09 | Network/SDK review of online builds; privacy texts | 1/3 | P2 | S | Done (current baseline; repeat for future SDKs) | – |
 | ZCR-LOC-01 | Release bug list from the owner's phone tests | 2 | P1 | M | Proposed | owner reports |

@@ -7,6 +7,7 @@
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
+    <VafadarSecurityRuntimeVersion>10.0.13</VafadarSecurityRuntimeVersion>
   </PropertyGroup>
 
   <ItemGroup Label="MAUI">
@@ -39,6 +40,9 @@
   <ItemGroup Label="Syncfusion">
     <PackageVersion Include="Syncfusion.Licensing" Version="35.1.37" />
     <PackageVersion Include="Syncfusion.Pdf.Net.Core" Version="35.1.37" />
+    <!-- October security fixes for the PDF libraries' cryptography dependencies; do not suppress NuGet audit. -->
+    <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
+    <PackageVersion Include="System.Security.Cryptography.Xml" Version="10.0.13" />
     <PackageVersion Include="Syncfusion.Maui.Core" Version="35.1.37" />
     <PackageVersion Include="Syncfusion.Maui.Calendar" Version="35.1.37" />
     <PackageVersion Include="Syncfusion.Maui.Charts" Version="35.1.37" />
@@ -53,8 +57,8 @@
     <PackageVersion Include="SQLitePCLRaw.bundle_e_sqlcipher" Version="2.1.11" />
     <!-- Maintained managed bridge for our source-built candidate; does not contain a native crypto binary. -->
     <PackageVersion Include="SQLitePCLRaw.provider.sqlcipher" Version="3.0.5" />
-    <!-- Independent source-built package qualification; no application native adoption is implied. -->
-    <PackageVersion Include="Vafadar.Native.SqlCipher.Android" Version="4.19.0-candidate.3" />
+    <!-- Official source-built native packages; Android is adopted, Windows main integration remains separate. -->
+    <PackageVersion Include="Vafadar.Native.SqlCipher.Android" Version="4.19.0-candidate.4" />
     <PackageVersion Include="Vafadar.Native.SqlCipher.Windows" Version="4.19.0-candidate.3" />
     <PackageVersion Include="System.Security.Cryptography.ProtectedData" Version="10.0.12" />
   </ItemGroup>

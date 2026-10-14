@@ -150,6 +150,109 @@ public sealed class DatabaseRecoveryTests : IDisposable
         await Assert.ThrowsAsync<IOException>(() => vault.OpenAsync(new byte[32], Ct));
         Assert.False(File.Exists(directory.Combine("recovery.cipher.db")));
     }
+    [Fact, Trait("AT", "AT-238")]
+    public async Task Cold_public_identity_read_preserves_exact_metadata_without_private_material_or_writes()
+    {
+        using var material = DatabaseRecoveryMaterial.Create(Guid.NewGuid());
+        var durability = new Durability();
+        await Catalogue(material.Identity, durability).CreateNewAsync(Ct);
+        var before = await File.ReadAllBytesAsync(PathOfCatalogue, Ct);
+        var syncs = durability.FileSyncs;
+        var read = await SqliteRecoveryEnvelopeCatalogue.ReadExistingIdentityAsync(PathOfCatalogue, durability, () => { }, Ct);
+        Assert.Equal(material.Identity.InstallationId, read.InstallationId);
+        Assert.Equal(material.Identity.RecoveryId, read.RecoveryId);
+        Assert.Equal(material.Identity.ExportPublicKey(), read.ExportPublicKey());
+        Assert.Equal(before, await File.ReadAllBytesAsync(PathOfCatalogue, Ct));
+        Assert.Equal(syncs, durability.FileSyncs);
+    }
+
+    [Fact, Trait("AT", "AT-238")]
+    public async Task Missing_public_identity_never_creates_recovery_metadata()
+    {
+        await Assert.ThrowsAsync<IOException>(() => SqliteRecoveryEnvelopeCatalogue.ReadExistingIdentityAsync(
+            PathOfCatalogue, new Durability(), () => { }, Ct));
+        Assert.False(File.Exists(PathOfCatalogue));
+    }
+
+    [Fact, Trait("AT", "AT-238")]
+    public async Task Cold_public_identity_read_rejects_foreign_schema_even_with_valid_public_identity()
+    {
+        using var material = DatabaseRecoveryMaterial.Create(Guid.NewGuid());
+        var durability = new Durability();
+        await Catalogue(material.Identity, durability).CreateNewAsync(Ct);
+        await using (var connection = new SqliteConnection($"Data Source={PathOfCatalogue};Pooling=False"))
+        {
+            await connection.OpenAsync(Ct);
+            using var command = connection.CreateCommand();
+            command.CommandText = "CREATE TABLE foreign_row (id INTEGER)";
+            await command.ExecuteNonQueryAsync(Ct);
+        }
+        await Assert.ThrowsAsync<InvalidDataException>(() => SqliteRecoveryEnvelopeCatalogue.ReadExistingIdentityAsync(
+            PathOfCatalogue, durability, () => { }, Ct));
+    }
+
+    [Fact, Trait("AT", "AT-238")]
+    public async Task Existing_only_vault_reader_never_creates_missing_private_material()
+    {
+        var missing = directory.Combine("missing-private.cipher.db");
+        await Assert.ThrowsAsync<IOException>(() => SqlCipherRecoveryVault.OpenExistingAsync(missing, Guid.NewGuid(),
+            new byte[32], "4.19.0", new Durability(), () => { }, Ct));
+        Assert.False(File.Exists(missing));
+    }
+
+    [Fact, Trait("AT", "AT-238")]
+    public async Task Existing_only_vault_reader_requires_captured_installation_before_native_access()
+    {
+        var accessed = false;
+        await Assert.ThrowsAsync<ArgumentException>(() => SqlCipherRecoveryVault.OpenExistingAsync(directory.Combine("vault.cipher.db"),
+            Guid.Empty, new byte[32], "4.19.0", new Durability(), () => accessed = true, Ct));
+        Assert.False(accessed);
+    }
+
+    [Fact, Trait("AT", "AT-238")]
+    public async Task Retention_removes_exact_mapping_and_requalifies_visible_delete_without_touching_other_generations()
+    {
+        using var material = DatabaseRecoveryMaterial.Create(Guid.NewGuid()); var persistence = new Durability();
+        var catalogue = Catalogue(material.Identity, persistence); await catalogue.CreateNewAsync(Ct);
+        var retired = Binding(material.Identity); var retained = Binding(material.Identity);
+        var first = RandomNumberGenerator.GetBytes(32); var second = RandomNumberGenerator.GetBytes(32);
+        try
+        {
+            await catalogue.CaptureAsync(retired, first, Ct); await catalogue.CaptureAsync(retained, second, Ct);
+            var captured = await catalogue.CaptureRetentionBindingAsync(retired, first, Ct);
+            persistence.Fail = true;
+            await Assert.ThrowsAsync<IOException>(() => catalogue.RemoveRetentionBindingAsync(retired, captured, _ => Task.CompletedTask, Ct));
+            persistence.Fail = false;
+            await catalogue.RemoveRetentionBindingAsync(retired, captured, _ => Task.CompletedTask, Ct);
+            Assert.Equal([retained], await catalogue.ReadBindingsAsync(Ct));
+            var recovered = await catalogue.RecoverAsync(retained, material, Ct);
+            try { Assert.Equal(second, recovered); } finally { CryptographicOperations.ZeroMemory(recovered); }
+        }
+        finally { CryptographicOperations.ZeroMemory(first); CryptographicOperations.ZeroMemory(second); }
+    }
+
+    [Fact, Trait("AT", "AT-238")]
+    public async Task Retention_refuses_missing_authority_and_changed_mapping_before_any_delete()
+    {
+        using var material = DatabaseRecoveryMaterial.Create(Guid.NewGuid()); var catalogue = Catalogue(material.Identity, new Durability());
+        await catalogue.CreateNewAsync(Ct); var binding = Binding(material.Identity); var key = RandomNumberGenerator.GetBytes(32);
+        try
+        {
+            await catalogue.CaptureAsync(binding, key, Ct); var captured = await catalogue.CaptureRetentionBindingAsync(binding, key, Ct);
+            await Assert.ThrowsAsync<IOException>(() => catalogue.RemoveRetentionBindingAsync(binding, captured,
+                _ => throw new IOException("Fictitious unresolved retained reference"), Ct));
+            Assert.Equal([binding], await catalogue.ReadBindingsAsync(Ct));
+            await using (var connection = new SqliteConnection($"Data Source={PathOfCatalogue};Pooling=False"))
+            {
+                await connection.OpenAsync(Ct); using var command = connection.CreateCommand();
+                command.CommandText = "UPDATE recovery_envelope SET confirmation=zeroblob(32)"; await command.ExecuteNonQueryAsync(Ct);
+            }
+            await Assert.ThrowsAsync<IOException>(() => catalogue.RemoveRetentionBindingAsync(binding, captured, _ => Task.CompletedTask, Ct));
+            Assert.Equal([binding], await catalogue.ReadBindingsAsync(Ct));
+        }
+        finally { CryptographicOperations.ZeroMemory(key); }
+    }
+
     private string PathOfCatalogue => directory.Combine("recovery-envelope.sqlite");
     private SqliteRecoveryEnvelopeCatalogue Catalogue(DatabaseRecoveryIdentity identity, Durability persistence) => new(PathOfCatalogue, identity, persistence, () => { });
     private static DatabaseKeyBinding Binding(DatabaseRecoveryIdentity identity) => new(Guid.NewGuid(), identity.InstallationId, Guid.NewGuid());

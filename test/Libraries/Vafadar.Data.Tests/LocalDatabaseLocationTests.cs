@@ -5,6 +5,38 @@ namespace Vafadar.Data.Tests;
 
 public sealed class LocalDatabaseLocationTests
 {
+    [Fact, Trait("AT", "AT-238")]
+    public async Task Covered_recovery_rebind_keeps_context_protection_and_never_creates_empty_replacement()
+    {
+        using var directory = new Vafadar.Testing.TemporaryDirectory();
+        using var services = new ServiceCollection().AddLocalDatabase<TestDbContext>(directory.Combine("original.db"), protectionRequired: true).BuildServiceProvider();
+        var location = services.GetRequiredService<LocalDatabaseLocation<TestDbContext>>();
+        var next = directory.Combine("recovered/data.db");
+        using var owner = await location.Access.AcquireExclusiveAsync(TestContext.Current.CancellationToken);
+        location.RebindUnpublishedOriginal(next, owner);
+        Assert.True(location.RequiresProtection); Assert.False(location.IsProtected); Assert.Equal(Path.GetFullPath(next), location.Path);
+        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        {
+            await using var context = await services.GetRequiredService<ILocalDbContextFactory<TestDbContext>>()
+                .CreateDbContextAsync(owner, TestContext.Current.CancellationToken);
+        });
+        Assert.False(File.Exists(next)); Assert.False(Directory.Exists(Path.GetDirectoryName(next)));
+    }
+
+    [Fact, Trait("AT", "AT-238")]
+    public async Task Recovery_rebind_refuses_live_protected_endpoints_and_other_maintenance_owners()
+    {
+        using var directory = new Vafadar.Testing.TemporaryDirectory();
+        var location = new LocalDatabaseLocation<TestDbContext>(directory.Combine("original.db"), protectionRequired: true);
+        var another = new LocalDatabaseLocation<TestDbContext>(directory.Combine("other.db"), protectionRequired: true);
+        using var owner = await location.Access.AcquireExclusiveAsync(TestContext.Current.CancellationToken);
+        using var foreign = await another.Access.AcquireExclusiveAsync(TestContext.Current.CancellationToken);
+        Assert.Throws<InvalidOperationException>(() => location.RebindUnpublishedOriginal(directory.Combine("next.db"), foreign));
+        location.MoveToProtected(directory.Combine("cipher.db"), () => throw new IOException("Unexpected native read"), "4.19.0", owner);
+        Assert.Throws<InvalidOperationException>(() => location.RebindUnpublishedOriginal(directory.Combine("next.db"), owner));
+        Assert.True(location.IsProtected);
+    }
+
     [Theory]
     [InlineData(false, false)]
     [InlineData(false, true)]

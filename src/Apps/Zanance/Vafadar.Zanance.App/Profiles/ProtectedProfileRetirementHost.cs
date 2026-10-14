@@ -12,7 +12,8 @@ public sealed class ProtectedProfileRetirementHost(
     IDatabaseGenerationFileDurability durability, IProfileRetirementReferenceFiles files,
     Func<ProfileRetirementCheckpoint, SqliteProfileRetirementJournal, CancellationToken, Task> removeFiles,
     Func<SqliteProfileRetirementJournal, CancellationToken, Task> verifyFilesRemoved,
-    SqliteRecoveryEnvelopeCatalogue? recovery = null) : IProfileRetirementHost
+    SqliteRecoveryEnvelopeCatalogue? recovery = null,
+    Func<ProfileRetirementCheckpoint, SqliteProfileRetirementJournal, bool, CancellationToken, Task>? captureNativeReferences = null) : IProfileRetirementHost
 {
     private const string Prefix = "profile-retirement-";
 
@@ -96,6 +97,8 @@ public sealed class ProtectedProfileRetirementHost(
         }
         if (recovery is null && await journal.HasRecoveryInventoryAsync(ct))
             throw new IOException("Captured recovery references require their original native host.");
+        if (captureNativeReferences is not null && (await journal.ReadAsync(ct)).Phase == ProfileRetirementPhase.Authorized)
+            await captureNativeReferences(request, journal, !profiles.ValidateRetirementCatalogue(request, captured, owner), ct);
         var effects = new Effects(profiles, location, owner, persistence, identityPath, durability,
             journal, captured, removeFiles, verifyFilesRemoved, recovery);
         await new ProfileRetirementCoordinator(journal, durability, effects).ResumeAsync(ct);

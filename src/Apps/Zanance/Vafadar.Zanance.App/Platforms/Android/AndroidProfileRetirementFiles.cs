@@ -85,6 +85,31 @@ public sealed class AndroidProfileRetirementFiles : IProfileRetirementReferenceF
         }
     }
 
+    /// <summary>Rechecks an exact captured object under the caller's durably recorded retention authority, then unlinks its direct name.</summary>
+    /// <remarks>Missing names are accepted only after requalifying the original root; replaced or changed objects are refused.</remarks>
+    internal async Task RemoveRetainedArtifactAsync(ProfileRetirementArtifact artifact,
+        Func<CancellationToken, Task> requireDurableAuthority, CancellationToken ct)
+    {
+        ArgumentNullException.ThrowIfNull(requireDurableAuthority);
+        Check(ct); await requireDurableAuthority(ct).ConfigureAwait(false);
+        using var directory = OpenRoot(artifact); RequireRoot(directory, artifact);
+        try
+        {
+            using var handle = directory.OpenFile(artifact.Name); var identity = Inspect(handle);
+            if (identity.Identity != artifact.NativeIdentity || identity.Length != artifact.Length)
+                throw new IOException("Captured retention file was replaced.");
+            using var input = new FileStream(handle, FileAccess.Read);
+            var hash = Convert.ToHexStringLower(await SHA256.HashDataAsync(input, ct).ConfigureAwait(false));
+            if (hash != artifact.Sha256 || Inspect(handle) != identity) throw new IOException("Captured retention bytes changed.");
+            await requireDurableAuthority(ct).ConfigureAwait(false); Check(ct);
+            using var named = directory.OpenFile(artifact.Name);
+            if (Inspect(named) != identity) throw new IOException("Retention namespace changed before unlink.");
+            directory.Unlink(artifact.Name);
+        }
+        catch (IOException failure) when (Missing(failure)) { }
+        directory.Sync(); Check(ct);
+    }
+
     private async Task CheckFileAsync(ProfileRetirementArtifact artifact, SqliteProfileRetirementJournal journal, bool delete, CancellationToken ct)
     {
         Check(ct); journal.RequireArtifactPath(Resolve(artifact)); using var directory = OpenRoot(artifact);

@@ -5419,3 +5419,18 @@ checks pass. Main encryption remains unactivated; no crash/power-loss/device/iOS
 
 D-262 complete signed Release APK is artifacts/android-d262-delivery/pro.vafadar.zanance-Signed.apk
 (83765978 bytes); signature/package/API24-36 and both assembly stores verified. No device release acceptance.
+
+D-263 Android main storage is implemented and locally verified: official SQLCipher, automatic native
+keys, optional recorded recovery, retained portable recovery, all-profile lifecycle, encrypted safety
+and authenticated reference-aware retirement. Final Android OS backup/transfer exclusion is coupled
+to adoption. PIN remains independent and portable passwords optional. Windows/iOS main registration
+is unchanged and their adoption/device/provider/Store gates remain open.
+
+Corrected 3509 tests passed with zero failures/skips, outputs cleaned. Strict Windows(17.50s) and
+complete signed Android Release builds passed. Final APK 88213830 bytes, SHA256 1f58420b304788fec0dbca7982128de3221b55a76d22fa9aa9d20a85f18c03b5;
+v2/v3, permanent package, API24/36, not debuggable, runtime13 and both cipher/assembly payloads verified.
+Actual corrected 18 native language/theme/width contexts check original navigation, key-loss cover,
+growing captions and actual picker cancellation while preserving exact envelopes/financial hashes.
+No power-loss/all-crash-points, phone/arm64/API24/16KiB, spoken, OEM, hosted-CI, iOS/Windows, OAuth or
+publication acceptance is inferred. Complete evidence: docs/quality/android-protected-storage.md.
+The full canonical backlog and continuous-development objective remain open.
