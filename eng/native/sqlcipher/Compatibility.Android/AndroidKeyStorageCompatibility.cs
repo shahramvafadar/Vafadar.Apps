@@ -36,6 +36,18 @@ internal static class AndroidKeyStorageCompatibility
         Directory.CreateDirectory(path); Refused(ReadAndClear); Directory.Delete(path);
         var target = Path.Combine(root, "fictitious-target"); File.WriteAllBytes(target, envelope);
         global::Android.Systems.Os.Symlink(target, path); Refused(ReadAndClear); File.Delete(path);
+        var hardLinkChecked = false;
+        try
+        {
+            global::Android.Systems.Os.Link(target, path);
+            try { Refused(ReadAndClear); hardLinkChecked = true; }
+            finally { File.Delete(path); }
+        }
+        catch (global::Android.Systems.ErrnoException error) when (error.Errno == global::Android.Systems.OsConstants.Eperm || error.Errno == global::Android.Systems.OsConstants.Eacces)
+        {
+            // Some Android app-private filesystems/SELinux policies deny hard links themselves.
+            // Report that restriction explicitly; it is not runtime coverage of the link-count guard.
+        }
         // A killed writer can leave its partial staging file. It cannot become the generation's final key.
         var orphan = Path.Combine(root, ".key-stage-" + Guid.NewGuid().ToString("N")); File.WriteAllBytes(orphan, envelope[..12]);
         store.PublishNew(binding, envelope);
@@ -43,6 +55,6 @@ internal static class AndroidKeyStorageCompatibility
         if (!File.Exists(orphan) || Directory.GetFiles(root, ".key-stage-*").Length != 1)
             throw new InvalidOperationException("Storage touched another writer's staged file.");
         count++;
-        return "{\"AndroidKeyStorageCases\":" + count + ",\"NoOverwriteOrReplacement\":true}";
+        return "{\"AndroidKeyStorageCases\":" + count + ",\"HardLinkReadRefusalExercised\":" + (hardLinkChecked ? "true" : "false") + ",\"NoOverwriteOrReplacement\":true}";
     }
 }

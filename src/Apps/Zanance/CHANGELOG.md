@@ -1547,3 +1547,9 @@ CandidateVerified or Selected in the real journal requires the actual candidate 
 Selected is mirrored. Two new cases, all 3463 tests and the actual original verifier on native Android
 pass; journal/history remain unchanged and no replacement data/keys appear. See decision/device-key
 proof. Multi-restore financial corpus, reconciliation/UI/retention/adoption/OS remain open; main is plaintext.
+
+D-248 aligns Android key reads with existing native ownership checks: regular, single-link and
+current-UID file descriptors only. Actual normal/cold/negative key-store observations pass; hard-link
+creation is denied by the emulator, explicitly not coverage of its read-refusal branch. Same-key
+negative continuation and failed harness evidence are retained. All 3463 tests pass. Final recovery/
+cleanup/retention/adoption/OS and external platform gates remain open; main remains plaintext.

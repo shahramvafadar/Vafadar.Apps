@@ -2657,3 +2657,9 @@ second restore without an old connection/package and preserves candidate/rollbac
 fictitious catalogue setup defect was corrected; its refusal and same-fixture continuation are retained,
 and a fresh complete scenario passes. See decision/device-key guide for exact evidence. Product code
 and verified signed APK remain D-246; reconciliation/retention/UI/adoption/OS/device gates remain open.
+
+D-248 aligns Android key reads with existing native ownership checks: regular, single-link and
+current-UID file descriptors only. Actual normal/cold/negative key-store observations pass; hard-link
+creation is denied by the emulator, explicitly not coverage of its read-refusal branch. Same-key
+negative continuation and failed harness evidence are retained. All 3463 tests pass. Final recovery/
+cleanup/retention/adoption/OS and external platform gates remain open; main remains plaintext.

@@ -4895,3 +4895,35 @@ producer suites were not repeated. The complete verified signed D-246 product AP
 This verifies the real multi-restore/pending-replay recovery corpus. It does not complete malformed
 staging/orphan reconciliation, generation/key/alias retention, final recovery/authentication UI,
 main provider/OS adoption, physical-device/iOS/provider acceptance or publication. Main remains plaintext.
+
+### D-248 — Match Android key reads to native file ownership requirements
+
+AndroidDatabaseKeyEnvelopeStore now rejects non-regular, multiply linked and foreign-UID file objects
+through the actual opened descriptor's fstat before reading/unwrapping. This matches the existing
+native retirement/reference boundary instead of accepting a key object that cannot safely qualify for
+later cleanup. No key format, crypto algorithm, profile data, native producer binary or UI changed.
+
+The independent original key-store caller verifies creation, cold encrypted reopen and malformed/
+missing/directory/symlink/no-overwrite/staged-file cases. Its additional hard-link case reports whether
+the read-refusal branch was actually exercised. On this emulator, native link returned EACCES; the
+initial negative phase stopped. The fixture now recognizes only EPERM/EACCES as explicit OS link
+creation restrictions, not successful coverage of the link-count guard. Its first pattern form used
+nonconstant Android errno properties and failed compilation; ordinary equality fixed that harness
+compile issue. Both negative runtime/compile logs are retained.
+
+The same fictitious key run fcf6548964f64553a8a8ba41af5a4979 resumes only the negative phase with the
+existing key/encrypted fixture; no fresh DEK or creation/reopen replay. Proof:
+artifacts/native-sqlcipher/build/android-d/android-key-proof-fcf6548964f64553a8a8ba41af5a4979.json.
+HardLinkReadRefusalExercised=false is explicit. The original positive phases passed before the
+OS restriction; resumed proof contains the negative phase only and does not invent those results.
+Foreign-UID and hard-link read rejection still need an environment capable of creating such objects.
+Final independent strict Release AOT/trim build is clean (57.56s). Harness parsing and diff checks pass.
+All 3463 solution tests pass, zero failures/skips (2m54.568s); strict Windows main build is clean (23.24s).
+
+Main registration remains plaintext. This read-boundary alignment does not finish malformed-stage/
+orphan cleanup, reference-aware file/key/alias retention, final recovery UI/provider/OS adoption or
+physical-device/iOS/provider/release acceptance. No unchanged UI or upstream producer suite repeated.
+
+D-248 strict main Android build has zero warnings/errors (40.62s).
+
+D-248 complete signed Release APK: artifacts/android-d248-delivery/pro.vafadar.zanance-Signed.apk, 83,266,096 bytes. Signature, pro.vafadar.zanance package, API 24/36, arm64-v8a/x86_64 and both complete embedded assembly stores verified. Test outputs cleaned after terminal checks. Local signing is not phone/iOS/store acceptance; main protection remains inactive.

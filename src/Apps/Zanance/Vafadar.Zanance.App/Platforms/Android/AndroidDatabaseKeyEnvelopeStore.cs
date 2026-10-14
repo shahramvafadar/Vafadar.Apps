@@ -54,7 +54,8 @@ public sealed partial class AndroidDatabaseKeyEnvelopeStore
         try
         {
             using var stat = Os.Fstat(descriptor)!;
-            if (!OsConstants.S_ISREG(stat.StMode)) throw new IOException("Key envelope is not a regular file.");
+            if (!OsConstants.S_ISREG(stat.StMode) || stat.StNlink != 1 || stat.StUid != Android.OS.Process.MyUid())
+                throw new IOException("Key envelope is linked, non-regular or foreign-owned.");
             input = new Java.IO.FileInputStream(descriptor);
         }
         catch { Os.Close(descriptor); throw; }
