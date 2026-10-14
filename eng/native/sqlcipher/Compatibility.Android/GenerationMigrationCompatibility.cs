@@ -17,6 +17,7 @@ internal static class GenerationMigrationCompatibility
     /// <summary>Creates a real original model or resumes/interrupts its captured native migration.</summary>
     internal static async Task<string> RunAsync(string folder, string phase)
     {
+        if (phase is "recovery-chain-create" or "recovery-chain-reopen" or "recovery-chain-repair") return await RecoveryRestoreChainCompatibility.RunAsync(folder, phase == "recovery-chain-create", repairFixtureCatalogue: phase == "recovery-chain-repair");
         if (phase == "recovery-pending-reference") return await RecoveryPendingReferenceCompatibility.RunAsync(folder);
         if (phase == "alias-loss-future")
         {

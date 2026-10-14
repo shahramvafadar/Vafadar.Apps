@@ -4551,3 +4551,43 @@ Physical devices, iOS, external providers and release acceptance remain separate
 D-246 strict main builds have zero warnings/errors: Windows 17.06s and Android 38.94s.
 
 D-246 complete signed Release APK: artifacts/android-d246-delivery/pro.vafadar.zanance-Signed.apk, 83,704,538 bytes. Signature, pro.vafadar.zanance package, API 24/36, arm64-v8a/x86_64 and both complete embedded assembly stores verified. Test outputs cleaned after terminal checks. Local signing is not store/phone/iOS acceptance; main protection remains inactive.
+
+### D-247 — Cold recovery of a real interrupted two-restore chain
+
+The independent Android caller now creates the actual 32-migration model, writes initial account
+balance 250, and restores two complete portable packages through the actual BackupService and
+SqlCipherPackageRestoreReceiver. The source databases are in memory; the original exporter creates
+bounded portable snapshots without plaintext disk staging. The first package restores balance 730.
+The second restores balance 990 and deliberately fails after actual native preference persistence,
+while its journal is Selected and history remains pending. All three captured device envelopes are
+removed; original/candidate/rollback/preference files and private/public recovery material remain.
+
+A cold process uses actual ProtectedProfileRecovery and ProfileRecoveryReferenceVerifier to preflight
+and re-enroll every retained key before opening current storage. Actual OpenCurrentAsync resumes the
+selected second restore without the portable package or old current connection, persists/replays the
+native preference value and completes the same three-row ancestry. Actual compiled-model reads
+confirm candidate balances 250/730/990 and before-restore balances 250/730. All retained ciphertext,
+rollback and typed preference capsules pass native authentication/integrity/reference verification.
+The source-only backup and unused profile-transition ports do not duplicate application algorithms.
+This probe does not implement or bypass production UI/device authentication.
+
+Initial cold recovery correctly refused stale independent-package profile metadata: fixture setup
+removed profiles.catalogue rather than the real profiles.work.catalogue. Setup now clears the actual
+fictitious catalogue. An explicit recorded-fixture continuation verifies the one-profile identity and
+three-row history, refuses non-fictitious extra profiles, and repairs only that independent package's
+stale catalogue before actual recovery. Existing generations/keys were not rebuilt. Negative runtime
+and continuation evidence remain in d247-native-runtime.log and d247-native-continuation.log.
+Continuation proof has Created=null, not invented creation evidence:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-39cbf89ea73f4a21b71d998352fecd12.json,
+run 5e99e9f6a10944f0a286301b37d86733.
+
+After the fixture correction, one fresh complete two-process scenario passes. Proof:
+artifacts/native-sqlcipher/build/android-d/android-migration-proof-89a5cc941e1842debb53350fb37f12d9.json.
+Final independent strict Release AOT/trim build has zero warnings/errors (54.69s). Script parsing and
+diff checks pass. Product source, financial model, UI, permissions, native producer binaries and main
+APK are unchanged from D-246. Therefore unchanged 3463-test baseline, main builds/UI matrices and
+producer suites were not repeated. The complete verified signed D-246 product APK remains current.
+
+This verifies the real multi-restore/pending-replay recovery corpus. It does not complete malformed
+staging/orphan reconciliation, generation/key/alias retention, final recovery/authentication UI,
+main provider/OS adoption, physical-device/iOS/provider acceptance or publication. Main remains plaintext.

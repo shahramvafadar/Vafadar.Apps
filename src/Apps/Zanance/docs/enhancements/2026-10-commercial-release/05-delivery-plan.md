@@ -1385,3 +1385,10 @@ CandidateVerified or Selected in the real journal requires the actual candidate 
 Selected is mirrored. Two new cases, all 3463 tests and the actual original verifier on native Android
 pass; journal/history remain unchanged and no replacement data/keys appear. See decision/device-key
 proof. Multi-restore financial corpus, reconciliation/UI/retention/adoption/OS remain open; main is plaintext.
+
+D-247 verifies an actual two-portable-restore chain and interrupted native preference persistence.
+Cold original application recovery verifies/re-enrolls all three generation keys, resumes the selected
+second restore without an old connection/package and preserves candidate/rollback balances. A stale
+fictitious catalogue setup defect was corrected; its refusal and same-fixture continuation are retained,
+and a fresh complete scenario passes. See decision/device-key guide for exact evidence. Product code
+and verified signed APK remain D-246; reconciliation/retention/UI/adoption/OS/device gates remain open.
