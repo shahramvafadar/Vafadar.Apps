@@ -16,6 +16,16 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
     {
         DemandKind(kind);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        // SQLite async open is synchronous; keep this operation's keyed native handle across its guarded queries.
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        return await ReadAsync(kind, db, cancellationToken);
+    }
+
+    /// <summary>Reads and rechecks the complete choice in an existing original operation's context.</summary>
+    /// <remarks>Retains exact-file and current-access checks without reopening an encrypted connection per choice.</remarks>
+    internal async Task<ResourceChoiceSnapshot> ReadAsync(QuotaKind kind, ZananceDbContext db, CancellationToken cancellationToken)
+    {
+        DemandKind(kind);
         var path = DatabaseFileIdentity.ConfiguredPath(db);
         var access = new CommercialFileAccess(commercialAccess, path);
         access.DemandFeature(CommercialFeature.History);

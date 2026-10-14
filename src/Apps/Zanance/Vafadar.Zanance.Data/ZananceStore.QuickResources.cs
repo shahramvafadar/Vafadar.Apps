@@ -28,9 +28,12 @@ public sealed partial class ZananceStore
     public async Task<QuickResourceReview> GetQuickResourceReviewAsync(Guid? sourceEntryId = null, CancellationToken cancellationToken = default)
     {
         var choices = new ResourceChoiceStore(contextFactory, commercialAccess);
-        var templates = await choices.ReadAsync(QuotaKind.QuickTemplates, cancellationToken);
-        var filters = await choices.ReadAsync(QuotaKind.SavedFilters, cancellationToken);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        // D-274: one captured original file and native connection owns this complete read. Reopening
+        // per choice repeated SQLCipher's unchanged key derivation and could capture a switched profile.
+        var templates = await choices.ReadAsync(QuotaKind.QuickTemplates, db, cancellationToken);
+        var filters = await choices.ReadAsync(QuotaKind.SavedFilters, db, cancellationToken);
         var review = new QuickResourceReview(templates, filters,
             (await db.Templates.AsNoTracking().ToListAsync(cancellationToken)).OrderBy(t => t.Id).ToArray(),
             (await db.SavedFilters.AsNoTracking().ToListAsync(cancellationToken)).OrderBy(f => f.Id).ToArray(),

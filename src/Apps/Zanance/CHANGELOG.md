@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Protected dashboard and quick choices
+
+- Avoid repeatedly reopening the encrypted database during one complete template/filter review.
+- Keep every access and stale-review check, and read fresh data again before explicit actions.
+
 ### Added - Country holiday coverage
 
 - Add reviewed Western Europe, US, Canada and Australia holiday choices with clear federal or shared-date scope.

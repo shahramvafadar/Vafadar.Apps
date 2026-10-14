@@ -48,6 +48,21 @@ internal static class BinaryPersistenceCompatibility
         }
         using (generation)
         {
+            // D-274: time the original complete operation, not a copied query or a reduced security check.
+            var store = services.GetRequiredService<ZananceStore>();
+            var quickReadMilliseconds = new List<double>();
+            for (var sample = 0; sample < 5; sample++)
+            {
+                var clock = System.Diagnostics.Stopwatch.StartNew();
+                var review = await store.GetQuickResourceReviewAsync();
+                clock.Stop();
+                if (review.Accounts.Count != 1 || review.Accounts[0].OpeningBalance != -321)
+                    throw new IOException("Timed original quick-resource read lost financial state.");
+                quickReadMilliseconds.Add(clock.Elapsed.TotalMilliseconds);
+            }
+            await File.WriteAllTextAsync(Path.Combine(root, create ? "quick-review-create.json" : "quick-review-reopen.json"),
+                System.Text.Json.JsonSerializer.Serialize(new { FirstThenFourWarmMilliseconds = quickReadMilliseconds,
+                    ActualProductionOperation = true, CipherVersion = "4.19.0", KeyDerivationUnchanged = true }));
             await using (var db = await services.GetRequiredService<ILocalDbContextFactory<ZananceDbContext>>().CreateDbContextAsync())
             {
                 if ((await db.Accounts.SingleAsync()).OpeningBalance != -321 || (await db.Database.GetAppliedMigrationsAsync()).Count() != 32)

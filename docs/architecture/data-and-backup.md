@@ -2025,3 +2025,12 @@ actual Release/native interruption corpus and remaining delivery/platform/device
 ## Protected Windows application adoption (D-264)
 
 Windows uses the shared protected installation/host/recovery/retention algorithms with CurrentUser DPAPI envelopes, no-replace private directories and captured native root identity. Covered startup selects SQLCipher before financial contexts and never recreates missing keys. Unpackaged MAUI preferences persist synchronously to their actual backend before replay acknowledgement. Retirement metadata uses SQLite win32-longpath and extended absolute paths because four immutable authority identifiers plus transaction suffixes exceed ordinary MAX_PATH. Source-built package contents are immutable and CI checks the reviewed compiler bytes. iOS remains pending; see the Windows quality record for actual runtime evidence and negative findings.
+
+## Operation-scoped encrypted quick-resource reads (D-274)
+
+The complete original quick-resource review captures one context/file and explicitly opens its
+non-pooled connection until both choice snapshots, original rows and validation finish. Standalone
+choice reads keep their connection open only through that operation. EF's per-command close/open
+otherwise repeats the unchanged SQLCipher KDF. Context disposal still releases connection/read lease;
+all per-command publication/current-access checks remain. Do not substitute global key-bearing pools,
+weaken KDF parameters or retain a reviewed connection across later actions or profile transitions.

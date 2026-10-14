@@ -162,6 +162,11 @@ public partial class App : Application
     protected override Window CreateWindow(IActivationState? activationState)
     {
 #if DEBUG
+        // Independent protected reviews must fail before the covered startup worker can touch a main installation.
+        // MSBuild can retain stale ApplicationId metadata when only a global property changes (D-274).
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "home-balance-reload" or "holiday-catalog"
+            && AppInfo.Current.PackageName != "pro.vafadar.zanance.storageacceptance")
+            throw new InvalidOperationException("Independent review application identity required before startup.");
         _startupWindowThread = Environment.CurrentManagedThreadId;
 #endif
         // Android builds the app in Application.onCreate, including notification-only process starts (D-46).

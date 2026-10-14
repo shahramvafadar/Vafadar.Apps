@@ -2822,3 +2822,33 @@ Use device setting. This is not physical-device, spoken screen-reader or iOS acc
 Detailed official sources, exact scope and observed verification failures are recorded in
 quality/target-holiday-calendars.md. No new SDK, network request, permission, schema, paid resource
 or commercial enforcement was introduced. The full development objective remains active.
+
+## D-274 operation-scoped encrypted quick-resource reads
+
+Measured protected Release startup after D-273: system first frames 1664/1401/1462 ms,
+while loaded Home is observed later (accessibility polling upper bounds, not exact paint).
+The original quick-resource operation reopened native keyed connections between EF queries.
+A single DbContext alone did not improve its measured warm median (~989 versus ~999 ms).
+The complete operation now captures one original context and explicitly keeps its non-pooled
+connection open through both resource choices, complete input read and every original validation.
+Standalone resource-choice reads also keep their own operation's connection open. No key format,
+KDF, schema, guard, commercial activation, global pool or cross-operation credential cache changes.
+Later explicit actions still read and validate fresh original data through a new context.
+
+The same independently encrypted fictional fixture and actual production Data assemblies show
+warm complete-read median 999.38 ms before, 82.42 ms after. First read 1220.60/565.23 ms includes
+process/JIT effects and is kept separate. Wrong-key refusal, 32 migrations, negative balance and
+portable read-back pass. Two actual-SQLite cases prove one captured context, unchanged rows/no
+default settings or resource-choice writes, fresh action validation and drained ownership.
+
+A Windows review launch exposed stale ApplicationId metadata despite an independent build property.
+Its exact process was stopped; that attempt is not independent-installation acceptance. Touch/rebuild
+and compiled identity checks precede the corrected review. Debug Home/holiday review routes now
+reject a main identity before covered storage startup, without changing Release behavior. Do not
+inspect or restore an unrelated installation to turn that failed attempt into evidence.
+
+Final affected tests/build/native results and artifact identity are recorded in
+quality/quick-resource-read-performance.md. Earlier full 3,571-test pass precedes the explicit-open
+refinement; final Data/App tests are repeated because their production dependency changed, while
+unchanged successful test projects retain that baseline. QA-06, full loaded-Home timing, large-data
+native publication, physical devices and iOS remain open. The development goal stays active.

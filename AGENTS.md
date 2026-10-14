@@ -1990,3 +1990,11 @@ scope. Unsupported new-country years remain unverified; do not guess regional/wo
 substitutes or call these bank business days. Extend the registry from official sources without
 changing language, currency or stored amounts. Preserve saved Plan country and weekend masks.
 Legacy Iran/Germany calculations remain compatible; a separate Iran variant is not enabled here.
+
+### Scoped cipher reads and independent review identity (D-274)
+
+Keep a complete guarded resource-read operation on its captured non-pooled connection until
+validation ends; later explicit actions use fresh context/current authority. Do not enable global
+key-bearing pooling or lower cipher derivation cost to improve loading. Before native independent
+reviews verify compiled PackageName, not only requested ApplicationId. Touch/rebuild the manifest
+when metadata is stale; protected Home/holiday Debug reviews must reject main identity before startup.
