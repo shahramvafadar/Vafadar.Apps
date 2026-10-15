@@ -2,16 +2,20 @@ namespace Vafadar.Data;
 
 /// <summary>Prepares every captured existing local profile before the host admits ordinary database work.</summary>
 /// <remarks>The host holds its real application maintenance owner and covers UI. This does not create missing
-/// financial databases, adopt a native provider, publish contexts or delete retained encrypted rollback/key files.</remarks>
+/// financial databases, adopt a native provider or delete retained encrypted rollback/key files.
+/// Only an explicitly supplied final selected-session callback may publish after all other profiles pass.</remarks>
 public static class SqlCipherProfileBootstrap
 {
-    /// <summary>Creates/resumes explicit first-install metadata or reads existing metadata, then verifies all captured profiles.</summary>
+    /// <summary>Creates/resumes metadata and verifies all profiles, optionally using the real selected-session publisher for the final profile.</summary>
+    /// <remarks>A selected publisher must perform the same current-generation verification before publication.
+    /// It runs only after every other captured profile is verified; it never replaces key or integrity checks.</remarks>
     public static async Task PrepareAsync<TContext>(LocalDatabaseLocation<TContext> location,
         DatabaseAccessGate.ExclusiveLease owner, string identityPath, IReadOnlyDictionary<string, string> originalPaths,
         bool initializeInstallation, IDatabaseGenerationKeyStore keys, IDatabaseGenerationFileDurability durability,
         Func<string, ProfileRestoreReference, SqlCipherPackageRestoreReceiver> createReceiver, Action validateAccess,
         int maximumBytes, string cipherVersion, CancellationToken ct = default,
-        Func<DatabaseProfileIdentity, string, ProfileRestoreReference, SqlCipherPackageRestoreReceiver>? createBoundReceiver = null) where TContext : LocalDbContext
+        Func<DatabaseProfileIdentity, string, ProfileRestoreReference, SqlCipherPackageRestoreReceiver>? createBoundReceiver = null,
+        string? selectedOriginalPath = null, Func<Task>? publishSelected = null) where TContext : LocalDbContext
     {
         ArgumentNullException.ThrowIfNull(location); ArgumentNullException.ThrowIfNull(owner);
         ArgumentNullException.ThrowIfNull(originalPaths); ArgumentNullException.ThrowIfNull(keys);
@@ -24,6 +28,9 @@ public static class SqlCipherProfileBootstrap
             throw new ArgumentException("Bootstrap requires an absolute identity path and the captured main profile.");
         var directory = Path.GetDirectoryName(Path.GetFullPath(identityPath));
         var captured = originalPaths.ToDictionary(row => row.Key, row => Path.GetFullPath(row.Value), StringComparer.Ordinal);
+        if ((selectedOriginalPath is null) != (publishSelected is null) || (selectedOriginalPath is not null &&
+            (!Path.IsPathFullyQualified(selectedOriginalPath) || selectedOriginalPath != location.Path || !captured.Values.Contains(selectedOriginalPath))))
+            throw new ArgumentException("Selected publication requires the captured current original and its verified session publisher.");
         if (Path.GetDirectoryName(location.Path) != directory || originalPaths.Values.Any(path => !Path.IsPathFullyQualified(path)) || captured.Values.Distinct(StringComparer.Ordinal).Count() != captured.Count ||
             captured.Values.Any(path => Path.GetDirectoryName(path) != directory || Path.GetExtension(path) != ".db"))
             throw new ArgumentException("Each captured profile must own a distinct database in the private metadata directory.");
@@ -53,7 +60,7 @@ public static class SqlCipherProfileBootstrap
         var rows = await identities.ReadAsync(ct).ConfigureAwait(false); Validate();
         if (!rows.Select(row => row.LegacyProfileId).Order(StringComparer.Ordinal).SequenceEqual(captured.Keys.Order(StringComparer.Ordinal)))
             throw new InvalidOperationException("Captured profile catalogue differs from durable identity metadata.");
-        foreach (var identity in rows)
+        foreach (var identity in rows.OrderBy(row => captured[row.LegacyProfileId] == selectedOriginalPath ? 1 : 0))
         {
             Validate(); var original = captured[identity.LegacyProfileId];
             // Disposed factory contexts can leave pooled native handles open on Windows. The complete
@@ -75,6 +82,18 @@ public static class SqlCipherProfileBootstrap
             var historyPath = original + ".restore-history.sqlite";
             var history = new SqliteProfileRestoreHistory(historyPath, identity.InitialCandidateKey, CheckProfile);
             if (!File.Exists(historyPath)) await history.CreateInitialIntentAsync(identity.InitialMigration, journal, durability, ct).ConfigureAwait(false);
+            if (original == selectedOriginalPath)
+            {
+                // The session retains its own verified key. Opening another temporary owner here would
+                // repeat KDF/integrity work and immediately discard it. All other profiles are ready.
+                Validate(); await publishSelected!().ConfigureAwait(false); Validate();
+                var endpoint = location.Capture();
+                if (!location.IsProtected || endpoint.CreateConnection?.Target is not SqlCipherProfileGeneration selected ||
+                    selected.Binding.ProfileId != identity.ProfileId || selected.Binding.InstallationId != identity.InstallationId ||
+                    selected.Path != endpoint.Path || selected.CipherVersion != cipherVersion)
+                    throw new InvalidOperationException("Selected publisher did not retain the verified captured profile.");
+                continue;
+            }
             using var generation = await SqlCipherProfileGeneration.OpenCurrentAsync(candidateLocation, identities, identity.LegacyProfileId,
                 original, history, reference => createBoundReceiver is null ? createReceiver(identity.LegacyProfileId, reference) : createBoundReceiver(identity, original, reference), keys, durability,
                 candidateOwner, CheckProfile, maximumBytes, cipherVersion, ct).ConfigureAwait(false);

@@ -52,7 +52,7 @@ internal static class ProtectedStartupCompatibility
         if (profiles.All.Count != 2 || profiles.Current.Id != legacy) throw new IOException("Fictitious captured catalogue is invalid.");
         var identityPath = Path.Combine(folder, "identities.sqlite");
         var actual = createKeys(folder);
-        IDatabaseGenerationKeyStore keys = create ? actual : new ExistingKeys(actual);
+        var keys = new CountingKeys(create ? actual : new ExistingKeys(actual));
         var durability = createDurability(folder);
         var resolutions = 0;
         var session = new SqlCipherProfileSession<ZananceDbContext>(location, async (original, owner, ct) =>
@@ -70,8 +70,12 @@ internal static class ProtectedStartupCompatibility
         var startup = new ProtectedDatabaseStartup(location, profiles, session, identityPath,
             create ? ProtectedStorageInitialization.LegacyPlaintextProfiles : ProtectedStorageInitialization.ExistingInstallation, keys, durability,
             (_, _) => throw new IOException("Initial startup cannot invent a restore."), 16 * 1024 * 1024, "4.19.0");
+        var startupClock = System.Diagnostics.Stopwatch.StartNew();
         await startup.PrepareAsync();
         await startup.PrepareAsync();
+        startupClock.Stop();
+        var startupReads = keys.Reads;
+        if (!create && startupReads != 4) throw new IOException("Cold two-profile startup repeated selected key verification.");
         if (resolutions != 1 || publicationCount != 1 || !location.IsProtected || File.Exists(main) || File.Exists(work))
             throw new IOException("Startup repeated publication or left a captured profile plaintext.");
         await using (var db = await services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync())
@@ -95,8 +99,47 @@ internal static class ProtectedStartupCompatibility
                     throw new IOException("Refused deletion changed a retained native artifact.");
         }
         using (var owner = await location.Access.AcquireExclusiveAsync()) session.Close(owner);
+        if (!create)
+        {
+            var identities = await new SqliteDatabaseIdentityCatalogue(identityPath, () => { }).ReadAsync();
+            foreach (var identity in identities)
+            {
+                using var rejectedServices = new ServiceCollection().AddZananceData(work, protectionRequired: true).BuildServiceProvider();
+                var rejectedLocation = rejectedServices.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
+                var rejectedProfiles = new ProfileService(rejectedLocation, rejectedServices.GetRequiredService<ZananceStore>(), preferences, new Runtime(), Translator.Instance);
+                var rejectingKeys = new RefusedProfileKeys(actual, identity.ProfileId);
+                var rejectedStorage = new ProtectedProfileStorage(rejectedLocation, () => rejectedProfiles, identityPath,
+                    rejectingKeys, durability, () => { }, (_, _, _) => throw new IOException("Unexpected restored profile."),
+                    16 * 1024 * 1024, "4.19.0");
+                var refused = false;
+                try { await rejectedStorage.CreateStartup(ProtectedStorageInitialization.ExistingInstallation).PrepareAsync(); }
+                catch (IOException) when (rejectingKeys.Exercised) { refused = true; }
+                if (!refused || rejectedLocation.IsProtected)
+                    throw new IOException("Failed selected or inactive profile admitted a financial endpoint.");
+            }
+        }
         return "{\"ActualApplicationStartup\":true,\"AllProfilesBeforeSinglePublication\":true,\"SelectedWorkAmount\":880,\"NoRepeatedKeyResolution\":true,\"ColdExistingKeysOnly\":" + (!create ? "true" : "false") +
+            ",\"StartupKeyReads\":" + startupReads + ",\"StartupMilliseconds\":" + startupClock.Elapsed.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture) +
+            ",\"SelectedAndInactiveKeyFailuresKeepCovered\":" + (!create ? "true" : "false") +
             ",\"IncompleteProtectedDeletionRefused\":" + (checkDeletion ? "true" : "false") + "}";
+    }
+
+    private sealed class CountingKeys(IDatabaseGenerationKeyStore inner) : IDatabaseGenerationKeyStore
+    {
+        internal int Reads;
+        public Task PrepareAsync(DatabaseKeyBinding binding, CancellationToken ct) => inner.PrepareAsync(binding, ct);
+        public Task<byte[]> ReadAsync(DatabaseKeyBinding binding, CancellationToken ct) { Reads++; return inner.ReadAsync(binding, ct); }
+    }
+
+    private sealed class RefusedProfileKeys(IDatabaseGenerationKeyStore inner, Guid profile) : IDatabaseGenerationKeyStore
+    {
+        internal bool Exercised;
+        public Task PrepareAsync(DatabaseKeyBinding binding, CancellationToken ct) => throw new IOException("Cold startup prepared a replacement key.");
+        public Task<byte[]> ReadAsync(DatabaseKeyBinding binding, CancellationToken ct)
+        {
+            if (binding.ProfileId == profile) { Exercised = true; throw new IOException("Fictitious retained-key read failure."); }
+            return inner.ReadAsync(binding, ct);
+        }
     }
 
     private sealed class ExistingKeys(IDatabaseGenerationKeyStore inner) : IDatabaseGenerationKeyStore

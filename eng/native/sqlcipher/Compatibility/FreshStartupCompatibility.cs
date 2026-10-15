@@ -85,7 +85,11 @@ internal static class FreshStartupCompatibility
             if (keys.Reads != reads || !ReferenceEquals(location.Capture(), retainedEndpoint) || completedObservers != 1)
                 throw new IOException("Observer retry changed publication/keys or skipped remaining observers.");
         }
+        var startupClock = System.Diagnostics.Stopwatch.StartNew();
         await startup.PrepareAsync(); await startup.PrepareAsync();
+        startupClock.Stop();
+        var startupReads = keys.Reads;
+        if (!create && startupReads != 2) throw new IOException("Cold selected profile repeated key verification.");
         if (File.Exists(original) || !location.IsProtected || resolutions != 1 || publications != (failPublication ? 2 : 1)
             || completedObservers != 1 || schemaBuilds != (create ? 1 : 0))
             throw new IOException("Fresh/cold startup created plaintext or repeated initialization.");
@@ -127,6 +131,7 @@ internal static class FreshStartupCompatibility
             finally { File.Move(held, identityPath, overwrite: false); }
         }
         return "{\"ActualFreshStartup\":true,\"NoPlaintextOriginal\":true,\"NoManufacturedAccount\":true,\"RetainedOpeningBalance\":321,\"MissingIdentityRefused\":" + (!create ? "true" : "false") +
+            ",\"StartupKeyReads\":" + startupReads + ",\"StartupMilliseconds\":" + startupClock.Elapsed.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture) +
             ",\"ObserverFailureRetainsKeyAndRetry\":" + (failPublication ? "true" : "false") + "}";
     }
 

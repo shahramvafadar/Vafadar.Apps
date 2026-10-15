@@ -1553,3 +1553,19 @@ never suppress warnings or silently promote a new baseline. Twenty-six focused c
 producer/source checks and unchanged immutable package entries pass locally. No unrelated app,
 UI/APK or upstream suites repeated; hosted result is pending at commit time. Existing warning
 safety, platform/device and release gates remain open. See ../../quality/windows-warning-drift.md.
+## D-290 one selected-generation verification at covered startup
+
+The all-profile pass opened/discarded the selected generation before the actual session reopened
+it. Prepare all other profiles first, then verify and retain the selected key through that same
+real session before publication. Require paired captured current-original/publisher authority and
+an actual verified profile/installation owner afterward. Keep complete key/KDF/integrity/history,
+migration/rollback and observer retry behavior; default bootstrap callers are unchanged.
+
+Nineteen affected strict infrastructure tests, four application startup tests and the final added
+no-op publisher case pass (four new covered behaviors; 3,614 coverage, not a full-suite rerun).
+Independent Windows/Release AOT Android creation/cold/key-failure cases, same-key observer retry,
+retained restored-session cold read, strict Windows build, complete signed APK and original
+same-process Android Home/expense/Cancel pass. Cold key reads fall 4 -> 2 (one profile) and
+6 -> 4 (two); final guarded small Windows two-profile sample is 338.27ms versus 496.62ms before.
+No whole-app/two-second/phone/iOS/native-warning/release acceptance follows. See
+../../quality/selected-startup-verification.md for retained evidence and precise measurement boundaries.

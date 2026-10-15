@@ -9,6 +9,42 @@ public sealed class ProfileGenerationBootstrapTests
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
+    [Fact, Trait("AT", "AT-290")]
+    public async Task Selected_publisher_cannot_claim_success_without_a_verified_retained_generation()
+    {
+        using var db = new TestDatabase(); var location = Location(db);
+        using var owner = await location.Access.AcquireExclusiveAsync(Ct);
+        var identityPath = db.PathOf("data/identities.sqlite");
+        var identities = new SqliteDatabaseIdentityCatalogue(identityPath, owner.Validate);
+        await identities.CreateNewAsync([""], Ct); var identity = Assert.Single(await identities.ReadAsync(Ct));
+        var journal = new SqliteDatabaseGenerationJournal(location.Path + ".generation.sqlite", identity.InitialMigration);
+        await journal.CreateNewAsync(Ct);
+        await new SqliteProfileRestoreHistory(location.Path + ".restore-history.sqlite", identity.InitialCandidateKey, owner.Validate)
+            .CreateInitialIntentAsync(identity.InitialMigration, journal, Ct);
+        var invoked = false;
+        var error = await Assert.ThrowsAsync<InvalidOperationException>(() => SqlCipherProfileBootstrap.PrepareAsync(location, owner,
+            identityPath, new Dictionary<string, string> { [""] = location.Path }, false, new NoKeys(), new NoDurability(),
+            (_, _) => throw new InvalidOperationException("Unexpected receiver."), () => { }, 1024 * 1024, "4.19.0", Ct,
+            selectedOriginalPath: location.Path, publishSelected: () => { invoked = true; return Task.CompletedTask; }));
+        Assert.True(invoked); Assert.Equal("Selected publisher did not retain the verified captured profile.", error.Message);
+        Assert.False(location.IsProtected); Assert.True(File.Exists(location.Path));
+    }
+
+    [Theory, InlineData("missing-publisher"), InlineData("missing-selected"), InlineData("foreign-selected"), Trait("AT", "AT-290")]
+    public async Task Selected_publication_requires_the_captured_current_original_and_publisher_pair(string scenario)
+    {
+        using var db = new TestDatabase(); var location = Location(db);
+        using var owner = await location.Access.AcquireExclusiveAsync(Ct);
+        var identityPath = db.PathOf("data/identities.sqlite");
+        var selected = scenario == "missing-selected" ? null : scenario == "foreign-selected" ? db.PathOf("data/foreign.db") : location.Path;
+        Func<Task>? publish = scenario == "missing-publisher" ? null : () => throw new InvalidOperationException("Unexpected publication.");
+        await Assert.ThrowsAsync<ArgumentException>(() => SqlCipherProfileBootstrap.PrepareAsync(location, owner, identityPath,
+            new Dictionary<string, string> { [""] = location.Path }, false, new NoKeys(), new NoDurability(),
+            (_, _) => throw new InvalidOperationException("Unexpected receiver."), () => { }, 1024 * 1024, "4.19.0", Ct,
+            selectedOriginalPath: selected, publishSelected: publish));
+        Assert.False(File.Exists(identityPath)); Assert.True(File.Exists(location.Path));
+    }
+
     [Fact, Trait("AT", "AT-227")]
     public async Task All_profile_preparation_retires_only_the_captured_original_pool_before_native_work()
     {

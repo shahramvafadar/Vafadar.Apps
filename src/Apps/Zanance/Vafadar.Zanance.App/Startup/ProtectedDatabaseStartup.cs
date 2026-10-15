@@ -80,11 +80,15 @@ public sealed class ProtectedDatabaseStartup(LocalDatabaseLocation<ZananceDbCont
                 initialization == ProtectedStorageInitialization.LegacyPlaintextProfiles, keys, durability,
                 (legacy, reference) => createOwnedReceiver is null ? createReceiver(legacy, reference) : createOwnedReceiver(capture.OriginalPaths[legacy], reference, owner), capture.Validate,
                 maximumBytes, cipherVersion, cancellationToken, createBoundReceiver is null ? null :
-                    (identity, original, reference) => createBoundReceiver(identity, original, reference, owner)).ConfigureAwait(false);
-            // No context is published midway through all-profile preparation, even for a non-main selection.
-            capture.Validate(); cancellationToken.ThrowIfCancellationRequested();
-            preparedCapture = capture;
-            await session.StartAsync(capture.CurrentOriginalPath, owner, cancellationToken).ConfigureAwait(false);
+                    (identity, original, reference) => createBoundReceiver(identity, original, reference, owner),
+                selectedOriginalPath: capture.CurrentOriginalPath, publishSelected: async () =>
+                {
+                    // All other captured profiles have passed. Verify the selected one through its actual
+                    // retained session exactly once, then publish; observer retry retains that same owner.
+                    capture.Validate(); cancellationToken.ThrowIfCancellationRequested();
+                    preparedCapture = capture;
+                    await session.StartAsync(capture.CurrentOriginalPath, owner, cancellationToken).ConfigureAwait(false);
+                }).ConfigureAwait(false);
             // Publication succeeded. A repeated callback must retain the same owner rather than resolve it twice.
             completed = true;
         }

@@ -2099,3 +2099,15 @@ opens and before its deferred transaction. This approximately 32 MiB page-cache 
 only for that non-pooled reader, allocates on demand and resets at close. It is not a process
 heap cap or persistent database setting. Preserve original ordering/columns/history, KDF and
 authority checks; do not apply the larger allowance to unrelated writes or retained global pools.
+
+### D-290 selected startup verification
+
+ProtectedDatabaseStartup orders the captured current original last and supplies the actual
+SqlCipherProfileSession.StartAsync as its final verification/publication callback. Other profiles
+complete their original verification first. The selected key is verified once and retained by
+that same session, replacing the discarded temporary selected owner plus duplicate resolve.
+Pair/path/catalogue checks and the actual profile/installation generation-owner check fail closed.
+Default bootstrap callers still verify every profile themselves. Recovery/history replay suppresses
+old publication callbacks through ResumeForGenerationAsync; selected startup does not recurse into
+session adoption. Retained cold restored state and later preferences are verified as well.
+See [D-290 evidence](../../src/Apps/Zanance/docs/quality/selected-startup-verification.md).

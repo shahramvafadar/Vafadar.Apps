@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Protected startup
+
+- Avoid repeating active-profile verification during startup while keeping every profile checked before financial content appears.
+
 ### Documentation - Current protection and delivery status
 
 - Correct encryption, OS backup, automatic/portable copy and loan-estimate summaries while keeping unfinished platform and release acceptance explicit.
