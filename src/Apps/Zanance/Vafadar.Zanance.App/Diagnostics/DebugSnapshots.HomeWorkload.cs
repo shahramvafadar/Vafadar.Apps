@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text.Json;
 using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Backup;
 using Vafadar.Data;
@@ -10,6 +11,7 @@ using Vafadar.Localization;
 using Vafadar.Zanance.App.Features.Home;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Data;
+using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.App.Diagnostics;
 
@@ -76,9 +78,17 @@ internal static partial class DebugSnapshots
                     var samples = new List<double>(); var gaps = new List<double>();
                     for (var sample = 0; sample < 2; sample++)
                     {
-                        var vm = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store);
-                        var page = new HomePage(vm, store)
+                        var reads = new HomeWindowReadFactory(data.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+                        var measuredStore = new ZananceStore(reads, data.GetRequiredService<TimeProvider>(), data.GetRequiredService<ICommercialWriteAccessSource>());
+                        var vm = ActivatorUtilities.CreateInstance<HomeViewModel>(services, measuredStore);
+                        var page = new HomePage(vm)
                         { FlowDirection = local.CurrentLanguage.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight };
+                        var presentations = 0;
+                        vm.PresentingSnapshot += () =>
+                        {
+                            if (vm.Loading.IsReady) throw new IOException("Original section layout was applied after uncovering Home.");
+                            presentations++;
+                        };
                         var heartbeat = Stopwatch.StartNew(); var last = heartbeat.Elapsed.TotalMilliseconds; var largest = 0d;
                         var timer = app.Dispatcher.CreateTimer(); timer.Interval = TimeSpan.FromMilliseconds(50);
                         timer.Tick += (_, _) => { var now = heartbeat.Elapsed.TotalMilliseconds; largest = Math.Max(largest, now - last); last = now; };
@@ -87,6 +97,8 @@ internal static partial class DebugSnapshots
                         try
                         {
                             await page.PendingPublication;
+                            if (reads.SynchronousCaptures != 0 || presentations != 1)
+                                throw new IOException("Home appearance reopened settings synchronously or missed covered layout publication.");
                             if (!vm.Loading.IsReady || vm.Accounts.Count != accountCount || !vm.HasEntries
                                 || !page.FindByName<ScrollView>("ContentViewport").IsVisible)
                                 throw new IOException("Loaded original Home did not publish every expected account.");
@@ -111,7 +123,8 @@ internal static partial class DebugSnapshots
                     }
                     results.Add(new { Shape = name, Language = language, Entries = entryCount, Accounts = accountCount,
                         FirstThenSecondPublicationMilliseconds = samples, LargestDispatcherGapMilliseconds = gaps,
-                        OriginalBalancesMatched = true, ActualNativeLayout = true });
+                        OriginalBalancesMatched = true, ActualNativeLayout = true, NoSynchronousSettingsRead = true,
+                        LayoutAppliedBeforeUncovering = true });
                     await File.WriteAllTextAsync(Path.Combine(folder, "home-workload-progress.json"), JsonSerializer.Serialize(results), ct);
                 }
                 using var bytes = new MemoryStream(); await data.GetRequiredService<IBackupSource>().WriteAsync(bytes, ct); bytes.Position = 0;
@@ -131,6 +144,17 @@ internal static partial class DebugSnapshots
         await File.WriteAllTextAsync(Path.Combine(folder, "home-workload-proof.json"), JsonSerializer.Serialize(new
         { Results = results, OriginalProductionPage = true, CompleteSchemaAndTypedRowsUnchanged = true,
             NoFinancialSave = true, ColdStartupOrPhoneAcceptance = false }), ct);
+    }
+
+    /// <summary>Delegates actual protected contexts and rejects accidental synchronous appearance reads.</summary>
+    private sealed class HomeWindowReadFactory(IDbContextFactory<ZananceDbContext> inner) : IDbContextFactory<ZananceDbContext>
+    {
+        /// <summary>Gets the number of synchronous context captures made by the original page operation.</summary>
+        public int SynchronousCaptures { get; private set; }
+        /// <inheritdoc />
+        public ZananceDbContext CreateDbContext() { SynchronousCaptures++; return inner.CreateDbContext(); }
+        /// <inheritdoc />
+        public Task<ZananceDbContext> CreateDbContextAsync(CancellationToken ct = default) => inner.CreateDbContextAsync(ct);
     }
 }
 #endif

@@ -1222,3 +1222,10 @@ Every Home section uses the same captured original financial reader. Keep the or
 scopes, complete balances, history and action availability. Reading and key derivation stay off the interface thread;
 only complete validated inputs uncover the original dashboard. A concurrent source/profile/rights change never
 authorizes action from an unrelated file. Loading, failure, retry and formatting retain the existing UI patterns.
+
+## D-285 captured layout and responsive Home
+
+Apply the original saved section order from the validated financial snapshot before removing the
+loading cover. Keep legacy device fallback only for null, and current default for explicit empty.
+Preserve already placed section handlers. Background financial/recurrence work must not mutate UI,
+translate on a worker or publish into a retired page; complete original results still appear together.

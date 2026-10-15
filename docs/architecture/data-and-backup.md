@@ -2083,3 +2083,11 @@ original enabled multi-currency valuation scope. Keep the original monthly SQL s
 No reader/connection survives into UI projection or a native dialog. Fresh final validation precedes the original
 covered publication; explicit later actions acquire their original fresh contexts. No pool, lower KDF, schema or
 portable-key change is introduced. See the coherent-home-read quality record for scoped proof and acceptance limits.
+
+### Covered Home publication (D-285)
+
+The complete captured financial settings supply Home section layout; appearance must not reopen
+a keyed connection on the window thread. Worker computation receives only captured original data
+and original work policy. Native collection/layout publication remains on the window thread under
+the loading cover, with lifetime checks after worker returns and fresh file/resource authorization
+before actions become available. Null versus empty layout retains its original fallback meaning.

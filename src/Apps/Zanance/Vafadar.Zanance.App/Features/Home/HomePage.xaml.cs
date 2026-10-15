@@ -7,7 +7,6 @@ namespace Vafadar.Zanance.App.Features.Home;
 public partial class HomePage : ContentPage
 {
     private readonly HomeViewModel _viewModel;
-    private readonly Vafadar.Zanance.Data.ZananceStore _store;
     private readonly Dictionary<HomeSection, VerticalStackLayout> _sections;
     private HomeLayout _layout = HomeLayout.Default;
     /// <summary>Gets the actual appearance publication so native review awaits this lifecycle rather than racing a second read.</summary>
@@ -16,9 +15,8 @@ public partial class HomePage : ContentPage
     /// <summary>Prevents pending reads from publishing into controls whose original Shell is being disconnected.</summary>
     internal void RetirePublication() => _viewModel.RetirePublication();
 
-    public HomePage(HomeViewModel viewModel, Vafadar.Zanance.Data.ZananceStore store)
+    public HomePage(HomeViewModel viewModel)
     {
-        _store = store;
         InitializeComponent();
         BindingContext = _viewModel = viewModel;
         _sections = new()
@@ -32,6 +30,9 @@ public partial class HomePage : ContentPage
             [HomeSection.Accounts] = AccountsSection,
             [HomeSection.Goals] = GoalsSection,
         };
+        // D-285: apply this same captured profile layout before the loading cover is removed.
+        // Appearance must not perform a separate synchronous SQLCipher settings read.
+        _viewModel.PresentingSnapshot += ApplyLayout;
 
         // A section without visible content takes no room, so hidden cards leave no extra gap.
         foreach (var section in _sections.Values)
@@ -57,8 +58,6 @@ public partial class HomePage : ContentPage
         for (Element? ancestor = Parent; ancestor is not null; ancestor = ancestor.Parent)
             if (ancestor is AppShell shell) { owner = shell; break; }
         (owner ?? Shell.Current as AppShell)?.RegisterHomePublication(this);
-        ApplyLayout();
-
         // Language, calendar or data may have changed elsewhere.
         PendingPublication = _viewModel.LoadAsync();
         await Presentation.Failures.GuardAsync(() => PendingPublication);
@@ -68,7 +67,7 @@ public partial class HomePage : ContentPage
     /// <summary>Applies saved visibility and order while retaining every correctly placed native section.</summary>
     internal void ApplyLayout()
     {
-        _layout = HomeLayoutPreferences.Load(_store);
+        _layout = HomeLayoutPreferences.FromSnapshot(_viewModel.CapturedHomeLayout);
         var desired = _layout.Sections.Select(state => _sections[state.Section]).ToArray();
         var first = _sections.Values.Min(section => Sections.Children.IndexOf(section));
         // D-177: keep native section trees attached when their order already matches. Move only a displaced section,

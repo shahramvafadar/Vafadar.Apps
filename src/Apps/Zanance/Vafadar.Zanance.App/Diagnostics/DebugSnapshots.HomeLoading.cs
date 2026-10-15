@@ -84,11 +84,60 @@ internal static partial class DebugSnapshots
                 await shell.Navigation.PopAsync(false); await original.PendingPublication;
             }
         }
+        var layoutCases = await ReviewCapturedHomeLayoutsAsync(app, services, local);
         if (before != await ProtectedRowsFingerprintAsync(services)) throw new IOException("Home loading/retry wrote financial rows.");
         await File.WriteAllTextAsync(Path.Combine(folder, "home-loading-proof.json"), JsonSerializer.Serialize(new
         { Contexts = contexts, InitialDefaultsCovered = true, PrematureActionsUnavailable = true,
             FailedReloadCovered = true, NativeRetries = contexts, OriginalAmountHandlersRetained = true,
-            FinancialRowsUnchanged = true, FinancialFingerprint = before, NativeCaptionObservations = observations.Count }));
+            FinancialRowsUnchanged = true, FinancialFingerprint = before, NativeCaptionObservations = observations.Count,
+            CapturedLayoutCases = layoutCases }));
+    }
+
+    /// <summary>Checks actual saved/default/legacy layouts under the cover, restoring only independently owned fixture choices.</summary>
+    private static async Task<int> ReviewCapturedHomeLayoutsAsync(App app, IServiceProvider services, ILocalizationService local)
+    {
+        var factory = services.GetRequiredService<IDbContextFactory<ZananceDbContext>>();
+        await using var db = await factory.CreateDbContextAsync();
+        var settings = await db.Settings.AsNoTracking().SingleAsync();
+        var hadLegacy = Preferences.Default.ContainsKey("home_layout");
+        var legacy = Preferences.Default.Get("home_layout", string.Empty);
+        const string syntheticLegacy = "Recent,Budget,-Accounts,-Upcoming";
+        var cases = 0;
+        try
+        {
+            Preferences.Default.Set("home_layout", syntheticLegacy);
+            foreach (var language in new[] { "en", "fa", "de" })
+            {
+                await SetLanguageAsync(app, local, language);
+                if (Shell.Current?.CurrentPage is not HomePage page || page.BindingContext is not HomeViewModel vm)
+                    throw new IOException("Original Home is unavailable for captured layout review.");
+                await page.PendingPublication;
+                foreach (var layout in new string?[] { null, string.Empty, "Budget,Recent,-Upcoming,-Accounts" })
+                {
+                    // Change only this synthetic profile's exact layout field, preserving every timestamp/financial value.
+                    await db.Settings.Where(row => row.Id == settings.Id).ExecuteUpdateAsync(update => update.SetProperty(row => row.HomeLayout, layout));
+                    await vm.LoadAsync();
+                    var expected = Core.Dashboard.HomeLayout.Parse(layout ?? syntheticLegacy);
+                    var sections = page.FindByName<VerticalStackLayout>("Sections");
+                    var ordered = expected.Sections.Select(state => page.FindByName<VerticalStackLayout>(state.Section + "Section")).ToArray();
+                    if (vm.CapturedHomeLayout != layout || !sections.Children.Where(child => ordered.Contains(child)).SequenceEqual(ordered)
+                        || expected.Sections.Any(state => !state.IsVisible && page.FindByName<VerticalStackLayout>(state.Section + "Section").IsVisible))
+                        throw new IOException("Captured profile/default/legacy layout differs from the original native sections.");
+                    var handlers = ordered.Select(section => section.Handler).ToArray();
+                    page.ApplyLayout(); page.ApplyLayout();
+                    if (!ordered.Select(section => section.Handler).SequenceEqual(handlers))
+                        throw new IOException("Repeated captured layout detached original native section handlers.");
+                    cases++;
+                }
+            }
+        }
+        finally
+        {
+            await db.Settings.Where(row => row.Id == settings.Id).ExecuteUpdateAsync(update => update.SetProperty(row => row.HomeLayout, settings.HomeLayout));
+            if (hadLegacy) Preferences.Default.Set("home_layout", legacy); else Preferences.Default.Remove("home_layout");
+            if (Shell.Current?.CurrentPage?.BindingContext is HomeViewModel vm) await vm.LoadAsync();
+        }
+        return cases;
     }
 
     /// <summary>Delays and fails only the first captured original read; all queries and data remain in production code.</summary>

@@ -42,7 +42,7 @@ internal static partial class DebugSnapshots
         var presenter = ActivatorUtilities.CreateInstance<Features.Goals.GoalPresenter>(services, fixture.GetRequiredService<HoldingStore>());
         var home = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store, fixture.GetRequiredService<PlanStore>(),
             fixture.GetRequiredService<GoalStore>(), fixture.GetRequiredService<HoldingStore>(), presenter, effects);
-        var page = new HomePage(home, store); await Shell.Current.Navigation.PushAsync(page);
+        var page = new HomePage(home); await Shell.Current.Navigation.PushAsync(page);
         async Task AwaitHomeAsync()
         {
             for (var attempt = 0; attempt < 40 && !ReferenceEquals(Shell.Current.CurrentPage, page); attempt++) await Task.Delay(50);

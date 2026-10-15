@@ -3020,3 +3020,16 @@ The appearance's synchronous layout-preference read and remaining UI-thread work
 No Release behavior, schema, native package or translation changes. D-283's signed APK and 3,604
 behavior coverage are retained; unchanged successful suites are not rerun. QA-06 remains in progress.
 See quality/loaded-native-home.md for exact samples and the original native evidence.
+## D-285 responsive covered Home publication
+
+Home appearance applies layout from the same validated financial snapshot before uncovering, with
+null legacy fallback, explicit default and complete custom order preserved. It no longer performs
+a synchronous settings/KDF read. Original ledger scans, balances, plan occurrences/commitments,
+forecast and category aggregation run on workers; formatting, collection/native updates remain on
+the window thread. Original scopes, rights, complete inputs and final lifetime/file validation remain.
+Thirteen focused SQLite cases pass, including three new layout behaviors (3,607 covered behaviors,
+not a new full-suite run). Twelve loaded native publications pass with no synchronous captures and
+complete preserved rows. Tenfold maximum dispatcher gap changes from 683 to 187 ms, while overall
+publication does not improve and reaches 3.11 seconds. Eighteen native cover/failure/retry cases and
+nine saved/default/legacy layout cases pass with original data and handlers retained. QA-06 remains
+open; no two-second, phone, cold-start, ANR or iOS acceptance. See quality/responsive-home-publication.md.

@@ -1511,3 +1511,12 @@ per en/fa/de context, measure native layout and dispatcher delays separately fro
 complete totals and final typed-row preservation, then document the observed limits. Delivered locally;
 see ../../quality/loaded-native-home.md. No unrelated successful cohort, full suite or APK was rebuilt.
 The synchronous appearance layout read and largest native gap remain concrete follow-up concerns.
+
+## Responsive Home publication batch (D-285)
+
+Remove the extra synchronous appearance settings read; preserve null/default/custom layout semantics
+and covered native order. Move original captured ledger/recurrence/forecast/category calculations to
+workers and recheck lifetime before UI publication. Verify loaded native responsiveness, complete
+source preservation, failure/retry and legacy/custom layout restoration; finish strict builds and
+the signed Release emulator handoff. The loaded cohort improves blocking, not complete latency;
+retain that limit and do not repeat successful unrelated checks. See ../../quality/responsive-home-publication.md.

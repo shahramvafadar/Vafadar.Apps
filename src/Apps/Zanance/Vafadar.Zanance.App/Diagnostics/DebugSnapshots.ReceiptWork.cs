@@ -92,7 +92,7 @@ internal static partial class DebugSnapshots
             var presenter = ActivatorUtilities.CreateInstance<Features.Goals.GoalPresenter>(services, fixture.GetRequiredService<HoldingStore>());
             var home = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store, fixture.GetRequiredService<PlanStore>(), fixture.GetRequiredService<GoalStore>(),
                 fixture.GetRequiredService<HoldingStore>(), presenter, session);
-            var homePage = new HomePage(home, store); await Shell.Current.Navigation.PushAsync(homePage); await Task.Delay(150); await homePage.PendingPublication;
+            var homePage = new HomePage(home); await Shell.Current.Navigation.PushAsync(homePage); await Task.Delay(150); await homePage.PendingPublication;
             var target = VisualDescendants(homePage).OfType<Button>().Single(button => button.Command == home.ReadReceiptCommand);
             if (FindScrollView(homePage) is { } homeScroll) await ScrollToViewIfNeededAsync(homeScroll, target);
             InvokeChoiceReview(target, ProfileNativeReads);

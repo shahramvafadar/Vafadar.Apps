@@ -2019,3 +2019,12 @@ sections under one non-pooled keyed connection/deferred reader and reuse their o
 Retain conditional valuation input scope and fresh final checks before uncovering actions. Never retain this reader
 across UI/dialog work or substitute a key-bearing global pool. Same-fixture data comparison and original native
 publication checks remain distinct from cold/phone performance acceptance.
+
+### Covered Home layout and worker calculations (D-285)
+
+Home appearance consumes its validated captured layout without a synchronous database read. Apply
+native section order before uncovering; preserve null legacy fallback versus explicit empty/default.
+Run original captured ledger/recurrence/forecast/category calculations off the window thread, but
+keep translation, observable/native mutation and layout on it. Recheck lifetime after each worker
+return and original rights/file authority before final publication. Responsiveness and total latency
+remain separate measurements; never omit original work or weaken encryption for a timing target.

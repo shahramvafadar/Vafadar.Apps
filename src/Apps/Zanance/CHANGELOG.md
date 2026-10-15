@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Home responsiveness
+
+- Keep large ledger and recurring-plan calculations off the interface thread.
+- Apply saved Home layout with the financial snapshot, retaining the loading cover and previous layout choices.
+
 ### Improved - Complete Home reads
 
 - Read Home's original financial sections together without repeatedly reopening the encrypted database.

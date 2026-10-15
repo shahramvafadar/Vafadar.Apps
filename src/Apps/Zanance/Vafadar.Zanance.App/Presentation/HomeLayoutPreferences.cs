@@ -20,8 +20,12 @@ internal static class HomeLayoutPreferences
         var settings = store.GetSettings();
         // D-155: opening Home is read-only. Keep the legacy visual fallback until an explicit layout Save,
         // rather than creating preferences or changing a settings timestamp during every new profile's first visit.
-        return HomeLayout.Parse(settings.HomeLayout ?? Preferences.Default.Get(LegacyKey, string.Empty));
+        return FromSnapshot(settings.HomeLayout);
     }
+
+    /// <summary>Resolves already captured profile settings without reopening a keyed database on the window thread.</summary>
+    public static HomeLayout FromSnapshot(string? profileLayout) =>
+        HomeLayout.Parse(profileLayout ?? Preferences.Default.Get(LegacyKey, string.Empty));
 
     /// <summary>Restores the default layout of the open profile, e.g. with "Delete all data".</summary>
     public static async Task ClearAsync(ZananceStore store)

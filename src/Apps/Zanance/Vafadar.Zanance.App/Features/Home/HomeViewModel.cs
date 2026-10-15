@@ -273,6 +273,12 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
 
     private bool _publicationRetired;
 
+    /// <summary>Gets the profile layout from the same validated snapshot as the original financial sections.</summary>
+    internal string? CapturedHomeLayout { get; private set; }
+
+    /// <summary>Applies original native section ordering while complete publication is still covered.</summary>
+    internal event Action? PresentingSnapshot;
+
     /// <summary>Keeps the original dashboard and its actions covered until the complete load has finished.</summary>
     public SnapshotLoadState Loading { get; } = new();
 
@@ -333,7 +339,22 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         var byId = allAccounts.ToDictionary(a => a.Id);
         var entries = snapshot.Entries;
         RequireCurrentPublication();
-        var accountEntries = new AccountEntryIndex(entries);
+        // D-285: scan the complete captured ledger off the window thread; publish only its original results.
+        var facts = await Task.Run(() =>
+        {
+            var index = new AccountEntryIndex(entries);
+            var unreviewedCount = LedgerCalculator.Unreviewed(allAccounts, entries).Sum(value => value.Count);
+            return new
+            {
+                Balances = LedgerCalculator.TotalBalances(allAccounts, entries, today),
+                UnreviewedCount = unreviewedCount,
+                Confirmed = unreviewedCount > 0 ? LedgerCalculator.TotalBalances(allAccounts, entries, today, confirmedOnly: true) : null,
+                Totals = LedgerCalculator.Totals(allAccounts, entries, new LedgerFilter(from, to)),
+                AccountBalances = accounts.ToDictionary(account => account.Id, account => LedgerCalculator.Balance(account, index.For(account.Id), today)),
+                OpenReimbursementCount = EntryActions.OpenReimbursements(entries).Count,
+            };
+        });
+        RequireCurrentPublication();
         var categoryList = templateReview.Categories.OrderBy(c => c.Kind).ThenBy(c => c.SortOrder).ToList();
         var categories = new CategoryLookup(categoryList, _translator);
 
@@ -362,7 +383,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         }
 
         // Recorded balance (FIN-13) per currency; totals always follow the accounts included in totals.
-        var balances = LedgerCalculator.TotalBalances(allAccounts, entries, today);
+        var balances = facts.Balances;
         // D-267: clearing first disconnects ContentView handlers while Windows reopens covered Home pages.
         // Publish the complete snapshot once so BindableLayout rebinds existing amount rows.
         Balances.ReplaceAll(balances.Select(value => new CurrencyTotal(value.Key, MoneyText.Format(value.Value, value.Key, culture))));
@@ -385,19 +406,18 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
                     + (combined.HasEstimate ? " · " + _translator["Home_RateEstimate"] : string.Empty);
         }
 
-        var unreviewed = LedgerCalculator.Unreviewed(allAccounts, entries);
-        UnreviewedCount = unreviewed.Sum(u => u.Count);
+        UnreviewedCount = facts.UnreviewedCount;
 
         // "Posted balance – includes unreviewed entries" with the confirmed-only value next to it (FIN-12).
         ConfirmedBalanceText = UnreviewedCount > 0
-            ? _translator.Format("Home_ConfirmedOnly", UnreviewedCount, string.Join("  ", LedgerCalculator.TotalBalances(allAccounts, entries, today, confirmedOnly: true)
+            ? _translator.Format("Home_ConfirmedOnly", UnreviewedCount, string.Join("  ", (facts.Confirmed ?? throw new InvalidOperationException("Confirmed Home balances are missing."))
                 .Select(b => MoneyText.Format(b.Value, b.Key, culture))))
             : null;
         UnreviewedText = UnreviewedCount > 0 ? _translator.Format("Home_Unreviewed", UnreviewedCount) : null;
 
         // Income and expense of the period.
         Periods.Clear();
-        foreach (var totals in LedgerCalculator.Totals(allAccounts, entries, new LedgerFilter(from, to)))
+        foreach (var totals in facts.Totals)
         {
             var refunds = totals.Refunds > 0 ? _translator.Format("Home_Refunds", MoneyText.Format(totals.Refunds, totals.CurrencyCode, culture)) : null;
             Periods.Add(new PeriodSummary(
@@ -408,18 +428,18 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
                 refunds));
         }
 
-        LoadBudget(snapshot, settings.BudgetCalendar, allAccounts, entries, categoryList, today, culture);
+        await LoadBudgetAsync(snapshot, settings.BudgetCalendar, allAccounts, entries, categoryList, today, culture);
         RequireCurrentPublication();
-        LoadPlans(byId, categories, schedules, states, today, planSnapshot.Work);
+        await LoadPlansAsync(byId, categories, schedules, states, today, planSnapshot.Work);
         LoadGettingStarted(entries.Count, schedules.Count, snapshot.Budgets.Count);
         RequireCurrentPublication();
-        LoadForecast(settings.Shows(Feature.ForecastDetails), allAccounts, entries, schedules, states, today, culture);
-        BuildSlices(allAccounts, entries, categories, from, to, culture);
+        await LoadForecastAsync(settings.Shows(Feature.ForecastDetails), allAccounts, entries, schedules, states, today, culture);
+        await BuildSlicesAsync(allAccounts, entries, categories, from, to, culture);
 
         var accountRows = new List<AccountItem>(accounts.Count);
         foreach (var account in accounts)
         {
-            var balance = LedgerCalculator.Balance(account, accountEntries.For(account.Id), today);
+            var balance = facts.AccountBalances[account.Id];
             accountRows.Add(new AccountItem(account.Id, account.Name, _translator[$"AccountType_{account.Type}"],
                 Icons.Parse(account.Icon, Icons.For(account.Type)), MoneyText.Format(balance, account.CurrencyCode, culture), balance < 0, !account.IncludeInTotals, !account.OpeningBalanceKnown) { Type = account.Type });
         }
@@ -440,8 +460,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
 
         HasRecent = RecentEntries.Count > 0;
 
-        var owed = EntryActions.OpenReimbursements(entries);
-        ReimbursementText = owed.Count == 0 ? null : _translator.Format("Home_Reimbursements", owed.Count);
+        ReimbursementText = facts.OpenReimbursementCount == 0 ? null : _translator.Format("Home_Reimbursements", facts.OpenReimbursementCount);
         LoadDataAttention(settings, allAccounts, entries, today);
         LoadGoals(snapshot, today);
         RequireCurrentPublication();
@@ -462,10 +481,12 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
                 _translator.Format("Home_TemplateDescription", template.Name)) { CanUse = templateReview.Work.CanApplyTemplate(template.Id) });
         }
         HasQuickTemplates = QuickTemplates.Count > 0;
+        CapturedHomeLayout = settings.HomeLayout;
+        PresentingSnapshot?.Invoke();
     }
 
     // Remaining overall budget of the month, only when a budget exists (a missing budget is not zero, BUD-01).
-    private void LoadBudget(HomeReadSnapshot snapshot, PeriodCalendar calendar, List<Account> accounts, List<LedgerEntry> entries, List<Core.Categories.Category> categories, DateOnly today, System.Globalization.CultureInfo culture)
+    private async Task LoadBudgetAsync(HomeReadSnapshot snapshot, PeriodCalendar calendar, List<Account> accounts, List<LedgerEntry> entries, List<Core.Categories.Category> categories, DateOnly today, System.Globalization.CultureInfo culture)
     {
         var (year, month) = PeriodMath.MonthOf(today, calendar, _startDay);
         if (PeriodIndex == 1)
@@ -486,7 +507,9 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         var limit = ownLimit + snapshot.Carry.Total;
         RequireCurrentPublication();
         var (from, to) = PeriodMath.MonthRange(year, month, calendar, _startDay);
-        var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, accounts, entries, categories, from, to));
+        var spent = await Task.Run(() => FlexCalculator.SpentAgainstLimit(budget, accounts, entries, categories, from, to));
+        RequireCurrentPublication();
+        var status = new BudgetStatus(limit, spent);
         BudgetText = status.IsOver
             ? _translator.Format("Budget_Over", MoneyText.Format(-status.Remaining, _homeCurrency, culture))
             : _translator.Format("Home_BudgetLeft", MoneyText.Format(status.Remaining, _homeCurrency, culture), MoneyText.Format(limit, _homeCurrency, culture));
@@ -512,15 +535,17 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
 
     // Advanced adds the estimated end-of-month balance and its lowest point (§14, FOR-08); a balance that may fall below
     // zero is a warning in "Needs attention" in both modes (ZEX-P19).
-    private void LoadForecast(bool showDetails, List<Account> accounts, List<LedgerEntry> entries, List<Schedule> schedules, List<OccurrenceState> states, DateOnly today, System.Globalization.CultureInfo culture)
+    private async Task LoadForecastAsync(bool showDetails, List<Account> accounts, List<LedgerEntry> entries, List<Schedule> schedules, List<OccurrenceState> states, DateOnly today, System.Globalization.CultureInfo culture)
     {
         ForecastEndText = null;
         LowBalanceText = null;
 
         var (year, month) = PeriodMath.MonthOf(today, Calendar, _startDay);
         var end = PeriodMath.MonthRange(year, month, Calendar, _startDay).Last;
-        var forecast = Core.Forecasts.ForecastCalculator.Compute(accounts, entries, schedules, states, today, end)
-            .FirstOrDefault(f => string.Equals(f.CurrencyCode, _homeCurrency, StringComparison.OrdinalIgnoreCase));
+        var currency = _homeCurrency;
+        var forecast = await Task.Run(() => Core.Forecasts.ForecastCalculator.Compute(accounts, entries, schedules, states, today, end)
+            .FirstOrDefault(f => string.Equals(f.CurrencyCode, currency, StringComparison.OrdinalIgnoreCase)));
+        RequireCurrentPublication();
         if (forecast is null)
         {
             return;
@@ -610,20 +635,31 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     [RelayCommand]
     private Task OpenReportsAsync() => Shell.Current.GoToAsync(AppShell.ReportsRoute);
 
-    private void LoadPlans(Dictionary<Guid, Account> accounts, CategoryLookup categories, List<Schedule> allSchedules, List<OccurrenceState> states,
+    private async Task LoadPlansAsync(Dictionary<Guid, Account> accounts, CategoryLookup categories, List<Schedule> allSchedules, List<OccurrenceState> states,
         DateOnly today, Core.Commerce.PlanWorkPolicy work)
     {
         var schedules = PlanActions.InForce(allSchedules);
         var text = new PlanText(_translator, _dates, _localization);
 
-        var due = schedules.SelectMany(s => Occurrences.OpenUpTo(s, states, today, s.ActiveFrom ?? s.Rule.Start))
-            .Where(o => work.AllowsOccurrence(o, today)).ToList();
+        var currency = _homeCurrency;
+        var computation = await Task.Run(() => new
+        {
+            Due = schedules.SelectMany(s => Occurrences.OpenUpTo(s, states, today, s.ActiveFrom ?? s.Rule.Start))
+                .Where(o => work.AllowsOccurrence(o, today)).ToList(),
+            Upcoming = schedules.SelectMany(s => Occurrences.Between(s, states, today.AddDays(-400), today.AddDays(14), today))
+                .Where(o => o.IsOpen && work.AllowsOccurrence(o, today)).OrderBy(o => o.DueDate).Take(3).ToList(),
+            Contracts = Core.Reminders.ContractReminderPlanner.Upcoming(allSchedules, today),
+            Next30 = Core.Reports.KpiCatalog.Commitments(accounts.Values, schedules, states, today)
+                .FirstOrDefault(c => string.Equals(c.CurrencyCode, currency, StringComparison.OrdinalIgnoreCase)),
+        });
+        RequireCurrentPublication();
+        var due = computation.Due;
         DueCount = due.Count;
         DueText = DueCount > 0 ? _translator.Format("Home_Due", DueCount) : null;
         var dueLook = due.Any(o => o.Status == OccurrenceView.Overdue) ? PlanLook.Danger : PlanLook.Future;
         (DueTileText, DueTileBackground, DueTileLine) = dueLook;
 
-        var contracts = Core.Reminders.ContractReminderPlanner.Upcoming(allSchedules, today);
+        var contracts = computation.Contracts;
         _contractPlanId = contracts.Count > 0 ? contracts[0].Schedule.Id : null;
         ContractText = contracts.Count == 0 ? null
             : _translator.Format(contracts[0].Kind == Core.Reminders.ContractDateKind.Cancellation ? "Home_CancelBy" : "Home_ReviewOn",
@@ -631,11 +667,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
               + (contracts.Count > 1 ? " " + _translator.Format("Home_MoreContracts", contracts.Count - 1) : string.Empty);
 
         Upcoming.Clear();
-        foreach (var occurrence in schedules
-                     .SelectMany(s => Occurrences.Between(s, states, today.AddDays(-400), today.AddDays(14), today))
-                     .Where(o => o.IsOpen && work.AllowsOccurrence(o, today))
-                     .OrderBy(o => o.DueDate)
-                     .Take(3))
+        foreach (var occurrence in computation.Upcoming)
         {
             var schedule = occurrence.Schedule;
             var color = schedule.Kind == EntryKind.Transfer ? EntryPresenter.NeutralColor : categories.Color(schedule.CategoryId);
@@ -665,7 +697,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
 
         // K04: what the next 30 days cost, known, estimated and unknown apart – the same number as the reports.
         var culture = _localization.CurrentCulture;
-        var next30 = Core.Reports.KpiCatalog.Commitments(accounts.Values, schedules, states, today).FirstOrDefault(c => string.Equals(c.CurrencyCode, _homeCurrency, StringComparison.OrdinalIgnoreCase));
+        var next30 = computation.Next30;
         Next30Text = next30 is null ? null : _translator.Format("Home_Next30", string.Join(" · ", new[]
         {
             MoneyText.Format(next30.Fixed, next30.CurrencyCode, culture),
@@ -676,14 +708,15 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
 
     // Expense by top-level category in the Home currency (or the only currency in use). Small slices are combined. The
     // chart shows gross expense like the reports, so Home and reports show the same numbers (ZEX-S0104).
-    private void BuildSlices(List<Account> accounts, List<LedgerEntry> entries, CategoryLookup categories, DateOnly from, DateOnly to, System.Globalization.CultureInfo culture)
+    private async Task BuildSlicesAsync(List<Account> accounts, List<LedgerEntry> entries, CategoryLookup categories, DateOnly from, DateOnly to, System.Globalization.CultureInfo culture)
     {
         Slices.Clear();
         SliceBrushes.Clear();
         ChartNote = null;
 
         Guid? TopLevel(Guid? id) => categories.Get(id)?.ParentId ?? id;
-        var byCategory = LedgerCalculator.ExpenseByCategory(accounts, entries, new LedgerFilter(from, to), TopLevel);
+        var byCategory = await Task.Run(() => LedgerCalculator.ExpenseByCategory(accounts, entries, new LedgerFilter(from, to), TopLevel));
+        RequireCurrentPublication();
         var currencies = byCategory.Select(c => c.CurrencyCode).Distinct().ToList();
         var currency = currencies.Contains(_homeCurrency) || currencies.Count == 0 ? _homeCurrency : currencies[0];
         if (currencies.Count > 1)

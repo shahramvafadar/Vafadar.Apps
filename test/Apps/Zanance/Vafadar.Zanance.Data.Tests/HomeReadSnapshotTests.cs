@@ -83,6 +83,27 @@ public sealed class HomeReadSnapshotTests : IDisposable
         await store.ValidateHomeSnapshotAsync(packet, Ct);
     }
 
+    /// <summary>Preserves null legacy fallback, explicit reset and custom profile order in the original captured read.</summary>
+    [Theory, InlineData(null), InlineData(""), InlineData("Budget,Recent,-Upcoming,-Accounts")]
+    [Trait("AT", "AT-285")]
+    public async Task Captured_home_layout_preserves_profile_default_and_legacy_distinction_without_a_second_settings_read(string? layout)
+    {
+        var provider = Create(); await SeedAsync(provider);
+        await using (var db = await Factory(provider).CreateDbContextAsync(Ct))
+        {
+            (await db.Settings.SingleAsync(Ct)).HomeLayout = layout;
+            await db.SaveChangesAsync(Ct);
+        }
+        var counted = new CountedFactory(Factory(provider));
+        var store = Store(counted, provider.GetRequiredService<ICommercialWriteAccessSource>());
+        var packet = await store.GetHomeSnapshotAsync(Today, 0, Ct);
+        Assert.Equal(layout, packet.QuickResources.Settings!.HomeLayout);
+        Assert.Equal(1, counted.Created);
+        await store.ValidateHomeSnapshotAsync(packet, Ct);
+        await using var original = await Factory(provider).CreateDbContextAsync(Ct);
+        Assert.Equal(layout, (await original.Settings.SingleAsync(Ct)).HomeLayout);
+    }
+
     /// <summary>Valuation reads the complete original rates only when the visible currency scope actually uses them.</summary>
     [Theory, InlineData(false, true), InlineData(true, true), InlineData(true, false)]
     public async Task Only_active_multi_currency_valuation_queries_rate_history(bool enabled, bool multiCurrency)
