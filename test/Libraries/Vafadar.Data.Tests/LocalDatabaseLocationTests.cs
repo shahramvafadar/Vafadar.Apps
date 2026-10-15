@@ -5,6 +5,19 @@ namespace Vafadar.Data.Tests;
 
 public sealed class LocalDatabaseLocationTests
 {
+    [Fact, Trait("AT", "AT-281")]
+    public void Captured_publication_refuses_switch_away_and_back_to_the_same_path()
+    {
+        using var directory = new Vafadar.Testing.TemporaryDirectory();
+        var original = directory.Combine("original.db");
+        var location = new LocalDatabaseLocation<TestDbContext>(original);
+        var validate = location.CaptureValidation(); validate();
+        location.MoveTo(directory.Combine("other.db")); location.MoveTo(original);
+        Assert.Equal(Path.GetFullPath(original), location.Path);
+        Assert.Throws<InvalidOperationException>(validate);
+        location.CaptureValidation()();
+    }
+
     [Fact, Trait("AT", "AT-238")]
     public async Task Covered_recovery_rebind_keeps_context_protection_and_never_creates_empty_replacement()
     {

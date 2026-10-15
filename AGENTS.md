@@ -141,6 +141,11 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data 
   only the protection choice on the device, never passwords. Explain that an unprotected portable file is readable
   by anyone who obtains it. First-run restore must not force or create an extra account; preserve restored preferences.
   About keeps a compact link to the required bundled notices, without an inline component list.
+* Automatic local backup (owner decision 2026-10-15): unattended copies use the existing device-key
+  encryption, independently of manual portable exports with optional passwords. Never remember a
+  backup password or silently create readable automatic files. Keep profile-bound schedule/status,
+  separate automatic/safety retention and explicit restore confirmation. A device-only copy cannot
+  replace a portable Zanance export for recovery on a new device.
 * Regional display and cloud discovery (D-67): language/RTL stay independent from numeric formatting culture,
   calendar, digit shapes, holiday region, week start and currency. Offer the choices in onboarding and Settings with
   examples; preserve them through language changes and new backup packages. Portable preference sources use an

@@ -754,3 +754,19 @@ Country choice and its existing portable preference remain unchanged in storage 
 registry contains public statutory dates and public authority URLs only; URLs are provenance,
 not runtime requests. No additional personal data, SDK, permission or network traffic. Existing
 Iran records remain compatible; the future separate variant is not introduced here.
+
+## D-281 automatic device-local copies
+
+Owner-approved daily/weekly/off automatic snapshots contain the existing complete financial,
+attachment and allowlisted portable-preference package in a device-key encrypted VBS1 envelope.
+They remain in private `backups-safety` storage under existing protected-platform OS backup/transfer
+exclusions. A separate independently wrapped key protects each copy; complete native recovery and
+reference-aware profile retirement include it. Automatic/pre-restore cohorts each keep ten per
+profile by default, without deleting cross-referenced keys. Device-only interval, success timestamps
+and generic transient failure status are not portable security credentials or imported preferences.
+
+No password is stored; no readable automatic file, sharing, cloud request, SDK or permission is added.
+Existing explicit portable exports retain optional password encryption and readable-file disclosure.
+Restoration still needs original preview, confirmation and authentication. Device/key loss requires
+a separate portable Zanance export; local automatic copies do not promise recovery on a new device.
+Physical-device/iOS/OEM/Store and hosted acceptance remain distinct from local evidence.

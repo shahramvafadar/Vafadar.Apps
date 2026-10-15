@@ -66,10 +66,17 @@ internal class ProtectedSafetyRetention(string root, IReadOnlyDictionary<string,
         await ResumeAsync(ct).ConfigureAwait(false);
         var files = Files;
         await durabilityFactory(roots["safety"]).SynchronizeFileAsync(Path.Combine(roots["safety"], uploadedName), ct).ConfigureAwait(false);
+        // An automatic success timestamp must follow persistence of the new directory entry too.
+        if (uploadedName.StartsWith("automatic-", StringComparison.Ordinal))
+            await durabilityFactory(roots["safety"]).SynchronizeDirectoryAsync(ct).ConfigureAwait(false);
         var copies = new List<(ProfileRetirementArtifact Artifact, DatabaseKeyBinding Binding, DateTimeOffset Date)>();
+        var automatic = uploadedName.StartsWith("automatic-", StringComparison.Ordinal);
         foreach (var name in await files.ListNamesAsync("safety", ct).ConfigureAwait(false))
         {
             if (!name.EndsWith(".vbs", StringComparison.Ordinal)) continue;
+            // Automatic recovery points and pre-restore safety copies each retain their own bounded cohort.
+            // Cross-cohort references still pin keys in RequireNoOtherReferencesAsync.
+            if (name.StartsWith("automatic-", StringComparison.Ordinal) != automatic) continue;
             var artifact = await files.CaptureAsync("safety", name, ct).ConfigureAwait(false);
             var envelope = await files.ReadAsync("safety", name, DeviceSafetyEncryption.MaximumPackageBytes + 80, false, ct).ConfigureAwait(false);
             byte[]? clear = null; byte[]? key = null;

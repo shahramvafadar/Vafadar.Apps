@@ -18,6 +18,7 @@ internal static class ProtectedStorageRegistration
         services.AddSingleton<IBackupPackageRestoreReceiver>(provider => provider.GetRequiredService<ProtectedStorageHost>());
         services.AddSingleton<IBackupSafetyCopyProtection>(provider => provider.GetRequiredService<ProtectedStorageHost>());
         services.AddSingleton<IBackupSafetyCopyMaintenance>(provider => provider.GetRequiredService<ProtectedStorageHost>());
+        services.AddSingleton<IAutomaticLocalBackupProtection>(provider => provider.GetRequiredService<ProtectedStorageHost>());
         services.AddSingleton<IProtectedProfileSessionSource>(provider => provider.GetRequiredService<ProtectedStorageHost>());
     }
 }

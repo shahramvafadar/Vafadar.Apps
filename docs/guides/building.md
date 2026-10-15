@@ -803,3 +803,16 @@ The independent Windows executable and new/resume commands are documented in
 eng/benchmarks/Zanance.ProtectedPerformance/README.md. It requires the reviewed Windows native
 package and uses only marked fictitious artifacts roots. Never use app data. It measures store
 operations, not native UI/device acceptance; no application rebuild is needed for this executable.
+
+## Focused automatic-backup review (D-281)
+
+Windows Debug `VAFADAR_SNAPSHOT_ONLY=automatic-backup` requires the compiled independent
+`pro.vafadar.zanance.storageacceptance` identity before startup and its retained protected fixture
+marker. It creates three actual native copies with a temporary two-copy retention bound, verifies
+both retained packages and the unchanged pre-restore cohort, then checks the original backup page
+in eighteen en/fa/de, light/dark, 360/412/wide contexts. Native row invocation previews the package;
+cancellation clears selection, and the final complete financial fingerprint must match. The route
+restores its retention/interval choices, avoids provider identity discovery, uses only the hidden own
+AppWindow and optional process-local font stress, and never launches against the main identity.
+Android qualification uses the final complete signed Release on the owned emulator with original
+UI, private encrypted files and explicit restore. Do not repeat unrelated successful native reviews.

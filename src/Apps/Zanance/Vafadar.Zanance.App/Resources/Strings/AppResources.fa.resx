@@ -6355,4 +6355,46 @@
   <data name="Home_RetryLoad" xml:space="preserve">
     <value>بارگذاری دوبارهٔ نمای کلی</value>
   </data>
+  <data name="Backup_AutoTitle" xml:space="preserve">
+    <value>نسخه‌های خودکار محلی</value>
+  </data>
+  <data name="Backup_AutoHint" xml:space="preserve">
+    <value>این نسخه‌ها برای همین دستگاه رمزنگاری می‌شوند. برای بازیابی روی دستگاه جدید، خروجی قابل‌انتقال جداگانه بسازید.</value>
+  </data>
+  <data name="Backup_AutoOff" xml:space="preserve">
+    <value>خاموش</value>
+  </data>
+  <data name="Backup_AutoDaily" xml:space="preserve">
+    <value>روزانه</value>
+  </data>
+  <data name="Backup_AutoWeekly" xml:space="preserve">
+    <value>هفتگی</value>
+  </data>
+  <data name="Backup_AutoLast" xml:space="preserve">
+    <value>آخرین نسخهٔ خودکار: «{0}»</value>
+  </data>
+  <data name="Backup_AutoNever" xml:space="preserve">
+    <value>هنوز نسخهٔ خودکاری ساخته نشده است.</value>
+  </data>
+  <data name="Backup_AutoFailed" xml:space="preserve">
+    <value>ساخت نسخهٔ خودکار کامل نشد. با بازکردن بعدی برنامه، دوباره تلاش می‌شود.</value>
+  </data>
+  <data name="Backup_AutoFile" xml:space="preserve">
+    <value>نسخهٔ خودکار · «{0}»</value>
+  </data>
+  <data name="Help_AutomaticBackup_Title" xml:space="preserve">
+    <value>نسخه‌های خودکار محلی</value>
+  </data>
+  <data name="Help_AutomaticBackup_Text" xml:space="preserve">
+    <value>هنگام بازکردن یا بازگشت به Zanance، اگر زمان انتخاب‌شده گذشته باشد، نسخه‌ای ساخته می‌شود. هر پروفایل سابقهٔ جداگانه دارد. نسخه‌ها با کلید محافظت‌شدهٔ دستگاه رمزنگاری می‌شوند و رمز بکاپ ذخیره نمی‌شود. برای هر پروفایل، حداکثر ده نسخهٔ خودکار و ده نسخهٔ ایمنی جداگانهٔ پیش از بازیابی نگه داشته می‌شود. برای بازیابی، نسخه‌ای از فهرست زیر انتخاب و آن را تأیید کنید. این نسخه‌ها روی همین دستگاه می‌مانند و در صورت گم‌شدن دستگاه یا کلید آن، جای خروجی قابل‌انتقال را نمی‌گیرند.</value>
+  </data>
+  <data name="Help_AutomaticBackup_Example" xml:space="preserve">
+    <value>با انتخاب «روزانه»، بازگشت پس از دو روز فقط یک نسخهٔ تازه می‌سازد، نه دو نسخه برای روزهای گذشته. پیش از رفتن به گوشی جدید، خروجی قابل‌انتقال را جداگانه بسازید.</value>
+  </data>
+  <data name="Backup_LastPortable" xml:space="preserve">
+    <value>آخرین خروجی قابل‌انتقال: «{0}»</value>
+  </data>
+  <data name="Backup_PortableNever" xml:space="preserve">
+    <value>هنوز خروجی قابل‌انتقالی ساخته نشده است.</value>
+  </data>
 </root>

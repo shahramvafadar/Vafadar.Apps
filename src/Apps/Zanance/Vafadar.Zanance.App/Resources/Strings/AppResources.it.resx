@@ -6344,4 +6344,46 @@ Limiti per categoria:
   <data name="Home_RetryLoad" xml:space="preserve">
     <value>Ricarica il riepilogo</value>
   </data>
+  <data name="Backup_AutoTitle" xml:space="preserve">
+    <value>Copie locali automatiche</value>
+  </data>
+  <data name="Backup_AutoHint" xml:space="preserve">
+    <value>Crittografate per questo dispositivo. Per recuperare i dati su un nuovo dispositivo, crea un’esportazione portatile separata.</value>
+  </data>
+  <data name="Backup_AutoOff" xml:space="preserve">
+    <value>Disattivate</value>
+  </data>
+  <data name="Backup_AutoDaily" xml:space="preserve">
+    <value>Ogni giorno</value>
+  </data>
+  <data name="Backup_AutoWeekly" xml:space="preserve">
+    <value>Ogni settimana</value>
+  </data>
+  <data name="Backup_AutoLast" xml:space="preserve">
+    <value>Ultima copia automatica: {0}</value>
+  </data>
+  <data name="Backup_AutoNever" xml:space="preserve">
+    <value>Non ci sono ancora copie automatiche.</value>
+  </data>
+  <data name="Backup_AutoFailed" xml:space="preserve">
+    <value>La copia automatica non è stata completata. L’app riproverà alla prossima apertura.</value>
+  </data>
+  <data name="Backup_AutoFile" xml:space="preserve">
+    <value>Copia automatica · {0}</value>
+  </data>
+  <data name="Help_AutomaticBackup_Title" xml:space="preserve">
+    <value>Copie locali automatiche</value>
+  </data>
+  <data name="Help_AutomaticBackup_Text" xml:space="preserve">
+    <value>Quando apri Zanance o torni nell’app, viene creata una copia se è trascorso l’intervallo scelto. Ogni profilo ha la propria cronologia. Le copie usano una chiave protetta dal dispositivo; non viene memorizzata alcuna password di backup. Per ogni profilo vengono conservate fino a dieci copie automatiche e dieci copie di sicurezza separate precedenti ai ripristini. Scegli una copia qui sotto e conferma il ripristino. Queste copie restano sul dispositivo e non sostituiscono un’esportazione portatile se perdi il dispositivo o la sua chiave.</value>
+  </data>
+  <data name="Help_AutomaticBackup_Example" xml:space="preserve">
+    <value>Con l’opzione giornaliera, tornare dopo due giorni crea una sola nuova copia, senza recuperare i giorni passati. Crea un’esportazione portatile separata prima di cambiare telefono.</value>
+  </data>
+  <data name="Backup_LastPortable" xml:space="preserve">
+    <value>Ultima esportazione portatile: {0}</value>
+  </data>
+  <data name="Backup_PortableNever" xml:space="preserve">
+    <value>Non ci sono ancora esportazioni portatili.</value>
+  </data>
 </root>

@@ -33,7 +33,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-06 | Recurring payments easier to find (repeat option in the entry form or a clearer entry point) | 2 | P2 | S | Done (local/native, D-111; phone/iOS acceptance open) | – |
 | ZCR-LOC-07 | Currencies of the target markets (ISO list, minor digits) | 2/8 | P3 | S | Target coverage delivered (D-273); additional jurisdictions/years remain | official currency sources |
 | ZCR-LOC-08 | More holiday regions with source, validity years and "uncertain" state | 8 | P3 | M | Target coverage delivered (D-273); additional jurisdictions/years remain | official jurisdiction/year sources |
-| ZCR-LOC-09 | Automatic local backup (interval exists, not wired) | 2 | P2 | S | Proposed | SEC-08 |
+| ZCR-LOC-09 | Automatic device-encrypted local backup; separate portable export | 2 | P2 | M | Done (local/native D-281; device/iOS/hosted acceptance remains open) | SEC-08 |
 | ZCR-LOC-13 | Owner-approved plan and debt UX (D-65) | Maintenance | P1 | M | Done (local; AT-72 device gate remains) | owner approval 2026-10-08 |
 | ZCR-LOC-15 | Independent saved filters after report navigation (D-109 / AT-114) | Maintenance | P1 | S | Done (local/native, D-109; device/iOS acceptance remains open) | D-69 ready-defect delivery |
 | ZCR-LOC-12 | Owner-requested receipt total detection and review (D-64) | Maintenance | P1 | M | Done (local; device/corpus gate remains QA-05) | owner request 2026-10-08 |
@@ -203,8 +203,13 @@ Scope: currencies and holiday regions of the confirmed target markets, each holi
 years, an "uncertain" state for lunar or announced holidays; never presented as bank business days.
 
 ### ZCR-LOC-09 – Automatic local backup
-Scope: wire the existing interval to an app-start/resume check that writes an encrypted local backup when due
-(password stored in the keystore only if the user agrees), with retention. Done: tests and setting text (owner).
+Scope: owner approved device-key-encrypted automatic local copies on 2026-10-15, with separate portable exports
+using an optional password. Never store a backup password or silently create a readable automatic file. Check
+daily/weekly/off on app-start/resume, maintain a separate successful timestamp per profile, coalesce concurrent
+requests and keep independent automatic/pre-restore retention. Discover current-profile copies and restore only
+after original preview/authentication/confirmation. Explain that device/key loss requires a portable export.
+Done: original-source tests, native encryption/restore/retention evidence, six-language UI checks, strict builds,
+complete signed APK and documentation in one finished batch. D-281 local/native delivery is complete; physical-device/iOS/hosted acceptance remains separate. See ../../quality/automatic-local-backup.md.
 
 ### ZCR-LOC-11 – Backup, first run and About (D-62)
 
@@ -2369,8 +2374,8 @@ complete signed installable APK remains artifacts/android-work-read-final/pro.va
 Exact evidence and scope: quality/test-build-upgrade-policy.md.
 
 Customer activation and announcement remain explicit owner/BIL gates. Do not turn disabled test
-enforcement into permanent paid facts or announce future limits as already enabled. LOC-09's
-final unattended protection choice and separate local personal-sync approval are pending;
+enforcement into permanent paid facts or announce future limits as already enabled. LOC-09's protection choice was subsequently approved on 2026-10-15 (D-281);
+separate local personal-sync approval remains pending;
 none follows from backend foundation approval. The full development goal remains active.
 
 

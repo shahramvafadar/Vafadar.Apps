@@ -6355,4 +6355,46 @@ Kategorielimits:
   <data name="Home_RetryLoad" xml:space="preserve">
     <value>Übersicht erneut laden</value>
   </data>
+  <data name="Backup_AutoTitle" xml:space="preserve">
+    <value>Automatische lokale Kopien</value>
+  </data>
+  <data name="Backup_AutoHint" xml:space="preserve">
+    <value>Für dieses Gerät verschlüsselt. Erstellen Sie für ein neues Gerät einen separaten übertragbaren Export.</value>
+  </data>
+  <data name="Backup_AutoOff" xml:space="preserve">
+    <value>Aus</value>
+  </data>
+  <data name="Backup_AutoDaily" xml:space="preserve">
+    <value>Täglich</value>
+  </data>
+  <data name="Backup_AutoWeekly" xml:space="preserve">
+    <value>Wöchentlich</value>
+  </data>
+  <data name="Backup_AutoLast" xml:space="preserve">
+    <value>Letzte automatische Kopie: {0}</value>
+  </data>
+  <data name="Backup_AutoNever" xml:space="preserve">
+    <value>Noch keine automatische Kopie.</value>
+  </data>
+  <data name="Backup_AutoFailed" xml:space="preserve">
+    <value>Die automatische Kopie konnte nicht abgeschlossen werden. Beim nächsten Öffnen der App wird es erneut versucht.</value>
+  </data>
+  <data name="Backup_AutoFile" xml:space="preserve">
+    <value>Automatische Kopie · {0}</value>
+  </data>
+  <data name="Help_AutomaticBackup_Title" xml:space="preserve">
+    <value>Automatische lokale Kopien</value>
+  </data>
+  <data name="Help_AutomaticBackup_Text" xml:space="preserve">
+    <value>Beim Öffnen oder bei der Rückkehr zu Zanance wird nach Ablauf des gewählten Intervalls eine Kopie erstellt. Jedes Profil hat einen eigenen Verlauf. Ein geschützter Geräteschlüssel verschlüsselt die Kopien; ein Sicherungspasswort wird nie gespeichert. Pro Profil bleiben bis zu zehn automatische Kopien und zehn separate Sicherheitskopien vor Wiederherstellungen erhalten. Wählen Sie unten eine Kopie und bestätigen Sie die Wiederherstellung. Die Kopien bleiben auf diesem Gerät und ersetzen keinen übertragbaren Export, falls Gerät oder Schlüssel verloren gehen.</value>
+  </data>
+  <data name="Help_AutomaticBackup_Example" xml:space="preserve">
+    <value>Bei Täglich erstellt die Rückkehr nach zwei Tagen eine neue Kopie, keine zwei nachgeholten Kopien. Erstellen Sie vor dem Wechsel auf ein neues Telefon einen separaten übertragbaren Export.</value>
+  </data>
+  <data name="Backup_LastPortable" xml:space="preserve">
+    <value>Letzter übertragbarer Export: {0}</value>
+  </data>
+  <data name="Backup_PortableNever" xml:space="preserve">
+    <value>Noch kein übertragbarer Export.</value>
+  </data>
 </root>

@@ -14,7 +14,7 @@ namespace Vafadar.Zanance.App.Security;
 /// missing keys or identities cannot select a replacement installation or plaintext provider.</remarks>
 internal abstract partial class ProtectedStorageHost(IServiceProvider services,
     Func<CancellationToken, Task<ProtectedStorageInitialization>> initialization, Func<CancellationToken, Task> complete)
-    : IAppDatabaseStartup, IProfileCreationHost, IProfileRetirementHost, IBackupSafetyCopyProtection, IBackupPackageRestoreReceiver, IProtectedProfileSessionSource, IBackupSafetyCopyMaintenance
+    : IAppDatabaseStartup, IProfileCreationHost, IProfileRetirementHost, IBackupSafetyCopyProtection, IBackupPackageRestoreReceiver, IProtectedProfileSessionSource, IBackupSafetyCopyMaintenance, IAutomaticLocalBackupProtection
 {
     private readonly SemaphoreSlim preparation = new(1, 1);
     private ProtectedProfileStorage? storage;
@@ -136,14 +136,24 @@ internal abstract partial class ProtectedStorageHost(IServiceProvider services,
     public Task<byte[]> OpenAsync(ReadOnlyMemory<byte> envelope, CancellationToken ct) => UseSafetyAsync(envelope, false, ct);
 
     /// <inheritdoc />
-    public async Task AfterUploadAsync(BackupFileInfo file, CancellationToken ct = default)
+    public Task<byte[]> ProtectAutomaticAsync(ReadOnlyMemory<byte> package, Action validate, CancellationToken ct) =>
+        UseSafetyAsync(package, true, ct, validate);
+
+    /// <inheritdoc />
+    public Task CompleteAutomaticAsync(BackupFileInfo file, Action validate, CancellationToken ct) =>
+        MaintainCopyAsync(file, ct, validate);
+
+    /// <inheritdoc />
+    public Task AfterUploadAsync(BackupFileInfo file, CancellationToken ct = default) => MaintainCopyAsync(file, ct);
+
+    private async Task MaintainCopyAsync(BackupFileInfo file, CancellationToken ct, Action? capturedValidation = null)
     {
         ArgumentNullException.ThrowIfNull(file);
         var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
         using var owner = await location.Access.AcquireExclusiveAsync(ct).ConfigureAwait(false);
-        Session.RequireStable(owner);
+        Session.RequireStable(owner); capturedValidation?.Invoke();
         var capture = services.GetRequiredService<ProfileService>().CaptureStorage();
-        void Validate() { location.Access.RequireDrainedOwner(owner); Session.RequireStable(owner); capture.Validate(); }
+        void Validate() { location.Access.RequireDrainedOwner(owner); Session.RequireStable(owner); capture.Validate(); capturedValidation?.Invoke(); }
         var root = Path.GetDirectoryName(identityPath!)!;
         var roots = new Dictionary<string, string>
         { ["database"] = root, ["keys"] = Path.Combine(root, "database-keys"),
@@ -158,15 +168,15 @@ internal abstract partial class ProtectedStorageHost(IServiceProvider services,
     }
 
     /// <summary>Binds each safety operation to the exact selected profile under drained original ownership.</summary>
-    private async Task<byte[]> UseSafetyAsync(ReadOnlyMemory<byte> input, bool protect, CancellationToken ct)
+    private async Task<byte[]> UseSafetyAsync(ReadOnlyMemory<byte> input, bool protect, CancellationToken ct, Action? capturedValidation = null)
     {
         var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
         using var owner = await location.Access.AcquireExclusiveAsync(ct).ConfigureAwait(false);
-        Storage.Session.RequireStable(owner);
+        Storage.Session.RequireStable(owner); capturedValidation?.Invoke();
         var profiles = services.GetRequiredService<ProfileService>();
         var capture = profiles.CaptureStorage(); capture.Validate();
         var id = capture.OriginalPaths.Single(pair => pair.Value == capture.CurrentOriginalPath).Key;
-        void Validate() { location.Access.RequireDrainedOwner(owner); Storage.Session.RequireStable(owner); capture.Validate(); }
+        void Validate() { location.Access.RequireDrainedOwner(owner); Storage.Session.RequireStable(owner); capture.Validate(); capturedValidation?.Invoke(); }
         var identity = (await new SqliteDatabaseIdentityCatalogue(identityPath!, Validate).ReadAsync(ct).ConfigureAwait(false))
             .Single(row => row.LegacyProfileId == id);
         var protection = new DeviceKeySafetyCopyProtection(identity.ProfileId, identity.InstallationId,

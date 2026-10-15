@@ -30,6 +30,20 @@
                     </Grid>
                 </Border>
 
+                <!-- Device-only unattended recovery points are distinct from portable exports. -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding CanChooseAutomatic}">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="{v:Translate Backup_AutoTitle}" Style="{StaticResource SectionHeader}" />
+                            <v:HelpButton Grid.Column="1" Topic="AutomaticBackup" />
+                        </Grid>
+                        <Label Text="{v:Translate Backup_AutoHint}" Style="{StaticResource Secondary}" />
+                        <Picker ItemsSource="{Binding AutomaticIntervals}" SelectedIndex="{Binding AutomaticIntervalIndex}"
+                                SemanticProperties.Description="{v:Translate Backup_AutoTitle}" />
+                        <Label Text="{Binding AutomaticStatus}" Style="{StaticResource Secondary}" />
+                    </VerticalStackLayout>
+                </Border>
+
                 <!-- Create -->
                 <Label Text="{v:Translate Backup_Create}" Style="{StaticResource SectionHeader}" IsVisible="{Binding CanCreateBackup}" />
                 <Border Style="{StaticResource Card}" IsVisible="{Binding CanCreateBackup}">
@@ -80,6 +94,23 @@
                     </VerticalStackLayout>
                 </Border>
                 <Label Text="{v:Translate Backup_OnDeviceHint}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding HasLocalBackups}" />
+
+                <Label Text="{v:Translate Backup_AutoTitle}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasAutomaticBackups}" />
+                <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasAutomaticBackups}">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding AutomaticBackups}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:LocalBackup">
+                                <Grid Padding="16,10" RowDefinitions="Auto,Auto" MinimumHeightRequest="44">
+                                    <Label Text="{Binding Title}" />
+                                    <Label Grid.Row="1" Text="{Binding Details}" Style="{StaticResource Secondary}" />
+                                    <Button Grid.RowSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}"
+                                            Command="{Binding OpenLocalCommand, Source={RelativeSource AncestorType={x:Type local:BackupViewModel}}, x:DataType=local:BackupViewModel}"
+                                            CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding Details}" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
 
                 <!-- Cloud backup (D-35): only with configured OAuth clients; an explicit choice of the user -->
                 <Label Text="{v:Translate Cloud_Title}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasCloud}" />

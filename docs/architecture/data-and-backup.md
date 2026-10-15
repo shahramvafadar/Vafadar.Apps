@@ -2044,3 +2044,32 @@ that already open/join a deferred transaction remain unchanged. Writer overloads
 their original write transaction; never open a second context in those validators or retain a
 key-bearing handle across independent actions/profile changes. The native comparison times actual
 read plus fresh validation against the same encrypted fixture and production assemblies.
+
+## Device-encrypted automatic copies (D-281)
+
+The foreground coordinator checks daily (default), weekly or off after covered startup, resume,
+profile switching and onboarding completion. It coalesces concurrent attempts and creates one
+current snapshot after a missed interval; it does not promise background scheduling. Failure retries
+on the next foreground. `backup.automaticIntervalDays` is device-only; successful
+`backup.lastAutomaticAt[.<set>]` is independent of portable `backup.lastBackupAt` and is never imported.
+
+The original backup service serializes bounded complete sources in memory, rechecks the captured
+catalogue and exact publication identity (including switch-away-and-back), then requires native
+protection under drained ownership. It never writes a plaintext automatic package or accepts a
+backup password. The existing VBS1 envelope uses an independently device-wrapped key per copy.
+Local-only upload, authenticated reread, native synchronization and reference-aware retention must
+finish before the success timestamp is recorded. Failed/interrupted effects retain recoverable
+encrypted objects and cannot report success. There is no plaintext/cloud fallback.
+
+Files `automatic-main-<guid>.vbs` / `automatic-set-<set>-<guid>.vbs` share the existing private
+`backups-safety` root. Automatic and pre-restore cohorts each keep ten per profile by default;
+complete cross-cohort/profile/recovery/staged references still pin keys. Existing retirement and
+recovery discovery include these copies. No new schema, native crypto algorithm or provider is added.
+The bounded portable package reader is stateless and does not reacquire the stateful backup gate:
+native retention calls it under that gate and native maintenance ownership. Stateful create/restore
+remain serialized. Caller-owned device envelopes are never accepted as portable key-loss backups.
+
+Discovery is current-profile only and offers explicit original preview/confirmation/authentication/
+safety/replacement, never sharing or silent restoration. Portable export retains its optional
+password and separate flow; device/key loss still requires a separately exported Zanance backup.
+Android/Windows protected hosts are adopted; iOS/device/OS/OEM/Store acceptance remains separate.

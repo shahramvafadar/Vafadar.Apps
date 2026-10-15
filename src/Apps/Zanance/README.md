@@ -412,3 +412,9 @@ remain optional. Sensitive Android app storage is excluded from OS backup/device
 restores a Zanance backup. PIN remains a separate gate. Windows/iOS adoption and device/provider/Store
 acceptance remain open. [Runtime evidence](docs/quality/android-protected-storage.md) records the final
 signed artifact, corrected native UI and remaining gates.
+
+## Automatic local copies (D-281)
+
+Android/Windows automatic local snapshots use device keys and separate daily/weekly/off history.
+Portable Zanance exports remain separate with optional passwords; device-local copies cannot replace
+them on device/key loss. See [verification and limits](docs/quality/automatic-local-backup.md).

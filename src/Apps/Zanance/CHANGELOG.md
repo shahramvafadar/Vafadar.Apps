@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Automatic local copies
+
+- Keep daily or weekly automatic backups encrypted for this device, or turn them off.
+- Browse and explicitly restore the current profile's automatic copies with a preview and confirmation.
+- Keep automatic history and pre-restore safety copies separate from portable exports.
+- Explain why a separate portable export is still needed when moving to a new device.
+
+
 ### Improved - Protected plan, goal and budget reads
 
 - Avoid repeated encrypted database opening within complete plan, goal and budget operations.

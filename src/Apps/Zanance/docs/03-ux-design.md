@@ -1205,3 +1205,13 @@ Loading and failed-read states use growing translated captions and a real wrappi
 button; successful retry runs the original complete read, never account creation or money posting.
 An actually empty completed snapshot still offers the existing account setup. Preserve original
 rows/handlers during the cover and distinguish this publication gate from app lock and performance.
+
+## D-281 automatic local recovery points
+
+Keep automatic device protection and portable password controls separate. The automatic card offers
+daily/weekly/off, a growing translated status and complete question-mark help explaining device/key
+loss and missed intervals. Portable status explicitly names portable export. Current-profile local
+automatic rows use separate title/detail rows and a last-child real semantic button; they open the
+original explicit preview/replace/cancel flow without a share action. Preserve the original growing
+restore action row. Opening or translating the form never writes the interval. Subscribe only while
+visible; retired pages stop receiving status events. All six existing translations are supplied.

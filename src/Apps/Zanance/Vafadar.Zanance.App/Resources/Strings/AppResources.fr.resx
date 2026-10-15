@@ -6332,4 +6332,46 @@ Plafonds par catégorie :
   <data name="Home_RetryLoad" xml:space="preserve">
     <value>Recharger l’aperçu</value>
   </data>
+  <data name="Backup_AutoTitle" xml:space="preserve">
+    <value>Copies locales automatiques</value>
+  </data>
+  <data name="Backup_AutoHint" xml:space="preserve">
+    <value>Chiffrées pour cet appareil. Pour récupérer vos données sur un nouvel appareil, créez un export portable séparé.</value>
+  </data>
+  <data name="Backup_AutoOff" xml:space="preserve">
+    <value>Désactivées</value>
+  </data>
+  <data name="Backup_AutoDaily" xml:space="preserve">
+    <value>Chaque jour</value>
+  </data>
+  <data name="Backup_AutoWeekly" xml:space="preserve">
+    <value>Chaque semaine</value>
+  </data>
+  <data name="Backup_AutoLast" xml:space="preserve">
+    <value>Dernière copie automatique : {0}</value>
+  </data>
+  <data name="Backup_AutoNever" xml:space="preserve">
+    <value>Aucune copie automatique pour le moment.</value>
+  </data>
+  <data name="Backup_AutoFailed" xml:space="preserve">
+    <value>La copie automatique n’a pas pu être terminée. Une nouvelle tentative aura lieu à la prochaine ouverture de l’application.</value>
+  </data>
+  <data name="Backup_AutoFile" xml:space="preserve">
+    <value>Copie automatique · {0}</value>
+  </data>
+  <data name="Help_AutomaticBackup_Title" xml:space="preserve">
+    <value>Copies locales automatiques</value>
+  </data>
+  <data name="Help_AutomaticBackup_Text" xml:space="preserve">
+    <value>À l’ouverture de Zanance ou à votre retour dans l’application, une copie est créée si l’intervalle choisi est écoulé. Chaque profil possède son propre historique. Les copies utilisent une clé protégée par l’appareil ; aucun mot de passe de sauvegarde n’est mémorisé. Jusqu’à dix copies automatiques et dix copies de sécurité distinctes avant restauration sont conservées par profil. Choisissez une copie ci-dessous et confirmez sa restauration. Ces copies restent sur cet appareil et ne remplacent pas un export portable en cas de perte de l’appareil ou de sa clé.</value>
+  </data>
+  <data name="Help_AutomaticBackup_Example" xml:space="preserve">
+    <value>Avec l’option quotidienne, un retour après deux jours crée une seule nouvelle copie, sans rattraper les deux jours. Créez un export portable séparé avant de changer de téléphone.</value>
+  </data>
+  <data name="Backup_LastPortable" xml:space="preserve">
+    <value>Dernier export portable : {0}</value>
+  </data>
+  <data name="Backup_PortableNever" xml:space="preserve">
+    <value>Aucun export portable pour le moment.</value>
+  </data>
 </root>

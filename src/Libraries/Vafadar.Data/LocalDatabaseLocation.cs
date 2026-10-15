@@ -42,6 +42,14 @@ public sealed class LocalDatabaseLocation<TContext>
     /// <summary>Gets whether the active publication requires its retained verified native key owner.</summary>
     public bool IsProtected { get { lock (_gate) return _endpoint.CreateConnection is not null; } }
 
+    /// <summary>Captures a credential-free recheck that rejects any replacement of the current publication.</summary>
+    /// <remarks>Returning to the same path after a profile switch must not validate a package assembled across publications.</remarks>
+    public Action CaptureValidation()
+    {
+        var captured = Capture();
+        return () => RequireContextPublication(captured);
+    }
+
     /// <summary>Captures the complete current publication for rollback under this exact maintenance owner.</summary>
     /// <remarks>The host retains underlying key owners until the transition commits or rolls back.</remarks>
     public Publication CapturePublication(DatabaseAccessGate.ExclusiveLease owner)

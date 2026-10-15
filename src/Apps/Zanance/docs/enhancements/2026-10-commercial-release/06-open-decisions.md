@@ -71,7 +71,9 @@ official sources and validity years are implementation research, not completed a
 LOC-09's old password-in-keystore proposal is not authority to violate D-62: never remember a
 backup password. An owner choice is requested between device-encrypted automatic local copies
 with separate optional-password portable exports, and explicitly accepted readable portable
-automatic copies. Neither choice is inferred, scheduled or activated while unanswered.
+automatic copies. The owner selected device-encrypted automatic local copies with separate portable
+exports on 2026-10-15. Implement the complete schedule/status/retention/explicit-recovery flow without
+storing a password or implying recovery on a new device from a device-only copy.
 
 Separate approval for local personal Pro sync on the new backend was requested; backend
 foundation approval does not authorize financial sync/sharing. Purchase ownership/trial/discount,

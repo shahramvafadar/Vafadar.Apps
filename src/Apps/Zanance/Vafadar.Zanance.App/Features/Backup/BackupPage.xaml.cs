@@ -17,7 +17,15 @@ public partial class BackupPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        _viewModel.WatchAutomatic(true);
         await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
+    }
+
+    /// <inheritdoc />
+    protected override void OnDisappearing()
+    {
+        _viewModel.WatchAutomatic(false);
+        base.OnDisappearing();
     }
 
     /// <summary>Prevents a device Back action from closing first-run restore while data is being replaced.</summary>

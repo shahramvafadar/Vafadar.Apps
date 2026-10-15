@@ -1114,3 +1114,18 @@ Store drafts now name all six existing languages and describe optional password 
 ## D-269 costed OD-02 backend proposal
 
 Official provider prices and the 2026-10-15 PostgreSQL availability change inform three bounded USD scenarios and a complete first backend delivery/restore boundary. Arithmetic/overage checks pass; see docs/enhancements/2026-10-commercial-release/07-backend-cost-and-decision.md. Provider, region and test-environment budget remain owner choices. No backend, account, mail, hosted resource, SDK, app code or publication changes; ZCR-ID-01 and the full development objective remain incomplete. Application tests/build/native/APK evidence is unchanged D-268 and was not repeated.
+
+## D-281 automatic device-encrypted local copies
+
+LOC-09 is implemented locally under the owner's final device-key policy. Daily/weekly/off foreground
+coordination, independent per-profile timestamps and automatic/pre-restore retention, six-language
+status/help/discovery and explicit original protected restore are complete. No password storage,
+readable automatic file, cloud fallback, sharing action, new crypto/provider/schema or permission.
+
+Full strict suite: 3,590 passed; final focused Data publication case: one passed (3,591 covered
+behaviors, no second full-suite claim). Strict Windows Debug and Android Release builds, 18 final Windows
+contexts, native encryption/reference-aware retention, six Android changed-surface/help contexts,
+original explicit restore and complete signed APK are recorded in quality/automatic-local-backup.md.
+The initial Android live-picker publication loop and native validation lock issue were corrected;
+only related checks were repeated. Local success is not hosted CI, physical-device/iOS/OEM,
+power-loss, OAuth, store-signing or product-publication acceptance. The full goal remains open.

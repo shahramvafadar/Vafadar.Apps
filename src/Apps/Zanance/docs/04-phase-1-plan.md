@@ -967,3 +967,9 @@ file-picker cancellation. Financial hashes and exact fixture envelopes were pres
 [Complete evidence](quality/android-protected-storage.md) records the exact artifact/hash, observed
 failures, native process-loss corpus and limits. Windows/iOS encrypted adoption, fresh hosted CI,
 physical/OEM/provider/Store acceptance and the full canonical backlog remain open.
+
+## D-281 automatic-copy extension
+
+LOC-09 extends the original local backup flow with device-encrypted automatic recovery points;
+portable export and first-run restoration remain separate. Current evidence and remaining platform
+gates are recorded in quality/automatic-local-backup.md and the canonical commercial backlog.

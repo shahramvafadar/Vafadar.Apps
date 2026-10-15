@@ -254,6 +254,14 @@ internal static partial class DebugSnapshots
     private static async Task RunCoreAsync(App app, IServiceProvider services, string folder)
     {
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "automatic-backup")
+        {
+            await ReviewAutomaticBackupAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "automatic-backup-ui")
+        {
+            await ReviewAutomaticBackupAsync(app, services, folder, existingCopiesOnly: true); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "holiday-catalog")
         {
             await ReviewHolidayCatalogAsync(app, services, folder); return;

@@ -73,6 +73,25 @@ public static class MauiProgram
             .AddZananceData(Profiles.ProfileService.StartupDatabasePath(DatabasePath()), protectionRequired: OperatingSystem.IsAndroid() || OperatingSystem.IsWindows())
             // Each local profile keeps its own backups, retention and last-backup time in shared folders (D-34).
             .AddVafadarBackup(options => options.FileSet = Profiles.ProfileService.CurrentBackupSet)
+            .AddSingleton<Features.Backup.AutomaticBackupCoordinator>(services => new(
+                services.GetRequiredService<Vafadar.Backup.IAutomaticLocalBackupService>(),
+                services.GetRequiredService<Vafadar.Core.Settings.ISettingsStore>(),
+                services.GetRequiredService<Vafadar.Backup.BackupOptions>(),
+                new Vafadar.Backup.Storage.LocalFolderBackupStorage(Path.Combine(FileSystem.AppDataDirectory, "backups-safety")),
+                () =>
+                {
+                    var capture = services.GetRequiredService<Profiles.ProfileService>().CaptureStorage();
+                    var location = services.GetRequiredService<Vafadar.Data.LocalDatabaseLocation<ZananceDbContext>>();
+                    var validatePublication = location.CaptureValidation();
+                    return () =>
+                    {
+                        capture.Validate();
+                        validatePublication();
+                    };
+                },
+                () => (OperatingSystem.IsAndroid() || OperatingSystem.IsWindows())
+                    && services.GetRequiredService<ZananceStore>().GetSettings().OnboardingCompleted,
+                action => MainThread.BeginInvokeOnMainThread(action)))
             .AddSingleton<Vafadar.Backup.IBackupSource>(services => new Vafadar.Backup.SettingsBackupSource(
                 services.GetRequiredService<Vafadar.Core.Settings.ISettingsStore>(), "display-settings.json", Vafadar.Localization.LocalizationService.PortableKeys))
             .AddSingleton<UndoService>()

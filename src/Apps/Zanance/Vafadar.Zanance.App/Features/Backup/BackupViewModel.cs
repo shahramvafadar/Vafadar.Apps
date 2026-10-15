@@ -14,7 +14,7 @@ using Vafadar.Zanance.Data;
 namespace Vafadar.Zanance.App.Features.Backup;
 
 /// <summary>A backup file kept on this device.</summary>
-public sealed record LocalBackup(BackupFileInfo File, string Title, string Details);
+public sealed record LocalBackup(BackupFileInfo File, string Title, string Details, bool DeviceOnly = false);
 
 /// <summary>
 /// Backup and restore (UI-13, BAK-01..12). A backup is an optionally encrypted file the user keeps wherever they like – shared to
@@ -42,6 +42,7 @@ public sealed partial class BackupViewModel : ViewModelBase
     /// <summary>Gets whether only restoration is offered before onboarding is completed (D-62).</summary>
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanCreateBackup))]
+    [NotifyPropertyChangedFor(nameof(CanChooseAutomatic))]
     public partial bool IsRestoreOnly { get; set; }
 
     /// <summary>Gets whether creating or uploading a backup is offered on this page.</summary>
@@ -59,6 +60,8 @@ public sealed partial class BackupViewModel : ViewModelBase
 #if DEBUG
     /// <summary>Independent diagnostics skip native/cloud discovery and never display real provider identity.</summary>
     internal bool IndependentRestoreReview { get; set; }
+    /// <summary>Uses independent native automatic-copy fixtures without accessing real cloud identities.</summary>
+    internal bool IndependentAutomaticReview { get; set; }
 #endif
 
     /// <summary>Sets the host for dialogs, including first run when no Shell exists.</summary>
@@ -120,7 +123,8 @@ public sealed partial class BackupViewModel : ViewModelBase
                 // Preserve an outer cloud/file read's busy lifetime while the inner restore publishes its state (D-167).
                 if (Restore.IsBusy) { _restorePriorBusy = IsBusy; IsBusy = true; } else IsBusy = _restorePriorBusy;
             }
-            if (e.PropertyName == nameof(BackupRestoreSession.HasCompleted)) OnPropertyChanged(nameof(CanCreateBackup));
+            if (e.PropertyName == nameof(BackupRestoreSession.HasCompleted))
+            { OnPropertyChanged(nameof(CanCreateBackup)); OnPropertyChanged(nameof(CanChooseAutomatic)); }
             OnPropertyChanged(nameof(CanUseBackupTools)); OnPropertyChanged(nameof(CanLeave));
         };
         PropertyChanged += (_, e) =>
@@ -175,8 +179,8 @@ public sealed partial class BackupViewModel : ViewModelBase
         if (IndependentRestoreReview) { LastBackupText = _translator["Backup_Never"]; return; }
 #endif
         LastBackupText = _backup.LastBackupAt is { } last
-            ? _translator.Format("Backup_LastBackup", FormatTime(last))
-            : _translator["Backup_Never"];
+            ? _translator.Format("Backup_LastPortable", FormatTime(last))
+            : _translator["Backup_PortableNever"];
 
         LocalBackups.Clear();
         foreach (var file in await _backup.DiscoverBackupsAsync(_local))
@@ -186,6 +190,10 @@ public sealed partial class BackupViewModel : ViewModelBase
         }
 
         HasLocalBackups = LocalBackups.Count > 0;
+        await RefreshAutomaticAsync();
+#if DEBUG
+        if (IndependentAutomaticReview) return;
+#endif
         await LoadCloudAsync();
     }
 
@@ -237,7 +245,7 @@ public sealed partial class BackupViewModel : ViewModelBase
         if (!CanUseBackupTools) return;
         var share = _translator["Backup_Share"];
         var restore = _translator["Backup_Restore"];
-        var choice = IsRestoreOnly ? restore : await DialogPage.DisplayActionSheetAsync(backup.Title, _translator["Common_Cancel"], null, share, restore);
+        var choice = IsRestoreOnly || backup.DeviceOnly ? restore : await DialogPage.DisplayActionSheetAsync(backup.Title, _translator["Common_Cancel"], null, share, restore);
         if (choice == share)
         {
             await ShareAsync(backup.File);
@@ -246,7 +254,7 @@ public sealed partial class BackupViewModel : ViewModelBase
         {
             try
             {
-                await using var stream = await _local.OpenReadAsync(backup.File.Id);
+                await using var stream = await (backup.DeviceOnly ? _safety : _local).OpenReadAsync(backup.File.Id);
                 await PrepareRestoreAsync(stream, backup.Title);
             }
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or BackupException)

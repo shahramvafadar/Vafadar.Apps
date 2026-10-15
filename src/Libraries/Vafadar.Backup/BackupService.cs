@@ -16,7 +16,7 @@ namespace Vafadar.Backup;
 /// Only one backup or restore runs at a time. The heavy work – the database snapshot, compression, checksums and the
 /// PBKDF2 key derivation (600,000 iterations) – runs on the thread pool, so a caller on the UI thread stays responsive.
 /// </remarks>
-public sealed class BackupService : IBackupService, IBackupPackageReader
+public sealed partial class BackupService : IBackupService, IBackupPackageReader, IAutomaticLocalBackupService
 {
     internal const string LastBackupKey = "backup.lastBackupAt";
 
@@ -28,6 +28,7 @@ public sealed class BackupService : IBackupService, IBackupPackageReader
     private readonly BackupOptions _options;
     private readonly IBackupPackageRestoreReceiver? _restoreReceiver;
     private readonly IBackupSafetyCopyProtection? _safetyProtection;
+    private readonly IAutomaticLocalBackupProtection? _automaticProtection;
     private readonly SemaphoreSlim _gate = new(1, 1);
 
     /// <summary>Creates the service.</summary>
@@ -38,8 +39,9 @@ public sealed class BackupService : IBackupService, IBackupPackageReader
         TimeProvider time,
         BackupOptions options,
         IBackupPackageRestoreReceiver? restoreReceiver = null,
-        IBackupSafetyCopyProtection? safetyProtection = null)
-        : this(sources, [], app, settings, time, options, restoreReceiver, safetyProtection)
+        IBackupSafetyCopyProtection? safetyProtection = null,
+        IAutomaticLocalBackupProtection? automaticProtection = null)
+        : this(sources, [], app, settings, time, options, restoreReceiver, safetyProtection, automaticProtection)
     {
     }
 
@@ -52,7 +54,8 @@ public sealed class BackupService : IBackupService, IBackupPackageReader
         TimeProvider time,
         BackupOptions options,
         IBackupPackageRestoreReceiver? restoreReceiver = null,
-        IBackupSafetyCopyProtection? safetyProtection = null)
+        IBackupSafetyCopyProtection? safetyProtection = null,
+        IAutomaticLocalBackupProtection? automaticProtection = null)
     {
         ArgumentNullException.ThrowIfNull(sources);
         ArgumentNullException.ThrowIfNull(summaries);
@@ -69,6 +72,7 @@ public sealed class BackupService : IBackupService, IBackupPackageReader
         _options = options;
         _restoreReceiver = restoreReceiver;
         _safetyProtection = safetyProtection;
+        _automaticProtection = automaticProtection;
     }
 
     /// <inheritdoc />
@@ -228,19 +232,17 @@ public sealed class BackupService : IBackupService, IBackupPackageReader
             throw new BackupException(BackupError.InvalidFormat, "Portable recovery package exceeds its bound.");
         if (DeviceSafetyEncryption.IsEncrypted(package))
             throw new BackupException(BackupError.InvalidFormat, "Device-local safety copies are not portable key-loss recovery files.");
-        await _gate.WaitAsync(ct).ConfigureAwait(false);
+        // This bounded portable-only reader neither reads live sources nor opens device keys. Retention may
+        // invoke it while creation owns the stateful backup gate and native maintenance owns the database.
+        // Reentering that gate would deadlock; state-changing create/restore operations remain serialized.
+        var (manifest, entries) = await Task.Run(() => OpenCoreAsync(package, password, ct, maximumBytes), ct).ConfigureAwait(false);
         try
         {
-            var (manifest, entries) = await Task.Run(() => OpenCoreAsync(package, password, ct, maximumBytes), ct).ConfigureAwait(false);
-            try
-            {
-                var borrowed = new ReadOnlyDictionary<string, ReadOnlyMemory<byte>>(
-                    entries.ToDictionary(entry => entry.Key, entry => (ReadOnlyMemory<byte>)entry.Value, StringComparer.Ordinal));
-                await consume(manifest, borrowed, ct).ConfigureAwait(false);
-            }
-            finally { foreach (var content in entries.Values) CryptographicOperations.ZeroMemory(content); }
+            var borrowed = new ReadOnlyDictionary<string, ReadOnlyMemory<byte>>(
+                entries.ToDictionary(entry => entry.Key, entry => (ReadOnlyMemory<byte>)entry.Value, StringComparer.Ordinal));
+            await consume(manifest, borrowed, ct).ConfigureAwait(false);
         }
-        finally { _gate.Release(); }
+        finally { foreach (var content in entries.Values) CryptographicOperations.ZeroMemory(content); }
     }
 
     /// <inheritdoc />

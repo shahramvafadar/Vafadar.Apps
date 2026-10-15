@@ -1472,3 +1472,18 @@ USA, Canada and Australia. Define an explicit country list and official jurisdic
 keep federal, provincial/state and national holidays distinct, bound supported years and show
 uncertain/unavailable data truthfully. Use an extensible country catalogue separate from language.
 Iran is a later separate variant, not implicitly enabled in this batch. New languages remain last.
+
+
+## Approved next complete batch: LOC-09 (D-281, 2026-10-15)
+
+1. Reuse device-envelope encryption and original bounded package validation. Separate automatic
+   timestamps, names and retention from manual portable and pre-restore copies; no password storage.
+2. Complete start/resume/onboarding-finish scheduling, daily/weekly/off device preferences and
+   coalesced attempts. Capture/recheck profile and generation inside native key/maintenance ownership.
+3. Complete translated status/help and current-profile recovery-point discovery. Route selection
+   through the original preview/authentication/confirmation/restore; never share a device-only file.
+4. Verify original library/application sources, concurrency/failure/profile changes, actual independent
+   Windows/Android encryption, exact data preservation, independent retention and explicit restoration.
+   Review changed surfaces in fa/en/de, light/dark, 360/412/wide and build strict targets/signed APK.
+5. Update privacy/spec/acceptance/decision records and commit/push the complete verified batch. Keep
+   failed observations and avoid unrelated successful verification. The complete local/native D-281 batch is delivered; see ../../quality/automatic-local-backup.md. Personal-sync product approval and other owner/external gates remain open.

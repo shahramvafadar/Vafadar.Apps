@@ -94,6 +94,7 @@ public partial class App : Application
         {
             ReplaceRoot(window, CreateShell());
             OfferNotificationsSoon();
+            if (_databaseReady) RequestAutomaticBackup();
             if (_pendingLink is { } link)
             {
                 _pendingLink = null;
@@ -164,7 +165,7 @@ public partial class App : Application
 #if DEBUG
         // Independent protected reviews must fail before the covered startup worker can touch a main installation.
         // MSBuild can retain stale ApplicationId metadata when only a global property changes (D-274).
-        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "home-balance-reload" or "holiday-catalog" or "home-loading"
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "home-balance-reload" or "holiday-catalog" or "home-loading" or "automatic-backup" or "automatic-backup-ui"
             && AppInfo.Current.PackageName != "pro.vafadar.zanance.storageacceptance")
             throw new InvalidOperationException("Independent review application identity required before startup.");
         _startupWindowThread = Environment.CurrentManagedThreadId;
@@ -340,6 +341,7 @@ public partial class App : Application
             }
 
             await reminders.RefreshAsync();
+            await RunAutomaticBackupAsync();
 
             // Receipts of deleted entries are removed at start only: undo is kept in memory, so after a restart no
             // deleted entry can come back, while on resume an undo may still be pending (F2-TX-04).
@@ -357,6 +359,17 @@ public partial class App : Application
                 System.Diagnostics.Debug.WriteLine($"Attachment cleanup failed: {ex}");
             }
         });
+    }
+
+    private void RequestAutomaticBackup() => _ = Task.Run(RunAutomaticBackupAsync);
+
+    private Task RunAutomaticBackupAsync()
+    {
+#if DEBUG
+        // Snapshot routes own their fictitious setup; ordinary foreground creation would alter their fixture.
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOTS") is { Length: > 0 }) return Task.CompletedTask;
+#endif
+        return _services.GetRequiredService<Features.Backup.AutomaticBackupCoordinator>().RunAsync();
     }
 
     private static string? _pendingLink;
