@@ -5659,3 +5659,13 @@ repeated locally. Existing 704 upstream warnings remain unresolved.
 
 Sources: [failed CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/38723670276),
 [exact runner inventory](https://github.com/actions/runner-images/blob/win25-vs2026/20261007.264/images/windows/Windows2025-VS2026-Readme.md).
+## D-289 Windows native diagnostic drift gate
+
+Bind the existing 704 upstream warning occurrences/689 diagnostic keys to 224 official-source
+files and their hashes. Refuse diagnostic/source drift at native build completion and before
+packaging; preserve exact resumed recipes and all original occurrences. Cache immutable packages
+rather than incomplete candidate fragments. Export proposals into fresh ignored evidence only;
+never suppress warnings or silently promote a new baseline. Twenty-six focused cases, real
+producer/source checks and unchanged immutable package entries pass locally. No unrelated app,
+UI/APK or upstream suites repeated; hosted result is pending at commit time. Existing warning
+safety, platform/device and release gates remain open. See quality/windows-warning-drift.md.

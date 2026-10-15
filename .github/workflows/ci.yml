@@ -128,13 +128,14 @@ jobs:
         shell: pwsh
         run: ./eng/native/sqlcipher/Test-WindowsToolchain.ps1
 
-      - name: Cache reviewed Windows source-built dependency
+      # Cache only exact immutable package entries. Candidate-only caches lose the producer
+      # logs/source required by the diagnostic gate; never treat those fragments as a build.
+      - name: Cache reviewed Windows source-built package
         uses: actions/cache@v4
         with:
           path: |
-            artifacts/native-sqlcipher/build/application-windows/candidate
-            artifacts/native-sqlcipher/build/application-windows/compatibility-proof.json
-          key: windows-cipher-${{ hashFiles('eng/native/sqlcipher/inputs.lock.json', 'eng/native/sqlcipher/windows.crypto.profile.json', 'eng/native/sqlcipher/windows.compiler.acceptance.json', 'eng/native/sqlcipher/Build-Windows.ps1', 'eng/native/sqlcipher/WindowsToolchain.psm1', 'eng/native/sqlcipher/Windows/**') }}
+            artifacts/native-sqlcipher/feed/Vafadar.Native.SqlCipher.Windows.*.nupkg
+          key: windows-cipher-package-${{ hashFiles('eng/native/sqlcipher/inputs.lock.json', 'eng/native/sqlcipher/windows.crypto.profile.json', 'eng/native/sqlcipher/windows.compiler.acceptance.json', 'eng/native/sqlcipher/windows.servicing.package.contents.json', 'eng/native/sqlcipher/Build-Windows.ps1', 'eng/native/sqlcipher/WindowsToolchain.psm1', 'eng/native/sqlcipher/WindowsWarnings.psm1', 'eng/native/sqlcipher/Test-WindowsWarnings.ps1', 'eng/native/sqlcipher/windows.warnings.baseline.json', 'eng/native/sqlcipher/Windows/**') }}
 
       - name: Prepare reviewed Windows native dependency
         shell: pwsh

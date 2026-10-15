@@ -201,3 +201,13 @@ installer allowlist, pinned MSVC/SDK and actual compiler SHA256. CI applies the 
 native dependency cache hit. Eleven policy cases and the current candidate atomic-width check
 passed locally; the second installer patch was metadata-only, not installed-host evidence.
 Unchanged upstream warnings remain open. App builds/UI/tests/APK were not repeated.
+
+## Windows diagnostic drift gate (D-289)
+
+Build-Windows.ps1 and Pack-Windows.ps1 now require exact diagnostic/source inventory through
+Test-WindowsWarnings.ps1. The native workflow exercises Test-WindowsWarningPolicy.ps1 after
+original-schema qualification; the main workflow caches only immutable packages whose entries
+are rechecked on reuse. Export-WindowsWarningProposal.ps1 verifies restored official Git objects
+and writes a proposed inventory to fresh ignored evidence, never the tracked acceptance file.
+See [the complete maintenance/verification record](../../src/Apps/Zanance/docs/quality/windows-warning-drift.md).
+Existing 704 upstream warning occurrences remain unresolved safety-wise; this gate detects drift.

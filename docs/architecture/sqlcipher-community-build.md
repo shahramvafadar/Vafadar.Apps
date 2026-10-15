@@ -382,3 +382,12 @@ retain compiler SHA256/signature, MSVC/SDK and immutable package checks. Sixteen
 local toolchain cases pass; hosted execution remains pending at commit time. No app/native
 binary/UI/APK or unrelated successful test rerun. See the D-288 decision for failure evidence
 and the versioned inventory. Native-warning safety review remains open.
+## Windows diagnostic drift gate (D-289)
+
+Build-Windows.ps1 and Pack-Windows.ps1 now require exact diagnostic/source inventory through
+Test-WindowsWarnings.ps1. The native workflow exercises Test-WindowsWarningPolicy.ps1 after
+original-schema qualification; the main workflow caches only immutable packages whose entries
+are rechecked on reuse. Export-WindowsWarningProposal.ps1 verifies restored official Git objects
+and writes a proposed inventory to fresh ignored evidence, never the tracked acceptance file.
+See [the complete maintenance/verification record](../../src/Apps/Zanance/docs/quality/windows-warning-drift.md).
+Existing 704 upstream warning occurrences remain unresolved safety-wise; this gate detects drift.

@@ -55,6 +55,9 @@ jobs:
         shell: pwsh
         run: |
           ./eng/native/sqlcipher/Ensure-WindowsPackage.ps1 -RunName windows-ci-b
+      - name: Exercise native diagnostic drift refusals
+        shell: pwsh
+        run: ./eng/native/sqlcipher/Test-WindowsWarningPolicy.ps1 -RunName windows-ci-b
       - name: Verify production assemblies across fresh process reopening
         shell: pwsh
         run: ./eng/native/sqlcipher/Test-BinaryWindows.ps1 -RunName windows-ci-b
@@ -73,6 +76,8 @@ jobs:
           name: windows-native-qualification
           path: |
             artifacts/native-sqlcipher/toolchain-review-*/proof.json
+            artifacts/native-sqlcipher/warning-policy-*/proof.json
+            artifacts/native-sqlcipher/build/windows-ci-*/warning-review-*/proof.json
             artifacts/native-sqlcipher/build/windows-ci-*/build.log
             artifacts/native-sqlcipher/build/windows-ci-*/exports.txt
             artifacts/native-sqlcipher/build/windows-ci-*/dependents.txt

@@ -22,6 +22,8 @@ if ($manifest.schemaVersion -ne 1 -or $manifest.runtimeIdentifier -ne 'win-x64' 
     throw 'The candidate manifest does not match the current reviewed inputs.'
 }
 $library = Join-Path $candidate 'runtimes/win-x64/native/sqlcipher.dll'
+# Recheck retained evidence even when the candidate predates this packaging invocation.
+& (Join-Path $PSScriptRoot 'Test-WindowsWarnings.ps1') -RunName $RunName | Out-Host
 if ((Get-Item -LiteralPath $library).Length -ne $manifest.libraryBytes -or
     (Get-FileHash -LiteralPath $library -Algorithm SHA256).Hash.ToLowerInvariant() -ne $manifest.librarySha256) {
     throw 'Candidate native library differs from its build manifest.'

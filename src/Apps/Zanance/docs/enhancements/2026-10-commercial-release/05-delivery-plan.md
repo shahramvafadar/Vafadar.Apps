@@ -1543,3 +1543,13 @@ retain compiler SHA256/signature, MSVC/SDK and immutable package checks. Sixteen
 local toolchain cases pass; hosted execution remains pending at commit time. No app/native
 binary/UI/APK or unrelated successful test rerun. See the D-288 decision for failure evidence
 and the versioned inventory. Native-warning safety review remains open.
+## D-289 Windows native diagnostic drift gate
+
+Bind the existing 704 upstream warning occurrences/689 diagnostic keys to 224 official-source
+files and their hashes. Refuse diagnostic/source drift at native build completion and before
+packaging; preserve exact resumed recipes and all original occurrences. Cache immutable packages
+rather than incomplete candidate fragments. Export proposals into fresh ignored evidence only;
+never suppress warnings or silently promote a new baseline. Twenty-six focused cases, real
+producer/source checks and unchanged immutable package entries pass locally. No unrelated app,
+UI/APK or upstream suites repeated; hosted result is pending at commit time. Existing warning
+safety, platform/device and release gates remain open. See ../../quality/windows-warning-drift.md.
