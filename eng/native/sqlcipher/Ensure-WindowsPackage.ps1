@@ -22,7 +22,7 @@ function Test-PackageContents([string]$path) {
             $stream = $entry.Open(); $hash = [Security.Cryptography.SHA256]::Create()
             try { $actual = ([BitConverter]::ToString($hash.ComputeHash($stream))).Replace('-','').ToLowerInvariant() }
             finally { $hash.Dispose(); $stream.Dispose() }
-            if ($actual -ne $contents.entries.($entry.FullName)) { throw 'Native package entry differs from reviewed contents.' }
+            if ($actual -ne $contents.entries.($entry.FullName)) { throw ('Native package entry differs from reviewed contents: {0}; expected={1}; actual={2}' -f $entry.FullName, $contents.entries.($entry.FullName), $actual) }
         }
     } finally { $archive.Dispose() }
 }

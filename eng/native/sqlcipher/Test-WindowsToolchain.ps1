@@ -39,14 +39,19 @@ $sdk = Copy-Policy $inputLock; $sdk.windowsCompiler.sdkVersion = '10.0.0.0'
 Require-Refused 'unreviewed-sdk' { Resolve-ReviewedWindowsToolchain $actual.Installation $sdk $acceptance } '*Unsupported Windows compiler acceptance*'
 $tools = Copy-Policy $inputLock; $tools.windowsCompiler.toolsVersion = '14.0.0'
 Require-Refused 'unreviewed-tools' { Resolve-ReviewedWindowsToolchain $actual.Installation $tools $acceptance } '*Unsupported Windows compiler acceptance*'
-$hash = Copy-Policy $acceptance; $hash.compilerExecutableSha256 = '0' * 64
+$hash = Copy-Policy $acceptance; $hash.compilers = @([pscustomobject]@{ sha256=('0' * 64); fileVersion=$actual.CompilerFileVersion })
 Require-Refused 'changed-compiler-bytes' { Resolve-ReviewedWindowsToolchain $actual.Installation $inputLock $hash } '*Installed compiler bytes differ*'
-$malformed = Copy-Policy $acceptance; $malformed.compilerExecutableSha256 = 'not-a-hash'
+$malformed = Copy-Policy $acceptance; $malformed.compilers[0].sha256 = 'not-a-hash'
 Require-Refused 'malformed-compiler-hash' { Resolve-ReviewedWindowsToolchain $actual.Installation $inputLock $malformed } '*Unsupported Windows compiler acceptance*'
-$schema = Copy-Policy $acceptance; $schema.schemaVersion = 2
+$schema = Copy-Policy $acceptance; $schema.schemaVersion = 3
 Require-Refused 'unknown-policy-schema' { Resolve-ReviewedWindowsToolchain $actual.Installation $inputLock $schema } '*Unsupported Windows compiler acceptance*'
 $empty = Copy-Policy $acceptance; $empty.installationVersions = @()
 Require-Refused 'empty-installer-allowlist' { Resolve-ReviewedWindowsToolchain $actual.Installation $inputLock $empty } '*Unsupported Windows compiler acceptance*'
+$wrongVersion = Copy-Policy $acceptance
+foreach ($item in $wrongVersion.compilers) { $item.fileVersion = '0.0.0.0' }
+Require-Refused 'changed-executable-version' { Resolve-ReviewedWindowsToolchain $actual.Installation $inputLock $wrongVersion } '*Installed compiler bytes differ*'
+$duplicate = Copy-Policy $acceptance; $duplicate.compilers = @($duplicate.compilers[0], $duplicate.compilers[0])
+Require-Refused 'duplicate-compiler-policy' { Resolve-ReviewedWindowsToolchain $actual.Installation $inputLock $duplicate } '*Unsupported Windows compiler acceptance*'
 $fixture = Join-Path (Get-NativeInputRoot) ('toolchain-review-' + [Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $fixture | Out-Null
 $missing = Copy-Policy $actual.Installation; $missing.installationPath = $fixture
@@ -59,7 +64,7 @@ foreach ($name in @('Build-Windows.ps1','Test-UpstreamWindows.ps1','Test-Windows
     }
 }
 [ordered]@{ Cases=$results; ActualCompilerBytesQualified=$true; ObservedInstallationVersion=$actual.Installation.installationVersion;
-    CompilerSha256=$acceptance.compilerExecutableSha256; SdkVersion=$actual.SdkVersion; ToolsVersion=$actual.ToolsVersion;
+    CompilerSha256=$actual.CompilerSha256; CompilerFileVersion=$actual.CompilerFileVersion; SdkVersion=$actual.SdkVersion; ToolsVersion=$actual.ToolsVersion;
     ApprovedPatchVersionsTestedAsMetadataOnly=$true; NoCompilerOrBootstrapExecutedByFixtures=$true } |
     ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $fixture 'proof.json') -Encoding UTF8
 "Toolchain qualification passed: $($results.Count) cases; evidence $fixture"

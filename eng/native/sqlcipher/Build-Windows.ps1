@@ -134,4 +134,4 @@ $manifest = [ordered]@{ schemaVersion=1; status='candidate-not-app-or-release-ac
 $manifest | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $packageRoot 'manifest.json') -Encoding UTF8
 Write-Output $packageRoot
 
-[ordered]@{ schemaVersion=1; observedInstallationVersion=$installation.installationVersion; reviewedCompilerExecutableSha256=$compilerAcceptance.compilerExecutableSha256; toolsVersion=$inputLock.windowsCompiler.toolsVersion; sdkVersion=$inputLock.windowsCompiler.sdkVersion } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $root 'compiler-host-proof.json') -Encoding utf8
+[ordered]@{ schemaVersion=1; observedInstallationVersion=$installation.installationVersion; reviewedCompilerExecutableSha256=$toolchain.CompilerSha256; compilerFileVersion=$toolchain.CompilerFileVersion; toolsVersion=$inputLock.windowsCompiler.toolsVersion; sdkVersion=$inputLock.windowsCompiler.sdkVersion } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $root 'compiler-host-proof.json') -Encoding utf8

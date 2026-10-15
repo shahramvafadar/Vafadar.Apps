@@ -3,12 +3,14 @@ Set-StrictMode -Version Latest
 function Resolve-ReviewedWindowsToolchain {
     <# .SYNOPSIS Qualifies supplied installation metadata against the shared compiler policy and actual executable bytes. #>
     param([Parameter(Mandatory)]$Installation, [Parameter(Mandatory)]$InputLock, [Parameter(Mandatory)]$Acceptance)
-    if ($InputLock.schemaVersion -ne 1 -or $Acceptance.schemaVersion -ne 1 -or
+    if ($InputLock.schemaVersion -ne 1 -or $Acceptance.schemaVersion -ne 2 -or
         $Acceptance.toolsVersion -ne $InputLock.windowsCompiler.toolsVersion -or
         $Acceptance.sdkVersion -ne $InputLock.windowsCompiler.sdkVersion -or
         $Acceptance.toolsVersion -notmatch '^\d+\.\d+\.\d+$' -or
         $Acceptance.sdkVersion -notmatch '^\d+\.\d+\.\d+\.\d+$' -or
-        $Acceptance.compilerExecutableSha256 -notmatch '^[a-f0-9]{64}$' -or
+        @($Acceptance.compilers).Count -eq 0 -or
+        @($Acceptance.compilers | Where-Object { $_.sha256 -notmatch '^[a-f0-9]{64}$' -or $_.fileVersion -notmatch '^\d+\.\d+\.\d+\.\d+$' }).Count -or
+        @($Acceptance.compilers.sha256 | Select-Object -Unique).Count -ne @($Acceptance.compilers).Count -or
         @($Acceptance.installationVersions).Count -eq 0) {
         throw 'Unsupported Windows compiler acceptance.'
     }
@@ -22,16 +24,19 @@ function Resolve-ReviewedWindowsToolchain {
         -not (Test-Path -LiteralPath $compiler -PathType Leaf)) {
         throw 'Pinned native compiler or bootstrap is unavailable.'
     }
-    if ((Get-FileHash -LiteralPath $compiler -Algorithm SHA256).Hash.ToLowerInvariant() -ne $Acceptance.compilerExecutableSha256) {
-        # Report public executable provenance without executing an unreviewed compiler.
-        $signature = Get-AuthenticodeSignature -LiteralPath $compiler
-        $version = [Diagnostics.FileVersionInfo]::GetVersionInfo($compiler)
-        $observedHash = (Get-FileHash -LiteralPath $compiler -Algorithm SHA256).Hash.ToLowerInvariant()
+    # A servicing patch can change executable bytes without changing the MSVC folder version.
+    $signature = Get-AuthenticodeSignature -LiteralPath $compiler
+    $version = [Diagnostics.FileVersionInfo]::GetVersionInfo($compiler)
+    $observedHash = (Get-FileHash -LiteralPath $compiler -Algorithm SHA256).Hash.ToLowerInvariant()
+    $reviewed = @($Acceptance.compilers | Where-Object { $_.sha256 -eq $observedHash -and $_.fileVersion -eq $version.FileVersion })
+    $signer = if ($signature.SignerCertificate) { $signature.SignerCertificate.Subject } else { '' }
+    if ($reviewed.Count -ne 1 -or $signature.Status -ne 'Valid' -or
+        $signer -cne 'CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US') {
         throw ('Installed compiler bytes differ from the reviewed native toolchain. SHA256={0}; FileVersion={1}; Signature={2}; Signer={3}' -f
-            $observedHash, $version.FileVersion, $signature.Status, $signature.SignerCertificate.Subject)
+            $observedHash, $version.FileVersion, $signature.Status, $signer)
     }
     [pscustomobject]@{ Installation = $Installation; Compiler = $compiler; VcVars = $vcvars;
-        Acceptance = $Acceptance; ToolsVersion = $Acceptance.toolsVersion; SdkVersion = $Acceptance.sdkVersion }
+        Acceptance = $Acceptance; CompilerSha256 = $observedHash; CompilerFileVersion = $version.FileVersion; ToolsVersion = $Acceptance.toolsVersion; SdkVersion = $Acceptance.sdkVersion }
 }
 
 function Get-ReviewedWindowsToolchain {

@@ -5517,3 +5517,28 @@ only public SHA-256, file version and Authenticode provenance without executing 
 Twenty focused recovery cases and all eleven existing toolchain cases pass locally. Hosted Windows
 compiler review and final successful CI are still pending; this is diagnosis, not acceptance. No
 application/UI/full-suite/APK repeat or production encryption/security/release claim is made.
+
+### Reviewed Windows servicing producer and immutable package
+
+Diagnostic run 38704482159 job 116320370636 observed compiler 19.51.36260.0, SHA-256
+b0a1818ebae6da7f18230a84e76ce839212584ac4c2ab55b97a0d5268085da57, with valid Microsoft
+Corporation Authenticode signature. Local reviewed 19.51.36257.0 remains pinned separately.
+Policy schema 2 requires an exact hash/file-version pair AND valid Microsoft signature, plus the
+existing installer/MSVC/SDK restrictions; there is no version wildcard or signature-only fallback.
+Microsoft documents compiler servicing separately from folder/toolset versions:
+https://learn.microsoft.com/en-us/cpp/overview/compiler-versions.
+
+Windows package candidate.5 has a stable recipe manifest naming both exact reviewed producers.
+The unchanged raw candidate manifest and compiler-host proof retain the actual observed producer;
+neither is rewritten as another compiler. Every packaged entry, including the original native DLL
+6455496953d402c7764693c2c2db60179ac9baf4ee3c5e6f5d6a405fdd17ec21, remains independently pinned.
+Different native output is still refused. Two fresh hosted outputs and the production-assembly
+create/cold/workload lane remain required before calling the servicing producer qualified.
+
+A related local consumer failure exposed PreserveNewest retaining old provenance because deterministic
+NuGet entries have fixed historical timestamps. Notices/provenance now copy Always. Candidate.4 and its
+failed consumer evidence are retained locally; candidate.5 is a new immutable version, never an overwrite.
+Thirteen toolchain cases pass. The actual production-assembly consumer builds with zero warnings/errors,
+creates with 32 migrations and reopens the same encrypted fixture in another process with exact money,
+portable-source and wrong-key checks. Only this changed consumer was repeated after the copy correction.
+Hosted completion remains pending; app/UI/APK and unrelated successful tests were not rerun locally.

@@ -57,9 +57,9 @@
     <PackageVersion Include="SQLitePCLRaw.bundle_e_sqlcipher" Version="2.1.11" />
     <!-- Maintained managed bridge for our source-built candidate; does not contain a native crypto binary. -->
     <PackageVersion Include="SQLitePCLRaw.provider.sqlcipher" Version="3.0.5" />
-    <!-- Official source-built native packages; Android is adopted, Windows main integration remains separate. -->
+    <!-- Official source-built native packages adopted by the Android and Windows protected hosts. -->
     <PackageVersion Include="Vafadar.Native.SqlCipher.Android" Version="4.19.0-candidate.4" />
-    <PackageVersion Include="Vafadar.Native.SqlCipher.Windows" Version="4.19.0-candidate.3" />
+    <PackageVersion Include="Vafadar.Native.SqlCipher.Windows" Version="4.19.0-candidate.5" />
     <PackageVersion Include="System.Security.Cryptography.ProtectedData" Version="10.0.12" />
   </ItemGroup>
 

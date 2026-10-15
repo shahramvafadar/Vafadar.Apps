@@ -48,6 +48,7 @@ jobs:
           ./eng/native/sqlcipher/Build-Windows.ps1 -RunName windows-ci-b
           $first = Get-FileHash artifacts/native-sqlcipher/build/windows-ci-a/candidate/runtimes/win-x64/native/sqlcipher.dll
           $second = Get-FileHash artifacts/native-sqlcipher/build/windows-ci-b/candidate/runtimes/win-x64/native/sqlcipher.dll
+          Write-Host ('Fresh Windows native SHA256: {0}; {1}' -f $first.Hash, $second.Hash)
           if ($first.Hash -ne $second.Hash) { throw 'Fresh Windows native outputs differ.' }
       - name: Verify original schema and immutable package entries
         shell: pwsh
@@ -74,6 +75,7 @@ jobs:
             artifacts/native-sqlcipher/build/windows-ci-*/build.log
             artifacts/native-sqlcipher/build/windows-ci-*/exports.txt
             artifacts/native-sqlcipher/build/windows-ci-*/dependents.txt
+            artifacts/native-sqlcipher/build/windows-ci-*/compiler-host-proof.json
             artifacts/native-sqlcipher/build/windows-ci-*/candidate/manifest.json
             artifacts/native-sqlcipher/build/windows-ci-*/compatibility-proof.json
             artifacts/native-sqlcipher/build/windows-ci-*/compatibility-*/ef-proof.json

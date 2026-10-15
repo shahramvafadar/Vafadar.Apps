@@ -1,13 +1,22 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "installationVersions": [
     "18.10.12201.205",
     "18.10.12217.157"
   ],
   "toolsVersion": "14.51.36231",
   "sdkVersion": "10.0.26100.0",
-  "compilerExecutableSha256": "315a654ea116864516a1674858e587e535e3bc3045ff32ed2f2739a2c1ec5640",
   "hostedImage": "windows-2025-vs2026",
   "hostedInventorySource": "https://github.com/actions/runner-images/blob/main/images/windows/Windows2025-VS2026-Readme.md",
-  "qualification": "Installer patch acceptance still requires the exact reviewed compiler bytes and complete immutable package entry verification."
+  "qualification": "Exact Microsoft-signed executable hash and file version, pinned MSVC/SDK, two fresh native outputs and immutable package entry verification. Actual producer provenance stays outside the portable package manifest.",
+  "compilers": [
+    {
+      "sha256": "315a654ea116864516a1674858e587e535e3bc3045ff32ed2f2739a2c1ec5640",
+      "fileVersion": "19.51.36257.0"
+    },
+    {
+      "sha256": "b0a1818ebae6da7f18230a84e76ce839212584ac4c2ab55b97a0d5268085da57",
+      "fileVersion": "19.51.36260.0"
+    }
+  ]
 }

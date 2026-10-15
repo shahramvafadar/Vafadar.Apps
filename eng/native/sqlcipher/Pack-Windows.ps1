@@ -38,7 +38,17 @@ if ($pe -lt 0 -or $pe + 96 -ge $bytes.Length -or [BitConverter]::ToUInt32($bytes
 $notices = 'Owner-written Zanance source remains all rights reserved. The following notices apply only to the bundled components.' + "`n`n" +
     (Get-Content -LiteralPath (Join-Path $candidate 'licenses/SQLCipher.txt') -Raw -Encoding UTF8) + "`n`n" +
     (Get-Content -LiteralPath (Join-Path $candidate 'licenses/OpenSSL.txt') -Raw -Encoding UTF8)
-$version = $inputLock.sources.sqlcipher.tag.TrimStart('v') + '-candidate.3'
+# Publish recipe provenance independently of the observed build machine. Exact DLL bytes and all
+# package entries remain pinned; the unmodified candidate manifest retains the actual producer.
+$compilerPolicy = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'windows.compiler.acceptance.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+if ($compilerPolicy.schemaVersion -ne 2 -or $manifest.compilerExecutableSha256 -notin @($compilerPolicy.compilers.sha256)) {
+    throw 'Candidate compiler is outside the reviewed producer policy.'
+}
+$packageManifest = $manifest | ConvertTo-Json -Depth 8 | ConvertFrom-Json
+$packageManifest.PSObject.Properties.Remove('compilerExecutableSha256')
+$packageManifest | Add-Member -NotePropertyName reviewedCompilerExecutables -NotePropertyValue @($compilerPolicy.compilers | Sort-Object sha256)
+$packageManifestBytes = [Text.Encoding]::UTF8.GetBytes((($packageManifest | ConvertTo-Json -Depth 8).Replace("`r`n","`n")) + "`n")
+$version = $inputLock.sources.sqlcipher.tag.TrimStart('v') + '-candidate.5'
 $packageId = 'Vafadar.Native.SqlCipher.Windows'
 $nuspec = @"
 <?xml version="1.0" encoding="utf-8"?>
@@ -63,7 +73,7 @@ try {
     $entries = [ordered]@{
         ($packageId + '.nuspec')=[Text.Encoding]::UTF8.GetBytes($nuspec.Replace("`r`n","`n"))
         'licenses/ThirdPartyNotices.txt'=[Text.Encoding]::UTF8.GetBytes($notices.Replace("`r`n","`n"))
-        'manifest.json'=[IO.File]::ReadAllBytes((Join-Path $candidate 'manifest.json'))
+        'manifest.json'=$packageManifestBytes
         ('buildTransitive/' + $packageId + '.targets')=[IO.File]::ReadAllBytes((Join-Path $PSScriptRoot 'windows-package.targets'))
         'runtimes/win-x64/native/sqlcipher.dll'=$bytes
     }
