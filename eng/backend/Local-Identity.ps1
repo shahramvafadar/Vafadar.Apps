@@ -1,9 +1,10 @@
 <# .SYNOPSIS Operates only the isolated fictional local identity service; never a hosted deployment. #>
 [CmdletBinding()]
-param([Parameter(Mandatory)][ValidateSet('Provision','Start','Stop','Backup','Restore')][string]$Action,
+param([Parameter(Mandatory)][ValidateSet('Provision','Start','Stop','Backup','Restore','ConnectionInfo')][string]$Action,
     [ValidatePattern('^[a-z0-9][a-z0-9-]{0,40}$')][string]$Instance='local',
     [ValidateRange(1024,65535)][int]$DatabasePort=55474,
     [ValidateRange(1024,65535)][int]$ServicePort=5047,
+    [ValidateRange(0,65535)][int]$ServiceTlsPort=0,
     [string]$Snapshot)
 $ErrorActionPreference='Stop'
 $repo=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
@@ -15,6 +16,16 @@ $database='zanance_identity_'+$Instance.Replace('-','_')
 $project=Join-Path $repo 'src/Apps/Zanance/Vafadar.Zanance.Api/Vafadar.Zanance.Api.csproj'
 $runtimeRoot=Join-Path $repo 'artifacts/zanance-identity/runtime/win-x64'
 $binary=Join-Path $runtimeRoot 'Vafadar.Zanance.Api.exe'
+if ($ServiceTlsPort -eq 0) { $ServiceTlsPort=$ServicePort+1 }
+if ($ServiceTlsPort -lt 1024 -or $ServiceTlsPort -gt 65535 -or $ServiceTlsPort -eq $ServicePort) { throw 'Distinct bounded local TLS port required.' }
+if ($Action -eq 'ConnectionInfo') {
+    # This file contains public connection information only, never a private certificate or credential.
+    $publicPath=Join-Path $owned 'connection.json'
+    $publicInfo=Get-Item -LiteralPath $publicPath
+    if ($publicInfo.Length -gt 4096 -or ($publicInfo.Attributes -band [IO.FileAttributes]::ReparsePoint)) { throw 'Public connection information is unsafe.' }
+    Get-Content -LiteralPath $publicPath -Raw -Encoding UTF8
+    return
+}
 function Require-Exit { if ($LASTEXITCODE -ne 0) { throw 'Owned local operation failed.' } }
 function Require-OwnedContainer {
     $label=& docker inspect $container --format '{{index .Config.Labels "pro.vafadar.zanance.identity"}}'
@@ -140,6 +151,7 @@ Require-Exit
 $info.Arguments='--Service:Root "'+$private+'"'
 $info.EnvironmentVariables['ConnectionStrings__Service']='Host=127.0.0.1;Port='+$DatabasePort+';Database='+$database+';Username=zanance_runtime'
 $info.EnvironmentVariables['Service__Port']=[string]$ServicePort
+$info.EnvironmentVariables['Service__TlsPort']=[string]$ServiceTlsPort
 $info.EnvironmentVariables['Service__LocalMailbox']='true'
 $server=[Diagnostics.Process]::Start($info)
 $published=$false
@@ -155,4 +167,11 @@ for ($attempt=0;$attempt -lt 30;$attempt++) {
     Start-Sleep -Milliseconds 500
 }
 if (-not $published) { throw 'Worker remains live but readiness was not observed; inspect this same PID before any retry.' }
-Write-Output ('Ready hidden local service PID '+$server.Id+' at http://127.0.0.1:'+$ServicePort+'; fictional data only.')
+$publicPinPath=Join-Path $private 'local-tls.fingerprint'
+$publicPinInfo=Get-Item -LiteralPath $publicPinPath
+if ($publicPinInfo.Length -gt 128 -or ($publicPinInfo.Attributes -band [IO.FileAttributes]::ReparsePoint)) { throw 'Public certificate fingerprint is unsafe.' }
+$publicPin=[IO.File]::ReadAllText($publicPinPath).Trim()
+if ($publicPin -notmatch '^[a-f0-9]{64}$') { throw 'Public certificate fingerprint is invalid.' }
+[ordered]@{ Schema=1; LocalAddress=('https://127.0.0.1:'+$ServiceTlsPort+'/'); EmulatorAddress=('https://10.0.2.2:'+$ServiceTlsPort+'/'); CertificateSha256=$publicPin } |
+    ConvertTo-Json | Set-Content -LiteralPath (Join-Path $owned 'connection.json') -Encoding UTF8
+Write-Output ('Ready hidden local service PID '+$server.Id+' at https://127.0.0.1:'+$ServiceTlsPort+'; public pin available through ConnectionInfo; fictional data only.')

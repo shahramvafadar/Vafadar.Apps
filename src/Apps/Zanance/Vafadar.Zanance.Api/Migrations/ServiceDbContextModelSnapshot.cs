@@ -338,6 +338,268 @@ namespace Vafadar.Zanance.Api.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncBlobPieceRow", b =>
+                {
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("BlobHash")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<int>("Index")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("FileId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<int>("Length")
+                        .HasColumnType("integer");
+
+                    b.HasKey("SpaceId", "BlobHash", "Index");
+
+                    b.HasIndex("FileId")
+                        .IsUnique();
+
+                    b.ToTable("SyncBlobPieces", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncBlobRow", b =>
+                {
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Hash")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<bool>("Complete")
+                        .HasColumnType("boolean");
+
+                    b.Property<long>("Length")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Parts")
+                        .HasColumnType("integer");
+
+                    b.HasKey("SpaceId", "Hash");
+
+                    b.ToTable("SyncBlobs", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncDeviceRow", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("LastSeenAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ProtectedName")
+                        .IsRequired()
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)");
+
+                    b.Property<bool>("Revoked")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("SessionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SessionId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId", "Revoked");
+
+                    b.ToTable("SyncDevices", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncEventRow", b =>
+                {
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("Sequence")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ProtectedBody")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RecordKey")
+                        .IsRequired()
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)");
+
+                    b.Property<string>("TableName")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.HasKey("SpaceId", "Sequence");
+
+                    b.HasIndex("SpaceId", "TableName", "RecordKey", "Sequence");
+
+                    b.ToTable("SyncEvents", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncPartRow", b =>
+                {
+                    b.Property<Guid>("RoundId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Index")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Bytes")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("ProtectedBody")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Rows")
+                        .HasColumnType("integer");
+
+                    b.HasKey("RoundId", "Index");
+
+                    b.ToTable("SyncParts", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncRecordRow", b =>
+                {
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("TableName")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<string>("RecordKey")
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)");
+
+                    b.Property<string>("ProtectedBody")
+                        .HasColumnType("text");
+
+                    b.Property<long>("Version")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("SpaceId", "TableName", "RecordKey");
+
+                    b.ToTable("SyncRecords", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncRoundRow", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Abandoned")
+                        .HasColumnType("boolean");
+
+                    b.Property<long>("CommitCursor")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Committed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("CompletionHash")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("ContentHash")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("OperationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("SchemaHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeviceId");
+
+                    b.HasIndex("SpaceId", "DeviceId", "OperationId")
+                        .IsUnique();
+
+                    b.ToTable("SyncRounds", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncSpaceRow", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BootstrapDeviceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CreationOperationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("Cursor")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Initializing")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ProtectedName")
+                        .IsRequired()
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)");
+
+                    b.Property<string>("SchemaHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId", "CreationOperationId")
+                        .IsUnique();
+
+                    b.ToTable("SyncSpaces", (string)null);
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -408,6 +670,84 @@ namespace Vafadar.Zanance.Api.Migrations
                 });
 
             modelBuilder.Entity("Vafadar.Zanance.Api.PrivateObject", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.ServiceUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncBlobPieceRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sync.SyncBlobRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId", "BlobHash")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncBlobRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sync.SyncSpaceRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncDeviceRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.ServiceUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncEventRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sync.SyncSpaceRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncPartRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sync.SyncRoundRow", null)
+                        .WithMany()
+                        .HasForeignKey("RoundId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncRecordRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sync.SyncSpaceRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncRoundRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sync.SyncDeviceRow", null)
+                        .WithMany()
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Zanance.Api.Sync.SyncSpaceRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncSpaceRow", b =>
                 {
                     b.HasOne("Vafadar.Zanance.Api.ServiceUser", null)
                         .WithMany()

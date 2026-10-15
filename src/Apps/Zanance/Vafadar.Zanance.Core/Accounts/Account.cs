@@ -83,6 +83,12 @@ public static class AccountTypes
 /// </summary>
 public sealed class Account : Entity, IAuditableEntity
 {
+    /// <summary>Creates a new local financial account.</summary>
+    public Account() { }
+
+    /// <summary>Projects a retained account identity for domain validation without creating another financial row.</summary>
+    public Account(Guid id) : base(id) { }
+
     /// <summary>Gets or sets the lender or borrower of a loan or lent money (F2-DEBT-01).</summary>
     public string? Counterparty { get; set; }
 

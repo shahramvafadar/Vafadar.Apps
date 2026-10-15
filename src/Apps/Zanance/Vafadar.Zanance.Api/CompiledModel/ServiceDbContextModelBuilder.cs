@@ -12,7 +12,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
     public partial class ServiceDbContextModel
     {
         private ServiceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("1f665bb6-c9de-4065-b8fe-89b85314388f"), entityTypeCount: 11)
+            : base(skipDetectChanges: false, modelId: new Guid("d7c033cc-4417-45e2-940b-d079d03616e5"), entityTypeCount: 19)
         {
         }
 
@@ -29,6 +29,14 @@ namespace Vafadar.Zanance.Api.CompiledModel
             var privateObject = PrivateObjectEntityType.Create(this);
             var requestWindow = RequestWindowEntityType.Create(this);
             var serviceUser = ServiceUserEntityType.Create(this);
+            var syncBlobPieceRow = SyncBlobPieceRowEntityType.Create(this);
+            var syncBlobRow = SyncBlobRowEntityType.Create(this);
+            var syncDeviceRow = SyncDeviceRowEntityType.Create(this);
+            var syncEventRow = SyncEventRowEntityType.Create(this);
+            var syncPartRow = SyncPartRowEntityType.Create(this);
+            var syncRecordRow = SyncRecordRowEntityType.Create(this);
+            var syncRoundRow = SyncRoundRowEntityType.Create(this);
+            var syncSpaceRow = SyncSpaceRowEntityType.Create(this);
 
             IdentityRoleClaimEntityType.CreateForeignKey1(identityRoleClaim, identityRole);
             IdentityUserClaimEntityType.CreateForeignKey1(identityUserClaim, serviceUser);
@@ -39,6 +47,15 @@ namespace Vafadar.Zanance.Api.CompiledModel
             DeviceSessionEntityType.CreateForeignKey1(deviceSession, serviceUser);
             IdentityChallengeEntityType.CreateForeignKey1(identityChallenge, serviceUser);
             PrivateObjectEntityType.CreateForeignKey1(privateObject, serviceUser);
+            SyncBlobPieceRowEntityType.CreateForeignKey1(syncBlobPieceRow, syncBlobRow);
+            SyncBlobRowEntityType.CreateForeignKey1(syncBlobRow, syncSpaceRow);
+            SyncDeviceRowEntityType.CreateForeignKey1(syncDeviceRow, serviceUser);
+            SyncEventRowEntityType.CreateForeignKey1(syncEventRow, syncSpaceRow);
+            SyncPartRowEntityType.CreateForeignKey1(syncPartRow, syncRoundRow);
+            SyncRecordRowEntityType.CreateForeignKey1(syncRecordRow, syncSpaceRow);
+            SyncRoundRowEntityType.CreateForeignKey1(syncRoundRow, syncDeviceRow);
+            SyncRoundRowEntityType.CreateForeignKey2(syncRoundRow, syncSpaceRow);
+            SyncSpaceRowEntityType.CreateForeignKey1(syncSpaceRow, serviceUser);
 
             IdentityRoleEntityType.CreateAnnotations(identityRole);
             IdentityRoleClaimEntityType.CreateAnnotations(identityRoleClaim);
@@ -51,6 +68,14 @@ namespace Vafadar.Zanance.Api.CompiledModel
             PrivateObjectEntityType.CreateAnnotations(privateObject);
             RequestWindowEntityType.CreateAnnotations(requestWindow);
             ServiceUserEntityType.CreateAnnotations(serviceUser);
+            SyncBlobPieceRowEntityType.CreateAnnotations(syncBlobPieceRow);
+            SyncBlobRowEntityType.CreateAnnotations(syncBlobRow);
+            SyncDeviceRowEntityType.CreateAnnotations(syncDeviceRow);
+            SyncEventRowEntityType.CreateAnnotations(syncEventRow);
+            SyncPartRowEntityType.CreateAnnotations(syncPartRow);
+            SyncRecordRowEntityType.CreateAnnotations(syncRecordRow);
+            SyncRoundRowEntityType.CreateAnnotations(syncRoundRow);
+            SyncSpaceRowEntityType.CreateAnnotations(syncSpaceRow);
 
             AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
             AddAnnotation("ProductVersion", "10.0.13");

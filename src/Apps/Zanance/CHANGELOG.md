@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Local personal synchronization
+
+- Connect a profile explicitly to the local personal service, retain offline edits, review complete financial conflicts, resume attachments and revoke devices without guessing financial values.
+- Keep pending edits local when service staging is full, and reclaim unpublished work after device revocation or session expiry while preserving committed history.
+
 ### Improved - Protected startup
 
 - Avoid repeating active-profile verification during startup while keeping every profile checked before financial content appears.
@@ -13,6 +18,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 ### Documentation - Current protection and delivery status
 
 - Correct encryption, OS backup, automatic/portable copy and loan-estimate summaries while keeping unfinished platform and release acceptance explicit.
+- Record approved shared encryption, future web-purchase prerequisites, current-machine hosting and German-first bank research; keep commercial Windows delivery and extra languages outside the current scope.
 
 ### Improved - Large Home history
 
@@ -1693,3 +1699,13 @@ and external gates remain open. Main stays plaintext.
 - Explain what a recorded sale result means and why it is not a tax calculation.
 - Browser return no longer claims a cloud connection succeeded before the app checks it.
 - English loan confirmations clearly identify the paying or receiving account.
+
+### Unpublished D-292 qualification progress
+
+- Personal sync refuses inconsistent planning values before publication and preserves complete original local data.
+- Actual Linux service persistence, domain refusals and staging maintenance pass under an isolated non-root account;
+  hosted CI remains unverified.
+- Complete managed coverage is 3,690 executions through the retained initial attempt and selective continuation,
+  with no repeat of the 648 initially successful application cases; this is not a fresh full-suite invocation.
+- The APK builder selects the personal-sync network edition explicitly and rejects a conflicting offline request.
+  Whole-batch final native/UI/APK checks and publication are still in progress.

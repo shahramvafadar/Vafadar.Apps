@@ -56,10 +56,16 @@ public static class IdentityRoutes
         {
             if (!Valid(input)) return Results.Unauthorized();
             var user = await users.FindByEmailAsync(input.Email);
-            if (user is null || !(await signIn.CheckPasswordSignInAsync(user, input.Password, lockoutOnFailure: true)).Succeeded)
-                return Results.Unauthorized();
+            if (user is null) return Results.Unauthorized();
+            await using var tx = await db.Database.BeginTransactionAsync(ct);
+            await Sync.SyncRequestScope.LockOwnerAsync(db, user.Id, ct);
+            // A reset can have completed while this request waited. Authenticate the reloaded
+            // maintained Identity row, not the previously tracked password/stamp snapshot.
+            await db.Entry(user).ReloadAsync(ct);
+            if (!(await signIn.CheckPasswordSignInAsync(user, input.Password, lockoutOnFailure: true)).Succeeded)
+            { await tx.CommitAsync(ct); return Results.Unauthorized(); }
             var session = new DeviceSession { Id = Guid.NewGuid(), UserId = user.Id, ExpiresAt = time.GetUtcNow().AddDays(14) };
-            db.Sessions.Add(session); await db.SaveChangesAsync(ct);
+            db.Sessions.Add(session); await db.SaveChangesAsync(ct); await tx.CommitAsync(ct);
             return await GrantAsync(signIn, user, session);
         });
         app.MapPost("/identity/refresh", async (RefreshInput input, IOptionsMonitor<BearerTokenOptions> options,
@@ -70,12 +76,17 @@ public static class IdentityRoutes
             if (ticket is null || ticket.Properties.ExpiresUtc <= time.GetUtcNow() ||
                 !Guid.TryParse(ticket.Principal.FindFirstValue(ServiceHost.SessionClaim), out var id) ||
                 !int.TryParse(ticket.Principal.FindFirstValue(ServiceHost.GenerationClaim), out var generation)) return Results.Unauthorized();
+            var owner = ticket.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(owner)) return Results.Unauthorized();
+            await using var tx = await db.Database.BeginTransactionAsync(ct);
+            await Sync.SyncRequestScope.LockOwnerAsync(db, owner, ct);
             var user = await signIn.ValidateSecurityStampAsync(ticket.Principal);
             if (user is null) return Results.Unauthorized();
             var count = await db.Sessions.Where(s => s.Id == id && s.UserId == user.Id && !s.Revoked && s.Generation == generation && s.ExpiresAt > time.GetUtcNow())
                 .ExecuteUpdateAsync(u => u.SetProperty(s => s.Generation, s => s.Generation + 1), ct);
             if (count != 1) return Results.Unauthorized();
             var session = await db.Sessions.AsNoTracking().SingleAsync(s => s.Id == id, ct);
+            await tx.CommitAsync(ct);
             return await GrantAsync(signIn, user, session);
         });
         app.MapGet("/sessions", async (ClaimsPrincipal principal, ServiceDbContext db, CancellationToken ct) =>
@@ -83,13 +94,21 @@ public static class IdentityRoutes
                 .Select(s => new { s.Id, s.ExpiresAt, s.Revoked }).ToListAsync(ct))).RequireAuthorization();
         app.MapDelete("/sessions/{id:guid}", async (Guid id, ClaimsPrincipal principal, ServiceDbContext db, CancellationToken ct) =>
         {
+            var owner = principal.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            await using var tx = await db.Database.BeginTransactionAsync(ct);
+            await Sync.SyncRequestScope.LockOwnerAsync(db, owner, ct);
             var changed = await db.Sessions.Where(s => s.Id == id && s.UserId == principal.FindFirstValue(ClaimTypes.NameIdentifier))
                 .ExecuteUpdateAsync(u => u.SetProperty(s => s.Revoked, true), ct);
+            await tx.CommitAsync(ct);
             return changed == 1 ? Results.NoContent() : Results.NotFound();
         }).RequireAuthorization();
         app.MapPost("/sessions/revoke-all", async (ClaimsPrincipal principal, ServiceDbContext db, CancellationToken ct) =>
         {
+            var owner = principal.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            await using var tx = await db.Database.BeginTransactionAsync(ct);
+            await Sync.SyncRequestScope.LockOwnerAsync(db, owner, ct);
             await db.Sessions.Where(s => s.UserId == principal.FindFirstValue(ClaimTypes.NameIdentifier)).ExecuteUpdateAsync(u => u.SetProperty(s => s.Revoked, true), ct);
+            await tx.CommitAsync(ct);
             return Results.NoContent();
         }).RequireAuthorization();
     }
@@ -118,6 +137,7 @@ public static class IdentityRoutes
             .ExecuteUpdateAsync(u => u.SetProperty(c => c.Consumed, true), ct);
         if (claimed != 1) return Results.BadRequest();
         var challenge = await db.Challenges.AsNoTracking().SingleAsync(c => c.Id == input.Id, ct);
+        await Sync.SyncRequestScope.LockOwnerAsync(db, challenge.UserId, ct);
         var mail = JsonSerializer.Deserialize<PrivateMail>(protection.CreateProtector("identity-mail-v1").Unprotect(challenge.ProtectedMail));
         if (mail is null || !System.Security.Cryptography.CryptographicOperations.FixedTimeEquals(
             System.Text.Encoding.UTF8.GetBytes(mail.Token), System.Text.Encoding.UTF8.GetBytes(input.Token))) return Results.BadRequest();

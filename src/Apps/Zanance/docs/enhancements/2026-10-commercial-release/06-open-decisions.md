@@ -1,21 +1,62 @@
 # 06 – Open decisions for the owner
 
-Only questions the owner must answer; each with a proposal. Settled decisions (three plans, no Pro Lifetime, prices
-as design values, languages last) are not asked again.
+Current owner authority and remaining external gates. The owner approved the consolidated questionnaire's
+recommendations on 2026-10-15 with the exceptions recorded below. Earlier proposals are historical, not conflicting
+open decisions. Settled choices are never asked again. Approval is distinct from implementation or acceptance.
 
-| Id | Question | Proposal | Needed before |
+| Id | Current decision / remaining gate | Approved direction | Applies to |
 |---|---|---|---|
-| OD-01 | Tax: first country, tax year, user type, scope level | Germany, the current tax year, employees and freelancers (income-surplus calculation); level 1 (accountant export) in Plus first, level 2 after review by a German tax expert; no filing (level 3) in the first scope | ZCR-TAX-01 |
-| OD-02 hosted gate | Local backend approved (D-271); hosted provider/region/monthly budget remain unchosen | No paid hosting, account creation or deployment until separately approved | Hosted ZCR-ID-01 |
-| OD-05 | After a Pro owner's subscription ends: grace period, read-only, server retention | 30 days read-only for all members with export, then 90 days retention before deletion, announced before sale | ZCR-SHR-03 |
-| OD-06 | Trial flow | Store introductory free trial of 14 days on Pro (auto-renews, store-enforced eligibility) | ZCR-BIL-04 |
-| OD-07 | Lifetime owners' 25 % on Pro: duration and stores | First year of Pro yearly at 25 % off via a store offer for verified Lifetime owners; renewal at the standard price; not combinable | ZCR-BIL-04 |
-| OD-08 | Purchases across devices and stores | A subscription belongs to its store account; Pro services are linked to the Zanance identity, so Pro bought on Android works on iOS through sign-in; Plus/Lifetime stay per store | ZCR-BIL-01 |
-| OD-09 | End-to-end encryption for shared spaces | Transport + storage encryption in the first Pro release; E2EE as a separate decision after the first release, with no E2EE claims before | ZCR-SHR-04 |
-| OD-11 | Current status of Mac/Xcode, Apple account and OAuth client ids | Owner confirms; documents updated accordingly | ZCR-GOV-02 |
-| OD-13 | AI: credit packages, unit, minimum top-up, failed-request policy | Decide after a provider cost review; refund reserved credit on provider failure | ZCR-AI-01 |
-| OD-14 | Bank connection and online rates: markets and providers | Evaluate after the first release; never part of Lifetime | ZCR-BANK-01, ZCR-FX-01 |
-| OD-15 | Cloud storage per shared space | Set from the cost model (ZCR-ID-01); never "unlimited" | ZCR-SHR-01 |
+| OD-01 | Approved, expandable by country | Germany, current tax year, employees/freelancers; accountant export first, expert-reviewed calculations later, no filing. Other target countries are being added individually without an ETA or a support claim | ZCR-TAX-01..03 |
+| OD-02 | Current-machine container hosting approved | Deploy isolated project/dependencies on existing Docker Desktop and use vafadar.pro. DNS/TLS/reachability/restore must be verified before exposure; no paid hosting authorized. A separate app domain may follow later | ZCR-ID-01 |
+| OD-05 | Approved | 30 days read-only/export, then 90 days retention; deletion after 120 total days with clear prior notice | ZCR-SHR-03 |
+| OD-06 | Approved | 14-day store Pro trial with explicit auto-renewal disclosure and store eligibility | ZCR-BIL-04 |
+| OD-07 | Approved | Verified Plus Lifetime owners: 25% off the first Pro annual year, standard renewal, no stacked offers | ZCR-BIL-04 |
+| OD-08 | Approved with future web channel | Pro follows Zanance identity across Android/iOS; store Plus/Lifetime remain per store. Future web purchases follow Zanance identity regardless of download store; implement prerequisites now, checkout/provider later | ZCR-BIL-01 |
+| OD-09 | Approved E2EE from the first shared delivery | Household data requires end-to-end encryption from the start, including membership/key/recovery lifecycle. The old transport/storage-only first-release proposal is superseded | ZCR-SHR-01..04 |
+| OD-11 | Owner reports recent MacBook Air and required software installed | Verify exact hardware/macOS/Xcode/workloads in the Mac environment when reached. Build/test there and use Apple Developer for publication when ready. Account/signing/OAuth/physical-device readiness is not inferred | ZCR-GOV-02 |
+| OD-13 | Local framework approved; live provider/costs remain gated | Consent, minimal data, provider boundary and credit accounting now; select provider, credit package prices/units after actual cost review | ZCR-AI-01 |
+| OD-14 | File research and provider-neutral prerequisites approved | Research Germany's widely used banks first, then USA and other target markets; implement file import/review before a separately accepted live bank connection. Rates: provider/cache/manual fallback now, actual provider/licence/cost later | ZCR-BANK-01, ZCR-FX-01, ZCR-IMP-01 |
+| OD-15 | Technical bounds approved; commercial allocation later | Configurable technical limits now; commercial storage shares after actual hosting costs, never unlimited | ZCR-SHR-01 |
+
+## Consolidated owner approval on 2026-10-15 (D-292 in progress)
+
+1. Complete local household implementation is approved after the current complete personal-sync batch.
+2. E2EE is required for shared financial content from its first delivery, not postponed after release.
+3. Shared subscription expiry follows the approved 30+90-day policy above; export stays available.
+4. Technical configurable bounds proceed now; commercial allocations require the later cost model.
+5. Android/iOS billing proceed. A commercial Windows edition remains a future product direction outside
+   the current work list, without a scheduled phase/date. Existing Windows development builds/checks remain.
+6. Separate purchase authority from app distribution. Future verified web grants belong to Zanance identity
+   across download stores. Plan identity/verification/idempotency/revocation prerequisites now; do not add a
+   checkout, payment provider, paid resource or unverified paid grant. Store-origin Plus/Lifetime policy stays.
+7. Pro store trial: 14 days, with clear automatic-renewal and eligibility wording.
+8. Lifetime discount: 25% on the first Pro annual year only, standard renewal, non-stackable.
+9. Germany tax scope first; each other approved market is a separate versioned country/year expansion.
+   A "being added" label has no ETA and never enables unsupported calculations or suggests current support.
+   This is tax availability only; existing currency/display/holiday support is independent and stays available.
+10. AI framework/consent/credit accounting locally; real provider/cost acceptance comes later.
+11. Bank file import and provider evaluation first; no live bank connection follows from research.
+12. Online-rate/price provider boundary, caching, provenance/staleness and manual fallback locally first.
+13. Current machine/Docker Desktop is the initial service host under vafadar.pro. Isolate its containers,
+    networks, ports, volumes and secrets from other projects. Paid hosting and a later dedicated domain
+    remain separate. Public routing is a concrete deployment gate, not evidence supplied by domain ownership.
+14. A recent MacBook Air with required software is owner-reported. Continue in that machine's actual repository
+    environment when available; installation of a chat application alone is not a remote connection. Owner
+    account entry remains personal; do not create accounts, enter secrets or infer signing/readiness.
+15. Research widely used German banks and current original export formats independently, then USA and the
+    remaining target markets. Do not guess a header schema from bank size or label an untested preset supported.
+16. Finish and polish the existing six languages. Additional languages are deferred outside the current
+    delivery scope; this supersedes wave 9's earlier minimum-twenty-new-languages requirement for this delivery.
+17. Free necessary tools/dependencies may be downloaded from official sources after security/licence review.
+    Global installation, system configuration, new accounts and spending still require separate approval.
+
+E2EE approval concerns the shared-space delivery discussed in the questionnaire. The current personal-sync
+protocol uses transport/service-storage protection and is not retroactively described as E2EE. Shared financial
+data must not be shipped through that readable-server protocol under an E2EE label.
+
+No recommendation outside these approved choices grants account access, reveals credentials, selects a paid
+provider or declares shipping readiness. See [current-machine deployment](09-current-machine-hosting.md)
+and [German bank research](10-bank-import-research.md). These decisions unblock implementation, not acceptance.
 
 ## Settled on 2026-10-10
 

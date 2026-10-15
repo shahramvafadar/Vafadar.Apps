@@ -1,6 +1,8 @@
 # OD-02 backend architecture and operating-cost proposal (D-269)
 
-Status: decision-ready proposal, not approved hosting or spending. Prices observed 2026-10-14;
+Historical cost comparison: the owner subsequently approved isolated current-machine Docker hosting using
+`vafadar.pro`, not a paid provider. See [09-current-machine-hosting.md](09-current-machine-hosting.md).
+The following provider proposals do not authorise spending or deployment. Prices observed 2026-10-14;
 recheck the provider quote before provisioning. No account, service, email, deployment or purchase
 was created. ZCR-ID-01 remains incomplete until implementation and its actual restore drill pass.
 

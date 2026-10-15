@@ -6397,4 +6397,511 @@
   <data name="Backup_PortableNever" xml:space="preserve">
     <value>هنوز خروجی قابل‌انتقالی ساخته نشده است.</value>
   </data>
+  <data name="Sync_Title" xml:space="preserve">
+    <value>همگام‌سازی شخصی</value>
+  </data>
+  <data name="Sync_Intro" xml:space="preserve">
+    <value>این پروفایل را با انتخاب خودتان به سرویس محلی Zanance وصل کنید. هنگام قطع سرویس، ثبت محلی همچنان در دسترس است. برای بازیابی مستقل، بکاپ قابل‌انتقال Zanance همچنان لازم است.</value>
+  </data>
+  <data name="Sync_Address" xml:space="preserve">
+    <value>نشانی سرویس محلی</value>
+  </data>
+  <data name="Sync_Fingerprint" xml:space="preserve">
+    <value>اثر انگشت تأییدشدهٔ گواهی (SHA-256)</value>
+  </data>
+  <data name="Sync_Email" xml:space="preserve">
+    <value>ایمیل حساب سرویس Zanance</value>
+  </data>
+  <data name="Sync_Password" xml:space="preserve">
+    <value>رمز سرویس (ذخیره نمی‌شود)</value>
+  </data>
+  <data name="Sync_DeviceName" xml:space="preserve">
+    <value>نام این دستگاه</value>
+  </data>
+  <data name="Sync_DefaultDevice" xml:space="preserve">
+    <value>دستگاه من</value>
+  </data>
+  <data name="Sync_NewSpace" xml:space="preserve">
+    <value>نام یک نسخهٔ جداگانهٔ تازه</value>
+  </data>
+  <data name="Sync_SignIn" xml:space="preserve">
+    <value>ورود به سرویس محلی</value>
+  </data>
+  <data name="Sync_Discover" xml:space="preserve">
+    <value>استفاده از نشست ذخیره‌شده و دریافت فهرست نسخه‌ها</value>
+  </data>
+  <data name="Sync_Create" xml:space="preserve">
+    <value>ساخت و اتصال یک نسخهٔ جداگانه</value>
+  </data>
+  <data name="Sync_Connect" xml:space="preserve">
+    <value>اتصال و ترکیب با این نسخه</value>
+  </data>
+  <data name="Sync_Now" xml:space="preserve">
+    <value>همگام‌سازی این پروفایل اکنون</value>
+  </data>
+  <data name="Sync_Pause" xml:space="preserve">
+    <value>توقف همگام‌سازی این پروفایل</value>
+  </data>
+  <data name="Sync_SignOut" xml:space="preserve">
+    <value>خروج از این سرویس</value>
+  </data>
+  <data name="Sync_Devices" xml:space="preserve">
+    <value>دستگاه‌های حساب سرویس شما</value>
+  </data>
+  <data name="Sync_Revoke" xml:space="preserve">
+    <value>لغو دسترسی این دستگاه به سرویس</value>
+  </data>
+  <data name="Sync_Conflicts" xml:space="preserve">
+    <value>تغییرهایی که به تصمیم شما نیاز دارند</value>
+  </data>
+  <data name="Sync_KeepLocal" xml:space="preserve">
+    <value>انتخاب رکورد محلی</value>
+  </data>
+  <data name="Sync_KeepRemote" xml:space="preserve">
+    <value>انتخاب رکورد سرویس</value>
+  </data>
+  <data name="Sync_Restart" xml:space="preserve">
+    <value>بازبینی دوباره با آخرین ویرایش‌های محلی من</value>
+  </data>
+  <data name="Sync_RestorePaused" xml:space="preserve">
+    <value>نسخهٔ بازیابی‌شده: همگام‌سازی تا اتصال دوبارهٔ صریح شما متوقف است. برای مستقل ماندن تاریخچهٔ بازیابی‌شده، یک نسخهٔ جداگانه در سرویس بسازید.</value>
+  </data>
+  <data name="Sync_Connected" xml:space="preserve">
+    <value>متصل به «{0}»</value>
+  </data>
+  <data name="Sync_Paused" xml:space="preserve">
+    <value>همگام‌سازی این پروفایل خاموش یا متوقف است.</value>
+  </data>
+  <data name="Sync_StatusDetails" xml:space="preserve">
+    <value>تغییرهای در انتظار: {0}. آخرین همگام‌سازی کامل: {1}.</value>
+  </data>
+  <data name="Sync_Never" xml:space="preserve">
+    <value>هنوز انجام نشده</value>
+  </data>
+  <data name="Sync_CreateConfirm" xml:space="preserve">
+    <value>نسخهٔ جداگانهٔ تازه‌ای با نام «{0}» در سرویس ساخته و این پروفایل به آن متصل شود؟ رکوردهای مالی فعلی این پروفایل برای آن نسخه در صف قرار می‌گیرند. نسخه‌های موجود سرویس جدا می‌مانند.</value>
+  </data>
+  <data name="Sync_ConnectConfirm" xml:space="preserve">
+    <value>این پروفایل به «{0}» وصل و رکوردهایش با آن نسخهٔ سرویس ترکیب شوند؟ این کار می‌تواند رکوردهای بازیابی‌شده را به دستگاه‌های دیگر شما بفرستد. ویرایش‌های متعارض و رکوردهای حذف‌شدهٔ قبلی نیازمند بازبینی‌اند. اگر تاریخچهٔ بازیابی‌شده را مستقل می‌خواهید، نسخهٔ جداگانهٔ تازه بسازید.</value>
+  </data>
+  <data name="Sync_PauseConfirm" xml:space="preserve">
+    <value>همگام‌سازی این پروفایل متوقف شود؟ رکوردهای محلی و صف در انتظار باقی می‌مانند. درخواستی که سرویس قبلاً پذیرفته ممکن است همچنان کامل شود.</value>
+  </data>
+  <data name="Sync_SignOutConfirm" xml:space="preserve">
+    <value>این پروفایل متوقف و نشست ذخیره‌شدهٔ این سرویس در این دستگاه فراموش شود؟ رکوردهای مالی محلی و تغییرهای در انتظار باقی می‌مانند.</value>
+  </data>
+  <data name="Sync_RevokeConfirm" xml:space="preserve">
+    <value>دسترسی «{0}» به سرویس لغو شود؟ آن نشست دیگر همگام‌سازی نمی‌کند. این اقدام نسخه‌هایی را که قبلاً روی آن دستگاه ذخیره شده‌اند از راه دور پاک نمی‌کند.</value>
+  </data>
+  <data name="Sync_KeepLocalConfirm" xml:space="preserve">
+    <value>رکورد محلیِ بازبینی‌شده به‌طور کامل انتخاب شود، از جمله حذف محلی اگر نمایش داده شده است؟ مبلغ میانگین انتخاب نمی‌شود. تعارض رکوردهای مرتبط ممکن است همچنان به تصمیم جداگانه نیاز داشته باشد.</value>
+  </data>
+  <data name="Sync_KeepRemoteConfirm" xml:space="preserve">
+    <value>رکورد سرویسِ بازبینی‌شده به‌طور کامل انتخاب شود، از جمله حذف در سرویس اگر نمایش داده شده است؟ نسخهٔ محلی متعارض هنگام اعمال امنِ کل دور جایگزین می‌شود. ویرایش‌های تازه به بازبینی دوباره نیاز دارند.</value>
+  </data>
+  <data name="Sync_RestartConfirm" xml:space="preserve">
+    <value>این بازبینی با آخرین ویرایش‌های محلی دوباره محاسبه شود؟ این کار اطلاعات مالی را اعمال یا حذف نمی‌کند. نتیجهٔ ثبت‌شده در سرویس حفظ می‌شود؛ دور ثبت‌نشده پیش از شروع دور تازه کنار گذاشته می‌شود.</value>
+  </data>
+  <data name="Sync_RegisterDeviceConfirm" xml:space="preserve">
+    <value>این نشست ذخیره‌شده به‌عنوان دستگاه سرویس با نام «{0}» ثبت شود؟</value>
+  </data>
+  <data name="Sync_SignInRequired" xml:space="preserve">
+    <value>نشست سرویس منقضی یا لغو شده است. دوباره وارد شوید؛ تغییرهای محلی در انتظار حفظ شده‌اند.</value>
+  </data>
+  <data name="Sync_ServiceUnavailable" xml:space="preserve">
+    <value>دسترسی به سرویس محلی ممکن نشد یا درخواست را نپذیرفت. نشانی، گواهی و در دسترس بودن آن را بررسی کنید. تغییرهای محلی در انتظار حفظ شده‌اند.</value>
+  </data>
+  <data name="Sync_CheckInputs" xml:space="preserve">
+    <value>نشانی محلی HTTPS، اثر انگشت تأییدشده، اطلاعات ورود و نام‌ها را بررسی کنید. همگام‌سازی موفقی تأیید نشده است.</value>
+  </data>
+  <data name="Sync_ActionFailed" xml:space="preserve">
+    <value>این اقدام به‌طور امن کامل نشد. رکوردهای محلی شما در دسترس می‌مانند. پیش از تلاش دوباره، وضعیت فعلی را دریافت یا بازبینی را تازه کنید.</value>
+  </data>
+  <data name="Sync_Confirm" xml:space="preserve">
+    <value>تأیید</value>
+  </data>
+  <data name="Sync_NoProfiles" xml:space="preserve">
+    <value>نسخهٔ شخصی سازگاری در فهرست نیست. می‌توانید پایین یک نسخهٔ جداگانه بسازید.</value>
+  </data>
+  <data name="Sync_EditionUnavailable" xml:space="preserve">
+    <value>همگام‌سازی شخصی در این نسخهٔ آفلاین فعال نیست. ابزارهای مالی محلی و بکاپ قابل‌انتقال همچنان در دسترس‌اند.</value>
+  </data>
+  <data name="Sync_ReviewHint" xml:space="preserve">
+    <value>پس از مقایسهٔ هر دو نسخه، یک رکورد کامل را انتخاب کنید. تغییر تازه، انتخاب قبلی را نامعتبر می‌کند. سپس دوباره همگام‌سازی کنید تا کل مجموعهٔ مرتبط بررسی شود.</value>
+  </data>
+  <data name="Sync_Local" xml:space="preserve">
+    <value>در این دستگاه</value>
+  </data>
+  <data name="Sync_Remote" xml:space="preserve">
+    <value>در سرویس</value>
+  </data>
+  <data name="Sync_Deleted" xml:space="preserve">
+    <value>حذف‌شده یا موجود نیست</value>
+  </data>
+  <data name="Sync_MoreHint" xml:space="preserve">
+    <value>سرویس محلی شما، تغییرهای در انتظار و دسترسی دستگاه‌ها</value>
+  </data>
+  <data name="Help_PersonalSync_Title" xml:space="preserve">
+    <value>همگام‌سازی شخصی و بکاپ محلی</value>
+  </data>
+  <data name="Help_PersonalSync_Text" xml:space="preserve">
+    <value>این اتصال محلی اختیاری، رکوردهای مالی و پیوست‌های پروفایلی را که صریحاً متصل کرده‌اید به سرویس Zanance شما می‌فرستد. پیش از ورود اطلاعات حساب، اثر انگشت گواهی سرویس را از راه‌اندازی مورد اعتماد خودتان تأیید کنید. رمز ذخیره نمی‌شود؛ یک نشست قابل‌لغو در فضای امن دستگاه نگهداری می‌شود. همگام‌سازی تغییرها را ترکیب می‌کند و دربارهٔ نسخه‌های متعارض می‌پرسد؛ جای بکاپ قابل‌انتقال را نمی‌گیرد. پروفایل بازیابی‌شده تا اتصال دوبارهٔ صریح شما جدا می‌ماند. لغو دستگاه، دسترسی بعدی آن به سرویس را متوقف می‌کند ولی نسخه‌های قبلاً دریافت‌شده را پاک نمی‌کند.</value>
+  </data>
+  <data name="Help_PersonalSync_Example" xml:space="preserve">
+    <value>در یک دستگاه مبلغ تراکنش و در دستگاه دیگر یادداشتش را تغییر می‌دهید: فیلدهای مستقل می‌توانند ترکیب شوند. اگر هر دو مبلغ را تغییر دهند، شما نسخه را انتخاب می‌کنید. بازیابی بکاپ قدیمی، آن را بی‌صدا وصل نمی‌کند و حذف‌های قدیمی‌اش را دوباره نمی‌فرستد.</value>
+  </data>
+  <data name="Sync_Reload" xml:space="preserve">
+    <value>خواندن دوبارهٔ وضعیت اتصال</value>
+  </data>
+  <data name="Sync_DeviceRevoked" xml:space="preserve">
+    <value>دسترسی به سرویس لغو شده است</value>
+  </data>
+  <data name="Sync_DeviceSeen" xml:space="preserve">
+    <value>آخرین فعالیت در سرویس: {0}</value>
+  </data>
+  <data name="Sync_ConnectionReviewRequired" xml:space="preserve">
+    <value>اتصال این پروفایل را بررسی کنید؛ سرویس، گواهی یا نشست ورود ذخیره‌شدهٔ آن با وضعیت فعلی متفاوت است.</value>
+  </data>
+  <data name="Sync_Confirmed" xml:space="preserve">
+    <value>تأییدشده</value>
+  </data>
+  <data name="Sync_Unreviewed" xml:space="preserve">
+    <value>بررسی‌نشده</value>
+  </data>
+  <data name="Sync_Increase" xml:space="preserve">
+    <value>افزایش</value>
+  </data>
+  <data name="Sync_Decrease" xml:space="preserve">
+    <value>کاهش</value>
+  </data>
+  <data name="Sync_Yes" xml:space="preserve">
+    <value>بله</value>
+  </data>
+  <data name="Sync_No" xml:space="preserve">
+    <value>خیر</value>
+  </data>
+  <data name="Sync_SourceManual" xml:space="preserve">
+    <value>ثبت دستی</value>
+  </data>
+  <data name="Sync_SourcePlan" xml:space="preserve">
+    <value>از پلن</value>
+  </data>
+  <data name="Sync_SourceImport" xml:space="preserve">
+    <value>واردشده از فایل</value>
+  </data>
+  <data name="Sync_StatusOpen" xml:space="preserve">
+    <value>باز</value>
+  </data>
+  <data name="Sync_StatusSettled" xml:space="preserve">
+    <value>تسویه‌شده</value>
+  </data>
+  <data name="Sync_StatusSkipped" xml:space="preserve">
+    <value>ردشده برای این نوبت</value>
+  </data>
+  <data name="Sync_Field_Aggregated" xml:space="preserve">
+    <value>جمع یک دوره</value>
+  </data>
+  <data name="Sync_Field_Archived" xml:space="preserve">
+    <value>بایگانی‌شده</value>
+  </data>
+  <data name="Sync_Field_AutoSuppressed" xml:space="preserve">
+    <value>ثبت خودکار این نوبت متوقف است</value>
+  </data>
+  <data name="Sync_Field_Direction" xml:space="preserve">
+    <value>جهت تغییر مانده</value>
+  </data>
+  <data name="Sync_Field_DueDate" xml:space="preserve">
+    <value>تاریخ سررسید</value>
+  </data>
+  <data name="Sync_Field_KnownBalance" xml:space="preserve">
+    <value>ماندهٔ آغازین مشخص است</value>
+  </data>
+  <data name="Sync_Field_Order" xml:space="preserve">
+    <value>ترتیب نمایش</value>
+  </data>
+  <data name="Sync_Field_OriginalCurrency" xml:space="preserve">
+    <value>ارز اصلی</value>
+  </data>
+  <data name="Sync_Field_OriginalDate" xml:space="preserve">
+    <value>تاریخ اصلی نوبت پلن</value>
+  </data>
+  <data name="Sync_Field_OriginalPurchase" xml:space="preserve">
+    <value>خرید اصلی</value>
+  </data>
+  <data name="Sync_Field_PaidAmount" xml:space="preserve">
+    <value>پرداخت‌های جزئی ثبت‌شده</value>
+  </data>
+  <data name="Sync_Field_Partial" xml:space="preserve">
+    <value>پرداخت جزئی</value>
+  </data>
+  <data name="Sync_Field_Plan" xml:space="preserve">
+    <value>پلن</value>
+  </data>
+  <data name="Sync_Field_Reconciled" xml:space="preserve">
+    <value>آخرین تاریخ تطبیق مانده</value>
+  </data>
+  <data name="Sync_Field_RepaymentDate" xml:space="preserve">
+    <value>تاریخ مورد انتظار بازپرداخت</value>
+  </data>
+  <data name="Sync_Field_Review" xml:space="preserve">
+    <value>وضعیت بررسی</value>
+  </data>
+  <data name="Sync_Field_Settlement" xml:space="preserve">
+    <value>پرداخت ثبت‌شده</value>
+  </data>
+  <data name="Sync_Field_Source" xml:space="preserve">
+    <value>روش ثبت</value>
+  </data>
+  <data name="Sync_Field_Status" xml:space="preserve">
+    <value>وضعیت</value>
+  </data>
+  <data name="Sync_Field_ToAmount" xml:space="preserve">
+    <value>مبلغ دریافتی</value>
+  </data>
+  <data name="Sync_KeepExisting" xml:space="preserve">
+    <value>حفظ رکورد موجود و کنارگذاشتن نسخهٔ تکراری من</value>
+  </data>
+  <data name="Sync_ReasonChanges" xml:space="preserve">
+    <value>هر دو دستگاه این اطلاعات را تغییر داده‌اند.</value>
+  </data>
+  <data name="Sync_ReasonRelated" xml:space="preserve">
+    <value>اطلاعات مرتبط نیز به بررسی نیاز دارد.</value>
+  </data>
+  <data name="Sync_ReasonSettlement" xml:space="preserve">
+    <value>برای این نوبت، پرداخت کامل دیگری ثبت شده است.</value>
+  </data>
+  <data name="Sync_ReasonStale" xml:space="preserve">
+    <value>نسخهٔ بررسی‌شده تغییر کرده است. پیش از انتخاب، مقدارهای تازه را بررسی کنید.</value>
+  </data>
+  <data name="Sync_Record" xml:space="preserve">
+    <value>رکورد</value>
+  </data>
+  <data name="Sync_RecordEntry" xml:space="preserve">
+    <value>تراکنش</value>
+  </data>
+  <data name="Sync_ReviewAbsent" xml:space="preserve">
+    <value>در سرویس ثبت نشده است</value>
+  </data>
+  <data name="Sync_ReviewDuplicateHint" xml:space="preserve">
+    <value>برای این نوبت فقط یک رکورد می‌ماند. رکورد موجود را نگه دارید و اگر اصلاح لازم است، پس از همگام‌سازی آن را ویرایش کنید.</value>
+  </data>
+  <data name="Sync_ReviewEmpty" xml:space="preserve">
+    <value>تعیین نشده</value>
+  </data>
+  <data name="Sync_ReviewIncomplete" xml:space="preserve">
+    <value>بخشی از اطلاعات تغییرکرده کامل قابل‌نمایش نیست. پیش از انتخاب، صفحه را تازه کنید یا اطلاعات را در صفحهٔ اصلی آن بررسی کنید.</value>
+  </data>
+  <data name="Sync_ReviewLocalChanged" xml:space="preserve">
+    <value>رکورد محلی پس از ارسال تغییر کرده است. بررسی را برای مقدارهای ذخیره‌شدهٔ فعلی از نو شروع کنید.</value>
+  </data>
+  <data name="Sync_ReviewRelated" xml:space="preserve">
+    <value>رکورد موجودِ مرتبط</value>
+  </data>
+  <data name="Sync_ReviewSubmitted" xml:space="preserve">
+    <value>نسخهٔ محلی ارسال‌شده</value>
+  </data>
+  <data name="Sync_ReviewUnavailable" xml:space="preserve">
+    <value>اطلاعات در دسترس نیست</value>
+  </data>
+  <data name="Sync_ReviewScrollHint" xml:space="preserve">
+    <value>برای خواندن کامل مقدار طولانی، آن را افقی پیمایش کنید.</value>
+  </data>
+  <data name="Sync_Field_Limit" xml:space="preserve">
+    <value>سقف دسته</value>
+  </data>
+  <data name="Sync_Field_Period" xml:space="preserve">
+    <value>دوره</value>
+  </data>
+  <data name="Sync_Field_PeriodStart" xml:space="preserve">
+    <value>آغاز دوره</value>
+  </data>
+  <data name="Sync_Field_Year" xml:space="preserve">
+    <value>سال در تقویم بودجه</value>
+  </data>
+  <data name="Sync_Field_Month" xml:space="preserve">
+    <value>ماه در تقویم بودجه</value>
+  </data>
+  <data name="Sync_AllBudgetAccounts" xml:space="preserve">
+    <value>همهٔ حساب‌های منظورشده در جمع کل با ارز این بودجه</value>
+  </data>
+  <data name="Sync_Field_ActiveUntil" xml:space="preserve">
+    <value>آخرین تاریخ اصلی متعلق به این پلن</value>
+  </data>
+  <data name="Sync_Field_PausedFrom" xml:space="preserve">
+    <value>توقف از تاریخ</value>
+  </data>
+  <data name="Sync_Field_PreviousPlan" xml:space="preserve">
+    <value>ادامهٔ پلن</value>
+  </data>
+  <data name="Sync_Field_AutoPostFrom" xml:space="preserve">
+    <value>آغاز ثبت خودکار</value>
+  </data>
+  <data name="Sync_Field_WeekendDays" xml:space="preserve">
+    <value>روزهای آخر هفته</value>
+  </data>
+  <data name="Sync_PlanActive" xml:space="preserve">
+    <value>فعال</value>
+  </data>
+  <data name="Sync_Field_HolidayRegion" xml:space="preserve">
+    <value>منطقهٔ تعطیلات</value>
+  </data>
+  <data name="Sync_Field_EndDate" xml:space="preserve">
+    <value>آخرین تاریخ تکرار</value>
+  </data>
+  <data name="Sync_DayRule_SpecificDay" xml:space="preserve">
+    <value>همان روز ماهِ تاریخ آغاز</value>
+  </data>
+  <data name="Sync_DayRule_LastDayOfMonth" xml:space="preserve">
+    <value>آخرین روز ماه</value>
+  </data>
+  <data name="Sync_DayRule_NthWeekday" xml:space="preserve">
+    <value>همان روز هفته و هفتهٔ ماهِ تاریخ آغاز</value>
+  </data>
+  <data name="Sync_DayRule_LastWeekday" xml:space="preserve">
+    <value>آخرین روز هفتهٔ متناظر در ماه</value>
+  </data>
+  <data name="Sync_Field_Basis" xml:space="preserve">
+    <value>بهای مبنا با ارز قیمت دارایی</value>
+  </data>
+  <data name="Sync_Field_HomePosition" xml:space="preserve">
+    <value>جایگاه در خانه</value>
+  </data>
+  <data name="Sync_Field_PausedAt" xml:space="preserve">
+    <value>زمان توقف (UTC)</value>
+  </data>
+  <data name="Sync_Field_CompletedAt" xml:space="preserve">
+    <value>زمان تکمیل (UTC)</value>
+  </data>
+  <data name="Sync_Field_AssumedPrice" xml:space="preserve">
+    <value>قیمت فرضی برای این برنامه</value>
+  </data>
+  <data name="Sync_InitializationRecover" xml:space="preserve">
+    <value>ادامهٔ بارگذاری اولیه روی این دستگاه</value>
+  </data>
+  <data name="Sync_InitializationConfirm" xml:space="preserve">
+    <value>بارگذاری اولیهٔ «{0}» با اطلاعات پروفایل محلی فعلی روی این دستگاه ادامه یابد؟ هنوز هیچ داده‌ای در این نسخهٔ سرویس منتشر نشده است. بارگذاری‌های قبلیِ ثبت‌نشده کنار گذاشته می‌شوند؛ اطلاعات دستگاه‌های دیگر تغییر نمی‌کند. این کار اطلاعات دستگاه گم‌شده را بازیابی نمی‌کند؛ برای آن از بکاپ قابل‌انتقال Zanance استفاده کنید.</value>
+  </data>
+  <data name="Sync_FirstRunOpen" xml:space="preserve">
+    <value>دریافت پروفایل همگام‌شده</value>
+  </data>
+  <data name="Sync_FirstRunFinish" xml:space="preserve">
+    <value>شروع با همین حساب‌ها</value>
+  </data>
+  <data name="Sync_FirstRunBack" xml:space="preserve">
+    <value>بازگشت به راه‌اندازی</value>
+  </data>
+  <data name="Sync_FirstRunConfirm" xml:space="preserve">
+    <value>راه‌اندازی با حساب‌های موجود در این پروفایل تمام شود؟ حساب اضافه‌ای ساخته نمی‌شود و ترجیحات ذخیره‌شدهٔ پروفایل حفظ می‌شوند.</value>
+  </data>
+  <data name="Sync_FirstRunNotReady" xml:space="preserve">
+    <value>برای شروع با این پروفایل، همگام‌سازی باید کامل و بازبینی‌ها حل شده باشند و دست‌کم یک حساب وجود داشته باشد.</value>
+  </data>
+  <data name="Sync_FirstRunConnectConfirm" xml:space="preserve">
+    <value>پروفایل «{0}» در این پروفایل محلی خالی دریافت شود؟ ترجیحات ذخیره‌شدهٔ آن جایگزین پیش‌فرض‌های راه‌اندازی خالی می‌شوند. اگر برگردید، پیش‌نویس ذخیره‌نشدهٔ ویزارد همچنان در دسترس است. حساب مالی اضافه‌ای ساخته نمی‌شود.</value>
+  </data>
+  <data name="Sync_LinkedGroup" xml:space="preserve">
+    <value>گروه مالی مرتبط</value>
+  </data>
+  <data name="Sync_GroupReview" xml:space="preserve">
+    <value>رویداد، پرداخت و کارمزدها را با هم بررسی کنید. انتخاب شما برای کل گروه مرتبط اعمال می‌شود.</value>
+  </data>
+  <data name="Sync_GroupMember" xml:space="preserve">
+    <value>عضو این گروه</value>
+  </data>
+  <data name="Sync_KeepLocalGroup" xml:space="preserve">
+    <value>انتخاب کل گروه محلی</value>
+  </data>
+  <data name="Sync_KeepRemoteGroup" xml:space="preserve">
+    <value>انتخاب کل گروه سرویس</value>
+  </data>
+  <data name="Sync_KeepLocalGroupConfirm" xml:space="preserve">
+    <value>کل گروه محلی بررسی‌شده، شامل رویداد، پرداخت، کارمزدها و حذف‌های نمایش‌داده‌شده انتخاب شود؟ یک انتخاب برای همهٔ اعضا اعمال می‌شود. داده‌های مالی فقط هنگام اعمال ایمن کل دور تغییر می‌کنند.</value>
+  </data>
+  <data name="Sync_KeepRemoteGroupConfirm" xml:space="preserve">
+    <value>کل گروه سرویس بررسی‌شده، شامل رویداد، پرداخت، کارمزدها و حذف‌های نمایش‌داده‌شده انتخاب شود؟ گروه محلی متعارض فقط هنگام اعمال ایمن کل دور جایگزین می‌شود. تغییرات تازه به بررسی دوباره نیاز دارند.</value>
+  </data>
+  <data name="Sync_Field_DefaultCategory" xml:space="preserve">
+    <value>دسته‌بندی پیش‌فرض</value>
+  </data>
+  <data name="Sync_Field_Essential" xml:space="preserve">
+    <value>هزینهٔ ضروری</value>
+  </data>
+  <data name="Sync_Field_HomeBudgetCurrency" xml:space="preserve">
+    <value>ارز بودجهٔ خانه</value>
+  </data>
+  <data name="Sync_Field_FortnightStart" xml:space="preserve">
+    <value>مبدأ دورهٔ دوهفته‌ای</value>
+  </data>
+  <data name="Sync_Field_EstimatePeriod" xml:space="preserve">
+    <value>دورهٔ برآورد</value>
+  </data>
+  <data name="Sync_Field_BaseDate" xml:space="preserve">
+    <value>شروع پیش‌بینی</value>
+  </data>
+  <data name="Sync_Field_Minimum" xml:space="preserve">
+    <value>کمترین موجودی پیش‌بینی‌شده</value>
+  </data>
+  <data name="Sync_Field_MinimumDate" xml:space="preserve">
+    <value>تاریخ کمترین موجودی</value>
+  </data>
+  <data name="Sync_Field_UnknownCount" xml:space="preserve">
+    <value>موارد با مبلغ نامشخص</value>
+  </data>
+  <data name="Sync_Field_AppVersion" xml:space="preserve">
+    <value>نسخهٔ برنامه هنگام ذخیره</value>
+  </data>
+  <data name="Sync_AllKinds" xml:space="preserve">
+    <value>همهٔ انواع تراکنش</value>
+  </data>
+  <data name="Sync_Shown" xml:space="preserve">
+    <value>نمایان</value>
+  </data>
+  <data name="Sync_Hidden" xml:space="preserve">
+    <value>پنهان</value>
+  </data>
+  <data name="Sync_ReviewFinished" xml:space="preserve">
+    <value>بازبینی تکمیل شده</value>
+  </data>
+  <data name="Sync_ReviewInProgress" xml:space="preserve">
+    <value>بازبینی در حال انجام</value>
+  </data>
+  <data name="Sync_AttachmentFileName" xml:space="preserve">
+    <value>نام فایل</value>
+  </data>
+  <data name="Sync_AttachmentType" xml:space="preserve">
+    <value>نوع فایل</value>
+  </data>
+  <data name="Sync_AttachmentContent" xml:space="preserve">
+    <value>محتوای فایل</value>
+  </data>
+  <data name="Sync_AttachmentBytes" xml:space="preserve">
+    <value>حجم: {0} بایت</value>
+  </data>
+  <data name="Sync_AttachmentPage" xml:space="preserve">
+    <value>صفحهٔ {0} از {1}</value>
+  </data>
+  <data name="Sync_AttachmentPrevious" xml:space="preserve">
+    <value>صفحهٔ قبل</value>
+  </data>
+  <data name="Sync_AttachmentNext" xml:space="preserve">
+    <value>صفحهٔ بعد</value>
+  </data>
+  <data name="Sync_AttachmentClose" xml:space="preserve">
+    <value>بستن پیش‌نمایش</value>
+  </data>
+  <data name="Sync_AttachmentPreviewLocal" xml:space="preserve">
+    <value>پیش‌نمایش فایل محلی</value>
+  </data>
+  <data name="Sync_AttachmentPreviewRemote" xml:space="preserve">
+    <value>پیش‌نمایش فایل سرویس</value>
+  </data>
+  <data name="Sync_AttachmentReviewHint" xml:space="preserve">
+    <value>می‌توانید پیش از انتخاب نسخهٔ کامل فایل، تصویر یا صفحه‌های PDF را ببینید. فایل‌های قفل‌شده یا پشتیبانی‌نشده هم با انتخاب صریح قابل استفاده‌اند. پیش‌نمایش، پیوست یا مبلغ تراکنش را تغییر نمی‌دهد.</value>
+  </data>
+  <data name="Sync_AttachmentZoomIn" xml:space="preserve">
+    <value>بزرگ‌تر</value>
+  </data>
+  <data name="Sync_AttachmentZoomOut" xml:space="preserve">
+    <value>کوچک‌تر</value>
+  </data>
 </root>

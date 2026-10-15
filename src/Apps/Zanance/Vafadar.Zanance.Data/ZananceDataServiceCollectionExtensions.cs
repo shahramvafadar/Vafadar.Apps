@@ -68,6 +68,8 @@ public static class ZananceDataServiceCollectionExtensions
             .AddSingleton<GoalStore>()
             .AddSingleton<HoldingStore>()
             .AddSingleton<AutoPostProcessor>()
+            .AddSingleton<Sync.PersonalSyncStore>()
+            .AddSingleton<Sync.PersonalSyncCoordinator>()
             .AddSingleton<IBackupSummaryProvider, ZananceBackupSummary>();
     }
 }

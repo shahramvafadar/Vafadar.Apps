@@ -69,6 +69,9 @@ internal sealed class FixedTime : TimeProvider
 internal sealed class FlowPlatform : IAppInteraction, IAppFlowHost
 {
     internal int Completed, Restored, ProfileOpened;
+    internal int SyncedRestoreOpened;
+    public bool PersonalSyncAvailable { get; set; }
+    public Task RestoreSyncedOnboardingAsync() { SyncedRestoreOpened++; return Task.CompletedTask; }
     internal readonly List<Exception> Failures = [];
     internal readonly List<(string Title, string Message)> Alerts = [];
     internal readonly Queue<bool> Confirmations = [];

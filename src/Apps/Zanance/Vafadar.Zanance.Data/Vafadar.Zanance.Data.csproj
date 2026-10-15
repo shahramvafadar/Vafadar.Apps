@@ -11,6 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Migrations/PersonalSyncJournalUp.sql" LogicalName="Vafadar.Zanance.Sync.JournalUp.v1.sql" />
+    <EmbeddedResource Include="Migrations/PersonalSyncJournalDown.sql" LogicalName="Vafadar.Zanance.Sync.JournalDown.v1.sql" />
     <!-- Design-time only (dotnet ef migrations ...); not shipped with the app. -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" PrivateAssets="all" />
     <!-- Native design-time context execution only; this bundle must never flow to application hosts. -->

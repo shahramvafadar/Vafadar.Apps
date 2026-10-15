@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\Vafadar.Core\Vafadar.Core.csproj" />
+    <EmbeddedResource Include="Sync/schema-v1.json" LogicalName="Vafadar.Zanance.Sync.schema-v1.json" />
   </ItemGroup>
 
 </Project>

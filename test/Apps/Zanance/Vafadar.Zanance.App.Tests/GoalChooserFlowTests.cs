@@ -55,7 +55,7 @@ public sealed class GoalChooserFlowTests
             command.CommandText = "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name";
             using var reader = await command.ExecuteReaderAsync(Ct); while (await reader.ReadAsync(Ct)) tables.Add(reader.GetString(0));
         }
-        Assert.Equal(25, tables.Count); var all = new SortedDictionary<string, List<string>>();
+        Assert.Equal(33, tables.Count); var all = new SortedDictionary<string, List<string>>();
         foreach (var table in tables.Where(table => choices || table != "ResourceSelections"))
         {
             using var command = connection.CreateCommand(); command.CommandText = "SELECT * FROM \"" + table + "\"";

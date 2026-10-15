@@ -104,6 +104,12 @@
   <PropertyGroup>
     <ZananceTargetPlatform>$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)'))</ZananceTargetPlatform>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(ZanancePersonalSyncEnabled)' == 'true'">
+    <DefineConstants>$(DefineConstants);PERSONAL_SYNC</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(ZananceTargetPlatform)' == 'android' and '$(ZanancePersonalSyncEnabled)' == 'true'">
+    <AndroidManifestOverlay Include="Platforms\Android\PersonalSyncManifest.xml" />
+  </ItemGroup>
 
   <PropertyGroup Condition="'$(MicrosoftEntraClientId)' != ''">
     <DefineConstants>$(DefineConstants);CLOUD_MICROSOFT</DefineConstants>
@@ -158,7 +164,7 @@
     </ItemGroup>
   </Target>
 
-  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(Configuration)' == 'Release' and '$(MicrosoftEntraClientId)$(GoogleOAuthClientIdAndroid)' == ''">
+  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(Configuration)' == 'Release' and '$(MicrosoftEntraClientId)$(GoogleOAuthClientIdAndroid)' == '' and '$(ZanancePersonalSyncEnabled)' != 'true'">
     <AndroidManifestOverlay Include="Platforms\Android\ReleaseManifest.xml" />
   </ItemGroup>
 

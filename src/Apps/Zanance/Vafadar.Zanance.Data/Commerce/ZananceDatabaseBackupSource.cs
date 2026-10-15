@@ -14,11 +14,11 @@ internal sealed class ZananceDatabaseBackupSource(IDbContextFactory<ZananceDbCon
 
     /// <inheritdoc />
     public Task WriteAsync(Stream destination, CancellationToken cancellationToken) =>
-        new SqliteDatabaseBackupSource<ZananceDbContext>(contextFactory).WriteAsync(destination, AccessCheck(), cancellationToken);
+        new SqliteDatabaseBackupSource<ZananceDbContext>(contextFactory, new Sync.PersonalSyncPortablePolicy()).WriteAsync(destination, AccessCheck(), cancellationToken);
 
     /// <inheritdoc />
     public Task RestoreAsync(Stream source, CancellationToken cancellationToken) =>
-        new SqliteDatabaseBackupSource<ZananceDbContext>(contextFactory).RestoreAsync(source, AccessCheck(), cancellationToken);
+        new SqliteDatabaseBackupSource<ZananceDbContext>(contextFactory, new Sync.PersonalSyncPortablePolicy()).RestoreAsync(source, AccessCheck(), cancellationToken);
 
     /// <summary>Each backup operation captures its own file before awaits and rechecks before native copying.</summary>
     private Action<ZananceDbContext> AccessCheck()

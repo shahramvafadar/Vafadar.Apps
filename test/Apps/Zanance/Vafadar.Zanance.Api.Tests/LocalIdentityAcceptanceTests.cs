@@ -52,8 +52,10 @@ public sealed class LocalIdentityAcceptanceTests
         }
         var runtime = new NpgsqlConnectionStringBuilder(connection) { Username = "zanance_runtime" }.ConnectionString;
         await using var host = new IdentityHost(runtime, root, clock);
-        using var client = host.CreateClient();
+        using var client = host.CreateSecureClient();
         Assert.Equal(HttpStatusCode.OK, (await client.GetAsync("/health/ready", cancellationToken: TestContext.Current.CancellationToken)).StatusCode);
+        using (var insecure = host.CreateClient(new WebApplicationFactoryClientOptions { BaseAddress = new Uri("http://localhost") }))
+            Assert.Equal(HttpStatusCode.UpgradeRequired, (await insecure.GetAsync("/objects/", TestContext.Current.CancellationToken)).StatusCode);
         Assert.Equal(HttpStatusCode.Unauthorized, (await client.GetAsync("/objects/", cancellationToken: TestContext.Current.CancellationToken)).StatusCode);
         var first = await EnrollAsync(client, host, "first@example.invalid");
         var second = await EnrollAsync(client, host, "second@example.invalid");
@@ -75,7 +77,7 @@ public sealed class LocalIdentityAcceptanceTests
         var objectId = (await upload.Content.ReadFromJsonAsync<JsonElement>(cancellationToken: TestContext.Current.CancellationToken)).GetProperty("id").GetGuid();
         Assert.Equal(content, await client.GetByteArrayAsync($"/objects/{objectId}", cancellationToken: TestContext.Current.CancellationToken));
         Assert.DoesNotContain("Fictional", Encoding.UTF8.GetString(await File.ReadAllBytesAsync(Path.Combine(root, "objects", objectId.ToString("N")), cancellationToken: TestContext.Current.CancellationToken)));
-        using var stranger = host.CreateClient();
+        using var stranger = host.CreateSecureClient();
         var other = await LoginAsync(stranger, "second@example.invalid");
         stranger.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", other.GetProperty("accessToken").GetString());
         Assert.Equal(HttpStatusCode.NotFound, (await stranger.GetAsync($"/objects/{objectId}", cancellationToken: TestContext.Current.CancellationToken)).StatusCode);
@@ -115,7 +117,7 @@ public sealed class LocalIdentityAcceptanceTests
         Assert.Equal(HttpStatusCode.TooManyRequests, (await client.PostAsJsonAsync("/identity/recover", new IdentityInput("missing@example.invalid", ""), cancellationToken: TestContext.Current.CancellationToken)).StatusCode);
         // A second host shares only the real DB/root/clock: its counter must not reset on process composition.
         await using var reopened = new IdentityHost(runtime, root, clock);
-        using var reopenedClient = reopened.CreateClient();
+        using var reopenedClient = reopened.CreateSecureClient();
         Assert.Equal(HttpStatusCode.TooManyRequests, (await reopenedClient.PostAsJsonAsync("/identity/recover", new IdentityInput("missing@example.invalid", ""), cancellationToken: TestContext.Current.CancellationToken)).StatusCode);
         Assert.NotEqual(first, second);
 
@@ -146,7 +148,7 @@ public sealed class LocalIdentityAcceptanceTests
         var payload = Encoding.UTF8.GetBytes("Restore fixture bytes: private and independently owned.");
         await using (var host = new IdentityHost(connection, source, clock))
         {
-            using var client = host.CreateClient();
+            using var client = host.CreateSecureClient();
             await EnrollAsync(client, host, "restore@example.invalid");
             active = await LoginAsync(client, "restore@example.invalid");
             revoked = await LoginAsync(client, "restore@example.invalid");
@@ -182,7 +184,7 @@ public sealed class LocalIdentityAcceptanceTests
         var restoredConnection = new NpgsqlConnectionStringBuilder(connection) { Database = destinationDb }.ConnectionString;
         await using (var recovered = new IdentityHost(restoredConnection, restored, clock))
         {
-            using var client = recovered.CreateClient();
+            using var client = recovered.CreateSecureClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", active.GetProperty("accessToken").GetString());
             Assert.Equal(payload, await client.GetByteArrayAsync($"/objects/{objectId}", ct));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", revoked.GetProperty("accessToken").GetString());
@@ -245,7 +247,7 @@ public sealed class LocalIdentityAcceptanceTests
         var root = Path.Combine(Path.GetTempPath(), "zanance-identity-capacity-" + Guid.NewGuid().ToString("N"));
         var clock = new FakeTimeProvider(TimeProvider.System.GetUtcNow());
         await using var host = new IdentityHost(connection, root, clock, mailbox: true);
-        using var client = host.CreateClient();
+        using var client = host.CreateSecureClient();
         Assert.Equal(HttpStatusCode.Accepted, (await client.PostAsJsonAsync("/identity/register", new IdentityInput("expired@example.invalid", "Fictional-Password9!"), ct)).StatusCode);
         var expired = await ReadChallengeAsync(host, "expired@example.invalid", "confirm");
         clock.Advance(TimeSpan.FromMinutes(16));
@@ -318,7 +320,7 @@ public sealed class LocalIdentityAcceptanceTests
         JsonElement token;
         await using (var source = new IdentityHost(connection, root, clock))
         {
-            using var client = source.CreateClient();
+            using var client = source.CreateSecureClient();
             await EnrollAsync(client, source, "key-loss@example.invalid");
             token = await LoginAsync(client, "key-loss@example.invalid");
         }
@@ -326,13 +328,13 @@ public sealed class LocalIdentityAcceptanceTests
         var keys = Path.Combine(root, "keys"); var retained = Path.Combine(root, "keys-retained-fixture");
         Directory.Move(keys, retained);
         await using (var unavailable = new IdentityHost(connection, root, clock))
-            Assert.Throws<InvalidOperationException>(() => unavailable.CreateClient());
+            Assert.Throws<InvalidOperationException>(() => unavailable.CreateSecureClient());
         Assert.False(Directory.Exists(keys));
         Assert.Equal(authority, await File.ReadAllBytesAsync(Path.Combine(root, "installation.protected"), ct));
         Directory.Move(retained, keys);
         await using (var recovered = new IdentityHost(connection, root, clock))
         {
-            using var client = recovered.CreateClient();
+            using var client = recovered.CreateSecureClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.GetProperty("accessToken").GetString());
             Assert.Equal(HttpStatusCode.OK, (await client.GetAsync("/sessions", ct)).StatusCode);
         }
@@ -368,6 +370,13 @@ public sealed class LocalIdentityAcceptanceTests
 
     private sealed class IdentityHost(string connection, string root, TimeProvider clock, bool mailbox = false) : WebApplicationFactory<Program>
     {
+        /// <summary>Uses an HTTPS request scheme to exercise the service's original transport guard.</summary>
+        internal HttpClient CreateSecureClient() => CreateClient(new WebApplicationFactoryClientOptions
+        {
+            // TestServer has no socket or TLS handshake; actual pinned TLS is qualified separately.
+            BaseAddress = new Uri("https://localhost"),
+        });
+
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.UseEnvironment("Integration");

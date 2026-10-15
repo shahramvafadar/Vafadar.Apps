@@ -1,8 +1,11 @@
 # Zanance local identity service
 
-Optional ASP.NET Core identity, durable device grants and private opaque objects. This is a local
-foundation for ZCR-ID-01, not financial sync, sharing, billing, public OAuth or a hosted product.
-Free/local Plus and the mobile app remain independent; the app does not connect to this service.
+Optional ASP.NET Core identity, durable device grants and private storage. D-272 delivered the local
+identity foundation. The current unpublished batch adds owner-approved local personal financial
+sync; its wire protocol has real two-client evidence, but the complete application feature is not
+delivered. See [current scope and evidence](../docs/quality/local-personal-sync.md). Household sharing,
+billing, public OAuth and hosted deployment remain separate gates. Default offline builds remain
+independent; only the explicit personal-sync edition offers the local service connection.
 
 ## Run the independent local service
 
@@ -14,7 +17,8 @@ On Windows with the already installed `postgres:18.4-alpine` Docker image:
 ```
 
 The script never pulls an image. It owns `zanance-backend-local`, the separately named volume,
-`artifacts/zanance-identity/local` and loopback ports 55474/5047. PostgreSQL trust authentication is
+`artifacts/zanance-identity/local` and loopback ports 55474/5047/5048. The HTTP port is content-free
+health only; identity and financial requests require the local HTTPS port. PostgreSQL trust authentication is
 only for this fictional isolated local environment. The migration operator is separate from the
 runtime role, which cannot create tables. Nothing uses another project's containers or credentials.
 The web process is hidden and uses the build-restored self-contained security runtime from
@@ -32,6 +36,19 @@ The local service binds 127.0.0.1, does not configure proxy headers and sends no
 - GET `/sessions`; DELETE `/sessions/{id}`; POST `/sessions/revoke-all`.
 - GET/POST `/objects/`; GET/DELETE `/objects/{id}`.
 - GET `/health/live` and `/health/ready`, without identity or financial content.
+- Personal `/sync/identity`, `/sync/current-device`, `/sync/devices`, `/sync/profiles`, immutable staged
+  rounds/feed and content-addressed private attachments, bound to the actual owner/session/device.
+- POST `/sync/profiles/{id}/initialization` explicitly transfers an unpublished, cursor-zero
+  initialization after confirmation; it cannot reset published financial data. It abandons old
+  staging authority, not source records on another device, and does not recover a lost source.
+
+The local HTTPS certificate is generated/reopened from its protected service file; its public
+fingerprint is reviewed explicitly, with no system trust installation. Windows Schannel cannot use
+an ephemeral imported private key: Windows uses `UserKeySet` without `PersistKeySet`, allowing the
+runtime-owned import container to be deleted on disposal. The authoritative PFX stays wrapped by
+Data Protection, never written as plaintext. Other hosts retain `EphemeralKeySet`. The same protected
+certificate/key ring reopened successfully in the Windows real-socket fixture; this is not Linux,
+Android, external certificate provisioning or hosted acceptance.
 
 Registration/recovery respond uniformly. Confirm/recovery tokens never appear in a URL, response
 or log. They use Identity's 15-minute Data Protection provider and a transactional one-use journal.
@@ -102,6 +119,47 @@ server's 10.0.13 runtime; generation succeeded. Do not silently update the exist
 
 ## Operations and incident handling
 
+### Personal synchronization staging
+
+These local technical bounds are independent of Free/Plus/Pro pricing, shared-space quotas and
+subscription-expiry retention. Configure finite values before starting a worker; identical workers
+must use the same policy. Defaults and accepted ranges:
+
+| Configuration key under `Service:Sync` | Default | Accepted range |
+|---|---:|---:|
+| `PendingRoundsPerOwner` | 64 | 1..1,024 |
+| `StagedBytesPerOwner` | 536,870,912 | 1,024..68,719,476,736 |
+| `BlobBytesPerOwner` | 1,073,741,824 | 1,024..68,719,476,736 |
+
+Owner byte totals span actual owned spaces under the same PostgreSQL owner lock. Staging counts
+original serialized proposal bytes in active uncommitted rounds, not just one round. A space still
+has its 16-round/profile-byte bounds. Attachment declarations require the original 1..5-MiB file
+bound and reserve their declared lengths, including retained historical blobs. These are logical
+payload bounds, not a claim about total filesystem/PostgreSQL/index/encryption overhead. Exact
+operation/part/blob retries are checked before capacity refusal and never reserve the bytes twice.
+Capacity failure leaves original local financial edits queued. No commercial limit is activated.
+
+Explicitly abandoned operations retain their nonce tombstone and release only unpublished parts.
+Revocation performs that retirement atomically under the original owner transaction. The worker
+rechecks expired/missing/revoked sessions after taking the same owner lock, marks their devices
+revoked and retires only uncommitted operations. A session renewed while that worker waits remains
+authorized with its pending parts intact. Committed acknowledgements, current rows, event history,
+device records and abandoned nonces are retained; no financial-history expiry is invented here.
+
+The private piece collector inspects rotating batches of at most 100 candidates. It unlinks only
+regular server-GUID-named files older than one day without any committed piece manifest. Fresh,
+manifested, unknown-name and redirected files remain. Publication and collection share a separate
+transactional PostgreSQL storage gate across workers: the file writer retains it until its original
+manifest commit/rollback, so an uncommitted publication cannot be mistaken for an orphan. The
+collector never reads/decrypts file contents or deletes a committed attachment/history blob.
+The grace period does not expire active staging. Keep snapshots quiesced as described above.
+
+The real PostgreSQL/pinned-TLS operations scenario in `Vafadar.Zanance.Sync.Tests` covers aggregate
+capacity/replay, abandonment, original readable pieces, actual in-flight commit/rollback, a waiting
+worker's renewed-session recheck, expiry and explicit revocation. See
+[local personal-sync qualification](../docs/quality/local-personal-sync.md) for retained evidence
+and remaining complete-batch gates.
+
 Stop before replacing the binary or taking a consistent snapshot. Check readiness after migration
 and startup; do not route requests while schema/key/storage access fails. Preserve original private
 bytes and snapshots after any recovery error. Revoke affected device grants, then investigate only
@@ -113,3 +171,19 @@ Primary component references:
 [Identity API](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-10.0),
 [Data Protection](https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/configuration/overview?view=aspnetcore-10.0),
 [Npgsql 10](https://www.npgsql.org/efcore/release-notes/10.0.html).
+
+## Linux synchronization qualification (unpublished D-292)
+
+The backend workflow includes independent protocol, planning and operations jobs using an isolated PostgreSQL
+fixture per job. Publish the standalone Sync.Tests project for linux-x64 with patched runtime 10.0.13, then run
+`bash eng/sync/Run-ServiceQualification.sh protocol` (or `planning` / `operations`). Required environment variables:
+`ZANANCE_SYNC_TEST_DB`, `ZANANCE_SYNC_TEST_ROOT`, `ZANANCE_SYNC_TEST_RUNTIME`, `ZANANCE_SYNC_TEST_PRIVATE`.
+Roots must be independently owned and fresh; the script refuses automatic retries against an existing root.
+Protocol executes an initial case and a separate OS process reopening its original persisted protection/finance.
+Planning and operations create their own additive schema/marker, never truncate retained fixture data.
+
+The test-only wrapping certificate/private key are generated in a private 0700 directory with 0600 files, supplied
+through the original explicit certificate configuration. No ephemeral Data Protection fallback is used for these
+Linux persistence checks. Upload bounded XML results only, never private files, key rings, databases or payloads.
+Local Linux non-root qualification passes all four cases; hosted workflow success and public deployment are still
+unverified. See the application qualification document for exact logs, preserved failures and current final gates.

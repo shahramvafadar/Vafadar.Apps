@@ -10,6 +10,25 @@ namespace Vafadar.Zanance.App.Tests;
 /// <summary>Real onboarding commands and SQLite writes with explicit window-transition ports.</summary>
 public sealed class OnboardingTests
 {
+    [Fact]
+    public async Task Optional_personal_sync_entry_preserves_the_unsaved_wizard_and_creates_no_account()
+    {
+        using var f = new FlowFixture(); f.Platform.PersonalSyncAvailable = true; var vm = Create(f);
+        vm.ReportCurrency = "USD"; vm.ModeIndex = 1; vm.Account.Name = "Fictitious unsaved wizard draft";
+        await vm.RestoreSyncedProfileCommand.ExecuteAsync(null);
+        Assert.Equal(1, f.Platform.SyncedRestoreOpened); Assert.Equal("USD", vm.ReportCurrency); Assert.Equal(1, vm.ModeIndex);
+        Assert.Equal("Fictitious unsaved wizard draft", vm.Account.Name);
+        Assert.Empty(await f.Store.GetAccountsAsync(cancellationToken: TestContext.Current.CancellationToken));
+        Assert.False((await f.Store.GetSettingsAsync(TestContext.Current.CancellationToken)).OnboardingCompleted);
+    }
+
+    [Fact]
+    public async Task Offline_edition_cannot_open_the_optional_personal_sync_first_run_path()
+    {
+        using var f = new FlowFixture(); var vm = Create(f); Assert.False(vm.PersonalSyncAvailable);
+        await vm.RestoreSyncedProfileCommand.ExecuteAsync(null); Assert.Equal(0, f.Platform.SyncedRestoreOpened);
+        Assert.Empty(await f.Store.GetAccountsAsync(cancellationToken: TestContext.Current.CancellationToken));
+    }
     [Fact, Trait("AT", "AT-80")]
     public async Task Back_and_next_keep_the_account_draft_without_writing_before_finish()
     {

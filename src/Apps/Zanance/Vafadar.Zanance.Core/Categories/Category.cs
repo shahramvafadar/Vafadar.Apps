@@ -31,6 +31,12 @@ public enum SpendingType
 /// </summary>
 public sealed class Category : Entity, IAuditableEntity
 {
+    /// <summary>Creates a new local category.</summary>
+    public Category() { }
+
+    /// <summary>Projects a retained category identity for original domain validation.</summary>
+    public Category(Guid id) : base(id) { }
+
     /// <summary>Gets or sets the kind.</summary>
     public CategoryKind Kind { get; set; }
 

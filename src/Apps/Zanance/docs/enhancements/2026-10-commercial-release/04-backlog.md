@@ -39,7 +39,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-12 | Owner-requested receipt total detection and review (D-64) | Maintenance | P1 | M | Done (local; device/corpus gate remains QA-05) | owner request 2026-10-08 |
 | ZCR-LOC-11 | Owner-requested backup, onboarding and About corrections (D-62) | 2 | P2 | S | Done | owner approval 2026-10-08 |
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Done (D-268 browser/account copy and six-language drafts; real OAuth/publication remain open) | D-69 continuous delivery |
-| ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | Proposed | sample files |
+| ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | Approved research in progress: Germany first, then USA/target markets; presets need actual format fixtures | original export specifications/samples |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
 | ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | Blocked (owner runs) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
@@ -47,7 +47,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
 | ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-64 local evidence verified; device/corpus pending) | sample receipts |
 | ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-283 coherent protected Home; D-278/280 protected read/search/save; D-284/285/286 loaded Windows; D-291 original Release/AOT Android loaded reference/tenfold Home and full preservation verified; tenfold latency, phone/low-memory/cold/ANR/iOS acceptance remains) | – |
-| ZCR-QA-07 | Platform parity Android/iOS/Windows (notifications, widget, file picker, lock, share, licences) | 2 | P2 | M | Blocked (iOS: Mac) | – |
+| ZCR-QA-07 | Android/iOS parity (notifications, widget, file picker, lock, share, licences); existing Windows development checks | 2 | P2 | M | Mac readiness owner-reported; verification and iOS runs pending in that environment. Windows commercial delivery is outside current scope | platform access/signing |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | In progress (D-174 widget and D-175 contextual date names/drafts verified locally; spoken TalkBack and remaining screen/platform acceptance open) | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
 | ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; D-96 complete account type/status descriptions; D-97 complete debt entry action; D-98 single readable modal headers; D-99 visible complete plan validation; D-100 complete transaction-field feedback; D-101 retained visible existing transfer fees in Simple; D-102 complete settlement fields/action; D-103 complete occurrence actions/field feedback; D-107 complete growing native selected/popup picker captions; D-108 complete report-scope captions/Clear targets and reachable result viewport locally delivered; other controls and platform acceptance open) | – |
@@ -57,26 +57,26 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-ENT-03 | Downgrade flow: choose active items, read-only rest | 3 | P1 | M | Implemented locally (D-173 bounded review closed; actual shared-server lifecycle and native release acceptance remain) | ENT-02 |
 | ZCR-ENT-04 | Plan screen, limit messages that keep the form, "continue with Free" | 3/6 | P1 | M | In progress (local comparison, readiness/reasons and retained outcomes delivered; remaining operation feedback plus verified billing/provider UI open) | ENT-02, translations |
 | ZCR-ENT-05 | Existing users and test builds: migration to plans (no limits before approval) | 3 | P1 | S | Current test-build/upgrade policy verified (D-277); customer activation/announcement remain owner gates | OD-03 |
-| ZCR-BIL-01 | Store adapters (Play Billing, StoreKit 2; Windows decision) and catalog | 6 | P1 | L | Proposed | ENT-01, OD-08 |
+| ZCR-BIL-01 | Play Billing/StoreKit 2 catalog and identity-bound future-web prerequisites | 6 | P1 | L | Approved Android/iOS scope; Windows commercial delivery and live web checkout excluded | ENT-01, OD-08 approved |
 | ZCR-BIL-02 | Verification service, notifications, idempotency, lifecycle states | 6 | P1 | L | Proposed | BIL-01, ID-01 |
 | ZCR-BIL-03 | Secure entitlement cache, offline window, clock changes | 6 | P1 | M | Proposed | BIL-02 |
 | ZCR-BIL-04 | Plus Lifetime, Lifetime-owner Pro discount, campaigns, trial | 6 | P1 | M | Proposed | BIL-02, OD-06, OD-07 |
 | ZCR-BIL-05 | Sandbox test matrix; production activation (owner only) | 6 | P1 | M | Proposed | BIL-01..04 |
-| ZCR-ID-01 | Optional identity, backend foundation, operations | 3 | P1 | L | Local foundation delivered (D-272 actual service/PostgreSQL/private restore; hosted/sender/mobile gates remain) | OD-02 |
-| ZCR-SYNC-01 | Change log, outbox, versions, tombstones | 4 | P1 | L | Approved for complete local personal delivery (owner 2026-10-15); not implemented | ID-01 |
-| ZCR-SYNC-02 | Conflicts, idempotent posting, restore into a synced profile | 4 | P1 | L | Approved for complete local personal delivery (owner 2026-10-15); not implemented | SYNC-01 |
-| ZCR-SYNC-03 | Sync status UI and device management | 4 | P2 | M | Approved for complete local personal delivery (owner 2026-10-15); not implemented | SYNC-01 |
-| ZCR-SHR-01 | Shared space, invitations, roles, server-side authorization | 5 | P1 | L | Proposed | SYNC-02 |
-| ZCR-SHR-02 | Cost sharing between people (F2-SHARE-05), household totals | 5 | P2 | M | Proposed | SHR-01 |
-| ZCR-SHR-03 | Audit trail, revocation, ownership transfer, end of subscription | 5 | P1 | M | Proposed | SHR-01, OD-05 |
-| ZCR-SHR-04 | End-to-end encryption decision and, if chosen, implementation | 5 | P2 | L | Proposed | OD-09 |
-| ZCR-TAX-01 | Tax research: country, year, scope, expert, official examples | 0→7 | P1 | M | Proposed | OD-01 |
-| ZCR-TAX-02 | Level 1: data and document export for an accountant (Plus) | 7 | P1 | M | Proposed | TAX-01 |
+| ZCR-ID-01 | Optional identity, backend foundation, operations | 3 | P1 | L | Local foundation delivered; current-machine Docker/vafadar.pro deployment now approved, not installed/exposed yet | OD-02 approved; deployment/restore/TLS gates |
+| ZCR-SYNC-01 | Change log, outbox, versions, tombstones | 4 | P1 | L | Implemented and locally qualified D-292: original service/protected Windows/Android HTTP, durable staging, complete graph and native UI pass; hosted CI separate | ID-01 |
+| ZCR-SYNC-02 | Conflicts, idempotent posting, restore into a synced profile | 4 | P1 | L | Implemented and locally qualified D-292: explicit complete conflicts/groups/attachments, idempotency and safe restore pass; external platform gates separate | SYNC-01 |
+| ZCR-SYNC-03 | Sync status UI and device management | 4 | P2 | M | Implemented and locally qualified D-292: original UI/device revocation and 36 Windows contexts plus retained Android native evidence; public hosting follows | SYNC-01 |
+| ZCR-SHR-01 | Shared space, invitations, roles, server-side authorization | 5 | P1 | L | Approved for complete local delivery after personal sync, with E2EE from the start | SYNC-02, SHR-04 |
+| ZCR-SHR-02 | Cost sharing between people (F2-SHARE-05), household totals | 5 | P2 | M | Approved local scope; not implemented | SHR-01 |
+| ZCR-SHR-03 | Audit trail, revocation, ownership transfer, end of subscription | 5 | P1 | M | Approved 30-day read-only/export plus 90-day retention policy; not implemented | SHR-01, OD-05 approved |
+| ZCR-SHR-04 | E2EE from the first shared delivery, including membership/key/recovery lifecycle | 5 | P1 | L | Approved; architecture/implementation/acceptance pending | OD-09 approved |
+| ZCR-TAX-01 | Germany/current-year tax research, expert and official examples; country expansion without ETA | 0→7 | P1 | M | Approved scope; research/acceptance pending | OD-01 approved |
+| ZCR-TAX-02 | Level 1: Germany data/document export for an accountant (Plus) | 7 | P1 | M | Approved; implementation pending | TAX-01 |
 | ZCR-TAX-03 | Level 2: versioned rule set and report for the first country/year | 7 | P2 | L | Proposed | TAX-01, expert |
-| ZCR-AI-01 | AI credit ledger, provider interface, consent, minimal data | 8 | P3 | L | Proposed | OD-13 |
-| ZCR-BANK-01 | Read-only bank connection evaluation and decision | 8 | P3 | M | Proposed | OD-14 |
-| ZCR-FX-01 | Online rates/prices: source, rights, caching, manual fallback | 8 | P3 | M | Proposed | OD-14 |
-| ZCR-LANG-01 | At least 20 additional languages (last feature wave) | 9 | P2 | L | Proposed | stable texts |
+| ZCR-AI-01 | Local AI credit ledger, provider interface, consent, minimal data | 8 | P3 | L | Local prerequisites approved; real provider/pricing remain gated | OD-13 |
+| ZCR-BANK-01 | German-first bank/file/provider evaluation, then USA and other targets | 8 | P3 | M | Research approved; live bank connection deferred | OD-14, IMP-01 |
+| ZCR-FX-01 | Rates/prices provider boundary, caching, provenance, manual fallback | 8 | P3 | M | Local prerequisites approved; actual source/licence/cost remain gated | OD-14 |
+| ZCR-LANG-01 | Additional languages beyond the existing six | Deferred | P2 | L | Outside current delivery by owner decision; no current release dependency or ETA | later scope decision |
 | ZCR-REL-01 | Final QA, store metadata, staged rollout | 10 | P1 | M | Proposed | all P1 |
 
 ## Item definitions
@@ -279,19 +279,20 @@ one occurrence → one entry; conflicting amount edits → conflict shown; Viewe
 report, file, search or API reveals an unshared account; revoked member's offline edits rejected.
 
 ### ZCR-TAX-01…03
-Research starts in wave 0 (OD-01): country, tax year, user type, expert, official examples. Level 1 (accountant
-export) belongs to Plus; levels 2–3 are an add-on per country/year. A first valid Tax scope is a near milestone
-before major user growth; if it cannot be in the first release, it gets its own milestone with owner, dependencies
-and readiness criteria.
+Approved initial scope: Germany, current tax year, employees and freelancers; accountant export first (Plus).
+Official calculations require expert review of the versioned country/year rules; filing is outside this scope.
+Add other target countries individually. Show unsupported countries as being added without a promised date,
+never as selectable tax rules. Tax availability is independent of existing currency, display and holiday choices.
 
 ### ZCR-AI-01, ZCR-BANK-01, ZCR-FX-01
-Each only after its own scope and cost approval (OD-13, OD-14); otherwise a later milestone, never an artificial
-release blocker.
+Approved now: local AI provider boundary, explicit consent, minimal data and credit accounting; bank CSV/import
+and German-first research; FX/assets provider boundary, cache, source, staleness and manual fallback. Live
+providers, licences, costs and bank connections remain separate decisions. Research Germany, then the USA and
+the other target countries using primary sources and verified export fixtures; see [10-bank-import-research.md](10-bank-import-research.md).
 
 ### ZCR-LANG-01
-At least 20 languages in addition to the six existing ones, as the last feature wave, after the release texts are
-stable: owner-provided translations with cultural review, never machine-filled files; each language with its
-calendar defaults, number formats, receipts terms and display checks as for es/fr/it.
+Deferred outside the current delivery: keep the existing six languages complete and reviewed. Additional
+languages have no current release dependency or promised date; plan each with cultural and layout review later.
 
 ### ZCR-SEC-10 - Device privacy maintenance (D-63)
 
@@ -2514,3 +2515,11 @@ explicit conflicts without guessed amounts, idempotency, safe restore and device
 ZCR-SYNC-01..03 is the next complete implementation batch; paid hosting, household sharing and
 commercial activation remain separate gates. This decision is recorded, not implemented by D-291.
 See ../../quality/android-loaded-home.md for exact evidence, boundaries and retained failures.
+
+Unpublished personal-sync implementation checkpoint: original optional application/lifetime source
+and real pinned-HTTPS/PostgreSQL/two-SQLite-client protocol now have focused evidence, including lost
+commit response, explicit competing money, tombstones/receipts/revocation, duplicate full settlement
+and stale related-payment review. AT-292 remains partial; complete conflict UI, first-run recovery,
+initialization takeover, remaining domain/native/platform cases and final delivery are unfinished.
+See ../../quality/local-personal-sync.md. Do not interpret the staged protocol tests as a finished
+application feature or change the last delivered full-suite/APK baseline.

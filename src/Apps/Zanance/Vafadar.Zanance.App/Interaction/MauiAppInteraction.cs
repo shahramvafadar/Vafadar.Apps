@@ -49,6 +49,10 @@ internal sealed class MauiAppInteraction : IAppInteraction, IAppFlowHost
 
     /// <inheritdoc />
     public Task RestoreOnboardingAsync() => Application.Current is App app ? app.ShowOnboardingRestoreAsync() : Task.CompletedTask;
+    /// <inheritdoc />
+    public bool PersonalSyncAvailable => Features.Sync.PersonalSyncBuild.IsAvailable;
+    /// <inheritdoc />
+    public Task RestoreSyncedOnboardingAsync() => Application.Current is App app ? app.ShowOnboardingSyncAsync() : Task.CompletedTask;
 
     /// <inheritdoc />
     public void CompleteOnboarding()

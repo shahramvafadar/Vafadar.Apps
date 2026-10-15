@@ -35,6 +35,36 @@ public static class PdfPageImages
 #endif
     }
 
+    /// <summary>Renders one selected page and reports the real count, without sampling or loading every page.</summary>
+    public static async Task<PdfPageImage?> ReadPageAsync(byte[] pdf, int pageIndex)
+    {
+        ArgumentNullException.ThrowIfNull(pdf);
+        if (pageIndex < 0) throw new ArgumentOutOfRangeException(nameof(pageIndex));
+        var count = 0;
+#if IOS || MACCATALYST
+        var images = await Task.Run(() => RenderApple(pdf, 1, pageIndex, value => count = value));
+#elif WINDOWS
+        var images = await RenderWindowsAsync(pdf, 1, pageIndex, value => count = value);
+#elif ANDROID
+        var images = await Task.Run(() => RenderAndroid(pdf, 1, pageIndex, value => count = value));
+#else
+        await Task.CompletedTask;
+        IReadOnlyList<byte[]> images = [];
+#endif
+        return images.Count == 1 ? new PdfPageImage(count, images[0]) : null;
+    }
+
+    private static IEnumerable<int> SelectedPages(int count, int maximum, int? selected, Action<int>? observe)
+    {
+        observe?.Invoke(count);
+        if (selected is { } index)
+        {
+            if (index < 0 || index >= count) throw new ArgumentOutOfRangeException(nameof(selected));
+            return [index];
+        }
+        return TextLayout.PagesToRead(count, maximum);
+    }
+
     private static (int Width, int Height) SizeOf(double width, double height)
     {
         var scale = Math.Min(Scale, MaxSide / Math.Max(1, Math.Max(width, height)));
@@ -42,7 +72,7 @@ public static class PdfPageImages
     }
 
 #if IOS || MACCATALYST
-    private static List<byte[]> RenderApple(byte[] pdf, int maxPages)
+    private static List<byte[]> RenderApple(byte[] pdf, int maxPages, int? selected = null, Action<int>? observe = null)
     {
         using var data = Foundation.NSData.FromArray(pdf);
         using var document = new PdfKit.PdfDocument(data);
@@ -52,7 +82,7 @@ public static class PdfPageImages
         }
 
         var images = new List<byte[]>();
-        foreach (var index in TextLayout.PagesToRead((int)document.PageCount, maxPages))
+        foreach (var index in SelectedPages(checked((int)document.PageCount), maxPages, selected, observe))
         {
             using var page = document.GetPage(index);
             if (page is null)
@@ -74,7 +104,7 @@ public static class PdfPageImages
 #endif
 
 #if ANDROID
-    private static List<byte[]> RenderAndroid(byte[] pdf, int maxPages)
+    private static List<byte[]> RenderAndroid(byte[] pdf, int maxPages, int? selected = null, Action<int>? observe = null)
     {
         // PdfRenderer needs a seekable file descriptor; the copy lives in the app's cache only while rendering.
         var path = Path.Combine(Android.App.Application.Context.CacheDir!.AbsolutePath, $"render-{Guid.NewGuid():N}.pdf");
@@ -90,7 +120,7 @@ public static class PdfPageImages
                 try
                 {
                     var images = new List<byte[]>();
-                    foreach (var index in TextLayout.PagesToRead(renderer.PageCount, maxPages))
+                    foreach (var index in SelectedPages(renderer.PageCount, maxPages, selected, observe))
                     {
                         using var page = renderer.OpenPage(index);
                         using var bitmap = RenderPage(page);
@@ -144,7 +174,7 @@ public static class PdfPageImages
 #endif
 
 #if WINDOWS
-    private static async Task<IReadOnlyList<byte[]>> RenderWindowsAsync(byte[] pdf, int maxPages)
+    private static async Task<IReadOnlyList<byte[]>> RenderWindowsAsync(byte[] pdf, int maxPages, int? selected = null, Action<int>? observe = null)
     {
         using var source = new global::Windows.Storage.Streams.InMemoryRandomAccessStream();
         using (var writer = new global::Windows.Storage.Streams.DataWriter(source.GetOutputStreamAt(0)))
@@ -169,7 +199,7 @@ public static class PdfPageImages
         }
 
         var images = new List<byte[]>();
-        foreach (var index in TextLayout.PagesToRead((int)document.PageCount, maxPages))
+        foreach (var index in SelectedPages(checked((int)document.PageCount), maxPages, selected, observe))
         {
             using var page = document.GetPage((uint)index);
             var (width, height) = SizeOf(page.Size.Width, page.Size.Height);

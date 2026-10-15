@@ -5841,3 +5841,80 @@ explicit conflicts without guessed amounts, idempotency, safe restore and device
 ZCR-SYNC-01..03 is the next complete implementation batch; paid hosting, household sharing and
 commercial activation remain separate gates. This decision is recorded, not implemented by D-291.
 See ../quality/android-loaded-home.md for exact evidence, boundaries and retained failures.
+
+## D-292 complete local personal synchronization (local implementation qualified)
+
+The owner authorized the full local personal Pro synchronization batch: durable changes/deletions,
+explicit financial conflict decisions, idempotency, safe profile restoration and device management.
+This remains one unpublished batch; paid hosting, household sharing and commercial activation do
+not follow. Current production-source implementation and original service/app/native qualification
+are recorded in ../quality/local-personal-sync.md. Independent caller packages are not a production
+APK handoff and the complete-batch acceptance gates remain open.
+
+The operational design bounds active rounds, aggregate serialized proposals and declared attachment
+bytes by actual owner across spaces. Exact replay precedes capacity refusal. Revocation/session
+expiry retire only unpublished parts under the original owner transaction, with live session
+rechecking after lock acquisition. Committed financial history, acknowledgements and nonce tombstones
+remain. A separate transaction storage gate orders ciphertext publication and aged orphan-only
+collection across workers, without decrypting files or inventing history/pending-work expiry.
+
+A real PostgreSQL/pinned-TLS scenario observes the actual publication and owner-lock waits, preserves
+committed files/records/events/receipts, permits rollback-orphan collection and preserves renewed
+pending work. Original protected Windows HTTP and Android Release/AOT/trimmed cold-process scenarios
+also pass; their caller-only negative evidence and same-fixture continuations are retained. Strict
+API Release compilation is warning-free. These targeted results do not replace the final full-suite,
+app/native UI, complete signed production APK, documentation/commit/push or external platform gates.
+The prior 3,614 covered-behavior baseline is historical; no new full-suite count is claimed.
+
+### Consolidated owner scope, 2026-10-15
+
+The binding seventeen-question approval and exceptions are recorded in
+../enhancements/2026-10-commercial-release/06-open-decisions.md. Current delivery keeps the existing
+six languages and Android/iOS purchases; commercial Windows delivery is a future unscheduled
+direction. Future web purchases belong to Zanance identity across download stores; current work
+includes prerequisites only. Household E2EE is required from first shared delivery, without claiming
+that the present personal protocol is E2EE. Germany tax expands country by country without an ETA;
+tax status does not change existing country display/currency/holiday availability. Current-machine
+Docker/vafadar.pro hosting is approved but not deployed/exposed by this record. A prepared recent
+MacBook Air is owner-reported; native build/signing/provider acceptance requires that environment.
+German-first bank-format research is approved, followed by USA and other target markets. Initial
+primary-source reach research is not exact-schema or importer acceptance. No runtime/test/APK change
+or new suite count follows from these scope records.
+
+### D-292 qualification update (in progress, not published)
+
+Original planning validation now refuses inconsistent complete sync graphs without partial publication. A real
+service case covers fourteen refusals and receipt of the valid complete graph on another client. Eleven existing
+snapshot helpers include all 33 tables; their 421 targeted cases pass. Four identity scenarios pass explicit HTTPS
+with HTTP still refused. Four non-root Linux cases qualify original two-process persisted protection/financial
+state and targeted planning/operations. These are focused/repeated-platform checks, not a new aggregate full-suite
+count; the earlier historical baseline remains separately identified. CI composition is added but hosted results,
+final integrated app/UI/APK, physical device/iOS and complete-batch delivery remain open.
+
+### D-292 current managed coverage (unpublished)
+
+The retained failed complete solution attempt plus focused continuation covers 3,690 managed test executions with
+no unresolved outcome. Application coverage is 1,258: 648 original successes excluded from the 610-case continuation,
+all of which pass. Other successful projects were not rerun; only the failed Core architecture case was repeated.
+Snapshot comparisons retain all 33 migrated tables. This supersedes the historical 3,614 baseline for current
+managed coverage without claiming a fresh complete-suite pass. Integrated Windows personal-sync Debug is strictly
+warning/error-free; Android APK and final UI/publication gates remain unfinished.
+
+### D-292 final native closure
+
+The current managed coverage remains 3,690 executions through selective continuation, not another complete-suite
+run. The changed real service planning case now rejects nineteen malformed complete proposals, including original
+calendar/weekly endpoint failures, without partial publication. Valid weekly budgets keep unused year/month zero.
+All 36 original Windows first-run/comparison contexts pass (en/fa/de, light/dark, 360/412/wide), with native glyph,
+semantic action and no-financial-write evidence. Prior original Android native cases remain qualified without replay.
+The main Windows identity is restored and final strict integrated build passes. Final artifact/publication evidence
+is maintained in quality/local-personal-sync.md; phone/iOS, hosted service, household E2EE and release remain separate.
+
+### D-292 delivered local scope and next batch
+
+The complete local personal sync implementation is qualified with current main-identity strict Windows and signed
+Android builds, 36 final Windows native contexts, nineteen real service planning refusals, retained original Windows/
+Android HTTP/native/restore/revocation evidence and 3,690 reconciled managed executions. Exact current APK hash and
+historical failures are recorded in quality/local-personal-sync.md. This delivery does not claim a new full-suite
+rerun, hosted CI, phone/iOS, E2EE, public hosting or release. The next approved complete batch is isolated current-
+machine Docker deployment under vafadar.pro; the remaining consolidated delivery order and external gates remain.

@@ -254,6 +254,10 @@ internal static partial class DebugSnapshots
     private static async Task RunCoreAsync(App app, IServiceProvider services, string folder)
     {
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "personal-sync")
+        {
+            await ReviewPersonalSyncAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "home-workload")
         {
             await ReviewHomeWorkloadAsync(app, services, folder); return;

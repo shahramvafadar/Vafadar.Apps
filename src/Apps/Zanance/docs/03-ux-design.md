@@ -1229,3 +1229,57 @@ Apply the original saved section order from the validated financial snapshot bef
 loading cover. Keep legacy device fallback only for null, and current default for explicit empty.
 Preserve already placed section handlers. Background financial/recurrence work must not mutate UI,
 translate on a worker or publish into a retired page; complete original results still appear together.
+
+
+### Personal sync at first run (unpublished)
+
+The explicit personal-sync edition offers receiving an existing service profile beside portable
+backup restore. Keep the original wizard and its unsaved draft attached under a modal. Explain
+that received profile preferences replace empty setup defaults; never manufacture another
+financial account. Existing financial data is not an empty destination. Offer Back independently
+of readiness, and explicit Use these accounts only after a complete applied round with accounts
+and no unresolved review. Confirmation changes only local first-run state, preserves received
+preferences and applies them through the original current-profile transition. New-space creation
+belongs to the normal sync page, not this receive path. Native runtime acceptance of these new
+controls remains pending in the complete personal-sync batch.
+
+### Unpublished personal-sync linked financial groups
+
+An original entry/holding GroupId is one financial version choice. Show one group card with each
+member's complete local and service versions, including payment and fees. The action caption and
+confirmation must explicitly select the complete group; never imply independent row decisions.
+Keep original actual currencies/quantity units and translated member descriptions; do not expose
+raw internal identifiers. A remote-only member is displayed and prevents selecting a silent local
+hybrid. Stale edits invalidate the entire group and require fresh explicit review. Recording a
+choice does not write money; the complete checked round applies it atomically.
+
+### Unpublished portable record review values
+
+Personal-sync choices retain typed values and original names instead of raw stored configuration
+strings. Show a template's actual account currency and destination, category hierarchy/rules, saved
+filter scope, exact source/target exchange rate, effective Home order/visibility, display-unit factors,
+review steps and estimate period/currency. Saved forecast comparisons list each original day/balance,
+including negative boundary amounts; empty scope/path stays empty. Malformed or unresolved changed
+values disable consent. Native review checks must apply the same display-digit presentation as the
+original labels and distinguish text presence from actual multiline/layout geometry. A displayed
+account relationship changing after review requires a new decision.
+
+### Unpublished optional attachment version previews
+
+Personal-sync attachment choices describe the complete exact file version, including a displayed
+deletion. Optional inline preview uses locally decoded images or one actual PDF page at a time,
+with real page counts, previous/next, zoom/pan and Close through native semantic buttons. File name,
+media type and byte length remain visible; no file path, opaque JSON or invented financial value is
+shown. Locked/unsupported files remain explicitly selectable; renderer support is not consent.
+Preview does not select a conflict, replace an attachment or run receipt recognition. Closing or
+retiring the page clears its transient image, and changed data/lifetime refuses late publication.
+
+### Personal sync native first-run and comparison qualification
+
+The original first-run flow retains its fixed growing Back/Finish footer while connection content scrolls. Finish
+requires actual received accounts; returning to setup preserves the original wizard. Comparison versions keep every
+original typed field, complete direction-safe money packet and exact reviewed command parameter. Native actions
+retain complete semantic names and at least 44-pixel targets. The independent Windows review passes en/fa/de,
+light/dark and 360/412/wide contexts, including glyph bounds and actual first-run Back invocation, with complete
+financial fingerprints unchanged. Prior independent Android native evidence remains separate from phone/screen-reader
+acceptance. The Debug route uses its own compiled installation identity and never owner credentials or desktop input.

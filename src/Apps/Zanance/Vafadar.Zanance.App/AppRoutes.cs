@@ -45,6 +45,9 @@ public static class AppRoutes
     /// <summary>Route of backup and restore.</summary>
     public const string BackupRoute = "backup";
 
+    /// <summary>Route of explicitly enabled local personal synchronization.</summary>
+    public const string PersonalSyncRoute = "personalsync";
+
     /// <summary>Route of the monthly budget (a top tab of Insights).</summary>
     public const string BudgetRoute = "//insights/budget";
 

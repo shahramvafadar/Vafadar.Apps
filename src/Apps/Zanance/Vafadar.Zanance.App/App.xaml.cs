@@ -15,6 +15,7 @@ public partial class App : Application
     private Page? _startupPage;
     private Startup.StartupViewModel? _startup;
     private bool _databaseReady;
+    private bool _isInForeground = true;
     private readonly TaskCompletionSource _startupReady = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
     /// <summary>Lets diagnostic routes wait for actual storage and access initialization instead of racing migration.</summary>
@@ -67,6 +68,7 @@ public partial class App : Application
         ApplyFonts(localization);
         localization.Changed += (_, _) => ApplyFonts(localization);
         this.ApplyToModalPages(localization);
+        ModalPushing += (_, _) => RetireSyncNavigation();
 
         var reminders = services.GetRequiredService<ReminderService>();
         reminders.Scheduler.Tapped += OnReminderTapped;
@@ -160,9 +162,34 @@ public partial class App : Application
         }
     }
 
+    /// <summary>Keeps the original wizard attached while its independent optional sync page receives existing accounts.</summary>
+    public async Task ShowOnboardingSyncAsync()
+    {
+        if (!Features.Sync.PersonalSyncBuild.IsAvailable || Windows.FirstOrDefault()?.Page is not OnboardingPage onboarding) return;
+        var page = _services.GetRequiredService<Features.Sync.PersonalSyncPage>().WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
+        page.BeginOnboarding(async () => { await onboarding.Navigation.PopModalAsync(animated: false); }, async () =>
+        {
+            await onboarding.Navigation.PopModalAsync(animated: false);
+            Dispatcher.Dispatch(ShowCurrentProfile);
+        });
+        await onboarding.Navigation.PushModalAsync(page, animated: false);
+    }
+
+#if DEBUG && WINDOWS
+    /// <summary>Replaces only the independently compiled sync review root with original native pages.</summary>
+    internal void ShowPersonalSyncReview(Page page)
+    {
+        if (AppInfo.Current.PackageName != "pro.vafadar.zanance.syncreview") throw new IOException("Independent sync review required.");
+        ReplaceRoot(Windows[0], new NavigationPage(page));
+    }
+#endif
+
     protected override Window CreateWindow(IActivationState? activationState)
     {
 #if DEBUG
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "personal-sync"
+            && AppInfo.Current.PackageName != "pro.vafadar.zanance.syncreview")
+            throw new InvalidOperationException("Independent sync review identity required before startup.");
         // Independent protected reviews must fail before the covered startup worker can touch a main installation.
         // MSBuild can retain stale ApplicationId metadata when only a global property changes (D-274).
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "home-balance-reload" or "holiday-catalog" or "home-loading" or "home-workload" or "automatic-backup" or "automatic-backup-ui"
@@ -301,6 +328,10 @@ public partial class App : Application
                 return Task.FromResult(link);
             }));
         _databaseReady = true;
+        if (Features.Sync.PersonalSyncBuild.IsAvailable && _isInForeground)
+            _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Resume();
+        if (Features.Sync.PersonalSyncBuild.IsAvailable)
+            _services.GetRequiredService<Features.Sync.PersonalSyncForegroundWorker>().Start();
         // The initial settings write must not schedule a competing reminder database read during preparation.
         _services.GetRequiredService<ReminderService>().WatchChanges(_services.GetRequiredService<Profiles.ProfileService>());
         _startupReady.TrySetResult();
@@ -310,12 +341,18 @@ public partial class App : Application
     protected override void OnSleep()
     {
         base.OnSleep();
+        _isInForeground = false;
+        if (_databaseReady && Features.Sync.PersonalSyncBuild.IsAvailable)
+            _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Suspend();
         if (_databaseReady) Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().SleepAsync());
     }
 
     protected override void OnResume()
     {
         base.OnResume();
+        _isInForeground = true;
+        if (_databaseReady && Features.Sync.PersonalSyncBuild.IsAvailable)
+            _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Resume();
         if (_databaseReady) Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().ResumeAsync());
         RunForegroundWork(starting: false);
     }
@@ -528,6 +565,7 @@ public partial class App : Application
         {
             retired.RetireNavigationBindings();
             retired.Navigated -= OnShellNavigated;
+            retired.Navigating -= OnShellNavigating;
         }
         window.Page = replacement;
     }
@@ -546,6 +584,15 @@ public partial class App : Application
     {
         var shell = _services.GetRequiredService<AppShell>().WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
         shell.Navigated += OnShellNavigated;
+        shell.Navigating += OnShellNavigating;
         return shell;
+    }
+
+    private void OnShellNavigating(object? sender, ShellNavigatingEventArgs e) => RetireSyncNavigation();
+
+    private void RetireSyncNavigation()
+    {
+        if (_databaseReady && Features.Sync.PersonalSyncBuild.IsAvailable)
+            _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().RetireNavigation();
     }
 }

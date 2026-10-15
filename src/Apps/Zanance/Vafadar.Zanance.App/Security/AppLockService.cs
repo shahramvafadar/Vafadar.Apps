@@ -22,6 +22,9 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     private bool _coverRequested;
     private bool _started;
 
+    /// <summary>Raised when covered access changes; optional foreground work cannot outlive successful-unlock authority.</summary>
+    public event EventHandler? AccessChanged;
+
     /// <summary>Gets a value indicating whether the lock is enabled.</summary>
     public bool IsEnabled => DeviceLockEnabled || PinEnabled || PinUnavailable;
 
@@ -88,6 +91,7 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
         {
             await RunPendingAsync();
         }
+        AccessChanged?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>Reads the setting again, e.g. after a restore brought another value.</summary>
@@ -199,6 +203,7 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
         _coverRequested = false;
         _sleptAt = null;
         await RunPendingAsync();
+        AccessChanged?.Invoke(this, EventArgs.Empty);
     }
 
     // Links and rebuilds that waited for the unlock, in the order they came.
@@ -230,6 +235,7 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     {
         // A missing/rebuilt window must not turn a requested lock into an unlocked application.
         _coverRequested = true;
+        AccessChanged?.Invoke(this, EventArgs.Empty);
         if (_page is not null && !_page.IsOnScreen)
         {
             _page = null;

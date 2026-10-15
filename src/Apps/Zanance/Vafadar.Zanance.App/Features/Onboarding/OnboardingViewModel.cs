@@ -105,6 +105,11 @@ public sealed partial class OnboardingViewModel : ViewModelBase
     /// <summary>Opens restore without creating an account or saving the draft profile preferences.</summary>
     [RelayCommand]
     private Task RestoreBackupAsync() => _host.RestoreOnboardingAsync();
+    /// <summary>Gets the edition choice without a network request or a stored opt-in.</summary>
+    public bool PersonalSyncAvailable => _host.PersonalSyncAvailable;
+    /// <summary>Opens a separately confirmed first-run sync path, preserving this unsaved wizard.</summary>
+    [RelayCommand]
+    private Task RestoreSyncedProfileAsync() => !IsBusy && PersonalSyncAvailable ? _host.RestoreSyncedOnboardingAsync() : Task.CompletedTask;
 
     public bool IsStep1 => Step == 1;
 

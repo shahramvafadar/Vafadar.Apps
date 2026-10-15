@@ -12,20 +12,27 @@
     ./eng/scripts/Build-AndroidApk.ps1
     ./eng/scripts/Build-AndroidApk.ps1 -Configuration Debug
     ./eng/scripts/Build-AndroidApk.ps1 -Offline -Output artifacts/android-offline
+    ./eng/scripts/Build-AndroidApk.ps1 -PersonalSync -Output artifacts/android-personal-sync
 #>
 param(
     [ValidateSet('Release', 'Debug')] [string]$Configuration = 'Release',
     [string]$Project = 'src\Apps\Zanance\Vafadar.Zanance.App\Vafadar.Zanance.App.csproj',
     [string]$Output = (Join-Path $PSScriptRoot '..\..\artifacts\android'),
+    [switch]$PersonalSync,
     [switch]$Offline)
 $ErrorActionPreference = 'Stop'
+if ($Offline -and $PersonalSync) {
+    throw 'An offline APK cannot enable personal network synchronization.'
+}
 if ($Offline -and $Configuration -ne 'Release') {
     throw 'Offline privacy verification requires Release; Debug includes debugger network access.'
 }
 # Empty global properties override local provider configuration without reading, logging or changing it.
-$cloudProperties = @()
+# Explicit edition properties outrank ambient environment/MSBuild defaults. In particular, -Offline
+# must not inherit a network-enabled sync edition from a previous local build.
+$cloudProperties = @('-p:ZanancePersonalSyncEnabled=' + $PersonalSync.IsPresent.ToString().ToLowerInvariant())
 if ($Offline) {
-    $cloudProperties = @('-p:MicrosoftEntraClientId=', '-p:GoogleOAuthClientIdAndroid=',
+    $cloudProperties += @('-p:MicrosoftEntraClientId=', '-p:GoogleOAuthClientIdAndroid=',
         '-p:GoogleOAuthClientIdIos=', '-p:GoogleOAuthClientIdWindows=')
 }
 Set-Location (Resolve-Path (Join-Path $PSScriptRoot '..\..'))

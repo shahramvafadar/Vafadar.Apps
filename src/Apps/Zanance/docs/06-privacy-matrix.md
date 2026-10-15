@@ -735,6 +735,22 @@ provisioning, off-host encrypted snapshots/retention and a real sender require s
 Current mobile privacy policy/Data Safety submission status is unchanged; see API README and
 quality/local-identity-backend.md for the actual fictional test/restore boundaries.
 
+### Unpublished approved personal-sync extension
+
+The explicitly enabled local personal edition can transmit opted-in financial records and receipt
+bytes to the reviewed loopback/emulator-alias HTTPS service. Device-local SQLite replay metadata
+and native SecureStorage credentials are separate: portable copies clear all eight replay tables,
+and restored generations require explicit reconnection. Authentication/financial payloads are not
+logged. Server row/blob bodies use maintained Data Protection; this is not E2EE. No shared-space,
+paid hosting, external mail, purchase or production activation follows from these local tests.
+Default offline builds do not gain the personal edition's Android network permission.
+
+Windows TLS imports its own wrapped certificate into a runtime-owned current-user key container
+for Schannel, without PersistKeySet. The authoritative PFX remains protected; no plaintext PFX or
+system trust entry is created. Non-Windows uses memory-only import. Current real wire evidence uses
+fictional plaintext SQLite clients against an isolated PostgreSQL/private root; it does not qualify
+the original encrypted mobile/native application or Linux certificate/key persistence.
+
 ## D-273 offline country calendars
 
 Country choice and its existing portable preference remain unchanged in storage scope. The new
@@ -757,3 +773,26 @@ Existing explicit portable exports retain optional password encryption and reada
 Restoration still needs original preview, confirmation and authentication. Device/key loss requires
 a separate portable Zanance export; local automatic copies do not promise recovery on a new device.
 Physical-device/iOS/OEM/Store and hosted acceptance remain distinct from local evidence.
+
+### Unpublished personal-sync attachment review
+
+Exact authenticated service attachment versions may be privately staged in the opted-in profile's
+encrypted synchronization metadata before a conflict is decided. This metadata remains outside
+portable financial exports. Local/service preview verifies the complete content length/digest and
+current reviewed file/profile authority. It uses bounded transient memory images, no external viewer,
+no OCR or financial writes, and no new permission or network SDK. The existing Android system PDF
+renderer briefly uses its private cache copy and removes it on normal completion/failure; abrupt
+process termination and physical/native-memory acceptance remain separate. Closing/leaving clears
+owned preview byte buffers. Preview is optional, including for valid locked/unsupported documents;
+explicit complete-file choices remain bound to their exact versions.
+
+### Unpublished personal-sync staging maintenance
+
+The local service enforces owner-wide technical staging/declaration bounds without activating
+commercial limits. Explicit abandonment and revoked/expired device authority remove only
+unpublished proposal bodies; committed financial history, receipts and nonce tombstones remain.
+Authority is rechecked under the original owner lock, including concurrent session-row renewal.
+Private ciphertext files older than one day are collected only when they have no committed
+manifest, under a storage-publication gate shared across workers. Collection never decrypts or
+reads attachment contents and skips fresh, redirected, unknown-name or manifested files. No active
+staging or committed history age policy, new recipient, permission or processor is introduced.

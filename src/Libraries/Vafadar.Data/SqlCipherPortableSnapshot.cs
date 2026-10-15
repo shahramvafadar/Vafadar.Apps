@@ -18,7 +18,8 @@ public static class SqlCipherPortableSnapshot
     /// <summary>Writes a coherent bounded snapshot with cached captured-access checks before native effects and every output chunk.</summary>
     /// <remarks>The check must not query the database, move profiles or perform network work; partial output is caller-owned on failure.</remarks>
     public static async Task WriteAsync(SqliteConnection source, Stream destination, int maximumBytes, Action? verifyAccess,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        Func<SqliteConnection, string, CancellationToken, Task>? preparePortableImage = null)
     {
         ArgumentNullException.ThrowIfNull(source); ArgumentNullException.ThrowIfNull(destination);
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(maximumBytes);
@@ -58,6 +59,13 @@ public static class SqlCipherPortableSnapshot
                 await export.ExecuteNonQueryAsync(cancellationToken);
                 verifyAccess?.Invoke();
                 await transaction.CommitAsync(cancellationToken);
+            }
+            // sqlcipher_export created fresh logical pages in this memory-only copy. Application
+            // policies may securely clear device metadata here without touching the keyed source.
+            if (preparePortableImage is not null)
+            {
+                verifyAccess?.Invoke(); await preparePortableImage(source, alias, cancellationToken);
+                verifyAccess?.Invoke();
             }
             serialized = raw.sqlite3_serialize(source.Handle, alias, out size, 0);
             verifyAccess?.Invoke();

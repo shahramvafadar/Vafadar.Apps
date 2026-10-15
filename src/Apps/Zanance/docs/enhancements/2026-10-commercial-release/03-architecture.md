@@ -1,13 +1,16 @@
 # 03 – Architecture for entitlements, billing, local security, sync and sharing
 
-Status: **ENT-01 Core policy implemented (D-117); remaining integrations are design, not implemented.** It builds on the existing layers (`docs/architecture/overview.md`): Core without
+Status refreshed 2026-10-15: implemented local security and backend sections are tracked in
+[04-backlog.md](04-backlog.md); personal sync D-292 is in progress and unpublished. Remaining sections below
+are architectural requirements, not implementation claims. The consolidated owner decisions in
+[06-open-decisions.md](06-open-decisions.md) supersede earlier proposals. It builds on the existing layers (`docs/architecture/overview.md`): Core without
 infrastructure, Data with EF Core/SQLite, MAUI app and shared `Vafadar.*` libraries. Names below are concepts; the
 concrete types are chosen when a section is built, inside the existing projects, without parallel copies.
 
 ## 1. Entitlements and quotas
 
 ```text
-Store adapter (Play Billing / StoreKit / Windows channel)  ──►  Purchase verification (server or store API)
+Purchase adapter (Play Billing / StoreKit; future web issuer)  ──►  Purchase verification (server or store API)
         │                                                              │
         ▼                                                              ▼
  EntitlementCache (secure, signed state, offline)  ◄──────────  Entitlement state (plan, purchase kind, scope, expiry)
@@ -36,7 +39,8 @@ Store adapter (Play Billing / StoreKit / Windows channel)  ──►  Purchase v
   and grace period during outages are fixed in an ADR (proposal: re-check when online; subscriptions stay valid until
   their store expiry plus a 7-day outage grace; the device clock alone never extends or revokes). Lifetime, once
   verified, never stops working because our service is down; restoring it on a new install needs the store.
-* **No online account for Free and local Plus.** An identity exists only for sync/sharing (Pro) and is optional.
+* **No online account for Free and store-local Plus.** Optional sync/sharing and future web purchase grants use
+  Zanance identity, separate from local profiles, app lock and connected-backup provider sign-in.
 * **Development:** sandbox and production products, secrets and test entitlements are separate; Release builds
   contain no backdoor. No real purchase button ships before the provider and the sold capability are ready.
 
@@ -48,52 +52,48 @@ end. Store notifications (Play RTDN, App Store Server Notifications v2) can arri
 signatures, deduplicate by notification/transaction id, re-query the store, apply idempotently; acknowledge (Play) or
 finish (StoreKit) in the trusted path; consumables (AI credit) are granted exactly once.
 
-### Store mapping (to confirm with the store consoles)
+### Purchase authority and distribution
 
-| | Google Play | Apple App Store | Windows |
-|---|---|---|---|
-| Plus, Pro subscriptions | one subscription product per plan with monthly and yearly base plans; upgrade/downgrade with replacement modes | one subscription group with Pro above Plus (levels), monthly and yearly in the group | Microsoft Store add-ons, only if the app is published there; otherwise free development target |
-| Plus Lifetime | one-time product, non-consumable | non-consumable | durable add-on |
-| Offers | offers on base plans (introductory/eligibility tags) | introductory offers, offer codes, win-back; offer codes for Lifetime owners only if the 25 % rule fits | – |
-| AI credit | consumable | consumable (credits purchased do not expire, App Review 3.1.1) | consumable |
+Current billing work targets Google Play and Apple App Store. Pro follows a verified Zanance identity across
+Android and iOS; store Plus/Lifetime remain tied to their store. Future web purchases belong to the Zanance
+identity regardless of the store used to download the app. Model purchase issuer independently of distribution,
+with verified grants, idempotent notifications, refunds and revocation. These prerequisites are current work;
+web checkout and its payment provider integration are deferred. No live products or payments are activated here.
 
-Cross-store transfer (Play ↔ App Store), OS family sharing and buying on one device for another are **not assumed**;
-an identity-based link of a purchase to other devices is a Pro-service decision (OD-08).
+Commercial Windows delivery remains a future, unscheduled phase outside the current backlog. Existing Windows
+builds, development and running-app checks remain. Store product mapping and eligibility still require the
+actual consoles and their policies; an online identity is required for web grants, not for Free or local Plus.
 
 ## 2. Local data security
 
-Current state (see [01-current-state.md](01-current-state.md) §2): the SQLite database is not encrypted; the app lock
-uses the device credential/biometrics only; backups are AES-encrypted with a password when the user chooses one; the
-safety copy before a restore is unencrypted.
+Android and Windows development builds now use the qualified source-built official SQLCipher Community runtime
+and automatic device-bound profile/generation keys (D-263/D-264). The old plaintext feasibility descriptions are
+historical. Android wraps keys with Keystore; Windows uses CurrentUser DPAPI. App PIN/device authentication is a
+separate access cover and is never described as the database key or as E2EE.
 
-Target, in small steps (wave 1):
-
-1. Threat model and decision record: what is protected against whom (lost/stolen unlocked phone, device backup,
-   malware with file access, shared computer), which files (database, `-wal`, `-shm`, attachments if outside the
-   database, temporary exports, safety copies, receipt images in cache).
-2. Library: an established SQLite encryption (e.g. SQLCipher via `SQLitePCLRaw.bundle_e_sqlcipher` or the
-   commercially licensed SQLite Encryption Extension) – checked for .NET 10, MAUI on Android/iOS/Windows, AOT/trimming,
-   licence and cost before adoption (owner approval for any paid licence). No home-made cryptography, no key in source.
-3. Keys: a random data key; wrapped by the platform keystore (Android Keystore, iOS Keychain, Windows DPAPI/CNG); an
-   optional app password with a standard KDF (Argon2id or PBKDF2-SHA256 with versioned parameters and salt) wraps a
-   second copy. A short PIN without hardware protection is not treated as a strong key.
-4. App password and biometrics: choose/change password, optional biometrics, invalidation after biometric changes,
-   attempt limiting with growing delay, lock on return. Device credential, app password, backup password and online
-   identity stay four separate things.
-5. Forgotten password / lost device: decided before building (OD-04). Proposal: a one-time **recovery key** shown at
-   set-up, plus the existing password-protected backup; no promise that "we can recover your password".
-6. Migration of an existing plaintext database: stop access, check free space, write the encrypted copy, verify row
-   counts and relations, switch atomically, recover on failure; the old plaintext file is deleted, without claiming
-   secure erasure on flash storage.
-7. Backups stay portable: they are encrypted with the backup password, never with a device-bound key; safety copies
-   get encrypted too.
-8. When billing or sync add network use, every SDK and any telemetry is reviewed again; the offline build's "nothing
-   is sent" claim is never copied to the online build; privacy texts and help texts are updated with the behaviour.
+* Covered startup prepares storage after window creation under drained maintenance ownership. Existing-data
+  migration verifies the candidate before generation selection and retains recoverable transaction checkpoints.
+  Missing keys or damaged protected state stay closed; never silently replace a user's financial database.
+* Optional separate recovery material and portable Zanance backups implement the approved recovery policy.
+  Device-bound keys are not a portable restore mechanism. Manual portable backup passwords stay optional and
+  are never remembered; private safety and unattended local copies use device-key protection (D-281).
+* Android's final sensitive-data OS backup/transfer exclusion is integrated with encryption. A new device restores
+  a Zanance export into fresh device-bound storage. The declined temporary policy remains declined; iOS native
+  implementation/OS-transfer acceptance is still a separate platform gate.
+* Private originals/keys, complete-data comparisons and cold/interrupted process evidence remain available.
+  Successful flush calls or emulator process tests do not establish physical power-loss or secure flash erasure.
+* Remaining platform acceptance includes physical devices, Android arm64/API24/16-KiB environments, the actual
+  Mac/iOS toolchain, signing and native recovery/backup behavior. Commercial Windows is outside the current
+  delivery; Windows development verification remains part of the engineering checks.
+* Keep native source/package provenance, update/security review and supported runtime maintenance current.
+  No obsolete proof bundle or alternative native binary is introduced without its own review. Network editions
+  require their actual privacy/permission texts; offline manifests continue without INTERNET.
 
 ## 3. Personal sync (Pro)
 
 * Not a copy of the database in a cloud folder and not "last file wins". A modular backend (one deployable service
-  with clear modules) is preferred over microservices; hosting, database and cost need owner approval (OD-02).
+  with clear modules) is preferred over microservices. Local ASP.NET Core/PostgreSQL/private storage and isolated
+  current-machine Docker hosting under vafadar.pro are approved; paid hosting is not (OD-02).
 * Identity and devices: register/revoke devices; every record has an owner; private data syncs only when the user
   turns sync on.
 * Change log: durable outbox, globally unique ids (already GUIDs), record versions, soft deletes (tombstones),
@@ -124,12 +124,14 @@ Target, in small steps (wave 1):
 * Audit trail of sensitive changes (who changed what), itself scoped.
 * Revocation stops future sync; offline edits of a revoked member are rejected; no promise of remote deletion of
   copies or exports already on a device.
-* Transport and storage are encrypted. End-to-end encryption (key sharing/rotation, invitations, revocation,
-  recovery) is a separate architecture decision (OD-09); **until it is fully built, "E2EE" or "zero-knowledge" is
-  never claimed.** With E2EE the server cannot validate amounts, detect duplicates or run AI on content – those move
-  to clients, by design.
-* End of the owner's subscription, security revocation of a member and deletion of data are three different events,
-  each with its own retention, export and recovery rule.
+* End-to-end encryption is required from the first shared-space delivery, including key distribution, membership
+  changes, rotation, revocation and recovery. Clients validate financial content and duplicates; the server still
+  authenticates every operation and authorises resource access. Select and review established cryptographic
+  components before implementation. The current personal-sync protocol exposes content to its server and must
+  never be described as E2EE or reused as evidence of shared-space E2EE.
+* End of the owner's subscription allows 30 days of read-only access and export, followed by 90 days of retention
+  before server deletion, disclosed beforehand. Security revocation and deletion remain separate events; this
+  subscription window never restores a revoked member's access or promises deletion of existing device copies.
 
 ## 5. Operations before Pro is sold
 
@@ -159,8 +161,8 @@ are set only after their own cost review and owner approval.
   reviewed by an expert of that country. The personal ledger is not the tax engine (cash vs accrual, depreciation,
   private vs business, closed years, later corrections live in a tax layer). A compressed receipt photo is not
   presented as the legal original. Licensed per country/year; documents already prepared stay accessible after the
-  add-on ends. First country/year/scope: OD-01 (proposal: Germany, current tax year, employees/freelancers with
-  income-surplus calculation, level 1 first, level 2 after expert review).
+  add-on ends. Approved initial country/year/scope: OD-01, Germany/current tax year, employees/freelancers, level 1 first
+  and level 2 after expert review; no filing. Other countries are added individually without a promised date.
 * **Bank (read-only):** provider and countries, cost, licence (PSD2/AIS), consent and revocation, matching with
   manual/CSV entries, pending vs posted, keeping the user's categories. No payments.
 * **Online rates and prices:** source and redistribution rights, timestamp, caching, offline fallback to manual rates;

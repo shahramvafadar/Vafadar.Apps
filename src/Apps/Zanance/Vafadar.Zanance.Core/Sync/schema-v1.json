@@ -1,0 +1,3636 @@
+{
+  "version": 1,
+  "tables": [
+    {
+      "name": "Accounts",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "Counterparty",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 100,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CountryCode",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 2,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CurrencyCode",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 3,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "DueDate",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Icon",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 64,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "IncludeInTotals",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Installment",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "InterestRate",
+          "kind": "decimal",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "IsArchived",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "LastReconciledOn",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Name",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 100,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "OpeningBalance",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "OpeningBalanceKnown",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "OpeningDate",
+          "kind": "date",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "SortOrder",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Type",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "UsableForPayments",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [],
+      "uniqueKeys": []
+    },
+    {
+      "name": "AssetEvents",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "AssetTypeId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "BasisAmount",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Date",
+          "kind": "date",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "GroupId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "IsIncrease",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Kind",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "LocationId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Note",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 1000,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ProceedsAmount",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Quantity",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Reason",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 200,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ToLocationId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "LocationId"
+          ],
+          "principalTable": "AssetLocations",
+          "principalColumns": [
+            "Id"
+          ]
+        },
+        {
+          "columns": [
+            "ToLocationId"
+          ],
+          "principalTable": "AssetLocations",
+          "principalColumns": [
+            "Id"
+          ]
+        },
+        {
+          "columns": [
+            "AssetTypeId"
+          ],
+          "principalTable": "AssetTypes",
+          "principalColumns": [
+            "Id"
+          ]
+        }
+      ],
+      "uniqueKeys": []
+    },
+    {
+      "name": "AssetLocations",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "IsArchived",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Name",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 100,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "SortOrder",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [],
+      "uniqueKeys": []
+    },
+    {
+      "name": "AssetTypes",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "CountUnitName",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 40,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Dimension",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Divisible",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Icon",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 64,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "IsArchived",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Kind",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Metal",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Name",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 100,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Note",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 1000,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "PriceCurrencyCode",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 3,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "PurityPer10000",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "SortOrder",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "UnitWeightMg",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [],
+      "uniqueKeys": []
+    },
+    {
+      "name": "AssetValuations",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "AssetTypeId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CurrencyCode",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 3,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Date",
+          "kind": "date",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Note",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 200,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "PricePerUnitMilli",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Source",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "AssetTypeId"
+          ],
+          "principalTable": "AssetTypes",
+          "principalColumns": [
+            "Id"
+          ]
+        }
+      ],
+      "uniqueKeys": []
+    },
+    {
+      "name": "Attachments",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "ContentType",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 100,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Data",
+          "kind": "blob",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "EntryId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "FileName",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 200,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [],
+      "uniqueKeys": []
+    },
+    {
+      "name": "BudgetCategoryLimits",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "BudgetId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CategoryId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Limit",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [
+        "BudgetId",
+        "CategoryId"
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "BudgetId"
+          ],
+          "principalTable": "Budgets",
+          "principalColumns": [
+            "Id"
+          ]
+        }
+      ],
+      "uniqueKeys": []
+    },
+    {
+      "name": "Budgets",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "AccountIds",
+          "kind": "json-guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "AlertsEnabled",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Calendar",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CurrencyCode",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 3,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Method",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Month",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Period",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "PeriodStart",
+          "kind": "date",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Rollover",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "TotalLimit",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Year",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [],
+      "uniqueKeys": [
+        {
+          "columns": [
+            "Period",
+            "Year",
+            "Month",
+            "PeriodStart",
+            "Calendar",
+            "CurrencyCode"
+          ],
+          "fullSettlementOnly": false
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "Color",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 9,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Icon",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 64,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "IsArchived",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "IsEssential",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Kind",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Name",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 100,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ParentId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "SortOrder",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "SpendingType",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "SystemKey",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 64,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "ParentId"
+          ],
+          "principalTable": "Categories",
+          "principalColumns": [
+            "Id"
+          ]
+        }
+      ],
+      "uniqueKeys": []
+    },
+    {
+      "name": "CategoryRules",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "CategoryId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Kind",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Match",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 100,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [],
+      "uniqueKeys": []
+    },
+    {
+      "name": "ContributionPlans",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "Amount",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "AssumedPricePerUnitMilli",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Calendar",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "CategoryIds",
+          "kind": "json-guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Count",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "DayRule",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "EndDate",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "EndKind",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Frequency",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "GoalId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "HolidayRegion",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 8,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Interval",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Method",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "MissingDay",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Percent",
+          "kind": "decimal",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ReminderEnabled",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "SecondDay",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Start",
+          "kind": "date",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "WeekendDays",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "WeekendShift",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "GoalId"
+          ],
+          "principalTable": "Goals",
+          "principalColumns": [
+            "Id"
+          ]
+        }
+      ],
+      "uniqueKeys": [
+        {
+          "columns": [
+            "GoalId"
+          ],
+          "fullSettlementOnly": false
+        }
+      ]
+    },
+    {
+      "name": "Entries",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "AccountId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "AggregatedFrom",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "AggregatedTo",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Amount",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CategoryId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Date",
+          "kind": "date",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Direction",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "GroupId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Icon",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 64,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ImportBatchId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "IsAggregated",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "IsPartialPayment",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Kind",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Note",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 4000,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "OccurrenceDate",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "OriginalAmount",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "OriginalCurrencyCode",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 3,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Payee",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 200,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "RefundOfId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ReimbursableAmount",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ReimbursedBy",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 200,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ReimbursementDueDate",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Review",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "ScheduleId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Source",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Tags",
+          "kind": "json-string",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Title",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 200,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ToAccountId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ToAmount",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "AccountId"
+          ],
+          "principalTable": "Accounts",
+          "principalColumns": [
+            "Id"
+          ]
+        },
+        {
+          "columns": [
+            "ToAccountId"
+          ],
+          "principalTable": "Accounts",
+          "principalColumns": [
+            "Id"
+          ]
+        },
+        {
+          "columns": [
+            "CategoryId"
+          ],
+          "principalTable": "Categories",
+          "principalColumns": [
+            "Id"
+          ]
+        },
+        {
+          "columns": [
+            "RefundOfId"
+          ],
+          "principalTable": "Entries",
+          "principalColumns": [
+            "Id"
+          ]
+        }
+      ],
+      "uniqueKeys": [
+        {
+          "columns": [
+            "ScheduleId",
+            "OccurrenceDate"
+          ],
+          "fullSettlementOnly": true
+        }
+      ]
+    },
+    {
+      "name": "ExchangeRates",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Date",
+          "kind": "date",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "FromCurrencyCode",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 3,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "IsEstimate",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Rate",
+          "kind": "decimal",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ToCurrencyCode",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 3,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [],
+      "uniqueKeys": [
+        {
+          "columns": [
+            "Date",
+            "FromCurrencyCode",
+            "ToCurrencyCode"
+          ],
+          "fullSettlementOnly": false
+        }
+      ]
+    },
+    {
+      "name": "ForecastSnapshots",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "AccountIds",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "AppVersion",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 40,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Assumptions",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 2000,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "BaseDate",
+          "kind": "date",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CurrencyCode",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 3,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Horizon",
+          "kind": "date",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Minimum",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "MinimumDate",
+          "kind": "date",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Name",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 100,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Path",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "UnknownCount",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [],
+      "uniqueKeys": []
+    },
+    {
+      "name": "GoalAllocations",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "AccountId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Amount",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Date",
+          "kind": "date",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "GoalId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Note",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 200,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [],
+      "uniqueKeys": []
+    },
+    {
+      "name": "Goals",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "AccountId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "AssetTypeId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CompletedAt",
+          "kind": "ticks",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CurrencyCode",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 3,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Frequency",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "HomePin",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Icon",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 64,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "LocationId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Name",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 100,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Note",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 1000,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "PausedAt",
+          "kind": "ticks",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Priority",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Protect",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "State",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "TargetAmount",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "TargetDate",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Type",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "AccountId"
+          ],
+          "principalTable": "Accounts",
+          "principalColumns": [
+            "Id"
+          ]
+        }
+      ],
+      "uniqueKeys": []
+    },
+    {
+      "name": "OccurrenceStates",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "Amount",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "AutoPostSuppressed",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "DueDate",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "EntryId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Note",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 4000,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "OriginalDate",
+          "kind": "date",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "PaidAmount",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ScheduleId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Status",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "ScheduleId"
+          ],
+          "principalTable": "Schedules",
+          "principalColumns": [
+            "Id"
+          ]
+        }
+      ],
+      "uniqueKeys": [
+        {
+          "columns": [
+            "ScheduleId",
+            "OriginalDate"
+          ],
+          "fullSettlementOnly": false
+        }
+      ]
+    },
+    {
+      "name": "SavedFilters",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "AccountId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CategoryIds",
+          "kind": "json-guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CategoryName",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 200,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "From",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "InTotalsOnly",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Kind",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Name",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 60,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Period",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Search",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 200,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "SortOrder",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "To",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "UnreviewedOnly",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [],
+      "uniqueKeys": []
+    },
+    {
+      "name": "Schedules",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "AccountId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ActiveFrom",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ActiveUntil",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Amount",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "AmountMode",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "AutoPost",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "AutoPostFrom",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Calendar",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "CancellationDeadline",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CategoryId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ContractEnd",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ContractProvider",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 200,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ContractReference",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 100,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ContractRenews",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Count",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "DayRule",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "EndDate",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "EndKind",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Frequency",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "HolidayRegion",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 8,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Icon",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 64,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Interval",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Kind",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "MissingDay",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Name",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 200,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Note",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 4000,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "PausedFrom",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "PreviousScheduleId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ReminderDaysBefore",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "ReminderEnabled",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ReminderOnDueDate",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ReminderTime",
+          "kind": "time",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ReviewDate",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "SecondDay",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Start",
+          "kind": "date",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "State",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "ToAccountId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ToAmount",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "WeekendDays",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "WeekendShift",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "AccountId"
+          ],
+          "principalTable": "Accounts",
+          "principalColumns": [
+            "Id"
+          ]
+        },
+        {
+          "columns": [
+            "ToAccountId"
+          ],
+          "principalTable": "Accounts",
+          "principalColumns": [
+            "Id"
+          ]
+        },
+        {
+          "columns": [
+            "CategoryId"
+          ],
+          "principalTable": "Categories",
+          "principalColumns": [
+            "Id"
+          ]
+        }
+      ],
+      "uniqueKeys": []
+    },
+    {
+      "name": "Settings",
+      "singleton": true,
+      "columns": [
+        {
+          "name": "BudgetCalendar",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "DefaultAccountId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "DefaultCurrencyCode",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 3,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "DisplayUnits",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 2000,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "EssentialEstimate",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "EssentialEstimateCurrency",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 3,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "EssentialEstimatePeriod",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "FortnightStart",
+          "kind": "date",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "HomeBudgetCurrencyCode",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 3,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "HomeLayout",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 500,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Mode",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "MonthStartDay",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "RateFreshnessDays",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "ReportCurrencyCode",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 3,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ReviewProgress",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 200,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ValuationCurrencyEnabled",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [],
+      "foreignKeys": [],
+      "uniqueKeys": []
+    },
+    {
+      "name": "Templates",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "AccountId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Amount",
+          "kind": "integer",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CategoryId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Icon",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 64,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Kind",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Name",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 60,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Payee",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 200,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "SortOrder",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Title",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 200,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ToAccountId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [],
+      "uniqueKeys": []
+    }
+  ]
+}

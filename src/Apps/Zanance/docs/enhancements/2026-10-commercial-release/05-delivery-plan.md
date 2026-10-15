@@ -10,6 +10,26 @@ The owner approved D-62 maintenance (ZCR-LOC-11) on 2026-10-08 before continuing
 That maintenance approval covered only backup, first run and About. The later D-69 continuation authorizes ready
 planned sections; unresolved choices still require owner decisions.
 
+## Active execution order (owner continuation, 2026-10-15)
+
+Deliver each complete batch through implementation, focused qualification, current documentation and one verified
+commit/push. Do not repeat successful unchanged checks. Existing D-292 files/fixtures are retained; no new helper
+slice is a delivery. Historical proposals and handoff notes below do not reopen settled decisions.
+
+| Order | Complete batch | Completion evidence / dependencies |
+|---|---|---|
+| 1 | Finish personal sync D-292 | Final domain/protocol review; original protected Windows/Android and two-client evidence; focused new cases, then final complete-suite/build/UI/APK gates; publish the complete batch |
+| 2 | Current-machine container deployment | Isolated API/PostgreSQL/private storage, persistent protected keys, migrations, health, backup/restore and TLS; verify concrete public routing under vafadar.pro before exposure |
+| 3 | Local household sharing | E2EE from first delivery, invitations/roles, member key rotation/revocation/recovery, selective sharing and approved 30+90-day expiry; real independent clients |
+| 4 | Billing and future-web prerequisites | Android/iOS adapters and sandbox lifecycle, trial/discounts, verified identity-bound grants independent of distribution; web checkout and commercial Windows excluded |
+| 5 | German tax preparation | Accountant export, current-year employee/freelancer scope; expert review required before official calculations, no filing; other countries labelled without an ETA |
+| 6 | Approved import and provider prerequisites | German bank research/import first, then USA and other markets; local AI consent/credits and rates/source/cache/manual fallback; no unapproved live provider or spending |
+| 7 | Final platform/release qualification | Existing six languages, physical-device/accessibility/performance and actual Mac/iOS environment; provider/account/signing/expert gates remain explicit; production publication only after readiness |
+
+Windows commercial delivery, additional languages and live web checkout remain future work outside this current
+execution list. Continue independent approved implementation when an external gate is unavailable; never label the
+gated capability complete. No completion date or acceptance is inferred from a build or CI result.
+
 ## Waves (dependency order)
 
 | Wave | Content | Exit criterion |
@@ -19,11 +39,11 @@ planned sections; unresolved choices still require owner decisions.
 | 2 | Release-critical local gaps: owner's bug list, ZEX leftovers (LOC-02…05), recurring entry point, import presets, device runs, accessibility, app tests, performance | All P1 of wave 2 Done or explicitly deferred by the owner |
 | 3 | Plan policy and quotas (ENT-01…05), optional identity and backend foundation (ID-01); no real sale | Policy tests for every combination; enforcement switched off in release until wave 6 |
 | 4 | Personal sync (SYNC-01…03) | Two-device conflict and idempotency tests pass |
-| 5 | Shared space, roles, member lifecycle (SHR-01…04) | Authorization tests per request/resource pass |
+| 5 | Approved local shared space, E2EE from first delivery, roles and member/key lifecycle (SHR-01…04) | Authorization, key distribution/revocation/recovery and financial invariant tests pass |
 | 6 | Billing in sandbox, restore/refund/upgrade, trial, offers, Lifetime, paywall, end of plan (BIL-01…05) | Sandbox matrix passes; production only by the owner |
 | 7 | First approved Tax scope (TAX-02/03) or its own near milestone | Official examples pass; expert review recorded |
 | 8 | Other approved release features; online rates/bank/AI only with approved scope and cost | Per item |
-| 9 | **Last feature wave: at least 20 additional languages** | Display, calendars, numbers and receipts checked per language |
+| 9 | Deferred outside current delivery: additional languages | No current release dependency; polish the existing six languages |
 | 10 | Final QA, bug fixes, store metadata, staged rollout; no new features | Release checklist complete |
 
 Deviations: Tax research and service-cost estimates start in wave 0 because they can change the plan; the
@@ -32,6 +52,31 @@ owner asked for it before release and it does not depend on the commercial waves
 in every wave.
 
 ## Release gates
+
+### Owner-approved scope update (2026-10-15, D-292 in progress)
+
+The consolidated decisions in [06-open-decisions.md](06-open-decisions.md) supersede older proposals.
+Finish the current complete personal-sync batch before the next substantial implementation batch.
+Prepare the isolated current-machine Docker service deployment under vafadar.pro with real health,
+protected persistent keys, migration, quiesced backup/restore and public-routing checks; do not
+publish the current loopback-only prototype by bypassing its environment or TLS guards.
+Then deliver approved household functionality with E2EE built into membership/key/recovery design.
+Bank-format research starts with Germany, then USA and remaining approved markets; it does not
+authorize live bank access. AI/rate provider prerequisites proceed without choosing paid providers.
+
+Billing targets Android/iOS now. Model verified purchase origin independently of app installation:
+Pro and future web grants follow Zanance identity across distribution stores; store-origin
+Plus/Lifetime remain per store. Future web checkout/payment-provider integration is outside this
+delivery; identity/verification/replay/revocation prerequisites belong in the current billing batch.
+Windows commercial delivery is an unscheduled future direction outside the current work list;
+existing Windows development, build, UI and data checks remain. Extra languages are also deferred
+outside this delivery, superseding the earlier minimum-twenty expansion for wave 9.
+
+Tax starts with Germany/current year/accountant export, followed by expert-reviewed calculations.
+Other approved countries may be shown as being added, without an ETA or active unsupported rules.
+The owner reports a prepared recent MacBook Air; verify and execute iOS work in its actual clone/
+environment when reached. Apple account/signing, physical-device and provider acceptance remain
+evidence gates, without another request to approve the already selected product scope.
 
 1. Security gate (after wave 1): database encryption, recovery and migration tested; privacy matrix updated.
 2. Local release gate (after wave 2): device acceptance runs, accessibility checklist, performance numbers.
@@ -1606,3 +1651,15 @@ explicit conflicts without guessed amounts, idempotency, safe restore and device
 ZCR-SYNC-01..03 is the next complete implementation batch; paid hosting, household sharing and
 commercial activation remain separate gates. This decision is recorded, not implemented by D-291.
 See ../../quality/android-loaded-home.md for exact evidence, boundaries and retained failures.
+
+## D-292 local personal synchronization delivered
+
+ZCR-SYNC-01..03 now has complete local implementation and qualification: actual owner/device/profile service,
+transactional original SQLite journals and complete graph validation, explicit related financial decisions,
+idempotency, safe restore, resumable protected attachments, status/lifetime and revocation. Final native Windows
+first-run/comparison matrix is 36 contexts; original Android native evidence is retained; strict current main builds
+and complete signed APK pass. Managed coverage is 3,690 through focused continuation, not a repeated full suite.
+See ../../quality/local-personal-sync.md for exact current artifact, retained failures and acceptance boundaries.
+One delayed hosted CI check follows push. Continue directly with the approved isolated current-machine Docker/
+vafadar.pro deployment batch, then household E2EE and the consolidated delivery order above. Commercial Windows,
+extra languages and actual future web checkout remain outside current delivery; product/release gates remain open.

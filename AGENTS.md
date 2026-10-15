@@ -23,11 +23,18 @@ live in the linked guides. When the owner sets a new rule, add it here in the sa
 * **Everything in the repository is English**: code, comments, documentation, commit messages, file names.
 * Ask only when a decision is really the owner's (money, publishing, identities, third-party downloads, product
   direction, changes to an approved design). Otherwise choose sensibly, do the work and report what was decided.
+* Consolidate foreseeable owner decisions into one questionnaire with context, possible options and a reasoned
+  recommendation. Do not ask settled choices again or stop already approved work for unanswered future gates.
+  A new material spending, publication or product decision still requires its own explicit approval.
 * On 2026-10-14 the owner requested one large end-to-end delivery at a time: plan the remaining
   batches first, implement the whole batch, then perform its final checks. Do not finish another
   isolated helper slice or repeat successful unrelated verification.
 * During approved continuous delivery, prioritize ready code changes and actual observed defects. Repeat or broaden
   verification only after a change, failure or unresolved concern; do not replace delivery with more planning.
+* On 2026-10-15 the owner requested batching foreseeable owner questions into one questionnaire:
+  explain each decision, list practical alternatives, and recommend one with a reason. Reuse settled
+  answers and continue already authorized independent work; ask later only for genuinely new decisions
+  or concrete external actions that cannot be decided from the collected answers.
 * Report honestly: what was verified and how, what was not, and what failed. Never call something fixed before it was
   checked in the running app.
 
@@ -67,7 +74,9 @@ live in the linked guides. When the owner sets a new rule, add it here in the sa
 * Never read, type, paste or write license keys, passwords or tokens for the owner, not even when asked: the owner
   enters them personally (local secrets file, GitHub secrets, store consoles, keystores).
 * Never create accounts or sign in on the owner's behalf (Play Console, App Store, Microsoft Entra, Google Cloud).
-* Ask before downloading anything that is not restored by the build itself (tools, SDKs, installers, files).
+* The owner approved free necessary tools/dependencies from official sources on 2026-10-15 after security/licence
+  review, including downloads outside build restore. Global installation, system configuration, new accounts,
+  spending and downloads outside that scope still require separate approval.
 * The Syncfusion license (Essential Studio Enterprise, community license) is registered once in `Vafadar.Maui`
   (`SyncfusionLicense.Register`); every MAUI app gets the key automatically. `Vafadar.SyncfusionLicense.Tests`
   validates it and the release workflow requires it.
@@ -277,6 +286,21 @@ repository.
   and certificate (D-50/AT-59), including Entra iOS; a verified Mac/Xcode and Apple signing setup for the iOS app build;
   tests on a physical device; a competitor
   and user-feedback review of reports and KPIs (postponed by the owner).
+
+### Consolidated current delivery decisions (2026-10-15, D-292 in progress)
+
+The approved questionnaire and exceptions are authoritative in commercial-release/06-open-decisions.md.
+Complete personal sync first, then approved local household functionality with E2EE from its first delivery.
+Prepare Android/iOS purchases; commercial Windows delivery is a future unscheduled direction outside the current
+work list, while existing Windows development/checks remain. Separate purchase authority from download store:
+future web grants belong to Zanance identity across platforms; implement prerequisites now, checkout/provider later.
+Use the existing machine's Docker Desktop for isolated app/service dependencies and vafadar.pro initially;
+do not reuse another project's containers, network, volumes, accounts or credentials. Verify public DNS/TLS and
+runtime restore before exposure. No paid hosting is authorized. Germany tax/accountant export comes first,
+then individual target-country additions without an ETA or unsupported-calculation claims. Research original
+bank formats beginning with widely used German banks, then USA and other target markets. Keep the existing
+six languages; extra languages are deferred outside this delivery. The owner reports a recent prepared MacBook
+Air; verify/build/test within its actual environment when available. Never infer remote access or signing readiness.
 
 ## 13. Large-text review (D-77 / D-78)
 

@@ -6,6 +6,34 @@ public static class DocumentImages
     /// <summary>The recognition edge limit; separate from an app's smaller attachment limit.</summary>
     public const int RecognitionEdge = 3200;
 
+    /// <summary>Reads dimensions of an already bounded encoded preview, without decoding an unbounded source image.</summary>
+    public static async Task<(int Width, int Height)> ReadPreviewSizeAsync(byte[] data)
+    {
+        ArgumentNullException.ThrowIfNull(data);
+#if ANDROID
+        using var bounds = new Android.Graphics.BitmapFactory.Options { InJustDecodeBounds = true };
+        Android.Graphics.BitmapFactory.DecodeByteArray(data, 0, data.Length, bounds);
+        await Task.CompletedTask;
+        var width = bounds.OutWidth; var height = bounds.OutHeight;
+#elif WINDOWS
+        using var stream = new global::Windows.Storage.Streams.InMemoryRandomAccessStream();
+        using (var writer = new global::Windows.Storage.Streams.DataWriter(stream.GetOutputStreamAt(0)))
+        { writer.WriteBytes(data); await writer.StoreAsync(); await writer.FlushAsync(); writer.DetachStream(); }
+        stream.Seek(0); var decoder = await global::Windows.Graphics.Imaging.BitmapDecoder.CreateAsync(stream);
+        var width = checked((int)decoder.PixelWidth); var height = checked((int)decoder.PixelHeight);
+#elif IOS || MACCATALYST
+        using var encoded = Foundation.NSData.FromArray(data); using var image = UIKit.UIImage.LoadFromData(encoded);
+        await Task.CompletedTask;
+        var width = checked((int)(image?.CGImage?.Width ?? 0)); var height = checked((int)(image?.CGImage?.Height ?? 0));
+#else
+        await Task.CompletedTask;
+        var width = 0; var height = 0;
+#endif
+        if (width <= 0 || height <= 0 || Math.Max(width, height) > RecognitionEdge)
+            throw new InvalidDataException("The bounded preview dimensions are invalid.");
+        return (width, height);
+    }
+
     /// <summary>
     /// Re-encodes pixels, respecting all EXIF orientations. Size is read before decoding; camera originals are never
     /// decoded without a pixel bound or returned as a fallback that could retain location metadata.

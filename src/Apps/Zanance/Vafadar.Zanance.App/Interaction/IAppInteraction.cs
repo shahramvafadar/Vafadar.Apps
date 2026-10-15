@@ -25,6 +25,10 @@ public interface IAppInteraction
 /// <summary>Window transitions at the end of profile/onboarding flows.</summary>
 public interface IAppFlowHost
 {
+    /// <summary>Gets whether this edition offers optional personal sync at first run.</summary>
+    bool PersonalSyncAvailable { get; }
+    /// <summary>Opens optional personal sync without creating a financial account or saving wizard drafts.</summary>
+    Task RestoreSyncedOnboardingAsync();
     /// <summary>Opens first-run restore without creating an account or committing the draft preferences.</summary>
     Task RestoreOnboardingAsync();
 

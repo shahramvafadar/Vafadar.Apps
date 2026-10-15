@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Vafadar.Zanance.App.Features.Sync.PersonalSyncPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
+    xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Sync"
+    xmlns:sync="clr-namespace:Vafadar.Zanance.Core.Sync;assembly=Vafadar.Zanance.Core"
+    x:DataType="local:PersonalSyncViewModel"
+    Title="{v:Translate Sync_Title}">
+    <ContentPage.Resources>
+        <local:PersonalSyncPreviewImageConverter x:Key="PreviewImage" />
+    </ContentPage.Resources>
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="12">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Label Text="{v:Translate Sync_Title}" Style="{StaticResource SectionHeader}" />
+                    <v:HelpButton Grid.Column="1" Topic="PersonalSync" />
+                </Grid>
+                <Label Text="{v:Translate Sync_Intro}" Style="{StaticResource Secondary}" />
+                <Label Text="{v:Translate Sync_EditionUnavailable}" IsVisible="{Binding Available, Converter={StaticResource InvertedBoolConverter}}" />
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+                <Label Text="{Binding Error}" Style="{StaticResource ErrorText}"
+                       IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+                <p:WrappingAction Text="{v:Translate Sync_Reload}" Command="{Binding ReloadCommand}"
+                                  IsVisible="{Binding Available}" IsEnabled="{Binding CanRead}" />
+                <Border x:Name="AttachmentPreviewPanel" Style="{StaticResource Card}" IsVisible="{Binding HasAttachmentPreview}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{Binding AttachmentPreviewTitle}" Style="{StaticResource SectionHeader}" />
+                        <Label Text="{Binding AttachmentPreviewPosition}" />
+                        <ScrollView x:Name="AttachmentImageViewport" Orientation="Both" HeightRequest="480">
+                            <Image Source="{Binding AttachmentPreview, Converter={StaticResource PreviewImage}}" Aspect="AspectFit"
+                                   WidthRequest="{Binding AttachmentImageWidth}" HeightRequest="{Binding AttachmentImageHeight}"
+                                   SemanticProperties.Description="{Binding AttachmentPreviewTitle}" />
+                        </ScrollView>
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                            <p:WrappingAction Text="{v:Translate Sync_AttachmentZoomOut}" Command="{Binding PreviewZoomOutCommand}" IsEnabled="{Binding CanPreviewZoomOut}" />
+                            <p:WrappingAction Grid.Column="1" Text="{v:Translate Sync_AttachmentZoomIn}" Command="{Binding PreviewZoomInCommand}" IsEnabled="{Binding CanPreviewZoomIn}" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                            <p:WrappingAction Text="{v:Translate Sync_AttachmentPrevious}" Command="{Binding PreviewPreviousCommand}" IsEnabled="{Binding CanPreviewPrevious}" />
+                            <p:WrappingAction Grid.Column="1" Text="{v:Translate Sync_AttachmentNext}" Command="{Binding PreviewNextCommand}" IsEnabled="{Binding CanPreviewNext}" />
+                        </Grid>
+                        <p:WrappingAction Text="{v:Translate Sync_AttachmentClose}" Command="{Binding CloseAttachmentPreviewCommand}" IsEnabled="{Binding CanLeave}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- The initial snapshot owns this cover; no default paused status or account action leaks through it. -->
+                <VerticalStackLayout Spacing="12" IsVisible="{Binding IsReady}" IsEnabled="{Binding CanInteract}">
+                    <Border Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="{Binding StatusText}" FontAttributes="Bold" />
+                            <Label Text="{Binding DetailText}" Style="{StaticResource Secondary}" />
+                            <Label Text="{Binding AutomaticError}" Style="{StaticResource ErrorText}"
+                                   IsVisible="{Binding AutomaticError, Converter={StaticResource IsNotNullConverter}}" />
+                            <p:WrappingAction Text="{v:Translate Sync_Now}" Appearance="Primary"
+                                              Command="{Binding SynchronizeCommand}" IsEnabled="{Binding CanSync}" />
+                            <p:WrappingAction Text="{v:Translate Sync_Pause}" Command="{Binding PauseCommand}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="{v:Translate Sync_Address}" />
+                            <Entry Text="{Binding Address}" Keyboard="Url" SemanticProperties.Description="{v:Translate Sync_Address}" />
+                            <Label Text="{v:Translate Sync_Fingerprint}" />
+                            <Editor Text="{Binding Fingerprint}" AutoSize="TextChanges"
+                                    SemanticProperties.Description="{v:Translate Sync_Fingerprint}" />
+                            <Label Text="{v:Translate Sync_Email}" />
+                            <Entry Text="{Binding Email}" Keyboard="Email" SemanticProperties.Description="{v:Translate Sync_Email}" />
+                            <Label Text="{v:Translate Sync_Password}" />
+                            <Entry Text="{Binding Password}" IsPassword="True" IsTextPredictionEnabled="False"
+                                   SemanticProperties.Description="{v:Translate Sync_Password}" />
+                            <Label Text="{v:Translate Sync_DeviceName}" />
+                            <Entry Text="{Binding DeviceName}" MaxLength="100" SemanticProperties.Description="{v:Translate Sync_DeviceName}" />
+                            <p:WrappingAction Text="{v:Translate Sync_SignIn}" Command="{Binding SignInCommand}" />
+                            <p:WrappingAction Text="{v:Translate Sync_Discover}" Command="{Binding DiscoverCommand}" />
+                            <p:WrappingAction Text="{v:Translate Sync_SignOut}" Command="{Binding SignOutCommand}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <VerticalStackLayout Spacing="12" IsVisible="{Binding SignedIn}">
+                        <Border Style="{StaticResource Card}" IsVisible="{Binding IsOnboardingRestore, Converter={StaticResource InvertedBoolConverter}}">
+                            <VerticalStackLayout Spacing="8">
+                                <Label Text="{v:Translate Sync_NewSpace}" />
+                                <Entry Text="{Binding NewProfileName}" MaxLength="100" SemanticProperties.Description="{v:Translate Sync_NewSpace}" />
+                                <p:WrappingAction Text="{v:Translate Sync_Create}" Command="{Binding CreateProfileCommand}" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Label Text="{v:Translate Sync_NoProfiles}" Style="{StaticResource Secondary}" IsVisible="{Binding NoProfiles}" />
+                        <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Profiles}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="sync:SyncProfile">
+                                    <Border Style="{StaticResource Card}">
+                                        <VerticalStackLayout Spacing="8">
+                                            <Label Text="{Binding Name}" FontAttributes="Bold" />
+                                            <p:WrappingAction Text="{v:Translate Sync_Connect}" CommandParameter="{Binding .}"
+                                                Command="{Binding ConnectCommand, Source={RelativeSource AncestorType={x:Type local:PersonalSyncViewModel}}, x:DataType=local:PersonalSyncViewModel}" />
+                                            <p:WrappingAction Text="{v:Translate Sync_InitializationRecover}" CommandParameter="{Binding .}" IsVisible="{Binding Initializing}"
+                                                Command="{Binding RecoverInitializationCommand, Source={RelativeSource AncestorType={x:Type local:PersonalSyncViewModel}}, x:DataType=local:PersonalSyncViewModel}" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <Label Text="{v:Translate Sync_Devices}" Style="{StaticResource SectionHeader}" />
+                        <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding DeviceItems}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:PersonalSyncDeviceItem">
+                                    <Border Style="{StaticResource Card}">
+                                        <VerticalStackLayout Spacing="8">
+                                            <Label Text="{Binding Name}" FontAttributes="Bold" />
+                                            <Label Text="{Binding Detail}" Style="{StaticResource Secondary}" />
+                                            <p:WrappingAction Text="{v:Translate Sync_Revoke}" Appearance="Destructive" IsEnabled="{Binding CanRevoke}"
+                                                CommandParameter="{Binding Source}"
+                                                Command="{Binding RevokeCommand, Source={RelativeSource AncestorType={x:Type local:PersonalSyncViewModel}}, x:DataType=local:PersonalSyncViewModel}" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                    <Border Style="{StaticResource Card}" IsVisible="{Binding HasConflicts}">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="{v:Translate Sync_Conflicts}" Style="{StaticResource SectionHeader}" />
+                            <Label Text="{v:Translate Sync_ReviewHint}" />
+                            <Label Text="{v:Translate Sync_ReviewScrollHint}" Style="{StaticResource Secondary}" />
+                            <VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding ReviewItems}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="local:PersonalSyncConflictItem">
+                                        <VerticalStackLayout Spacing="8">
+                                            <Label Text="{Binding Title}" FontAttributes="Bold" />
+                                            <Label Text="{Binding Reason}" />
+                                            <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Versions}">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate x:DataType="local:PersonalSyncReviewVersion">
+                                                        <Border Style="{StaticResource Card}">
+                                                            <VerticalStackLayout Spacing="8">
+                                                                <Label Text="{Binding Heading}" FontAttributes="Bold" />
+                                                                <Label Text="{Binding State}" />
+                                                                <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Fields}">
+                                                                    <BindableLayout.ItemTemplate>
+                                                                        <DataTemplate x:DataType="local:PersonalSyncReviewField">
+                                                                            <VerticalStackLayout Spacing="2">
+                                                                                <Label Text="{Binding Caption}" Style="{StaticResource Secondary}" />
+                                                                                <ScrollView Orientation="Horizontal">
+                                                                                    <Label Text="{Binding Value}" LineBreakMode="NoWrap" />
+                                                                                </ScrollView>
+                                                                            </VerticalStackLayout>
+                                                                        </DataTemplate>
+                                                                    </BindableLayout.ItemTemplate>
+                                                                </VerticalStackLayout>
+                                                            </VerticalStackLayout>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </VerticalStackLayout>
+                                            <Label Text="{Binding Hint}" Style="{StaticResource Secondary}"
+                                                   IsVisible="{Binding Hint, Converter={StaticResource IsNotNullConverter}}" />
+                                            <Label Text="{v:Translate Sync_AttachmentReviewHint}" IsVisible="{Binding IsAttachment}" />
+                                            <p:WrappingAction Text="{v:Translate Sync_AttachmentPreviewLocal}" IsVisible="{Binding CanPreviewLocal}"
+                                                CommandParameter="{Binding Review}"
+                                                Command="{Binding PreviewLocalCommand, Source={RelativeSource AncestorType={x:Type local:PersonalSyncViewModel}}, x:DataType=local:PersonalSyncViewModel}" />
+                                            <p:WrappingAction Text="{v:Translate Sync_AttachmentPreviewRemote}" IsVisible="{Binding CanPreviewRemote}"
+                                                CommandParameter="{Binding Review}"
+                                                Command="{Binding PreviewRemoteCommand, Source={RelativeSource AncestorType={x:Type local:PersonalSyncViewModel}}, x:DataType=local:PersonalSyncViewModel}" />
+                                            <p:WrappingAction Text="{Binding LocalAction}" IsEnabled="{Binding CanChooseLocal}"
+                                                CommandParameter="{Binding Review}"
+                                                Command="{Binding KeepLocalCommand, Source={RelativeSource AncestorType={x:Type local:PersonalSyncViewModel}}, x:DataType=local:PersonalSyncViewModel}" />
+                                            <p:WrappingAction Text="{Binding RemoteAction}" IsEnabled="{Binding CanChooseRemote}"
+                                                CommandParameter="{Binding Review}"
+                                                Command="{Binding KeepRemoteCommand, Source={RelativeSource AncestorType={x:Type local:PersonalSyncViewModel}}, x:DataType=local:PersonalSyncViewModel}" />
+                                        </VerticalStackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                            <p:WrappingAction Text="{v:Translate Sync_Restart}" Command="{Binding RestartReviewCommand}" IsEnabled="{Binding CanConnect}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+        <!-- Cancellation remains reachable independently of the disabled scroll form. -->
+        <VerticalStackLayout Grid.Row="1" Margin="16,8" Spacing="8" IsVisible="{Binding ShowFooter}">
+            <p:WrappingAction Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" IsVisible="{Binding IsBusy}" />
+            <p:WrappingAction Text="{v:Translate Sync_FirstRunFinish}" Appearance="Primary" Command="{Binding FinishOnboardingCommand}"
+                              IsVisible="{Binding IsOnboardingRestore}" IsEnabled="{Binding CanFinishOnboarding}" />
+            <p:WrappingAction Text="{v:Translate Sync_FirstRunBack}" Command="{Binding CloseOnboardingCommand}"
+                              IsVisible="{Binding IsOnboardingRestore}" IsEnabled="{Binding CanCloseOnboarding}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

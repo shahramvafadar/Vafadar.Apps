@@ -11,7 +11,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
     public partial class ZananceDbContextModel
     {
         private ZananceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("44588a9b-3c44-428a-b8d2-6b979fbb103b"), entityTypeCount: 25)
+            : base(skipDetectChanges: false, modelId: new Guid("52b52505-f226-42ca-9c03-79a4752ddc7c"), entityTypeCount: 33)
         {
         }
 
@@ -42,6 +42,14 @@ namespace Vafadar.Zanance.Data.CompiledModel
             var zananceSettings = ZananceSettingsEntityType.Create(this);
             var storedResourceSelection = StoredResourceSelectionEntityType.Create(this);
             var importLinkBatch = ImportLinkBatchEntityType.Create(this);
+            var syncBindingRow = SyncBindingRowEntityType.Create(this);
+            var syncBlobPart = SyncBlobPartEntityType.Create(this);
+            var syncBlobTransfer = SyncBlobTransferEntityType.Create(this);
+            var syncClientRound = SyncClientRoundEntityType.Create(this);
+            var syncConflictRow = SyncConflictRowEntityType.Create(this);
+            var syncIncomingRow = SyncIncomingRowEntityType.Create(this);
+            var syncKnownRow = SyncKnownRowEntityType.Create(this);
+            var syncOutboxRow = SyncOutboxRowEntityType.Create(this);
 
             BudgetCategoryLimitEntityType.CreateForeignKey1(budgetCategoryLimit, budget);
             CategoryEntityType.CreateForeignKey1(category, category);
@@ -87,6 +95,14 @@ namespace Vafadar.Zanance.Data.CompiledModel
             ZananceSettingsEntityType.CreateAnnotations(zananceSettings);
             StoredResourceSelectionEntityType.CreateAnnotations(storedResourceSelection);
             ImportLinkBatchEntityType.CreateAnnotations(importLinkBatch);
+            SyncBindingRowEntityType.CreateAnnotations(syncBindingRow);
+            SyncBlobPartEntityType.CreateAnnotations(syncBlobPart);
+            SyncBlobTransferEntityType.CreateAnnotations(syncBlobTransfer);
+            SyncClientRoundEntityType.CreateAnnotations(syncClientRound);
+            SyncConflictRowEntityType.CreateAnnotations(syncConflictRow);
+            SyncIncomingRowEntityType.CreateAnnotations(syncIncomingRow);
+            SyncKnownRowEntityType.CreateAnnotations(syncKnownRow);
+            SyncOutboxRowEntityType.CreateAnnotations(syncOutboxRow);
 
             AddAnnotation("ProductVersion", "10.0.12");
         }

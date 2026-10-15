@@ -19,7 +19,8 @@ namespace Vafadar.Data;
 /// finally applies EF Core migrations, so a backup from an older app version is upgraded to the current schema.
 /// </para>
 /// </remarks>
-public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TContext> contextFactory) : IBackupSource
+public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TContext> contextFactory,
+    ISqlitePortableSnapshotPolicy? portablePolicy = null) : IBackupSource
     where TContext : DbContext
 {
     /// <summary>The name of the database entry in backup packages.</summary>
@@ -53,7 +54,8 @@ public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TCont
                 Check();
                 await context.Database.OpenConnectionAsync(cancellationToken);
                 Check();
-                await SqlCipherPortableSnapshot.WriteAsync(captured, destination, MaximumProtectedSnapshotBytes, Check, cancellationToken);
+                await SqlCipherPortableSnapshot.WriteAsync(captured, destination, MaximumProtectedSnapshotBytes, Check, cancellationToken,
+                    portablePolicy is null ? null : portablePolicy.PrepareAsync);
                 return;
             }
             snapshotPath = CreateTemporaryPath();
@@ -63,6 +65,14 @@ public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TCont
                 await snapshot.OpenAsync(cancellationToken);
                 verifyAccess?.Invoke(context);
                 ((SqliteConnection)context.Database.GetDbConnection()).BackupDatabase(snapshot);
+                if (portablePolicy is not null)
+                {
+                    await portablePolicy.PrepareAsync(snapshot, "main", cancellationToken);
+                    // Online backup copies existing free pages too. Rebuild only this owned plaintext
+                    // copy so historical device metadata cannot survive in its original freelist.
+                    await using var compact = snapshot.CreateCommand(); compact.CommandText = "VACUUM;";
+                    await compact.ExecuteNonQueryAsync(cancellationToken);
+                }
             }
 
             await using var file = new FileStream(snapshotPath, FileMode.Open, FileAccess.Read, FileShare.Read, 81920, useAsync: true);
@@ -100,6 +110,12 @@ public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TCont
             {
                 await snapshot.OpenAsync(cancellationToken);
                 await EnsureIntegrityAsync(snapshot, cancellationToken);
+                if (portablePolicy is not null)
+                {
+                    await portablePolicy.PrepareAsync(snapshot, "main", cancellationToken);
+                    await using var compact = snapshot.CreateCommand(); compact.CommandText = "VACUUM;";
+                    await compact.ExecuteNonQueryAsync(cancellationToken);
+                }
 
                 await context.Database.OpenConnectionAsync(cancellationToken);
                 verifyAccess?.Invoke(context);

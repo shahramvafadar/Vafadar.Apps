@@ -5,6 +5,7 @@ namespace Vafadar.Zanance.Api;
 /// <summary>Durable local outbox and private deletion; no external mail is sent by this delivery.</summary>
 public sealed class PrivateMaintenance(IServiceScopeFactory scopes, ServiceStorage storage, TimeProvider time, IHostApplicationLifetime lifetime) : BackgroundService
 {
+    private readonly Sync.SyncPieceMaintenance syncPieces = new(storage, time);
     /// <inheritdoc />
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -25,6 +26,7 @@ public sealed class PrivateMaintenance(IServiceScopeFactory scopes, ServiceStora
         var factory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
         await using var db = await factory.CreateDbContextAsync(ct);
         var now = time.GetUtcNow();
+        await syncPieces.RunAsync(db, ct);
         foreach (var id in await db.Objects.Where(o => o.Deleted && !o.StorageRetired).OrderBy(o => o.CreatedAt).ThenBy(o => o.Id).Select(o => o.Id).Take(100).ToListAsync(ct))
         {
             File.Delete(storage.ObjectPath(id));
@@ -36,6 +38,7 @@ public sealed class PrivateMaintenance(IServiceScopeFactory scopes, ServiceStora
             if (!await db.Objects.AnyAsync(o => o.Id == id, ct)) File.Delete(path);
         }
         await db.RequestWindows.Where(w => w.StartsAt < now.AddHours(-1)).ExecuteDeleteAsync(ct);
+        await Sync.SyncStagingMaintenance.RunAsync(db, now, ct);
         await db.Sessions.Where(s => s.ExpiresAt < now.AddDays(-1)).ExecuteDeleteAsync(ct);
         var expiredMail = await db.Challenges.Where(c => c.ExpiresAt < now.AddDays(-1)).OrderBy(c => c.ExpiresAt).ThenBy(c => c.Id).Select(c => c.Id).Take(100).ToListAsync(ct);
         foreach (var id in expiredMail)

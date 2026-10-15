@@ -82,6 +82,8 @@
                         <!-- D-91: keep the full restore alternative readable at native large-text sizes. -->
                         <p:WrappingAction x:Name="WelcomeRestoreAction" Text="{v:Translate Onb_RestoreButton}" Command="{Binding RestoreBackupCommand}"
                                           Appearance="Secondary" Margin="0,16,0,0" IsEnabled="{Binding IsNotBusy}" />
+                        <p:WrappingAction Text="{v:Translate Sync_FirstRunOpen}" Command="{Binding RestoreSyncedProfileCommand}"
+                                          IsVisible="{Binding PersonalSyncAvailable}" IsEnabled="{Binding IsNotBusy}" Margin="0,8,0,0" />
 
                         <Label Text="{v:Translate Settings_Language}" Style="{StaticResource SectionHeader}" Margin="4,28,4,6" />
                         <Border Style="{StaticResource Card}" Padding="6">
@@ -163,6 +165,8 @@
                                 <Label Text="{v:Translate Onb_RestoreText}" Style="{StaticResource Secondary}" />
                                 <p:WrappingAction x:Name="AccountRestoreAction" Text="{v:Translate Onb_RestoreButton}" Command="{Binding RestoreBackupCommand}"
                                                   Appearance="Secondary" IsEnabled="{Binding IsNotBusy}" />
+                                <p:WrappingAction Text="{v:Translate Sync_FirstRunOpen}" Command="{Binding RestoreSyncedProfileCommand}"
+                                                  IsVisible="{Binding PersonalSyncAvailable}" IsEnabled="{Binding IsNotBusy}" />
                             </VerticalStackLayout>
                         </Border>
                         <Border Style="{StaticResource StepIcon}" Margin="0,24,0,0">

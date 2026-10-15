@@ -5708,3 +5708,85 @@ explicit conflicts without guessed amounts, idempotency, safe restore and device
 ZCR-SYNC-01..03 is the next complete implementation batch; paid hosting, household sharing and
 commercial activation remain separate gates. This decision is recorded, not implemented by D-291.
 See quality/android-loaded-home.md for exact evidence, boundaries and retained failures.
+
+## D-292 complete local personal synchronization (local implementation qualified)
+
+The owner authorized the full local personal Pro synchronization batch: durable changes/deletions,
+explicit financial conflict decisions, idempotency, safe profile restoration and device management.
+This is one complete locally qualified batch; the final delivery record below supersedes its earlier
+unpublished progress. Public hosting, household E2EE and commercial activation are separate approved batches. Current production-source implementation and original service/app/native qualification
+are recorded in quality/local-personal-sync.md. Independent caller packages are not a production
+APK handoff and the complete-batch acceptance gates remain open.
+
+The operational design bounds active rounds, aggregate serialized proposals and declared attachment
+bytes by actual owner across spaces. Exact replay precedes capacity refusal. Revocation/session
+expiry retire only unpublished parts under the original owner transaction, with live session
+rechecking after lock acquisition. Committed financial history, acknowledgements and nonce tombstones
+remain. A separate transaction storage gate orders ciphertext publication and aged orphan-only
+collection across workers, without decrypting files or inventing history/pending-work expiry.
+
+A real PostgreSQL/pinned-TLS scenario observes the actual publication and owner-lock waits, preserves
+committed files/records/events/receipts, permits rollback-orphan collection and preserves renewed
+pending work. Original protected Windows HTTP and Android Release/AOT/trimmed cold-process scenarios
+also pass; their caller-only negative evidence and same-fixture continuations are retained. Strict
+API Release compilation is warning-free. These targeted results do not replace the final full-suite,
+app/native UI, complete signed production APK, documentation/commit/push or external platform gates.
+The prior 3,614 covered-behavior baseline is historical; no new full-suite count is claimed.
+
+### Consolidated owner decisions, 2026-10-15
+
+The owner accepted all seventeen questionnaire recommendations with explicit exceptions: current
+Android/iOS billing and future unscheduled commercial Windows delivery; future identity-bound web
+purchases with prerequisites now and checkout later; Germany-first expandable tax; current-machine
+Docker Desktop hosting under vafadar.pro; a reported prepared recent MacBook Air; and independent
+German-first bank-format research before USA/other markets. Household E2EE from first delivery,
+30+90-day shared expiry, store trial/discount/cross-store policy, technical bounds, local AI/rate
+prerequisites, existing-six-language scope and bounded official free downloads are approved.
+The complete binding choices and remaining external gates are in commercial-release/06-open-decisions.md.
+Commercial Windows and new languages are outside the current delivery, not abandoned product directions.
+Future web grants must be independent of the store used to download an app; no checkout or paid grant
+is implemented by recording that direction. Current personal sync is not described as E2EE.
+
+Docker/Compose presence and public DNS were inspected without changing other projects, credentials,
+records or system settings; container deployment/public TLS are not yet implemented. Primary German
+bank publications establish an initial reach shortlist, with explicit group/retail/format evidence
+limits; no guessed CSV schema or supported-preset claim follows. These documentation/research changes
+do not require replaying successful builds/tests/native checks or create a new full-suite count.
+
+### D-292 continued: complete graph and Linux service qualification (unpublished)
+
+Complete sync graphs now enforce planning unit/amount/settings rules before publication, including the original
+one-active-or-paused-balance-goal rule. Fourteen invalid original captures are refused without partial service
+publication; valid negative earmark releases, zero budgets and null contribution scaffolding remain allowed.
+The actual original coordinator receives the valid graph on a second client. No guessed financial repair occurs.
+
+The affected no-write snapshots include all 33 migrated tables (421 targeted cases pass). Explicit HTTPS factory
+options preserve the production transport guard (four identity cases pass; failed override attempt retained).
+Certificate-protected Linux persistence is verified under non-root UID/GID 1654 in four actual cases, including
+reopening original financial state/TLS keys in a second OS process. The backend CI adds independent protocol,
+planning and operations jobs, with private key/data roots excluded from uploaded artifacts. Local qualification
+is not hosted success or public deployment. See the qualification document for exact logs and limits.
+The D-292 complete-batch final gates and single verified delivery remain unfinished; no baseline full-suite count
+or release acceptance is inferred from these focused cases.
+
+### D-292 final native and budget boundary qualification
+
+The complete original Windows first-run/comparison route passes 36 contexts across en/fa/de, light/dark and
+360/412/1280 widths in an independently compiled protected installation. Actual native glyph geometry, first-run
+Back invocation, comparison command identity/semantic targets and unchanged complete financial fingerprints are
+retained. No main installation, owner credentials or desktop input was used. The route is in the Debug inventory.
+Final domain review found invalid typed budget periods; original `BudgetPeriods.Range` now validates the complete
+received graph with its financial month start. Nineteen actual PostgreSQL/TLS refusals preserve an empty service
+publication, while the valid graph is received without changing source rows. Weekly zero year/month remains valid.
+Only this changed planning case was rerun. Main Windows identity is restored and the integrated strict rebuild
+passes with zero errors/warnings (27.03 seconds). The final affected signed Android build follows this Core change;
+its artifact qualification and complete delivery state are recorded in quality/local-personal-sync.md.
+
+### D-292 delivered local scope and next batch
+
+The complete local personal sync implementation is qualified with current main-identity strict Windows and signed
+Android builds, 36 final Windows native contexts, nineteen real service planning refusals, retained original Windows/
+Android HTTP/native/restore/revocation evidence and 3,690 reconciled managed executions. Exact current APK hash and
+historical failures are recorded in quality/local-personal-sync.md. This delivery does not claim a new full-suite
+rerun, hosted CI, phone/iOS, E2EE, public hosting or release. The next approved complete batch is isolated current-
+machine Docker deployment under vafadar.pro; the remaining consolidated delivery order and external gates remain.

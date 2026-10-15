@@ -3078,3 +3078,90 @@ explicit conflicts without guessed amounts, idempotency, safe restore and device
 ZCR-SYNC-01..03 is the next complete implementation batch; paid hosting, household sharing and
 commercial activation remain separate gates. This decision is recorded, not implemented by D-291.
 See quality/android-loaded-home.md for exact evidence, boundaries and retained failures.
+
+## AT-292 local personal sync wire checkpoint (unpublished batch)
+
+Two actual SQLite clients use the original service, least-privilege PostgreSQL runtime role and
+original pinned HTTPS transport. Initial publication/pull, idempotent space creation, disjoint
+merge, competing amounts held for explicit review, a lost response after an actual committed
+transaction, exact receipt bytes, tombstone propagation and session revocation pass. A separate
+continuation reopens the same protected service TLS identity and original financial files, then
+proves two offline full settlements cannot become two server payments. Explicit existing-row
+choices retain one payment and the matching original occurrence state.
+
+Initial Windows TLS failure and the focused fix are retained. No previous successful wire scenario
+was repeated for the settlement continuation. Tests are staged explicitly, not ordered by the test
+runner: first `*Two_actual_clients*`, then `*Duplicate_full_settlements*`, with the same isolated
+`ZANANCE_SYNC_TEST_DB` and `ZANANCE_SYNC_TEST_ROOT`. Do not point them at a development/user database.
+These fixtures preserve failed/successful data; see quality/local-personal-sync.md for exact files.
+Application conflict presentation, first-run restore, initialization takeover, full domain corpus,
+encrypted native clients, lifecycle commit boundaries, platform/CI and final app acceptance remain
+open. This does not complete ZCR-SYNC-01..03 or change the last delivered full-suite/APK baseline.
+
+The third staged continuation, `*Changed_related_payment*`, also passes on the retained files.
+Missing unique-counterpart approval is refused; a concurrent change to the existing payment
+requires a fresh version-bound review. Other already accepted choices remain retained, preventing
+an alternating conflict loop. Fresh approval applies the actual revised amount and clears the queue.
+
+Fourth staged method `*Original_delete_and_undo*` reproduces and then passes the actual receipt
+ownership case, using the same service/files/key ring. Ordinary deletion removes the receiver's
+receipt while preserving the sender's original Undo bytes; Undo restores one entry/receipt with
+identical bytes. A live service orphan left by the retained failed prototype required an explicit
+protocol deletion review during continuation. Four Core restore/orphan-authority regressions pass.
+This is not native startup, power loss, UI presentation or a completed sync feature.
+
+### AT-292 unpublished attachment review extension
+
+The real PostgreSQL/TLS case proves both exact attachment versions before a decision, original
+file/money preservation, size bounds, tampered-stage refusal and stale preview rejection. Four
+original app-flow cases cover optional preview, explicit unsupported-file choice, page navigation,
+transient cleanup, retirement and concurrent edits. Six independent original Android Release cases
+cover image/two-page PDF/native controls in en/fa/de light/dark. Evidence and exact limits are in
+`quality/local-personal-sync.md`; complete native network sync, final whole-batch checks, 360/wide/
+Windows runtime, physical/iOS/provider/Store gates are still open. No fresh full-suite count is inferred.
+
+### AT-292 unpublished native HTTP and storage operations extension
+
+Separate original protected Windows HTTP/cold-session and Android Release/AOT/trimmed HTTP/cold
+process scenarios now pass basic transfer, exact attachment bytes, explicit competing money and
+original tombstone propagation against the actual local service. Earlier caller-only manifest,
+path-alias and first-run-mode failures remain with their same-fixture continuations; these are
+distinct from page-only review or production defect claims. See `quality/local-personal-sync.md`.
+
+One evolving real PostgreSQL/pinned-TLS operations case passes owner-wide staging/attachment bounds,
+exact retry at capacity, abandoned nonce preservation, private orphan-only collection and actual
+cross-worker publication commit/rollback. A worker observed waiting for the owner lock preserves
+parts after session-row renewal; actual expiry and explicit device revocation retire only
+unpublished staging while keeping committed financial rows/events/receipts. No unchanged native
+or UI cases were repeated for server-only changes. Complete-batch domain/protocol/operations and
+final build/test/UI/APK/documentation/commit/push remain open; no full-suite count is inferred.
+
+### AT-292 continued: domain refusal, existing state and Linux persistence (unpublished)
+
+Fourteen inconsistent planning proposals are refused over actual PostgreSQL/pinned TLS without records/events or
+cursor publication; the valid complete graph reaches a second original client. Negative earmark releases, zero budgets
+and empty contribution scaffolding stay valid. All 421 cases in the eleven snapshot classes affected by eight
+new metadata tables pass; four identity scenarios pass explicit HTTPS and retain an HTTP refusal assertion.
+Linux non-root qualification passes four cases, including a second OS process reopening retained protection/TLS
+and financial state. Bounded XML reports and original fixture files remain. Hosted CI, final integrated app/UI/APK,
+physical device/iOS, public deployment and overall D-292 completion are not established by these passes.
+
+### AT-292 managed continuation and integrated build status
+
+The managed solution now has 3,690 covered executions across thirteen projects, reconciled from the retained failed
+initial full attempt and focused continuation (`sync-final-coverage.json`). All 1,258 App cases are covered:
+648 initially passed and were explicitly excluded; 610 failed/unexecuted cases passed after the six snapshot-helper
+corrections. Only the failed source-policy caption case was rerun in Core. This is not a fresh full-suite pass.
+The personal-sync-enabled integrated Windows build passes strictly with no warnings/errors. Android APK/final native
+UI/geometry, complete batch publication and hosted CI remain separate pending checks.
+
+### AT-292 final native first-run/comparison and budget boundaries
+
+Passed locally: 36 original Windows contexts (en/fa/de; light/dark; 360/412/1280) in the independently named protected
+installation. Complete native captions/glyph allocations, original UI Automation first-run Back, disabled finish
+without received accounts, exact comparison command parameters, native names/44-pixel targets and complete financial
+fingerprints pass. Nineteen invalid complete planning graphs are refused by actual PostgreSQL/TLS without events,
+records or cursor publication; the valid complete graph reaches the original receiving coordinator. Weekly zero
+month/year remains valid. Final strict original main-identity Windows rebuild passes. Retained Android native cases
+and the managed 3,690 coverage are not repeated. APK/publication/hosted CI evidence is recorded separately; these
+passes do not grant physical-device, iOS, public service, E2EE or release acceptance.

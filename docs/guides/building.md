@@ -853,3 +853,26 @@ The route refuses missing identities/history/keys and never seeds a replacement 
 review windows remain hidden and capture only their own root. Standard Rebuild regenerates package
 metadata when the build property changes; verify compiled metadata before launching and restore the
 normal identity afterward. Native publication, dispatcher gaps and cold startup are distinct measures.
+
+### Explicit personal-sync APK edition (D-292 in progress)
+
+Use `./eng/scripts/Build-AndroidApk.ps1 -PersonalSync -Output artifacts/android-personal-sync` for the opt-in local
+network edition. Use `-Offline` for a Release without connected providers or personal sync. The switches are
+mutually exclusive; the script sets `ZanancePersonalSyncEnabled` explicitly so an ambient environment value cannot
+enable network sync in an offline build. Neither edition activates commercial limits or real billing. Verify the
+actual package/signature and final permission manifest before a phone handoff; a build result alone is insufficient.
+The retained D-292 personal-sync APK is documented in the local-personal-sync qualification record; its existence
+is not device, iOS, Store or public-service acceptance.
+
+### Independent personal-sync native review (D-292)
+
+Build Windows Debug with `-t:Rebuild -p:ApplicationId=pro.vafadar.zanance.syncreview
+-p:ZanancePersonalSyncEnabled=true -p:ContinuousIntegrationBuild=true` and verify the generated PackageName metadata.
+Use a fresh `VAFADAR_SNAPSHOTS` output with `VAFADAR_SNAPSHOT_ONLY=personal-sync`. This route refuses the main
+installation before startup, and requires an empty independently named native data root before fictional seeding.
+It renders the original first-run and version comparison pages in en/fa/de, light/dark and 360/412/1280 widths.
+The existing native caption glyph checks and real UI Automation Invoke pattern inspect original controls, retaining
+complete financial fingerprints. It never signs in, enters credentials, contacts a service or invokes a financial
+choice. Own-window renders remain hidden; no desktop input or full-screen capture is used. Retain its marker,
+financial fixture, negative evidence and results; do not reset a completed or failed installation to repeat successes.
+Restore the normal compiled identity before the main artifact is built.

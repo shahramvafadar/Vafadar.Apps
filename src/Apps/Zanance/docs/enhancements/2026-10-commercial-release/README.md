@@ -1,6 +1,7 @@
 # Enhancement ZCR – commercial release (Free, Plus, Pro)
 
-**Status refreshed 2026-10-09 (D-88):** the 2026-10-07 wave-0 package was documentation-only. Subsequent
+**Status refreshed 2026-10-15:** personal sync D-292 is in progress and unpublished. Consolidated owner
+approvals and scope exceptions are recorded in [06-open-decisions.md](06-open-decisions.md). Subsequent
 maintenance and ready local sections have been delivered; their current states and remaining gates live in
 [04-backlog.md](04-backlog.md). D-69 authorizes continuous delivery of ready planned work; open product/licence,
 provider, spending and publication decisions remain owner gates ([05-delivery-plan.md](05-delivery-plan.md)).
@@ -16,9 +17,11 @@ earlier monetization model of the specification (MON-02 one-time Pro purchase, M
 | [03-architecture.md](03-architecture.md) | Entitlements and billing lifecycle, local encryption and keys, sync, shared space, add-ons, operations, costs |
 | [04-backlog.md](04-backlog.md) | **The canonical backlog** of all remaining work (ids `ZCR-*`) |
 | [05-delivery-plan.md](05-delivery-plan.md) | Waves, release gates, mandatory acceptance tests, section template, proposed first section, handoff |
-| [06-open-decisions.md](06-open-decisions.md) | Questions for the owner, each with a proposal |
+| [06-open-decisions.md](06-open-decisions.md) | Consolidated owner decisions, current authority and remaining external gates |
 | [07-backend-cost-and-decision.md](07-backend-cost-and-decision.md) | Costed OD-02 proposal, complete backend delivery boundary and explicit owner gates (D-269) |
-| [08-backend-cost-model.json](08-backend-cost-model.json) | Source-linked monthly inputs, assumptions, overages and three recalculated scenarios |
+| [08-backend-cost-model.json](08-backend-cost-model.json) | Historical provider cost inputs; no spending approval |
+| [09-current-machine-hosting.md](09-current-machine-hosting.md) | Approved current-machine Docker scope and remaining deployment checks |
+| [10-bank-import-research.md](10-bank-import-research.md) | Initial German bank priorities and primary-source export research |
 
 Ids: `ZCR-<area>-nn` for work items (areas GOV, SEC, LOC, IMP, QA, A11Y, ENT, BIL, ID, SYNC, SHR, TAX, AI, BANK, FX,
 LANG, REL) and `OD-nn` for open decisions. Open stories of enhancement ZEX continue under the ZCR ids named in the

@@ -139,12 +139,10 @@ pre-selected purchases.
 
 ### Trial
 
-Goal: **14 days of Pro** for eligible people, never started silently, with the renewal price, the end of the trial
-and the cancel path shown before confirming. Two possible flows ([06-open-decisions.md](06-open-decisions.md),
-OD-06): (a) a **store introductory free trial** on the Pro yearly/monthly subscription (auto-renews; eligibility
-handled by the store per account), or (b) an **in-app trial without renewal**. Proposal: (a), because eligibility is
-enforced by the store and no own trial server state is needed; changing product, device or profile must not create
-endless trials.
+Approved: **14 days of Pro** through a store introductory free trial for eligible people. It auto-renews;
+show eligibility, renewal price, trial end and cancellation path before confirmation. The store enforces
+eligibility per account; changing product, device or profile must not create endless trials. Console setup
+and live purchase activation remain separate from this product decision.
 
 ## 4. Shared space and sync rules
 
@@ -171,7 +169,7 @@ running advanced automation follow the plan.
 | Holdings | Values and history visible; no new holdings or price entries. |
 | Open item needs a fix (wrong amount, reconcile, settle an overdue occurrence, close a loan) | Always allowed. |
 | Restore or import above the quota | Always succeeds; data above the quota is read-only for new work. A backup never revives a paid entitlement or a revoked membership. |
-| Pro owner's subscription ends | The shared space is not deleted at once: read-only grace period, export for members, then a retention rule announced before sale (OD-05). Local history on each device stays. |
+| Pro owner's subscription ends | 30 days read-only with export, then 90 days retention before server deletion, disclosed before sale. Local device history stays; security revocation remains separate. |
 
 The final counting rules are confirmed (OD-03 / D-117), but activation remains separate; **no commercial limit is applied to test builds
 before the owner's approval**, and test access is never a permanent customer entitlement.

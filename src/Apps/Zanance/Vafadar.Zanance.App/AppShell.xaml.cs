@@ -176,6 +176,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(PlanDetailRoute, typeof(PlanDetailPage));
         Routing.RegisterRoute(OccurrenceRoute, typeof(OccurrencePage));
         Routing.RegisterRoute(BackupRoute, typeof(BackupPage));
+        Routing.RegisterRoute(AppRoutes.PersonalSyncRoute, typeof(Features.Sync.PersonalSyncPage));
         Routing.RegisterRoute(BudgetEditorRoute, typeof(BudgetEditorPage));
         Routing.RegisterRoute(RatesRoute, typeof(RatesPage));
         Routing.RegisterRoute(HomeLayoutRoute, typeof(Features.Home.HomeLayoutPage));
@@ -205,6 +206,7 @@ public partial class AppShell : Shell
     protected override void OnNavigating(ShellNavigatingEventArgs args)
     {
         if (CurrentPage?.BindingContext is BackupViewModel backup && !backup.CanLeave && args.CanCancel) args.Cancel();
+        if (CurrentPage?.BindingContext is Features.Sync.PersonalSyncViewModel sync && !sync.CanLeave && args.CanCancel) args.Cancel();
         base.OnNavigating(args);
     }
 

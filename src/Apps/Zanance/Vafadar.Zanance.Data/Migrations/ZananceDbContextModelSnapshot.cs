@@ -1251,6 +1251,236 @@ namespace Vafadar.Zanance.Data.Migrations
                     b.ToTable("ImportLinks", (string)null);
                 });
 
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sync.SyncBindingRow", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Applying")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("Cursor")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("GenerationPath")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("IdentityId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastFailure")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<long?>("LastSuccessAt")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("PeerKey")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RemoteName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SchemaHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SyncBinding", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_SyncBinding_Singleton", "\"Id\" = 1");
+                        });
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sync.SyncBlobPart", b =>
+                {
+                    b.Property<string>("Hash")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Part")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<byte[]>("Data")
+                        .IsRequired()
+                        .HasColumnType("BLOB");
+
+                    b.HasKey("Hash", "Part");
+
+                    b.ToTable("SyncBlobParts", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sync.SyncBlobTransfer", b =>
+                {
+                    b.Property<string>("Hash")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("Length")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Manifest")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Hash");
+
+                    b.ToTable("SyncBlobTransfers", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sync.SyncClientRound", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ContentHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("Cutoff")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("OperationId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PartCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Phase")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("ReadCursor")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid?>("RemoteId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("SentParts")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("ThroughCursor")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SyncClientRound", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_SyncClientRound_Singleton", "\"Id\" = 1");
+                        });
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sync.SyncConflictRow", b =>
+                {
+                    b.Property<string>("TableName")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RecordKey")
+                        .HasMaxLength(2048)
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("LocalSequence")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Payload")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool?>("UseProposal")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TableName", "RecordKey");
+
+                    b.ToTable("SyncConflicts", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sync.SyncIncomingRow", b =>
+                {
+                    b.Property<string>("TableName")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RecordKey")
+                        .HasMaxLength(2048)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("Version")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TableName", "RecordKey");
+
+                    b.ToTable("SyncIncoming", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sync.SyncKnownRow", b =>
+                {
+                    b.Property<string>("TableName")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RecordKey")
+                        .HasMaxLength(2048)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("Version")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TableName", "RecordKey");
+
+                    b.ToTable("SyncKnown", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sync.SyncOutboxRow", b =>
+                {
+                    b.Property<long>("Sequence")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RecordKey")
+                        .IsRequired()
+                        .HasMaxLength(2048)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TableName")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Sequence");
+
+                    b.HasIndex("TableName", "RecordKey", "Sequence");
+
+                    b.ToTable("SyncOutbox", (string)null);
+                });
+
             modelBuilder.Entity("Vafadar.Zanance.Core.Budgets.Budget", b =>
                 {
                     b.OwnsMany("Vafadar.Zanance.Core.Budgets.BudgetCategoryLimit", "CategoryLimits", b1 =>

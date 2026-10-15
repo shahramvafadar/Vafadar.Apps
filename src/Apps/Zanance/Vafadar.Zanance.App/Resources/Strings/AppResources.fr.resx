@@ -6374,4 +6374,511 @@ Plafonds par catégorie :
   <data name="Backup_PortableNever" xml:space="preserve">
     <value>Aucun export portable pour le moment.</value>
   </data>
+  <data name="Sync_Title" xml:space="preserve">
+    <value>Synchronisation personnelle</value>
+  </data>
+  <data name="Sync_Intro" xml:space="preserve">
+    <value>Connectez explicitement ce profil à votre service local Zanance. La saisie locale reste disponible si le service est hors ligne. Une sauvegarde portable Zanance reste nécessaire pour une restauration indépendante.</value>
+  </data>
+  <data name="Sync_Address" xml:space="preserve">
+    <value>Adresse du service local</value>
+  </data>
+  <data name="Sync_Fingerprint" xml:space="preserve">
+    <value>Empreinte vérifiée du certificat (SHA-256)</value>
+  </data>
+  <data name="Sync_Email" xml:space="preserve">
+    <value>Adresse e-mail du compte de service Zanance</value>
+  </data>
+  <data name="Sync_Password" xml:space="preserve">
+    <value>Mot de passe du service (non mémorisé)</value>
+  </data>
+  <data name="Sync_DeviceName" xml:space="preserve">
+    <value>Nom de cet appareil</value>
+  </data>
+  <data name="Sync_DefaultDevice" xml:space="preserve">
+    <value>Mon appareil</value>
+  </data>
+  <data name="Sync_NewSpace" xml:space="preserve">
+    <value>Nom d’une nouvelle copie distincte</value>
+  </data>
+  <data name="Sync_SignIn" xml:space="preserve">
+    <value>Se connecter au service local</value>
+  </data>
+  <data name="Sync_Discover" xml:space="preserve">
+    <value>Utiliser la session enregistrée et charger les copies</value>
+  </data>
+  <data name="Sync_Create" xml:space="preserve">
+    <value>Créer et connecter une copie distincte</value>
+  </data>
+  <data name="Sync_Connect" xml:space="preserve">
+    <value>Connecter et combiner avec cette copie</value>
+  </data>
+  <data name="Sync_Now" xml:space="preserve">
+    <value>Synchroniser ce profil maintenant</value>
+  </data>
+  <data name="Sync_Pause" xml:space="preserve">
+    <value>Suspendre la synchronisation de ce profil</value>
+  </data>
+  <data name="Sync_SignOut" xml:space="preserve">
+    <value>Se déconnecter de ce service</value>
+  </data>
+  <data name="Sync_Devices" xml:space="preserve">
+    <value>Vos appareils du service</value>
+  </data>
+  <data name="Sync_Revoke" xml:space="preserve">
+    <value>Révoquer l’accès de cet appareil au service</value>
+  </data>
+  <data name="Sync_Conflicts" xml:space="preserve">
+    <value>Modifications nécessitant votre décision</value>
+  </data>
+  <data name="Sync_KeepLocal" xml:space="preserve">
+    <value>Choisir l’enregistrement local</value>
+  </data>
+  <data name="Sync_KeepRemote" xml:space="preserve">
+    <value>Choisir l’enregistrement du service</value>
+  </data>
+  <data name="Sync_Restart" xml:space="preserve">
+    <value>Réexaminer avec mes dernières modifications locales</value>
+  </data>
+  <data name="Sync_RestorePaused" xml:space="preserve">
+    <value>Copie restaurée : la synchronisation reste suspendue jusqu’à votre reconnexion explicite. Créez une copie distincte dans le service pour conserver cet historique séparément.</value>
+  </data>
+  <data name="Sync_Connected" xml:space="preserve">
+    <value>Connecté à {0}</value>
+  </data>
+  <data name="Sync_Paused" xml:space="preserve">
+    <value>La synchronisation de ce profil est désactivée ou suspendue.</value>
+  </data>
+  <data name="Sync_StatusDetails" xml:space="preserve">
+    <value>Modifications en attente : {0}. Dernière synchronisation terminée : {1}.</value>
+  </data>
+  <data name="Sync_Never" xml:space="preserve">
+    <value>pas encore</value>
+  </data>
+  <data name="Sync_CreateConfirm" xml:space="preserve">
+    <value>Créer une nouvelle copie distincte nommée « {0} » dans le service et connecter ce profil ? Ses données financières actuelles seront mises en attente pour cette copie. Les copies existantes resteront distinctes.</value>
+  </data>
+  <data name="Sync_ConnectConfirm" xml:space="preserve">
+    <value>Connecter ce profil à « {0} » et combiner ses enregistrements avec cette copie du service ? Des enregistrements restaurés pourront être envoyés à vos autres appareils. Les modifications concurrentes et les enregistrements supprimés auparavant nécessitent un examen. Créez une nouvelle copie distincte pour garder l’historique restauré indépendant.</value>
+  </data>
+  <data name="Sync_PauseConfirm" xml:space="preserve">
+    <value>Suspendre la synchronisation de ce profil ? Les enregistrements locaux et la file d’attente seront conservés. Une demande déjà acceptée par le service pourra encore se terminer.</value>
+  </data>
+  <data name="Sync_SignOutConfirm" xml:space="preserve">
+    <value>Suspendre ce profil et oublier la session enregistrée de ce service sur cet appareil ? Les données financières locales et les modifications en attente seront conservées.</value>
+  </data>
+  <data name="Sync_RevokeConfirm" xml:space="preserve">
+    <value>Révoquer l’accès de « {0} » au service ? Cette session ne pourra plus synchroniser. Cette action n’efface pas à distance les copies déjà stockées sur cet appareil.</value>
+  </data>
+  <data name="Sync_KeepLocalConfirm" xml:space="preserve">
+    <value>Choisir l’enregistrement local examiné dans son intégralité, y compris sa suppression locale si elle est indiquée ? Aucun montant moyen n’est calculé. Les conflits d’enregistrements liés peuvent nécessiter une autre décision.</value>
+  </data>
+  <data name="Sync_KeepRemoteConfirm" xml:space="preserve">
+    <value>Choisir l’enregistrement du service examiné dans son intégralité, y compris sa suppression si elle est indiquée ? La version locale concurrente sera remplacée lors de l’application sûre de toute la synchronisation. Les modifications plus récentes nécessitent un nouvel examen.</value>
+  </data>
+  <data name="Sync_RestartConfirm" xml:space="preserve">
+    <value>Recalculer cette vérification avec vos dernières modifications locales ? Cette action ne modifie ni ne supprime les données financières. Un résultat confirmé par le service reste conservé ; un cycle non confirmé est abandonné avant le suivant.</value>
+  </data>
+  <data name="Sync_RegisterDeviceConfirm" xml:space="preserve">
+    <value>Enregistrer cette session comme appareil du service nommé « {0} » ?</value>
+  </data>
+  <data name="Sync_SignInRequired" xml:space="preserve">
+    <value>La session du service a expiré ou a été révoquée. Reconnectez-vous ; les modifications locales en attente sont conservées.</value>
+  </data>
+  <data name="Sync_ServiceUnavailable" xml:space="preserve">
+    <value>Le service local est inaccessible ou a refusé la demande. Vérifiez son adresse, son certificat et sa disponibilité. Les modifications locales en attente sont conservées.</value>
+  </data>
+  <data name="Sync_CheckInputs" xml:space="preserve">
+    <value>Vérifiez l’adresse HTTPS locale, l’empreinte vérifiée, les informations de connexion et les noms. Aucune synchronisation réussie n’a été confirmée.</value>
+  </data>
+  <data name="Sync_ActionFailed" xml:space="preserve">
+    <value>Cette action n’a pas pu se terminer en toute sécurité. Vos enregistrements locaux restent disponibles. Rechargez l’état actuel ou réexaminez les modifications avant de réessayer.</value>
+  </data>
+  <data name="Sync_Confirm" xml:space="preserve">
+    <value>Confirmer</value>
+  </data>
+  <data name="Sync_NoProfiles" xml:space="preserve">
+    <value>Aucune copie personnelle compatible n’est répertoriée. Vous pouvez créer une copie distincte ci-dessous.</value>
+  </data>
+  <data name="Sync_EditionUnavailable" xml:space="preserve">
+    <value>La synchronisation personnelle n’est pas activée dans cette édition hors ligne. Les outils financiers locaux et les sauvegardes portables restent disponibles.</value>
+  </data>
+  <data name="Sync_ReviewHint" xml:space="preserve">
+    <value>Choisissez un enregistrement complet après comparaison des deux versions. Une modification plus récente invalide ce choix. Relancez ensuite la synchronisation pour vérifier l’ensemble des données liées.</value>
+  </data>
+  <data name="Sync_Local" xml:space="preserve">
+    <value>Sur cet appareil</value>
+  </data>
+  <data name="Sync_Remote" xml:space="preserve">
+    <value>Dans le service</value>
+  </data>
+  <data name="Sync_Deleted" xml:space="preserve">
+    <value>Supprimé ou absent</value>
+  </data>
+  <data name="Sync_MoreHint" xml:space="preserve">
+    <value>Votre service local, les modifications en attente et l’accès des appareils</value>
+  </data>
+  <data name="Help_PersonalSync_Title" xml:space="preserve">
+    <value>Synchronisation personnelle et sauvegardes locales</value>
+  </data>
+  <data name="Help_PersonalSync_Text" xml:space="preserve">
+    <value>Cette connexion locale facultative envoie les données financières et les pièces jointes du profil explicitement connecté à votre service Zanance. Vérifiez l’empreinte du certificat via votre propre configuration de confiance avant de saisir vos identifiants. Le mot de passe n’est pas mémorisé ; une session révocable est conservée dans le stockage sécurisé de l’appareil. La synchronisation combine les modifications et demande votre choix en cas de conflit ; elle ne remplace pas une sauvegarde portable. Un profil restauré reste déconnecté jusqu’à votre reconnexion explicite. Révoquer un appareil bloque son accès futur au service, mais n’efface pas les copies déjà téléchargées.</value>
+  </data>
+  <data name="Help_PersonalSync_Example" xml:space="preserve">
+    <value>Vous modifiez le montant d’une opération sur un appareil et sa note sur un autre : ces champs indépendants peuvent être combinés. Si les deux montants changent, vous choisissez une version. Restaurer une ancienne sauvegarde ne la reconnecte pas silencieusement et ne rejoue pas ses anciennes suppressions.</value>
+  </data>
+  <data name="Sync_Reload" xml:space="preserve">
+    <value>Recharger l’état de connexion</value>
+  </data>
+  <data name="Sync_DeviceRevoked" xml:space="preserve">
+    <value>Accès au service révoqué</value>
+  </data>
+  <data name="Sync_DeviceSeen" xml:space="preserve">
+    <value>Dernière activité sur le service : {0}</value>
+  </data>
+  <data name="Sync_ConnectionReviewRequired" xml:space="preserve">
+    <value>Vérifiez la connexion de ce profil : son service, son certificat ou sa session enregistrés diffèrent des éléments actuels.</value>
+  </data>
+  <data name="Sync_Confirmed" xml:space="preserve">
+    <value>Confirmé</value>
+  </data>
+  <data name="Sync_Unreviewed" xml:space="preserve">
+    <value>Non vérifié</value>
+  </data>
+  <data name="Sync_Increase" xml:space="preserve">
+    <value>Augmentation</value>
+  </data>
+  <data name="Sync_Decrease" xml:space="preserve">
+    <value>Diminution</value>
+  </data>
+  <data name="Sync_Yes" xml:space="preserve">
+    <value>Oui</value>
+  </data>
+  <data name="Sync_No" xml:space="preserve">
+    <value>Non</value>
+  </data>
+  <data name="Sync_SourceManual" xml:space="preserve">
+    <value>Saisi manuellement</value>
+  </data>
+  <data name="Sync_SourcePlan" xml:space="preserve">
+    <value>Issu d’un plan</value>
+  </data>
+  <data name="Sync_SourceImport" xml:space="preserve">
+    <value>Importé</value>
+  </data>
+  <data name="Sync_StatusOpen" xml:space="preserve">
+    <value>En attente</value>
+  </data>
+  <data name="Sync_StatusSettled" xml:space="preserve">
+    <value>Réglé</value>
+  </data>
+  <data name="Sync_StatusSkipped" xml:space="preserve">
+    <value>Ignoré</value>
+  </data>
+  <data name="Sync_Field_Aggregated" xml:space="preserve">
+    <value>Total regroupé d’une période</value>
+  </data>
+  <data name="Sync_Field_Archived" xml:space="preserve">
+    <value>Archivé</value>
+  </data>
+  <data name="Sync_Field_AutoSuppressed" xml:space="preserve">
+    <value>Enregistrement automatique suspendu</value>
+  </data>
+  <data name="Sync_Field_Direction" xml:space="preserve">
+    <value>Sens de variation du solde</value>
+  </data>
+  <data name="Sync_Field_DueDate" xml:space="preserve">
+    <value>Date d’échéance</value>
+  </data>
+  <data name="Sync_Field_KnownBalance" xml:space="preserve">
+    <value>Solde initial connu</value>
+  </data>
+  <data name="Sync_Field_Order" xml:space="preserve">
+    <value>Ordre d’affichage</value>
+  </data>
+  <data name="Sync_Field_OriginalCurrency" xml:space="preserve">
+    <value>Devise d’origine</value>
+  </data>
+  <data name="Sync_Field_OriginalDate" xml:space="preserve">
+    <value>Date initiale du plan</value>
+  </data>
+  <data name="Sync_Field_OriginalPurchase" xml:space="preserve">
+    <value>Achat d’origine</value>
+  </data>
+  <data name="Sync_Field_PaidAmount" xml:space="preserve">
+    <value>Paiements partiels enregistrés</value>
+  </data>
+  <data name="Sync_Field_Partial" xml:space="preserve">
+    <value>Paiement partiel</value>
+  </data>
+  <data name="Sync_Field_Plan" xml:space="preserve">
+    <value>Plan</value>
+  </data>
+  <data name="Sync_Field_Reconciled" xml:space="preserve">
+    <value>Date du dernier rapprochement</value>
+  </data>
+  <data name="Sync_Field_RepaymentDate" xml:space="preserve">
+    <value>Date de remboursement prévue</value>
+  </data>
+  <data name="Sync_Field_Review" xml:space="preserve">
+    <value>État de vérification</value>
+  </data>
+  <data name="Sync_Field_Settlement" xml:space="preserve">
+    <value>Paiement enregistré</value>
+  </data>
+  <data name="Sync_Field_Source" xml:space="preserve">
+    <value>Origine de l’enregistrement</value>
+  </data>
+  <data name="Sync_Field_Status" xml:space="preserve">
+    <value>État</value>
+  </data>
+  <data name="Sync_Field_ToAmount" xml:space="preserve">
+    <value>Montant reçu</value>
+  </data>
+  <data name="Sync_KeepExisting" xml:space="preserve">
+    <value>Conserver l’enregistrement existant et abandonner mon doublon</value>
+  </data>
+  <data name="Sync_ReasonChanges" xml:space="preserve">
+    <value>Les deux appareils ont modifié ces informations.</value>
+  </data>
+  <data name="Sync_ReasonRelated" xml:space="preserve">
+    <value>Les informations liées doivent également être vérifiées.</value>
+  </data>
+  <data name="Sync_ReasonSettlement" xml:space="preserve">
+    <value>Un paiement complet existe déjà pour cette échéance.</value>
+  </data>
+  <data name="Sync_ReasonStale" xml:space="preserve">
+    <value>La version examinée a changé. Vérifiez les nouvelles valeurs avant de choisir.</value>
+  </data>
+  <data name="Sync_Record" xml:space="preserve">
+    <value>Enregistrement</value>
+  </data>
+  <data name="Sync_RecordEntry" xml:space="preserve">
+    <value>Transaction</value>
+  </data>
+  <data name="Sync_ReviewAbsent" xml:space="preserve">
+    <value>Non enregistré sur le service</value>
+  </data>
+  <data name="Sync_ReviewDuplicateHint" xml:space="preserve">
+    <value>Une seule entrée correspond à cette échéance. Conservez celle qui existe et corrigez-la après synchronisation si nécessaire.</value>
+  </data>
+  <data name="Sync_ReviewEmpty" xml:space="preserve">
+    <value>Non défini</value>
+  </data>
+  <data name="Sync_ReviewIncomplete" xml:space="preserve">
+    <value>Certaines informations modifiées ne peuvent pas être affichées entièrement. Actualisez ou vérifiez-les sur leur écran d’origine avant de choisir.</value>
+  </data>
+  <data name="Sync_ReviewLocalChanged" xml:space="preserve">
+    <value>L’enregistrement local a changé après l’envoi. Recommencez la vérification des valeurs actuellement enregistrées.</value>
+  </data>
+  <data name="Sync_ReviewRelated" xml:space="preserve">
+    <value>Enregistrement existant lié</value>
+  </data>
+  <data name="Sync_ReviewSubmitted" xml:space="preserve">
+    <value>Version locale envoyée</value>
+  </data>
+  <data name="Sync_ReviewUnavailable" xml:space="preserve">
+    <value>Information indisponible</value>
+  </data>
+  <data name="Sync_ReviewScrollHint" xml:space="preserve">
+    <value>Faites défiler horizontalement une valeur longue pour la lire entièrement.</value>
+  </data>
+  <data name="Sync_Field_Limit" xml:space="preserve">
+    <value>Plafond de catégorie</value>
+  </data>
+  <data name="Sync_Field_Period" xml:space="preserve">
+    <value>Période</value>
+  </data>
+  <data name="Sync_Field_PeriodStart" xml:space="preserve">
+    <value>Début de période</value>
+  </data>
+  <data name="Sync_Field_Year" xml:space="preserve">
+    <value>Année du calendrier du budget</value>
+  </data>
+  <data name="Sync_Field_Month" xml:space="preserve">
+    <value>Mois du calendrier du budget</value>
+  </data>
+  <data name="Sync_AllBudgetAccounts" xml:space="preserve">
+    <value>Tous les comptes inclus dans les totaux dans la devise de ce budget</value>
+  </data>
+  <data name="Sync_Field_ActiveUntil" xml:space="preserve">
+    <value>Dernière date initiale de ce plan</value>
+  </data>
+  <data name="Sync_Field_PausedFrom" xml:space="preserve">
+    <value>En pause à partir du</value>
+  </data>
+  <data name="Sync_Field_PreviousPlan" xml:space="preserve">
+    <value>Suite du plan</value>
+  </data>
+  <data name="Sync_Field_AutoPostFrom" xml:space="preserve">
+    <value>Enregistrement automatique à partir du</value>
+  </data>
+  <data name="Sync_Field_WeekendDays" xml:space="preserve">
+    <value>Jours du week-end</value>
+  </data>
+  <data name="Sync_PlanActive" xml:space="preserve">
+    <value>Actif</value>
+  </data>
+  <data name="Sync_Field_HolidayRegion" xml:space="preserve">
+    <value>Région des jours fériés</value>
+  </data>
+  <data name="Sync_Field_EndDate" xml:space="preserve">
+    <value>Dernière date de répétition</value>
+  </data>
+  <data name="Sync_DayRule_SpecificDay" xml:space="preserve">
+    <value>Même jour du mois que la date initiale</value>
+  </data>
+  <data name="Sync_DayRule_LastDayOfMonth" xml:space="preserve">
+    <value>Dernier jour du mois</value>
+  </data>
+  <data name="Sync_DayRule_NthWeekday" xml:space="preserve">
+    <value>Même jour de la semaine et même semaine du mois que la date initiale</value>
+  </data>
+  <data name="Sync_DayRule_LastWeekday" xml:space="preserve">
+    <value>Dernier jour de la semaine correspondant du mois</value>
+  </data>
+  <data name="Sync_Field_Basis" xml:space="preserve">
+    <value>Coût de revient dans la devise du prix de l’actif</value>
+  </data>
+  <data name="Sync_Field_HomePosition" xml:space="preserve">
+    <value>Position sur l’accueil</value>
+  </data>
+  <data name="Sync_Field_PausedAt" xml:space="preserve">
+    <value>Mis en pause le (UTC)</value>
+  </data>
+  <data name="Sync_Field_CompletedAt" xml:space="preserve">
+    <value>Terminé le (UTC)</value>
+  </data>
+  <data name="Sync_Field_AssumedPrice" xml:space="preserve">
+    <value>Prix supposé pour ce plan</value>
+  </data>
+  <data name="Sync_InitializationRecover" xml:space="preserve">
+    <value>Continuer le premier envoi sur cet appareil</value>
+  </data>
+  <data name="Sync_InitializationConfirm" xml:space="preserve">
+    <value>Continuer le premier envoi de {0} avec le profil local actuel de cet appareil ? Aucune donnée n’a encore été publiée dans cette copie du service. Les envois précédents non confirmés seront abandonnés ; les données des autres appareils restent inchangées. Cette action ne récupère pas les données d’un appareil perdu : utilisez une sauvegarde portable Zanance pour cela.</value>
+  </data>
+  <data name="Sync_FirstRunOpen" xml:space="preserve">
+    <value>Recevoir un profil synchronisé</value>
+  </data>
+  <data name="Sync_FirstRunFinish" xml:space="preserve">
+    <value>Commencer avec ces comptes</value>
+  </data>
+  <data name="Sync_FirstRunBack" xml:space="preserve">
+    <value>Retour à la configuration</value>
+  </data>
+  <data name="Sync_FirstRunConfirm" xml:space="preserve">
+    <value>Terminer la configuration avec les comptes déjà présents dans ce profil ? Aucun compte supplémentaire ne sera créé. Les préférences enregistrées du profil seront conservées.</value>
+  </data>
+  <data name="Sync_FirstRunNotReady" xml:space="preserve">
+    <value>Terminez la synchronisation sans vérification en attente et avec au moins un compte avant de commencer avec ce profil.</value>
+  </data>
+  <data name="Sync_FirstRunConnectConfirm" xml:space="preserve">
+    <value>Recevoir {0} dans ce profil local vide ? Ses préférences enregistrées remplaceront les valeurs initiales de la configuration vide. Votre brouillon non enregistré restera disponible à votre retour. Aucun compte financier ne sera créé.</value>
+  </data>
+  <data name="Sync_LinkedGroup" xml:space="preserve">
+    <value>Groupe financier lié</value>
+  </data>
+  <data name="Sync_GroupReview" xml:space="preserve">
+    <value>Vérifiez ensemble l’opération, le paiement et les frais. Votre choix s’applique à tout le groupe lié.</value>
+  </data>
+  <data name="Sync_GroupMember" xml:space="preserve">
+    <value>Membre de ce groupe</value>
+  </data>
+  <data name="Sync_KeepLocalGroup" xml:space="preserve">
+    <value>Choisir tout le groupe local</value>
+  </data>
+  <data name="Sync_KeepRemoteGroup" xml:space="preserve">
+    <value>Choisir tout le groupe du service</value>
+  </data>
+  <data name="Sync_KeepLocalGroupConfirm" xml:space="preserve">
+    <value>Choisir tout le groupe local vérifié, avec l’opération, le paiement, les frais et les suppressions affichées ? Un seul choix s’applique à tous les membres. Les données financières ne changent que lors de l’application sécurisée de tout le cycle.</value>
+  </data>
+  <data name="Sync_KeepRemoteGroupConfirm" xml:space="preserve">
+    <value>Choisir tout le groupe vérifié du service, avec l’opération, le paiement, les frais et les suppressions affichées ? Le groupe local en conflit ne sera remplacé que lors de l’application sécurisée de tout le cycle. Les modifications ultérieures nécessitent une nouvelle vérification.</value>
+  </data>
+  <data name="Sync_Field_DefaultCategory" xml:space="preserve">
+    <value>Catégorie par défaut</value>
+  </data>
+  <data name="Sync_Field_Essential" xml:space="preserve">
+    <value>Dépense essentielle</value>
+  </data>
+  <data name="Sync_Field_HomeBudgetCurrency" xml:space="preserve">
+    <value>Devise du budget de l’accueil</value>
+  </data>
+  <data name="Sync_Field_FortnightStart" xml:space="preserve">
+    <value>Début du cycle de deux semaines</value>
+  </data>
+  <data name="Sync_Field_EstimatePeriod" xml:space="preserve">
+    <value>Période de l’estimation</value>
+  </data>
+  <data name="Sync_Field_BaseDate" xml:space="preserve">
+    <value>Début de la prévision</value>
+  </data>
+  <data name="Sync_Field_Minimum" xml:space="preserve">
+    <value>Solde prévisionnel le plus bas</value>
+  </data>
+  <data name="Sync_Field_MinimumDate" xml:space="preserve">
+    <value>Date du solde le plus bas</value>
+  </data>
+  <data name="Sync_Field_UnknownCount" xml:space="preserve">
+    <value>Éléments au montant inconnu</value>
+  </data>
+  <data name="Sync_Field_AppVersion" xml:space="preserve">
+    <value>Version de l’application lors de l’enregistrement</value>
+  </data>
+  <data name="Sync_AllKinds" xml:space="preserve">
+    <value>Tous les types d’opérations</value>
+  </data>
+  <data name="Sync_Shown" xml:space="preserve">
+    <value>Affiché</value>
+  </data>
+  <data name="Sync_Hidden" xml:space="preserve">
+    <value>Masqué</value>
+  </data>
+  <data name="Sync_ReviewFinished" xml:space="preserve">
+    <value>Vérification terminée</value>
+  </data>
+  <data name="Sync_ReviewInProgress" xml:space="preserve">
+    <value>Vérification en cours</value>
+  </data>
+  <data name="Sync_AttachmentFileName" xml:space="preserve">
+    <value>Nom du fichier</value>
+  </data>
+  <data name="Sync_AttachmentType" xml:space="preserve">
+    <value>Type de fichier</value>
+  </data>
+  <data name="Sync_AttachmentContent" xml:space="preserve">
+    <value>Contenu du fichier</value>
+  </data>
+  <data name="Sync_AttachmentBytes" xml:space="preserve">
+    <value>{0} octets</value>
+  </data>
+  <data name="Sync_AttachmentPage" xml:space="preserve">
+    <value>Page {0} sur {1}</value>
+  </data>
+  <data name="Sync_AttachmentPrevious" xml:space="preserve">
+    <value>Page précédente</value>
+  </data>
+  <data name="Sync_AttachmentNext" xml:space="preserve">
+    <value>Page suivante</value>
+  </data>
+  <data name="Sync_AttachmentClose" xml:space="preserve">
+    <value>Fermer l’aperçu</value>
+  </data>
+  <data name="Sync_AttachmentPreviewLocal" xml:space="preserve">
+    <value>Voir le fichier local</value>
+  </data>
+  <data name="Sync_AttachmentPreviewRemote" xml:space="preserve">
+    <value>Voir le fichier du service</value>
+  </data>
+  <data name="Sync_AttachmentReviewHint" xml:space="preserve">
+    <value>Vous pouvez consulter les images ou pages PDF avant de choisir la version complète du fichier. Les fichiers verrouillés ou non pris en charge restent sélectionnables explicitement. L’aperçu ne modifie ni la pièce jointe ni le montant de l’opération.</value>
+  </data>
+  <data name="Sync_AttachmentZoomIn" xml:space="preserve">
+    <value>Agrandir</value>
+  </data>
+  <data name="Sync_AttachmentZoomOut" xml:space="preserve">
+    <value>Réduire</value>
+  </data>
 </root>

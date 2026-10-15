@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace Vafadar.Zanance.Api;
 
@@ -20,6 +21,8 @@ public sealed class ServiceStorage
     public required string Root { get; init; }
     /// <summary>Development-only fictional mail delivery; never an external sender.</summary>
     public required bool LocalMailbox { get; init; }
+    /// <summary>Finite technical bounds shared by all workers for personal synchronization.</summary>
+    public Sync.SyncStorageLimits SyncLimits { get; init; } = new();
     /// <summary>Private immutable object path; identifiers originate on the server only.</summary>
     public string ObjectPath(Guid id) => Path.Combine(Root, "objects", id.ToString("N"));
 }
@@ -40,8 +43,15 @@ public static class ServiceHost
         if (builder.Environment.IsDevelopment())
         {
             var port = builder.Configuration.GetValue<int?>("Service:Port") ?? 5047;
-            if (port is < 1024 or > 65535) throw new InvalidOperationException("Invalid local service port.");
-            builder.WebHost.UseUrls($"http://127.0.0.1:{port}");
+            var tlsPort = builder.Configuration.GetValue<int?>("Service:TlsPort") ?? port + 1;
+            if (port is < 1024 or > 65535 || tlsPort is < 1024 or > 65535 || port == tlsPort)
+                throw new InvalidOperationException("Invalid local service ports.");
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                // The old loopback port remains content-free readiness only. Identity and finance use TLS.
+                options.Listen(System.Net.IPAddress.Loopback, port);
+                ListenLocalTls(options, tlsPort);
+            });
         }
         var connection = builder.Configuration.GetConnectionString("Service") ?? throw new InvalidOperationException("Service database configuration required.");
         var root = builder.Configuration["Service:Root"] ?? throw new InvalidOperationException("Private service root required.");
@@ -49,7 +59,8 @@ public static class ServiceHost
         if (File.Exists(Path.Combine(root, "installation.protected")) &&
             (!Directory.Exists(Path.Combine(root, "keys")) || !Directory.EnumerateFiles(Path.Combine(root, "keys"), "key-*.xml").Any()))
             throw new InvalidOperationException("Existing service protection keys are unavailable; preserve private data and restore the original key ring.");
-        var storage = new ServiceStorage { Root = root, LocalMailbox = builder.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>("Service:LocalMailbox") };
+        var storage = new ServiceStorage { Root = root, LocalMailbox = builder.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>("Service:LocalMailbox"),
+            SyncLimits = Sync.SyncStorageLimits.Read(builder.Configuration) };
         var directory = Directory.CreateDirectory(root);
         if (OperatingSystem.IsWindows())
         {
@@ -66,6 +77,7 @@ public static class ServiceHost
         Directory.CreateDirectory(Path.Combine(root, "objects"));
         Directory.CreateDirectory(Path.Combine(root, "mailbox"));
         builder.Services.AddSingleton(storage);
+        builder.Services.AddSingleton<Sync.LocalSyncCertificate>();
         builder.Services.AddSingleton(TimeProvider.System);
         builder.Services.AddDbContextFactory<ServiceDbContext>(o => o.UseNpgsql(connection));
         // Identity owns its infrastructure scope; application operations create short-lived contexts via the factory.
@@ -99,6 +111,16 @@ public static class ServiceHost
         builder.Logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.None);
     }
 
+    /// <summary>Uses the original protected local TLS identity, also for isolated real-socket integration checks.</summary>
+    public static void ListenLocalTls(KestrelServerOptions options, int port)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+        if (port is < 1024 or > 65535 && !(port == 0 && options.ApplicationServices.GetRequiredService<IHostEnvironment>().IsEnvironment("Integration")))
+            throw new ArgumentOutOfRangeException(nameof(port));
+        options.Listen(System.Net.IPAddress.Loopback, port, listener =>
+            listener.UseHttps(options.ApplicationServices.GetRequiredService<Sync.LocalSyncCertificate>().Certificate));
+    }
+
     /// <summary>Schema changes are an explicit operator action, not ordinary worker startup.</summary>
     public static async Task MigrateAsync(IServiceProvider services)
     {
@@ -111,6 +133,12 @@ public static class ServiceHost
     /// <summary>Applies durable rate limits and validates session/stamp on every request.</summary>
     public static void UseZananceService(this WebApplication app)
     {
+        app.Use(async (http, next) =>
+        {
+            if (!http.Request.IsHttps && !http.Request.Path.StartsWithSegments("/health"))
+            { http.Response.StatusCode = 426; return; }
+            await next(http);
+        });
         app.Use(async (http, next) =>
         {
             if (!http.Request.Path.StartsWithSegments("/health"))
@@ -171,5 +199,6 @@ public static class ServiceHost
         });
         IdentityRoutes.Map(app);
         ObjectRoutes.Map(app);
+        Sync.SyncServiceRoutes.Map(app);
     }
 }
