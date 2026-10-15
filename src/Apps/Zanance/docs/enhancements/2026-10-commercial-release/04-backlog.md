@@ -2450,3 +2450,10 @@ rerun. Strict builds, 18 protected Windows native contexts, same-process Release
 Cancel and a complete signed APK pass. Exact evidence and retained negative observations:
 [coherent-home-read.md](../../quality/coherent-home-read.md). No two-second/phone/iOS/release acceptance;
 QA-06 and the full development goal remain open.
+
+## D-287 current summary reconciliation
+
+Current ADR/native/privacy/spec summaries now agree with delivered Android/Windows protection,
+local copies, P2-18 loan estimates and local entitlement/identity foundations. Initial inventories
+are explicitly historical; owner/external/native-warning gates are not marked complete. No code
+or runtime verification repeated. Evidence: ../../quality/current-status-alignment.md.

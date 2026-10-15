@@ -53,10 +53,11 @@ completed local review does not authorize activation or a fabricated purchase fl
 
 ## Owner/external dependencies: do not replace with temporary behavior
 
-- Encryption SEC-01..08: ADR/provider licence, permanent key/recovery and OS-backup decisions; automatic
-  local backup depends on encrypted safety copies. Interim exclusion was explicitly declined.
-- Billing/identity/sync/sharing: store/account/backend/cost/scope decisions and verified provider facts.
-- LOC-05/10: explicitly owner-supplied texts. LOC-07/08: confirmed target markets and sourced holiday sets.
+- Encryption SEC-01..08: source/key/recovery/OS policy is settled and Android/Windows integration is
+  locally verified (D-263/D-264); iOS and device/fault acceptance remain. Automatic local copies are
+  delivered (D-281); do not ask the settled policy again.
+- Billing/sync/sharing: separate scope/store/retention/encryption decisions and verified provider facts. The local identity backend is delivered (D-272); hosted cost/provider and financial sync are not approved by that foundation decision.
+- LOC-05/10 copy is delivered (D-268). Target currencies/holiday coverage is delivered (D-273); additional jurisdiction/year acceptance remains explicit. New languages stay last.
 - Import presets/receipt corpus: actual representative samples; invented bank presets are not acceptance.
 - Physical phone, real OAuth and Mac/Xcode/iOS/signing: external setup/device acceptance.
 - Tax, AI, bank/rates and sharing encryption: their separately recorded scope/cost decisions.

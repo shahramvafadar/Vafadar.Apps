@@ -1,5 +1,10 @@
 # Device-protected database keys (D-192)
 
+Current integration (2026-10-15, D-287): the main Android Keystore and Windows CurrentUser DPAPI
+stores, durable envelopes, optional recovery and profile retirement are locally verified in
+D-263/D-264. iOS/device/hardware acceptance is unfinished. The primitive and dated proof sections
+below describe their original scope; they are not claims that current main-app storage is absent.
+
 OD-04 and OD-10 are approved: automatic local key, optional separate recovery key and Zanance
 backup recovery; permanent Android/iOS sensitive-data backup/transfer exclusion coupled with
 completed encryption. Portable backup encryption stays optional. No interim policy is introduced.

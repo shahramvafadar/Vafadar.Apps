@@ -1,4 +1,4 @@
-# 01 – Current state and gap map
+# 01 – D-61 audit and current-status pointers
 
 Audit of `main` at `5d41d9d` (2026-10-07), working tree clean. Status values: **Implemented and verified** (automated
 tests and, where it matters, a run of the app), **Implemented but unverified** (code exists, tests or device runs
@@ -6,6 +6,12 @@ missing), **Partial**, **Missing**, **Blocked**, **Deferred by owner**. A class,
 evidence; each row names the implementation, the tests and the UI path. Backlog ids refer to
 [04-backlog.md](04-backlog.md).
 
+Current-status overlay (2026-10-15, D-287): this is the dated D-61 audit, not a current search of src.
+Android/Windows main encryption/recovery/OS policy is locally delivered (D-263/D-264), automatic
+local copies in D-281, local entitlement boundaries in D-173 (activation off), identity backend in
+D-272, target holidays/currencies in D-273 and current performance evidence through D-286.
+The canonical 04-backlog.md and current spec Section 31 summary govern present status. Earlier
+maintenance paragraphs and audit tables below retain their dates and must not override later work.
 Maintenance update 2026-10-08 (D-62/D-63): optional backup protection and first-run restore are implemented. The app now has a device-wide four-digit PIN with 20 verifier/attempt/recovery tests and Windows UI checks, and an Android foreground screenshot choice. Android backup rules exclude only device-bound SecureStorage ciphertext; plaintext database backup and database encryption remain open. Historical rows below describe the 2026-10-07 audit and must not be used as current evidence for those changed items.
 
 Verification refresh 2026-10-09 (D-72/D-73/D-74): aggregate import/Undo, bulk operations, profiles, onboarding,
@@ -16,7 +22,7 @@ Physical-device, iOS, provider and release acceptance remain independent gates.
 
 ## 1. Product capabilities
 
-All capabilities below are open to every user today. There is **no plan, quota, entitlement, purchase or paywall code**
+At the 2026-10-07 audit, capabilities below were open to every user. There was **no plan, quota, entitlement, purchase or paywall code**
 anywhere in `src` (searched for entitlement, purchase, billing, Plus/Pro/Premium, paywall, quota, subscription, IAP);
 the only gating is the display mode (`Core/Settings/FeaturePolicy.cs`, tested by `FeaturePolicyTests`,
 `ZexModeSwitchTests`). Technical caps only: 10 tags per entry, 5 MB per attachment, 30 pending notifications, 600 loan

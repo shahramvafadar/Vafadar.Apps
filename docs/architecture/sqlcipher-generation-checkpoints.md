@@ -1,5 +1,10 @@
 # Database generation checkpoints (D-188)
 
+Current integration (2026-10-15, D-287): these checkpoints and their durable coordinator are used
+by Android/Windows main startup, profile and restore lifecycles (D-263/D-264). OD-04/OD-10 are
+settled; iOS and external fault/device acceptance remain open. Each dated implementation record
+below keeps its original evidence boundary and is not the current activation status.
+
 DatabaseGenerationCheckpoint is the immutable non-secret protocol model for one profile and two
 explicit generation identities. Its constructor rejects empty or identical generations. Advance
 requires the original profile/candidate and exactly the next phase; completed states cannot advance.

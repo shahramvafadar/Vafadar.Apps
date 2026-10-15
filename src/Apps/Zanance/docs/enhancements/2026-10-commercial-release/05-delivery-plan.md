@@ -1528,3 +1528,11 @@ allowance without changing security/schema/order, then remove temporary timing c
 the original native page and full source preservation. Keep read-only/default reset cases, strict
 builds and the signed Release handoff; retain the phone/memory/cold acceptance boundary. Final
 native samples pass at 1351-1837 ms for tenfold data; see ../../quality/home-reader-page-cache.md.
+
+## Current-status reconciliation batch (D-287)
+
+Audit current summaries against provider/host registration, Android backup inputs, loan source,
+quota/identity registration and qualified test/native records. Correct the whole contradictory
+current summary set, keep dated history separate and verify mirrored privacy facts. Delivered as
+documentation only; successful builds/tests/APK are not repeated. Remaining owner/external gates
+remain in 04-backlog.md and 06-open-decisions.md.

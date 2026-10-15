@@ -1,10 +1,10 @@
 # 0010. Profile database encryption and device-bound key envelopes
 
-- Status: **Official Community source and OD-04/OD-10 policy accepted; final integration in progress (2026-10-13)**
+- Status: **Accepted; main Android/Windows integration locally verified, iOS and external acceptance open (2026-10-15, D-287)**
 - Date: 2026-10-08
 - Section: ZCR-SEC-01; decision log D-68
-- Source baseline: 081603c596c8b2331990112212798c9604a7b477
-- Scope: approved final key/recovery/OS-backup policy and implementation in progress; independent probes retain fictitious data only.
+- Initial decision source baseline: 081603c596c8b2331990112212798c9604a7b477
+- Scope: approved source/key/recovery/OS-backup policy, main Android/Windows implementation and remaining platform/device acceptance. Independent probes retain fictitious data only.
 
 ## Recommendation
 
@@ -14,22 +14,23 @@ required platforms and long-term maintenance; build a repeatable native build/pa
 process before final key, migration and CI integration. Do not ship or reuse the deprecated
 SQLitePCLRaw.bundle_e_sqlcipher 2.1.11 proof binary. Review every native and managed dependency before adoption.
 
-The proposed data design remains a random 256-bit DEK per profile and a separate versioned device key envelope.
+The implemented Android/Windows design uses a random 256-bit per-generation profile DEK and a separate versioned device key envelope.
 The owner separately accepted OD-04 and OD-10 on 2026-10-13 (D-192): automatic local key, optional
 recovery key and Zanance backup recovery; permanent Android/iOS sensitive-data backup/transfer
-exclusion with completed encryption. No interim policy. The main app still remains plaintext
-until native storage/migration integration and acceptance are complete.
+exclusion with completed encryption. Android/Windows implementation is locally verified in D-263/D-264;
+Android final OS exclusion is active. iOS native integration/exclusion and device acceptance remain open.
+No interim policy or physical-device/product acceptance is inferred. D-286 is the current local baseline.
 
-This selects an architectural direction, not a production binary. Neither an unofficial successful probe nor a
+The source decision alone did not qualify a binary; current package/runtime adoption is recorded in D-263/D-264. Neither an unofficial successful probe nor a
 vendor's platform support statement establishes production readiness. No paid purchase, trial account, production
 provider switch or unverified migration follows merely from source selection. OD-04/OD-10 policy approval is separately recorded in D-192.
 
-## Current Community evaluation (D-180, 2026-10-12)
+## Initial Community evaluation (D-180, 2026-10-12)
 
 Initial app baseline: f0c25d7b45699179e51bff3d6dadb52a7abf95d7. Inputs are pinned in
 `eng/native/sqlcipher/inputs.lock.json`, not selected by a changing latest URL:
 
-| Input | Current evaluated source | Exact commit |
+| Input | Evaluated source at D-180 | Exact commit |
 |---|---|---|
 | SQLCipher | Official stable v4.19.0 | c4b275a47932888216bade83aff2bbc73df0ff85 |
 | OpenSSL | Official 3.5.9 LTS, support through 2030-04-08 | 45e844fa2a14ec92d146bd8f5778ac130b6625fb |
@@ -49,12 +50,27 @@ Encrypted-to-encrypted BackupDatabase works, while plaintext export requires sql
 Full EF/migration, upstream security suites, reproducibility and mobile follow-through remain open.
 See [the bounded compatibility record](../architecture/sqlcipher-community-build.md).
 
-## Verified current storage inventory
+## Current storage and acceptance (2026-10-15, D-287)
+
+| Asset | Current Android/Windows behavior | Remaining boundary |
+|---|---|---|
+| All financial profile databases | SQLCipher through protected startup and captured keyed EF contexts; original plaintext is migrated and retired under exclusive ownership | iOS and physical-device/fault acceptance |
+| Key envelopes and recovery | Android Keystore / Windows CurrentUser DPAPI, durable per-generation storage; optional recovery and explicit Zanance backup restoration | Hardware/device/iOS acceptance; DPAPI does not resist same-user code |
+| Portable backup | Bounded memory-only SQLite export, optional independent password protection; validated encrypted restore staging | Real OAuth and physical-device/iOS acceptance |
+| Safety / automatic local copies | Device-key protected, separately retained; original preview/authentication/confirmation for restore | Not a replacement for a portable export on a new device |
+| Attachments / external exports | Database BLOBs follow page encryption; explicit viewer/CSV/PDF share copies remain plaintext outside that boundary | Export lifetime and recipient/OS behavior are separate acceptance |
+| Android OS backup / transfer | allowBackup=false plus complete backup/data-extraction exclusions, coupled to main encryption | OEM/device transfer acceptance; iOS exclusion is not implemented/accepted |
+| Profile catalogue / preferences | Non-secret identity, selection and device/display metadata are not financial-database encryption; portable preferences remain allowlisted | Never include credentials, PIN state or device security in portable preferences |
+
+Earlier inventory and D-number records below retain their original dates. They are evidence of the
+migration from the initial state, not a statement that the current main app is still plaintext.
+
+## Initial source storage inventory (2026-10-08, superseded for Android/Windows)
 
 Inventory is based on source, not opening the owner's data. Paths below are logical locations; no real financial
 file, credential, token cache or secure value was read to perform this review.
 
-| Asset / source | Current storage and protection | Required future treatment |
+| Asset / source | Initial storage and protection | Required treatment at that date |
 |---|---|---|
 | Main and profile databases: MauiProgram.DatabasePath, ProfileService.PathOf, LocalDatabaseLocation.Build | AppData/zanance.db and profile files; connection has DataSource only, no key. OS sandbox/disk protection is the current boundary | Encrypt all profiles, including inactive ones; fail closed if a key is missing |
 | WAL, SHM, rollback journal | SQLite sidecars; plaintext page data in WAL/journal with current SQLite. SHM is a wal-index, not data pages | Encrypt page-bearing sidecars; inspect leakage while files exist; do not describe SHM as encrypted |

@@ -5629,3 +5629,13 @@ Final original native Home publications on the same protected reference/tenfold 
 Sixteen related SQLite cases pass, including read-only/read-write and pooled cache isolation (3,610 covered
 behaviors, not a new full-suite run). Temporary timing code was removed before final qualification.
 QA-06 still requires phone/low-memory/cold/Android ANR/iOS acceptance. See quality/home-reader-page-cache.md.
+## D-287 current-status alignment
+
+Correct current summaries that still described pre-integration plaintext storage, Android OS backup,
+missing loan estimation and absent entitlement/identity code. Main Android/Windows protected runtime,
+recovery/safety/automatic copies, P2-18 loan estimates and local identity/quota boundaries now match
+source. Retain inactive commercial enforcement, optional portable passwords, iOS/device/provider/native
+warning review and release gates. Both privacy matrices and the unpublished policy draft distinguish
+Android exclusion from pending iOS integration. Initial inventories remain explicitly historical.
+Only docs changed; no build/test/device/APK rerun. Baseline remains D-286 with 3,610 covered behaviors,
+not a new complete-suite run. See quality/current-status-alignment.md for the finite source audit.

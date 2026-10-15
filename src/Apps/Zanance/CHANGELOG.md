@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Documentation - Current protection and delivery status
+
+- Correct encryption, OS backup, automatic/portable copy and loan-estimate summaries while keeping unfinished platform and release acceptance explicit.
+
 ### Improved - Large Home history
 
 - Reduce complete Home loading time for large encrypted histories while retaining all original transactions and totals.

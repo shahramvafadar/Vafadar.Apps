@@ -1,7 +1,9 @@
 # Independent SQLCipher Android producer (D-183)
 
-Status: local native candidate; not app activation or product release. Main app remains plaintext
-and unchanged at D-179 (3,179 main tests). Upstream Windows OpenSSL result remains separately D-182.
+Status (2026-10-15, D-287): this source-built Android runtime is used by the main app (D-263).
+D-286 is the current locally verified app/APK baseline. ARM64 phone/API 24/16 KiB OS, low-memory,
+OEM transfer, iOS and product release remain separate gates. D-183 and later dated producer/probe
+records below retain their historical scope; they do not override main-app integration.
 
 ## Inputs and repeatable commands
 

@@ -1,21 +1,31 @@
 # SQLCipher native security validation
 
-Status: independent candidate validation only. No original app database is encrypted or migrated.
-Source and build identities are in [the Community guide](sqlcipher-community-build.md).
+Status (2026-10-15, D-287): official Community encryption is active in the main Android/Windows
+application (D-263/D-264). Native producers remain independently reproducible, but their initial
+probe state is not the current app state. The current local engineering evidence is D-286; iOS,
+physical-device/OEM/low-memory acceptance and product release remain unfinished.
+Source/build identities are in [the Community guide](sqlcipher-community-build.md).
 
-## Scope and evidence
+## Current scope and evidence
 
-| Boundary | Current authoritative evidence | Still required |
+| Boundary | Qualified local evidence | Still required |
 |---|---|---|
-| Official source/tool provenance | Pinned official SQLCipher/OpenSSL commits, portable host checksums and tool identities | Advisory/support review on each update; mobile toolchain inputs |
-| Windows determinism | Two fresh DLL and NuGet hashes match; negative stale incremental evidence retained | Required mobile matrix and CI comparison |
-| Original application schema | Actual compiled model, 32 migrations, original dummy identifiers/Unicode/EUR/money/date/settings reopen | Full populated profiles, relationships, durable pools, cross-platform migration |
-| Key and integrity refusal | Missing/wrong key and altered page reject reads; plaintext header/marker absent | Corrupt WAL, crash, disk failure, loss/recovery, encrypted safety copies |
-| Portable backup boundary | Encrypted snapshots work; plaintext BackupDatabase rejects; memory export feasibility passes | Final verified streaming/export/import without plaintext disk artifacts |
-| Official OpenSSL suite | Test-UpstreamWindows.ps1 runs stock nmake test under an unprivileged account | SQLCipher upstream suite; mobile runtime suite |
-| App activation | None: original app and D-179 signed APK unchanged | Final platform-native composition, keys and crash-safe copy/verify/switch |
+| Official source/tool provenance | Pinned official sources, reviewed tool identities, immutable baseline/servicing Windows packages and Android package | Advisory/support review on each update; exact required mobile matrix |
+| Native determinism and CI | Matching clean producer outputs; earlier successful hosted Native cipher candidates run 38707538867 | Each changed recipe/consumer still requires its own hosted result; no current-head green claim here |
+| Main data and lifecycle | Android/Windows protected startup, all-profile migration, original EF model, profile creation/switch/retirement and cold reopen | Physical device, iOS and broader OS/fault acceptance |
+| Key loss and integrity | Native device-key storage, missing/wrong-key refusal, optional recovery and explicit Zanance restore | Hardware-backed phone assurance, iOS and real power-loss acceptance |
+| Portable and local copies | Protected memory export/validated restore, encrypted safety and automatic local copies with independent retention (D-281) | Physical-device/low-memory/iOS acceptance; real OAuth backup clients |
+| Official suites | Recorded unprivileged Windows OpenSSL baseline and Linux SQLCipher upstream suite; skip counts retained in each dated record | Never infer all APIs/ABIs or all upstream warnings are accepted |
+| Main Home | D-286 original native reference/tenfold publication, complete typed-row preservation and focused cache/lifetime cases | Loaded phone/Android/iOS, complete cold startup and ANR acceptance |
 
-## Preserved upstream warnings
+The recorded current-profile Windows baseline reports 704 upstream occurrences (628 C4267, 72 C4244, two C4319 and
+two C4133). They remain recorded, not suppressed or blanket-approved. Earlier 749-occurrence and
+partial source-range reviews below concern their dated profiles; do not transfer them to every
+current site. Main managed strict builds being warning-free does not resolve native warning review.
+
+## Historical producer warning evidence (D-181)
+
+### Original 749-occurrence inventory
 
 The fresh Windows native producer logs each contain 749 occurrences, including compiler dependency
 passes: C4267 670, C4244 73, C4133 2, C4319 2 and C4334 2. No blanket suppression or upstream patch

@@ -1,8 +1,10 @@
 # Official SQLCipher Community build and compatibility (D-180)
 
-Status: owner direction accepted; independent Windows C/.NET feasibility verified. Production native
-build/packaging/update/security pipeline and app integration remain in progress. The app is unchanged
-and its databases remain plaintext. Current complete main APK/test/build baseline is D-256.
+Status (2026-10-15, D-287): official Community runtime is integrated in the main Android/Windows app
+(D-263/D-264), including migration, profile lifecycle, recovery and protected backups. The current local
+engineering baseline is D-286; iOS, reference-phone/OEM/low-memory acceptance and release remain open.
+Dated evidence below describes each earlier step, not the current activation state. Native warnings
+are preserved and remain a separate review concern; none are blanket-approved.
 
 ## Owner constraints
 
@@ -11,7 +13,7 @@ cryptography or unnecessary fork; review security/maintenance before using nativ
 dependencies. First prove architecture, platforms and long-term maintenance, then integrate final
 security, migration and CI. Recovery OD-04 and final OS-backup OD-10 are approved: automatic device key, optional recovery
 key and Zanance backup recovery; permanent OS backup/transfer exclusion accompanies completed
-encryption. Their final implementation remains unfinished. No interim app policy or deprecated
+encryption. Android/Windows implementation is locally verified; iOS and external acceptance remain unfinished. No interim app policy or deprecated
 probe binary is introduced.
 
 ## Source and host-tool provenance

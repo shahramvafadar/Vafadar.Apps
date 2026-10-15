@@ -1,7 +1,7 @@
 # Memory-only portable SQLite boundary (D-186)
 
-Status: reusable final infrastructure, not activated for the main application. SQLCipher Community
-build/probe identity remains documented in the native guides; real databases remain plaintext.
+Status (2026-10-15, D-287): activated in the Android/Windows main protected backup/restore paths
+(D-263/D-264); iOS remains unfinished. Earlier D-186 probe results below are historical evidence.
 
 SqlCipherPortableSnapshot.WriteAsync receives the already open, captured keyed connection and
 caller stream/cap. It refuses an existing transaction, attaches a private plaintext memory alias,
@@ -9,7 +9,7 @@ uses one read transaction for schema/rows/header copying through official sqlcip
 serializes the memory alias. user_version/application_id are explicit because export does not
 carry them automatically. No plaintext temporary database path is created. Output protection stays
 in the existing portable package layer, preserving owner D-62 optional password semantics. This
-class does not remember keys or decide profile authorization; current backups still use their old path.
+class does not remember keys or decide profile authorization; Android/Windows production backup sources now use this boundary; iOS adoption remains open.
 
 SqliteMemorySnapshot.OpenAsync reads a capped plaintext portable image, checks header/integrity and
 creates an owned read-only native memory allocation. WAL-mode header bytes are normalized only in

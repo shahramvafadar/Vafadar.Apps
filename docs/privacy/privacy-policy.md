@@ -18,8 +18,8 @@ This policy covers the apps published by Shahram Vafadar ("I", "me") under the n
   access the internet for your own Google Drive or OneDrive backups. On Android, Google ML Kit may also transmit
   SDK diagnostics described under receipt reading, independently of whether you have connected a cloud account.
 * Your financial files leave the device when **you** share a backup or export file or store a backup in your own cloud
-  storage, and through the device backup of your phone (Google or Apple), depending on your device settings.
-* Password protection is optional for both local and cloud backup files. With it enabled, files are encrypted with
+  storage. Android excludes private app data from system backup and device transfer; the iOS release policy remains to be verified before release.
+* Password protection is optional for portable local and cloud backup files. With it enabled, files are encrypted with
   your chosen password. Without it, anyone who obtains the file can read its contents.
 * I add no advertising, application analytics, tracking or crash-reporting service. Android builds with cloud backup
   can permit Google ML Kit diagnostics; offline Android Release builds remove the network permission.
@@ -29,13 +29,20 @@ This policy covers the apps published by Shahram Vafadar ("I", "me") under the n
 Each app stores the information you enter (for example, in Zanance: accounts, transactions, plans, budgets,
 categories, tags, notes and attached receipt photos or PDF files) in a database on your device, together with your
 settings (language, calendar, theme). Photos you attach are stored without their metadata (such as location) on
-Android and iOS.
+Android, iOS and Windows.
+
+Android and Windows encrypt the financial database using a key protected for the current device/user.
+This does not encrypt a file you explicitly export or protect it after sharing with another app.
+An optional separate recovery key and a portable Zanance backup provide distinct recovery paths.
+Without usable device keys or recovery material, encrypted data cannot simply be opened or reset
+without losing access. The iOS implementation and its release acceptance remain unfinished.
 
 ## Backups and export
 
-* **Backup file.** You can create a backup with optional password encryption (AES-256) and share it through your device's share menu to a
+* **Portable backup file.** You can create a backup with optional password encryption (AES-256) and share it through your device's share menu to a
   destination you choose. The last backups are also kept on the device. The password is not stored; if you forget
   it, the backup cannot be recovered.
+* **Automatic local copies.** If enabled, daily or weekly copies use device-key encryption without storing a password. They stay local with separate retention and explicit restore confirmation. They cannot replace a portable export when moving to a new device.
 * **CSV and PDF export.** You can export entries (CSV) or a report (PDF) and share them. These files are **not
   encrypted**; where they go is your decision. Attachments are never included in exports.
 * **Cloud backup (optional).** You can connect your own Google Drive or OneDrive (Android, iOS, Windows) and store
@@ -50,9 +57,11 @@ Android and iOS.
 
 ## Device backup (Android and iOS)
 
-Android may include app data in the device backup to your Google account (Android Auto Backup), and iOS may include
-it in your iCloud or computer backup, depending on your device settings. These backups are operated by Google or
-Apple under your account terms.
+Android requests exclusion of private app data, financial databases, key files and internal backup
+copies from system cloud backup and device transfer. Restore a new device from a portable Zanance
+backup. Manufacturer-specific transfer behavior still needs device acceptance. The approved iOS
+exclusion policy is not yet implemented and verified with the protected iOS runtime; no iOS release
+acceptance is claimed by this draft.
 
 ## Reminders
 
@@ -76,8 +85,9 @@ device credential or biometric data. Zanance also offers a separate four-digit a
 and attempt-limit state in the platform's protected storage, not the plain PIN and not in portable backups.
 Repeated incorrect attempts cause growing waits. PIN change/removal needs the current PIN; forgotten-PIN recovery
 requires successful device authentication and confirmation. Without device authentication there is no in-app recovery.
-This access gate does not encrypt the financial database. Android excludes its device-bound secure-storage ciphertext
-from OS backup/transfer; iOS keychain persistence follows OS policy (uninstalling need not remove its entries).
+The access gate is separate from Android/Windows database encryption. Unavailable or failed device
+authentication does not unlock the app. Android excludes private app storage from OS backup/transfer;
+iOS keychain persistence follows OS policy (uninstalling need not remove its entries).
 
 Android screenshots are blocked by default, but you can allow them in Settings. A screenshot can contain financial
 information; review it before sharing. Recent-apps protection remains enabled. iOS and Windows do not block screenshots.
