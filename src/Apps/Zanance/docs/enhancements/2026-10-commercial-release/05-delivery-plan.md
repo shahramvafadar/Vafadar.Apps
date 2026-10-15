@@ -1503,3 +1503,11 @@ Iran is a later separate variant, not implicitly enabled in this batch. New lang
 This local engineering batch is delivered; see ../../quality/coherent-home-read.md. QA-06 still retains its
 loaded native/phone/cold/ANR/platform gates. Personal financial sync, sharing, purchases and other separately
 recorded product/provider decisions are not implied by backend foundation approval. The full goal remains active.
+
+## Loaded native Home batch (D-284)
+
+Resume only the marked protected reference/tenfold datasets; run original native Home publication twice
+per en/fa/de context, measure native layout and dispatcher delays separately from cold startup, verify
+complete totals and final typed-row preservation, then document the observed limits. Delivered locally;
+see ../../quality/loaded-native-home.md. No unrelated successful cohort, full suite or APK was rebuilt.
+The synchronous appearance layout read and largest native gap remain concrete follow-up concerns.

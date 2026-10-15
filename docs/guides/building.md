@@ -843,3 +843,13 @@ compares only the original/current complete Home read operations and verifies co
 It refuses missing fixtures and writes a new home-measurements-<id>.json, preserving previous measurements.
 This timer includes data equality/validation and excludes native UI. Do not infer a full startup/device claim.
 The existing independent home-loading native route verifies the complete application binding/cover/retry matrix.
+
+### Loaded native Windows Home (D-284)
+
+Use a Windows Debug build with verified compiled ApplicationId pro.vafadar.zanance.storageacceptance,
+VAFADAR_SNAPSHOT_ONLY=home-workload, VAFADAR_HOME_PERFORMANCE_ROOT pointing to the retained marked
+protected reference/tenfold root, and a fresh VAFADAR_SNAPSHOTS output. Never use the main app identity.
+The route refuses missing identities/history/keys and never seeds a replacement fixture. Requested
+review windows remain hidden and capture only their own root. Standard Rebuild regenerates package
+metadata when the build property changes; verify compiled metadata before launching and restore the
+normal identity afterward. Native publication, dispatcher gaps and cold startup are distinct measures.

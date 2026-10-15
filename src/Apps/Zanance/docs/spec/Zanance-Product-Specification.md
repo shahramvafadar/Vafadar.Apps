@@ -5738,3 +5738,16 @@ rerun. Strict builds, 18 protected Windows native contexts, same-process Release
 Cancel and a complete signed APK pass. Exact evidence and retained negative observations:
 [coherent-home-read.md](../quality/coherent-home-read.md). No two-second/phone/iOS/release acceptance;
 QA-06 and the full development goal remain open.
+## D-284 loaded native Windows Home baseline
+
+The original Home page now has a Debug-only native reference/tenfold review using the same retained
+protected D-280 files and device keys. Twelve actual publications (en/fa/de, two each per shape)
+retain every account and match complete original ledger totals; both final full schema/header/
+integrity/typed-row comparisons pass against authenticated encrypted rollbacks without a financial Save.
+Reference publication is 627-929 ms; tenfold is 1849-2312 ms. Largest dispatcher gap is 683 ms.
+These are page navigation/read/projection/native-layout measurements, excluding cold app startup,
+authentication, page construction and PNG encoding; they do not prove phone/ANR/two-second acceptance.
+The appearance's synchronous layout-preference read and remaining UI-thread work remain concerns.
+No Release behavior, schema, native package or translation changes. D-283's signed APK and 3,604
+behavior coverage are retained; unchanged successful suites are not rerun. QA-06 remains in progress.
+See ../quality/loaded-native-home.md for exact samples and the original native evidence.
