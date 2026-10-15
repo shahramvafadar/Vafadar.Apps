@@ -38,6 +38,13 @@ public sealed partial class ZananceStore
             // D-283: SQLite async APIs execute synchronously. Both key derivation and materialization belong
             // off the UI thread; keep the unchanged KDF and non-pooled handle scoped to this operation only.
             await db.Database.OpenConnectionAsync(cancellationToken);
+            // D-286: newest-first full-history reads revisit encrypted table pages through the date index.
+            // Suggest a 32 MiB page cache for this non-pooled reader only; close releases it.
+            // This is SQLite's cache target, not a process-memory cap or a persistent database setting.
+            // Ordinary pooled callers retain their original allowance so it cannot leak to later operations.
+            var connection = (SqliteConnection)db.Database.GetDbConnection();
+            if (!new SqliteConnectionStringBuilder(connection.ConnectionString).Pooling)
+                await db.Database.ExecuteSqlRawAsync("PRAGMA cache_size = -32768", cancellationToken);
             await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
             await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
             var quick = await GetQuickResourceReviewAsync(db, null, cancellationToken);

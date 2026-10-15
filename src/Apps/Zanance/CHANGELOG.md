@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Large Home history
+
+- Reduce complete Home loading time for large encrypted histories while retaining all original transactions and totals.
+
 ### Improved - Home responsiveness
 
 - Keep large ledger and recurring-plan calculations off the interface thread.

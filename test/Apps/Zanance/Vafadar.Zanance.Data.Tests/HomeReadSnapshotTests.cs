@@ -128,6 +128,34 @@ public sealed class HomeReadSnapshotTests : IDisposable
         Assert.Equal(1.2m, (await original.ExchangeRates.SingleAsync(Ct)).Rate);
     }
 
+    /// <summary>Read-only and ordinary operations retain complete ordering without leaking a connection-local cache target.</summary>
+    [Theory, InlineData(false, false), InlineData(true, false), InlineData(false, true)]
+    [Trait("AT", "AT-286")]
+    public async Task Home_page_cache_is_scoped_to_its_reader_and_preserves_complete_ordered_rows(bool readOnly, bool pooled)
+    {
+        var provider = Create(); await SeedAsync(provider);
+        var originalStore = provider.GetRequiredService<ZananceStore>();
+        var expected = JsonSerializer.Serialize(await originalStore.GetEntriesAsync(cancellationToken: Ct));
+        var path = provider.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>().Path;
+        var observation = new PageCacheObservation();
+        var options = new DbContextOptionsBuilder<ZananceDbContext>()
+            .UseSqlite($"Data Source={path};Pooling={pooled};Mode={(readOnly ? "ReadOnly" : "ReadWrite")}")
+            .UseModel(ZananceDbContextModel.Instance).AddInterceptors(observation).Options;
+        var factory = new DirectFactory(options);
+        var store = Store(factory, provider.GetRequiredService<ICommercialWriteAccessSource>());
+        var packet = await store.GetHomeSnapshotAsync(Today, 0, Ct);
+        Assert.Equal(expected, JsonSerializer.Serialize(packet.Entries));
+        var target = Assert.Single(observation.EntryReadTargets);
+        if (pooled) Assert.NotEqual(-32768, target); else Assert.Equal(-32768, target);
+        await store.ValidateHomeSnapshotAsync(packet, Ct);
+        await using var fresh = factory.CreateDbContext();
+        await fresh.Database.OpenConnectionAsync(Ct);
+        using var command = fresh.Database.GetDbConnection().CreateCommand();
+        command.CommandText = "PRAGMA cache_size";
+        Assert.NotEqual(-32768, Convert.ToInt32(await command.ExecuteScalarAsync(Ct), System.Globalization.CultureInfo.InvariantCulture));
+        if (pooled) Microsoft.Data.Sqlite.SqliteConnection.ClearPool((Microsoft.Data.Sqlite.SqliteConnection)fresh.Database.GetDbConnection());
+    }
+
     /// <summary>Profile changes cannot revalidate a retained Home against a newly selected file.</summary>
     [Fact]
     public async Task Changed_factory_file_refuses_retained_home()
@@ -207,6 +235,21 @@ public sealed class HomeReadSnapshotTests : IDisposable
             CommandEventData eventData, InterceptionResult<DbDataReader> result, CancellationToken cancellationToken = default)
         {
             if (command.CommandText.Contains("\"ExchangeRates\"", StringComparison.Ordinal)) RateQueries++;
+            return base.ReaderExecutingAsync(command, eventData, result, cancellationToken);
+        }
+    }
+    private sealed class PageCacheObservation : DbCommandInterceptor
+    {
+        public List<int> EntryReadTargets { get; } = [];
+        public override ValueTask<InterceptionResult<DbDataReader>> ReaderExecutingAsync(DbCommand command,
+            CommandEventData eventData, InterceptionResult<DbDataReader> result, CancellationToken cancellationToken = default)
+        {
+            if (command.CommandText.Contains("FROM \"Entries\"", StringComparison.Ordinal))
+            {
+                using var check = command.Connection!.CreateCommand(); check.Transaction = command.Transaction;
+                check.CommandText = "PRAGMA cache_size";
+                EntryReadTargets.Add(Convert.ToInt32(check.ExecuteScalar(), System.Globalization.CultureInfo.InvariantCulture));
+            }
             return base.ReaderExecutingAsync(command, eventData, result, cancellationToken);
         }
     }

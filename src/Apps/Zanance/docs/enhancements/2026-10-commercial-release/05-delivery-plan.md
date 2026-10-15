@@ -1520,3 +1520,11 @@ workers and recheck lifetime before UI publication. Verify loaded native respons
 source preservation, failure/retry and legacy/custom layout restoration; finish strict builds and
 the signed Release emulator handoff. The loaded cohort improves blocking, not complete latency;
 retain that limit and do not repeat successful unrelated checks. See ../../quality/responsive-home-publication.md.
+
+## Complete Home reader latency batch (D-286)
+
+Measure original native stages, isolate the complete ordered read, test an operation-local cache
+allowance without changing security/schema/order, then remove temporary timing code and qualify
+the original native page and full source preservation. Keep read-only/default reset cases, strict
+builds and the signed Release handoff; retain the phone/memory/cold acceptance boundary. Final
+native samples pass at 1351-1837 ms for tenfold data; see ../../quality/home-reader-page-cache.md.

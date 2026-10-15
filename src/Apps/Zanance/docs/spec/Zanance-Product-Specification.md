@@ -5764,3 +5764,14 @@ complete preserved rows. Tenfold maximum dispatcher gap changes from 683 to 187 
 publication does not improve and reaches 3.11 seconds. Eighteen native cover/failure/retry cases and
 nine saved/default/legacy layout cases pass with original data and handlers retained. QA-06 remains
 open; no two-second, phone, cold-start, ANR or iOS acceptance. See ../quality/responsive-home-publication.md.
+## D-286 operation-scoped Home page cache
+
+Native stage measurements isolate complete ordered entry reading as the dominant tenfold cost:
+1485/1549 ms, reduced to 681/846 ms by changing only that connection's cache target. Home suggests
+32 MiB of SQLite page cache only on non-pooled readers; pooled callers keep their default. This is not a
+process-memory cap, persistent setting, global pool, KDF reduction or history/column limit.
+Final original native Home publications on the same protected reference/tenfold data pass all
+12 cases: reference 542-795 ms, tenfold 1351-1837 ms, complete balances and all typed rows preserved.
+Sixteen related SQLite cases pass, including read-only/read-write and pooled cache isolation (3,610 covered
+behaviors, not a new full-suite run). Temporary timing code was removed before final qualification.
+QA-06 still requires phone/low-memory/cold/Android ANR/iOS acceptance. See ../quality/home-reader-page-cache.md.

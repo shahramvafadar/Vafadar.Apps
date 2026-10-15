@@ -2091,3 +2091,11 @@ a keyed connection on the window thread. Worker computation receives only captur
 and original work policy. Native collection/layout publication remains on the window thread under
 the loading cover, with lifetime checks after worker returns and fresh file/resource authorization
 before actions become available. Null versus empty layout retains its original fallback meaning.
+
+### Operation-local Home page cache (D-286)
+
+The original complete Home reader suggests SQLite cache_size=-32768 after its keyed connection
+opens and before its deferred transaction. This approximately 32 MiB page-cache allowance exists
+only for that non-pooled reader, allocates on demand and resets at close. It is not a process
+heap cap or persistent database setting. Preserve original ordering/columns/history, KDF and
+authority checks; do not apply the larger allowance to unrelated writes or retained global pools.
