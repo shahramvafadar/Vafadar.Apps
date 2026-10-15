@@ -38,7 +38,7 @@ public sealed class DatabaseRecoveryTests : IDisposable
             var envelope = material.Identity.Protect(key, original);
             var wrong = new DatabaseKeyBinding(changed == 0 ? Guid.NewGuid() : original.ProfileId,
                 changed == 1 ? Guid.NewGuid() : original.InstallationId, changed == 2 ? Guid.NewGuid() : original.GenerationId);
-            Assert.Throws<CryptographicException>(() => (changed == 3 ? another : material).Open(envelope, wrong));
+            Assert.ThrowsAny<CryptographicException>(() => (changed == 3 ? another : material).Open(envelope, wrong));
         }
         finally { CryptographicOperations.ZeroMemory(key); }
     }
@@ -51,7 +51,8 @@ public sealed class DatabaseRecoveryTests : IDisposable
         try
         {
             var envelope = material.Identity.Protect(key, binding); envelope[10] ^= 1;
-            Assert.Throws<CryptographicException>(() => material.Open(envelope, binding));
+            // Native RSA providers use platform-specific CryptographicException subclasses.
+            Assert.ThrowsAny<CryptographicException>(() => material.Open(envelope, binding));
             Assert.Throws<CryptographicException>(() => material.Open(envelope.AsSpan(0, 383), binding));
             material.Dispose(); Assert.Throws<ObjectDisposedException>(() => material.Open(envelope, binding));
         }
@@ -97,8 +98,8 @@ public sealed class DatabaseRecoveryTests : IDisposable
             await using var connection = new SqliteConnection($"Data Source={PathOfCatalogue};Pooling=False"); await connection.OpenAsync(Ct);
             using var command = connection.CreateCommand(); command.CommandText = "UPDATE recovery_envelope SET envelope=zeroblob(384)";
             await command.ExecuteNonQueryAsync(Ct); await connection.CloseAsync();
-            await Assert.ThrowsAsync<CryptographicException>(() => catalogue.CaptureAsync(binding, key, Ct));
-            await Assert.ThrowsAsync<CryptographicException>(() => catalogue.RecoverAsync(binding, material, Ct));
+            await Assert.ThrowsAnyAsync<CryptographicException>(() => catalogue.CaptureAsync(binding, key, Ct));
+            await Assert.ThrowsAnyAsync<CryptographicException>(() => catalogue.RecoverAsync(binding, material, Ct));
         }
         finally { CryptographicOperations.ZeroMemory(key); CryptographicOperations.ZeroMemory(changed); }
     }

@@ -41,3 +41,8 @@ eng/git-hooks/* text eol=lf
 *.jks binary
 *.db binary
 *.sqlite binary
+
+# Native provenance fingerprints bind the reviewed Windows checkout bytes on every host.
+eng/native/sqlcipher/inputs.lock.json text eol=crlf
+eng/native/sqlcipher/android.inputs.lock.json text eol=crlf
+eng/native/sqlcipher/windows.crypto.profile.json text eol=crlf

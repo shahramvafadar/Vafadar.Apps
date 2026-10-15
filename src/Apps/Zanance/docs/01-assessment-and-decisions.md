@@ -5502,3 +5502,18 @@ original explicit restore and complete signed APK are recorded in quality/automa
 The initial Android live-picker publication loop and native validation lock issue were corrected;
 only related checks were repeated. Local success is not hosted CI, physical-device/iOS/OEM,
 power-loss, OAuth, store-signing or product-publication acceptance. The full goal remains open.
+
+## D-282 CI platform contract and native provenance diagnosis
+
+CI run 38698595330 on D-281 failed independently in Linux RSA exception assertions, Android
+native packaging and Windows compiler qualification. Accept CryptographicException subtypes only
+at native RSA refusal assertions; retain exact managed validation and fail-closed checks. Pin native
+input-lock checkout endings to their reviewed CRLF bytes on every host: the prior platform-default
+checkout changed both fingerprints under Linux, despite identical JSON and native source revisions.
+Immutable package entries and observed ABI/runtime qualification remain required.
+
+The Windows host compiler hash differs from the reviewed executable. Preserve refusal and report
+only public SHA-256, file version and Authenticode provenance without executing unreviewed bytes.
+Twenty focused recovery cases and all eleven existing toolchain cases pass locally. Hosted Windows
+compiler review and final successful CI are still pending; this is diagnosis, not acceptance. No
+application/UI/full-suite/APK repeat or production encryption/security/release claim is made.

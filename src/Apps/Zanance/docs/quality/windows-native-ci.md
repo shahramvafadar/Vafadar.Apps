@@ -52,3 +52,18 @@ After push, inspect the final commit's hosted workflow once after the repository
 Pending, cancellation, compiler/package mismatch and execution failure are not success. Preserve
 the actual failed job/log before changing anything; never accept runner drift by deleting the
 compiler or immutable-package checks. The full continuous-development goal stays open.
+
+## D-282 CI platform contract and native provenance diagnosis
+
+CI run 38698595330 on D-281 failed independently in Linux RSA exception assertions, Android
+native packaging and Windows compiler qualification. Accept CryptographicException subtypes only
+at native RSA refusal assertions; retain exact managed validation and fail-closed checks. Pin native
+input-lock checkout endings to their reviewed CRLF bytes on every host: the prior platform-default
+checkout changed both fingerprints under Linux, despite identical JSON and native source revisions.
+Immutable package entries and observed ABI/runtime qualification remain required.
+
+The Windows host compiler hash differs from the reviewed executable. Preserve refusal and report
+only public SHA-256, file version and Authenticode provenance without executing unreviewed bytes.
+Twenty focused recovery cases and all eleven existing toolchain cases pass locally. Hosted Windows
+compiler review and final successful CI are still pending; this is diagnosis, not acceptance. No
+application/UI/full-suite/APK repeat or production encryption/security/release claim is made.

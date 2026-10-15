@@ -23,7 +23,12 @@ function Resolve-ReviewedWindowsToolchain {
         throw 'Pinned native compiler or bootstrap is unavailable.'
     }
     if ((Get-FileHash -LiteralPath $compiler -Algorithm SHA256).Hash.ToLowerInvariant() -ne $Acceptance.compilerExecutableSha256) {
-        throw 'Installed compiler bytes differ from the reviewed native toolchain.'
+        # Report public executable provenance without executing an unreviewed compiler.
+        $signature = Get-AuthenticodeSignature -LiteralPath $compiler
+        $version = [Diagnostics.FileVersionInfo]::GetVersionInfo($compiler)
+        $observedHash = (Get-FileHash -LiteralPath $compiler -Algorithm SHA256).Hash.ToLowerInvariant()
+        throw ('Installed compiler bytes differ from the reviewed native toolchain. SHA256={0}; FileVersion={1}; Signature={2}; Signer={3}' -f
+            $observedHash, $version.FileVersion, $signature.Status, $signature.SignerCertificate.Subject)
     }
     [pscustomobject]@{ Installation = $Installation; Compiler = $compiler; VcVars = $vcvars;
         Acceptance = $Acceptance; ToolsVersion = $Acceptance.toolsVersion; SdkVersion = $Acceptance.sdkVersion }
