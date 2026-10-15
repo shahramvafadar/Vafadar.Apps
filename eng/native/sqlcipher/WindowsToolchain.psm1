@@ -50,4 +50,16 @@ function Get-ReviewedWindowsToolchain {
     Resolve-ReviewedWindowsToolchain -Installation $records[0] -InputLock $lock -Acceptance $acceptance
 }
 
-Export-ModuleMember -Function Resolve-ReviewedWindowsToolchain,Get-ReviewedWindowsToolchain
+function Get-ReviewedWindowsPackageContents {
+    <# .SYNOPSIS Selects one immutable package variant, never a set of alternate entry hashes for one version. #>
+    param()
+    $variant = $env:VafadarWindowsCipherVariant
+    if ($variant -and $variant -notin @('baseline','servicing')) { throw 'Unsupported Windows cipher package variant.' }
+    $name = if ($variant -eq 'servicing') { 'windows.servicing.package.contents.json' } else { 'windows.package.contents.json' }
+    $contents = Get-Content -LiteralPath (Join-Path $PSScriptRoot $name) -Raw -Encoding UTF8 | ConvertFrom-Json
+    if ($contents.schemaVersion -ne 1 -or $contents.packageId -ne 'Vafadar.Native.SqlCipher.Windows' -or
+        $contents.compilerExecutableSha256 -notmatch '^[a-f0-9]{64}$') { throw 'Unsupported native package contents.' }
+    $contents
+}
+
+Export-ModuleMember -Function Resolve-ReviewedWindowsToolchain,Get-ReviewedWindowsToolchain,Get-ReviewedWindowsPackageContents

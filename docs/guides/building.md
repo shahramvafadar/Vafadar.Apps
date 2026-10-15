@@ -816,3 +816,14 @@ restores its retention/interval choices, avoids provider identity discovery, use
 AppWindow and optional process-local font stress, and never launches against the main identity.
 Android qualification uses the final complete signed Release on the owned emulator with original
 UI, private encrypted files and explicit restore. Do not repeat unrelated successful native reviews.
+
+### Exact Windows native servicing variants (D-282)
+
+The default local Windows producer uses reviewed MSVC 19.51.36257.0 and immutable native candidate.5.
+Hosted windows-2025-vs2026 uses the separately reviewed 19.51.36260.0 producer with
+VafadarWindowsCipherVariant=servicing and immutable candidate.6. Set this process-local environment
+variable only when that exact signed compiler is installed; central package versions and native
+packaging select the same variant. Unknown producers/variants and cross-producer packages are refused.
+Neither setting installs or changes Visual Studio. Keep the actual producer evidence beside each raw
+candidate and require the distinct entry policy plus production persistence checks. Existing local
+baseline packages remain unchanged; do not overwrite one version with another compiler's output.

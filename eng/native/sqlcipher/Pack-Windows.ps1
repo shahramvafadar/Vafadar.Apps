@@ -7,6 +7,8 @@ param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'windows-
     [ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$PackageName = 'package')
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
+Import-Module (Join-Path $PSScriptRoot 'WindowsToolchain.psm1') -Force
+$contents = Get-ReviewedWindowsPackageContents
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
 $candidate = Join-Path $root 'candidate'
 $manifest = Get-Content -LiteralPath (Join-Path $candidate 'manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json
@@ -41,14 +43,14 @@ $notices = 'Owner-written Zanance source remains all rights reserved. The follow
 # Publish recipe provenance independently of the observed build machine. Exact DLL bytes and all
 # package entries remain pinned; the unmodified candidate manifest retains the actual producer.
 $compilerPolicy = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'windows.compiler.acceptance.json') -Raw -Encoding UTF8 | ConvertFrom-Json
-if ($compilerPolicy.schemaVersion -ne 2 -or $manifest.compilerExecutableSha256 -notin @($compilerPolicy.compilers.sha256)) {
+if ($compilerPolicy.schemaVersion -ne 2 -or $manifest.compilerExecutableSha256 -ne $contents.compilerExecutableSha256 -or $manifest.compilerExecutableSha256 -notin @($compilerPolicy.compilers.sha256)) {
     throw 'Candidate compiler is outside the reviewed producer policy.'
 }
 $packageManifest = $manifest | ConvertTo-Json -Depth 8 | ConvertFrom-Json
 $packageManifest.PSObject.Properties.Remove('compilerExecutableSha256')
 $packageManifest | Add-Member -NotePropertyName reviewedCompilerExecutables -NotePropertyValue @($compilerPolicy.compilers | Sort-Object sha256)
 $packageManifestBytes = [Text.Encoding]::UTF8.GetBytes((($packageManifest | ConvertTo-Json -Depth 8).Replace("`r`n","`n")) + "`n")
-$version = $inputLock.sources.sqlcipher.tag.TrimStart('v') + '-candidate.5'
+$version = $contents.version
 $packageId = 'Vafadar.Native.SqlCipher.Windows'
 $nuspec = @"
 <?xml version="1.0" encoding="utf-8"?>

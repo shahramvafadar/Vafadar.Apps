@@ -106,6 +106,7 @@ jobs:
     name: Windows build
     runs-on: windows-2025-vs2026
     env:
+      VafadarWindowsCipherVariant: servicing
       SyncfusionLicenseKey: ${{ secrets.SYNCFUSION_LICENSE_KEY }}
       # Optional OAuth clients (D-35, D-50): with them the build offers OneDrive and Google Drive; empty in forks.
       MicrosoftEntraClientId: ${{ secrets.MICROSOFT_ENTRA_CLIENT_ID }}

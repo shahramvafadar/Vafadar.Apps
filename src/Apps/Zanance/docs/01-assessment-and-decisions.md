@@ -5542,3 +5542,23 @@ Thirteen toolchain cases pass. The actual production-assembly consumer builds wi
 creates with 32 migrations and reopens the same encrypted fixture in another process with exact money,
 portable-source and wrong-key checks. Only this changed consumer was repeated after the copy correction.
 Hosted completion remains pending; app/UI/APK and unrelated successful tests were not rerun locally.
+
+### Distinct immutable servicing output
+
+Run 38705256020 produced two identical fresh serviced DLLs:
+ac0939dbe00bec809fcfc4c77587b509b2798002456bb4c54ed3ca579a12f288. Original-schema,
+32-migration, Unicode/money/date, foreign-key, wrong/missing-key/tamper, memory export and complete
+staging checks passed before the old immutable package correctly refused the changed manifest.
+Its public manifest digest c58665de95ee66aa9907051e273651513e42f01d41048de484cb982872a9a5c8
+exactly matches the prior stable recipe manifest with only the observed native SHA-256 replaced;
+size is still 5,641,216 bytes. This binds the full metadata to the hosted log without importing a binary.
+
+Keep candidate.5 bound exclusively to the original compiler/DLL. Introduce candidate.6 exclusively for
+the exact serviced compiler/DLL, with every entry pinned separately in windows.servicing.package.contents.json.
+VafadarWindowsCipherVariant=servicing selects that explicit producer in both hosted Windows jobs and
+central NuGet versions; default local baseline remains candidate.5. Unknown variants and cross-producer
+packing fail closed. No one package version accepts alternative bytes and no native binary is downloaded.
+The 15 toolchain/variant cases and real mismatched-producer refusal are focused checks; full hosted
+consumer/workload/main-Windows-build completion remains pending at this commit. Already successful Linux
+suite (3,566 passed / 25 skipped / zero failed), Android Release, stock cipher, CodeQL and local backend
+on dfae08a2 are retained evidence, not replaced by new local repeats.

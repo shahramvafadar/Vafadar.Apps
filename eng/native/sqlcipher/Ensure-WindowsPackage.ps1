@@ -6,7 +6,8 @@
 param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'application-windows')
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
-$contents = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'windows.package.contents.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+Import-Module (Join-Path $PSScriptRoot 'WindowsToolchain.psm1') -Force
+$contents = Get-ReviewedWindowsPackageContents
 if ($contents.schemaVersion -ne 1 -or $contents.packageId -ne 'Vafadar.Native.SqlCipher.Windows') { throw 'Unsupported native package contents.' }
 $feed = Join-Path (Get-NativeInputRoot) 'feed'
 New-Item -ItemType Directory -Force $feed | Out-Null

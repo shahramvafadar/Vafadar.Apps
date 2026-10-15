@@ -52,6 +52,19 @@ foreach ($item in $wrongVersion.compilers) { $item.fileVersion = '0.0.0.0' }
 Require-Refused 'changed-executable-version' { Resolve-ReviewedWindowsToolchain $actual.Installation $inputLock $wrongVersion } '*Installed compiler bytes differ*'
 $duplicate = Copy-Policy $acceptance; $duplicate.compilers = @($duplicate.compilers[0], $duplicate.compilers[0])
 Require-Refused 'duplicate-compiler-policy' { Resolve-ReviewedWindowsToolchain $actual.Installation $inputLock $duplicate } '*Unsupported Windows compiler acceptance*'
+# Package variants must be explicit and immutable; never accept alternate native bytes in one version.
+$originalVariant = $env:VafadarWindowsCipherVariant
+try {
+    $env:VafadarWindowsCipherVariant = 'baseline'; $baseline = Get-ReviewedWindowsPackageContents
+    $env:VafadarWindowsCipherVariant = 'servicing'; $servicing = Get-ReviewedWindowsPackageContents
+    if ($baseline.version -eq $servicing.version -or $baseline.compilerExecutableSha256 -eq $servicing.compilerExecutableSha256 -or
+        $baseline.entries.'runtimes/win-x64/native/sqlcipher.dll' -eq $servicing.entries.'runtimes/win-x64/native/sqlcipher.dll') {
+        throw 'Servicing native output lost its distinct immutable identity.'
+    }
+    $results.Add('distinct-immutable-servicing-package')
+    $env:VafadarWindowsCipherVariant = 'unknown-fixture'
+    Require-Refused 'unknown-package-variant' { Get-ReviewedWindowsPackageContents } '*Unsupported Windows cipher package variant*'
+} finally { $env:VafadarWindowsCipherVariant = $originalVariant }
 $fixture = Join-Path (Get-NativeInputRoot) ('toolchain-review-' + [Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $fixture | Out-Null
 $missing = Copy-Policy $actual.Installation; $missing.installationPath = $fixture

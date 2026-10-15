@@ -8,6 +8,9 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
     <VafadarSecurityRuntimeVersion>10.0.13</VafadarSecurityRuntimeVersion>
+    <!-- Servicing builds have a distinct immutable native package; one version never has alternate bytes. -->
+    <VafadarWindowsCipherPackageVersion>4.19.0-candidate.5</VafadarWindowsCipherPackageVersion>
+    <VafadarWindowsCipherPackageVersion Condition="'$(VafadarWindowsCipherVariant)' == 'servicing'">4.19.0-candidate.6</VafadarWindowsCipherPackageVersion>
   </PropertyGroup>
 
   <ItemGroup Label="MAUI">
@@ -59,7 +62,7 @@
     <PackageVersion Include="SQLitePCLRaw.provider.sqlcipher" Version="3.0.5" />
     <!-- Official source-built native packages adopted by the Android and Windows protected hosts. -->
     <PackageVersion Include="Vafadar.Native.SqlCipher.Android" Version="4.19.0-candidate.4" />
-    <PackageVersion Include="Vafadar.Native.SqlCipher.Windows" Version="4.19.0-candidate.5" />
+    <PackageVersion Include="Vafadar.Native.SqlCipher.Windows" Version="$(VafadarWindowsCipherPackageVersion)" />
     <PackageVersion Include="System.Security.Cryptography.ProtectedData" Version="10.0.12" />
   </ItemGroup>
 
