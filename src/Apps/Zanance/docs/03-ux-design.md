@@ -1215,3 +1215,10 @@ automatic rows use separate title/detail rows and a last-child real semantic but
 original explicit preview/replace/cancel flow without a share action. Preserve the original growing
 restore action row. Opening or translating the form never writes the interval. Subscribe only while
 visible; retired pages stop receiving status events. All six existing translations are supplied.
+
+## D-283 coherent Home source
+
+Every Home section uses the same captured original financial reader. Keep the original account/budget/goal/rate
+scopes, complete balances, history and action availability. Reading and key derivation stay off the interface thread;
+only complete validated inputs uncover the original dashboard. A concurrent source/profile/rights change never
+authorizes action from an unrelated file. Loading, failure, retry and formatting retain the existing UI patterns.

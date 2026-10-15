@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Improved - Complete Home reads
+
+- Read Home's original financial sections together without repeatedly reopening the encrypted database.
+- Keep database reading off the interface thread and preserve the loading/retry cover, original balances and work choices.
+
+
 ### Added - Automatic local copies
 
 - Keep daily or weekly automatic backups encrypted for this device, or turn them off.

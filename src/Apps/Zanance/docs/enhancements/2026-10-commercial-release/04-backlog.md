@@ -33,7 +33,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-06 | Recurring payments easier to find (repeat option in the entry form or a clearer entry point) | 2 | P2 | S | Done (local/native, D-111; phone/iOS acceptance open) | – |
 | ZCR-LOC-07 | Currencies of the target markets (ISO list, minor digits) | 2/8 | P3 | S | Target coverage delivered (D-273); additional jurisdictions/years remain | official currency sources |
 | ZCR-LOC-08 | More holiday regions with source, validity years and "uncertain" state | 8 | P3 | M | Target coverage delivered (D-273); additional jurisdictions/years remain | official jurisdiction/year sources |
-| ZCR-LOC-09 | Automatic device-encrypted local backup; separate portable export | 2 | P2 | M | Done (local/native D-281; device/iOS/hosted acceptance remains open) | SEC-08 |
+| ZCR-LOC-09 | Automatic device-encrypted local backup; separate portable export | 2 | P2 | M | Done (local/native D-281; physical-device/iOS/release acceptance remains open) | SEC-08 |
 | ZCR-LOC-13 | Owner-approved plan and debt UX (D-65) | Maintenance | P1 | M | Done (local; AT-72 device gate remains) | owner approval 2026-10-08 |
 | ZCR-LOC-15 | Independent saved filters after report navigation (D-109 / AT-114) | Maintenance | P1 | S | Done (local/native, D-109; device/iOS acceptance remains open) | D-69 ready-defect delivery |
 | ZCR-LOC-12 | Owner-requested receipt total detection and review (D-64) | Maintenance | P1 | M | Done (local; device/corpus gate remains QA-05) | owner request 2026-10-08 |
@@ -46,7 +46,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
 | ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-64 local evidence verified; device/corpus pending) | sample receipts |
-| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-75 measurements, D-76 loading gate, D-92 Home reload optimization, D-95 hidden native account view removal and D-104 repeated-filter row reuse and D-105 complete bulk-selection reload and D-106 exact Settings suggestion history and D-110 unchanged native-source reuse delivered; cold duration/ANR, native publication and device gates open) | – |
+| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-283 coherent protected Home read/validation; D-278/280 protected reference/tenfold read/search/save verified locally; loaded native/cold/ANR/device/iOS acceptance remains) | – |
 | ZCR-QA-07 | Platform parity Android/iOS/Windows (notifications, widget, file picker, lock, share, licences) | 2 | P2 | M | Blocked (iOS: Mac) | – |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | In progress (D-174 widget and D-175 contextual date names/drafts verified locally; spoken TalkBack and remaining screen/platform acceptance open) | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
@@ -2432,3 +2432,21 @@ Release builds have zero warnings/errors. See quality/protected-ledger-performan
 result counts, preservation and timing limits. No unrelated app/UI/APK/full-test replay or new app
 change: 3,574 covered behaviors retain their qualified baseline. Native phone/Home/search/Save, cold/
 ANR, iOS, the approximate two-second objective and full goal acceptance remain open.
+
+## D-283 complete coherent protected Home read
+
+Initial Home and reload now use one captured context/keyed connection/deferred SQLite reader for
+all original sections, then revalidate the original reviews through a fresh operation before uncovering
+actions. Reuse existing quick/plan/goal guards, exact monthly SQL selection and Core calculations;
+no key-bearing global pool, lower KDF, dropped history, default-row write or schema/UI policy change.
+All native opening/materialization and final validation run off the UI thread. Goal Home projection
+uses the same full packet and preserves every original financial row and activity choice.
+
+On the same protected reference/tenfold fixtures, complete read/validation warm medians changed
+798.06 -> 223.96 ms and 1925.59 -> 1355.62 ms, including full packet equality checks. Full logical data
+comparison passes. Ten real-SQLite cases and three original application-source cases are added;
+affected Data 805 / App 1186 pass. Coverage 3,604 means previous 3,591 plus thirteen new, not a full-suite
+rerun. Strict builds, 18 protected Windows native contexts, same-process Release emulator Home/entry/
+Cancel and a complete signed APK pass. Exact evidence and retained negative observations:
+[coherent-home-read.md](../../quality/coherent-home-read.md). No two-second/phone/iOS/release acceptance;
+QA-06 and the full development goal remain open.

@@ -2011,3 +2011,11 @@ covered through complete read/publication and failed reads; retry only the origi
 Retirement cannot uncover an old page. Use Home-specific translated retry wording and the same
 native scaling/semantic action patterns. Debug home-loading review requires independent identity
 before storage startup and delegates all queries/data to the actual captured protected context.
+
+### Coherent protected Home reads (D-283)
+
+Home initial/reload operations capture their actual factory context before queuing work. Keep the complete original
+sections under one non-pooled keyed connection/deferred reader and reuse their original resource/carry algorithms.
+Retain conditional valuation input scope and fresh final checks before uncovering actions. Never retain this reader
+across UI/dialog work or substitute a key-bearing global pool. Same-fixture data comparison and original native
+publication checks remain distinct from cold/phone performance acceptance.

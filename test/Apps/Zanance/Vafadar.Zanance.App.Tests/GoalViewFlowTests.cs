@@ -67,6 +67,23 @@ public sealed class GoalViewFlowTests
     private static async Task ChooseAsync(Seed s, params Guid[] ids) =>
         await s.Choices.SaveAsync(await s.Choices.ReadAsync(QuotaKind.Goals, Ct), ids, Ct);
     private static Task<string> RowsAsync(FlowFixture f) => GoalChooserFlowTests.SnapshotAsync(f);
+    /// <summary>Home's single-reader packet preserves original financial goal rows and separate new-work availability.</summary>
+    [Theory, InlineData("en"), InlineData("fa"), InlineData("de"), Trait("AT", "AT-283")]
+    public async Task Captured_home_projects_the_same_complete_goal_packets_without_additional_reads(string language)
+    {
+        using var f = new FlowFixture(); var seed = await SeedAsync(f); Enable(f, seed); await ChooseAsync(seed, seed.Items[0].Id);
+        f.Localization.SetLanguage(f.Localization.SupportedLanguages.First(item => item.CultureName == language));
+        var day = DateOnly.FromDateTime(f.Time.Now.DateTime); var before = await RowsAsync(f);
+        var store = new ZananceStore(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>(), f.Time, seed.Access);
+        var captured = await store.GetHomeSnapshotAsync(day, 0, Ct);
+        var expected = await GoalHomeProjection.ReadAsync(seed.Goals, seed.Presenter, f.Translator,
+            captured.QuickResources.Accounts, captured.Entries, day);
+        var actual = GoalHomeProjection.Project(captured, seed.Presenter, f.Translator, day);
+        Assert.Equal(expected.Pinned, actual.Pinned); Assert.Equal(expected.Attention, actual.Attention);
+        await store.ValidateHomeSnapshotAsync(captured, Ct);
+        Assert.Equal(before, await RowsAsync(f));
+    }
+
     private static async Task OpenAsync(Seed s, int index)
     {
         s.Detail.ApplyQueryAttributes(new Dictionary<string, object> { ["id"] = s.Items[index].Id }); await s.Detail.LoadAsync();

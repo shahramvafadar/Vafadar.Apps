@@ -2073,3 +2073,13 @@ Discovery is current-profile only and offers explicit original preview/confirmat
 safety/replacement, never sharing or silent restoration. Portable export retains its optional
 password and separate flow; device/key loss still requires a separately exported Zanance backup.
 Android/Windows protected hosts are adopted; iOS/device/OS/OEM/Store acceptance remains separate.
+
+## Coherent protected Home operation (D-283)
+
+Home captures its real context/factory lease before dispatching synchronous SQLite work to a worker. One explicitly
+opened non-pooled keyed connection and deferred reader gather its complete original resource/financial packet.
+Original quick/plan/goal readers retain their exact-file, rights and input checks. Read rate history only for the
+original enabled multi-currency valuation scope. Keep the original monthly SQL selection and Core carry calculation.
+No reader/connection survives into UI projection or a native dialog. Fresh final validation precedes the original
+covered publication; explicit later actions acquire their original fresh contexts. No pool, lower KDF, schema or
+portable-key change is introduced. See the coherent-home-read quality record for scoped proof and acceptance limits.

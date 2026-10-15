@@ -834,3 +834,12 @@ Wait on explicit TCP host/database, then initialize the fixture role on the same
 pinned image's temporary initdb server listens only on Unix sockets; default pg_isready can report
 that temporary process and race its shutdown. TCP readiness excludes that process without a fixed
 startup delay. The CI fixture remains independent from the local backend and all other projects.
+
+### Coherent Home comparison (D-283)
+
+After building eng/benchmarks/Zanance.ProtectedPerformance, run its explicit home mode against an existing marked
+protected reference/tenfold root, for example artifacts/protected-ledger-d280. It resumes the same keys/data,
+compares only the original/current complete Home read operations and verifies complete typed financial preservation.
+It refuses missing fixtures and writes a new home-measurements-<id>.json, preserving previous measurements.
+This timer includes data equality/validation and excludes native UI. Do not infer a full startup/device claim.
+The existing independent home-loading native route verifies the complete application binding/cover/retry matrix.

@@ -2987,3 +2987,23 @@ power-loss, OAuth, store-signing or product-publication acceptance. The full goa
 creation/coalescing, off/weekly/daily choices, independent clocks/retention, failed qualification,
 profile-publication changes, original preview/cancel/confirmed restore, and retirement preserving
 the main recovery point. Physical-device, iOS, hardware-keystore, OS/OEM and hosted gates remain open.
+
+## D-283 complete coherent protected Home read
+
+Initial Home and reload now use one captured context/keyed connection/deferred SQLite reader for
+all original sections, then revalidate the original reviews through a fresh operation before uncovering
+actions. Reuse existing quick/plan/goal guards, exact monthly SQL selection and Core calculations;
+no key-bearing global pool, lower KDF, dropped history, default-row write or schema/UI policy change.
+All native opening/materialization and final validation run off the UI thread. Goal Home projection
+uses the same full packet and preserves every original financial row and activity choice.
+
+On the same protected reference/tenfold fixtures, complete read/validation warm medians changed
+798.06 -> 223.96 ms and 1925.59 -> 1355.62 ms, including full packet equality checks. Full logical data
+comparison passes. Ten real-SQLite cases and three original application-source cases are added;
+affected Data 805 / App 1186 pass. Coverage 3,604 means previous 3,591 plus thirteen new, not a full-suite
+rerun. Strict builds, 18 protected Windows native contexts, same-process Release emulator Home/entry/
+Cancel and a complete signed APK pass. Exact evidence and retained negative observations:
+[coherent-home-read.md](quality/coherent-home-read.md). No two-second/phone/iOS/release acceptance;
+QA-06 and the full development goal remain open.
+
+**AT-283:** coherent Home source/carry/rights/concurrent-writer, original goal projection, loading/failure/native retry and explicit no-Save entry return are locally verified. Physical, spoken accessibility and iOS acceptance remain separate.

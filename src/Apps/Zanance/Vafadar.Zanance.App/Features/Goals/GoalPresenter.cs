@@ -82,6 +82,15 @@ public sealed class GoalPresenter(Translator translator, IDateFormatter dates, I
             snapshot.ContributionPlans, today, events, _types);
     }
 
+    /// <summary>Evaluates Home's original goal algorithm without opening another financial connection.</summary>
+    public IReadOnlyList<GoalProgress> Evaluate(Data.HomeReadSnapshot snapshot, DateOnly today)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot); _types = snapshot.AssetTypes;
+        return GoalProgressService.Evaluate(snapshot.Goals.Goals, snapshot.Goals.Allocations,
+            snapshot.QuickResources.Accounts, snapshot.Entries, snapshot.Goals.ContributionPlans,
+            today, snapshot.AssetEvents, _types);
+    }
+
     /// <summary>Returns an amount of a goal: money, or the quantity of its holding in the holding's unit.</summary>
     public string Amount(Goal goal, long value)
     {

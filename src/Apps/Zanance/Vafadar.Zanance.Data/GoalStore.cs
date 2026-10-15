@@ -21,6 +21,12 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         // D-276: all original rules, references and access checks share one operation-scoped keyed handle.
         await db.Database.OpenConnectionAsync(cancellationToken);
+        return await GetWorkSnapshotAsync(db, cancellationToken);
+    }
+
+    /// <summary>Reads the original guarded snapshot inside a caller-owned coherent read operation.</summary>
+    internal async Task<GoalWorkSnapshot> GetWorkSnapshotAsync(ZananceDbContext db, CancellationToken cancellationToken)
+    {
         var access = new CommercialFileAccess(commercialAccess, ProfileFilePath(db));
         access.DemandFeature(CommercialFeature.History);
         var stored = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.Goals, cancellationToken);

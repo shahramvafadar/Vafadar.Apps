@@ -21,6 +21,19 @@ public static class GoalHomeProjection
         var snapshot = await goals.GetWorkSnapshotAsync();
         var progress = await presenter.EvaluateAsync(snapshot, accounts, entries, today);
         await goals.ValidateWorkSnapshotAsync(snapshot);
+        return Project(snapshot, presenter, translator, progress);
+    }
+
+    /// <summary>Projects the original complete Home packet; its caller validates the packet before uncovering actions.</summary>
+    public static GoalHomeView Project(HomeReadSnapshot snapshot, GoalPresenter presenter, Translator translator, DateOnly today)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        return Project(snapshot.Goals, presenter, translator, presenter.Evaluate(snapshot, today));
+    }
+
+    private static GoalHomeView Project(GoalWorkSnapshot snapshot, GoalPresenter presenter, Translator translator,
+        IReadOnlyList<GoalProgress> progress)
+    {
         var pinned = progress.Where(p => p.Goal.State == GoalState.Active && p.Goal.HomePin is not null)
             .OrderBy(p => p.Goal.HomePin).Take(2).Select(p => presenter.Row(p.Goal, p, snapshot.Work)).ToArray();
         var overdue = progress.FirstOrDefault(p => p.Goal.State == GoalState.Active && p.IsOverdue);

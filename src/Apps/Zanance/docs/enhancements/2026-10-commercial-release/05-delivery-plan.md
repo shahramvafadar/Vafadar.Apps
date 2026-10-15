@@ -1487,3 +1487,19 @@ Iran is a later separate variant, not implicitly enabled in this batch. New lang
    Review changed surfaces in fa/en/de, light/dark, 360/412/wide and build strict targets/signed APK.
 5. Update privacy/spec/acceptance/decision records and commit/push the complete verified batch. Keep
    failed observations and avoid unrelated successful verification. The complete local/native D-281 batch is delivered; see ../../quality/automatic-local-backup.md. Personal-sync product approval and other owner/external gates remain open.
+
+## Complete coherent Home read batch (D-283)
+
+1. Capture all original Home inputs under one actual factory lease/keyed connection/deferred SQLite reader;
+   reuse the original quick/plan/goal guard methods and exact original budget/carry/valuation scopes.
+2. Connect every original Home section to that packet, keeping covered publication, fresh original validation,
+   explicit later actions, pinned goal/history availability and retired-context refusal.
+3. Prove real concurrent SQLite snapshot behavior, absent default writes, foreign/stale access refusal and
+   original goal projection. Compare original/new complete operations on the same protected reference/tenfold data.
+4. Complete native Home first-read/failure/retry in en/fa/de, both themes and 360/412/wide, strict builds and
+   same-process signed Release emulator open/Cancel/return. Preserve complete original rows and any negative observations.
+5. Document and push the verified whole batch; do not infer a two-second experience or physical/iOS acceptance.
+
+This local engineering batch is delivered; see ../../quality/coherent-home-read.md. QA-06 still retains its
+loaded native/phone/cold/ANR/platform gates. Personal financial sync, sharing, purchases and other separately
+recorded product/provider decisions are not implied by backend foundation approval. The full goal remains active.

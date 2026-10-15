@@ -44,7 +44,6 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     private readonly ZananceStore _store;
     /// <summary>Gets the actual reviewed template navigation source, independent of financial presentation.</summary>
     public TemplateNavigationViewModel TemplateNavigation { get; }
-    private readonly PlanStore _plans;
     private readonly Translator _translator;
     private readonly IDateFormatter _dates;
     private readonly ILocalizationService _localization;
@@ -57,25 +56,20 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     private int _startDay = 1;
     private readonly Vafadar.Zanance.App.Profiles.ProfileService _profiles;
     private readonly Receipts.ReceiptReadingSession _receipts;
-    private readonly GoalStore _goals;
     private readonly Goals.GoalPresenter _goalPresenter;
-    private readonly HoldingStore _holdings;
     private readonly Holdings.HoldingText _holdingText;
     private readonly Vafadar.Backup.IBackupService _backup;
     private readonly SemaphoreSlim _loading = new(1, 1);
 
-    public HomeViewModel(ZananceStore store, PlanStore plans, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Receipts.ReceiptReadingSession receipts, GoalStore goals, Goals.GoalPresenter goalPresenter, HoldingStore holdings, Holdings.HoldingText holdingText, Vafadar.Backup.IBackupService backup, Interaction.IAppInteraction interaction)
+    public HomeViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Receipts.ReceiptReadingSession receipts, Goals.GoalPresenter goalPresenter, Holdings.HoldingText holdingText, Vafadar.Backup.IBackupService backup, Interaction.IAppInteraction interaction)
     {
         _backup = backup;
         TemplateNavigation = new(store, translator, interaction, LoadAsync);
-        _holdings = holdings;
         _holdingText = holdingText;
-        _goals = goals;
         _goalPresenter = goalPresenter;
         _store = store;
         _receipts = receipts;
         _profiles = profiles;
-        _plans = plans;
         _translator = translator;
         _dates = dates;
         _localization = localization;
@@ -315,7 +309,11 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     {
         var today = Today;
         var culture = _localization.CurrentCulture;
-        var templateReview = await _store.GetQuickResourceReviewAsync();
+        var snapshot = await _store.GetHomeSnapshotAsync(today, PeriodIndex);
+        // A period change while the worker reads is queued separately; never project its old budget as the new period.
+        while (snapshot.PeriodIndex != PeriodIndex)
+            snapshot = await _store.GetHomeSnapshotAsync(today, PeriodIndex);
+        var templateReview = snapshot.QuickResources;
         RequireCurrentPublication();
         var settings = templateReview.Settings ?? new ZananceSettings();
         _reportCurrency = settings.ReportCurrencyCode;
@@ -333,14 +331,14 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             ? _translator["Home_QuickAddChoose"]
             : _translator.Format("Home_QuickAddTarget", defaultAccount!.Name, MoneyText.UnitName(defaultAccount.CurrencyCode));
         var byId = allAccounts.ToDictionary(a => a.Id);
-        var entries = await _store.GetEntriesAsync();
+        var entries = snapshot.Entries;
         RequireCurrentPublication();
         var accountEntries = new AccountEntryIndex(entries);
         var categoryList = templateReview.Categories.OrderBy(c => c.Kind).ThenBy(c => c.SortOrder).ToList();
         var categories = new CategoryLookup(categoryList, _translator);
 
         // Plans are read once for the due items, the forecast and getting started.
-        var planSnapshot = await _plans.GetWorkSnapshotAsync();
+        var planSnapshot = snapshot.Plans;
         RequireCurrentPublication();
         var schedules = planSnapshot.Schedules;
         var states = planSnapshot.States;
@@ -377,7 +375,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             // Secondary, with the date of the oldest rate and a reminder when a rate may be outdated (ZEX-S0106).
             var (monthYear, monthNumber) = PeriodMath.MonthOf(today, settings.BudgetCalendar, _startDay);
             var freshness = new RateFreshness(settings.RateFreshnessDays, PeriodMath.MonthRange(monthYear, monthNumber, settings.BudgetCalendar, _startDay).First);
-            var combined = new RateTable(await _store.GetRatesAsync()).Combine(balances, _reportCurrency, today, freshness);
+            var combined = new RateTable(snapshot.Rates).Combine(balances, _reportCurrency, today, freshness);
             RequireCurrentPublication();
             CombinedIncomplete = !combined.IsComplete || combined.IsOutdated;
             var rateDate = combined.OldestRateDate is { } oldest ? _dates.Format(oldest, DateFormatStyle.Short) : "-";
@@ -410,10 +408,10 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
                 refunds));
         }
 
-        await LoadBudgetAsync(settings.BudgetCalendar, allAccounts, entries, categoryList, today, culture);
+        LoadBudget(snapshot, settings.BudgetCalendar, allAccounts, entries, categoryList, today, culture);
         RequireCurrentPublication();
         LoadPlans(byId, categories, schedules, states, today, planSnapshot.Work);
-        await LoadGettingStartedAsync(entries.Count, schedules.Count);
+        LoadGettingStarted(entries.Count, schedules.Count, snapshot.Budgets.Count);
         RequireCurrentPublication();
         LoadForecast(settings.Shows(Feature.ForecastDetails), allAccounts, entries, schedules, states, today, culture);
         BuildSlices(allAccounts, entries, categories, from, to, culture);
@@ -445,13 +443,14 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         var owed = EntryActions.OpenReimbursements(entries);
         ReimbursementText = owed.Count == 0 ? null : _translator.Format("Home_Reimbursements", owed.Count);
         LoadDataAttention(settings, allAccounts, entries, today);
-        await LoadGoalsAsync(allAccounts, entries, today);
+        LoadGoals(snapshot, today);
         RequireCurrentPublication();
-        await LoadHoldingsAsync(today);
+        LoadHoldings(snapshot, today);
         RequireCurrentPublication();
         HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null || ReimbursementText is not null || LowBalanceText is not null || GoalAttentionText is not null || ReviewText is not null || BackupText is not null;
-        await _store.ValidateQuickResourceReviewAsync(templateReview);
+        await _store.ValidateHomeSnapshotAsync(snapshot);
         RequireCurrentPublication();
+        if (snapshot.PeriodIndex != PeriodIndex) { await LoadCoreAsync(); return; }
         TemplateNavigation.Publish(templateReview);
         QuickTemplates.Clear();
         foreach (var template in TemplateNavigation.Items)
@@ -466,7 +465,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     }
 
     // Remaining overall budget of the month, only when a budget exists (a missing budget is not zero, BUD-01).
-    private async Task LoadBudgetAsync(PeriodCalendar calendar, List<Account> accounts, List<LedgerEntry> entries, List<Core.Categories.Category> categories, DateOnly today, System.Globalization.CultureInfo culture)
+    private void LoadBudget(HomeReadSnapshot snapshot, PeriodCalendar calendar, List<Account> accounts, List<LedgerEntry> entries, List<Core.Categories.Category> categories, DateOnly today, System.Globalization.CultureInfo culture)
     {
         var (year, month) = PeriodMath.MonthOf(today, calendar, _startDay);
         if (PeriodIndex == 1)
@@ -474,7 +473,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             (year, month) = PeriodMath.Previous(year, month);
         }
 
-        var budget = await _store.GetBudgetAsync(year, month, calendar, _homeCurrency);
+        var budget = snapshot.MonthBudget;
         RequireCurrentPublication();
         BudgetDailyText = null;
         HasBudget = budget?.TotalLimit is not null;
@@ -484,7 +483,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         }
 
         // The same limit as on the budget page, including rollover (§10.3, Q-05).
-        var limit = ownLimit + (await _store.GetBudgetCarryAsync(budget)).Total;
+        var limit = ownLimit + snapshot.Carry.Total;
         RequireCurrentPublication();
         var (from, to) = PeriodMath.MonthRange(year, month, calendar, _startDay);
         var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, accounts, entries, categories, from, to));
@@ -566,9 +565,9 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     private Task OpenForecastAsync() => Shell.Current.GoToAsync(AppShell.ForecastRoute);
 
     // Quantities per asset type, never added across types or into money (ZEX-AS05); at most three, then "+N".
-    private async Task LoadHoldingsAsync(DateOnly today)
+    private void LoadHoldings(HomeReadSnapshot snapshot, DateOnly today)
     {
-        var types = (await _holdings.GetTypesAsync()).Where(t => !t.IsArchived).ToDictionary(t => t.Id);
+        var types = snapshot.AssetTypes.Where(t => !t.IsArchived).ToDictionary(t => t.Id);
         RequireCurrentPublication();
         if (types.Count == 0)
         {
@@ -576,7 +575,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             return;
         }
 
-        var events = new AssetEventIndex(await _holdings.GetEventsAsync());
+        var events = new AssetEventIndex(snapshot.AssetEvents);
         RequireCurrentPublication();
         var held = types.Values
             .Select(t => (Type: t, Quantity: HoldingsLedger.Quantity(events.For(t.Id), t.Id, today)))
@@ -592,9 +591,9 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     private Task OpenHoldingsAsync() => Shell.Current.GoToAsync(AppShell.HoldingsRoute);
 
     // Pinned goals with progress and the estimate of the plan, only when valid (ZEX-GO06, GO07). Paused goals leave Home.
-    private async Task LoadGoalsAsync(List<Account> accounts, List<LedgerEntry> entries, DateOnly today)
+    private void LoadGoals(HomeReadSnapshot snapshot, DateOnly today)
     {
-        var view = await Goals.GoalHomeProjection.ReadAsync(_goals, _goalPresenter, _translator, accounts, entries, today);
+        var view = Goals.GoalHomeProjection.Project(snapshot, _goalPresenter, _translator, today);
         RequireCurrentPublication();
         PinnedGoals.Clear();
         foreach (var row in view.Pinned) PinnedGoals.Add(row);
@@ -746,13 +745,11 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
 
     private const string GettingStartedKey = "home.getting_started.hidden";
 
-    private async Task LoadGettingStartedAsync(int entryCount, int planCount)
+    private void LoadGettingStarted(int entryCount, int planCount, int budgetCount)
     {
         FirstEntryDone = entryCount > 0;
         PlanDone = planCount > 0;
-        var budgets = await _store.GetBudgetsAsync();
-        RequireCurrentPublication();
-        BudgetDone = budgets.Count > 0;
+        BudgetDone = budgetCount > 0;
         ShowGettingStarted = HasAccounts && !Preferences.Default.Get(GettingStartedKey, false) && !(FirstEntryDone && PlanDone && BudgetDone);
     }
 

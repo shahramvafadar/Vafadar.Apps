@@ -59,3 +59,13 @@ Windows benchmark runs in the dedicated Windows lane of Native cipher candidates
 fresh runner uses the same reviewed toolchain and immutable package checks; it does not run MAUI.
 Only measurement JSON is uploaded, never DPAPI envelopes or financial fixture files. See
 [the evidence report](../../../src/Apps/Zanance/docs/quality/protected-workload-performance.md).
+
+## Focused complete Home comparison (D-283)
+
+Use `dotnet run --project eng/benchmarks/Zanance.ProtectedPerformance -c Release --no-build -- artifacts/protected-ledger-d280 home`
+after building. Both existing marked protected workload folders are required; missing data or keys never authorize
+regeneration. Four original/new operation samples include original validation and full packet comparison; valuation
+rate reads follow the actual enabled/multi-currency boundary. No search/save/unchanged timing cohort is repeated.
+Complete final logical preservation is still verified. Each run writes a separate home-measurements-<id>.json.
+Normal full hosted runs include the current complete Home read/validation cohort; ledger mode remains unchanged.
+The comparison is not MAUI rendering, full cold launch or a physical-device two-second measurement.
