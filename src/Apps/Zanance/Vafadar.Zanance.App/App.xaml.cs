@@ -179,7 +179,7 @@ public partial class App : Application
     /// <summary>Replaces only the independently compiled sync review root with original native pages.</summary>
     internal void ShowPersonalSyncReview(Page page)
     {
-        if (AppInfo.Current.PackageName != "pro.vafadar.zanance.syncreview") throw new IOException("Independent sync review required.");
+        if (AppInfo.Current.PackageName is not ("pro.vafadar.zanance.syncreview" or "pro.vafadar.zanance.syncpublicreview")) throw new IOException("Independent sync review required.");
         ReplaceRoot(Windows[0], new NavigationPage(page));
     }
 #endif
@@ -188,7 +188,8 @@ public partial class App : Application
     {
 #if DEBUG
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "personal-sync"
-            && AppInfo.Current.PackageName != "pro.vafadar.zanance.syncreview")
+            && AppInfo.Current.PackageName != (Environment.GetEnvironmentVariable("VAFADAR_SYNC_PUBLIC_REVIEW") == "1"
+                ? "pro.vafadar.zanance.syncpublicreview" : "pro.vafadar.zanance.syncreview"))
             throw new InvalidOperationException("Independent sync review identity required before startup.");
         // Independent protected reviews must fail before the covered startup worker can touch a main installation.
         // MSBuild can retain stale ApplicationId metadata when only a global property changes (D-274).

@@ -19,9 +19,11 @@ internal static partial class DebugSnapshots
     /// <summary>Checks original first-run and version comparison controls only in an independent protected installation.</summary>
     private static async Task ReviewPersonalSyncAsync(App app, IServiceProvider services, string folder)
     {
-        if (AppInfo.Current.PackageName != "pro.vafadar.zanance.syncreview") throw new IOException("Independent sync installation required.");
+        var publicReview = Environment.GetEnvironmentVariable("VAFADAR_SYNC_PUBLIC_REVIEW") == "1";
+        var package = publicReview ? "pro.vafadar.zanance.syncpublicreview" : "pro.vafadar.zanance.syncreview";
+        if (AppInfo.Current.PackageName != package) throw new IOException("Independent sync installation required.");
         var root = Path.GetFullPath(FileSystem.AppDataDirectory);
-        if (!root.Contains("pro.vafadar.zanance.syncreview", StringComparison.OrdinalIgnoreCase))
+        if (!root.Contains(package, StringComparison.OrdinalIgnoreCase))
             throw new IOException("Independent native data root required.");
         var marker = Path.Combine(root, "fictitious-sync-window.marker");
         if (File.Exists(marker)) throw new IOException("This route requires a fresh marked installation; never reset an existing review.");
@@ -32,7 +34,7 @@ internal static partial class DebugSnapshots
         var themes = services.GetRequiredService<ThemeService>();
         var observations = new List<object>(); var results = new List<object>();
         var sync = services.GetRequiredService<PersonalSyncStore>();
-        foreach (var comparison in new[] { false, true })
+        foreach (var comparison in publicReview ? new[] { false } : new[] { false, true })
         {
             if (comparison)
             {
@@ -49,10 +51,12 @@ internal static partial class DebugSnapshots
             foreach (var language in new[] { "en", "fa", "de" })
             foreach (var theme in new[] { ThemeChoice.Light, ThemeChoice.Dark })
             foreach (var width in new[] { 360, 412, 1280 })
+            foreach (var hosted in publicReview ? new[] { false, true } : new[] { false })
             {
                 themes.Set(theme); await SetLanguageAsync(app, local, language);
                 app.Windows[0].Width = width; app.Windows[0].Height = 820;
                 var vm = services.GetRequiredService<PersonalSyncViewModel>();
+                if (publicReview && !hosted) vm.Address = "https://127.0.0.1:5048/";
                 if (vm.IsReady || vm.CanInteract) throw new IOException("Sync construction must remain covered.");
                 var page = new PersonalSyncPage(vm) { FlowDirection = local.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight };
                 var back = 0;
@@ -61,6 +65,8 @@ internal static partial class DebugSnapshots
                 for (var frame = 0; frame < 100 && !vm.IsReady && vm.Error is null; frame++) await Task.Delay(100);
                 if (!vm.IsReady || vm.Error is not null || vm.ReviewItems.Count != (comparison ? 1 : 0))
                     throw new IOException("Original sync local snapshot did not publish.");
+                if (publicReview && hosted && (vm.Address != "https://api.zanance.vafadar.pro/" || vm.Fingerprint.Length != 0))
+                    throw new IOException("Native default public connection must retain normal system trust.");
                 await Task.Delay(250);
                 var scroll = ((Grid)page.Content!).Children.OfType<ScrollView>().Single();
                 foreach (var label in VisualDescendants(page).OfType<Label>().Where(label => Visible(label) && label.FontAutoScalingEnabled && !string.IsNullOrEmpty(label.Text)))
@@ -86,9 +92,11 @@ internal static partial class DebugSnapshots
                     InvokeChoiceReview(button, observations);
                     if (back != 1 || vm.CanFinishOnboarding) throw new IOException("Native first-run Back or unreceived finish gate failed.");
                 }
-                await CaptureWindowAsync(app.Windows[0], Path.Combine(folder, $"{language}-{theme}-{width}-{(comparison ? "comparison" : "first-run")}.png"));
+                await CaptureWindowAsync(app.Windows[0], Path.Combine(folder, $"{language}-{theme}-{width}-{(comparison ? "comparison" : "first-run")}{(publicReview ? hosted ? "-hosted" : "-local" : "")}.png"));
+                if (publicReview && hosted)
+                    await CaptureHelpAsync(app, folder, $"{language}-{theme}-{width}", ["PersonalSync"]);
                 vm.Deactivate();
-                results.Add(new { Language = language, Theme = theme.ToString(), Width = width, Comparison = comparison, OriginalPage = true });
+                results.Add(new { Language = language, Theme = theme.ToString(), Width = width, Comparison = comparison, HostedAddress = hosted, OriginalPage = true });
                 await File.WriteAllTextAsync(Path.Combine(folder, "personal-sync-progress.json"), JsonSerializer.Serialize(results));
             }
             if (before != await ProtectedRowsFingerprintAsync(services)) throw new IOException("Native sync layout review changed financial data.");

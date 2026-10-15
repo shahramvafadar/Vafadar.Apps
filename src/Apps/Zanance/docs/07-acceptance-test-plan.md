@@ -3165,3 +3165,13 @@ records or cursor publication; the valid complete graph reaches the original rec
 month/year remains valid. Final strict original main-identity Windows rebuild passes. Retained Android native cases
 and the managed 3,690 coverage are not repeated. APK/publication/hosted CI evidence is recorded separately; these
 passes do not grant physical-device, iOS, public service, E2EE or release acceptance.
+
+### AT-293 - Isolated current-machine deployment
+
+Locally qualified: original financial clients across process restart; public-chain positive/refusal; forged proxy
+headers and missing/wrong-role database certificates; runtime DDL/history refusal; full quiesced PostgreSQL/private
+PDF/key-ring restore to a separate target; retained-key TLS renewal with original auth/finances/PDF readback;
+missing-key and fictional-public-promotion refusal; completed restore without replay. Fifteen API boundary and twelve
+Data peer cases pass. Original Windows36 contexts/18 help dialogs and Android12 contexts/six help dialogs preserve
+complete financial snapshots, secure flag and no opt-in. Strict main builds/current signed APK pass. Hosted CI,
+public routing/mail, phone/iOS and release remain separate. See quality/self-hosted-stack.md for negative evidence.

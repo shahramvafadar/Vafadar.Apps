@@ -1,0 +1,43 @@
+name: Self-hosted service qualification
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'eng/hosting/**'
+      - 'src/Apps/Zanance/Vafadar.Zanance.Api/**'
+      - 'src/Apps/Zanance/Vafadar.Zanance.Data/**'
+      - 'src/Apps/Zanance/Vafadar.Zanance.Core/**'
+      - 'src/Libraries/Vafadar.Data/**'
+      - 'Directory.Packages.props'
+      - '.github/workflows/self-hosted-service.yml'
+  pull_request:
+    paths:
+      - 'eng/hosting/**'
+      - 'src/Apps/Zanance/Vafadar.Zanance.Api/**'
+      - 'src/Apps/Zanance/Vafadar.Zanance.Data/**'
+      - 'src/Apps/Zanance/Vafadar.Zanance.Core/**'
+      - 'src/Libraries/Vafadar.Data/**'
+      - 'Directory.Packages.props'
+      - '.github/workflows/self-hosted-service.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: self-hosted-service-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  isolated-deployment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+      - name: Qualify original clients, private restore and transport renewal
+        run: bash eng/hosting/qualify-ci.sh
+      - name: Report only public container state
+        if: always()
+        run: docker ps -a --filter label=pro.vafadar.zanance.hosting=d293 --format '{{.Names}} {{.State}} {{.Status}}'
+      # No artifact upload: private volumes, fictional credentials and financial payloads remain on the runner.

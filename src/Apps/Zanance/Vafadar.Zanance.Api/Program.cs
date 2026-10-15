@@ -8,6 +8,7 @@ var app = builder.Build();
 if (args.Contains("--migrate", StringComparer.Ordinal))
 {
     await ServiceHost.MigrateAsync(app.Services);
+    await SelfHostedService.GrantRuntimeAsync(app.Services);
     return;
 }
 var root = app.Services.GetRequiredService<ServiceStorage>().Root;

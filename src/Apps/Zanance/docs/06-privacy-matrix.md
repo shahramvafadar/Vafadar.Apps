@@ -796,3 +796,12 @@ Private ciphertext files older than one day are collected only when they have no
 manifest, under a storage-publication gate shared across workers. Collection never decrypts or
 reads attachment contents and skips fresh, redirected, unknown-name or manifested files. No active
 staging or committed history age policy, new recipient, permission or processor is introduced.
+
+### D-293 - Isolated personal-service hosting
+
+The optional explicitly connected personal service remains server-readable. Production origin uses normal system
+TLS trust; local peers use explicit pins. Internal software CA/client-role machine keys and persistent Data Protection
+key ring/private files stay in isolated Docker volumes. Complete private snapshots remain root-only Docker volumes,
+not uploaded artifacts. Operator TLS renewal retains historical protection keys; qualification and live authorities
+cannot be reclassified. No analytics/network SDK or new app permission is added. Personal-sync INTERNET is unchanged;
+no automatic opt-in, real mail sender, public routing or production privacy acceptance is implied.

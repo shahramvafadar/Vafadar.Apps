@@ -1,0 +1,33 @@
+services:
+  qualification:
+    image: zanance-hosting-qualification:d293
+    build:
+      context: ../..
+      dockerfile: eng/hosting/Qualification.Dockerfile
+    user: "1654:1654"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: ["/tmp:uid=1654,gid=1654,mode=0700"]
+    environment:
+      DOTNET_EnableDiagnostics: "0"
+      ZANANCE_QUALIFICATION_PROJECT: ${COMPOSE_PROJECT_NAME}
+      SSL_CERT_FILE: ${ZANANCE_QUALIFICATION_TRUST_FILE:-/etc/ssl/certs/ca-certificates.crt}
+      ZANANCE_EXPECTED_AUTHORITY: localhost:${ZANANCE_PROXY_PORT:-14543}
+    extra_hosts:
+      - api.zanance.vafadar.pro:127.0.0.1
+    command: ["${ZANANCE_QUALIFICATION_STAGE:-initial}", "${ZANANCE_PROXY_ADDRESS:-172.29.83.10}"]
+    networks: [database, service]
+    volumes:
+      - qualification:/qualification
+      - operator-identity:/identities:ro
+      - api-identity:/runtime-identities:ro
+      - private:/private:ro
+      - ../../artifacts/hosting-proxy-root.crt:/proxy-trust/root.crt:ro
+    labels:
+      pro.vafadar.zanance.hosting: d293
+      pro.vafadar.fixture: hosting-qualification
+volumes:
+  qualification:
+    external: true
+    name: zanance-selfhost-qualification-d293

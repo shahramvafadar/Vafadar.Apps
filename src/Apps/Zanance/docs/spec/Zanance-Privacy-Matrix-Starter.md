@@ -806,3 +806,8 @@ rechecked under that owner lock before retirement. Only aged, regular server-nam
 no committed manifest is collected, under the same cross-worker publication barrier as file writes.
 No attachment decryption, external processing, new permission, financial-history expiry or active
 pending-work age limit follows. This remains local engineering, not hosted/physical/release acceptance.
+
+D-293 mirrors the maintained profile: optional server-readable personal sync, public system TLS/local explicit pin,
+isolated internal machine certificates and persistent protection/private volumes, root-only complete private Docker
+snapshots and retained-key transport renewal. No new permission/SDK or automatic connection. Public routing/mail,
+provider/phone/iOS and store declarations remain unaccepted; this starter is not submission-ready.

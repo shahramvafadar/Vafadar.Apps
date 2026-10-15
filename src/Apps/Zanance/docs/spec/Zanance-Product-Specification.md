@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, current summary aligned 2026-10-15, D-287)
+## 31. Implementation Status (v1.1, current summary aligned 2026-10-15, D-293)
 
 This section records what the repository actually contains. "Verified" is qualified by each scenario's evidence:
 automated tests, running Windows layouts or targeted isolated Android emulator checks. Complete signed Release
@@ -5918,3 +5918,14 @@ Android HTTP/native/restore/revocation evidence and 3,690 reconciled managed exe
 historical failures are recorded in quality/local-personal-sync.md. This delivery does not claim a new full-suite
 rerun, hosted CI, phone/iOS, E2EE, public hosting or release. The next approved complete batch is isolated current-
 machine Docker deployment under vafadar.pro; the remaining consolidated delivery order and external gates remain.
+
+### D-293 complete isolated local deployment
+
+Original API/PostgreSQL/private files run in dedicated pinned non-root containers with verified TLS, role-certificate
+authentication and persistent protection. Initial/cold original clients, authorization refusals, exact private PDF/
+financial restore to a separate target and retained-key certificate renewal pass. Qualification authorities cannot
+be promoted publicly. Public default uses system TLS; local addresses retain pins and six-language explanation.
+Twelve new Data cases bring reconciled main coverage to3702; fifteen separate API boundary cases pass. This is not a
+fresh complete-suite invocation. Original Windows36 and Android12 contexts plus18/6 native help dialogs preserve
+complete financial data. Main strict builds and current signed APK pass. Hosted CI, public routing/mail, phone/iOS,
+household E2EE and release remain separate. See ../quality/self-hosted-stack.md for exact evidence and failures.

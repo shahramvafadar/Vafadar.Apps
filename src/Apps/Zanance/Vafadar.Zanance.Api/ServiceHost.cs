@@ -38,7 +38,8 @@ public static class ServiceHost
     /// <summary>Registers the maintained authentication and independent service database.</summary>
     public static void AddZananceService(this WebApplicationBuilder builder)
     {
-        if (!builder.Environment.IsDevelopment() && !builder.Environment.IsEnvironment("Integration"))
+        var selfHosted = SelfHostedService.Configure(builder);
+        if (!builder.Environment.IsDevelopment() && !builder.Environment.IsEnvironment("Integration") && selfHosted is null)
             throw new InvalidOperationException("Hosted activation is not approved for this local delivery.");
         if (builder.Environment.IsDevelopment())
         {
@@ -133,6 +134,7 @@ public static class ServiceHost
     /// <summary>Applies durable rate limits and validates session/stamp on every request.</summary>
     public static void UseZananceService(this WebApplication app)
     {
+        SelfHostedService.UseBoundary(app);
         app.Use(async (http, next) =>
         {
             if (!http.Request.IsHttps && !http.Request.Path.StartsWithSegments("/health"))

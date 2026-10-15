@@ -1283,3 +1283,10 @@ retain complete semantic names and at least 44-pixel targets. The independent Wi
 light/dark and 360/412/wide contexts, including glyph bounds and actual first-run Back invocation, with complete
 financial fingerprints unchanged. Prior independent Android native evidence remains separate from phone/screen-reader
 acceptance. The Debug route uses its own compiled installation identity and never owner credentials or desktop input.
+
+### D-293 - Local and hosted personal-service trust
+
+The approved hosted default uses normal system chain/name validation and an empty fingerprint. Local development
+addresses retain explicit trusted fingerprint verification. Explain both in all six languages and state that the
+personal service can read connected records. No automatic opt-in or network work follows merely opening the form.
+Original Windows36 and Android12 contexts plus native18/6 help dialogs preserve complete text, Back and finances.

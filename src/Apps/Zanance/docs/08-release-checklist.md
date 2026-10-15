@@ -1129,3 +1129,11 @@ original explicit restore and complete signed APK are recorded in quality/automa
 The initial Android live-picker publication loop and native validation lock issue were corrected;
 only related checks were repeated. Local success is not hosted CI, physical-device/iOS/OEM,
 power-loss, OAuth, store-signing or product-publication acceptance. The full goal remains open.
+
+### D-293 service activation gate
+
+- [x] Isolated current-machine non-root service, TLS role boundaries, full private-file restore and certificate renewal locally qualified.
+- [x] Fictional production-promotion refused; public client uses system TLS and local client keeps explicit pins.
+- [ ] Fresh production project, DNS/443 routing, real confirmation/recovery mail and external service acceptance.
+- [ ] Actual hosted CI result and phone/iOS acceptance; local Windows/emulator evidence does not close these gates.
+- [ ] Off-machine private service disaster recovery and reviewed compromise/trust-root migration procedure before live operation.

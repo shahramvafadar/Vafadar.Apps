@@ -62,7 +62,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-BIL-03 | Secure entitlement cache, offline window, clock changes | 6 | P1 | M | Proposed | BIL-02 |
 | ZCR-BIL-04 | Plus Lifetime, Lifetime-owner Pro discount, campaigns, trial | 6 | P1 | M | Proposed | BIL-02, OD-06, OD-07 |
 | ZCR-BIL-05 | Sandbox test matrix; production activation (owner only) | 6 | P1 | M | Proposed | BIL-01..04 |
-| ZCR-ID-01 | Optional identity, backend foundation, operations | 3 | P1 | L | Local foundation delivered; current-machine Docker/vafadar.pro deployment now approved, not installed/exposed yet | OD-02 approved; deployment/restore/TLS gates |
+| ZCR-ID-01 | Optional identity, backend foundation, operations | 3 | P1 | L | D-293 isolated current-machine Docker deployment, private-file restore and retained-key certificate renewal locally qualified; public DNS/routing and real mail remain external gates | OD-02 approved; public deployment/identity acceptance |
 | ZCR-SYNC-01 | Change log, outbox, versions, tombstones | 4 | P1 | L | Implemented and locally qualified D-292: original service/protected Windows/Android HTTP, durable staging, complete graph and native UI pass; hosted CI separate | ID-01 |
 | ZCR-SYNC-02 | Conflicts, idempotent posting, restore into a synced profile | 4 | P1 | L | Implemented and locally qualified D-292: explicit complete conflicts/groups/attachments, idempotency and safe restore pass; external platform gates separate | SYNC-01 |
 | ZCR-SYNC-03 | Sync status UI and device management | 4 | P2 | M | Implemented and locally qualified D-292: original UI/device revocation and 36 Windows contexts plus retained Android native evidence; public hosting follows | SYNC-01 |

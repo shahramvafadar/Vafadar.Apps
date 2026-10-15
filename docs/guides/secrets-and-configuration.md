@@ -109,3 +109,11 @@ Repository → Settings:
    only if the upload key leaked – Google Play can reset the upload key).
 2. Update the local file and GitHub secrets.
 3. Removing the commit is not enough: forks and caches may already contain it.
+
+## Isolated current-machine service (D-293)
+
+See eng/hosting/README.md for exact project-scoped operations. No owner database password is generated or passed;
+internal software machine keys remain only in Docker volumes. Never print or export their private PEMs/key rings.
+Complete private snapshots stream directly between Docker-owned volumes; runner workflows upload no private data.
+Public activation requires fresh production authority, external DNS/443 and real mail, never known fictional users.
+Transport renewal preserves historical protection material; interrupted/partial authority fails closed for inspection.

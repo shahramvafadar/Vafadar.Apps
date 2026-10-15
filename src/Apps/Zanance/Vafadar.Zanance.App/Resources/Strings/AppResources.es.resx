@@ -6370,13 +6370,13 @@ Límites por categoría:
     <value>Sincronización personal</value>
   </data>
   <data name="Sync_Intro" xml:space="preserve">
-    <value>Conecta este perfil a tu servicio local de Zanance cuando tú lo decidas. Puedes seguir registrando datos sin conexión al servicio. Sigue siendo necesaria una copia portátil de Zanance para una recuperación independiente.</value>
+    <value>Conecta este perfil a tu servicio de Zanance solo si lo decides. Puedes seguir registrando datos localmente si el servicio no está disponible. Para recuperar tus datos de forma independiente, sigues necesitando una copia de Zanance que puedas transferir.</value>
   </data>
   <data name="Sync_Address" xml:space="preserve">
-    <value>Dirección del servicio local</value>
+    <value>Dirección del servicio de Zanance</value>
   </data>
   <data name="Sync_Fingerprint" xml:space="preserve">
-    <value>Huella verificada del certificado (SHA-256)</value>
+    <value>Huella del certificado local (SHA-256; déjala vacía para el servicio alojado)</value>
   </data>
   <data name="Sync_Email" xml:space="preserve">
     <value>Correo de tu cuenta del servicio Zanance</value>
@@ -6514,7 +6514,7 @@ Límites por categoría:
     <value>Sincronización personal y copias locales</value>
   </data>
   <data name="Help_PersonalSync_Text" xml:space="preserve">
-    <value>Esta conexión local opcional envía los registros financieros y adjuntos del perfil que conectes expresamente a tu servicio Zanance. Verifica la huella del certificado mediante tu propia configuración de confianza antes de introducir credenciales. La contraseña no se guarda; una sesión revocable se conserva en el almacenamiento seguro del dispositivo. La sincronización combina cambios y pregunta por las versiones en conflicto; no sustituye una copia portátil. Un perfil restaurado permanece desconectado hasta que lo vuelvas a conectar expresamente. Revocar un dispositivo detiene su acceso futuro al servicio, pero no borra las copias que ya descargó.</value>
+    <value>Esta conexión opcional envía los registros financieros y los adjuntos del perfil que conectes expresamente a tu servicio de Zanance. El servicio puede leer el perfil conectado. Para una dirección local, comprueba la huella del certificado mediante tu configuración de confianza antes de introducir tus credenciales. La dirección alojada autorizada https://api.zanance.vafadar.pro usa la validación normal de certificados del sistema; deja la huella vacía. La contraseña no se recuerda; una sesión revocable se guarda en el almacenamiento seguro del dispositivo. La sincronización combina cambios y te pregunta si hay versiones en conflicto; no sustituye una copia transferible. Un perfil restaurado permanece desconectado hasta que lo vuelvas a conectar expresamente. Revocar un dispositivo impide su acceso futuro al servicio, pero no borra las copias que ya descargó.</value>
   </data>
   <data name="Help_PersonalSync_Example" xml:space="preserve">
     <value>Cambias el importe de un movimiento en un dispositivo y su nota en otro: los campos independientes pueden combinarse. Si ambos cambian el importe, eliges una versión. Restaurar una copia antigua no la reconecta en silencio ni reproduce sus antiguas eliminaciones.</value>

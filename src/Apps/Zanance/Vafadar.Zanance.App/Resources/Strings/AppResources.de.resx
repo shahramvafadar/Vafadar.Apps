@@ -6401,13 +6401,13 @@ Kategorielimits:
     <value>Persönliche Synchronisierung</value>
   </data>
   <data name="Sync_Intro" xml:space="preserve">
-    <value>Verbinden Sie dieses Profil ausdrücklich mit Ihrem lokalen Zanance-Dienst. Lokale Buchungen bleiben bei einem Ausfall möglich. Für eine unabhängige Wiederherstellung benötigen Sie weiterhin eine übertragbare Zanance-Sicherung.</value>
+    <value>Verbinden Sie dieses Profil ausdrücklich mit Ihrem Zanance-Dienst. Lokales Erfassen bleibt bei einem Ausfall verfügbar. Für eine unabhängige Wiederherstellung brauchen Sie weiterhin eine übertragbare Zanance-Sicherung.</value>
   </data>
   <data name="Sync_Address" xml:space="preserve">
-    <value>Adresse des lokalen Dienstes</value>
+    <value>Adresse des Zanance-Dienstes</value>
   </data>
   <data name="Sync_Fingerprint" xml:space="preserve">
-    <value>Geprüfter Zertifikatsfingerabdruck (SHA-256)</value>
+    <value>Lokaler Zertifikat-Fingerabdruck (SHA-256; beim gehosteten Dienst leer lassen)</value>
   </data>
   <data name="Sync_Email" xml:space="preserve">
     <value>E-Mail des Zanance-Dienstkontos</value>
@@ -6545,7 +6545,7 @@ Kategorielimits:
     <value>Persönliche Synchronisierung und lokale Sicherungen</value>
   </data>
   <data name="Help_PersonalSync_Text" xml:space="preserve">
-    <value>Diese optionale lokale Verbindung sendet Finanzdaten und Anhänge des ausdrücklich verbundenen Profils an Ihren Zanance-Dienst. Prüfen Sie den Zertifikatsfingerabdruck über Ihre eigene vertrauenswürdige Einrichtung, bevor Sie Anmeldedaten eingeben. Das Passwort wird nicht gespeichert; eine widerrufbare Sitzung liegt im sicheren Gerätespeicher. Die Synchronisierung führt Änderungen zusammen und fragt bei widersprüchlichen Versionen nach. Sie ersetzt keine übertragbare Sicherung. Ein wiederhergestelltes Profil bleibt bis zur ausdrücklichen Neuverbindung getrennt. Ein Gerätewiderruf beendet künftigen Dienstzugriff, löscht aber keine bereits geladenen Kopien.</value>
+    <value>Diese freiwillige Verbindung sendet Finanzdaten und Anhänge nur des ausdrücklich verbundenen Profils an Ihren Zanance-Dienst. Der Dienst kann das verbundene Profil lesen. Prüfen Sie bei einer lokalen Adresse vor der Anmeldung den Zertifikat-Fingerabdruck über Ihre vertrauenswürdige Einrichtung. Die freigegebene Adresse https://api.zanance.vafadar.pro verwendet die normale Zertifikatsprüfung des Systems; lassen Sie den Fingerabdruck leer. Das Passwort wird nicht gespeichert; eine widerrufbare Sitzung liegt im sicheren Gerätespeicher. Die Synchronisierung führt Änderungen zusammen und fragt bei widersprüchlichen Versionen nach; sie ersetzt keine übertragbare Sicherung. Ein wiederhergestelltes Profil bleibt getrennt, bis Sie es ausdrücklich neu verbinden. Der Widerruf eines Geräts beendet dessen künftigen Dienstzugriff, löscht aber keine bereits heruntergeladenen Kopien.</value>
   </data>
   <data name="Help_PersonalSync_Example" xml:space="preserve">
     <value>Sie ändern auf einem Gerät den Betrag einer Buchung und auf einem anderen ihre Notiz: Getrennte Felder können zusammengeführt werden. Ändern beide den Betrag, wählen Sie eine Version. Eine alte Sicherung wird nach der Wiederherstellung nicht unbemerkt verbunden und spielt keine alten Löschungen ab.</value>

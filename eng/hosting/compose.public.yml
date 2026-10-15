@@ -1,0 +1,15 @@
+# Enable only after the complete local deployment gates and owner public-routing actions.
+services:
+  provision:
+    environment:
+      ZANANCE_DEPLOYMENT_PURPOSE: production
+  api:
+    environment:
+      Service__PublicOrigin: https://api.zanance.vafadar.pro
+  migrate:
+    environment:
+      Service__PublicOrigin: https://api.zanance.vafadar.pro
+  proxy:
+    command: ["caddy", "run", "--config", "/etc/caddy/Caddyfile.public", "--adapter", "caddyfile"]
+    ports: !override
+      - "0.0.0.0:443:8443"

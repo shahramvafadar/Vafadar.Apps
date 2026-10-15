@@ -34,6 +34,10 @@
     <ApplicationId>pro.vafadar.zanance.androidsyncnetwork</ApplicationId>
     <DefineConstants>$(DefineConstants);SYNC_NETWORK_REVIEW</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(ReviewPublicService)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.androidsyncpublicreview</ApplicationId>
+    <DefineConstants>$(DefineConstants);SYNC_PUBLIC_REVIEW</DefineConstants>
+  </PropertyGroup>
   <!-- Compile original production sources and XAML; the application never references this independent caller. -->
   <ItemGroup>
     <Compile Include="$(OriginalAppRoot)**/*.cs"

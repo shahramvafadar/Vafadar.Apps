@@ -6430,13 +6430,13 @@ Category limits:
     <value>Personal sync</value>
   </data>
   <data name="Sync_Intro" xml:space="preserve">
-    <value>Connect this profile explicitly to your local Zanance service. Local recording remains available when the service is offline. A portable Zanance backup is still needed for independent recovery.</value>
+    <value>Connect this profile explicitly to your Zanance service. Local recording remains available when the service is offline. A portable Zanance backup is still needed for independent recovery.</value>
   </data>
   <data name="Sync_Address" xml:space="preserve">
-    <value>Local service address</value>
+    <value>Zanance service address</value>
   </data>
   <data name="Sync_Fingerprint" xml:space="preserve">
-    <value>Verified certificate fingerprint (SHA-256)</value>
+    <value>Local certificate fingerprint (SHA-256; leave empty for the hosted service)</value>
   </data>
   <data name="Sync_Email" xml:space="preserve">
     <value>Zanance service email</value>
@@ -6574,7 +6574,7 @@ Category limits:
     <value>Personal sync and local backups</value>
   </data>
   <data name="Help_PersonalSync_Text" xml:space="preserve">
-    <value>This optional local connection sends the explicitly connected profile’s financial records and attachments to your Zanance service. Verify the service certificate fingerprint through your own trusted setup before entering credentials. The password is not remembered; a revocable session is kept in device secure storage. Sync combines changes and asks about competing versions; it does not replace a portable backup. A restored profile stays detached until you explicitly reconnect. Revoking a device stops its future service access but cannot erase copies it already downloaded.</value>
+    <value>This optional connection sends the explicitly connected profile’s financial records and attachments to your Zanance service. The service can read the connected profile. For a local address, verify its certificate fingerprint through your trusted setup before entering credentials. The approved hosted address https://api.zanance.vafadar.pro uses normal system certificate validation; leave the fingerprint empty. The password is not remembered; a revocable session is kept in device secure storage. Sync combines changes and asks about competing versions; it does not replace a portable backup. A restored profile stays detached until you explicitly reconnect. Revoking a device stops its future service access but cannot erase copies it already downloaded.</value>
   </data>
   <data name="Help_PersonalSync_Example" xml:space="preserve">
     <value>You change an entry’s amount on one device and its note on another: separate fields can combine. If both change the amount, you choose a version. Restoring an old backup does not silently reconnect it or replay its old deletions.</value>

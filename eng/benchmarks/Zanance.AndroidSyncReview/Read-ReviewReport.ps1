@@ -3,7 +3,7 @@
     [Parameter(Mandatory)][ValidateRange(1, 2147483647)][int]$ProcessId,
     [Parameter(Mandatory)][string]$OutputPath,
     [ValidateRange(1, 60)][int]$ObserveSeconds = 45,
-    [ValidateSet('pro.vafadar.zanance.androidsyncreview', 'pro.vafadar.zanance.androidsyncgroupreview', 'pro.vafadar.zanance.androidsyncportablereview', 'pro.vafadar.zanance.androidsyncattachmentreview', 'pro.vafadar.zanance.androidsyncnetwork')]
+    [ValidateSet('pro.vafadar.zanance.androidsyncreview', 'pro.vafadar.zanance.androidsyncgroupreview', 'pro.vafadar.zanance.androidsyncportablereview', 'pro.vafadar.zanance.androidsyncattachmentreview', 'pro.vafadar.zanance.androidsyncnetwork', 'pro.vafadar.zanance.androidsyncpublicreview')]
     [string]$Package = 'pro.vafadar.zanance.androidsyncreview'
 )
 $ErrorActionPreference = 'Stop'

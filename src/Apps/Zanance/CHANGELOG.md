@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Added - Isolated service deployment
+
+- Run the personal service on the current machine with isolated containers, verified TLS, persistent private storage and a complete backup/restore operation.
+- Preserve existing identities and private files across transport-certificate renewal; prevent test accounts from being promoted into a public service.
+- Explain local certificate fingerprints and normal hosted certificate validation separately. Public domain routing and real email delivery remain pending.
+
 ### Added - Local personal synchronization
 
 - Connect a profile explicitly to the local personal service, retain offline edits, review complete financial conflicts, resume attachments and revoke devices without guessing financial values.

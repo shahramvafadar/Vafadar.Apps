@@ -18,8 +18,8 @@ slice is a delivery. Historical proposals and handoff notes below do not reopen 
 
 | Order | Complete batch | Completion evidence / dependencies |
 |---|---|---|
-| 1 | Finish personal sync D-292 | Final domain/protocol review; original protected Windows/Android and two-client evidence; focused new cases, then final complete-suite/build/UI/APK gates; publish the complete batch |
-| 2 | Current-machine container deployment | Isolated API/PostgreSQL/private storage, persistent protected keys, migrations, health, backup/restore and TLS; verify concrete public routing under vafadar.pro before exposure |
+| 1 | Personal sync D-292 locally delivered | Original protected Windows/Android HTTP, complete graph/conflicts/device UI, focused final cases and current signed APK qualified; hosted/platform acceptance separate |
+| 2 | Current-machine deployment D-293 locally qualified | Isolated API/PostgreSQL/private storage, nonempty-file restore, TLS refusals and retained-key renewal pass; public DNS/routing and real mail remain external gates |
 | 3 | Local household sharing | E2EE from first delivery, invitations/roles, member key rotation/revocation/recovery, selective sharing and approved 30+90-day expiry; real independent clients |
 | 4 | Billing and future-web prerequisites | Android/iOS adapters and sandbox lifecycle, trial/discounts, verified identity-bound grants independent of distribution; web checkout and commercial Windows excluded |
 | 5 | German tax preparation | Accountant export, current-year employee/freelancer scope; expert review required before official calculations, no filing; other countries labelled without an ETA |

@@ -5790,3 +5790,16 @@ Android HTTP/native/restore/revocation evidence and 3,690 reconciled managed exe
 historical failures are recorded in quality/local-personal-sync.md. This delivery does not claim a new full-suite
 rerun, hosted CI, phone/iOS, E2EE, public hosting or release. The next approved complete batch is isolated current-
 machine Docker deployment under vafadar.pro; the remaining consolidated delivery order and external gates remain.
+
+### D-293 - Complete isolated current-machine deployment (2026-10-15)
+
+Deploy original personal service in dedicated non-root read-only containers, PostgreSQL TLS/client-role certificates,
+persistent private storage and a narrowly trusted proxy. Use reviewed pinned official images; never reuse another
+project or promote fictional accounts into production. Public api.zanance.vafadar.pro uses system certificate trust;
+local peers retain explicit pins. Six-language help/defaults make server-readable personal scope explicit.
+Actual original initial/cold/public-trust/refusal/private-file restore and retained-key certificate renewal pass.
+Fifteen separate hosted API boundary cases and twelve new peer cases pass; 36 original Windows contexts and twelve
+Android contexts/six native dialogs pass without financial changes. Current main strict builds and complete signed
+APK qualify the affected app. No unrelated full-suite replay. Exact evidence, preserved failures and boundaries:
+quality/self-hosted-stack.md and eng/hosting/README.md. Public DNS/routing/mail, hosted CI, phone/iOS and release
+remain unaccepted. Continue directly to complete local household E2EE under the consolidated owner approval.

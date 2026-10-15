@@ -1943,3 +1943,7 @@ original explicit restore and complete signed APK are recorded in quality/automa
 The initial Android live-picker publication loop and native validation lock issue were corrected;
 only related checks were repeated. Local success is not hosted CI, physical-device/iOS/OEM,
 power-loss, OAuth, store-signing or product-publication acceptance. The full goal remains open.
+
+D-293: complete local isolated hosting/private restore/TLS renewal qualification follows D-292 personal sync.
+Public routing/mail remain external. Next approved complete batch is local household E2EE, not another helper slice.
+Canonical state/order remain in enhancements/2026-10-commercial-release/04-backlog.md and 05-delivery-plan.md.

@@ -245,3 +245,12 @@ references neither MAUI nor local financial SQLite. Its actual HTTP/DB acceptanc
 separate PostgreSQL-dependent test project, outside Vafadar.Tests.slnf and in the full solution.
 See the API README for private roots, maintained authentication, migration/runtime roles, durable
 limits/outbox, operations and isolated restore. The mobile app has no service connection yet.
+
+## Current-machine personal-service composition (D-293)
+
+eng/hosting composes the original service, PostgreSQL18.6 and Caddy2.11.7 in dedicated networks/volumes. The runtime
+uses a finite DML role with verified TLS/client certificates, independent explicit owner migration, persistent wrapped
+protection and private files. Proxy peer/exact authority are checked before one trusted forwarded client address.
+Public system trust and local explicit pins stay in original Data transport. Full private snapshot/restore and
+transport-only retained-key renewal are locally qualified; public activation remains externally gated. Personal
+sync is server-readable and must not be reused as a claim of household E2EE. See the deployment guide/evidence.

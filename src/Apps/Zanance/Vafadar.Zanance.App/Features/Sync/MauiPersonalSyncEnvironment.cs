@@ -42,8 +42,14 @@ internal sealed class MauiPersonalSyncEnvironment(ISettingsStore settings, IPers
     /// <inheritdoc />
     public bool Available => PersonalSyncBuild.IsAvailable;
     /// <inheritdoc />
-    public PersonalSyncConnection ReadConnection() => new(settings.Get(AddressKey) ??
-        (OperatingSystem.IsAndroid() ? "https://10.0.2.2:5048/" : "https://127.0.0.1:5048/"), settings.Get(PinKey) ?? "");
+    public PersonalSyncConnection ReadConnection()
+    {
+        var address = settings.Get(AddressKey) ?? "https://api.zanance.vafadar.pro/";
+        // A process can stop between the two public preference writes. A stale local pin must never
+        // become an override of the hosted origin's mandatory system certificate validation.
+        var hosted = Uri.TryCreate(address, UriKind.Absolute, out var origin) && origin.DnsSafeHost == "api.zanance.vafadar.pro";
+        return new(address, hosted ? "" : settings.Get(PinKey) ?? "");
+    }
     /// <inheritdoc />
     public void RememberPeer(LocalSyncPeer peer)
     { settings.Set(AddressKey, peer.Address.AbsoluteUri); settings.Set(PinKey, peer.Fingerprint); }

@@ -1,0 +1,28 @@
+{
+	admin off
+	auto_https disable_redirects
+	https_port 8443
+	servers {
+		protocols h1 h2
+	}
+}
+https://api.zanance.vafadar.pro {
+	tls {
+		issuer acme {
+			disable_http_challenge
+		}
+	}
+	request_body {
+		max_size 8MB
+	}
+	reverse_proxy https://api:8443 {
+		header_up Host api.zanance.vafadar.pro
+		transport http {
+			tls_trust_pool file /trust/authority.crt
+			tls_server_name api
+		}
+	}
+	log {
+		output discard
+	}
+}

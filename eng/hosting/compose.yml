@@ -1,0 +1,169 @@
+name: zanance-selfhost
+x-service: &worker
+  image: ${ZANANCE_SERVICE_IMAGE:-zanance-service:d293}
+  build:
+    context: ../..
+    dockerfile: eng/hosting/Service.Dockerfile
+    target: service
+  user: "1654:1654"
+  read_only: true
+  stop_grace_period: 45s
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  tmpfs:
+    - /tmp:uid=1654,gid=1654,mode=0700
+  environment: &worker-environment
+    ASPNETCORE_ENVIRONMENT: SelfHosted
+    DOTNET_EnableDiagnostics: "0"
+    Service__Mode: isolated-self-hosted
+    Service__PublicOrigin: https://localhost:${ZANANCE_PROXY_PORT:-14543}
+    Service__ProxyAddress: ${ZANANCE_PROXY_ADDRESS:-172.29.83.10}
+    Service__Root: /private
+    Service__ListenerCertificate: /identities/server.crt
+    Service__ListenerPrivateKey: /identities/server.key
+    Service__ProtectionCertificate: /identities/protection.crt
+    Service__ProtectionPrivateKey: /identities/protection.key
+  networks: [database, service]
+  labels:
+    pro.vafadar.zanance.hosting: d293
+  logging:
+    driver: local
+    options: {max-size: "10m", max-file: "3"}
+
+services:
+  provision:
+    image: ${ZANANCE_BOOTSTRAP_IMAGE:-zanance-bootstrap:d293}
+    build:
+      context: ../..
+      dockerfile: eng/hosting/Service.Dockerfile
+      target: bootstrap
+    user: "0:0"
+    network_mode: none
+    environment:
+      ZANANCE_DEPLOYMENT_PURPOSE: qualification
+    read_only: true
+    cap_drop: [ALL]
+    cap_add: [CHOWN, FOWNER, DAC_OVERRIDE]
+    security_opt: [no-new-privileges:true]
+    entrypoint: ["sh", "/configuration/bootstrap-entrypoint.sh"]
+    volumes:
+      - authority:/secrets/authority
+      - database-identity:/secrets/database
+      - api-identity:/secrets/api
+      - operator-identity:/secrets/operator
+      - trust:/secrets/trust
+      - database-data:/database
+      - private:/private
+      - proxy-data:/proxy-data
+    labels: {pro.vafadar.zanance.hosting: d293}
+  database:
+    image: ${ZANANCE_DATABASE_IMAGE:-zanance-database:d293}
+    build:
+      context: .
+      dockerfile: Database.Dockerfile
+    user: "70:70"
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    entrypoint: ["sh", "/configuration/database-entrypoint.sh"]
+    environment:
+      PGDATA: /var/lib/postgresql/18/docker
+    volumes:
+      - database-data:/var/lib/postgresql
+      - database-identity:/identities:ro
+    tmpfs:
+      - /tmp:uid=70,gid=70,mode=0700
+    shm_size: 128mb
+    networks: [database]
+    depends_on:
+      provision: {condition: service_completed_successfully}
+    healthcheck:
+      test: ["CMD-SHELL", "test -f \"$$PGDATA/zanance-initialized\" && pg_isready -h /tmp -U postgres -d zanance"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    labels: {pro.vafadar.zanance.hosting: d293}
+    logging:
+      driver: local
+      options: {max-size: "10m", max-file: "3"}
+  migrate:
+    <<: *worker
+    command: ["--migrate"]
+    environment:
+      <<: *worker-environment
+      Service__ListenerCertificate: /listener/server.crt
+      Service__ListenerPrivateKey: /listener/server.key
+      ConnectionStrings__Service: Host=database;Database=zanance;Username=zanance_owner;SSL Mode=VerifyFull;GSS Encryption Mode=Disable;Root Certificate=/identities/authority.crt;SSL Certificate=/identities/database.crt;SSL Key=/identities/database.key
+    volumes:
+      - operator-identity:/identities:ro
+      - api-identity:/listener:ro
+      - private:/private
+    depends_on:
+      database: {condition: service_healthy}
+  api:
+    <<: *worker
+    restart: unless-stopped
+    environment:
+      <<: *worker-environment
+      ConnectionStrings__Service: Host=database;Database=zanance;Username=zanance_runtime;SSL Mode=VerifyFull;GSS Encryption Mode=Disable;Root Certificate=/identities/authority.crt;SSL Certificate=/identities/database.crt;SSL Key=/identities/database.key
+    volumes:
+      - api-identity:/identities:ro
+      - private:/private
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+    healthcheck:
+      test: ["CMD", "dotnet", "/probe/Bootstrap.dll", "probe", "https://api:8443/health/ready", "/identities/authority.crt"]
+      interval: 10s
+      timeout: 8s
+      retries: 6
+  proxy:
+    image: ${ZANANCE_PROXY_IMAGE:-zanance-proxy:d293}
+    build:
+      context: .
+      dockerfile: Proxy.Dockerfile
+    user: "1655:1655"
+    restart: unless-stopped
+    read_only: true
+    stop_grace_period: 45s
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    environment:
+      ZANANCE_PROXY_AUTHORITY: localhost:${ZANANCE_PROXY_PORT:-14543}
+    command: ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
+    ports:
+      - "127.0.0.1:${ZANANCE_PROXY_PORT:-14543}:8443"
+    volumes:
+      - proxy-data:/data
+      - trust:/trust:ro
+    tmpfs:
+      - /config:uid=1655,gid=1655,mode=0700
+      - /tmp:uid=1655,gid=1655,mode=0700
+    networks:
+      service:
+        ipv4_address: ${ZANANCE_PROXY_ADDRESS:-172.29.83.10}
+      edge: {}
+    depends_on:
+      api: {condition: service_healthy}
+    labels: {pro.vafadar.zanance.hosting: d293}
+    logging:
+      driver: local
+      options: {max-size: "10m", max-file: "3"}
+
+networks:
+  database:
+    internal: true
+  service:
+    internal: true
+    ipam:
+      config: [{subnet: "${ZANANCE_SERVICE_SUBNET:-172.29.83.0/24}"}]
+  edge: {}
+volumes:
+  authority:
+  database-identity:
+  api-identity:
+  operator-identity:
+  trust:
+  database-data:
+  private:
+  proxy-data:

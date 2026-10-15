@@ -21,7 +21,9 @@ namespace Vafadar.Zanance.App;
 /// <summary>Renders the actual page/flow/native adapters over protected fictional data, without service credentials or HTTP.</summary>
 internal static partial class AndroidSyncReview
 {
-#if SYNC_NETWORK_REVIEW
+#if SYNC_PUBLIC_REVIEW
+    internal const string Package = "pro.vafadar.zanance.androidsyncpublicreview";
+#elif SYNC_NETWORK_REVIEW
     internal const string Package = "pro.vafadar.zanance.androidsyncnetwork";
     private static readonly bool LinkedGroup = false;
 #elif SYNC_ATTACHMENT_REVIEW
@@ -37,6 +39,7 @@ internal static partial class AndroidSyncReview
     internal const string Package = "pro.vafadar.zanance.androidsyncreview";
     private static readonly bool LinkedGroup = false;
 #endif
+#if !SYNC_PUBLIC_REVIEW
 #if SYNC_ATTACHMENT_REVIEW
     private static readonly bool AttachmentReview = true;
 #else
@@ -47,10 +50,14 @@ internal static partial class AndroidSyncReview
 #else
     private static readonly bool PortableRecords = false;
 #endif
+#endif
     private const string Tag = "ZananceSyncReview";
 
     internal static async Task RunAsync(App app, IServiceProvider services, string run, bool resume, string? fromLanguage = null)
     {
+#if SYNC_PUBLIC_REVIEW
+        await RunPublicServiceAsync(app, services, run, resume);
+#else
         var checkpoint = "identity";
         using var deadline = new CancellationTokenSource(TimeSpan.FromMinutes(4)); var ct = deadline.Token;
         try
@@ -174,6 +181,7 @@ internal static partial class AndroidSyncReview
             // Only type/stack are public; no credentials, keys, financial payloads or platform error messages.
             Emit(run, JsonSerializer.Serialize(new { Passed = false, Checkpoint = checkpoint, ErrorType = error.GetType().FullName, Stack = error.StackTrace }));
         }
+#endif
     }
 
     private static async Task SeedReviewAsync(IServiceProvider services, Guid entryId, Guid accountId, CancellationToken ct)

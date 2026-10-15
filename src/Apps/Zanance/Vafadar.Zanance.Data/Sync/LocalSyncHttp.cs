@@ -5,22 +5,32 @@ using Vafadar.Zanance.Core.Sync;
 
 namespace Vafadar.Zanance.Data.Sync;
 
-/// <summary>A reviewed local peer, separate from account credentials and financial profile identifiers.</summary>
+/// <summary>A reviewed local or approved hosted peer, separate from credentials and financial profile identifiers.</summary>
 public sealed class LocalSyncPeer
 {
-    /// <summary>Canonical loopback or emulator-alias HTTPS endpoint.</summary>
+    /// <summary>Canonical local HTTPS endpoint or the explicitly approved public service origin.</summary>
     public Uri Address { get; }
-    /// <summary>Explicitly reviewed public certificate SHA-256, not an automatically discovered trust decision.</summary>
+    /// <summary>Reviewed local certificate SHA-256; empty only for the approved public origin's normal system trust.</summary>
     public string Fingerprint { get; }
 
-    /// <summary>Rejects cleartext, remote hosting, embedded credentials, path redirects and malformed pins.</summary>
+    /// <summary>Whether maintained system PKI validates the approved public host, permitting ordinary leaf renewal.</summary>
+    public bool UsesSystemTrust { get; }
+
+    /// <summary>Rejects arbitrary hosting, cleartext, embedded credentials, paths and ambiguous public pin overrides.</summary>
     public LocalSyncPeer(string address, string fingerprint)
     {
         if (!Uri.TryCreate(address, UriKind.Absolute, out var uri) || uri.Scheme != Uri.UriSchemeHttps ||
-            uri.Port is < 1024 or > 65535 || uri.UserInfo.Length != 0 || uri.Query.Length != 0 || uri.Fragment.Length != 0 ||
-            uri.AbsolutePath != "/" || uri.DnsSafeHost is not ("localhost" or "127.0.0.1" or "::1" or "10.0.2.2"))
-            throw new ArgumentException("A local HTTPS service address is required.");
+            uri.UserInfo.Length != 0 || uri.Query.Length != 0 || uri.Fragment.Length != 0 || uri.AbsolutePath != "/")
+            throw new ArgumentException("A reviewed HTTPS service origin is required.");
         ArgumentNullException.ThrowIfNull(fingerprint);
+        if (uri.DnsSafeHost == "api.zanance.vafadar.pro")
+        {
+            if (uri.Port != 443 || !string.IsNullOrWhiteSpace(fingerprint))
+                throw new ArgumentException("The approved public origin requires normal system trust without a local pin override.");
+            Address = uri; Fingerprint = ""; UsesSystemTrust = true; return;
+        }
+        if (uri.Port is < 1024 or > 65535 || uri.DnsSafeHost is not ("localhost" or "127.0.0.1" or "::1" or "10.0.2.2"))
+            throw new ArgumentException("Only a local peer or the approved public origin is permitted.");
         var pin = fingerprint.Replace(":", "", StringComparison.Ordinal).Replace(" ", "", StringComparison.Ordinal).ToLowerInvariant();
         if (!SyncProtocolDigest.IsDigest(pin)) throw new ArgumentException("A reviewed SHA-256 certificate fingerprint is required.");
         Address = uri; Fingerprint = pin;
@@ -34,7 +44,7 @@ public sealed class LocalSyncPeer
     public override string ToString() => Address.AbsoluteUri;
 }
 
-/// <summary>Local TLS transport policy; never changes global/device trust or accepts an arbitrary certificate.</summary>
+/// <summary>Explicit local pin or normal approved-origin PKI; never changes global trust or accepts arbitrary certificates.</summary>
 public static class LocalSyncHttp
 {
     /// <summary>Creates one peer-bound client; authentication is supplied only after this policy validates the endpoint.</summary>
@@ -52,7 +62,9 @@ public static class LocalSyncHttp
             PooledConnectionLifetime = TimeSpan.FromMinutes(5),
             MaxResponseHeadersLength = 16,
         };
-        handler.SslOptions.RemoteCertificateValidationCallback = (_, certificate, _, errors) =>
+        // The hosted origin uses the maintained TLS stack's complete system/name validation. Installing a
+        // local pin callback there would bypass public PKI and break normal automatic certificate renewal.
+        if (!peer.UsesSystemTrust) handler.SslOptions.RemoteCertificateValidationCallback = (_, certificate, _, errors) =>
         {
             if (certificate is null || (errors & (SslPolicyErrors.RemoteCertificateNotAvailable | SslPolicyErrors.RemoteCertificateNameMismatch)) != 0)
                 return false;

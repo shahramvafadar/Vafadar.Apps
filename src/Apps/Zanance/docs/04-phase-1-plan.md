@@ -973,3 +973,6 @@ physical/OEM/provider/Store acceptance and the full canonical backlog remain ope
 LOC-09 extends the original local backup flow with device-encrypted automatic recovery points;
 portable export and first-run restoration remain separate. Current evidence and remaining platform
 gates are recorded in quality/automatic-local-backup.md and the canonical commercial backlog.
+
+D-293 adds locally qualified isolated service deployment and current main signed APK. It does not reopen finished
+phase-1 checks or establish public mail/routing, phone/iOS or release acceptance. See quality/self-hosted-stack.md.

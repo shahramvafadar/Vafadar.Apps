@@ -6378,13 +6378,13 @@ Plafonds par catégorie :
     <value>Synchronisation personnelle</value>
   </data>
   <data name="Sync_Intro" xml:space="preserve">
-    <value>Connectez explicitement ce profil à votre service local Zanance. La saisie locale reste disponible si le service est hors ligne. Une sauvegarde portable Zanance reste nécessaire pour une restauration indépendante.</value>
+    <value>Connectez ce profil à votre service Zanance uniquement si vous le choisissez. La saisie locale reste disponible si le service est indisponible. Une sauvegarde Zanance transférable reste nécessaire pour une restauration indépendante.</value>
   </data>
   <data name="Sync_Address" xml:space="preserve">
-    <value>Adresse du service local</value>
+    <value>Adresse du service Zanance</value>
   </data>
   <data name="Sync_Fingerprint" xml:space="preserve">
-    <value>Empreinte vérifiée du certificat (SHA-256)</value>
+    <value>Empreinte du certificat local (SHA-256 ; laissez ce champ vide pour le service hébergé)</value>
   </data>
   <data name="Sync_Email" xml:space="preserve">
     <value>Adresse e-mail du compte de service Zanance</value>
@@ -6522,7 +6522,7 @@ Plafonds par catégorie :
     <value>Synchronisation personnelle et sauvegardes locales</value>
   </data>
   <data name="Help_PersonalSync_Text" xml:space="preserve">
-    <value>Cette connexion locale facultative envoie les données financières et les pièces jointes du profil explicitement connecté à votre service Zanance. Vérifiez l’empreinte du certificat via votre propre configuration de confiance avant de saisir vos identifiants. Le mot de passe n’est pas mémorisé ; une session révocable est conservée dans le stockage sécurisé de l’appareil. La synchronisation combine les modifications et demande votre choix en cas de conflit ; elle ne remplace pas une sauvegarde portable. Un profil restauré reste déconnecté jusqu’à votre reconnexion explicite. Révoquer un appareil bloque son accès futur au service, mais n’efface pas les copies déjà téléchargées.</value>
+    <value>Cette connexion facultative envoie les données financières et les pièces jointes du profil que vous connectez explicitement à votre service Zanance. Le service peut lire le profil connecté. Pour une adresse locale, vérifiez l’empreinte du certificat depuis votre configuration de confiance avant de saisir vos identifiants. L’adresse hébergée autorisée https://api.zanance.vafadar.pro utilise la validation habituelle des certificats du système ; laissez l’empreinte vide. Le mot de passe n’est pas mémorisé ; une session révocable est conservée dans le stockage sécurisé de l’appareil. La synchronisation combine les modifications et vous consulte en cas de versions contradictoires ; elle ne remplace pas une sauvegarde transférable. Un profil restauré reste déconnecté jusqu’à ce que vous le reconnectiez explicitement. Révoquer un appareil bloque son accès futur au service, sans effacer les copies déjà téléchargées.</value>
   </data>
   <data name="Help_PersonalSync_Example" xml:space="preserve">
     <value>Vous modifiez le montant d’une opération sur un appareil et sa note sur un autre : ces champs indépendants peuvent être combinés. Si les deux montants changent, vous choisissez une version. Restaurer une ancienne sauvegarde ne la reconnecte pas silencieusement et ne rejoue pas ses anciennes suppressions.</value>
