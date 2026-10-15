@@ -2457,3 +2457,10 @@ Current ADR/native/privacy/spec summaries now agree with delivered Android/Windo
 local copies, P2-18 loan estimates and local entitlement/identity foundations. Initial inventories
 are explicitly historical; owner/external/native-warning gates are not marked complete. No code
 or runtime verification repeated. Evidence: ../../quality/current-status-alignment.md.
+## D-288 hosted Windows installer repair
+
+Allow the exact Visual Studio 18.10.12224.181 metadata from runner image 20261007.264.1;
+retain compiler SHA256/signature, MSVC/SDK and immutable package checks. Sixteen focused
+local toolchain cases pass; hosted execution remains pending at commit time. No app/native
+binary/UI/APK or unrelated successful test rerun. See the D-288 decision for failure evidence
+and the versioned inventory. Native-warning safety review remains open.

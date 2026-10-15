@@ -16,7 +16,8 @@ function Resolve-ReviewedWindowsToolchain {
     }
     if ($Installation.installationVersion -notin $Acceptance.installationVersions -or
         -not [IO.Path]::IsPathRooted($Installation.installationPath)) {
-        throw 'The installed compiler differs from the reviewed native toolchain.'
+        throw ('The installed compiler differs from the reviewed native toolchain. InstallationVersion={0}; InstallationPathRooted={1}' -f
+            $Installation.installationVersion, [IO.Path]::IsPathRooted($Installation.installationPath))
     }
     $vcvars = Join-Path $Installation.installationPath 'VC/Auxiliary/Build/vcvarsall.bat'
     $compiler = Join-Path $Installation.installationPath ('VC/Tools/MSVC/' + $Acceptance.toolsVersion + '/bin/Hostx64/x64/cl.exe')

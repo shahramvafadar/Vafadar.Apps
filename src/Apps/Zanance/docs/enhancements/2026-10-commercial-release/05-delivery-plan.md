@@ -1536,3 +1536,10 @@ quota/identity registration and qualified test/native records. Correct the whole
 current summary set, keep dated history separate and verify mirrored privacy facts. Delivered as
 documentation only; successful builds/tests/APK are not repeated. Remaining owner/external gates
 remain in 04-backlog.md and 06-open-decisions.md.
+## D-288 hosted Windows installer repair
+
+Allow the exact Visual Studio 18.10.12224.181 metadata from runner image 20261007.264.1;
+retain compiler SHA256/signature, MSVC/SDK and immutable package checks. Sixteen focused
+local toolchain cases pass; hosted execution remains pending at commit time. No app/native
+binary/UI/APK or unrelated successful test rerun. See the D-288 decision for failure evidence
+and the versioned inventory. Native-warning safety review remains open.

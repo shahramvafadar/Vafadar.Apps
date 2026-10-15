@@ -5639,3 +5639,23 @@ warning review and release gates. Both privacy matrices and the unpublished poli
 Android exclusion from pending iOS integration. Initial inventories remain explicitly historical.
 Only docs changed; no build/test/device/APK rerun. Baseline remains D-286 with 3,610 covered behaviors,
 not a new complete-suite run. See quality/current-status-alignment.md for the finite source audit.
+
+## D-288 hosted Windows installer metadata repair
+
+CI run 38723670276 failed in Windows toolchain qualification, before native compilation or the
+application build. Libraries/tests and Android succeeded. The runner reports image
+20261007.264.1; its versioned official inventory lists Visual Studio 18.10.12224.181, absent from
+the explicit installer allowlist. Add only that version and retain exact Microsoft signer,
+compiler file-version/SHA256, MSVC/SDK and immutable native package checks. Pin the inventory
+reference to the observed image rather than a moving main-branch document. Include the observed
+installer version and rooted-path result in future rejection messages.
+
+The 16 focused toolchain cases pass on the actual local compiler, including new installer
+metadata and refusal of unknown versions, changed compiler bytes, malformed policy, SDK/tools
+drift and package-identity drift. Hosted compiler bytes and the final Windows build still need
+the new hosted run; metadata acceptance is not executable qualification. No application code,
+native source/flags/package identity, UI or APK changed; unrelated successful checks were not
+repeated locally. Existing 704 upstream warnings remain unresolved.
+
+Sources: [failed CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/38723670276),
+[exact runner inventory](https://github.com/actions/runner-images/blob/win25-vs2026/20261007.264/images/windows/Windows2025-VS2026-Readme.md).

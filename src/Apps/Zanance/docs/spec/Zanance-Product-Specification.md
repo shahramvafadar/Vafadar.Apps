@@ -5785,3 +5785,10 @@ warning review and release gates. Both privacy matrices and the unpublished poli
 Android exclusion from pending iOS integration. Initial inventories remain explicitly historical.
 Only docs changed; no build/test/device/APK rerun. Baseline remains D-286 with 3,610 covered behaviors,
 not a new complete-suite run. See ../quality/current-status-alignment.md for the finite source audit.
+## D-288 hosted Windows installer repair
+
+Allow the exact Visual Studio 18.10.12224.181 metadata from runner image 20261007.264.1;
+retain compiler SHA256/signature, MSVC/SDK and immutable package checks. Sixteen focused
+local toolchain cases pass; hosted execution remains pending at commit time. No app/native
+binary/UI/APK or unrelated successful test rerun. See the D-288 decision for failure evidence
+and the versioned inventory. Native-warning safety review remains open.

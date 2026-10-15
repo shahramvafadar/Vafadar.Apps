@@ -375,3 +375,10 @@ production-assembly create/cold reopening and protected reference/tenfold worklo
 policy remains mandatory. Upload only allowlisted public logs/proofs/measurements, never fixture/key
 roots. Windows upstream OpenSSL is not claimed under an elevated runner. See
 src/Apps/Zanance/docs/quality/windows-native-ci.md for orchestration evidence and pending hosted result.
+## D-288 hosted Windows installer repair
+
+Allow the exact Visual Studio 18.10.12224.181 metadata from runner image 20261007.264.1;
+retain compiler SHA256/signature, MSVC/SDK and immutable package checks. Sixteen focused
+local toolchain cases pass; hosted execution remains pending at commit time. No app/native
+binary/UI/APK or unrelated successful test rerun. See the D-288 decision for failure evidence
+and the versioned inventory. Native-warning safety review remains open.
