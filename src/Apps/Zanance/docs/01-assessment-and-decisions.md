@@ -5562,3 +5562,15 @@ The 15 toolchain/variant cases and real mismatched-producer refusal are focused 
 consumer/workload/main-Windows-build completion remains pending at this commit. Already successful Linux
 suite (3,566 passed / 25 skipped / zero failed), Android Release, stock cipher, CodeQL and local backend
 on dfae08a2 are retained evidence, not replaced by new local repeats.
+
+### Isolated PostgreSQL TCP readiness
+
+Run 38707538871 failed before service publishing: pg_isready on the default Unix socket observed
+"accepting connections" followed immediately by "rejecting connections". The pinned official image
+uses a temporary bootstrap server with listen_addresses='' before starting the final server. CI now
+waits on 127.0.0.1 TCP for the explicit database, then creates the fixture runtime role over that same
+transport. No arbitrary extra delay or blind job retry is used. An isolated, network-none container
+from the already present exact image digest verified the entrypoint behavior, final TCP readiness and
+actual CREATE ROLE; only that explicitly labeled fixture was removed. Service/app code and prior
+successful identity/restore scenarios were not rerun locally. Final hosted completion is reported by
+GitHub after this commit; these entries record evidence available at each delivery push.

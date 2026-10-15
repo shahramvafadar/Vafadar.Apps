@@ -827,3 +827,10 @@ packaging select the same variant. Unknown producers/variants and cross-producer
 Neither setting installs or changes Visual Studio. Keep the actual producer evidence beside each raw
 candidate and require the distinct entry policy plus production persistence checks. Existing local
 baseline packages remain unchanged; do not overwrite one version with another compiler's output.
+
+### Isolated PostgreSQL readiness in CI (D-282)
+
+Wait on explicit TCP host/database, then initialize the fixture role on the same transport. The
+pinned image's temporary initdb server listens only on Unix sockets; default pg_isready can report
+that temporary process and race its shutdown. TCP readiness excludes that process without a fixed
+startup delay. The CI fixture remains independent from the local backend and all other projects.

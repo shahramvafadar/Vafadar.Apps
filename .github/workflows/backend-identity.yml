@@ -41,12 +41,13 @@ jobs:
       - name: Prepare isolated PostgreSQL build dependency
         run: |
           docker run -d --name zanance-backend-ci -p 127.0.0.1:55473:5432 --tmpfs /var/lib/postgresql -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_DB=zanance_identity_ci postgres@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15
+          # The image bootstrap server accepts Unix sockets before the final TCP server starts.
           for attempt in $(seq 1 30); do
-            if docker exec zanance-backend-ci pg_isready -U postgres; then break; fi
+            if docker exec zanance-backend-ci pg_isready -h 127.0.0.1 -U postgres -d zanance_identity_ci; then break; fi
             sleep 1
           done
-          docker exec zanance-backend-ci pg_isready -U postgres
-          docker exec zanance-backend-ci psql -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE ROLE zanance_runtime LOGIN'
+          docker exec zanance-backend-ci pg_isready -h 127.0.0.1 -U postgres -d zanance_identity_ci
+          docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE ROLE zanance_runtime LOGIN'
       - name: Publish security-patched independent test runtime
         run: dotnet publish test/Apps/Zanance/Vafadar.Zanance.Api.Tests/Vafadar.Zanance.Api.Tests.csproj --configuration Release -r linux-x64 --self-contained true -p:RuntimeFrameworkVersion=10.0.13 -p:ContinuousIntegrationBuild=true --output artifacts/identity-test-runtime
       - name: Verify actual identity, private storage and isolated restore
