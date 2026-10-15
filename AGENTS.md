@@ -1985,6 +1985,11 @@ with per-request stamp/session ownership, durable one-use grants/rate limits/out
 persistent protection keys. Hosted/production activation remains refused. Never send real mail or
 connect app finances under this local foundation scope. Stop its exact hidden owned worker before
 building/replacing the binary or taking a quiesced snapshot; PID alone is insufficient ownership.
+The owner subsequently approved complete local personal Pro financial sync on 2026-10-15:
+durable changes/deletions, explicit conflicts without guessing amounts, idempotency, safe profile
+restore and device management. This supersedes the foundation-only financial-sync restriction
+for that local personal scope. Paid hosting, household sharing and commercial activation remain
+separate owner gates. Complete this as one end-to-end batch before its final checks.
 Service tests require an explicitly isolated PostgreSQL fixture and run in their dedicated workflow,
 not the local SQLite filter. Never substitute mocks or the mobile test baseline for service restore.
 

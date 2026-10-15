@@ -1486,7 +1486,7 @@ Iran is a later separate variant, not implicitly enabled in this batch. New lang
    Windows/Android encryption, exact data preservation, independent retention and explicit restoration.
    Review changed surfaces in fa/en/de, light/dark, 360/412/wide and build strict targets/signed APK.
 5. Update privacy/spec/acceptance/decision records and commit/push the complete verified batch. Keep
-   failed observations and avoid unrelated successful verification. The complete local/native D-281 batch is delivered; see ../../quality/automatic-local-backup.md. Personal-sync product approval and other owner/external gates remain open.
+   failed observations and avoid unrelated successful verification. The complete local/native D-281 batch is delivered; see ../../quality/automatic-local-backup.md. Personal sync was separately approved on 2026-10-15; its complete local implementation is next. Other owner/external gates remain open.
 
 ## Complete coherent Home read batch (D-283)
 
@@ -1569,3 +1569,40 @@ same-process Android Home/expense/Cancel pass. Cold key reads fall 4 -> 2 (one p
 6 -> 4 (two); final guarded small Windows two-profile sample is 338.27ms versus 496.62ms before.
 No whole-app/two-second/phone/iOS/native-warning/release acceptance follows. See
 ../../quality/selected-startup-verification.md for retained evidence and precise measurement boundaries.
+
+## Approved next end-to-end batch: local personal sync (owner 2026-10-15)
+
+Finish the currently running independent Release/AOT Android loaded-Home measurement, retaining
+its original failures and exact data-preservation evidence. Then deliver ZCR-SYNC-01..03 together:
+authenticated owner/device/profile protocol and server uniqueness; transactional local outbox and
+tombstones for complete related financial data; explicit conflicting-money resolution; idempotent
+occurrence settlement; reviewed restore into a synced profile; optional local connection, queue/error/
+conflict status and device revocation UI. Local recording must remain available during an outage.
+Perform final focused two-device/concurrent/replay/revocation/restore and running-screen checks after
+the complete batch, not isolated helpers or unrelated successful suites. Use independent local
+PostgreSQL/private storage. Paid hosting, household sharing and commercial activation are excluded.
+The approval settles scope, not implementation or acceptance; those remain unfinished.
+
+## D-291 original protected Release/AOT Android Home
+
+An independent x64 caller compiles the original Home/App/data sources and measures two actual native
+pages in en/fa/de on protected reference (10,000 entries/20 accounts/100 schedules) and tenfold
+(100,000/200/1,000) data. The complete twelve-page result and both original schema/header/integrity/
+typed-row export comparisons pass. Reference publication is 1104.51-1786.76ms; tenfold is
+6586.67-7225.87ms, with largest dispatcher gap 363.15ms. Tenfold latency remains an observed concern.
+This excludes page construction, cold startup, fixture preparation and generation verification;
+frame callbacks are not GPU/phone/two-second/ANR acceptance.
+
+Caller-only manifest/property/registration/path-alias/locale/native-digit expectation failures are
+retained. Original Android locale handling and original NativeDigits presentation are preserved;
+no ledger discrepancy or financial Save occurred. Already successful English samples were retained,
+and the same prepared financial files/keys continued without reseeding or observation-timeout restart.
+Final Release/AOT build has zero warnings/errors; independent signed package/native hashes verify.
+Main source/APK remain D-290 and 3,614 covered behaviors remain unchanged, not a full-suite rerun.
+No unrelated successful test, Windows/UI/native corpus or unchanged main APK build was repeated.
+
+The owner separately approved complete local personal Pro sync on 2026-10-15: changes/deletions,
+explicit conflicts without guessed amounts, idempotency, safe restore and device management.
+ZCR-SYNC-01..03 is the next complete implementation batch; paid hosting, household sharing and
+commercial activation remain separate gates. This decision is recorded, not implemented by D-291.
+See ../../quality/android-loaded-home.md for exact evidence, boundaries and retained failures.

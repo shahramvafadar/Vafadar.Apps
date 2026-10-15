@@ -75,7 +75,10 @@ automatic copies. The owner selected device-encrypted automatic local copies wit
 exports on 2026-10-15. Implement the complete schedule/status/retention/explicit-recovery flow without
 storing a password or implying recovery on a new device from a device-only copy.
 
-Separate approval for local personal Pro sync on the new backend was requested; backend
-foundation approval does not authorize financial sync/sharing. Purchase ownership/trial/discount,
+The owner approved complete local personal Pro sync on 2026-10-15, including durable changes and
+deletions, explicit conflicts without guessed amounts, idempotency, safe profile restore and device
+management. This is implementation authority for ZCR-SYNC-01..03 on the local backend; it does not
+authorize paid hosting, household sharing or commercial activation. Do not ask this decision again.
+Purchase ownership/trial/discount,
 shared-space retention/storage/E2EE, tax scope and hosted/provider gates stay in the table above.
 Current ENT-05 test-build/upgrade evidence does not activate any customer commercial limit.

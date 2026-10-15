@@ -46,7 +46,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
 | ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-64 local evidence verified; device/corpus pending) | sample receipts |
-| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-283 coherent protected Home read/validation; D-278/280 protected reference/tenfold read/search/save verified locally; D-284/285/286 loaded Windows reference/tenfold Home and reduced blocking/reader latency verified; phone/low-memory/Android/cold/ANR/iOS acceptance remains) | – |
+| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-283 coherent protected Home; D-278/280 protected read/search/save; D-284/285/286 loaded Windows; D-291 original Release/AOT Android loaded reference/tenfold Home and full preservation verified; tenfold latency, phone/low-memory/cold/ANR/iOS acceptance remains) | – |
 | ZCR-QA-07 | Platform parity Android/iOS/Windows (notifications, widget, file picker, lock, share, licences) | 2 | P2 | M | Blocked (iOS: Mac) | – |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | In progress (D-174 widget and D-175 contextual date names/drafts verified locally; spoken TalkBack and remaining screen/platform acceptance open) | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
@@ -63,9 +63,9 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-BIL-04 | Plus Lifetime, Lifetime-owner Pro discount, campaigns, trial | 6 | P1 | M | Proposed | BIL-02, OD-06, OD-07 |
 | ZCR-BIL-05 | Sandbox test matrix; production activation (owner only) | 6 | P1 | M | Proposed | BIL-01..04 |
 | ZCR-ID-01 | Optional identity, backend foundation, operations | 3 | P1 | L | Local foundation delivered (D-272 actual service/PostgreSQL/private restore; hosted/sender/mobile gates remain) | OD-02 |
-| ZCR-SYNC-01 | Change log, outbox, versions, tombstones | 4 | P1 | L | Proposed | ID-01 |
-| ZCR-SYNC-02 | Conflicts, idempotent posting, restore into a synced profile | 4 | P1 | L | Proposed | SYNC-01 |
-| ZCR-SYNC-03 | Sync status UI and device management | 4 | P2 | M | Proposed | SYNC-01 |
+| ZCR-SYNC-01 | Change log, outbox, versions, tombstones | 4 | P1 | L | Approved for complete local personal delivery (owner 2026-10-15); not implemented | ID-01 |
+| ZCR-SYNC-02 | Conflicts, idempotent posting, restore into a synced profile | 4 | P1 | L | Approved for complete local personal delivery (owner 2026-10-15); not implemented | SYNC-01 |
+| ZCR-SYNC-03 | Sync status UI and device management | 4 | P2 | M | Approved for complete local personal delivery (owner 2026-10-15); not implemented | SYNC-01 |
 | ZCR-SHR-01 | Shared space, invitations, roles, server-side authorization | 5 | P1 | L | Proposed | SYNC-02 |
 | ZCR-SHR-02 | Cost sharing between people (F2-SHARE-05), household totals | 5 | P2 | M | Proposed | SHR-01 |
 | ZCR-SHR-03 | Audit trail, revocation, ownership transfer, end of subscription | 5 | P1 | M | Proposed | SHR-01, OD-05 |
@@ -2375,8 +2375,8 @@ Exact evidence and scope: quality/test-build-upgrade-policy.md.
 
 Customer activation and announcement remain explicit owner/BIL gates. Do not turn disabled test
 enforcement into permanent paid facts or announce future limits as already enabled. LOC-09's protection choice was subsequently approved on 2026-10-15 (D-281);
-separate local personal-sync approval remains pending;
-none follows from backend foundation approval. The full development goal remains active.
+local personal sync was separately approved by the owner on 2026-10-15 and remains to be implemented;
+sharing, purchases and hosting do not follow from that approval. The full development goal remains active.
 
 
 ## D-278 protected reference and tenfold workload evidence
@@ -2490,3 +2490,27 @@ same-process Android Home/expense/Cancel pass. Cold key reads fall 4 -> 2 (one p
 6 -> 4 (two); final guarded small Windows two-profile sample is 338.27ms versus 496.62ms before.
 No whole-app/two-second/phone/iOS/native-warning/release acceptance follows. See
 ../../quality/selected-startup-verification.md for retained evidence and precise measurement boundaries.
+
+## D-291 original protected Release/AOT Android Home
+
+An independent x64 caller compiles the original Home/App/data sources and measures two actual native
+pages in en/fa/de on protected reference (10,000 entries/20 accounts/100 schedules) and tenfold
+(100,000/200/1,000) data. The complete twelve-page result and both original schema/header/integrity/
+typed-row export comparisons pass. Reference publication is 1104.51-1786.76ms; tenfold is
+6586.67-7225.87ms, with largest dispatcher gap 363.15ms. Tenfold latency remains an observed concern.
+This excludes page construction, cold startup, fixture preparation and generation verification;
+frame callbacks are not GPU/phone/two-second/ANR acceptance.
+
+Caller-only manifest/property/registration/path-alias/locale/native-digit expectation failures are
+retained. Original Android locale handling and original NativeDigits presentation are preserved;
+no ledger discrepancy or financial Save occurred. Already successful English samples were retained,
+and the same prepared financial files/keys continued without reseeding or observation-timeout restart.
+Final Release/AOT build has zero warnings/errors; independent signed package/native hashes verify.
+Main source/APK remain D-290 and 3,614 covered behaviors remain unchanged, not a full-suite rerun.
+No unrelated successful test, Windows/UI/native corpus or unchanged main APK build was repeated.
+
+The owner separately approved complete local personal Pro sync on 2026-10-15: changes/deletions,
+explicit conflicts without guessed amounts, idempotency, safe restore and device management.
+ZCR-SYNC-01..03 is the next complete implementation batch; paid hosting, household sharing and
+commercial activation remain separate gates. This decision is recorded, not implemented by D-291.
+See ../../quality/android-loaded-home.md for exact evidence, boundaries and retained failures.
