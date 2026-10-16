@@ -94,6 +94,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     {
         OnPropertyChanged(nameof(CanRunImport)); OnPropertyChanged(nameof(CanReviewPreview)); OnPropertyChanged(nameof(HasImportDock));
         ImportCommand.NotifyCanExecuteChanged(); PreviewCommand.NotifyCanExecuteChanged(); RefreshPreviewCommand.NotifyCanExecuteChanged();
+        PickStarMoneyCommand.NotifyCanExecuteChanged();
         PickCommand.NotifyCanExecuteChanged(); ExportCommand.NotifyCanExecuteChanged(); ExportHoldingsCommand.NotifyCanExecuteChanged(); UndoCommand.NotifyCanExecuteChanged();
     }
 
@@ -301,6 +302,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     {
         var file = await _files.PickCsvAsync(_translator["Import_Pick"]);
         if (file is null) return;
+        IsBankPreset = false; _bankRead = null; _bankOwner = null; BankAcknowledged = false; BankLines.Clear();
         // Only an actual new selection replaces the previous raw review or accepted result.
         ImportError = null; UndoError = null; ImportResult = null; HasPreview = false; CanImport = false; _previewAccepted = false;
         _preview = []; _holdingsContent = null; Overlaps.Clear();
@@ -363,6 +365,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     private async Task ReadPreviewAsync()
     {
         ImportError = null;
+        if (IsBankPreset) { await ReadBankPreviewAsync(); return; }
         _previewStale = false;
         var accounts = await _store.GetAccountsAsync();
         var categories = await _store.GetCategoriesAsync();
@@ -474,7 +477,8 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         var shared = Overlaps.Where(o => o.HasChoice && o.Decision.Link).SelectMany(o => o.Preview.Detailed)
             .GroupBy(e => e.Id).Any(g => g.Count() > 1);
         OverlapError = shared ? _translator["Import_Overlap_SharedDetail"] : null;
-        CanImport = ImportCount > 0 && !pending && !shared && !_previewStale;
+        CanImport = ImportCount > 0 && !pending && !shared && !_previewStale
+            && (!IsBankPreset || BankAcknowledged && _bankRead is not null && _preview.All(r => r.Error is null));
     }
 
     [RelayCommand(CanExecute = nameof(CanRunImport))]
@@ -500,7 +504,19 @@ public sealed partial class ImportExportViewModel : ViewModelBase
             ImportResult = null;
             ImportResult result;
             Exception? publication = null;
-            try { result = await _store.ImportAsync(entries, Overlaps.Select(o => o.Decision).ToList()); }
+            var bank = IsBankPreset ? _bankRead ?? throw new InvalidOperationException("Review the bank source again.") : null;
+            var bankEpoch = _bankEpoch;
+            if (bank is not null)
+            {
+                bank.EnsureCurrent();
+                if (!await _interaction.ConfirmAsync(_translator["BankCsv_Title"],
+                    _translator.Format("BankCsv_Confirm", entries.Count, Account?.Name ?? "", Account?.CurrencyCode ?? ""),
+                    ImportButtonText ?? _translator["BankCsv_Title"], _translator["Common_Cancel"])) return;
+                if (bankEpoch != _bankEpoch || !BankAcknowledged || !ReferenceEquals(_bankRead, bank)) throw new InvalidOperationException("The original bank consent changed.");
+                bank.EnsureCurrent();
+            }
+            try { result = bank is null ? await _store.ImportAsync(entries, Overlaps.Select(o => o.Decision).ToList())
+                : await _store.ImportReviewedAsync(entries, Overlaps.Select(o => o.Decision).ToList(), bank); }
             catch (CommittedWriteNotificationException<ImportResult> ex) { result = ex.Result; publication = ex; }
             if (result.Conflict is { } conflict)
             {
@@ -526,6 +542,8 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         {
             ImportError = _translator[_previewAccepted ? "Import_SavedFollowUpFailed" : "Import_SaveFailed"];
             if (!_previewAccepted) ImportError = CommercialFailureMessage.OrFallback(ex, _translator, "Import_SaveFailed", draftKept: true);
+            if (IsBankPreset && !_previewAccepted)
+            { RetireBankReview(); ImportError = CommercialFailureMessage.OrFallback(ex, _translator, "BankCsv_Failed", draftKept: true); }
             await _interaction.ShowFailureAsync(ex);
         }
         finally

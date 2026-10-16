@@ -7804,4 +7804,67 @@ Identity: {2}</value>
   <data name="Tax_PageTitle" xml:space="preserve">
     <value>Accountant packet</value>
   </data>
+  <data name="BankCsv_Title" xml:space="preserve">
+    <value>German bank-software CSV</value>
+  </data>
+  <data name="BankCsv_Pick" xml:space="preserve">
+    <value>Choose StarMoney Giro cashflow CSV</value>
+  </data>
+  <data name="BankCsv_Encoding" xml:space="preserve">
+    <value>Text encoding for the next file (choose the original export setting)</value>
+  </data>
+  <data name="BankCsv_Acknowledge" xml:space="preserve">
+    <value>I checked every source row: posted ordinary income/expenses only, in the selected account and currency. No transfers, refunds, reversals, pending payments or split totals.</value>
+  </data>
+  <data name="BankCsv_Warning" xml:space="preserve">
+    <value>This preset is the documented StarMoney Giro field set, not a promise for every bank CSV. The file has no verified booked-status field. Confirm ordinary posted cashflows yourself; a positive sign cannot prove income. Export other relationships separately and record/link them explicitly in Zanance. Every invalid row blocks this preset import.</value>
+  </data>
+  <data name="BankCsv_Source" xml:space="preserve">
+    <value>Reviewed target: «{0}» · {1}. Source account ends «{2}». Confirm they are the same account; the app never changes currency.</value>
+  </data>
+  <data name="BankCsv_Page" xml:space="preserve">
+    <value>Review page {0} of {1} · {2} source rows in total</value>
+  </data>
+  <data name="BankCsv_Row" xml:space="preserve">
+    <value>Source row {0} · {1} · {2}</value>
+  </data>
+  <data name="BankCsv_Detail" xml:space="preserve">
+    <value>Text: «{0}»
+Counterparty: «{1}»
+References: «{2}»
+Status: {3}</value>
+  </data>
+  <data name="BankCsv_Known" xml:space="preserve">
+    <value>Existing source identity: skip; never overwrite later edits.</value>
+  </data>
+  <data name="BankCsv_Duplicate" xml:space="preserve">
+    <value>Possible equal date/amount: review; similarity is not proof of duplication.</value>
+  </data>
+  <data name="BankCsv_New" xml:space="preserve">
+    <value>New row, pending your explicit cashflow confirmation.</value>
+  </data>
+  <data name="BankCsv_Previous" xml:space="preserve">
+    <value>Previous source rows</value>
+  </data>
+  <data name="BankCsv_Next" xml:space="preserve">
+    <value>Next source rows</value>
+  </data>
+  <data name="BankCsv_Confirm" xml:space="preserve">
+    <value>Record {0} reviewed ordinary cashflows in «{1}» ({2})? This is a local import, not a bank payment. Confirm source account, posted status and that transfers/refunds/reversals were excluded.</value>
+  </data>
+  <data name="BankCsv_Failed" xml:space="preserve">
+    <value>The original bank file, encoding, source account or reviewed data is unsupported or changed. Nothing new was imported. Choose the correct original Giro cashflow export and review again. Limits: 8 MiB, 10,000 records; no silent truncation.</value>
+  </data>
+  <data name="Import_Error_BankRelationship" xml:space="preserve">
+    <value>Split, cancellation or reversal requires an explicit financial relationship.</value>
+  </data>
+  <data name="Help_BankCsv_Title" xml:space="preserve">
+    <value>Original German bank-software files</value>
+  </data>
+  <data name="Help_BankCsv_Text" xml:space="preserve">
+    <value>Choose the documented StarMoney Giro export and its actual text encoding. Check the target account and currency, every source page and posted ordinary cashflow meaning before accepting. This preset does not infer transfers, refunds, reversals, split relationships or pending status. Use a separately selected export of ordinary posted income/expenses; unsupported relationships block the whole preset import. The source software IDs prevent reimport of the same history/account; matching date and amount alone is only a warning. Later edits are never overwritten. An edited file or a different software history may use different IDs and needs review. Notes retain remittance, value-date and source-category/comment references. The source IBAN field is not saved, but remittance text itself can contain sensitive references. Only Cash, Checking and Savings targets are eligible. Existing aggregate overlap decisions and durable Undo still apply. No bank login, network connection, PDF recognition, XML/CAMT, OFX or QIF is used.</value>
+  </data>
+  <data name="Help_BankCsv_Example" xml:space="preserve">
+    <value>Example: import a posted salary and a card expense from the same EUR Giro history. Exclude an account transfer and merchant refund; record those as an explicit transfer or linked refund instead of new income. Reimporting the same source IDs adds no second copy.</value>
+  </data>
 </root>

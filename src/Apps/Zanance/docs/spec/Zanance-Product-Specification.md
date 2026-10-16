@@ -6112,3 +6112,14 @@ recounted. Current APK is92,848,685 bytes; SHA256d42d5812a506e0b248b46a4712f2577
 Complete scope, failures, official-source limitations and physical/iOS/expert/publication gates remain in
 commercial-release/13-accountant-export-delivery.md. TAX-03 calculation/filing is not delivered. Next ready
 independent work is German-first bank import and the already approved AI/FX prerequisites; Mac/store gates remain.
+
+
+### Section31 current delivery: D-297 documented bank CSV
+
+The explicit StarMoney Giro preset adds original file/encoding/account selection, complete row review,
+ordinary-posted-cashflow acknowledgment and native confirmation through the existing transactional importer,
+stable source/account ids and durable Undo. Unknown revisions, ambiguous splits/storno, invalid currency/amount
+and changed original history/payload refuse. Transfers/refunds/reversals/pending status are not guessed.
+29 new focused cases and32 affected existing import cases pass;23 resource checks pass. Historical3753 full-suite
+count is unchanged and was not rerun. No new schema/SDK/permission. IMP-01/BANK-01 remain In progress for actual
+bank revisions/other markets/relationships, not a universal support claim. Delivery record: enhancements/2026-10-commercial-release/14-bank-csv-delivery.md.

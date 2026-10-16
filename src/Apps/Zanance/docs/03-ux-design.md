@@ -1414,3 +1414,14 @@ transfer/counterparty disclosure before review. Field errors appear together. Ch
 original review; native confirmations never save money. Keep complete scalable summary/warnings, a short native
 page title and a pinned growing Review/Share row. State that the ZIP is readable, instructions are English and
 stored copies may not be legal originals. An actual Cancel must precede cache/authentication/share effects.
+
+
+## D-297 Explicit bank-software CSV review
+
+Keep the StarMoney preset separate from generic mapping. Encoding applies to the next picked file and is never
+guessed from language/currency. Show selected local account/currency and only masked source ending, every
+proposed row (25 per page), original remittance/payee/value-date/category references, duplicate/error states and
+before-opening warning. Acknowledge posted ordinary income/expenses explicitly; transfers/refunds/reversals,
+pending and splits are excluded. Invalid rows block the whole preset. Real native final count/account consent,
+Cancel and durable batch Undo retain their original meaning. Departure/account change invalidates consent;
+source/history changes require fresh review. Growing captions/native44-unit actions preserve all six languages.

@@ -39,8 +39,12 @@ public sealed partial class ZananceStore
     /// Saves all valid new rows and explicitly selected aggregate reductions in one transaction. Rechecks the entire
     /// preview against current data and records durable Undo before committing; never subtracts earlier details twice.
     /// </summary>
-    public async Task<ImportResult> ImportAsync(IReadOnlyList<LedgerEntry> entries, IReadOnlyList<ImportAggregateChoice> choices,
-        CancellationToken cancellationToken = default)
+    public Task<ImportResult> ImportAsync(IReadOnlyList<LedgerEntry> entries, IReadOnlyList<ImportAggregateChoice> choices,
+        CancellationToken cancellationToken = default) => ImportReviewedAsync(entries, choices, null, cancellationToken);
+
+    /// <summary>Uses the existing atomic import/Undo writer with an original-file bank preview guard when supplied.</summary>
+    public async Task<ImportResult> ImportReviewedAsync(IReadOnlyList<LedgerEntry> entries, IReadOnlyList<ImportAggregateChoice> choices,
+        ImportReadReview? review, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(entries);
         ArgumentNullException.ThrowIfNull(choices);
@@ -52,10 +56,13 @@ public sealed partial class ZananceStore
         var known = stored.Select(e => e.Id).Concat(ConsumedIds(journals)).ToHashSet();
         var toAdd = entries.Where(e => !known.Contains(e.Id)).DistinctBy(e => e.Id).Select(e => e.Copy()).ToList();
         var skipped = entries.Count - toAdd.Count;
-        if (toAdd.Count == 0) { return new ImportResult(null, 0, skipped, new Dictionary<Guid, IReadOnlyList<LedgerError>>()); }
+        if (toAdd.Count == 0 && review is null) { return new ImportResult(null, 0, skipped, new Dictionary<Guid, IReadOnlyList<LedgerError>>()); }
 
         var accounts = await db.Accounts.AsNoTracking().ToDictionaryAsync(a => a.Id, cancellationToken);
         var categories = await db.Categories.AsNoTracking().ToDictionaryAsync(c => c.Id, cancellationToken);
+        review?.ValidateWriter(db, entries, new ImportReviewInputs(accounts.Values.OrderBy(a => a.Id).ToList(),
+            categories.Values.OrderBy(c => c.Id).ToList(), stored.OrderBy(e => e.Id).ToList(), journals.Select(j => j.Batch).OrderBy(j => j.Id).ToList()));
+        if (toAdd.Count == 0) return new ImportResult(null, 0, skipped, new Dictionary<Guid, IReadOnlyList<LedgerError>>());
         var all = stored.Concat(toAdd).ToDictionary(e => e.Id);
         var refunded = stored.Where(e => e.RefundOfId is not null).GroupBy(e => e.RefundOfId!.Value)
             .ToDictionary(g => g.Key, g => g.Sum(e => e.Amount));

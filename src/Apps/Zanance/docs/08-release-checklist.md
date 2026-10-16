@@ -1175,3 +1175,12 @@ Current local Android/service evidence and complete test APK are in enhancements
 
 Current source, safety bounds, readable-cache lifetime, actual Android observation and APK hash are in
 commercial-release/13-accountant-export-delivery.md. Recipient copies and missing originals remain outside the app's control.
+
+
+## D-297 bank CSV qualification
+
+Keep the exact supported StarMoney Giro ordinary-cashflow variant, original structural-source evidence and
+fictional fixtures distinct from customer bank acceptance.29 focused new cases,32 affected prior import cases
+and23 resource checks are local evidence. Native contexts/package and negative evidence: enhancements/2026-10-commercial-release/14-bank-csv-delivery.md.
+Do not list all German banks as supported or count CAMT/MT940/OFX/QIF/live connections as implemented. Physical
+phone/iOS, current customer-export corpus and release acceptance remain open.

@@ -7775,4 +7775,67 @@
   <data name="Tax_PageTitle" xml:space="preserve">
     <value>بستهٔ حسابدار</value>
   </data>
+  <data name="BankCsv_Title" xml:space="preserve">
+    <value>فایل CSV نرم‌افزار بانکی آلمان</value>
+  </data>
+  <data name="BankCsv_Pick" xml:space="preserve">
+    <value>انتخاب CSV جریان نقدی StarMoney Giro</value>
+  </data>
+  <data name="BankCsv_Encoding" xml:space="preserve">
+    <value>رمزگذاری متن فایل بعدی؛ مطابق تنظیم خروجی اصلی انتخاب کنید</value>
+  </data>
+  <data name="BankCsv_Acknowledge" xml:space="preserve">
+    <value>همهٔ ردیف‌های منبع را بررسی کرده‌ام: فقط درآمد و هزینهٔ عادیِ ثبت‌شده، در حساب و ارز انتخاب‌شده است؛ انتقال، بازپرداخت، برگشت درآمد، پرداخت معلق یا جمع تفکیک‌شده ندارد.</value>
+  </data>
+  <data name="BankCsv_Warning" xml:space="preserve">
+    <value>این الگو فقط مجموعهٔ مستند ستون‌های StarMoney Giro است، نه همهٔ CSVهای بانک‌ها. فایل ستون تأییدشده‌ای برای وضعیت ثبت قطعی ندارد. عادی و ثبت‌شده بودن جریان نقدی را خودتان تأیید کنید؛ علامت مثبت به‌تنهایی درآمد را ثابت نمی‌کند. روابط دیگر را جدا صادر و صریحاً در Zanance ثبت یا مرتبط کنید. هر ردیف نامعتبر، ورود این الگو را متوقف می‌کند.</value>
+  </data>
+  <data name="BankCsv_Source" xml:space="preserve">
+    <value>مقصد بازبینی‌شده: «{0}» با ارز «{1}». پایان شمارهٔ حساب منبع «{2}» است. یکسان بودن دو حساب را تأیید کنید؛ برنامه ارز را تغییر نمی‌دهد.</value>
+  </data>
+  <data name="BankCsv_Page" xml:space="preserve">
+    <value>صفحهٔ بازبینی «{0}» از «{1}»؛ تعداد کل ردیف‌های منبع «{2}»</value>
+  </data>
+  <data name="BankCsv_Row" xml:space="preserve">
+    <value>ردیف منبع «{0}»؛ تاریخ «{1}»؛ مبلغ «{2}»</value>
+  </data>
+  <data name="BankCsv_Detail" xml:space="preserve">
+    <value>متن: «{0}»
+طرف معامله: «{1}»
+ارجاع‌ها: «{2}»
+وضعیت: {3}</value>
+  </data>
+  <data name="BankCsv_Known" xml:space="preserve">
+    <value>شناسهٔ منبع از قبل موجود است؛ رد می‌شود و ویرایش‌های بعدی بازنویسی نمی‌شوند.</value>
+  </data>
+  <data name="BankCsv_Duplicate" xml:space="preserve">
+    <value>احتمال یکسان بودن تاریخ و مبلغ؛ بررسی کنید. شباهت، اثبات تکراری بودن نیست.</value>
+  </data>
+  <data name="BankCsv_New" xml:space="preserve">
+    <value>ردیف تازه؛ منتظر تأیید صریح نوع جریان نقدی شماست.</value>
+  </data>
+  <data name="BankCsv_Previous" xml:space="preserve">
+    <value>ردیف‌های قبلی منبع</value>
+  </data>
+  <data name="BankCsv_Next" xml:space="preserve">
+    <value>ردیف‌های بعدی منبع</value>
+  </data>
+  <data name="BankCsv_Confirm" xml:space="preserve">
+    <value>تعداد «{0}» جریان نقدی عادیِ بازبینی‌شده در «{1}» با ارز «{2}» ثبت شود؟ این ورود محلی است، نه پرداخت بانکی. حساب منبع، ثبت قطعی و حذف انتقال‌ها، بازپرداخت‌ها و برگشت‌ها را تأیید کنید.</value>
+  </data>
+  <data name="BankCsv_Failed" xml:space="preserve">
+    <value>فایل اصلی بانک، رمزگذاری متن، حساب منبع یا دادهٔ بازبینی‌شده پشتیبانی نمی‌شود یا تغییر کرده است. دادهٔ تازه‌ای وارد نشد. خروجی اصلی و درستِ جریان نقدی Giro را انتخاب و دوباره بازبینی کنید. سقف فنی ۸ MiB و ۱۰٬۰۰۰ رکورد است؛ داده بی‌خبر کوتاه نمی‌شود.</value>
+  </data>
+  <data name="Import_Error_BankRelationship" xml:space="preserve">
+    <value>تفکیک یا برگشت، به رابطهٔ مالی صریح نیاز دارد.</value>
+  </data>
+  <data name="Help_BankCsv_Title" xml:space="preserve">
+    <value>فایل اصلی نرم‌افزار بانکی آلمان</value>
+  </data>
+  <data name="Help_BankCsv_Text" xml:space="preserve">
+    <value>خروجی مستند StarMoney Giro و رمزگذاری متن واقعی آن را انتخاب کنید. پیش از پذیرش، حساب و ارز مقصد، همهٔ صفحه‌های منبع و عادی و ثبت‌شده بودن جریان نقدی را بررسی کنید. این الگو انتقال، بازپرداخت، برگشت، رابطهٔ تفکیک یا وضعیت معلق را حدس نمی‌زند. از خروجی جداگانهٔ درآمد و هزینهٔ عادی و ثبت‌شده استفاده کنید؛ روابط پشتیبانی‌نشده کل ورود الگو را متوقف می‌کنند. شناسهٔ نرم‌افزار منبع، ورود دوبارهٔ همان تاریخچه و حساب را تشخیص می‌دهد؛ یکسان بودن تاریخ و مبلغ فقط هشدار است. ویرایش‌های بعدی بازنویسی نمی‌شوند. فایل ویرایش‌شده یا تاریخچهٔ نرم‌افزاری دیگر ممکن است شناسهٔ متفاوت داشته باشد و باید بررسی شود. یادداشت‌ها ارجاع پرداخت، تاریخ ارزش و دسته و توضیح منبع را نگه می‌دارند. فیلد IBAN منبع ذخیره نمی‌شود، ولی متن پرداخت ممکن است خودش ارجاع حساس داشته باشد. فقط مقصد نقدی، جاری و پس‌انداز مجاز است. تصمیم صریح هم‌پوشانی مبالغ تجمیعی و Undo پایدار همچنان اعمال می‌شوند. ورود بانکی، اتصال شبکه، خواندن PDF، XML/CAMT، OFX یا QIF انجام نمی‌شود.</value>
+  </data>
+  <data name="Help_BankCsv_Example" xml:space="preserve">
+    <value>نمونه: حقوق ثبت‌شده و یک هزینهٔ کارت را از همان تاریخچهٔ Giro با ارز EUR وارد کنید. انتقال بین حساب‌ها و بازپرداخت فروشنده را کنار بگذارید و به‌جای درآمد تازه، به‌صورت انتقال صریح یا بازپرداخت مرتبط ثبت کنید. ورود دوبارهٔ همان شناسه‌های منبع کپی دوم نمی‌سازد.</value>
+  </data>
 </root>

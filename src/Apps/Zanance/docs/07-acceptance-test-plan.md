@@ -3385,3 +3385,13 @@ unchanged complete financial fingerprint. Long native title clipping was observe
 a short translated title; affected presentation was rechecked. Complete signed Release Android package/local
 native checks are recorded in13-accountant-export-delivery.md. Genuine device/iOS/recipient/expert tax acceptance
 remains separate. No payment, tax filing, financial write, credential or background upload belongs to this flow.
+
+
+## AT-297 Documented bank-software ordinary cashflows
+
+Focused source-flow qualification:29 new BankCsvFlowTests plus32 affected existing DataFileOutcomeFlowTests;
+23 resource completeness/usage checks. Six-language consent/Cancel/import/reimport/new-model durable Undo,
+complete paged review, explicit legacy/UTF-8 encoding, exact currency/minor units, unknown/split/malformed source,
+invalid rows, stale finance/account/retired-form/payload and forbidden loan/asset target rejection are covered.
+This is not a repeated full-suite run or actual bank-account acceptance. Native Windows/Release Android and
+package results, including original failed fixture preparation, are recorded in enhancements/2026-10-commercial-release/14-bank-csv-delivery.md.

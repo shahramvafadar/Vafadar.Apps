@@ -944,3 +944,14 @@ checks native selection/review/Cancel and realized captions in en/fa/de, light/d
 retains failed captures and records completed cases so successes are not replayed. It never shares externally.
 Actual Release Android sharing/package checks remain distinct. Focused source-flow acceptance is AT-296 in
 AccountantExportFlowTests. See the D-296 delivery record for final native/APK paths and failed-then-fixed evidence.
+
+
+### Documented bank CSV (D-297)
+
+Focused classes: BankCsvFlowTests and directly affected DataFileOutcomeFlowTests in Vafadar.Zanance.App.Tests;
+resource completeness/usage in Vafadar.Localization.Tests. The independent Debug Windows identity
+pro.vafadar.zanance.bankcsvreview with VAFADAR_SNAPSHOT_ONLY=bank-csv-native accepts only the exact owned
+artifacts/bank-csv-native-d297 folder and resumes unfinished contexts. Native Invoke/Toggle/Cancel only,
+fictitious independent sources, own-window rendering, unchanged financial fingerprint. Never reset its data
+or replay complete contexts. Main Android Release uses Build-AndroidApk.ps1 -Billing -BillingSandbox with the
+permanent identity; source-flow/native/APK evidence is in14-bank-csv-delivery.md.

@@ -7775,4 +7775,67 @@ Identität: {2}</value>
   <data name="Tax_PageTitle" xml:space="preserve">
     <value>Steuerberater-Paket</value>
   </data>
+  <data name="BankCsv_Title" xml:space="preserve">
+    <value>Deutsche Banking-Software · CSV</value>
+  </data>
+  <data name="BankCsv_Pick" xml:space="preserve">
+    <value>StarMoney-Giro-CSV für Geldbewegungen wählen</value>
+  </data>
+  <data name="BankCsv_Encoding" xml:space="preserve">
+    <value>Textkodierung der nächsten Datei (Originalexport beachten)</value>
+  </data>
+  <data name="BankCsv_Acknowledge" xml:space="preserve">
+    <value>Ich habe alle Quellzeilen geprüft: nur gebuchte normale Einnahmen/Ausgaben im gewählten Konto und in dessen Währung. Keine Umbuchungen, Erstattungen, Stornos, Vormerkungen oder Splittsummen.</value>
+  </data>
+  <data name="BankCsv_Warning" xml:space="preserve">
+    <value>Diese Vorlage gilt für den dokumentierten StarMoney-Giro-Feldsatz, nicht für jede Bank-CSV. Die Datei besitzt kein geprüftes Feld für den Buchungsstatus. Normale gebuchte Geldbewegungen selbst bestätigen; ein Pluszeichen beweist keine Einnahme. Andere Beziehungen separat exportieren und in Zanance ausdrücklich erfassen/verknüpfen. Jede ungültige Zeile blockiert diesen Import.</value>
+  </data>
+  <data name="BankCsv_Source" xml:space="preserve">
+    <value>Geprüftes Ziel: «{0}» · {1}. Quellkonto endet auf «{2}». Dasselbe Konto bestätigen; die App ändert die Währung nicht.</value>
+  </data>
+  <data name="BankCsv_Page" xml:space="preserve">
+    <value>Prüfseite {0} von {1} · insgesamt {2} Quellzeilen</value>
+  </data>
+  <data name="BankCsv_Row" xml:space="preserve">
+    <value>Quellzeile {0} · {1} · {2}</value>
+  </data>
+  <data name="BankCsv_Detail" xml:space="preserve">
+    <value>Text: «{0}»
+Gegenpartei: «{1}»
+Referenzen: «{2}»
+Status: {3}</value>
+  </data>
+  <data name="BankCsv_Known" xml:space="preserve">
+    <value>Quellidentität vorhanden: überspringen; spätere Änderungen nie überschreiben.</value>
+  </data>
+  <data name="BankCsv_Duplicate" xml:space="preserve">
+    <value>Datum/Betrag möglicherweise gleich: prüfen; Ähnlichkeit beweist kein Duplikat.</value>
+  </data>
+  <data name="BankCsv_New" xml:space="preserve">
+    <value>Neue Zeile; wartet auf Ihre ausdrückliche Bestätigung der Geldbewegung.</value>
+  </data>
+  <data name="BankCsv_Previous" xml:space="preserve">
+    <value>Vorherige Quellzeilen</value>
+  </data>
+  <data name="BankCsv_Next" xml:space="preserve">
+    <value>Nächste Quellzeilen</value>
+  </data>
+  <data name="BankCsv_Confirm" xml:space="preserve">
+    <value>{0} geprüfte normale Geldbewegungen in «{1}» ({2}) erfassen? Dies ist ein lokaler Import, keine Bankzahlung. Quellkonto, Buchungsstatus und ausgeschlossene Umbuchungen/Erstattungen/Stornos bestätigen.</value>
+  </data>
+  <data name="BankCsv_Failed" xml:space="preserve">
+    <value>Originaldatei, Kodierung, Quellkonto oder geprüfte Daten werden nicht unterstützt oder sind verändert. Nichts Neues wurde importiert. Den richtigen Original-Giroexport für normale Geldbewegungen wählen und erneut prüfen. Grenzen: 8 MiB, 10.000 Datensätze; keine stille Kürzung.</value>
+  </data>
+  <data name="Import_Error_BankRelationship" xml:space="preserve">
+    <value>Splitt, Storno oder Rückbuchung erfordern eine ausdrückliche finanzielle Zuordnung.</value>
+  </data>
+  <data name="Help_BankCsv_Title" xml:space="preserve">
+    <value>Originaldateien deutscher Banking-Software</value>
+  </data>
+  <data name="Help_BankCsv_Text" xml:space="preserve">
+    <value>Den dokumentierten StarMoney-Giroexport und seine tatsächliche Textkodierung wählen. Zielkonto, Währung, jede Quellseite und gebuchte normale Geldbewegungen vor der Annahme prüfen. Die Vorlage leitet keine Umbuchungen, Erstattungen, Stornos, Splittbeziehungen oder Vormerkungen ab. Einen separat ausgewählten Export normaler gebuchter Einnahmen/Ausgaben verwenden; nicht unterstützte Beziehungen blockieren den gesamten Vorlagenimport. Quellsoftware-IDs erkennen dieselbe Historie im selben Konto; gleiches Datum/Betrag ist nur ein Hinweis. Spätere Änderungen werden nie überschrieben. Bearbeitete Dateien oder andere Softwarehistorien können andere IDs besitzen und müssen geprüft werden. Notizen behalten Zahlungs-, Wertstellungs-, Kategorie- und Kommentarreferenzen. Das Quell-IBAN-Feld wird nicht gespeichert; Zahlungstexte können selbst sensible Angaben enthalten. Nur Bargeld-, Giro- und Sparkonten sind zulässig. Ausdrückliche Aggregatentscheidungen und dauerhaftes Undo gelten weiterhin. Kein Banklogin, Netzwerkzugriff, PDF-Lesen, XML/CAMT, OFX oder QIF.</value>
+  </data>
+  <data name="Help_BankCsv_Example" xml:space="preserve">
+    <value>Beispiel: gebuchtes Gehalt und Kartenausgabe aus derselben EUR-Girohistorie importieren. Kontoübertrag und Händlererstattung ausschließen; als ausdrückliche Umbuchung bzw. verknüpfte Erstattung erfassen, nicht als neue Einnahme. Dieselben Quell-IDs erzeugen beim erneuten Import keine zweite Kopie.</value>
+  </data>
 </root>

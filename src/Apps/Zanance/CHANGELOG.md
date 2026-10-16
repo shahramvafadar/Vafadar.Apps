@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Documented German bank-software CSV (D-297)
+
+- Choose the StarMoney Giro preset, explicit encoding and matching account; review every ordinary posted cashflow before native confirmation.
+- Retain exact amounts, complete references and source categories/comments without guessing transfers, refunds, reversals or split relationships.
+- Prevent repeat imports through source/account ids, retain later edits and use the existing durable batch Undo.
+- Refuse unknown formats, invalid rows and stale financial reviews. Other bank formats remain in progress.
+
 ### Germany accountant data packet (D-296)
 
 - Choose a Gregorian year and financial accounts, review the disclosure and share a readable ZIP for an employee's or freelancer's accountant.

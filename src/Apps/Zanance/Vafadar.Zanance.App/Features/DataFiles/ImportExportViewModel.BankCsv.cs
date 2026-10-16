@@ -1,0 +1,120 @@
+using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Vafadar.Localization.Formatting;
+using Vafadar.Zanance.Core.DataFiles;
+using Vafadar.Zanance.Core.Money;
+using Vafadar.Zanance.Data.Importing;
+using Vafadar.Zanance.App.Presentation;
+
+namespace Vafadar.Zanance.App.Features.DataFiles;
+
+/// <summary>A complete read-only source-row review, paged rather than silently limited to the first few records.</summary>
+public sealed record BankCsvLine(string Heading, string Detail);
+
+public sealed partial class ImportExportViewModel
+{
+    private ImportReadReview? _bankRead;
+    private string? _bankOwner;
+    private int _bankEpoch, _bankPage;
+    private IReadOnlyList<BankCsvLine> _bankLines = [];
+    /// <summary>Gets or sets whether the picked source uses the original StarMoney cashflow contract.</summary>
+    [ObservableProperty] public partial bool IsBankPreset { get; private set; }
+    /// <summary>Gets or sets the explicit encoding for the next original bank file.</summary>
+    [ObservableProperty] public partial int BankEncodingIndex { get; set; }
+    /// <summary>Gets or sets explicit confirmation that these are posted ordinary income/expenses, not inferred relationships.</summary>
+    [ObservableProperty] public partial bool BankAcknowledged { get; set; }
+    /// <summary>Gets original-source identities that this complete preview will disclose locally.</summary>
+    [ObservableProperty] public partial string? BankSourceText { get; private set; }
+    /// <summary>Gets the current page of complete bank-source review rows.</summary>
+    public ObservableCollection<BankCsvLine> BankLines { get; } = [];
+    /// <summary>Gets explicit native encoding captions for the next picker.</summary>
+    public IReadOnlyList<string> BankEncodings => ["UTF-8", "Windows-1252"];
+    /// <summary>Gets the translated current page and complete row count.</summary>
+    public string BankPageText => _translator.Format("BankCsv_Page", _bankPage + 1, Math.Max(1, (_bankLines.Count + 24) / 25), _bankLines.Count);
+
+    partial void OnBankAcknowledgedChanged(bool value) { if (IsBankPreset) { UpdateOverlapChoices(); RefreshActions(); } }
+    partial void OnAccountChanged(Features.Entries.AccountChoice? value) { if (IsBankPreset) RetireBankReview(); }
+    /// <summary>Retires continuations from a departed original native form; raw data is retained for a fresh review.</summary>
+    public void RetireBankReview()
+    {
+        Interlocked.Increment(ref _bankEpoch); _bankRead = null; BankAcknowledged = false;
+        if (IsBankPreset) { _previewStale = true; CanImport = false; HasPreview = false; BankLines.Clear(); }
+        RefreshActions();
+    }
+
+    /// <summary>Chooses one original preset file without inventing a bank or treating CSV-CAMT as XML.</summary>
+    [RelayCommand(CanExecute = nameof(IsNotBusy))]
+    private async Task PickStarMoneyAsync()
+    {
+        if (IsBusy) return;
+        IsBusy = true; var epoch = _bankEpoch;
+        try
+        {
+            var originalFile = await _store.CaptureImportFileAsync();
+            var selected = await _files.PickBankCsvAsync(_translator["BankCsv_Pick"], BankEncodingIndex == 0 ? BankCsvEncoding.Utf8 : BankCsvEncoding.Windows1252);
+            if (selected is null || epoch != _bankEpoch) return;
+            var rows = await Task.Run(() => StarMoneyCsv.Read(selected.Text));
+            var currentFile = await _store.CaptureImportFileAsync();
+            if (epoch != _bankEpoch) return;
+            if (originalFile != currentFile) throw new InvalidOperationException("The original bank-import profile changed.");
+            _rows = rows; _bankOwner = originalFile; IsBankPreset = true; _bankRead = null; _holdingsContent = null; _ownFormat = false;
+            FileName = selected.Name; ShowMapping = false; _previewAccepted = false; _previewStale = true; _preview = [];
+            HasPreview = false; CanImport = false; ImportError = null; ImportResult = null; UndoError = null;
+            BankAcknowledged = false; Overlaps.Clear(); BankLines.Clear();
+            await ReadPreviewAsync();
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        { ImportError = _translator["BankCsv_Failed"]; if (IsBankPreset) RetireBankReview(); }
+        finally { IsBusy = false; RefreshActions(); }
+    }
+
+    private async Task ReadBankPreviewAsync()
+    {
+        if (_bankOwner is null || Account is null) throw new InvalidOperationException("Choose an original bank file and target account.");
+        var epoch = _bankEpoch; var owner = _bankOwner; var accountId = Account.Id; var source = _rows;
+        // SQLite async reads and AOT serialization still perform synchronous native work (D-297).
+        // Keep original input preparation off the UI thread while the native picker returns focus.
+        var prepared = await Task.Run(async () =>
+        {
+            var original = await _store.ReadImportReviewAsync(owner);
+            var target = original.Inputs.Accounts.SingleOrDefault(a => a.Id == accountId && !a.IsArchived)
+                ?? throw new InvalidOperationException("The reviewed target account changed.");
+            var proposed = StarMoneyCsv.Preview(source, target, original.Inputs.Categories, original.Inputs.Entries, original.ConsumedIds);
+            original.Bind(proposed.Where(r => r.Entry is not null).Select(r => r.Entry!)); original.EnsureCurrent();
+            return (Read: original, Account: target, Preview: proposed);
+        });
+        if (epoch != _bankEpoch || Account?.Id != accountId) throw new InvalidOperationException("The original bank form was retired.");
+        var (read, account, preview) = prepared;
+        _bankRead = read; _preview = preview; _existingEntries = read.Inputs.Entries;
+        _previewAccounts = read.Inputs.Accounts.ToDictionary(a => a.Id);
+        _previewCategories = new CategoryLookup(read.Inputs.Categories, _translator);
+        _bankPage = 0;
+        _bankLines = preview.Select(row => row.Entry is { } entry ? new BankCsvLine(
+            _translator.Format("BankCsv_Row", row.Line, _dates.Format(entry.Date, DateFormatStyle.Short),
+                MoneyText.Format(entry.Kind == Core.Ledger.EntryKind.Expense ? -entry.Amount : entry.Amount, account.CurrencyCode, _localization.CurrentCulture)),
+            _translator.Format("BankCsv_Detail", entry.Title ?? "", entry.Payee ?? "", entry.Note ?? "",
+                row.AlreadyImported ? _translator["BankCsv_Known"] : row.PossibleDuplicate ? _translator["BankCsv_Duplicate"] : _translator["BankCsv_New"]))
+            : new BankCsvLine(_translator.Format("Import_InvalidLine", row.Line, _translator[$"Import_Error_{row.Error}"]), "")).ToArray();
+        PublishBankPage();
+        var sourceColumn = _rows[0].Select((name, index) => (name, index)).Single(p => p.name.Trim() == "QkIBAN").index;
+        var sourceAccount = _rows[1][sourceColumn].Replace(" ", "", StringComparison.Ordinal).Trim();
+        BankSourceText = _translator.Format("BankCsv_Source", account.Name, account.CurrencyCode, sourceAccount[^4..]);
+        PreviewText = _translator.Format("Import_Preview", preview.Count(r => r.Entry is not null && !r.AlreadyImported), preview.Count(r => r.AlreadyImported), preview.Count(r => r.Error is not null));
+        InvalidLines.Clear(); foreach (var row in preview.Where(r => r.Error is not null).Take(8))
+            InvalidLines.Add(_translator.Format("Import_InvalidLine", row.Line, _translator[$"Import_Error_{row.Error}"]));
+        HasDuplicates = preview.Any(r => r.PossibleDuplicate && !r.AlreadyImported);
+        var beforeOpening = preview.Count(r => r.BeforeOpening && !r.AlreadyImported);
+        WarningText = _translator["BankCsv_Warning"] + (beforeOpening == 0 ? "" : Environment.NewLine + _translator.Format("Import_BeforeOpening", beforeOpening));
+        _previewStale = false; HasPreview = true; UpdateCount();
+    }
+    private void PublishBankPage()
+    {
+        BankLines.Clear(); foreach (var line in _bankLines.Skip(_bankPage * 25).Take(25)) BankLines.Add(line);
+        OnPropertyChanged(nameof(BankPageText));
+    }
+    /// <summary>Moves through the complete original bank preview without changing financial or source data.</summary>
+    [RelayCommand] private void BankNext() { if (!IsBusy && (_bankPage + 1) * 25 < _bankLines.Count) { _bankPage++; PublishBankPage(); } }
+    /// <summary>Returns to an earlier original preview page without selecting a different source.</summary>
+    [RelayCommand] private void BankPrevious() { if (!IsBusy && _bankPage > 0) { _bankPage--; PublishBankPage(); } }
+}

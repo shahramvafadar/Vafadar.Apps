@@ -18,6 +18,22 @@ internal sealed class MauiDataFileInteraction(AppLockService appLock) : IDataFil
     /// <inheritdoc />
     public Task<bool> ConfirmExportAsync(string reason) => appLock.ConfirmAsync(reason);
     /// <inheritdoc />
+    public async Task<PickedDataFile?> PickBankCsvAsync(string title, Core.DataFiles.BankCsvEncoding encoding)
+    {
+        var file = await FilePicker.Default.PickAsync(new PickOptions { PickerTitle = title });
+        if (file is null) return null;
+        await using var source = await file.OpenReadAsync(); using var buffer = new MemoryStream();
+        var bytes = new byte[65536]; int count;
+        while ((count = await source.ReadAsync(bytes)) != 0)
+        {
+            if (buffer.Length + count > Core.DataFiles.StarMoneyCsv.MaximumBytes) throw new FormatException("The bank file exceeds its safe bound.");
+            await buffer.WriteAsync(bytes.AsMemory(0, count));
+        }
+        // Strict decoding can be synchronous even when the platform stream completed asynchronously.
+        var content = buffer.ToArray();
+        return new(file.FileName, await Task.Run(() => Core.DataFiles.StarMoneyCsv.Decode(content, encoding)));
+    }
+    /// <inheritdoc />
     public async Task ShareCsvAsync(string fileName, string title, string content)
     {
         if (Path.GetFileName(fileName) != fileName || !fileName.StartsWith("zanance-", StringComparison.Ordinal)

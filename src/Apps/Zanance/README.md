@@ -435,3 +435,11 @@ Import/export includes a separate reviewed calendar-year/account packet for an a
 blank tax-review columns, separate currency/kind totals and optional stored document copies. Notes/documents
 start off. The explicitly shared ZIP is readable; it is not a tax calculation, original invoice archive, filing
 or Zanance backup. Basic CSV remains separate. See [scope, official sources and verification](docs/enhancements/2026-10-commercial-release/13-accountant-export-delivery.md).
+
+
+## Documented bank-software CSV (D-297)
+
+Import/export offers an explicit StarMoney Giro preset for reviewed posted ordinary income/expenses, with
+encoding selection, complete preview, native confirmation, source-id replay protection and durable Undo.
+Transfers/refunds/reversals/pending/splits are excluded; this is not universal bank support or a live connection.
+[Exact format, privacy, limits and verification](docs/enhancements/2026-10-commercial-release/14-bank-csv-delivery.md) records the qualified boundary.

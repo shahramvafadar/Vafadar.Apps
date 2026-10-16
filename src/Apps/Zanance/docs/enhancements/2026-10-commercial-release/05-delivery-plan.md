@@ -1830,3 +1830,12 @@ recorded in13-accountant-export-delivery.md. No tax calculation/filing/expert or
 Proceed with the approved German-first bank-file import batch using10-bank-import-research.md, without
 replaying completed billing, sync, household, cipher, Home or accountant verification. Retain native Mac/store
 work across unavailable external environments. New provider/spending/publication gates stay explicit.
+
+
+## D-297 qualified preset and remaining ready sequence
+
+Complete one documented German bank-software cashflow preset through picker/review/native confirmation/atomic
+import/reimport/durable Undo, retaining actual mixed-bank revision gaps in IMP-01/BANK-01. Do not invent headers
+or widen into unapproved IMP-02 merely to mark the research complete. Continue approved independent local AI
+consent/minimal-data/credit accounting and FX provenance/cache/manual fallback across unavailable customer-bank
+corpora and external provider gates. No replay of successful unrelated sync/billing/cipher/accountant checks.

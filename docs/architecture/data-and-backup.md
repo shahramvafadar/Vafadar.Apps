@@ -2274,3 +2274,14 @@ documents without retaining blobs. Recomputed hashes reject a stale review befor
 confirmation/share never holds the SQL reader. No schema/model change or new engine is required. The archive
 is bounded at128 MiB; documents preserve the existing5 MiB per-item bound. Detailed format, further safety
 bounds and local cache lifetime are in Zanance commercial-release/13-accountant-export-delivery.md.
+
+
+### Reviewed bank-software CSV writer (D-297)
+
+StarMoneyCsv is a pure bounded parser; the native adapter reads only the explicit selected encoding/file.
+ImportReadReview captures one coherent deferred SQLite snapshot of original accounts/categories/entries/import
+journals plus exact configured file/cached rights. Binding serializes original proposals with explicit AOT
+metadata. ImportReviewedAsync revalidates those sources using the existing writer-loaded inputs inside its
+transaction before original ledger/aggregate/Undo logic. No schema/compiled-model change or extra writer SQL
+pass. Stable source/account/software ids prevent replay without overwriting edits; equal date/amount alone is
+a warning. No transfer/refund/split relation, bank authenticity or encryption is inferred by the preset.

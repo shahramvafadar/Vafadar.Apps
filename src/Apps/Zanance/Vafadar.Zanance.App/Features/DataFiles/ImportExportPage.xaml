@@ -47,7 +47,48 @@
                     <VerticalStackLayout Spacing="8">
                         <Label Text="{v:Translate Import_Intro}" Style="{StaticResource Secondary}" />
                         <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Import_Pick}" Command="{Binding PickCommand}" IsEnabled="{Binding IsNotBusy}" />
+                        <VerticalStackLayout x:Name="BankPresetChooser" Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="{v:Translate BankCsv_Title}" Style="{StaticResource FieldLabel}" />
+                            <v:HelpButton Grid.Column="1" Topic="BankCsv" />
+                        </Grid>
+                        <Label Text="{v:Translate BankCsv_Encoding}" Style="{StaticResource Secondary}" />
+                        <Picker ItemsSource="{Binding BankEncodings}" SelectedIndex="{Binding BankEncodingIndex}"
+                                MinimumHeightRequest="44" SemanticProperties.Description="{v:Translate BankCsv_Encoding}" />
+                        <p:WrappingAction Text="{v:Translate BankCsv_Pick}" Command="{Binding PickStarMoneyCommand}" IsEnabled="{Binding IsNotBusy}" />
+                        </VerticalStackLayout>
                         <Label Text="{Binding FileName}" FontAttributes="Bold" IsVisible="{Binding FileName, Converter={StaticResource IsNotNullConverter}}" />
+
+                        <VerticalStackLayout x:Name="BankPresetReview" IsVisible="{Binding IsBankPreset}" Spacing="8">
+                            <Label Text="{v:Translate Import_Account}" Style="{StaticResource FieldLabel}" />
+                            <Picker ItemsSource="{Binding Accounts}" SelectedItem="{Binding Account}" MinimumHeightRequest="44"
+                                    SemanticProperties.Description="{v:Translate Import_Account}" />
+                            <Label Text="{Binding BankSourceText}" />
+                            <Label Text="{v:Translate BankCsv_Warning}" Style="{StaticResource Secondary}" />
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                <Label Text="{v:Translate BankCsv_Acknowledge}" VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding BankAcknowledged}" OnColor="{DynamicResource Primary}"
+                                        SemanticProperties.Description="{v:Translate BankCsv_Acknowledge}" />
+                            </Grid>
+                            <p:WrappingAction Text="{v:Translate Import_PreviewButton}" Command="{Binding PreviewCommand}" />
+                            <VerticalStackLayout Spacing="8" IsVisible="{Binding HasPreview}">
+                                <Label Text="{Binding BankPageText}" FontAttributes="Bold" />
+                                <VerticalStackLayout BindableLayout.ItemsSource="{Binding BankLines}" Spacing="8">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="local:BankCsvLine">
+                                            <Border Style="{StaticResource Card}">
+                                                <VerticalStackLayout Spacing="4">
+                                                    <Label Text="{Binding Heading}" FontAttributes="Bold" />
+                                                    <Label Text="{Binding Detail}" />
+                                                </VerticalStackLayout>
+                                            </Border>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                                <p:WrappingAction Text="{v:Translate BankCsv_Previous}" Command="{Binding BankPreviousCommand}" />
+                                <p:WrappingAction Text="{v:Translate BankCsv_Next}" Command="{Binding BankNextCommand}" />
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
 
                         <!-- Mapping for other files: nothing ambiguous is guessed (IO-08) -->
                         <VerticalStackLayout Spacing="0" IsVisible="{Binding ShowMapping}">

@@ -2274,3 +2274,13 @@ explain linked transfer identities, readable ZIP disclosure and originals/struct
 Revalidate exact source/file/rights/form/lock across native awaits. No financial writes, private service rows
 or security credentials enter the packet. Keep basic CSV/portable backup separate and current test limits
 inactive; future countries have no promised date. One coherent reader and bounded streaming avoid blob piles.
+
+
+### Documented bank CSV imports (D-297)
+
+Qualify each exact bank/software export revision from original documentation and fictitious fixtures. Never
+infer transfer/refund/reversal/pending/split relationships from signs or ambiguous text. The StarMoney Giro
+preset requires explicit posted ordinary-cashflow acknowledgment, exact source/account currency, full row
+review, native confirmation and writer-transaction revalidation. Reject unsupported revisions and relationships;
+keep generic CSV explicit and durable Undo unchanged. Stable software ids are source/account scoped, not bank
+authentication. No bank login or new provider is authorized by file-import research.

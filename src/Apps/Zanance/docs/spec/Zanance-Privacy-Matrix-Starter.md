@@ -890,3 +890,12 @@ explained. The ZIP is readable, not an encrypted backup or original archive. Fai
 are removed; offered files older than24 hours are removed on the next export, with at most16 retained files.
 Recipient copies remain independent. Private security/service credentials are excluded; no SDK/permission
 or automatic upload is added. Source: commercial-release/13-accountant-export-delivery.md.
+
+
+## D-297 bank-software CSV
+
+Explicit local file selection only, with encoding and financial review/consent. No bank credentials, SDK,
+connection or permission. Source account participates in local idempotence; only its ending is displayed and
+its field is not saved to ledger. Original remittance/payee/comments can carry sensitive identifiers and are
+shown before import. Stored entries/Undo retain existing encrypted-profile and portable-export privacy rules.
+Original selected file is never changed/deleted.

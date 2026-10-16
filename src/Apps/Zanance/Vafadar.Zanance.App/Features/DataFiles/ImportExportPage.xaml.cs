@@ -10,6 +10,9 @@ public partial class ImportExportPage : ContentPage
         BindingContext = _viewModel = viewModel;
     }
 
+    /// <inheritdoc />
+    protected override void OnDisappearing() { _viewModel.RetireBankReview(); base.OnDisappearing(); }
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();

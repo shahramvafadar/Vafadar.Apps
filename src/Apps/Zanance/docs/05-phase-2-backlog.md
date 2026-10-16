@@ -1989,3 +1989,11 @@ All six translations and the individually named future country queue are include
 Implementation, official-source qualifications, bounds, failures and final evidence are recorded in
 `enhancements/2026-10-commercial-release/13-accountant-export-delivery.md`. Expert calculations and physical/iOS/
 public release acceptance remain separate. No new database schema, migration, SDK or network permission is added.
+
+
+## D-297 bank CSV execution
+
+One documented StarMoney Giro ordinary-cashflow preset is integrated end-to-end with the original preview,
+atomic writer and durable Undo. This advances ZCR-IMP-01, not universal bank coverage. Exact current retail-bank
+schemas, mixed relationship imports and other market formats remain open; original-source research continues
+Germany, USA, then approved targets. IMP-02 formats/live connections remain separate. See enhancements/2026-10-commercial-release/14-bank-csv-delivery.md.

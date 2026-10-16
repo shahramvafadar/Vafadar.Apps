@@ -6020,3 +6020,15 @@ All six translations and the individually named future country queue are include
 Implementation, official-source qualifications, bounds, failures and final evidence are recorded in
 `enhancements/2026-10-commercial-release/13-accountant-export-delivery.md`. Expert calculations and physical/iOS/
 public release acceptance remain separate. No new database schema, migration, SDK or network permission is added.
+
+
+## D-297 Documented StarMoney Giro cashflow import
+
+Deliver the approved German-first CSV batch through the actual existing importer rather than guess current
+consumer-bank schemas. Original StarMoney help/field specification supports this explicit ordinary-cashflow
+variant; complete transfer/refund/reversal/split and pending-status semantics remain unqualified and are refused
+or explicitly excluded by per-import consent. Select encoding/account, inspect every row, confirm natively,
+revalidate exact source history/rights/proposed entries in the writer, preserve idempotence and durable Undo.
+No schema, migration, SDK or permission change. Current commercial test limits remain inactive. Broader IMP-01
+and BANK-01 stay In progress; OFX/QIF/CAMT remain outside approved implementation. Exact original sources,
+focused verification, retained negative evidence and native/package qualification: enhancements/2026-10-commercial-release/14-bank-csv-delivery.md.

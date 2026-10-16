@@ -64,3 +64,38 @@ Austria, Belgium, France, Luxembourg, Monaco, Netherlands, Switzerland, United K
 Canada and Australia, while Germany and USA lead the sequence. This is extensible and independent
 of UI language. The later separate Iran variant remains separate. No country/bank roadmap date,
 unverified-format support or live-connection availability is promised.
+
+
+## D-297 original-format follow-through, checked 2026-10-17
+
+The earlier absence of a qualified preset is historical. One explicit StarMoney Giro ordinary-cashflow
+variant is now implemented; [exact delivery and gates](14-bank-csv-delivery.md) records original help/PDF,
+required fields, refused split/storno revisions and user-confirmed posted-status/relationship boundary.
+This does not establish the current direct CSV contract for every institution below.
+
+| Current original evidence | Verified consequence, not broader support |
+| --- | --- |
+| [Haspa consumer export glossary](https://www.haspa.de/de/home/login-online-banking/uebersicht-glossare.html?lightbox=%2Fde%2Fhome%2Fonlinebanking%2Fumsaetze%2Fumsaetze%2Fglossar-umsaetze%3Fn%3Dtrue) | Distinct CSV-MT940, CSV-CAMT and XML/other export options; the label CAMT does not prove one interchangeable CSV schema |
+| [SSKM format retirement](https://www.sskm.de/fi/home/produkte/banking-und-software/weitere-services/formatabkuendigung.html?n=true) | Current format revisions matter; this is not authority to implement out-of-scope CAMT/MT940 |
+| [ING business FAQ](https://www.ing.de/business/geschaeftskonto/faq/) | Business-account CSV availability only; not a retail Giro field specification |
+| [N26 statement/export instructions](https://support.n26.com/en-eu/payments-transfers-and-withdrawals/balance-and-limits/how-to-get-bank-statement-n26) | Web-app CSV and separate Spaces exports exist; exact stable ids/column/relationship semantics still need original specimens |
+
+### USA discovery and format qualification
+
+The [Federal Reserve large-bank table](https://www.federalreserve.gov/releases/lbr/current/default.htm)
+is dated30 June2026 and was posted2 October2026. Consolidated-asset ranks1-4 are JPMorgan Chase, Bank of America,
+Citibank and Wells Fargo; U.S.Bank/Capital One/PNC are also discovery candidates. This is an asset-ranked shortlist,
+not a ranking of active retail users or permission to scrape accounts. No current retail-use count is inferred.
+
+[Wells Fargo's original Account Activity FAQ](https://www.wellsfargo.com/help/online-banking/activity-faqs/)
+describes per-account comma-delimited downloads with explicit date ranges. It separately explains pending vs
+posted balances/amounts. It does not establish all exact CSV columns, stable transaction ids, currency and
+relationship rules needed by a safe preset; do not copy a third-party converter's schema as bank authority.
+Chase commercial documentation was found but is not substituted for its consumer product. Bank of America,
+Citibank and the other candidates still require current original product/format qualification.
+
+After Germany/USA, retain Austria, Belgium, France, Liechtenstein, Luxembourg, Monaco, Netherlands, Switzerland,
+United Kingdom, Ireland, Canada and Australia in the individually extensible research queue without ETA. Iran
+remains the later separate variant. Exact customer-export corpora are an external evidence gap, not a reason
+to replay successful unrelated engineering or advertise unsupported formats. Live-bank provider/licence/cost,
+consent and payment/account linking remain separate owner/provider gates.

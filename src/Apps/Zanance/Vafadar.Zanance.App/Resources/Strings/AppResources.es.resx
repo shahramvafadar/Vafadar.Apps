@@ -7744,4 +7744,67 @@ Identidad: {2}</value>
   <data name="Tax_PageTitle" xml:space="preserve">
     <value>Paquete contable</value>
   </data>
+  <data name="BankCsv_Title" xml:space="preserve">
+    <value>CSV de software bancario alemán</value>
+  </data>
+  <data name="BankCsv_Pick" xml:space="preserve">
+    <value>Elegir CSV de movimientos de StarMoney Giro</value>
+  </data>
+  <data name="BankCsv_Encoding" xml:space="preserve">
+    <value>Codificación del próximo archivo (elige la del original)</value>
+  </data>
+  <data name="BankCsv_Acknowledge" xml:space="preserve">
+    <value>He revisado todas las filas: solo ingresos y gastos ordinarios contabilizados en la cuenta y moneda elegidas. Sin transferencias, reembolsos, anulaciones, pagos pendientes ni totales divididos.</value>
+  </data>
+  <data name="BankCsv_Warning" xml:space="preserve">
+    <value>Esta plantilla corresponde a los campos documentados de StarMoney Giro, no a cualquier CSV bancario. El archivo no tiene un campo verificado de estado contabilizado. Confirma tú los movimientos ordinarios contabilizados; un signo positivo no demuestra un ingreso. Exporta otras relaciones por separado y regístralas o vincúlalas expresamente en Zanance. Toda fila inválida bloquea esta importación.</value>
+  </data>
+  <data name="BankCsv_Source" xml:space="preserve">
+    <value>Destino revisado: «{0}» · {1}. La cuenta de origen termina en «{2}». Confirma que es la misma; la aplicación no cambia la moneda.</value>
+  </data>
+  <data name="BankCsv_Page" xml:space="preserve">
+    <value>Página de revisión {0} de {1} · {2} filas de origen en total</value>
+  </data>
+  <data name="BankCsv_Row" xml:space="preserve">
+    <value>Fila de origen {0} · {1} · {2}</value>
+  </data>
+  <data name="BankCsv_Detail" xml:space="preserve">
+    <value>Texto: «{0}»
+Contraparte: «{1}»
+Referencias: «{2}»
+Estado: {3}</value>
+  </data>
+  <data name="BankCsv_Known" xml:space="preserve">
+    <value>Identidad de origen existente: omitir; nunca sobrescribir ediciones posteriores.</value>
+  </data>
+  <data name="BankCsv_Duplicate" xml:space="preserve">
+    <value>Posible coincidencia de fecha e importe: revísala; la similitud no demuestra un duplicado.</value>
+  </data>
+  <data name="BankCsv_New" xml:space="preserve">
+    <value>Fila nueva, pendiente de tu confirmación expresa del movimiento.</value>
+  </data>
+  <data name="BankCsv_Previous" xml:space="preserve">
+    <value>Filas de origen anteriores</value>
+  </data>
+  <data name="BankCsv_Next" xml:space="preserve">
+    <value>Siguientes filas de origen</value>
+  </data>
+  <data name="BankCsv_Confirm" xml:space="preserve">
+    <value>¿Registrar {0} movimientos ordinarios revisados en «{1}» ({2})? Es una importación local, no un pago bancario. Confirma la cuenta, el estado contabilizado y que excluiste transferencias, reembolsos y anulaciones.</value>
+  </data>
+  <data name="BankCsv_Failed" xml:space="preserve">
+    <value>El archivo original, la codificación, la cuenta o los datos revisados no son compatibles o han cambiado. No se importó nada nuevo. Elige el export original correcto de movimientos Giro y revisa de nuevo. Límites: 8 MiB y 10.000 registros; no se recorta nada sin avisar.</value>
+  </data>
+  <data name="Import_Error_BankRelationship" xml:space="preserve">
+    <value>La división, cancelación o reversión requiere una relación financiera explícita.</value>
+  </data>
+  <data name="Help_BankCsv_Title" xml:space="preserve">
+    <value>Archivos originales de software bancario alemán</value>
+  </data>
+  <data name="Help_BankCsv_Text" xml:space="preserve">
+    <value>Elige el export documentado de StarMoney Giro y su codificación real. Comprueba cuenta, moneda, todas las páginas y el carácter ordinario contabilizado antes de aceptar. La plantilla no deduce transferencias, reembolsos, anulaciones, divisiones ni estados pendientes. Usa un export separado de ingresos/gastos ordinarios contabilizados; las relaciones no compatibles bloquean toda la importación. Los identificadores del software detectan la misma historia y cuenta; fecha e importe iguales son solo un aviso. Nunca se sobrescriben cambios posteriores. Otro historial o archivo editado puede tener otros identificadores y exige revisión. Las notas conservan referencias de pago, fecha valor, categorías y comentarios originales. No se guarda el campo IBAN de origen, pero los textos pueden contener referencias sensibles. Solo se permiten cuentas de efectivo, corrientes y de ahorro. Se mantienen las decisiones de solapamiento de agregados y la reversión duradera. Sin inicio de sesión bancario, red, lectura de PDF, XML/CAMT, OFX ni QIF.</value>
+  </data>
+  <data name="Help_BankCsv_Example" xml:space="preserve">
+    <value>Ejemplo: importa una nómina contabilizada y un gasto de tarjeta del mismo historial Giro en EUR. Excluye transferencias y reembolsos del comercio; regístralos como transferencia expresa o reembolso vinculado, no como ingreso nuevo. Reimportar los mismos identificadores no crea otra copia.</value>
+  </data>
 </root>

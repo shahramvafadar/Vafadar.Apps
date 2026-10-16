@@ -897,3 +897,12 @@ and failed unpublished files are removed; offered files expire after24 hours on 
 recipients control their own copies. This is independent of encrypted automatic backup and optional-password
 portable backup. No new SDK, permission, background upload or financial write is introduced. See the D-296
 delivery record for source, coherent-read/stale-review guards and actual local/native evidence.
+
+
+## D-297 explicit local bank CSV source
+
+The user picks an original local file with explicit UTF-8/Windows-1252. No login/network/provider/new permission.
+In-memory reviewed data includes source identity, exact dates/currencies/amounts/payee/remittance; only the
+source ending is shown and source IBAN field is not copied to the ledger. Original free text can still contain
+identifiers. Imported entries and Undo metadata follow existing profile-local encrypted storage/backup rules.
+Original files are read only. No automatic payment, upload, raw-file retention or device-security export.
