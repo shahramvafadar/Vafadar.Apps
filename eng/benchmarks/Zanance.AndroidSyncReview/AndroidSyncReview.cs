@@ -21,7 +21,11 @@ namespace Vafadar.Zanance.App;
 /// <summary>Renders the actual page/flow/native adapters over protected fictional data, without service credentials or HTTP.</summary>
 internal static partial class AndroidSyncReview
 {
-#if SYNC_PUBLIC_REVIEW
+#if HOUSEHOLD_SNAPSHOT_REVIEW
+    internal const string Package = "pro.vafadar.zanance.householdsnapshotreview";
+#elif HOUSEHOLD_FILE_REVIEW
+    internal const string Package = "pro.vafadar.zanance.androidhouseholdfiles";
+#elif SYNC_PUBLIC_REVIEW
     internal const string Package = "pro.vafadar.zanance.androidsyncpublicreview";
 #elif SYNC_NETWORK_REVIEW
     internal const string Package = "pro.vafadar.zanance.androidsyncnetwork";
@@ -39,7 +43,7 @@ internal static partial class AndroidSyncReview
     internal const string Package = "pro.vafadar.zanance.androidsyncreview";
     private static readonly bool LinkedGroup = false;
 #endif
-#if !SYNC_PUBLIC_REVIEW
+#if !SYNC_PUBLIC_REVIEW && !HOUSEHOLD_FILE_REVIEW
 #if SYNC_ATTACHMENT_REVIEW
     private static readonly bool AttachmentReview = true;
 #else
@@ -55,7 +59,11 @@ internal static partial class AndroidSyncReview
 
     internal static async Task RunAsync(App app, IServiceProvider services, string run, bool resume, string? fromLanguage = null)
     {
-#if SYNC_PUBLIC_REVIEW
+#if HOUSEHOLD_SNAPSHOT_REVIEW
+        await AndroidHouseholdSnapshotReview.RunAsync(app, run);
+#elif HOUSEHOLD_FILE_REVIEW
+        await AndroidHouseholdFileReview.RunAsync(app, services, run, resume);
+#elif SYNC_PUBLIC_REVIEW
         await RunPublicServiceAsync(app, services, run, resume);
 #else
         var checkpoint = "identity";

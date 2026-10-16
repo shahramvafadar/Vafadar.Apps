@@ -2061,3 +2061,176 @@ Run original captured ledger/recurrence/forecast/category calculations off the w
 keep translation, observable/native mutation and layout on it. Recheck lifetime after each worker
 return and original rights/file authority before final publication. Responsiveness and total latency
 remain separate measurements; never omit original work or weaken encryption for a timing target.
+
+### Completed initial-generation native rollback (D-294 in progress)
+
+A completed selected initial candidate can hold an interrupted ordinary writer's hot journal. Under captured
+drained ownership, allow existing-only keyed ReadWrite native recovery, then apply query_only for verification.
+Unselected candidates and independent rollback snapshots stay ReadOnly. Never delete sidecars manually, create
+a missing file, replace keys or bypass integrity checks to make startup succeed. Same-file native process-loss
+evidence does not establish restored-generation/mobile/power-loss acceptance or complete household delivery.
+
+### Explicit household source selection (D-294 in progress)
+
+Household creation copies only explicit selected account/history/file choices into a separate protected ledger;
+future personal-source edits are independent. Recheck an immutable source review, retain original keys/setup and
+pending consent before financial writes, and commit the complete validated copy/receipt atomically. Pending copy
+blocks remote binding; only explicit current consent can replace an unapplied request in an empty unpublished
+draft. Never silently drop pending selected history or overwrite a completed copy. Omit unrelated personal data,
+settings/security/queues and private counterpart identities. Preserve only the selected transfer side's exact
+units through neutral excluded endpoints; never guess FX or financial relationships. Selected free text/files
+remain explicit shared content. Actual app UI/profile and mobile adoption remain part of the unfinished batch.
+
+### Verified household local writes (D-294 in progress)
+
+Household financial writes require the current complete pinned membership, approved exact device, existing current
+key, authenticated host observation and active deadline under the actual writer. Inactive commercial limits never
+bypass this independent authority. Original stores, tracked EF and raw SQL remain covered by fixed native guards;
+validate their exact definitions, not migration history alone. Only internal reviewed seed/feed row keys may arm
+maintenance. Recheck clock/file/transaction authority at commit, including borrowed outer transactions. Device-only
+settings updates stay separate. A scoped authenticated 404 hides revocation/deletion and closes local write authority
+just like 403/410; retain original pending ciphertext, operation/cutoff and financial bytes. Read-only members with
+no own proposals consume verified incoming finance through a local-only receipt, never a financial write request.
+Native independent-role checks do not replace main UI/profile, Android, recovery or whole-household acceptance.
+
+### Original household application setup (D-294 in progress)
+
+Household app setup captures the actual financial generation before identity HTTP and rechecks it inside the first
+native draft writer. A profile switch cannot adopt that action. New setup requires a separate empty destination;
+source copying retains its separate immutable selection/consent path. Persist exact original signed creation,
+invitation and claim bytes before HTTP mutation. Private invitation capabilities stay in bounded protected profile
+intent, never URLs, portable preferences or logs. A retained administrative proposal needs explicit Resume; a new
+role/revocation action cannot silently complete a different operation. Pending device lists are current-owner scoped
+and every client approval rechecks both signatures plus independently confirmed full device fingerprint. App manual
+and foreground household finance must use the encrypted coordinator; never fall back to readable personal HTTP.
+Initial empty verified history is valid only when local membership version is zero and no unexplained proof exists.
+Main native UI/device, optional household recovery/cost/history and whole-batch gates still require completion.
+
+### Explicit household costs and financial contract (D-294 in progress)
+
+Keep delivered personal v1 finance unchanged and negotiate household v2 explicitly; no readable personal fallback
+or silent omission of household cost history. Cost contacts are financial labels, never service authority. Save
+complete cost/shares and validate actual links/refunds/repayments at the final native transaction boundary,
+including original ledger edits. Never post a second cash entry, infer equal shares, joint ownership or an exchange
+rate. Preserve historical archived shares; refuse new allocations to archived contacts. Currency changes clear
+numeric drafts while live translation retains their original input culture. Debug layout cannot fabricate member
+write authority; distinguish actual native editor Save from read-only own-window geometry and Android acceptance.
+
+### Original household recovery authority (D-294 in progress)
+
+Household kits are optional, independently password-encrypted exports, separate from identity credentials, local
+database keys and portable financial backups. Never remember their passwords. Enrollment/replacement/removal and
+owner-device recovery rotate both owner key roles; removal of a delegated owner device also retires its known root.
+Keep root/device/recovery epoch purposes and key components disjoint. Only approved devices of the current owning
+identity may receive private-root delegation. Persist original ciphertext pages before upload, close native readers
+before HTTP and promote only a complete finite archive with the exact membership transaction. All-devices-lost
+recovery requires actual owning identity/session, the registered kit, new-root acceptance and new-device possession.
+Retire old owner devices atomically without reposting money. A kit cannot recover unsent data or a lost local database
+key. Previously downloaded keys/history cannot be recalled. Native Save success and fresh unlocked/profile activation
+are separate steps: a picker may background/lock the app, and a Share dismissal is never Save acceptance. Keep stale
+intents and original keys for explicit continuation; do not replace them to make a scenario pass. Native helper evidence
+does not complete main UI, Android, iOS, phone, retention or whole-household acceptance.
+
+### Household source handoff and original conflict review (D-294 in progress)
+
+Source selection is explicit and starts unchecked; history and files are separate opt-ins. Retire a reviewed
+snapshot when choices change. Recheck it with the maintenance factory under drained profile ownership directly
+before the separate destination opens; never deadlock an ordinary factory under that lease. A catalogue change
+retires prior foreground access: capture fresh access only for the same source generation. A process-memory
+review belongs to one exact destination/peer/identity and cannot be silently replaced. Fresh destination consent
+precedes durable copy intent and atomic seeding; pending memory/copy receipts block publication. After process
+loss, re-review the source and choose the same existing destination with its original keys. Cancellation does not
+delete durable intent or money. Reuse the original complete-group/inline-file conflict page for household review,
+but hide and refuse all readable personal session/connection operations on household bindings. Refusal/layout
+evidence does not establish authenticated conflict decisions, main Android or complete household acceptance.
+
+
+### Pending household devices and retired owner roots (D-294 in progress)
+
+An unrelated roster update must preserve unaccepted original claims and accepted-member self-enrolled devices.
+Revoke only formerly accepted members/devices actually removed, their dependent pending devices, or old owner
+requests during recovery. A replacement signing root expires its unaccepted old invitations; accepted members
+and independent self-enrollment proofs remain separate. Current/sole-device removal uses a separate lifecycle;
+this page refuses it. Removing a delegated owner device rotates both owner key roles, current epoch and an enabled
+recovery archive, with exact retained lost-response continuation. Display the verified current owner root rather
+than the initial pin. Explicit invitation Finish checks its original protected operation/frame digest and current
+owner authority without needing clipboard data or republishing old signatures. Native financial comparisons must
+use exact reviewed financial columns; session/membership observation journals legitimately change during discovery.
+
+
+### Existing-member devices and complete local adoption (D-294 in progress)
+
+Public signed device-access packages are distinct from one-use member invitations and private-kit recovery anchors.
+Require the actual same accepted identity, independently compared complete owner fingerprint and separate empty captured
+profile; retain the original device/setup/proof before HTTP. A fresh session proves that same key/operation, never a
+replacement or implicit approval. Keep the original service admission proof; pending session reattachment grants no
+financial/key resource. Verify the exact signed checkpoint and later explicit approval through the whole old history.
+
+Verified membership/keys alone do not enable financial writes. Require the exact financial household binding; a
+non-creating receiver additionally needs its first successful atomic financial apply. Preserve receive-only startup
+across a cut after connection commit, never upload local defaults. Only an authenticated exact connected first receiver
+with no own proposals/resolutions may use a local empty-cutoff receipt to consume original verified incoming finance.
+The incoming writer's fixed verified maintenance scope does not become a reusable ordinary write grant. Keep native
+counterexamples/whole-database rollback evidence, original files/keys/round and separate cold acceptance.
+
+
+### Original household ownership and protected schema publication (D-294 in progress)
+
+A new-root signature alone is not target-identity consent: the previous owner could generate that root. Require the
+original approved target device's exact staged acceptance even through generic membership publication. Bind original
+offer/target/fingerprint/former role/checkpoint/deadline, persist each literal private candidate/public signature before
+HTTP and resume the same bytes after lost acknowledgement. Terminal receipt observation by a departed source is
+metadata-only private possession bound to its actual session, never a financial/key grant. Explicit finish may retire
+only this exact authenticated unused candidate; committed keys/history and unrelated uncertain proposals stay put.
+
+An existing selected encrypted generation must apply its supported pending application migrations under drained
+ownership before publication. Integrity/key verification alone does not upgrade schema. Refuse unknown/future
+migration history; preserve original keys/files and covered retry after failure. New native status layouts are not
+full transfer-prompt, mobile or whole-household acceptance.
+
+
+### Ownership target reception is not financial write authority (D-294 in progress)
+
+A verified ciphertext replica is not the actual applied financial ledger. Before target ownership-key generation,
+consume the exact original root-signed target offer's frozen financial horizon through the original incoming pipeline.
+Require current target device/identity/root/membership/cursor/head/deadline and accepted read authority, no own rows,
+resolutions/conflicts or unresolved outgoing ciphertext. Revalidate inside the final receiving transaction. Ordinary
+rotation writes remain refused; no generic rotation bypass, outgoing proposal or reusable maintenance scope is granted.
+A retained original candidate resumes without replacing keys; a clean exact already-applied horizon creates no new
+empty financial round. Retained former-owner Viewer/Editor roles never receive the new private ownership root.
+
+### Household permanent privacy intent (D-294 in progress)
+
+Owner deletion retains its exact literal declaration in an existing protected local slot before HTTP. Pending or accepted intent blocks ordinary and incoming financial writers; uncertain transport errors never release it. Only the actual service's locked proof of unaccepted expiry permits explicit local finish. Preserve local money, keys, user pause and unrelated operations. Accepted access revocation is permanent, while current physical retirement may need replay after an old database restore.
+
+The service publishes immutable minimal deletion intent outside its database snapshot before effects, checks it on every room authorization and replays exact-room cleanup. Keep its latest private marker set with database restoration; an old snapshot alone is not current privacy authority. Actor/time/unsigned activity are service-reported, and public signatures must match independently verified original membership/publication history. This is not identity erasure, local-copy recall or power-loss acceptance. Main mobile, lifecycle composition and whole D-294 remain open.
+Household expiry does not remove owner privacy rights. Deletion review uses only actual owner/device-scoped opaque checkpoints and an existing independently trusted private root; no financial refresh, epoch grant or new root adoption is permitted merely to delete. Same-key session reattachment may support status/privacy metadata during retention, while every financial/key resource and writer remains separately refused. Recheck the exact pre-confirmation checkpoint before retaining original consent. Historical root anchoring for this purpose must never become roster/epoch/financial authority. Local-household opt-in is a nonsecret technical setting that must survive private backup/restart/restore and remain impossible to activate on public/production hosting.
+
+Independent review identities must match both generated package manifest and compiled AppInfo before launch.
+MAUI Windows manifest incremental inputs can retain an older ApplicationId; invalidate only the owned generated
+manifest on an actual identity mismatch, never reset another installation or bypass the pre-startup guard.
+The household Android identity override is Debug-only. Keep real native confirmations, protected screen flags,
+original fixture keys/data and completed stages; public diagnostic observations are not Release/phone acceptance.
+
+Household client proposal deadlines reserve one minute below the actual service maximum to tolerate ordinary
+positive clock skew; never loosen the service ceiling, renew existing literal consent or change a device clock.
+An explicit RemoteRefused observation overrides a last positive grant snapshot for sync/audit UI and commands.
+Lifecycle metadata never renews that financial authority. Hide obsolete future automatic-retention deadlines
+after permanent deletion, while retaining the original receipt and downloaded local data. The independent main
+Windows/Android Debug privacy lifecycle is verified; broader household and final Release acceptance remain open.
+
+Warm household HTTP403/404/410 failures must publish any already recorded local RemoteRefused barrier before
+input is re-enabled. Do not retain a stale positive Sync/admin/audit hint, retry HTTP, refresh owner metadata
+for authority or discard original finance/keys/pending ciphertext. A failed local refusal read closes the old
+presentation hint; retired profile state cannot publish onto another context. Last verified ownership is separate
+from current device write authority and existing owner-only privacy metadata rights.
+
+Protected portable exports omit trusted device-only household/sync rows before native allocation; do not first
+copy arbitrary ciphertext history into a portable image and only then clear it. Keep all financial rows/schema,
+original source history and existing output bounds. The scoped standard native authorizer applies only to exact
+exporter-owned destination INSERTs on a fresh application-owned connection with no prior authorizer. Release it
+before subsequent work and on failure; external packages never select omitted tables. Enforce destination page
+bounds before growth, retain native failure codes/evidence, and never fork the cipher or create plaintext disk
+snapshots to compact history.
+
+Native Windows dialog sizing keeps original controls/results/commands and grows button minimum targets to44 units only while that interaction is outstanding. Always detach its popup observer. Native prompts must inherit the actual page language direction; a ContentDialog footer resource alone does not cover MAUI Flyouts/subclass styles. Preserve genuine native Cancel/confirmation and own-window-only review; layout never manufactures protocol consent or financial writes.

@@ -73,8 +73,7 @@ public sealed partial class PersonalSyncStore
 
     private static async Task<SyncRecord> ReadReviewRecordAsync(ZananceDbContext db, SyncRecordKey key, CancellationToken ct)
     {
-        var table = SyncSchema.Manifest.Tables.SingleOrDefault(row => row.Name == key.Table)
-            ?? throw new InvalidDataException("The personal review relationship is unavailable.");
+        var table = SyncSchema.Describe(key.Table);
         if (!SyncGraphValidation.ValidIdentity(table, key)) throw new InvalidDataException("The personal review relationship identity is invalid.");
         // Hash the actual logical live attachment under this same snapshot; its content is not a missing row.
         if (table.Name == "Attachments") return await ReadReviewAttachmentRecordAsync(db, key, ct);

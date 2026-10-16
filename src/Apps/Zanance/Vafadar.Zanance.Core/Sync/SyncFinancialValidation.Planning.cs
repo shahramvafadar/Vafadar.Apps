@@ -8,14 +8,14 @@ namespace Vafadar.Zanance.Core.Sync;
 public static partial class SyncFinancialValidation
 {
     /// <summary>Checks units and complete planning relationships that SQLite scalar constraints cannot express.</summary>
-    private static IReadOnlyList<SyncGraphIssue> ValidatePlanning(SyncRecord[] live)
+    private static IReadOnlyList<SyncGraphIssue> ValidatePlanning(SyncRecord[] live, SyncSchemaManifest? contract = null)
     {
         var issues = new List<SyncGraphIssue>();
         var accounts = Rows("Accounts").ToDictionary(Id);
         var goals = Rows("Goals").ToDictionary(Id);
         var settings = Rows("Settings").FirstOrDefault();
         var monthStart = settings is null ? 1 : checked((int)Number(settings.Values!.Value, "MonthStartDay"));
-        var currencyColumns = SyncSchema.Manifest.Tables.ToDictionary(table => table.Name,
+        var currencyColumns = (contract ?? SyncSchema.Manifest).Tables.ToDictionary(table => table.Name,
             table => table.Columns.Where(column => column.Name.EndsWith("CurrencyCode", StringComparison.Ordinal) ||
                 column.Name == "EssentialEstimateCurrency").Select(column => column.Name).ToArray());
         var balanceOwners = new Dictionary<Guid, SyncRecordKey>();

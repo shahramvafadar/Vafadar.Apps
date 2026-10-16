@@ -10,6 +10,8 @@ internal sealed class SyncBindingRow
     public int Id { get; set; } = 1;
     /// <summary>Actual authenticated personal space.</summary>
     public Guid ProfileId { get; set; }
+    /// <summary>Explicit protected household versus original readable personal publication; restore scrubs this authority with the binding.</summary>
+    public ProfileSynchronizationKind TransportKind { get; set; }
     /// <summary>Actual revocable service device.</summary>
     public Guid DeviceId { get; set; }
     /// <summary>Actual authenticated identity; changing sign-in cannot silently reuse another owner's queue.</summary>

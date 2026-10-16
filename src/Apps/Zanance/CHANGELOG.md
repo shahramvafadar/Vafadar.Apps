@@ -6,6 +6,25 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Read shared financial history without keeping every old version in memory; preserve existing money and review decisions.
+
+- Close shared sync, administration and history actions immediately after confirmed device-access refusal, while keeping downloaded finances, keys and unfinished work.
+### Local household sharing (D-294)
+
+- Keep an existing household profile out of empty-profile setup and recovery after a refused reconnect.
+
+- Keep one damaged private deletion marker from blocking unrelated household cleanup; preserve the original damaged entry for investigation.
+
+- Add explicit two-sided ownership transfer with independently created new-owner keys, original-request continuation and former-owner leave/read/edit choices. Main Android/Windows transfer, receipt adoption, cold key/data reopening and final local dialog checks are recorded; physical/iOS/public release acceptance remains separate.
+- Receive the future owner's already published household changes before preparing ownership keys, while keeping normal writes and outgoing changes blocked during the transfer.
+- Apply later database schema upgrades before opening an existing encrypted profile; keep the original file and keys when startup must retry.
+- Keep household finances separate and use encrypted shared synchronization with explicit device approval and member roles.
+- Continue the same creation or member request after a lost response, and prevent a profile switch from adopting an old setup action.
+- Offer a separate optional password-encrypted household recovery file. Actual local-service/device recovery preserves shared history and replaces prior owner devices; main Android Debug Save/Cancel/Pick, wrong-password refusal, recovery and cold financial equality are checked; physical/iOS/public release acceptance remains separate.
+- Removing or replacing a household recovery kit rotates both ownership keys instead of only hiding its service record. Previously downloaded copies cannot be recalled.
+- The household feature is still under development; complete native interface, recovery and cost-sharing acceptance are pending.
+
+
 ### Added - Isolated service deployment
 
 - Run the personal service on the current machine with isolated containers, verified TLS, persistent private storage and a complete backup/restore operation.
@@ -1715,3 +1734,28 @@ and external gates remain open. Main stays plaintext.
   with no repeat of the 648 initially successful application cases; this is not a fresh full-suite invocation.
 - The APK builder selects the personal-sync network edition explicitly and rejects a conflicting offline request.
   Whole-batch final native/UI/APK checks and publication are still in progress.
+
+In progress, D-294 household batch: explicit actual costs, refunds, exact person shares and private repayments now have protected persistence and encrypted two-client synchronization. The original form keeps cost attribution/private advances separate from cash balances and saves complete reviewed facts without a duplicate cash posting. Six-language Windows form/runtime checks are scoped evidence; Android integration and the complete household delivery are still unfinished.
+
+In progress, D-294 household batch: choose personal accounts, optional history and files for an explicitly reviewed
+copy into a separate profile. Pending copies block publication, including after a process stop; original keys are
+retained. Source-page Windows checks pass; complete destination/mobile delivery remains in progress. Shared
+financial review reuses the original conflict and attachment views with the personal publication path disabled.
+
+
+Household work in progress: owners can review pending and approved device fingerprints, approve a separately confirmed device and remove another device safely. Removing an owner device changes future owner keys. Original pending invitations can be finished after a key change without retaining their clipboard text. This does not complete household/mobile/release acceptance.
+
+
+Household work in progress: existing members can prepare a separately approved device from a public access package. Pending devices retain their original request through a restart or fresh sign-in. Financial editing waits for complete initial data reception, including after an interrupted connection. Main Android approval/recovery and the remaining household lifecycle are not yet accepted.
+
+Household work in progress: the owner can request permanent remote-space deletion with a retained original request and outcome. The local financial profile and downloaded copies stay separate. Service deadlines and bounded activity pages explain expiry, retention and cleanup. Service/process-loss checks passed; the full household UI/mobile delivery remains unfinished.
+Household work in progress: local service restoration preserves permanent deletion and its local feature setting. Owner deletion during the retained period no longer requires reading financial data first; downloaded local data stays separate. Full household confirmation/mobile acceptance is not yet complete.
+
+### Household privacy lifecycle refinement (D-294 in progress)
+
+- Household security requests leave room for small clock differences without extending the service's validity limits.
+- Explicit remote access refusal disables financial synchronization and remote audit fetch, while owner status and privacy actions remain available.
+- Confirmed remote deletion preserves downloaded local money and the original receipt across app restarts. Deleted status hides irrelevant future automatic-retention deadlines.
+- The complete household delivery and final Release qualification remain in progress.
+
+D-294 local household delivery is complete at the recorded Windows/emulator/local-service scopes, including compact protected portable copies, bounded historical financial reads and growing native confirmation/cancel targets with correct Persian prompt direction. The current signed Android package and precise3753-case test union are recorded in docs/enhancements/2026-10-commercial-release/11-household-delivery.md; earlier in-progress entries retain chronology and do not claim public release.

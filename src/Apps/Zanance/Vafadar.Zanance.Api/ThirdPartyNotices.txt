@@ -28,6 +28,13 @@ OR MODIFICATIONS.
 
 ASP.NET Core Identity, Data Protection, authentication and EF Core
 Copyright (c) .NET Foundation and Contributors
+
+jose-jwt 5.3.0 (standard JOSE implementation)
+Source: https://github.com/dvsekhvalnov/jose-jwt/tree/v5.3.0
+License: https://github.com/dvsekhvalnov/jose-jwt/blob/v5.3.0/LICENSE
+Copyright (c) 2014-2024 dvsekhvalnov
+
+The MIT terms below apply to the named .NET and jose-jwt components only.
 MIT License
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

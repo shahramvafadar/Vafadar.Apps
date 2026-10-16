@@ -4,18 +4,21 @@ using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Plans;
 using Vafadar.Zanance.Core.Goals;
+using Vafadar.Zanance.Data.Sharing;
 
 namespace Vafadar.Zanance.Data.Commerce;
 
 /// <summary>
 /// Holds the SQLite write transaction across read/count/check/save. Independent services must compete for the same
-/// database writer rather than each using an unrelated in-memory semaphore. Inactive checks add no quota
-/// transaction; callers may retain their existing atomic operation by explicitly requesting its transaction.
+/// database writer rather than each using an unrelated in-memory semaphore. Inactive commercial checks never
+/// disable the actual household membership/expiry boundary; callers can retain their existing outer transaction.
 /// </summary>
 internal sealed class CommercialWriteTransaction : IAsyncDisposable
 {
     private readonly CommercialFileAccess _access;
     private readonly IDbContextTransaction? _ownedTransaction;
+    private readonly HouseholdLocalWritePermission? _household;
+    private readonly IDisposable _runtimeScope;
     private ResourceSelection? _accountSelection;
     private ResourceSelection? _planSelection;
     private StoredResourceSelection? _storedAccounts;
@@ -29,10 +32,12 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
     /// <summary>Gets this writer's exact verified context, never a newly selected profile.</summary>
     internal CapabilityContext? Context => _access.Context;
 
-    private CommercialWriteTransaction(CommercialFileAccess access, IDbContextTransaction? transaction)
+    private CommercialWriteTransaction(ZananceDbContext db, CommercialFileAccess access, IDbContextTransaction? transaction, HouseholdLocalWritePermission? household)
     {
         _access = access;
         _ownedTransaction = transaction;
+        _household = household;
+        _runtimeScope = db.ArmHouseholdEditor(household);
         _accountSelection = access.AccountSelection;
         _planSelection = access.PlanSelection;
         _goalSelection = access.GoalSelection;
@@ -40,6 +45,14 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
 
     /// <summary>Gets whether a write requires commercial checks.</summary>
     public bool Enforced => _access.Enforced;
+
+    /// <summary>Cost writers require the actual verified household, independently of inactive test-build commercial limits.</summary>
+    internal void DemandHousehold()
+    {
+        EnsureCurrent();
+        if (_household is null) throw new HouseholdWriteRejectedException(HouseholdWriteBlockReason.Unverified);
+        _household.Demand();
+    }
 
     /// <summary>Gets the exact financial counting scope from this write's already-bound access snapshot.</summary>
     public QuotaScope FinancialScope => _access.Context is { } context
@@ -54,14 +67,16 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
         ArgumentNullException.ThrowIfNull(source);
         var path = DatabaseFileIdentity.ConfiguredPath(db);
         var access = new CommercialFileAccess(source, path);
-        if (!access.Enforced && !requireTransaction) return new(access, null);
         // Microsoft.Data.Sqlite's serializable writer transaction protects count and save across factories/processes.
         // The independent-provider contention test verifies this boundary with the actual SQLite implementation.
         var transaction = db.Database.CurrentTransaction is null
             ? await db.Database.BeginTransactionAsync(cancellationToken) : null;
-        var result = new CommercialWriteTransaction(access, transaction);
+        CommercialWriteTransaction? result = null;
         try
         {
+            var household = await HouseholdJournal.CaptureLocalWritePermissionAsync(db, db.WorkClock, cancellationToken);
+            household?.Demand();
+            result = new CommercialWriteTransaction(db, access, transaction, household);
             result.EnsureCurrent();
             // D-141: read the explicit choices only after acquiring this actual file's writer. Stored rows override
             // cached fallback choices; a selection never modifies or grants the source's verified paid facts.
@@ -80,7 +95,8 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
         }
         catch
         {
-            await result.DisposeAsync();
+            if (result is not null) await result.DisposeAsync();
+            else if (transaction is not null) await transaction.DisposeAsync();
             throw;
         }
     }
@@ -368,6 +384,7 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
     public void EnsureCurrent()
     {
         _access.EnsureCurrent();
+        _household?.Demand();
     }
 
     /// <summary>Commits only the transaction this guard owns; existing callers keep their outer atomic operation.</summary>
@@ -380,6 +397,7 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
     /// <summary>Disposes an owned uncommitted transaction, rolling back rejected or failed writes.</summary>
     public async ValueTask DisposeAsync()
     {
+        _runtimeScope.Dispose();
         if (_ownedTransaction is not null) await _ownedTransaction.DisposeAsync();
     }
 }

@@ -18,6 +18,7 @@ param(
     [ValidateSet('Release', 'Debug')] [string]$Configuration = 'Release',
     [string]$Project = 'src\Apps\Zanance\Vafadar.Zanance.App\Vafadar.Zanance.App.csproj',
     [string]$Output = (Join-Path $PSScriptRoot '..\..\artifacts\android'),
+    [ValidateSet('', 'pro.vafadar.zanance.householdlifecycle')] [string]$ReviewApplicationId = '',
     [switch]$PersonalSync,
     [switch]$Offline)
 $ErrorActionPreference = 'Stop'
@@ -31,6 +32,10 @@ if ($Offline -and $Configuration -ne 'Release') {
 # Explicit edition properties outrank ambient environment/MSBuild defaults. In particular, -Offline
 # must not inherit a network-enabled sync edition from a previous local build.
 $cloudProperties = @('-p:ZanancePersonalSyncEnabled=' + $PersonalSync.IsPresent.ToString().ToLowerInvariant())
+if ($ReviewApplicationId) {
+    if ($Configuration -ne 'Debug') { throw 'Independent review identity is Debug-only; Release keeps the permanent product identity.' }
+    $cloudProperties += ('-p:ApplicationId=' + $ReviewApplicationId)
+}
 if ($Offline) {
     $cloudProperties += @('-p:MicrosoftEntraClientId=', '-p:GoogleOAuthClientIdAndroid=',
         '-p:GoogleOAuthClientIdIos=', '-p:GoogleOAuthClientIdWindows=')

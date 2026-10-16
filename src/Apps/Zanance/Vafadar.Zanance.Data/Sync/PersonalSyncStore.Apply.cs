@@ -10,7 +10,7 @@ namespace Vafadar.Zanance.Data.Sync;
 public sealed partial class PersonalSyncStore
 {
     /// <summary>Applies the complete staged graph with current local edits, or retains explicit conflicts without a financial write.</summary>
-    internal async Task<bool> ApplyFeedAsync(SyncRoundWork work, CancellationToken ct, bool refreshReviewOnly = false)
+    internal async Task<bool> ApplyFeedAsync(SyncRoundWork work, CancellationToken ct, bool refreshReviewOnly = false, Guid? ownershipReception = null)
     {
         var applied = false;
         await InRoundAsync(work, async (db, round, binding) =>
@@ -19,7 +19,8 @@ public sealed partial class PersonalSyncStore
                 throw new InvalidOperationException("The personal feed is incomplete.");
             await ReconcileAttachmentCaptureAsync(db, round.Cutoff, ct);
             await ReconcileGroupCaptureAsync(db, round.Cutoff, ct);
-            var local = await ReadFinancialAsync(db, ct);
+            var contract = SyncSchema.ForScope(binding.TransportKind == ProfileSynchronizationKind.Household);
+            var local = await ReadFinancialAsync(db, ct, contract);
             var known = await db.Set<SyncKnownRow>().ToDictionaryAsync(row => new SyncRecordKey(row.TableName, row.RecordKey), ct);
             var incoming = (await db.Set<SyncIncomingRow>().AsNoTracking().ToArrayAsync(ct))
                 .ToDictionary(row => new SyncRecordKey(row.TableName, row.RecordKey), row => new SyncRecord(new(row.TableName, row.RecordKey), row.Version, SyncRowCodec.Parse(row.Body)));
@@ -65,7 +66,7 @@ public sealed partial class PersonalSyncStore
             var graph = projected.Select(row => new SyncRecord(row.Key, 0, row.Value)).ToArray();
             if (conflicts.Count == 0)
             {
-                foreach (var issue in SyncFinancialValidation.Validate(local.Select(row => new SyncRecord(row.Key, 0, row.Value)).ToArray(), graph))
+                foreach (var issue in SyncFinancialValidation.Validate(local.Select(row => new SyncRecord(row.Key, 0, row.Value)).ToArray(), graph, contract: contract))
                 {
                     var key = boundaries.ContainsKey(issue.Record) ? issue.Record
                         : issue.RelatedRecord is { } related && boundaries.ContainsKey(related) ? related : issue.Record;
@@ -87,20 +88,20 @@ public sealed partial class PersonalSyncStore
                     conflicts[key] = new(proposals.GetValueOrDefault(key) ?? original.Proposal, baselines.GetValueOrDefault(key), currentRemote,
                         ["GroupId"], "LinkedGroupReview", LinkedGroup: group);
             }
-            foreach (var group in proposals.Values.GroupBy(proposal => SyncConflictGrouping.Group(proposal.Record, proposal.Values) ??
+            foreach (var group in proposals.Values.GroupBy(proposal => (Family: SyncConflictGrouping.Family(proposal.Record), Id: SyncConflictGrouping.Group(proposal.Record, proposal.Values) ??
                 SyncConflictGrouping.Group(proposal.Record, remoteGraph.GetValueOrDefault(proposal.Record)?.Values) ??
-                SyncConflictGrouping.Group(proposal.Record, baselines.GetValueOrDefault(proposal.Record)?.Values)).Where(group => group.Key is not null))
+                SyncConflictGrouping.Group(proposal.Record, baselines.GetValueOrDefault(proposal.Record)?.Values))).Where(group => group.Key.Id is not null))
             {
                 var allApproved = !refreshReviewOnly && group.All(proposal => reviews.TryGetValue(proposal.Record, out var choice) &&
                     choice.UseProposal is not null && !conflicts.ContainsKey(proposal.Record)) &&
                     group.Select(proposal => reviews[proposal.Record].UseProposal).Distinct().Count() == 1;
                 if (!allApproved && group.Any(proposal => !Same(proposal.Values, baselines[proposal.Record].Values)) &&
                     (group.Any(proposal => !Same(remoteGraph.GetValueOrDefault(proposal.Record)?.Values, baselines[proposal.Record].Values)) ||
-                        remoteGraph.Values.Any(record => SyncConflictGrouping.Group(record.Record, record.Values) == group.Key && !proposals.ContainsKey(record.Record))) &&
+                        remoteGraph.Values.Any(record => SyncConflictGrouping.Family(record.Record) == group.Key.Family && SyncConflictGrouping.Group(record.Record, record.Values) == group.Key.Id && !proposals.ContainsKey(record.Record))) &&
                     group.Any(proposal => !Same(proposal.Values, remoteGraph.GetValueOrDefault(proposal.Record)?.Values)))
                     foreach (var proposal in group)
                         conflicts[proposal.Record] = new(proposal, baselines[proposal.Record], remoteGraph.GetValueOrDefault(proposal.Record),
-                            ["GroupId"], "LinkedGroupReview", LinkedGroup: group.Key);
+                            ["GroupId"], "LinkedGroupReview", LinkedGroup: group.Key.Id);
             }
             if (conflicts.Count != 0)
             {
@@ -125,9 +126,16 @@ public sealed partial class PersonalSyncStore
             var settingsKey = new SyncRecordKey("Settings", "[]");
             if (local.ContainsKey(settingsKey) && projected.GetValueOrDefault(settingsKey) is null)
                 throw new InvalidDataException("Personal sync cannot remove the local settings singleton.");
+            if (ownershipReception is { } operation)
+            {
+                if (binding.TransportKind != ProfileSynchronizationKind.Household || outgoing.Count != 0 || reviews.Count != 0 || pending.Length != 0) throw new InvalidOperationException("Ownership reception cannot publish local work.");
+                await Sharing.HouseholdJournal.RequireOwnershipReceptionAsync(db, operation, ct, through);
+            }
             binding.Applying = true; await db.SaveChangesAsync(ct);
             await db.Database.ExecuteSqlRawAsync("PRAGMA defer_foreign_keys=ON;", ct);
             var changed = projected.Where(row => !Same(local.GetValueOrDefault(row.Key), row.Value)).ToArray();
+            using var householdApply = binding.TransportKind == ProfileSynchronizationKind.Household
+                ? db.ArmVerifiedHouseholdMaintenance(changed.Select(row => row.Key).ToHashSet()) : null;
             var indexes = await DropSwapIndexesAsync(db, changed.Select(row => row.Key.Table).ToHashSet(StringComparer.Ordinal), ct);
             foreach (var (key, selected) in changed.Where(row => row.Value is not null))
                 await WriteFinancialAsync(db, key, selected!.Value, local.GetValueOrDefault(key), ct);
@@ -138,7 +146,7 @@ public sealed partial class PersonalSyncStore
             await using (var check = Command(db, "PRAGMA foreign_key_check;"))
             await using (var failures = await check.ExecuteReaderAsync(ct))
                 if (await failures.ReadAsync(ct)) throw new InvalidDataException("The complete personal graph violates an original foreign key.");
-            var actual = await ReadFinancialAsync(db, ct);
+            var actual = await ReadFinancialAsync(db, ct, contract);
             if (projected.Count(row => row.Value is not null) != actual.Count || projected.Any(row => !Same(row.Value, actual.GetValueOrDefault(row.Key))))
                 throw new InvalidDataException("The applied personal graph does not match its complete reviewed projection.");
             foreach (var (key, remote) in incoming)
@@ -163,10 +171,10 @@ public sealed partial class PersonalSyncStore
         return applied;
     }
 
-    private static async Task<Dictionary<SyncRecordKey, JsonElement?>> ReadFinancialAsync(ZananceDbContext db, CancellationToken ct)
+    internal static async Task<Dictionary<SyncRecordKey, JsonElement?>> ReadFinancialAsync(ZananceDbContext db, CancellationToken ct, SyncSchemaManifest? contract = null)
     {
         var result = new Dictionary<SyncRecordKey, JsonElement?>(); long bytes = 0;
-        foreach (var table in SyncSchema.Manifest.Tables)
+        foreach (var table in (contract ?? SyncSchema.Manifest).Tables)
         {
             await using var command = Command(db, SyncTriggerSql.ReadLiveExisting(table));
             await using var reader = await command.ExecuteReaderAsync(ct);
@@ -181,14 +189,20 @@ public sealed partial class PersonalSyncStore
         return result;
     }
 
-    private async Task WriteFinancialAsync(ZananceDbContext db, SyncRecordKey key, JsonElement selected, JsonElement? before, CancellationToken ct)
+    private Task WriteFinancialAsync(ZananceDbContext db, SyncRecordKey key, JsonElement selected, JsonElement? before, CancellationToken ct) =>
+        WriteProjectedFinancialAsync(db, key, selected, before, (time ?? TimeProvider.System).GetUtcNow(),
+            (hash, length, token) => VerifiedBlobAsync(db, hash, length, token), ct);
+
+    /// <summary>The original parameterized writer also installs an explicitly reviewed isolated household seed; blob bytes remain caller-owned and verified.</summary>
+    internal static async Task WriteProjectedFinancialAsync(ZananceDbContext db, SyncRecordKey key, JsonElement selected, JsonElement? before,
+        DateTimeOffset timestamp, Func<string, long, CancellationToken, Task<byte[]>> readBlob, CancellationToken ct)
     {
-        var table = SyncSchema.Manifest.Tables.Single(table => table.Name == key.Table);
+        var table = SyncSchema.Describe(key.Table);
         if (table.Singleton && before is null)
         {
             // Original defaults construct all device-only columns; the peer updates only its reviewed allowlist.
             db.Settings.Add(new ZananceSettings()); await db.SaveChangesAsync(ct);
-            before = (await ReadFinancialAsync(db, ct)).GetValueOrDefault(key);
+            before = (await ReadFinancialAsync(db, ct, SyncSchema.ForScope(key.Table.StartsWith("Household", StringComparison.Ordinal)))).GetValueOrDefault(key);
         }
         var columns = table.Columns.Where(column => before is null || !table.PrimaryKey.Contains(column.Name)).ToArray();
         var updates = new List<string>(); var names = new List<string>(); var values = new List<string>(); var secrets = new List<byte[]>();
@@ -204,7 +218,7 @@ public sealed partial class PersonalSyncStore
                 if (cell.ValueKind == JsonValueKind.Null) value = null;
                 else if (column.Kind == "blob")
                 {
-                    var content = await VerifiedBlobAsync(db, cell.GetProperty("sha256").GetString()!, cell.GetProperty("length").GetInt64(), ct);
+                    var content = await readBlob(cell.GetProperty("sha256").GetString()!, cell.GetProperty("length").GetInt64(), ct);
                     secrets.Add(content); value = content;
                 }
                 else value = column.Kind switch { "integer" or "ticks" => cell.GetInt64(), "real" => cell.GetDouble(), _ => (object?)cell.GetString() };
@@ -212,7 +226,7 @@ public sealed partial class PersonalSyncStore
             }
             if (await HasAuditColumnAsync(db, table.Name, ct))
             {
-                Parameter(command, "$audit", (time ?? TimeProvider.System).GetUtcNow().UtcTicks);
+                Parameter(command, "$audit", timestamp.UtcTicks);
                 names.Add("\"UpdatedAt\""); values.Add("$audit"); updates.Add("\"UpdatedAt\"=$audit");
             }
             command.CommandText = before is null ? "INSERT INTO " + Quote(table.Name) + "(" + string.Join(',', names) + ") VALUES(" + string.Join(',', values) + ");"
@@ -224,7 +238,7 @@ public sealed partial class PersonalSyncStore
 
     private static async Task DeleteFinancialAsync(ZananceDbContext db, SyncRecordKey key, CancellationToken ct)
     {
-        var table = SyncSchema.Manifest.Tables.Single(table => table.Name == key.Table);
+        var table = SyncSchema.Describe(key.Table);
         if (table.Singleton) throw new InvalidDataException("Personal sync cannot remove a local settings singleton.");
         await using var command = Command(db, "");
         command.CommandText = "DELETE FROM " + Quote(table.Name) + " WHERE " + KeyPredicate(command, table, key) + ";";
@@ -234,7 +248,7 @@ public sealed partial class PersonalSyncStore
     {
         if (tombstone)
         { db.Add(new SyncOutboxRow { TableName = key.Table, RecordKey = key.Key }); return; }
-        var table = SyncSchema.Manifest.Tables.Single(table => table.Name == key.Table);
+        var table = SyncSchema.Describe(key.Table);
         // Explicit result aliases avoid depending on SQLite's expression-derived column captions.
         await using var command = Command(db, "INSERT INTO \"SyncOutbox\"(\"TableName\",\"RecordKey\",\"Body\") SELECT $table,record_key,record_body FROM (" +
             SyncTriggerSql.ReadLiveExistingAliased(table) + ") WHERE record_key=$key;");
@@ -261,7 +275,7 @@ public sealed partial class PersonalSyncStore
     private static async Task<string[]> DropSwapIndexesAsync(ZananceDbContext db, HashSet<string> changed, CancellationToken ct)
     {
         var sqls = new List<string>();
-        foreach (var table in SyncSchema.Manifest.Tables.Where(table => changed.Contains(table.Name)))
+        foreach (var table in Core.Sharing.HouseholdFinancialSchema.Manifest.Tables.Where(table => changed.Contains(table.Name)))
             foreach (var unique in table.UniqueKeys)
             {
                 var name = "IX_" + table.Name + "_" + string.Join('_', unique.Columns);
@@ -286,14 +300,14 @@ public sealed partial class PersonalSyncStore
     private static Dictionary<string, int> DependencyOrder()
     {
         var result = new Dictionary<string, int>(StringComparer.Ordinal); var visiting = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var table in SyncSchema.Manifest.Tables) Visit(table);
+        foreach (var table in Core.Sharing.HouseholdFinancialSchema.Manifest.Tables) Visit(table);
         return result;
         int Visit(SyncTable table)
         {
             if (result.TryGetValue(table.Name, out var rank)) return rank;
             if (!visiting.Add(table.Name)) throw new InvalidDataException("The original financial dependency order is cyclic.");
             rank = table.ForeignKeys.Where(key => key.PrincipalTable != table.Name)
-                .Select(key => Visit(SyncSchema.Manifest.Tables.Single(parent => parent.Name == key.PrincipalTable)) + 1).DefaultIfEmpty(0).Max();
+                .Select(key => Visit(SyncSchema.Describe(key.PrincipalTable)) + 1).DefaultIfEmpty(0).Max();
             visiting.Remove(table.Name); result[table.Name] = rank; return rank;
         }
     }

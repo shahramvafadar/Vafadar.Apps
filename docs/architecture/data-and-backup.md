@@ -2111,3 +2111,138 @@ Default bootstrap callers still verify every profile themselves. Recovery/histor
 old publication callbacks through ResumeForGenerationAsync; selected startup does not recurse into
 session adoption. Retained cold restored state and later preferences are verified as well.
 See [D-290 evidence](../../src/Apps/Zanance/docs/quality/selected-startup-verification.md).
+
+### In-progress D-294 completed-candidate hot-journal recovery
+
+A selected initial generation at durable Completed may contain an ordinary writer's hot rollback journal after
+process loss. Verification opens only that captured existing candidate with its retained key and ReadWrite under
+drained ownership, permits SQLite's native recovery, then applies query_only before integrity verification.
+Unselected candidates and independent rollback snapshots remain ReadOnly; never create a missing file, remove
+its sidecars manually or generate a replacement key. Same-file native interruption/continuation evidence and
+remaining restored-generation/mobile limits are recorded in the active household delivery document. This does
+not qualify physical power loss or finish the household app.
+
+### In-progress D-294 explicit household source projection
+
+Selected account/history/file choices are immutable, read from one actual protected source and rechecked before
+copying into a distinct empty unpublished protected owner draft. Projection uses the shipped complete financial
+validator and original parameterized writer. Only selected dependencies enter; personal settings/security/queues
+and unrelated finance never do. Private transfer endpoints become neutral excluded accounts in the selected
+side's exact units, with fresh ids and no private account identity/currency/balance. Source data is unchanged.
+
+A device-only pending copy receipt precedes financial writes. Finance/readback/completed receipt commit together;
+after interruption, original setup/keys and pending consent remain while partial finance rolls back. Pending copy
+blocks remote binding. Replacement needs explicit current pending-operation consent in an empty unpublished draft;
+completed copies are immutable. Existing portable scrubbing removes the entire household binding, including its
+four new nullable receipt fields. This does not yet qualify main profile/UI adoption or mobile native behavior.
+
+### In-progress D-294 native household write authority
+
+Migration20261016022511_HouseholdVerifiedLocalWriteAuthority adds five private binding fields for authenticated
+observation time, host expiry, retention, required rotation and remote refusal, with a regenerated compiled model.
+The existing nine private tables are still scrubbed from portable copies. No signed membership or paid fact is
+manufactured from these cache fields: the writer verifies the original pinned chain, exact device and existing
+current epoch under its actual transaction. Store commercial transactions and tracked EF share this independent
+check. Frozen63 native INSERT/UPDATE/DELETE guards cover all21 financial contract tables, including unarmed raw SQL.
+Settings UPDATE compares actual financial wire columns; device-only preferences/status remain writable. The runtime
+requires each exact original guard definition before arming an editor or reviewed seed/feed scope. Its callback
+performs no SQL/key import, and a private transaction interceptor rechecks permission at final native commit even
+when an outer transaction outlives its editor scope. Read-only receive uses only already-validated exact row keys.
+
+The household coordinator records authenticated checkpoint metadata after current signed membership/grants and
+closes write authority on scoped403/404/410. Removed scopes intentionally return404. Pending original ciphertext,
+operation/cutoff and local financial changes remain retained. Accepted viewers or grace-period members with zero own
+proposals produce a local-only receipt and can apply verified incoming finance without opening a server write round.
+Actual native role/expiry/revocation evidence and remaining app/recovery limits are in the active D-294 delivery log.
+
+### Original household workspace (D-294 in progress)
+
+HouseholdWorkspace composes actual journal, standard-signed membership and the original financial coordinator for
+app creation/admission/member actions. Persist exact signed administrative bytes before HTTP; the retained proposal's
+own encrypted recipient grant preserves initial epoch material across lost acknowledgement. Initial history may be
+empty only for version0 without unexplained local proofs. Capture the actual generation before identity HTTP and
+check it inside the new empty-draft transaction. A switched profile must not adopt even a same-user setup action.
+
+The existing8192-byte secret-frame bound also covers only two fixed private invitation/claim intent purposes; no
+schema/table or wire-financial contract changes are introduced. Portable scrubbing still drops all nine private
+household tables. Native admin completion rechecks its exact operation under the same writer before removing intent.
+Owner-only pending public proofs contain no capability. Approvals independently verify both signed consent messages
+and the confirmed joint device fingerprint. Manual/foreground actual binding dispatch selects encrypted household
+finance; readable personal sync is never a household fallback. UI/layout/mobile/recovery/cost integration is still
+unfinished and must remain distinct from original protected workspace/foreground qualification.
+
+Explicit household session reconnection proves the same retained private device key against the actual new/current
+session id. The service's original approved-device/member check is authoritative even before a recipient has its
+first local chain; a pending response cannot grant access. Verified scoped refusal closes writes. Current native
+workspace composition checks the existing approved session without changing membership, keys or financial horizon;
+new interactive-login/native UI acceptance remains separate. Main owner grace display avoids active-only invitation
+queries and disables administration without hiding retained read-only role information.
+
+### Household actual-cost contract and atomicity (D-294 in progress)
+
+Household financial v2 is the explicit25-table/324-column union of delivered personal v1 and four mapped cost/
+contact/allocation/repayment tables. Personal v1 stays byte-canonical compatible and never gains readable access
+to household cost records. New SQL capture is transport-kind1 only;12 new immutable native financial guards join
+original63. Exact guard definitions are checked before granting editor/maintenance scope. Whole cost/share/link
+validation runs after compound SQL and before actual commit, including original ledger edits/outer transactions.
+Maintenance can apply only already reviewed row keys and preserves historical archived allocations. Financial
+cost rows remain user data in portable snapshots; local household keys, membership/session bindings and queues
+remain scrubbed. A detached portable history does not grant household writes or silently connect to personal sync.
+
+The original native store uses captured-generation content review, exact minor units and original domain rules;
+it never posts cash entries. See the active household delivery document for retained native/cost/editor/cold and
+corrected own-window evidence, historical fixture protocol boundaries and still-unfinished whole-batch gates.
+
+
+Protected startup schema upgrades (D-294): key/integrity verification of an existing selected encrypted generation
+is insufficient when a later application model adds tables. ProtectedProfileStorage.ResolveAsync applies only the
+supported pending EF migration suffix through the generation's existing-only unpooled keyed connection, under its
+original drained host lease, before session publication. Unknown/future history fails closed; no plaintext factory,
+new generation key or fixture reset is used. Ordinary isolated SQLite callback tests do not establish native cipher
+acceptance; the retained original native app file/key supplied the observed upgrade/continuation evidence.
+
+
+Household ownership reception (D-294): original target-specific signed consent and the frozen financial horizon gate
+a distinct incoming-only coordinator path. The final actual receiver revalidates its protected operation/device/root/
+checkpoint/deadline under the writer before finite incoming row maintenance. Empty local receipts grant no outgoing
+ciphertext or ordinary write privilege while rotation is pending. Clean exact already-applied horizons are idempotent;
+retained original candidate/root/epoch/signatures are reused after a response loss, rather than recaptured or regenerated.
+
+D-294 household privacy lifecycle uses original protected local metadata slots and additive service migration HouseholdLifecycleRetirement. The original signed owner declaration is persisted before HTTP and blocks ordinary and incoming writers in the actual native transaction; it does not remove local money/key files. Only an authenticated unaccepted-expired review permits explicit exact-intent finish. The owner-only receipt keeps its original operation/hash/UTC while physical-retirement state remains a current observation.
+
+The service-private household-deletions directory is newer anti-resurrection authority, separate from PostgreSQL snapshots. Every actual room scope checks it before authorizing ciphertext/key/audit access. The bounded room-locked worker purges exact child ciphertext/grants/recovery/roster/audit and retains a minimal room tombstone. Real process exit47 and pg_dump/pg_restore qualification preserved original financial data and unrelated room access. A latest deletion marker set must be retained when restoring an old full service snapshot; integration into eng/hosting/operate.py is implemented and the subsequent independent full compose/snapshot lifecycle passed; main destructive-dialog/mobile and identity-erasure acceptance remain outstanding. Do not claim restoring an old private-volume snapshot alone preserves later deletions. Identity erasure and invalid-marker worker isolation/operational diagnostics still need complete lifecycle review. Native flush/rename calls are not power-loss guarantees.
+The operational historical-restore code now requires the exact latest stopped original private source and immutably merges its deletion markers before target startup. A freshly built capability-labeled service image passed the offline merge as nonroot with read-only root, no network and no capabilities; Windows idempotence, conflicting-original preservation and invalid-directory refusal also passed. Source/target markers are validated without transferring any key/mail/financial payload. Legacy images cannot serve newer permanent deletion authority. This closes the missing code path, but the full new compose/snapshot operation has not been executed; do not mark that operational acceptance or identity-erasure composition complete. No successful D-293 full hosting qualification was repeated merely for these targeted command cases.
+D-294 full operational privacy restoration now passed on independent source/target Docker stacks, including actual complete snapshots before/after deletion, live-source refusal, latest-marker merge before old snapshot startup, permanent deleted-room receipt/retirement and unchanged independent-room ciphertext decryption. A concrete configuration omission was fixed: local-household opt-in now survives backup/restart/restore without enabling it publicly. No successful old D-293 hosting stage was rerun.
+
+A separate real retained-owner counterexample showed that the original deletion workspace depended on forbidden financial refresh. The same original protected files/keys and31-day retained service state now complete owner-only opaque privacy checkpoint review, same-device fresh-session possession, original consent and retirement without fetching financial data or epoch grants. Actual financial/key resources and normal local writes stayed refused; every local financial column was preserved. The existing historical trusted root signs only this exact privacy request; newer opaque checkpoint metadata never grants roster/epoch/financial authority, and a missing/different root fails closed. Main confirmation refetches the exact reviewed checkpoint before persisting consent. No schema, dependency or resource changed, so no model regeneration or unchanged resource/layout matrix was repeated. New strict main Windows/Android builds passed; whole D-294 and native destructive-dialog/mobile acceptance remain unfinished. See11-household-delivery.md for current fixtures and exact scope.
+
+### D-294 protected household history
+
+HouseholdLocalFinancialReferences stores only private derived original row positions, never historical plaintext
+bodies or a new financial identity. Its migration also indexes HouseholdLocalEvents by opaque RecordId/Cursor.
+Complete replay writes/verifies those positions under the same native rollback transaction. Inconsistent existing
+positions fail closed; missing positions are rebuilt only from complete verified originals. The portable policy
+scrubs this table before its parent packets. An in-memory protocol replica retains its historical API; a protected
+replica uses FinancialFeedAsync, bounded baseline reads and original durable preparation. Every archive read still
+reauthenticates source signatures, roster cutoffs, envelopes and exact framing/row identities. Indexed predecessor
+lookups use only already verified cursors. No open reader, private handle or native transaction crosses HTTP.
+Original ciphertext remains retained; no full-history compaction or change of the existing256MiB portable bound
+is claimed. Exact scoped native evidence is in11-household-delivery.md.
+
+### Compact private-history exclusion before protected export allocation
+
+The application policy now exposes a finite trusted EmptyRowTables set. On the factory-owned protected connection,
+SqlCipherPortableSnapshot installs a temporary standard SQLite authorizer around SQLCipher's unchanged export:
+IGNORE applies only to INSERT into those exact tables in its fresh memory alias. It never suppresses source writes,
+other destination tables or schema/trigger/index creation. The native authorizer is released before later policy
+sanitization and on every failure; this opt-in requires the application-owned connection with no prior authorizer.
+No package controls the table set. Destination max_page_count enforces the existing portable-image budget before
+native allocation. Plain SQLite snapshot sanitization/compaction and non-opting callers keep their original path.
+All source ciphertext/history remains authoritative; no unproven event pruning or native fork is introduced.
+
+The retained native household fixture's complete financial digest is identical in source and copy; private-row
+omission reduces the copy from72269824 to3371008 bytes. A smaller independent native case proves budget failure
+before output, post-failure detach/source usability and exact financial bytes. The actual wrapper reports pager
+budget failure as SQLITE_ERROR in this case. See11-household-delivery.md for scope and Android follow-up.
+Primary APIs: https://www.sqlite.org/c3ref/set_authorizer.html and
+https://www.zetetic.net/sqlcipher/sqlcipher-api/#sqlcipher_export .

@@ -7,6 +7,16 @@ public sealed class MoneyTextTests
 {
     private static readonly CultureInfo English = CultureInfo.GetCultureInfo("en");
 
+    /// <summary>A household total may exceed a single ledger row's range without losing minor units or its bidi packet.</summary>
+    [Fact, Trait("AT", "AT-294")]
+    public void Exact_aggregate_larger_than_Int64_keeps_all_minor_units_and_does_not_expand_the_input_parser()
+    {
+        var total = (decimal)long.MaxValue + 1001;
+        Assert.Equal("9,223,372,036,854,776.808 KWD", Strip(MoneyText.Format(total, "KWD", English)));
+        Assert.False(MoneyText.TryParse("9223372036854776.808", "KWD", English, out _));
+        Assert.Throws<ArgumentException>(() => MoneyText.Format(1.5m, "KWD", English));
+    }
+
     [Fact]
     public void Amounts_are_isolated_left_to_right_with_a_real_minus_sign()
     {

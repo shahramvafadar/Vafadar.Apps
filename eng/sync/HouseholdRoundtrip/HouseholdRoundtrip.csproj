@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <OutputType>Exe</OutputType>
+    <Description>Independent fictional protected household synchronization process qualification.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Api/Vafadar.Zanance.Api.csproj" />
+    <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/Vafadar.Zanance.Data.csproj" />
+    <PackageReference Include="Vafadar.Native.SqlCipher.Windows" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="FluentIcons.Common" />
+    <ProjectReference Include="$(RepoRoot)src/Libraries/Vafadar.Localization/Vafadar.Localization.csproj" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sharing/HouseholdCostsViewModel.cs" Link="Application/HouseholdCostsViewModel.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sync/PersonalSyncViewModel.cs" Link="Application/PersonalSyncViewModel.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sync/PersonalSyncViewModel.Attachments.cs" Link="Application/PersonalSyncViewModel.Attachments.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sync/PersonalSyncReviewPresenter.cs" Link="Application/PersonalSyncReviewPresenter.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sync/PersonalSyncReviewPresenter.Portable.cs" Link="Application/PersonalSyncReviewPresenter.Portable.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/PlanText.cs" Link="Application/PlanText.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/Calendars.cs" Link="Application/Calendars.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/Icons.cs" Link="Application/Icons.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Holdings/HoldingText.cs" Link="Application/HoldingText.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/AppRoutes.cs" Link="Application/AppRoutes.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Interaction/IAppInteraction.cs" Link="Application/IAppInteraction.cs" />
+    <Compile Include="../../../src/Libraries/Vafadar.Maui/Mvvm/ViewModelBase.cs" Link="Application/ViewModelBase.cs" />
+    <EmbeddedResource Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Resources/Strings/AppResources*.resx" Link="Resources/%(Filename)%(Extension)" />
+    <Compile Include="../ProtectedRoundtrip/ProtectedClient.cs" Link="ProtectedClient.cs" />
+    <Compile Include="../ProtectedRoundtrip/ProtectedSessions.cs" Link="ProtectedSessions.cs" />
+    <Compile Include="../HouseholdJournal/RetainedCiphertext.cs" Link="RetainedCiphertext.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sync/PersonalSyncForegroundCoordinator.cs" Link="Application/PersonalSyncForegroundCoordinator.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sync/IPersonalSyncEnvironment.cs" Link="Application/IPersonalSyncEnvironment.cs" />
+  </ItemGroup>
+</Project>

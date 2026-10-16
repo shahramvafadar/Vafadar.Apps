@@ -8,7 +8,7 @@
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Sync"
     xmlns:sync="clr-namespace:Vafadar.Zanance.Core.Sync;assembly=Vafadar.Zanance.Core"
     x:DataType="local:PersonalSyncViewModel"
-    Title="{v:Translate Sync_Title}">
+    Title="{Binding PageTitle}">
     <ContentPage.Resources>
         <local:PersonalSyncPreviewImageConverter x:Key="PreviewImage" />
     </ContentPage.Resources>
@@ -16,10 +16,10 @@
         <ScrollView>
             <VerticalStackLayout Padding="16" Spacing="12">
                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                    <Label Text="{v:Translate Sync_Title}" Style="{StaticResource SectionHeader}" />
-                    <v:HelpButton Grid.Column="1" Topic="PersonalSync" />
+                    <Label Text="{Binding PageTitle}" Style="{StaticResource SectionHeader}" />
+                    <v:HelpButton Grid.Column="1" Topic="{Binding HelpTopic}" />
                 </Grid>
-                <Label Text="{v:Translate Sync_Intro}" Style="{StaticResource Secondary}" />
+                <Label Text="{Binding IntroText}" Style="{StaticResource Secondary}" />
                 <Label Text="{v:Translate Sync_EditionUnavailable}" IsVisible="{Binding Available, Converter={StaticResource InvertedBoolConverter}}" />
                 <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
                 <Label Text="{Binding Error}" Style="{StaticResource ErrorText}"
@@ -52,15 +52,16 @@
                     <Border Style="{StaticResource Card}">
                         <VerticalStackLayout Spacing="8">
                             <Label Text="{Binding StatusText}" FontAttributes="Bold" />
+                            <p:WrappingAction Text="{v:Translate Household_Title}" Command="{Binding OpenHouseholdCommand}" IsVisible="{Binding IsHouseholdConnection}" />
                             <Label Text="{Binding DetailText}" Style="{StaticResource Secondary}" />
                             <Label Text="{Binding AutomaticError}" Style="{StaticResource ErrorText}"
                                    IsVisible="{Binding AutomaticError, Converter={StaticResource IsNotNullConverter}}" />
-                            <p:WrappingAction Text="{v:Translate Sync_Now}" Appearance="Primary"
+                            <p:WrappingAction Text="{v:Translate Sync_Now}" Appearance="Primary" IsVisible="{Binding ShowPersonalConnection}"
                                               Command="{Binding SynchronizeCommand}" IsEnabled="{Binding CanSync}" />
-                            <p:WrappingAction Text="{v:Translate Sync_Pause}" Command="{Binding PauseCommand}" />
+                            <p:WrappingAction Text="{v:Translate Sync_Pause}" Command="{Binding PauseCommand}" IsVisible="{Binding ShowPersonalConnection}" />
                         </VerticalStackLayout>
                     </Border>
-                    <Border Style="{StaticResource Card}">
+                    <Border Style="{StaticResource Card}" IsVisible="{Binding ShowPersonalConnection}">
                         <VerticalStackLayout Spacing="8">
                             <Label Text="{v:Translate Sync_Address}" />
                             <Entry Text="{Binding Address}" Keyboard="Url" SemanticProperties.Description="{v:Translate Sync_Address}" />
@@ -79,7 +80,7 @@
                             <p:WrappingAction Text="{v:Translate Sync_SignOut}" Command="{Binding SignOutCommand}" />
                         </VerticalStackLayout>
                     </Border>
-                    <VerticalStackLayout Spacing="12" IsVisible="{Binding SignedIn}">
+                    <VerticalStackLayout Spacing="12" IsVisible="{Binding ShowPersonalSignedIn}">
                         <Border Style="{StaticResource Card}" IsVisible="{Binding IsOnboardingRestore, Converter={StaticResource InvertedBoolConverter}}">
                             <VerticalStackLayout Spacing="8">
                                 <Label Text="{v:Translate Sync_NewSpace}" />
@@ -120,6 +121,7 @@
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
                     </VerticalStackLayout>
+                    <Label Text="{v:Translate Household_Review_Empty}" IsVisible="{Binding HouseholdReviewEmpty}" Style="{StaticResource Secondary}" />
                     <Border Style="{StaticResource Card}" IsVisible="{Binding HasConflicts}">
                         <VerticalStackLayout Spacing="8">
                             <Label Text="{v:Translate Sync_Conflicts}" Style="{StaticResource SectionHeader}" />
@@ -174,7 +176,7 @@
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </VerticalStackLayout>
-                            <p:WrappingAction Text="{v:Translate Sync_Restart}" Command="{Binding RestartReviewCommand}" IsEnabled="{Binding CanConnect}" />
+                            <p:WrappingAction Text="{v:Translate Sync_Restart}" Command="{Binding RestartReviewCommand}" IsEnabled="{Binding CanConnect}" IsVisible="{Binding ShowPersonalConnection}" />
                         </VerticalStackLayout>
                     </Border>
                 </VerticalStackLayout>

@@ -46,6 +46,8 @@ public sealed record Quota
 /// <summary>The final proposed counts only; no app service applies them until separately approved enforcement.</summary>
 public static class QuotaPolicy
 {
+    /// <summary>Approved shared identities including the owner and unexpired reserved invitations, never device count.</summary>
+    public const int SharedSpaceSeatLimit = 6;
     /// <summary>Returns the quota in the appropriate personal or specifically authorized shared context.</summary>
     public static Quota Get(QuotaKind kind, CapabilityContext context)
     {
@@ -53,7 +55,7 @@ public static class QuotaPolicy
         if (!Enum.IsDefined(kind)) throw new ArgumentOutOfRangeException(nameof(kind));
         var shared = context.Scope.Kind == EntitlementScopeKind.SharedSpace;
         if (shared && !context.HasSharedAccess) return new(0);
-        if (kind == QuotaKind.SharedMembers) return new(shared ? 6 : 0);
+        if (kind == QuotaKind.SharedMembers) return new(shared ? SharedSpaceSeatLimit : 0);
         if (kind == QuotaKind.HostedSpaces) return new(!shared && context.PersonalPlan == ProductPlan.Pro ? 1 : 0);
         if (kind == QuotaKind.LocalProfiles) return shared ? new(0) : new(context.PersonalPlan == ProductPlan.Free ? 1 : null);
         if (context.LocalPlan >= ProductPlan.Plus) return new(null);

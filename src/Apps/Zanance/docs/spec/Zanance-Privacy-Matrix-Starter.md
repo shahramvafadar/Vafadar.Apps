@@ -811,3 +811,72 @@ D-293 mirrors the maintained profile: optional server-readable personal sync, pu
 isolated internal machine certificates and persistent protection/private volumes, root-only complete private Docker
 snapshots and retained-key transport renewal. No new permission/SDK or automatic connection. Public routing/mail,
 provider/phone/iOS and store declarations remain unaccepted; this starter is not submission-ready.
+
+D-294 is unfinished. Its local household path uses opaque E2EE finance with public membership/device/role/timing/
+size metadata visible to the service. Personal sync is still separately server-readable. Protected household key
+frames and pending/complete copy receipts are device-only, excluded from portable authority. Selected account/
+history/file copying is explicit and independent of future source edits; original source remains unchanged.
+Unrelated personal finance, preferences/security/queues and private transfer counterpart identities/units are
+excluded. Neutral excluded endpoints preserve only the actual selected transfer side. Selected free text/files
+are not automatically redacted. Main household UI/profile/mobile integration and privacy/release acceptance
+remain open; current independent native Windows evidence is not a store declaration.
+
+Current D-294 private binding metadata also records actual authenticated host observation/expiry/retention,
+rotation readiness and remote-scope refusal. Those device-only fields remain inside the existing scrubbed household
+binding table, not portable preferences. They grant no membership or paid entitlement alone. Scoped authenticated
+404/403/410 refuses further local financial writes while retaining the user's exact pending ciphertext and finance.
+Device-only preferences remain separate from guarded financial Settings. Native independent accepted-role/grace
+checks do not establish main household UI, mobile, recovery, publication or complete privacy acceptance.
+
+D-294 original app setup retains a private invitation capability and exact recipient claim only in two fixed,
+bounded device-protected household intent slots. The owner-only pending list exposes signed public consent/device
+proofs and identity ids, never the capability or financial content. The app requires an independently compared
+complete root/device fingerprint, clears visible invitation/password on page retirement, and never changes a
+personal profile into a household implicitly. The actual binding kind selects manual/foreground encrypted financial
+HTTP; personal readable transport is not a fallback. Six-language disclosures are implemented; current native app
+rendering, mobile and complete household/privacy/release acceptance remain unfinished.
+
+D-294 in progress: HouseholdContacts/Costs/Allocations/Settlements hold user-visible financial facts and optional historical identity labels, not authentication grants. Local SQLCipher and the explicit household25-table E2EE contract protect them; the unchanged personal21-table readable contract cannot accept them. Portable backups retain finance and scrub household local authority/key/session/queue state. Exact per-currency totals/private advances do not infer ownership. No new permission, telemetry, password persistence or whole-batch privacy acceptance is claimed.
+
+D-294 recovery continuation: the optional separate off-device file contains password-encrypted independent kit
+material and public original service/identity/root anchors. Its password is never retained. The service stores
+only public signed enrollment/recovery evidence and standard recipient-encrypted root/epoch archives. Protected
+native preparation/import frames are device-local and excluded from portable financial snapshots. Native explicit
+Save/Pick adds no storage permission, readable cache file or persisted document URI. Actual native Windows/service
+process-loss, cold recovery, active-kit append and root-changing retirement are qualified in the active batch;
+main Android/file controls, iOS, phone and whole-household privacy acceptance remain separate unfinished gates.
+
+D-294 continuation: selected-source UI keeps history/files unchecked and asks explicit shared-content consent.
+Its bounded detached memory view belongs to one destination/peer/identity, without source keys/sessions, and
+durable pending-copy metadata is excluded from portable exports. Native source recheck is local only. Recovery
+picker handoff retains encrypted bytes/public Save metadata only; no password, clear kit or document URI persists.
+Independent Android Save/Pick/Cancel is qualified, not final main lock/file acceptance. Original native household
+cost conflict review used the encrypted channel and refused readable personal session/publication actions.
+
+
+D-294 pending device administration: current-owner-only public device key/possession metadata for accepted identities, bounded and independently fingerprint-confirmed. Private keys and financial content remain local/encrypted. Local invitation Finish is distinct from server revocation; owner-root replacement expires old unaccepted invitations. No additional permissions or SDK. Whole-household/mobile acceptance remains open.
+
+
+D-294 existing-member device access: public signed identity/checkpoint/expiry and owner public keys; no private key, invitation capability or financial body. Actual session/private-key proof retains the original pending request but grants no resource until owner approval. Protected original profile retains private setup, and ordinary writes wait for the first verified atomic receive. No new SDK, permission or portable security field.
+
+
+D-294 ownership metadata contains bounded public identity/device/checkpoint/expiry/signature proofs and standard
+opaque recipient/root envelopes only. Target-device consent is independent of a newly chosen signing root. Private
+candidates remain in protected local slots and are never portable preferences. A departed participant can observe
+only its own original public terminal receipt with actual identity/session/private-device proof; that receipt returns
+no key envelopes or financial rows. Previously downloaded history cannot be recalled. No new SDK, OS permission,
+external provider, plaintext financial HTTP or automatic readable export was added. Current native evidence is
+scoped; main mobile, complete lifecycle and release acceptance remain open.
+
+D-294 lifecycle metadata adds bounded private room activity (actual actor/device/operation, service UTC, membership/publication checkpoints and optional public signatures; no recipient grant or decrypted finance). Exact owner deletion and expiry purge room ciphertext, grants, recovery, roster, invitations and audit. A minimal room tombstone/owner relation remains in PostgreSQL and an immutable opaque actor/request commitment remains in the service-private deletion directory. This is not identity anonymization/erasure or recall of downloaded files. The original deletion declaration/outcome is device-local protected metadata, scrubbed with other household metadata from portable financial exports. A latest private marker set must accompany old database restoration; restoring only an old complete service snapshot remains an open operational integration gate. No external SDK, permission or readable financial network payload was added.
+The latest private-marker merge and complete historical service restore have now been executed successfully on separate fictional Docker stacks. Snapshot manifests additionally retain only the nonsecret local-household opt-in (never public activation). An actual current owner/device can review opaque deletion checkpoints during retained time and reattach its same private device to a fresh authenticated session for status/privacy actions. Neither endpoint serves financial rows, epoch grants or new financial write authority. The exact declaration still needs its existing independently trusted private owner root and actual current server ownership checks. Main/native destructive-dialog and mobile, identity erasure and whole D-294 remain open.
+The household retirement worker reports only an aggregate count of unavailable private entries. It never logs
+room/identity ids, file paths, protected bytes or exception messages. Unknown/corrupt markers remain untouched;
+unrelated room retirement continues under separate transactions. Offline restoration still refuses unknown
+source entries, and unreadable/redirected roots do not become an empty deletion ledger (D-294 in progress).
+
+D-294 bounded-history continuation: derived household row positions (original table/key/version and ciphertext
+position) remain solely inside the existing device-protected local database. They introduce no service plaintext,
+permission, SDK or credential. All11 private household tables, including this index, are scrubbed from the portable
+memory image; original keys, history and financial data remain untouched. Scoped native export acceptance is in
+11-household-delivery.md; whole D-294/mobile/Release acceptance remains open.

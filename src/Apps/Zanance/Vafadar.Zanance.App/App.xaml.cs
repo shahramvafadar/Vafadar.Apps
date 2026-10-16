@@ -175,11 +175,29 @@ public partial class App : Application
         await onboarding.Navigation.PushModalAsync(page, animated: false);
     }
 
-#if DEBUG && WINDOWS
+    /// <summary>Keeps the original empty wizard behind explicit household creation/admission with no extra financial account.</summary>
+    public async Task ShowOnboardingHouseholdAsync()
+    {
+        if (!Features.Sync.PersonalSyncBuild.IsAvailable || Windows.FirstOrDefault()?.Page is not OnboardingPage onboarding) return;
+        var page = _services.GetRequiredService<Features.Sharing.HouseholdPage>().WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
+        page.BeginOnboarding(async () => { await onboarding.Navigation.PopModalAsync(animated: false); }, async () =>
+        {
+            await onboarding.Navigation.PopModalAsync(animated: false); Dispatcher.Dispatch(ShowCurrentProfile);
+        });
+        await onboarding.Navigation.PushModalAsync(page, animated: false);
+    }
+
+#if DEBUG
     /// <summary>Replaces only the independently compiled sync review root with original native pages.</summary>
     internal void ShowPersonalSyncReview(Page page)
     {
         if (AppInfo.Current.PackageName is not ("pro.vafadar.zanance.syncreview" or "pro.vafadar.zanance.syncpublicreview")) throw new IOException("Independent sync review required.");
+        ReplaceRoot(Windows[0], new NavigationPage(page));
+    }
+    /// <summary>Shows only the explicitly compiled independent household review page.</summary>
+    internal void ShowHouseholdReview(Page page)
+    {
+        if (AppInfo.Current.PackageName is not ("pro.vafadar.zanance.householdreview" or "pro.vafadar.zanance.householdsourceflow" or "pro.vafadar.zanance.householdlifecycle")) throw new IOException("Independent household review required.");
         ReplaceRoot(Windows[0], new NavigationPage(page));
     }
 #endif
@@ -187,6 +205,15 @@ public partial class App : Application
     protected override Window CreateWindow(IActivationState? activationState)
     {
 #if DEBUG
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "household-lifecycle-flow" or "household-lifecycle-deleted-layout" or "household-transfer-flow" or "household-transfer-dialog-layout"
+            && AppInfo.Current.PackageName != "pro.vafadar.zanance.householdlifecycle")
+            throw new InvalidOperationException("Independent household lifecycle installation required before startup.");
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "household-source-flow" or "household-management-ui" or "household-root-management" or "household-device-access" or "household-ownership-status" or "household-lifecycle-status"
+            && AppInfo.Current.PackageName != "pro.vafadar.zanance.householdsourceflow")
+            throw new InvalidOperationException("Independent household source flow identity required before startup.");
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "household-ui" or "household-source-ui"
+            && AppInfo.Current.PackageName != "pro.vafadar.zanance.householdreview")
+            throw new InvalidOperationException("Independent household review identity required before startup.");
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "personal-sync"
             && AppInfo.Current.PackageName != (Environment.GetEnvironmentVariable("VAFADAR_SYNC_PUBLIC_REVIEW") == "1"
                 ? "pro.vafadar.zanance.syncpublicreview" : "pro.vafadar.zanance.syncreview"))

@@ -90,19 +90,31 @@ def _pipe(left, right):
                            + '; ' + ', '.join(categories) + '); original and partial target preserved.')
 
 
-def _compose(project, port, subnet, action, images=None, public=False):
+def _compose(project, port, subnet, action, images=None, public=False, household=None):
     network = ipaddress.ip_network(subnet, strict=True)
     if network.version != 4 or network.prefixlen != 24 or not network.is_private or not str(network).startswith('172.'):
         raise RuntimeError('Explicit private /24 service subnet required.')
     if (public and port != 443) or (not public and not 1024 <= port <= 65535):
         raise RuntimeError('Explicit loopback-only proxy port required.')
     env = os.environ.copy()
+    if household is not None:
+        env['ZANANCE_HOUSEHOLD_QUALIFICATION'] = 'true' if household else 'false'
     env.update(ZANANCE_PROXY_PORT=str(port), ZANANCE_SERVICE_SUBNET=str(network), ZANANCE_PROXY_ADDRESS=str(network.network_address + 10))
     if images:
         env.update(ZANANCE_SERVICE_IMAGE=images['api'], ZANANCE_PROXY_IMAGE=images['proxy'], ZANANCE_BOOTSTRAP_IMAGE=images['provision'], ZANANCE_DATABASE_IMAGE=images['database'])
     files = ['-f', str(BASE / 'compose.yml')]
     if public: files += ['-f', str(BASE / 'compose.public.yml')]
     return _run(['docker', 'compose', '-p', project, *files, *action], env=env)
+
+
+def _household_mode(project):
+    """Read only this nonsecret technical opt-in, never dump the container's credential environment."""
+    name, _ = _container(project, 'api')
+    value = _run(['docker', 'container', 'inspect', name, '--format',
+                  '{{range .Config.Env}}{{if eq (index (split . "=") 0) "Service__Household__LocalQualification"}}{{index (split . "=") 1}}{{end}}{{end}}']).strip().lower()
+    if value not in (b'', b'true', b'false'):
+        raise RuntimeError('Original household opt-in is not a supported boolean; preserve source configuration.')
+    return value == b'true'
 
 
 def _manifest(snapshot, helper):
@@ -119,6 +131,8 @@ def _manifest(snapshot, helper):
         raise RuntimeError('Complete snapshot manifest is invalid.')
     if value.get('DeploymentFormat') != 'immutable-config-v1':
         raise RuntimeError('Historical snapshot requires its original runtime configuration; current restore cannot silently substitute it.')
+    if not isinstance(value.get('HouseholdLocalQualification', False), bool) or value.get('HouseholdLocalQualification', False) and value.get('Public', False):
+        raise RuntimeError('Household qualification cannot activate public hosting.')
     if set(value.get('Images', {})) != {'api', 'proxy', 'provision', 'database'}:
         raise RuntimeError('Snapshot image authority is incomplete.')
     for image in value.get('Images', {}).values():
@@ -146,6 +160,7 @@ def _backup(args, helper):
     if not SNAPSHOT.fullmatch(args.snapshot or '') or _exists('volume', args.snapshot):
         raise RuntimeError('Choose a fresh owned snapshot volume; existing snapshots are never reset.')
     database, _ = _container(args.project, 'database')
+    household = _household_mode(args.project)
     for service in ('api', 'proxy', 'migrate', 'provision'):
         _container(args.project, service)
     active = _run(['docker', 'ps', '--filter', 'label=com.docker.compose.project=' + args.project,
@@ -176,7 +191,7 @@ def _backup(args, helper):
         filename = 'database.dump' if logical == 'database' else 'volumes/' + logical + '.tar'
         archives[logical] = _run(_helper(helper, target, 'sha256sum /snapshot/' + filename)).decode().split()[0]
     manifest = {'Schema': 1, 'DeploymentFormat': 'immutable-config-v1', 'SourceProject': args.project, 'CreatedUtc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-                'Quiesced': True, 'Public': args.public, 'Images': images, 'Archives': archives}
+                'Quiesced': True, 'Public': args.public, 'HouseholdLocalQualification': household, 'Images': images, 'Archives': archives}
     _run(_helper(helper, target, 'umask 077; cat >/snapshot/complete.pending; sync -f /snapshot/complete.pending; mv /snapshot/complete.pending /snapshot/complete.json; sync -f /snapshot'), data=json.dumps(manifest).encode())
     _manifest(args.snapshot, helper)
     print('Complete private snapshot: ' + args.snapshot + '; original workers remain stopped.')
@@ -188,12 +203,34 @@ def _restore(args, helper):
         raise RuntimeError('Snapshot deployment mode differs; explicit trust/routing migration required.')
     if args.project == manifest['SourceProject'] or not manifest.get('Quiesced'):
         raise RuntimeError('Only a separate fresh or explicitly continued target is allowed.')
+    privacy_source = manifest['SourceProject']
+    if not PROJECT.fullmatch(privacy_source) or privacy_source == args.project:
+        raise RuntimeError('Explicit distinct original privacy project required.')
+    # An old full private-volume snapshot cannot prove that no deletion happened later.
+    # Require the actual latest owned source, drained before inspecting/copying markers.
+    for service in ('api', 'proxy'):
+        if _container(privacy_source, service)[1]['state'] != 'exited':
+            raise RuntimeError('Latest original privacy workers must be stopped before restore.')
+    active_source = _run(['docker', 'ps', '--filter', 'label=com.docker.compose.project=' + privacy_source,
+                         '--format', '{{.Label "com.docker.compose.service"}}']).decode().splitlines()
+    if any(service != 'database' for service in active_source):
+        raise RuntimeError('Latest original private-storage clients must be drained before restore.')
+    current_private = _volume(privacy_source, 'private')
+    privacy_image = manifest['Images']['api']
+    privacy_labels = _metadata('image', privacy_image, '{{json .Config.Labels}}') or {}
+    capable = privacy_labels.get('pro.vafadar.zanance.household-privacy') == 'deletion-v1'
+    markers = _run(_helper(helper, [(current_private, '/current', True)],
+        'test ! -L /current/household-deletions || exit 23; if test -e /current/household-deletions; then test -d /current/household-deletions || exit 23; find /current/household-deletions -mindepth 1 -maxdepth 1 -name "*.json" -print -quit; fi')).strip()
+    if markers and not capable:
+        raise RuntimeError('Historical service image cannot enforce current household deletions; explicit upgrade qualification required.')
     state_name = args.project + '_restore-state'
     if _exists('volume', state_name):
         state_name = _volume(args.project, 'restore-state')
         state = _receipt(helper, state_name)
         if state.get('Snapshot') != args.snapshot or state.get('Target') != args.project:
             raise RuntimeError('Existing restore authority differs; no target changes made.')
+        if state.get('PrivacySource', privacy_source) != privacy_source:
+            raise RuntimeError('Original privacy authority differs; no target changes made.')
     else:
         for logical in (*VOLUMES, 'database-data'):
             if _exists('volume', args.project + '_' + logical):
@@ -201,7 +238,7 @@ def _restore(args, helper):
         if _run(['docker', 'ps', '-aq', '--filter', 'label=com.docker.compose.project=' + args.project]).strip():
             raise RuntimeError('An existing target deployment cannot be overwritten.')
         state_name = _volume(args.project, 'restore-state', create=True)
-        state = {'Snapshot': args.snapshot, 'Target': args.project, 'Copied': [], 'DatabaseRestored': False, 'Complete': False}
+        state = {'Snapshot': args.snapshot, 'Target': args.project, 'PrivacySource': privacy_source, 'Copied': [], 'DatabaseRestored': False, 'Complete': False}
         _receipt(helper, state_name, state)
     if state.get('Complete'):
         print('Restore already complete; no successful operation repeated.'); return
@@ -231,7 +268,22 @@ def _restore(args, helper):
         _pipe(_helper(helper, [(args.snapshot, '/snapshot', True)], 'cat /snapshot/database.dump'),
               ['docker', 'exec', '-i', database, 'pg_restore', '-h', '/tmp', '-U', 'postgres', '-d', 'zanance', '--single-transaction', '--exit-on-error'])
         state['DatabaseRestored'] = True; _receipt(helper, state_name, state)
-    _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait'], manifest['Images'], public=args.public)
+    if capable:
+        # Re-run only this idempotent additive merge on interrupted restoration; never
+        # replace an original marker or skip newer privacy intent before serving data.
+        _run(['docker', 'run', '--rm', '--network', 'none', '--read-only', '--user', '1654:1654',
+              '--cap-drop', 'ALL', '--security-opt', 'no-new-privileges:true',
+              '--mount', 'type=volume,source=' + current_private + ',target=/current,readonly',
+              '--mount', 'type=volume,source=' + _volume(args.project, 'private') + ',target=/restored',
+              privacy_image, '--merge-household-deletions', '/current', '/restored'])
+    state['PrivacySource'] = privacy_source
+    state['PrivacyReconciled'] = True
+    _receipt(helper, state_name, state)
+    for service in ('api', 'proxy'):
+        if _container(privacy_source, service)[1]['state'] != 'exited':
+            raise RuntimeError('Original privacy workers restarted during restore; target remains stopped.')
+    _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait'], manifest['Images'], public=args.public,
+             household=manifest.get('HouseholdLocalQualification', False))
     state['Complete'] = True; _receipt(helper, state_name, state)
     print('Isolated restore complete; original source and snapshot preserved: ' + args.project)
 
@@ -257,17 +309,19 @@ def main():
         # A complete pre-maintenance snapshot is mandatory; never rotate key-ring protection or private keys.
         if not args.snapshot:
             raise RuntimeError('A fresh pre-maintenance snapshot name is required.')
+        household = _household_mode(args.project)
         _backup(args, helper)
         _compose(args.project, args.port, args.subnet, ['stop', '--timeout', '45', 'database'], public=args.public)
         _compose(args.project, args.port, args.subnet,
                  ['run', '--no-deps', '-e', 'ZANANCE_CERTIFICATE_OPERATION=renew-transport', 'provision'], public=args.public)
-        _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait'], public=args.public)
+        _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait'], public=args.public, household=household)
         print('Transport renewal complete; retained identities and snapshot were preserved.')
     elif args.action == 'status': print(_compose(args.project, args.port, args.subnet, ['ps', '-a', '--format', '{{.Service}} {{.State}} {{.Health}}'], public=args.public).decode(), end='')
     else:
         for service in ('api', 'proxy', 'database', 'provision', 'migrate'): _container(args.project, service)
         action = ['up', '-d', '--wait'] if args.action == 'start' else ['stop', '--timeout', '45', 'api', 'proxy']
-        _compose(args.project, args.port, args.subnet, action, public=args.public)
+        _compose(args.project, args.port, args.subnet, action, public=args.public,
+                 household=_household_mode(args.project) if args.action == 'start' else None)
         print('Owned operation complete: ' + args.action)
 
 

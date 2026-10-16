@@ -20,7 +20,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 "Vafadar.Zanance.Data.Sync.SyncBindingRow",
                 typeof(SyncBindingRow),
                 baseEntityType,
-                propertyCount: 13,
+                propertyCount: 14,
                 keyCount: 1);
 
             var id = runtimeEntityType.AddProperty(
@@ -116,6 +116,13 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 propertyInfo: typeof(SyncBindingRow).GetProperty("SchemaHash", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 fieldInfo: typeof(SyncBindingRow).GetField("<SchemaHash>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 maxLength: 64);
+
+            var transportKind = runtimeEntityType.AddProperty(
+                "TransportKind",
+                typeof(ProfileSynchronizationKind),
+                propertyInfo: typeof(SyncBindingRow).GetProperty("TransportKind", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(SyncBindingRow).GetField("<TransportKind>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
+            transportKind.SetSentinelFromProviderValue(0);
 
             var key = runtimeEntityType.AddKey(
                 new[] { id });

@@ -9,7 +9,7 @@ public static class SyncReviewRelationships
     /// <summary>Returns physical and explicit logical references without interpreting opaque metadata as identities.</summary>
     public static IEnumerable<SyncRecordKey> Keys(string tableName, JsonElement values)
     {
-        var table = SyncSchema.Manifest.Tables.Single(row => row.Name == tableName);
+        var table = SyncSchema.Describe(tableName);
         foreach (var relation in table.ForeignKeys)
             if (!relation.Columns.Any(column => values.GetProperty(column).ValueKind == JsonValueKind.Null))
                 yield return new(relation.PrincipalTable, SyncGraphValidation.KeyOf(values, relation.Columns));
@@ -41,7 +41,7 @@ public static class SyncReviewRelationships
         {
             if (source.Values is not { } body) continue;
             var group = SyncConflictGrouping.Group(source.Record, body);
-            var linked = group is null ? [] : graph.Values.Where(row => SyncConflictGrouping.Group(row.Record, row.Values) == group).Select(row => row.Record).ToArray();
+            var linked = group is null ? [] : graph.Values.Where(row => SyncConflictGrouping.InGroup(row.Record, row.Values, source.Record, group.Value)).Select(row => row.Record).ToArray();
             foreach (var key in Keys(source.Record.Table, body).Concat(linked))
             {
                 if (!seen.Add(key) || key == conflict.Proposal.Record) continue;

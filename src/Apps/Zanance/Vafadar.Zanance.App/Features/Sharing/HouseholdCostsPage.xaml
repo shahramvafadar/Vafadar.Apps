@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Vafadar.Zanance.App.Features.Sharing.HouseholdCostsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
+    xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Sharing"
+    x:DataType="local:HouseholdCostsViewModel" Title="{v:Translate HouseholdCost_Title}">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="12">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Label Text="{v:Translate HouseholdCost_Title}" Style="{StaticResource SectionHeader}" />
+                    <v:HelpButton Grid.Column="1" Topic="HouseholdCosts" />
+                </Grid>
+                <Label Text="{v:Translate HouseholdCost_Intro}" Style="{StaticResource Secondary}" />
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+                <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" />
+                <p:WrappingAction Text="{v:Translate Sync_Reload}" Command="{Binding ReloadCommand}" IsEnabled="{Binding IsNotBusy}" />
+                <VerticalStackLayout Spacing="12" IsVisible="{Binding IsReady}" IsEnabled="{Binding CanInteract}">
+                    <Label Text="{v:Translate HouseholdCost_ReadOnly}" IsVisible="{Binding CanWrite, Converter={StaticResource InvertedBoolConverter}}" />
+                    <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Summaries}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:HouseholdCostSummary">
+                                <Border Style="{StaticResource Card}">
+                                    <VerticalStackLayout Spacing="6">
+                                        <Label Text="{Binding Caption}" />
+                                        <p:AmountReadout AmountText="{Binding Amount}" />
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Label Text="{v:Translate HouseholdCost_Contacts}" Style="{StaticResource SectionHeader}" />
+                    <p:WrappingAction Text="{v:Translate HouseholdCost_AddContact}" Command="{Binding AddContactCommand}" IsEnabled="{Binding CanWrite}" />
+                    <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Contacts}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:HouseholdContactChoice">
+                                <p:WrappingAction Text="{Binding Caption}" CommandParameter="{Binding .}"
+                                    Command="{Binding ManageContactCommand, Source={RelativeSource AncestorType={x:Type local:HouseholdCostsViewModel}}, x:DataType=local:HouseholdCostsViewModel}"
+                                    IsEnabled="{Binding CanWrite, Source={RelativeSource AncestorType={x:Type local:HouseholdCostsViewModel}}, x:DataType=local:HouseholdCostsViewModel}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <p:WrappingAction Text="{v:Translate HouseholdCost_AddCost}" Command="{Binding NewCostCommand}" IsEnabled="{Binding CanWrite}" />
+                    <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Costs}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:HouseholdCostItem">
+                                <Border Style="{StaticResource Card}">
+                                    <VerticalStackLayout Spacing="6">
+                                        <Label Text="{Binding Caption}" />
+                                        <p:AmountReadout AmountText="{Binding Amount}" />
+                                        <p:WrappingAction Text="{v:Translate HouseholdCost_Review}" CommandParameter="{Binding .}"
+                                            Command="{Binding EditCostCommand, Source={RelativeSource AncestorType={x:Type local:HouseholdCostsViewModel}}, x:DataType=local:HouseholdCostsViewModel}" />
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <p:WrappingAction Text="{v:Translate HouseholdCost_AddSettlement}" Command="{Binding NewSettlementCommand}" IsEnabled="{Binding CanWrite}" />
+                    <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Settlements}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:HouseholdSettlementItem">
+                                <Border Style="{StaticResource Card}">
+                                    <VerticalStackLayout Spacing="6">
+                                        <Label Text="{Binding Caption}" />
+                                        <p:AmountReadout AmountText="{Binding Amount}" />
+                                        <p:WrappingAction Text="{v:Translate HouseholdCost_Review}" CommandParameter="{Binding .}"
+                                            Command="{Binding EditSettlementCommand, Source={RelativeSource AncestorType={x:Type local:HouseholdCostsViewModel}}, x:DataType=local:HouseholdCostsViewModel}" />
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Border Style="{StaticResource Card}" IsVisible="{Binding HasEditor}">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="{v:Translate HouseholdCost_Editor}" Style="{StaticResource SectionHeader}" />
+                            <VerticalStackLayout Spacing="6" IsVisible="{Binding EditingCost}">
+                                <Label Text="{v:Translate HouseholdCost_Description}" />
+                                <Entry Text="{Binding Title}" MaxLength="200" SemanticProperties.Description="{v:Translate HouseholdCost_Description}" />
+                                <Label Text="{Binding TitleError}" Style="{StaticResource ErrorText}" />
+                                <Label Text="{v:Translate HouseholdCost_IsRefund}" />
+                                <Switch IsToggled="{Binding IsRefund}" SemanticProperties.Description="{v:Translate HouseholdCost_IsRefund}" />
+                                <VerticalStackLayout IsVisible="{Binding IsRefund}" Spacing="6">
+                                    <Label Text="{v:Translate HouseholdCost_RefundOriginal}" />
+                                    <Picker ItemsSource="{Binding OriginalCosts}" SelectedItem="{Binding RefundOriginal}" ItemDisplayBinding="{Binding ChoiceCaption, x:DataType=local:HouseholdCostItem}"
+                                        SemanticProperties.Description="{v:Translate HouseholdCost_RefundOriginal}" />
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                            <Label Text="{v:Translate HouseholdCost_Date}" />
+                            <v:DateField Date="{Binding Date}" AccessibilityLabel="{v:Translate HouseholdCost_Date}" />
+                            <Label Text="{v:Translate HouseholdCost_Currency}" />
+                            <Picker ItemsSource="{Binding Currencies}" SelectedItem="{Binding CurrencyCode}" SemanticProperties.Description="{v:Translate HouseholdCost_Currency}" />
+                            <Label Text="{v:Translate HouseholdCost_Amount}" />
+                            <Entry Text="{Binding AmountText}" Keyboard="Numeric" SemanticProperties.Description="{v:Translate HouseholdCost_Amount}" />
+                            <Label Text="{Binding AmountError}" Style="{StaticResource ErrorText}" />
+                            <Label Text="{v:Translate HouseholdCost_Payer}" />
+                            <Picker ItemsSource="{Binding Contacts}" SelectedItem="{Binding Payer}" ItemDisplayBinding="{Binding Caption, x:DataType=local:HouseholdContactChoice}"
+                                SemanticProperties.Description="{v:Translate HouseholdCost_Payer}" />
+                            <VerticalStackLayout IsVisible="{Binding EditingSettlement}" Spacing="6">
+                                <Label Text="{v:Translate HouseholdCost_Recipient}" />
+                                <Picker ItemsSource="{Binding Contacts}" SelectedItem="{Binding Recipient}" ItemDisplayBinding="{Binding Caption, x:DataType=local:HouseholdContactChoice}"
+                                    SemanticProperties.Description="{v:Translate HouseholdCost_Recipient}" />
+                            </VerticalStackLayout>
+                            <Label Text="{v:Translate HouseholdCost_SharedCash}" />
+                            <Switch IsToggled="{Binding UsesSharedCash}" SemanticProperties.Description="{v:Translate HouseholdCost_SharedCash}" />
+                            <VerticalStackLayout IsVisible="{Binding UsesSharedCash}" Spacing="6">
+                                <Label Text="{v:Translate HouseholdCost_LinkHint}" Style="{StaticResource Secondary}" />
+                                <Entry Text="{Binding MovementSearch}" MaxLength="200" Placeholder="{v:Translate HouseholdCost_SearchTitle}" SemanticProperties.Description="{v:Translate HouseholdCost_SearchTitle}" />
+                                <p:WrappingAction Text="{v:Translate HouseholdCost_FindMovements}" Command="{Binding FindMovementsCommand}" />
+                                <Picker ItemsSource="{Binding Movements}" SelectedItem="{Binding Movement}" ItemDisplayBinding="{Binding Caption, x:DataType=local:HouseholdMovementChoice}"
+                                    SemanticProperties.Description="{v:Translate HouseholdCost_FindMovements}" />
+                                <VerticalStackLayout IsVisible="{Binding EditingSettlement}" Spacing="6">
+                                    <Label Text="{v:Translate HouseholdCost_Destination}" />
+                                    <Switch IsToggled="{Binding UsesDestinationAmount}" SemanticProperties.Description="{v:Translate HouseholdCost_Destination}" />
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                            <Label Text="{Binding ReferenceError}" Style="{StaticResource ErrorText}" />
+                            <VerticalStackLayout IsVisible="{Binding EditingCost}" Spacing="8">
+                                <Label Text="{v:Translate HouseholdCost_Shares}" Style="{StaticResource SectionHeader}" />
+                                <Label Text="{v:Translate HouseholdCost_SharesHint}" Style="{StaticResource Secondary}" />
+                                <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Shares}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="local:HouseholdShareInput">
+                                            <VerticalStackLayout Spacing="6">
+                                                <Label Text="{Binding Contact.Name}" />
+                                                <Entry Text="{Binding Text}" Keyboard="Numeric" SemanticProperties.Description="{Binding Contact.Name}" />
+                                                <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" />
+                                            </VerticalStackLayout>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                                <Label Text="{Binding SharesError}" Style="{StaticResource ErrorText}" />
+                            </VerticalStackLayout>
+                            <Label Text="{v:Translate HouseholdCost_Note}" />
+                            <Editor Text="{Binding Note}" MaxLength="4000" AutoSize="TextChanges" SemanticProperties.Description="{v:Translate HouseholdCost_Note}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+        <VerticalStackLayout Grid.Row="1" Padding="16,8" Spacing="8" IsVisible="{Binding HasEditor}">
+            <p:WrappingAction Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" Appearance="Primary" IsEnabled="{Binding CanWrite}" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                <p:WrappingAction Text="{v:Translate Common_Cancel}" Command="{Binding CancelEditCommand}" IsEnabled="{Binding CanInteract}" />
+                <p:WrappingAction Grid.Column="1" Text="{v:Translate HouseholdCost_Delete}" Command="{Binding DeleteCommand}" IsEnabled="{Binding CanDelete}" />
+            </Grid>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

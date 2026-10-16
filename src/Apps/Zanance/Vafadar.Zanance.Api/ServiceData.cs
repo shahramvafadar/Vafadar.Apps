@@ -78,8 +78,10 @@ public sealed class RequestWindow
 }
 
 /// <summary>Independent PostgreSQL service schema and maintained Identity persistence.</summary>
-public sealed class ServiceDbContext(DbContextOptions<ServiceDbContext> options) : IdentityDbContext<ServiceUser>(options)
+public sealed class ServiceDbContext(DbContextOptions<ServiceDbContext> options, Sharing.IHouseholdDeletionLedger? householdDeletions = null) : IdentityDbContext<ServiceUser>(options)
 {
+    /// <summary>Runtime-only immutable privacy intent port; absent design-time contexts cannot authorize household requests.</summary>
+    internal Sharing.IHouseholdDeletionLedger HouseholdDeletions => householdDeletions ?? throw new InvalidOperationException("Household privacy storage is not composed.");
     /// <summary>Device grants.</summary>
     public DbSet<DeviceSession> Sessions => Set<DeviceSession>();
     /// <summary>Challenges and mail delivery journal.</summary>
@@ -94,6 +96,9 @@ public sealed class ServiceDbContext(DbContextOptions<ServiceDbContext> options)
     {
         base.OnModelCreating(builder);
         Sync.SyncServiceModel.Configure(builder);
+        Sharing.HouseholdServiceModel.Configure(builder);
+        Sharing.HouseholdOwnershipModel.Configure(builder);
+        Sharing.HouseholdLifecycleModel.Configure(builder);
         builder.Entity<DeviceSession>().HasOne<ServiceUser>().WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
         builder.Entity<IdentityChallenge>().HasOne<ServiceUser>().WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
         builder.Entity<PrivateObject>().HasOne<ServiceUser>().WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);

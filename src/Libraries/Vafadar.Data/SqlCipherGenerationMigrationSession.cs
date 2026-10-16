@@ -113,7 +113,11 @@ public sealed class SqlCipherGenerationMigrationSession : IDatabaseGenerationMig
         var key = await ReadKeyAsync(cancellationToken).ConfigureAwait(false);
         try
         {
-            await using var opened = await OpenAsync(candidate, key, cancellationToken).ConfigureAwait(false);
+            // A completed candidate has hosted ordinary app writers. Native hot-journal rollback
+            // after their process loss requires existing-only ReadWrite under drained ownership;
+            // pre-selection candidates and independent rollback snapshots remain read-only.
+            await using var opened = await OpenAsync(candidate, key, cancellationToken,
+                recoverSelected: checkpoint.Phase == DatabaseGenerationPhase.Completed).ConfigureAwait(false);
             await CheckIntegrityAsync(opened, cancellationToken).ConfigureAwait(false);
             if (checkpoint.Phase == DatabaseGenerationPhase.CandidateVerified)
             {
@@ -171,21 +175,35 @@ public sealed class SqlCipherGenerationMigrationSession : IDatabaseGenerationMig
         ValidateContext();
     }
 
-    private async Task<SqliteConnection> OpenAsync(string path, byte[]? key, CancellationToken cancellationToken)
+    private async Task<SqliteConnection> OpenAsync(string path, byte[]? key, CancellationToken cancellationToken, bool recoverSelected = false)
     {
         ValidateContext(); RequireFile(path);
         var header = new byte[16];
         using (var file = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) file.ReadExactly(header);
         if ((key is null) != header.AsSpan().SequenceEqual("SQLite format 3\0"u8))
             throw new InvalidDataException("Captured generation has the wrong plaintext/cipher format.");
+        if (recoverSelected)
+        {
+            if (path != candidate || key is null) throw new InvalidOperationException("Only the captured completed candidate can recover native writer state.");
+            foreach (var suffix in new[] { "-journal", "-wal", "-shm" })
+                if (File.Exists(path + suffix)) RequireFile(path + suffix);
+        }
         // D-196: SQLCipher ATTACH inherits source access flags: exporting into writable memory requires ReadWrite.
         // Main is read under the exporter's snapshot transaction; never ReadWriteCreate or ledger writes.
         var connection = new SqliteConnection(new SqliteConnectionStringBuilder
         { DataSource = path, Password = key is null ? "" : Convert.ToBase64String(key),
-            Mode = key is null ? SqliteOpenMode.ReadWrite : SqliteOpenMode.ReadOnly, Pooling = false }.ToString());
+            Mode = key is null || recoverSelected ? SqliteOpenMode.ReadWrite : SqliteOpenMode.ReadOnly, Pooling = false }.ToString());
         try
         {
             await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
+            ValidateContext();
+            if (key is not null)
+            {
+                // Opening with the retained key permits SQLite's own recovery, not application
+                // mutation. Verification keeps its connection query-only after native open.
+                using var readOnly = connection.CreateCommand(); readOnly.CommandText = "PRAGMA query_only = ON";
+                await readOnly.ExecuteNonQueryAsync(cancellationToken).ConfigureAwait(false);
+            }
             using var check = connection.CreateCommand(); check.CommandText = "PRAGMA cipher_version";
             if ((Convert.ToString(await check.ExecuteScalarAsync(cancellationToken).ConfigureAwait(false)) ?? "").Split(' ')[0] != cipherVersion)
                 throw new InvalidDataException("Captured connection is not the reviewed cipher provider.");

@@ -47,6 +47,10 @@ public static class AppRoutes
 
     /// <summary>Route of explicitly enabled local personal synchronization.</summary>
     public const string PersonalSyncRoute = "personalsync";
+    /// <summary>Route of independently confirmed encrypted household sharing.</summary>
+    public const string HouseholdRoute = "household";
+    /// <summary>Explicit actual household costs, shares and repayments in the current independent profile.</summary>
+    public const string HouseholdCostsRoute = "household-costs";
 
     /// <summary>Route of the monthly budget (a top tab of Insights).</summary>
     public const string BudgetRoute = "//insights/budget";

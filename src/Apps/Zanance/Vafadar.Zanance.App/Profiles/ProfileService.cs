@@ -178,11 +178,25 @@ public sealed partial class ProfileService(
     public Task<bool> SwitchToAsync(LocalProfile profile) => SwitchReviewedAsync(ReadWorkReview(), profile);
 
     /// <summary>Opens any reviewed original for retained work; rechecks catalogue and rights before committing after authentication.</summary>
-    public async Task<bool> SwitchReviewedAsync(ProfileCatalogueReview review, LocalProfile profile)
+    public Task<bool> SwitchReviewedAsync(ProfileCatalogueReview review, LocalProfile profile) => SwitchCoreAsync(review, profile, null);
+
+    /// <summary>Rechecks a selected household source under drained ownership immediately before opening its separate target.</summary>
+    public Task<bool> SwitchHouseholdSourceAsync(ProfileCatalogueReview review, LocalProfile profile,
+        Vafadar.Zanance.Data.Sharing.HouseholdProjectionStore source,
+        Vafadar.Zanance.Data.Sharing.HouseholdProjectionReview selected, Action retainConfirmedSelection) =>
+        SwitchCoreAsync(review, profile, async owner =>
+        {
+            await source.RequireCurrentForMaintenanceAsync(selected, owner);
+            retainConfirmedSelection();
+        });
+
+    private async Task<bool> SwitchCoreAsync(ProfileCatalogueReview review, LocalProfile profile,
+        Func<DatabaseAccessGate.ExclusiveLease, Task>? beforeOpen)
     {
         ValidateWorkReview(review); RequireReviewedProfile(review, profile);
         if (profile.Id == Current.Id)
         {
+            if (beforeOpen is not null) throw new InvalidOperationException("Household copying requires a separate destination profile.");
             return true;
         }
 
@@ -197,6 +211,7 @@ public sealed partial class ProfileService(
             var previous = location.CapturePublication(owner);
             try
             {
+                if (beforeOpen is not null) await beforeOpen(owner);
                 await runtime.OpenDatabaseAsync(location, PathOf(MainPath(), profile.Id), owner);
                 var settings = await store.GetSettingsForMaintenanceAsync(owner);
                 var authenticated = !settings.AppLockEnabled

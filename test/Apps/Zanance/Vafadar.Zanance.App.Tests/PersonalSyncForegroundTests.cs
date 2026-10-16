@@ -12,6 +12,18 @@ namespace Vafadar.Zanance.App.Tests;
 /// <summary>Actual foreground orchestration against SQLite; native lifetime/transport effects are explicit ports.</summary>
 public sealed class PersonalSyncForegroundTests
 {
+    /// <summary>An unverified marker is not membership, but it must still prevent readable personal fallback.</summary>
+    [Fact, Trait("AT", "AT-294")]
+    public async Task A_household_kind_without_its_original_encrypted_channel_cannot_fall_back_to_personal_HTTP()
+    {
+        using var f = new FlowFixture(); using var environment = new PersonalSyncFlowTests.EnvironmentPort();
+        await ConnectAsync(f);
+        await using (var db = await f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct))
+            await db.Database.ExecuteSqlRawAsync("UPDATE SyncBinding SET TransportKind=1", Ct);
+        await Create(f, environment).RunAsync(true, Ct);
+        Assert.Equal(0, environment.Opens);
+        Assert.Equal("service-unavailable", (await f.Services.GetRequiredService<PersonalSyncStore>().StatusAsync(Ct)).Failure);
+    }
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
     private static PersonalSyncForegroundCoordinator Create(FlowFixture f, PersonalSyncFlowTests.EnvironmentPort environment) => new(
         f.Services.GetRequiredService<PersonalSyncStore>(), f.Services.GetRequiredService<PersonalSyncCoordinator>(), environment, f.Time);

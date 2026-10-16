@@ -1,5 +1,26 @@
 # Original personal-sync page review
 
+## Independent household recovery-file adapter variant
+
+`ReviewHouseholdFiles=true` selects the permanent engineering package
+`pro.vafadar.zanance.androidhouseholdfiles`. It compiles the same production source/XAML and the original
+Android document-result bridge, but performs no identity sign-in, HTTP, household membership grant or financial
+write. Build/sign with the command below plus that property and verify actual identity/signature before install.
+Launch only a fresh public `review_run`32-hex id. The content-free `ZananceHouseholdFiles` JSON phases request
+native Save, selection of the exact same generated fictitious file, and cancellation of a second Save. Drive only
+the observed native document targets on the owned emulator. A Share dismissal is never considered Save success.
+Do not read unrelated files or change device settings/secure-window flags.
+
+The retained D-294 run `ddcbca7b096c4820bb064589874c7a47` completed all three effects on the existing x64/API36
+emulator, with exact encrypted-byte/public-kit readback and unchanged empty financial data. The full Release AOT
+build/sign passed in128.21s without warnings/errors after unused fields were excluded from this new variant.
+Evidence: `artifacts/household-native-file-adapters-runtime.log` and the three native document XML observations.
+Its generated3773-byte external document was removed only after exact canonical-path ownership/hash checks;
+cancelled Save created no document. The independent process was stopped. Do not rerun this completed mutation
+phase or count it as the full main household page/identity/foreground/profile/network flow, phone, arm64/API24/
+16KiB, iOS, Store signing or product acceptance. Preserve its separate protected installation/keys for inspection.
+
+
 The optional `ReviewNetwork=true` variant is a separate engine/network qualification, with
 permanent package `pro.vafadar.zanance.androidsyncnetwork`. It adds the original personal-sync
 INTERNET manifest overlay, while retaining pinned HTTPS, the secure window and original protected
@@ -106,3 +127,13 @@ The final product keeps preview optional, so valid locked/unsupported files rema
 selectable. This caller never forces a content decision or claims native HTTP/phone acceptance.
 Use this exact package with the existing report reader and retain the same data/keys/run on an
 explicit continuation; never replace a fixture solely because observation timed out.
+
+## Native compact snapshot allocation variant
+
+ReviewHouseholdSnapshot=true selects pro.vafadar.zanance.householdsnapshotreview. It retains the existing signed
+Release AOT/trimmed independent caller and secure window. Launch one fresh32-hex review_run only. The original
+application startup finishes, then only the new in-memory native allocation/authorization case runs: no prior page,
+network, file-picker, identity or financial-operation scenario is replayed. Reports use the content-free
+ZananceHouseholdSnapshot tag and the exact process id. Each owned per-run folder refuses replay. The shared native
+case is linked from HistoryQualification.NativeBound.cs; no source/private frame is logged. This mechanism proof
+is separate from the actual main encrypted-profile export check and physical/main Release acceptance.

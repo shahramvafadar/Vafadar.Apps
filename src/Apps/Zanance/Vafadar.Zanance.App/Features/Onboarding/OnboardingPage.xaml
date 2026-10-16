@@ -84,6 +84,8 @@
                                           Appearance="Secondary" Margin="0,16,0,0" IsEnabled="{Binding IsNotBusy}" />
                         <p:WrappingAction Text="{v:Translate Sync_FirstRunOpen}" Command="{Binding RestoreSyncedProfileCommand}"
                                           IsVisible="{Binding PersonalSyncAvailable}" IsEnabled="{Binding IsNotBusy}" Margin="0,8,0,0" />
+                        <p:WrappingAction Text="{v:Translate Household_Title}" Command="{Binding OpenHouseholdCommand}"
+                                          IsVisible="{Binding PersonalSyncAvailable}" IsEnabled="{Binding IsNotBusy}" />
 
                         <Label Text="{v:Translate Settings_Language}" Style="{StaticResource SectionHeader}" Margin="4,28,4,6" />
                         <Border Style="{StaticResource Card}" Padding="6">
@@ -166,6 +168,8 @@
                                 <p:WrappingAction x:Name="AccountRestoreAction" Text="{v:Translate Onb_RestoreButton}" Command="{Binding RestoreBackupCommand}"
                                                   Appearance="Secondary" IsEnabled="{Binding IsNotBusy}" />
                                 <p:WrappingAction Text="{v:Translate Sync_FirstRunOpen}" Command="{Binding RestoreSyncedProfileCommand}"
+                                                  IsVisible="{Binding PersonalSyncAvailable}" IsEnabled="{Binding IsNotBusy}" />
+                                <p:WrappingAction Text="{v:Translate Household_Title}" Command="{Binding OpenHouseholdCommand}"
                                                   IsVisible="{Binding PersonalSyncAvailable}" IsEnabled="{Binding IsNotBusy}" />
                             </VerticalStackLayout>
                         </Border>

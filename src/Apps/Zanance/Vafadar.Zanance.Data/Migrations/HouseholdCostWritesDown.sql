@@ -1,0 +1,12 @@
+DROP TRIGGER "zhh_guard_HouseholdAllocations_insert";
+DROP TRIGGER "zhh_guard_HouseholdAllocations_update";
+DROP TRIGGER "zhh_guard_HouseholdAllocations_delete";
+DROP TRIGGER "zhh_guard_HouseholdContacts_insert";
+DROP TRIGGER "zhh_guard_HouseholdContacts_update";
+DROP TRIGGER "zhh_guard_HouseholdContacts_delete";
+DROP TRIGGER "zhh_guard_HouseholdCosts_insert";
+DROP TRIGGER "zhh_guard_HouseholdCosts_update";
+DROP TRIGGER "zhh_guard_HouseholdCosts_delete";
+DROP TRIGGER "zhh_guard_HouseholdSettlements_insert";
+DROP TRIGGER "zhh_guard_HouseholdSettlements_update";
+DROP TRIGGER "zhh_guard_HouseholdSettlements_delete";

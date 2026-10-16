@@ -1290,3 +1290,102 @@ The approved hosted default uses normal system chain/name validation and an empt
 addresses retain explicit trusted fingerprint verification. Explain both in all six languages and state that the
 personal service can read connected records. No automatic opt-in or network work follows merely opening the form.
 Original Windows36 and Android12 contexts plus native18/6 help dialogs preserve complete text, Back and finances.
+
+### Household flow under development (D-294, native rendering not yet accepted)
+
+Household setup stays in a separate empty profile and preserves the original profile/Add/open and first-run wizard.
+The complete local initial read owns its cover; account/session defaults never imply verified membership. Keep
+private invitation text in the explicit form, clear visible capability/password on retirement, and explain that it
+alone grants no data access. Compare complete owner/device fingerprints independently before admission. Show the
+last verified role and separate financial-write state; local permission hints cannot authorize a later write.
+
+Use original growing semantic buttons, native scaling and palette resources. Pending claims and signed members
+retain their exact original command parameters. A new member action cannot replace retained original administration;
+Resume is explicit. First-run Cancel/Finish have fixed growing rows outside the scroll area; Finish changes only
+local setup state after actual connection, without creating another account. All six existing languages include
+full privacy/role/grace help. Original app-flow and native backend evidence do not qualify the new rendered page;
+complete en/fa/de, themes and phone/minimum/wide native checks remain part of the same unfinished batch.
+
+### Actual household cost form (D-294 in progress)
+
+Cost shares allocate actual expenses/refunds; they never imply joint-account ownership or create another cash
+posting. Show cost attribution, private advances and shared/private payment totals separately per actual unit.
+Enter exact shares with field-local sum/reference/amount errors. Linking cash is an explicit bounded date/title
+search with the real selected movement retained; never pick a first result automatically. Refunds select an
+original cost, repayments select actual sender/recipient and an optional exact transfer side. Contact archival
+retains history and does not revoke service membership. Currency changes clear numeric drafts; live translation
+preserves original input culture and selection identities. Save/Cancel/Delete reserve growing rows outside the
+viewport; a new draft has no Delete permission. Long Windows titles use the production growing PageHeader.
+
+The original cost form has54 new fully translated keys, no new language. Eighteen corrected own-window en/fa/de,
+light/dark,360/412/wide read-only-history cases preserve every stored row; original writable app-source Save is
+qualified on actual protected household storage. Android/native household setup and complete batch UX remain open.
+
+Household source selection (D-294 in progress) uses original unchecked account controls, independent history/file
+choices, complete wrapping account/currency/count disclosures and explicit separate-destination consent. A fresh
+destination visit confirms the original detached copy; pending copies block publishing. Explain returning to the
+same destination after process loss and never imply cancellation deletes profiles/keys/money. Native Windows
+selection/review passed18 language/theme/width cases with full fixture restoration; destination and mobile flows
+remain separate gates. Recovery pickers retain only bounded encrypted files/public Save receipts across a lock
+modal; passwords and foreground grants are retired. The common household conflict page reuses whole-group and
+inline-file review while hiding/refusing readable personal connection actions; authenticated native review remains
+open. These controls do not manufacture member authority for layout verification.
+
+Original source/profile creation now has functional main Windows acceptance at412/light with actual native
+consent/selection/menu/prompt and real encrypted publication. A user-edited connection label pre-fills the original
+new-profile prompt; an unchanged personal label does not silently become its new default. The prompt stays
+editable and requires explicit Save. Existing target choices use quoted names plus stable reviewed ordinals,
+without exposing internal ids. Native flyout and ContentDialog are different surfaces; qualification must invoke
+their original named providers without desktop input/focus, not assume a single dialog class. This functional case
+does not replace the existing18-case source-control layout matrix or final household/mobile dialog acceptance.
+
+
+Household device administration (D-294 in progress): complete wrapping public device fingerprints retain real growing approval/removal actions. Current/sole-device removal is unavailable in this flow. Show the current verified owner root after rotation. A visible retained-invitation hint and explicit confirmation finish only the original protected intent, even without clipboard text. Eighteen actual Windows language/theme/width cases and the native current-root/Finish action passed; main mobile remains open.
+
+
+D-294 device access: label public existing-member device access separately from new-member invitations and recovery kits. Explain separate empty profile, same identity, independent full root/device comparisons and original-request continuation. Disable a new request on a bound ledger. Main Windows export/request/Cancel/admission/cold and18 language/theme/width checks of the changed hint/request/export controls passed; actual owner text entry is not qualified on hidden Windows and remains an Android acceptance gate.
+
+
+D-294 ownership: choose one actual accepted identity/device with an independently compared complete fingerprint and
+an explicit former-owner Leave/Viewer/Editor disposition. Show original stages as waiting/explicit next-device
+approval, never auto-finish another person's step. Separate Refresh, consent, Cancel and terminal Finish. Explain the
+publication pause, new independent ownership keys, old kit retirement and irrevocable downloaded history in all six
+languages. Keep growing native actions and exact retained lost-response continuation. The actual no-pending status
+card/Refresh passed18 new Windows language/theme/width cases; transfer prompts/other stages/Android remain open.
+
+
+D-294 ownership continuation: the target's explicit Offered-stage approval first adopts the exact frozen incoming financial horizon, then prepares ownership keys. Downloaded ciphertext alone is not applied finance. Unsent local rows/conflicts remain for explicit resolution; no automatic financial overwrite or outgoing rotation grant is inferred. A retained candidate and an already applied clean horizon resume without replacement keys or another empty round.
+
+D-294 remote lifecycle UI keeps service UTC deadlines separate from financial dates/calendars, explains 30-day read/export plus90-day retained time and distinguishes permanent access revocation from current physical cleanup. Owner deletion requires explicit irreversible confirmation and warns that downloaded local copies/portable exports survive while unsent work cannot be published. Original uncertain consent stays visible and blocks fresh writes; only authenticated unaccepted expiry permits explicit finishing. Activity pages verify signed membership/publication evidence against trusted local history; actor/time and unsigned operational events are labeled service-reported. Eighteen new native Windows Active/no-deletion status layouts passed; no destructive prompt, other-state or mobile acceptance is claimed.
+The subsequent original main Windows lifecycle/audit status review completed18 new language/theme/width cases (fa/en/de, light/dark,360/412/1280),54 own-window captures and7992 native observations. Actual native Discover, lifecycle and audit reads preserved every financial column. Initial hidden-page publication/disabled-peer failures were retained; no protected file/key was reset. A bounded publication check and explicit independent ApplicationId build preceded completion; the broader lifetime cause is not proven. This is actual Active/no-deletion status acceptance only, not destructive confirmation, other lifecycle states, audit history completeness or Android acceptance. Strict current Windows and Android builds passed with zero warnings/errors;23 resource completeness/literal-usage cases passed. Successful earlier service/native/suite cases were not replayed. The whole household batch is still unfinished and uncommitted.
+D-294 retained-time privacy: the Delete action reviews only owner-scoped opaque checkpoints before confirmation and rechecks the exact checkpoint afterward. It must not fetch financial data merely to permit owner deletion during retention. Same-device session possession can reattach for status/privacy metadata without restoring financial/key access. Existing trusted owner root availability remains mandatory; changed/missing roots are not adopted from server metadata. Full main destructive-confirmation and mobile acceptance remain pending; prior18 status-only layouts are not broader evidence.
+
+### D-294 privacy observations and retired service data
+
+A negative authenticated service observation takes priority over an earlier positive grant snapshot. Disable sync and remote audit data actions after explicit refusal or original deletion consent; owner lifecycle and privacy metadata remain independent. A read-only grace period still permits its authorized read/export path. Do not turn a successful lifecycle-status request into renewed financial or key authority.
+
+Once permanent deletion is observed, hide future automatic-retention deadlines that no longer describe the room's outcome. Keep the original pending/accepted/retired receipt visible and preserve local copies. Native en/fa/de confirmation semantics, real button targets and cold original receipt were checked on the independent Debug installation; final changed-state layout/control verification remains separately recorded in the canonical household delivery plan.
+
+D-294 final changed-state follow-up: both strict builds passed. The changed Windows deleted-state layout passed18 cases with2,844 native observations and unchanged local financial columns. The new signed complete Android Debug binary then reopened the original retired receipt/local ledger, rendered no obsolete automatic deadlines, disabled the actual audit button and kept lifecycle metadata enabled. Original operation/hash/time and local money were unchanged, without another deletion or receipt request. This verifies the changed display/control gate only; six earlier native confirmation cases and unchanged active layouts were not repeated. Whole D-294, final Release/AOT, physical-device and iOS gates remain open. Canonical details and immutable evidence identities are in enhancements/2026-10-commercial-release/11-household-delivery.md.
+
+A refused household reconnect retains the validated selected local context before contacting the service. Existing
+financial rows must never acquire empty-profile setup/recovery actions merely because404/403 prevented rebind.
+Retained context alone grants no owner role, key or synchronization. Native local Reload can publish the cached
+read-only state after that failed explicit action; display-language/theme review must not repeat the refused rebind.
+Main ownership confirmations compare the exact independent recipient device and state the chosen former role and
+old-kit invalidation. Never capture a private invitation editor beneath a confirmation (D-294 in progress).
+
+A warm shared page must publish a transport-recorded local refusal before enabling input again. Do not keep
+Sync/admin/audit active from an older positive hint, retry HTTP to close the page, erase the selected household
+context or renew access through privacy metadata. Keep downloaded rows/keys and original pending work; show the
+translated original failure and readonly status. The last verified owning identity is distinct from live device
+administration. Native competing-cost decisions choose the complete cost/allocation group, never individual shares.
+
+### D-294 native household confirmations
+
+Retain original native dialogs and explicit consent. Windows action-sheet/prompts/confirmation buttons grow to
+at least44 units through an operation-scoped popup observer, removed on dismissal/failure. Copy the original
+root page direction into native ContentDialog because MAUI prompts do not inherit it consistently. Do not replace
+native commands, simulate confirmations, activate the desktop window or manufacture a protocol role for layout.
+The18 complete dialog cases and six subsequent affected RTL prompts preserve the original financial dataset;
+see11-household-delivery.md for exact geometry, images and retained negative evidence.

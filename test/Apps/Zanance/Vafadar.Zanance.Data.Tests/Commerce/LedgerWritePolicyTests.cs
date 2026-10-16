@@ -464,7 +464,9 @@ public sealed class LedgerWritePolicyTests : IDisposable
             command.CommandText = "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name";
             using var reader = await command.ExecuteReaderAsync(Ct); while (await reader.ReadAsync(Ct)) tables.Add(reader.GetString(0));
         }
-        Assert.Equal(33, tables.Count); var all = new Dictionary<string, List<string>>();
+        // Keep the complete no-write comparison, including every newly migrated private table.
+        Assert.Equal(db.Model.GetEntityTypes().Select(entity => entity.GetTableName()).OfType<string>()
+            .Append("__EFMigrationsHistory").Append("__EFMigrationsLock").Distinct().Order(StringComparer.Ordinal), tables.Order(StringComparer.Ordinal)); var all = new Dictionary<string, List<string>>();
         foreach (var table in tables)
         {
             if (omitEntries && table == "Entries") continue;

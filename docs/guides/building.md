@@ -876,3 +876,42 @@ complete financial fingerprints. It never signs in, enters credentials, contacts
 choice. Own-window renders remain hidden; no desktop input or full-screen capture is used. Retain its marker,
 financial fixture, negative evidence and results; do not reset a completed or failed installation to repeat successes.
 Restore the normal compiled identity before the main artifact is built.
+
+## Independent main household lifecycle review (D-294 in progress)
+
+Windows Debug routes `household-lifecycle-flow` and `household-lifecycle-deleted-layout` require the compiled
+identity `pro.vafadar.zanance.householdlifecycle` before covered storage starts. The project compares its owned
+generated Windows manifest identity before the MAUI manifest target: changing only ApplicationId was otherwise
+absent from the SDK incremental inputs and reused stale AppInfo metadata. It regenerates only that mismatched
+generated manifest; no installation is reset. Verify generated manifest and AssemblyInfo identities before launch.
+
+The completed original main lifecycle folder is `artifacts/household-main-lifecycle-ui-d294`. Preserve its public
+progress and completion files, encrypted installation, keys and exact service deletion. Do not replay completed
+flow stages. The separate deleted-state layout route requires that completed original fixture and resumes only
+unfinished layout cases, without financial synchronization or another deletion. Its own-window root stays hidden.
+
+For the independent Android Debug review only, use `Build-AndroidApk.ps1 -Configuration Debug -PersonalSync
+-ReviewApplicationId pro.vafadar.zanance.householdlifecycle -Output artifacts/android-household-lifecycle-d294`.
+The script rejects that override for Release; the normal product identity and complete signed Release handoff
+remain unchanged. The explicit `household_lifecycle_review` activity extra can show only this package's original
+main household page. Stage only the fictional service's public CA and exact public identity receipt in its own
+files directory, and reverse the owned emulator's port14645 to localhost. Never alter device trust/settings or
+FLAG_SECURE. Native confirmations remain real Android UI actions; the Debug observer records public status and
+fictitious local ledger hashes, never credentials, device/root keys or tokens. This is not Release/AOT, phone,
+all-financial-graph, iOS or whole-household acceptance.
+
+The original main lifecycle and its six Android native confirmation cases are now completed; never replay or
+reset them. The current retired room is0ec753d7-031b-4e3a-8c16-68599ef608ce, with original operation
+8c52880c-f3f7-42cc-b014-7ea9ac8807e7. Main cold receipt and local account/entry preservation passed. The later
+changed-state audit/deadline check used a new signed Debug binary and only a lifecycle observation, without
+another deletion or receipt request. Its evidence is household-deleted-display-audit-android-final-proof.json
+under artifacts. Final changed Windows layouts are in artifacts/household-deleted-final-layout-d294, separate
+from the earlier unchanged cases. These are not final Release qualification or permission to reset test data.
+
+The same independent package also accepts household_recovery_review with review_stage owner/export/restore/cold/original
+for the main-page recovery qualification. It retains public fixture identifiers and exact financial hashes,
+creates explicitly named independent protected profiles and refuses replacement after interrupted unpublished
+creation. Consequential operations still require real native page buttons, confirmations and document pickers.
+recovery_mode wrong/valid changes only compiled fictional in-memory password input when the original page is idle;
+no password enters arguments, reports, preferences or service credentials. Preserve completed original stages and
+use cold/original only to reopen their retained data; never clear or reseed an interrupted installation.

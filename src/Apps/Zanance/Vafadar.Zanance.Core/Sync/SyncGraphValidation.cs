@@ -22,11 +22,11 @@ public static class SyncGraphValidation
     public const int MaximumRows = 1_000_000;
 
     /// <summary>Validates every live scalar/key, dependency and original unique rule before any round can publish.</summary>
-    public static IReadOnlyList<SyncGraphIssue> Validate(IReadOnlyCollection<SyncRecord> records)
+    public static IReadOnlyList<SyncGraphIssue> Validate(IReadOnlyCollection<SyncRecord> records, SyncSchemaManifest? contract = null)
     {
         ArgumentNullException.ThrowIfNull(records);
         if (records.Count > MaximumRows) throw new SyncProfileBoundException();
-        var tables = SyncSchema.Manifest.Tables.ToDictionary(table => table.Name, StringComparer.Ordinal);
+        var tables = (contract ?? SyncSchema.Manifest).Tables.ToDictionary(table => table.Name, StringComparer.Ordinal);
         var issues = new List<SyncGraphIssue>();
         var live = new Dictionary<SyncRecordKey, JsonElement>();
         var semanticIdentities = new HashSet<SyncRecordKey>();

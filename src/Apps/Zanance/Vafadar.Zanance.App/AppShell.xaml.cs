@@ -177,6 +177,8 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(OccurrenceRoute, typeof(OccurrencePage));
         Routing.RegisterRoute(BackupRoute, typeof(BackupPage));
         Routing.RegisterRoute(AppRoutes.PersonalSyncRoute, typeof(Features.Sync.PersonalSyncPage));
+        Routing.RegisterRoute(AppRoutes.HouseholdRoute, typeof(Features.Sharing.HouseholdPage));
+        Routing.RegisterRoute(AppRoutes.HouseholdCostsRoute, typeof(Features.Sharing.HouseholdCostsPage));
         Routing.RegisterRoute(BudgetEditorRoute, typeof(BudgetEditorPage));
         Routing.RegisterRoute(RatesRoute, typeof(RatesPage));
         Routing.RegisterRoute(HomeLayoutRoute, typeof(Features.Home.HomeLayoutPage));
@@ -207,6 +209,8 @@ public partial class AppShell : Shell
     {
         if (CurrentPage?.BindingContext is BackupViewModel backup && !backup.CanLeave && args.CanCancel) args.Cancel();
         if (CurrentPage?.BindingContext is Features.Sync.PersonalSyncViewModel sync && !sync.CanLeave && args.CanCancel) args.Cancel();
+        if (CurrentPage?.BindingContext is Features.Sharing.HouseholdViewModel household && !household.CanLeave && args.CanCancel) args.Cancel();
+        if (CurrentPage?.BindingContext is Features.Sharing.HouseholdCostsViewModel costs && !costs.CanLeave && args.CanCancel) args.Cancel();
         base.OnNavigating(args);
     }
 

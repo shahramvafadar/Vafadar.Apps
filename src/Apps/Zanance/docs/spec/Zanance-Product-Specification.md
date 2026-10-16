@@ -5929,3 +5929,145 @@ Twelve new Data cases bring reconciled main coverage to3702; fifteen separate AP
 fresh complete-suite invocation. Original Windows36 and Android12 contexts plus18/6 native help dialogs preserve
 complete financial data. Main strict builds and current signed APK pass. Hosted CI, public routing/mail, phone/iOS,
 household E2EE and release remain separate. See ../quality/self-hosted-stack.md for exact evidence and failures.
+
+### D-294 household application continuation (unfinished, not delivered)
+
+The actual protected workspace now connects retained creation/genesis replay, private invitation/claim, owner-only
+pending approval, signed role/revocation and manual/foreground encrypted routing to a six-language app flow. Initial
+lost-response bootstrap and setup across profile switches are checked on original native protected files. Two real
+independent clients use HTTPS/PostgreSQL and original financial capture/apply for viewer admission and approved
+editor publication. Scoped original foreground publication does not open readable personal financial HTTP.
+
+Six new application cases passed separately;3702 remains the last finished application baseline, not a newly rerun
+or reconciled complete D-294 suite. Native rendering/mobile/current final APK, selected-source main UI, complete
+cost/recovery/transfer/audit/deletion/retention and bounded-history integration remain open. No final household,
+physical-device/iOS, provider, purchase, public-hosting or product-release acceptance is declared.
+
+D-294 cost continuation (2026-10-16): actual mapped costs/contacts/exact shares/refunds/repayments and final native commit/link validation now use the explicit household25-table/324-column E2EE contract. Delivered personal21-table/294-column compatibility is unchanged. Original two-client protected roundtrip, partial/stale rollback, app editor culture/save/retirement and cold same-key facts pass. Three focused SQLite transaction cases and19 focused Core behaviours are covered separately;3702 remains the last finished baseline, not a newly executed complete-suite count. The54 new cost/review/help keys have real translations in all six existing languages. Corrected18-case own-window Windows layout passes with complete rows unchanged. Actual Android/AOT household costs, source/conflict/recovery/transfer/audit/delete/retention/history and final complete APK/batch remain unfinished.
+
+D-294 recovery continuation (2026-10-16): optional independent password-encrypted kits, both owner-key roles,
+finite immutable epoch archives, actual identity/session plus kit/new-device consent and cold recovered-device
+anchors now compose through the original protected Windows/HTTPS/PostgreSQL path. Archive commit/process loss,
+new-owner-device commit/process loss, identical-request continuation, complete existing cost-history receive,
+old-device refusal, cold same-key reopen, active-kit ordinary role/recipient verification and root-changing kit
+retirement pass without cash reposting.21 recovery/help strings have six real translations. Strict main Windows/
+Android compile and independent signed Android x64/API36 Release/AOT Save/Pick/Cancel with exact encrypted-byte/
+kit readback pass; this is file-adapter acceptance, not full main household UI/network/profile/lock or phone/iOS
+acceptance. Focused tests remain separately reported;3702 is still the last finished full-suite baseline. Main
+Android household/source/conflict/transfer/audit/delete/retention/history, final main APK and full batch remain open.
+
+Section31 D-294 source continuation: explicit actual accounts/history/files, frozen review, drained same-source
+recheck and destination-bound memory handoff are wired into the original app. New owner keys and pending copy
+receipt share their first commit; the same native draft reopens cold and refuses empty publication.18 Windows
+source-selection/review cases pass with real native Toggle/Invoke and full financial restoration; this does not
+complete destination/profile/network/Android adoption. The common original conflict surface is reused with
+household captions and hard readable-personal-channel refusal; actual authenticated cost decisions remain open.
+Independent adapter Save/Pick/Cancel acceptance is distinct from main recovery lock/picker composition. Focused
+new checks do not change the last finished3702 full-suite baseline or complete D-294.
+
+Section31 D-294 subsequent main Windows adoption: the actual independently identified protected app completed
+original native source selection/consent/profile creation, drained same-source handoff, fresh destination copy and
+real encrypted household publication, preserving the entire source fingerprint and reopening the target with its
+same keys/owner authority. One selected account/450-minor-unit historical expense received new ids; the private
+account/history stayed out. The native two-client original common cost review also passed explicit remote group
+choice and encrypted application/restoration without duplicate cash. These scoped completions do not replace
+main Android, all dialog variants, recovery lock/file or remaining household full-batch gates.3702 remains the last
+finished full-suite baseline; final main APK and release acceptance are not newly claimed.
+
+
+Section31 continuation, D-294 still in progress: original owner-device approval/removal, pending admission preservation and retired-root invitation expiry are implemented with native exact-request/cold evidence. Original Windows device inventory rendering passed18 language/theme/width cases; current-root display and retained invitation Finish passed through native controls. The subsequent root case preserved all allowlisted financial columns. No new full-suite test count, final main APK, mobile/phone/iOS or whole-household acceptance is claimed. See the canonical household delivery record.
+
+
+Section31 continuation, D-294 remains open: typed independently anchored existing-member device setup, exact same-key/session continuation, later owner approval and cold financial/private-root adoption are implemented. Pre-adoption financial writes require the exact connection and first atomic receive; actual cut/continuation verified original source financial/settings preservation. Main Windows native export/request/Cancel/admission/cold and18 new-control layouts passed, with actual owner text entry excluded. Current strict Windows/Android and app-source builds pass; one new trust behavior and21 changed resource-integrity cases passed. No new full-suite/APK/mobile/phone/iOS or whole-household acceptance is claimed.
+
+
+D-294 ownership continuation remains part of the unfinished household batch. Exact old-owner offer, actual approved
+target-device/new-root acceptance and original-source final publication now have native exits38/39/40/41, public
+post-removal receipt, unchanged financial columns and cold committed-key/writer evidence. The general membership
+endpoint cannot bypass actual target-device consent. A real encrypted startup schema-upgrade omission was fixed on
+the same original app file/key; two callback regression cases and actual native status continuation passed. Eighteen
+new status-only Windows layouts, three role/checkpoint trust cases, one changed actual service case, one model case,
+21 resource-integrity cases and one literal-key case passed; no complete-suite baseline was recounted. Main complete
+transfer prompts/mobile/recovery/file/conflict, target catch-up, audit/deletion/retention/history and whole-batch gates
+remain open. See11-household-delivery.md for exact scope, retained failures and current original fixtures.
+
+
+D-294 ownership reception continuation: a real target prepared ownership keys after downloading ciphertext but before
+applying newer saved finance. The same original candidate/operation now completes bounded incoming-only financial
+adoption. A fresh Offered-stage case receives before generating keys; wrong-operation/ordinary rotation sync and
+normal writes remain refused. An already applied exact horizon is idempotent. Real Viewer and Editor former-owner
+transfers passed with no current private-root delegation and complete original financial digests restored by actual
+Save/sync. No successful previous suite/layout/cost/device case was repeated. Complete main transfer/mobile/lifecycle
+and whole-household acceptance remains open; see11-household-delivery.md for retained failures and original fixture
+state. No new complete-suite count or final APK is claimed.
+
+D-294 lifecycle is in progress: focused actual service, native process-loss and real old-PostgreSQL-snapshot continuation passed with permanent access revocation, original intent/key/data preservation and exact-room retirement. Audit signature/frozen-prefix and authenticated expired-request finishing also passed. Main lifecycle UI has18 new native Windows Active/no-deletion status cases; destructive confirmation and other states remain unaccepted; mobile, complete lifecycle/identity erasure, operational latest-marker restore composition and scale/history gates remain. No previous successful unrelated suite was rerun. The complete-suite baseline is3702; no final D-294 APK or release is claimed. See11-household-delivery.md for exact fixtures and negative evidence.
+D-294 full operational privacy restoration now passed on independent source/target Docker stacks, including actual complete snapshots before/after deletion, live-source refusal, latest-marker merge before old snapshot startup, permanent deleted-room receipt/retirement and unchanged independent-room ciphertext decryption. A concrete configuration omission was fixed: local-household opt-in now survives backup/restart/restore without enabling it publicly. No successful old D-293 hosting stage was rerun.
+
+A separate real retained-owner counterexample showed that the original deletion workspace depended on forbidden financial refresh. The same original protected files/keys and31-day retained service state now complete owner-only opaque privacy checkpoint review, same-device fresh-session possession, original consent and retirement without fetching financial data or epoch grants. Actual financial/key resources and normal local writes stayed refused; every local financial column was preserved. The existing historical trusted root signs only this exact privacy request; newer opaque checkpoint metadata never grants roster/epoch/financial authority, and a missing/different root fails closed. Main confirmation refetches the exact reviewed checkpoint before persisting consent. No schema, dependency or resource changed, so no model regeneration or unchanged resource/layout matrix was repeated. New strict main Windows/Android builds passed; whole D-294 and native destructive-dialog/mobile acceptance remain unfinished. See11-household-delivery.md for current fixtures and exact scope.
+
+### Section31 progress: main household owner privacy (D-294 unfinished)
+
+The original main Windows/Android Debug owner lifecycle now includes actual native cancel/confirm,31-day retained-state privacy deletion, same-operation cold receipt, completed exact-room remote retirement and preserved local money. Android's six en/fa/de and light/dark confirmation cases are scoped native evidence, not Release/AOT, all-financial-graph, phone or iOS acceptance. The real client clock-skew defect is fixed with shorter client deadlines; the server's15-minute ceiling is unchanged. Seven focused temporal-policy cases passed without rerunning the unchanged complete baseline3702. Explicit service refusal governs sync/audit UI independently of an older positive grant; deleted status suppresses irrelevant future retention dates. Final changed-state checks and all remaining D-294 gates are authoritative in enhancements/2026-10-commercial-release/11-household-delivery.md.
+
+D-294 final changed-state follow-up: both strict builds passed. The changed Windows deleted-state layout passed18 cases with2,844 native observations and unchanged local financial columns. The new signed complete Android Debug binary then reopened the original retired receipt/local ledger, rendered no obsolete automatic deadlines, disabled the actual audit button and kept lifecycle metadata enabled. Original operation/hash/time and local money were unchanged, without another deletion or receipt request. This verifies the changed display/control gate only; six earlier native confirmation cases and unchanged active layouts were not repeated. Whole D-294, final Release/AOT, physical-device and iOS gates remain open. Canonical details and immutable evidence identities are in enhancements/2026-10-commercial-release/11-household-delivery.md.
+
+D-294 main Android recovery-file continuation: the original main page now passes actual native Save/Cancel,
+separate explicit enrollment, native Pick, wrong-password rejection without a draft/financial change, retry of
+the same selected encrypted file, completed ownership/history recovery and cold reopening in a fresh protected
+profile. All financial columns match the source; the former device is revoked, and returning to the completed
+original lifecycle profile preserves its full financial hash. Both strict platform builds pass. No unchanged
+suite or completed lifecycle/adapter cases were repeated; complete-suite baseline stays3702. This is Debug
+same-installation separate-profile evidence, not device-loss/hardware, Release/AOT, iOS or whole-batch acceptance.
+See11-household-delivery.md for exact fixtures and immutable public observations; D-294 remains unfinished.
+
+D-294 retirement-isolation continuation: the actual PostgreSQL worker now preserves unverifiable original room
+markers while rotating both finite queues and completing a later unrelated expiry. Unknown raw names advance
+discovery but still refuse offline privacy transfer; no marker is deleted, replaced or treated as absent authority.
+Five focused file/worker/database/transfer cases passed, with zero-warning strict API/test/caller compilation.
+Successful prior suite, native lifecycle/UI and full hosting restore cases were not repeated. The complete-suite
+baseline remains3702. Final composed hosted image and other D-294 gates remain open; see11-household-delivery.md.
+
+D-294 main functional ownership continuation: actual Android/Windows main pages now complete invitation/device
+approval, target-created independent keys, both-sided consent, explicit former-owner Leave, publication/receipt
+adoption and cold owner reopening with identical full financial columns. Actual current root/epoch grants include
+only the new device, the old kit is removed, former devices are revoked, and both original main profiles remain
+unchanged. A real cold404 UI defect is fixed: known selected household context survives refused rebind rather than
+exposing fresh setup/recovery. Six native en/fa/de light/dark cases on the same process keep sync/setup blocked and
+financial columns unchanged, using cached-state Reload rather than repeating service rebind. Both strict builds
+pass; unchanged successful suites and protocol/recovery/lifecycle cases were not repeated. Complete-suite baseline
+stays3702. Final UI consolidation, other main gates and whole D-294 remain open. See11-household-delivery.md.
+
+D-294 main device/cost-group continuation: actual existing-owner device approval and cold receive, two actual
+native competing cost Saves, one complete three-row conflict decision,18 new en/fa/de/light/dark/width cases and
+original native delegated-device removal now pass. Both full financial hashes match; private costs post no cash
+and accepting the remote group makes no new financial publication. A real warm stale-access hint is fixed by
+publishing only the already recorded local refusal. Actual404 checks in both main platforms close sync/admin/
+audit/setup and preserve data/keys; Android's actual Sync target is disabled. Both original main datasets remain
+unchanged and review processes are stopped. See11-household-delivery.md for exact evidence, negative fixtures,
+standard signed Debug APK and scoped denial versus signed removal. No successful unchanged suite was rerun;
+baseline3702 is retained. Final storage/history/composed-image/Release-AOT and whole D-294 gates remain open.
+
+Section31 D-294 continuation: protected household history no longer retains all old financial bodies/opaque
+addresses in replica memory. Additive derived-index migration and regenerated compiled model preserve original
+financial and cryptographic contracts. Scoped SQLCipher warm/cold12009-version/96-page, large-row, old-baseline
+conflict, corruption/refill and portable-private-table checks pass;8 new framing cases and the existing model-match
+case pass. The complete-suite baseline remains3702, not a new full run. Whole-batch/mobile/Release-AOT acceptance
+is still open. Exact evidence and scale limitations:11-household-delivery.md.
+
+### D-294 final local delivery
+
+The complete local household batch is implemented and qualified together: protected E2EE membership/device/key
+and optional recovery lifecycle; selected separate financial adoption and complete costs/conflicts; two-sided
+ownership transfer; audit, permanent privacy intent/retirement and latest-marker-aware full service restoration.
+Final service composition, bounded historical row reads, compact pre-allocation portable scrubbing, real main
+Android upgrade/export, separate Release AOT/trimmed native allocation and native transfer-dialog geometry pass.
+The original full run plus only899 exact failed-case reruns yields3753 passing existing cases;2854 prior successes
+were not repeated. Separate focused cases do not change that total. Final product APK:
+artifacts/android-household-final-d294/pro.vafadar.zanance-Signed.apk;91356917 bytes;
+SHA2566ebe1f0d8f963f1c1f18cd2ecee7d03a4a5cfc5325d25e3883bdeee960ac38f2; signature/permanent id/arm64+x64 verified.
+Exact scope, retained failures and runtime evidence are in enhancements/2026-10-commercial-release/11-household-delivery.md.
+Earlier in-progress notes are historical. Public/commercial activation, physical/iOS, store/provider/signing,
+external security review and publication remain separate gates; identity erasure and ciphertext recall are not
+claimed. Continue the already approved complete billing/future-web-prerequisite batch without helper-only slices
+or repeated unrelated successful checks.

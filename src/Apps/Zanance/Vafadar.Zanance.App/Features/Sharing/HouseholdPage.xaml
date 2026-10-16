@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Vafadar.Zanance.App.Features.Sharing.HouseholdPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
+    xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Sharing"
+    x:DataType="local:HouseholdViewModel" Title="{v:Translate Household_Title}">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="12">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Label Text="{v:Translate Household_Title}" Style="{StaticResource SectionHeader}" />
+                    <v:HelpButton Grid.Column="1" Topic="Household" />
+                </Grid>
+                <Label Text="{v:Translate Household_Intro}" Style="{StaticResource Secondary}" />
+                <Label Text="{v:Translate Sync_EditionUnavailable}" IsVisible="{Binding Available, Converter={StaticResource InvertedBoolConverter}}" />
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+                <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+                <p:WrappingAction Text="{v:Translate Sync_Reload}" Command="{Binding ReloadCommand}" IsVisible="{Binding Available}" IsEnabled="{Binding IsNotBusy}" />
+                <VerticalStackLayout Spacing="12" IsVisible="{Binding IsReady}" IsEnabled="{Binding CanInteract}">
+                    <p:WrappingAction Text="{v:Translate HouseholdCost_Title}" Command="{Binding CostsCommand}" IsVisible="{Binding HasMembership}" />
+                    <p:WrappingAction Text="{v:Translate Household_Review_Title}" Command="{Binding ReviewChangesCommand}" IsVisible="{Binding HasMembership}" />
+                    <Border Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="{Binding StatusText}" FontAttributes="Bold" />
+                            <Label Text="{Binding Fingerprints}" Style="{StaticResource Secondary}" />
+                            <p:WrappingAction Text="{v:Translate Sync_Now}" Command="{Binding SynchronizeCommand}" IsEnabled="{Binding CanSynchronize}" />
+                            <p:WrappingAction Text="{v:Translate Household_RefreshMembers}" Command="{Binding RefreshMembersCommand}" IsVisible="{Binding HasMembership}" />
+                            <p:WrappingAction Text="{v:Translate Household_ResumeAdministration}" Command="{Binding ResumeAdministrationCommand}" IsVisible="{Binding HasPendingAdministration}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="{v:Translate Sync_Address}" />
+                            <Entry Text="{Binding Address}" Keyboard="Url" SemanticProperties.Description="{v:Translate Sync_Address}" />
+                            <Label Text="{v:Translate Sync_Fingerprint}" />
+                            <Editor Text="{Binding Fingerprint}" AutoSize="TextChanges" MaxLength="64" SemanticProperties.Description="{v:Translate Sync_Fingerprint}" />
+                            <Label Text="{v:Translate Sync_Email}" />
+                            <Entry Text="{Binding Email}" Keyboard="Email" SemanticProperties.Description="{v:Translate Sync_Email}" />
+                            <Label Text="{v:Translate Sync_Password}" />
+                            <Entry Text="{Binding Password}" IsPassword="True" IsTextPredictionEnabled="False" SemanticProperties.Description="{v:Translate Sync_Password}" />
+                            <p:WrappingAction Text="{v:Translate Sync_SignIn}" Command="{Binding SignInCommand}" />
+                            <p:WrappingAction Text="{v:Translate Sync_Discover}" Command="{Binding DiscoverCommand}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Label Text="{v:Translate Household_Name}" />
+                    <Entry Text="{Binding Name}" MaxLength="40" SemanticProperties.Description="{v:Translate Household_Name}" />
+                    <p:WrappingAction Text="{v:Translate Household_NewProfile}" Command="{Binding CreateSeparateProfileCommand}" />
+                    <Border Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="8">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                <Label Text="{v:Translate HouseholdSource_Title}" Style="{StaticResource SectionHeader}" />
+                                <v:HelpButton Grid.Column="1" Topic="HouseholdSource" />
+                            </Grid>
+                            <Label Text="{v:Translate HouseholdSource_Consent}" Style="{StaticResource Secondary}" />
+                            <p:WrappingAction Text="{v:Translate HouseholdSource_Load}" Command="{Binding LoadSourceAccountsCommand}" IsEnabled="{Binding CanChooseSource}" />
+                            <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding SourceAccounts}" IsEnabled="{Binding CanChooseSource}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="local:HouseholdSourceAccount">
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" MinimumHeightRequest="44">
+                                            <CheckBox IsChecked="{Binding Selected}" MinimumHeightRequest="44" MinimumWidthRequest="44" SemanticProperties.Description="{Binding Caption}" />
+                                            <Label Grid.Column="1" Text="{Binding Caption}" VerticalOptions="Center" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" IsEnabled="{Binding CanChooseSource}">
+                                <CheckBox x:Name="HouseholdSourceHistory" IsChecked="{Binding SourceHistory}" MinimumHeightRequest="44" SemanticProperties.Description="{v:Translate HouseholdSource_History}" />
+                                <Label Grid.Column="1" Text="{v:Translate HouseholdSource_History}" VerticalOptions="Center" />
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" IsEnabled="{Binding CanChooseSource}">
+                                <CheckBox IsChecked="{Binding SourceAttachments}" MinimumHeightRequest="44" SemanticProperties.Description="{v:Translate HouseholdSource_Files}" />
+                                <Label Grid.Column="1" Text="{v:Translate HouseholdSource_Files}" VerticalOptions="Center" />
+                            </Grid>
+                            <p:WrappingAction Text="{v:Translate HouseholdSource_Review}" Command="{Binding ReviewSourceCommand}" IsEnabled="{Binding CanChooseSource}" />
+                            <Label Text="{Binding SourceSummary}" />
+                            <p:WrappingAction Text="{v:Translate HouseholdSource_Destination}" Command="{Binding OpenSourceDestinationCommand}" IsVisible="{Binding HasSourceReview}" />
+                            <p:WrappingAction Text="{v:Translate HouseholdSource_Copy}" Command="{Binding CompleteSourceCopyCommand}" IsVisible="{Binding HasSourceHandoff}" />
+                            <p:WrappingAction Text="{v:Translate Common_Cancel}" Command="{Binding CancelSourceCopyCommand}" IsVisible="{Binding HasSourceHandoff}" />
+                            <Label Text="{v:Translate HouseholdSource_Pending}" IsVisible="{Binding HasPendingSourceReceipt}" Style="{StaticResource Secondary}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <VerticalStackLayout Spacing="8" IsVisible="{Binding ShowSetup}">
+                        <p:WrappingAction Text="{v:Translate Household_Create}" Command="{Binding BeginOwnerCommand}" IsEnabled="{Binding CanSetUp}" />
+                    </VerticalStackLayout>
+                    <p:WrappingAction Text="{v:Translate Household_CompleteCreation}" Command="{Binding CompleteOwnerCommand}" IsEnabled="{Binding CanCompleteOwner}" />
+                    <Border Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="8">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                <Label Text="{v:Translate HouseholdRecovery_Title}" Style="{StaticResource SectionHeader}" />
+                                <v:HelpButton Grid.Column="1" Topic="HouseholdRecovery" />
+                            </Grid>
+                            <Label Text="{v:Translate HouseholdRecovery_Intro}" Style="{StaticResource Secondary}" />
+                            <Label Text="{Binding RecoveryStatus}" />
+                            <VerticalStackLayout Spacing="8" IsVisible="{Binding RecoveryFilesAvailable}">
+                                <Label Text="{v:Translate HouseholdRecovery_FilePassword}" />
+                                <Entry Text="{Binding RecoveryPassword}" IsPassword="True" IsTextPredictionEnabled="False" MaxLength="256"
+                                    SemanticProperties.Description="{v:Translate HouseholdRecovery_FilePassword}" />
+                                <Label Text="{v:Translate HouseholdRecovery_FilePasswordConfirm}" />
+                                <Entry Text="{Binding RecoveryPasswordConfirm}" IsPassword="True" IsTextPredictionEnabled="False" MaxLength="256"
+                                    SemanticProperties.Description="{v:Translate HouseholdRecovery_FilePasswordConfirm}" />
+                                <p:WrappingAction Text="{v:Translate HouseholdRecovery_Export}" Command="{Binding ExportRecoveryCommand}" IsVisible="{Binding IsOwner}" IsEnabled="{Binding CanExportRecovery}" />
+                                <p:WrappingAction Text="{v:Translate HouseholdRecovery_Enable}" Command="{Binding EnableRecoveryCommand}" IsVisible="{Binding IsOwner}" IsEnabled="{Binding CanEnableRecovery}" />
+                                <p:WrappingAction Text="{v:Translate HouseholdRecovery_Pick}" Command="{Binding PickRecoveryCommand}" IsVisible="{Binding ShowSetup}" IsEnabled="{Binding CanPickRecovery}" />
+                                <p:WrappingAction Text="{v:Translate HouseholdRecovery_Import}" Command="{Binding ImportRecoveryCommand}" IsVisible="{Binding ShowSetup}" IsEnabled="{Binding CanImportRecovery}" />
+                            </VerticalStackLayout>
+                            <p:WrappingAction Text="{v:Translate HouseholdRecovery_Complete}" Command="{Binding CompleteRecoveryCommand}" IsVisible="{Binding IsOwnerRecoveryDraft}" />
+                            <p:WrappingAction Text="{v:Translate HouseholdRecovery_Revoke}" Command="{Binding RevokeRecoveryCommand}" IsVisible="{Binding IsOwner}" IsEnabled="{Binding CanRevokeRecovery}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="{v:Translate Household_Invitation}" FontAttributes="Bold" />
+                            <Label Text="{v:Translate Household_InvitationPrivacy}" Style="{StaticResource Secondary}" />
+                            <Editor Text="{Binding InvitationText}" AutoSize="TextChanges" MaxLength="8192" IsTextPredictionEnabled="False"
+                                    SemanticProperties.Description="{v:Translate Household_Invitation}" />
+                            <Label Text="{v:Translate Household_RootConfirmation}" />
+                            <Entry Text="{Binding ConfirmedRoot}" MaxLength="64" IsTextPredictionEnabled="False" SemanticProperties.Description="{v:Translate Household_RootConfirmation}" />
+                            <p:WrappingAction Text="{v:Translate Household_Join}" Command="{Binding ClaimCommand}" />
+                            <Label Text="{v:Translate HouseholdDeviceAccess_Hint}" Style="{StaticResource Secondary}" />
+                            <p:WrappingAction Text="{v:Translate HouseholdDeviceAccess_Request}" Command="{Binding EnrollOwnDeviceCommand}" IsEnabled="{Binding CanSetUp}" />
+                            <p:WrappingAction Text="{v:Translate Household_CheckAdmission}" Command="{Binding CheckAdmissionCommand}" IsEnabled="{Binding CanCheckAdmission}" />
+                            <VerticalStackLayout Spacing="8" IsVisible="{Binding IsOwner}" IsEnabled="{Binding CanAdminister}">
+                                <p:WrappingAction Text="{v:Translate Household_Invite}" Command="{Binding CreateInvitationCommand}" />
+                                <Label Text="{v:Translate Household_PendingInvitationHint}" IsVisible="{Binding HasPendingInvitation}" Style="{StaticResource Secondary}" />
+                                <p:WrappingAction Text="{v:Translate Household_InvitationFinish}" Command="{Binding FinishInvitationCommand}" IsVisible="{Binding HasPendingInvitation}" />
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Style="{StaticResource Card}" IsVisible="{Binding HasMembership}">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="{v:Translate HouseholdLifecycle_Title}" Style="{StaticResource SectionHeader}" />
+                            <Label Text="{v:Translate HouseholdLifecycle_Hint}" Style="{StaticResource Secondary}" />
+                            <Label Text="{Binding LifecycleText}" />
+                            <Label Text="{Binding LifecycleDeadlines}" />
+                            <p:WrappingAction Text="{v:Translate Sync_Reload}" Command="{Binding ReadLifecycleCommand}" IsEnabled="{Binding CanInteract}" />
+                            <p:WrappingAction Text="{v:Translate HouseholdLifecycle_Delete}" Command="{Binding DeleteRemoteCommand}" IsEnabled="{Binding CanDeleteRemote}" IsVisible="{Binding IsOwner}" />
+                            <VerticalStackLayout Spacing="8" IsVisible="{Binding HasRemoteDeletion}">
+                                <Label Text="{Binding RemoteDeletionText}" />
+                                <p:WrappingAction Text="{v:Translate HouseholdLifecycle_Resume}" Command="{Binding ResumeRemoteDeletionCommand}" IsEnabled="{Binding CanInteract}" />
+                                <p:WrappingAction Text="{v:Translate HouseholdLifecycle_Review}" Command="{Binding ReviewRemoteDeletionCommand}" IsEnabled="{Binding CanInteract}" />
+                                <p:WrappingAction Text="{v:Translate HouseholdLifecycle_Finish}" Command="{Binding FinishRejectedDeletionCommand}" IsEnabled="{Binding CanFinishRejectedDeletion}" />
+                            </VerticalStackLayout>
+                            <Label Text="{v:Translate HouseholdLifecycle_Audit}" Style="{StaticResource SectionHeader}" />
+                            <Label Text="{v:Translate HouseholdLifecycle_AuditHint}" Style="{StaticResource Secondary}" />
+                            <p:WrappingAction Text="{v:Translate Sync_Reload}" Command="{Binding ReadAuditCommand}" IsEnabled="{Binding CanReadAudit}" />
+                            <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding AuditItems}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="local:HouseholdAuditItemView"><Label Text="{Binding Caption}" /></DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                            <p:WrappingAction Text="{v:Translate HouseholdLifecycle_More}" Command="{Binding ReadMoreAuditCommand}" IsEnabled="{Binding CanReadMoreAudit}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Label Text="{v:Translate Household_Members}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasMembership}" />
+                    <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Members}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:HouseholdMemberItem">
+                                <Border Style="{StaticResource Card}">
+                                    <VerticalStackLayout Spacing="8">
+                                        <Label Text="{Binding Caption}" />
+                                        <VerticalStackLayout IsVisible="{Binding IsOwner, Source={RelativeSource AncestorType={x:Type local:HouseholdViewModel}}, x:DataType=local:HouseholdViewModel}"
+                                            IsEnabled="{Binding CanAdminister, Source={RelativeSource AncestorType={x:Type local:HouseholdViewModel}}, x:DataType=local:HouseholdViewModel}">
+                                            <p:WrappingAction Text="{v:Translate Household_ManageMember}" CommandParameter="{Binding .}" IsVisible="{Binding CanChange}"
+                                                Command="{Binding ChangeMemberCommand, Source={RelativeSource AncestorType={x:Type local:HouseholdViewModel}}, x:DataType=local:HouseholdViewModel}" />
+                                            <p:WrappingAction Text="{v:Translate HouseholdDeviceAccess_Export}" CommandParameter="{Binding .}"
+                                                Command="{Binding CreateDeviceAccessCommand, Source={RelativeSource AncestorType={x:Type local:HouseholdViewModel}}, x:DataType=local:HouseholdViewModel}" />
+                                        </VerticalStackLayout>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Border Style="{StaticResource Card}" IsVisible="{Binding HasMembership}">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="{v:Translate HouseholdOwnership_Title}" Style="{StaticResource SectionHeader}" />
+                            <Label Text="{v:Translate HouseholdOwnership_Hint}" Style="{StaticResource Secondary}" />
+                            <Label Text="{Binding OwnershipStatus}" />
+                            <p:WrappingAction Text="{v:Translate Sync_Reload}" Command="{Binding ReadOwnershipCommand}" IsEnabled="{Binding CanInteract}" />
+                            <VerticalStackLayout Spacing="8" IsVisible="{Binding HasOwnershipTransfer}">
+                                <p:WrappingAction Text="{v:Translate HouseholdOwnership_Continue}" Command="{Binding AdvanceOwnershipCommand}" IsEnabled="{Binding CanAdvanceOwnership}" />
+                                <p:WrappingAction Text="{v:Translate Common_Cancel}" Command="{Binding CancelOwnershipCommand}" IsEnabled="{Binding CanCancelOwnership}" />
+                                <p:WrappingAction Text="{v:Translate HouseholdOwnership_Finish}" Command="{Binding FinishOwnershipCommand}" IsEnabled="{Binding CanFinishOwnership}" />
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+                    <VerticalStackLayout Spacing="8" IsVisible="{Binding IsOwner}" IsEnabled="{Binding CanAdminister}">
+                        <Label Text="{v:Translate Household_Devices}" Style="{StaticResource SectionHeader}" />
+                        <Label Text="{v:Translate Household_DeviceRemovalHint}" Style="{StaticResource Secondary}" />
+                        <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding ApprovedDevices}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:HouseholdApprovedDeviceItem">
+                                    <Border Style="{StaticResource Card}">
+                                        <VerticalStackLayout Spacing="8">
+                                            <Label Text="{Binding Caption}" />
+                                            <p:WrappingAction Text="{v:Translate Household_RevokeDevice}" CommandParameter="{Binding .}" IsEnabled="{Binding CanRevoke}"
+                                                Command="{Binding RevokeDeviceCommand, Source={RelativeSource AncestorType={x:Type local:HouseholdViewModel}}, x:DataType=local:HouseholdViewModel}" />
+                                            <p:WrappingAction Text="{v:Translate HouseholdOwnership_Start}" CommandParameter="{Binding .}" IsVisible="{Binding CanTransfer}"
+                                                Command="{Binding BeginOwnershipCommand, Source={RelativeSource AncestorType={x:Type local:HouseholdViewModel}}, x:DataType=local:HouseholdViewModel}" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding PendingDevices}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:HouseholdPendingDeviceItem">
+                                    <Border Style="{StaticResource Card}">
+                                        <VerticalStackLayout Spacing="8">
+                                            <Label Text="{Binding Caption}" />
+                                            <p:WrappingAction Text="{v:Translate Household_Approve}" CommandParameter="{Binding .}"
+                                                Command="{Binding ApproveDeviceCommand, Source={RelativeSource AncestorType={x:Type local:HouseholdViewModel}}, x:DataType=local:HouseholdViewModel}" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <Label Text="{v:Translate Household_Pending}" Style="{StaticResource SectionHeader}" />
+                        <Label Text="{v:Translate Household_PendingHint}" Style="{StaticResource Secondary}" />
+                        <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Pending}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:HouseholdPendingItem">
+                                    <Border Style="{StaticResource Card}">
+                                        <VerticalStackLayout Spacing="8">
+                                            <Label Text="{Binding Caption}" />
+                                            <p:WrappingAction Text="{v:Translate Household_Approve}" CommandParameter="{Binding .}"
+                                                Command="{Binding ApproveCommand, Source={RelativeSource AncestorType={x:Type local:HouseholdViewModel}}, x:DataType=local:HouseholdViewModel}" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" Padding="16,8" ColumnSpacing="8" IsVisible="{Binding IsOnboarding}">
+            <p:WrappingAction Text="{v:Translate Common_Cancel}" Command="{Binding CloseCommand}" IsEnabled="{Binding CanLeave}" />
+            <p:WrappingAction Grid.Column="1" Text="{v:Translate Household_Finish}" Appearance="Primary" Command="{Binding FinishCommand}" IsEnabled="{Binding CanFinish}" />
+        </Grid>
+    </Grid>
+</ContentPage>

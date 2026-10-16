@@ -49,12 +49,13 @@ public sealed partial class PersonalSyncStore
             foreach (var record in page.Records)
             {
                 if (record.Version != ++expected) throw new InvalidDataException("The immutable personal feed sequence is incomplete.");
-                var table = SyncSchema.Manifest.Tables.SingleOrDefault(table => table.Name == record.Record.Table);
+                var table = SyncSchema.ForScope(work.Authority.TransportKind == ProfileSynchronizationKind.Household).Tables.SingleOrDefault(table => table.Name == record.Record.Table);
                 if (table is null || !SyncGraphValidation.ValidIdentity(table, record.Record) ||
                     record.Values is { } row && SyncGraphValidation.ValidateRow(table, record.Record, row).Count != 0)
                     throw new InvalidDataException("The received personal record violates the model contract.");
                 var body = record.Values?.GetRawText(); bytes += body is null ? 0 : System.Text.Encoding.UTF8.GetByteCount(body);
-                if (bytes > 2 * 1024 * 1024) throw new InvalidDataException("The personal feed response exceeds its bound.");
+                if (bytes > (work.Authority.TransportKind == ProfileSynchronizationKind.Household ? Core.Sharing.HouseholdFinancialFraming.MaximumRecordBytes : 2 * 1024 * 1024))
+                    throw new InvalidDataException("The original financial feed response exceeds its bound.");
                 var target = await db.Set<SyncIncomingRow>().FindAsync([record.Record.Table, record.Record.Key], ct);
                 if (target is null)
                 { target = new() { TableName = record.Record.Table, RecordKey = record.Record.Key }; db.Add(target); }
@@ -129,7 +130,7 @@ public sealed partial class PersonalSyncStore
     {
         var result = new Dictionary<string, long>(StringComparer.Ordinal);
         foreach (var record in records.Where(record => record.Values is not null))
-            foreach (var column in SyncSchema.Manifest.Tables.Single(table => table.Name == record.Record.Table).Columns.Where(column => column.Kind == "blob"))
+            foreach (var column in SyncSchema.Describe(record.Record.Table).Columns.Where(column => column.Kind == "blob"))
             {
                 var cell = record.Values!.Value.GetProperty(column.Name); if (cell.ValueKind == JsonValueKind.Null) continue;
                 var hash = cell.GetProperty("sha256").GetString()!; var length = cell.GetProperty("length").GetInt64();

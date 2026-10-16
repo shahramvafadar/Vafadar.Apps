@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 using Vafadar.Zanance.Core.Sync;
+using Vafadar.Zanance.Core.Sharing;
 
 namespace Vafadar.Zanance.Data.Sync;
 
@@ -40,7 +41,7 @@ public sealed class PersonalSyncHttpException(HttpStatusCode status) : Exception
 }
 
 /// <summary>Authenticated pinned local transport; no database ownership is held over its network requests.</summary>
-public sealed class PersonalSyncTransport : IDisposable
+public sealed class PersonalSyncTransport : IProfileSynchronizationTransport, IDisposable
 {
     private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, SemaphoreSlim> PeerRequests = new(StringComparer.Ordinal);
     private readonly HttpClient http;
@@ -52,6 +53,8 @@ public sealed class PersonalSyncTransport : IDisposable
     private const int MaximumResponseBytes = 3 * 1024 * 1024;
     /// <summary>The immutable public endpoint and certificate identity reviewed by the owner.</summary>
     public LocalSyncPeer Peer { get; }
+    /// <inheritdoc />
+    public ProfileSynchronizationKind Kind => ProfileSynchronizationKind.Personal;
 
     /// <summary>Creates a per-peer pinned connection without reading credentials or making a request.</summary>
     public PersonalSyncTransport(LocalSyncPeer peer, IPersonalSyncTokenStore tokens, TimeProvider? time = null, Action? verifyAccess = null)
@@ -156,6 +159,50 @@ public sealed class PersonalSyncTransport : IDisposable
     }
 
     private Task<T> GetAsync<T>(string path, JsonTypeInfo<T> type, CancellationToken ct) => GetOrPostAsync(HttpMethod.Get, path, type, ct);
+
+    /// <summary>Reuses actual pinned session renewal/serialization for bounded public household metadata and ciphertext only.</summary>
+    internal Task<T> HouseholdGetAsync<T>(string path, JsonTypeInfo<T> type, CancellationToken ct)
+    { RequireHouseholdPath(path); return GetAsync(path, type, ct); }
+
+    /// <summary>No financial-row/blob/plain-key DTO can enter this separate household metadata transport lane.</summary>
+    internal Task<TResponse> HouseholdPostAsync<TBody, TResponse>(string path, TBody body, JsonTypeInfo<TBody> bodyType,
+        JsonTypeInfo<TResponse> responseType, CancellationToken ct)
+    {
+        RequireHouseholdPath(path); RequireHouseholdBody<TBody>();
+        return JsonAsync(HttpMethod.Post, path, body, bodyType, responseType, ct);
+    }
+
+    /// <summary>Uploads only the fixed opaque-part contract through the shared original authenticated transport.</summary>
+    internal Task HouseholdPutAsync(string path, HouseholdOpaquePart part, CancellationToken ct)
+    {
+        RequireHouseholdPath(path);
+        return EmptyAsync(HttpMethod.Put, path, JsonContent.Create(part, HouseholdMetadataJsonContext.Default.HouseholdOpaquePart), ct);
+    }
+
+    /// <summary>Bodyless explicit household operations cannot carry a financial proposal or private key.</summary>
+    internal Task HouseholdEmptyAsync(HttpMethod method, string path, CancellationToken ct)
+    { RequireHouseholdPath(path); return EmptyAsync(method, path, null, ct); }
+
+    /// <summary>Routes consist only of internal fixed segments and validated opaque ids; redirects/absolute addresses cannot reuse the session.</summary>
+    private static void RequireHouseholdPath(string path)
+    {
+        if (!path.StartsWith("households/", StringComparison.Ordinal) || path.Contains("..", StringComparison.Ordinal) ||
+            path.Contains("://", StringComparison.Ordinal) || path.Any(character => character is '\\' or '#' or '%' or '\r' or '\n'))
+            throw new ArgumentException("An internal household route is required.", nameof(path));
+    }
+
+    /// <summary>Explicit wire allowlist: generic JSON reuse cannot accidentally route original readable financial payloads into household service storage.</summary>
+    private static void RequireHouseholdBody<T>()
+    {
+        var type = typeof(T);
+        if (type != typeof(HouseholdReserveSpace) && type != typeof(HouseholdPublishMembership) && type != typeof(HouseholdCreateInvitation) &&
+            type != typeof(HouseholdClaimInvitation) && type != typeof(HouseholdEnrollDevice) && type != typeof(HouseholdRebindDevice) &&
+            type != typeof(HouseholdOpenRound) && type != typeof(HouseholdCommitRound) && type != typeof(HouseholdUploadParts) &&
+            type != typeof(HouseholdOpenRecoverySeed) && type != typeof(HouseholdUploadRecoveryEpochs) && type != typeof(HouseholdRecoverOwner) &&
+            type != typeof(HouseholdOpenOwnership) && type != typeof(HouseholdPrepareOwnership) && type != typeof(HouseholdAuthorizeOwnership) &&
+            type != typeof(HouseholdAcceptOwnership) && type != typeof(HouseholdObserveOwnership) && type != typeof(HouseholdCancelOwnership) && type != typeof(HouseholdDeleteRequest))
+            throw new InvalidOperationException("Only explicit public household metadata or protected content may use this transport.");
+    }
     private async Task<T> GetOrPostAsync<T>(HttpMethod method, string path, JsonTypeInfo<T> type, CancellationToken ct)
     {
         await requests.WaitAsync(ct);

@@ -5,8 +5,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Vafadar.Zanance.Core.Sync;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.Sync;
+using Vafadar.Zanance.Data.Sharing;
 
 var root = Directory.GetCurrentDirectory();
+var checkOnly = args.Length == 1 && args[0] == "--check";
+if (args.Length != 0 && !checkOnly) throw new ArgumentException("Use no arguments to export or --check for read-only contract verification.");
 if (!OperatingSystem.IsWindows() || !File.Exists(Path.Combine(root, "AGENTS.md")) ||
     (!Directory.Exists(Path.Combine(root, ".git")) && !File.Exists(Path.Combine(root, ".git"))))
     throw new InvalidOperationException("Run from the repository root.");
@@ -23,7 +26,9 @@ var settings = new HashSet<string>(["ReportCurrencyCode", "DefaultCurrencyCode",
 var tables = new List<SyncTable>();
 foreach (var table in model.Tables.OrderBy(value => value.Name, StringComparer.Ordinal))
 {
-    if (excluded.Contains(table.Name) || table.Name.StartsWith("Sync", StringComparison.Ordinal)) continue;
+    // HouseholdLocal is reserved for captured device authority, private frames and derived
+    // authenticated caches. None of those native-only tables belongs to a financial wire contract.
+    if (excluded.Contains(table.Name) || table.Name.StartsWith("Sync", StringComparison.Ordinal) || table.Name.StartsWith("HouseholdLocal", StringComparison.Ordinal)) continue;
     var singleton = table.Name == "Settings";
     var columns = table.Columns.Where(column => singleton ? settings.Contains(column.Name) : column.Name != "UpdatedAt")
         .OrderBy(column => column.Name, StringComparer.Ordinal).Select(column =>
@@ -59,19 +64,46 @@ foreach (var table in model.Tables.OrderBy(value => value.Name, StringComparer.O
         singleton ? [] : (table.PrimaryKey ?? throw new InvalidOperationException("Financial primary key required.")).Columns.Select(column => column.Name).ToArray(),
         foreign, unique));
 }
-var manifest = new SyncSchemaManifest(1, tables.ToArray());
+var household = new SyncSchemaManifest(1, tables.Where(table => table.Name.StartsWith("Household", StringComparison.Ordinal)).ToArray());
+// Personal v1 is already delivered. Household financial data has a separate explicit contract;
+// adding shared costs must not silently change personal negotiation or expose those rows there.
+var manifest = new SyncSchemaManifest(1, tables.Where(table => !table.Name.StartsWith("Household", StringComparison.Ordinal)).ToArray());
 var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true };
 var bytes = JsonSerializer.SerializeToUtf8Bytes(manifest, options);
 var output = Path.Combine(root, "src/Apps/Zanance/Vafadar.Zanance.Core/Sync/schema-v1.json");
+var householdOutput = Path.Combine(root, "src/Apps/Zanance/Vafadar.Zanance.Core/Sharing/household-financial-schema-v1.json");
 var migrations = Path.Combine(root, "src/Apps/Zanance/Vafadar.Zanance.Data/Migrations");
 // Published migrations must never change when a later model gains a column. Require a new snapshot/migration instead.
 RequireFrozen(Path.Combine(migrations, "PersonalSyncJournalUp.sql"), SyncTriggerSql.Create(manifest));
 RequireFrozen(Path.Combine(migrations, "PersonalSyncJournalDown.sql"), SyncTriggerSql.Drop(manifest));
-File.WriteAllBytes(output, bytes);
-Console.WriteLine($"Financial contract: {tables.Count} tables, {tables.Sum(table => table.Columns.Length)} columns, canonical SHA-256 {SyncSchemaDigest.Compute(manifest)}.");
+WriteNewOrRequireFrozen(Path.Combine(migrations, "HouseholdCostCaptureUp.sql"), SyncTriggerSql.Create(household, householdOnly: true));
+WriteNewOrRequireFrozen(Path.Combine(migrations, "HouseholdCostCaptureDown.sql"), SyncTriggerSql.Drop(household));
+WriteNewOrRequireFrozen(Path.Combine(migrations, "HouseholdCostWritesUp.sql"), HouseholdCostTriggerSql.Create(household));
+WriteNewOrRequireFrozen(Path.Combine(migrations, "HouseholdCostWritesDown.sql"), HouseholdCostTriggerSql.Drop(household));
+if (checkOnly)
+{
+    if (SyncSchemaDigest.Compute(manifest) != SyncSchema.Hash)
+        throw new InvalidOperationException("The actual financial model differs from its reviewed shipped contract.");
+    if (!File.Exists(householdOutput) || SyncSchemaDigest.Compute(JsonSerializer.Deserialize<SyncSchemaManifest>(File.ReadAllBytes(householdOutput),
+        options) ?? throw new InvalidOperationException("Household contract is missing.")) != SyncSchemaDigest.Compute(household))
+        throw new InvalidOperationException("The actual household financial model differs from its reviewed contract.");
+}
+else
+{
+    File.WriteAllBytes(output, bytes);
+    File.WriteAllBytes(householdOutput, JsonSerializer.SerializeToUtf8Bytes(household, options));
+}
+Console.WriteLine($"Personal financial contract: {manifest.Tables.Length} tables, {manifest.Tables.Sum(table => table.Columns.Length)} columns, canonical SHA-256 {SyncSchemaDigest.Compute(manifest)}.");
+Console.WriteLine($"Household additional financial contract: {household.Tables.Length} tables, {household.Tables.Sum(table => table.Columns.Length)} columns, canonical SHA-256 {SyncSchemaDigest.Compute(household)}.");
 
 static void RequireFrozen(string path, string expected)
 {
     if (!File.Exists(path) || File.ReadAllText(path).Replace("\r\n", "\n") != expected.Replace("\r\n", "\n"))
         throw new InvalidOperationException("Frozen capture SQL differs; review a new versioned migration instead of overwriting history.");
+}
+
+void WriteNewOrRequireFrozen(string path, string expected)
+{
+    if (!File.Exists(path) && !checkOnly) File.WriteAllText(path, expected);
+    else RequireFrozen(path, expected);
 }

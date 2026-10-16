@@ -338,6 +338,885 @@ namespace Vafadar.Zanance.Api.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdAuditRow", b =>
+                {
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("Sequence")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Action")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ActorId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<int>("Bytes")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("EvidenceJson")
+                        .IsRequired()
+                        .HasMaxLength(524288)
+                        .HasColumnType("character varying(524288)");
+
+                    b.Property<string>("MembershipHead")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<long>("MembershipVersion")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("OperationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("PublicationCursor")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PublicationHead")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.HasKey("SpaceId", "Sequence");
+
+                    b.ToTable("HouseholdAudit", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdDeviceRow", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AdmissionOperationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AdmissionProof")
+                        .HasMaxLength(65536)
+                        .HasColumnType("character varying(65536)");
+
+                    b.Property<bool>("Approved")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Fingerprint")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<DateTimeOffset>("LastSeenAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("Revoked")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("SessionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("SessionOperationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("SessionProof")
+                        .HasMaxLength(65536)
+                        .HasColumnType("character varying(65536)");
+
+                    b.Property<string>("SigningKey")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
+
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<string>("WrappingKey")
+                        .IsRequired()
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SpaceId", "UserId", "Fingerprint")
+                        .IsUnique();
+
+                    b.ToTable("HouseholdDevices", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdEventRow", b =>
+                {
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("Cursor")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("RecordId")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<long>("BaseVersion")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Bytes")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Ciphertext")
+                        .IsRequired()
+                        .HasMaxLength(1048576)
+                        .HasColumnType("character varying(1048576)");
+
+                    b.Property<string>("Digest")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<int>("Index")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("RoundId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("SpaceId", "Cursor", "RecordId");
+
+                    b.HasIndex("RoundId");
+
+                    b.ToTable("HouseholdEvents", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdInvitationRow", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Accepted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("CapabilityHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<Guid?>("ClaimOperationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ClaimedDeviceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ClaimedFingerprint")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("ClaimedUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<DateTimeOffset>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("OperationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Revoked")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SignedClaim")
+                        .HasMaxLength(65536)
+                        .HasColumnType("character varying(65536)");
+
+                    b.Property<string>("SignedInvitation")
+                        .IsRequired()
+                        .HasMaxLength(65536)
+                        .HasColumnType("character varying(65536)");
+
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SpaceId", "OperationId")
+                        .IsUnique();
+
+                    b.ToTable("HouseholdInvitations", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdKeyGrantRow", b =>
+                {
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("Epoch")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Ciphertext")
+                        .IsRequired()
+                        .HasMaxLength(32768)
+                        .HasColumnType("character varying(32768)");
+
+                    b.Property<string>("Digest")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<long>("MembershipVersion")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("SpaceId", "Epoch", "DeviceId");
+
+                    b.HasIndex("DeviceId");
+
+                    b.ToTable("HouseholdKeyGrants", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdMemberRow", b =>
+                {
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("UserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<bool>("Accepted")
+                        .HasColumnType("boolean");
+
+                    b.Property<long>("JoinedVersion")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Revoked")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
+
+                    b.HasKey("SpaceId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("SpaceId", "Role")
+                        .IsUnique()
+                        .HasFilter("\"Role\" = 3 AND NOT \"Revoked\"");
+
+                    b.ToTable("HouseholdMembers", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdMembershipEventRow", b =>
+                {
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("Version")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ActorId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("GrantsHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<Guid>("OperationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("PreviousHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("RecoveryEvidenceJson")
+                        .HasMaxLength(16384)
+                        .HasColumnType("character varying(16384)");
+
+                    b.Property<string>("RequestHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("SignedAcceptanceClaim")
+                        .HasMaxLength(65536)
+                        .HasColumnType("character varying(65536)");
+
+                    b.Property<string>("SignedEvent")
+                        .IsRequired()
+                        .HasMaxLength(65536)
+                        .HasColumnType("character varying(65536)");
+
+                    b.Property<string>("SignerSigningKey")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
+
+                    b.Property<string>("SignerWrappingKey")
+                        .IsRequired()
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)");
+
+                    b.Property<string>("TransferAcceptance")
+                        .HasMaxLength(65536)
+                        .HasColumnType("character varying(65536)");
+
+                    b.HasKey("SpaceId", "Version");
+
+                    b.HasIndex("SpaceId", "OperationId")
+                        .IsUnique();
+
+                    b.ToTable("HouseholdMembershipEvents", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdOwnerRootGrantRow", b =>
+                {
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Ciphertext")
+                        .IsRequired()
+                        .HasMaxLength(65536)
+                        .HasColumnType("character varying(65536)");
+
+                    b.Property<string>("Digest")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<long>("MembershipVersion")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("RootFingerprint")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.HasKey("SpaceId", "DeviceId");
+
+                    b.HasIndex("DeviceId");
+
+                    b.ToTable("HouseholdOwnerRootGrants", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdOwnershipRow", b =>
+                {
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("OperationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AcceptanceJson")
+                        .HasMaxLength(2097152)
+                        .HasColumnType("character varying(2097152)");
+
+                    b.Property<long>("AnchorVersion")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTimeOffset>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("OwnerDeviceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<string>("PreparationJson")
+                        .HasMaxLength(2097152)
+                        .HasColumnType("character varying(2097152)");
+
+                    b.Property<string>("PublishedProofJson")
+                        .HasMaxLength(524288)
+                        .HasColumnType("character varying(524288)");
+
+                    b.Property<string>("SignedOffer")
+                        .IsRequired()
+                        .HasMaxLength(8192)
+                        .HasColumnType("character varying(8192)");
+
+                    b.Property<string>("SignedStatement")
+                        .HasMaxLength(131072)
+                        .HasColumnType("character varying(131072)");
+
+                    b.Property<int>("Stage")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("TargetDeviceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("TargetId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.HasKey("SpaceId", "OperationId");
+
+                    b.HasIndex("SpaceId")
+                        .IsUnique()
+                        .HasFilter("\"Stage\" >= 1 AND \"Stage\" <= 4");
+
+                    b.HasIndex("TargetId", "Stage");
+
+                    b.ToTable("HouseholdOwnershipTransfers", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdPartRow", b =>
+                {
+                    b.Property<Guid>("RoundId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Index")
+                        .HasColumnType("integer");
+
+                    b.Property<long>("BaseVersion")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Bytes")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Ciphertext")
+                        .IsRequired()
+                        .HasMaxLength(1048576)
+                        .HasColumnType("character varying(1048576)");
+
+                    b.Property<string>("Digest")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("RecordId")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.HasKey("RoundId", "Index");
+
+                    b.HasIndex("RoundId", "RecordId")
+                        .IsUnique();
+
+                    b.ToTable("HouseholdParts", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdRecordRow", b =>
+                {
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("RecordId")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<int>("Bytes")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Ciphertext")
+                        .IsRequired()
+                        .HasMaxLength(1048576)
+                        .HasColumnType("character varying(1048576)");
+
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Digest")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<long>("KeyEpoch")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MembershipVersion")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("OperationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("Version")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("SpaceId", "RecordId");
+
+                    b.ToTable("HouseholdRecords", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdRecoveryEpochRow", b =>
+                {
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("EnrollmentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("Epoch")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Bytes")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Ciphertext")
+                        .IsRequired()
+                        .HasMaxLength(8192)
+                        .HasColumnType("character varying(8192)");
+
+                    b.Property<string>("Digest")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<long>("MembershipVersion")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("SpaceId", "EnrollmentId", "Epoch");
+
+                    b.ToTable("HouseholdRecoveryEpochs", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdRecoveryRow", b =>
+                {
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Ciphertext")
+                        .IsRequired()
+                        .HasMaxLength(65536)
+                        .HasColumnType("character varying(65536)");
+
+                    b.Property<string>("Digest")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("MembershipVersion")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<string>("SignedEnrollment")
+                        .IsRequired()
+                        .HasMaxLength(16384)
+                        .HasColumnType("character varying(16384)");
+
+                    b.Property<string>("SigningKey")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
+
+                    b.Property<string>("WrappingKey")
+                        .IsRequired()
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)");
+
+                    b.HasKey("SpaceId");
+
+                    b.ToTable("HouseholdRecovery", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdRecoverySeedEpochRow", b =>
+                {
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("OperationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("Epoch")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Bytes")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Ciphertext")
+                        .IsRequired()
+                        .HasMaxLength(8192)
+                        .HasColumnType("character varying(8192)");
+
+                    b.Property<string>("Digest")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<long>("MembershipVersion")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("SpaceId", "OperationId", "Epoch");
+
+                    b.ToTable("HouseholdRecoverySeedEpochs", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdRecoverySeedRow", b =>
+                {
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("OperationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("EnrollmentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ExpectedHead")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<long>("ExpectedVersion")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<string>("RequestHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("RootCiphertext")
+                        .IsRequired()
+                        .HasMaxLength(65536)
+                        .HasColumnType("character varying(65536)");
+
+                    b.Property<string>("SignedDeclaration")
+                        .IsRequired()
+                        .HasMaxLength(16384)
+                        .HasColumnType("character varying(16384)");
+
+                    b.Property<long>("StoredBytes")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ThroughEpoch")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UploadedThroughEpoch")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("SpaceId", "OperationId");
+
+                    b.HasIndex("SpaceId")
+                        .IsUnique();
+
+                    b.ToTable("HouseholdRecoverySeeds", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdRoundRow", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Abandoned")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Acknowledged")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("AttemptId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long?>("CommittedCursor")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ContentHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("ExpectedCursor")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("KeyEpoch")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("LastSeenAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long>("MembershipVersion")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("OperationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("SignedCommit")
+                        .HasMaxLength(65536)
+                        .HasColumnType("character varying(65536)");
+
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeviceId");
+
+                    b.HasIndex("SpaceId", "CommittedCursor");
+
+                    b.HasIndex("SpaceId", "DeviceId", "OperationId")
+                        .IsUnique()
+                        .HasFilter("\"CommittedCursor\" IS NOT NULL");
+
+                    b.HasIndex("SpaceId", "DeviceId", "OperationId", "AttemptId")
+                        .IsUnique();
+
+                    b.ToTable("HouseholdRounds", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdSpaceRow", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("AuditBytes")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("AuditCursor")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CreationOperationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("Cursor")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeletionActorHash")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<Guid?>("DeletionOperationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("DeletionReason")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("DeletionRequestHash")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<DateTimeOffset?>("HostExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long>("KeyEpoch")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MembershipHead")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<long>("MembershipVersion")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
+
+                    b.Property<string>("OwnerSigningKey")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
+
+                    b.Property<string>("OwnerWrappingKey")
+                        .IsRequired()
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)");
+
+                    b.Property<string>("PublicationHead")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<bool>("RotationRequired")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("SchemaHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<bool>("StorageRetired")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HostExpiresAt");
+
+                    b.HasIndex("OwnerId")
+                        .IsUnique()
+                        .HasFilter("NOT \"Deleted\"");
+
+                    b.HasIndex("Deleted", "StorageRetired");
+
+                    b.HasIndex("OwnerId", "CreationOperationId")
+                        .IsUnique();
+
+                    b.ToTable("HouseholdSpaces", (string)null);
+                });
+
             modelBuilder.Entity("Vafadar.Zanance.Api.Sync.SyncBlobPieceRow", b =>
                 {
                     b.Property<Guid>("SpaceId")
@@ -674,6 +1553,183 @@ namespace Vafadar.Zanance.Api.Migrations
                     b.HasOne("Vafadar.Zanance.Api.ServiceUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdAuditRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdSpaceRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdDeviceRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdMemberRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdEventRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdRoundRow", null)
+                        .WithMany()
+                        .HasForeignKey("RoundId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdInvitationRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdSpaceRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdKeyGrantRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdDeviceRow", null)
+                        .WithMany()
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdSpaceRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdMemberRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdSpaceRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Zanance.Api.ServiceUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdMembershipEventRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdSpaceRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdOwnerRootGrantRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdDeviceRow", null)
+                        .WithMany()
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdSpaceRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdOwnershipRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdSpaceRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdPartRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdRoundRow", null)
+                        .WithMany()
+                        .HasForeignKey("RoundId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdRecordRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdSpaceRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdRecoveryEpochRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdRecoveryRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdRecoveryRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdSpaceRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdRecoverySeedEpochRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdRecoverySeedRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId", "OperationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdRecoverySeedRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdSpaceRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdRoundRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdDeviceRow", null)
+                        .WithMany()
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Zanance.Api.Sharing.HouseholdSpaceRow", null)
+                        .WithMany()
+                        .HasForeignKey("SpaceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Sharing.HouseholdSpaceRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.ServiceUser", null)
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

@@ -61,7 +61,21 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     /// <summary>Gets whether a current actual authenticated service device was resolved.</summary>
     public bool SignedIn => identity is not null && device is not null;
     /// <summary>Gets whether profile connection actions can start.</summary>
-    public bool CanConnect => CanInteract && SignedIn;
+    public bool CanConnect => CanInteract && SignedIn && !IsHouseholdConnection;
+    /// <summary>The current actual household transport must retain its encrypted route even when this personal page is opened.</summary>
+    public bool IsHouseholdConnection => review?.TransportKind == ProfileSynchronizationKind.Household;
+    /// <summary>The original review surface follows the actual bound encrypted household, never a selectable transport override.</summary>
+    public string PageTitle => translator[IsHouseholdConnection ? "Household_Review_Title" : "Sync_Title"];
+    /// <summary>Household decisions compare already verified local snapshots; service sign-in/connection stays on the encrypted household page.</summary>
+    public string IntroText => translator[IsHouseholdConnection ? "Sync_ReviewHint" : "Sync_Intro"];
+    /// <summary>The original page's explanations follow its actual financial binding.</summary>
+    public string HelpTopic => IsHouseholdConnection ? "HouseholdReview" : "PersonalSync";
+    /// <summary>Readable personal-service setup never appears in a household review.</summary>
+    public bool ShowPersonalConnection => !IsHouseholdConnection;
+    /// <summary>Personal discovery panels remain stable during a submitted operation, while never appearing for a household binding.</summary>
+    public bool ShowPersonalSignedIn => SignedIn && ShowPersonalConnection;
+    /// <summary>Explicit household empty feedback is separate from a missing original connection.</summary>
+    public bool HouseholdReviewEmpty => IsHouseholdConnection && !HasConflicts;
     /// <summary>Gets whether manual synchronization can run for the actual opted-in original.</summary>
     public bool CanSync => CanConnect && status?.Connected == true && SessionMatchesConnection;
     /// <summary>Gets whether native Back may leave outside a running action.</summary>
@@ -92,7 +106,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
         _ => null,
     };
     /// <summary>Gets translated complete connection/restore status.</summary>
-    public string StatusText => status?.PausedAfterRestore == true ? translator["Sync_RestorePaused"] : status?.Connected == true
+    public string StatusText => IsHouseholdConnection ? translator["Household_PersonalRouteHint"] : status?.PausedAfterRestore == true ? translator["Sync_RestorePaused"] : status?.Connected == true
         ? translator.Format("Sync_Connected", status.RemoteName ?? "") : translator["Sync_Paused"];
     /// <summary>Gets the actual queue count and last successful local application using the chosen display calendar.</summary>
     public string DetailText => status is null ? "" : NativeDigits.Apply(translator.Format("Sync_StatusDetails", status.PendingChanges,
@@ -166,10 +180,15 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     /// <summary>Retries only the covered local read; it never signs in or opts a profile in.</summary>
     [RelayCommand]
     private Task ReloadAsync() => RunAsync(async (_, ct) => await RefreshLocalAsync(ct), allowCoveredRead: true);
+    /// <summary>Opens the original encrypted household flow without changing or relabeling this profile binding.</summary>
+    [RelayCommand]
+    private Task OpenHouseholdAsync() => CanInteract && IsHouseholdConnection && !IsOnboardingRestore
+        ? interaction.NavigateAsync(AppRoutes.HouseholdRoute) : Task.CompletedTask;
 
     [RelayCommand]
     private Task SignInAsync() => RunAsync(async (access, ct) =>
     {
+        RequirePersonalConnection();
         var peer = new LocalSyncPeer(Address, Fingerprint);
         var password = Password; Password = "";
         transport?.Dispose(); transport = environment.Open(peer, access.Validate);
@@ -183,6 +202,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     [RelayCommand]
     private Task DiscoverAsync() => RunAsync(async (access, ct) =>
     {
+        RequirePersonalConnection();
         var peer = new LocalSyncPeer(Address, Fingerprint);
         transport?.Dispose(); transport = environment.Open(peer, access.Validate);
         identity = await transport.IdentityAsync(ct); access.Validate();
@@ -268,6 +288,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     [RelayCommand]
     private Task PauseAsync() => RunAsync(async (access, ct) =>
     {
+        RequirePersonalConnection();
         var connection = review ?? await store.ReviewAsync(ct);
         if (!await ConfirmAsync("Sync_PauseConfirm", "")) return;
         access.Validate(); await store.PauseAsync(connection, ct); environment.ConnectionChanged(); await RefreshLocalAsync(ct);
@@ -276,6 +297,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     [RelayCommand]
     private Task SignOutAsync() => RunAsync(async (access, ct) =>
     {
+        RequirePersonalConnection();
         var connection = await store.ReviewAsync(ct); access.Validate();
         var peer = transport?.Peer ?? new LocalSyncPeer(Address, Fingerprint);
         if (!await ConfirmAsync("Sync_SignOutConfirm", "")) return;
@@ -363,10 +385,13 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     }
     private void RequireSession()
     {
+        RequirePersonalConnection();
         if (transport is null || identity is null || device is null || transport.Peer.Address.AbsoluteUri != new LocalSyncPeer(Address, Fingerprint).Address.AbsoluteUri ||
             transport.Peer.Fingerprint != new LocalSyncPeer(Address, Fingerprint).Fingerprint)
             throw new InvalidOperationException("The reviewed personal peer/session changed.");
     }
+    private void RequirePersonalConnection()
+    { if (IsHouseholdConnection) throw new InvalidOperationException("The original encrypted household connection owns this operation."); }
     private bool SessionMatchesConnection => transport is not null && identity is not null && device is not null &&
         review?.DeviceId == device.Id && review.IdentityId == identity.Id && review.PeerKey == transport.Peer.BindingKey(identity.Id);
     private Task<bool> ConfirmAsync(string key, string argument) => interaction.ConfirmAsync(translator["Sync_Title"],
@@ -377,9 +402,9 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     {
         var presenter = new PersonalSyncReviewPresenter(translator, dates, localization);
         ReviewItems.Clear();
-        var groups = new HashSet<Guid>();
+        var groups = new HashSet<(string Family, Guid Id)>();
         foreach (var conflict in Conflicts)
-            if (conflict.Conflict.LinkedGroup is not { } group || groups.Add(group))
+            if (conflict.Conflict.LinkedGroup is not { } group || groups.Add((SyncConflictGrouping.Family(conflict.Conflict.Proposal.Record), group)))
             {
                 var item = presenter.Create(conflict, reviewRemote);
                 ReviewItems.Add(item);
@@ -399,7 +424,8 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     private void RefreshProperties()
     {
         RefreshAttachmentProperties();
-        foreach (var property in new[] { nameof(Available), nameof(CanRead), nameof(IsReady), nameof(CanInteract), nameof(CanConnect), nameof(CanSync), nameof(SignedIn), nameof(CanLeave),
+        foreach (var property in new[] { nameof(PageTitle), nameof(IntroText), nameof(HelpTopic), nameof(ShowPersonalConnection), nameof(ShowPersonalSignedIn), nameof(HouseholdReviewEmpty) }) OnPropertyChanged(property);
+        foreach (var property in new[] { nameof(Available), nameof(CanRead), nameof(IsReady), nameof(CanInteract), nameof(CanConnect), nameof(CanSync), nameof(IsHouseholdConnection), nameof(SignedIn), nameof(CanLeave),
             nameof(Error), nameof(AutomaticError), nameof(StatusText), nameof(DetailText), nameof(NoProfiles), nameof(HasConflicts) }) OnPropertyChanged(property);
         foreach (var property in new[] { nameof(IsOnboardingRestore), nameof(CanFinishOnboarding), nameof(CanCloseOnboarding), nameof(ShowFooter) }) OnPropertyChanged(property);
     }

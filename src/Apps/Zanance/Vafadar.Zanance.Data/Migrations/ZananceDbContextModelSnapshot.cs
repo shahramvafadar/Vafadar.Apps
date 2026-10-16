@@ -1205,6 +1205,167 @@ namespace Vafadar.Zanance.Data.Migrations
                     b.ToTable("Settings", (string)null);
                 });
 
+            modelBuilder.Entity("Vafadar.Zanance.Core.Sharing.HouseholdContact", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("CreatedAt")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("IdentityId")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("UpdatedAt")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HouseholdContacts", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Core.Sharing.HouseholdCost", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("Amount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("CreatedAt")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CurrencyCode")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("EntryId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Kind")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(4000)
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("PaidByContactId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PaymentKind")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid?>("RefundOfCostId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("UpdatedAt")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Date");
+
+                    b.HasIndex("EntryId")
+                        .IsUnique();
+
+                    b.HasIndex("PaidByContactId");
+
+                    b.HasIndex("RefundOfCostId");
+
+                    b.ToTable("HouseholdCosts", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Core.Sharing.HouseholdCostAllocation", b =>
+                {
+                    b.Property<Guid>("CostId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ContactId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("Amount")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("CostId", "ContactId");
+
+                    b.HasIndex("ContactId");
+
+                    b.ToTable("HouseholdAllocations", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Core.Sharing.HouseholdSettlement", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("Amount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("CreatedAt")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CurrencyCode")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("EntryId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("FromContactId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(4000)
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ToContactId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("UpdatedAt")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("UsesDestinationAmount")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Date");
+
+                    b.HasIndex("EntryId")
+                        .IsUnique();
+
+                    b.HasIndex("FromContactId");
+
+                    b.HasIndex("ToContactId");
+
+                    b.ToTable("HouseholdSettlements", (string)null);
+                });
+
             modelBuilder.Entity("Vafadar.Zanance.Data.Commerce.StoredResourceSelection", b =>
                 {
                     b.Property<int>("Kind")
@@ -1249,6 +1410,451 @@ namespace Vafadar.Zanance.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ImportLinks", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sharing.HouseholdLocalAttempt", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Abandoned")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("AttemptId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CaptureHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CommitJson")
+                        .IsRequired()
+                        .HasMaxLength(131072)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Committed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("Cutoff")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("FinancialCursor")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("OpenJson")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("OperationId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Parts")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid?>("RemoteId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HouseholdLocalAttempts", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_HouseholdLocalAttempt_Singleton", "\"Id\" = 1");
+                        });
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sharing.HouseholdLocalAttemptPart", b =>
+                {
+                    b.Property<int>("Index")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("BaseVersion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(0L);
+
+                    b.Property<int>("CiphertextBytes")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("Digest")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("");
+
+                    b.Property<string>("PartJson")
+                        .IsRequired()
+                        .HasMaxLength(2097152)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RecordId")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("");
+
+                    b.Property<int>("SerializedBytes")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(0);
+
+                    b.HasKey("Index");
+
+                    b.ToTable("HouseholdLocalAttemptParts", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sharing.HouseholdLocalBinding", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("AccessObservedAtUnixSeconds")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AccessRetention")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("Cursor")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("DeviceFingerprint")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("FinancialCursor")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("GenerationPath")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("TEXT");
+
+                    b.Property<long?>("HostExpiresAtUnixSeconds")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("IdentityId")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MembershipHead")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("MembershipVersion")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("OwnerCreation")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("PeerKey")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PinnedSigningKey")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PinnedWrappingKey")
+                        .IsRequired()
+                        .HasMaxLength(2048)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProjectionContentHash")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProjectionReceiptJson")
+                        .HasMaxLength(4096)
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("ProjectionReviewId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProjectionSourceDigest")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PublicationHead")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("RemoteAccessRefused")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("RotationRequired")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("SendingDisabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("SetupOperation")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SignedInvitation")
+                        .HasMaxLength(131072)
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("SpaceId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HouseholdLocalBinding", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_HouseholdLocalBinding_Singleton", "\"Id\" = 1");
+                        });
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sharing.HouseholdLocalBlobReference", b =>
+                {
+                    b.Property<string>("Hash")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PieceIndex")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("Cursor")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ElementIndex")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EventIndex")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("Length")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("PieceHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Hash", "PieceIndex");
+
+                    b.HasIndex("Cursor", "EventIndex");
+
+                    b.ToTable("HouseholdLocalBlobReferences", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_HouseholdLocalBlobReference_Position", "\"Cursor\" > 0 AND \"Length\" > 0 AND \"PieceIndex\" >= 0 AND \"EventIndex\" >= 0 AND \"ElementIndex\" BETWEEN -1 AND 511");
+                        });
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sharing.HouseholdLocalEvent", b =>
+                {
+                    b.Property<long>("Cursor")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Index")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("BaseVersion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(0L);
+
+                    b.Property<string>("Digest")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("");
+
+                    b.Property<string>("EventJson")
+                        .IsRequired()
+                        .HasMaxLength(2097152)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RecordId")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("");
+
+                    b.Property<int>("SerializedBytes")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(0);
+
+                    b.HasKey("Cursor", "Index");
+
+                    b.HasIndex("RecordId", "Cursor");
+
+                    b.ToTable("HouseholdLocalEvents", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sharing.HouseholdLocalFinancialReference", b =>
+                {
+                    b.Property<long>("Version")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("Cursor")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EventIndex")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(2048)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Length")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("Offset")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Table")
+                        .IsRequired()
+                        .HasMaxLength(96)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Version");
+
+                    b.HasIndex("Cursor");
+
+                    b.ToTable("HouseholdLocalFinancialReferences", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_HouseholdFinancialReference_Position", "\"Version\" > 0 AND \"Cursor\" > 0 AND \"EventIndex\" >= 0 AND ((\"Offset\" = -1 AND \"Length\" = 0) OR (\"Offset\" >= 4 AND \"Length\" BETWEEN 1 AND 16777216))");
+                        });
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sharing.HouseholdLocalMembership", b =>
+                {
+                    b.Property<long>("Version")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProofJson")
+                        .IsRequired()
+                        .HasMaxLength(524288)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Version");
+
+                    b.ToTable("HouseholdLocalMemberships", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sharing.HouseholdLocalMembershipProposal", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("BodyJson")
+                        .IsRequired()
+                        .HasMaxLength(8388608)
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("ExpectedVersion")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("OperationId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HouseholdLocalMembershipProposals", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_HouseholdMembershipProposal_Singleton", "\"Id\" = 1");
+                        });
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sharing.HouseholdLocalOwnership", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("AnchorVersion")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("BodyJson")
+                        .IsRequired()
+                        .HasMaxLength(2097152)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Digest")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("OperationId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Stage")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HouseholdLocalOwnership", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_HouseholdLocalOwnership_Bound", "length(CAST(\"BodyJson\" AS BLOB)) BETWEEN 1 AND 2097152");
+
+                            t.HasCheckConstraint("CK_HouseholdLocalOwnership_Singleton", "\"Id\"=1");
+                        });
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sharing.HouseholdLocalPacket", b =>
+                {
+                    b.Property<long>("Cursor")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ReceiptJson")
+                        .IsRequired()
+                        .HasMaxLength(8388608)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Cursor");
+
+                    b.ToTable("HouseholdLocalPackets", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sharing.HouseholdLocalSecret", b =>
+                {
+                    b.Property<string>("Slot")
+                        .HasMaxLength(96)
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Frame")
+                        .IsRequired()
+                        .HasColumnType("BLOB");
+
+                    b.HasKey("Slot");
+
+                    b.ToTable("HouseholdLocalSecrets", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_HouseholdLocalSecret_FrameBound", "length(\"Frame\") BETWEEN 1 AND CASE WHEN \"Slot\" IN ('pending-recovery-preparation','pending-owner-recovery') THEN 131072 ELSE 8192 END");
+                        });
                 });
 
             modelBuilder.Entity("Vafadar.Zanance.Data.Sync.SyncBindingRow", b =>
@@ -1302,6 +1908,9 @@ namespace Vafadar.Zanance.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("TransportKind")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -1747,6 +2356,86 @@ namespace Vafadar.Zanance.Data.Migrations
                         });
 
                     b.Navigation("Rule")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Core.Sharing.HouseholdCost", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Core.Ledger.LedgerEntry", null)
+                        .WithMany()
+                        .HasForeignKey("EntryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Vafadar.Zanance.Core.Sharing.HouseholdContact", null)
+                        .WithMany()
+                        .HasForeignKey("PaidByContactId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Vafadar.Zanance.Core.Sharing.HouseholdCost", null)
+                        .WithMany()
+                        .HasForeignKey("RefundOfCostId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Core.Sharing.HouseholdCostAllocation", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Core.Sharing.HouseholdContact", null)
+                        .WithMany()
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Zanance.Core.Sharing.HouseholdCost", null)
+                        .WithMany()
+                        .HasForeignKey("CostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Core.Sharing.HouseholdSettlement", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Core.Ledger.LedgerEntry", null)
+                        .WithMany()
+                        .HasForeignKey("EntryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Vafadar.Zanance.Core.Sharing.HouseholdContact", null)
+                        .WithMany()
+                        .HasForeignKey("FromContactId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Zanance.Core.Sharing.HouseholdContact", null)
+                        .WithMany()
+                        .HasForeignKey("ToContactId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sharing.HouseholdLocalBlobReference", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Data.Sharing.HouseholdLocalPacket", null)
+                        .WithMany()
+                        .HasForeignKey("Cursor")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sharing.HouseholdLocalEvent", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Data.Sharing.HouseholdLocalPacket", null)
+                        .WithMany()
+                        .HasForeignKey("Cursor")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sharing.HouseholdLocalFinancialReference", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Data.Sharing.HouseholdLocalPacket", null)
+                        .WithMany()
+                        .HasForeignKey("Cursor")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

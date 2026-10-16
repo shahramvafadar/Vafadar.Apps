@@ -19,6 +19,7 @@ x-service: &worker
     Service__PublicOrigin: https://localhost:${ZANANCE_PROXY_PORT:-14543}
     Service__ProxyAddress: ${ZANANCE_PROXY_ADDRESS:-172.29.83.10}
     Service__Root: /private
+    Service__Household__LocalQualification: ${ZANANCE_HOUSEHOLD_QUALIFICATION:-false}
     Service__ListenerCertificate: /identities/server.crt
     Service__ListenerPrivateKey: /identities/server.key
     Service__ProtectionCertificate: /identities/protection.crt

@@ -19,6 +19,12 @@ public class MainActivity : MauiAppCompatActivity
     protected override void OnCreate(Bundle? savedInstanceState)
     {
 #if DEBUG
+        if (PackageName == "pro.vafadar.zanance.householdlifecycle" && Intent?.GetBooleanExtra("household_conflict_review", false) == true)
+            System.Environment.SetEnvironmentVariable("VAFADAR_HOUSEHOLD_CONFLICT_REVIEW", "1");
+        if (PackageName == "pro.vafadar.zanance.householdlifecycle" && Intent?.GetBooleanExtra("household_recovery_review", false) == true)
+            System.Environment.SetEnvironmentVariable("VAFADAR_HOUSEHOLD_RECOVERY_REVIEW", "1");
+        if (PackageName == "pro.vafadar.zanance.householdlifecycle" && Intent?.GetBooleanExtra("household_lifecycle_review", false) == true)
+            System.Environment.SetEnvironmentVariable("VAFADAR_HOUSEHOLD_ANDROID_REVIEW", "1");
         if (PackageName == "pro.vafadar.zanance.copyacceptance" && Intent?.GetBooleanExtra("sale_copy_review", false) == true)
             System.Environment.SetEnvironmentVariable("VAFADAR_SALE_COPY_REVIEW", "1");
         if (PackageName == "pro.vafadar.zanance.accessacceptance" && Intent?.GetBooleanExtra("device_unlock_review", false) == true)
@@ -56,15 +62,25 @@ public class MainActivity : MauiAppCompatActivity
     protected override void OnActivityResult(int requestCode, Result resultCode, Intent? data)
     {
         base.OnActivityResult(requestCode, resultCode, data);
-        if (!CameraCapture.OnActivityResult(requestCode, resultCode))
+        if (!Interaction.AndroidHouseholdRecoverySave.OnActivityResult(this, requestCode, resultCode, data) && !CameraCapture.OnActivityResult(requestCode, resultCode))
         {
             Vafadar.Authentication.Maui.SignInActivityResults.OnActivityResult(requestCode, resultCode, data);
         }
     }
 
+    /// <inheritdoc />
+    protected override void OnDestroy()
+    { Interaction.AndroidHouseholdRecoverySave.OnDestroyed(this); base.OnDestroy(); }
+
     protected override void OnNewIntent(Intent? intent)
     {
         base.OnNewIntent(intent);
+#if DEBUG
+        if (PackageName == "pro.vafadar.zanance.householdlifecycle" && intent?.GetBooleanExtra("household_recovery_review", false) == true)
+            Diagnostics.DebugHouseholdRecoveryAndroid.ApplyInputMode(intent.GetStringExtra("recovery_mode"));
+        if (PackageName == "pro.vafadar.zanance.householdlifecycle" && intent?.GetBooleanExtra("household_conflict_review", false) == true)
+            Diagnostics.DebugHouseholdConflictAndroid.ApplyMode(intent.GetStringExtra("household_conflict_mode"));
+#endif
         OpenFromWidget(intent);
     }
 

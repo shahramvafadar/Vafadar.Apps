@@ -27,6 +27,7 @@ public sealed class PrivateMaintenance(IServiceScopeFactory scopes, ServiceStora
         await using var db = await factory.CreateDbContextAsync(ct);
         var now = time.GetUtcNow();
         await syncPieces.RunAsync(db, ct);
+        await scope.ServiceProvider.GetRequiredService<Sharing.HouseholdRetirement>().RunOnceAsync(ct);
         foreach (var id in await db.Objects.Where(o => o.Deleted && !o.StorageRetired).OrderBy(o => o.CreatedAt).ThenBy(o => o.Id).Select(o => o.Id).Take(100).ToListAsync(ct))
         {
             File.Delete(storage.ObjectPath(id));

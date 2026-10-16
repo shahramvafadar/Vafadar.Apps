@@ -1,6 +1,15 @@
 using Vafadar.Zanance.Api;
 using Microsoft.AspNetCore.DataProtection;
 
+// Offline privacy restoration never constructs the database, listener, key ring or host.
+if (args.Length > 0 && args[0] == "--merge-household-deletions")
+{
+    if (args.Length != 3) throw new IOException("Explicit current and restored private roots required.");
+    var merged = await Vafadar.Zanance.Api.Sharing.HouseholdDeletionTransfer.MergeAsync(args[1], args[2]);
+    Console.WriteLine("Validated permanent household deletion markers: " + merged.ToString(System.Globalization.CultureInfo.InvariantCulture));
+    return;
+}
+
 // The operator switch is not a key/value configuration option; do not pass it to the host parser.
 var builder = WebApplication.CreateBuilder(args.Where(arg => arg != "--migrate").ToArray());
 builder.AddZananceService();

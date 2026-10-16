@@ -1,11 +1,13 @@
 using System.Net;
 using Vafadar.Zanance.Data.Sync;
+using Vafadar.Zanance.Data.Sharing;
 
 namespace Vafadar.Zanance.App.Features.Sync;
 
 /// <summary>Runs one original current-profile round with coalescing, lifetime checks and bounded retry delays.</summary>
 public sealed class PersonalSyncForegroundCoordinator(PersonalSyncStore store, PersonalSyncCoordinator coordinator,
-    IPersonalSyncEnvironment environment, TimeProvider time)
+    IPersonalSyncEnvironment environment, TimeProvider time, HouseholdJournal? householdJournal = null,
+    HouseholdSyncCoordinator? householdCoordinator = null, IPersonalSyncTokenStore? householdTokens = null)
 {
     private sealed record Retry(DateTimeOffset Due, int Failures);
     private readonly SemaphoreSlim gate = new(1, 1);
@@ -56,8 +58,21 @@ public sealed class PersonalSyncForegroundCoordinator(PersonalSyncStore store, P
             }
             if ((await store.ConflictsAsync(token)).Count != 0)
             { SetDue(scope, attemptRevision, TimeSpan.MaxValue, 0); return; }
-            access.Validate(); using var transport = environment.Open(peer, access.Validate);
-            var outcome = await coordinator.SynchronizeAsync(transport, token); access.Validate();
+            access.Validate(); PersonalSyncOutcome outcome;
+            if (connection.TransportKind == ProfileSynchronizationKind.Household)
+            {
+                if (householdJournal is null || householdCoordinator is null || householdTokens is null)
+                    throw new InvalidOperationException("The original encrypted household channel is unavailable.");
+                var actual = await householdJournal.CaptureAsync(peer, connection.IdentityId, token) ?? throw new InvalidDataException();
+                access.Validate(); using var encrypted = new HouseholdServiceTransport(peer, householdTokens, time, access.Validate);
+                outcome = await householdCoordinator.SynchronizeAsync(encrypted, actual.Authority, token);
+            }
+            else
+            {
+                using var transport = environment.Open(peer, access.Validate);
+                outcome = await coordinator.SynchronizeAsync(transport, token);
+            }
+            access.Validate();
             if (outcome.Applied) await environment.PublishAppliedAsync(token);
             access.Validate(); SetDue(scope, attemptRevision, TimeSpan.FromSeconds(30), 0); Changed?.Invoke(this, EventArgs.Empty);
         }
@@ -67,7 +82,9 @@ public sealed class PersonalSyncForegroundCoordinator(PersonalSyncStore store, P
             // Responses and exceptions may contain private information; retain only these fixed status codes.
             if (access is null || linked is null) return;
             var unauthorized = error is PersonalSyncHttpException { Status: HttpStatusCode.Unauthorized };
-            var reconnect = error is PersonalSyncHttpException { Status: HttpStatusCode.Forbidden };
+            var reconnect = error is PersonalSyncHttpException { Status: HttpStatusCode.Forbidden } ||
+                connection?.TransportKind == ProfileSynchronizationKind.Household &&
+                (error is PersonalSyncHttpException { Status: HttpStatusCode.NotFound or HttpStatusCode.Gone } || error is HouseholdWriteRejectedException);
             failures = Math.Min(failures + 1, 5);
             SetDue(scope, attemptRevision, unauthorized || reconnect ? TimeSpan.MaxValue : TimeSpan.FromSeconds(Math.Min(300, 15 * (1 << failures))), failures);
             if (connection is null) return;

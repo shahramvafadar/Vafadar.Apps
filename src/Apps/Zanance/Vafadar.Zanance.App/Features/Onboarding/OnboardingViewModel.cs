@@ -110,6 +110,9 @@ public sealed partial class OnboardingViewModel : ViewModelBase
     /// <summary>Opens a separately confirmed first-run sync path, preserving this unsaved wizard.</summary>
     [RelayCommand]
     private Task RestoreSyncedProfileAsync() => !IsBusy && PersonalSyncAvailable ? _host.RestoreSyncedOnboardingAsync() : Task.CompletedTask;
+    /// <summary>Household setup uses the existing independent empty profile and explicit signed admission.</summary>
+    [RelayCommand]
+    private Task OpenHouseholdAsync() => !IsBusy && PersonalSyncAvailable ? _host.OpenHouseholdOnboardingAsync() : Task.CompletedTask;
 
     public bool IsStep1 => Step == 1;
 

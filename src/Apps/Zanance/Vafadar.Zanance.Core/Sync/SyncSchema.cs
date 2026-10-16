@@ -29,6 +29,15 @@ public static class SyncSchema
     /// <summary>Standard digest used for compatibility negotiation, not encryption or authentication.</summary>
     public static string Hash { get; } = SyncSchemaDigest.Compute(Manifest);
 
+    /// <summary>Chooses one reviewed scope contract; a household must never negotiate the personal contract as a fallback.</summary>
+    public static SyncSchemaManifest ForScope(bool household) => household ? Sharing.HouseholdFinancialSchema.Manifest : Manifest;
+    /// <summary>Gets the corresponding exact negotiation digest without altering delivered personal compatibility.</summary>
+    public static string HashForScope(bool household) => household ? Sharing.HouseholdFinancialSchema.Hash : Hash;
+    /// <summary>Looks up only a shipped financial descriptor; graph/transport validation still decides whether its scope permits that row.</summary>
+    public static SyncTable Describe(string name) => Manifest.Tables.FirstOrDefault(table => table.Name == name)
+        ?? Sharing.HouseholdFinancialSchema.Additional.Tables.FirstOrDefault(table => table.Name == name)
+        ?? throw new InvalidDataException("The financial table is not in a reviewed contract.");
+
     private static byte[] ReadBytes()
     {
         using var source = typeof(SyncSchema).Assembly.GetManifestResourceStream("Vafadar.Zanance.Sync.schema-v1.json")

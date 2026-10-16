@@ -15,6 +15,8 @@
 !src/Libraries/
 !src/Libraries/Vafadar.Core/
 !src/Libraries/Vafadar.Core/**
+!src/Libraries/Vafadar.Cryptography/
+!src/Libraries/Vafadar.Cryptography/**
 !src/Apps/
 !src/Apps/Zanance/
 !src/Apps/Zanance/Vafadar.Zanance.Core/

@@ -6933,4 +6933,617 @@ Category limits:
   <data name="Sync_AttachmentZoomOut" xml:space="preserve">
     <value>Reduce</value>
   </data>
+  <data name="Household_Title" xml:space="preserve">
+    <value>Household sharing</value>
+  </data>
+  <data name="Household_MoreHint" xml:space="preserve">
+    <value>Separate shared finances, members and encrypted sync</value>
+  </data>
+  <data name="Household_Intro" xml:space="preserve">
+    <value>Keep shared finances in a separate profile. Only approved devices receive the keys. Compare fingerprints with the other person before granting access.</value>
+  </data>
+  <data name="Household_SeparateRequired" xml:space="preserve">
+    <value>This profile uses personal sync. Create a separate profile for household sharing.</value>
+  </data>
+  <data name="Household_NotConnected" xml:space="preserve">
+    <value>No verified household session is open. Sign in or use the saved session.</value>
+  </data>
+  <data name="Household_Waiting" xml:space="preserve">
+    <value>Setup is retained. Complete creation, or wait for the owner's device approval.</value>
+  </data>
+  <data name="Household_Access" xml:space="preserve">
+    <value>Last verified role: {0}. {1}</value>
+  </data>
+  <data name="Household_Writable" xml:space="preserve">
+    <value>Financial editing is currently allowed.</value>
+  </data>
+  <data name="Household_ReadOnly" xml:space="preserve">
+    <value>Financial editing is blocked. Existing data and pending changes are retained.</value>
+  </data>
+  <data name="Household_Fingerprints" xml:space="preserve">
+    <value>Owner root: {0}
+This device: {1}</value>
+  </data>
+  <data name="Household_Name" xml:space="preserve">
+    <value>Local household profile name</value>
+  </data>
+  <data name="Household_NewProfile" xml:space="preserve">
+    <value>Create and open a separate profile</value>
+  </data>
+  <data name="Household_Create" xml:space="preserve">
+    <value>Prepare a household in this empty profile</value>
+  </data>
+  <data name="Household_CompleteCreation" xml:space="preserve">
+    <value>Complete retained household creation</value>
+  </data>
+  <data name="Household_CreateConfirm" xml:space="preserve">
+    <value>Prepare a new household only in this empty profile? Personal profiles stay separate; this does not share their accounts or history.</value>
+  </data>
+  <data name="Household_PublishConfirm" xml:space="preserve">
+    <value>Create or resume this household on the chosen service using its retained keys? No personal profile is uploaded.</value>
+  </data>
+  <data name="Household_Invitation" xml:space="preserve">
+    <value>Private invitation text</value>
+  </data>
+  <data name="Household_InvitationPrivacy" xml:space="preserve">
+    <value>Share this invitation only with the intended person through a private channel. It does not grant access until the person accepts and the owner approves the exact device.</value>
+  </data>
+  <data name="Household_RootConfirmation" xml:space="preserve">
+    <value>Owner fingerprint compared independently</value>
+  </data>
+  <data name="Household_Join" xml:space="preserve">
+    <value>Accept this invitation for this empty profile</value>
+  </data>
+  <data name="Household_JoinConfirm" xml:space="preserve">
+    <value>Accept the invitation using the independently compared owner fingerprint? This device still needs owner approval; no existing personal accounts are shared.</value>
+  </data>
+  <data name="Household_CheckAdmission" xml:space="preserve">
+    <value>Check device approval and receive shared data</value>
+  </data>
+  <data name="Household_Invite" xml:space="preserve">
+    <value>Create or recover a private invitation</value>
+  </data>
+  <data name="Household_InvitationFinish" xml:space="preserve">
+    <value>Finish displaying this invitation</value>
+  </data>
+  <data name="Household_InvitationFinishConfirm" xml:space="preserve">
+    <value>Clear this displayed invitation so another can be created? The original invitation remains valid until accepted, withdrawn or expired.</value>
+  </data>
+  <data name="Household_Members" xml:space="preserve">
+    <value>Members and roles</value>
+  </data>
+  <data name="Household_Member" xml:space="preserve">
+    <value>Member: {0}
+Role: {1}</value>
+  </data>
+  <data name="Household_Owner" xml:space="preserve">
+    <value>Owner</value>
+  </data>
+  <data name="Household_Editor" xml:space="preserve">
+    <value>Editor</value>
+  </data>
+  <data name="Household_Viewer" xml:space="preserve">
+    <value>Viewer</value>
+  </data>
+  <data name="Household_Unverified" xml:space="preserve">
+    <value>Not verified</value>
+  </data>
+  <data name="Household_ManageMember" xml:space="preserve">
+    <value>Change role or revoke access</value>
+  </data>
+  <data name="Household_Revoke" xml:space="preserve">
+    <value>Revoke membership</value>
+  </data>
+  <data name="Household_MemberChangeConfirm" xml:space="preserve">
+    <value>Apply this confirmed role change or revocation and rotate the shared key? Revocation cannot erase copies already downloaded or exported.</value>
+  </data>
+  <data name="Household_Pending" xml:space="preserve">
+    <value>Devices awaiting approval</value>
+  </data>
+  <data name="Household_PendingHint" xml:space="preserve">
+    <value>Approve only after comparing the recipient's complete device fingerprint through a separate channel.</value>
+  </data>
+  <data name="Household_Device" xml:space="preserve">
+    <value>Identity: {0}
+Device fingerprint: {1}</value>
+  </data>
+  <data name="Household_Approve" xml:space="preserve">
+    <value>Approve this exact device</value>
+  </data>
+  <data name="Household_DeviceFingerprintPrompt" xml:space="preserve">
+    <value>Enter the complete device fingerprint compared independently with the recipient.</value>
+  </data>
+  <data name="Household_RefreshMembers" xml:space="preserve">
+    <value>Refresh membership and pending approvals</value>
+  </data>
+  <data name="Household_ResumeAdministration" xml:space="preserve">
+    <value>Resume the original pending member change</value>
+  </data>
+  <data name="Household_ActionFailed" xml:space="preserve">
+    <value>The household action did not finish. Your data and retained request are preserved. Check the connection, approval and current role, then resume the original request.</value>
+  </data>
+  <data name="Household_ConflictReview" xml:space="preserve">
+    <value>Some changes need an explicit financial choice before syncing. No amount has been chosen automatically.</value>
+  </data>
+  <data name="Household_Finish" xml:space="preserve">
+    <value>Open this household</value>
+  </data>
+  <data name="Household_FinishConfirm" xml:space="preserve">
+    <value>Open the connected household without creating another account? Existing display choices are preserved.</value>
+  </data>
+  <data name="Help_Household_Title" xml:space="preserve">
+    <value>Household privacy and access</value>
+  </data>
+  <data name="Help_Household_Text" xml:space="preserve">
+    <value>A household has a separate ledger and up to six accepted identities including its owner. Viewers read and export; editors also change finances. The owner confirms invitations, devices and role changes. Data is encrypted on your device before upload. Compare complete fingerprints independently: an invitation alone grants no data access. Keep invitations private. Removing access rotates future keys but cannot erase earlier downloads or exports. After service expiry, read/export remains available for 30 days; the next 90 days retain service data without serving it. Keep a separate portable Zanance backup for a new device.</value>
+  </data>
+  <data name="Help_Household_Example" xml:space="preserve">
+    <value>For example, invite another person as a viewer, compare their device fingerprint by phone and approve only that exact device. Their personal profile is not added to the household.</value>
+  </data>
+  <data name="Household_PersonalRouteHint" xml:space="preserve">
+    <value>This profile uses encrypted household sharing. Manage and sync it from Household sharing.</value>
+  </data>
+  <data name="HouseholdCost_Title" xml:space="preserve">
+    <value>Household costs and shares</value>
+  </data>
+  <data name="HouseholdCost_Intro" xml:space="preserve">
+    <value>Record actual shared costs once. Cost shares, private advances and cash-account balances are separate.</value>
+  </data>
+  <data name="HouseholdCost_Contacts" xml:space="preserve">
+    <value>Financial contacts</value>
+  </data>
+  <data name="HouseholdCost_AddContact" xml:space="preserve">
+    <value>Add a financial contact</value>
+  </data>
+  <data name="HouseholdCost_ContactName" xml:space="preserve">
+    <value>Name for cost allocation; this does not invite a member.</value>
+  </data>
+  <data name="HouseholdCost_AddCost" xml:space="preserve">
+    <value>Record an actual cost or refund</value>
+  </data>
+  <data name="HouseholdCost_AddSettlement" xml:space="preserve">
+    <value>Record a private repayment</value>
+  </data>
+  <data name="HouseholdCost_Review" xml:space="preserve">
+    <value>Review this record</value>
+  </data>
+  <data name="HouseholdCost_Editor" xml:space="preserve">
+    <value>Review the actual facts before saving</value>
+  </data>
+  <data name="HouseholdCost_Description" xml:space="preserve">
+    <value>Cost description</value>
+  </data>
+  <data name="HouseholdCost_Date" xml:space="preserve">
+    <value>Actual cost or repayment date</value>
+  </data>
+  <data name="HouseholdCost_Currency" xml:space="preserve">
+    <value>Exact amount currency</value>
+  </data>
+  <data name="HouseholdCost_Amount" xml:space="preserve">
+    <value>Positive actual amount</value>
+  </data>
+  <data name="HouseholdCost_Payer" xml:space="preserve">
+    <value>Private payer or repayment sender</value>
+  </data>
+  <data name="HouseholdCost_Recipient" xml:space="preserve">
+    <value>Private repayment recipient</value>
+  </data>
+  <data name="HouseholdCost_IsRefund" xml:space="preserve">
+    <value>This is an actual refund</value>
+  </data>
+  <data name="HouseholdCost_RefundOriginal" xml:space="preserve">
+    <value>Original actual cost being refunded</value>
+  </data>
+  <data name="HouseholdCost_SharedCash" xml:space="preserve">
+    <value>Link an existing shared cash movement</value>
+  </data>
+  <data name="HouseholdCost_LinkHint" xml:space="preserve">
+    <value>Choose the matching movement on the selected date. This screen never creates or changes a cash entry.</value>
+  </data>
+  <data name="HouseholdCost_SearchTitle" xml:space="preserve">
+    <value>Filter existing movements by description</value>
+  </data>
+  <data name="HouseholdCost_FindMovements" xml:space="preserve">
+    <value>Find existing movements on this date</value>
+  </data>
+  <data name="HouseholdCost_Destination" xml:space="preserve">
+    <value>Use the actual destination side of the transfer</value>
+  </data>
+  <data name="HouseholdCost_Shares" xml:space="preserve">
+    <value>Exact cost shares</value>
+  </data>
+  <data name="HouseholdCost_SharesHint" xml:space="preserve">
+    <value>Enter each agreed share in this currency. Their sum must equal the cost. No equal split or exchange rate is assumed.</value>
+  </data>
+  <data name="HouseholdCost_Note" xml:space="preserve">
+    <value>Optional actual note</value>
+  </data>
+  <data name="HouseholdCost_NetTotal" xml:space="preserve">
+    <value>Actual net household costs</value>
+  </data>
+  <data name="HouseholdCost_SharedPaid" xml:space="preserve">
+    <value>Paid from shared accounts</value>
+  </data>
+  <data name="HouseholdCost_PrivatePaid" xml:space="preserve">
+    <value>Paid privately</value>
+  </data>
+  <data name="HouseholdCost_Attributed" xml:space="preserve">
+    <value>Cost share: {0}</value>
+  </data>
+  <data name="HouseholdCost_Advance" xml:space="preserve">
+    <value>Private advance balance: {0}</value>
+  </data>
+  <data name="HouseholdCost_FromTo" xml:space="preserve">
+    <value>Repayment from {0} to {1}</value>
+  </data>
+  <data name="HouseholdCost_Movement" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="HouseholdCost_Unnamed" xml:space="preserve">
+    <value>Existing cash movement</value>
+  </data>
+  <data name="HouseholdCost_Rename" xml:space="preserve">
+    <value>Change this financial name</value>
+  </data>
+  <data name="HouseholdCost_Archive" xml:space="preserve">
+    <value>Archive this financial contact</value>
+  </data>
+  <data name="HouseholdCost_Reactivate" xml:space="preserve">
+    <value>Reactivate this financial contact</value>
+  </data>
+  <data name="HouseholdCost_ArchivedContact" xml:space="preserve">
+    <value>{0} (archived)</value>
+  </data>
+  <data name="HouseholdCost_Delete" xml:space="preserve">
+    <value>Delete this record</value>
+  </data>
+  <data name="HouseholdCost_SaveConfirm" xml:space="preserve">
+    <value>Save these actual facts and exact shares? This does not create a cash ledger entry.</value>
+  </data>
+  <data name="HouseholdCost_DeleteConfirm" xml:space="preserve">
+    <value>Delete only this reviewed cost/shares or repayment record? Its existing cash movement will remain.</value>
+  </data>
+  <data name="HouseholdCost_Discard" xml:space="preserve">
+    <value>Discard this unsaved draft before continuing?</value>
+  </data>
+  <data name="HouseholdCost_ReadOnly" xml:space="preserve">
+    <value>These costs are view-only under the current household role or access state.</value>
+  </data>
+  <data name="HouseholdCost_ActionFailed" xml:space="preserve">
+    <value>The operation was not completed. Retain the draft, then reload and review the current household before trying again.</value>
+  </data>
+  <data name="HouseholdCost_InvalidGraph" xml:space="preserve">
+    <value>Check the allocations, original refund and exact linked movement. No partial cost changes were saved.</value>
+  </data>
+  <data name="HouseholdCost_TitleRequired" xml:space="preserve">
+    <value>Enter the actual cost description.</value>
+  </data>
+  <data name="HouseholdCost_ReferencesRequired" xml:space="preserve">
+    <value>Choose the actual people, original refund cost and matching cash movement where required.</value>
+  </data>
+  <data name="HouseholdCost_SumRequired" xml:space="preserve">
+    <value>Enter exact shares whose sum equals the actual amount.</value>
+  </data>
+  <data name="HouseholdCost_RecordCaption" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="HouseholdCost_DestinationValue" xml:space="preserve">
+    <value>Destination amount: {0}</value>
+  </data>
+  <data name="Help_HouseholdCosts_Title" xml:space="preserve">
+    <value>Actual household costs</value>
+  </data>
+  <data name="Help_HouseholdCosts_Text" xml:space="preserve">
+    <value>These records allocate actual costs, not account ownership. Private payments affect private advances; a linked shared-account expense is counted only once. Refunds require an original cost and cannot exceed its total or a person's share. A repayment records an actual private payment and creates no cash movement. Enter exact shares; no split, currency conversion or estimated debt is invented. Changing currency clears numeric drafts. Archived people retain history but cannot receive new shares.</value>
+  </data>
+  <data name="Help_HouseholdCosts_Example" xml:space="preserve">
+    <value>A private cost of 10.01 KWD has shares of 3.33 and 6.68 KWD. The household cost is 10.01 KWD. A shared-account balance does not imply that either person owns half of that cash.</value>
+  </data>
+  <data name="HouseholdCost_ContactIdentity" xml:space="preserve">
+    <value>Optional historical identity label</value>
+  </data>
+  <data name="HouseholdCost_PaymentSource" xml:space="preserve">
+    <value>Actual payment source</value>
+  </data>
+  <data name="HouseholdRecovery_Title" xml:space="preserve">
+    <value>Household recovery</value>
+  </data>
+  <data name="HouseholdRecovery_Intro" xml:space="preserve">
+    <value>An optional separate recovery file can restore household ownership after all your devices are lost. Keep it outside this device. Your Zanance identity sign-in is still required; portable financial backups remain separate.</value>
+  </data>
+  <data name="HouseholdRecovery_FilePassword" xml:space="preserve">
+    <value>Recovery-file password (not your sign-in password)</value>
+  </data>
+  <data name="HouseholdRecovery_FilePasswordConfirm" xml:space="preserve">
+    <value>Repeat the password when exporting</value>
+  </data>
+  <data name="HouseholdRecovery_Export" xml:space="preserve">
+    <value>Save a protected recovery file</value>
+  </data>
+  <data name="HouseholdRecovery_FileSaved" xml:space="preserve">
+    <value>The encrypted file was saved. After unlocking, explicitly enable this original kit. If the app process stops first, export again; the pending kit stays the same.</value>
+  </data>
+  <data name="HouseholdRecovery_FilePicked" xml:space="preserve">
+    <value>An encrypted recovery file is selected. Enter its password to review the original household.</value>
+  </data>
+  <data name="HouseholdRecovery_Off" xml:space="preserve">
+    <value>No enabled recovery kit has been discovered for the current owner.</value>
+  </data>
+  <data name="HouseholdRecovery_Active" xml:space="preserve">
+    <value>The service has an enabled encrypted kit for the current owner. Its password is never remembered.</value>
+  </data>
+  <data name="HouseholdRecovery_PasswordError" xml:space="preserve">
+    <value>Use at least eight characters and repeat the same recovery-file password.</value>
+  </data>
+  <data name="HouseholdRecovery_Pick" xml:space="preserve">
+    <value>Choose an encrypted recovery file</value>
+  </data>
+  <data name="HouseholdRecovery_Enable" xml:space="preserve">
+    <value>Enable the saved recovery kit</value>
+  </data>
+  <data name="HouseholdRecovery_EnableConfirm" xml:space="preserve">
+    <value>Enable this saved file for household recovery? The original staged archive will finish, ownership keys will rotate, and any previous kit will lose future access. Keep the file and its password separately and safely.</value>
+  </data>
+  <data name="HouseholdRecovery_Import" xml:space="preserve">
+    <value>Review this kit in the empty profile</value>
+  </data>
+  <data name="HouseholdRecovery_Complete" xml:space="preserve">
+    <value>Recover ownership and receive household history</value>
+  </data>
+  <data name="HouseholdRecovery_ImportConfirm" xml:space="preserve">
+    <value>Use this independent empty profile to recover the original household? Your actual owning identity and separate kit must both be verified. Completing recovery replaces all prior owner devices. Other members remain, no money is posted, and unsent data on lost devices cannot be recovered from the service.</value>
+  </data>
+  <data name="HouseholdRecovery_Revoke" xml:space="preserve">
+    <value>Disable the current recovery kit</value>
+  </data>
+  <data name="HouseholdRecovery_RevokeConfirm" xml:space="preserve">
+    <value>Disable the current kit and replace both ownership keys? The old file will not unlock future generations. Previously downloaded keys, history or exported files cannot be recalled. Keep a separate portable Zanance backup for a new device.</value>
+  </data>
+  <data name="Help_HouseholdRecovery_Title" xml:space="preserve">
+    <value>Separate household recovery</value>
+  </data>
+  <data name="Help_HouseholdRecovery_Text" xml:space="preserve">
+    <value>Recovery is optional. First save the password-encrypted file outside this device, then explicitly enable it. Zanance never remembers its password. A new empty profile needs both the same owning identity sign-in and the original kit; signing in alone cannot replace lost keys. Recovery retires prior owner devices, preserves other members and receives only history that reached the service. It does not recover a lost local database key. Interrupted operations retain their original keys and encrypted pages; do not create another household to resume them.</value>
+  </data>
+  <data name="Help_HouseholdRecovery_Example" xml:space="preserve">
+    <value>For example, after losing a phone, sign in with the same Zanance identity in a separate empty profile, choose the saved recovery file and enter its password. Review and explicitly complete recovery; keep the financial portable backup separately.</value>
+  </data>
+  <data name="Household_Review_Title" xml:space="preserve">
+    <value>Review shared changes</value>
+  </data>
+  <data name="Household_Review_Empty" xml:space="preserve">
+    <value>No shared changes currently need a decision. Return to the household to synchronize after reviewing any earlier choices.</value>
+  </data>
+  <data name="Help_HouseholdReview_Title" xml:space="preserve">
+    <value>Compare shared financial changes</value>
+  </data>
+  <data name="Help_HouseholdReview_Text" xml:space="preserve">
+    <value>Compare the complete submitted and received versions before choosing. A linked movement or cost and its shares are one decision; Zanance does not guess amounts, equal shares or exchange rates. These choices are recorded in the current protected profile, then applied through encrypted household synchronization. This review does not sign in to personal sync or send readable household finance. Open an attachment preview when required. If data changed after the review, reload the actual review instead of reusing old consent.</value>
+  </data>
+  <data name="Help_HouseholdReview_Example" xml:space="preserve">
+    <value>For example, two members edit the same expense and its shares while offline. Compare the original currency, amount, payer and all shares, then choose one complete version. Return to the household to synchronize; no extra cash movement is created by choosing.</value>
+  </data>
+  <data name="HouseholdSource_Title" xml:space="preserve">
+    <value>Choose personal data to share</value>
+  </data>
+  <data name="HouseholdSource_Load" xml:space="preserve">
+    <value>Load my source accounts</value>
+  </data>
+  <data name="HouseholdSource_History" xml:space="preserve">
+    <value>Include selected accounts' history</value>
+  </data>
+  <data name="HouseholdSource_Files" xml:space="preserve">
+    <value>Include their attached files</value>
+  </data>
+  <data name="HouseholdSource_Review" xml:space="preserve">
+    <value>Review the exact copy</value>
+  </data>
+  <data name="HouseholdSource_Destination" xml:space="preserve">
+    <value>Choose a separate destination profile</value>
+  </data>
+  <data name="HouseholdSource_Copy" xml:space="preserve">
+    <value>Copy my reviewed selection here</value>
+  </data>
+  <data name="HouseholdSource_PrivateCounterpart" xml:space="preserve">
+    <value>Excluded private account</value>
+  </data>
+  <data name="HouseholdSource_Summary" xml:space="preserve">
+    <value>Accounts: {0}
+Historical entries: {1}; files: {2}.
+Transfers with a private side: {3}; refunds without the private purchase link: {4}.</value>
+  </data>
+  <data name="HouseholdSource_Consent" xml:space="preserve">
+    <value>Only the reviewed accounts and optional history/files will be copied into a separate ledger. Selected notes and files become shared content. Private transfer counterparts use a neutral label; no exchange rate is guessed. Later personal edits stay separate. The destination must be empty or have an unfinished unpublished copy. Nothing is published until you complete household creation.</value>
+  </data>
+  <data name="HouseholdSource_ReplacePending" xml:space="preserve">
+    <value>Replace only the unfinished copy request with this newly reviewed selection? The destination must still be empty and unpublished. Its original setup and keys remain unchanged.</value>
+  </data>
+  <data name="HouseholdSource_CancelMemory" xml:space="preserve">
+    <value>Discard this memory-only selection? No copied data, durable unfinished request, profile or key will be deleted. An unfinished copy still requires a fresh source review before publication.</value>
+  </data>
+  <data name="HouseholdSource_Pending" xml:space="preserve">
+    <value>An unfinished selected copy blocks publication. Return to the personal source, review it again and choose this existing destination to continue with its original keys.</value>
+  </data>
+  <data name="Help_HouseholdSource_Title" xml:space="preserve">
+    <value>A separate reviewed copy</value>
+  </data>
+  <data name="Help_HouseholdSource_Text" xml:space="preserve">
+    <value>Choose accounts explicitly. History and attachments are separate opt-ins. Review names and counts before choosing a separate destination. The app rechecks the actual source while profile maintenance excludes writers. Changing a choice requires another review. If the process stops, review the source again; do not replace the destination's keys.</value>
+  </data>
+  <data name="Help_HouseholdSource_Example" xml:space="preserve">
+    <value>Share the household account and its receipts while keeping your personal savings private. Later savings edits are not sent to the household.</value>
+  </data>
+  <data name="Household_Devices" xml:space="preserve">
+    <value>Approved and pending devices</value>
+  </data>
+  <data name="Household_ApprovedDevice" xml:space="preserve">
+    <value>Member: {0}; role: {1}
+Device fingerprint: {2}</value>
+  </data>
+  <data name="Household_RevokeDevice" xml:space="preserve">
+    <value>Revoke this other device</value>
+  </data>
+  <data name="Household_RevokeDeviceConfirm" xml:space="preserve">
+    <value>Revoke the reviewed device and rotate financial keys? For an owner's device, both owner key roles also change and any enabled recovery kit is updated. Previously downloaded or exported content cannot be recalled. Other approved devices keep access.</value>
+  </data>
+  <data name="Household_DeviceRemovalHint" xml:space="preserve">
+    <value>Compare complete fingerprints before approving another device. This screen removes only another device when its member has a second approved device. To remove another member's last device, remove that member. Your current device stays available for completing the operation.</value>
+  </data>
+  <data name="Household_PendingInvitationHint" xml:space="preserve">
+    <value>An original invitation request is still saved on this device. You can finish that local request even without pasting an old copy. This does not cancel a previously shared invitation; changing owner keys invalidates invitations that are still awaiting acceptance.</value>
+  </data>
+  <data name="HouseholdDeviceAccess_Export" xml:space="preserve">
+    <value>Prepare access for another device of this member</value>
+  </data>
+  <data name="HouseholdDeviceAccess_Request" xml:space="preserve">
+    <value>Request approval for this device using the pasted access package</value>
+  </data>
+  <data name="HouseholdDeviceAccess_Hint" xml:space="preserve">
+    <value>Already a member on another device? Ask the owner for your public device access package, sign in to the same identity in a separate empty profile, and independently compare the complete owner fingerprint. Request approval here. The owner must then compare this device fingerprint and approve it. Sign-in alone gives no financial access. After restarting, use Check admission to continue the same saved request.</value>
+  </data>
+  <data name="HouseholdDeviceAccess_ExportConfirm" xml:space="preserve">
+    <value>Prepare a public signed access package for this existing member? This neither invites a new member nor approves a device. Share it only with this member; approval still requires comparing the new device fingerprint independently.</value>
+  </data>
+  <data name="HouseholdDeviceAccess_RequestConfirm" xml:space="preserve">
+    <value>Request approval for this device in this separate empty profile? Its own key and original request will be saved before submission. No financial data or keys are received until the owner independently approves this exact device. Keep this profile to resume after a restart.</value>
+  </data>
+  <data name="HouseholdOwnership_Title" xml:space="preserve">
+    <value>Transfer household ownership</value>
+  </data>
+  <data name="HouseholdOwnership_Hint" xml:space="preserve">
+    <value>Both people explicitly approve on their selected devices. The new owner creates independent keys. Financial publication pauses until completion, cancellation or expiry. Saved financial history stays unchanged.</value>
+  </data>
+  <data name="HouseholdOwnership_Start" xml:space="preserve">
+    <value>Choose as new owner</value>
+  </data>
+  <data name="HouseholdOwnership_Leave" xml:space="preserve">
+    <value>Leave this household</value>
+  </data>
+  <data name="HouseholdOwnership_Continue" xml:space="preserve">
+    <value>Approve this original step</value>
+  </data>
+  <data name="HouseholdOwnership_Finish" xml:space="preserve">
+    <value>Finish this transfer request</value>
+  </data>
+  <data name="HouseholdOwnership_Confirm" xml:space="preserve">
+    <value>Continue only for the independently verified person and device. The new owner receives future ownership keys; the former owner keeps only the explicitly selected role, or leaves. The old household recovery kit stops working after completion. Previously downloaded history cannot be recalled.</value>
+  </data>
+  <data name="HouseholdOwnership_CancelConfirm" xml:space="preserve">
+    <value>Cancel only this pending ownership transfer? The existing signed ownership remains. This does not undo a completed transfer or delete financial data.</value>
+  </data>
+  <data name="HouseholdOwnership_FinishConfirm" xml:space="preserve">
+    <value>Verify the original final receipt, then close this request? Only unused candidates of this exact canceled or expired request may be removed; saved financial history and committed keys remain.</value>
+  </data>
+  <data name="HouseholdOwnership_None" xml:space="preserve">
+    <value>No transfer request is retained here. Refresh to check for a request addressed to this identity.</value>
+  </data>
+  <data name="HouseholdOwnership_Offered" xml:space="preserve">
+    <value>Offer recorded. The selected future owner's device must prepare its own new keys. The original owner can resume an unacknowledged offer.</value>
+  </data>
+  <data name="HouseholdOwnership_Prepared" xml:space="preserve">
+    <value>The future owner prepared the original new keys and recipient list. The original owner's selected device must authorize these exact bytes.</value>
+  </data>
+  <data name="HouseholdOwnership_Authorized" xml:space="preserve">
+    <value>The original owner signed the exact transfer. The future owner's selected device must accept that original signature and key recipients.</value>
+  </data>
+  <data name="HouseholdOwnership_Accepted" xml:space="preserve">
+    <value>Both sides accepted. The original owner's selected device must publish the same retained transfer to complete the ownership change.</value>
+  </data>
+  <data name="HouseholdOwnership_Published" xml:space="preserve">
+    <value>The transfer was published. Finish this request to verify and adopt its original receipt on this device.</value>
+  </data>
+  <data name="HouseholdOwnership_Canceled" xml:space="preserve">
+    <value>This original transfer was canceled. Finish the request explicitly; the existing signed owner remains.</value>
+  </data>
+  <data name="HouseholdOwnership_Expired" xml:space="preserve">
+    <value>This original transfer expired. Finish it explicitly before starting a different request; no new keys or consent are inferred.</value>
+  </data>
+  <data name="HouseholdLifecycle_Title" xml:space="preserve">
+    <value>Remote space and retention</value>
+  </data>
+  <data name="HouseholdLifecycle_Hint" xml:space="preserve">
+    <value>After service expiry: 30 days to read and export, then 90 days retained without access. Permanent deletion follows. Local copies and portable exports remain separate.</value>
+  </data>
+  <data name="HouseholdLifecycle_Unknown" xml:space="preserve">
+    <value>Service state has not been checked.</value>
+  </data>
+  <data name="HouseholdLifecycle_Active" xml:space="preserve">
+    <value>Service access is active.</value>
+  </data>
+  <data name="HouseholdLifecycle_Grace" xml:space="preserve">
+    <value>Read and export only during the 30-day grace period.</value>
+  </data>
+  <data name="HouseholdLifecycle_Retained" xml:space="preserve">
+    <value>Retained on the service; remote reading and export are unavailable.</value>
+  </data>
+  <data name="HouseholdLifecycle_Due" xml:space="preserve">
+    <value>The retention deadline passed. Access is permanently blocked; cleanup is pending.</value>
+  </data>
+  <data name="HouseholdLifecycle_Deleted" xml:space="preserve">
+    <value>This remote space is permanently deleted.</value>
+  </data>
+  <data name="HouseholdLifecycle_Deadlines" xml:space="preserve">
+    <value>Read/export until: {0}
+Permanent deletion after: {1}
+Times are UTC.</value>
+  </data>
+  <data name="HouseholdLifecycle_NoDeadline" xml:space="preserve">
+    <value>No deadline reported</value>
+  </data>
+  <data name="HouseholdLifecycle_Delete" xml:space="preserve">
+    <value>Permanently delete remote space</value>
+  </data>
+  <data name="HouseholdLifecycle_DeleteConfirm" xml:space="preserve">
+    <value>Permanently stop access for everyone and delete this household’s encrypted data, member grants and recovery archive from the service? This cannot be undone. Previously downloaded local data, portable exports and other spaces are not deleted. Unsynced work cannot be published afterward.</value>
+  </data>
+  <data name="HouseholdLifecycle_Pending" xml:space="preserve">
+    <value>The original deletion request is retained. Its outcome is uncertain; new financial writes are blocked.</value>
+  </data>
+  <data name="HouseholdLifecycle_Accepted" xml:space="preserve">
+    <value>Permanent deletion is accepted. Access is blocked; physical cleanup is pending.</value>
+  </data>
+  <data name="HouseholdLifecycle_Retired" xml:space="preserve">
+    <value>The service reports that this remote space’s stored data has been retired. Downloaded copies remain separate.</value>
+  </data>
+  <data name="HouseholdLifecycle_Rejected" xml:space="preserve">
+    <value>The service confirms that the original request expired without acceptance. You may explicitly finish this request; no remote deletion was accepted.</value>
+  </data>
+  <data name="HouseholdLifecycle_Resume" xml:space="preserve">
+    <value>Continue original deletion or refresh receipt</value>
+  </data>
+  <data name="HouseholdLifecycle_Review" xml:space="preserve">
+    <value>Check the original request’s outcome</value>
+  </data>
+  <data name="HouseholdLifecycle_Finish" xml:space="preserve">
+    <value>Finish unaccepted expired request</value>
+  </data>
+  <data name="HouseholdLifecycle_FinishConfirm" xml:space="preserve">
+    <value>Finish only this expired request that the service did not accept? Keep local financial data and keys. This does not undo an accepted permanent deletion.</value>
+  </data>
+  <data name="HouseholdLifecycle_Audit" xml:space="preserve">
+    <value>Household activity</value>
+  </data>
+  <data name="HouseholdLifecycle_AuditHint" xml:space="preserve">
+    <value>Membership and publication signatures are checked against the trusted history. Actor labels, operational events and UTC times are reported by the service; they are not financial dates. Only the current page is shown.</value>
+  </data>
+  <data name="HouseholdLifecycle_More" xml:space="preserve">
+    <value>Read next activity page</value>
+  </data>
+  <data name="HouseholdLifecycle_AuditItem" xml:space="preserve">
+    <value>{0}
+Service time: {1}
+Identity: {2}</value>
+  </data>
+  <data name="HouseholdLifecycle_Membership" xml:space="preserve">
+    <value>Signed membership change</value>
+  </data>
+  <data name="HouseholdLifecycle_Publication" xml:space="preserve">
+    <value>Signed encrypted publication</value>
+  </data>
+  <data name="HouseholdLifecycle_Left" xml:space="preserve">
+    <value>Member departure reported by service</value>
+  </data>
+  <data name="HouseholdLifecycle_Device" xml:space="preserve">
+    <value>Device session change reported by service</value>
+  </data>
 </root>

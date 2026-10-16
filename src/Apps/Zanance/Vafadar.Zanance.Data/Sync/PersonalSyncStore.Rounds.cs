@@ -8,7 +8,8 @@ using Vafadar.Zanance.Core.Sync;
 namespace Vafadar.Zanance.Data.Sync;
 
 /// <summary>The exact local file/owner/device captured before any network work.</summary>
-internal sealed record SyncLocalAuthority(string Generation, Guid Profile, Guid Device, string Identity, string PeerKey);
+internal sealed record SyncLocalAuthority(string Generation, Guid Profile, Guid Device, string Identity, string PeerKey,
+    ProfileSynchronizationKind TransportKind = ProfileSynchronizationKind.Personal);
 /// <summary>A sealed local cutoff; all network work consumes immutable copies after the writer has ended.</summary>
 internal sealed record SyncRoundWork(SyncLocalAuthority Authority, Guid Operation, Guid? Remote, long Cutoff, int Phase,
     int SentParts, long Cursor, long ReadCursor, long? ThroughCursor, SyncRoundPart[] Parts, string ContentHash,
@@ -19,7 +20,8 @@ public sealed partial class PersonalSyncStore
     private const int BlobPieceBytes = 2 * 1024 * 1024;
 
     /// <summary>Freezes a complete committed cutoff; later local edits remain outside this round.</summary>
-    internal async Task<SyncRoundWork> CaptureRoundAsync(LocalSyncPeer peer, string identity, CancellationToken ct)
+    internal async Task<SyncRoundWork> CaptureRoundAsync(LocalSyncPeer peer, string identity, CancellationToken ct,
+        ProfileSynchronizationKind transportKind = ProfileSynchronizationKind.Personal)
     {
         await using var db = await factory.CreateDbContextAsync(ct); var access = Access(db);
         return await Task.Run(async () =>
@@ -28,9 +30,9 @@ public sealed partial class PersonalSyncStore
             await using var transaction = await db.Database.BeginTransactionAsync(ct);
             var binding = await db.Set<SyncBindingRow>().SingleOrDefaultAsync(ct);
             if (binding is null || !binding.Enabled || binding.Applying || binding.GenerationPath != Generation(db) ||
-                binding.IdentityId != identity || binding.PeerKey != peer.BindingKey(identity) || binding.SchemaHash != SyncSchema.Hash)
+                binding.IdentityId != identity || binding.PeerKey != peer.BindingKey(identity) || binding.SchemaHash != SyncSchema.HashForScope(transportKind == ProfileSynchronizationKind.Household) || binding.TransportKind != transportKind)
                 throw new InvalidOperationException("The personal sync connection is paused or no longer belongs to this actual profile.");
-            var authority = new SyncLocalAuthority(Generation(db), binding.ProfileId, binding.DeviceId, binding.IdentityId, binding.PeerKey);
+            var authority = new SyncLocalAuthority(Generation(db), binding.ProfileId, binding.DeviceId, binding.IdentityId, binding.PeerKey, binding.TransportKind);
             var round = await db.Set<SyncClientRound>().SingleOrDefaultAsync(ct);
             if (round is null)
             {
@@ -42,6 +44,9 @@ public sealed partial class PersonalSyncStore
             }
             var captured = await OutboxThroughAsync(db, round.Cutoff, ct);
             var known = await db.Set<SyncKnownRow>().AsNoTracking().ToDictionaryAsync(row => new SyncRecordKey(row.TableName, row.RecordKey), ct);
+            var allowed = SyncSchema.ForScope(transportKind == ProfileSynchronizationKind.Household).Tables.Select(table => table.Name).ToHashSet(StringComparer.Ordinal);
+            if (captured.Any(row => !allowed.Contains(row.TableName)) || known.Keys.Any(key => !allowed.Contains(key.Table)))
+                throw new InvalidDataException("Captured finance does not belong to this exact transport contract.");
             var blobs = new Dictionary<string, byte[]>(StringComparer.Ordinal); var blobBytes = 0L;
             try
             {
@@ -57,7 +62,7 @@ public sealed partial class PersonalSyncStore
                     });
                     return new SyncProposal(key, known.GetValueOrDefault(key)?.Version ?? 0, values);
                 }).ToArray();
-                var parts = SyncRowCodec.Parts(proposals); var digest = SyncProtocolDigest.Round(parts.Select(SyncProtocolDigest.Part));
+                var parts = SyncRowCodec.Parts(proposals, transportKind); var digest = SyncProtocolDigest.Round(parts.Select(SyncProtocolDigest.Part));
                 if (round.Phase == 0)
                 { round.ContentHash = digest; round.PartCount = parts.Length; round.Phase = 1; }
                 else if (digest != round.ContentHash || parts.Length != round.PartCount)
@@ -158,7 +163,7 @@ public sealed partial class PersonalSyncStore
         var binding = await db.Set<SyncBindingRow>().SingleOrDefaultAsync(ct);
         if (binding is null || !binding.Enabled || binding.Applying || Generation(db) != authority.Generation || binding.GenerationPath != authority.Generation ||
             binding.ProfileId != authority.Profile || binding.DeviceId != authority.Device || binding.IdentityId != authority.Identity ||
-            binding.PeerKey != authority.PeerKey || binding.SchemaHash != SyncSchema.Hash)
+            binding.PeerKey != authority.PeerKey || binding.SchemaHash != SyncSchema.HashForScope(authority.TransportKind == ProfileSynchronizationKind.Household) || binding.TransportKind != authority.TransportKind)
             throw new InvalidOperationException("The captured personal sync authority is no longer current.");
         return binding;
     }

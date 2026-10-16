@@ -37,6 +37,7 @@
     <Project Path="src/Libraries/Vafadar.Backup.OneDrive/Vafadar.Backup.OneDrive.csproj" />
     <Project Path="src/Libraries/Vafadar.Backup/Vafadar.Backup.csproj" />
     <Project Path="src/Libraries/Vafadar.Core/Vafadar.Core.csproj" />
+    <Project Path="src/Libraries/Vafadar.Cryptography/Vafadar.Cryptography.csproj" />
     <Project Path="src/Libraries/Vafadar.Data/Vafadar.Data.csproj" />
     <Project Path="src/Libraries/Vafadar.Documents.Maui/Vafadar.Documents.Maui.csproj" />
     <Project Path="src/Libraries/Vafadar.Documents/Vafadar.Documents.csproj" />

@@ -1,0 +1,451 @@
+{
+  "version": 1,
+  "tables": [
+    {
+      "name": "HouseholdAllocations",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "Amount",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ContactId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CostId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [
+        "CostId",
+        "ContactId"
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "ContactId"
+          ],
+          "principalTable": "HouseholdContacts",
+          "principalColumns": [
+            "Id"
+          ]
+        },
+        {
+          "columns": [
+            "CostId"
+          ],
+          "principalTable": "HouseholdCosts",
+          "principalColumns": [
+            "Id"
+          ]
+        }
+      ],
+      "uniqueKeys": []
+    },
+    {
+      "name": "HouseholdContacts",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "IdentityId",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 128,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "IsArchived",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Name",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 100,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [],
+      "uniqueKeys": []
+    },
+    {
+      "name": "HouseholdCosts",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "Amount",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CurrencyCode",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 3,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Date",
+          "kind": "date",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "EntryId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Kind",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "Note",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 4000,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "PaidByContactId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "PaymentKind",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            1,
+            2
+          ],
+          "flags": false,
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        {
+          "name": "RefundOfCostId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Title",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 200,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "EntryId"
+          ],
+          "principalTable": "Entries",
+          "principalColumns": [
+            "Id"
+          ]
+        },
+        {
+          "columns": [
+            "PaidByContactId"
+          ],
+          "principalTable": "HouseholdContacts",
+          "principalColumns": [
+            "Id"
+          ]
+        },
+        {
+          "columns": [
+            "RefundOfCostId"
+          ],
+          "principalTable": "HouseholdCosts",
+          "principalColumns": [
+            "Id"
+          ]
+        }
+      ],
+      "uniqueKeys": [
+        {
+          "columns": [
+            "EntryId"
+          ],
+          "fullSettlementOnly": false
+        }
+      ]
+    },
+    {
+      "name": "HouseholdSettlements",
+      "singleton": false,
+      "columns": [
+        {
+          "name": "Amount",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CreatedAt",
+          "kind": "ticks",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "CurrencyCode",
+          "kind": "text",
+          "nullable": false,
+          "maximumLength": 3,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Date",
+          "kind": "date",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "EntryId",
+          "kind": "guid",
+          "nullable": true,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "FromContactId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Id",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "Note",
+          "kind": "text",
+          "nullable": true,
+          "maximumLength": 4000,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "ToContactId",
+          "kind": "guid",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": null,
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        },
+        {
+          "name": "UsesDestinationAmount",
+          "kind": "integer",
+          "nullable": false,
+          "maximumLength": null,
+          "enumValues": [
+            0,
+            1
+          ],
+          "flags": false,
+          "minimum": null,
+          "maximum": null
+        }
+      ],
+      "primaryKey": [
+        "Id"
+      ],
+      "foreignKeys": [
+        {
+          "columns": [
+            "EntryId"
+          ],
+          "principalTable": "Entries",
+          "principalColumns": [
+            "Id"
+          ]
+        },
+        {
+          "columns": [
+            "FromContactId"
+          ],
+          "principalTable": "HouseholdContacts",
+          "principalColumns": [
+            "Id"
+          ]
+        },
+        {
+          "columns": [
+            "ToContactId"
+          ],
+          "principalTable": "HouseholdContacts",
+          "principalColumns": [
+            "Id"
+          ]
+        }
+      ],
+      "uniqueKeys": [
+        {
+          "columns": [
+            "EntryId"
+          ],
+          "fullSettlementOnly": false
+        }
+      ]
+    }
+  ]
+}

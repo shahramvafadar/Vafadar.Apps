@@ -95,16 +95,21 @@ public sealed partial class PersonalSyncReviewPresenter(Translator translator, I
         ["MinimumDate"] = "Sync_Field_MinimumDate", ["UnknownCount"] = "Sync_Field_UnknownCount", ["Assumptions"] = "Snapshot_Assumptions",
         ["AppVersion"] = "Sync_Field_AppVersion", ["Path"] = "Forecast_Path",
         ["FileName"] = "Sync_AttachmentFileName", ["ContentType"] = "Sync_AttachmentType", ["Data"] = "Sync_AttachmentContent",
+        ["IdentityId"] = "HouseholdCost_ContactIdentity", ["PaymentKind"] = "HouseholdCost_PaymentSource",
+        ["PaidByContactId"] = "HouseholdCost_Payer", ["RefundOfCostId"] = "HouseholdCost_RefundOriginal",
+        ["CostId"] = "HouseholdCost_Title", ["ContactId"] = "HouseholdCost_Contacts",
+        ["FromContactId"] = "HouseholdCost_Payer", ["ToContactId"] = "HouseholdCost_Recipient",
+        ["UsesDestinationAmount"] = "HouseholdCost_Destination",
     };
     private static readonly HashSet<string> MoneyFields = new(StringComparer.Ordinal)
     { "Entries.Amount", "Entries.ToAmount", "Entries.OriginalAmount", "Entries.ReimbursableAmount", "Accounts.OpeningBalance",
         "Accounts.Installment", "OccurrenceStates.Amount", "OccurrenceStates.PaidAmount", "Budgets.TotalLimit", "BudgetCategoryLimits.Limit",
         "Schedules.Amount", "Schedules.ToAmount", "AssetEvents.BasisAmount", "AssetEvents.ProceedsAmount", "GoalAllocations.Amount",
-        "Templates.Amount", "ForecastSnapshots.Minimum", "Settings.EssentialEstimate" };
+        "Templates.Amount", "ForecastSnapshots.Minimum", "Settings.EssentialEstimate", "HouseholdCosts.Amount", "HouseholdAllocations.Amount", "HouseholdSettlements.Amount" };
     private static readonly HashSet<string> Booleans = new(StringComparer.Ordinal)
     { "IsAggregated", "IsPartialPayment", "IncludeInTotals", "UsableForPayments", "IsArchived", "OpeningBalanceKnown", "AutoPostSuppressed", "AlertsEnabled",
         "AutoPost", "ReminderEnabled", "ReminderOnDueDate", "ContractRenews", "IsIncrease", "Divisible", "Protect", "IsEssential",
-        "InTotalsOnly", "UnreviewedOnly", "IsEstimate", "ValuationCurrencyEnabled" };
+        "InTotalsOnly", "UnreviewedOnly", "IsEstimate", "ValuationCurrencyEnabled", "UsesDestinationAmount" };
 
     /// <summary>Builds only from immutable reviewed payloads and actual prepared local relationship snapshots.</summary>
     public PersonalSyncConflictItem Create(PersonalSyncConflictReview review, IReadOnlyList<SyncRecord> remoteRecords)
@@ -115,11 +120,11 @@ public sealed partial class PersonalSyncReviewPresenter(Translator translator, I
             var items = members.Select(member => CreateSingle(member, remoteRecords)).ToArray();
             var keys = members.Select(member => member.Conflict.Proposal.Record).ToHashSet();
             var unknownRemote = members.SelectMany(member => member.Conflict.Context ?? []).Any(record =>
-                SyncConflictGrouping.Group(record.Record, record.Values) == group && !keys.Contains(record.Record));
+                SyncConflictGrouping.InGroup(record.Record, record.Values, review.Conflict.Proposal.Record, group) && !keys.Contains(record.Record));
             var versions = items.SelectMany(item => item.Versions.Select(version => version with { Heading = item.Title + " · " + version.Heading })).ToList();
             // A remote-only member is displayed, but cannot be silently retained as part of a local-version choice.
             foreach (var record in members.SelectMany(member => member.Conflict.Context ?? []).Where(record =>
-                SyncConflictGrouping.Group(record.Record, record.Values) == group && !keys.Contains(record.Record)).DistinctBy(record => record.Record))
+                SyncConflictGrouping.InGroup(record.Record, record.Values, review.Conflict.Proposal.Record, group) && !keys.Contains(record.Record)).DistinctBy(record => record.Record))
             {
                 var context = members.SelectMany(member => member.Conflict.Context ?? []).DistinctBy(row => row.Record).ToArray();
                 var snapshot = review with { Conflict = new(new(record.Record, record.Version, record.Values), record, record, [], "LinkedGroupReview", Context: context, LinkedGroup: group),
@@ -173,14 +178,15 @@ public sealed partial class PersonalSyncReviewPresenter(Translator translator, I
             "AssetLocations" => "AssetEvent_Location", "Goals" => "Goal_Details", "GoalAllocations" => "Goal_History",
             "ContributionPlans" => "Goal_PlanTitle", "Templates" => "Templates_Title", "SavedFilters" => "Filter_Title",
             "Categories" => "Entry_Category", "CategoryRules" => "Rules_Title", "ExchangeRates" => "Rates_Title",
-            "Settings" => "Settings_MoneyMonths", "ForecastSnapshots" => "Snapshot_Detail", "Attachments" => "Attachment_Title", _ => "Sync_Record" }];
+            "Settings" => "Settings_MoneyMonths", "ForecastSnapshots" => "Snapshot_Detail", "Attachments" => "Attachment_Title",
+            "HouseholdContacts" => "HouseholdCost_Contacts", "HouseholdCosts" or "HouseholdAllocations" or "HouseholdSettlements" => "HouseholdCost_Title", _ => "Sync_Record" }];
         return new(review, title, reason, versions, complete && !changed && !duplicate, complete && !changed, hint,
             translator[duplicate ? "Sync_KeepExisting" : "Sync_KeepRemote"], translator["Sync_KeepLocal"]);
 
         PersonalSyncReviewVersion Version(SyncRecordKey key, JsonElement? body, JsonElement? other, string heading, bool existed, bool remoteVersion = false)
         {
             if (body is null) return new(heading, translator[existed ? "Sync_Deleted" : "Sync_ReviewAbsent"], []);
-            var table = SyncSchema.Manifest.Tables.Single(row => row.Name == key.Table); var fields = new List<PersonalSyncReviewField>();
+            var table = SyncSchema.Describe(key.Table); var fields = new List<PersonalSyncReviewField>();
             if (table.Name is "Schedules" or "ContributionPlans")
             {
                 var rule = ReviewRule(body.Value);
@@ -203,6 +209,7 @@ public sealed partial class PersonalSyncReviewPresenter(Translator translator, I
                 if (table.Name == "ContributionPlans" && column.Name == "Method") label = translator["Goal_Method"];
                 if (table.Name == "Goals" && column.Name == "Type") label = translator["Goal_TypeQuestion"];
                 if (table.Name == "Goals" && column.Name == "Frequency") label = translator["Goal_Frequency"];
+                if (table.Name.StartsWith("Household", StringComparison.Ordinal) && column.Name == "EntryId") label = translator["HouseholdCost_SharedCash"];
                 if (TryValue(table, column, value, body.Value, remoteVersion ? remoteReferences : references, out var text)) fields.Add(new(label, text));
                 else if (Critical(column.Name) || column.Kind is "guid" or "json-guid" || !Same(value, compared)) complete = false;
             }
@@ -349,6 +356,8 @@ public sealed partial class PersonalSyncReviewPresenter(Translator translator, I
                 ("Templates", "Kind") => "EntryKind_" + (EntryKind)number,
                 ("Categories", "Kind") or ("CategoryRules", "Kind") => number == 0 ? "EntryKind_Expense" : "EntryKind_Income",
                 ("Entries", "Kind") => "EntryKind_" + (EntryKind)number,
+                ("HouseholdCosts", "Kind") => number == 1 ? "EntryKind_Expense" : "EntryKind_Refund",
+                ("HouseholdCosts", "PaymentKind") => number == 1 ? "HouseholdCost_PrivatePaid" : "HouseholdCost_SharedPaid",
                 ("Entries", "Review") => number == 0 ? "Sync_Confirmed" : "Sync_Unreviewed",
                 ("Entries", "Direction") => number == 0 ? "Sync_Increase" : "Sync_Decrease",
                 ("Entries", "Source") => number switch { 0 => "Sync_SourceManual", 1 => "Sync_SourcePlan", _ => "Sync_SourceImport" },
@@ -402,6 +411,10 @@ public sealed partial class PersonalSyncReviewPresenter(Translator translator, I
     {
         if (column == "OriginalAmount") return body.GetProperty("OriginalCurrencyCode").GetString();
         if (table == "Accounts") return body.GetProperty("CurrencyCode").GetString();
+        if (table is "HouseholdCosts" or "HouseholdSettlements") return body.GetProperty("CurrencyCode").GetString();
+        if (table == "HouseholdAllocations")
+            return references.TryGetValue(Key("HouseholdCosts", body.GetProperty("CostId").GetString()!), out var cost) && cost.Values is { } costBody
+                ? costBody.GetProperty("CurrencyCode").GetString() : null;
         if (table == "Budgets") return body.GetProperty("CurrencyCode").GetString();
         if (table == "ForecastSnapshots") return body.GetProperty("CurrencyCode").GetString();
         if (table == "Settings" && column == "EssentialEstimate") return body.GetProperty("EssentialEstimateCurrency").GetString();

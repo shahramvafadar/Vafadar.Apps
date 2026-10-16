@@ -12,13 +12,13 @@ public static partial class SyncFinancialValidation
 {
     /// <summary>Checks ledger/recurrence/holding history and prevents a currency edit from relabeling retained amounts.</summary>
     public static IReadOnlyList<SyncGraphIssue> Validate(IReadOnlyCollection<SyncRecord> before,
-        IReadOnlyCollection<SyncRecord> after, IReadOnlySet<Guid>? newEntryIds = null)
+        IReadOnlyCollection<SyncRecord> after, IReadOnlySet<Guid>? newEntryIds = null, SyncSchemaManifest? contract = null)
     {
-        var issues = SyncLedgerValidation.Validate(after, newEntryIds).ToList();
+        var issues = SyncLedgerValidation.Validate(after, newEntryIds, contract).ToList();
         if (issues.Count != 0) return issues;
         var live = after.Where(row => row.Values is not null).ToArray();
         var previous = before.ToDictionary(row => row.Record);
-        issues.AddRange(ValidatePlanning(live));
+        issues.AddRange(ValidatePlanning(live, contract));
         foreach (var record in live.Where(row => row.Record.Table is "Schedules" or "ContributionPlans"))
         {
             var row = record.Values!.Value;
@@ -71,6 +71,8 @@ public static partial class SyncFinancialValidation
                 CountReferences("GoalAllocations", "AccountId"), budgets, account.Values!.Value.GetProperty("Installment").ValueKind != JsonValueKind.Null);
             if (locked.IsLocked) issues.Add(new(account.Record, "AccountCurrencyLocked", ["CurrencyCode"]));
         }
+        if (contract?.Tables.Any(table => table.Name == "HouseholdCosts") == true)
+            issues.AddRange(ValidateHousehold(before, after, newEntryIds is not null));
         return issues.Take(100).ToArray();
 
         SyncRecordKey? ChangedHolding(Guid? type)

@@ -1,0 +1,28 @@
+services:
+  household-qualification:
+    image: zanance-household-hosting-qualification:d294
+    build:
+      context: ../..
+      dockerfile: eng/hosting/HouseholdQualification.Dockerfile
+    user: "1654:1654"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: ["/tmp:uid=1654,gid=1654,mode=0700"]
+    environment:
+      DOTNET_EnableDiagnostics: "0"
+      ZANANCE_QUALIFICATION_PROJECT: ${COMPOSE_PROJECT_NAME}
+    command: ["${ZANANCE_HOUSEHOLD_STAGE:-prepare}", "${ZANANCE_PROXY_ADDRESS:-172.29.86.10}"]
+    networks: [database, service]
+    volumes:
+      - household-qualification:/qualification
+      - operator-identity:/identities:ro
+      - private:/private:ro
+      - ../../artifacts/household-hosting-d294-root.crt:/proxy-trust/root.crt:ro
+    labels:
+      pro.vafadar.zanance.hosting: d293
+      pro.vafadar.fixture: household-hosting-d294
+volumes:
+  household-qualification:
+    external: true
+    name: zanance-household-hosting-qualification-d294

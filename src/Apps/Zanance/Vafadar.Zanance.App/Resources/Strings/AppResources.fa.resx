@@ -6904,4 +6904,617 @@
   <data name="Sync_AttachmentZoomOut" xml:space="preserve">
     <value>کوچک‌تر</value>
   </data>
+  <data name="Household_Title" xml:space="preserve">
+    <value>اشتراک خانوادگی</value>
+  </data>
+  <data name="Household_MoreHint" xml:space="preserve">
+    <value>امور مالی مشترک جدا، اعضا و همگام‌سازی رمزنگاری‌شده</value>
+  </data>
+  <data name="Household_Intro" xml:space="preserve">
+    <value>امور مالی مشترک را در پروفایلی جدا نگه دارید. کلیدها فقط به دستگاه‌های تأییدشده می‌رسند. پیش از دادن دسترسی، اثر انگشت را با شخص مقابل مقایسه کنید.</value>
+  </data>
+  <data name="Household_SeparateRequired" xml:space="preserve">
+    <value>این پروفایل از همگام‌سازی شخصی استفاده می‌کند. برای اشتراک خانوادگی، پروفایلی جدا بسازید.</value>
+  </data>
+  <data name="Household_NotConnected" xml:space="preserve">
+    <value>نشست تأییدشدهٔ خانوادگی باز نیست. وارد شوید یا از نشست ذخیره‌شده استفاده کنید.</value>
+  </data>
+  <data name="Household_Waiting" xml:space="preserve">
+    <value>درخواست راه‌اندازی نگه داشته شده است. ساخت را کامل کنید یا منتظر تأیید دستگاه توسط مالک بمانید.</value>
+  </data>
+  <data name="Household_Access" xml:space="preserve">
+    <value>آخرین نقش تأییدشده: {0}. {1}</value>
+  </data>
+  <data name="Household_Writable" xml:space="preserve">
+    <value>ویرایش مالی در حال حاضر مجاز است.</value>
+  </data>
+  <data name="Household_ReadOnly" xml:space="preserve">
+    <value>ویرایش مالی بسته است. داده‌های موجود و تغییرات ارسال‌نشده حفظ می‌شوند.</value>
+  </data>
+  <data name="Household_Fingerprints" xml:space="preserve">
+    <value>اثر انگشت مالک: {0}
+اثر انگشت این دستگاه: {1}</value>
+  </data>
+  <data name="Household_Name" xml:space="preserve">
+    <value>نام محلی پروفایل خانوادگی</value>
+  </data>
+  <data name="Household_NewProfile" xml:space="preserve">
+    <value>ساخت و باز کردن پروفایلی جدا</value>
+  </data>
+  <data name="Household_Create" xml:space="preserve">
+    <value>آماده‌سازی فضای خانوادگی در این پروفایل خالی</value>
+  </data>
+  <data name="Household_CompleteCreation" xml:space="preserve">
+    <value>تکمیل درخواست ساخت فضای خانوادگی</value>
+  </data>
+  <data name="Household_CreateConfirm" xml:space="preserve">
+    <value>فضای خانوادگی تازه فقط در این پروفایل خالی آماده شود؟ پروفایل‌های شخصی جدا می‌مانند و حساب‌ها و تاریخچهٔ آن‌ها به اشتراک گذاشته نمی‌شود.</value>
+  </data>
+  <data name="Household_PublishConfirm" xml:space="preserve">
+    <value>این فضای خانوادگی با کلیدهای نگه‌داشته‌شده در سرویس انتخابی ساخته یا ادامه داده شود؟ هیچ پروفایل شخصی بارگذاری نمی‌شود.</value>
+  </data>
+  <data name="Household_Invitation" xml:space="preserve">
+    <value>متن خصوصی دعوت</value>
+  </data>
+  <data name="Household_InvitationPrivacy" xml:space="preserve">
+    <value>این دعوت را فقط از راهی خصوصی به شخص مورد نظر بدهید. دسترسی پس از پذیرش او و تأیید همان دستگاه توسط مالک داده می‌شود.</value>
+  </data>
+  <data name="Household_RootConfirmation" xml:space="preserve">
+    <value>اثر انگشت مالک که جداگانه مقایسه کرده‌اید</value>
+  </data>
+  <data name="Household_Join" xml:space="preserve">
+    <value>پذیرش این دعوت برای این پروفایل خالی</value>
+  </data>
+  <data name="Household_JoinConfirm" xml:space="preserve">
+    <value>دعوت با اثر انگشت مالک که جداگانه مقایسه کرده‌اید پذیرفته شود؟ این دستگاه هنوز به تأیید مالک نیاز دارد و حساب‌های شخصی موجود به اشتراک گذاشته نمی‌شوند.</value>
+  </data>
+  <data name="Household_CheckAdmission" xml:space="preserve">
+    <value>بررسی تأیید دستگاه و دریافت داده‌های مشترک</value>
+  </data>
+  <data name="Household_Invite" xml:space="preserve">
+    <value>ساخت یا بازیابی دعوت خصوصی</value>
+  </data>
+  <data name="Household_InvitationFinish" xml:space="preserve">
+    <value>پایان نمایش این دعوت</value>
+  </data>
+  <data name="Household_InvitationFinishConfirm" xml:space="preserve">
+    <value>متن این دعوت از نمایش پاک شود تا بتوانید دعوت دیگری بسازید؟ دعوت اصلی تا پذیرش، لغو یا انقضا معتبر می‌ماند.</value>
+  </data>
+  <data name="Household_Members" xml:space="preserve">
+    <value>اعضا و نقش‌ها</value>
+  </data>
+  <data name="Household_Member" xml:space="preserve">
+    <value>عضو: {0}
+نقش: {1}</value>
+  </data>
+  <data name="Household_Owner" xml:space="preserve">
+    <value>مالک</value>
+  </data>
+  <data name="Household_Editor" xml:space="preserve">
+    <value>ویرایشگر</value>
+  </data>
+  <data name="Household_Viewer" xml:space="preserve">
+    <value>مشاهده‌گر</value>
+  </data>
+  <data name="Household_Unverified" xml:space="preserve">
+    <value>تأیید نشده</value>
+  </data>
+  <data name="Household_ManageMember" xml:space="preserve">
+    <value>تغییر نقش یا لغو دسترسی</value>
+  </data>
+  <data name="Household_Revoke" xml:space="preserve">
+    <value>لغو عضویت</value>
+  </data>
+  <data name="Household_MemberChangeConfirm" xml:space="preserve">
+    <value>این تغییر نقش یا لغو تأییدشده اعمال و کلید مشترک عوض شود؟ لغو دسترسی، نسخه‌های دریافت‌شده یا خروجی‌های قبلی را پاک نمی‌کند.</value>
+  </data>
+  <data name="Household_Pending" xml:space="preserve">
+    <value>دستگاه‌های منتظر تأیید</value>
+  </data>
+  <data name="Household_PendingHint" xml:space="preserve">
+    <value>فقط پس از مقایسهٔ کامل اثر انگشت دستگاه شخص مقابل از راهی جدا، آن را تأیید کنید.</value>
+  </data>
+  <data name="Household_Device" xml:space="preserve">
+    <value>هویت: {0}
+اثر انگشت دستگاه: {1}</value>
+  </data>
+  <data name="Household_Approve" xml:space="preserve">
+    <value>تأیید همین دستگاه</value>
+  </data>
+  <data name="Household_DeviceFingerprintPrompt" xml:space="preserve">
+    <value>اثر انگشت کامل دستگاه را که جداگانه با شخص مقابل مقایسه کرده‌اید وارد کنید.</value>
+  </data>
+  <data name="Household_RefreshMembers" xml:space="preserve">
+    <value>تازه‌سازی عضویت و درخواست‌های تأیید</value>
+  </data>
+  <data name="Household_ResumeAdministration" xml:space="preserve">
+    <value>ادامهٔ همان تغییر عضویت ناتمام</value>
+  </data>
+  <data name="Household_ActionFailed" xml:space="preserve">
+    <value>کار خانوادگی تمام نشد. داده‌ها و درخواست نگه‌داشته‌شده حفظ شده‌اند. اتصال، تأیید دستگاه و نقش فعلی را بررسی و همان درخواست را ادامه دهید.</value>
+  </data>
+  <data name="Household_ConflictReview" xml:space="preserve">
+    <value>برخی تغییرات پیش از همگام‌سازی به انتخاب صریح مالی نیاز دارند. هیچ مبلغی خودکار انتخاب نشده است.</value>
+  </data>
+  <data name="Household_Finish" xml:space="preserve">
+    <value>باز کردن این فضای خانوادگی</value>
+  </data>
+  <data name="Household_FinishConfirm" xml:space="preserve">
+    <value>فضای خانوادگی متصل بدون ساخت حساب دیگری باز شود؟ انتخاب‌های نمایش موجود حفظ می‌شوند.</value>
+  </data>
+  <data name="Help_Household_Title" xml:space="preserve">
+    <value>حریم خصوصی و دسترسی خانوادگی</value>
+  </data>
+  <data name="Help_Household_Text" xml:space="preserve">
+    <value>فضای خانوادگی دفتر مالی جدا و حداکثر شش هویت پذیرفته‌شده، شامل مالک، دارد. مشاهده‌گر می‌خواند و خروجی می‌گیرد؛ ویرایشگر امور مالی را هم تغییر می‌دهد. مالک دعوت، دستگاه و تغییر نقش را تأیید می‌کند. داده‌ها پیش از بارگذاری روی دستگاه شما رمزنگاری می‌شوند. اثر انگشت کامل را جداگانه مقایسه کنید؛ دعوت به‌تنهایی دسترسی نمی‌دهد. دعوت‌ها را خصوصی نگه دارید. لغو دسترسی کلیدهای بعدی را عوض می‌کند ولی دریافت‌ها و خروجی‌های قبلی را پاک نمی‌کند. پس از انقضای سرویس، خواندن و خروجی تا ۳۰ روز ممکن است؛ ۹۰ روز بعد داده‌ها در سرویس نگه داشته می‌شوند ولی ارائه نمی‌شوند. برای دستگاه تازه، بکاپ قابل‌انتقال Zanance را جدا نگه دارید.</value>
+  </data>
+  <data name="Help_Household_Example" xml:space="preserve">
+    <value>مثلاً شخصی را به‌عنوان مشاهده‌گر دعوت کنید، اثر انگشت دستگاه او را تلفنی مقایسه و فقط همان دستگاه را تأیید کنید. پروفایل شخصی او به فضای خانوادگی اضافه نمی‌شود.</value>
+  </data>
+  <data name="Household_PersonalRouteHint" xml:space="preserve">
+    <value>این پروفایل از اشتراک خانوادگی رمزنگاری‌شده استفاده می‌کند. مدیریت و همگام‌سازی آن را از بخش اشتراک خانوادگی انجام دهید.</value>
+  </data>
+  <data name="HouseholdCost_Title" xml:space="preserve">
+    <value>هزینه‌ها و سهم‌های خانوادگی</value>
+  </data>
+  <data name="HouseholdCost_Intro" xml:space="preserve">
+    <value>هزینهٔ مشترک واقعی را فقط یک‌بار ثبت کنید. سهم هزینه، طلب یا بدهی خصوصی و ماندهٔ حساب نقدی جدا هستند.</value>
+  </data>
+  <data name="HouseholdCost_Contacts" xml:space="preserve">
+    <value>افرادِ تقسیم هزینه</value>
+  </data>
+  <data name="HouseholdCost_AddContact" xml:space="preserve">
+    <value>افزودن فرد برای تقسیم هزینه</value>
+  </data>
+  <data name="HouseholdCost_ContactName" xml:space="preserve">
+    <value>نام برای تقسیم هزینه؛ این کار دعوت عضو نیست.</value>
+  </data>
+  <data name="HouseholdCost_AddCost" xml:space="preserve">
+    <value>ثبت هزینه یا بازپرداخت واقعی</value>
+  </data>
+  <data name="HouseholdCost_AddSettlement" xml:space="preserve">
+    <value>ثبت تسویهٔ خصوصی</value>
+  </data>
+  <data name="HouseholdCost_Review" xml:space="preserve">
+    <value>بررسی این ثبت</value>
+  </data>
+  <data name="HouseholdCost_Editor" xml:space="preserve">
+    <value>پیش از ذخیره، اطلاعات واقعی را بررسی کنید</value>
+  </data>
+  <data name="HouseholdCost_Description" xml:space="preserve">
+    <value>شرح هزینه</value>
+  </data>
+  <data name="HouseholdCost_Date" xml:space="preserve">
+    <value>تاریخ واقعی هزینه یا تسویه</value>
+  </data>
+  <data name="HouseholdCost_Currency" xml:space="preserve">
+    <value>ارز دقیق مبلغ</value>
+  </data>
+  <data name="HouseholdCost_Amount" xml:space="preserve">
+    <value>مبلغ مثبت واقعی</value>
+  </data>
+  <data name="HouseholdCost_Payer" xml:space="preserve">
+    <value>پرداخت‌کنندهٔ خصوصی یا فرستندهٔ تسویه</value>
+  </data>
+  <data name="HouseholdCost_Recipient" xml:space="preserve">
+    <value>دریافت‌کنندهٔ تسویهٔ خصوصی</value>
+  </data>
+  <data name="HouseholdCost_IsRefund" xml:space="preserve">
+    <value>این مبلغ بازپرداخت واقعی است</value>
+  </data>
+  <data name="HouseholdCost_RefundOriginal" xml:space="preserve">
+    <value>هزینهٔ واقعی اصلی برای بازپرداخت</value>
+  </data>
+  <data name="HouseholdCost_SharedCash" xml:space="preserve">
+    <value>اتصال به حرکت پولِ موجود در حساب مشترک</value>
+  </data>
+  <data name="HouseholdCost_LinkHint" xml:space="preserve">
+    <value>حرکت پولِ مطابق را در تاریخ انتخابی برگزینید. این صفحه هیچ ثبت پولی ایجاد یا تغییر نمی‌دهد.</value>
+  </data>
+  <data name="HouseholdCost_SearchTitle" xml:space="preserve">
+    <value>فیلتر حرکت‌های موجود با شرح</value>
+  </data>
+  <data name="HouseholdCost_FindMovements" xml:space="preserve">
+    <value>یافتن حرکت‌های موجود در این تاریخ</value>
+  </data>
+  <data name="HouseholdCost_Destination" xml:space="preserve">
+    <value>استفاده از سمت واقعی مقصد انتقال</value>
+  </data>
+  <data name="HouseholdCost_Shares" xml:space="preserve">
+    <value>سهم‌های دقیق هزینه</value>
+  </data>
+  <data name="HouseholdCost_SharesHint" xml:space="preserve">
+    <value>سهم توافق‌شدهٔ هر فرد را با همین ارز وارد کنید. مجموع باید برابر هزینه باشد. تقسیم مساوی یا نرخ تبدیل فرض نمی‌شود.</value>
+  </data>
+  <data name="HouseholdCost_Note" xml:space="preserve">
+    <value>یادداشت واقعی اختیاری</value>
+  </data>
+  <data name="HouseholdCost_NetTotal" xml:space="preserve">
+    <value>خالص هزینه‌های واقعی خانوادگی</value>
+  </data>
+  <data name="HouseholdCost_SharedPaid" xml:space="preserve">
+    <value>پرداخت‌شده از حساب‌های مشترک</value>
+  </data>
+  <data name="HouseholdCost_PrivatePaid" xml:space="preserve">
+    <value>پرداخت‌شده به‌صورت خصوصی</value>
+  </data>
+  <data name="HouseholdCost_Attributed" xml:space="preserve">
+    <value>سهم هزینهٔ «{0}»</value>
+  </data>
+  <data name="HouseholdCost_Advance" xml:space="preserve">
+    <value>ماندهٔ طلب خصوصی «{0}»</value>
+  </data>
+  <data name="HouseholdCost_FromTo" xml:space="preserve">
+    <value>تسویه از «{0}» به «{1}»</value>
+  </data>
+  <data name="HouseholdCost_Movement" xml:space="preserve">
+    <value>شرح «{0}»؛ مبلغ «{1}»</value>
+  </data>
+  <data name="HouseholdCost_Unnamed" xml:space="preserve">
+    <value>حرکت پول موجود</value>
+  </data>
+  <data name="HouseholdCost_Rename" xml:space="preserve">
+    <value>تغییر این نام مالی</value>
+  </data>
+  <data name="HouseholdCost_Archive" xml:space="preserve">
+    <value>بایگانی این فردِ تقسیم هزینه</value>
+  </data>
+  <data name="HouseholdCost_Reactivate" xml:space="preserve">
+    <value>فعال‌سازی دوبارهٔ این فرد</value>
+  </data>
+  <data name="HouseholdCost_ArchivedContact" xml:space="preserve">
+    <value>نام «{0}» (بایگانی‌شده)</value>
+  </data>
+  <data name="HouseholdCost_Delete" xml:space="preserve">
+    <value>حذف این ثبت</value>
+  </data>
+  <data name="HouseholdCost_SaveConfirm" xml:space="preserve">
+    <value>این اطلاعات واقعی و سهم‌های دقیق ذخیره شوند؟ هیچ ثبت پولی ایجاد نمی‌شود.</value>
+  </data>
+  <data name="HouseholdCost_DeleteConfirm" xml:space="preserve">
+    <value>فقط این ثبتِ بررسی‌شدهٔ هزینه و سهم‌ها یا تسویه حذف شود؟ حرکت پولِ موجود باقی می‌ماند.</value>
+  </data>
+  <data name="HouseholdCost_Discard" xml:space="preserve">
+    <value>پیش از ادامه، این پیش‌نویس ذخیره‌نشده کنار گذاشته شود؟</value>
+  </data>
+  <data name="HouseholdCost_ReadOnly" xml:space="preserve">
+    <value>این هزینه‌ها با نقش یا وضعیت دسترسی فعلی فقط خواندنی هستند.</value>
+  </data>
+  <data name="HouseholdCost_ActionFailed" xml:space="preserve">
+    <value>عملیات کامل نشد. پیش‌نویس را نگه دارید؛ سپس وضعیت فعلی خانوادگی را دوباره بخوانید و بررسی کنید.</value>
+  </data>
+  <data name="HouseholdCost_InvalidGraph" xml:space="preserve">
+    <value>سهم‌ها، هزینهٔ اصلی بازپرداخت و حرکت پولِ متصل را بررسی کنید. تغییر ناقص هزینه ذخیره نشد.</value>
+  </data>
+  <data name="HouseholdCost_TitleRequired" xml:space="preserve">
+    <value>شرح هزینهٔ واقعی را وارد کنید.</value>
+  </data>
+  <data name="HouseholdCost_ReferencesRequired" xml:space="preserve">
+    <value>افراد واقعی، هزینهٔ اصلی بازپرداخت و حرکت پولِ مطابقِ لازم را انتخاب کنید.</value>
+  </data>
+  <data name="HouseholdCost_SumRequired" xml:space="preserve">
+    <value>سهم‌های دقیق را طوری وارد کنید که مجموع برابر مبلغ واقعی باشد.</value>
+  </data>
+  <data name="HouseholdCost_RecordCaption" xml:space="preserve">
+    <value>شرح «{0}»؛ تاریخ «{1}»</value>
+  </data>
+  <data name="HouseholdCost_DestinationValue" xml:space="preserve">
+    <value>مبلغ مقصد: «{0}»</value>
+  </data>
+  <data name="Help_HouseholdCosts_Title" xml:space="preserve">
+    <value>هزینه‌های واقعی خانوادگی</value>
+  </data>
+  <data name="Help_HouseholdCosts_Text" xml:space="preserve">
+    <value>این ثبت‌ها هزینهٔ واقعی را تقسیم می‌کنند، نه مالکیت حساب را. پرداخت خصوصی بر طلب خصوصی اثر دارد؛ هزینهٔ متصل به حساب مشترک فقط یک‌بار شمرده می‌شود. بازپرداخت به هزینهٔ اصلی نیاز دارد و از کل آن یا سهم فرد بیشتر نمی‌شود. تسویه فقط پرداخت خصوصی واقعی را ثبت می‌کند و حرکت پول نمی‌سازد. سهم‌ها را دقیق وارد کنید؛ تقسیم، تبدیل ارز یا بدهی تخمینی ساخته نمی‌شود. تغییر ارز پیش‌نویس عددی را پاک می‌کند. افراد بایگانی‌شده سابقه را حفظ می‌کنند ولی سهم تازه نمی‌گیرند.</value>
+  </data>
+  <data name="Help_HouseholdCosts_Example" xml:space="preserve">
+    <value>برای هزینهٔ خصوصی «۱۰٫۰۱ KWD»، سهم‌ها «۳٫۳۳» و «۶٫۶۸ KWD» هستند. هزینهٔ خانوادگی همان «۱۰٫۰۱ KWD» است. ماندهٔ حساب مشترک به معنی مالکیت نیمی از آن پول برای هر فرد نیست.</value>
+  </data>
+  <data name="HouseholdCost_ContactIdentity" xml:space="preserve">
+    <value>برچسب اختیاری هویت در سابقه</value>
+  </data>
+  <data name="HouseholdCost_PaymentSource" xml:space="preserve">
+    <value>منبع واقعی پرداخت</value>
+  </data>
+  <data name="HouseholdRecovery_Title" xml:space="preserve">
+    <value>بازیابی فضای خانوادگی</value>
+  </data>
+  <data name="HouseholdRecovery_Intro" xml:space="preserve">
+    <value>فایل بازیابی جداگانه و اختیاری می‌تواند پس از گم‌شدن همهٔ دستگاه‌ها، مالکیت فضای خانوادگی را برگرداند. آن را بیرون از این دستگاه نگه دارید. ورود به هویت Zanance همچنان لازم است؛ بکاپ قابل‌انتقال اطلاعات مالی مسیر جداگانه‌ای دارد.</value>
+  </data>
+  <data name="HouseholdRecovery_FilePassword" xml:space="preserve">
+    <value>رمز فایل بازیابی؛ جدا از رمز ورود</value>
+  </data>
+  <data name="HouseholdRecovery_FilePasswordConfirm" xml:space="preserve">
+    <value>برای خروجی گرفتن، رمز را دوباره بنویسید</value>
+  </data>
+  <data name="HouseholdRecovery_Export" xml:space="preserve">
+    <value>ذخیرهٔ فایل بازیابی محافظت‌شده</value>
+  </data>
+  <data name="HouseholdRecovery_FileSaved" xml:space="preserve">
+    <value>فایل رمزنگاری‌شده ذخیره شد. پس از بازکردن قفل، همین کلید بازیابی را صریحاً فعال کنید. اگر فرایند برنامه زودتر متوقف شد، دوباره خروجی بگیرید؛ کلید در انتظار تغییر نمی‌کند.</value>
+  </data>
+  <data name="HouseholdRecovery_FilePicked" xml:space="preserve">
+    <value>یک فایل بازیابی رمزنگاری‌شده انتخاب شده است. برای بررسی فضای خانوادگی اصلی، رمز همان فایل را وارد کنید.</value>
+  </data>
+  <data name="HouseholdRecovery_Off" xml:space="preserve">
+    <value>برای مالک فعلی، کلید بازیابی فعالی پیدا نشده است.</value>
+  </data>
+  <data name="HouseholdRecovery_Active" xml:space="preserve">
+    <value>در سرویس، یک کلید بازیابی رمزنگاری‌شده برای مالک فعلی فعال است. رمز آن هرگز ذخیره نمی‌شود.</value>
+  </data>
+  <data name="HouseholdRecovery_PasswordError" xml:space="preserve">
+    <value>رمز فایل بازیابی باید دست‌کم هشت نویسه داشته باشد و تکرار آن یکسان باشد.</value>
+  </data>
+  <data name="HouseholdRecovery_Pick" xml:space="preserve">
+    <value>انتخاب فایل بازیابی رمزنگاری‌شده</value>
+  </data>
+  <data name="HouseholdRecovery_Enable" xml:space="preserve">
+    <value>فعال‌کردن کلید بازیابی ذخیره‌شده</value>
+  </data>
+  <data name="HouseholdRecovery_EnableConfirm" xml:space="preserve">
+    <value>این فایل ذخیره‌شده برای بازیابی فضای خانوادگی فعال شود؟ آرشیو در انتظار تکمیل و کلیدهای مالکیت تعویض می‌شوند؛ کلید بازیابی قبلی به نسل‌های آینده دسترسی نخواهد داشت. فایل و رمز آن را جداگانه و امن نگه دارید.</value>
+  </data>
+  <data name="HouseholdRecovery_Import" xml:space="preserve">
+    <value>بررسی این فایل در پروفایل خالی</value>
+  </data>
+  <data name="HouseholdRecovery_Complete" xml:space="preserve">
+    <value>بازیابی مالکیت و دریافت تاریخچهٔ خانوادگی</value>
+  </data>
+  <data name="HouseholdRecovery_ImportConfirm" xml:space="preserve">
+    <value>از این پروفایل مستقل و خالی برای بازیابی فضای خانوادگی اصلی استفاده شود؟ هویت واقعی مالک و فایل بازیابی جداگانه هر دو باید تأیید شوند. تکمیل بازیابی همهٔ دستگاه‌های قبلی مالک را کنار می‌گذارد. اعضای دیگر حفظ می‌شوند، هیچ مبلغی ثبت نمی‌شود و دادهٔ ارسال‌نشدهٔ دستگاه گم‌شده از سرویس قابل‌بازیابی نیست.</value>
+  </data>
+  <data name="HouseholdRecovery_Revoke" xml:space="preserve">
+    <value>غیرفعال‌کردن کلید بازیابی فعلی</value>
+  </data>
+  <data name="HouseholdRecovery_RevokeConfirm" xml:space="preserve">
+    <value>کلید بازیابی فعلی غیرفعال و هر دو کلید مالکیت عوض شوند؟ فایل قدیمی نسل‌های آینده را باز نخواهد کرد. کلیدها، تاریخچه یا فایل‌هایی که قبلاً دریافت شده‌اند قابل‌پس‌گرفتن نیستند. برای دستگاه جدید، بکاپ قابل‌انتقال Zanance را جداگانه نگه دارید.</value>
+  </data>
+  <data name="Help_HouseholdRecovery_Title" xml:space="preserve">
+    <value>بازیابی جداگانهٔ فضای خانوادگی</value>
+  </data>
+  <data name="Help_HouseholdRecovery_Text" xml:space="preserve">
+    <value>بازیابی اختیاری است. ابتدا فایل دارای رمز را بیرون از این دستگاه ذخیره کنید و سپس آن را صریحاً فعال کنید. Zanance رمز فایل را به خاطر نمی‌سپارد. پروفایل خالی جدید هم به ورود با همان هویت مالک و هم به فایل اصلی نیاز دارد؛ ورود به‌تنهایی کلید گم‌شده را عوض نمی‌کند. بازیابی دستگاه‌های قبلی مالک را کنار می‌گذارد، اعضای دیگر را حفظ می‌کند و فقط تاریخچهٔ رسیده به سرویس را دریافت می‌کند. کلید گم‌شدهٔ دیتابیس محلی را برنمی‌گرداند. عملیات قطع‌شده کلیدها و بخش‌های رمزنگاری‌شدهٔ اصلی را نگه می‌دارد؛ برای ادامه، فضای خانوادگی تازه نسازید.</value>
+  </data>
+  <data name="Help_HouseholdRecovery_Example" xml:space="preserve">
+    <value>مثلاً پس از گم‌شدن گوشی، در پروفایلی مستقل و خالی با همان هویت Zanance وارد شوید، فایل بازیابی ذخیره‌شده را انتخاب کنید و رمز آن را بنویسید. پس از بررسی، بازیابی را صریحاً تکمیل کنید؛ بکاپ مالی قابل‌انتقال را جداگانه نگه دارید.</value>
+  </data>
+  <data name="Household_Review_Title" xml:space="preserve">
+    <value>بررسی تغییرات مشترک</value>
+  </data>
+  <data name="Household_Review_Empty" xml:space="preserve">
+    <value>در حال حاضر تغییر مشترکی نیاز به تصمیم ندارد. برای همگام‌سازی پس از بررسی تصمیم‌های قبلی، به فضای خانوادگی برگردید.</value>
+  </data>
+  <data name="Help_HouseholdReview_Title" xml:space="preserve">
+    <value>مقایسهٔ تغییرات مالی مشترک</value>
+  </data>
+  <data name="Help_HouseholdReview_Text" xml:space="preserve">
+    <value>پیش از انتخاب، نسخهٔ کامل ارسال‌شده و دریافت‌شده را مقایسه کنید. یک گردش مرتبط یا هزینه و سهم‌هایش، یک تصمیم واحد هستند؛ Zanance مبلغ، سهم برابر یا نرخ تبدیل را حدس نمی‌زند. تصمیم‌ها در پروفایل محافظت‌شدهٔ فعلی ثبت و سپس از راه همگام‌سازی رمزنگاری‌شدهٔ خانوادگی اعمال می‌شوند. این بررسی به همگام‌سازی شخصی وارد نمی‌شود و اطلاعات مالی خانوادگی را خوانا ارسال نمی‌کند. هرجا لازم بود، پیش‌نمایش پیوست را باز کنید. اگر داده پس از بررسی عوض شده، به‌جای استفاده از رضایت قبلی، بررسی واقعی را تازه‌سازی کنید.</value>
+  </data>
+  <data name="Help_HouseholdReview_Example" xml:space="preserve">
+    <value>مثلاً دو عضو در حالت آفلاین، یک هزینه و سهم‌هایش را ویرایش کرده‌اند. ارز اصلی، مبلغ، پرداخت‌کننده و همهٔ سهم‌ها را مقایسه و سپس یک نسخهٔ کامل را انتخاب کنید. برای همگام‌سازی به فضای خانوادگی برگردید؛ انتخاب نسخه، گردش مالی اضافه نمی‌سازد.</value>
+  </data>
+  <data name="HouseholdSource_Title" xml:space="preserve">
+    <value>انتخاب دادهٔ شخصی برای اشتراک</value>
+  </data>
+  <data name="HouseholdSource_Load" xml:space="preserve">
+    <value>خواندن حساب‌های مبدأ من</value>
+  </data>
+  <data name="HouseholdSource_History" xml:space="preserve">
+    <value>سابقهٔ حساب‌های انتخاب‌شده هم کپی شود</value>
+  </data>
+  <data name="HouseholdSource_Files" xml:space="preserve">
+    <value>فایل‌های پیوست آن سابقه هم کپی شوند</value>
+  </data>
+  <data name="HouseholdSource_Review" xml:space="preserve">
+    <value>بازبینی کپی دقیق</value>
+  </data>
+  <data name="HouseholdSource_Destination" xml:space="preserve">
+    <value>انتخاب پروفایل مقصد جداگانه</value>
+  </data>
+  <data name="HouseholdSource_Copy" xml:space="preserve">
+    <value>کپی انتخاب بازبینی‌شده در این پروفایل</value>
+  </data>
+  <data name="HouseholdSource_PrivateCounterpart" xml:space="preserve">
+    <value>حساب شخصیِ خارج از اشتراک</value>
+  </data>
+  <data name="HouseholdSource_Summary" xml:space="preserve">
+    <value>حساب‌ها: {0}
+تعداد تراکنش‌های سابقه: {1}؛ فایل‌ها: {2}.
+انتقال‌های دارای سمت شخصی: {3}؛ بازپرداخت‌های بدون پیوند خرید شخصی: {4}.</value>
+  </data>
+  <data name="HouseholdSource_Consent" xml:space="preserve">
+    <value>فقط حساب‌های بازبینی‌شده و سابقه یا فایل‌های انتخابی در دفتر جدا کپی می‌شوند. یادداشت‌ها و فایل‌های انتخابی محتوای مشترک خواهند شد. سمت شخصی انتقال با نام خنثی نشان داده می‌شود و نرخ ارز حدس زده نمی‌شود. ویرایش‌های بعدی شخصی جدا می‌مانند. مقصد باید خالی یا دارای کپی منتشرنشدهٔ نیمه‌تمام باشد. تا تکمیل ساخت فضای مشترک چیزی منتشر نمی‌شود.</value>
+  </data>
+  <data name="HouseholdSource_ReplacePending" xml:space="preserve">
+    <value>فقط درخواست کپی نیمه‌تمام با این انتخاب تازهٔ بازبینی‌شده جایگزین شود؟ مقصد باید همچنان خالی و منتشرنشده باشد. شناسهٔ راه‌اندازی و کلیدهای اصلی آن حفظ می‌شوند.</value>
+  </data>
+  <data name="HouseholdSource_CancelMemory" xml:space="preserve">
+    <value>این انتخاب موقت کنار گذاشته شود؟ دادهٔ کپی‌شده، درخواست پایدار نیمه‌تمام، پروفایل یا کلیدی حذف نمی‌شود. کپی نیمه‌تمام همچنان پیش از انتشار به بازبینی تازهٔ مبدأ نیاز دارد.</value>
+  </data>
+  <data name="HouseholdSource_Pending" xml:space="preserve">
+    <value>کپی انتخابی نیمه‌تمام مانع انتشار است. به مبدأ شخصی برگردید، آن را دوباره بازبینی کنید و همین مقصد موجود را برای ادامه با کلیدهای اصلی انتخاب کنید.</value>
+  </data>
+  <data name="Help_HouseholdSource_Title" xml:space="preserve">
+    <value>کپی جداگانه و بازبینی‌شده</value>
+  </data>
+  <data name="Help_HouseholdSource_Text" xml:space="preserve">
+    <value>حساب‌ها را صریح انتخاب کنید. سابقه و پیوست‌ها انتخاب جداگانه‌اند. پیش از انتخاب مقصد جدا، نام‌ها و تعدادها را بازبینی کنید. برنامه مبدأ واقعی را هنگام نگهداری پروفایل و توقف نویسنده‌ها دوباره بررسی می‌کند. تغییر انتخاب به بازبینی تازه نیاز دارد. اگر فرایند متوقف شد، مبدأ را دوباره بازبینی کنید؛ کلیدهای مقصد را جایگزین نکنید.</value>
+  </data>
+  <data name="Help_HouseholdSource_Example" xml:space="preserve">
+    <value>حساب خانوادگی و رسیدهایش را به اشتراک بگذارید و پس‌انداز شخصی را خصوصی نگه دارید. ویرایش‌های بعدی پس‌انداز به فضای مشترک فرستاده نمی‌شوند.</value>
+  </data>
+  <data name="Household_Devices" xml:space="preserve">
+    <value>دستگاه‌های تأییدشده و در انتظار</value>
+  </data>
+  <data name="Household_ApprovedDevice" xml:space="preserve">
+    <value>عضو: {0}؛ نقش: {1}
+اثر انگشت دستگاه: {2}</value>
+  </data>
+  <data name="Household_RevokeDevice" xml:space="preserve">
+    <value>قطع دسترسی این دستگاه دیگر</value>
+  </data>
+  <data name="Household_RevokeDeviceConfirm" xml:space="preserve">
+    <value>دسترسی دستگاه بازبینی‌شده قطع و کلیدهای مالی عوض شوند؟ برای دستگاه مالک، هر دو کلید مالک نیز عوض و کلید بازیابی فعال به‌روز می‌شود. محتوای دانلود یا صادرشدهٔ قبلی قابل پس‌گرفتن نیست. دسترسی دیگر دستگاه‌های تأییدشده حفظ می‌شود.</value>
+  </data>
+  <data name="Household_DeviceRemovalHint" xml:space="preserve">
+    <value>پیش از تأیید دستگاه دیگر، اثر انگشت کامل را مقایسه کنید. این صفحه فقط دستگاه دیگری را حذف می‌کند که عضو آن یک دستگاه تأییدشدهٔ دیگر هم دارد. برای قطع دسترسی آخرین دستگاه عضو دیگر، خود آن عضو را حذف کنید. دستگاه فعلی شما برای تکمیل عملیات در دسترس می‌ماند.</value>
+  </data>
+  <data name="Household_PendingInvitationHint" xml:space="preserve">
+    <value>درخواست اصلی یک دعوت هنوز روی این دستگاه ذخیره است. حتی بدون چسباندن کپی قبلی می‌توانید همان درخواست محلی را پایان دهید. این کار دعوت قبلاً به‌اشتراک‌گذاشته‌شده را لغو نمی‌کند؛ تغییر کلیدهای مالک، دعوت‌های هنوزپذیرفته‌نشده را بی‌اعتبار می‌کند.</value>
+  </data>
+  <data name="HouseholdDeviceAccess_Export" xml:space="preserve">
+    <value>آماده‌کردن دسترسی دستگاه دیگر همین عضو</value>
+  </data>
+  <data name="HouseholdDeviceAccess_Request" xml:space="preserve">
+    <value>درخواست تأیید این دستگاه با بستهٔ دسترسی چسبانده‌شده</value>
+  </data>
+  <data name="HouseholdDeviceAccess_Hint" xml:space="preserve">
+    <value>از دستگاه دیگری عضو هستید؟ بستهٔ عمومی دسترسی دستگاه خود را از مالک بگیرید، در یک پروفایل جدا و خالی وارد همان هویت شوید و اثر انگشت کامل مالک را از راهی مستقل مقایسه کنید. اینجا درخواست تأیید دهید. سپس مالک باید اثر انگشت همین دستگاه را مقایسه و آن را تأیید کند. ورود به حساب به‌تنهایی دسترسی مالی نمی‌دهد. پس از راه‌اندازی دوباره، با بررسی پذیرش همان درخواست ذخیره‌شده را ادامه دهید.</value>
+  </data>
+  <data name="HouseholdDeviceAccess_ExportConfirm" xml:space="preserve">
+    <value>بستهٔ عمومی و امضاشدهٔ دسترسی برای همین عضو فعلی آماده شود؟ این کار نه عضو تازه‌ای دعوت می‌کند و نه دستگاهی را تأیید می‌کند. بسته را فقط به همین عضو بدهید؛ تأیید دستگاه تازه همچنان به مقایسهٔ مستقل اثر انگشت آن نیاز دارد.</value>
+  </data>
+  <data name="HouseholdDeviceAccess_RequestConfirm" xml:space="preserve">
+    <value>برای این دستگاه در همین پروفایل جدا و خالی درخواست تأیید داده شود؟ کلید مخصوص آن و درخواست اصلی پیش از ارسال ذخیره می‌شوند. تا مالک همین دستگاه را مستقل تأیید نکند، دادهٔ مالی یا کلید فضا دریافت نمی‌شود. این پروفایل را برای ادامه پس از راه‌اندازی دوباره نگه دارید.</value>
+  </data>
+  <data name="HouseholdOwnership_Title" xml:space="preserve">
+    <value>انتقال مالکیت فضای خانوادگی</value>
+  </data>
+  <data name="HouseholdOwnership_Hint" xml:space="preserve">
+    <value>هر دو نفر روی دستگاه‌های انتخاب‌شده صریحاً تأیید می‌کنند. مالک جدید کلیدهای مستقل می‌سازد. ارسال تغییرات مالی تا تکمیل، انصراف یا انقضا متوقف می‌شود. سابقهٔ مالی ذخیره‌شده تغییر نمی‌کند.</value>
+  </data>
+  <data name="HouseholdOwnership_Start" xml:space="preserve">
+    <value>انتخاب به‌عنوان مالک جدید</value>
+  </data>
+  <data name="HouseholdOwnership_Leave" xml:space="preserve">
+    <value>خروج از این فضای خانوادگی</value>
+  </data>
+  <data name="HouseholdOwnership_Continue" xml:space="preserve">
+    <value>تأیید همین مرحلهٔ ثبت‌شده</value>
+  </data>
+  <data name="HouseholdOwnership_Finish" xml:space="preserve">
+    <value>بستن همین درخواست انتقال</value>
+  </data>
+  <data name="HouseholdOwnership_Confirm" xml:space="preserve">
+    <value>فقط برای فرد و دستگاهی ادامه دهید که مستقل بررسی کرده‌اید. کلیدهای مالکیت آینده به مالک جدید می‌رسد؛ مالک قبلی فقط نقش صریحاً انتخاب‌شده را حفظ می‌کند یا خارج می‌شود. پس از تکمیل، کیت بازیابی قدیمی این فضا از کار می‌افتد. سابقه‌ای که قبلاً دریافت شده قابل پس‌گرفتن نیست.</value>
+  </data>
+  <data name="HouseholdOwnership_CancelConfirm" xml:space="preserve">
+    <value>فقط همین انتقال مالکیت ناتمام لغو شود؟ مالکیت امضاشدهٔ فعلی حفظ می‌شود. این کار انتقال تکمیل‌شده را برنمی‌گرداند و دادهٔ مالی را حذف نمی‌کند.</value>
+  </data>
+  <data name="HouseholdOwnership_FinishConfirm" xml:space="preserve">
+    <value>پس از بررسی رسید نهایی اصلی، همین درخواست بسته شود؟ فقط نامزدهای استفاده‌نشدهٔ همین درخواست لغوشده یا منقضی‌شده ممکن است حذف شوند؛ سابقهٔ مالی و کلیدهای ثبت‌شده حفظ می‌شوند.</value>
+  </data>
+  <data name="HouseholdOwnership_None" xml:space="preserve">
+    <value>درخواست انتقالی در اینجا ثبت نشده است. برای بررسی درخواست خطاب به این هویت، تازه‌سازی کنید.</value>
+  </data>
+  <data name="HouseholdOwnership_Offered" xml:space="preserve">
+    <value>پیشنهاد ثبت شده است. دستگاه انتخاب‌شدهٔ مالک آینده باید کلیدهای تازهٔ خودش را آماده کند. مالک فعلی می‌تواند پیشنهاد بدون پاسخ را ادامه دهد.</value>
+  </data>
+  <data name="HouseholdOwnership_Prepared" xml:space="preserve">
+    <value>مالک آینده کلیدهای تازه و فهرست گیرندگان اصلی را آماده کرده است. دستگاه انتخاب‌شدهٔ مالک فعلی باید همین داده‌های دقیق را تأیید کند.</value>
+  </data>
+  <data name="HouseholdOwnership_Authorized" xml:space="preserve">
+    <value>مالک فعلی متن دقیق انتقال را امضا کرده است. دستگاه انتخاب‌شدهٔ مالک آینده باید همان امضای اصلی و گیرندگان کلید را بپذیرد.</value>
+  </data>
+  <data name="HouseholdOwnership_Accepted" xml:space="preserve">
+    <value>هر دو طرف پذیرفته‌اند. دستگاه انتخاب‌شدهٔ مالک فعلی باید همان انتقال ثبت‌شده را ارسال کند تا تغییر مالکیت تکمیل شود.</value>
+  </data>
+  <data name="HouseholdOwnership_Published" xml:space="preserve">
+    <value>انتقال ثبت نهایی شده است. همین درخواست را ببندید تا رسید اصلی روی این دستگاه بررسی و اعمال شود.</value>
+  </data>
+  <data name="HouseholdOwnership_Canceled" xml:space="preserve">
+    <value>همین انتقال اصلی لغو شده است. درخواست را صریحاً ببندید؛ مالک امضاشدهٔ فعلی حفظ می‌شود.</value>
+  </data>
+  <data name="HouseholdOwnership_Expired" xml:space="preserve">
+    <value>همین انتقال اصلی منقضی شده است. پیش از درخواست متفاوت، آن را صریحاً ببندید؛ هیچ کلید یا رضایت تازه‌ای فرض نمی‌شود.</value>
+  </data>
+  <data name="HouseholdLifecycle_Title" xml:space="preserve">
+    <value>فضای سرویس و مدت نگهداری</value>
+  </data>
+  <data name="HouseholdLifecycle_Hint" xml:space="preserve">
+    <value>پس از پایان سرویس، ۳۰ روز برای خواندن و خروجی گرفتن فرصت دارید؛ سپس داده‌ها ۹۰ روز بدون دسترسی نگهداری و در پایان حذف می‌شوند. نسخه‌های محلی و خروجی‌های قابل‌انتقال جدا هستند.</value>
+  </data>
+  <data name="HouseholdLifecycle_Unknown" xml:space="preserve">
+    <value>وضعیت سرویس هنوز بررسی نشده است.</value>
+  </data>
+  <data name="HouseholdLifecycle_Active" xml:space="preserve">
+    <value>دسترسی به سرویس فعال است.</value>
+  </data>
+  <data name="HouseholdLifecycle_Grace" xml:space="preserve">
+    <value>در مهلت ۳۰روزه فقط خواندن و خروجی گرفتن مجاز است.</value>
+  </data>
+  <data name="HouseholdLifecycle_Retained" xml:space="preserve">
+    <value>داده‌ها در سرویس نگهداری می‌شوند؛ خواندن و خروجی گرفتن از سرویس در دسترس نیست.</value>
+  </data>
+  <data name="HouseholdLifecycle_Due" xml:space="preserve">
+    <value>مهلت نگهداری پایان یافته است. دسترسی برای همیشه بسته و پاک‌سازی در انتظار انجام است.</value>
+  </data>
+  <data name="HouseholdLifecycle_Deleted" xml:space="preserve">
+    <value>این فضای سرویس برای همیشه حذف شده است.</value>
+  </data>
+  <data name="HouseholdLifecycle_Deadlines" xml:space="preserve">
+    <value>پایان مهلت خواندن و خروجی: «{0}»
+زمان حذف دائمی: «{1}»
+زمان‌ها بر اساس UTC هستند.</value>
+  </data>
+  <data name="HouseholdLifecycle_NoDeadline" xml:space="preserve">
+    <value>مهلتی اعلام نشده است</value>
+  </data>
+  <data name="HouseholdLifecycle_Delete" xml:space="preserve">
+    <value>حذف دائمی فضای سرویس</value>
+  </data>
+  <data name="HouseholdLifecycle_DeleteConfirm" xml:space="preserve">
+    <value>دسترسی همهٔ اعضا برای همیشه بسته شود و داده‌های رمزنگاری‌شده، مجوزهای اعضا و بایگانی بازیابی این خانواده از سرویس حذف شوند؟ این کار برگشت‌پذیر نیست. داده‌های دریافت‌شدهٔ محلی، خروجی‌های قابل‌انتقال و فضاهای دیگر حذف نمی‌شوند. پس از آن، تغییرات ارسال‌نشده قابل ارسال نیستند.</value>
+  </data>
+  <data name="HouseholdLifecycle_Pending" xml:space="preserve">
+    <value>درخواست اصلی حذف نگه داشته شده است. نتیجه هنوز قطعی نیست و ثبت مالی تازه بسته است.</value>
+  </data>
+  <data name="HouseholdLifecycle_Accepted" xml:space="preserve">
+    <value>حذف دائمی پذیرفته شده است. دسترسی بسته و پاک‌سازی فیزیکی در انتظار انجام است.</value>
+  </data>
+  <data name="HouseholdLifecycle_Retired" xml:space="preserve">
+    <value>سرویس پایان پاک‌سازی داده‌های این فضا را گزارش می‌کند. نسخه‌های دریافت‌شده جدا باقی می‌مانند.</value>
+  </data>
+  <data name="HouseholdLifecycle_Rejected" xml:space="preserve">
+    <value>سرویس تأیید می‌کند که درخواست اصلی بدون پذیرش منقضی شده است. می‌توانید این درخواست را صریحاً ببندید؛ حذف سرویس پذیرفته نشده است.</value>
+  </data>
+  <data name="HouseholdLifecycle_Resume" xml:space="preserve">
+    <value>ادامهٔ حذف اصلی یا تازه‌سازی رسید</value>
+  </data>
+  <data name="HouseholdLifecycle_Review" xml:space="preserve">
+    <value>بررسی نتیجهٔ درخواست اصلی</value>
+  </data>
+  <data name="HouseholdLifecycle_Finish" xml:space="preserve">
+    <value>بستن درخواست منقضی و پذیرفته‌نشده</value>
+  </data>
+  <data name="HouseholdLifecycle_FinishConfirm" xml:space="preserve">
+    <value>فقط همین درخواست منقضی که سرویس نپذیرفته است بسته شود؟ داده‌های مالی و کلیدهای محلی حفظ می‌شوند. این کار حذف دائمی پذیرفته‌شده را برنمی‌گرداند.</value>
+  </data>
+  <data name="HouseholdLifecycle_Audit" xml:space="preserve">
+    <value>رویدادهای خانواده</value>
+  </data>
+  <data name="HouseholdLifecycle_AuditHint" xml:space="preserve">
+    <value>امضاهای عضویت و انتشار با تاریخچهٔ مورداعتماد بررسی می‌شوند. شناسهٔ اقدام‌کننده، رویدادهای عملیاتی و زمان UTC گزارش سرویس‌اند و تاریخ مالی محسوب نمی‌شوند. فقط صفحهٔ فعلی نمایش داده می‌شود.</value>
+  </data>
+  <data name="HouseholdLifecycle_More" xml:space="preserve">
+    <value>خواندن صفحهٔ بعدی رویدادها</value>
+  </data>
+  <data name="HouseholdLifecycle_AuditItem" xml:space="preserve">
+    <value>رویداد: {0}
+زمان گزارش سرویس: «{1}»
+شناسه: «{2}»</value>
+  </data>
+  <data name="HouseholdLifecycle_Membership" xml:space="preserve">
+    <value>تغییر امضاشدهٔ عضویت</value>
+  </data>
+  <data name="HouseholdLifecycle_Publication" xml:space="preserve">
+    <value>انتشار رمزنگاری‌شدهٔ امضاشده</value>
+  </data>
+  <data name="HouseholdLifecycle_Left" xml:space="preserve">
+    <value>خروج عضو طبق گزارش سرویس</value>
+  </data>
+  <data name="HouseholdLifecycle_Device" xml:space="preserve">
+    <value>تغییر نشست دستگاه طبق گزارش سرویس</value>
+  </data>
 </root>

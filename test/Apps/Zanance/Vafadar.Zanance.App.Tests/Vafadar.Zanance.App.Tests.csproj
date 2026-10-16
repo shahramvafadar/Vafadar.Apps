@@ -1,5 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sharing/HouseholdViewModel.cs" Link="Application/HouseholdViewModel.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sharing/HouseholdViewModel.Ownership.cs" Link="Application/HouseholdViewModel.Ownership.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sharing/HouseholdViewModel.Lifecycle.cs" Link="Application/HouseholdViewModel.Lifecycle.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sharing/HouseholdViewModel.Recovery.cs" Link="Application/HouseholdViewModel.Recovery.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sharing/HouseholdViewModel.Source.cs" Link="Application/HouseholdViewModel.Source.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sharing/HouseholdProjectionHandoff.cs" Link="Application/HouseholdProjectionHandoff.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sharing/HouseholdCostsViewModel.cs" Link="Application/HouseholdCostsViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sync/PersonalSyncViewModel.cs" Link="Application/PersonalSyncViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sync/PersonalSyncViewModel.Attachments.cs" Link="Application/PersonalSyncViewModel.Attachments.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sync/PersonalSyncReviewPresenter.cs" Link="Application/PersonalSyncReviewPresenter.cs" />

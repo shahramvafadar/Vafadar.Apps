@@ -1947,3 +1947,22 @@ power-loss, OAuth, store-signing or product-publication acceptance. The full goa
 D-293: complete local isolated hosting/private restore/TLS renewal qualification follows D-292 personal sync.
 Public routing/mail remain external. Next approved complete batch is local household E2EE, not another helper slice.
 Canonical state/order remain in enhancements/2026-10-commercial-release/04-backlog.md and 05-delivery-plan.md.
+
+Current household cost status is in canonical ZCR-SHR-02/D-294: original protected persistence, exact complete encrypted contract, two-client/editor/cold facts and corrected Windows layout are qualified; Android/AOT and the remaining full household integration are unfinished. Keep one complete delivery batch and the existing finished baseline.
+
+### D-294 final local delivery
+
+The complete local household batch is implemented and qualified together: protected E2EE membership/device/key
+and optional recovery lifecycle; selected separate financial adoption and complete costs/conflicts; two-sided
+ownership transfer; audit, permanent privacy intent/retirement and latest-marker-aware full service restoration.
+Final service composition, bounded historical row reads, compact pre-allocation portable scrubbing, real main
+Android upgrade/export, separate Release AOT/trimmed native allocation and native transfer-dialog geometry pass.
+The original full run plus only899 exact failed-case reruns yields3753 passing existing cases;2854 prior successes
+were not repeated. Separate focused cases do not change that total. Final product APK:
+artifacts/android-household-final-d294/pro.vafadar.zanance-Signed.apk;91356917 bytes;
+SHA2566ebe1f0d8f963f1c1f18cd2ecee7d03a4a5cfc5325d25e3883bdeee960ac38f2; signature/permanent id/arm64+x64 verified.
+Exact scope, retained failures and runtime evidence are in enhancements/2026-10-commercial-release/11-household-delivery.md.
+Earlier in-progress notes are historical. Public/commercial activation, physical/iOS, store/provider/signing,
+external security review and publication remain separate gates; identity erasure and ciphertext recall are not
+claimed. Continue the already approved complete billing/future-web-prerequisite batch without helper-only slices
+or repeated unrelated successful checks.

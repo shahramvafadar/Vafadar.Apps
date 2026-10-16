@@ -1137,3 +1137,16 @@ power-loss, OAuth, store-signing or product-publication acceptance. The full goa
 - [ ] Fresh production project, DNS/443 routing, real confirmation/recovery mail and external service acceptance.
 - [ ] Actual hosted CI result and phone/iOS acceptance; local Windows/emulator evidence does not close these gates.
 - [ ] Off-machine private service disaster recovery and reviewed compromise/trust-root migration procedure before live operation.
+
+### D-294 local household engineering delivery
+
+- [x] Original encrypted multi-client household, costs/conflicts, selective adoption, device/recovery/transfer flows locally qualified.
+- [x] Main native Windows/Android privacy lifecycle, audit/revocation, full service snapshot/restore and final immutable image qualified.
+- [x] Bounded original history, compact protected exports, actual Android main export and separate Release AOT/trimmed native allocation qualified.
+- [x] Original transfer dialogs:18 language/theme/width cases plus only six affected RTL prompts; no financial/protocol mutation.
+- [x]3753 existing cases pass by original full-run plus exact failed-case union; unrelated successes were not repeated.
+- [x] Current complete Release APK signature/permanent id/arm64+x64 verified: artifacts/android-household-final-d294/pro.vafadar.zanance-Signed.apk.
+- [ ] Real hosted CI result, public/commercial activation, external security review, physical-device/iOS/provider/store-signing and publication acceptance.
+
+Exact scope, negative evidence and final artifacts: enhancements/2026-10-commercial-release/11-household-delivery.md.
+Identity erasure, ciphertext recall,8GiB saturation and a performance threshold are not claimed.

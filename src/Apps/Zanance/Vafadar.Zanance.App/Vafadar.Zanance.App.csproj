@@ -168,4 +168,22 @@
     <AndroidManifestOverlay Include="Platforms\Android\ReleaseManifest.xml" />
   </ItemGroup>
 
+  <!-- MAUI's Windows manifest target does not include ApplicationId in its incremental
+       inputs. A different independent review identity can otherwise reuse the previous
+       manifest and compiled AppInfo. Invalidate only that owned generated file (D-294). -->
+  <Target Name="ZananceInvalidateChangedWindowsIdentity" BeforeTargets="MauiGeneratePackageAppxManifest"
+          Condition="'$(_ResizetizerIsWindowsAppSdk)' == 'True' and Exists('$(_MauiIntermediateManifest)Package.appxmanifest')">
+    <PropertyGroup>
+      <_ZananceExpectedWindowsIdentity Condition="'$(ApplicationIdGuid)' != ''">$(ApplicationIdGuid)</_ZananceExpectedWindowsIdentity>
+      <_ZananceExpectedWindowsIdentity Condition="'$(ApplicationIdGuid)' == ''">$(ApplicationId)</_ZananceExpectedWindowsIdentity>
+    </PropertyGroup>
+    <XmlPeek XmlInputPath="$(_MauiIntermediateManifest)Package.appxmanifest"
+             Namespaces="&lt;Namespace Prefix='p' Uri='http://schemas.microsoft.com/appx/manifest/foundation/windows10'/&gt;"
+             Query="/p:Package/p:Identity/@Name">
+      <Output TaskParameter="Result" PropertyName="_ZananceGeneratedWindowsIdentity" />
+    </XmlPeek>
+    <Delete Files="$(_MauiIntermediateManifest)Package.appxmanifest"
+            Condition="'$(_ZananceGeneratedWindowsIdentity)' != '$(_ZananceExpectedWindowsIdentity)'" />
+  </Target>
+
 </Project>

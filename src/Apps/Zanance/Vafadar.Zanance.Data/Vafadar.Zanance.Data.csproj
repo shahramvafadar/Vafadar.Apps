@@ -7,12 +7,22 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\Vafadar.Data\Vafadar.Data.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Vafadar.Cryptography\Vafadar.Cryptography.csproj" />
     <ProjectReference Include="..\Vafadar.Zanance.Core\Vafadar.Zanance.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="Vafadar.Zanance.Sync.Tests" />
+    <InternalsVisibleTo Include="HouseholdRoundtrip" />
+    <InternalsVisibleTo Include="HouseholdJournal" />
     <EmbeddedResource Include="Migrations/PersonalSyncJournalUp.sql" LogicalName="Vafadar.Zanance.Sync.JournalUp.v1.sql" />
     <EmbeddedResource Include="Migrations/PersonalSyncJournalDown.sql" LogicalName="Vafadar.Zanance.Sync.JournalDown.v1.sql" />
+    <EmbeddedResource Include="Migrations/HouseholdLocalWritesUp.sql" LogicalName="Vafadar.Zanance.Household.WriteUp.v1.sql" />
+    <EmbeddedResource Include="Migrations/HouseholdLocalWritesDown.sql" LogicalName="Vafadar.Zanance.Household.WriteDown.v1.sql" />
+    <EmbeddedResource Include="Migrations/HouseholdCostCaptureUp.sql" LogicalName="Vafadar.Zanance.Household.CostCaptureUp.v1.sql" />
+    <EmbeddedResource Include="Migrations/HouseholdCostCaptureDown.sql" LogicalName="Vafadar.Zanance.Household.CostCaptureDown.v1.sql" />
+    <EmbeddedResource Include="Migrations/HouseholdCostWritesUp.sql" LogicalName="Vafadar.Zanance.Household.CostWriteUp.v1.sql" />
+    <EmbeddedResource Include="Migrations/HouseholdCostWritesDown.sql" LogicalName="Vafadar.Zanance.Household.CostWriteDown.v1.sql" />
     <!-- Design-time only (dotnet ef migrations ...); not shipped with the app. -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" PrivateAssets="all" />
     <!-- Native design-time context execution only; this bundle must never flow to application hosts. -->

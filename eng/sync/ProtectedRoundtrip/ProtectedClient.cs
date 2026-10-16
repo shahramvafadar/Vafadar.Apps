@@ -24,7 +24,7 @@ internal sealed class ProtectedClient : IDisposable
     { Services = services; generation = current; Transport = transport; }
 
     /// <summary>Creates only a fresh fictional input or reopens its original retained key/generation.</summary>
-    internal static async Task<ProtectedClient> OpenAsync(string root, LocalSyncPeer peer, bool create, CancellationToken ct)
+    internal static async Task<ProtectedClient> OpenAsync(string root, LocalSyncPeer peer, bool create, CancellationToken ct, TimeProvider? clock = null)
     {
         var original = Path.Combine(root, "original.db");
         if (create)
@@ -43,7 +43,7 @@ internal sealed class ProtectedClient : IDisposable
                 if ((ancestor.Attributes & FileAttributes.ReparsePoint) != 0) throw new IOException("Redirected client roots are refused.");
         }
         Validate();
-        var services = new ServiceCollection().AddSingleton(TimeProvider.System).AddZananceData(original, protectionRequired: true).BuildServiceProvider();
+        var services = new ServiceCollection().AddSingleton(clock ?? TimeProvider.System).AddZananceData(original, protectionRequired: true).BuildServiceProvider();
         try
         {
             var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();

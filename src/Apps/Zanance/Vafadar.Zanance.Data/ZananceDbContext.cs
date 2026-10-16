@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.Sqlite;
 using Vafadar.Data;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
@@ -19,8 +20,17 @@ namespace Vafadar.Zanance.Data;
 /// <c>dotnet ef migrations add &lt;Name&gt; --project src/Apps/Zanance/Vafadar.Zanance.Data</c>.
 /// Migrations must keep existing user data (AT-60).
 /// </remarks>
-public sealed class ZananceDbContext(DbContextOptions<ZananceDbContext> options) : LocalDbContext(options)
+public sealed partial class ZananceDbContext : LocalDbContext
 {
+    /// <summary>Configures the original context and closed-connection write function without opening storage or reading data during construction.</summary>
+    public ZananceDbContext(DbContextOptions<ZananceDbContext> options, TimeProvider? time = null) : base(options)
+    {
+        WorkClock = time ?? TimeProvider.System;
+        if (Database.GetDbConnection() is SqliteConnection sqlite)
+            sqlite.CreateFunction<string, string, string, long>("zanance_household_write", DemandHouseholdFinancialWrite);
+    }
+    /// <summary>Actual injected operation clock; commercial/test flags never replace household expiry authority.</summary>
+    internal TimeProvider WorkClock { get; }
     /// <summary>Gets profile-local explicit financial resource choices, independent of verified paid facts.</summary>
     internal DbSet<Commerce.StoredResourceSelection> ResourceSelections => Set<Commerce.StoredResourceSelection>();
 
@@ -86,6 +96,15 @@ public sealed class ZananceDbContext(DbContextOptions<ZananceDbContext> options)
 
     /// <summary>Gets the receipt photos and documents of entries (F2-TX-04).</summary>
     public DbSet<EntryAttachment> Attachments => Set<EntryAttachment>();
+
+    /// <summary>Gets encrypted household financial contacts; none is an authentication or membership grant.</summary>
+    public DbSet<Core.Sharing.HouseholdContact> HouseholdContacts => Set<Core.Sharing.HouseholdContact>();
+    /// <summary>Gets actual shared costs/refunds, counted once independently of their allocations or linked cash entry.</summary>
+    public DbSet<Core.Sharing.HouseholdCost> HouseholdCosts => Set<Core.Sharing.HouseholdCost>();
+    /// <summary>Gets exact minor-unit shares of one shared cost.</summary>
+    public DbSet<Core.Sharing.HouseholdCostAllocation> HouseholdAllocations => Set<Core.Sharing.HouseholdCostAllocation>();
+    /// <summary>Gets explicit actual private repayments; saving one never manufactures a ledger transfer.</summary>
+    public DbSet<Core.Sharing.HouseholdSettlement> HouseholdSettlements => Set<Core.Sharing.HouseholdSettlement>();
 
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)

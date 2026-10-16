@@ -3,6 +3,12 @@ namespace Vafadar.Zanance.App.Interaction;
 /// <summary>Platform dialogs and navigation used by application flows; no view or global window is required by the caller.</summary>
 public interface IAppInteraction
 {
+    /// <summary>Whether this actual host has its explicit encrypted recovery-file Save adapter; unsupported platforms do not claim export acceptance.</summary>
+    bool HouseholdRecoveryFilesAvailable => false;
+    /// <summary>Reads only an explicitly selected bounded encrypted recovery file; cancellation leaves existing protected intent unchanged.</summary>
+    Task<byte[]?> PickHouseholdRecoveryAsync(string title, CancellationToken ct) => throw new PlatformNotSupportedException();
+    /// <summary>Saves an already encrypted recovery file through the native document picker, returning true only after its output stream completes.</summary>
+    Task<bool> SaveHouseholdRecoveryAsync(string fileName, byte[] encrypted, CancellationToken ct) => throw new PlatformNotSupportedException();
     /// <summary>Shows information beside the active application flow.</summary>
     Task AlertAsync(string title, string message, string cancel);
 
@@ -29,6 +35,8 @@ public interface IAppFlowHost
     bool PersonalSyncAvailable { get; }
     /// <summary>Opens optional personal sync without creating a financial account or saving wizard drafts.</summary>
     Task RestoreSyncedOnboardingAsync();
+    /// <summary>Opens explicit household setup for this independent empty first-run profile.</summary>
+    Task OpenHouseholdOnboardingAsync() => Task.CompletedTask;
     /// <summary>Opens first-run restore without creating an account or committing the draft preferences.</summary>
     Task RestoreOnboardingAsync();
 

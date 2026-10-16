@@ -1,0 +1,12 @@
+DROP TRIGGER "zsync_HouseholdAllocations_insert";
+DROP TRIGGER "zsync_HouseholdAllocations_update";
+DROP TRIGGER "zsync_HouseholdAllocations_delete";
+DROP TRIGGER "zsync_HouseholdContacts_insert";
+DROP TRIGGER "zsync_HouseholdContacts_update";
+DROP TRIGGER "zsync_HouseholdContacts_delete";
+DROP TRIGGER "zsync_HouseholdCosts_insert";
+DROP TRIGGER "zsync_HouseholdCosts_update";
+DROP TRIGGER "zsync_HouseholdCosts_delete";
+DROP TRIGGER "zsync_HouseholdSettlements_insert";
+DROP TRIGGER "zsync_HouseholdSettlements_update";
+DROP TRIGGER "zsync_HouseholdSettlements_delete";

@@ -33,6 +33,9 @@ internal static partial class DebugSnapshots
     public static void StartIfRequested(App app, IServiceProvider services, Window window)
     {
 #if ANDROID
+        if (DebugHouseholdConflictAndroid.StartIfRequested(app, services)) { return; }
+        if (DebugHouseholdRecoveryAndroid.StartIfRequested(app, services)) { return; }
+        if (DebugHouseholdLifecycleAndroid.StartIfRequested(app, services)) { return; }
         if (DebugSaleCopyAndroid.StartIfRequested(app, services)) { return; }
         if (DebugDeviceUnlockAndroid.StartIfRequested(app, services)) { return; }
         if (DebugImportLinks.StartIfRequested(app, services)) { return; }
@@ -254,6 +257,54 @@ internal static partial class DebugSnapshots
     private static async Task RunCoreAsync(App app, IServiceProvider services, string folder)
     {
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "household-transfer-dialog-layout")
+        {
+            await ReviewHouseholdTransferDialogsAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "household-transfer-flow")
+        {
+            await ReviewHouseholdTransferFlowAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "household-lifecycle-deleted-layout")
+        {
+            await ReviewHouseholdDeletedLayoutAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "household-lifecycle-flow")
+        {
+            await ReviewHouseholdLifecycleFlowAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "household-lifecycle-status")
+        {
+            await ReviewHouseholdLifecycleStatusAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "household-ownership-status")
+        {
+            await ReviewHouseholdOwnershipStatusAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "household-device-access")
+        {
+            await ReviewHouseholdDeviceAccessAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "household-root-management")
+        {
+            await ReviewHouseholdRootManagementAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "household-management-ui")
+        {
+            await ReviewHouseholdManagementUiAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "household-source-flow")
+        {
+            await ReviewHouseholdSourceFlowAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "household-source-ui")
+        {
+            await ReviewHouseholdSourceUiAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "household-ui")
+        {
+            await ReviewHouseholdUiAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "personal-sync")
         {
             await ReviewPersonalSyncAsync(app, services, folder); return;
@@ -606,6 +657,8 @@ internal static partial class DebugSnapshots
             ("headers", AppShell.SettingsRoute, null),
             ("active-items", AppRoutes.ActiveItemsRoute, null),
             ("productplans", AppRoutes.ProductPlansRoute, null),
+            ("household", AppRoutes.HouseholdRoute, null),
+            ("household-costs", AppRoutes.HouseholdCostsRoute, null),
             ("entry-asset-income", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Income), ["account"] = confirmationAsset.Id }),
             ("entry-asset-expense", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Expense), ["account"] = confirmationAsset.Id }),
             ("entry-edit", AppShell.EntryEditorRoute, new() { ["id"] = expenseId }),

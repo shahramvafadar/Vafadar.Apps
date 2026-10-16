@@ -70,6 +70,11 @@ public static class ZananceDataServiceCollectionExtensions
             .AddSingleton<AutoPostProcessor>()
             .AddSingleton<Sync.PersonalSyncStore>()
             .AddSingleton<Sync.PersonalSyncCoordinator>()
+            .AddSingleton<Sharing.HouseholdProjectionStore>()
+            .AddSingleton<Sharing.HouseholdJournal>()
+            .AddSingleton<Sharing.HouseholdSyncCoordinator>()
+            .AddSingleton<Sharing.HouseholdWorkspace>()
+            .AddSingleton<Sharing.HouseholdCostStore>()
             .AddSingleton<IBackupSummaryProvider, ZananceBackupSummary>();
     }
 }

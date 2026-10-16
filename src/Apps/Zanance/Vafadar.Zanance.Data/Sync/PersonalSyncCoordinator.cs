@@ -12,12 +12,12 @@ public sealed class PersonalSyncCoordinator(PersonalSyncStore store)
     private readonly SemaphoreSlim running = new(1, 1);
 
     /// <summary>Explicitly replaces an uncommitted review with the latest local edits; a lost committed acknowledgement stays recoverable.</summary>
-    public async Task<bool> RestartReviewAsync(PersonalSyncTransport transport, CancellationToken ct = default)
+    public async Task<bool> RestartReviewAsync(IProfileSynchronizationTransport transport, CancellationToken ct = default)
     {
         await running.WaitAsync(ct);
         try
         {
-            var identity = await transport.IdentityAsync(ct); var work = await store.CaptureRoundAsync(transport.Peer, identity.Id, ct);
+            var identity = await transport.IdentityAsync(ct); var work = await store.CaptureRoundAsync(transport.Peer, identity.Id, ct, transport.Kind);
             if (work.Phase == 2)
             {
                 // A service acknowledgement is immutable. Recompute only local consent against
@@ -43,13 +43,13 @@ public sealed class PersonalSyncCoordinator(PersonalSyncStore store)
     }
 
     /// <summary>Completes one captured round without holding a local financial connection over network waits.</summary>
-    public async Task<PersonalSyncOutcome> SynchronizeAsync(PersonalSyncTransport transport, CancellationToken ct = default)
+    public async Task<PersonalSyncOutcome> SynchronizeAsync(IProfileSynchronizationTransport transport, CancellationToken ct = default)
     {
         await running.WaitAsync(ct);
         try
         {
             var identity = await transport.IdentityAsync(ct);
-            var work = await store.CaptureRoundAsync(transport.Peer, identity.Id, ct);
+            var work = await store.CaptureRoundAsync(transport.Peer, identity.Id, ct, transport.Kind);
             if (work.NeedsReview)
             { await DownloadReviewBlobsAsync(store, transport, work, ct); return new(false, true); }
             var authority = work.Authority;
@@ -102,7 +102,7 @@ public sealed class PersonalSyncCoordinator(PersonalSyncStore store)
         finally { running.Release(); }
     }
 
-    private static async Task UploadBlobsAsync(PersonalSyncStore store, PersonalSyncTransport transport, SyncRoundWork work, CancellationToken ct)
+    private static async Task UploadBlobsAsync(PersonalSyncStore store, IProfileSynchronizationTransport transport, SyncRoundWork work, CancellationToken ct)
     {
         var authority = work.Authority;
         var references = PersonalSyncStore.BlobNeeds(work.Parts.SelectMany(part => part.Rows).Select(row => new SyncRecord(row.Record, row.BaseVersion, row.Values)));
@@ -124,7 +124,7 @@ public sealed class PersonalSyncCoordinator(PersonalSyncStore store)
         }
     }
 
-    private static async Task DownloadReviewBlobsAsync(PersonalSyncStore store, PersonalSyncTransport transport, SyncRoundWork work, CancellationToken ct)
+    private static async Task DownloadReviewBlobsAsync(PersonalSyncStore store, IProfileSynchronizationTransport transport, SyncRoundWork work, CancellationToken ct)
     {
         foreach (var blob in await store.ReviewBlobsAsync(work, ct))
             foreach (var index in await store.MissingBlobPiecesAsync(work, blob, ct))

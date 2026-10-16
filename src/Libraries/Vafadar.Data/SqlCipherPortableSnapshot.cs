@@ -19,7 +19,8 @@ public static class SqlCipherPortableSnapshot
     /// <remarks>The check must not query the database, move profiles or perform network work; partial output is caller-owned on failure.</remarks>
     public static async Task WriteAsync(SqliteConnection source, Stream destination, int maximumBytes, Action? verifyAccess,
         CancellationToken cancellationToken = default,
-        Func<SqliteConnection, string, CancellationToken, Task>? preparePortableImage = null)
+        Func<SqliteConnection, string, CancellationToken, Task>? preparePortableImage = null,
+        IReadOnlyCollection<string>? emptyRowTables = null)
     {
         ArgumentNullException.ThrowIfNull(source); ArgumentNullException.ThrowIfNull(destination);
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(maximumBytes);
@@ -28,8 +29,13 @@ public static class SqlCipherPortableSnapshot
         if (raw.sqlite3_get_autocommit(source.Handle) == 0)
             throw new InvalidOperationException("The portable exporter requires its own snapshot transaction.");
         verifyAccess?.Invoke();
+        var omitted = emptyRowTables?.ToHashSet(StringComparer.Ordinal) ?? [];
+        if (omitted.Count > 256 || omitted.Any(name => name.Length is < 1 or > 128 || name.StartsWith("sqlite_", StringComparison.OrdinalIgnoreCase) ||
+            name.Any(character => !char.IsAsciiLetterOrDigit(character) && character != '_')))
+            throw new ArgumentException("Only finite trusted ordinary table names can omit portable rows.", nameof(emptyRowTables));
         var alias = "portable_" + Guid.NewGuid().ToString("N");
         var attached = false;
+        var authorizing = false;
         IntPtr serialized = IntPtr.Zero;
         long size = 0;
         var buffer = ArrayPool<byte>.Shared.Rent(81920);
@@ -41,6 +47,24 @@ public static class SqlCipherPortableSnapshot
                 attach.CommandText = $"ATTACH DATABASE ':memory:' AS {alias} KEY '';";
                 await attach.ExecuteNonQueryAsync(cancellationToken); attached = true;
                 verifyAccess?.Invoke();
+            }
+            if (omitted.Count != 0)
+            {
+                // This is a fresh memory schema. Enforce the existing output budget before native
+                // allocation, rather than first materializing an arbitrarily large private journal.
+                await using var bound = source.CreateCommand(); bound.CommandText = $"PRAGMA {alias}.page_size;";
+                var pageSize = Convert.ToInt64(await bound.ExecuteScalarAsync(cancellationToken));
+                if (pageSize is < 512 or > 65536) throw new InvalidDataException("Portable page size was refused.");
+                bound.CommandText = FormattableString.Invariant($"PRAGMA {alias}.max_page_count={Math.Max(1, maximumBytes / pageSize)};");
+                await bound.ExecuteNonQueryAsync(cancellationToken);
+                strdelegate_authorizer authorize = (_, action, table, _, database, _) =>
+                    action == raw.SQLITE_INSERT && database == alias && table is not null && omitted.Contains(table) ? raw.SQLITE_IGNORE : raw.SQLITE_OK;
+                // SQLite IGNORE on this exact destination INSERT suppresses only its row copy.
+                // sqlcipher_export still owns schema, indexes, triggers and all non-private rows.
+                // The application factory owns this connection; no pre-existing authorizer is replaced.
+                var result = raw.sqlite3_set_authorizer(source.Handle, authorize, null);
+                if (result != raw.SQLITE_OK) throw new InvalidOperationException("Portable row authorization could not be installed.");
+                authorizing = true;
             }
             // The read transaction holds a single WAL view throughout schema, rows and header copying.
             await using (var transaction = source.BeginTransaction(deferred: true))
@@ -59,6 +83,12 @@ public static class SqlCipherPortableSnapshot
                 await export.ExecuteNonQueryAsync(cancellationToken);
                 verifyAccess?.Invoke();
                 await transaction.CommitAsync(cancellationToken);
+            }
+            if (authorizing)
+            {
+                if (raw.sqlite3_set_authorizer(source.Handle, (strdelegate_authorizer?)null, null) != raw.SQLITE_OK)
+                    throw new InvalidOperationException("Portable row authorization could not be released.");
+                authorizing = false;
             }
             // sqlcipher_export created fresh logical pages in this memory-only copy. Application
             // policies may securely clear device metadata here without touching the keyed source.
@@ -85,6 +115,7 @@ public static class SqlCipherPortableSnapshot
         }
         finally
         {
+            if (authorizing) raw.sqlite3_set_authorizer(source.Handle, (strdelegate_authorizer?)null, null);
             CryptographicOperations.ZeroMemory(buffer);
             if (serialized != IntPtr.Zero)
             {

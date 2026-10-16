@@ -12,7 +12,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
     public partial class ServiceDbContextModel
     {
         private ServiceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("d7c033cc-4417-45e2-940b-d079d03616e5"), entityTypeCount: 19)
+            : base(skipDetectChanges: false, modelId: new Guid("bc72f1eb-13cf-4927-9fbd-01ae782d8eaf"), entityTypeCount: 36)
         {
         }
 
@@ -29,6 +29,23 @@ namespace Vafadar.Zanance.Api.CompiledModel
             var privateObject = PrivateObjectEntityType.Create(this);
             var requestWindow = RequestWindowEntityType.Create(this);
             var serviceUser = ServiceUserEntityType.Create(this);
+            var householdAuditRow = HouseholdAuditRowEntityType.Create(this);
+            var householdDeviceRow = HouseholdDeviceRowEntityType.Create(this);
+            var householdEventRow = HouseholdEventRowEntityType.Create(this);
+            var householdInvitationRow = HouseholdInvitationRowEntityType.Create(this);
+            var householdKeyGrantRow = HouseholdKeyGrantRowEntityType.Create(this);
+            var householdMemberRow = HouseholdMemberRowEntityType.Create(this);
+            var householdMembershipEventRow = HouseholdMembershipEventRowEntityType.Create(this);
+            var householdOwnerRootGrantRow = HouseholdOwnerRootGrantRowEntityType.Create(this);
+            var householdOwnershipRow = HouseholdOwnershipRowEntityType.Create(this);
+            var householdPartRow = HouseholdPartRowEntityType.Create(this);
+            var householdRecordRow = HouseholdRecordRowEntityType.Create(this);
+            var householdRecoveryEpochRow = HouseholdRecoveryEpochRowEntityType.Create(this);
+            var householdRecoveryRow = HouseholdRecoveryRowEntityType.Create(this);
+            var householdRecoverySeedEpochRow = HouseholdRecoverySeedEpochRowEntityType.Create(this);
+            var householdRecoverySeedRow = HouseholdRecoverySeedRowEntityType.Create(this);
+            var householdRoundRow = HouseholdRoundRowEntityType.Create(this);
+            var householdSpaceRow = HouseholdSpaceRowEntityType.Create(this);
             var syncBlobPieceRow = SyncBlobPieceRowEntityType.Create(this);
             var syncBlobRow = SyncBlobRowEntityType.Create(this);
             var syncDeviceRow = SyncDeviceRowEntityType.Create(this);
@@ -47,6 +64,27 @@ namespace Vafadar.Zanance.Api.CompiledModel
             DeviceSessionEntityType.CreateForeignKey1(deviceSession, serviceUser);
             IdentityChallengeEntityType.CreateForeignKey1(identityChallenge, serviceUser);
             PrivateObjectEntityType.CreateForeignKey1(privateObject, serviceUser);
+            HouseholdAuditRowEntityType.CreateForeignKey1(householdAuditRow, householdSpaceRow);
+            HouseholdDeviceRowEntityType.CreateForeignKey1(householdDeviceRow, householdMemberRow);
+            HouseholdEventRowEntityType.CreateForeignKey1(householdEventRow, householdRoundRow);
+            HouseholdInvitationRowEntityType.CreateForeignKey1(householdInvitationRow, householdSpaceRow);
+            HouseholdKeyGrantRowEntityType.CreateForeignKey1(householdKeyGrantRow, householdDeviceRow);
+            HouseholdKeyGrantRowEntityType.CreateForeignKey2(householdKeyGrantRow, householdSpaceRow);
+            HouseholdMemberRowEntityType.CreateForeignKey1(householdMemberRow, householdSpaceRow);
+            HouseholdMemberRowEntityType.CreateForeignKey2(householdMemberRow, serviceUser);
+            HouseholdMembershipEventRowEntityType.CreateForeignKey1(householdMembershipEventRow, householdSpaceRow);
+            HouseholdOwnerRootGrantRowEntityType.CreateForeignKey1(householdOwnerRootGrantRow, householdDeviceRow);
+            HouseholdOwnerRootGrantRowEntityType.CreateForeignKey2(householdOwnerRootGrantRow, householdSpaceRow);
+            HouseholdOwnershipRowEntityType.CreateForeignKey1(householdOwnershipRow, householdSpaceRow);
+            HouseholdPartRowEntityType.CreateForeignKey1(householdPartRow, householdRoundRow);
+            HouseholdRecordRowEntityType.CreateForeignKey1(householdRecordRow, householdSpaceRow);
+            HouseholdRecoveryEpochRowEntityType.CreateForeignKey1(householdRecoveryEpochRow, householdRecoveryRow);
+            HouseholdRecoveryRowEntityType.CreateForeignKey1(householdRecoveryRow, householdSpaceRow);
+            HouseholdRecoverySeedEpochRowEntityType.CreateForeignKey1(householdRecoverySeedEpochRow, householdRecoverySeedRow);
+            HouseholdRecoverySeedRowEntityType.CreateForeignKey1(householdRecoverySeedRow, householdSpaceRow);
+            HouseholdRoundRowEntityType.CreateForeignKey1(householdRoundRow, householdDeviceRow);
+            HouseholdRoundRowEntityType.CreateForeignKey2(householdRoundRow, householdSpaceRow);
+            HouseholdSpaceRowEntityType.CreateForeignKey1(householdSpaceRow, serviceUser);
             SyncBlobPieceRowEntityType.CreateForeignKey1(syncBlobPieceRow, syncBlobRow);
             SyncBlobRowEntityType.CreateForeignKey1(syncBlobRow, syncSpaceRow);
             SyncDeviceRowEntityType.CreateForeignKey1(syncDeviceRow, serviceUser);
@@ -68,6 +106,23 @@ namespace Vafadar.Zanance.Api.CompiledModel
             PrivateObjectEntityType.CreateAnnotations(privateObject);
             RequestWindowEntityType.CreateAnnotations(requestWindow);
             ServiceUserEntityType.CreateAnnotations(serviceUser);
+            HouseholdAuditRowEntityType.CreateAnnotations(householdAuditRow);
+            HouseholdDeviceRowEntityType.CreateAnnotations(householdDeviceRow);
+            HouseholdEventRowEntityType.CreateAnnotations(householdEventRow);
+            HouseholdInvitationRowEntityType.CreateAnnotations(householdInvitationRow);
+            HouseholdKeyGrantRowEntityType.CreateAnnotations(householdKeyGrantRow);
+            HouseholdMemberRowEntityType.CreateAnnotations(householdMemberRow);
+            HouseholdMembershipEventRowEntityType.CreateAnnotations(householdMembershipEventRow);
+            HouseholdOwnerRootGrantRowEntityType.CreateAnnotations(householdOwnerRootGrantRow);
+            HouseholdOwnershipRowEntityType.CreateAnnotations(householdOwnershipRow);
+            HouseholdPartRowEntityType.CreateAnnotations(householdPartRow);
+            HouseholdRecordRowEntityType.CreateAnnotations(householdRecordRow);
+            HouseholdRecoveryEpochRowEntityType.CreateAnnotations(householdRecoveryEpochRow);
+            HouseholdRecoveryRowEntityType.CreateAnnotations(householdRecoveryRow);
+            HouseholdRecoverySeedEpochRowEntityType.CreateAnnotations(householdRecoverySeedEpochRow);
+            HouseholdRecoverySeedRowEntityType.CreateAnnotations(householdRecoverySeedRow);
+            HouseholdRoundRowEntityType.CreateAnnotations(householdRoundRow);
+            HouseholdSpaceRowEntityType.CreateAnnotations(householdSpaceRow);
             SyncBlobPieceRowEntityType.CreateAnnotations(syncBlobPieceRow);
             SyncBlobRowEntityType.CreateAnnotations(syncBlobRow);
             SyncDeviceRowEntityType.CreateAnnotations(syncDeviceRow);

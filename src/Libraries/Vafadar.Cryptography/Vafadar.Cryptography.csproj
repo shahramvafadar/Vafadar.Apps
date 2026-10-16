@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <Description>Bounded standard JOSE cryptography and owned platform key handles without remote discovery.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="jose-jwt" />
+  </ItemGroup>
+</Project>

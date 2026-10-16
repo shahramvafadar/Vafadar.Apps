@@ -7,6 +7,8 @@ namespace Vafadar.Zanance.Data.Sync;
 internal sealed class PersonalSyncPortablePolicy : ISqlitePortableSnapshotPolicy
 {
     /// <inheritdoc />
+    public IReadOnlyCollection<string> EmptyRowTables => PersonalSyncStore.PortableMetadataTables;
+    /// <inheritdoc />
     public async Task PrepareAsync(SqliteConnection connection, string schema, CancellationToken cancellationToken)
     {
         if (schema != "main" && (schema.Length != 41 || !schema.StartsWith("portable_", StringComparison.Ordinal) ||

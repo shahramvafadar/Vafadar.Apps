@@ -25,20 +25,25 @@ public static class MoneyText
     /// <param name="showCurrency">Whether the currency code (or the user's display unit, FX-07) is appended.</param>
     /// <param name="approximate">Whether the amount is an estimate; "≈" is placed inside the isolated amount so it stays in front in any text direction.</param>
     public static string Format(long minor, string currencyCode, CultureInfo culture, bool showPlus = false, bool showCurrency = true, bool approximate = false)
+        => Format((decimal)minor, currencyCode, culture, showPlus, showCurrency, approximate);
+
+    /// <summary>Formats an exact integral minor-unit aggregate without narrowing totals back to a single Int64 ledger amount.</summary>
+    public static string Format(decimal minor, string currencyCode, CultureInfo culture, bool showPlus = false, bool showCurrency = true, bool approximate = false)
     {
         ArgumentNullException.ThrowIfNull(culture);
+        if (decimal.Truncate(minor) != minor) throw new ArgumentException("A display total requires exact minor units.", nameof(minor));
         var currency = CurrencyOf(currencyCode);
         string number, label;
         if (DisplayUnits.TryGet(currency.Code, out var unit))
         {
             // D-86: take the magnitude after decimal conversion; Int64.MinValue has no positive Int64 counterpart.
-            var value = decimal.Abs(ToDecimal(minor, currency));
+            var value = decimal.Abs(minor / Pow10(currency.MinorDigits + unit.Exponent));
             number = value.ToString("N" + DecimalsOf(value, currency.MinorDigits + unit.Exponent), culture);
             label = unit.Name;
         }
         else
         {
-            number = decimal.Abs(MoneyAmount.ToDecimal(minor, currency)).ToString("N" + currency.MinorDigits, culture);
+            number = decimal.Abs(minor / currency.MinorFactor).ToString("N" + currency.MinorDigits, culture);
             label = currency.Code;
         }
 

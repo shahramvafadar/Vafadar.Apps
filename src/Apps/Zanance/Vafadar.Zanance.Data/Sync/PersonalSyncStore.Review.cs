@@ -55,13 +55,14 @@ public sealed partial class PersonalSyncStore
             if (review.Conflict.LinkedGroup is { } group)
             {
                 var pending = await db.Set<SyncConflictRow>().AsNoTracking().Where(row => row.UseProposal == null).ToArrayAsync(ct);
-                var expectedKeys = pending.Where(row => JsonSerializer.Deserialize(row.Payload, PersonalSyncJsonContext.Default.SyncConflict)?.LinkedGroup == group)
+                var expectedKeys = pending.Where(row => SyncConflictGrouping.Family(new(row.TableName, row.RecordKey)) == SyncConflictGrouping.Family(review.Conflict.Proposal.Record) &&
+                    JsonSerializer.Deserialize(row.Payload, PersonalSyncJsonContext.Default.SyncConflict)?.LinkedGroup == group)
                     .Select(row => new SyncRecordKey(row.TableName, row.RecordKey)).ToHashSet();
-                if (members.Any(member => member.Conflict.LinkedGroup != group) || members.Length != expectedKeys.Count ||
+                if (members.Any(member => member.Conflict.LinkedGroup != group || SyncConflictGrouping.Family(member.Conflict.Proposal.Record) != SyncConflictGrouping.Family(review.Conflict.Proposal.Record)) || members.Length != expectedKeys.Count ||
                     !expectedKeys.SetEquals(members.Select(member => member.Conflict.Proposal.Record)))
                     throw new InvalidOperationException("The complete linked financial group must be reviewed together.");
                 if (keepLocalProposal && members.SelectMany(member => member.Conflict.Context ?? []).Any(record =>
-                    SyncConflictGrouping.Group(record.Record, record.Values) == group && !expectedKeys.Contains(record.Record)))
+                    SyncConflictGrouping.InGroup(record.Record, record.Values, review.Conflict.Proposal.Record, group) && !expectedKeys.Contains(record.Record)))
                     throw new InvalidOperationException("A remote-only group member cannot be silently included in a local version choice.");
             }
             else if (members.Length != 1) throw new InvalidOperationException("Unrelated personal conflicts cannot share a decision.");
@@ -100,6 +101,6 @@ public sealed partial class PersonalSyncStore
 
     private static IReadOnlyList<PersonalSyncConflictReview> AttachReviewGroups(IReadOnlyList<PersonalSyncConflictReview> reviews) =>
         reviews.Select(review => review with { GroupMembers = review.Conflict.LinkedGroup is { } group ?
-            reviews.Where(member => member.Conflict.LinkedGroup == group && member.Conflict.Proposal.Record != review.Conflict.Proposal.Record)
+            reviews.Where(member => member.Conflict.LinkedGroup == group && SyncConflictGrouping.Family(member.Conflict.Proposal.Record) == SyncConflictGrouping.Family(review.Conflict.Proposal.Record) && member.Conflict.Proposal.Record != review.Conflict.Proposal.Record)
                 .Select(member => member with { GroupMembers = null }).ToArray() : null }).ToArray();
 }

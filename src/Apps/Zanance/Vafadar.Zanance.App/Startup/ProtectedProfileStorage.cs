@@ -210,15 +210,30 @@ public sealed class ProtectedProfileStorage
         var generation = await SqlCipherProfileGeneration.OpenCurrentAsync(location, identities, row.Key, row.Value, history,
             reference => createBoundReceiver is null ? createReceiver(row.Value, reference, owner) : createBoundReceiver(identity, row.Value, reference, owner), keys, durability, owner, ValidateProfile,
             maximumBytes, cipherVersion, ct).ConfigureAwait(false);
-        try { capture.Validate(); return generation; }
+        try
+        {
+            // Existing encrypted generations also need application schema upgrades. Initial
+            // encryption/restore validation alone cannot create later additive app tables.
+            // Keep the real host drained and the destination unpublished until migrations
+            // finish on this exact existing-only keyed connection (D-294).
+            location.Access.RequireDrainedOwner(owner); capture.Validate();
+            await using var connection = generation.CreateConnection();
+            await UpgradeAsync(connection, ct).ConfigureAwait(false);
+            location.Access.RequireDrainedOwner(owner); capture.Validate(); return generation;
+        }
         catch { generation.Dispose(); throw; }
     }
 
-    private static async Task UpgradeAsync(SqliteConnection connection, CancellationToken ct)
+    /// <summary>Applies only the pending suffix of the supported real application migrations on the supplied owned connection.</summary>
+    internal static async Task UpgradeAsync(SqliteConnection connection, CancellationToken ct)
     {
         var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(connection, contextOwnsConnection: false)
             .UseModel(ZananceDbContextModel.Instance).Options;
         await using var db = new ZananceDbContext(options);
-        await db.Database.MigrateAsync(ct).ConfigureAwait(false);
+        var recorded = (await db.Database.GetAppliedMigrationsAsync(ct).ConfigureAwait(false)).ToArray();
+        var known = db.Database.GetMigrations().ToArray();
+        if (recorded.Length > known.Length || !recorded.SequenceEqual(known.Take(recorded.Length), StringComparer.Ordinal))
+            throw new InvalidDataException("Protected application schema history is not a supported migration prefix.");
+        if (recorded.Length != known.Length) await db.Database.MigrateAsync(ct).ConfigureAwait(false);
     }
 }

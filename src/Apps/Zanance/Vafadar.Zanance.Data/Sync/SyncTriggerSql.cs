@@ -7,7 +7,7 @@ namespace Vafadar.Zanance.Data.Sync;
 public static class SyncTriggerSql
 {
     /// <summary>Captures complete values only under explicit opt-in and outside incoming publication.</summary>
-    public static string Create(SyncSchemaManifest manifest)
+    public static string Create(SyncSchemaManifest manifest, bool householdOnly = false)
     {
         var sql = new StringBuilder();
         foreach (var table in manifest.Tables)
@@ -20,7 +20,8 @@ public static class SyncTriggerSql
             {
                 sql.Append("CREATE TRIGGER ").Append(Identifier(Name(table, action))).Append(" AFTER ")
                     .Append(action.ToUpperInvariant()).Append(" ON ").Append(quoted)
-                    .Append(" WHEN EXISTS(SELECT 1 FROM \"SyncBinding\" WHERE \"Id\"=1 AND \"Enabled\"=1 AND \"Applying\"=0)");
+                    .Append(" WHEN EXISTS(SELECT 1 FROM \"SyncBinding\" WHERE \"Id\"=1 AND \"Enabled\"=1 AND \"Applying\"=0")
+                    .Append(householdOnly ? " AND \"TransportKind\"=1)" : ")");
                 if (action == "update") sql.Append(" AND (").Append(changed).Append(')');
                 sql.AppendLine(" BEGIN");
                 if (action == "update")

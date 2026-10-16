@@ -5,6 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../Vafadar.Zanance.Core/Vafadar.Zanance.Core.csproj" />
+    <ProjectReference Include="../../../Libraries/Vafadar.Cryptography/Vafadar.Cryptography.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" PrivateAssets="all" />

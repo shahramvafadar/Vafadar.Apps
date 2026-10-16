@@ -11,8 +11,7 @@ internal static class SyncRowCodec
     internal static JsonElement? ToWire(SyncRecordKey key, string? body, Action<string, byte[]>? retainBlob = null)
     {
         if (body is null) return null;
-        var table = SyncSchema.Manifest.Tables.SingleOrDefault(table => table.Name == key.Table)
-            ?? throw new InvalidDataException("The captured table is unavailable.");
+        var table = SyncSchema.Describe(key.Table);
         using var source = JsonDocument.Parse(body); using var output = new MemoryStream();
         using (var writer = new Utf8JsonWriter(output))
         {
@@ -50,22 +49,24 @@ internal static class SyncRowCodec
     }
 
     /// <summary>Splits complete proposals by their actual typed transport size, never through a row or transaction.</summary>
-    internal static SyncRoundPart[] Parts(IReadOnlyList<SyncProposal> proposals)
+    internal static SyncRoundPart[] Parts(IReadOnlyList<SyncProposal> proposals, ProfileSynchronizationKind kind = ProfileSynchronizationKind.Personal)
     {
+        var maximumPartBytes = kind == ProfileSynchronizationKind.Household ? Core.Sharing.HouseholdFinancialFraming.MaximumRecordBytes + 4096 : 1024 * 1024;
+        var maximumRoundBytes = kind == ProfileSynchronizationKind.Household ? Core.Sharing.HouseholdFinancialFraming.MaximumStreamBytes : SyncGraphValidation.MaximumProfileBytes;
         var parts = new List<SyncRoundPart>(); var current = new List<SyncProposal>(); long bytes = 0;
         foreach (var proposal in proposals.OrderBy(row => row.Record.Table, StringComparer.Ordinal).ThenBy(row => row.Record.Key, StringComparer.Ordinal))
         {
             current.Add(proposal);
             var candidate = new SyncRoundPart(parts.Count, current);
             var size = JsonSerializer.SerializeToUtf8Bytes(candidate, PersonalSyncJsonContext.Default.SyncRoundPart).Length;
-            if (size > 1024 * 1024 || current.Count > 128)
+            if (size > maximumPartBytes || current.Count > 128)
             {
                 current.RemoveAt(current.Count - 1);
                 if (current.Count == 0) throw new InvalidDataException("A complete financial row exceeds the personal sync part bound.");
                 var sealedPart = new SyncRoundPart(parts.Count, current.ToArray()); parts.Add(sealedPart);
                 bytes += JsonSerializer.SerializeToUtf8Bytes(sealedPart, PersonalSyncJsonContext.Default.SyncRoundPart).Length;
                 current = [proposal];
-                if (JsonSerializer.SerializeToUtf8Bytes(new SyncRoundPart(parts.Count, current), PersonalSyncJsonContext.Default.SyncRoundPart).Length > 1024 * 1024)
+                if (JsonSerializer.SerializeToUtf8Bytes(new SyncRoundPart(parts.Count, current), PersonalSyncJsonContext.Default.SyncRoundPart).Length > maximumPartBytes)
                     throw new InvalidDataException("A complete financial row exceeds the personal sync part bound.");
             }
         }
@@ -74,7 +75,7 @@ internal static class SyncRowCodec
             var part = new SyncRoundPart(parts.Count, current.ToArray()); parts.Add(part);
             bytes += JsonSerializer.SerializeToUtf8Bytes(part, PersonalSyncJsonContext.Default.SyncRoundPart).Length;
         }
-        if (parts.Count > 16384 || proposals.Count > SyncGraphValidation.MaximumRows || bytes > SyncGraphValidation.MaximumProfileBytes)
+        if (parts.Count > 16384 || proposals.Count > SyncGraphValidation.MaximumRows || bytes > maximumRoundBytes)
             throw new InvalidDataException("The personal sync round exceeds its technical bound.");
         return parts.ToArray();
     }

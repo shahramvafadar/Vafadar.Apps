@@ -10,9 +10,10 @@ namespace Vafadar.Zanance.Core.Sync;
 public static class SyncLedgerValidation
 {
     /// <summary>Checks structure first, then actual account currencies and original ledger invariants without posting money.</summary>
-    public static IReadOnlyList<SyncGraphIssue> Validate(IReadOnlyCollection<SyncRecord> records, IReadOnlySet<Guid>? newEntryIds = null)
+    public static IReadOnlyList<SyncGraphIssue> Validate(IReadOnlyCollection<SyncRecord> records, IReadOnlySet<Guid>? newEntryIds = null,
+        SyncSchemaManifest? contract = null)
     {
-        var structural = SyncGraphValidation.Validate(records);
+        var structural = SyncGraphValidation.Validate(records, contract);
         if (structural.Count != 0) return structural;
         var live = records.Where(record => record.Values is not null).ToArray();
         var accounts = live.Where(record => record.Record.Table == "Accounts").ToDictionary(record => Id(record.Values!.Value), record =>
@@ -69,7 +70,8 @@ public static class SyncLedgerValidation
         return issues.Take(100).ToArray();
     }
 
-    private static LedgerEntry ProjectEntry(JsonElement row) => new(Id(row))
+    /// <summary>Original typed ledger projection reused after structural validation by the household cost validator.</summary>
+    internal static LedgerEntry ProjectEntry(JsonElement row) => new(Id(row))
     {
         Kind = (EntryKind)Long(row, "Kind"), Date = Date(row, "Date"), AccountId = row.GetProperty("AccountId").GetGuid(),
         Amount = Long(row, "Amount"), ToAccountId = GuidOrNull(row, "ToAccountId"), ToAmount = LongOrNull(row, "ToAmount"),

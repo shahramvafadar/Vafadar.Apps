@@ -11,7 +11,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
     public partial class ZananceDbContextModel
     {
         private ZananceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("52b52505-f226-42ca-9c03-79a4752ddc7c"), entityTypeCount: 33)
+            : base(skipDetectChanges: false, modelId: new Guid("f9509ac3-b0cc-4ecd-917b-088bfe3f130a"), entityTypeCount: 48)
         {
         }
 
@@ -40,8 +40,23 @@ namespace Vafadar.Zanance.Data.CompiledModel
             var recurrenceRule0 = RecurrenceRule0EntityType.Create(this);
             var exchangeRate = ExchangeRateEntityType.Create(this);
             var zananceSettings = ZananceSettingsEntityType.Create(this);
+            var householdContact = HouseholdContactEntityType.Create(this);
+            var householdCost = HouseholdCostEntityType.Create(this);
+            var householdCostAllocation = HouseholdCostAllocationEntityType.Create(this);
+            var householdSettlement = HouseholdSettlementEntityType.Create(this);
             var storedResourceSelection = StoredResourceSelectionEntityType.Create(this);
             var importLinkBatch = ImportLinkBatchEntityType.Create(this);
+            var householdLocalAttempt = HouseholdLocalAttemptEntityType.Create(this);
+            var householdLocalAttemptPart = HouseholdLocalAttemptPartEntityType.Create(this);
+            var householdLocalBinding = HouseholdLocalBindingEntityType.Create(this);
+            var householdLocalBlobReference = HouseholdLocalBlobReferenceEntityType.Create(this);
+            var householdLocalEvent = HouseholdLocalEventEntityType.Create(this);
+            var householdLocalFinancialReference = HouseholdLocalFinancialReferenceEntityType.Create(this);
+            var householdLocalMembership = HouseholdLocalMembershipEntityType.Create(this);
+            var householdLocalMembershipProposal = HouseholdLocalMembershipProposalEntityType.Create(this);
+            var householdLocalOwnership = HouseholdLocalOwnershipEntityType.Create(this);
+            var householdLocalPacket = HouseholdLocalPacketEntityType.Create(this);
+            var householdLocalSecret = HouseholdLocalSecretEntityType.Create(this);
             var syncBindingRow = SyncBindingRowEntityType.Create(this);
             var syncBlobPart = SyncBlobPartEntityType.Create(this);
             var syncBlobTransfer = SyncBlobTransferEntityType.Create(this);
@@ -69,6 +84,17 @@ namespace Vafadar.Zanance.Data.CompiledModel
             ScheduleEntityType.CreateForeignKey2(schedule, category);
             ScheduleEntityType.CreateForeignKey3(schedule, account);
             RecurrenceRule0EntityType.CreateForeignKey1(recurrenceRule0, schedule);
+            HouseholdCostEntityType.CreateForeignKey1(householdCost, ledgerEntry);
+            HouseholdCostEntityType.CreateForeignKey2(householdCost, householdContact);
+            HouseholdCostEntityType.CreateForeignKey3(householdCost, householdCost);
+            HouseholdCostAllocationEntityType.CreateForeignKey1(householdCostAllocation, householdContact);
+            HouseholdCostAllocationEntityType.CreateForeignKey2(householdCostAllocation, householdCost);
+            HouseholdSettlementEntityType.CreateForeignKey1(householdSettlement, ledgerEntry);
+            HouseholdSettlementEntityType.CreateForeignKey2(householdSettlement, householdContact);
+            HouseholdSettlementEntityType.CreateForeignKey3(householdSettlement, householdContact);
+            HouseholdLocalBlobReferenceEntityType.CreateForeignKey1(householdLocalBlobReference, householdLocalPacket);
+            HouseholdLocalEventEntityType.CreateForeignKey1(householdLocalEvent, householdLocalPacket);
+            HouseholdLocalFinancialReferenceEntityType.CreateForeignKey1(householdLocalFinancialReference, householdLocalPacket);
 
             AccountEntityType.CreateAnnotations(account);
             BudgetEntityType.CreateAnnotations(budget);
@@ -93,8 +119,23 @@ namespace Vafadar.Zanance.Data.CompiledModel
             RecurrenceRule0EntityType.CreateAnnotations(recurrenceRule0);
             ExchangeRateEntityType.CreateAnnotations(exchangeRate);
             ZananceSettingsEntityType.CreateAnnotations(zananceSettings);
+            HouseholdContactEntityType.CreateAnnotations(householdContact);
+            HouseholdCostEntityType.CreateAnnotations(householdCost);
+            HouseholdCostAllocationEntityType.CreateAnnotations(householdCostAllocation);
+            HouseholdSettlementEntityType.CreateAnnotations(householdSettlement);
             StoredResourceSelectionEntityType.CreateAnnotations(storedResourceSelection);
             ImportLinkBatchEntityType.CreateAnnotations(importLinkBatch);
+            HouseholdLocalAttemptEntityType.CreateAnnotations(householdLocalAttempt);
+            HouseholdLocalAttemptPartEntityType.CreateAnnotations(householdLocalAttemptPart);
+            HouseholdLocalBindingEntityType.CreateAnnotations(householdLocalBinding);
+            HouseholdLocalBlobReferenceEntityType.CreateAnnotations(householdLocalBlobReference);
+            HouseholdLocalEventEntityType.CreateAnnotations(householdLocalEvent);
+            HouseholdLocalFinancialReferenceEntityType.CreateAnnotations(householdLocalFinancialReference);
+            HouseholdLocalMembershipEntityType.CreateAnnotations(householdLocalMembership);
+            HouseholdLocalMembershipProposalEntityType.CreateAnnotations(householdLocalMembershipProposal);
+            HouseholdLocalOwnershipEntityType.CreateAnnotations(householdLocalOwnership);
+            HouseholdLocalPacketEntityType.CreateAnnotations(householdLocalPacket);
+            HouseholdLocalSecretEntityType.CreateAnnotations(householdLocalSecret);
             SyncBindingRowEntityType.CreateAnnotations(syncBindingRow);
             SyncBlobPartEntityType.CreateAnnotations(syncBlobPart);
             SyncBlobTransferEntityType.CreateAnnotations(syncBlobTransfer);

@@ -23,6 +23,8 @@ public sealed class ServiceStorage
     public required bool LocalMailbox { get; init; }
     /// <summary>Finite technical bounds shared by all workers for personal synchronization.</summary>
     public Sync.SyncStorageLimits SyncLimits { get; init; } = new();
+    /// <summary>Explicit fictional/local household acceptance only; this cannot manufacture a public paid hosting entitlement.</summary>
+    public bool LocalHouseholdQualification { get; init; }
     /// <summary>Private immutable object path; identifiers originate on the server only.</summary>
     public string ObjectPath(Guid id) => Path.Combine(Root, "objects", id.ToString("N"));
 }
@@ -60,7 +62,13 @@ public static class ServiceHost
         if (File.Exists(Path.Combine(root, "installation.protected")) &&
             (!Directory.Exists(Path.Combine(root, "keys")) || !Directory.EnumerateFiles(Path.Combine(root, "keys"), "key-*.xml").Any()))
             throw new InvalidOperationException("Existing service protection keys are unavailable; preserve private data and restore the original key ring.");
+        var household = builder.Configuration.GetValue<bool>("Service:Household:LocalQualification");
+        if (household && !(builder.Environment.IsDevelopment() || builder.Environment.IsEnvironment("Integration") ||
+            selfHosted?.Origin.DnsSafeHost == "localhost" && File.Exists(Path.Combine(root, "fictitious-hosting.marker")) &&
+            !File.Exists(Path.Combine(root, "production-hosting.marker"))))
+            throw new InvalidOperationException("Household local qualification cannot activate public hosting.");
         var storage = new ServiceStorage { Root = root, LocalMailbox = builder.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>("Service:LocalMailbox"),
+            LocalHouseholdQualification = household,
             SyncLimits = Sync.SyncStorageLimits.Read(builder.Configuration) };
         var directory = Directory.CreateDirectory(root);
         if (OperatingSystem.IsWindows())
@@ -78,6 +86,8 @@ public static class ServiceHost
         Directory.CreateDirectory(Path.Combine(root, "objects"));
         Directory.CreateDirectory(Path.Combine(root, "mailbox"));
         builder.Services.AddSingleton(storage);
+        builder.Services.AddSingleton<Sharing.IHouseholdDeletionLedger, Sharing.HouseholdDeletionLedger>();
+        builder.Services.AddSingleton<Sharing.HouseholdRetirement>();
         builder.Services.AddSingleton<Sync.LocalSyncCertificate>();
         builder.Services.AddSingleton(TimeProvider.System);
         builder.Services.AddDbContextFactory<ServiceDbContext>(o => o.UseNpgsql(connection));
@@ -202,5 +212,6 @@ public static class ServiceHost
         IdentityRoutes.Map(app);
         ObjectRoutes.Map(app);
         Sync.SyncServiceRoutes.Map(app);
+        Sharing.HouseholdRoutes.Map(app);
     }
 }

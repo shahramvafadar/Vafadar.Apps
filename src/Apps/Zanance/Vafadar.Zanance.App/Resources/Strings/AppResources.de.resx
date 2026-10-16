@@ -6904,4 +6904,617 @@ Kategorielimits:
   <data name="Sync_AttachmentZoomOut" xml:space="preserve">
     <value>Verkleinern</value>
   </data>
+  <data name="Household_Title" xml:space="preserve">
+    <value>Haushalt teilen</value>
+  </data>
+  <data name="Household_MoreHint" xml:space="preserve">
+    <value>Getrennte gemeinsame Finanzen, Mitglieder und verschlüsselter Abgleich</value>
+  </data>
+  <data name="Household_Intro" xml:space="preserve">
+    <value>Gemeinsame Finanzen bleiben in einem eigenen Profil. Nur bestätigte Geräte erhalten Schlüssel. Vergleichen Sie Fingerabdrücke mit der anderen Person, bevor Sie Zugriff erteilen.</value>
+  </data>
+  <data name="Household_SeparateRequired" xml:space="preserve">
+    <value>Dieses Profil nutzt persönlichen Abgleich. Erstellen Sie ein eigenes Profil für den Haushalt.</value>
+  </data>
+  <data name="Household_NotConnected" xml:space="preserve">
+    <value>Keine bestätigte Haushaltssitzung ist geöffnet. Melden Sie sich an oder nutzen Sie die gespeicherte Sitzung.</value>
+  </data>
+  <data name="Household_Waiting" xml:space="preserve">
+    <value>Einrichtung ist gespeichert. Schließen Sie die Erstellung ab oder warten Sie auf die Gerätebestätigung durch den Eigentümer.</value>
+  </data>
+  <data name="Household_Access" xml:space="preserve">
+    <value>Zuletzt bestätigte Rolle: {0}. {1}</value>
+  </data>
+  <data name="Household_Writable" xml:space="preserve">
+    <value>Finanzielle Änderungen sind derzeit erlaubt.</value>
+  </data>
+  <data name="Household_ReadOnly" xml:space="preserve">
+    <value>Finanzielle Änderungen sind gesperrt. Vorhandene Daten und ausstehende Änderungen bleiben erhalten.</value>
+  </data>
+  <data name="Household_Fingerprints" xml:space="preserve">
+    <value>Eigentümerschlüssel: {0}
+Dieses Gerät: {1}</value>
+  </data>
+  <data name="Household_Name" xml:space="preserve">
+    <value>Lokaler Name des Haushaltsprofils</value>
+  </data>
+  <data name="Household_NewProfile" xml:space="preserve">
+    <value>Eigenes Profil erstellen und öffnen</value>
+  </data>
+  <data name="Household_Create" xml:space="preserve">
+    <value>Haushalt in diesem leeren Profil vorbereiten</value>
+  </data>
+  <data name="Household_CompleteCreation" xml:space="preserve">
+    <value>Gespeicherte Haushaltserstellung abschließen</value>
+  </data>
+  <data name="Household_CreateConfirm" xml:space="preserve">
+    <value>Einen neuen Haushalt nur in diesem leeren Profil vorbereiten? Persönliche Profile bleiben getrennt; ihre Konten und Verläufe werden nicht geteilt.</value>
+  </data>
+  <data name="Household_PublishConfirm" xml:space="preserve">
+    <value>Diesen Haushalt beim gewählten Dienst mit den gespeicherten Schlüsseln erstellen oder fortsetzen? Kein persönliches Profil wird hochgeladen.</value>
+  </data>
+  <data name="Household_Invitation" xml:space="preserve">
+    <value>Privater Einladungstext</value>
+  </data>
+  <data name="Household_InvitationPrivacy" xml:space="preserve">
+    <value>Geben Sie die Einladung nur privat an die gewünschte Person weiter. Zugriff besteht erst nach Annahme und Bestätigung genau dieses Geräts durch den Eigentümer.</value>
+  </data>
+  <data name="Household_RootConfirmation" xml:space="preserve">
+    <value>Unabhängig verglichener Eigentümer-Fingerabdruck</value>
+  </data>
+  <data name="Household_Join" xml:space="preserve">
+    <value>Einladung für dieses leere Profil annehmen</value>
+  </data>
+  <data name="Household_JoinConfirm" xml:space="preserve">
+    <value>Einladung mit dem unabhängig verglichenen Eigentümer-Fingerabdruck annehmen? Das Gerät braucht weiterhin dessen Bestätigung. Persönliche Konten werden nicht geteilt.</value>
+  </data>
+  <data name="Household_CheckAdmission" xml:space="preserve">
+    <value>Gerätebestätigung prüfen und gemeinsame Daten empfangen</value>
+  </data>
+  <data name="Household_Invite" xml:space="preserve">
+    <value>Private Einladung erstellen oder wieder öffnen</value>
+  </data>
+  <data name="Household_InvitationFinish" xml:space="preserve">
+    <value>Anzeige dieser Einladung beenden</value>
+  </data>
+  <data name="Household_InvitationFinishConfirm" xml:space="preserve">
+    <value>Diesen angezeigten Text entfernen, um eine weitere Einladung zu erstellen? Die ursprüngliche Einladung gilt bis zur Annahme, zum Widerruf oder Ablauf.</value>
+  </data>
+  <data name="Household_Members" xml:space="preserve">
+    <value>Mitglieder und Rollen</value>
+  </data>
+  <data name="Household_Member" xml:space="preserve">
+    <value>Mitglied: {0}
+Rolle: {1}</value>
+  </data>
+  <data name="Household_Owner" xml:space="preserve">
+    <value>Eigentümer</value>
+  </data>
+  <data name="Household_Editor" xml:space="preserve">
+    <value>Bearbeiter</value>
+  </data>
+  <data name="Household_Viewer" xml:space="preserve">
+    <value>Betrachter</value>
+  </data>
+  <data name="Household_Unverified" xml:space="preserve">
+    <value>Nicht bestätigt</value>
+  </data>
+  <data name="Household_ManageMember" xml:space="preserve">
+    <value>Rolle ändern oder Zugriff widerrufen</value>
+  </data>
+  <data name="Household_Revoke" xml:space="preserve">
+    <value>Mitgliedschaft widerrufen</value>
+  </data>
+  <data name="Household_MemberChangeConfirm" xml:space="preserve">
+    <value>Diese bestätigte Rollenänderung oder diesen Widerruf anwenden und den gemeinsamen Schlüssel wechseln? Bereits geladene oder exportierte Kopien werden dadurch nicht gelöscht.</value>
+  </data>
+  <data name="Household_Pending" xml:space="preserve">
+    <value>Geräte mit ausstehender Bestätigung</value>
+  </data>
+  <data name="Household_PendingHint" xml:space="preserve">
+    <value>Bestätigen Sie erst nach vollständigem Fingerabdruckvergleich mit dem Empfänger über einen getrennten Kanal.</value>
+  </data>
+  <data name="Household_Device" xml:space="preserve">
+    <value>Identität: {0}
+Geräte-Fingerabdruck: {1}</value>
+  </data>
+  <data name="Household_Approve" xml:space="preserve">
+    <value>Genau dieses Gerät bestätigen</value>
+  </data>
+  <data name="Household_DeviceFingerprintPrompt" xml:space="preserve">
+    <value>Geben Sie den vollständigen, unabhängig mit dem Empfänger verglichenen Geräte-Fingerabdruck ein.</value>
+  </data>
+  <data name="Household_RefreshMembers" xml:space="preserve">
+    <value>Mitgliedschaft und offene Bestätigungen aktualisieren</value>
+  </data>
+  <data name="Household_ResumeAdministration" xml:space="preserve">
+    <value>Ursprüngliche offene Mitgliederänderung fortsetzen</value>
+  </data>
+  <data name="Household_ActionFailed" xml:space="preserve">
+    <value>Die Haushaltsaktion wurde nicht abgeschlossen. Daten und gespeicherter Auftrag bleiben erhalten. Prüfen Sie Verbindung, Gerätebestätigung und Rolle; setzen Sie den ursprünglichen Auftrag fort.</value>
+  </data>
+  <data name="Household_ConflictReview" xml:space="preserve">
+    <value>Einige Änderungen benötigen vor dem Abgleich eine ausdrückliche finanzielle Entscheidung. Kein Betrag wurde automatisch gewählt.</value>
+  </data>
+  <data name="Household_Finish" xml:space="preserve">
+    <value>Diesen Haushalt öffnen</value>
+  </data>
+  <data name="Household_FinishConfirm" xml:space="preserve">
+    <value>Den verbundenen Haushalt ohne ein weiteres Konto öffnen? Vorhandene Anzeigeeinstellungen bleiben erhalten.</value>
+  </data>
+  <data name="Help_Household_Title" xml:space="preserve">
+    <value>Datenschutz und Zugriff im Haushalt</value>
+  </data>
+  <data name="Help_Household_Text" xml:space="preserve">
+    <value>Ein Haushalt hat ein eigenes Finanzbuch und bis zu sechs bestätigte Identitäten einschließlich Eigentümer. Betrachter lesen und exportieren; Bearbeiter ändern auch Finanzdaten. Der Eigentümer bestätigt Einladungen, Geräte und Rollenwechsel. Daten werden vor dem Hochladen auf Ihrem Gerät verschlüsselt. Vergleichen Sie vollständige Fingerabdrücke unabhängig: Eine Einladung allein gewährt keinen Datenzugriff. Halten Sie Einladungen privat. Widerruf erneuert künftige Schlüssel, löscht aber keine früheren Downloads oder Exporte. Nach Dienstablauf bleiben Lesen und Export 30 Tage möglich; weitere 90 Tage werden die Daten ohne Zugriff gespeichert. Bewahren Sie für neue Geräte eine getrennte portable Zanance-Sicherung auf.</value>
+  </data>
+  <data name="Help_Household_Example" xml:space="preserve">
+    <value>Laden Sie zum Beispiel eine Person als Betrachter ein, vergleichen Sie den Geräte-Fingerabdruck telefonisch und bestätigen Sie nur dieses Gerät. Ihr persönliches Profil wird nicht übernommen.</value>
+  </data>
+  <data name="Household_PersonalRouteHint" xml:space="preserve">
+    <value>Dieses Profil nutzt verschlüsselte Haushaltsfreigabe. Verwalten und synchronisieren Sie es unter Haushalt teilen.</value>
+  </data>
+  <data name="HouseholdCost_Title" xml:space="preserve">
+    <value>Haushaltskosten und Anteile</value>
+  </data>
+  <data name="HouseholdCost_Intro" xml:space="preserve">
+    <value>Erfassen Sie gemeinsame Istkosten einmal. Kostenanteile, private Auslagen und Kontostände bleiben getrennt.</value>
+  </data>
+  <data name="HouseholdCost_Contacts" xml:space="preserve">
+    <value>Personen für die Kostenaufteilung</value>
+  </data>
+  <data name="HouseholdCost_AddContact" xml:space="preserve">
+    <value>Person zur Kostenaufteilung hinzufügen</value>
+  </data>
+  <data name="HouseholdCost_ContactName" xml:space="preserve">
+    <value>Name für Kostenanteile; dies lädt kein Mitglied ein.</value>
+  </data>
+  <data name="HouseholdCost_AddCost" xml:space="preserve">
+    <value>Tatsächliche Kosten oder Erstattung erfassen</value>
+  </data>
+  <data name="HouseholdCost_AddSettlement" xml:space="preserve">
+    <value>Private Rückzahlung erfassen</value>
+  </data>
+  <data name="HouseholdCost_Review" xml:space="preserve">
+    <value>Diesen Eintrag prüfen</value>
+  </data>
+  <data name="HouseholdCost_Editor" xml:space="preserve">
+    <value>Tatsächliche Angaben vor dem Speichern prüfen</value>
+  </data>
+  <data name="HouseholdCost_Description" xml:space="preserve">
+    <value>Kostenbeschreibung</value>
+  </data>
+  <data name="HouseholdCost_Date" xml:space="preserve">
+    <value>Tatsächliches Kosten- oder Rückzahlungsdatum</value>
+  </data>
+  <data name="HouseholdCost_Currency" xml:space="preserve">
+    <value>Genaue Betragswährung</value>
+  </data>
+  <data name="HouseholdCost_Amount" xml:space="preserve">
+    <value>Tatsächlicher positiver Betrag</value>
+  </data>
+  <data name="HouseholdCost_Payer" xml:space="preserve">
+    <value>Privat zahlende oder zurückzahlende Person</value>
+  </data>
+  <data name="HouseholdCost_Recipient" xml:space="preserve">
+    <value>Empfangende Person der privaten Rückzahlung</value>
+  </data>
+  <data name="HouseholdCost_IsRefund" xml:space="preserve">
+    <value>Dies ist eine tatsächliche Erstattung</value>
+  </data>
+  <data name="HouseholdCost_RefundOriginal" xml:space="preserve">
+    <value>Ursprüngliche erstattete Istkosten</value>
+  </data>
+  <data name="HouseholdCost_SharedCash" xml:space="preserve">
+    <value>Vorhandene gemeinsame Kontobewegung verknüpfen</value>
+  </data>
+  <data name="HouseholdCost_LinkHint" xml:space="preserve">
+    <value>Wählen Sie die passende Bewegung am gewählten Datum. Diese Seite erstellt oder ändert keine Kontobuchung.</value>
+  </data>
+  <data name="HouseholdCost_SearchTitle" xml:space="preserve">
+    <value>Vorhandene Bewegungen nach Beschreibung filtern</value>
+  </data>
+  <data name="HouseholdCost_FindMovements" xml:space="preserve">
+    <value>Vorhandene Bewegungen an diesem Datum suchen</value>
+  </data>
+  <data name="HouseholdCost_Destination" xml:space="preserve">
+    <value>Tatsächliche Zielseite der Umbuchung verwenden</value>
+  </data>
+  <data name="HouseholdCost_Shares" xml:space="preserve">
+    <value>Genaue Kostenanteile</value>
+  </data>
+  <data name="HouseholdCost_SharesHint" xml:space="preserve">
+    <value>Geben Sie jeden vereinbarten Anteil in dieser Währung ein. Die Summe muss den Kosten entsprechen. Es wird weder gleich geteilt noch ein Wechselkurs angenommen.</value>
+  </data>
+  <data name="HouseholdCost_Note" xml:space="preserve">
+    <value>Optionale tatsächliche Notiz</value>
+  </data>
+  <data name="HouseholdCost_NetTotal" xml:space="preserve">
+    <value>Tatsächliche Netto-Haushaltskosten</value>
+  </data>
+  <data name="HouseholdCost_SharedPaid" xml:space="preserve">
+    <value>Aus gemeinsamen Konten bezahlt</value>
+  </data>
+  <data name="HouseholdCost_PrivatePaid" xml:space="preserve">
+    <value>Privat bezahlt</value>
+  </data>
+  <data name="HouseholdCost_Attributed" xml:space="preserve">
+    <value>Kostenanteil: {0}</value>
+  </data>
+  <data name="HouseholdCost_Advance" xml:space="preserve">
+    <value>Saldo privater Auslagen: {0}</value>
+  </data>
+  <data name="HouseholdCost_FromTo" xml:space="preserve">
+    <value>Rückzahlung von {0} an {1}</value>
+  </data>
+  <data name="HouseholdCost_Movement" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="HouseholdCost_Unnamed" xml:space="preserve">
+    <value>Vorhandene Kontobewegung</value>
+  </data>
+  <data name="HouseholdCost_Rename" xml:space="preserve">
+    <value>Diesen Finanznamen ändern</value>
+  </data>
+  <data name="HouseholdCost_Archive" xml:space="preserve">
+    <value>Diese Kostenperson archivieren</value>
+  </data>
+  <data name="HouseholdCost_Reactivate" xml:space="preserve">
+    <value>Diese Kostenperson reaktivieren</value>
+  </data>
+  <data name="HouseholdCost_ArchivedContact" xml:space="preserve">
+    <value>{0} (archiviert)</value>
+  </data>
+  <data name="HouseholdCost_Delete" xml:space="preserve">
+    <value>Diesen Eintrag löschen</value>
+  </data>
+  <data name="HouseholdCost_SaveConfirm" xml:space="preserve">
+    <value>Diese tatsächlichen Angaben und genauen Anteile speichern? Dabei entsteht keine Kontobuchung.</value>
+  </data>
+  <data name="HouseholdCost_DeleteConfirm" xml:space="preserve">
+    <value>Nur diesen geprüften Kosten-/Anteil- oder Rückzahlungseintrag löschen? Die vorhandene Kontobewegung bleibt bestehen.</value>
+  </data>
+  <data name="HouseholdCost_Discard" xml:space="preserve">
+    <value>Diesen ungespeicherten Entwurf vor dem Fortfahren verwerfen?</value>
+  </data>
+  <data name="HouseholdCost_ReadOnly" xml:space="preserve">
+    <value>Diese Kosten sind mit der aktuellen Haushaltsrolle oder dem Zugriffsstatus schreibgeschützt.</value>
+  </data>
+  <data name="HouseholdCost_ActionFailed" xml:space="preserve">
+    <value>Der Vorgang wurde nicht abgeschlossen. Behalten Sie den Entwurf, laden Sie neu und prüfen Sie den aktuellen Haushalt vor einem neuen Versuch.</value>
+  </data>
+  <data name="HouseholdCost_InvalidGraph" xml:space="preserve">
+    <value>Prüfen Sie Anteile, ursprüngliche Erstattungskosten und die genaue verknüpfte Bewegung. Es wurden keine unvollständigen Kostenänderungen gespeichert.</value>
+  </data>
+  <data name="HouseholdCost_TitleRequired" xml:space="preserve">
+    <value>Geben Sie die tatsächliche Kostenbeschreibung ein.</value>
+  </data>
+  <data name="HouseholdCost_ReferencesRequired" xml:space="preserve">
+    <value>Wählen Sie die tatsächlichen Personen, ursprünglichen Erstattungskosten und bei Bedarf die passende Kontobewegung.</value>
+  </data>
+  <data name="HouseholdCost_SumRequired" xml:space="preserve">
+    <value>Geben Sie genaue Anteile ein, deren Summe dem tatsächlichen Betrag entspricht.</value>
+  </data>
+  <data name="HouseholdCost_RecordCaption" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="HouseholdCost_DestinationValue" xml:space="preserve">
+    <value>Zielbetrag: {0}</value>
+  </data>
+  <data name="Help_HouseholdCosts_Title" xml:space="preserve">
+    <value>Tatsächliche Haushaltskosten</value>
+  </data>
+  <data name="Help_HouseholdCosts_Text" xml:space="preserve">
+    <value>Diese Einträge verteilen Istkosten, nicht Kontoeigentum. Private Zahlungen verändern private Auslagen; verknüpfte gemeinsame Ausgaben zählen nur einmal. Erstattungen benötigen ursprüngliche Kosten und dürfen weder deren Summe noch den Personenanteil überschreiten. Rückzahlungen erfassen tatsächliche private Zahlungen ohne Kontobuchung. Geben Sie genaue Anteile ein; Aufteilung, Umrechnung oder geschätzte Schulden werden nicht erfunden. Währungswechsel leeren Zahlenentwürfe. Archivierte Personen behalten ihre Historie, erhalten aber keine neuen Anteile.</value>
+  </data>
+  <data name="Help_HouseholdCosts_Example" xml:space="preserve">
+    <value>Private Kosten von 10,01 KWD haben Anteile von 3,33 und 6,68 KWD. Die Haushaltskosten betragen 10,01 KWD. Ein gemeinsamer Kontostand bedeutet nicht, dass jede Person die Hälfte dieses Geldes besitzt.</value>
+  </data>
+  <data name="HouseholdCost_ContactIdentity" xml:space="preserve">
+    <value>Optionales historisches Identitätslabel</value>
+  </data>
+  <data name="HouseholdCost_PaymentSource" xml:space="preserve">
+    <value>Tatsächliche Zahlungsquelle</value>
+  </data>
+  <data name="HouseholdRecovery_Title" xml:space="preserve">
+    <value>Haushalt wiederherstellen</value>
+  </data>
+  <data name="HouseholdRecovery_Intro" xml:space="preserve">
+    <value>Eine optionale separate Wiederherstellungsdatei kann den Haushaltsbesitz nach Verlust aller Geräte wiederherstellen. Bewahren Sie sie außerhalb dieses Geräts auf. Die Anmeldung mit Ihrer Zanance-Identität bleibt erforderlich; übertragbare Finanzsicherungen bleiben getrennt.</value>
+  </data>
+  <data name="HouseholdRecovery_FilePassword" xml:space="preserve">
+    <value>Dateipasswort zur Wiederherstellung (kein Anmeldepasswort)</value>
+  </data>
+  <data name="HouseholdRecovery_FilePasswordConfirm" xml:space="preserve">
+    <value>Passwort beim Export wiederholen</value>
+  </data>
+  <data name="HouseholdRecovery_Export" xml:space="preserve">
+    <value>Geschützte Wiederherstellungsdatei speichern</value>
+  </data>
+  <data name="HouseholdRecovery_FileSaved" xml:space="preserve">
+    <value>Die verschlüsselte Datei wurde gespeichert. Aktivieren Sie dieses ursprüngliche Set nach dem Entsperren ausdrücklich. Wird der App-Prozess vorher beendet, exportieren Sie erneut; das vorgemerkte Set bleibt unverändert.</value>
+  </data>
+  <data name="HouseholdRecovery_FilePicked" xml:space="preserve">
+    <value>Eine verschlüsselte Wiederherstellungsdatei ist ausgewählt. Geben Sie ihr Passwort ein, um den ursprünglichen Haushalt zu prüfen.</value>
+  </data>
+  <data name="HouseholdRecovery_Off" xml:space="preserve">
+    <value>Für den aktuellen Besitzer wurde kein aktives Wiederherstellungsset gefunden.</value>
+  </data>
+  <data name="HouseholdRecovery_Active" xml:space="preserve">
+    <value>Der Dienst hat ein aktives verschlüsseltes Set für den aktuellen Besitzer. Sein Passwort wird nie gespeichert.</value>
+  </data>
+  <data name="HouseholdRecovery_PasswordError" xml:space="preserve">
+    <value>Verwenden Sie mindestens acht Zeichen und wiederholen Sie dasselbe Dateipasswort.</value>
+  </data>
+  <data name="HouseholdRecovery_Pick" xml:space="preserve">
+    <value>Verschlüsselte Wiederherstellungsdatei auswählen</value>
+  </data>
+  <data name="HouseholdRecovery_Enable" xml:space="preserve">
+    <value>Gespeichertes Wiederherstellungsset aktivieren</value>
+  </data>
+  <data name="HouseholdRecovery_EnableConfirm" xml:space="preserve">
+    <value>Diese gespeicherte Datei zur Haushaltswiederherstellung aktivieren? Das vorgemerkte Archiv wird fertiggestellt, die Besitzschlüssel werden gewechselt und ein bisheriges Set verliert künftigen Zugriff. Bewahren Sie Datei und Passwort sicher und getrennt auf.</value>
+  </data>
+  <data name="HouseholdRecovery_Import" xml:space="preserve">
+    <value>Dieses Set im leeren Profil prüfen</value>
+  </data>
+  <data name="HouseholdRecovery_Complete" xml:space="preserve">
+    <value>Besitz wiederherstellen und Haushaltsverlauf empfangen</value>
+  </data>
+  <data name="HouseholdRecovery_ImportConfirm" xml:space="preserve">
+    <value>Den ursprünglichen Haushalt in diesem unabhängigen leeren Profil wiederherstellen? Sowohl Ihre tatsächliche Besitzeridentität als auch das separate Set müssen verifiziert werden. Die Wiederherstellung ersetzt alle bisherigen Besitzergeräte. Andere Mitglieder bleiben erhalten, es wird kein Geld gebucht; ungesendete Daten verlorener Geräte sind nicht vom Dienst wiederherstellbar.</value>
+  </data>
+  <data name="HouseholdRecovery_Revoke" xml:space="preserve">
+    <value>Aktuelles Wiederherstellungsset deaktivieren</value>
+  </data>
+  <data name="HouseholdRecovery_RevokeConfirm" xml:space="preserve">
+    <value>Das aktuelle Set deaktivieren und beide Besitzschlüssel ersetzen? Die alte Datei öffnet keine künftigen Generationen. Bereits heruntergeladene Schlüssel, Verläufe oder exportierte Dateien lassen sich nicht zurückrufen. Bewahren Sie für ein neues Gerät eine separate übertragbare Zanance-Sicherung auf.</value>
+  </data>
+  <data name="Help_HouseholdRecovery_Title" xml:space="preserve">
+    <value>Separate Haushaltswiederherstellung</value>
+  </data>
+  <data name="Help_HouseholdRecovery_Text" xml:space="preserve">
+    <value>Die Wiederherstellung ist optional. Speichern Sie zuerst die passwortgeschützte Datei außerhalb dieses Geräts und aktivieren Sie sie anschließend ausdrücklich. Zanance merkt sich das Passwort nie. Ein neues leeres Profil benötigt die Anmeldung mit derselben Besitzeridentität und das ursprüngliche Set; die Anmeldung allein ersetzt keine verlorenen Schlüssel. Die Wiederherstellung ersetzt bisherige Besitzergeräte, erhält andere Mitglieder und empfängt nur den beim Dienst angekommenen Verlauf. Sie stellt keinen verlorenen lokalen Datenbankschlüssel wieder her. Unterbrochene Vorgänge behalten ihre ursprünglichen Schlüssel und verschlüsselten Seiten; legen Sie zum Fortsetzen keinen weiteren Haushalt an.</value>
+  </data>
+  <data name="Help_HouseholdRecovery_Example" xml:space="preserve">
+    <value>Melden Sie sich zum Beispiel nach Verlust eines Telefons mit derselben Zanance-Identität in einem separaten leeren Profil an. Wählen Sie die gespeicherte Wiederherstellungsdatei und geben Sie ihr Passwort ein. Prüfen und bestätigen Sie die Wiederherstellung ausdrücklich; bewahren Sie die übertragbare Finanzsicherung getrennt auf.</value>
+  </data>
+  <data name="Household_Review_Title" xml:space="preserve">
+    <value>Gemeinsame Änderungen prüfen</value>
+  </data>
+  <data name="Household_Review_Empty" xml:space="preserve">
+    <value>Aktuell erfordern keine gemeinsamen Änderungen eine Entscheidung. Kehren Sie zum Haushalt zurück, um nach Prüfung bisheriger Entscheidungen zu synchronisieren.</value>
+  </data>
+  <data name="Help_HouseholdReview_Title" xml:space="preserve">
+    <value>Gemeinsame Finanzänderungen vergleichen</value>
+  </data>
+  <data name="Help_HouseholdReview_Text" xml:space="preserve">
+    <value>Vergleichen Sie vor der Auswahl die vollständige gesendete und empfangene Version. Ein verknüpfter Vorgang oder Kosten mit ihren Anteilen bilden eine Entscheidung; Zanance errät keine Beträge, gleichen Anteile oder Wechselkurse. Die Auswahl wird im aktuellen geschützten Profil gespeichert und anschließend über die verschlüsselte Haushaltssynchronisierung angewendet. Diese Prüfung meldet Sie nicht bei der persönlichen Synchronisierung an und sendet keine lesbaren Haushaltsfinanzen. Öffnen Sie bei Bedarf die Anhangvorschau. Haben sich Daten nach der Prüfung geändert, laden Sie die aktuelle Prüfung neu statt eine alte Zustimmung wiederzuverwenden.</value>
+  </data>
+  <data name="Help_HouseholdReview_Example" xml:space="preserve">
+    <value>Zum Beispiel bearbeiten zwei Mitglieder offline dieselben Kosten und deren Anteile. Vergleichen Sie ursprüngliche Währung, Betrag, zahlende Person und alle Anteile und wählen Sie dann eine vollständige Version. Kehren Sie zum Synchronisieren zum Haushalt zurück; durch die Auswahl entsteht kein zusätzlicher Geldvorgang.</value>
+  </data>
+  <data name="HouseholdSource_Title" xml:space="preserve">
+    <value>Persönliche Daten zum Teilen wählen</value>
+  </data>
+  <data name="HouseholdSource_Load" xml:space="preserve">
+    <value>Meine Quellkonten laden</value>
+  </data>
+  <data name="HouseholdSource_History" xml:space="preserve">
+    <value>Verlauf der gewählten Konten einschließen</value>
+  </data>
+  <data name="HouseholdSource_Files" xml:space="preserve">
+    <value>Zugehörige Anhänge einschließen</value>
+  </data>
+  <data name="HouseholdSource_Review" xml:space="preserve">
+    <value>Genaue Kopie prüfen</value>
+  </data>
+  <data name="HouseholdSource_Destination" xml:space="preserve">
+    <value>Separates Zielprofil wählen</value>
+  </data>
+  <data name="HouseholdSource_Copy" xml:space="preserve">
+    <value>Geprüfte Auswahl hierher kopieren</value>
+  </data>
+  <data name="HouseholdSource_PrivateCounterpart" xml:space="preserve">
+    <value>Ausgeschlossenes Privatkonto</value>
+  </data>
+  <data name="HouseholdSource_Summary" xml:space="preserve">
+    <value>Konten: {0}
+Bisherige Buchungen: {1}; Dateien: {2}.
+Transfers mit privater Gegenseite: {3}; Erstattungen ohne privaten Kaufbezug: {4}.</value>
+  </data>
+  <data name="HouseholdSource_Consent" xml:space="preserve">
+    <value>Nur geprüfte Konten und der gewählte Verlauf oder Dateien werden in ein separates Buch kopiert. Gewählte Notizen und Dateien werden geteilt. Private Transferpartner erhalten eine neutrale Bezeichnung; Wechselkurse werden nicht geschätzt. Spätere private Änderungen bleiben getrennt. Das Ziel muss leer sein oder eine unfertige, unveröffentlichte Kopie enthalten. Erst das Abschließen der Haushaltserstellung veröffentlicht Daten.</value>
+  </data>
+  <data name="HouseholdSource_ReplacePending" xml:space="preserve">
+    <value>Nur den unfertigen Kopierauftrag durch diese neu geprüfte Auswahl ersetzen? Das Ziel muss weiterhin leer und unveröffentlicht sein. Ursprüngliche Einrichtung und Schlüssel bleiben erhalten.</value>
+  </data>
+  <data name="HouseholdSource_CancelMemory" xml:space="preserve">
+    <value>Diese Auswahl im Arbeitsspeicher verwerfen? Kopierte Daten, dauerhafte unfertige Aufträge, Profile und Schlüssel werden nicht gelöscht. Eine unfertige Kopie benötigt vor Veröffentlichung eine neue Quellprüfung.</value>
+  </data>
+  <data name="HouseholdSource_Pending" xml:space="preserve">
+    <value>Eine unfertige Auswahlkopie blockiert die Veröffentlichung. Zur privaten Quelle zurückkehren, erneut prüfen und dieses bestehende Ziel wählen, um mit den ursprünglichen Schlüsseln fortzufahren.</value>
+  </data>
+  <data name="Help_HouseholdSource_Title" xml:space="preserve">
+    <value>Eine separat geprüfte Kopie</value>
+  </data>
+  <data name="Help_HouseholdSource_Text" xml:space="preserve">
+    <value>Konten ausdrücklich auswählen. Verlauf und Anhänge sind getrennte Optionen. Namen und Anzahlen vor der Wahl eines separaten Ziels prüfen. Die App prüft die tatsächliche Quelle während der Profilwartung erneut, wenn Schreibzugriffe ausgeschlossen sind. Jede Auswahländerung erfordert eine neue Prüfung. Nach einem Prozessabbruch die Quelle erneut prüfen, ohne Zielschlüssel zu ersetzen.</value>
+  </data>
+  <data name="Help_HouseholdSource_Example" xml:space="preserve">
+    <value>Haushaltskonto und Belege teilen, private Ersparnisse jedoch nicht. Spätere Änderungen der Ersparnisse werden nicht an den Haushalt gesendet.</value>
+  </data>
+  <data name="Household_Devices" xml:space="preserve">
+    <value>Bestätigte und wartende Geräte</value>
+  </data>
+  <data name="Household_ApprovedDevice" xml:space="preserve">
+    <value>Mitglied: {0}; Rolle: {1}
+Gerätefingerabdruck: {2}</value>
+  </data>
+  <data name="Household_RevokeDevice" xml:space="preserve">
+    <value>Diesem anderen Gerät Zugriff entziehen</value>
+  </data>
+  <data name="Household_RevokeDeviceConfirm" xml:space="preserve">
+    <value>Dem geprüften Gerät den Zugriff entziehen und Finanzschlüssel wechseln? Bei einem Eigentümergerät werden auch beide Eigentümerschlüssel ersetzt und ein aktives Wiederherstellungspaket aktualisiert. Bereits heruntergeladene oder exportierte Inhalte lassen sich nicht zurückholen. Andere bestätigte Geräte behalten Zugriff.</value>
+  </data>
+  <data name="Household_DeviceRemovalHint" xml:space="preserve">
+    <value>Vor Bestätigung eines weiteren Geräts die vollständigen Fingerabdrücke vergleichen. Hier kann nur ein anderes Gerät entfernt werden, wenn dessen Mitglied ein zweites bestätigtes Gerät hat. Für das letzte Gerät eines anderen Mitglieds das Mitglied entfernen. Ihr aktuelles Gerät bleibt für den Abschluss verfügbar.</value>
+  </data>
+  <data name="Household_PendingInvitationHint" xml:space="preserve">
+    <value>Eine ursprüngliche Einladungsanfrage ist noch auf diesem Gerät gespeichert. Sie können diesen lokalen Vorgang auch ohne eingefügte alte Kopie beenden. Eine bereits geteilte Einladung wird dadurch nicht widerrufen; ein Wechsel der Eigentümerschlüssel macht noch nicht angenommene Einladungen ungültig.</value>
+  </data>
+  <data name="HouseholdDeviceAccess_Export" xml:space="preserve">
+    <value>Zugang für ein weiteres Gerät dieses Mitglieds vorbereiten</value>
+  </data>
+  <data name="HouseholdDeviceAccess_Request" xml:space="preserve">
+    <value>Dieses Gerät mit dem eingefügten Zugangspaket zur Freigabe anmelden</value>
+  </data>
+  <data name="HouseholdDeviceAccess_Hint" xml:space="preserve">
+    <value>Sie sind bereits auf einem anderen Gerät Mitglied? Bitten Sie den Eigentümer um Ihr öffentliches Gerätezugangspaket, melden Sie sich in einem getrennten leeren Profil mit derselben Identität an und vergleichen Sie den vollständigen Fingerabdruck des Eigentümers unabhängig. Fordern Sie hier die Freigabe an. Der Eigentümer muss anschließend den Fingerabdruck dieses Geräts vergleichen und es freigeben. Die Anmeldung allein erlaubt keinen Finanzzugriff. Nach einem Neustart setzt die Zulassungsprüfung dieselbe gespeicherte Anfrage fort.</value>
+  </data>
+  <data name="HouseholdDeviceAccess_ExportConfirm" xml:space="preserve">
+    <value>Ein öffentliches signiertes Zugangspaket für dieses bestehende Mitglied vorbereiten? Dies lädt kein neues Mitglied ein und gibt kein Gerät frei. Teilen Sie es nur mit diesem Mitglied; für die Freigabe muss der neue Gerätefingerabdruck weiterhin unabhängig verglichen werden.</value>
+  </data>
+  <data name="HouseholdDeviceAccess_RequestConfirm" xml:space="preserve">
+    <value>Die Freigabe dieses Geräts in diesem getrennten leeren Profil anfordern? Sein eigener Schlüssel und die ursprüngliche Anfrage werden vor dem Senden gespeichert. Finanzdaten und Raumschlüssel werden erst nach unabhängiger Freigabe genau dieses Geräts durch den Eigentümer empfangen. Behalten Sie dieses Profil für die Fortsetzung nach einem Neustart.</value>
+  </data>
+  <data name="HouseholdOwnership_Title" xml:space="preserve">
+    <value>Eigentum des Haushalts übertragen</value>
+  </data>
+  <data name="HouseholdOwnership_Hint" xml:space="preserve">
+    <value>Beide Personen bestätigen ausdrücklich auf ihren ausgewählten Geräten. Die neue Eigentümerperson erstellt unabhängige Schlüssel. Finanzänderungen werden bis zum Abschluss, Abbruch oder Ablauf nicht übertragen. Der gespeicherte Finanzverlauf bleibt unverändert.</value>
+  </data>
+  <data name="HouseholdOwnership_Start" xml:space="preserve">
+    <value>Als neue Eigentümerperson wählen</value>
+  </data>
+  <data name="HouseholdOwnership_Leave" xml:space="preserve">
+    <value>Diesen Haushalt verlassen</value>
+  </data>
+  <data name="HouseholdOwnership_Continue" xml:space="preserve">
+    <value>Diesen ursprünglichen Schritt bestätigen</value>
+  </data>
+  <data name="HouseholdOwnership_Finish" xml:space="preserve">
+    <value>Diese Übertragungsanfrage abschließen</value>
+  </data>
+  <data name="HouseholdOwnership_Confirm" xml:space="preserve">
+    <value>Fahren Sie nur für die unabhängig geprüfte Person und das geprüfte Gerät fort. Künftige Eigentümerschlüssel erhält die neue Eigentümerperson. Die bisherige Person behält nur die ausdrücklich gewählte Rolle oder verlässt den Haushalt. Das bisherige Wiederherstellungspaket funktioniert danach nicht mehr. Bereits heruntergeladene Verläufe lassen sich nicht zurückrufen.</value>
+  </data>
+  <data name="HouseholdOwnership_CancelConfirm" xml:space="preserve">
+    <value>Nur diese ausstehende Eigentumsübertragung abbrechen? Das bestehende signierte Eigentum bleibt erhalten. Eine abgeschlossene Übertragung wird nicht rückgängig gemacht; Finanzdaten werden nicht gelöscht.</value>
+  </data>
+  <data name="HouseholdOwnership_FinishConfirm" xml:space="preserve">
+    <value>Den ursprünglichen endgültigen Beleg prüfen und diese Anfrage schließen? Nur unbenutzte Schlüsselkandidaten genau dieser abgebrochenen oder abgelaufenen Anfrage dürfen entfernt werden. Finanzverlauf und übernommene Schlüssel bleiben erhalten.</value>
+  </data>
+  <data name="HouseholdOwnership_None" xml:space="preserve">
+    <value>Hier ist keine Übertragungsanfrage gespeichert. Aktualisieren Sie, um Anfragen für diese Identität zu prüfen.</value>
+  </data>
+  <data name="HouseholdOwnership_Offered" xml:space="preserve">
+    <value>Angebot gespeichert. Das ausgewählte Gerät der künftigen Eigentümerperson muss eigene neue Schlüssel vorbereiten. Die bisherige Person kann ein unbestätigtes Angebot fortsetzen.</value>
+  </data>
+  <data name="HouseholdOwnership_Prepared" xml:space="preserve">
+    <value>Die künftige Eigentümerperson hat neue Schlüssel und die Empfängerliste vorbereitet. Das ausgewählte Gerät der bisherigen Person muss genau diese Daten autorisieren.</value>
+  </data>
+  <data name="HouseholdOwnership_Authorized" xml:space="preserve">
+    <value>Die bisherige Eigentümerperson hat die genaue Übertragung signiert. Das ausgewählte Gerät der künftigen Person muss diese ursprüngliche Signatur und die Schlüsselempfänger bestätigen.</value>
+  </data>
+  <data name="HouseholdOwnership_Accepted" xml:space="preserve">
+    <value>Beide Seiten haben bestätigt. Das ausgewählte Gerät der bisherigen Eigentümerperson muss dieselbe gespeicherte Übertragung veröffentlichen, um den Wechsel abzuschließen.</value>
+  </data>
+  <data name="HouseholdOwnership_Published" xml:space="preserve">
+    <value>Die Übertragung wurde veröffentlicht. Schließen Sie diese Anfrage ab, um den ursprünglichen Beleg auf diesem Gerät zu prüfen und zu übernehmen.</value>
+  </data>
+  <data name="HouseholdOwnership_Canceled" xml:space="preserve">
+    <value>Diese ursprüngliche Übertragung wurde abgebrochen. Schließen Sie die Anfrage ausdrücklich ab; die bestehende signierte Eigentümerschaft bleibt bestehen.</value>
+  </data>
+  <data name="HouseholdOwnership_Expired" xml:space="preserve">
+    <value>Diese ursprüngliche Übertragung ist abgelaufen. Schließen Sie sie ausdrücklich ab, bevor Sie eine andere Anfrage starten. Neue Schlüssel oder Zustimmungen werden nicht unterstellt.</value>
+  </data>
+  <data name="HouseholdLifecycle_Title" xml:space="preserve">
+    <value>Serverbereich und Aufbewahrung</value>
+  </data>
+  <data name="HouseholdLifecycle_Hint" xml:space="preserve">
+    <value>Nach Ablauf des Dienstes: 30 Tage zum Lesen und Exportieren, danach 90 Tage Aufbewahrung ohne Zugriff. Anschließend werden die Daten dauerhaft gelöscht. Lokale Kopien und Exporte bleiben getrennt.</value>
+  </data>
+  <data name="HouseholdLifecycle_Unknown" xml:space="preserve">
+    <value>Dienststatus noch nicht geprüft.</value>
+  </data>
+  <data name="HouseholdLifecycle_Active" xml:space="preserve">
+    <value>Dienstzugriff ist aktiv.</value>
+  </data>
+  <data name="HouseholdLifecycle_Grace" xml:space="preserve">
+    <value>In der 30-tägigen Nachfrist sind nur Lesen und Exportieren möglich.</value>
+  </data>
+  <data name="HouseholdLifecycle_Retained" xml:space="preserve">
+    <value>Auf dem Server aufbewahrt; Lesen und Exportieren sind nicht verfügbar.</value>
+  </data>
+  <data name="HouseholdLifecycle_Due" xml:space="preserve">
+    <value>Die Aufbewahrungsfrist ist abgelaufen. Der Zugriff ist dauerhaft gesperrt; die Bereinigung steht aus.</value>
+  </data>
+  <data name="HouseholdLifecycle_Deleted" xml:space="preserve">
+    <value>Dieser Serverbereich ist dauerhaft gelöscht.</value>
+  </data>
+  <data name="HouseholdLifecycle_Deadlines" xml:space="preserve">
+    <value>Lesen/Export bis: {0}
+Dauerhafte Löschung ab: {1}
+Zeitangaben in UTC.</value>
+  </data>
+  <data name="HouseholdLifecycle_NoDeadline" xml:space="preserve">
+    <value>Keine Frist gemeldet</value>
+  </data>
+  <data name="HouseholdLifecycle_Delete" xml:space="preserve">
+    <value>Serverbereich dauerhaft löschen</value>
+  </data>
+  <data name="HouseholdLifecycle_DeleteConfirm" xml:space="preserve">
+    <value>Den Zugriff für alle dauerhaft sperren und die verschlüsselten Haushaltsdaten, Mitgliederfreigaben und das Wiederherstellungsarchiv vom Server löschen? Dies ist unumkehrbar. Bereits heruntergeladene lokale Daten, Exporte und andere Bereiche bleiben erhalten. Nicht synchronisierte Änderungen können danach nicht mehr gesendet werden.</value>
+  </data>
+  <data name="HouseholdLifecycle_Pending" xml:space="preserve">
+    <value>Der ursprüngliche Löschauftrag bleibt erhalten. Das Ergebnis ist unklar; neue Finanzänderungen sind gesperrt.</value>
+  </data>
+  <data name="HouseholdLifecycle_Accepted" xml:space="preserve">
+    <value>Die dauerhafte Löschung wurde angenommen. Der Zugriff ist gesperrt; die physische Bereinigung steht aus.</value>
+  </data>
+  <data name="HouseholdLifecycle_Retired" xml:space="preserve">
+    <value>Der Dienst meldet die abgeschlossene Bereinigung dieses Serverbereichs. Heruntergeladene Kopien bleiben getrennt.</value>
+  </data>
+  <data name="HouseholdLifecycle_Rejected" xml:space="preserve">
+    <value>Der Dienst bestätigt, dass der ursprüngliche Auftrag ohne Annahme abgelaufen ist. Sie können diesen Auftrag ausdrücklich abschließen; eine Serverlöschung wurde nicht angenommen.</value>
+  </data>
+  <data name="HouseholdLifecycle_Resume" xml:space="preserve">
+    <value>Ursprüngliche Löschung fortsetzen oder Beleg aktualisieren</value>
+  </data>
+  <data name="HouseholdLifecycle_Review" xml:space="preserve">
+    <value>Ergebnis des ursprünglichen Auftrags prüfen</value>
+  </data>
+  <data name="HouseholdLifecycle_Finish" xml:space="preserve">
+    <value>Nicht angenommenen abgelaufenen Auftrag abschließen</value>
+  </data>
+  <data name="HouseholdLifecycle_FinishConfirm" xml:space="preserve">
+    <value>Nur diesen abgelaufenen, vom Dienst nicht angenommenen Auftrag abschließen? Lokale Finanzdaten und Schlüssel bleiben erhalten. Eine angenommene dauerhafte Löschung wird dadurch nicht rückgängig gemacht.</value>
+  </data>
+  <data name="HouseholdLifecycle_Audit" xml:space="preserve">
+    <value>Haushaltsaktivitäten</value>
+  </data>
+  <data name="HouseholdLifecycle_AuditHint" xml:space="preserve">
+    <value>Mitgliedschafts- und Veröffentlichungssignaturen werden mit dem vertrauenswürdigen Verlauf geprüft. Akteursangaben, Betriebsereignisse und UTC-Zeiten stammen vom Dienst; sie sind keine Finanzdaten. Angezeigt wird nur die aktuelle Seite.</value>
+  </data>
+  <data name="HouseholdLifecycle_More" xml:space="preserve">
+    <value>Nächste Aktivitätsseite lesen</value>
+  </data>
+  <data name="HouseholdLifecycle_AuditItem" xml:space="preserve">
+    <value>{0}
+Dienstzeit: {1}
+Identität: {2}</value>
+  </data>
+  <data name="HouseholdLifecycle_Membership" xml:space="preserve">
+    <value>Signierte Mitgliedschaftsänderung</value>
+  </data>
+  <data name="HouseholdLifecycle_Publication" xml:space="preserve">
+    <value>Signierte verschlüsselte Veröffentlichung</value>
+  </data>
+  <data name="HouseholdLifecycle_Left" xml:space="preserve">
+    <value>Vom Dienst gemeldeter Mitgliedsaustritt</value>
+  </data>
+  <data name="HouseholdLifecycle_Device" xml:space="preserve">
+    <value>Vom Dienst gemeldeter Gerätesitzungswechsel</value>
+  </data>
 </root>

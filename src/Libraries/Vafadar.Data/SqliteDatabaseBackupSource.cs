@@ -55,7 +55,7 @@ public sealed class SqliteDatabaseBackupSource<TContext>(IDbContextFactory<TCont
                 await context.Database.OpenConnectionAsync(cancellationToken);
                 Check();
                 await SqlCipherPortableSnapshot.WriteAsync(captured, destination, MaximumProtectedSnapshotBytes, Check, cancellationToken,
-                    portablePolicy is null ? null : portablePolicy.PrepareAsync);
+                    portablePolicy is null ? null : portablePolicy.PrepareAsync, portablePolicy?.EmptyRowTables);
                 return;
             }
             snapshotPath = CreateTemporaryPath();

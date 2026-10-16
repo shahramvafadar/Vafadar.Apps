@@ -11,6 +11,7 @@
       "src\\Libraries\\Vafadar.Backup.OneDrive\\Vafadar.Backup.OneDrive.csproj",
       "src\\Libraries\\Vafadar.Backup\\Vafadar.Backup.csproj",
       "src\\Libraries\\Vafadar.Core\\Vafadar.Core.csproj",
+      "src\\Libraries\\Vafadar.Cryptography\\Vafadar.Cryptography.csproj",
       "src\\Libraries\\Vafadar.Data\\Vafadar.Data.csproj",
       "src\\Libraries\\Vafadar.Documents\\Vafadar.Documents.csproj",
       "src\\Libraries\\Vafadar.Localization\\Vafadar.Localization.csproj",

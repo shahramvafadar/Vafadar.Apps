@@ -48,6 +48,7 @@ public sealed partial class MoreViewModel(Translator translator) : ViewModelBase
                 Item("Profile_Title", "More_ProfilesHint", Symbol.PeopleSwap, AppShell.ProfilesRoute),
 #if PERSONAL_SYNC
                 Item("Sync_Title", "Sync_MoreHint", Symbol.ArrowSwap, AppRoutes.PersonalSyncRoute),
+                Item("Household_Title", "Household_MoreHint", Symbol.PeopleSwap, AppRoutes.HouseholdRoute),
 #endif
             ]),
             new(translator["More_App"],

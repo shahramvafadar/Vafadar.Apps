@@ -39,7 +39,17 @@
     <DefineConstants>$(DefineConstants);SYNC_PUBLIC_REVIEW</DefineConstants>
   </PropertyGroup>
   <!-- Compile original production sources and XAML; the application never references this independent caller. -->
+  <PropertyGroup Condition="'$(ReviewHouseholdFiles)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.androidhouseholdfiles</ApplicationId>
+    <DefineConstants>$(DefineConstants);HOUSEHOLD_FILE_REVIEW</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(ReviewHouseholdSnapshot)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.householdsnapshotreview</ApplicationId>
+    <DefineConstants>$(DefineConstants);HOUSEHOLD_SNAPSHOT_REVIEW;HOUSEHOLD_FILE_REVIEW</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
+    <Compile Include="../../sync/HouseholdRoundtrip/HistoryQualification.NativeBound.cs" Link="Native/HistoryQualification.NativeBound.cs"
+             Condition="'$(ReviewHouseholdSnapshot)' == 'true'" />
     <Compile Include="$(OriginalAppRoot)**/*.cs"
              Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)Platforms/Windows/**;$(OriginalAppRoot)Platforms/iOS/**;$(OriginalAppRoot)Platforms/Android/MainActivity.cs"
              Link="%(RecursiveDir)%(Filename)%(Extension)" />

@@ -805,3 +805,83 @@ key ring/private files stay in isolated Docker volumes. Complete private snapsho
 not uploaded artifacts. Operator TLS renewal retains historical protection keys; qualification and live authorities
 cannot be reclassified. No analytics/network SDK or new app permission is added. Personal-sync INTERNET is unchanged;
 no automatic opt-in, real mail sender, public routing or production privacy acceptance is implied.
+
+### D-294 in progress - Household and selected-source boundary
+
+The unfinished local household implementation separates opaque E2EE financial payloads from service-visible
+identity/role/device public keys, member consent, timing, ciphertext sizes and serial publication metadata.
+The personal-service protocol remains server-readable; its protection is not relabeled as household E2EE.
+Original device/root/epoch keys and source-copy consent/receipts are inside protected profile storage and scrubbed
+from portable exports. No final household app connection, privacy submission or release acceptance is declared.
+
+Explicit source selection reads only chosen personal accounts, optional related history/category ancestry and
+separately opted-in files on the device. Its immutable review owns temporary memory, closes source readers before
+UI/creation and rechecks source content/choices. Source financial data is unchanged. Copies have independent ids
+and exclude personal preferences, other-account data, security, queues, plans/rules/filters and private counterpart
+names/ids/balances/currencies. Only selected-side exact transfer units remain through neutral excluded endpoints.
+Selected free text and explicitly included files are shared content, not automatically redacted. A device-only
+pending receipt cannot silently become an empty shared ledger after interruption. These data-path checks are
+independent native Windows evidence; main household UI/profile, Android/AOT/iOS and whole-batch acceptance remain.
+
+Current D-294 private binding metadata also records actual authenticated host observation/expiry/retention,
+rotation readiness and remote-scope refusal. Those device-only fields remain inside the existing scrubbed household
+binding table, not portable preferences. They grant no membership or paid entitlement alone. Scoped authenticated
+404/403/410 refuses further local financial writes while retaining the user's exact pending ciphertext and finance.
+Device-only preferences remain separate from guarded financial Settings. Native independent accepted-role/grace
+checks do not establish main household UI, mobile, recovery, publication or complete privacy acceptance.
+
+D-294 original app setup retains a private invitation capability and exact recipient claim only in two fixed,
+bounded device-protected household intent slots. The owner-only pending list exposes signed public consent/device
+proofs and identity ids, never the capability or financial content. The app requires an independently compared
+complete root/device fingerprint, clears visible invitation/password on page retirement, and never changes a
+personal profile into a household implicitly. The actual binding kind selects manual/foreground encrypted financial
+HTTP; personal readable transport is not a fallback. Six-language disclosures are implemented; current native app
+rendering, mobile and complete household/privacy/release acceptance remain unfinished.
+
+D-294 actual cost facts add encrypted financial contact names/optional historical identity labels, actual costs, exact shares and private repayments. They are protected local financial rows and household E2EE ciphertext only; financial labels never grant membership. Readable personal sync refuses these tables/history. Portable user snapshots retain the financial facts while original local authority/key/session/queue scrubbing remains intact. No new network SDK, analytics, permission or password storage is introduced. Corrected18-case Windows layout and actual protected writer/roundtrip evidence do not establish Android, physical-device, recovery or whole-household privacy acceptance.
+
+D-294 recovery continuation: an optional off-device password-encrypted kit is distinct from identity authentication,
+local database recovery and portable financial backups. The service receives only public enrollment/consent and
+standard recipient-encrypted root/epoch frames; private import/preparation bytes remain in protected local slots
+and are scrubbed from portable financial snapshots. Passwords are transient and never remembered. Native document
+Save/Pick uses explicit per-file access, with no new storage permission, readable cache or retained document URI.
+Device/root recovery, active-kit append and kit retirement pass the retained actual Windows/HTTPS/PostgreSQL
+cases described in11-household-delivery.md; this does not establish final Android/iOS/phone privacy acceptance.
+Revocation prevents future keys/access, not recall of previously decrypted/exported/downloaded content.
+
+D-294 source/page continuation: an explicit selected personal snapshot may remain in process memory only for its
+exact destination/peer/actual identity; source keys and sessions are not included. History/files are separate
+opt-ins, and chosen free text is disclosed as shared content. No source/path/queue/device authority enters portable
+preferences. Cancelling a memory handoff never deletes money or durable pending intent. A native picker may
+retain only bounded encrypted kit bytes/public Save receipt across page retirement, never a password, clear kit,
+document URI or prior foreground grant. Actual Android adapter Save/Pick/Cancel passed independently; main lock/
+picker composition and complete mobile acceptance remain open. The common household conflict review refuses
+readable personal session/publication actions; native two-client cost-group decisions used only encrypted HTTP.
+
+
+D-294 continuation: the owner-only pending-device endpoint exposes bounded public device keys and self-possession proof only for accepted member identities. No new SDK, OS permission, private financial payload or device private key is returned. Retired-root unaccepted invitations expire server-side; local Finish erases only the reviewed protected setup intent, without claiming remote deletion of copied content. Device revocation cannot recall previously downloaded history.
+
+
+D-294 device access packages contain public owner keys and a signed actual member identity/membership checkpoint/expiry only, without invitation capability, private keys or financial data. Login and pending session reattachment grant no financial resources; later explicit independent device approval remains required. Private setup keys/proofs stay in the original protected profile. No SDK, permissions or portable preference fields were added. Initial receive preserves defaults as local until verified incoming financial apply; it cannot silently publish them.
+
+
+D-294 ownership metadata contains bounded public identity/device/checkpoint/expiry/signature proofs and standard
+opaque recipient/root envelopes only. Target-device consent is independent of a newly chosen signing root. Private
+candidates remain in protected local slots and are never portable preferences. A departed participant can observe
+only its own original public terminal receipt with actual identity/session/private-device proof; that receipt returns
+no key envelopes or financial rows. Previously downloaded history cannot be recalled. No new SDK, OS permission,
+external provider, plaintext financial HTTP or automatic readable export was added. Current native evidence is
+scoped; main mobile, complete lifecycle and release acceptance remain open.
+
+D-294 lifecycle metadata adds bounded private room activity (actual actor/device/operation, service UTC, membership/publication checkpoints and optional public signatures; no recipient grant or decrypted finance). Exact owner deletion and expiry purge room ciphertext, grants, recovery, roster, invitations and audit. A minimal room tombstone/owner relation remains in PostgreSQL and an immutable opaque actor/request commitment remains in the service-private deletion directory. This is not identity anonymization/erasure or recall of downloaded files. The original deletion declaration/outcome is device-local protected metadata, scrubbed with other household metadata from portable financial exports. A latest private marker set must accompany old database restoration; restoring only an old complete service snapshot remains an open operational integration gate. No external SDK, permission or readable financial network payload was added.
+The latest private-marker merge and complete historical service restore have now been executed successfully on separate fictional Docker stacks. Snapshot manifests additionally retain only the nonsecret local-household opt-in (never public activation). An actual current owner/device can review opaque deletion checkpoints during retained time and reattach its same private device to a fresh authenticated session for status/privacy actions. Neither endpoint serves financial rows, epoch grants or new financial write authority. The exact declaration still needs its existing independently trusted private owner root and actual current server ownership checks. Main/native destructive-dialog and mobile, identity erasure and whole D-294 remain open.
+The household retirement worker reports only an aggregate count of unavailable private entries. It never logs
+room/identity ids, file paths, protected bytes or exception messages. Unknown/corrupt markers remain untouched;
+unrelated room retirement continues under separate transactions. Offline restoration still refuses unknown
+source entries, and unreadable/redirected roots do not become an empty deletion ledger (D-294 in progress).
+
+D-294 bounded-history continuation: derived household row positions (original table/key/version and ciphertext
+position) remain solely inside the existing device-protected local database. They introduce no service plaintext,
+permission, SDK or credential. All11 private household tables, including this index, are scrubbed from the portable
+memory image; original keys, history and financial data remain untouched. Scoped native export acceptance is in
+11-household-delivery.md; whole D-294/mobile/Release acceptance remains open.
