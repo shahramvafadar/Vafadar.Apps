@@ -1,6 +1,7 @@
 using System.Xml.Linq;
 using Vafadar.Testing;
 using Vafadar.Zanance.Core.Accounts;
+using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Dashboard;
 using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Holdings;
@@ -18,7 +19,7 @@ public sealed class RuntimeResourceKeyTests
 {
     private const string Resources = "src/Apps/Zanance/Vafadar.Zanance.App/Resources/Strings/AppResources";
 
-    public static TheoryData<string> Languages() => [string.Empty, ".fa", ".de"];
+    public static TheoryData<string> Languages() => [string.Empty, ".fa", ".de", ".es", ".fr", ".it"];
 
     [Theory]
     [MemberData(nameof(Languages))]
@@ -30,6 +31,7 @@ public sealed class RuntimeResourceKeyTests
             where T : struct, Enum => Enum.GetValues<T>().Select(v => $"{prefix}{v}{suffix}");
 
         var expected = Of<HomeSection>("HomeSection_")
+            .Concat(Of<BillingReplacementTiming>("Billing_Replacement_"))
             .Concat(Of<EntryKind>("EntryKind_"))
             .Concat(Of<AccountType>("AccountType_"))
             .Concat(Of<AccountGroup>("AccountGroup_"))

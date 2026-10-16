@@ -2262,3 +2262,15 @@ the exact native completion, not a current paid grant. Complete service backups 
 original private protection/signing authority together; a database alone cannot decrypt protected references.
 Provider credentials remain separate operator-owned private mounts. The existing latest household privacy-marker
 restore rule is unchanged.
+
+
+### Accountant preparation (D-296)
+
+The Germany Level 1 packet is a read-only streaming ZIP, not a database backup. AccountantExportStore uses
+original-file commercial access plus one deferred SQLite snapshot per review/build/validation, with selected
+ledger/context and opted-in attachment sources only. Review is a digest/count object, not a second blob set.
+The worker streams exact minor-unit rows and one stored copy at a time; a metadata-only second pass indexes
+documents without retaining blobs. Recomputed hashes reject a stale review before native publication. Native
+confirmation/share never holds the SQL reader. No schema/model change or new engine is required. The archive
+is bounded at128 MiB; documents preserve the existing5 MiB per-item bound. Detailed format, further safety
+bounds and local cache lifetime are in Zanance commercial-release/13-accountant-export-delivery.md.

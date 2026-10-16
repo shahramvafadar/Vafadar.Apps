@@ -257,6 +257,10 @@ internal static partial class DebugSnapshots
     private static async Task RunCoreAsync(App app, IServiceProvider services, string folder)
     {
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "accountant-native")
+        {
+            await ReviewAccountantAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "billing-identity-layout")
         {
             await ReviewBillingIdentityLayoutAsync(app, services, folder); return;
@@ -739,6 +743,7 @@ internal static partial class DebugSnapshots
             ("asset-purchase", AppShell.AssetEventEditorRoute, new() { ["type"] = goldId, ["kind"] = "Purchase" }),
             ("asset-move", AppShell.AssetEventEditorRoute, new() { ["type"] = goldId, ["kind"] = "LocationTransfer" }),
             ("importexport", AppShell.ImportExportRoute, null),
+            ("accountantexport", AppRoutes.AccountantExportRoute, null),
             ("import-overlap", AppShell.ImportExportRoute, null),
             ("reports", AppShell.ReportsRoute, null),
             ("report-commitments", AppShell.ReportsRoute, new() { ["report"] = 1 }),

@@ -1974,3 +1974,18 @@ Local Android/service billing and protected signed continuation are qualified; n
 store/provider/public sandbox acceptance remain unfinished. This history does not mark the commercial wave done.
 The only current remaining-work state is ZCR-BIL-01..05 in the canonical commercial-release/04-backlog.md;
 12-billing-delivery.md records the exact scope, current APK, focused tests and exclusions.
+
+
+## D-296 Germany accountant preparation
+
+The approved Level 1 batch adds an explicit year/account review and readable ZIP containing exact ledger data,
+separate currency/kind recorded totals, blank accountant-review columns and opt-in exact stored document copies.
+Transfers remain one row; refunds keep their links; no deductibility/VAT/profit/filing is inferred. Notes/documents
+start off, linked transfer identities are explained, original-source changes and retired form/file/rights/lock
+refuse sharing, and no money/preferences are written. This is a Plus preparation feature distinct from later
+TaxAddOn rules; test commercial enforcement stays inactive. Existing basic CSV and portable backup are retained.
+Original invoices/structured e-invoices must be kept separately; this is not an original/GoBD/DATEV/ELSTER archive.
+All six translations and the individually named future country queue are included without an ETA.
+Implementation, official-source qualifications, bounds, failures and final evidence are recorded in
+`enhancements/2026-10-commercial-release/13-accountant-export-delivery.md`. Expert calculations and physical/iOS/
+public release acceptance remain separate. No new database schema, migration, SDK or network permission is added.

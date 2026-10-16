@@ -3369,3 +3369,19 @@ Pending external/native acceptance: actual Google/Apple sandbox catalog/purchase
 revocation and trial/discount matrix, native StoreKit2 implementation/Mac build, real credentials/accounts, public
 notification delivery, store signing, physical-device/runtime traffic and final commercial activation. Local fixture
 facts and negative Apple signature cases do not pass those rows. Unchanged3753-case prior baseline was not replayed.
+
+
+## AT-296 Germany accountant data/document export
+
+Actual SQLite/source-flow/native-port acceptance has23 new cases, including selection, one-row cross-currency
+transfers, refund links, default minimal disclosure, exact stored document bytes/hashes, no unrelated year/account/
+orphan data, no source writes, stale original source/day/scope/rights refusal, native-await retirement/lock,
+unknown precision/Int64/formula text and explicit whole-packet refusal for oversized/invalid choices. Only the two
+changed document-index packet cases were rerun after its streaming refinement. The policy76-case matrix and
+resource checks are separate focused evidence; historical full-suite3753 is not a newly executed total.
+
+Native Windows18 en/fa/de/theme/width cases passed original selection/review/Cancel, caption/target checks and
+unchanged complete financial fingerprint. Long native title clipping was observed, retained and corrected with
+a short translated title; affected presentation was rechecked. Complete signed Release Android package/local
+native checks are recorded in13-accountant-export-delivery.md. Genuine device/iOS/recipient/expert tax acceptance
+remains separate. No payment, tax filing, financial write, credential or background upload belongs to this flow.

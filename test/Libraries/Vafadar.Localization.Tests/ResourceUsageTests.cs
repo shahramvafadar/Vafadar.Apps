@@ -63,6 +63,6 @@ public sealed partial class ResourceUsageTests
                            && !path.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}", StringComparison.Ordinal));
 
     // {v:Translate Key}, translator["Key"], _translator["Key"], Translator.Instance["Key"], translator.Format("Key", ...).
-    [GeneratedRegex(@"(?:Translate\s+(?<key>[A-Za-z]+_[A-Za-z0-9_]+)\}|[tT]ranslator(?:\.Instance)?\[""(?<key>[A-Za-z]+_[A-Za-z0-9_]+)""\]|[tT]ranslator\.Format\(""(?<key>[A-Za-z]+_[A-Za-z0-9_]+)"")")]
+    [GeneratedRegex(@"(?:Translate\s+(?<key>[A-Za-z]+_[A-Za-z0-9_]+)\}|[tT]ranslator(?:\.Instance)?\[""(?<key>[A-Za-z]+_[A-Za-z0-9_]+)""\]|[tT]ranslator\.Format\(""(?<key>[A-Za-z]+_[A-Za-z0-9_]+)""\s*[,)])")]
     private static partial Regex UsagePattern();
 }

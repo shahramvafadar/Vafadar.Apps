@@ -64,6 +64,7 @@ public static class ZananceDataServiceCollectionExtensions
             .AddSingleton<ReceiptWorkStore>()
             .AddSingleton<LoanWorkStore>()
             .AddSingleton<ReportWorkStore>()
+            .AddSingleton<Tax.AccountantExportStore>()
             .AddSingleton<BudgetChoiceStore>()
             .AddSingleton<GoalStore>()
             .AddSingleton<HoldingStore>()

@@ -933,3 +933,14 @@ signature is not store signing. The actual store catalog/service must be configu
 Do not bypass unavailable state with design prices, a client grant or an unverified transaction id.
 Native StoreKit2 and iOS build/runtime qualification must run in the actual Mac clone; Windows common-code builds
 are not iOS evidence. See src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/12-billing-delivery.md.
+
+
+### Germany accountant preparation (D-296)
+
+The original `accountantexport` route is included in the Debug walkthrough. Its dedicated `accountant-native`
+Windows review requires the independently compiled id `pro.vafadar.zanance.accountantreview` (including
+ApplicationIdGuid) and exact `artifacts/accountant-native-d296` output. It uses its own fictitious SQLite file,
+checks native selection/review/Cancel and realized captions in en/fa/de, light/dark and360/412/1280 widths,
+retains failed captures and records completed cases so successes are not replayed. It never shares externally.
+Actual Release Android sharing/package checks remain distinct. Focused source-flow acceptance is AT-296 in
+AccountantExportFlowTests. See the D-296 delivery record for final native/APK paths and failed-then-fixed evidence.

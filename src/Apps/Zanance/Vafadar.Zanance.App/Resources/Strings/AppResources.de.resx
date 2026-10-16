@@ -7703,4 +7703,76 @@ Identität: {2}</value>
   <data name="Billing_LifetimeKeepsSubscription" xml:space="preserve">
     <value>Der Kauf von Plus Lifetime kündigt Ihr bestehendes Abo nicht. Verwalten Sie dessen Verlängerung separat im ursprünglichen Store.</value>
   </data>
+  <data name="Tax_Title" xml:space="preserve">
+    <value>Steuerberater-Paket · Deutschland</value>
+  </data>
+  <data name="Tax_Intro" xml:space="preserve">
+    <value>Erfasste Daten für die Steuerberatung von Angestellten oder Selbstständigen vorbereiten. Nur Deutschland; keine Steuerberechnung oder Abgabe. Plus-Funktion; aktuelle Testversionen ohne kommerzielle Grenzen.</value>
+  </data>
+  <data name="Tax_Year" xml:space="preserve">
+    <value>Erfasste Daten · gregorianisches Kalenderjahr</value>
+  </data>
+  <data name="Tax_YearError" xml:space="preserve">
+    <value>Ein gregorianisches Jahr ab 1900 bis zum aktuellen Jahr eingeben.</value>
+  </data>
+  <data name="Tax_Accounts" xml:space="preserve">
+    <value>Finanzkonten zur Weitergabe (auch archivierte)</value>
+  </data>
+  <data name="Tax_AccountsError" xml:space="preserve">
+    <value>Mindestens ein Finanzkonto auswählen.</value>
+  </data>
+  <data name="Tax_TransferDisclosure" xml:space="preserve">
+    <value>Überweisungen eines ausgewählten Kontos enthalten beide Kontonamen, Währungen und Beträge in einer Zeile. Andere Vorgänge und Anfangssalden werden ausgelassen.</value>
+  </data>
+  <data name="Tax_SelectAll" xml:space="preserve">
+    <value>Alle aufgeführten Konten auswählen</value>
+  </data>
+  <data name="Tax_SelectNone" xml:space="preserve">
+    <value>Kontoauswahl aufheben</value>
+  </data>
+  <data name="Tax_Notes" xml:space="preserve">
+    <value>Empfänger, Notizen und Erstattungsnamen einschließen</value>
+  </data>
+  <data name="Tax_Documents" xml:space="preserve">
+    <value>Gespeicherte Belegkopien einschließen</value>
+  </data>
+  <data name="Tax_Originals" xml:space="preserve">
+    <value>Kopien sind keine geprüften Originale; Fotos können komprimiert sein. Originalrechnungen und strukturierte E-Rechnungen separat aufbewahren. Abziehbarkeit, Umsatzsteuer oder betrieblicher Anteil werden nicht abgeleitet.</value>
+  </data>
+  <data name="Tax_Summary" xml:space="preserve">
+    <value>Geprüft: {0} erfasste Zeilen, {1} Belegkopien ({2} Bytes), {3} zusätzliche verknüpfte Kontoidentitäten. Titel, Kategorien und Tags sind enthalten. CSV-Spalten und Paketanleitung sind Englisch.</value>
+  </data>
+  <data name="Tax_ReadableWarning" xml:space="preserve">
+    <value>Das ZIP ist unverschlüsselt und für jeden Empfänger lesbar. Empfänger selbst auswählen. Angebotene private Cache-Dateien werden nach 24 Stunden beim nächsten Export entfernt; Empfängerkopien liegen außerhalb der Kontrolle von Zanance.</value>
+  </data>
+  <data name="Tax_Confirm" xml:space="preserve">
+    <value>Die geprüften unverschlüsselten Daten und ausdrücklich ausgewählten Belegkopien teilen? Den Empfänger im nächsten Systemdialog prüfen. Dies ist keine Steuererklärung und kein Zanance-Backup.</value>
+  </data>
+  <data name="Tax_Review" xml:space="preserve">
+    <value>Ausgewählte Daten prüfen</value>
+  </data>
+  <data name="Tax_Share" xml:space="preserve">
+    <value>Geprüftes ZIP erstellen und teilen</value>
+  </data>
+  <data name="Tax_Reload" xml:space="preserve">
+    <value>Konten neu laden / erneut versuchen</value>
+  </data>
+  <data name="Tax_Failed" xml:space="preserve">
+    <value>Das Paket konnte nicht erstellt werden oder die Prüfung ist veraltet. Neu laden und erneut prüfen. Technische Grenze: 128 MiB und 10.000 Belegkopien; nichts wird stillschweigend ausgelassen.</value>
+  </data>
+  <data name="Tax_Countries" xml:space="preserve">
+    <value>Deutschland: Datenvorbereitung verfügbar. Ohne Terminzusage werden ergänzt: Österreich, Belgien, Frankreich, Liechtenstein, Luxemburg, Monaco, die Niederlande, die Schweiz, das Vereinigte Königreich, Irland, die USA, Kanada und Australien. Anzeige- und Feiertagsregionen aktivieren keine Steuerregeln.</value>
+  </data>
+  <data name="Help_AccountantExport_Title" xml:space="preserve">
+    <value>Paket für die deutsche Steuerberatung</value>
+  </data>
+  <data name="Help_AccountantExport_Text" xml:space="preserve">
+    <value>Gregorianisches Jahr und Finanzkonten wählen, dann vor dem Teilen prüfen. Nur tatsächlich gespeicherte Buchungen sind enthalten, keine geplanten Zahlungen. Überweisungen bleiben eine Zeile; Erstattungen behalten ihre Verweise. Notizen und gespeicherte Belegkopien sind optional und zunächst aus. Summen trennen Währungen und Vorgangsarten; sie sind kein steuerpflichtiger Gewinn. Leere Prüfspalten sind für die Steuerberatung. Originale, strukturierte E-Rechnungen und Belege außerhalb von Zanance separat prüfen. Das lesbare ZIP ist weder Steuerberechnung, GoBD-Archiv, DATEV-Datei, Steuerabgabe noch wiederherstellbares Backup. Dieser Ablauf bucht kein Geld.</value>
+  </data>
+  <data name="Help_AccountantExport_Example" xml:space="preserve">
+    <value>Beispiel: Gehalts- und Geschäftskonto für 2026 auswählen. Ausgabe und Erstattung zusammen prüfen; eine Darlehensüberweisung ist kein Einkommen. Gespeicherte Belegkopien nur einschließen, wenn sie an die gewählte Steuerberatung gehen sollen.</value>
+  </data>
+  <data name="Tax_PageTitle" xml:space="preserve">
+    <value>Steuerberater-Paket</value>
+  </data>
 </root>

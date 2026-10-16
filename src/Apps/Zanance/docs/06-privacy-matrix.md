@@ -885,3 +885,15 @@ position) remain solely inside the existing device-protected local database. The
 permission, SDK or credential. All11 private household tables, including this index, are scrubbed from the portable
 memory image; original keys, history and financial data remain untouched. Scoped native export acceptance is in
 11-household-delivery.md; whole D-294/mobile/Release acceptance remains open.
+
+
+## D-296 accountant data packet
+
+Explicit Germany/year/account selection exports local financial rows and necessary account/category identities
+to a readable ZIP only after review and confirmation. Both transfer account identities are disclosed together.
+Payees/notes/reimbursement names and exact stored attachment copies are separate opt-ins, initially off. No
+security, preferences, credentials or private service authority is included. Production private cache is bounded
+and failed unpublished files are removed; offered files expire after24 hours on the next export. Native
+recipients control their own copies. This is independent of encrypted automatic backup and optional-password
+portable backup. No new SDK, permission, background upload or financial write is introduced. See the D-296
+delivery record for source, coherent-read/stale-review guards and actual local/native evidence.

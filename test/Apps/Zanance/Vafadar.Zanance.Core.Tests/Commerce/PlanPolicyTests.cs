@@ -37,6 +37,7 @@ public sealed class PlanPolicyTests
         CommercialFeature.AdvancedReports, CommercialFeature.AdvancedPdf, CommercialFeature.AdvancedForecast,
         CommercialFeature.ManageHoldings, CommercialFeature.LoanAnalysis, CommercialFeature.SplitTransactions,
         CommercialFeature.CategorizationRules, CommercialFeature.ReceiptReading, CommercialFeature.ContributionReviewReminders,
+        CommercialFeature.AccountantExport,
     ];
 
     /// <summary>Every valid product/duration, both display modes and both financial contexts.</summary>

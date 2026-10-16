@@ -1404,3 +1404,13 @@ an identity or start payment. Anonymous Plus remains account-free. Optional iden
 is separate from financial accounts; clear typed credentials on submit/retirement and show adjacent validation.
 An explicit restore explains optional association; Lifetime warns that another subscription is not canceled.
 Native own-window and changed main Android evidence is in enhancements/2026-10-commercial-release/12-billing-delivery.md.
+
+
+## D-296 explicit accountant disclosure
+
+Keep Germany preparation separate from display/holiday country and later tax calculations. Default the explicit
+Gregorian year, initially select no financial accounts, keep notes/document copies off, and explain complete
+transfer/counterparty disclosure before review. Field errors appear together. Changing any choice retires the
+original review; native confirmations never save money. Keep complete scalable summary/warnings, a short native
+page title and a pinned growing Review/Share row. State that the ZIP is readable, instructions are English and
+stored copies may not be legal originals. An actual Cancel must precede cache/authentication/share effects.

@@ -7672,4 +7672,76 @@ Identidad: {2}</value>
   <data name="Billing_LifetimeKeepsSubscription" xml:space="preserve">
     <value>Comprar Plus Lifetime no cancela tu suscripción existente. Gestiona su renovación por separado en la tienda original.</value>
   </data>
+  <data name="Tax_Title" xml:space="preserve">
+    <value>Paquete para tu asesor · Alemania</value>
+  </data>
+  <data name="Tax_Intro" xml:space="preserve">
+    <value>Prepara tus datos registrados para el asesor de empleados o autónomos. Solo Alemania; sin cálculo ni presentación fiscal. Función Plus; las pruebas actuales no tienen límites comerciales.</value>
+  </data>
+  <data name="Tax_Year" xml:space="preserve">
+    <value>Fechas registradas · año del calendario gregoriano</value>
+  </data>
+  <data name="Tax_YearError" xml:space="preserve">
+    <value>Introduce un año gregoriano entre 1900 y el año actual.</value>
+  </data>
+  <data name="Tax_Accounts" xml:space="preserve">
+    <value>Cuentas financieras que quieres compartir (incluidas las archivadas)</value>
+  </data>
+  <data name="Tax_AccountsError" xml:space="preserve">
+    <value>Selecciona al menos una cuenta financiera.</value>
+  </data>
+  <data name="Tax_TransferDisclosure" xml:space="preserve">
+    <value>Las transferencias de una cuenta seleccionada incluyen los nombres, monedas e importes de ambas cuentas en una fila. Se excluyen el historial ajeno y los saldos iniciales.</value>
+  </data>
+  <data name="Tax_SelectAll" xml:space="preserve">
+    <value>Seleccionar todas las cuentas de la lista</value>
+  </data>
+  <data name="Tax_SelectNone" xml:space="preserve">
+    <value>Quitar la selección de cuentas</value>
+  </data>
+  <data name="Tax_Notes" xml:space="preserve">
+    <value>Incluir beneficiarios, notas y nombres de reembolso</value>
+  </data>
+  <data name="Tax_Documents" xml:space="preserve">
+    <value>Incluir copias de documentos guardadas</value>
+  </data>
+  <data name="Tax_Originals" xml:space="preserve">
+    <value>Las copias no son originales verificados; las fotos pueden estar comprimidas. Conserva aparte las facturas originales y los archivos estructurados de factura electrónica. No se deducen desgravaciones, IVA ni porcentajes profesionales.</value>
+  </data>
+  <data name="Tax_Summary" xml:space="preserve">
+    <value>Revisado: {0} filas registradas, {1} copias de documentos ({2} bytes) y {3} identidades adicionales de cuentas vinculadas. Se incluyen títulos, categorías y etiquetas. Las cabeceras CSV y las instrucciones están en inglés.</value>
+  </data>
+  <data name="Tax_ReadableWarning" xml:space="preserve">
+    <value>El ZIP no está cifrado: cualquiera que lo obtenga podrá leerlo. Elige tú al destinatario. Las copias temporales ofrecidas se eliminan tras 24 horas al exportar de nuevo; Zanance no controla las copias del destinatario.</value>
+  </data>
+  <data name="Tax_Confirm" xml:space="preserve">
+    <value>¿Quieres compartir los datos revisados sin cifrar y las copias de documentos que seleccionaste? Comprueba el destinatario en el siguiente diálogo del sistema. No es una declaración fiscal ni una copia de seguridad de Zanance.</value>
+  </data>
+  <data name="Tax_Review" xml:space="preserve">
+    <value>Revisar los datos seleccionados</value>
+  </data>
+  <data name="Tax_Share" xml:space="preserve">
+    <value>Preparar y compartir el ZIP revisado</value>
+  </data>
+  <data name="Tax_Reload" xml:space="preserve">
+    <value>Recargar cuentas / reintentar</value>
+  </data>
+  <data name="Tax_Failed" xml:space="preserve">
+    <value>No se pudo preparar el paquete o cambió la revisión. Recarga y revisa de nuevo. El límite técnico es 128 MiB y 10.000 copias de documentos; no se omite nada sin avisar.</value>
+  </data>
+  <data name="Tax_Countries" xml:space="preserve">
+    <value>Alemania: preparación de datos disponible. Se añadirán, sin fecha prometida: Austria, Bélgica, Francia, Liechtenstein, Luxemburgo, Mónaco, Países Bajos, Suiza, Reino Unido, Irlanda, Estados Unidos, Canadá y Australia. Las opciones de visualización o festivos no activan normas fiscales.</value>
+  </data>
+  <data name="Help_AccountantExport_Title" xml:space="preserve">
+    <value>Paquete para tu asesor en Alemania</value>
+  </data>
+  <data name="Help_AccountantExport_Text" xml:space="preserve">
+    <value>Elige un año gregoriano y cuentas financieras y revisa antes de compartir. Solo se incluyen registros guardados, no pagos previstos. Las transferencias siguen en una fila y los reembolsos conservan sus referencias. Las notas y copias de documentos son opcionales y están desactivadas inicialmente. Los totales separan monedas y tipos; no son beneficios fiscales. Las columnas vacías son para tu asesor. Comprueba aparte originales, facturas electrónicas estructuradas y registros externos. El ZIP legible no es un cálculo fiscal, archivo GoBD, fichero DATEV, presentación fiscal ni copia restaurable. Este proceso no registra dinero.</value>
+  </data>
+  <data name="Help_AccountantExport_Example" xml:space="preserve">
+    <value>Ejemplo: selecciona las cuentas de nómina y actividad autónoma de 2026. Revisa juntos un gasto y su reembolso; no trates un préstamo transferido como ingreso. Incluye copias de recibos solo si quieres enviarlas al asesor elegido.</value>
+  </data>
+  <data name="Tax_PageTitle" xml:space="preserve">
+    <value>Paquete contable</value>
+  </data>
 </root>

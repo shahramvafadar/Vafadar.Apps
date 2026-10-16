@@ -79,6 +79,9 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         SignNames = [translator["Import_SignNegativeExpense"], translator["Import_SignAllExpenses"], translator["Import_SignAllIncome"]];
     }
 
+    /// <summary>Opens explicit Germany accountant preparation without altering the CSV form.</summary>
+    [RelayCommand] private Task AccountantExportAsync() => _interaction.NavigateAsync(AppRoutes.AccountantExportRoute);
+
     /// <summary>Gets whether the exact current, unaccepted review can be imported explicitly.</summary>
     public bool CanRunImport => CanImport && HasPreview && !IsBusy && !_previewAccepted;
     /// <summary>Gets whether original raw CSV/mapping may be explicitly reviewed again.</summary>

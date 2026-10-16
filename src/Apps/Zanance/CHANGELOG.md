@@ -6,6 +6,15 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Germany accountant data packet (D-296)
+
+- Choose a Gregorian year and financial accounts, review the disclosure and share a readable ZIP for an employee's or freelancer's accountant.
+- Keep transfers together and preserve exact minor-unit amounts, currencies, refund links and original categories without guessing tax treatment.
+- Optionally include notes/payees and exact stored document copies; both start off. Explain original-invoice requirements, linked account identities and readable-file privacy.
+- Refuse stale reviews across data/profile/rights/lock changes and leave financial rows unchanged.
+- Name further target countries as being added without a promised date. Tax calculations, filing and expert acceptance remain separate.
+
+
 ### Local Android store billing (D-295; genuine store acceptance pending)
 
 - Show actual store offers and renewal terms separately from the plan comparison; explain reviewed subscription changes without starting a parallel purchase.

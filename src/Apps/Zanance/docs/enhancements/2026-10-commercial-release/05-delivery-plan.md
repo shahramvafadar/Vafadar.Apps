@@ -22,7 +22,7 @@ slice is a delivery. Historical proposals and handoff notes below do not reopen 
 | 2 | Current-machine deployment D-293 locally qualified | Isolated API/PostgreSQL/private storage, nonempty-file restore, TLS refusals and retained-key renewal pass; public DNS/routing and real mail remain external gates |
 | 3 | Local household sharing D-294 locally qualified | E2EE from first delivery, invitations/roles, member key rotation/revocation/recovery, selective sharing and approved 30+90-day expiry; real independent clients |
 | 4 | D-295 local Android/service billing qualified; cross-platform/store gates in progress | Android native code/private cache/original UI and PostgreSQL/HTTP authority delivered locally; native StoreKit2/Mac and genuine sandbox/provider acceptance remain explicit; no web checkout/Windows commercial |
-| 5 | German tax preparation | Accountant export, current-year employee/freelancer scope; expert review required before official calculations, no filing; other countries labelled without an ETA |
+| 5 | D-296 German accountant preparation locally qualified | Complete original data/document ZIP and native review/share; expert review still required before official calculations, no filing; named future countries without an ETA |
 | 6 | Approved import and provider prerequisites | German bank research/import first, then USA and other markets; local AI consent/credits and rates/source/cache/manual fallback; no unapproved live provider or spending |
 | 7 | Final platform/release qualification | Existing six languages, physical-device/accessibility/performance and actual Mac/iOS environment; provider/account/signing/expert gates remain explicit; production publication only after readiness |
 
@@ -1819,3 +1819,14 @@ AI consent/credit and rates provenance/cache prerequisites in approved order. Ac
 physical devices, provider credentials/store sandbox, public DNS/TLS/mail and release/commercial activation stay
 visible and incomplete until their actual environments/evidence are available. Do not ask settled product choices
 again or substitute repeated successful unrelated tests for these remaining deliveries.
+
+
+## D-296 local accountant batch complete; next ready execution
+
+Level1 Germany preparation now has original coherent sources, explicit disclosure/review, bounded ZIP/opt-in
+stored copies, original native Cancel and actual main Release Android share-sheet handoff. Nonempty packet
+semantics and23 source-flow cases,18 native Windows contexts, strict builds and complete signed package are
+recorded in13-accountant-export-delivery.md. No tax calculation/filing/expert or physical/iOS acceptance follows.
+Proceed with the approved German-first bank-file import batch using10-bank-import-research.md, without
+replaying completed billing, sync, household, cipher, Home or accountant verification. Retain native Mac/store
+work across unavailable external environments. New provider/spending/publication gates stay explicit.

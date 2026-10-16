@@ -103,6 +103,8 @@ public enum CommercialFeature
     TaxAddOn,
     /// <summary>A separately approved bank-connection add-on.</summary>
     BankConnection,
+    /// <summary>Country-specific data and stored-document preparation for an accountant, without tax calculations.</summary>
+    AccountantExport,
 }
 
 /// <summary>The reason a commercial operation is eligible or needs another right.</summary>
@@ -152,6 +154,7 @@ public static class PlanPolicy
                 or CommercialFeature.AdvancedReports or CommercialFeature.AdvancedPdf or CommercialFeature.AdvancedForecast
                 or CommercialFeature.ManageHoldings or CommercialFeature.LoanAnalysis or CommercialFeature.SplitTransactions
                 or CommercialFeature.CategorizationRules or CommercialFeature.ReceiptReading or CommercialFeature.ContributionReviewReminders
+                or CommercialFeature.AccountantExport
                 => context.LocalPlan >= ProductPlan.Plus ? FeaturePermission.Allowed : FeaturePermission.RequiresPlus,
             // Creating a personal profile is a device operation: guest Plus never spreads outside the shared space.
             CommercialFeature.LocalProfiles => shared ? FeaturePermission.OutsideScope : FeaturePermission.Allowed,

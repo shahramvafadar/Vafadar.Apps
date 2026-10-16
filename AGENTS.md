@@ -2263,3 +2263,14 @@ execution and continue approved independent German accountant-export work across
 retain iOS/store work in the current backlog. Do not ask settled product choices again. Qualified original-source
 fixtures use their own BillingLocal trait and dedicated ephemeral hosted database; the identity-only CI job must
 not mistake intentionally unconfigured fixture skips for identity failures. Hosted success requires actual CI.
+
+
+### Germany accountant preparation (D-296)
+
+Level 1 is explicit year/account data and optional stored-document-copy export, separate from later tax rules
+or filing. Retain transfers as one original row, exact minor units, refund/group references and distinct
+currency/kind totals. Never infer deductibility, VAT or taxable profit. Notes/payees and documents default off;
+explain linked transfer identities, readable ZIP disclosure and originals/structured e-invoice limitations.
+Revalidate exact source/file/rights/form/lock across native awaits. No financial writes, private service rows
+or security credentials enter the packet. Keep basic CSV/portable backup separate and current test limits
+inactive; future countries have no promised date. One coherent reader and bounded streaming avoid blob piles.

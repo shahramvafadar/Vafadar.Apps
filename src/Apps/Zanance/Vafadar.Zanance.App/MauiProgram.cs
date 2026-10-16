@@ -234,6 +234,8 @@ public static class MauiProgram
             .AddTransient<Features.Reports.PeriodReviewPage>().AddTransient<Features.Reports.PeriodReviewViewModel>()
             .AddTransient<Features.Forecast.SnapshotPage>().AddTransient<Features.Forecast.SnapshotViewModel>()
             .AddTransient<ImportExportPage>().AddTransient<ImportExportViewModel>()
+            .AddTransient<AccountantExportPage>().AddTransient<AccountantExportViewModel>()
+            .AddTransient<IAccountantExportRuntime, MauiAccountantExportRuntime>()
             .AddTransient<DisplayUnitsPage>().AddTransient<DisplayUnitsViewModel>()
             .AddTransient<Features.Profiles.ProfilesPage>().AddTransient<Features.Profiles.ProfilesViewModel>()
             .AddTransient<Features.Commerce.ProductPlansPage>().AddTransient<Features.Commerce.ProductPlansViewModel>()

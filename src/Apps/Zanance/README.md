@@ -427,3 +427,11 @@ purchase flow, with explicit restore/manage and optional Zanance identity. Pro f
 local store Plus remains account-free. This is locally qualified implementation, not live sale or store acceptance.
 Commercial quotas stay inactive. StoreKit2/Mac implementation and genuine store/provider/public acceptance remain
 open. See [current scope and APK](docs/enhancements/2026-10-commercial-release/12-billing-delivery.md) and the canonical backlog.
+
+
+## Germany accountant preparation (D-296)
+
+Import/export includes a separate reviewed calendar-year/account packet for an accountant: exact ledger CSV,
+blank tax-review columns, separate currency/kind totals and optional stored document copies. Notes/documents
+start off. The explicitly shared ZIP is readable; it is not a tax calculation, original invoice archive, filing
+or Zanance backup. Basic CSV remains separate. See [scope, official sources and verification](docs/enhancements/2026-10-commercial-release/13-accountant-export-delivery.md).

@@ -6094,3 +6094,21 @@ Android-first local delivery can be retained without holding already approved in
 Mac/store environment; this changes execution order, not approved product scope.
 
 Canonical evidence: enhancements/2026-10-commercial-release/12-billing-delivery.md. Earlier no-billing statements describe their historical phase, not current source.
+
+
+### Section31 current delivery: D-296 Germany accountant preparation
+
+TAX-02 Level1 is locally delivered: explicit Gregorian year/accounts, coherent data packet, blank review columns,
+exact minor units/refund links/one-row transfers, separated currency/kind totals, opt-in exact stored document
+copies and reviewed readable-ZIP handoff. Original source/file/rights/form/lock changes refuse publication;
+no financial writes, security settings, credentials or private service rows enter the packet. Test limits remain
+inactive; Level1 Plus is separate from later TaxAddOn rules. The named future countries have no ETA.
+
+Evidence:23 new actual application/SQLite cases, only two relevant packet reruns after the streaming change,
+76 relevant policy cases,21 completeness cases, corrected literal-use checks and six enum-key cases; Windows/
+Android Debug/Release strict builds,18 native Windows contexts and actual main Release Android confirmation/
+Cancel/share resolver with no recipient selected. Historical full-suite3753 is retained and was not rerun or
+recounted. Current APK is92,848,685 bytes; SHA256d42d5812a506e0b248b46a4712f25774eb2d76b144dfa5b80082c584347f51ec.
+Complete scope, failures, official-source limitations and physical/iOS/expert/publication gates remain in
+commercial-release/13-accountant-export-delivery.md. TAX-03 calculation/filing is not delivered. Next ready
+independent work is German-first bank import and the already approved AI/FX prerequisites; Mac/store gates remain.

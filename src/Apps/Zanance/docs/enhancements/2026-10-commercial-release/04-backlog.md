@@ -70,8 +70,8 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-SHR-02 | Cost sharing between people (F2-SHARE-05), household totals | 5 | P2 | M | D-294 local delivery qualified: mapped complete costs/shares/refunds/repayments, real native two-client conflict decisions and no duplicate cash posting | SHR-01 |
 | ZCR-SHR-03 | Audit trail, revocation, ownership transfer, end of subscription | 5 | P1 | M | D-294 local delivery qualified: consent-bound transfer, audit, revocation, expiry/privacy retirement and latest-marker-aware full restoration; no identity-erasure claim | SHR-01, OD-05 approved |
 | ZCR-SHR-04 | E2EE from the first shared delivery, including membership/key/recovery lifecycle | 5 | P1 | L | D-294 local delivery qualified: pinned membership/epoch/recovery lifecycle, original native persistence, bounded historical reads and portable scrubbing; external audit/device/iOS separate | OD-09 approved |
-| ZCR-TAX-01 | Germany/current-year tax research, expert and official examples; country expansion without ETA | 0→7 | P1 | M | Approved scope; research/acceptance pending | OD-01 approved |
-| ZCR-TAX-02 | Level 1: Germany data/document export for an accountant (Plus) | 7 | P1 | M | Approved; implementation pending | TAX-01 |
+| ZCR-TAX-01 | Germany/current-year tax research, expert and official examples; country expansion without ETA | 0→7 | P1 | M | D-296 official-source boundary research; expert/rule acceptance open | OD-01 approved |
+| ZCR-TAX-02 | Level 1: Germany data/document export for an accountant (Plus) | 7 | P1 | M | Locally delivered D-296; physical/iOS/expert acceptance separate | TAX-01 |
 | ZCR-TAX-03 | Level 2: versioned rule set and report for the first country/year | 7 | P2 | L | Proposed | TAX-01, expert |
 | ZCR-AI-01 | Local AI credit ledger, provider interface, consent, minimal data | 8 | P3 | L | Local prerequisites approved; real provider/pricing remain gated | OD-13 |
 | ZCR-BANK-01 | German-first bank/file/provider evaluation, then USA and other targets | 8 | P3 | M | Research approved; live bank connection deferred | OD-14, IMP-01 |
@@ -2541,3 +2541,13 @@ genuine store products/credentials/sandbox/public callbacks and commercial activ
 Continue ready approved German accountant-export work while those environments are unavailable; preserve the
 Mac/store work in this current backlog. No new owner scope decision, Windows commercial phase or paid resource
 is implied. Do not repeat delivered household/cipher/full-suite checks as a substitute for remaining implementation.
+
+
+### D-296 accountant-export delivery
+
+TAX-02 Level1 is locally qualified end-to-end, with23 new source-flow cases, relevant policy/resource checks,
+18 native Windows contexts and main signed Release Android confirmation/Cancel/native share handoff. It does
+not implement TAX-03 or tax filing. See [13-accountant-export-delivery.md](13-accountant-export-delivery.md)
+for exact sources, source/privacy/size guards, failures, package hash and acceptance limits. Full-suite3753 remains
+historical, not a fresh full run. Next ready work is BANK-01 original-format research/import, then approved
+AI/FX prerequisites. Retain all current BIL/platform/provider/release gates and future Windows/web exclusions.

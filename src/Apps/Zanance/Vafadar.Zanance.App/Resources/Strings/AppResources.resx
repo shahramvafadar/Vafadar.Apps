@@ -7732,4 +7732,76 @@ Identity: {2}</value>
   <data name="Billing_LifetimeKeepsSubscription" xml:space="preserve">
     <value>Buying Plus Lifetime does not cancel your existing subscription. Manage its renewal separately in the original store.</value>
   </data>
+  <data name="Tax_Title" xml:space="preserve">
+    <value>Accountant packet · Germany</value>
+  </data>
+  <data name="Tax_Intro" xml:space="preserve">
+    <value>Prepare recorded data for an employee’s or freelancer’s accountant. Germany only; no tax calculation or filing. Plus feature; current test builds have no commercial limits.</value>
+  </data>
+  <data name="Tax_Year" xml:space="preserve">
+    <value>Recorded dates · Gregorian calendar year</value>
+  </data>
+  <data name="Tax_YearError" xml:space="preserve">
+    <value>Enter a Gregorian year from 1900 through the current year.</value>
+  </data>
+  <data name="Tax_Accounts" xml:space="preserve">
+    <value>Financial accounts to disclose (including archived accounts)</value>
+  </data>
+  <data name="Tax_AccountsError" xml:space="preserve">
+    <value>Select at least one financial account.</value>
+  </data>
+  <data name="Tax_TransferDisclosure" xml:space="preserve">
+    <value>Transfers touching a selected account include both account names, currencies and amounts in one row. Unrelated history and opening balances are excluded.</value>
+  </data>
+  <data name="Tax_SelectAll" xml:space="preserve">
+    <value>Select all listed accounts</value>
+  </data>
+  <data name="Tax_SelectNone" xml:space="preserve">
+    <value>Clear account selection</value>
+  </data>
+  <data name="Tax_Notes" xml:space="preserve">
+    <value>Include payees, notes and reimbursement names</value>
+  </data>
+  <data name="Tax_Documents" xml:space="preserve">
+    <value>Include stored document copies</value>
+  </data>
+  <data name="Tax_Originals" xml:space="preserve">
+    <value>Copies are not verified originals. Photos may be compressed. Keep original invoices and structured e-invoice files separately. No deduction, VAT or business share is inferred.</value>
+  </data>
+  <data name="Tax_Summary" xml:space="preserve">
+    <value>Reviewed: {0} recorded rows, {1} document copies ({2} bytes), {3} additional linked account identities. Titles, categories and tags are included. CSV headers and packet instructions are English.</value>
+  </data>
+  <data name="Tax_ReadableWarning" xml:space="preserve">
+    <value>The ZIP is unencrypted and readable by anyone who obtains it. Choose the recipient yourself. Offered private cache files are removed after 24 hours on the next export; recipient copies remain outside Zanance’s control.</value>
+  </data>
+  <data name="Tax_Confirm" xml:space="preserve">
+    <value>Share the reviewed unencrypted data and any explicitly selected document copies? Check the recipient in the next native dialog. This is not a tax return or a Zanance backup.</value>
+  </data>
+  <data name="Tax_Review" xml:space="preserve">
+    <value>Review selected data</value>
+  </data>
+  <data name="Tax_Share" xml:space="preserve">
+    <value>Prepare and share reviewed ZIP</value>
+  </data>
+  <data name="Tax_Reload" xml:space="preserve">
+    <value>Reload accounts / retry</value>
+  </data>
+  <data name="Tax_Failed" xml:space="preserve">
+    <value>The packet could not be prepared or its review changed. Reload and review again. Large packets must stay within 128 MiB and 10,000 document copies; nothing is silently omitted.</value>
+  </data>
+  <data name="Tax_Countries" xml:space="preserve">
+    <value>Germany: data preparation available. Being added without a promised date: Austria, Belgium, France, Liechtenstein, Luxembourg, Monaco, the Netherlands, Switzerland, the United Kingdom, Ireland, the United States, Canada and Australia. Display and holiday choices do not enable tax rules.</value>
+  </data>
+  <data name="Help_AccountantExport_Title" xml:space="preserve">
+    <value>Germany accountant packet</value>
+  </data>
+  <data name="Help_AccountantExport_Text" xml:space="preserve">
+    <value>Choose a Gregorian year and financial accounts, then review before sharing. Only actual stored ledger rows are included, not planned payments. Transfers stay one row; refunds keep their links. Notes and stored document copies are optional and off initially. Totals separate currencies and kinds; they are not taxable profit. Blank review columns are for your accountant. Original invoices, structured e-invoices and records outside Zanance must be checked separately. The packet is a readable ZIP, not a tax calculation, GoBD archive, DATEV file, tax submission or restorable backup. The app writes no money during this flow.</value>
+  </data>
+  <data name="Help_AccountantExport_Example" xml:space="preserve">
+    <value>Example: select the salary and freelance accounts for 2026. Review an expense and its refund together; do not treat a loan transfer as income. Add stored receipt copies only if you want them sent to the chosen accountant.</value>
+  </data>
+  <data name="Tax_PageTitle" xml:space="preserve">
+    <value>Accountant packet</value>
+  </data>
 </root>

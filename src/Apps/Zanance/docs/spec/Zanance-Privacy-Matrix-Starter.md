@@ -880,3 +880,13 @@ position) remain solely inside the existing device-protected local database. The
 permission, SDK or credential. All11 private household tables, including this index, are scrubbed from the portable
 memory image; original keys, history and financial data remain untouched. Scoped native export acceptance is in
 11-household-delivery.md; whole D-294/mobile/Release acceptance remains open.
+
+
+### D-296 accountant ZIP disclosure
+
+Reviewed Germany/calendar-year/account data and optional stored document copies leave through an explicit
+native share. Notes/payees and documents default off; counterparty identities of selected transfers are
+explained. The ZIP is readable, not an encrypted backup or original archive. Failed unpublished cache files
+are removed; offered files older than24 hours are removed on the next export, with at most16 retained files.
+Recipient copies remain independent. Private security/service credentials are excluded; no SDK/permission
+or automatic upload is added. Source: commercial-release/13-accountant-export-delivery.md.

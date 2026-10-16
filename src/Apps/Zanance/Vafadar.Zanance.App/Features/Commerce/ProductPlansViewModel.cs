@@ -135,6 +135,7 @@ public sealed partial class ProductPlansViewModel : ViewModelBase
         (CommercialFeature.AdvancedPdf, "ProductPlans_AdvancedPdf"), (CommercialFeature.AdvancedForecast, "ProductPlans_AdvancedForecast"),
         (CommercialFeature.ManageHoldings, "ProductPlans_ManageHoldings"), (CommercialFeature.LoanAnalysis, "ProductPlans_LoanAnalysis"),
         (CommercialFeature.SplitTransactions, "Split_Title"), (CommercialFeature.CategorizationRules, "Rules_Title"),
+        (CommercialFeature.AccountantExport, "Tax_Title"),
         (CommercialFeature.ReceiptReading, "ProductPlans_ReceiptReading"), (CommercialFeature.ContributionReviewReminders, "ProductPlans_ReviewReminders"),
     ];
 }

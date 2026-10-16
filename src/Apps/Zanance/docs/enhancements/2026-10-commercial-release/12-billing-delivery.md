@@ -15,7 +15,8 @@ stay explicit in the current backlog. This is consistent with Android-first deli
 instruction to continue independent approved work across external gates; approved product scope is unchanged.
 Earlier in-progress/uncommitted/checkpoint wording below is retained history and superseded by this current status.
 Do not treat source compilation, local provider fixtures or this delivery as genuine store or whole commercial
-wave acceptance. Next ready independent work is the approved Germany accountant-export batch.
+wave acceptance. The subsequent approved Germany accountant-export batch is locally qualified as D-296; see
+[13-accountant-export-delivery.md](13-accountant-export-delivery.md). Bank-file import is the next independent ready work.
 
 This is one complete approved batch after local household D-294, not a sequence of helper deliveries. Android/iOS
 store adapters, server verification/lifecycle, protected offline cache, original plan UI, trials/offers and the

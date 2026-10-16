@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Vafadar.Zanance.App.Features.DataFiles.AccountantExportPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
+    xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.DataFiles"
+    x:DataType="local:AccountantExportViewModel" Title="{v:Translate Tax_PageTitle}">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="12" IsEnabled="{Binding IsNotBusy}">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Label Text="{v:Translate Tax_Intro}" />
+                    <v:HelpButton Grid.Column="1" Topic="AccountantExport" VerticalOptions="Start" />
+                </Grid>
+                <Border Style="{StaticResource Card}" IsVisible="{Binding Loaded}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{v:Translate Tax_Year}" Style="{StaticResource FieldLabel}" />
+                        <Entry Text="{Binding Year}" Keyboard="Numeric" MaxLength="4" SemanticProperties.Description="{v:Translate Tax_Year}" />
+                        <Label Text="{Binding YearError}" Style="{StaticResource ErrorText}" IsVisible="{Binding YearError, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{v:Translate Tax_Accounts}" Style="{StaticResource FieldLabel}" />
+                        <Label Text="{v:Translate Tax_TransferDisclosure}" Style="{StaticResource Secondary}" />
+                        <p:WrappingAction Text="{v:Translate Tax_SelectAll}" Command="{Binding SelectAllCommand}" />
+                        <p:WrappingAction Text="{v:Translate Tax_SelectNone}" Command="{Binding SelectNoneCommand}" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Accounts}" Spacing="8">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:AccountantAccountChoice">
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" MinimumHeightRequest="44">
+                                        <CheckBox IsChecked="{Binding Selected}" MinimumWidthRequest="44" MinimumHeightRequest="44"
+                                                  SemanticProperties.Description="{Binding Caption}" />
+                                        <Label Grid.Column="1" Text="{Binding Caption}" VerticalOptions="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <Label Text="{Binding AccountsError}" Style="{StaticResource ErrorText}" IsVisible="{Binding AccountsError, Converter={StaticResource IsNotNullConverter}}" />
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="{v:Translate Tax_Notes}" VerticalOptions="Center" />
+                            <Switch Grid.Column="1" IsToggled="{Binding IncludeNotes}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Tax_Notes}" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="{v:Translate Tax_Documents}" VerticalOptions="Center" />
+                            <Switch Grid.Column="1" IsToggled="{Binding IncludeDocuments}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Tax_Documents}" />
+                        </Grid>
+                        <Label Text="{v:Translate Tax_Originals}" Style="{StaticResource Secondary}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}" IsVisible="{Binding Summary, Converter={StaticResource IsNotNullConverter}}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{Binding Summary}" FontAttributes="Bold" />
+                        <Label Text="{v:Translate Tax_ReadableWarning}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Label Text="{v:Translate Tax_Countries}" Style="{StaticResource Secondary}" />
+            </VerticalStackLayout>
+        </ScrollView>
+        <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" BackgroundColor="{DynamicResource PageBackground}">
+            <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{DynamicResource Primary}" HeightRequest="44" />
+            <p:WrappingAction Text="{v:Translate Tax_Reload}" Command="{Binding LoadCommand}" IsEnabled="{Binding IsNotBusy}" />
+            <p:WrappingAction Text="{v:Translate Tax_Review}" Command="{Binding ReviewCommand}" IsEnabled="{Binding IsNotBusy}" />
+            <p:WrappingAction Text="{v:Translate Tax_Share}" Command="{Binding ShareCommand}" IsEnabled="{Binding CanShare}" Appearance="Primary" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

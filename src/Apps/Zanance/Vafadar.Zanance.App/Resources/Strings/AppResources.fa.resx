@@ -7703,4 +7703,76 @@
   <data name="Billing_LifetimeKeepsSubscription" xml:space="preserve">
     <value>خرید Plus Lifetime اشتراک موجود شما را لغو نمی‌کند. تمدید آن را جداگانه در فروشگاه اصلی مدیریت کنید.</value>
   </data>
+  <data name="Tax_Title" xml:space="preserve">
+    <value>بستهٔ حسابدار · آلمان</value>
+  </data>
+  <data name="Tax_Intro" xml:space="preserve">
+    <value>داده‌های ثبت‌شده را برای حسابدار کارمند یا فرد مستقل آماده کنید. فعلاً فقط آلمان؛ بدون محاسبه یا ارسال مالیات. قابلیت Plus است؛ نسخهٔ آزمایشی فعلی محدودیت تجاری ندارد.</value>
+  </data>
+  <data name="Tax_Year" xml:space="preserve">
+    <value>تاریخ ثبت رکوردها · سال تقویم میلادی</value>
+  </data>
+  <data name="Tax_YearError" xml:space="preserve">
+    <value>یک سال میلادی از ۱۹۰۰ تا سال جاری وارد کنید.</value>
+  </data>
+  <data name="Tax_Accounts" xml:space="preserve">
+    <value>حساب‌های مالی برای خروجی؛ شامل حساب‌های بایگانی‌شده</value>
+  </data>
+  <data name="Tax_AccountsError" xml:space="preserve">
+    <value>دست‌کم یک حساب مالی انتخاب کنید.</value>
+  </data>
+  <data name="Tax_TransferDisclosure" xml:space="preserve">
+    <value>برای انتقال مرتبط با حساب انتخاب‌شده، نام هر دو حساب و ارز و مبلغ هر دو طرف در یک ردیف قرار می‌گیرد. تاریخچهٔ نامرتبط و موجودی اولیه صادر نمی‌شوند.</value>
+  </data>
+  <data name="Tax_SelectAll" xml:space="preserve">
+    <value>انتخاب همهٔ حساب‌های فهرست</value>
+  </data>
+  <data name="Tax_SelectNone" xml:space="preserve">
+    <value>پاک کردن انتخاب حساب‌ها</value>
+  </data>
+  <data name="Tax_Notes" xml:space="preserve">
+    <value>همراه با نام طرف معامله، یادداشت و نام بازپرداخت‌کننده</value>
+  </data>
+  <data name="Tax_Documents" xml:space="preserve">
+    <value>همراه با کپی ذخیره‌شدهٔ مدارک</value>
+  </data>
+  <data name="Tax_Originals" xml:space="preserve">
+    <value>کپی‌ها اصل تأییدشده نیستند و عکس‌ها ممکن است فشرده شده باشند. اصل صورتحساب و فایل ساختاریافتهٔ صورتحساب الکترونیکی را جدا نگه دارید. کسر مالیاتی، VAT یا سهم کاری حدس زده نمی‌شود.</value>
+  </data>
+  <data name="Tax_Summary" xml:space="preserve">
+    <value>بازبینی: تعداد ردیف‌ها «{0}»، کپی مدارک «{1}» با حجم «{2}» بایت و شناسهٔ حساب‌های مرتبط اضافی «{3}» است. عنوان، دسته و برچسب‌ها صادر می‌شوند. سرستون CSV و راهنمای بسته انگلیسی است.</value>
+  </data>
+  <data name="Tax_ReadableWarning" xml:space="preserve">
+    <value>فایل ZIP رمز ندارد و هرکس آن را بگیرد می‌تواند بخواند. گیرنده را خودتان انتخاب کنید. کپی موقتِ ارائه‌شده پس از ۲۴ ساعت، هنگام خروجی بعدی حذف می‌شود؛ کپی گیرنده در اختیار Zanance نیست.</value>
+  </data>
+  <data name="Tax_Confirm" xml:space="preserve">
+    <value>داده‌های بازبینی‌شدهٔ بدون رمز و کپی مدارکی که صریحاً انتخاب کرده‌اید به اشتراک گذاشته شوند؟ در پنجرهٔ بعدی سیستم، گیرنده را بررسی کنید. این فایل اظهارنامهٔ مالیاتی یا بکاپ Zanance نیست.</value>
+  </data>
+  <data name="Tax_Review" xml:space="preserve">
+    <value>بازبینی داده‌های انتخاب‌شده</value>
+  </data>
+  <data name="Tax_Share" xml:space="preserve">
+    <value>ساخت و اشتراک‌گذاری ZIP بازبینی‌شده</value>
+  </data>
+  <data name="Tax_Reload" xml:space="preserve">
+    <value>بارگذاری دوبارهٔ حساب‌ها / تلاش دوباره</value>
+  </data>
+  <data name="Tax_Failed" xml:space="preserve">
+    <value>بسته آماده نشد یا بازبینی تغییر کرده است. دوباره بارگذاری و بازبینی کنید. سقف فنی بسته ۱۲۸ MiB و ۱۰٬۰۰۰ کپی مدرک است؛ هیچ داده‌ای بی‌خبر حذف نمی‌شود.</value>
+  </data>
+  <data name="Tax_Countries" xml:space="preserve">
+    <value>آلمان: آماده‌سازی داده در دسترس است. کشورهای در حال اضافه شدن بدون موعد مشخص: اتریش، بلژیک، فرانسه، لیختن‌اشتاین، لوکزامبورگ، موناکو، هلند، سوئیس، بریتانیا، ایرلند، آمریکا، کانادا و استرالیا. انتخاب کشور نمایش یا تعطیلات، قواعد مالیاتی را فعال نمی‌کند.</value>
+  </data>
+  <data name="Help_AccountantExport_Title" xml:space="preserve">
+    <value>بستهٔ حسابدار آلمان</value>
+  </data>
+  <data name="Help_AccountantExport_Text" xml:space="preserve">
+    <value>سال میلادی و حساب‌های مالی را انتخاب و پیش از اشتراک‌گذاری بازبینی کنید. فقط رکوردهای واقعاً ذخیره‌شده صادر می‌شوند، نه پرداخت‌های برنامه‌ریزی‌شده. انتقال یک ردیف می‌ماند و ارتباط بازپرداخت حفظ می‌شود. یادداشت و کپی مدارک اختیاری‌اند و ابتدا خاموش‌اند. جمع‌ها بر پایهٔ ارز و نوع رکورد جدا هستند و سود مشمول مالیات نیستند. ستون‌های خالی برای بررسی حسابدار است. اصل صورتحساب، صورتحساب الکترونیکی ساختاریافته و سوابق خارج Zanance باید جدا بررسی شوند. بسته ZIP خوانا است؛ محاسبهٔ مالیات، بایگانی GoBD، فایل DATEV، ارسال اظهارنامه یا بکاپ قابل‌بازیابی نیست. این مسیر هیچ مبلغی ثبت نمی‌کند.</value>
+  </data>
+  <data name="Help_AccountantExport_Example" xml:space="preserve">
+    <value>نمونه: حساب حقوق و حساب فعالیت مستقل را برای سال «۲۰۲۶» انتخاب کنید. هزینه و بازپرداختش را با هم بررسی کنید و انتقال وام را درآمد نگیرید. فقط اگر می‌خواهید کپی رسیدها برای حسابدار انتخاب‌شده فرستاده شود، آن گزینه را روشن کنید.</value>
+  </data>
+  <data name="Tax_PageTitle" xml:space="preserve">
+    <value>بستهٔ حسابدار</value>
+  </data>
 </root>

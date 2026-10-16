@@ -1163,3 +1163,15 @@ Identity erasure, ciphertext recall,8GiB saturation and a performance threshold 
 - [ ] Obtain separate commercial activation/publication acceptance. Local fixtures never enable quotas or a web checkout.
 
 Current local Android/service evidence and complete test APK are in enhancements/2026-10-commercial-release/12-billing-delivery.md.
+
+
+## D-296 Germany accountant-export qualification
+
+- [x] Explicit country/year/account disclosure, opted-in stored copies, coherent original-source hashes and no-write acceptance covered locally.
+- [x] Windows native en/fa/de, light/dark,360/412/1280 selection/review/Cancel:18 contexts, unchanged financial fingerprint.
+- [x] Complete Release APK: permanent id, arm64+x64, ZIP integrity and local test v2/v3 signature verified.
+- [ ] Physical-device recipient handoff and actual iOS build/share; native layout is not either acceptance.
+- [ ] Expert-reviewed official country/year calculations before any Level 2 release. Level 1 makes no tax, GoBD, DATEV or filing acceptance claim.
+
+Current source, safety bounds, readable-cache lifetime, actual Android observation and APK hash are in
+commercial-release/13-accountant-export-delivery.md. Recipient copies and missing originals remain outside the app's control.

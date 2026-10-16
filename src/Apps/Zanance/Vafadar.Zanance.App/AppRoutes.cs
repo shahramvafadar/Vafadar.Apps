@@ -86,6 +86,8 @@ public static class AppRoutes
 
     /// <summary>Route of CSV import and export.</summary>
     public const string ImportExportRoute = "importexport";
+    /// <summary>Germany data-only accountant preparation and explicit document-copy disclosure.</summary>
+    public const string AccountantExportRoute = "accountantexport";
 
     /// <summary>Route of the quick templates (TX-04).</summary>
     public const string TemplatesRoute = "templates";

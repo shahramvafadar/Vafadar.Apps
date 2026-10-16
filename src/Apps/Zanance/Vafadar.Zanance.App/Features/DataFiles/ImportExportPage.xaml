@@ -39,6 +39,8 @@
                     </VerticalStackLayout>
                 </Border>
 
+                <p:WrappingAction Text="{v:Translate Tax_Title}" Command="{Binding AccountantExportCommand}" />
+
                 <!-- Import (IO-07..13) -->
                 <Label Text="{v:Translate Import_Title}" Style="{StaticResource SectionHeader}" />
                 <Border x:Name="ImportCard" Style="{StaticResource Card}">
