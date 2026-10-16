@@ -7494,4 +7494,190 @@ Identité : {2}</value>
   <data name="HouseholdLifecycle_Device" xml:space="preserve">
     <value>Changement de session d’appareil signalé par le service</value>
   </data>
+  <data name="Billing_Title" xml:space="preserve">
+    <value>Achats dans la boutique</value>
+  </data>
+  <data name="Billing_Loading" xml:space="preserve">
+    <value>Vérification des achats et des prix de la boutique…</value>
+  </data>
+  <data name="Billing_VerifiedPlan" xml:space="preserve">
+    <value>Offre vérifiée de la boutique : {0}</value>
+  </data>
+  <data name="Billing_NoVerifiedState" xml:space="preserve">
+    <value>Aucun résultat d’achat vérifié actuel n’est disponible.</value>
+  </data>
+  <data name="Billing_IdentityPresent" xml:space="preserve">
+    <value>Une identité Zanance est connectée pour Pro. Plus local reste indépendant.</value>
+  </data>
+  <data name="Billing_IdentityOptional" xml:space="preserve">
+    <value>Plus local ne nécessite pas de compte Zanance. Pro exige une identité Zanance vérifiée.</value>
+  </data>
+  <data name="Billing_Status_Unavailable" xml:space="preserve">
+    <value>Les achats dans la boutique ne sont pas disponibles dans cette édition.</value>
+  </data>
+  <data name="Billing_Status_Ready" xml:space="preserve">
+    <value>Vérifiez toutes les périodes tarifaires avant de continuer dans la boutique.</value>
+  </data>
+  <data name="Billing_Status_NotConfigured" xml:space="preserve">
+    <value>Les produits de la boutique ne sont pas encore activés. Aucun achat n’est proposé.</value>
+  </data>
+  <data name="Billing_Status_VerificationUnavailable" xml:space="preserve">
+    <value>La vérification des achats est indisponible. Cela ne signifie ni remboursement ni annulation.</value>
+  </data>
+  <data name="Billing_Status_Pending" xml:space="preserve">
+    <value>L’achat initial doit être vérifié. Continuer ou restaurer ne déclenchera pas un nouveau paiement.</value>
+  </data>
+  <data name="Billing_ContinueStore" xml:space="preserve">
+    <value>Continuer dans la boutique</value>
+  </data>
+  <data name="Billing_ContinueOriginal" xml:space="preserve">
+    <value>Reprendre l’achat initial</value>
+  </data>
+  <data name="Billing_Restore" xml:space="preserve">
+    <value>Restaurer les achats de la boutique</value>
+  </data>
+  <data name="Billing_Manage" xml:space="preserve">
+    <value>Gérer les abonnements de la boutique</value>
+  </data>
+  <data name="Billing_PeriodTrial" xml:space="preserve">
+    <value>14 jours</value>
+  </data>
+  <data name="Billing_PeriodMonth" xml:space="preserve">
+    <value>un mois</value>
+  </data>
+  <data name="Billing_PeriodYear" xml:space="preserve">
+    <value>un an</value>
+  </data>
+  <data name="Billing_PeriodOnce" xml:space="preserve">
+    <value>un paiement</value>
+  </data>
+  <data name="Billing_PhaseRenewal" xml:space="preserve">
+    <value>Prix du renouvellement : {0} pour {1} ; renouvellement automatique jusqu’à résiliation.</value>
+  </data>
+  <data name="Billing_PhaseIntro" xml:space="preserve">
+    <value>Période initiale : {0} pour {1} ; le prix suivant figure ci-dessous.</value>
+  </data>
+  <data name="Billing_PhaseOnce" xml:space="preserve">
+    <value>Prix unique : {0} ; aucun renouvellement automatique.</value>
+  </data>
+  <data name="Billing_ReviewTitle" xml:space="preserve">
+    <value>Vérifier les conditions de la boutique</value>
+  </data>
+  <data name="Billing_ReviewTerms" xml:space="preserve">
+    <value>La boutique affiche la confirmation finale. Les abonnements se renouvellent au prix indiqué jusqu’à résiliation. Un essai n’est pas une offre gratuite permanente. Les remises ne se cumulent pas.</value>
+  </data>
+  <data name="Billing_RestoreExplanation" xml:space="preserve">
+    <value>Consultez les achats existants sans payer à nouveau. Plus local ne nécessite pas de compte Zanance. Si vous êtes connecté, Plus restauré peut aussi être associé à cette identité pour vérifier les offres ; Pro exige son identité initiale. Si les données privées d’achat sont illisibles, un contexte de restauration distinct est créé. Les anciennes données privées sont conservées et la vérification du store doit se terminer avant tout nouvel achat.</value>
+  </data>
+  <data name="Billing_TestNotice" xml:space="preserve">
+    <value>Les limites commerciales restent désactivées dans cette version de test. Afficher une offre n’enregistre pas de paiement.</value>
+  </data>
+  <data name="Billing_ComparisonNote" xml:space="preserve">
+    <value>Comparez ici les fonctions incluses. Les offres disponibles et l’état de vérification figurent dans la section des achats.</value>
+  </data>
+  <data name="BillingIdentity_Title" xml:space="preserve">
+    <value>Identité Zanance</value>
+  </data>
+  <data name="BillingIdentity_SignIn" xml:space="preserve">
+    <value>Se connecter</value>
+  </data>
+  <data name="BillingIdentity_Register" xml:space="preserve">
+    <value>Créer une identité</value>
+  </data>
+  <data name="BillingIdentity_Recover" xml:space="preserve">
+    <value>Demander une récupération</value>
+  </data>
+  <data name="BillingIdentity_Confirm" xml:space="preserve">
+    <value>Confirmer l’adresse</value>
+  </data>
+  <data name="BillingIdentity_Reset" xml:space="preserve">
+    <value>Réinitialiser le mot de passe</value>
+  </data>
+  <data name="BillingIdentity_SignOut" xml:space="preserve">
+    <value>Se déconnecter sur cet appareil</value>
+  </data>
+  <data name="BillingIdentity_Email" xml:space="preserve">
+    <value>Adresse e-mail</value>
+  </data>
+  <data name="BillingIdentity_Password" xml:space="preserve">
+    <value>Mot de passe (au moins 12 caractères)</value>
+  </data>
+  <data name="BillingIdentity_Challenge" xml:space="preserve">
+    <value>Identifiant de la demande fourni dans le message du service</value>
+  </data>
+  <data name="BillingIdentity_Token" xml:space="preserve">
+    <value>Code de confirmation à usage unique</value>
+  </data>
+  <data name="BillingIdentity_EmailError" xml:space="preserve">
+    <value>Saisissez une adresse e-mail valide de 254 caractères maximum.</value>
+  </data>
+  <data name="BillingIdentity_PasswordError" xml:space="preserve">
+    <value>Saisissez un mot de passe de 12 à 256 caractères.</value>
+  </data>
+  <data name="BillingIdentity_ChallengeError" xml:space="preserve">
+    <value>Saisissez l’identifiant complet de la demande fourni dans le message du service.</value>
+  </data>
+  <data name="BillingIdentity_TokenError" xml:space="preserve">
+    <value>Saisissez le code complet à usage unique, sans retour à la ligne.</value>
+  </data>
+  <data name="BillingIdentity_Explanation" xml:space="preserve">
+    <value>Plus local ne nécessite pas de compte Zanance. Une identité relie Pro entre les boutiques prises en charge. Sa création ne crée pas de compte financier, ne partage aucun profil et ne lance aucun achat.</value>
+  </data>
+  <data name="BillingIdentity_Privacy" xml:space="preserve">
+    <value>Votre mot de passe et votre code à usage unique ne sont pas enregistrés. Les fichiers financiers locaux et les achats restent séparés de ce formulaire d’identité.</value>
+  </data>
+  <data name="BillingIdentity_Instructions" xml:space="preserve">
+    <value>Si la demande est admissible, les instructions sont envoyées par le service configuré. Cette réponse ne confirme pas l’existence d’un compte.</value>
+  </data>
+  <data name="BillingIdentity_Completed" xml:space="preserve">
+    <value>La demande à usage unique a abouti. Connectez-vous avec le mot de passe actuel.</value>
+  </data>
+  <data name="BillingIdentity_SignedIn" xml:space="preserve">
+    <value>L’identité Zanance est connectée sur cet appareil. Aucun profil financier n’a été partagé.</value>
+  </data>
+  <data name="BillingIdentity_SignOutExplanation" xml:space="preserve">
+    <value>Seule la session d’identité de cet appareil sera fermée. Plus local, les fichiers financiers et les autres appareils ne sont pas supprimés. Un achat Pro en attente nécessite toujours son identité initiale pour reprendre.</value>
+  </data>
+  <data name="BillingIdentity_SignedOut" xml:space="preserve">
+    <value>La session d’identité de cet appareil est fermée.</value>
+  </data>
+  <data name="BillingIdentity_LocalSignOut" xml:space="preserve">
+    <value>La déconnexion locale a abouti. La révocation de la session distante n’a pas été confirmée.</value>
+  </data>
+  <data name="BillingIdentity_Unavailable" xml:space="preserve">
+    <value>L’opération d’identité n’a pas pu être confirmée. Vérifiez le service et vos informations de compte actuelles.</value>
+  </data>
+  <data name="Help_BillingIdentity_Title" xml:space="preserve">
+    <value>Identité Zanance et achats</value>
+  </data>
+  <data name="Help_BillingIdentity_Text" xml:space="preserve">
+    <value>L’identité est facultative pour Plus local. Pro suit l’identité vérifiée entre les boutiques prises en charge. Ce formulaire gère uniquement l’accès au compte ; le partage des données financières exige toujours une connexion explicite distincte. La récupération et la confirmation utilisent la demande initiale à usage unique du service.</value>
+  </data>
+  <data name="Help_BillingIdentity_Example" xml:space="preserve">
+    <value>Vous pouvez par exemple utiliser Plus local sans compte, ou vous connecter avant de restaurer l’achat Pro lié à cette même identité. La déconnexion ne supprime pas les finances locales et ne révoque aucun autre appareil.</value>
+  </data>
+  <data name="Billing_Status_RecoveryRequired" xml:space="preserve">
+    <value>Restaurez les achats existants du store pour rétablir l’accès privé aux achats. Aucun nouveau paiement ne sera lancé et les anciennes données privées sont conservées.</value>
+  </data>
+  <data name="Billing_Status_ManageExisting" xml:space="preserve">
+    <value>Gérez votre abonnement existant dans sa boutique d’origine avant d’en souscrire un autre.</value>
+  </data>
+  <data name="Billing_ProRestoreRequired" xml:space="preserve">
+    <value>Pour passer de Plus local à Pro, restaurez d’abord explicitement vos achats afin de lier Plus à votre identité Zanance connectée.</value>
+  </data>
+  <data name="Billing_OfferChanged" xml:space="preserve">
+    <value>Les conditions de la boutique ou l’abonnement existant ont changé. Vérifiez l’offre actuelle avant de continuer ; aucun paiement n’a été lancé.</value>
+  </data>
+  <data name="Billing_Replacement_KeepBillingDate" xml:space="preserve">
+    <value>Cette offre remplace votre abonnement {0} existant. La date de facturation reste le {1} ; la boutique calcule le montant final et tout crédit.</value>
+  </data>
+  <data name="Billing_Replacement_TimeCredit" xml:space="preserve">
+    <value>Cette offre remplace immédiatement votre abonnement {0}. La boutique calcule le crédit de temps pour la période payée jusqu’au {1} et affiche le montant final.</value>
+  </data>
+  <data name="Billing_Replacement_Deferred" xml:space="preserve">
+    <value>Cette offre prévoit le remplacement de votre abonnement {0} le {1}. Votre accès payé reste valable jusque-là ; le nouveau forfait ne commence qu’après vérification par la boutique à cette date.</value>
+  </data>
+  <data name="Billing_LifetimeKeepsSubscription" xml:space="preserve">
+    <value>L’achat de Plus Lifetime n’annule pas votre abonnement existant. Gérez son renouvellement séparément dans la boutique d’origine.</value>
+  </data>
 </root>

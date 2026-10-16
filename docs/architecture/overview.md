@@ -254,3 +254,15 @@ protection and private files. Proxy peer/exact authority are checked before one 
 Public system trust and local explicit pins stay in original Data transport. Full private snapshot/restore and
 transport-only retained-key renewal are locally qualified; public activation remains externally gated. Personal
 sync is server-readable and must not be reused as a claim of household E2EE. See the deployment guide/evidence.
+
+
+## Zanance billing authority (D-295)
+
+Pure commerce policy/protocol stays in Zanance.Core. Zanance.Data owns the protected private client/cache and
+fixed-origin transport, outside the financial EF model and portable exports. The API owns its separate additive
+BillingPurchaseAuthority migration/compiled service model, provider credentials, canonical purchase ownership,
+original command receipts and durable notification/reconciliation work. Only native hosts reference store SDKs.
+The original MAUI comparison/identity pages use explicit billing effects; application-flow tests compile their
+actual non-UI source rather than reproducing algorithms. Android has the selected maintained Play adapter; native
+StoreKit2 remains an actual Mac implementation/build gate. Web is reserved/identity-bound, without a checkout.
+Commercial Windows and public commercial activation are outside this local delivery.

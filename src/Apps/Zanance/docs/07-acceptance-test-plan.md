@@ -3353,3 +3353,19 @@ Earlier in-progress notes are historical. Public/commercial activation, physical
 external security review and publication remain separate gates; identity erasure and ciphertext recall are not
 claimed. Continue the already approved complete billing/future-web-prerequisite batch without helper-only slices
 or repeated unrelated successful checks.
+
+
+## AT-295: local billing composition and remaining store matrix
+
+Local evidence passes for signed original device/current/operation separation; canonical ownership and exact
+idempotent lost-response continuation; explicit local Plus versus actual identity Pro; native receipt/product/
+replacement binding; deferred current/future terms; clock/cache/refund/outage boundaries; private-state recovery;
+actual PostgreSQL/HTTP sessions, cross-distribution identity rights and other-user refusal. Source-linked actual
+view models preserve financial rows and all six translations. Changed original Windows native geometry/Cancel
+and main Android signed Release upgrade/current unavailable state are separately recorded in
+enhancements/2026-10-commercial-release/12-billing-delivery.md.
+
+Pending external/native acceptance: actual Google/Apple sandbox catalog/purchase/renewal/restore/refund/hold/grace/
+revocation and trial/discount matrix, native StoreKit2 implementation/Mac build, real credentials/accounts, public
+notification delivery, store signing, physical-device/runtime traffic and final commercial activation. Local fixture
+facts and negative Apple signature cases do not pass those rows. Unchanged3753-case prior baseline was not replayed.

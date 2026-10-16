@@ -7517,4 +7517,190 @@
   <data name="HouseholdLifecycle_Device" xml:space="preserve">
     <value>تغییر نشست دستگاه طبق گزارش سرویس</value>
   </data>
+  <data name="Billing_Title" xml:space="preserve">
+    <value>خرید از استور</value>
+  </data>
+  <data name="Billing_Loading" xml:space="preserve">
+    <value>در حال بررسی خریدها و قیمت‌های استور…</value>
+  </data>
+  <data name="Billing_VerifiedPlan" xml:space="preserve">
+    <value>طرح تأییدشدهٔ استور: {0}</value>
+  </data>
+  <data name="Billing_NoVerifiedState" xml:space="preserve">
+    <value>نتیجهٔ تأییدشدهٔ فعلی برای خرید در دسترس نیست.</value>
+  </data>
+  <data name="Billing_IdentityPresent" xml:space="preserve">
+    <value>هویت Zanance برای Pro متصل است. Plus محلی مستقل می‌ماند.</value>
+  </data>
+  <data name="Billing_IdentityOptional" xml:space="preserve">
+    <value>برای Plus محلی حساب Zanance لازم نیست. Pro به هویت تأییدشدهٔ Zanance نیاز دارد.</value>
+  </data>
+  <data name="Billing_Status_Unavailable" xml:space="preserve">
+    <value>خرید از استور در این نسخه در دسترس نیست.</value>
+  </data>
+  <data name="Billing_Status_Ready" xml:space="preserve">
+    <value>پیش از ادامه در استور، قیمت همهٔ دوره‌ها را بررسی کنید.</value>
+  </data>
+  <data name="Billing_Status_NotConfigured" xml:space="preserve">
+    <value>محصولات استور هنوز فعال نشده‌اند. فعلاً خریدی ارائه نمی‌شود.</value>
+  </data>
+  <data name="Billing_Status_VerificationUnavailable" xml:space="preserve">
+    <value>تأیید خرید در دسترس نیست. این وضعیت به معنای بازپرداخت یا لغو خرید نیست.</value>
+  </data>
+  <data name="Billing_Status_Pending" xml:space="preserve">
+    <value>خرید قبلی به بررسی نیاز دارد. ادامه یا بازیابی را انتخاب کنید؛ پرداخت تازه‌ای آغاز نمی‌شود.</value>
+  </data>
+  <data name="Billing_ContinueStore" xml:space="preserve">
+    <value>ادامه در استور</value>
+  </data>
+  <data name="Billing_ContinueOriginal" xml:space="preserve">
+    <value>ادامهٔ خرید قبلی</value>
+  </data>
+  <data name="Billing_Restore" xml:space="preserve">
+    <value>بازیابی خریدهای استور</value>
+  </data>
+  <data name="Billing_Manage" xml:space="preserve">
+    <value>مدیریت اشتراک‌های استور</value>
+  </data>
+  <data name="Billing_PeriodTrial" xml:space="preserve">
+    <value>۱۴ روز</value>
+  </data>
+  <data name="Billing_PeriodMonth" xml:space="preserve">
+    <value>یک ماه</value>
+  </data>
+  <data name="Billing_PeriodYear" xml:space="preserve">
+    <value>یک سال</value>
+  </data>
+  <data name="Billing_PeriodOnce" xml:space="preserve">
+    <value>یک پرداخت</value>
+  </data>
+  <data name="Billing_PhaseRenewal" xml:space="preserve">
+    <value>قیمت تمدید: {0} برای {1}؛ تا زمان لغو، خودکار تمدید می‌شود.</value>
+  </data>
+  <data name="Billing_PhaseIntro" xml:space="preserve">
+    <value>دورهٔ اولیه: {0} برای {1}؛ قیمت دورهٔ بعد در ادامه آمده است.</value>
+  </data>
+  <data name="Billing_PhaseOnce" xml:space="preserve">
+    <value>قیمت یک‌باره: {0}؛ تمدید خودکار ندارد.</value>
+  </data>
+  <data name="Billing_ReviewTitle" xml:space="preserve">
+    <value>بررسی شرایط استور</value>
+  </data>
+  <data name="Billing_ReviewTerms" xml:space="preserve">
+    <value>تأیید نهایی در استور نمایش داده می‌شود. اشتراک تا زمان لغو با قیمت تمدید نمایش‌داده‌شده تمدید می‌شود. دورهٔ آزمایشی، طرح رایگان دائمی نیست. تخفیف‌ها با هم جمع نمی‌شوند.</value>
+  </data>
+  <data name="Billing_RestoreExplanation" xml:space="preserve">
+    <value>خریدهای موجود بدون پرداخت دوباره بررسی می‌شوند. Plus محلی به حساب Zanance نیاز ندارد. اگر وارد حساب شده باشید، Plus بازیابی‌شده برای بررسی شرایط پیشنهادها به همان هویت هم متصل می‌شود؛ Pro به هویت اصلی خود نیاز دارد. اگر اطلاعات خصوصی خرید خواندنی نباشد، زمینهٔ جداگانه‌ای برای بازیابی ساخته می‌شود. اطلاعات خصوصی قبلی حفظ می‌شود و پیش از شروع خرید تازه، بررسی استور باید کامل شود.</value>
+  </data>
+  <data name="Billing_TestNotice" xml:space="preserve">
+    <value>محدودیت‌های تجاری در این نسخهٔ آزمایشی غیرفعال می‌مانند. نمایش پیشنهاد به‌تنهایی پرداختی ثبت نمی‌کند.</value>
+  </data>
+  <data name="Billing_ComparisonNote" xml:space="preserve">
+    <value>اینجا امکانات طرح‌ها را مقایسه کنید. پیشنهادهای موجود استور و وضعیت تأیید در بخش خرید نمایش داده می‌شوند.</value>
+  </data>
+  <data name="BillingIdentity_Title" xml:space="preserve">
+    <value>هویت Zanance</value>
+  </data>
+  <data name="BillingIdentity_SignIn" xml:space="preserve">
+    <value>ورود</value>
+  </data>
+  <data name="BillingIdentity_Register" xml:space="preserve">
+    <value>ساخت هویت</value>
+  </data>
+  <data name="BillingIdentity_Recover" xml:space="preserve">
+    <value>درخواست بازیابی</value>
+  </data>
+  <data name="BillingIdentity_Confirm" xml:space="preserve">
+    <value>تأیید ایمیل</value>
+  </data>
+  <data name="BillingIdentity_Reset" xml:space="preserve">
+    <value>بازنشانی رمز عبور</value>
+  </data>
+  <data name="BillingIdentity_SignOut" xml:space="preserve">
+    <value>خروج در این دستگاه</value>
+  </data>
+  <data name="BillingIdentity_Email" xml:space="preserve">
+    <value>نشانی ایمیل</value>
+  </data>
+  <data name="BillingIdentity_Password" xml:space="preserve">
+    <value>رمز عبور، دست‌کم ۱۲ نویسه</value>
+  </data>
+  <data name="BillingIdentity_Challenge" xml:space="preserve">
+    <value>شناسهٔ درخواست در پیام سرویس</value>
+  </data>
+  <data name="BillingIdentity_Token" xml:space="preserve">
+    <value>کد تأیید یک‌بارمصرف</value>
+  </data>
+  <data name="BillingIdentity_EmailError" xml:space="preserve">
+    <value>نشانی ایمیل معتبر با حداکثر ۲۵۴ نویسه وارد کنید.</value>
+  </data>
+  <data name="BillingIdentity_PasswordError" xml:space="preserve">
+    <value>رمز عبوری با ۱۲ تا ۲۵۶ نویسه وارد کنید.</value>
+  </data>
+  <data name="BillingIdentity_ChallengeError" xml:space="preserve">
+    <value>شناسهٔ کامل درخواست را از پیام سرویس وارد کنید.</value>
+  </data>
+  <data name="BillingIdentity_TokenError" xml:space="preserve">
+    <value>کد کامل یک‌بارمصرف را بدون شکست خط وارد کنید.</value>
+  </data>
+  <data name="BillingIdentity_Explanation" xml:space="preserve">
+    <value>Plus محلی به حساب Zanance نیاز ندارد. هویت Zanance، Pro را میان استورهای پشتیبانی‌شده متصل می‌کند. ساخت آن حساب مالی ایجاد نمی‌کند، پروفایلی را همگام نمی‌کند و خریدی آغاز نمی‌کند.</value>
+  </data>
+  <data name="BillingIdentity_Privacy" xml:space="preserve">
+    <value>رمز عبور و کد یک‌بارمصرف ذخیره نمی‌شوند. فایل‌های مالی محلی و خریدهای استور از این فرم هویت جدا می‌مانند.</value>
+  </data>
+  <data name="BillingIdentity_Instructions" xml:space="preserve">
+    <value>اگر درخواست واجد شرایط باشد، راهنما از مسیر پیکربندی‌شدهٔ سرویس ارسال می‌شود. این پاسخ وجود یا نبود حساب را تأیید نمی‌کند.</value>
+  </data>
+  <data name="BillingIdentity_Completed" xml:space="preserve">
+    <value>درخواست یک‌بارمصرف تکمیل شد. با رمز عبور فعلی وارد شوید.</value>
+  </data>
+  <data name="BillingIdentity_SignedIn" xml:space="preserve">
+    <value>هویت Zanance در این دستگاه متصل است. هیچ پروفایل مالی همگام نشده است.</value>
+  </data>
+  <data name="BillingIdentity_SignOutExplanation" xml:space="preserve">
+    <value>فقط نشست هویت این دستگاه خاتمه می‌یابد. Plus محلی، فایل‌های مالی و دستگاه‌های دیگر حذف نمی‌شوند. ادامهٔ خرید ناتمام Pro همچنان به هویت اصلی آن نیاز دارد.</value>
+  </data>
+  <data name="BillingIdentity_SignedOut" xml:space="preserve">
+    <value>نشست هویت این دستگاه بسته شد.</value>
+  </data>
+  <data name="BillingIdentity_LocalSignOut" xml:space="preserve">
+    <value>خروج محلی انجام شد. خاتمهٔ نشست در سرویس تأیید نشد.</value>
+  </data>
+  <data name="BillingIdentity_Unavailable" xml:space="preserve">
+    <value>انجام عملیات هویت تأیید نشد. سرویس و اطلاعات فعلی حساب را بررسی کنید.</value>
+  </data>
+  <data name="Help_BillingIdentity_Title" xml:space="preserve">
+    <value>هویت Zanance و خریدها</value>
+  </data>
+  <data name="Help_BillingIdentity_Text" xml:space="preserve">
+    <value>هویت برای Plus محلی اختیاری است. Pro در استورهای پشتیبانی‌شده به هویت تأییدشده وابسته است. این فرم فقط دسترسی به حساب را مدیریت می‌کند؛ همگام‌سازی داده‌های مالی همیشه به اتصال صریح جداگانه نیاز دارد. بازیابی و تأیید ایمیل با درخواست یک‌بارمصرف اصلی سرویس انجام می‌شوند.</value>
+  </data>
+  <data name="Help_BillingIdentity_Example" xml:space="preserve">
+    <value>مثلاً می‌توانید بدون حساب از Plus محلی استفاده کنید، یا پیش از بازیابی خرید Pro متعلق به همان هویت وارد شوید. خروج، داده‌های مالی محلی را حذف نمی‌کند و نشست دستگاه دیگری را نمی‌بندد.</value>
+  </data>
+  <data name="Billing_Status_RecoveryRequired" xml:space="preserve">
+    <value>برای بازسازی دسترسی خصوصی خرید، خریدهای موجود استور را بازیابی کنید. پرداخت تازه‌ای شروع نمی‌شود و اطلاعات خصوصی قبلی حفظ می‌شود.</value>
+  </data>
+  <data name="Billing_Status_ManageExisting" xml:space="preserve">
+    <value>پیش از شروع اشتراک دیگر، اشتراک موجود را در فروشگاه اصلی آن مدیریت کنید.</value>
+  </data>
+  <data name="Billing_ProRestoreRequired" xml:space="preserve">
+    <value>برای تغییر Plus محلی به Pro، ابتدا خریدهای فروشگاه را صریحاً بازیابی کنید تا Plus به هویت Zanance واردشدهٔ شما متصل شود.</value>
+  </data>
+  <data name="Billing_OfferChanged" xml:space="preserve">
+    <value>شرایط فروشگاه یا اشتراک موجود تغییر کرده است. پیش از ادامه، پیشنهاد فعلی را بررسی کنید؛ هیچ پرداختی شروع نشد.</value>
+  </data>
+  <data name="Billing_Replacement_KeepBillingDate" xml:space="preserve">
+    <value>این انتخاب جایگزین اشتراک فعلی «{0}» می‌شود. تاریخ پرداخت «{1}» باقی می‌ماند؛ فروشگاه مبلغ نهایی و هر اعتبار را محاسبه می‌کند.</value>
+  </data>
+  <data name="Billing_Replacement_TimeCredit" xml:space="preserve">
+    <value>این انتخاب فوراً جایگزین اشتراک فعلی «{0}» می‌شود. فروشگاه اعتبار زمانی دورهٔ پرداخت‌شده تا «{1}» را محاسبه می‌کند و مبلغ نهایی را نشان می‌دهد.</value>
+  </data>
+  <data name="Billing_Replacement_Deferred" xml:space="preserve">
+    <value>این انتخاب جایگزینی اشتراک «{0}» را برای «{1}» زمان‌بندی می‌کند. دسترسی پرداخت‌شدهٔ فعلی تا آن تاریخ باقی می‌ماند؛ پلن تازه فقط پس از تأیید فروشگاه در همان تاریخ شروع می‌شود.</value>
+  </data>
+  <data name="Billing_LifetimeKeepsSubscription" xml:space="preserve">
+    <value>خرید Plus Lifetime اشتراک موجود شما را لغو نمی‌کند. تمدید آن را جداگانه در فروشگاه اصلی مدیریت کنید.</value>
+  </data>
 </root>

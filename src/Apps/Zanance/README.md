@@ -418,3 +418,12 @@ signed artifact, corrected native UI and remaining gates.
 Android/Windows automatic local snapshots use device keys and separate daily/weekly/off history.
 Portable Zanance exports remain separate with optional passwords; device-local copies cannot replace
 them on device/key loss. See [verification and limits](docs/quality/automatic-local-backup.md).
+
+
+## Current local billing delivery (D-295)
+
+The optional Android billing variant now has actual native store choices and an independently verified private
+purchase flow, with explicit restore/manage and optional Zanance identity. Pro follows the confirmed identity;
+local store Plus remains account-free. This is locally qualified implementation, not live sale or store acceptance.
+Commercial quotas stay inactive. StoreKit2/Mac implementation and genuine store/provider/public acceptance remain
+open. See [current scope and APK](docs/enhancements/2026-10-commercial-release/12-billing-delivery.md) and the canonical backlog.

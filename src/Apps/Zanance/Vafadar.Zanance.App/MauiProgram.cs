@@ -106,6 +106,11 @@ public static class MauiProgram
             .AddSingleton<IAppLockHost, MauiAppLockHost>()
             .AddSingleton<AppLockService>()
             .AddSingleton<Features.Sync.PersonalSyncLifetime>()
+            .AddSingleton<Vafadar.Zanance.Data.Billing.IBillingPrivateStorage, Features.Commerce.Billing.SecureBillingStorage>()
+            .AddSingleton<Features.Commerce.Billing.IProductBillingEnvironment, Features.Commerce.Billing.MauiProductBillingEnvironment>()
+            .AddSingleton<Features.Commerce.Billing.IBillingIdentityEnvironment>(services =>
+                (Features.Commerce.Billing.IBillingIdentityEnvironment)services.GetRequiredService<Features.Commerce.Billing.IProductBillingEnvironment>())
+            .AddTransient<Features.Commerce.Billing.BillingIdentityPage>().AddTransient<Features.Commerce.Billing.BillingIdentityViewModel>()
             .AddSingleton<Vafadar.Zanance.Data.Sync.IPersonalSyncTokenStore, Features.Sync.SecurePersonalSyncTokens>()
             .AddSingleton<Features.Sync.MauiPersonalSyncEnvironment>()
             .AddSingleton<Features.Sync.IPersonalSyncEnvironment>(services => services.GetRequiredService<Features.Sync.MauiPersonalSyncEnvironment>())
@@ -234,6 +239,10 @@ public static class MauiProgram
             .AddTransient<Features.Commerce.ProductPlansPage>().AddTransient<Features.Commerce.ProductPlansViewModel>()
             .AddTransient<Features.About.AboutPage>().AddTransient<Features.About.NoticesPage>().AddTransient<Features.About.AboutViewModel>()
             .AddTransient<Features.Home.HomeLayoutPage>().AddTransient<Features.Home.HomeLayoutViewModel>();
+
+#if BILLING && ANDROID
+        builder.Services.AddSingleton<Features.Commerce.Billing.IBillingNativeStore, Platforms.Android.GooglePlayBillingStore>();
+#endif
 
 #if DEBUG
         builder.Logging.AddDebug();

@@ -205,6 +205,9 @@ public partial class App : Application
     protected override Window CreateWindow(IActivationState? activationState)
     {
 #if DEBUG
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "billing-layout" or "billing-comparison-note" or "billing-identity-layout" or "billing-retry-layout" or "billing-recovery-layout" or "billing-dialog-caption" or "billing-replacement-layout"
+            && AppInfo.Current.PackageName != "pro.vafadar.zanance.billinglayout")
+            throw new InvalidOperationException("Independent billing layout identity required before startup.");
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "household-lifecycle-flow" or "household-lifecycle-deleted-layout" or "household-transfer-flow" or "household-transfer-dialog-layout"
             && AppInfo.Current.PackageName != "pro.vafadar.zanance.householdlifecycle")
             throw new InvalidOperationException("Independent household lifecycle installation required before startup.");
@@ -356,7 +359,7 @@ public partial class App : Application
                 return Task.FromResult(link);
             }));
         _databaseReady = true;
-        if (Features.Sync.PersonalSyncBuild.IsAvailable && _isInForeground)
+        if ((Features.Sync.PersonalSyncBuild.IsAvailable || Features.Commerce.Billing.BillingBuild.IsAvailable) && _isInForeground)
             _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Resume();
         if (Features.Sync.PersonalSyncBuild.IsAvailable)
             _services.GetRequiredService<Features.Sync.PersonalSyncForegroundWorker>().Start();
@@ -370,7 +373,7 @@ public partial class App : Application
     {
         base.OnSleep();
         _isInForeground = false;
-        if (_databaseReady && Features.Sync.PersonalSyncBuild.IsAvailable)
+        if (_databaseReady && (Features.Sync.PersonalSyncBuild.IsAvailable || Features.Commerce.Billing.BillingBuild.IsAvailable))
             _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Suspend();
         if (_databaseReady) Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().SleepAsync());
     }
@@ -379,7 +382,7 @@ public partial class App : Application
     {
         base.OnResume();
         _isInForeground = true;
-        if (_databaseReady && Features.Sync.PersonalSyncBuild.IsAvailable)
+        if (_databaseReady && (Features.Sync.PersonalSyncBuild.IsAvailable || Features.Commerce.Billing.BillingBuild.IsAvailable))
             _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Resume();
         if (_databaseReady) Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().ResumeAsync());
         RunForegroundWork(starting: false);
@@ -620,7 +623,7 @@ public partial class App : Application
 
     private void RetireSyncNavigation()
     {
-        if (_databaseReady && Features.Sync.PersonalSyncBuild.IsAvailable)
+        if (_databaseReady && (Features.Sync.PersonalSyncBuild.IsAvailable || Features.Commerce.Billing.BillingBuild.IsAvailable))
             _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().RetireNavigation();
     }
 }

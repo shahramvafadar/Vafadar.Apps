@@ -498,6 +498,8 @@ appsettings.Local.json
 *.pfx
 *.mobileprovision
 *.cer
+# Public Apple verification root, pinned by source hash; never a private signing identity.
+!src/Apps/Zanance/Vafadar.Zanance.Api/Billing/AppleRootCA-G3.cer
 
 # Google / Firebase platform config files that may contain project details
 google-services.json

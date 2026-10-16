@@ -915,3 +915,21 @@ creation. Consequential operations still require real native page buttons, confi
 recovery_mode wrong/valid changes only compiled fictional in-memory password input when the original page is idle;
 no password enters arguments, reports, preferences or service credentials. Preserve completed original stages and
 use cold/original only to reopen their retained data; never clear or reseed an interrupted installation.
+
+
+## Optional Android billing test edition (D-295)
+
+Build the complete selected test APK with:
+
+```powershell
+./eng/scripts/Build-AndroidApk.ps1 -Billing -BillingSandbox -Output artifacts/android-billing-local-d295
+./eng/scripts/Test-AndroidPrivacy.ps1 -Path artifacts/android-billing-local-d295/pro.vafadar.zanance-Signed.apk -Variant Billing
+```
+
+Billing is independent of PersonalSync. Offline cannot select either network feature; BillingSandbox requires
+Billing. Explicit defaults override ambient build properties. The maintained official SDK restores only for the
+selected Android billing graph. Debug/sandbox cannot issue production private rights; the selected local debug
+signature is not store signing. The actual store catalog/service must be configured before an offer is available.
+Do not bypass unavailable state with design prices, a client grant or an unverified transaction id.
+Native StoreKit2 and iOS build/runtime qualification must run in the actual Mac clone; Windows common-code builds
+are not iOS evidence. See src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/12-billing-delivery.md.

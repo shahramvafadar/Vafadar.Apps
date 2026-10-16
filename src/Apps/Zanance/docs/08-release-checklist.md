@@ -1150,3 +1150,16 @@ power-loss, OAuth, store-signing or product-publication acceptance. The full goa
 
 Exact scope, negative evidence and final artifacts: enhancements/2026-10-commercial-release/11-household-delivery.md.
 Identity erasure, ciphertext recall,8GiB saturation and a performance threshold are not claimed.
+
+
+## D-295 billing release gates (still unchecked)
+
+- [ ] Implement/build/qualify the native StoreKit2 path in the verified Mac clone; iOS currently exposes no checkout.
+- [ ] Configure genuine products,14-day trial, first-annual-year Lifetime discount and supported replacements in each store.
+- [ ] Owner personally supplies provider/account/signing credentials and accepts store agreements; no credentials enter app binaries or repository.
+- [ ] Complete the actual sandbox purchase/renewal/restore/refund/revocation/pending/hold/grace/cancel/expiry/recovery matrix.
+- [ ] Qualify public notification authentication/routing, stable HTTPS origin, issuer/protection-key restoration and service operations.
+- [ ] Qualify native SDK traffic/privacy, Data safety, physical devices and final signed store variants.
+- [ ] Obtain separate commercial activation/publication acceptance. Local fixtures never enable quotas or a web checkout.
+
+Current local Android/service evidence and complete test APK are in enhancements/2026-10-commercial-release/12-billing-delivery.md.

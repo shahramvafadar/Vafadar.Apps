@@ -17,11 +17,38 @@
                             <p:WrappingAction Text="{v:Translate ActiveItems_Title}" Command="{Binding ActiveItemsCommand}" />
                         </VerticalStackLayout>
                     </Border>
+                    <Border Style="{StaticResource Card}" IsVisible="{Binding ShowBilling}">
+                        <VerticalStackLayout Spacing="12">
+                            <Label Text="{v:Translate Billing_Title}" Style="{StaticResource SectionHeader}" Margin="0" />
+                            <Label Text="{Binding BillingPlanText}" />
+                            <Label Text="{Binding BillingIdentityText}" Style="{StaticResource Secondary}" />
+                            <Label Text="{Binding BillingStatusText}" />
+                            <ActivityIndicator IsVisible="{Binding BillingBusy}" IsRunning="{Binding BillingBusy}" WidthRequest="44" HeightRequest="44" Color="{DynamicResource Primary}" />
+                            <p:WrappingAction Text="{v:Translate ProductPlans_Retry}" Command="{Binding RetryBillingCommand}" IsVisible="{Binding CanRetryBilling}" />
+                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding BillingOffers}" Spacing="12">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="local:BillingOfferRow">
+                                        <VerticalStackLayout Spacing="8">
+                                            <Label Text="{Binding Title}" FontAttributes="Bold" />
+                                            <Label Text="{Binding Terms}" />
+                                            <p:WrappingAction Text="{Binding Action}" CommandParameter="{Binding .}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ProductPlansViewModel}}, Path=BuyBillingCommand, x:DataType=local:ProductPlansViewModel}" />
+                                        </VerticalStackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                            <p:WrappingAction Text="{v:Translate Billing_ContinueOriginal}" Command="{Binding ContinueBillingCommand}" />
+                            <p:WrappingAction Text="{v:Translate Billing_Restore}" Command="{Binding RestoreBillingCommand}" />
+                            <p:WrappingAction Text="{v:Translate Billing_Manage}" Command="{Binding ManageBillingCommand}" />
+                            <Label Text="{v:Translate Billing_TestNotice}" Style="{StaticResource Secondary}" />
+                            <p:WrappingAction Text="{v:Translate BillingIdentity_Title}" Command="{Binding BillingIdentityCommand}" />
+                        </VerticalStackLayout>
+                    </Border>
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                         <Label Text="{v:Translate ProductPlans_Compare}" Style="{StaticResource SectionHeader}" Margin="0" />
                         <v:HelpButton Grid.Column="1" Topic="ProductPlans" VerticalOptions="Start" />
                     </Grid>
-                    <Label Text="{v:Translate ProductPlans_Availability}" Style="{StaticResource Secondary}" />
+                    <Label Text="{Binding AvailabilityText}" Style="{StaticResource Secondary}" />
                     <v:ChoiceChips ItemsSource="{Binding PlanNames}" SelectedIndex="{Binding PlanIndex, Mode=TwoWay}"
                                    IsEnabled="{Binding CanInteract}" />
                     <Label Text="{Binding Description}" />

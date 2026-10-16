@@ -1,5 +1,33 @@
 # Zanance SDK and permission review (SEC-09, D-69)
 
+
+## Current optional billing boundary (D-295,2026-10-16)
+
+The2026-10-08 absence inventory below is historical. Local personal/household services and the selected Android
+billing edition now have their own disclosed scopes; this update concerns billing only. The explicit Billing
+permission policy requires INTERNET and com.android.vending.BILLING, rejects location/advertising-id/network-state
+and does not widen Offline or Cloud. Nine new policy cases and the actual selected complete Release APK guard
+pass; unchanged prior permission cases were not replayed.
+
+Microsoft's Xamarin.Android.Google.BillingClient9.1.0.2 binds official Play Billing9.1.0. The official Maven artifact
+itself requires DataTransport/Play services support; a direct binding would not remove those native dependencies.
+The selected graph resolves TransportApi4.1.1.1, TransportRuntime4.1.1.1, TransportBackendCct4.1.1.2 and Play services
+Location121.4.0.1. Location is not declared in the final APK. Presence/absence of a permission or diagnostic package
+is not proof of native traffic behavior. Store connection/catalog/purchase effects are lazy and require explicit
+page work; real SDK traffic/device/store privacy acceptance remains pending. No application analytics, ads or
+crash reporting feature is introduced. The offline edition omits the billing SDK.
+
+Purchase references/opaque account binding travel only to the selected actual store and fixed owned HTTPS issuer.
+They are excluded from general logs, financial backups and portable preferences. Google.Apis.Auth/Core1.77.0 are
+service-side only; explicit provider credentials remain operator-owned private mounts. Apple uses authenticated
+signed data and fresh Server API verification, not a public numeric transaction id as possession. Native StoreKit2
+is not implemented/qualified by this Windows delivery. Production endpoints, genuine store sandbox/provider
+credentials, public callbacks and commercial activation stay closed/unaccepted.
+
+The actual package MIT/Google SDK terms and service Apache2.0 notices are bundled. These third-party terms grant
+no rights to Zanance source, which remains all rights reserved. See the exact current artifacts/evidence in
+src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/12-billing-delivery.md.
+
 Reviewed 2026-10-08 against the current application sources, resolved Android libraries and complete signed Release
 APKs. This is the current local/cloud-backup baseline. Billing, identity backend, sync, AI and bank SDKs are absent;
 repeat the review before any is introduced. Source checks do not prove native runtime traffic or store acceptance.

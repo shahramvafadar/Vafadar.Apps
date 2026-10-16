@@ -107,6 +107,17 @@
   <PropertyGroup Condition="'$(ZanancePersonalSyncEnabled)' == 'true'">
     <DefineConstants>$(DefineConstants);PERSONAL_SYNC</DefineConstants>
   </PropertyGroup>
+  <!-- D-295: the selected store edition alone restores the official payment SDK. Offline builds keep their graph. -->
+  <PropertyGroup Condition="'$(ZananceBillingSandbox)' == 'true'">
+    <DefineConstants>$(DefineConstants);BILLING_SANDBOX</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(ZananceBillingEnabled)' == 'true'">
+    <DefineConstants>$(DefineConstants);BILLING</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(ZananceTargetPlatform)' == 'android' and '$(ZananceBillingEnabled)' == 'true'">
+    <PackageReference Include="Xamarin.Android.Google.BillingClient" />
+    <AndroidManifestOverlay Include="Platforms\Android\BillingManifest.xml" />
+  </ItemGroup>
   <ItemGroup Condition="'$(ZananceTargetPlatform)' == 'android' and '$(ZanancePersonalSyncEnabled)' == 'true'">
     <AndroidManifestOverlay Include="Platforms\Android\PersonalSyncManifest.xml" />
   </ItemGroup>
@@ -164,7 +175,7 @@
     </ItemGroup>
   </Target>
 
-  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(Configuration)' == 'Release' and '$(MicrosoftEntraClientId)$(GoogleOAuthClientIdAndroid)' == '' and '$(ZanancePersonalSyncEnabled)' != 'true'">
+  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(Configuration)' == 'Release' and '$(MicrosoftEntraClientId)$(GoogleOAuthClientIdAndroid)' == '' and '$(ZanancePersonalSyncEnabled)' != 'true' and '$(ZananceBillingEnabled)' != 'true'">
     <AndroidManifestOverlay Include="Platforms\Android\ReleaseManifest.xml" />
   </ItemGroup>
 

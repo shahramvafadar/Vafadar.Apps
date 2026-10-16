@@ -40,6 +40,8 @@ public enum EntitlementSource
     AppStore,
     /// <summary>Windows store verification, if that distribution channel is approved.</summary>
     WindowsStore,
+    /// <summary>Reserved verified identity-bound web provenance, independent of distribution; no web issuer is activated.</summary>
+    Web,
 }
 
 /// <summary>

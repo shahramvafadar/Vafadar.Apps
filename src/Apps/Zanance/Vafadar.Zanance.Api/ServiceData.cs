@@ -99,6 +99,7 @@ public sealed class ServiceDbContext(DbContextOptions<ServiceDbContext> options,
         Sharing.HouseholdServiceModel.Configure(builder);
         Sharing.HouseholdOwnershipModel.Configure(builder);
         Sharing.HouseholdLifecycleModel.Configure(builder);
+        Billing.BillingServiceModel.Configure(builder);
         builder.Entity<DeviceSession>().HasOne<ServiceUser>().WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
         builder.Entity<IdentityChallenge>().HasOne<ServiceUser>().WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
         builder.Entity<PrivateObject>().HasOne<ServiceUser>().WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);

@@ -25,6 +25,8 @@ public sealed class ServiceStorage
     public Sync.SyncStorageLimits SyncLimits { get; init; } = new();
     /// <summary>Explicit fictional/local household acceptance only; this cannot manufacture a public paid hosting entitlement.</summary>
     public bool LocalHouseholdQualification { get; init; }
+    /// <summary>Explicit independently owned billing qualification; it never enables real sale or commercial quotas.</summary>
+    public bool LocalBillingQualification { get; init; }
     /// <summary>Private immutable object path; identifiers originate on the server only.</summary>
     public string ObjectPath(Guid id) => Path.Combine(Root, "objects", id.ToString("N"));
 }
@@ -67,8 +69,14 @@ public static class ServiceHost
             selfHosted?.Origin.DnsSafeHost == "localhost" && File.Exists(Path.Combine(root, "fictitious-hosting.marker")) &&
             !File.Exists(Path.Combine(root, "production-hosting.marker"))))
             throw new InvalidOperationException("Household local qualification cannot activate public hosting.");
+        var billing = builder.Configuration.GetValue<bool>("Billing:LocalQualification");
+        if (billing && !(builder.Environment.IsDevelopment() || builder.Environment.IsEnvironment("Integration") ||
+            selfHosted?.Origin.DnsSafeHost == "localhost" && File.Exists(Path.Combine(root, "fictitious-hosting.marker")) &&
+            !File.Exists(Path.Combine(root, "production-hosting.marker"))))
+            throw new InvalidOperationException("Billing local qualification cannot activate public purchases.");
         var storage = new ServiceStorage { Root = root, LocalMailbox = builder.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>("Service:LocalMailbox"),
             LocalHouseholdQualification = household,
+            LocalBillingQualification = billing,
             SyncLimits = Sync.SyncStorageLimits.Read(builder.Configuration) };
         var directory = Directory.CreateDirectory(root);
         if (OperatingSystem.IsWindows())
@@ -86,6 +94,7 @@ public static class ServiceHost
         Directory.CreateDirectory(Path.Combine(root, "objects"));
         Directory.CreateDirectory(Path.Combine(root, "mailbox"));
         builder.Services.AddSingleton(storage);
+        Billing.BillingModule.Add(builder.Services);
         builder.Services.AddSingleton<Sharing.IHouseholdDeletionLedger, Sharing.HouseholdDeletionLedger>();
         builder.Services.AddSingleton<Sharing.HouseholdRetirement>();
         builder.Services.AddSingleton<Sync.LocalSyncCertificate>();
@@ -159,7 +168,8 @@ public static class ServiceHost
                 {
                     var time = http.RequestServices.GetRequiredService<TimeProvider>().GetUtcNow();
                     var minute = DateTimeOffset.FromUnixTimeSeconds(time.ToUnixTimeSeconds() / 60 * 60);
-                    var lane = http.Request.Path.StartsWithSegments("/identity") ? "identity" : "service";
+                    var lane = http.Request.Path.StartsWithSegments("/identity") ? "identity" :
+                        http.Request.Path.StartsWithSegments("/billing") ? "billing" : "service";
                     var partition = Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(lane + ":" + http.Connection.RemoteIpAddress)));
                     var factory = http.RequestServices.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
                     await using var db = await factory.CreateDbContextAsync(http.RequestAborted);
@@ -168,7 +178,7 @@ public static class ServiceHost
                         ON CONFLICT ("Partition", "StartsAt") DO UPDATE SET "Count" = LEAST("RequestWindows"."Count" + 1, 10001)
                         RETURNING "Count" AS "Value"
                         """).ToListAsync(http.RequestAborted);
-                    if (counts[0] > (lane == "identity" ? 30 : 200))
+                    if (counts[0] > (lane is "identity" or "billing" ? 30 : 200))
                     {
                         http.Response.StatusCode = 429; http.Response.Headers.RetryAfter = "60"; return;
                     }
@@ -213,5 +223,6 @@ public static class ServiceHost
         ObjectRoutes.Map(app);
         Sync.SyncServiceRoutes.Map(app);
         Sharing.HouseholdRoutes.Map(app);
+        Billing.BillingModule.Map(app);
     }
 }

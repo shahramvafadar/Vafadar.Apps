@@ -21,7 +21,7 @@ public partial class ProductPlansPage : ContentPage
     /// <inheritdoc />
     protected override void OnDisappearing()
     {
-        _localization.Changed -= OnDisplayChanged; base.OnDisappearing();
+        _localization.Changed -= OnDisplayChanged; _viewModel.DeactivateBilling(); base.OnDisappearing();
     }
     private void OnDisplayChanged(object? sender, EventArgs e) => _viewModel.RefreshDisplay();
 }

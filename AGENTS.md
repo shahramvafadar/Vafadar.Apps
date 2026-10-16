@@ -2234,3 +2234,32 @@ bounds before growth, retain native failure codes/evidence, and never fork the c
 snapshots to compact history.
 
 Native Windows dialog sizing keeps original controls/results/commands and grows button minimum targets to44 units only while that interaction is outstanding. Always detach its popup observer. Native prompts must inherit the actual page language direction; a ContentDialog footer resource alone does not cover MAUI Flyouts/subclass styles. Preserve genuine native Cancel/confirmation and own-window-only review; layout never manufactures protocol consent or financial writes.
+
+
+### Existing subscription replacement and public Apple possession (D-295 in progress)
+
+A fresh paid snapshot and actual native ownership must identify the same original purchase/SKU before a new
+subscription flow. Replace that subscription explicitly; do not charge a parallel one because a store account,
+identity association or pending/suspended/scheduled state is missing. Native review retains the original purchase
+commitment and complete timing/renewal terms. Store credit/proration is provider-calculated, never application
+money. Plus-to-Pro requires explicit association with the actual confirmed identity; sign-in alone is not consent.
+A Lifetime purchase never implies cancellation of an existing renewing subscription.
+
+Deferred replacement separates current paid rights, scheduled target and signed original native completion.
+At the known change date, verify the effective product rather than extending the old tier or granting the future
+one. Preserve the sold future terms, original pending command/receipt/key and exact native target through process
+loss. Continue never creates recovery keys or implicitly associates purchases; those require original Restore
+consent. Only actual outage errors permit outage allowance. Public Apple purchase/restore requires the signed
+StoreKit transaction JWS and original verified chain; numeric transaction ids alone are not possession. Only
+already authorized internal refresh/reconciliation may query a stored canonical numeric id.
+
+
+### D-295 local delivery and remaining native/store gates
+
+The substantial Android/private-client/service billing implementation is locally qualified together; overall
+ZCR-BIL-01..05 remain In progress. Native StoreKit2 must be implemented/built on the actual Mac, genuine store
+sandbox/provider/public acceptance is not inferred, and commercial quotas stay inactive. Follow Android-first
+execution and continue approved independent German accountant-export work across unavailable external gates;
+retain iOS/store work in the current backlog. Do not ask settled product choices again. Qualified original-source
+fixtures use their own BillingLocal trait and dedicated ephemeral hosted database; the identity-only CI job must
+not mistake intentionally unconfigured fixture skips for identity failures. Hosted success requires actual CI.

@@ -5,7 +5,7 @@ using NativeButton = Microsoft.UI.Xaml.Controls.Button;
 
 namespace Vafadar.Zanance.App.Presentation;
 
-/// <summary>Keeps original native dialog buttons at the application's minimum touch size.</summary>
+/// <summary>Keeps original native dialog buttons readable and at the application's minimum touch size.</summary>
 internal static class WindowsDialogTargets
 {
     /// <summary>Observes only this window's transient popup while the original operation is outstanding.</summary>
@@ -28,17 +28,27 @@ internal static class WindowsDialogTargets
             foreach (var popup in VisualTreeHelper.GetOpenPopupsForXamlRoot(root))
                 if (popup.Child is { } child) Grow(child);
         }
-        void Grow(DependencyObject node)
+        void Grow(DependencyObject node, bool buttonCaption = false)
         {
             // MAUI's native PromptDialog does not copy the page's direction, unlike AlertDialog.
             if (node is Microsoft.UI.Xaml.Controls.ContentDialog dialog && dialog.FlowDirection != direction)
                 dialog.FlowDirection = direction;
             if (node is NativeButton button)
             {
+                buttonCaption = true;
                 if (button.MinHeight < 44) button.MinHeight = 44;
                 if (button.MinWidth < 44) button.MinWidth = 44;
             }
-            for (var index = 0; index < VisualTreeHelper.GetChildrenCount(node); index++) Grow(VisualTreeHelper.GetChild(node, index));
+            if (buttonCaption && node is Microsoft.UI.Xaml.Controls.TextBlock text)
+            {
+                // Native ContentDialog footer columns remain narrow even when the body grows. D-295's
+                // German Restore caption exposed clipping without IsTextTrimmed being set. Keep the original
+                // button/name/result and let its actual text plus footer row grow instead of shortening it.
+                if (text.TextWrapping != TextWrapping.Wrap) text.TextWrapping = TextWrapping.Wrap;
+                if (text.TextTrimming != TextTrimming.None) text.TextTrimming = TextTrimming.None;
+                if (text.MaxLines != 0) text.MaxLines = 0;
+            }
+            for (var index = 0; index < VisualTreeHelper.GetChildrenCount(node); index++) Grow(VisualTreeHelper.GetChild(node, index), buttonCaption);
         }
     }
 }

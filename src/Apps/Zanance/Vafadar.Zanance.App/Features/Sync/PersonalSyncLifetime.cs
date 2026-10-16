@@ -42,12 +42,15 @@ public sealed class PersonalSyncLifetime : IDisposable
         previous.Cancel(); previous.Dispose(); Changed?.Invoke(this, EventArgs.Empty);
     }
     /// <summary>Captures current actual device catalogue and location without opening a financial connection.</summary>
-    public PersonalSyncAccess Capture()
+    public PersonalSyncAccess Capture() => CaptureCore(PersonalSyncBuild.IsAvailable);
+    /// <summary>Captures the same native lock/foreground/catalogue boundary for the separately selected billing edition.</summary>
+    internal PersonalSyncAccess CaptureBilling() => CaptureCore(Commerce.Billing.BillingBuild.IsAvailable);
+    private PersonalSyncAccess CaptureCore(bool available)
     {
         long captured; CancellationToken cancellation;
         lock (state)
         {
-            if (!PersonalSyncBuild.IsAvailable || !foreground || appLock.IsLocked)
+            if (!available || !foreground || appLock.IsLocked)
                 throw new OperationCanceledException("Personal sync is unavailable outside unlocked foreground access.");
             captured = epoch; cancellation = current.Token;
         }

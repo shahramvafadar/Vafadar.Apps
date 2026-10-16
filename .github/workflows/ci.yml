@@ -102,6 +102,13 @@ jobs:
       - name: Build (Release)
         run: dotnet build Vafadar.Apps.slnx --configuration Release -p:VafadarMauiTargetFrameworks=net10.0-android
 
+      # Compile the selected native store adapter and Debug boundaries as well as the default edition.
+      - name: Build selected Android billing sandbox
+        run: >
+          dotnet build src/Apps/Zanance/Vafadar.Zanance.App/Vafadar.Zanance.App.csproj
+          --configuration Debug -f net10.0-android -p:VafadarMauiTargetFrameworks=net10.0-android
+          -p:ZananceBillingEnabled=true -p:ZananceBillingSandbox=true -p:ContinuousIntegrationBuild=true
+
   windows:
     name: Windows build
     runs-on: windows-2025-vs2026

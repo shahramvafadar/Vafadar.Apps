@@ -1966,3 +1966,11 @@ Earlier in-progress notes are historical. Public/commercial activation, physical
 external security review and publication remain separate gates; identity erasure and ciphertext recall are not
 claimed. Continue the already approved complete billing/future-web-prerequisite batch without helper-only slices
 or repeated unrelated successful checks.
+
+
+## D-295 local billing checkpoint
+
+Local Android/service billing and protected signed continuation are qualified; native StoreKit2/Mac and actual
+store/provider/public sandbox acceptance remain unfinished. This history does not mark the commercial wave done.
+The only current remaining-work state is ZCR-BIL-01..05 in the canonical commercial-release/04-backlog.md;
+12-billing-delivery.md records the exact scope, current APK, focused tests and exclusions.

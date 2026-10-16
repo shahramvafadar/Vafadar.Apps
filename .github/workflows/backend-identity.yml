@@ -63,7 +63,7 @@ jobs:
       - name: Verify actual identity, private storage and isolated restore
         run: |
           mkdir -p TestResults
-          ./artifacts/identity-test-runtime/Vafadar.Zanance.Api.Tests -failSkips -result-xml TestResults/identity.xml
+          ./artifacts/identity-test-runtime/Vafadar.Zanance.Api.Tests -trait- "Qualification=BillingLocal" -failSkips -result-xml TestResults/identity.xml
       - name: Upload bounded test results
         if: always()
         uses: actions/upload-artifact@v7
@@ -74,6 +74,49 @@ jobs:
       - name: Remove only the test container
         if: always()
         run: docker rm -f zanance-backend-ci
+
+  billing:
+    name: Isolated purchase authority
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      DOTNET_NOLOGO: true
+      ZANANCE_BILLING_QA_CONNECTION: Host=127.0.0.1;Port=55475;Database=zanance_billing_d295;Username=zanance_billing_qa
+      ZANANCE_BILLING_QA_ROOT: ${{ github.workspace }}/artifacts/billing-ci-fixture
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+      - name: Prepare original isolated PostgreSQL dependency
+        run: |
+          docker run -d --name zanance-billing-ci -p 127.0.0.1:55475:5432 --tmpfs /var/lib/postgresql -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_USER=zanance_billing_qa -e POSTGRES_DB=zanance_billing_d295 postgres@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15
+          for attempt in $(seq 1 30); do
+            if docker exec zanance-billing-ci pg_isready -h 127.0.0.1 -U zanance_billing_qa -d zanance_billing_d295; then break; fi
+            sleep 1
+          done
+          docker exec zanance-billing-ci pg_isready -h 127.0.0.1 -U zanance_billing_qa -d zanance_billing_d295
+          mkdir -p "$ZANANCE_BILLING_QA_ROOT" TestResults
+          printf '%s' 'Zanance fictional billing d295' > "$ZANANCE_BILLING_QA_ROOT/fixture.marker"
+      - name: Publish security-patched purchase test runtime
+        run: dotnet publish test/Apps/Zanance/Vafadar.Zanance.Api.Tests/Vafadar.Zanance.Api.Tests.csproj --configuration Release -r linux-x64 --self-contained true -p:RuntimeFrameworkVersion=10.0.13 -p:ContinuousIntegrationBuild=true --output artifacts/billing-test-runtime
+      - name: Establish original durable service stages
+        run: ./artifacts/billing-test-runtime/Vafadar.Zanance.Api.Tests -class '*BillingPersistenceTests' -failSkips -result-xml TestResults/billing-service.xml
+      - name: Continue protected original clients and identity sessions
+        run: |
+          ./artifacts/billing-test-runtime/Vafadar.Zanance.Api.Tests -class '*BillingClientContinuationTests' -failSkips -result-xml TestResults/billing-clients.xml
+          ./artifacts/billing-test-runtime/Vafadar.Zanance.Api.Tests -class '*BillingIdentitySessionTests' -failSkips -result-xml TestResults/billing-sessions.xml
+      - name: Upload bounded purchase results only
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: billing-authority-results
+          path: TestResults/billing-*.xml
+          retention-days: 14
+      - name: Remove only the ephemeral purchase container
+        if: always()
+        run: docker rm -f zanance-billing-ci
 
   personal-sync:
     runs-on: ubuntu-latest

@@ -154,6 +154,301 @@ namespace Vafadar.Zanance.Api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Vafadar.Zanance.Api.Billing.BillingCommandRow", b =>
+                {
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("CompletedWork")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("LastState")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ProtectedRequest")
+                        .IsRequired()
+                        .HasMaxLength(65536)
+                        .HasColumnType("character varying(65536)");
+
+                    b.Property<string>("ProtectedResponse")
+                        .IsRequired()
+                        .HasMaxLength(262144)
+                        .HasColumnType("character varying(262144)");
+
+                    b.Property<string>("ProtectedWork")
+                        .IsRequired()
+                        .HasMaxLength(65536)
+                        .HasColumnType("character varying(65536)");
+
+                    b.Property<string>("RequestHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.HasKey("CustomerId", "Id");
+
+                    b.HasIndex("ExpiresAt");
+
+                    b.ToTable("BillingCommandRow");
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Billing.BillingCustomerRow", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AccountToken")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AnonymousAccountBinding")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeviceFingerprint")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<int>("Distribution")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Environment")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ProtectedRegistrationResponse")
+                        .IsRequired()
+                        .HasMaxLength(65536)
+                        .HasColumnType("character varying(65536)");
+
+                    b.Property<string>("PublicIdentity")
+                        .IsRequired()
+                        .HasMaxLength(16384)
+                        .HasColumnType("character varying(16384)");
+
+                    b.Property<string>("RegistrationIdentityHash")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<long>("Revision")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Revoked")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountToken")
+                        .IsUnique();
+
+                    b.HasIndex("Distribution", "Environment", "AnonymousAccountBinding")
+                        .IsUnique();
+
+                    b.HasIndex("UserId", "Environment", "Revoked");
+
+                    b.ToTable("BillingCustomerRow");
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Billing.BillingDevicePurchaseRow", b =>
+                {
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("PurchaseId")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.HasKey("CustomerId", "PurchaseId");
+
+                    b.HasIndex("PurchaseId");
+
+                    b.ToTable("BillingDevicePurchaseRow");
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Billing.BillingIdentityRow", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Environment")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("AccountToken")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("GoogleAccountBinding")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.HasKey("UserId", "Environment");
+
+                    b.HasIndex("AccountToken")
+                        .IsUnique();
+
+                    b.HasIndex("GoogleAccountBinding")
+                        .IsUnique();
+
+                    b.ToTable("BillingIdentityRow");
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Billing.BillingNotificationRow", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<int>("Attempts")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Completed")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Environment")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Issuer")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("LeaseOwner")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("LeaseUntil")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ProtectedReference")
+                        .IsRequired()
+                        .HasMaxLength(32768)
+                        .HasColumnType("character varying(32768)");
+
+                    b.Property<DateTimeOffset>("ReceivedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTimeOffset>("RetryAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Completed", "RetryAt", "LeaseUntil");
+
+                    b.ToTable("BillingNotificationRow");
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Billing.BillingPurchaseAliasRow", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("PurchaseId")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PurchaseId");
+
+                    b.ToTable("BillingPurchaseAliasRow");
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Billing.BillingPurchaseRow", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<DateTimeOffset?>("AccessUntil")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("AcknowledgePending")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Environment")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("FactsJson")
+                        .IsRequired()
+                        .HasMaxLength(8192)
+                        .HasColumnType("character varying(8192)");
+
+                    b.Property<int>("Issuer")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("LeaseOwner")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset?>("LeaseUntil")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Product")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ProtectedReference")
+                        .IsRequired()
+                        .HasMaxLength(32768)
+                        .HasColumnType("character varying(32768)");
+
+                    b.Property<string>("ProviderAccountBinding")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<DateTimeOffset>("RecheckAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("RecheckFailures")
+                        .HasColumnType("integer");
+
+                    b.Property<long>("RequestedRecheckRevision")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("Revision")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("State")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Verified")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset>("VerifiedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("AcknowledgePending", "LeaseUntil");
+
+                    b.HasIndex("State", "AccessUntil");
+
+                    b.HasIndex("UserId", "Environment");
+
+                    b.HasIndex("Verified", "RecheckAt", "LeaseUntil");
+
+                    b.ToTable("BillingPurchaseRow");
+                });
+
             modelBuilder.Entity("Vafadar.Zanance.Api.DeviceSession", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1528,6 +1823,70 @@ namespace Vafadar.Zanance.Api.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Billing.BillingCommandRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Billing.BillingCustomerRow", null)
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Billing.BillingCustomerRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.ServiceUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Billing.BillingDevicePurchaseRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Billing.BillingCustomerRow", null)
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Zanance.Api.Billing.BillingPurchaseRow", null)
+                        .WithMany()
+                        .HasForeignKey("PurchaseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Billing.BillingIdentityRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.ServiceUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Billing.BillingPurchaseAliasRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Billing.BillingPurchaseRow", null)
+                        .WithMany()
+                        .HasForeignKey("PurchaseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Billing.BillingPurchaseRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Billing.BillingCustomerRow", null)
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Zanance.Api.ServiceUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Vafadar.Zanance.Api.DeviceSession", b =>

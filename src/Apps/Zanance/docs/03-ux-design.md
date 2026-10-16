@@ -1389,3 +1389,18 @@ root page direction into native ContentDialog because MAUI prompts do not inheri
 native commands, simulate confirmations, activate the desktop window or manufacture a protocol role for layout.
 The18 complete dialog cases and six subsequent affected RTL prompts preserve the original financial dataset;
 see11-household-delivery.md for exact geometry, images and retained negative evidence.
+
+
+## D-295 original store choices and identity
+
+The original plan comparison remains readable while a separate store surface loads. Display only actual provider
+price packets and every introductory/renewal phase. Before native launch, show the original selected terms and
+subscription replacement timing/date in the current display calendar. Recheck those exact terms after consent;
+a changed offer returns for review without a payment. Keep every native action growing, semantic and at least44px.
+
+Pending/uncertain original work offers Continue, never another Buy. A failed read offers a read-only retry, not a
+fabricated pending purchase. Missing private state exposes explicit Restore; Cancel cannot create a key, associate
+an identity or start payment. Anonymous Plus remains account-free. Optional identity registration/sign-in/recovery
+is separate from financial accounts; clear typed credentials on submit/retirement and show adjacent validation.
+An explicit restore explains optional association; Lifetime warns that another subscription is not canceled.
+Native own-window and changed main Android evidence is in enhancements/2026-10-commercial-release/12-billing-delivery.md.

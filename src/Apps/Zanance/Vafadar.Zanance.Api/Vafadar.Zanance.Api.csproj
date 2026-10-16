@@ -7,11 +7,14 @@
     <ProjectReference Include="../Vafadar.Zanance.Core/Vafadar.Zanance.Core.csproj" />
     <ProjectReference Include="../../../Libraries/Vafadar.Cryptography/Vafadar.Cryptography.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
+    <PackageReference Include="Google.Apis.Auth" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Billing/AppleRootCA-G3.cer" />
     <Content Include="ThirdPartyNotices.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <InternalsVisibleTo Include="Vafadar.Zanance.Sync.Tests" />
+    <InternalsVisibleTo Include="Vafadar.Zanance.Api.Tests" />
   </ItemGroup>
 </Project>

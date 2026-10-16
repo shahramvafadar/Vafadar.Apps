@@ -1,7 +1,7 @@
 # 03 – Architecture for entitlements, billing, local security, sync and sharing
 
 Status refreshed 2026-10-15: implemented local security and backend sections are tracked in
-[04-backlog.md](04-backlog.md); personal sync D-292 is in progress and unpublished. Remaining sections below
+[04-backlog.md](04-backlog.md); personal sync D-292 and household D-294 are locally qualified; billing D-295 is in progress. Remaining sections below
 are architectural requirements, not implementation claims. The consolidated owner decisions in
 [06-open-decisions.md](06-open-decisions.md) supersede earlier proposals. It builds on the existing layers (`docs/architecture/overview.md`): Core without
 infrastructure, Data with EF Core/SQLite, MAUI app and shared `Vafadar.*` libraries. Names below are concepts; the

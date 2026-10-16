@@ -89,6 +89,17 @@ public static class IdentityRoutes
             await tx.CommitAsync(ct);
             return await GrantAsync(signIn, user, session);
         });
+        app.MapPost("/identity/logout", async (ClaimsPrincipal principal, ServiceDbContext db,
+            TimeProvider time, CancellationToken ct) =>
+        {
+            await using var scope = await Sync.SyncRequestScope.OpenAsync(principal, db, time, ct);
+            if (scope is null) return Results.Unauthorized();
+            if (!Guid.TryParse(principal.FindFirstValue(ServiceHost.SessionClaim), out var current)) return Results.Unauthorized();
+            // Sign-out retires this actual session only. Other devices and financial/profile bindings remain separate.
+            await db.Sessions.Where(s => s.Id == current && s.UserId == scope.Owner)
+                .ExecuteUpdateAsync(setters => setters.SetProperty(s => s.Revoked, true), ct);
+            await scope.CommitAsync(ct); return Results.NoContent();
+        }).RequireAuthorization();
         app.MapGet("/sessions", async (ClaimsPrincipal principal, ServiceDbContext db, CancellationToken ct) =>
             Results.Ok(await db.Sessions.AsNoTracking().Where(s => s.UserId == principal.FindFirstValue(ClaimTypes.NameIdentifier))
                 .Select(s => new { s.Id, s.ExpiresAt, s.Revoked }).ToListAsync(ct))).RequireAuthorization();

@@ -257,6 +257,14 @@ internal static partial class DebugSnapshots
     private static async Task RunCoreAsync(App app, IServiceProvider services, string folder)
     {
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "billing-identity-layout")
+        {
+            await ReviewBillingIdentityLayoutAsync(app, services, folder); return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "billing-layout" or "billing-comparison-note" or "billing-retry-layout" or "billing-recovery-layout" or "billing-dialog-caption" or "billing-replacement-layout")
+        {
+            await ReviewBillingLayoutAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "household-transfer-dialog-layout")
         {
             await ReviewHouseholdTransferDialogsAsync(app, services, folder); return;
@@ -657,6 +665,7 @@ internal static partial class DebugSnapshots
             ("headers", AppShell.SettingsRoute, null),
             ("active-items", AppRoutes.ActiveItemsRoute, null),
             ("productplans", AppRoutes.ProductPlansRoute, null),
+            ("billingidentity", AppRoutes.BillingIdentityRoute, null),
             ("household", AppRoutes.HouseholdRoute, null),
             ("household-costs", AppRoutes.HouseholdCostsRoute, null),
             ("entry-asset-income", AppShell.EntryEditorRoute, new() { ["kind"] = nameof(EntryKind.Income), ["account"] = confirmationAsset.Id }),

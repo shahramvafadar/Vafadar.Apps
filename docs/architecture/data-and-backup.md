@@ -2246,3 +2246,19 @@ before output, post-failure detach/source usability and exact financial bytes. T
 budget failure as SQLITE_ERROR in this case. See11-household-delivery.md for scope and Android follow-up.
 Primary APIs: https://www.sqlite.org/c3ref/set_authorizer.html and
 https://www.zetetic.net/sqlcipher/sqlcipher-api/#sqlcipher_export .
+
+
+## Billing metadata is outside financial and portable data (D-295)
+
+Service billing rows and protected provider references belong to the separate PostgreSQL service schema, not
+Zanance's financial SQLite schema or existing financial migrations. Device purchase keys/routes/cache, original signed
+commands/native receipts and optional identity session live only in platform-protected private slots. Never add
+them to portable preferences or financial backup tables. Explicit private-state recovery preserves old slots and
+uses a separate restore-only candidate; normal Load/Continue cannot replace a lost key or claim payment.
+
+Current snapshots fully replace old private paid cache after signature/nonce/device/environment/time validation;
+recent terminal history is bounded without deleting the service history. Original operation replies authorize only
+the exact native completion, not a current paid grant. Complete service backups must retain PostgreSQL and the
+original private protection/signing authority together; a database alone cannot decrypt protected references.
+Provider credentials remain separate operator-owned private mounts. The existing latest household privacy-marker
+restore rule is unchanged.

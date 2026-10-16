@@ -7,7 +7,7 @@ function Assert-ZananceAndroidPrivacy {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)] [string]$Package,
-        [Parameter(Mandatory = $true)] [ValidateSet('Offline', 'Cloud')] [string]$Variant,
+        [Parameter(Mandatory = $true)] [ValidateSet('Offline', 'Cloud', 'Billing')] [string]$Variant,
         [Parameter(Mandatory = $true)] [AllowEmptyCollection()] [string[]]$Permissions,
         [bool]$Debuggable)
     if ($Package -ne 'pro.vafadar.zanance') { throw 'The Zanance application package is required.' }
@@ -15,12 +15,14 @@ function Assert-ZananceAndroidPrivacy {
     $allowed = @('android.permission.POST_NOTIFICATIONS', 'android.permission.RECEIVE_BOOT_COMPLETED',
         'android.permission.USE_BIOMETRIC', 'android.permission.USE_FINGERPRINT',
         'pro.vafadar.zanance.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION')
-    if ($Variant -eq 'Cloud') { $allowed += 'android.permission.INTERNET' }
+    if ($Variant -in @('Cloud', 'Billing')) { $allowed += 'android.permission.INTERNET' }
+    if ($Variant -eq 'Billing') { $allowed += 'com.android.vending.BILLING' }
     $unexpected = @($Permissions | Where-Object { $_ -notin $allowed })
     if ($unexpected.Count -gt 0) { throw ('Unexpected permissions: ' + ($unexpected -join ', ')) }
-    if ($Variant -eq 'Cloud' -and 'android.permission.INTERNET' -notin $Permissions) {
-        throw 'The Cloud variant must declare INTERNET; check the build configuration.'
+    if ($Variant -in @('Cloud', 'Billing') -and 'android.permission.INTERNET' -notin $Permissions) {
+        throw 'The selected online variant must declare INTERNET; check the build configuration.'
     }
+    if ($Variant -eq 'Billing' -and 'com.android.vending.BILLING' -notin $Permissions) { throw 'The Billing variant must declare its store permission.' }
     foreach ($required in @('android.permission.POST_NOTIFICATIONS', 'android.permission.RECEIVE_BOOT_COMPLETED')) {
         if ($required -notin $Permissions) { throw ('Missing reminder permission: ' + $required) }
     }

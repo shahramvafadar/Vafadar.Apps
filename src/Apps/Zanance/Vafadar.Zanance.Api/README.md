@@ -1,11 +1,15 @@
-# Zanance local identity service
+# Zanance local identity, synchronization and purchase service
 
-Optional ASP.NET Core identity, durable device grants and private storage. D-272 delivered the local
-identity foundation. The current unpublished batch adds owner-approved local personal financial
-sync; its wire protocol has real two-client evidence, but the complete application feature is not
-delivered. See [current scope and evidence](../docs/quality/local-personal-sync.md). Household sharing,
-billing, public OAuth and hosted deployment remain separate gates. Default offline builds remain
-independent; only the explicit personal-sync edition offers the local service connection.
+Local identity D-272, personal sync D-292, isolated current-machine hosting D-293 and local household E2EE D-294
+are qualified in their documented local scope. D-295 adds canonical purchase verification, original signed client
+continuation/current state, protected references, durable notification/acknowledgement work and cross-distribution
+identity-bound Pro prerequisites. Public billing remains closed. Native StoreKit2/Mac, genuine store products/
+credentials/sandbox, public callbacks, physical platforms and commercial/publication acceptance remain open.
+No owner credential, payment or live web checkout was introduced. Default offline builds remain independent.
+See [billing scope and evidence](../docs/enhancements/2026-10-commercial-release/12-billing-delivery.md).
+
+The legacy independent D-272 commands below are separate from the isolated current-machine Docker stack;
+current hosted operations are documented in eng/hosting/README.md at the repository root.
 
 ## Run the independent local service
 

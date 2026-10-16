@@ -46,3 +46,6 @@ eng/git-hooks/* text eol=lf
 eng/native/sqlcipher/inputs.lock.json text eol=crlf
 eng/native/sqlcipher/android.inputs.lock.json text eol=crlf
 eng/native/sqlcipher/windows.crypto.profile.json text eol=crlf
+
+# Retain the upstream SDK notice text verbatim, including its original end-of-line spaces.
+src/Apps/Zanance/Vafadar.Zanance.App/Resources/Raw/ThirdPartyNotices.txt whitespace=-blank-at-eol

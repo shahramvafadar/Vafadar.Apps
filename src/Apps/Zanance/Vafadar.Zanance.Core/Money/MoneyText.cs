@@ -17,6 +17,14 @@ public static class MoneyText
     private const char LeftToRightMark = '\u200E';
     private const char Minus = '−';
 
+    /// <summary>Preserves an actual store-formatted price without recalculating a charge or ledger amount.</summary>
+    public static string ProviderPrice(string formattedPrice)
+    {
+        if (string.IsNullOrWhiteSpace(formattedPrice) || formattedPrice.Length > 128 || formattedPrice.Any(char.IsControl))
+            throw new ArgumentException("A bounded actual provider price is required.", nameof(formattedPrice));
+        return $"{LeftToRightIsolate}{LeftToRightMark}{formattedPrice}{LeftToRightMark}{PopDirectionalIsolate}";
+    }
+
     /// <summary>Formats <paramref name="minor"/> units of <paramref name="currencyCode"/>, e.g. <c>−12.50 EUR</c>.</summary>
     /// <param name="minor">Amount in minor units.</param>
     /// <param name="currencyCode">ISO currency code.</param>

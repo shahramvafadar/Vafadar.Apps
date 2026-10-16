@@ -2,7 +2,7 @@
 .SYNOPSIS
     Verifies the declared Android permissions of a complete Zanance APK, without reading app secrets.
 .DESCRIPTION
-    Checks the shipped binary rather than its source manifest. Select Offline or Cloud explicitly: Debug,
+    Checks the shipped binary rather than its source manifest. Select Offline, Cloud or Billing explicitly: Debug,
     unknown permissions and an unexpected network permission fail. This is a static boundary check, not a
     runtime traffic audit, OAuth acceptance or a store privacy declaration.
 .EXAMPLE
@@ -10,7 +10,7 @@
 #>
 param(
     [Parameter(Mandatory = $true)] [string]$Path,
-    [Parameter(Mandatory = $true)] [ValidateSet('Offline', 'Cloud')] [string]$Variant,
+    [Parameter(Mandatory = $true)] [ValidateSet('Offline', 'Cloud', 'Billing')] [string]$Variant,
     [string]$SdkRoot)
 $ErrorActionPreference = 'Stop'
 $apkFile = (Resolve-Path -LiteralPath $Path).Path

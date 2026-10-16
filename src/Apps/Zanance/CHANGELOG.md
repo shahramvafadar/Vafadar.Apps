@@ -6,6 +6,16 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Local Android store billing (D-295; genuine store acceptance pending)
+
+- Show actual store offers and renewal terms separately from the plan comparison; explain reviewed subscription changes without starting a parallel purchase.
+- Keep local store Plus account-free, offer optional Zanance identity, and bind verified Pro to the same identity across supported distributions.
+- Continue the original pending purchase after a lost response; keep private purchase keys/cache outside financial backups and offer explicit store restoration after private-state loss.
+- Preserve paid time after renewal cancellation and distinguish scheduled changes, refund/revocation, store grace and a bounded verification outage.
+- Provide private verification/notification/acknowledgement service code and future identity-bound web prerequisites, with no live web checkout or commercial activation.
+- Native StoreKit2/Mac implementation, genuine store sandbox, public provider setup and physical-device/release acceptance remain open.
+
+
 - Read shared financial history without keeping every old version in memory; preserve existing money and review decisions.
 
 - Close shared sync, administration and history actions immediately after confirmed device-access refusal, while keeping downloaded finances, keys and unfinished work.

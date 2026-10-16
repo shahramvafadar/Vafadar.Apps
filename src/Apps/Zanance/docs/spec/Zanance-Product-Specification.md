@@ -6071,3 +6071,26 @@ Earlier in-progress notes are historical. Public/commercial activation, physical
 external security review and publication remain separate gates; identity erasure and ciphertext recall are not
 claimed. Continue the already approved complete billing/future-web-prerequisite batch without helper-only slices
 or repeated unrelated successful checks.
+
+
+### Section31 current delivery: D-295 local billing; platform/store acceptance still open
+
+The local Android/service billing composition is implemented: actual Play9.1 catalog/price phases and retained
+native intent, explicit original subscription replacement/restore, account-free local Plus, confirmed-identity Pro,
+canonical provider verification, signed current/private cache, notification/acknowledgement continuation and original
+identity UI. Future web is an identity-bound reserved issuer, with no checkout or unverified grant route. Principal,
+environment, purchase origin, app distribution and financial profile stay separate. Commercial quotas stay inactive.
+
+Source-linked policy/application cases, actual PostgreSQL and authenticated HTTP continuation/ownership/refusal
+cases, strict builds, changed native layouts and the current signed Release APK are qualified locally. Earlier
+successful household/cipher/full-suite/native-private-storage scenarios were not repeated. The last whole existing
+baseline remains3753; focused billing cases are separately listed, not a newly executed complete-suite total.
+
+This does not finish cross-platform billing or ZCR-BIL-05: StoreKit2 native implementation/build in the actual Mac
+clone, genuine store products/provider credentials/sandbox purchases/renewals/refunds, public callbacks/TLS routing,
+physical devices, SDK traffic/privacy and production/store signing remain explicit gates. No owner's credential,
+new account, payment or commercial activation was used. Windows commercial remains outside the current scope.
+Android-first local delivery can be retained without holding already approved independent work for the unavailable
+Mac/store environment; this changes execution order, not approved product scope.
+
+Canonical evidence: enhancements/2026-10-commercial-release/12-billing-delivery.md. Earlier no-billing statements describe their historical phase, not current source.

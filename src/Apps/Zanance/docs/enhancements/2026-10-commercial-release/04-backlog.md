@@ -57,11 +57,11 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-ENT-03 | Downgrade flow: choose active items, read-only rest | 3 | P1 | M | Implemented locally (D-173 bounded review closed; actual shared-server lifecycle and native release acceptance remain) | ENT-02 |
 | ZCR-ENT-04 | Plan screen, limit messages that keep the form, "continue with Free" | 3/6 | P1 | M | In progress (local comparison, readiness/reasons and retained outcomes delivered; remaining operation feedback plus verified billing/provider UI open) | ENT-02, translations |
 | ZCR-ENT-05 | Existing users and test builds: migration to plans (no limits before approval) | 3 | P1 | S | Current test-build/upgrade policy verified (D-277); customer activation/announcement remain owner gates | OD-03 |
-| ZCR-BIL-01 | Play Billing/StoreKit 2 catalog and identity-bound future-web prerequisites | 6 | P1 | L | Approved Android/iOS scope; Windows commercial delivery and live web checkout excluded | ENT-01, OD-08 approved |
-| ZCR-BIL-02 | Verification service, notifications, idempotency, lifecycle states | 6 | P1 | L | Proposed | BIL-01, ID-01 |
-| ZCR-BIL-03 | Secure entitlement cache, offline window, clock changes | 6 | P1 | M | Proposed | BIL-02 |
-| ZCR-BIL-04 | Plus Lifetime, Lifetime-owner Pro discount, campaigns, trial | 6 | P1 | M | Proposed | BIL-02, OD-06, OD-07 |
-| ZCR-BIL-05 | Sandbox test matrix; production activation (owner only) | 6 | P1 | M | Proposed | BIL-01..04 |
+| ZCR-BIL-01 | Play Billing/StoreKit 2 catalog and identity-bound future-web prerequisites | 6 | P1 | L | In progress (D-295 local Android/identity-bound cross-store service delivered; native StoreKit2/Mac and genuine store acceptance remain; web checkout/Windows commercial excluded) | ENT-01, OD-08 approved |
+| ZCR-BIL-02 | Verification service, notifications, idempotency, lifecycle states | 6 | P1 | L | In progress (D-295 canonical verification/notifications/durable lifecycle qualified locally; genuine provider/public acceptance remains) | BIL-01, ID-01 |
+| ZCR-BIL-03 | Secure entitlement cache, offline window, clock changes | 6 | P1 | M | In progress (D-295 signed private cache/clock/original-request/recovery qualified locally and Android storage checked; iOS/device acceptance remains) | BIL-02 |
+| ZCR-BIL-04 | Plus Lifetime, Lifetime-owner Pro discount, campaigns, trial | 6 | P1 | M | In progress (D-295 Lifetime/trial/discount/replacement policy and actual-price review qualified locally; genuine store eligibility/sandbox matrix remains) | BIL-02, OD-06, OD-07 |
+| ZCR-BIL-05 | Sandbox test matrix; production activation (owner only) | 6 | P1 | M | In progress (D-295 local fixture/native qualification only; real store sandbox and owner production activation remain unchecked) | BIL-01..04 |
 | ZCR-ID-01 | Optional identity, backend foundation, operations | 3 | P1 | L | D-293 isolated current-machine Docker deployment, private-file restore and retained-key certificate renewal locally qualified; public DNS/routing and real mail remain external gates | OD-02 approved; public deployment/identity acceptance |
 | ZCR-SYNC-01 | Change log, outbox, versions, tombstones | 4 | P1 | L | Implemented and locally qualified D-292: original service/protected Windows/Android HTTP, durable staging, complete graph and native UI pass; hosted CI separate | ID-01 |
 | ZCR-SYNC-02 | Conflicts, idempotent posting, restore into a synced profile | 4 | P1 | L | Implemented and locally qualified D-292: explicit complete conflicts/groups/attachments, idempotency and safe restore pass; external platform gates separate | SYNC-01 |
@@ -2530,3 +2530,14 @@ D-294 full operational privacy restoration now passed on independent source/targ
 A separate real retained-owner counterexample showed that the original deletion workspace depended on forbidden financial refresh. The same original protected files/keys and31-day retained service state now complete owner-only opaque privacy checkpoint review, same-device fresh-session possession, original consent and retirement without fetching financial data or epoch grants. Actual financial/key resources and normal local writes stayed refused; every local financial column was preserved. The existing historical trusted root signs only this exact privacy request; newer opaque checkpoint metadata never grants roster/epoch/financial authority, and a missing/different root fails closed. Main confirmation refetches the exact reviewed checkpoint before persisting consent. No schema, dependency or resource changed, so no model regeneration or unchanged resource/layout matrix was repeated. New strict main Windows/Android builds passed; whole D-294 and native destructive-dialog/mobile acceptance remain unfinished. See11-household-delivery.md for current fixtures and exact scope.
 
 Current SHR-01..04 local completion and exact gates supersede the earlier chronological D-294 in-progress notes. See11-household-delivery.md. The next ready complete batch is BIL-01..05 local implementation and future-web prerequisites; actual store sandbox, signing and production activation remain evidence/owner gates.
+
+## Current billing delivery boundary (D-295)
+
+The local Android/service end-to-end implementation is retained as one substantial delivery, including private
+cache/recovery, actual native catalog/intent/replacement code, original comparison/identity UI and canonical
+PostgreSQL/HTTP authority. Details and immutable evidence are in12-billing-delivery.md. This does not mark the
+whole cross-platform commercial wave Done. Native StoreKit2 must be implemented and tested on the actual Mac;
+genuine store products/credentials/sandbox/public callbacks and commercial activation remain external gates.
+Continue ready approved German accountant-export work while those environments are unavailable; preserve the
+Mac/store work in this current backlog. No new owner scope decision, Windows commercial phase or paid resource
+is implied. Do not repeat delivered household/cipher/full-suite checks as a substitute for remaining implementation.

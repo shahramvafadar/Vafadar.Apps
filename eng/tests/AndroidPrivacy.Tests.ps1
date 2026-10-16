@@ -1,4 +1,5 @@
 # AT-76: test forbidden capabilities and configuration errors without a device, secrets or extra test modules.
+param([switch]$BillingOnly)
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot '../modules/AndroidPrivacy.psm1') -Force
 $base = @('android.permission.POST_NOTIFICATIONS', 'android.permission.RECEIVE_BOOT_COMPLETED',
@@ -17,6 +18,19 @@ $cases = @(
     @{ Name = 'Debug is not a Release handoff'; Variant = 'Offline'; Permissions = $base; Debuggable = $true; Pass = $false },
     @{ Name = 'Missing reminder permission fails'; Variant = 'Offline'; Permissions = @('android.permission.RECEIVE_BOOT_COMPLETED'); Pass = $false }
 )
+$billing = $base + 'android.permission.INTERNET' + 'com.android.vending.BILLING'
+$newCases = @(
+    @{ Name = 'Billing declares exact store and network permissions'; Variant = 'Billing'; Permissions = $billing; Pass = $true },
+    @{ Name = 'Billing refuses missing store permission'; Variant = 'Billing'; Permissions = $base + 'android.permission.INTERNET'; Pass = $false },
+    @{ Name = 'Billing refuses missing network permission'; Variant = 'Billing'; Permissions = $base + 'com.android.vending.BILLING'; Pass = $false },
+    @{ Name = 'Billing refuses location'; Variant = 'Billing'; Permissions = $billing + 'android.permission.ACCESS_FINE_LOCATION'; Pass = $false },
+    @{ Name = 'Billing refuses advertising id'; Variant = 'Billing'; Permissions = $billing + 'com.google.android.gms.permission.AD_ID'; Pass = $false },
+    @{ Name = 'Billing refuses network state'; Variant = 'Billing'; Permissions = $billing + 'android.permission.ACCESS_NETWORK_STATE'; Pass = $false },
+    @{ Name = 'Cloud still refuses a billing APK'; Variant = 'Cloud'; Permissions = $billing; Pass = $false },
+    @{ Name = 'Offline still refuses store permission'; Variant = 'Offline'; Permissions = $base + 'com.android.vending.BILLING'; Pass = $false },
+    @{ Name = 'Billing refuses debugger packaging'; Variant = 'Billing'; Permissions = $billing; Debuggable = $true; Pass = $false }
+)
+$cases = if ($BillingOnly) { $newCases } else { $cases + $newCases }
 foreach ($case in $cases) {
     $package = 'pro.vafadar.zanance'
     if ($case.Package) { $package = $case.Package }

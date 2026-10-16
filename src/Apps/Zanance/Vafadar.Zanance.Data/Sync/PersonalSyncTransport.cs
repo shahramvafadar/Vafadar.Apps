@@ -29,6 +29,8 @@ public sealed class PersonalSyncSession
     public string RefreshToken { get; init; } = "";
     /// <summary>Absolute renewal boundary from the injected clock.</summary>
     public DateTimeOffset ExpiresAt { get; init; }
+    /// <summary>Actual service-confirmed subject, retained only with this private session for offline identity scope; never a client claim.</summary>
+    public string? UserId { get; init; }
     /// <inheritdoc />
     public override string ToString() => nameof(PersonalSyncSession);
 }
@@ -78,7 +80,7 @@ public sealed class PersonalSyncTransport : IProfileSynchronizationTransport, ID
                 SyncCredentialJsonContext.Default.SyncSignInBody, ct);
             // Do not persist a credential for an endpoint that cannot resolve its actual authenticated owner.
             var identity = await SendCoreAsync(HttpMethod.Get, "sync/identity", null, PersonalSyncJsonContext.Default.SyncIdentity, session, ct);
-            await tokens.WriteAsync(credentialKey, session, ct); return identity;
+            await tokens.WriteAsync(credentialKey, WithIdentity(session, identity.Id), ct); return identity;
         }
         finally { requests.Release(); }
     }
@@ -88,6 +90,31 @@ public sealed class PersonalSyncTransport : IProfileSynchronizationTransport, ID
     {
         await requests.WaitAsync(ct);
         try { await tokens.RemoveAsync(credentialKey, ct); }
+        finally { requests.Release(); }
+    }
+
+    /// <summary>Revokes only this actual remote session, then forgets its local credentials even if the remote response is lost.</summary>
+    public async Task SignOutAsync(CancellationToken ct = default)
+    {
+        await requests.WaitAsync(ct);
+        try
+        {
+            try
+            {
+                var current = await tokens.ReadAsync(credentialKey, ct);
+                if (current is null) return;
+                var session = await SessionAsync(ct);
+                using var request = Request(HttpMethod.Post, "identity/logout", null, session);
+                using var response = await http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, ct);
+                Demand(response);
+            }
+            finally
+            {
+                // The shared peer gate prevents a concurrent successful sign-in from being removed by this old cleanup.
+                using var cleanup = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+                await tokens.RemoveAsync(credentialKey, cleanup.Token);
+            }
+        }
         finally { requests.Release(); }
     }
 
@@ -230,6 +257,49 @@ public sealed class PersonalSyncTransport : IProfileSynchronizationTransport, ID
             finally { requests.Release(); }
         }
     }
+    /// <summary>Reads the exact current private session subject; old sessions need one actual authenticated identity query.</summary>
+    public async Task<string?> BillingIdentityAsync(CancellationToken ct = default)
+    {
+        await requests.WaitAsync(ct);
+        try
+        {
+            var session = await tokens.ReadAsync(credentialKey, ct);
+            if (session is null) return null;
+            if (session.UserId is { Length: > 0 and <= 256 } user) return user;
+            session = await SessionAsync(ct);
+            var identity = await SendCoreAsync(HttpMethod.Get, "sync/identity", null, PersonalSyncJsonContext.Default.SyncIdentity, session, ct);
+            if (identity.Id is not { Length: > 0 and <= 256 }) throw new InvalidDataException("Current identity unavailable.");
+            await tokens.WriteAsync(credentialKey, WithIdentity(session, identity.Id), ct); return identity.Id;
+        }
+        finally { requests.Release(); }
+    }
+
+    /// <summary>Uses the actual shared rotating identity session for a typed billing registration only.</summary>
+    public Task<Core.Commerce.BillingRegistrationResult> BillingRegisterAsync(string expectedUser, Core.Commerce.BillingRegistrationEnvelope input, CancellationToken ct = default)
+        => BillingAuthenticatedAsync(expectedUser, "billing/devices", input, Core.Commerce.BillingJson.Default.BillingRegistrationEnvelope,
+            Core.Commerce.BillingJson.Default.BillingRegistrationResult, ct);
+
+    /// <summary>Uses the same identity serialization for an exact original signed billing command only.</summary>
+    public Task<Core.Commerce.BillingCommandResult> BillingCommandAsync(string expectedUser, Guid customer, Core.Commerce.BillingSignedRequest input, CancellationToken ct = default)
+        => BillingAuthenticatedAsync(expectedUser, "billing/devices/" + customer.ToString("D") + "/commands", input,
+            Core.Commerce.BillingJson.Default.BillingSignedRequest, Core.Commerce.BillingJson.Default.BillingCommandResult, ct);
+
+    private async Task<TResponse> BillingAuthenticatedAsync<TBody, TResponse>(string expectedUser, string path, TBody body,
+        JsonTypeInfo<TBody> bodyType, JsonTypeInfo<TResponse> responseType, CancellationToken ct)
+    {
+        if (string.IsNullOrWhiteSpace(expectedUser) || expectedUser.Length > 256) throw new InvalidDataException("Current billing identity required.");
+        await requests.WaitAsync(ct);
+        try
+        {
+            var session = await SessionAsync(ct);
+            if (session.UserId != expectedUser) throw new InvalidDataException("Current billing identity changed.");
+            return await SendCoreAsync(HttpMethod.Post, path, JsonContent.Create(body, bodyType), responseType, session, ct);
+        }
+        finally { requests.Release(); }
+    }
+    private static PersonalSyncSession WithIdentity(PersonalSyncSession session, string? user) => new()
+    { AccessToken = session.AccessToken, RefreshToken = session.RefreshToken, ExpiresAt = session.ExpiresAt, UserId = user };
+
     private async Task<PersonalSyncSession> SessionAsync(CancellationToken ct)
     {
         verifyAccess?.Invoke();
@@ -238,6 +308,7 @@ public sealed class PersonalSyncTransport : IProfileSynchronizationTransport, ID
         try
         {
             var renewed = await GrantAsync("identity/refresh", new SyncRefreshBody { RefreshToken = session.RefreshToken }, SyncCredentialJsonContext.Default.SyncRefreshBody, ct);
+            renewed = WithIdentity(renewed, session.UserId);
             await tokens.WriteAsync(credentialKey, renewed, ct); return renewed;
         }
         catch (PersonalSyncHttpException error) when (error.Status == HttpStatusCode.Unauthorized)

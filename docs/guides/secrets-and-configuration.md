@@ -117,3 +117,20 @@ internal software machine keys remain only in Docker volumes. Never print or exp
 Complete private snapshots stream directly between Docker-owned volumes; runner workflows upload no private data.
 Public activation requires fresh production authority, external DNS/443 and real mail, never known fictional users.
 Transport renewal preserves historical protection material; interrupted/partial authority fails closed for inspection.
+
+
+## Billing operator boundary (D-295)
+
+The API billing endpoints/workers are closed unless Billing:LocalQualification is explicitly enabled in an
+allowed local Development/Integration or original fictitious localhost self-hosted environment. This is not a
+production switch and cannot activate public hosting. The app's normal paid issuer is fixed at
+https://api.zanance.vafadar.pro/ with system TLS; a user-selected sync peer cannot become a paid issuer.
+
+Only the owner/operator personally supplies a Google service-account file or Apple P8 key as a direct regular
+file under the service private billing-credentials directory. Configure paths with Billing:Google:ServiceAccountFile
+or Billing:Apple:PrivateKeyFile; Apple issuer/key/application identifiers and notification audience/sender metadata
+come from the owner's actual registrations. Never print/read/copy those owner values during a review, place them
+in source/app configuration, use ambient machine credentials or invent products. Provider verification consumes
+only the explicitly mounted maintained credentials. Public catalogue ids/terms/offer windows belong under
+Billing:Catalog:{issuer}:{environment}:{logicalProduct}; they establish neither actual prices nor store eligibility.
+No real operator credentials or products were configured during local D-295 qualification.

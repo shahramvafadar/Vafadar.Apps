@@ -13,6 +13,7 @@
     ./eng/scripts/Build-AndroidApk.ps1 -Configuration Debug
     ./eng/scripts/Build-AndroidApk.ps1 -Offline -Output artifacts/android-offline
     ./eng/scripts/Build-AndroidApk.ps1 -PersonalSync -Output artifacts/android-personal-sync
+    ./eng/scripts/Build-AndroidApk.ps1 -Billing -BillingSandbox -Output artifacts/android-billing-sandbox
 #>
 param(
     [ValidateSet('Release', 'Debug')] [string]$Configuration = 'Release',
@@ -20,10 +21,15 @@ param(
     [string]$Output = (Join-Path $PSScriptRoot '..\..\artifacts\android'),
     [ValidateSet('', 'pro.vafadar.zanance.householdlifecycle')] [string]$ReviewApplicationId = '',
     [switch]$PersonalSync,
+    [switch]$Billing,
+    [switch]$BillingSandbox,
     [switch]$Offline)
 $ErrorActionPreference = 'Stop'
-if ($Offline -and $PersonalSync) {
-    throw 'An offline APK cannot enable personal network synchronization.'
+if ($Offline -and ($PersonalSync -or $Billing)) {
+    throw 'An offline APK cannot enable personal synchronization or store billing.'
+}
+if ($BillingSandbox -and -not $Billing) {
+    throw 'The billing sandbox requires the explicit billing edition.'
 }
 if ($Offline -and $Configuration -ne 'Release') {
     throw 'Offline privacy verification requires Release; Debug includes debugger network access.'
@@ -31,7 +37,10 @@ if ($Offline -and $Configuration -ne 'Release') {
 # Empty global properties override local provider configuration without reading, logging or changing it.
 # Explicit edition properties outrank ambient environment/MSBuild defaults. In particular, -Offline
 # must not inherit a network-enabled sync edition from a previous local build.
-$cloudProperties = @('-p:ZanancePersonalSyncEnabled=' + $PersonalSync.IsPresent.ToString().ToLowerInvariant())
+$cloudProperties = @(
+    ('-p:ZanancePersonalSyncEnabled=' + $PersonalSync.IsPresent.ToString().ToLowerInvariant()),
+    ('-p:ZananceBillingEnabled=' + $Billing.IsPresent.ToString().ToLowerInvariant()),
+    ('-p:ZananceBillingSandbox=' + $BillingSandbox.IsPresent.ToString().ToLowerInvariant()))
 if ($ReviewApplicationId) {
     if ($Configuration -ne 'Debug') { throw 'Independent review identity is Debug-only; Release keeps the permanent product identity.' }
     $cloudProperties += ('-p:ApplicationId=' + $ReviewApplicationId)

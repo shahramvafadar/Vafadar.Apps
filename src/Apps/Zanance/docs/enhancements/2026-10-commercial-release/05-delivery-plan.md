@@ -21,7 +21,7 @@ slice is a delivery. Historical proposals and handoff notes below do not reopen 
 | 1 | Personal sync D-292 locally delivered | Original protected Windows/Android HTTP, complete graph/conflicts/device UI, focused final cases and current signed APK qualified; hosted/platform acceptance separate |
 | 2 | Current-machine deployment D-293 locally qualified | Isolated API/PostgreSQL/private storage, nonempty-file restore, TLS refusals and retained-key renewal pass; public DNS/routing and real mail remain external gates |
 | 3 | Local household sharing D-294 locally qualified | E2EE from first delivery, invitations/roles, member key rotation/revocation/recovery, selective sharing and approved 30+90-day expiry; real independent clients |
-| 4 | Billing and future-web prerequisites | Android/iOS adapters and sandbox lifecycle, trial/discounts, verified identity-bound grants independent of distribution; web checkout and commercial Windows excluded |
+| 4 | D-295 local Android/service billing qualified; cross-platform/store gates in progress | Android native code/private cache/original UI and PostgreSQL/HTTP authority delivered locally; native StoreKit2/Mac and genuine sandbox/provider acceptance remain explicit; no web checkout/Windows commercial |
 | 5 | German tax preparation | Accountant export, current-year employee/freelancer scope; expert review required before official calculations, no filing; other countries labelled without an ETA |
 | 6 | Approved import and provider prerequisites | German bank research/import first, then USA and other markets; local AI consent/credits and rates/source/cache/manual fallback; no unapproved live provider or spending |
 | 7 | Final platform/release qualification | Existing six languages, physical-device/accessibility/performance and actual Mac/iOS environment; provider/account/signing/expert gates remain explicit; production publication only after readiness |
@@ -1803,3 +1803,19 @@ Earlier in-progress notes are historical. Public/commercial activation, physical
 external security review and publication remain separate gates; identity erasure and ciphertext recall are not
 claimed. Continue the already approved complete billing/future-web-prerequisite batch without helper-only slices
 or repeated unrelated successful checks.
+
+## D-295 locally qualified Android/service boundary and remaining execution
+
+The approved product scope is unchanged. Android-first execution can finish its substantial native/service/local
+qualification without pretending the unavailable Mac or genuine stores have passed. D-295 retains the complete
+local Android/private-client/service composition, current signed APK, exact changed checks and source/binary
+notices together; the overall BIL-01..05 rows remain In progress. The earlier plan to hold all source until a native
+Mac bridge is built is superseded by this concrete execution boundary, consistent with the independent-work rule
+above. Do not claim an iOS adapter or real store interoperability from Windows/fixture results.
+
+Next ready substantial delivery: Germany/current-year accountant export and supported-country expansion framing,
+with official research and no unreviewed tax filing/calculation claim. Continue bank import research/formats,
+AI consent/credit and rates provenance/cache prerequisites in approved order. Actual Mac StoreKit2/encryption,
+physical devices, provider credentials/store sandbox, public DNS/TLS/mail and release/commercial activation stay
+visible and incomplete until their actual environments/evidence are available. Do not ask settled product choices
+again or substitute repeated successful unrelated tests for these remaining deliveries.

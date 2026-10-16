@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Vafadar.Zanance.App.Features.Commerce.Billing.BillingIdentityPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui" xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
+    xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Commerce.Billing" x:DataType="local:BillingIdentityViewModel"
+    Title="{v:Translate BillingIdentity_Title}">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="12">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Label Text="{v:Translate BillingIdentity_Title}" Style="{StaticResource SectionHeader}" Margin="0" />
+                    <v:HelpButton Grid.Column="1" Topic="BillingIdentity" VerticalOptions="Start" />
+                </Grid>
+                <Label Text="{v:Translate BillingIdentity_Explanation}" />
+                <v:ChoiceChips ItemsSource="{Binding Modes}" SelectedIndex="{Binding ModeIndex, Mode=TwoWay}" IsEnabled="{Binding CanSubmit}" />
+                <VerticalStackLayout Spacing="4" IsVisible="{Binding ShowEmail}">
+                    <Label Text="{v:Translate BillingIdentity_Email}" />
+                    <Entry Text="{Binding Email}" Keyboard="Email" MaxLength="254" IsEnabled="{Binding CanSubmit}"
+                        SemanticProperties.Description="{v:Translate BillingIdentity_Email}" />
+                    <Label Text="{Binding EmailError}" Style="{StaticResource ErrorText}" IsVisible="{Binding EmailError, Converter={StaticResource IsNotNullConverter}}" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Spacing="4" IsVisible="{Binding ShowPassword}">
+                    <Label Text="{v:Translate BillingIdentity_Password}" />
+                    <Entry Text="{Binding Password}" IsPassword="True" MaxLength="256" IsEnabled="{Binding CanSubmit}"
+                        IsTextPredictionEnabled="False" IsSpellCheckEnabled="False" SemanticProperties.Description="{v:Translate BillingIdentity_Password}" />
+                    <Label Text="{Binding PasswordError}" Style="{StaticResource ErrorText}" IsVisible="{Binding PasswordError, Converter={StaticResource IsNotNullConverter}}" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Spacing="4" IsVisible="{Binding ShowChallenge}">
+                    <Label Text="{v:Translate BillingIdentity_Challenge}" />
+                    <Entry Text="{Binding Challenge}" MaxLength="36" IsEnabled="{Binding CanSubmit}" IsTextPredictionEnabled="False"
+                        SemanticProperties.Description="{v:Translate BillingIdentity_Challenge}" />
+                    <Label Text="{Binding ChallengeError}" Style="{StaticResource ErrorText}" IsVisible="{Binding ChallengeError, Converter={StaticResource IsNotNullConverter}}" />
+                    <Label Text="{v:Translate BillingIdentity_Token}" />
+                    <Entry Text="{Binding Token}" IsPassword="True" MaxLength="8192" IsEnabled="{Binding CanSubmit}"
+                        IsTextPredictionEnabled="False" IsSpellCheckEnabled="False" SemanticProperties.Description="{v:Translate BillingIdentity_Token}" />
+                    <Label Text="{Binding TokenError}" Style="{StaticResource ErrorText}" IsVisible="{Binding TokenError, Converter={StaticResource IsNotNullConverter}}" />
+                </VerticalStackLayout>
+                <Label Text="{Binding Status}" IsVisible="{Binding Status, Converter={StaticResource IsNotNullConverter}}" />
+                <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" WidthRequest="44" HeightRequest="44" Color="{DynamicResource Primary}" />
+                <Label Text="{v:Translate BillingIdentity_Privacy}" Style="{StaticResource Secondary}" />
+            </VerticalStackLayout>
+        </ScrollView>
+        <VerticalStackLayout Grid.Row="1" Margin="16,8,16,16" Spacing="8">
+            <p:WrappingAction Text="{Binding SubmitText}" Command="{Binding SubmitCommand}" Appearance="Primary" />
+            <p:WrappingAction Text="{v:Translate BillingIdentity_SignOut}" Command="{Binding SignOutCommand}" IsVisible="{Binding Connected}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

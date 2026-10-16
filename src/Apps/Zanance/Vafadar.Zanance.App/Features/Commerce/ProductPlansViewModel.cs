@@ -19,15 +19,17 @@ public sealed partial class ProductPlansViewModel : ViewModelBase
     private readonly CommercialAccessStore _store;
     private readonly Translator _translator;
     private readonly IAppInteraction _interaction;
+    private readonly IDateFormatter? _billingDates;
     private CommercialAccessSnapshot? _snapshot;
     // Comparison scope is fictitious and fixed: it never enters a provider, profile, writer or portable data.
     private static readonly EntitlementScope ComparisonScope = new(EntitlementScopeKind.PersonalProfile,
         Guid.Parse("98989898-4545-5656-6767-898989898989"));
 
     /// <summary>Creates a covered form without starting reads or changing access.</summary>
-    public ProductPlansViewModel(CommercialAccessStore store, Translator translator, IAppInteraction interaction)
+    public ProductPlansViewModel(CommercialAccessStore store, Translator translator, IAppInteraction interaction,
+        Billing.IProductBillingEnvironment? billing = null, IDateFormatter? dates = null)
     {
-        _store = store; _translator = translator; _interaction = interaction;
+        _store = store; _translator = translator; _interaction = interaction; _billing = billing; _billingDates = dates;
         Loading.PropertyChanged += (_, _) => NotifyReadiness();
     }
     /// <summary>Gets covered publication and translated retry state.</summary>
@@ -53,6 +55,8 @@ public sealed partial class ProductPlansViewModel : ViewModelBase
         ? _translator["Commercial_ProfileSelection"] : null;
     /// <summary>Gets the selected comparison description without advertising an unavailable sale.</summary>
     public string Description => _translator[$"ProductPlans_{(ProductPlan)PlanIndex}Description"];
+    /// <summary>The comparison note must not contradict an actual separately available store surface.</summary>
+    public string AvailabilityText => _translator[ShowBilling ? "Billing_ComparisonNote" : "ProductPlans_Availability"];
     /// <summary>Gets the Lifetime explanation only with the local Plus capability set.</summary>
     public bool ShowLifetime => PlanIndex != (int)ProductPlan.Free;
     /// <summary>Gets the unavailable-online-services roadmap note only for the Pro comparison.</summary>
@@ -73,10 +77,12 @@ public sealed partial class ProductPlansViewModel : ViewModelBase
             });
         }
         catch (Exception) { /* The translated covered retry surface owns read failures; no prior paid claim is published. */ }
+        if (Loading.IsReady) await LoadBillingAsync();
     }
     /// <summary>Refreshes translated captions without changing the selected tier or stored data.</summary>
     public void RefreshDisplay()
     {
+        RefreshBillingDisplay();
         var context = new CapabilityContext((ProductPlan)PlanIndex, ComparisonScope);
         var rows = new List<ProductPlanRow>();
         foreach (var (kind, key) in QuotaRows)
@@ -89,7 +95,7 @@ public sealed partial class ProductPlansViewModel : ViewModelBase
             rows.Add(new(_translator[key], _translator[PlanPolicy.Check(feature, context) == FeaturePermission.Allowed
                 ? "ProductPlans_Included" : "ProductPlans_PlusRequired"]));
         Rows = rows;
-        foreach (var name in new[] { nameof(AccessText), nameof(ProfileText), nameof(Description), nameof(ShowLifetime),
+        foreach (var name in new[] { nameof(AccessText), nameof(ProfileText), nameof(Description), nameof(AvailabilityText), nameof(ShowLifetime),
             nameof(ShowOnline), nameof(ContinueText) }) OnPropertyChanged(name);
     }
     private bool _restoringIndex;

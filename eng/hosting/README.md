@@ -119,3 +119,15 @@ The household retirement worker reports only an aggregate count of unavailable p
 room/identity ids, file paths, protected bytes or exception messages. Unknown/corrupt markers remain untouched;
 unrelated room retirement continues under separate transactions. Offline restoration still refuses unknown
 source entries, and unreadable/redirected roots do not become an empty deletion ledger (D-294 in progress).
+
+
+## Local billing service migration (D-295)
+
+The additive BillingPurchaseAuthority service migration adds seven PostgreSQL tables; no financial SQLite model
+changes. Take the original complete drained private snapshot before applying it, preserve the original protection/
+signing keys and latest household deletion markers, and run the existing migration operator before the runtime.
+The current isolated local deployment includes this migration and bundled service notices; Billing:LocalQualification
+remains false there. Genuine provider credentials/products, public callbacks and commercial activation were not
+configured. Do not promote a fictitious qualification stack or silently expose local billing endpoints publicly.
+See src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/12-billing-delivery.md for immutable image/snapshot,
+APK and exact local evidence. Unchanged whole historical-restore acceptance was not replayed.
