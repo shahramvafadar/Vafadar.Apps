@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Understand verified purchase validity (D-310)
+
+- Show original paid-through dates, grace, Lifetime and observed automatic renewal beside purchase offers.
+- Explain when saved purchase information needs verification; never guess the next charge.
+- Preserve separate device/identity history, regional dates, current access and existing financial data.
+
 ### Less repeated protected startup setup (D-309)
 
 - Reuse the original connection while checking and upgrading the protected database schema.

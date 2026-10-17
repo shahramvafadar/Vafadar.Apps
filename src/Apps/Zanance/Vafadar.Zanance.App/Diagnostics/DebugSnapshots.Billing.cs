@@ -27,13 +27,14 @@ internal static partial class DebugSnapshots
     /// <summary>Actual main comparison page and native Cancel only, with fictional store effects and an independent financial file.</summary>
     private static async Task ReviewBillingLayoutAsync(App app, IServiceProvider services, string folder)
     {
+        var ownedOnly = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "billing-owned-layout";
         var noteOnly = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "billing-comparison-note";
         var retryOnly = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "billing-retry-layout";
         var captionOnly = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "billing-dialog-caption";
         var replacementOnly = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "billing-replacement-layout";
         var restoreOnly = captionOnly || Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "billing-recovery-layout";
         if (AppInfo.Current.PackageName != "pro.vafadar.zanance.billinglayout" || !Path.GetFullPath(folder).Equals(
-            Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "artifacts", replacementOnly ? "billing-replacement-layout-d295" : captionOnly ? "billing-dialog-caption-d295" : restoreOnly ? "billing-recovery-layout-d295" : retryOnly ? "billing-retry-layout-d295" : noteOnly ? "billing-comparison-note-d295" : "billing-layout-d295")), StringComparison.OrdinalIgnoreCase))
+            Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "artifacts", ownedOnly ? "billing-owned-layout-d310" : replacementOnly ? "billing-replacement-layout-d295" : captionOnly ? "billing-dialog-caption-d295" : restoreOnly ? "billing-recovery-layout-d295" : retryOnly ? "billing-retry-layout-d295" : noteOnly ? "billing-comparison-note-d295" : "billing-layout-d295")), StringComparison.OrdinalIgnoreCase))
             throw new IOException("Exact independently owned billing layout required.");
         var complete = Path.Combine(folder, "billing-layout.complete.json");
         if (File.Exists(complete)) throw new IOException("Never replay completed billing layout.");
@@ -48,13 +49,13 @@ internal static partial class DebugSnapshots
         foreach (var language in new[] { "en", "fa", "de" })
         foreach (var theme in new[] { ThemeChoice.Light, ThemeChoice.Dark })
         foreach (var width in new[] { 360, 412, 1280 })
-        foreach (var status in replacementOnly ? new[] { ProductBillingStatus.Ready, ProductBillingStatus.ManageExisting } : restoreOnly ? new[] { ProductBillingStatus.RecoveryRequired } : retryOnly ? new[] { ProductBillingStatus.VerificationUnavailable, ProductBillingStatus.NotConfigured } : noteOnly ? new[] { ProductBillingStatus.Ready } : new[] { ProductBillingStatus.Ready, ProductBillingStatus.Pending, ProductBillingStatus.VerificationUnavailable, ProductBillingStatus.NotConfigured })
+        foreach (var status in ownedOnly ? new[] { ProductBillingStatus.VerificationUnavailable } : replacementOnly ? new[] { ProductBillingStatus.Ready, ProductBillingStatus.ManageExisting } : restoreOnly ? new[] { ProductBillingStatus.RecoveryRequired } : retryOnly ? new[] { ProductBillingStatus.VerificationUnavailable, ProductBillingStatus.NotConfigured } : noteOnly ? new[] { ProductBillingStatus.Ready } : new[] { ProductBillingStatus.Ready, ProductBillingStatus.Pending, ProductBillingStatus.VerificationUnavailable, ProductBillingStatus.NotConfigured })
         {
             var key = new BillingLayoutCase(language, theme.ToString(), width, status.ToString());
             if (cases.Contains(key)) continue;
             themes.Set(theme); await SetLanguageAsync(app, localization, language);
             window.Width = width; window.Height = 820;
-            var effect = new BillingLayoutStore(status, noteOnly, replacementOnly);
+            var effect = new BillingLayoutStore(status, noteOnly, replacementOnly, ownedOnly);
             var vm = new ProductPlansViewModel(fixture.GetRequiredService<CommercialAccessStore>(), translator,
                 services.GetRequiredService<IAppInteraction>(), effect, services.GetRequiredService<IDateFormatter>());
             var page = new ProductPlansPage(vm, localization).WithFlowDirection(localization);
@@ -76,7 +77,7 @@ internal static partial class DebugSnapshots
                 for (var wait = 0; wait < 160 && (!vm.Loading.IsReady || vm.BillingBusy || vm.BillingStatusText.Length == 0); wait++) await Task.Delay(25);
                 if (!vm.Loading.IsReady || vm.BillingBusy || !vm.ShowBilling) throw new IOException("Original billing page is not ready.");
                 var scroll = VisualDescendants(page).OfType<ScrollView>().Single(); var reads = new List<object>();
-                var captions = captionOnly ? new List<string>() : retryOnly || restoreOnly ? new List<string> { vm.BillingStatusText } : noteOnly ? new List<string> { vm.AvailabilityText } : new List<string>
+                var captions = ownedOnly ? vm.BillingOwnedPurchases.SelectMany(row => new[] { row.Title, row.Details }).ToList() : captionOnly ? new List<string>() : retryOnly || restoreOnly ? new List<string> { vm.BillingStatusText } : noteOnly ? new List<string> { vm.AvailabilityText } : new List<string>
                     { translator["Billing_Title"], vm.BillingPlanText, vm.BillingIdentityText, vm.BillingStatusText, translator["Billing_TestNotice"] };
                 if (status == ProductBillingStatus.Ready && !noteOnly)
                 {
@@ -86,7 +87,7 @@ internal static partial class DebugSnapshots
                 {
                     var label = VisualDescendants(page).OfType<Label>().Single(row => row.Text == caption);
                     await ScrollToViewIfNeededAsync(scroll, label); await Task.Delay(30); CheckCaption(label, reads);
-                    await CaptureWindowAsync(window, Path.Combine(folder, $"{language}-{theme}-{width}-{status}-{captions.IndexOf(caption)}.png"));
+                    if (!ownedOnly || caption == captions[^1]) await CaptureWindowAsync(window, Path.Combine(folder, $"{language}-{theme}-{width}-{status}-{captions.IndexOf(caption)}.png"));
                 }
                 foreach (var action in VisualDescendants(page).OfType<WrappingAction>().Where(action =>
                     restoreOnly ? ReferenceEquals(action.Command, vm.RestoreBillingCommand) : retryOnly ? ReferenceEquals(action.Command, vm.RetryBillingCommand) : noteOnly ? ReferenceEquals(action.Command, vm.BillingIdentityCommand) : ReferenceEquals(action.Command, vm.BuyBillingCommand) || ReferenceEquals(action.Command, vm.RestoreBillingCommand) ||
@@ -176,7 +177,7 @@ internal static partial class DebugSnapshots
         }
     }
     private sealed record BillingLayoutCase(string Language, string Theme, int Width, string Status);
-    private sealed class BillingLayoutStore(ProductBillingStatus status, bool hold = false, bool replacement = false) : IProductBillingEnvironment
+    private sealed class BillingLayoutStore(ProductBillingStatus status, bool hold = false, bool replacement = false, bool owned = false) : IProductBillingEnvironment
     {
         public bool Available => true;
         internal int Purchases;
@@ -186,7 +187,7 @@ internal static partial class DebugSnapshots
         internal int Restores;
         public Task<ProductBillingPresentation> LoadAsync(CancellationToken ct)
         { Reads++; return held?.Task ?? Task.FromResult(State()); }
-        private ProductBillingPresentation State() => new(status, null, null,
+        private ProductBillingPresentation State() => owned ? OwnedBillingReviewState() : new(status, null, null,
             status == ProductBillingStatus.Ready ? [new("fictional-store-choice", "Fictional Zanance Pro", "Fictional store catalog only",
                 new("fictional-store-choice", BillingProduct.ProYearly, BillingOfferKind.ProTrial,
                     [new(0, "EUR", "0.00 EUR", "P14D", 1, false), new(39990000, "EUR", "39.99 EUR", "P1Y", 0, true)], true), "fictional-store-identity",

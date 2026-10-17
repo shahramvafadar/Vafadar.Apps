@@ -6256,3 +6256,18 @@ Eight new related AT-309 cases and the original two cases qualify the ownership/
 schema fact also preserves original first-schema account, entry, settings and balance through migration.
 Native same-ciphertext evidence, final package and explicit remaining limits are recorded in
 [protected schema connection lifetime](quality/protected-schema-connection-lifetime.md).
+
+## D-310 original verified purchase lifecycle on the plan screen
+
+ENT-04's original current-plan/renewal requirement was only partially visible: the billing page showed a
+verified tier and offers, but no original owned purchase validity/renewal/lifecycle details. Display those
+facts separately from new offers and from the current access decision, preserving device/identity horizons.
+Use original provider-confirmed paid/grace ends, last verification and scheduled changes with the current
+regional date formatter. Lifetime never gets an invented expiry; automatic renewal is labeled as observed
+at last verification, never as a predicted next debit. Saved verification/outage allowance explicitly needs
+refresh. No purchase reference, receipt, account identity or provider diagnostic enters display text.
+
+All six existing languages receive real translations. Original growing labels keep native font scaling,
+commands and pinned Continue; no commercial activation, price, network provider, key, schema or permission
+changes. Exact source/test/native/package qualification and remaining real-store/Mac/device gates:
+[verified purchase lifecycle](quality/verified-purchase-lifecycle.md).

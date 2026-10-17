@@ -189,3 +189,12 @@ built xUnit DLL with `-class Vafadar.Zanance.App.Tests.ProtectedSchemaUpgradeTes
 after a narrower assertion edit, repeat only its exact `-method`. Never confuse focused coverage with a new
 complete-suite pass. The retained independent Android `schema` phase qualifies real keyed native behavior;
 it does not duplicate the algorithm or replace main-package startup and external platform acceptance.
+
+## Original purchase lifecycle presentation (D-310 / AT-310)
+
+BillingOwnedPresentationTests compile actual ProductPlans source and use verified-metadata-shaped fictional
+facts, real SQLite and localization/date formatting. Validate source lifecycle facts, then check all seven
+states, renewal on/off, grace, Lifetime, scheduled changes, separate scope and cache decisions. Compare
+original stored financial inputs and ensure live translation needs no store read. No snapshot means no
+invented history; retirement clears it. The focused six-language theory and separate absent-state case
+are seven distinct cases, not a whole-suite baseline. Native original-page checks remain separate.

@@ -1486,3 +1486,12 @@ of the existing bounded filter viewport, preserving the result/action docks. A d
 keeps the original scalable typography/colors; its last real native button owns the unchanged query, argument
 and full spoken name. Horizontal overflow is not a substitute for a readable saved-query action. Native
 selection remains read-only. [Verification](quality/saved-filter-actions-readable.md).
+
+## Verified purchase history alongside offers (D-310)
+
+Show owned purchase lifecycle in growing full-width title/detail rows on the original plan screen, separately
+from offers and current effective access. Preserve native scale, wrapping and existing pinned Continue.
+Explain saved verification and its refresh requirement. Label the original paid-through/grace-through date;
+never infer a next charge from it. Auto-renew reflects the last verified provider fact, and Lifetime has no
+invented renewal date. Keep each device/identity history horizon intact; never merge conflicting historical
+fields or expose raw account/purchase/receipt identifiers. Current regional calendar formatting stays live.

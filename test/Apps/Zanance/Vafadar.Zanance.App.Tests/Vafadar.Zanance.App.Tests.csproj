@@ -63,6 +63,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Commerce/Billing/IProductBillingEnvironment.cs" Link="Application/IProductBillingEnvironment.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Commerce/Billing/BillingOfferSelection.cs" Link="Application/BillingOfferSelection.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Commerce/ProductPlansViewModel.Billing.cs" Link="Application/ProductPlansViewModel.Billing.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Commerce/ProductPlansViewModel.OwnedPurchases.cs" Link="Application/ProductPlansViewModel.OwnedPurchases.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Commerce/ProductPlansViewModel.cs" Link="Application/ProductPlansViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Commerce/ActiveItemsViewModel.cs" Link="Application/ActiveItemsViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Commerce/QuickResourceActions.cs" Link="Application/QuickResourceActions.cs" />

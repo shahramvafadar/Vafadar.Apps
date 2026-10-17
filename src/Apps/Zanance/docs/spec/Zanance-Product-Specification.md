@@ -6307,3 +6307,13 @@ keys observes two opens becoming one, with complete raw schema/typed rows unchan
 Windows builds pass. This bounded callback improvement is not whole cold-start, two-second, ANR, phone,
 iOS or release acceptance. QA-06 stays In progress. Native/package receipts and exact limits:
 [protected schema connection lifetime](../quality/protected-schema-connection-lifetime.md).
+
+## D-310 verified purchase validity and renewal presentation
+
+The original plan screen now exposes original owned-purchase lifecycle alongside offers: paid/grace ends,
+last verification, observed auto-renewal, Lifetime and future scheduled changes. Historical device and
+identity packets remain separate from current effective rights; cached/outage facts explicitly require
+refresh. No next debit, price, early scheduled access or cancellation is inferred. No raw purchase/account/
+receipt identifiers are shown. Seven new focused cases cover all six languages and original financial
+preservation, including live retranslation without store reads. Native/build/package evidence and retained
+failures: [verified purchase lifecycle](../quality/verified-purchase-lifecycle.md). Genuine store, Mac/iOS, phone and release gates stay open.

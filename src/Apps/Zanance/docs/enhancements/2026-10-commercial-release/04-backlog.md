@@ -55,7 +55,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Implemented (D-117 / approved OD-03; 76 policy cases; no app enforcement) | OD-03 approved |
 | ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | Implemented locally (D-173 bounded review closed; enforcement inactive; activation/native release gates remain) | ENT-01 |
 | ZCR-ENT-03 | Downgrade flow: choose active items, read-only rest | 3 | P1 | M | Implemented locally (D-173 bounded review closed; actual shared-server lifecycle and native release acceptance remain) | ENT-02 |
-| ZCR-ENT-04 | Plan screen, limit messages that keep the form, "continue with Free" | 3/6 | P1 | M | In progress (local comparison, readiness/reasons and retained outcomes delivered; remaining operation feedback plus verified billing/provider UI open) | ENT-02, translations |
+| ZCR-ENT-04 | Plan screen, limit messages that keep the form, "continue with Free" | 3/6 | P1 | M | Locally delivered through D-310 (comparison, retained write outcomes and verified purchase validity/renewal/history UI); real store/provider, Mac/iOS and device acceptance remain | ENT-02, translations |
 | ZCR-ENT-05 | Existing users and test builds: migration to plans (no limits before approval) | 3 | P1 | S | Current test-build/upgrade policy verified (D-277); customer activation/announcement remain owner gates | OD-03 |
 | ZCR-BIL-01 | Play Billing/StoreKit 2 catalog and identity-bound future-web prerequisites | 6 | P1 | L | In progress (D-295 local Android/identity-bound cross-store service delivered; native StoreKit2/Mac and genuine store acceptance remain; web checkout/Windows commercial excluded) | ENT-01, OD-08 approved |
 | ZCR-BIL-02 | Verification service, notifications, idempotency, lifecycle states | 6 | P1 | L | In progress (D-295 canonical verification/notifications/durable lifecycle qualified locally; genuine provider/public acceptance remains) | BIL-01, ID-01 |
@@ -2630,3 +2630,13 @@ keys observes two opens becoming one, with complete raw schema/typed rows unchan
 Windows builds pass. This bounded callback improvement is not whole cold-start, two-second, ANR, phone,
 iOS or release acceptance. QA-06 stays In progress. Native/package receipts and exact limits:
 [protected schema connection lifetime](../../quality/protected-schema-connection-lifetime.md).
+
+## D-310 verified purchase validity and renewal presentation
+
+The original plan screen now exposes original owned-purchase lifecycle alongside offers: paid/grace ends,
+last verification, observed auto-renewal, Lifetime and future scheduled changes. Historical device and
+identity packets remain separate from current effective rights; cached/outage facts explicitly require
+refresh. No next debit, price, early scheduled access or cancellation is inferred. No raw purchase/account/
+receipt identifiers are shown. Seven new focused cases cover all six languages and original financial
+preservation, including live retranslation without store reads. Native/build/package evidence and retained
+failures: [verified purchase lifecycle](../../quality/verified-purchase-lifecycle.md). Genuine store, Mac/iOS, phone and release gates stay open.

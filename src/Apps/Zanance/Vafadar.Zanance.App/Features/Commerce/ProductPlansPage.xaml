@@ -22,6 +22,17 @@
                             <Label Text="{v:Translate Billing_Title}" Style="{StaticResource SectionHeader}" Margin="0" />
                             <Label Text="{Binding BillingPlanText}" />
                             <Label Text="{Binding BillingIdentityText}" Style="{StaticResource Secondary}" />
+                            <!-- Verified purchase history grows independently of offers; no cached date promises a new charge. -->
+                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding BillingOwnedPurchases}" Spacing="12">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="local:BillingOwnedPurchaseRow">
+                                        <VerticalStackLayout Spacing="4">
+                                            <Label Text="{Binding Title}" FontAttributes="Bold" />
+                                            <Label Text="{Binding Details}" />
+                                        </VerticalStackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
                             <Label Text="{Binding BillingStatusText}" />
                             <ActivityIndicator IsVisible="{Binding BillingBusy}" IsRunning="{Binding BillingBusy}" WidthRequest="44" HeightRequest="44" Color="{DynamicResource Primary}" />
                             <p:WrappingAction Text="{v:Translate ProductPlans_Retry}" Command="{Binding RetryBillingCommand}" IsVisible="{Binding CanRetryBilling}" />

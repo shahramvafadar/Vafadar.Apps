@@ -97,3 +97,14 @@ fixture, saves money or changes the KDF. Observe its exact live PID with `-Phase
 For a production change, build a new caller and use a fresh comparison against the same retained run. Keep
 before/after process/module identities and failure packets. A timeout is not process death. This phase is
 not whole Home startup, rendered-frame, statistical timing, phone, iOS or two-second acceptance.
+
+## Original verified purchase lifecycle (D-310)
+
+The `billing-owned` phase uses a fresh explicit run/comparison and an independent SQLite fixture. Its
+fictitious signed-metadata effect port never calls a store, payment, restore or management. The actual
+production ProductPlansPage/view model/formatter render paid-through, grace, scheduled change, Lifetime and
+cached-verification facts in en/fa/de and light/dark. Check original Android text layouts/ellipsis/geometry
+and original stored settings/accounts/entries; never weaken flags, change device settings or use main data.
+Observe the same exact live PID with `-Phase billing-owned -Comparison <pass>`. Preserve failure packets
+and continue the same fixture after a caller correction; completed comparisons cannot be repeated. This
+is native presentation qualification, not genuine signed-provider/store or physical/iOS acceptance.

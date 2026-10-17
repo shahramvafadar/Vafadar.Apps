@@ -24,6 +24,8 @@ public sealed partial class ProductPlansViewModel
     [ObservableProperty] public partial string BillingStatusText { get; private set; } = "";
     /// <summary>Actual eligible store choices, without design prices or synthetic checkout.</summary>
     [ObservableProperty] public partial IReadOnlyList<BillingOfferRow> BillingOffers { get; private set; } = [];
+    /// <summary>Original verified purchase facts, separately scoped to device and identity; never an entitlement grant.</summary>
+    public IReadOnlyList<BillingOwnedPurchaseRow> BillingOwnedPurchases => OwnedPurchases();
     /// <summary>Only verified ready state can start a new native payment.</summary>
     public bool CanBuyBilling => ShowBilling && _billingPage is not null && !_billingReview && !BillingBusy && _billingPresentation?.Status == ProductBillingStatus.Ready;
     /// <summary>Actual owned-purchase restoration never launches payment.</summary>
@@ -43,7 +45,7 @@ public sealed partial class ProductPlansViewModel
     /// <summary>Retires observation without deleting original protected intent or an outstanding SDK task.</summary>
     public void DeactivateBilling()
     {
-        _billingEpoch++; _billingPage?.Cancel(); _billingPage?.Dispose(); _billingPage = null; BillingOffers = []; BillingBusy = false; _billingPresentation = null;
+        _billingEpoch++; _billingPage?.Cancel(); _billingPage?.Dispose(); _billingPage = null; BillingOffers = []; BillingBusy = false; _billingPresentation = null; OnPropertyChanged(nameof(BillingOwnedPurchases));
     }
     private async Task LoadBillingAsync()
     {
@@ -65,7 +67,7 @@ public sealed partial class ProductPlansViewModel
             "Billing_Status_" + (_billingPresentation?.Status.ToString() ?? "VerificationUnavailable")];
         BillingOffers = _billingPresentation?.Offers.Select(offer => new BillingOfferRow(offer, offer.Title,
             Terms(offer), _translator["Billing_ContinueStore"])).ToArray() ?? [];
-        OnPropertyChanged(nameof(BillingPlanText)); OnPropertyChanged(nameof(BillingIdentityText)); NotifyBillingCommands();
+        OnPropertyChanged(nameof(BillingPlanText)); OnPropertyChanged(nameof(BillingIdentityText)); OnPropertyChanged(nameof(BillingOwnedPurchases)); NotifyBillingCommands();
     }
     private string Terms(NativeBillingOffer offer)
     {

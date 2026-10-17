@@ -3548,3 +3548,13 @@ across retained runs, with only the final strengthened fact rerun after its asse
 a new full-suite run. Actual native keyed reference/tenfold files retain complete raw data and restore the
 closed state with one physical open. Main-package and external limits are recorded in
 [the delivery evidence](quality/protected-schema-connection-lifetime.md); QA-06 remains In progress.
+
+## AT-310 - Verified purchase validity and renewal presentation (D-310)
+
+The original plan screen now exposes original owned-purchase lifecycle alongside offers: paid/grace ends,
+last verification, observed auto-renewal, Lifetime and future scheduled changes. Historical device and
+identity packets remain separate from current effective rights; cached/outage facts explicitly require
+refresh. No next debit, price, early scheduled access or cancellation is inferred. No raw purchase/account/
+receipt identifiers are shown. Seven new focused cases cover all six languages and original financial
+preservation, including live retranslation without store reads. Native/build/package evidence and retained
+failures: [verified purchase lifecycle](quality/verified-purchase-lifecycle.md). Genuine store, Mac/iOS, phone and release gates stay open.

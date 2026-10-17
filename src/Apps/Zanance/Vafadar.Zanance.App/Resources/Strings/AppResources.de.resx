@@ -8128,4 +8128,55 @@ Quellenangabe: {11}</value>
 Quellenrevision: {1}
 Ursprüngliche Kurskennung: {2}</value>
   </data>
+  <data name="Billing_Owned_Device" xml:space="preserve">
+    <value>Store-Kauf auf diesem Gerät</value>
+  </data>
+  <data name="Billing_Owned_Identity" xml:space="preserve">
+    <value>Mit der Zanance-Identität verknüpfter Kauf</value>
+  </data>
+  <data name="Billing_Owned_Verified" xml:space="preserve">
+    <value>Zuletzt bestätigt: {0}</value>
+  </data>
+  <data name="Billing_Owned_Refresh" xml:space="preserve">
+    <value>Gespeicherte Bestätigung; bitte aktualisieren. Diese Angaben bestätigen keine neue Zahlung.</value>
+  </data>
+  <data name="Billing_Owned_PaidThrough" xml:space="preserve">
+    <value>Bezahlt bis: {0}</value>
+  </data>
+  <data name="Billing_Owned_GraceThrough" xml:space="preserve">
+    <value>Vom Anbieter bestätigte Kulanzfrist bis: {0}</value>
+  </data>
+  <data name="Billing_Owned_RenewOn" xml:space="preserve">
+    <value>Bei der letzten Bestätigung war die automatische Verlängerung aktiv. Die nächste Abbuchung bestimmt der Store.</value>
+  </data>
+  <data name="Billing_Owned_RenewOff" xml:space="preserve">
+    <value>Bei der letzten Bestätigung war die automatische Verlängerung aus. Bezahlter Zugriff endet dadurch nicht vorzeitig.</value>
+  </data>
+  <data name="Billing_Owned_Lifetime" xml:space="preserve">
+    <value>Lifetime-Kauf; kein automatisches Verlängerungsdatum.</value>
+  </data>
+  <data name="Billing_Owned_Change" xml:space="preserve">
+    <value>Geplanter Wechsel: {0}, gültig ab {1}. Kein vorzeitiger Zugriff.</value>
+  </data>
+  <data name="Billing_Owned_StatePending" xml:space="preserve">
+    <value>Zahlung ausstehend</value>
+  </data>
+  <data name="Billing_Owned_StateActive" xml:space="preserve">
+    <value>Bei der letzten Bestätigung aktiv</value>
+  </data>
+  <data name="Billing_Owned_StateGrace" xml:space="preserve">
+    <value>Vom Anbieter bestätigte Kulanzfrist</value>
+  </data>
+  <data name="Billing_Owned_StateHold" xml:space="preserve">
+    <value>Zahlung ausgesetzt; kein bezahlter Zugriff durch diesen Kauf</value>
+  </data>
+  <data name="Billing_Owned_StatePaused" xml:space="preserve">
+    <value>Pausiert; kein bezahlter Zugriff durch diesen Kauf</value>
+  </data>
+  <data name="Billing_Owned_StateExpired" xml:space="preserve">
+    <value>Abgelaufen</value>
+  </data>
+  <data name="Billing_Owned_StateRevoked" xml:space="preserve">
+    <value>Widerrufen oder erstattet</value>
+  </data>
 </root>

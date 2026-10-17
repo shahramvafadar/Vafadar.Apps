@@ -922,3 +922,10 @@ Household source documents are signed/encrypted under the existing membership ho
 HTTP or a financial write grant. No network SDK, permission, analytics or silent source refresh was introduced.
 Actual source/licence/coverage/cost, external retention and release gates remain open; exact local/native evidence
 is in enhancements/2026-10-commercial-release/16-market-reference-delivery.md.
+
+### D-310 purchase lifecycle presentation
+
+Existing private verified purchase dates/state are displayed on the plan screen with explicit saved-
+verification feedback. There is no new data source, network request, permission or portable backup field.
+Raw receipt/purchase/account identifiers are excluded from presentation. Local fictional review does not
+claim genuine store or platform acceptance.

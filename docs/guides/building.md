@@ -1063,3 +1063,12 @@ a fresh comparison id and the exact live PID. It invokes the actual protected-st
 physical opens before comparing complete original ciphertext data against the existing rollback. Follow
 eng/benchmarks/Zanance.AndroidHome/README.md; never reseed or replace keys for a comparison. Finish native
 measurement before running another compiler. A callback timing is not whole Home/cold readiness.
+
+### Owned purchase history layout (D-310)
+
+A separate Windows Debug identity pro.vafadar.zanance.billinglayout with VAFADAR_SNAPSHOT_ONLY=billing-owned-layout
+requires exactly artifacts/billing-owned-layout-d310. Its retained fixture/progress checks original growing
+purchase captions in en/fa/de, light/dark and 360/412/1280 widths; process-local font stress is not an OS
+setting. Completed cases are not repeated. Keep the own AppWindow hidden; no desktop activation/input.
+The independent original-source Android caller has `billing-owned` for native text layout without store,
+payment or financial effects. Actual store metadata/signature/provider lifecycle acceptance is separate.

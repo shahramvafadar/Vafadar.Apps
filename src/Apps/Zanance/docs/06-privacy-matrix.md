@@ -933,3 +933,10 @@ backup protection choice and actual personal-profile authority; shared copies ar
 encrypted membership/publication chain. Host ciphertext cannot grant financial authority. Do not imply erasure
 of previously downloaded history after membership removal. Local-only service qualification is separate from
 live provider/retention/redistribution/public/physical/iOS acceptance; see16-market-reference-delivery.md.
+
+### D-310 original private purchase metadata display
+
+The plan screen displays already verified device/identity purchase lifecycle and validity dates from the
+existing private signed snapshots. No new collection, HTTP, storage, export or permission is introduced.
+Raw purchase references, receipts, identity hashes and provider diagnostics remain absent from labels.
+Fictitious native review metadata is independent from owner data and real store verification.
