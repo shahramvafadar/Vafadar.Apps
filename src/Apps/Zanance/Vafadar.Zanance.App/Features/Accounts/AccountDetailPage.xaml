@@ -56,7 +56,7 @@
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                     <p:WrappingAction Text="{Binding ManualLoanActionText}" Command="{Binding DebtActionCommand}" Appearance="Text" IsVisible="{Binding HasLoanTerms}" />
-                    <Label Text="{v:Translate Loan_AddTerms}" Style="{StaticResource Secondary}" IsVisible="{Binding HasLoanTerms, Converter={StaticResource InvertedBoolConverter}}" />
+                    <Label Text="{v:Translate Loan_AddTerms}" Style="{StaticResource Secondary}" IsVisible="{Binding MissingLoanTerms}" />
                 </VerticalStackLayout>
             </Border>
 

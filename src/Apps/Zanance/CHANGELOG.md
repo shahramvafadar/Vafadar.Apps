@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Repaid debt details (D-319)
+
+- Stop asking to add loan terms after the balance reaches zero when those terms are already saved. Verify original loan and lent-money principal/interest, manual final repayment and retained records after upgrade on the approved Android phone.
+
 ### First plan visibility (D-318)
 
 - Show the first saved plan without switching list tabs or saving again. Keep empty feedback scrollable and its translated Add caption complete at large text sizes. Verified on the approved Android phone without resetting existing data.

@@ -1515,3 +1515,7 @@ sharing. Selection uses the original protected restore and explicit replacement 
 ## Stable first-plan publication (D-318)
 
 Plans keeps the actual collection/row template and persistent bottom Add target. Empty feedback has its own growing scroll viewport controlled by the existing empty state, avoiding Android empty-adapter exchange. The optional first-plan Add caption uses WrappingAction: preserve full translation/native scaling and the original real command-owning target. No segment toggle or extra Save is required to reveal a newly saved first plan.
+
+## Existing loan terms after repayment (D-319)
+
+A zero outstanding balance stops the repayment estimate, not the existence of stored terms. Show the existing Add-terms instruction only when installment configuration is actually absent. Keep original balance/history/manual transfer/reminder access and genuine missing-data guidance; never infer a missing rate/installment from unavailable estimates or paid entitlement state.

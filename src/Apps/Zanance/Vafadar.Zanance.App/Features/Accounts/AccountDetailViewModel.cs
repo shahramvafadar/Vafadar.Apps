@@ -41,6 +41,8 @@ public sealed partial class AccountDetailViewModel(
     [ObservableProperty] public partial string? LoanWorkFeedback { get; private set; }
     /// <summary>Gets whether original paid estimates and installment tools can be shown.</summary>
     [ObservableProperty] public partial bool ShowLoanEstimate { get; private set; }
+    /// <summary>Gets whether the debt actually lacks installment terms, independently of its remaining balance.</summary>
+    [ObservableProperty] public partial bool MissingLoanTerms { get; private set; }
     /// <summary>Gets an essential original warning independently of analytical access.</summary>
     [ObservableProperty] public partial string? LoanEssentialWarning { get; private set; }
     /// <summary>Gets the original manual repayment caption without claiming an unavailable calculated installment.</summary>
@@ -259,6 +261,8 @@ public sealed partial class AccountDetailViewModel(
     {
         var reviewed = _loanReview ?? throw new InvalidOperationException("Missing original loan review.");
         _outstanding = reviewed.Outstanding(account);
+        // D-319: a repaid balance stops estimates; it does not erase the terms already stored on the account.
+        MissingLoanTerms = IsDebt && account.Installment is not > 0;
         HasLoanTerms = IsDebt && account.Installment is > 0 && _outstanding > 0;
         ShowDebtAction = DebtActionText is not null && !HasLoanTerms;
         ShowLoanEstimate = false; LoanNextText = LoanPayoffText = LoanWorkFeedback = null;
