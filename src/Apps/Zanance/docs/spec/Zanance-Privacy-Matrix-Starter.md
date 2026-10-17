@@ -935,3 +935,8 @@ claim genuine store or platform acceptance.
 Backup shows profile/install-scoped device-only pre-restore candidates from bounded nonsecret headers.
 Listing does not decrypt content or read/create keys. Original complete authentication, access and explicit
 replacement remain required; no share/export, SDK, permission or network change is introduced.
+
+
+## D-313 optional hosted edge processor (not active)
+
+The approved Cloudflare Tunnel path terminates public TLS at Cloudflare; visitor IP/routing metadata and identity request plaintext can be processed there. Existing application-layer sync/share ciphertext is separate from TLS; disclosed analysis has its own consent boundary. No mobile SDK, permission, local schema or automatic upload is added. The connector mounts only the owner credential file and original public CA; bounded error logs never enable request/header debugging. No live tunnel, account, DNS or real mail is configured. Draft processor/retention and exact release-build declarations need review before publication; historical offline/cloud-backup-only answers do not apply to optional identity/sync builds.

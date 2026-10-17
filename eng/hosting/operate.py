@@ -90,21 +90,48 @@ def _pipe(left, right):
                            + '; ' + ', '.join(categories) + '); original and partial target preserved.')
 
 
-def _compose(project, port, subnet, action, images=None, public=False, household=None):
+def _compose(project, port, subnet, action, images=None, public=False, household=None, gateway="direct"):
     network = ipaddress.ip_network(subnet, strict=True)
     if network.version != 4 or network.prefixlen != 24 or not network.is_private or not str(network).startswith('172.'):
         raise RuntimeError('Explicit private /24 service subnet required.')
-    if (public and port != 443) or (not public and not 1024 <= port <= 65535):
+    if gateway not in ('direct', 'tunnel') or gateway == 'tunnel' and not public:
+        raise RuntimeError('Tunnel origins require explicit public deployment mode.')
+    if (public and gateway == 'direct' and port != 443) or ((not public or gateway == 'tunnel') and not 1024 <= port <= 65535):
         raise RuntimeError('Explicit loopback-only proxy port required.')
     env = os.environ.copy()
+    if public and household:
+        raise RuntimeError('Fictional household qualification cannot activate public hosting.')
     if household is not None:
         env['ZANANCE_HOUSEHOLD_QUALIFICATION'] = 'true' if household else 'false'
-    env.update(ZANANCE_PROXY_PORT=str(port), ZANANCE_SERVICE_SUBNET=str(network), ZANANCE_PROXY_ADDRESS=str(network.network_address + 10))
+    env.update(ZANANCE_PROXY_PORT=str(port), ZANANCE_SERVICE_SUBNET=str(network), ZANANCE_PROXY_ADDRESS=str(network.network_address + 10), ZANANCE_CONNECTOR_ADDRESS=str(network.network_address + 20))
     if images:
         env.update(ZANANCE_SERVICE_IMAGE=images['api'], ZANANCE_PROXY_IMAGE=images['proxy'], ZANANCE_BOOTSTRAP_IMAGE=images['provision'], ZANANCE_DATABASE_IMAGE=images['database'])
     files = ['-f', str(BASE / 'compose.yml')]
-    if public: files += ['-f', str(BASE / 'compose.public.yml')]
+    if public: files += ['-f', str(BASE / ('compose.tunnel-origin.yml' if gateway == 'tunnel' else 'compose.public.yml'))]
     return _run(['docker', 'compose', '-p', project, *files, *action], env=env)
+
+
+def _gateway_mode(project):
+    """Inspect only the owned proxy command; never infer routing mode from a caller's port choice."""
+    name, _ = _container(project, 'proxy')
+    command = _metadata('container', name, '{{json .Config.Cmd}}')
+    if command == ['caddy', 'run', '--config', '/etc/caddy/Caddyfile.tunnel', '--adapter', 'caddyfile']: return 'tunnel'
+    if command == ['caddy', 'run', '--config', '/etc/caddy/Caddyfile.public', '--adapter', 'caddyfile']: return 'direct'
+    if command == ['caddy', 'run', '--config', '/etc/caddy/Caddyfile', '--adapter', 'caddyfile']: return 'local'
+    raise RuntimeError('Unknown original gateway configuration; preserve it without mutation.')
+
+
+def _require_gateway(args):
+    """Refuse an implicit public/loopback or direct/tunnel transition before stopping or starting workers."""
+    expected = args.gateway if args.public else 'local'
+    if _gateway_mode(args.project) != expected:
+        raise RuntimeError('Original gateway mode differs; explicit qualified routing migration required.')
+    api, _ = _container(args.project, 'api')
+    original = _run(['docker', 'inspect', api, '--format',
+        '{{range .Config.Env}}{{if eq (index (split . "=") 0) "Service__PublicOrigin"}}{{index (split . "=") 1}}{{end}}{{end}}']).decode().strip()
+    authority = 'https://api.zanance.vafadar.pro' if args.public else 'https://localhost:' + str(args.port)
+    if original != authority:
+        raise RuntimeError('Original API origin differs; preserve existing authority without mutation.')
 
 
 def _household_mode(project):
@@ -133,6 +160,8 @@ def _manifest(snapshot, helper):
         raise RuntimeError('Historical snapshot requires its original runtime configuration; current restore cannot silently substitute it.')
     if not isinstance(value.get('HouseholdLocalQualification', False), bool) or value.get('HouseholdLocalQualification', False) and value.get('Public', False):
         raise RuntimeError('Household qualification cannot activate public hosting.')
+    if value.get('Gateway', 'direct') not in ('direct', 'tunnel') or value.get('Gateway') == 'tunnel' and not value.get('Public', False):
+        raise RuntimeError('Snapshot gateway authority is invalid.')
     if set(value.get('Images', {})) != {'api', 'proxy', 'provision', 'database'}:
         raise RuntimeError('Snapshot image authority is incomplete.')
     for image in value.get('Images', {}).values():
@@ -159,6 +188,7 @@ def _receipt(helper, volume, value=None):
 def _backup(args, helper):
     if not SNAPSHOT.fullmatch(args.snapshot or '') or _exists('volume', args.snapshot):
         raise RuntimeError('Choose a fresh owned snapshot volume; existing snapshots are never reset.')
+    _require_gateway(args)
     database, _ = _container(args.project, 'database')
     household = _household_mode(args.project)
     for service in ('api', 'proxy', 'migrate', 'provision'):
@@ -167,7 +197,7 @@ def _backup(args, helper):
                    '--format', '{{.Label "com.docker.compose.service"}}']).decode().splitlines()
     if any(service not in ('api', 'proxy', 'database') for service in active):
         raise RuntimeError('An owned migration/qualification is still live; snapshot refused.')
-    _compose(args.project, args.port, args.subnet, ['stop', '--timeout', '45', 'api', 'proxy'], public=args.public)
+    _compose(args.project, args.port, args.subnet, ['stop', '--timeout', '45', 'api', 'proxy'], public=args.public, gateway=args.gateway)
     _, api = _container(args.project, 'api')
     _, proxy = _container(args.project, 'proxy')
     if api['state'] != 'exited' or proxy['state'] != 'exited':
@@ -191,7 +221,7 @@ def _backup(args, helper):
         filename = 'database.dump' if logical == 'database' else 'volumes/' + logical + '.tar'
         archives[logical] = _run(_helper(helper, target, 'sha256sum /snapshot/' + filename)).decode().split()[0]
     manifest = {'Schema': 1, 'DeploymentFormat': 'immutable-config-v1', 'SourceProject': args.project, 'CreatedUtc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-                'Quiesced': True, 'Public': args.public, 'HouseholdLocalQualification': household, 'Images': images, 'Archives': archives}
+                'Quiesced': True, 'Public': args.public, 'Gateway': args.gateway, 'HouseholdLocalQualification': household, 'Images': images, 'Archives': archives}
     _run(_helper(helper, target, 'umask 077; cat >/snapshot/complete.pending; sync -f /snapshot/complete.pending; mv /snapshot/complete.pending /snapshot/complete.json; sync -f /snapshot'), data=json.dumps(manifest).encode())
     _manifest(args.snapshot, helper)
     print('Complete private snapshot: ' + args.snapshot + '; original workers remain stopped.')
@@ -199,7 +229,7 @@ def _backup(args, helper):
 
 def _restore(args, helper):
     manifest = _manifest(args.snapshot, helper)
-    if bool(manifest.get('Public', False)) != args.public:
+    if bool(manifest.get('Public', False)) != args.public or manifest.get('Gateway', 'direct') != args.gateway:
         raise RuntimeError('Snapshot deployment mode differs; explicit trust/routing migration required.')
     if args.project == manifest['SourceProject'] or not manifest.get('Quiesced'):
         raise RuntimeError('Only a separate fresh or explicitly continued target is allowed.')
@@ -256,7 +286,7 @@ def _restore(args, helper):
         _run(_helper(helper, [(args.snapshot, '/snapshot', True), (target, '/target', False)],
                      'tar -C /target --numeric-owner -xpf /snapshot/volumes/' + logical + '.tar; sync -f /target'))
         state['Copied'].append(logical); _receipt(helper, state_name, state)
-    _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait', 'database'], manifest['Images'], public=args.public)
+    _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait', 'database'], manifest['Images'], public=args.public, gateway=args.gateway)
     database, restored_database = _container(args.project, 'database')
     if restored_database['image'] != manifest['Images']['database']:
         raise RuntimeError('Database image differs from the snapshot authority; explicit upgrade qualification required.')
@@ -282,7 +312,7 @@ def _restore(args, helper):
     for service in ('api', 'proxy'):
         if _container(privacy_source, service)[1]['state'] != 'exited':
             raise RuntimeError('Original privacy workers restarted during restore; target remains stopped.')
-    _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait'], manifest['Images'], public=args.public,
+    _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait'], manifest['Images'], public=args.public, gateway=args.gateway,
              household=manifest.get('HouseholdLocalQualification', False))
     state['Complete'] = True; _receipt(helper, state_name, state)
     print('Isolated restore complete; original source and snapshot preserved: ' + args.project)
@@ -296,7 +326,8 @@ def main():
     parser.add_argument('--port', type=int, default=14543)
     parser.add_argument('--subnet', default='172.29.83.0/24')
     parser.add_argument('--snapshot')
-    parser.add_argument('--public', action='store_true', help='Preserve an already approved public deployment; requires port 443.')
+    parser.add_argument('--public', action='store_true', help='Preserve an already approved public deployment.')
+    parser.add_argument('--gateway', choices=('direct', 'tunnel'), default='direct', help='Preserve original public ingress; direct mode requires port 443.')
     args = parser.parse_args()
     if not PROJECT.fullmatch(args.project):
         raise RuntimeError('Explicit Zanance project ownership required.')
@@ -311,16 +342,17 @@ def main():
             raise RuntimeError('A fresh pre-maintenance snapshot name is required.')
         household = _household_mode(args.project)
         _backup(args, helper)
-        _compose(args.project, args.port, args.subnet, ['stop', '--timeout', '45', 'database'], public=args.public)
+        _compose(args.project, args.port, args.subnet, ['stop', '--timeout', '45', 'database'], public=args.public, gateway=args.gateway)
         _compose(args.project, args.port, args.subnet,
-                 ['run', '--no-deps', '-e', 'ZANANCE_CERTIFICATE_OPERATION=renew-transport', 'provision'], public=args.public)
-        _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait'], public=args.public, household=household)
+                 ['run', '--no-deps', '-e', 'ZANANCE_CERTIFICATE_OPERATION=renew-transport', 'provision'], public=args.public, gateway=args.gateway)
+        _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait'], public=args.public, gateway=args.gateway, household=household)
         print('Transport renewal complete; retained identities and snapshot were preserved.')
-    elif args.action == 'status': print(_compose(args.project, args.port, args.subnet, ['ps', '-a', '--format', '{{.Service}} {{.State}} {{.Health}}'], public=args.public).decode(), end='')
+    elif args.action == 'status': print(_compose(args.project, args.port, args.subnet, ['ps', '-a', '--format', '{{.Service}} {{.State}} {{.Health}}'], public=args.public, gateway=args.gateway).decode(), end='')
     else:
+        _require_gateway(args)
         for service in ('api', 'proxy', 'database', 'provision', 'migrate'): _container(args.project, service)
         action = ['up', '-d', '--wait'] if args.action == 'start' else ['stop', '--timeout', '45', 'api', 'proxy']
-        _compose(args.project, args.port, args.subnet, action, public=args.public,
+        _compose(args.project, args.port, args.subnet, action, public=args.public, gateway=args.gateway,
                  household=_household_mode(args.project) if args.action == 'start' else None)
         print('Owned operation complete: ' + args.action)
 

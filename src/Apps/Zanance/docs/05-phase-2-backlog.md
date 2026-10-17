@@ -2085,3 +2085,8 @@ pre-restore safety copies. The original page now lists only current-profile/inst
 bounded metadata-only discovery and retains the original complete authenticated restore/consent flow.
 Seven new focused cases and original native layout evidence are recorded in
 [physical Android safety recovery](quality/physical-android-safety-recovery.md). Broader phone/iOS gates remain.
+
+
+## D-313 public-path engineering
+
+The Tunnel composition and gateway-preserving operators are locally qualified. No live connector, DNS or real mail is configured; application/APK remain D-312. See [outbound tunnel origin](quality/outbound-tunnel-origin.md).

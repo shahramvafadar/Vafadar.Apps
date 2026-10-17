@@ -946,3 +946,8 @@ Fictitious native review metadata is independent from owner data and real store 
 Only current profile/installation nonsecret envelope-header candidates and local file date/size appear in
 Backup. Discovery opens no key or plaintext package. Selection retains complete authentication and access/
 replacement checks. Device-only rows do not share/export files; no permission, SDK, network or new data class.
+
+
+## D-313 optional hosted edge processor (not active)
+
+The approved Cloudflare Tunnel path terminates public TLS at Cloudflare; visitor IP/routing metadata and identity request plaintext can be processed there. Existing application-layer sync/share ciphertext is separate from TLS; disclosed analysis has its own consent boundary. No mobile SDK, permission, local schema or automatic upload is added. The connector mounts only the owner credential file and original public CA; bounded error logs never enable request/header debugging. No live tunnel, account, DNS or real mail is configured. Draft processor/retention and exact release-build declarations need review before publication; historical offline/cloud-backup-only answers do not apply to optional identity/sync builds.

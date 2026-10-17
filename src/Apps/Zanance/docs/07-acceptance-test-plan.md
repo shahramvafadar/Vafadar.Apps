@@ -3578,3 +3578,8 @@ and retired authority refusal. Original Windows layout has 18 qualified language
 Actual same-file phone recovery, signed package and cold continuation are separated from those narrow
 checks in [physical Android safety recovery](quality/physical-android-safety-recovery.md). This does not
 close all device scenarios, real notification/OAuth/store/reader or iOS acceptance.
+
+
+## D-313 hosting gateway acceptance
+
+Seven focused operator cases, nine distinct original-proxy TLS/forwarding cases and official ingress/no-port composition checks pass locally. Failed observations and selective continuation are retained. No live Cloudflare, public DNS/mail, phone-network or release acceptance. See [outbound tunnel origin](quality/outbound-tunnel-origin.md).

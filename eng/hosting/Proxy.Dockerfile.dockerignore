@@ -1,3 +1,4 @@
 **
 !Caddyfile.local
 !Caddyfile.public
+!Caddyfile.tunnel

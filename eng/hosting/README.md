@@ -80,9 +80,9 @@ its machine authority as production, requires empty private storage and prevents
 qualification authorities refuse production promotion. The API independently checks production/fictitious markers
 before opening its public listener. Qualification callers whitelist only their three fictional project names.
 
-The overlay prepares `api.zanance.vafadar.pro`, public TLS-ALPN issuance/renewal and external443. It is **not active**.
-Before activation, the owner must configure DNS/443 routing to this machine and provide a real mail sender through
-the approved identity flow. No account login, mail credential, host firewall/router change or paid host was created.
+The historical direct overlay prepares public TLS-ALPN and external443; it is **not active** and is not
+required for the owner-selected Tunnel path below. The direct alternative would require DNS/443 routing.
+Both paths require a real confirmation/recovery mail sender before exposing the identity service. No account login, mail credential, host firewall/router change or paid host was created.
 Do not expose an identity service that cannot deliver confirmation/recovery mail. Local runtime qualification,
 private-file restore, retained-key transport renewal and negative authorization cases pass; hosted CI is separate.
 See `src/Apps/Zanance/docs/quality/self-hosted-stack.md`. HA, phone/iOS and release acceptance remain open.
@@ -131,3 +131,58 @@ remains false there. Genuine provider credentials/products, public callbacks and
 configured. Do not promote a fictitious qualification stack or silently expose local billing endpoints publicly.
 See src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/12-billing-delivery.md for immutable image/snapshot,
 APK and exact local evidence. Unchanged whole historical-restore acceptance was not replayed.
+
+
+## Approved outbound tunnel path (D-313)
+
+The owner chose Cloudflare Tunnel instead of direct443 for this machine. The old direct overlay is optional,
+not the current activation plan. No live connector/DNS is configured. Finish owner/company account setup,
+real confirmation/recovery mail, processor declarations and original public acceptance before exposure.
+Do not expose any existing fictional project or use another project's Cloudflare credential.
+
+Use compose.yml plus compose.tunnel-origin.yml for a fresh separately named production origin. Build its
+source images first; check a free private /24 subnet, then set ZANANCE_SERVICE_SUBNET, ZANANCE_PROXY_ADDRESS
+(network +10) and ZANANCE_CONNECTOR_ADDRESS (network +20) consistently. This overlay removes all published
+ports. Never combine it with compose.public.yml. Production markers and API origin checks refuse reuse of
+qualification authorities; preserve refused volumes and investigate without resetting them.
+
+The owner personally creates a locally managed tunnel scoped to api.zanance.vafadar.pro, configures its
+DNS route and stores its JSON credential outside this repository. Never paste credential contents into a
+command, chat, environment variable, log or tracked file. Do not use a temporary quick tunnel. Require
+external HTTPS, no same-zone Worker/header rewriting, and no caching of identity/financial API responses.
+Public TLS ends at Cloudflare: IP/routing/identity request processing needs the corresponding privacy review.
+
+After the fresh origin is healthy, export only its original public root:
+
+```
+python -B eng/hosting/tunnel.py export-public-root --origin zanance-selfhost-live --root-file artifacts/tunnel-live/origin-ca.crt
+```
+
+The owner supplies nonsecret ZANANCE_TUNNEL_ID and runtime path ZANANCE_TUNNEL_CREDENTIAL_FILE personally.
+Set ZANANCE_TUNNEL_ROOT_FILE to that exported public certificate, then:
+
+```
+python -B eng/hosting/tunnel.py start --origin zanance-selfhost-live
+python -B eng/hosting/tunnel.py status --origin zanance-selfhost-live
+python -B eng/hosting/tunnel.py stop --origin zanance-selfhost-live
+```
+
+The independent zanance-tunnel-live project joins only that origin's service network. The UID65532
+read-only connector gets its credential file and public CA, never application/private CA volumes. Bind
+sources must exist; no host port, Docker socket or credential-content diagnostic is allowed. The official
+2026.10.1 image is digest-pinned. Health uses the connector's own loopback ready endpoint; it proves a
+connector connection, not public hostname, mobile traffic, mail or financial acceptance.
+
+For this origin, all original operator commands require --public --gateway tunnel and its original
+--subnet. Stop the separate connector before backup/renewal/cutover. Complete snapshots retain Gateway
+alongside immutable service image identities, private data and latest deletion authority. Direct/tunnel
+or local/public mismatches are refused before destructive work; old direct manifests keep their original
+meaning. Snapshot restore does not restore owner connector credentials, reconnect the old gateway or
+change DNS. Retain original authorities; verify the restored origin and original public CA, then start a
+separate matching connector project only after stopping the old connector. Never run two active origins
+for the same tunnel during a cutover. Credential loss/revocation is an owner Cloudflare operation, separate
+from database or application key recovery. Do not prune the previous state as a retry.
+
+Focused protocol/operator evidence and primary sources:
+src/Apps/Zanance/docs/quality/outbound-tunnel-origin.md. CI's qualify-tunnel.sh uses an independent no-port
+TLS echo fixture, not a Cloudflare account or production financial data. It does not replay the mobile APK.

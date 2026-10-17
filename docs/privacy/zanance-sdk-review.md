@@ -122,3 +122,8 @@ separate from these PowerShell cases. No app UI, financial schema, production pr
   must repeat the dependency/permission/endpoint review and update this matrix before enabling its online build.
 * Physical device/native traffic and real OAuth refresh/revoke/restore acceptance remain QA-02/QA-07. No new sign-in,
   purchase, provider account or production service was performed for this audit.
+
+
+## D-313 optional hosted edge processor (not active)
+
+The approved Cloudflare Tunnel path terminates public TLS at Cloudflare; visitor IP/routing metadata and identity request plaintext can be processed there. Existing application-layer sync/share ciphertext is separate from TLS; disclosed analysis has its own consent boundary. No mobile SDK, permission, local schema or automatic upload is added. The connector mounts only the owner credential file and original public CA; bounded error logs never enable request/header debugging. No live tunnel, account, DNS or real mail is configured. Draft processor/retention and exact release-build declarations need review before publication; historical offline/cloud-backup-only answers do not apply to optional identity/sync builds.

@@ -62,7 +62,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-BIL-03 | Secure entitlement cache, offline window, clock changes | 6 | P1 | M | In progress (D-295 signed private cache/clock/original-request/recovery qualified locally and Android storage checked; iOS/device acceptance remains) | BIL-02 |
 | ZCR-BIL-04 | Plus Lifetime, Lifetime-owner Pro discount, campaigns, trial | 6 | P1 | M | In progress (D-295 Lifetime/trial/discount/replacement policy and actual-price review qualified locally; genuine store eligibility/sandbox matrix remains) | BIL-02, OD-06, OD-07 |
 | ZCR-BIL-05 | Sandbox test matrix; production activation (owner only) | 6 | P1 | M | In progress (D-295 local fixture/native qualification only; real store sandbox and owner production activation remain unchecked) | BIL-01..04 |
-| ZCR-ID-01 | Optional identity, backend foundation, operations | 3 | P1 | L | D-293 isolated current-machine Docker deployment, private-file restore and retained-key certificate renewal locally qualified; public DNS/routing and real mail remain external gates | OD-02 approved; public deployment/identity acceptance |
+| ZCR-ID-01 | Optional identity, backend foundation, operations | 3 | P1 | L | D-293 local deployment/restore/renewal; D-313 outbound tunnel origin and gateway continuity locally qualified; owner tunnel/DNS, real mail and public acceptance remain | OD-02 approved; public deployment/identity acceptance |
 | ZCR-SYNC-01 | Change log, outbox, versions, tombstones | 4 | P1 | L | Implemented and locally qualified D-292: original service/protected Windows/Android HTTP, durable staging, complete graph and native UI pass; hosted CI separate | ID-01 |
 | ZCR-SYNC-02 | Conflicts, idempotent posting, restore into a synced profile | 4 | P1 | L | Implemented and locally qualified D-292: explicit complete conflicts/groups/attachments, idempotency and safe restore pass; external platform gates separate | SYNC-01 |
 | ZCR-SYNC-03 | Sync status UI and device management | 4 | P2 | M | Implemented and locally qualified D-292: original UI/device revocation and 36 Windows contexts plus retained Android native evidence; public hosting follows | SYNC-01 |
@@ -2658,3 +2658,8 @@ The original Backup page now exposes current-profile/install device-only candida
 header-only discovery; original authenticated validation and explicit consent still own replacement.
 Seven focused tests and 18 native Windows layout contexts cover the changed boundary. Exact actual phone
 continuation, signed candidate and external limits: [physical Android safety recovery](../../quality/physical-android-safety-recovery.md).
+
+
+### D-313 approved tunnel path
+
+No-port production origin, exact TLS/client metadata boundary and separate owner-credential connector are locally qualified, including gateway-preserving operations. No unrelated successful mobile or financial scenario was repeated. See [outbound tunnel origin](../../quality/outbound-tunnel-origin.md).

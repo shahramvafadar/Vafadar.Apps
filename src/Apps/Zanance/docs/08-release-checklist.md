@@ -1350,3 +1350,8 @@ Retained pre-restore safety candidates are now selectable only within the curren
 separately from automatic/portable files. Listing reads no key/plaintext; original full authentication and
 explicit replacement remain mandatory. Exact focused/native/physical receipts and limits:
 [physical Android safety recovery](quality/physical-android-safety-recovery.md). This is not overall release acceptance.
+
+
+## D-313 outbound gateway remains externally gated
+
+Do not expose fictional deployments. Owner-created tunnel/DNS, real mail and processor/public acceptance are required before activation. APK remains D-312. See [outbound tunnel origin](quality/outbound-tunnel-origin.md).

@@ -1095,3 +1095,8 @@ with a fresh VAFADAR_SNAPSHOTS directory and process-local VAFADAR_SNAPSHOT_FONT
 checks en/fa/de, both themes and 360/412/1280 widths using display-only candidates; it never invokes restore or
 opens their files. The original full restore is qualified separately on the authorized phone, preserving its
 existing fictitious data, safety files and keys across the signed upgrade. No system setting or credential entry.
+
+
+### D-313 outbound tunnel qualification
+
+eng/hosting/README.md documents the production origin and owner-maintained connector. The CI-only eng/hosting/qualify-tunnel.sh checks original Caddy TLS/forwarding in an independent no-port fixture plus focused operator tests; it never uses a Cloudflare credential or opens a tunnel. Local receipts are not public acceptance.

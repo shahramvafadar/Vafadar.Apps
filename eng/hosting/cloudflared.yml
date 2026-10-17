@@ -1,0 +1,14 @@
+# Credential bytes are entered and maintained by the owner outside the repository.
+credentials-file: /credentials/tunnel.json
+no-autoupdate: true
+loglevel: error
+metrics: 127.0.0.1:20241
+ingress:
+  - hostname: api.zanance.vafadar.pro
+    service: https://proxy:8443
+    originRequest:
+      originServerName: api.zanance.vafadar.pro
+      httpHostHeader: api.zanance.vafadar.pro
+      caPool: /trust/origin-ca.crt
+      noTLSVerify: false
+  - service: http_status:404

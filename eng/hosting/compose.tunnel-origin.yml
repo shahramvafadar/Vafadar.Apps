@@ -1,0 +1,17 @@
+# Public activation still requires a fresh production authority and the real-mail gate.
+services:
+  provision:
+    environment:
+      ZANANCE_DEPLOYMENT_PURPOSE: production
+  api:
+    environment:
+      Service__PublicOrigin: https://api.zanance.vafadar.pro
+  migrate:
+    environment:
+      Service__PublicOrigin: https://api.zanance.vafadar.pro
+  proxy:
+    command: ["caddy", "run", "--config", "/etc/caddy/Caddyfile.tunnel", "--adapter", "caddyfile"]
+    environment:
+      ZANANCE_PROXY_AUTHORITY: api.zanance.vafadar.pro
+      ZANANCE_CONNECTOR_ADDRESS: ${ZANANCE_CONNECTOR_ADDRESS:?Explicit connector address required}
+    ports: !reset []

@@ -37,6 +37,8 @@ jobs:
       - uses: actions/checkout@v7
       - name: Qualify original clients, private restore and transport renewal
         run: bash eng/hosting/qualify-ci.sh
+      - name: Qualify outbound tunnel origin without owner credentials
+        run: bash eng/hosting/qualify-tunnel.sh
       - name: Report only public container state
         if: always()
         run: docker ps -a --filter label=pro.vafadar.zanance.hosting=d293 --format '{{.Names}} {{.State}} {{.Status}}'

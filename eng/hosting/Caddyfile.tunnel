@@ -1,0 +1,41 @@
+{
+	admin off
+	skip_install_trust
+	auto_https disable_redirects
+	servers {
+		protocols h1 h2
+		trusted_proxies static {$ZANANCE_CONNECTOR_ADDRESS}
+		trusted_proxies_strict
+		client_ip_headers CF-Connecting-IP
+	}
+}
+https://api.zanance.vafadar.pro:8443 {
+	tls internal
+	# Only the separately owned connector may assert Cloudflare client metadata.
+	@foreign not remote_ip {$ZANANCE_CONNECTOR_ADDRESS}
+	respond @foreign 403
+	@plaintext not header X-Forwarded-Proto https
+	respond @plaintext 403
+	@missing not header CF-Connecting-IP *
+	respond @missing 403
+	@multiple header_regexp CF-Connecting-IP `[,[:space:]]`
+	respond @multiple 403
+	@invalid expression `{client_ip} == {http.request.remote.host}`
+	respond @invalid 403
+	request_body {
+		max_size 8MB
+	}
+	reverse_proxy https://api:8443 {
+		header_up Host {$ZANANCE_PROXY_AUTHORITY:api.zanance.vafadar.pro}
+		header_up X-Forwarded-For {client_ip}
+		header_up -X-Forwarded-Host
+		header_up -CF-Connecting-IP
+		transport http {
+			tls_trust_pool file /trust/authority.crt
+			tls_server_name api
+		}
+	}
+	log {
+		output discard
+	}
+}

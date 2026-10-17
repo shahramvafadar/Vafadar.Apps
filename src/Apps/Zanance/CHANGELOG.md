@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Hosting operations (D-313)
+
+- Prepare the approved outbound tunnel and preserve its gateway during maintenance/restoration. Public activation awaits dedicated owner setup and real mail; the application package is unchanged.
+
 ### Fixed (D-312)
 
 - Safety copies saved before a restore can be selected in Backup to recover earlier profile data. They stay separate from automatic copies and portable exports, with verification and confirmation before replacement.

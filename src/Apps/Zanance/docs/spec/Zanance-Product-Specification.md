@@ -6336,3 +6336,8 @@ and replacement consent; no schema/cryptographic/key/retention change. Seven new
 18 original Windows presentation contexts remain separate from actual device recovery. See
 [physical Android safety recovery](../quality/physical-android-safety-recovery.md). No full-suite rerun/count
 or broad physical-device/iOS/release completion is inferred.
+
+
+### D-313 approved public ingress engineering
+
+Outbound-only origin and separate non-root connector are locally qualified with preserved operational gateway mode. Seven focused operator checks and nine distinct TLS/forwarding cases are not a new application full-suite count. Live tunnel/DNS/mail/legal acceptance remains open; APK remains D-312. See [outbound tunnel origin](../quality/outbound-tunnel-origin.md).

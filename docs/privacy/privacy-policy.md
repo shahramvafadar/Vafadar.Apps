@@ -1,9 +1,9 @@
 # Privacy Policy
 
 > **Draft.** Source text for the policy published at `https://vafadar.pro/privacy`. Before publishing: fill in the
-> contact address, the effective date and the list of apps, and remove this note. If the released Zanance build has no
-> cloud backup (no OAuth clients configured, D-35), remove the cloud backup parts and keep "does not connect to the
-> internet".
+> contact address, effective date, exact online features and processors, and remove this note. Only an exact
+> offline artifact with no network permission can use a "does not connect to the internet" statement; absent
+> cloud-backup OAuth alone does not establish this when optional service features are included.
 
 **Effective date:** _YYYY-MM-DD_
 
@@ -14,11 +14,12 @@ This policy covers the apps published by Shahram Vafadar ("I", "me") under the n
 ## Summary
 
 * Your data is stored **on your device**.
-* I do **not** operate servers that receive your financial data, and I cannot see it. Cloud-enabled builds can
-  access the internet for your own Google Drive or OneDrive backups. On Android, Google ML Kit may also transmit
-  SDK diagnostics described under receipt reading, independently of whether you have connected a cloud account.
-* Your financial files leave the device when **you** share a backup or export file or store a backup in your own cloud
-  storage. Android excludes private app data from system backup and device transfer; the iOS release policy remains to be verified before release.
+* Local-only use keeps finance on the device. Optional identity, encrypted synchronization/sharing, purchase
+  verification and explicitly consented service features have separate online data flows described below.
+  The current service is qualified locally; its public activation and final processor declarations are pending.
+  Cloud-backup builds can also access your own Google Drive or OneDrive. Google ML Kit diagnostics are described below.
+* Financial files leave the device when **you** share an export, use your own cloud backup or expressly enable
+  an optional online synchronization/sharing flow with its separate encryption and consent boundaries. Android excludes private app data from system backup and device transfer; the iOS release policy remains to be verified before release.
 * Password protection is optional for portable local and cloud backup files. With it enabled, files are encrypted with
   your chosen password. Without it, anyone who obtains the file can read its contents.
 * I add no advertising, application analytics, tracking or crash-reporting service. Android builds with cloud backup
@@ -96,13 +97,13 @@ information; review it before sharing. Recent-apps protection remains enabled. i
 
 Where an app offers a "Pro" upgrade or a way to support the developer, payment is processed entirely by Google Play
 or the Apple App Store. I receive no payment card details; the store may tell the app that a purchase exists so that
-the purchased features can be unlocked. Zanance currently has no purchases.
+the purchased features can be unlocked. Zanance has no activated real-store purchases; local verification prerequisites are not a live payment service.
 
 ## Permissions
 
 The apps request only the permissions they need. Zanance uses notifications (reminders, asked only when you turn
 one on), restarting reminders after the device restarts, biometric unlock (for the optional app lock) and, only in
-builds that offer cloud backup, internet access for your own Google Drive or OneDrive. It has no location,
+online-enabled builds, internet access for your chosen cloud backup and expressly enabled service features. It has no location,
 contacts or photo-library permission. Android receipt photos use the camera app without a camera permission; iOS
 asks for camera access only when you choose to take a receipt photo. Existing files use the system file picker. Each app's store listing shows the permissions it uses.
 ## Children
@@ -111,9 +112,11 @@ The apps are not directed at children under 13 and do not knowingly collect data
 
 ## Your rights
 
-Because I do not collect your personal data, there is nothing I hold that I could show, correct or delete. All data
-is under your control on your device and in the files you share. "Delete all data on this device" in the app's
-settings, or uninstalling the app, deletes its on-device data.
+Local-only records and shared export files remain under your control. Deleting local data or uninstalling
+removes on-device data, not remotely retained account metadata, uploaded ciphertext or another recipient's
+previously downloaded copy. Before activating an optional public service, publish the verified account/data
+request and retention process, processor details and contact information. Do not treat local deletion as
+proof of server erasure; final legal and service acceptance remain release gates.
 
 ## Changes
 
@@ -123,3 +126,18 @@ changes are mentioned in the app's release notes.
 ## Contact
 
 Questions about privacy: _privacy@vafadar.pro_ (to be set up), or open an issue at the project's GitHub repository.
+
+
+## Optional hosted service and edge processor (D-313 draft)
+
+The optional service can retain identity/account metadata, device/session and purchase-verification metadata,
+plus encrypted synchronization/sharing objects. Disclosed optional analysis has its own explicit consent;
+transport encryption does not make an intentionally submitted analysis packet opaque to its recipient.
+Application-layer encrypted finance and device/private keys remain separate from TLS protection.
+
+The approved hosting path uses Cloudflare Tunnel on the current machine. Cloudflare terminates public TLS
+and can process visitor IP, request/routing metadata and identity request plaintext. Its role is service
+transport, not an advertising or application analytics SDK. The connector uses bounded error-level logs,
+without request/header debug logs. Public Cloudflare/DNS, real mail and final processor/retention/legal
+acceptance are not configured; this draft does not announce an active public service. Historical
+cloud-backup-only/offline Store answers must not be reused for an optional identity/sync service build.

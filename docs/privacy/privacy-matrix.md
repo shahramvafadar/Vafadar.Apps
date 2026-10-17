@@ -77,3 +77,7 @@ the current Play Console help texts before submitting; when in doubt, declare co
 | Data linked to you | None collected by the app. A build with cloud backup sends optionally password-protected backup files and uses the account e-mail only between the device and the user's own Google Drive / OneDrive at the user's request (D-50); the developer receives nothing – re-check Apple's definitions at submission |
 | Data not linked to you | None |
 | Privacy manifest | `Platforms/iOS/Resources/PrivacyInfo.xcprivacy` (no tracking; required-reason API `UserDefaults` declared with reason `CA92.1`) |
+
+## D-313 optional hosted edge processor (not active)
+
+The approved Cloudflare Tunnel path terminates public TLS at Cloudflare; visitor IP/routing metadata and identity request plaintext can be processed there. Existing application-layer sync/share ciphertext is separate from TLS; disclosed analysis has its own consent boundary. No mobile SDK, permission, local schema or automatic upload is added. The connector mounts only the owner credential file and original public CA; bounded error logs never enable request/header debugging. No live tunnel, account, DNS or real mail is configured. Draft processor/retention and exact release-build declarations need review before publication; historical offline/cloud-backup-only answers do not apply to optional identity/sync builds.

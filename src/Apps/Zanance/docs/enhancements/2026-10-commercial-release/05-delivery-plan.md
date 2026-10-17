@@ -2049,3 +2049,8 @@ candidate. Do not rebuild the financial scenario or replace keys just to obtain 
 current-profile safety discovery/listing is now complete; retain unrelated successful qualification and
 separate exact phone/cold recovery from Windows display-only checks. Full evidence and open gates:
 [physical Android safety recovery](../../quality/physical-android-safety-recovery.md).
+
+
+## D-313 local tunnel gateway batch
+
+Composition/operator/protocol checks qualify one complete local gateway batch: seven focused operational and nine distinct real TLS/forwarding cases, with retained failures and selective continuation. Owner credential entry, DNS, real mail and public/processor acceptance remain separate. No unrelated mobile build/APK replay. See [outbound tunnel origin](../../quality/outbound-tunnel-origin.md).

@@ -5,4 +5,5 @@ USER 0:0
 RUN setcap -r /usr/bin/caddy
 COPY Caddyfile.local /etc/caddy/Caddyfile
 COPY Caddyfile.public /etc/caddy/Caddyfile.public
+COPY Caddyfile.tunnel /etc/caddy/Caddyfile.tunnel
 USER 1655:1655

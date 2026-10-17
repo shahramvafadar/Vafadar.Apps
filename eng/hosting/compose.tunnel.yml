@@ -1,0 +1,46 @@
+# Independent outbound-only connector; attach only to the exact approved origin's service network.
+services:
+  connector:
+    image: cloudflare/cloudflared:2026.10.1@sha256:a15a3b50b8dabd57ac2090e9484c0247dba9dfa1f0df4d298d4317f9d69eb2d5
+    user: "65532:65532"
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    command: ["tunnel", "--config", "/configuration/cloudflared.yml", "run", "${ZANANCE_TUNNEL_ID:?Owner-created tunnel required}"]
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/cloudflared", "tunnel", "--metrics", "127.0.0.1:20241", "ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    volumes:
+      - type: bind
+        source: ./cloudflared.yml
+        target: /configuration/cloudflared.yml
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${ZANANCE_TUNNEL_CREDENTIAL_FILE:?Owner credential file required}
+        target: /credentials/tunnel.json
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${ZANANCE_TUNNEL_ROOT_FILE:?Original public origin CA required}
+        target: /trust/origin-ca.crt
+        read_only: true
+        bind: {create_host_path: false}
+    networks:
+      origin:
+        ipv4_address: ${ZANANCE_CONNECTOR_ADDRESS:?Explicit connector address required}
+      edge: {}
+    labels:
+      pro.vafadar.zanance.tunnel: d313
+      pro.vafadar.zanance.origin: ${ZANANCE_TUNNEL_ORIGIN_PROJECT:?Exact origin ownership required}
+    logging:
+      driver: local
+      options: {max-size: "1m", max-file: "2"}
+networks:
+  origin:
+    external: true
+    name: ${ZANANCE_TUNNEL_ORIGIN_PROJECT:?Exact origin ownership required}_service
+  edge: {}

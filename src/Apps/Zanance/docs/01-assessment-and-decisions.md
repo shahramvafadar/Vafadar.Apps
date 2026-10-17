@@ -6307,3 +6307,8 @@ reuse original full validation, preview, access checks and explicit replacement 
 Automatic/portable cohorts remain separate; device-only rows cannot share a file. Existing keys/files are
 preserved. Seven focused tests and 18 original Windows layout contexts qualify the changed boundary;
 actual phone continuation and complete package evidence: [physical Android safety recovery](quality/physical-android-safety-recovery.md).
+
+
+## D-313 outbound-only approved hosting path
+
+Implement the approved Tunnel origin and separate credential-file connector with exact TLS/forwarding authority and production classification. Preserve gateway mode across snapshot/restore/maintenance; never expose fictional services or read owner credentials. Seven operational checks and nine distinct protocol cases pass locally. Public tunnel/DNS/real mail/legal acceptance remains open. See [outbound tunnel origin](quality/outbound-tunnel-origin.md).
