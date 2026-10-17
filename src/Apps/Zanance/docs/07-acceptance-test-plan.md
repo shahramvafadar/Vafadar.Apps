@@ -3659,3 +3659,17 @@ app build/install or unrelated successful check is repeated. English/light prese
 displayed preservation are the scope; evaluation notices limit merchant accuracy, and real corpus,
 image OCR/camera, raw main-store equality, other native/platform and release acceptance remain open.
 See [physical evidence](quality/physical-digital-receipts.md).
+
+
+## AT-325 image OCR, accent evidence and safe refusal
+
+Actual Samsung image OCR exposed French À -> Å in NET À PAYER while the number/unit remained correct.
+D-325 folds Latin accents only for whole keyword/exclusion comparisons, preserving original source,
+non-Latin marks and all numeric/currency/refusal rules. Ten added behaviors reproduce the failure and
+retain safety; all 118 related cases pass, followed by test cleanup and zero-warning Windows/complete
+signed offline Android builds. Same-file French recognition now gives 24.50 with original Å source;
+seven original raster cases include German EXIF and blank missing-total/currency-conflict drafts.
+Three pre-fix successes are retained; four final cases and upgrade preserve five rows/Home 979 without
+Save/reset. Exact owned inputs and diagnostic package are removed. Real corpus/camera/scanned/iOS and
+release gates remain open; a separate dangling transfer-summary caption is observed and queued next.
+See [physical evidence](quality/physical-receipt-ocr-accents.md).

@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Receipt OCR accent tolerance (D-325)
+
+- Recognize purchase-total labels when image reading changes a Latin accent, while retaining the original evidence and refusing damaged amounts or conflicting currencies. Verify the correction and safe review on the approved Android phone.
+
 ### Physical digital-receipt acceptance (D-324)
 
 - Verify purchase totals from six source-language digital PDFs on the approved Android phone, with explicit review and discard preserving existing records. Real receipt-image and camera acceptance remain separate.

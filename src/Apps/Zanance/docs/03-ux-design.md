@@ -1519,3 +1519,8 @@ Plans keeps the actual collection/row template and persistent bottom Add target.
 ## Existing loan terms after repayment (D-319)
 
 A zero outstanding balance stops the repayment estimate, not the existence of stored terms. Show the existing Add-terms instruction only when installment configuration is actually absent. Keep original balance/history/manual transfer/reminder access and genuine missing-data guidance; never infer a missing rate/installment from unavailable estimates or paid entitlement state.
+
+
+## Receipt OCR accent evidence (D-325)
+
+Latin accent differences may match a complete known total/exclusion phrase, but the existing review card keeps the actual OCR source. Never silently rewrite digits, currencies or spelling to populate a receipt amount. Missing/conflicting evidence keeps manual entry and explicit Save/Discard.

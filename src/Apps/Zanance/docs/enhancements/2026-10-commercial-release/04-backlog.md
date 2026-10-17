@@ -45,7 +45,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
-| ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-324 Samsung six source-language digital-PDF totals/native review/discard; real corpus/image OCR/camera/iOS remain) | sample receipts |
+| ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-324 six source-language digital PDFs; D-325 physical Latin image OCR/EXIF/refusal and French accent fix; real corpus/camera/scanned/iOS remain) | sample receipts |
 | ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-322 trusted complete-row null metadata and 12 retained phone Home cases; loaded Home 1.92-2.83s reference / 7.23-9.51s tenfold; full cold/ANR statistics/low-memory/iOS remain) | – |
 | ZCR-QA-07 | Android/iOS parity (notifications, widget, file picker, lock, share, licences); existing Windows development checks | 2 | P2 | M | Mac readiness owner-reported; verification and iOS runs pending in that environment. Windows commercial delivery is outside current scope | platform access/signing |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | In progress (D-174 widget and D-175 contextual date names/drafts verified locally; spoken TalkBack and remaining screen/platform acceptance open) | – |
@@ -2739,3 +2739,17 @@ app build/install or unrelated successful check is repeated. English/light prese
 displayed preservation are the scope; evaluation notices limit merchant accuracy, and real corpus,
 image OCR/camera, raw main-store equality, other native/platform and release acceptance remain open.
 See [physical evidence](../../quality/physical-digital-receipts.md).
+
+
+## D-325 physical OCR correction and next observed defect
+
+Actual Samsung image OCR exposed French À -> Å in NET À PAYER while the number/unit remained correct.
+D-325 folds Latin accents only for whole keyword/exclusion comparisons, preserving original source,
+non-Latin marks and all numeric/currency/refusal rules. Ten added behaviors reproduce the failure and
+retain safety; all 118 related cases pass, followed by test cleanup and zero-warning Windows/complete
+signed offline Android builds. Same-file French recognition now gives 24.50 with original Å source;
+seven original raster cases include German EXIF and blank missing-total/currency-conflict drafts.
+Three pre-fix successes are retained; four final cases and upgrade preserve five rows/Home 979 without
+Save/reset. Exact owned inputs and diagnostic package are removed. Real corpus/camera/scanned/iOS and
+release gates remain open; a separate dangling transfer-summary caption is observed and queued next.
+See [physical evidence](../../quality/physical-receipt-ocr-accents.md).

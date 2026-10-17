@@ -304,15 +304,39 @@ public static partial class ReceiptParser
     // The lower-case words of a line, padded with spaces so that whole words and phrases can be found. Keywords match the
     // Arabic letter forms of PDFs and OCR (ي, ى, ك) and words written with or without a half-space ("باقی‌مانده").
     private static string Tokens(string line) =>
-        " " + string.Join(' ', WordPattern().Matches(FoldPersian(line.Normalize(NormalizationForm.FormC).ToLowerInvariant())).Select(m => m.Value)) + " ";
+        " " + string.Join(' ', WordPattern().Matches(FoldLatinAccents(FoldPersian(line.Normalize(NormalizationForm.FormC).ToLowerInvariant()))).Select(m => m.Value)) + " ";
 
     private static string FoldPersian(string text) =>
         text.Replace('ي', 'ی').Replace('ى', 'ی').Replace('ك', 'ک').Replace("\u200C", string.Empty, StringComparison.Ordinal);
 
-    private static bool Has(string tokens, string phrase) => tokens.Contains(" " + phrase + " ", StringComparison.Ordinal);
+    // D-325: native OCR read French À as Å. Fold Latin accents symmetrically for labels and exclusions
+    // only; the original source rows, amounts, signs and currency/unit parsing remain unchanged.
+    private static string FoldLatinAccents(string text)
+    {
+        var result = new StringBuilder(text.Length);
+        var latinBase = false;
+        foreach (var character in text.Normalize(NormalizationForm.FormD))
+        {
+            var category = char.GetUnicodeCategory(character);
+            if (category is UnicodeCategory.NonSpacingMark or UnicodeCategory.SpacingCombiningMark or UnicodeCategory.EnclosingMark)
+            {
+                if (!latinBase) result.Append(character);
+            }
+            else
+            {
+                result.Append(character);
+                latinBase = char.IsAsciiLetter(character);
+            }
+        }
+
+        // Preserve non-Latin combining marks and their original composed forms (including Persian text).
+        return result.ToString().Normalize(NormalizationForm.FormC);
+    }
+
+    private static bool Has(string tokens, string phrase) => tokens.Contains(" " + FoldLatinAccents(phrase) + " ", StringComparison.Ordinal);
 
     private static string WithoutTotalPhrases(string tokens) =>
-        TotalDespiteExclusion.Aggregate(tokens, (text, phrase) => text.Replace(" " + phrase + " ", " ", StringComparison.Ordinal));
+        TotalDespiteExclusion.Aggregate(tokens, (text, phrase) => text.Replace(" " + FoldLatinAccents(phrase) + " ", " ", StringComparison.Ordinal));
 
     private static DateOnly? FindDate(string[] lines, DateOnly today)
     {
