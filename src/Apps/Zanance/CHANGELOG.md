@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Physical own-format CSV checks (D-330)
+
+- Verify the app-produced CSV through real Android import, complete exported-field re-export comparison, duplicate refusal and Undo after restarting. Application behavior and APK remain unchanged.
+
 ### Continued report PDF context (D-329)
 
 - Repeat account names, exact report scope and column headings when a table continues on another PDF page, so a balance keeps its financial context. Original figures and row membership are unchanged.

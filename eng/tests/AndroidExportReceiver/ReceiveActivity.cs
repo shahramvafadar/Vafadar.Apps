@@ -9,11 +9,12 @@ using Android.Provider;
 
 namespace Vafadar.Zanance.Verification.ExportReceiver;
 
-/// <summary>Receives explicitly granted original accountant ZIPs or report PDFs into isolated test storage.</summary>
+/// <summary>Receives explicitly granted original accountant ZIPs, report PDFs or ledger CSVs into isolated test storage.</summary>
 [Activity(Name = "pro.vafadar.zanance.exportreview.ReceiveActivity", Label = "Zanance export review",
     Exported = true, NoHistory = true, ExcludeFromRecents = true)]
 [IntentFilter([Intent.ActionSend], Categories = [Intent.CategoryDefault], DataMimeType = "application/zip")]
 [IntentFilter([Intent.ActionSend], Categories = [Intent.CategoryDefault], DataMimeType = "application/pdf")]
+[IntentFilter([Intent.ActionSend], Categories = [Intent.CategoryDefault], DataMimeType = "text/csv")]
 public sealed class ReceiveActivity : Activity
 {
     private const int Limit = 2 * 1024 * 1024;
@@ -26,7 +27,8 @@ public sealed class ReceiveActivity : Activity
         {
             var intent = Intent ?? throw new InvalidOperationException();
             var pdf = intent.Type == "application/pdf";
-            if (intent.Action != Intent.ActionSend || (!pdf && intent.Type != "application/zip")
+            var csv = intent.Type == "text/csv";
+            if (intent.Action != Intent.ActionSend || (!pdf && !csv && intent.Type != "application/zip")
                 || (intent.Flags & ActivityFlags.GrantReadUriPermission) == 0) throw new InvalidOperationException();
             var uri = intent.ClipData?.ItemCount == 1 ? intent.ClipData.GetItemAt(0)?.Uri
                 : intent.GetParcelableExtra(Intent.ExtraStream, Java.Lang.Class.FromType(typeof(Android.Net.Uri))) as Android.Net.Uri;
@@ -37,11 +39,11 @@ public sealed class ReceiveActivity : Activity
                 ?? throw new InvalidOperationException();
             if (!metadata.MoveToFirst()) throw new InvalidOperationException();
             var name = metadata.GetString(0) ?? throw new InvalidOperationException();
-            var pattern = pdf ? "^zanance-report-[0-9a-f]{32}\\.pdf$" : "^zanance-accountant-[0-9a-f]{32}\\.zip$";
+            var pattern = csv ? "^zanance-export-[0-9]{8}-[0-9]{4}\\.csv$" : pdf ? "^zanance-report-[0-9a-f]{32}\\.pdf$" : "^zanance-accountant-[0-9a-f]{32}\\.zip$";
             if (!Regex.IsMatch(name, pattern, RegexOptions.CultureInvariant))
                 throw new InvalidOperationException();
-            var token = name[(pdf ? 15 : 19)..^4];
-            var destination = Path.Combine(root, "received-" + token + (pdf ? ".pdf" : ".zip"));
+            var token = csv ? name[..^4] : name[(pdf ? 15 : 19)..^4];
+            var destination = Path.Combine(root, "received-" + token + (csv ? ".csv" : pdf ? ".pdf" : ".zip"));
             if (File.Exists(destination)) throw new InvalidOperationException();
             using var input = resolver.OpenInputStream(uri) ?? throw new IOException();
             using var bytes = new MemoryStream();
@@ -54,7 +56,13 @@ public sealed class ReceiveActivity : Activity
             }
             var packet = bytes.ToArray();
             string[] entries = [];
-            if (pdf)
+            if (csv)
+            {
+                // Accept only the bounded original ledger-export header; parsing and financial checks stay on the host.
+                var text = new System.Text.UTF8Encoding(false, true).GetString(packet).TrimStart('\uFEFF');
+                if (!text.StartsWith("id,date,kind,amount,currency,account,", StringComparison.Ordinal)) throw new InvalidOperationException();
+            }
+            else if (pdf)
             {
                 // Validate the owned file kind only; the host renders and inspects the original PDF pages.
                 if (!packet.AsSpan().StartsWith("%PDF-"u8)) throw new InvalidOperationException();

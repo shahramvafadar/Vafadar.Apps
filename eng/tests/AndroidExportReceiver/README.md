@@ -89,3 +89,27 @@ This fixture-specific check rejects a continued cash row without its account/sco
 known original figures and renders both pages to verify actual footer pixels independently of extracted
 text. It does not prove all document layout or legal correctness. D-329 also visually inspects the original
 Persian/German exports. Temporary render files are removed when the verifier exits.
+
+
+## Original ledger CSV roundtrip (D-330)
+
+The receiver accepts text/csv only for zanance-export-YYYYMMDD-HHMM.csv from the original main FileProvider,
+with a native read grant, strict UTF-8, the original ledger header and the existing2MiB bound. It neither
+parses financial relationships nor executes/forwards CSV. Receipt MediaType, original filename/length/hash
+must match before copying only this fixture's own private files. Same-minute tokens refuse overwrite.
+
+Stage the exact received fictitious file only at a previously absent owned Downloads path. Create a fresh
+profile with the two exact fixture account names and opening dates no later than17October2026; keep both
+zero and included in totals. Use original picker/preview/import, original re-export, same-file duplicate
+refusal and a real process-cold Undo under verified current-profile identity. Retire only that new profile,
+require the external file's exact original hash before deletion and uninstall only the fresh receiver.
+Notes inclusion is the main CSV's existing on default; this fixture has no nonempty notes.
+
+```powershell
+python eng/tests/AndroidExportReceiver/verify_csv_roundtrip.py <original.csv> <target-reexport.csv>
+```
+
+The standard-library verifier checks every27-column value against five stable IDs, known fixture money,
+refund and transfer/fee relationships. Equal-date order may differ. This proves exported-field equality,
+not database/key equality, a complete backup, arbitrary bank format or malformed-file acceptance.
+See src/Apps/Zanance/docs/quality/physical-csv-roundtrip.md for the original native evidence.

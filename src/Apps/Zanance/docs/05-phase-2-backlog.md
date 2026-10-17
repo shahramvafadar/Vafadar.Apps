@@ -2247,3 +2247,15 @@ Samsung chooser coordinates opened an unrelated app; no further interaction occu
 fictitious-file grant absence is not proven. Final selection uses a fresh compressed hierarchy and exact
 local receiver. No financial/schema/native-crypto change or full-suite/performance replay. Wider device,
 reader/iOS/provider/Store and release gates remain open.
+
+
+## D-330 own-format physical continuation
+
+D-330 qualifies the original Samsung CSV producer/consumer roundtrip on the unchanged D-329 offline APK:
+five original rows, all27 exported fields/stable IDs equal after re-export, retained refund/transfer/fee
+relationships, disabled five-ID duplicate import, cold original batch and explicit Undo to zero. Only the
+new matching-account profile is retired; Main979 and three previous profiles remain. Twenty-three saved
+observation assertions pass; only the independent offline receiver is rebuilt with zero warnings/errors.
+No maintained unit count, main source/APK or unrelated successful suite/build changes. Bank/aggregate/
+malformed-file/full-device/iOS/release gates remain separate.
+See [evidence](quality/physical-csv-roundtrip.md).

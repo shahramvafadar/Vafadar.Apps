@@ -1166,3 +1166,8 @@ Use eng/tests/AndroidExportReceiver/README.md for the isolated native URI-grant 
 ## Native continued report PDF qualification
 
 The independent export receiver now accepts original report PDFs as well as accountant ZIPs. Use its README and verify_report_pages.py with local pypdf/Pillow and Poppler to inspect actual original bytes and rendered footer visibility. Samsung expanded chooser observations require the current compressed hierarchy; never reuse underlying-grid coordinates. Do not inspect main private storage or infer a valid export from a stale receipt.
+
+
+## Physical original CSV producer/consumer
+
+The isolated export receiver supports the bounded original ledger CSV format. Its README and verify_csv_roundtrip.py cover exact-byte native grant receipt, matching zero-account fixture preparation, all-column re-export comparison, same-file duplicate refusal, cold Undo and exact owned cleanup. Main code/APK need no rebuild when unchanged; this does not qualify arbitrary bank revisions.

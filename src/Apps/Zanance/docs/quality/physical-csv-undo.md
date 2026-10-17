@@ -78,3 +78,8 @@ malformed/large-file limits, full cold/ANR timing, other Android API/page-size m
 Production source/APK and their successful strict build/tests remain D-315; no unrelated successful suite,
 crypto/backend/build or package qualification is replayed and no new whole-suite count is claimed. The
 canonical remaining-work backlog and development goal stay open.
+
+
+## D-330 original producer/consumer continuation
+
+The separately documented [original physical roundtrip](physical-csv-roundtrip.md) now checks a real app-produced file, all27 fields on five stable IDs, refund/transfer/group relationships and cold Undo. It supersedes only that scoped gap above. Earlier manual multiline/formula-like cases are retained, not replayed or attributed to this notes-empty fixture.

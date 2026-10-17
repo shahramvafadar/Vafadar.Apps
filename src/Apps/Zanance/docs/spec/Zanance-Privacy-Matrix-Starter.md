@@ -969,3 +969,12 @@ SDKs and network behavior do not change. One initial stale chooser action opened
 no temporary fictitious-file grant absence is claimed; subsequent explicit local selection is verified.
 No real financial data or keys are inspected/uploaded. The original report footer and main privacy policy
 are unchanged; local fictitious PDF/raster evidence stays outside Git.
+
+
+### D-330 original fictitious CSV qualification only
+
+The independent offline receiver additionally accepts only the bounded original ledger CSV name/header and
+native read grant. Its fictitious local output and one hash-matched public picker input support an explicit
+producer/consumer test; the input, fresh profile and receiver are removed afterward. Main collection/SDKs,
+permissions and export defaults do not change. CSV notes inclusion was on, with no notes in this fixture;
+nonempty-note redaction is not claimed. No owner data/keys are read or uploaded.

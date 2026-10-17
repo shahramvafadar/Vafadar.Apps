@@ -1415,3 +1415,8 @@ Physical accountant default/no-document all-account and cash-only ZIP receiving/
 ## D-329 physical report PDF
 
 Original en/fa/de exports and repeated financial context are qualified on Samsung; raw main-store equality, full device/reader, iOS/provider/Store and release acceptance remain open. See quality/physical-report-pagination.md.
+
+
+## D-330 physical CSV boundary
+
+Original own-format export/import/re-export/duplicate/cold Undo is qualified for the five-row Samsung fixture; real bank specimens, aggregate/unsafe Undo, broader device and iOS/Store/release acceptance remain open. Main APK stays D-329; see quality/physical-csv-roundtrip.md.
