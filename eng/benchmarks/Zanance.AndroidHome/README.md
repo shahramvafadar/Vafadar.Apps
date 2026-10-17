@@ -200,3 +200,8 @@ caller timings do not represent production compilation. D-320 removes only extra
 Release compiler/task downloads follow the same central servicing pin as the runtime. Restore with the same
 Configuration as publish; the normal APK script does this explicitly. Diagnostic exception output is type/stack
 only, never exception messages. The independent window stays awake only during its explicit foreground review.
+
+
+## Bounded read-stage diagnostics (D-321)
+
+The existing read-profile phase additionally observes fixed-table EF execution/reader/open durations for its exact owned connection path and separately times fresh Home validation. It never serializes SQL, parameter values, paths or keys. Duration boundaries overlap and cannot be summed as independent work; EfReadCalls records EF wrapper calls, not the complete direct-reader row count. Complete ordered-entry digests and before/after typed-row verification remain mandatory. Use a fresh comparison on retained ciphertext/keys; a read comparison does not replace final original Home/native/package qualification.

@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Complete history reading (D-321)
+
+- Load large transaction histories with less delay while preserving complete records and calculations. Verify the same protected phone data and offline upgrade; Home still needs further performance work.
+
 ### Android compilation stability (D-320)
 
 - Adjust Android compilation to avoid the profiled Home crash observed with large histories, and keep serviced runtime/build tools aligned. Verify the same protected data and a complete phone upgrade; remaining latency is still open.

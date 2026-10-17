@@ -45,13 +45,20 @@ internal static partial class AndroidHomeReview
                 using (generation)
                 {
                     await using var before = await PortableAsync(services);
+                    using var timings = new HomeReadDiagnostics(generation.Path);
+                    timings.Begin("public-ledger");
                     var store = services.GetRequiredService<ZananceStore>(); var watch = Stopwatch.StartNew();
                     var entries = await store.GetEntriesAsync(cancellationToken: ct); watch.Stop(); var ledgerMs = watch.Elapsed.TotalMilliseconds;
                     var digest = Digest(entries); var count = entries.Count; entries.Clear();
+                    timings.Begin("home-read");
                     watch.Restart(); var home = await store.GetHomeSnapshotAsync(Vafadar.Zanance.Performance.PerformanceFixture.Today, 0, ct);
                     watch.Stop(); var homeMs = watch.Elapsed.TotalMilliseconds;
                     if (home.Entries.Count != count || digest != Digest(home.Entries))
                         throw new ReviewCheckException("Complete original public read packets differ.");
+                    timings.Begin("home-validation"); watch.Restart();
+                    await store.ValidateHomeSnapshotAsync(home, ct);
+                    watch.Stop(); var validationMs = watch.Elapsed.TotalMilliseconds;
+                    var readTimings = timings.Capture(); timings.Dispose();
                     double? genericMs = null, directMs = null, rawValuesMs = null; long? fields = null; string? converterType = null;
                     if (comparison == baseline)
                     {
@@ -94,7 +101,8 @@ internal static partial class AndroidHomeReview
                     await using var after = await PortableAsync(services);
                     await SqliteSnapshotVerifier.VerifyAsync(before.Connection, after.Connection, ct);
                     results.Add(new { Shape = name, Entries = count, CompleteOrderedEntryDigest = digest,
-                        PublicGetEntriesMs = ledgerMs, PublicHomeSnapshotMs = homeMs, RawClrFieldReadMs = rawValuesMs,
+                        PublicGetEntriesMs = ledgerMs, PublicHomeSnapshotMs = homeMs, PublicHomeValidationMs = validationMs,
+                        EfTimingEvents = readTimings, RawClrFieldReadMs = rawValuesMs,
                         RawFieldsRead = fields, TimestampConverter = converterType,
                         TimestampConversions = comparison == baseline ? 200000 : 0, OriginalBoxedTimestampMs = genericMs, BclTimestampMs = directMs,
                         TimestampValuesMatched = comparison == baseline ? true : (bool?)null, CompletePortableSchemaAndTypedRowsUnchanged = true });

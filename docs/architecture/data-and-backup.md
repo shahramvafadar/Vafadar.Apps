@@ -2325,3 +2325,8 @@ history to the current period, changes cryptographic parameters or creates a SQL
 LedgerEntry entity uses the supported Customize hook and public ConstructorBinding to bind its existing-id
 constructor. Keep new-entry identifier generation unchanged; regenerate the compiled model after changes and
 qualify complete migration/materialization, ordering and Native AOT behavior. This is no schema change.
+
+
+## Complete current-row materialization (D-321)
+
+The guarded complete ledger command still owns its original connection/transaction, mapping contract and 32 fields. Only an exact unwrapped SqliteDataReader uses one bounded row-type buffer and borrowed statement for equivalent native scalar access. Preserve checked Int32 narrowing, null errors, SQLite coercion/decoder, model timestamp/tag converters and provider date parsing. Canonical GUID spans avoid temporary strings; alternate representations retain original parsing. Replaced/derived readers use their own getters. Never retain handles/types across operations or bypass reader advancement, cancellation, model drift or actual-file authority. No schema/compiled-model change belongs to this optimization.

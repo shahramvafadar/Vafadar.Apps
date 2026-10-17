@@ -457,3 +457,6 @@ docs/enhancements/2026-10-commercial-release/16-market-reference-delivery.md.
 failure, limited compilation workaround, matching serviced compiler/task and complete signed main upgrade.
 Financial algorithms/data are unchanged; remaining latency, full cold/ANR statistics and release acceptance
 are open. The qualified local APK is artifacts/android-aot-runtime-d320-qualified/pro.vafadar.zanance-Signed.apk.
+
+
+D-321 qualifies faster complete ledger reading on retained physical data without changing cryptography or financial results. Final loaded Home and offline upgrade boundaries: [evidence](docs/quality/physical-home-row-reading.md).

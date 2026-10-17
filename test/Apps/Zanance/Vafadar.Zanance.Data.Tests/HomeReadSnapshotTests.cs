@@ -247,6 +247,78 @@ public sealed class HomeReadSnapshotTests : IDisposable
         Assert.IsType<InvalidOperationException>(typed);
     }
 
+    /// <summary>Native row access retains alternate GUID/storage/coercion behavior from an independent EF materialization.</summary>
+    [Theory, InlineData("guid-braces"), InlineData("guid-compact"), InlineData("guid-blob"), InlineData("guid-utf8-blob"),
+        InlineData("legacy-date"), InlineData("numeric-coercion"), InlineData("embedded-null")]
+    [Trait("AT", "AT-321")]
+    public async Task Complete_history_retains_provider_storage_and_conversion_semantics(string representation)
+    {
+        var provider = Create(); await SeedAsync(provider);
+        var group = Guid.Parse("a502b17e-74c6-4d1b-b174-e52764c44f72");
+        await using (var db = await Factory(provider).CreateDbContextAsync(Ct))
+        {
+            switch (representation)
+            {
+                case "guid-braces":
+                    await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET GroupId = {group.ToString("B")}", Ct); break;
+                case "guid-compact":
+                    await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET GroupId = {group.ToString("N")}", Ct); break;
+                case "guid-blob":
+                    await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET GroupId = {group.ToByteArray()}", Ct); break;
+                case "guid-utf8-blob":
+                    await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET GroupId = {System.Text.Encoding.UTF8.GetBytes(group.ToString("D"))}", Ct); break;
+                case "legacy-date":
+                    await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET Date = {"10/15/2026"}", Ct); break;
+                case "numeric-coercion":
+                    await db.Database.ExecuteSqlRawAsync("UPDATE Entries SET Amount = 123.75, IsAggregated = 2, Kind = 1.75", Ct); break;
+                case "embedded-null":
+                    await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET Title = {"left\0right"}, Note = {System.Text.Encoding.UTF8.GetBytes("blob\0note")}", Ct); break;
+            }
+        }
+        string expected;
+        await using (var oracle = await Factory(provider).CreateDbContextAsync(Ct))
+            expected = JsonSerializer.Serialize(await oracle.Entries.AsNoTracking()
+                .OrderByDescending(row => row.Date).ThenByDescending(row => row.CreatedAt).ToListAsync(Ct));
+        var store = provider.GetRequiredService<ZananceStore>();
+        Assert.Equal(expected, JsonSerializer.Serialize(await store.GetEntriesAsync(cancellationToken: Ct)));
+        Assert.Equal(expected, JsonSerializer.Serialize((await store.GetHomeSnapshotAsync(Today, 0, Ct)).Entries));
+    }
+
+    /// <summary>Native checked narrowing preserves refusal of an out-of-range stored enum instead of publishing a partial history.</summary>
+    [Fact]
+    [Trait("AT", "AT-321")]
+    public async Task Complete_history_refuses_out_of_range_enum_like_the_original_provider()
+    {
+        var provider = Create(); await SeedAsync(provider);
+        await using (var db = await Factory(provider).CreateDbContextAsync(Ct))
+            await db.Database.ExecuteSqlRawAsync("UPDATE Entries SET Kind = 2147483648", Ct);
+        await using (var oracle = await Factory(provider).CreateDbContextAsync(Ct))
+            await Assert.ThrowsAsync<OverflowException>(async () => await oracle.Entries.AsNoTracking().ToListAsync(Ct));
+        var store = provider.GetRequiredService<ZananceStore>();
+        await Assert.ThrowsAsync<OverflowException>(async () => await store.GetEntriesAsync(cancellationToken: Ct));
+        await Assert.ThrowsAsync<OverflowException>(async () => await store.GetHomeSnapshotAsync(Today, 0, Ct));
+    }
+
+    /// <summary>A reader supplied by an EF interceptor retains its typed getters instead of being treated as a native statement.</summary>
+    [Fact]
+    [Trait("AT", "AT-321")]
+    public async Task Complete_history_respects_interceptor_replaced_typed_reader()
+    {
+        var provider = Create(); await SeedAsync(provider);
+        string expected;
+        await using (var oracle = await Factory(provider).CreateDbContextAsync(Ct))
+            expected = JsonSerializer.Serialize(await oracle.Entries.AsNoTracking()
+                .OrderByDescending(row => row.Date).ThenByDescending(row => row.CreatedAt).ToListAsync(Ct));
+        var path = provider.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>().Path;
+        var replacement = new TypedEntryReader();
+        var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite($"Data Source={path};Pooling=False")
+            .UseModel(ZananceDbContextModel.Instance).AddInterceptors(replacement).Options;
+        var store = Store(new DirectFactory(options), provider.GetRequiredService<ICommercialWriteAccessSource>());
+        Assert.Equal(expected, JsonSerializer.Serialize(await store.GetEntriesAsync(cancellationToken: Ct)));
+        Assert.Equal(expected, JsonSerializer.Serialize((await store.GetHomeSnapshotAsync(Today, 0, Ct)).Entries));
+        Assert.Equal(2, replacement.Replaced);
+    }
+
     /// <summary>Preserves null legacy fallback, explicit reset and custom profile order in the original captured read.</summary>
     [Theory, InlineData(null), InlineData(""), InlineData("Budget,Recent,-Upcoming,-Accounts")]
     [Trait("AT", "AT-285")]
@@ -445,6 +517,48 @@ public sealed class HomeReadSnapshotTests : IDisposable
         public CommercialWriteAccess Current { get; set; } = CommercialWriteAccess.Inactive;
         public CommercialWriteAccess Capture(string databasePath) => Current;
     }
+    /// <summary>Supplies a genuinely different typed reader; its boolean and Int32 getters cannot be replaced with GetInt64.</summary>
+    private sealed class TypedEntryReader : DbCommandInterceptor
+    {
+        internal int Replaced { get; private set; }
+        public override async ValueTask<DbDataReader> ReaderExecutedAsync(DbCommand command, CommandExecutedEventData eventData,
+            DbDataReader result, CancellationToken cancellationToken = default)
+        {
+            if (!command.CommandText.Contains("FROM \"Entries\"", StringComparison.Ordinal)) return result;
+            var table = new System.Data.DataTable();
+            for (var ordinal = 0; ordinal < result.FieldCount; ordinal++)
+            {
+                var name = result.GetName(ordinal);
+                var type = name.EndsWith("Id", StringComparison.Ordinal) ? typeof(Guid) : name switch
+                {
+                    "IsAggregated" or "IsPartialPayment" => typeof(bool),
+                    "Kind" or "Direction" or "Review" or "Source" => typeof(int),
+                    "Date" or "AggregatedFrom" or "AggregatedTo" or "OccurrenceDate" or "ReimbursementDueDate" => typeof(DateOnly),
+                    "Amount" or "ToAmount" or "OriginalAmount" or "ReimbursableAmount" or "CreatedAt" or "UpdatedAt" => typeof(long),
+                    _ => typeof(string),
+                };
+                table.Columns.Add(name, type);
+            }
+            while (await result.ReadAsync(cancellationToken))
+            {
+                var values = new object[result.FieldCount];
+                for (var ordinal = 0; ordinal < values.Length; ordinal++)
+                {
+                    var type = table.Columns[ordinal].DataType;
+                    values[ordinal] = result.IsDBNull(ordinal) ? DBNull.Value
+                        : type == typeof(Guid) ? result.GetGuid(ordinal)
+                        : type == typeof(bool) ? result.GetBoolean(ordinal)
+                        : type == typeof(int) ? result.GetInt32(ordinal)
+                        : type == typeof(DateOnly) ? result.GetFieldValue<DateOnly>(ordinal)
+                        : type == typeof(long) ? result.GetInt64(ordinal) : result.GetString(ordinal);
+                }
+                table.Rows.Add(values);
+            }
+            await result.DisposeAsync(); Replaced++;
+            return table.CreateDataReader();
+        }
+    }
+
     private sealed class RecordedReads : DbCommandInterceptor
     {
         public int RateQueries { get; private set; }

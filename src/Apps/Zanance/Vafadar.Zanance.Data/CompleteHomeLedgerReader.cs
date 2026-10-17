@@ -64,42 +64,45 @@ internal static class CompleteHomeLedgerReader
         await using var result = await command.ExecuteReaderAsync(parameters, ct);
         var reader = result.DbDataReader;
         var entries = new List<LedgerEntry>();
+        // One bounded buffer belongs to this reader, never a retained row or global native handle.
+        var storageTypes = new int[Columns.Length];
         while (await reader.ReadAsync(ct))
         {
             ct.ThrowIfCancellationRequested();
-            entries.Add(new LedgerEntry(reader.GetGuid(0))
+            var row = new CompleteHomeLedgerRow(reader, storageTypes);
+            entries.Add(new LedgerEntry(row.GetGuid(0))
             {
-                AccountId = reader.GetGuid(1),
-                AggregatedFrom = reader.IsDBNull(2) ? null : reader.GetFieldValue<DateOnly>(2),
-                AggregatedTo = reader.IsDBNull(3) ? null : reader.GetFieldValue<DateOnly>(3),
-                Amount = reader.GetInt64(4),
-                CategoryId = reader.IsDBNull(5) ? null : reader.GetGuid(5),
-                CreatedAt = (DateTimeOffset)contract.CreatedAt.ConvertFromProvider(reader.GetInt64(6))!,
-                Date = reader.GetFieldValue<DateOnly>(7),
-                Direction = reader.IsDBNull(8) ? null : (AdjustmentDirection)reader.GetInt32(8),
-                GroupId = reader.IsDBNull(9) ? null : reader.GetGuid(9),
-                Icon = reader.IsDBNull(10) ? null : reader.GetString(10),
-                ImportBatchId = reader.IsDBNull(11) ? null : reader.GetGuid(11),
-                IsAggregated = reader.GetBoolean(12),
-                IsPartialPayment = reader.GetBoolean(13),
-                Kind = (EntryKind)reader.GetInt32(14),
-                Note = reader.IsDBNull(15) ? null : reader.GetString(15),
-                OccurrenceDate = reader.IsDBNull(16) ? null : reader.GetFieldValue<DateOnly>(16),
-                OriginalAmount = reader.IsDBNull(17) ? null : reader.GetInt64(17),
-                OriginalCurrencyCode = reader.IsDBNull(18) ? null : reader.GetString(18),
-                Payee = reader.IsDBNull(19) ? null : reader.GetString(19),
-                RefundOfId = reader.IsDBNull(20) ? null : reader.GetGuid(20),
-                ReimbursableAmount = reader.IsDBNull(21) ? null : reader.GetInt64(21),
-                ReimbursedBy = reader.IsDBNull(22) ? null : reader.GetString(22),
-                ReimbursementDueDate = reader.IsDBNull(23) ? null : reader.GetFieldValue<DateOnly>(23),
-                Review = (ReviewState)reader.GetInt32(24),
-                ScheduleId = reader.IsDBNull(25) ? null : reader.GetGuid(25),
-                Source = (EntrySource)reader.GetInt32(26),
-                Tags = contract.ReadTags(reader.GetString(27)),
-                Title = reader.IsDBNull(28) ? null : reader.GetString(28),
-                ToAccountId = reader.IsDBNull(29) ? null : reader.GetGuid(29),
-                ToAmount = reader.IsDBNull(30) ? null : reader.GetInt64(30),
-                UpdatedAt = (DateTimeOffset)contract.UpdatedAt.ConvertFromProvider(reader.GetInt64(31))!,
+                AccountId = row.GetGuid(1),
+                AggregatedFrom = row.IsDBNull(2) ? null : row.GetFieldValue<DateOnly>(2),
+                AggregatedTo = row.IsDBNull(3) ? null : row.GetFieldValue<DateOnly>(3),
+                Amount = row.GetInt64(4),
+                CategoryId = row.IsDBNull(5) ? null : row.GetGuid(5),
+                CreatedAt = (DateTimeOffset)contract.CreatedAt.ConvertFromProvider(row.GetInt64(6))!,
+                Date = row.GetFieldValue<DateOnly>(7),
+                Direction = row.IsDBNull(8) ? null : (AdjustmentDirection)row.GetInt32(8),
+                GroupId = row.IsDBNull(9) ? null : row.GetGuid(9),
+                Icon = row.IsDBNull(10) ? null : row.GetString(10),
+                ImportBatchId = row.IsDBNull(11) ? null : row.GetGuid(11),
+                IsAggregated = row.GetBoolean(12),
+                IsPartialPayment = row.GetBoolean(13),
+                Kind = (EntryKind)row.GetInt32(14),
+                Note = row.IsDBNull(15) ? null : row.GetString(15),
+                OccurrenceDate = row.IsDBNull(16) ? null : row.GetFieldValue<DateOnly>(16),
+                OriginalAmount = row.IsDBNull(17) ? null : row.GetInt64(17),
+                OriginalCurrencyCode = row.IsDBNull(18) ? null : row.GetString(18),
+                Payee = row.IsDBNull(19) ? null : row.GetString(19),
+                RefundOfId = row.IsDBNull(20) ? null : row.GetGuid(20),
+                ReimbursableAmount = row.IsDBNull(21) ? null : row.GetInt64(21),
+                ReimbursedBy = row.IsDBNull(22) ? null : row.GetString(22),
+                ReimbursementDueDate = row.IsDBNull(23) ? null : row.GetFieldValue<DateOnly>(23),
+                Review = (ReviewState)row.GetInt32(24),
+                ScheduleId = row.IsDBNull(25) ? null : row.GetGuid(25),
+                Source = (EntrySource)row.GetInt32(26),
+                Tags = contract.ReadTags(row.GetString(27)),
+                Title = row.IsDBNull(28) ? null : row.GetString(28),
+                ToAccountId = row.IsDBNull(29) ? null : row.GetGuid(29),
+                ToAmount = row.IsDBNull(30) ? null : row.GetInt64(30),
+                UpdatedAt = (DateTimeOffset)contract.UpdatedAt.ConvertFromProvider(row.GetInt64(31))!,
             });
         }
         return entries;
