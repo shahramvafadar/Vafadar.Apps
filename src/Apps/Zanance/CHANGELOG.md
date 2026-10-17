@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Reduced native encrypted-storage libraries (D-301)
+
+- Remove unused OpenSSL facilities through its official build configuration while preserving database format, keys and required cryptography.
+- Use newly versioned source-built packages; retain existing encrypted data on Android upgrade and reject mismatched package bytes.
+- Keep remaining native warning review and physical-device/iOS acceptance open.
+
 ### Android startup compilation (D-300)
 
 - Precompile the measured cold-start path while preserving encrypted storage, access checks and the startup cover.

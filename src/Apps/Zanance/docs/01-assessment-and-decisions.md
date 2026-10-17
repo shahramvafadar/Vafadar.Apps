@@ -6112,3 +6112,17 @@ ordinary main/PR consumer gates stay intact. No automatic feed, application or r
 The complete batch, real failures, evidence and remaining hosted/adoption work are recorded in
 enhancements/2026-10-commercial-release/18-native-storage-profile-delivery.md. At this producer stage the main
 APK is still D-300; application/package adoption, per-site warning safety and device/iOS/release gates remain.
+
+### D-301 final native consumer adoption and observed workflow context repair
+
+Actual producer run39002185961 passes on the reviewed source/profile and hosted servicing compiler. Verify its
+artifact digest, two fresh outputs, current50-migration/native proofs and all nested package entries before
+recording new servicing candidate.8; keep distinct baseline candidate.7 and Android candidate.5. Main strict
+Windows and ordinary signed Android Release, exact embedded native hashes, retained installation cold Home
+and real expense/Cancel pass locally without key/data replacement. Original diagnostic safety remains open.
+
+The parallel backend workflow fails before any job because runner.temp is unavailable in a job env map.
+Place the identical private path in the two consuming step env maps, retaining private fixtures/report-only
+uploads. This is a parser/context repair, not a reason to repeat successful local backend/sync/app tests.
+Current full main-hosted completion remains distinct from the successful producer run. Exact evidence,
+failures, APK and open per-site/platform/release gates are in18-native-storage-profile-delivery.md.

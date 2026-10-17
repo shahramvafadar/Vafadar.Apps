@@ -1,4 +1,4 @@
-# Reduced native storage-crypto delivery (D-301 in progress)
+# Reduced native storage-crypto delivery (D-301)
 
 ## Original remaining requirement and complete batch
 
@@ -44,9 +44,9 @@ References: [SQLCipher releases](https://github.com/sqlcipher/sqlcipher/releases
 [Microsoft MAP](https://learn.microsoft.com/en-us/cpp/build/reference/map-generate-mapfile?view=msvc-170)
 and [link attribution](https://learn.microsoft.com/en-us/cpp/build/reference/verbose-print-progress-messages?view=msvc-170).
 Original local evidence is retained under artifacts/native-sqlcipher/link-closure-d301. The first reduced Windows
-candidate uses a fresh source/build directory; no production package or original fixture has changed yet.
+candidate used a fresh source/build directory; no production package or original fixture changed at that attribution stage.
 
-## Locally qualified producers; application adoption still pending
+## Producer qualification before application adoption
 
 The shared reviewed profile preserves AES-256-CBC, SHA1/SHA256/SHA512, HMAC, PBKDF2, RAND/DRBG, threads,
 assembly acceleration and secure memory. Fifty explicit official Configure removals reduce deprecated, legacy,
@@ -104,4 +104,71 @@ shahram/native-producer-4.19.0-candidate.8 requests its real two-build/schema/wa
 package; this mode skips unrelated Linux/consumer/performance stages and exports no key/database fixtures.
 After verifying actual workflow head/source/profile/compiler/package evidence, bind its exact entry hashes
 to the new servicing version. Ordinary main/pull-request runs retain the full consumer gates. Main application
-packages are still D-300 at this producer stage; final consumer pinning/build/native/package work remains open.
+packages remained D-300 at that producer stage; final consumer pinning/build/native/package evidence follows below.
+
+## Actual local consumer and main Android upgrade
+
+Local reviewed package inventories now bind Windows candidate.7 and Android candidate.5 to the actual produced
+entries, including notices, metadata and native libraries. Normal Ensure scripts verified those exact entries
+before populating the owned source-built feed. The real package-bound Windows persistence executable passed
+creation and reopening in separate processes with production assemblies, the complete50 migration set, original
+negative amounts, actual portable source and wrong-key refusal. The historical Original32Migrations result
+member remains a legacy name; its implementation now requires the current complete migration sequence.
+
+Main Windows strict build completed with0 warnings/errors. The ordinary complete Android BillingSandbox Release
+publish also passed its warning-rejecting gate. Final locally signed APK is
+artifacts/android-native-d301/pro.vafadar.zanance-Signed.apk;96150061 bytes;SHA256
+313390850b2517ea494ef361dbbcb5223f0e304bfcd94c3c9b8e4b06f558ac96. ZIP entry identity binds both new ABI hashes;
+component notices are bundled and recording payload is absent. Signature v2/v3 is valid with the existing local
+test certificate92cf83dfc05c274ad7fc99b820f9f1b272ff46eb5fb32b3039267074ed36167b. Permanent id, minAPI24,
+target36 and arm64+x64 remain; this is not store signing or acceptance of either physical ABI.
+
+The original main installation was upgraded in place without clearing data, changing keys/OS/security settings
+or creating a replacement fixture. OriginalPID32237 started its Activity cold in11660ms. Its initial native
+observation remained covered; the same process subsequently showed the loaded original0.00EUR/My account Home.
+Activity timing and this observation interval are not measured performance acceptance. No production private
+files were read through extra privileges, and no complete private-table hash claim follows from visible Home.
+The independent retained Windows key/database evidence and actual50-migration probes are separately recorded
+above. Main upgrade/native navigation continuation and hosted servicing qualification finish this same batch.
+
+The originalPID32237 opened the actual New expense form showing My account(EUR), then native Cancel returned
+to Home with the exact original visible text list, including0.00EUR. No Save was invoked. The first UI dump
+during that transition returned a null automation root; the same running process was retained and its completed
+form was read later, without a second tap/restart/fixture. This is an observation failure, not an invented
+application crash or a claim that all native transition races are fixed. d301-main-runtime-proof.json binds
+the final original-process/unchanged-visible-data evidence.
+
+## Actual hosted producer and final adoption
+
+[Native cipher candidates producer run39002185961](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39002185961)
+completed successfully on exact headf4036fe95dafe6aa36d87b6fc50b08cbeadafb70. Windows completed all producer
+gates; Linux was deliberately skipped in this producer-only run, not reported as newly passed. The public
+windows-native-qualification artifact12088779864 is1807930 bytes with GitHub digest
+ca3ba9b88c34fdbff5cb44aaf19e8f68290263c3da33a8643d4e518ffac99204; downloaded bytes match that digest.
+No key/database root is exported or imported into the consumer feed.
+
+Actual two fresh serviced DLLs both have4108288 bytes and SHA256
+45d430bcabce5daf3f8513fdc27ec25ff48590c064fe9ce55c7bbadd26ee6521. Compiler fingerprint is the previously
+reviewed b0a1818ebae6da7f18230a84e76ce839212584ac4c2ab55b97a0d5268085da57. Independent artifact verification
+binds both manifests, exact official source commits, input/profile hashes, reviewed compiler metadata, current50
+migrations, actual schema/refusal/export/staging results and original508-diagnostic/160-source closed drift
+proof. The nested candidate.8 nupkg and every entry are then checked against that manifest and library bytes.
+Its SHA256 is4c1ad735996175950c711f66e76e1e81ce7bea911e906291910e8b58715bba3b. Only those actual observed
+entry hashes become windows.servicing.package.contents.json. Baseline Windows remains separate candidate.7,
+Android candidate.5. Servicing pinning changes neither locally tested binary, so successful local builds,
+probes and main APK/navigation are not replayed. Ordinary main consumer gates still qualify all targets.
+
+The same head also exposed a pre-existing independent workflow parser failure:
+[backend run39002185011](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39002185011) has no jobs,
+with line134 rejecting runner.temp at jobs.personal-sync.env. This is not a failed backend test. Move only that
+same private path to the qualification and bounded-report steps' env maps, where runner context is available;
+preserve the original fixture, private-key boundary, report-only uploads and actual service scenarios. No local
+backend/sync suite or application build is repeated for this context-only correction. GitHub's own context
+availability table defines this distinction; actual full hosted completion after final main adoption remains a
+separate follow-up result, never inferred from the successful producer branch.
+
+This finishes the local native source/package/application maintenance batch and actual hosted producer
+qualification, not all SEC acceptance. Keep508 remaining per-site warnings, physical arm64/API24/16KiB,
+Mac/iOS, power loss, OAuth/provider/store and public-release gates open. Original source/build/negative/runtime
+evidence remains owned under artifacts/native-sqlcipher. Historical3753 and unrelated successful finance,
+sync/household, billing/provider/layout suites were not replayed or recounted.

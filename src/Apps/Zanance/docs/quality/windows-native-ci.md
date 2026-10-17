@@ -124,3 +124,17 @@ from the already present exact image digest verified the entrypoint behavior, fi
 actual CREATE ROLE; only that explicitly labeled fixture was removed. Service/app code and prior
 successful identity/restore scenarios were not rerun locally. Final hosted completion is reported by
 GitHub after this commit; these entries record evidence available at each delivery push.
+
+### D-301 reduced-profile servicing producer
+
+Producer-only Native cipher candidates run39002185961 passed onf4036fe9, including two fresh serviced outputs,
+actual current50-migration production resources and closed diagnostic/source gates. The verified public artifact
+binds candidate.8 native45d430bcabce5daf3f8513fdc27ec25ff48590c064fe9ce55c7bbadd26ee6521; baseline candidate.7
+remains2dc0973b3fb59cd52d83b1b22a48d5e02fcc8c3bc3d2de4de18c756fab7a8d59. All entries have distinct immutable
+inventories. Linux/ordinary consumer/performance stages were intentionally skipped in that producer mode;
+normal main/PR gates remain unchanged and their completion is not inferred.
+
+The same head's backend workflow run39002185011 had no jobs: GitHub rejected line134 runner.temp in a job env
+map. Scope the exact private path to both qualification/report-collection step env maps, where runner exists.
+No service algorithms/scenarios/private-upload policy change and no local successful backend tests are repeated.
+See18-native-storage-profile-delivery.md for actual artifact, diagnostics, APK/native evidence and remaining gates.

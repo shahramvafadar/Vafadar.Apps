@@ -3,21 +3,26 @@
   "sourceInputsSha256": "770688af8a3774f695f8a2119574376e8c2b5b34bc6af4d777f62654b2d07de6",
   "androidInputsSha256": "48b473aa1b696dc7b8d51cd36e6f6249410bb8d0c45f282bed653e4373207df6",
   "nativeByAbi": {
-    "arm64-v8a": "abc2c51b7b284672d8f6e86249847b962997d245720b50273531a1f85dbf1f56",
-    "x86_64": "9579006cdaca361daba6b08cf5228319d605a60c84bfc33e6a1287a06e702644"
+    "arm64-v8a": "48d06bc639afdd119833d998da14976c64fc4fb3a9cc43dac682879cea72475c",
+    "x86_64": "20b009b7ce0fc50bf31fe6e321216085a2c9ee3f3e14e0eb6757597380c2c568"
   },
-  "evidenceReference": "D-183; artifacts/native-sqlcipher/build/android-d/runtime-proof.json",
-  "evidenceSha256": "02065d0f3f8200190f9ba0bd490a6c3d4112571ff15bf8baac3440598d52c3ab",
+  "evidenceReference": "D-301; artifacts/native-sqlcipher/build/android-storage-d301-a/runtime-proof.json",
+  "evidenceSha256": "d5b921ecdf08a7aabc0e7de2dd219b578817a27b3532161ffa9c57ab1212be41",
   "runtimeEvidence": {
     "abi": "x86_64",
-    "nativeSha256": "9579006cdaca361daba6b08cf5228319d605a60c84bfc33e6a1287a06e702644",
+    "nativeSha256": "20b009b7ce0fc50bf31fe6e321216085a2c9ee3f3e14e0eb6757597380c2c568",
     "nativeProof": {
       "nativeCipherAndProviderMatched": true,
       "correctKeyReopenMinorUnitsCurrencyDate": true,
+      "foreignKeysEnabled": true,
       "wrongMissingKeyTamperRefused": true,
+      "plaintextHeaderAbsent": true,
       "fictitiousOnly": true
-    }
+    },
+    "fictitiousOnly": true,
+    "notAppKeyMigrationArm64OrReleaseAcceptance": true
   },
   "arm64RuntimeAccepted": false,
-  "wholeApplicationAccepted": false
+  "wholeApplicationAccepted": false,
+  "cryptoProfileSha256": "48709be053c460fe06e91edb5233898c124941c8e6bda2a67b10160136f04980"
 }

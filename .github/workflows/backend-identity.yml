@@ -131,7 +131,6 @@ jobs:
       ZANANCE_SYNC_TEST_DB: Host=127.0.0.1;Port=55479;Database=zanance_identity_sync_ci;Username=postgres
       ZANANCE_SYNC_TEST_ROOT: ${{ github.workspace }}/artifacts/sync-fixture-${{ matrix.scenario }}
       ZANANCE_SYNC_TEST_RUNTIME: ${{ github.workspace }}/artifacts/sync-test-runtime
-      ZANANCE_SYNC_TEST_PRIVATE: ${{ runner.temp }}/zanance-sync-private-${{ matrix.scenario }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-dotnet@v6
@@ -149,9 +148,13 @@ jobs:
       - name: Publish patched independent sync qualification runtime
         run: dotnet publish test/Apps/Zanance/Vafadar.Zanance.Sync.Tests/Vafadar.Zanance.Sync.Tests.csproj --configuration Release -r linux-x64 --self-contained true -p:RuntimeFrameworkVersion=10.0.13 -p:ContinuousIntegrationBuild=true --output artifacts/sync-test-runtime
       - name: Qualify actual service and original clients
+        env:
+          ZANANCE_SYNC_TEST_PRIVATE: ${{ runner.temp }}/zanance-sync-private-${{ matrix.scenario }}
         run: bash eng/sync/Run-ServiceQualification.sh '${{ matrix.scenario }}'
       - name: Collect only bounded test reports
         if: always()
+        env:
+          ZANANCE_SYNC_TEST_PRIVATE: ${{ runner.temp }}/zanance-sync-private-${{ matrix.scenario }}
         run: |
           mkdir -p TestResults
           if [ -d "$ZANANCE_SYNC_TEST_PRIVATE/results" ]; then

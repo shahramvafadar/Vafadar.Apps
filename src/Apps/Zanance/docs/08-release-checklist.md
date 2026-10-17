@@ -1207,3 +1207,11 @@ arm64/API24/16KiB, iOS, store signing and release acceptance remain separate; qu
 The measured Android cold-start profile is a build-only method input, with no shipping recorder or changed privacy/cryptography/access policy. Keep physical arm64/API24/16KiB, genuine phone timing, iOS, two-second target, general ANR freedom and release gates open.
 
 Current exact evidence: enhancements/2026-10-commercial-release/17-startup-responsiveness-delivery.md.
+
+## D-301 native maintenance gate
+
+Use only the exact new source-built package entries after actual producer/compiler/profile qualification.
+Required primitive/format/key behavior is preserved;508 Windows diagnostic occurrences still require their own
+safety review. A reduced profile and passing stock suite are not blanket security acceptance. Retain physical
+arm64/API24/16KiB, actual Mac/iOS, phone, genuine store signing and release gates. Exact consumer/native/main APK
+and hosted status are in enhancements/2026-10-commercial-release/18-native-storage-profile-delivery.md.

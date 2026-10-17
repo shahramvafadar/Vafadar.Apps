@@ -414,3 +414,12 @@ files and never fix drift by rewriting an immutable version. Independent callers
 provider-neutral Data assemblies so cryptography dependencies and frozen migration SQL resources cannot drift
 away from a duplicated Compile glob. Exact current qualification and remaining adoption work:
 src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/18-native-storage-profile-delivery.md.
+
+### D-301 actual consumer inventories
+
+The reduced profile's actual current inventories are baseline Windows candidate.7, serviced Windows candidate.8
+and Android candidate.5. New exact native/metadata bytes never replace historical5/6/4 identities. The hosted
+servicing artifact is downloaded only to owned qualification evidence and verified against its actual repository
+run/head/digest/source/compiler; normal dependency restoration continues building official sources, not fetching
+that binary as a substitute.508 current diagnostics retain no per-site safety acceptance; prior704 counts above
+are historical. Full original local/package/main and producer evidence is in18-native-storage-profile-delivery.md.

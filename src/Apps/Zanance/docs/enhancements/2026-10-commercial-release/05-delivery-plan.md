@@ -1880,3 +1880,12 @@ new immutable consumer pins, actual original main upgrade/cold behavior and fina
 at a helper-only source gate or invent hosted bytes. Producer branches isolate source qualification from normal
 consumer adoption. Keep original key/data/proof files and pending live processes; avoid unrelated successful
 verification. Remaining per-site warnings, physical/Mac/iOS and public release stay explicit separate gates.
+
+### D-301 completed local/producer boundary and next gates
+
+The same complete batch now includes successful actual hosted Windows producer qualification, separate immutable
+Windows7/8 and Android5 pins, package-bound production persistence, strict main builds and signed original Android
+upgrade/cold Home/expense/Cancel. Producer success is separate from full normal-main CI. Preserve the actual
+observed backend context repair and check the final commit once. Do not repeat any passed local native/crypto,
+app, financial, sync/provider/layout verification without a new change, failure or unresolved concern.
+Per-site native diagnostics, genuine physical/accessibility/Mac/iOS/provider/store and release gates remain open.

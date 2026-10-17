@@ -6169,3 +6169,16 @@ unchanged. The native candidate starts its Activity in10624ms and loaded Home is
 same account/balance; this is emulator evidence, not a two-second, physical-device or general ANR claim. No new
 unit-test behavior is introduced; historical full-suite3753 and later focused evidence are not replayed/recounted.
 See enhancements/2026-10-commercial-release/17-startup-responsiveness-delivery.md for final qualification.
+
+### Section31 current delivery: D-301 reduced native storage profile
+
+The official Community native storage build now removes unused capabilities through one reviewed Configure
+profile shared by Windows, Android and the independent stock suite. AES/SHA/HMAC/PBKDF2/RAND, acceleration,
+threading, secure memory and original format/KDF remain unchanged. Local Windows candidate.7 and Android
+candidate.5 packages are entry-pinned and main Android upgrades retain the existing protected installation.
+New profile-boundary6 and producer-version12 cases, existing diagnostic-policy26 cases, the configured official
+OpenSSL347-file/1348-reported-test suite with explicit skips, official SQLCipher226-test suite and actual current
+50-migration native/production-assembly checks are qualified separately. Historical3753 application full-suite
+evidence was not rerun or recounted.508 remaining Windows diagnostic occurrences have no per-site safety waiver.
+Exact local main package/runtime and real hosted-servicing status belong in18-native-storage-profile-delivery.md;
+physical arm64/API24/16KiB, iOS, complete upstream warning review and product release remain open.

@@ -22,6 +22,7 @@ earlier monetization model of the specification (MON-02 one-time Pro purchase, M
 | [08-backend-cost-model.json](08-backend-cost-model.json) | Historical provider cost inputs; no spending approval |
 | [09-current-machine-hosting.md](09-current-machine-hosting.md) | Approved current-machine Docker scope and remaining deployment checks |
 | [10-bank-import-research.md](10-bank-import-research.md) | Initial German bank priorities and primary-source export research |
+| [18-native-storage-profile-delivery.md](18-native-storage-profile-delivery.md) | Current reduced native source/package/main-app qualification and explicit remaining security/platform gates |
 
 Ids: `ZCR-<area>-nn` for work items (areas GOV, SEC, LOC, IMP, QA, A11Y, ENT, BIL, ID, SYNC, SHR, TAX, AI, BANK, FX,
 LANG, REL) and `OD-nn` for open decisions. Open stories of enhancement ZEX continue under the ZCR ids named in the

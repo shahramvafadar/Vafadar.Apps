@@ -3431,3 +3431,13 @@ These are not a new whole-suite total, live-source/physical/iOS/performance/publ
 Qualify the original retained protected installation through cold Activity, covered preparation, loaded Home, expense opening and native Cancel without Save. Compare actual process reasons; do not replace Home readiness with Activity timings. No new unit behaviors or historical full-suite total are asserted.
 
 Current exact evidence: enhancements/2026-10-commercial-release/17-startup-responsiveness-delivery.md.
+
+## D-301 actual native storage acceptance scope
+
+Two fresh outputs per local native target match exactly. Required original storage behavior, complete current
+50 migrations, Unicode/exact money/date, wrong/missing-key/tamper refusal, typed memory export/staging and retained
+old Windows DPAPI data reopening pass. Official configured OpenSSL and stock SQLCipher suites retain all actual
+skip counts and do not waive remaining diagnostics. The original main Android installation upgrades to the
+ordinary signed new package and reaches its original loaded Home without data/key reset. Hosted servicing and
+final navigation evidence are recorded in18-native-storage-profile-delivery.md. No unrelated successful
+application, financial, sync, provider or layout suite was replayed; no new whole-suite count is asserted.
