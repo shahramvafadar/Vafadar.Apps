@@ -6346,3 +6346,8 @@ Outbound-only origin and separate non-root connector are locally qualified with 
 ### D-314 physical ARM64 workload
 
 The retained protected reference/tenfold data now has original-source physical Home/native search/validated Save receipts and complete preservation. No new application unit-test count, production source change or main APK is claimed. Initial reference/large publication remains above target; full cold/ANR/low-memory and iOS are not accepted. See [physical protected workload](../quality/physical-protected-workload.md).
+
+
+## D-315 physical full-history improvement
+
+34 related tests pass with independent EF expectations, optional inclusive date bounds, complete values/order and cancellation. Strict Windows/Android builds and complete signed main upgrade pass. On the same retained Samsung ciphertext/keys, 100,000-entry public read goes 7,773 -> 4,313 ms and original native load/layout 10,446 -> 6,964 ms, with complete preservation. Exact/empty/wide search and original main 979 EUR history remain correct; successful unchanged financial writes were not replayed. No full-suite rerun/count is claimed. QA-06 remains In progress for remaining latency, cold/ANR/low-memory/device/platform acceptance. See [physical ledger read](../quality/physical-ledger-read.md).

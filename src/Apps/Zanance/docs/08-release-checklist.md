@@ -1360,3 +1360,8 @@ Do not expose fictional deployments. Owner-created tunnel/DNS, real mail and pro
 ## D-314 device performance is partial
 
 Loaded original-source ARM64 Home/search/store-write and data-preservation receipts exist on the approved Samsung. Several reference Home samples exceed two seconds and tenfold Home/ledger is much slower. QA-06 and full cold/ANR/low-memory/platform acceptance remain open. No new main APK or release signature. See [physical protected workload](quality/physical-protected-workload.md).
+
+
+## D-315 main physical upgrade and remaining performance gates
+
+34 related tests pass with independent EF expectations, optional inclusive date bounds, complete values/order and cancellation. Strict Windows/Android builds and complete signed main upgrade pass. On the same retained Samsung ciphertext/keys, 100,000-entry public read goes 7,773 -> 4,313 ms and original native load/layout 10,446 -> 6,964 ms, with complete preservation. Exact/empty/wide search and original main 979 EUR history remain correct; successful unchanged financial writes were not replayed. No full-suite rerun/count is claimed. QA-06 remains In progress for remaining latency, cold/ANR/low-memory/device/platform acceptance. See [physical ledger read](quality/physical-ledger-read.md).

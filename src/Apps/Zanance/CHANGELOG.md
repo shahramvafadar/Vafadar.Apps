@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Faster complete history (D-315)
+
+- Read the full transaction history sequentially while retaining every field, original order and inclusive date filters. The complete signed upgrade is checked on the approved Android phone with existing data preserved. Large-data latency remains above target.
+
 ### Android qualification (D-314)
 
 - Exercise protected reference and large workloads on the approved Samsung. Original search and validated writes preserve data; slow initial publication remains under investigation. The main application package is unchanged.

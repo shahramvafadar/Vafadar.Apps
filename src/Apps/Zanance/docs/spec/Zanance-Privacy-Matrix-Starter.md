@@ -945,3 +945,8 @@ The approved Cloudflare Tunnel path terminates public TLS at Cloudflare; visitor
 ### D-314 independent physical qualification only
 
 The separate offline signed package records model/API/architecture/page size, timings/counts and fictitious validation outcomes in bounded local public reports. No hardware identifier, key, owner financial record, new app collection/SDK/permission or network upload is introduced. Main package, security flags and OS settings remain unchanged. Retained independent ciphertext/keys permit same-data comparisons; failed write intents are preserved for explicit inspection.
+
+
+### D-315 same-data ledger qualification
+
+Local independent fictitious reports contain derived digests/timings/counts, never personal financial rows, keys or hardware identifiers. Main uses the existing complete reader without new collection, permission, SDK, schema or upload. Offline complete candidate remains without INTERNET; optional online-build disclosures remain distinct.

@@ -3588,3 +3588,8 @@ Seven focused operator cases, nine distinct original-proxy TLS/forwarding cases 
 ## D-314 physical protected reference/tenfold batch
 
 Actual Samsung ARM64/API36/4KiB: six original Home language/shape groups, three native query outcomes per shape and eight validated store writes/read-back/exact cleanup pass with preserved data. Five complete groups were retained after the eight-frame caller limit, not replayed. Initial Home/ledger latency remains slow; no whole cold/ANR/low-memory or native Save-button timing acceptance. See [physical protected workload](quality/physical-protected-workload.md).
+
+
+## AT-315 complete history retains its financial packet
+
+34 related tests pass with independent EF expectations, optional inclusive date bounds, complete values/order and cancellation. Strict Windows/Android builds and complete signed main upgrade pass. On the same retained Samsung ciphertext/keys, 100,000-entry public read goes 7,773 -> 4,313 ms and original native load/layout 10,446 -> 6,964 ms, with complete preservation. Exact/empty/wide search and original main 979 EUR history remain correct; successful unchanged financial writes were not replayed. No full-suite rerun/count is claimed. QA-06 remains In progress for remaining latency, cold/ANR/low-memory/device/platform acceptance. See [physical ledger read](quality/physical-ledger-read.md).

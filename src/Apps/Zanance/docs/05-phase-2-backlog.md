@@ -2095,3 +2095,8 @@ The Tunnel composition and gateway-preserving operators are locally qualified. N
 ## D-314 physical loaded-workload evidence
 
 Reference/tenfold original Home, native search and validated write/read-back/cleanup now have actual Samsung ARM64 receipts, with complete raw/portable preservation. Initial publication still misses the performance objective; full cold/low-memory/ANR and broader device/iOS gates remain. App/APK remain D-312. See [physical protected workload](quality/physical-protected-workload.md).
+
+
+## D-315 delivered ledger-read improvement
+
+34 related tests pass with independent EF expectations, optional inclusive date bounds, complete values/order and cancellation. Strict Windows/Android builds and complete signed main upgrade pass. On the same retained Samsung ciphertext/keys, 100,000-entry public read goes 7,773 -> 4,313 ms and original native load/layout 10,446 -> 6,964 ms, with complete preservation. Exact/empty/wide search and original main 979 EUR history remain correct; successful unchanged financial writes were not replayed. No full-suite rerun/count is claimed. QA-06 remains In progress for remaining latency, cold/ANR/low-memory/device/platform acceptance. See [physical ledger read](quality/physical-ledger-read.md).

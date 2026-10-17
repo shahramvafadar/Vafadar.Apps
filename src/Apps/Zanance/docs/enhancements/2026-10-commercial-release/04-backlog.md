@@ -2668,3 +2668,8 @@ No-port production origin, exact TLS/client metadata boundary and separate owner
 ### D-314 actual physical workload and remaining latency
 
 The complete independent original-source ARM64 batch qualifies Home/search/validated writes and preservation on the approved Samsung. Five successful groups remain retained; only the incomplete layout-observation group continued. Initial Home/ledger still misses its objective; investigate the actual remaining managed-read/projection/validation/layout work without speculative caching or weaker integrity/KDF scope. See [physical protected workload](../../quality/physical-protected-workload.md).
+
+
+## D-315 QA-06 measured ledger improvement
+
+34 related tests pass with independent EF expectations, optional inclusive date bounds, complete values/order and cancellation. Strict Windows/Android builds and complete signed main upgrade pass. On the same retained Samsung ciphertext/keys, 100,000-entry public read goes 7,773 -> 4,313 ms and original native load/layout 10,446 -> 6,964 ms, with complete preservation. Exact/empty/wide search and original main 979 EUR history remain correct; successful unchanged financial writes were not replayed. No full-suite rerun/count is claimed. QA-06 remains In progress for remaining latency, cold/ANR/low-memory/device/platform acceptance. See [physical ledger read](../../quality/physical-ledger-read.md).

@@ -27,9 +27,9 @@ internal static partial class AndroidHomeReview
     };
 
     /// <summary>Exercises original native search and validated writes only inside retained independent ciphertext.</summary>
-    private static async Task<object> ReviewPhoneLedgerAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct)
+    private static async Task<object> ReviewPhoneLedgerAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct, bool includeWrites = true)
     {
-        if (File.Exists(Path.Combine(root, "ledger-" + comparison + "-result.json")))
+        if (File.Exists(Path.Combine(root, (includeWrites ? "ledger-" : "ledger-read-") + comparison + "-result.json")))
             throw new ReviewCheckException("Completed ledger comparison must not be repeated.");
         var results = new List<JsonElement>();
         var progress = Path.Combine(root, "ledger-progress-" + comparison + ".json");
@@ -38,7 +38,7 @@ internal static partial class AndroidHomeReview
             results = JsonSerializer.Deserialize<List<JsonElement>>(await File.ReadAllTextAsync(progress, ct)) ?? [];
             if (results.Count > 2 || results.Select(row => row.GetProperty("Shape").GetString()).Distinct().Count() != results.Count ||
                 results.Any(row => row.GetProperty("Shape").GetString() is not ("reference" or "tenfold") ||
-                    !row.GetProperty("CompletePortableSchemaAndTypedRowsUnchanged").GetBoolean()))
+                    !row.GetProperty("CompletePortableSchemaAndTypedRowsUnchanged").GetBoolean() || row.GetProperty("SavedRowsReadBackAndRemoved").GetInt32() != (includeWrites ? 4 : 0)))
                 throw new ReviewCheckException("Retained ledger progress differs.");
         }
         app.OpenReviewShell(); await WaitRootAsync();
@@ -113,7 +113,7 @@ internal static partial class AndroidHomeReview
                         searchSamples.Add(new { Query = query, ResultCount = rows.Length, DebounceThroughNativeLayoutMs = clock.Elapsed.TotalMilliseconds });
                     }
                     await shell.Navigation.PopAsync(false);
-                    for (var sample = 0; sample < 4; sample++)
+                    for (var sample = 0; sample < (includeWrites ? 4 : 0); sample++)
                     {
                         var accounts = await store.GetAccountsAsync(cancellationToken: ct);
                         var entry = new LedgerEntry { AccountId = accounts[0].Id, Amount = 1234, Date = PerformanceFixture.Today,
@@ -143,7 +143,7 @@ internal static partial class AndroidHomeReview
             }
         }
         return new { Comparison = comparison, Device = DeviceEvidence(), Results = results,
-            MainPackageTouched = false, SystemSettingsChanged = false, FullColdStartupOrLowMemoryAcceptance = false,
+            MainPackageTouched = false, SystemSettingsChanged = false, ValidatedWritesIncluded = includeWrites, FullColdStartupOrLowMemoryAcceptance = false,
             Boundary = "Original native ledger input/grouping/layout and validated store Save/read-back/cleanup; no main data or copied financial algorithm" };
 
         async Task<SqliteMemorySnapshot> PortableAsync(IServiceProvider data)

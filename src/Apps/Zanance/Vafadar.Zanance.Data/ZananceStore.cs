@@ -918,6 +918,10 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         // read stays in the profile that requested it. One worker owns the query; disposal follows its completion.
         return await Task.Run(async () =>
         {
+            // D-315: full-history lists share the complete sequential reader already qualified by Home.
+            // Keep bounded date queries on SQL's range index; preserve every mapped field and original order.
+            if (from is null && to is null)
+                return await ReadCompleteHomeLedgerAsync(db, cancellationToken);
             var query = db.Entries.AsNoTracking();
             if (from is { } f)
             {

@@ -1105,3 +1105,12 @@ eng/hosting/README.md documents the production origin and owner-maintained conne
 ### D-314 approved physical ARM64 workload
 
 eng/benchmarks/Zanance.AndroidHome/README.md documents the explicit ARM64 override, exact independent signed package, physical model/transport/PID guard and prepare/measure/ledger phases. Coordinate exclusive phone turns; never reset fixtures after an observation failure. The bounded frame observation extension retains the original success condition. Physical receipts are in the app quality/physical-protected-workload.md report; main APK remains D-312.
+
+
+### D-315 same-data protected read qualification
+
+The AndroidHome caller supports read-profile (complete public read packet + optional initial component diagnosis)
+and ledger-read (original native search without repeating financial writes). See its README for baseline/pass
+semantics and physical/PID guards. Build the main candidate with Build-AndroidApk.ps1 -Offline -Output
+artifacts/android-sequential-ledger-d315-qualified. Actual final APK/signature, same-file phone evidence and
+focused test scope are recorded in the app quality/physical-ledger-read.md; this is not full cold/ANR acceptance.

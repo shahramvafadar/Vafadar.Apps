@@ -152,3 +152,19 @@ inspection rather than guessing cleanup or repeating Save. Completed shapes are 
 Largest dispatcher gaps cover the actual ledger phase and caller assertions; they are diagnostic samples,
 not a statistical Android ANR or low-memory acceptance. Full cold startup, OS pressure, genuine provider,
 spoken accessibility, other API/page-size matrices and iOS remain separate requirements.
+
+
+## Same-data read diagnosis and read-only native ledger (D-315)
+
+read-profile requires the retained protected run and a fresh review_pass. Set review_baseline to that
+same pass for the initial actual-model timestamp/raw-CLR diagnosis. A new after pass uses the original
+baseline identity and skips those already qualified component loops. Both actual public reads always
+compare complete ordered entries and portable schema/typed rows before/after. Stream JSON digests to
+a null sink, never a plaintext financial file. Compare original and final digests on the host.
+
+ledger-read uses a fresh pass on that same run and original native TransactionsPage/SearchView/grouping.
+It retains the ledger phase's exact/empty/wide native and portable-preservation checks, but deliberately
+executes zero successful financial writes again. Per-shape progress validates the expected 0/4 write
+count before continuation. Observe exact live PIDs with -Phase read-profile or ledger-read, same Run and
+Comparison, explicit PhysicalDevice/DeviceTransportId. No reseeding, reset or new keys; observation timeout
+is not process death. Finished comparisons refuse repetition. Actual receipts: app quality/physical-ledger-read.md.

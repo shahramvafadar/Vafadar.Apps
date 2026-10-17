@@ -109,7 +109,10 @@ public sealed class HomeReadSnapshotTests : IDisposable
             if (removeRow) { db.Entries.Remove(removed!); await db.SaveChangesAsync(Ct); }
         }
         var store = provider.GetRequiredService<ZananceStore>();
-        var original = await store.GetEntriesAsync(cancellationToken: Ct);
+        List<LedgerEntry> original;
+        await using (var oracle = await Factory(provider).CreateDbContextAsync(Ct))
+            original = await oracle.Entries.AsNoTracking().OrderByDescending(row => row.Date).ThenByDescending(row => row.CreatedAt).ToListAsync(Ct);
+        Assert.Equal(JsonSerializer.Serialize(original), JsonSerializer.Serialize(await store.GetEntriesAsync(cancellationToken: Ct)));
         var captured = await store.GetHomeSnapshotAsync(Today, 0, Ct);
         Assert.Equal(removeRow ? 11 : 12, captured.Entries.Count);
         Assert.Equal(JsonSerializer.Serialize(original), JsonSerializer.Serialize(captured.Entries));
@@ -156,7 +159,10 @@ public sealed class HomeReadSnapshotTests : IDisposable
             }
         }
         var store = provider.GetRequiredService<ZananceStore>();
-        var expected = JsonSerializer.Serialize(await store.GetEntriesAsync(cancellationToken: Ct));
+        string expected;
+        await using (var oracle = await Factory(provider).CreateDbContextAsync(Ct))
+            expected = JsonSerializer.Serialize(await oracle.Entries.AsNoTracking().OrderByDescending(row => row.Date).ThenByDescending(row => row.CreatedAt).ToListAsync(Ct));
+        Assert.Equal(expected, JsonSerializer.Serialize(await store.GetEntriesAsync(cancellationToken: Ct)));
         var packet = await store.GetHomeSnapshotAsync(Today, 0, Ct);
         Assert.Equal(9, packet.Entries.Count);
         Assert.Equal(expected, JsonSerializer.Serialize(packet.Entries));
@@ -168,10 +174,38 @@ public sealed class HomeReadSnapshotTests : IDisposable
         Assert.Equal(expected, JsonSerializer.Serialize(await store.GetEntriesAsync(cancellationToken: Ct)));
     }
 
+    /// <summary>Complete and bounded public reads match the independent EF query, retaining inclusive range ends.</summary>
+    [Theory, InlineData(false, false), InlineData(true, false), InlineData(false, true), InlineData(true, true)]
+    [Trait("AT", "AT-315")]
+    public async Task Public_history_retains_inclusive_optional_date_bounds(bool lower, bool upper)
+    {
+        var provider = Create();
+        await using (var db = await Factory(provider).CreateDbContextAsync(Ct))
+        {
+            var account = new Account { Name = "Original bounded history", CurrencyCode = "EUR", OpeningDate = Today.AddYears(-1) };
+            db.Accounts.Add(account);
+            for (var day = -2; day <= 2; day++) db.Entries.Add(new LedgerEntry
+                { AccountId = account.Id, Date = Today.AddDays(day), Kind = EntryKind.Expense, Amount = 100 + day, Title = "Retained day " + day });
+            await db.SaveChangesAsync(Ct);
+        }
+        DateOnly? from = lower ? Today.AddDays(-1) : null, to = upper ? Today.AddDays(1) : null;
+        List<LedgerEntry> expected;
+        await using (var oracle = await Factory(provider).CreateDbContextAsync(Ct))
+        {
+            var query = oracle.Entries.AsNoTracking();
+            if (from is { } first) query = query.Where(row => row.Date >= first);
+            if (to is { } last) query = query.Where(row => row.Date <= last);
+            expected = await query.OrderByDescending(row => row.Date).ThenByDescending(row => row.CreatedAt).ToListAsync(Ct);
+        }
+        var actual = await provider.GetRequiredService<ZananceStore>().GetEntriesAsync(from, to, Ct);
+        Assert.Equal(5 - (lower ? 1 : 0) - (upper ? 1 : 0), actual.Count);
+        Assert.Equal(JsonSerializer.Serialize(expected), JsonSerializer.Serialize(actual));
+    }
+
     /// <summary>Cancellation at reader completion cannot return a partial Home or retain its SQLite reader transaction.</summary>
-    [Fact]
-    [Trait("AT", "AT-305")]
-    public async Task Typed_home_cancellation_after_command_refuses_partial_publication_and_releases_reader_transaction()
+    [Theory, InlineData(false), InlineData(true)]
+    [Trait("AT", "AT-305"), Trait("AT", "AT-315")]
+    public async Task Typed_history_cancellation_after_command_refuses_partial_publication_and_releases_reader_transaction(bool ledgerApi)
     {
         var provider = Create(); await SeedAsync(provider);
         using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(Ct);
@@ -179,7 +213,11 @@ public sealed class HomeReadSnapshotTests : IDisposable
         var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite($"Data Source={path};Pooling=False")
             .UseModel(ZananceDbContextModel.Instance).AddInterceptors(new CancelEntryRead(cancellation)).Options;
         var store = Store(new DirectFactory(options), provider.GetRequiredService<ICommercialWriteAccessSource>());
-        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => store.GetHomeSnapshotAsync(Today, 0, cancellation.Token));
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(async () =>
+        {
+            if (ledgerApi) await store.GetEntriesAsync(cancellationToken: cancellation.Token);
+            else await store.GetHomeSnapshotAsync(Today, 0, cancellation.Token);
+        });
         await using var connection = new Microsoft.Data.Sqlite.SqliteConnection(new Microsoft.Data.Sqlite.SqliteConnectionStringBuilder
             { DataSource = path, Pooling = false, DefaultTimeout = 1 }.ToString());
         await connection.OpenAsync(Ct);
@@ -197,9 +235,15 @@ public sealed class HomeReadSnapshotTests : IDisposable
         await using (var db = await Factory(provider).CreateDbContextAsync(Ct))
             await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET Tags = {malformed}", Ct);
         var store = provider.GetRequiredService<ZananceStore>();
-        var original = await Record.ExceptionAsync(async () => await store.GetEntriesAsync(cancellationToken: Ct));
+        var original = await Record.ExceptionAsync(async () =>
+        {
+            await using var oracle = await Factory(provider).CreateDbContextAsync(Ct);
+            await oracle.Entries.AsNoTracking().ToListAsync(Ct);
+        });
+        var ledger = await Record.ExceptionAsync(async () => await store.GetEntriesAsync(cancellationToken: Ct));
         var typed = await Record.ExceptionAsync(async () => await store.GetHomeSnapshotAsync(Today, 0, Ct));
         Assert.IsType<InvalidOperationException>(original);
+        Assert.IsType<InvalidOperationException>(ledger);
         Assert.IsType<InvalidOperationException>(typed);
     }
 

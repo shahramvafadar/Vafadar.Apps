@@ -6317,3 +6317,8 @@ Implement the approved Tunnel origin and separate credential-file connector with
 ## D-314 physical ARM64 protected workload
 
 Use the owner-approved Samsung and existing independent original-source caller with a complete signed ARM64 package. Prepare once, retain the same ciphertext/keys, preserve five completed Home groups after a caller-only layout-window failure, and continue only the incomplete group. Original native search and eight validated writes/read-back/exact cleanup preserve full financial data. The reference/tenfold initial-publication latency remains a measured concern, not two-second or cold/ANR acceptance. See [physical protected workload](quality/physical-protected-workload.md).
+
+
+## D-315 complete unbounded ledger reads on physical Android
+
+Actual same-file phone profiling isolated the old public full-history path: 7.77 seconds versus the existing complete Home path's 4.56 seconds for 100,000 entries. Reuse its sequential full-field reader only without date bounds; preserve original bounded SQL, exact order/values, transaction/interception and cancellation. Do not change the small timestamp converter cost or weaken encryption. 34 focused tests use independent EF oracles. Physical public/native reads and the data-preserving complete main upgrade are verified; large Home/cold/ANR/platform acceptance remains open. See [physical ledger read](quality/physical-ledger-read.md).

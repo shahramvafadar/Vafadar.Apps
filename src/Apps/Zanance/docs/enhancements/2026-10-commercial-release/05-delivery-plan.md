@@ -2059,3 +2059,8 @@ Composition/operator/protocol checks qualify one complete local gateway batch: s
 ## D-314 complete physical loaded-workload batch
 
 Qualify the original source on the approved phone using one independent protected reference/tenfold fixture, with serialized device input. Loaded Home, native queries and validated writes/read-back/exact cleanup pass; retain completed groups and all failure evidence. Do not replay unchanged emulator/Windows/full suites or build the unchanged main APK. The next performance work must locate the measured multi-second initial publication cause before a production optimization, preserving complete financial inputs and the same retained data. See [physical protected workload](../../quality/physical-protected-workload.md).
+
+
+## D-315 complete ledger batch delivered
+
+34 related tests pass with independent EF expectations, optional inclusive date bounds, complete values/order and cancellation. Strict Windows/Android builds and complete signed main upgrade pass. On the same retained Samsung ciphertext/keys, 100,000-entry public read goes 7,773 -> 4,313 ms and original native load/layout 10,446 -> 6,964 ms, with complete preservation. Exact/empty/wide search and original main 979 EUR history remain correct; successful unchanged financial writes were not replayed. No full-suite rerun/count is claimed. QA-06 remains In progress for remaining latency, cold/ANR/low-memory/device/platform acceptance. See [physical ledger read](../../quality/physical-ledger-read.md).

@@ -43,10 +43,15 @@ internal static partial class AndroidHomeReview
                 await Task.Run(() => PrepareAsync(root, ct), ct);
                 await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, MainPackageTouched = false, Device = DeviceEvidence() }, ct);
             }
-            else if (phase == "ledger")
+            else if (phase == "read-profile")
             {
                 RequireRoot(root);
-                await WriteReportAsync(root, phase, await ReviewPhoneLedgerAsync(app, services, root, comparison!, ct), ct);
+                await WriteReportAsync(root, phase, await ReviewReadStagesAsync(root, comparison!, baseline!, ct), ct);
+            }
+            else if (phase is "ledger" or "ledger-read")
+            {
+                RequireRoot(root);
+                await WriteReportAsync(root, phase, await ReviewPhoneLedgerAsync(app, services, root, comparison!, ct, includeWrites: phase == "ledger"), ct);
             }
             else if (phase == "tables")
             {
