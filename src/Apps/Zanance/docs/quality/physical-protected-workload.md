@@ -1,5 +1,9 @@
 # Physical protected reference/tenfold workload (D-314)
 
+> D-320 compilation qualification: these historical caller timings omit the main release profile/assembly parity.
+> Keep their original independent-build scope; current evidence and the observed profiled-GC workaround are in
+> [physical Home compilation](physical-home-compilation.md). They are not main-package speed ratios.
+
 ## Actual device and package scope
 
 The owner-approved Samsung SM-A176B reports Android API36, ARM64, physical device type and 4096-byte pages.

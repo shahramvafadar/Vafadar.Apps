@@ -2082,3 +2082,15 @@ The actual first-plan blank-list defect is fixed without persistence/financial c
 ## D-319 complete physical debt/lent batch
 
 Both original physical debt/lent lifecycles now have native evidence: positive setup signs, complete 11- and 6-row estimates, cancellation without posting, principal transfers versus 10 expense / 5 income, explicit final repayments, six retained rows and cash 1,495 after signed cold upgrade. The observed zero-balance missing-terms hint is corrected; 38 focused native Windows cases and zero-warning Windows/complete Android builds pass. Main returns 979. Unit counts and successful unrelated checks are retained; broader device/platform/performance/release gates remain open. See [physical loan lifecycle](../../quality/physical-loan-lifecycle.md).
+
+## D-320 complete native compilation batch
+
+The independent phone caller now matches production assembly/profile inputs. A captured extra CoreLib
+AOT-method selection reproduces native failures under load; removing only those additional roots while
+preserving SDK defaults completes all 12 en/fa/de reference/tenfold Home cases and full schema/typed-row
+preservation on the same retained ciphertext/keys. Align restored runtime/compiler/task servicing versions,
+fix matching-configuration restore, keep only the explicit review window awake and retain scoped failures.
+Windows and complete signed Android builds pass without warnings/errors; the main data-preserving upgrade
+shows 979 EUR and actual expense/Cancel returns unchanged. No financial C# algorithm, schema, KDF/native
+cipher or full-suite count changes. Current loaded observations remain 1.96-2.65s reference/8.83-10.29s tenfold;
+this is stability qualification, not a general speed improvement, full cold/ANR matrix or release approval. See [native evidence](../../quality/physical-home-compilation.md).

@@ -95,7 +95,7 @@ internal static partial class AndroidHomeReview
             {
                 RequireRoot(root);
                 if (comparison is null || !System.Text.RegularExpressions.Regex.IsMatch(comparison, "^[0-9a-f]{32}$")
-                    || phase is not ("measure" or "compare" or "guard")) throw new ReviewCheckException("Explicit original comparison required.");
+                    || phase is not ("measure" or "compare" or "guard" or "home-stages")) throw new ReviewCheckException("Explicit original comparison required.");
                 if (baseline is null || !System.Text.RegularExpressions.Regex.IsMatch(baseline, "^[0-9a-f]{32}$"))
                     throw new ReviewCheckException("Original baseline presentation identity required.");
                 await MeasureAsync(app, services, root, phase, comparison, baseline, ct);
@@ -200,7 +200,7 @@ internal static partial class AndroidHomeReview
             }
             using (generation)
             {
-                if (phase != "guard") nativeReadProfiles.Add(await ProfileNativeReadAsync(data, shape.Entries, ct));
+                if (phase is not ("guard" or "home-stages")) nativeReadProfiles.Add(await ProfileNativeReadAsync(data, shape.Entries, ct));
                 var today = DateOnly.FromDateTime(services.GetRequiredService<TimeProvider>().GetLocalNow().DateTime);
                 var expected = await data.GetRequiredService<ZananceStore>().GetHomeSnapshotAsync(today, 0, ct);
                 if (expected.Entries.Count != shape.Entries || expected.QuickResources.Accounts.Count != shape.Accounts || expected.Plans.Schedules.Count != shape.Schedules)
@@ -213,19 +213,49 @@ internal static partial class AndroidHomeReview
                     if (app.Windows[0].Page is not AppShell shell || shell.CurrentPage is not HomePage originalHome)
                         throw new ReviewCheckException("Original native Shell/Home is unavailable.");
                     await originalHome.PendingPublication;
-                    var samples = new List<double>(); var gaps = new List<double>();
+                    var samples = new List<double>(); var gaps = new List<double>(); var notificationSamples = new List<object>();
                     for (var sample = 0; sample < (phase == "guard" ? 1 : 2); sample++)
                     {
                         var reads = new WindowReadFactory(data.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
                         var store = new ZananceStore(reads, data.GetRequiredService<TimeProvider>(), data.GetRequiredService<ICommercialWriteAccessSource>());
                         var vm = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store);
+                        // D-320: observe existing public publication boundaries before native bindings subscribe.
+                        // No timing hook, financial algorithm or observer is introduced into the production app.
+                        var clock = new Stopwatch(); var marks = new List<object>();
+                        void Mark(string stage)
+                        {
+                            if (phase != "home-stages") return;
+                            lock (marks) marks.Add(new { Stage = stage, Milliseconds = clock.Elapsed.TotalMilliseconds });
+                            if (stage is "navigation-start" or "property:QuickAddTargetText" or "final-model-publication" or "native-layout-ready")
+                                Android.Util.Log.Info("ZananceHomeStage", comparison + "|" + name + "|" + language + "|" + sample + "|" + stage);
+                        }
+                        System.ComponentModel.PropertyChangedEventHandler changed = (_, args) =>
+                        {
+                            if (args.PropertyName is "QuickAddTargetText" or "HasAccounts" or "ScopeText" or "ForecastEndText" or "HasSlices" or "HoldingsText" or "HasPinnedGoals" or "HasAttention") Mark("property:" + args.PropertyName);
+                        };
+                        System.Collections.Specialized.NotifyCollectionChangedEventHandler balancesChanged = (_, _) => Mark("balances-publish");
+                        System.Collections.Specialized.NotifyCollectionChangedEventHandler periodsChanged = (_, args) => Mark("periods:" + args.Action);
+                        System.Collections.Specialized.NotifyCollectionChangedEventHandler plansChanged = (_, args) => Mark("plans:" + args.Action);
+                        System.Collections.Specialized.NotifyCollectionChangedEventHandler slicesChanged = (_, args) => Mark("slices:" + args.Action);
+                        System.Collections.Specialized.NotifyCollectionChangedEventHandler accountsChanged = (_, _) => Mark("accounts-publish");
+                        System.Collections.Specialized.NotifyCollectionChangedEventHandler recentChanged = (_, args) => Mark("recent:" + args.Action);
+                        System.Collections.Specialized.NotifyCollectionChangedEventHandler goalsChanged = (_, args) => Mark("goals:" + args.Action);
+                        System.Collections.Specialized.NotifyCollectionChangedEventHandler templatesChanged = (_, args) => Mark("templates:" + args.Action);
+                        if (phase == "home-stages")
+                        {
+                            vm.PropertyChanged += changed; vm.Balances.CollectionChanged += balancesChanged;
+                            vm.Periods.CollectionChanged += periodsChanged; vm.Upcoming.CollectionChanged += plansChanged;
+                            vm.Slices.CollectionChanged += slicesChanged; vm.Accounts.CollectionChanged += accountsChanged;
+                            vm.RecentEntries.CollectionChanged += recentChanged; vm.PinnedGoals.CollectionChanged += goalsChanged;
+                            vm.QuickTemplates.CollectionChanged += templatesChanged;
+                        }
                         var page = new HomePage(vm) { FlowDirection = local.CurrentLanguage.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight };
                         var presentations = 0;
-                        vm.PresentingSnapshot += () => { if (vm.Loading.IsReady) throw new ReviewCheckException("Layout published after uncovering."); presentations++; };
+                        vm.PresentingSnapshot += () => { if (vm.Loading.IsReady) throw new ReviewCheckException("Layout published after uncovering."); presentations++; Mark("final-model-publication"); };
                         var heartbeat = Stopwatch.StartNew(); var last = 0d; var largest = 0d;
                         var timer = app.Dispatcher.CreateTimer(); timer.Interval = TimeSpan.FromMilliseconds(50);
                         timer.Tick += (_, _) => { var now = heartbeat.Elapsed.TotalMilliseconds; largest = Math.Max(largest, now - last); last = now; };
-                        var clock = Stopwatch.StartNew(); timer.Start();
+                        clock.Start(); Mark("navigation-start"); timer.Start();
                         await shell.Navigation.PushAsync(page, false);
                         try
                         {
@@ -234,7 +264,7 @@ internal static partial class AndroidHomeReview
                                 reads.SynchronousCaptures != 0 || presentations != 1 || !page.FindByName<ScrollView>("ContentViewport").IsVisible)
                                 throw new ReviewCheckException("Complete original Home publication differs.");
                             if (page.Handler?.PlatformView is not Android.Views.View native) throw new ReviewCheckException("Android native Home tree unavailable.");
-                            await WaitLayoutAsync(native, ct); clock.Stop();
+                            await WaitLayoutAsync(native, ct); Mark("native-layout-ready"); clock.Stop();
                             var texts = NativeTexts(native).ToHashSet(StringComparer.Ordinal);
                             foreach (var balance in balances)
                             {
@@ -250,16 +280,25 @@ internal static partial class AndroidHomeReview
                             await Task.Delay(75, ct); timer.Stop();
                             var presentation = CapturePresentation(vm);
                             var originalPath = Path.Combine(folder, "presentation-" + baseline + "-" + language + ".json");
-                            if (phase == "measure" && !File.Exists(originalPath))
+                            if ((phase == "measure" || phase == "home-stages" && comparison == baseline) && !File.Exists(originalPath))
                                 await File.WriteAllTextAsync(originalPath, presentation, ct);
                             if (!File.Exists(originalPath) || presentation != await File.ReadAllTextAsync(originalPath, ct))
                                 throw new ReviewCheckException("Original complete financial presentation differs.");
                             samples.Add(clock.Elapsed.TotalMilliseconds); gaps.Add(largest);
+                            if (phase == "home-stages") lock (marks) notificationSamples.Add(new { Sample = sample, Marks = marks.ToArray() });
                         }
-                        finally { timer.Stop(); page.RetirePublication(); await shell.Navigation.PopAsync(false); await originalHome.PendingPublication; }
+                        finally
+                        {
+                            timer.Stop(); vm.PropertyChanged -= changed; vm.Balances.CollectionChanged -= balancesChanged;
+                            vm.Periods.CollectionChanged -= periodsChanged; vm.Upcoming.CollectionChanged -= plansChanged;
+                            vm.Slices.CollectionChanged -= slicesChanged; vm.Accounts.CollectionChanged -= accountsChanged;
+                            vm.RecentEntries.CollectionChanged -= recentChanged; vm.PinnedGoals.CollectionChanged -= goalsChanged;
+                            vm.QuickTemplates.CollectionChanged -= templatesChanged;
+                            page.RetirePublication(); await shell.Navigation.PopAsync(false); await originalHome.PendingPublication;
+                        }
                     }
                     results.Add(new { Shape = name, Language = language, shape.Entries, shape.Accounts, shape.Schedules,
-                        FirstThenSecondPublicationMilliseconds = samples, LargestDispatcherGapMilliseconds = gaps,
+                        FirstThenSecondPublicationMilliseconds = samples, LargestDispatcherGapMilliseconds = gaps, PublicNotificationSamples = notificationSamples,
                         OriginalBalancesAndNativeTextMatched = true, OriginalFinancialPresentationMatched = true, ActualNativeLayout = true, NoSynchronousSettingsRead = true });
                     await File.WriteAllTextAsync(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json"), JsonSerializer.Serialize(results), ct);
                     _balanceEvidence = null;

@@ -1124,3 +1124,20 @@ For Windows empty-layout qualification build the original app sequentially with 
 ## Original loan missing-term native checks (D-319)
 
 Build the original Windows app sequentially with ContinuousIntegrationBuild=true, ApplicationId=pro.vafadar.zanance.loanterms and an independent output. Launch only that verified executable hidden, with VAFADAR_SNAPSHOTS beneath artifacts/loan-terms-d319/, VAFADAR_SNAPSHOT_ONLY=loan-terms and VAFADAR_SNAPSHOT_FONT_SCALE=2. The early guarded route owns loan-terms.db only, checks original AccountDetail publication/native caption visibility and preserves complete stored packets. It retains per-case progress and refuses completed review; continue failed/incomplete cases on the same fixture after diagnostic-only repairs. Use the actual vertical ScrollView rather than the horizontal monetary viewports. Never run the general snapshot wrapper against existing data for this check. See [physical loan evidence](../../src/Apps/Zanance/docs/quality/physical-loan-lifecycle.md).
+
+## Serviced Android AOT toolchain and native load qualification (D-320)
+
+The main Android host and runtime-pinned Home/sync callers import eng/AndroidAotRuntime.targets.
+PackageDownload restores compiler packages for ARM64/x64 and the task matching VafadarSecurityRuntimeVersion;
+selection validates their presence and overrides the workload task locally. Installed SDK/workloads remain
+unchanged. The runtime, actual compiler --version and task product metadata must agree. Other hosts still
+need their own qualification; current native runtime evidence is the approved ARM64 phone, not all ABIs.
+
+Use matching restore/publish configurations. Build-AndroidApk.ps1 passes its Configuration to restore before
+the unchanged complete publish; default Debug restore cannot prove Release tool downloads.
+SDK default AOT profiles remain enabled. The captured startup profile omits only additional CoreLib method
+roots after the retained-load failure comparison. A compatible .NET10 profile reader/writer can filter with
+--filter-module='^(?!System[.]Private[.]CoreLib)' and --output; inspect actual method count/hash afterward.
+A no-op filter is not acceptance. Keep original capture provenance/history, never rewrite tokens/identities,
+and repeat only changed/failed/uncertain checks. See [native evidence](../../src/Apps/Zanance/docs/quality/physical-home-compilation.md)
+and the [independent caller](../../eng/benchmarks/Zanance.AndroidHome/README.md).

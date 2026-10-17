@@ -57,7 +57,7 @@ New-Item -ItemType Directory -Force $Output | Out-Null
 # the solution open restores in the background too and can overwrite it meanwhile (NETSDK1005, APT2126): then the
 # build is tried once more.
 for ($attempt = 1; $attempt -le 2; $attempt++) {
-    $log = dotnet restore $Project -p:VafadarMauiTargetFrameworks=net10.0-android -p:ContinuousIntegrationBuild=true @cloudProperties -nologo 2>&1
+    $log = dotnet restore $Project -p:Configuration=$Configuration -p:VafadarMauiTargetFrameworks=net10.0-android -p:ContinuousIntegrationBuild=true @cloudProperties -nologo 2>&1
     if ($LASTEXITCODE -eq 0) {
         # EmbedAssembliesIntoApk makes a Debug APK complete as well; Release always embeds them.
         $log = dotnet publish $Project -c $Configuration -f net10.0-android -p:VafadarMauiTargetFrameworks=net10.0-android `

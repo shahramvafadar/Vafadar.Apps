@@ -2362,3 +2362,17 @@ fonts, complete code viewports and real list/row buttons of at least 44 units wi
 Amount/currency and manual-rate groups reserve whole rows rather than fixed narrow currency columns. Keep
 original controls, bindings, errors and unsaved drafts. Hidden-window diagnostics may render the original Win2D
 drawable into their own target; never force shipping coordinates, change OS scale or activate owner windows.
+
+## D-320 serviced Android compilation and retained-load review
+
+Release Android hosts using the serviced Mono runtime must restore/select the matching AOT compiler/task
+from the central version through eng/AndroidAotRuntime.targets; do not mutate installed workloads or fall
+back silently. Restore with the same Configuration as publish. The independent Home caller retains its
+own Android identity/storage but uses production managed assembly/profile inputs. Keep SDK default profiles.
+Additional captured CoreLib method roots reproduced native GC failures under retained physical load; their
+qualified removal is a compilation workaround, not a financial/crypto algorithm change or universal GC fix.
+Future profile refreshes must inspect actual method roots/hash and qualify the same retained native data,
+including large histories, before adoption. Never rewrite profile tokens/MVIDs manually. Review windows
+may keep only their own foreground display awake; no OS-setting/authentication change. Exception diagnostics
+are type/source stack only, never messages/keys/values. Retain live processes after observation loss; a scoped
+actual crash or authoritative ANR is different. Do not repeat successful unrelated verification.

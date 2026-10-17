@@ -6340,3 +6340,15 @@ Actual main and independent original-source Samsung reproductions isolate correc
 ## D-319 physical debt/lent lifecycle and genuine missing terms
 
 Qualify both directions through the original phone setup/account/estimate/native confirmation/ledger paths, including cancel without writes, principal versus actual interest, explicit final transfers and cold signed upgrade. All 17 displayed estimate rows satisfy independent integer arithmetic; six actual financial packets and final 1,495 EUR are retained, Main returns 979 EUR. Fix the observed false missing-terms hint at zero balance using actual installment configuration independently of estimate availability. Original calculators/writers/access remain unchanged. All 38 related native Windows cases and final zero-warning Windows/complete Android builds pass; unrelated successful suites are not replayed. See [physical loan lifecycle](quality/physical-loan-lifecycle.md).
+
+## D-320 retained-load Android AOT stability
+
+The independent phone caller now matches production assembly/profile inputs. A captured extra CoreLib
+AOT-method selection reproduces native failures under load; removing only those additional roots while
+preserving SDK defaults completes all 12 en/fa/de reference/tenfold Home cases and full schema/typed-row
+preservation on the same retained ciphertext/keys. Align restored runtime/compiler/task servicing versions,
+fix matching-configuration restore, keep only the explicit review window awake and retain scoped failures.
+Windows and complete signed Android builds pass without warnings/errors; the main data-preserving upgrade
+shows 979 EUR and actual expense/Cancel returns unchanged. No financial C# algorithm, schema, KDF/native
+cipher or full-suite count changes. Current loaded observations remain 1.96-2.65s reference/8.83-10.29s tenfold;
+this is stability qualification, not a general speed improvement, full cold/ANR matrix or release approval. See [native evidence](quality/physical-home-compilation.md).

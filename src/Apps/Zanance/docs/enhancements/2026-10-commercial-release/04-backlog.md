@@ -46,7 +46,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
 | ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-64 local evidence verified; device/corpus pending) | sample receipts |
-| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-314 physical loaded Home/search/validated Save; D-315 tenfold complete ledger 7.77 -> 4.31s and native load 10.45 -> 6.96s with full preservation; Home remains 2.54s reference/7.4-9.9s tenfold; remaining latency, full cold/ANR/low-memory/iOS acceptance remain) | – |
+| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-320 shared release-compilation parity and observed profiled-GC repro avoided on retained physical reference/10x data; loaded Home remains 1.96-2.65s / 8.83-10.29s; full cold/ANR statistics/low-memory/iOS remain) | – |
 | ZCR-QA-07 | Android/iOS parity (notifications, widget, file picker, lock, share, licences); existing Windows development checks | 2 | P2 | M | Mac readiness owner-reported; verification and iOS runs pending in that environment. Windows commercial delivery is outside current scope | platform access/signing |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | In progress (D-174 widget and D-175 contextual date names/drafts verified locally; spoken TalkBack and remaining screen/platform acceptance open) | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
@@ -2691,3 +2691,15 @@ The actual first-plan blank-list defect is fixed without persistence/financial c
 ## D-319 QA-01 physical debt/lent correction
 
 Both original physical debt/lent lifecycles now have native evidence: positive setup signs, complete 11- and 6-row estimates, cancellation without posting, principal transfers versus 10 expense / 5 income, explicit final repayments, six retained rows and cash 1,495 after signed cold upgrade. The observed zero-balance missing-terms hint is corrected; 38 focused native Windows cases and zero-warning Windows/complete Android builds pass. Main returns 979. Unit counts and successful unrelated checks are retained; broader device/platform/performance/release gates remain open. See [physical loan lifecycle](../../quality/physical-loan-lifecycle.md).
+
+## D-320 QA-06 native compilation qualification
+
+The independent phone caller now matches production assembly/profile inputs. A captured extra CoreLib
+AOT-method selection reproduces native failures under load; removing only those additional roots while
+preserving SDK defaults completes all 12 en/fa/de reference/tenfold Home cases and full schema/typed-row
+preservation on the same retained ciphertext/keys. Align restored runtime/compiler/task servicing versions,
+fix matching-configuration restore, keep only the explicit review window awake and retain scoped failures.
+Windows and complete signed Android builds pass without warnings/errors; the main data-preserving upgrade
+shows 979 EUR and actual expense/Cancel returns unchanged. No financial C# algorithm, schema, KDF/native
+cipher or full-suite count changes. Current loaded observations remain 1.96-2.65s reference/8.83-10.29s tenfold;
+this is stability qualification, not a general speed improvement, full cold/ANR matrix or release approval. See [native evidence](../../quality/physical-home-compilation.md).

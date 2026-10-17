@@ -174,3 +174,29 @@ is not process death. Finished comparisons refuse repetition. Actual receipts: a
 plan-publication is a separate original protected-installation diagnostic, not a marked performance workload. Require the independent package and nonredirected run root, initially zero accounts/plans/entries and no prior intent. Record its fictitious account intent before setup; invoke actual original editor/native Save once and report stored count, VM/binding count, adapter/child count and realized caption independently. A blank native row does not imply missing persistence.
 
 plan-publication-fixed requires the same retained account, original intent, one known unpaid definition and zero ledger entries. It writes an exclusive plan-retirement receipt before deleting only that definition through the original history guard, then exercises a new first-row transition with the original editor. It never resets/reseeds the installation or replaces keys. Native caption realization is required; preserve all failure reports and definition receipts. Use a fresh comparison id, the original run id and Read-ReviewReport.ps1 with the exact already-running PID. On the approved physical phone use explicit ARM64 build, PhysicalDevice and DeviceTransportId opt-in, after exclusive-input coordination. See [evidence](../../../src/Apps/Zanance/docs/quality/first-plan-publication.md).
+
+
+## Original public Home boundaries (D-320)
+
+home-stages uses the retained protected performance run and two distinct review_pass identities. For the
+baseline only, review_baseline equals review_pass; an after comparison supplies that original baseline.
+Existing per-language complete financial presentation files are never overwritten. This phase skips the
+already qualified raw native stepping loop and records existing public VM/property/collection events before
+native bindings subscribe. Navigation, final model publication and Android layout/frame completion delimit
+loaded Home readiness; notifications approximate stages rather than timing private algorithms.
+
+Capture the exact live PID with Read-ReviewReport.ps1 -Phase home-stages and the matching Comparison.
+Retain the same process after observation timeout and the same fixture identities/keys after package upgrade.
+No preparation, financial Save, production timing hook, OS setting or screenshot-protection change is involved.
+The existing full schema/typed-row and native balance/presentation checks remain mandatory after changed reads.
+Do not run host builds during phone timing. See application quality/physical-home-compilation.md for the
+qualified comparison and remaining cold-start/performance boundaries.
+
+The managed AssemblyName and AndroidAotProfile inputs match production so its method/type signatures resolve.
+The Android ApplicationId and private storage remain independent. KeepScreenOn applies only to explicit review
+phases on that window; never change a device setting or bypass a genuine access gate. Historical D-314/315
+caller timings do not represent production compilation. D-320 removes only extra CoreLib method roots from the captured profile after same-data native qualification; SDK defaults remain.
+
+Release compiler/task downloads follow the same central servicing pin as the runtime. Restore with the same
+Configuration as publish; the normal APK script does this explicitly. Diagnostic exception output is type/stack
+only, never exception messages. The independent window stays awake only during its explicit foreground review.

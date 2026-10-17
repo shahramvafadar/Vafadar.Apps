@@ -1,5 +1,9 @@
 # Complete physical ledger read (D-315)
 
+> D-320 compilation qualification: these historical caller timings omit the main release profile/assembly parity.
+> Keep their original independent-build scope; current evidence and the observed profiled-GC workaround are in
+> [physical Home compilation](physical-home-compilation.md). They are not main-package speed ratios.
+
 ## Observed cause and final change
 
 The retained D-314 Samsung workload exposed a slow unbounded GetEntriesAsync query. On the same protected

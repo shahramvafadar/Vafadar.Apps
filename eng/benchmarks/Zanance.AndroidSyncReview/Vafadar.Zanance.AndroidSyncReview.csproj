@@ -110,4 +110,5 @@
   <Target Name="PrepareAndroidCipherDependency" BeforeTargets="_GenerateRestoreGraphProjectEntry">
     <Exec Command="pwsh -NoProfile -File &quot;$(RepoRoot)eng/native/sqlcipher/Ensure-AndroidPackage.ps1&quot;" />
   </Target>
+  <Import Project="$(RepoRoot)eng/AndroidAotRuntime.targets" />
 </Project>

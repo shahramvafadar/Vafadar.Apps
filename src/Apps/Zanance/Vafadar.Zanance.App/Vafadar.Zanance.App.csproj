@@ -203,4 +203,5 @@
             Condition="'$(_ZananceGeneratedWindowsIdentity)' != '$(_ZananceExpectedWindowsIdentity)'" />
   </Target>
 
+  <Import Project="$(RepoRoot)eng/AndroidAotRuntime.targets" />
 </Project>

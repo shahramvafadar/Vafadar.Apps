@@ -5,6 +5,7 @@
     <TargetFrameworks>net10.0-android</TargetFrameworks>
     <OutputType>Exe</OutputType>
     <RootNamespace>Vafadar.Zanance.App</RootNamespace>
+    <AssemblyName>Vafadar.Zanance.App</AssemblyName>
     <ApplicationTitle>Zanance Home review</ApplicationTitle>
     <ApplicationId>pro.vafadar.zanance.androidhomereview</ApplicationId>
     <ApplicationVersion>1</ApplicationVersion>
@@ -17,6 +18,10 @@
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
+  <!-- D-320: measure the original release compilation inputs as well as its source/native library. -->
+  <ItemGroup Condition="'$(Configuration)' == 'Release'">
+    <AndroidAotProfile Include="$(OriginalAppRoot)Platforms/Android/Profiles/startup.aprof" />
+  </ItemGroup>
   <!-- Compile original production sources and XAML; the application never references this independent caller. -->
   <ItemGroup>
     <Compile Include="$(OriginalAppRoot)**/*.cs"
@@ -67,4 +72,5 @@
   <Target Name="PrepareAndroidCipherDependency" BeforeTargets="_GenerateRestoreGraphProjectEntry">
     <Exec Command="pwsh -NoProfile -File &quot;$(RepoRoot)eng/native/sqlcipher/Ensure-AndroidPackage.ps1&quot;" />
   </Target>
+  <Import Project="$(RepoRoot)eng/AndroidAotRuntime.targets" />
 </Project>

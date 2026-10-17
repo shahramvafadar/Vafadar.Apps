@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Android compilation stability (D-320)
+
+- Adjust Android compilation to avoid the profiled Home crash observed with large histories, and keep serviced runtime/build tools aligned. Verify the same protected data and a complete phone upgrade; remaining latency is still open.
+
 ### Repaid debt details (D-319)
 
 - Stop asking to add loan terms after the balance reaches zero when those terms are already saved. Verify original loan and lent-money principal/interest, manual final repayment and retained records after upgrade on the approved Android phone.

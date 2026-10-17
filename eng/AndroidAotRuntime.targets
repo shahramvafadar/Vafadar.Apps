@@ -1,0 +1,32 @@
+<Project>
+  <!-- D-320: compile with the same serviced Mono toolchain as the packaged runtime, without changing installed workloads. -->
+  <ItemGroup Condition="'$(Configuration)' == 'Release' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+    <PackageDownload Include="Microsoft.NET.Runtime.MonoAOTCompiler.Task" Version="[$(VafadarSecurityRuntimeVersion)]" />
+    <PackageDownload Include="Microsoft.NETCore.App.Runtime.AOT.$(NETCoreSdkRuntimeIdentifier).Cross.android-arm64" Version="[$(VafadarSecurityRuntimeVersion)]" />
+    <PackageDownload Include="Microsoft.NETCore.App.Runtime.AOT.$(NETCoreSdkRuntimeIdentifier).Cross.android-x64" Version="[$(VafadarSecurityRuntimeVersion)]" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+    <_VafadarAotRoot>$([MSBuild]::EnsureTrailingSlash('$(NuGetPackageRoot)'))</_VafadarAotRoot>
+    <_VafadarAotHost>$([System.String]::Copy('$(NETCoreSdkRuntimeIdentifier)').ToLowerInvariant())</_VafadarAotHost>
+    <_VafadarAotExecutable>mono-aot-cross</_VafadarAotExecutable>
+    <_VafadarAotExecutable Condition="$([MSBuild]::IsOSPlatform('windows'))">mono-aot-cross.exe</_VafadarAotExecutable>
+    <_VafadarAotTaskFramework Condition="'$(MSBuildRuntimeType)' == 'Core'">net10.0</_VafadarAotTaskFramework>
+    <_VafadarAotTaskFramework Condition="'$(MSBuildRuntimeType)' != 'Core'">net472</_VafadarAotTaskFramework>
+    <_VafadarAotTask>$(_VafadarAotRoot)microsoft.net.runtime.monoaotcompiler.task/$(VafadarSecurityRuntimeVersion)/tasks/$(_VafadarAotTaskFramework)/MonoAOTCompiler.dll</_VafadarAotTask>
+  </PropertyGroup>
+  <UsingTask TaskName="MonoAOTCompiler" AssemblyFile="$(_VafadarAotTask)" Override="true"
+             Condition="'$(Configuration)' == 'Release' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
+  <Target Name="SelectServicedAndroidAotCompiler" BeforeTargets="_AndroidAotCompilation"
+          Condition="'$(Configuration)' == 'Release' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+    <ItemGroup>
+      <_VafadarSelectedAot Remove="@(_VafadarSelectedAot)" />
+      <MonoAotCrossCompiler Remove="@(MonoAotCrossCompiler)" />
+      <MonoAotCrossCompiler Include="$(_VafadarAotRoot)microsoft.netcore.app.runtime.aot.$(_VafadarAotHost).cross.android-arm64/$(VafadarSecurityRuntimeVersion)/tools/$(_VafadarAotExecutable)" RuntimeIdentifier="android-arm64" />
+      <MonoAotCrossCompiler Include="$(_VafadarAotRoot)microsoft.netcore.app.runtime.aot.$(_VafadarAotHost).cross.android-x64/$(VafadarSecurityRuntimeVersion)/tools/$(_VafadarAotExecutable)" RuntimeIdentifier="android-x64" />
+      <_VafadarSelectedAot Include="@(MonoAotCrossCompiler)" Condition="'%(MonoAotCrossCompiler.RuntimeIdentifier)' == '$(RuntimeIdentifier)'" />
+    </ItemGroup>
+    <Error Condition="'@(_VafadarSelectedAot)' == '' or !Exists('@(_VafadarSelectedAot)') or !Exists('$(_VafadarAotTask)')"
+           Text="The matching serviced Android AOT compiler and task must be restored before compilation." />
+    <Message Importance="high" Text="Android AOT runtime/compiler/task version: $(VafadarSecurityRuntimeVersion); host: $(_VafadarAotHost); target: $(RuntimeIdentifier)." />
+  </Target>
+</Project>

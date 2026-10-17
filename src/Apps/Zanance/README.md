@@ -450,3 +450,10 @@ Explicit source lookup/cache/review and retained provenance are separate from ma
 The default live source is unavailable. Current local, protected personal/shared, native and signed-package
 evidence and remaining source/licence/platform gates are recorded in
 docs/enhancements/2026-10-commercial-release/16-market-reference-delivery.md.
+
+## Current Android compilation qualification (D-320)
+
+[Retained physical Home evidence](docs/quality/physical-home-compilation.md) records the profiled native
+failure, limited compilation workaround, matching serviced compiler/task and complete signed main upgrade.
+Financial algorithms/data are unchanged; remaining latency, full cold/ANR statistics and release acceptance
+are open. The qualified local APK is artifacts/android-aot-runtime-d320-qualified/pro.vafadar.zanance-Signed.apk.
