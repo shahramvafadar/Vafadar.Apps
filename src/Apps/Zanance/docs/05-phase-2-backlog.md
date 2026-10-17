@@ -2259,3 +2259,9 @@ observation assertions pass; only the independent offline receiver is rebuilt wi
 No maintained unit count, main source/APK or unrelated successful suite/build changes. Bank/aggregate/
 malformed-file/full-device/iOS/release gates remain separate.
 See [evidence](quality/physical-csv-roundtrip.md).
+
+## D-331 existing import presentation
+
+IO-09's count-only preview is replaced with interpreted read-only pages and a fresh-review gate after
+mapping changes. This does not add a bank format or change aggregate/Undo authority. Current scope and
+remaining device qualification: [evidence](quality/interpreted-csv-preview.md).

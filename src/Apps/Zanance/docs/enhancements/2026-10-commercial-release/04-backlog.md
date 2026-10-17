@@ -2833,3 +2833,11 @@ observation assertions pass; only the independent offline receiver is rebuilt wi
 No maintained unit count, main source/APK or unrelated successful suite/build changes. Bank/aggregate/
 malformed-file/full-device/iOS/release gates remain separate.
 IMP-01 still requires original external bank specimens; own-format acceptance does not qualify those revisions. See [evidence](../../quality/physical-csv-roundtrip.md).
+
+## D-331 IO-09 row interpretation
+
+Locally implemented: actual own-format/generic preview cards, bounded traversal including invalid/known rows and
+changed-mapping refusal are implemented. The19 new behaviors,51 related application,29 bank and23 resource
+cases pass; signed offline Android build/upgrade and18 native Windows contexts pass. Phone rendering
+remains pending in [evidence](../../quality/interpreted-csv-preview.md). QA-01 remains in progress; no
+arbitrary-bank, wider-device, iOS, performance or release gate closes.

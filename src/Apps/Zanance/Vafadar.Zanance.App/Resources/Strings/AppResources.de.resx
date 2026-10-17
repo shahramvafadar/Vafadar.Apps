@@ -8188,4 +8188,34 @@ Ursprüngliche Kurskennung: {2}</value>
   <data name="Backup_SafetyHint" xml:space="preserve">
     <value>Frühere Daten dieses Profils, für dieses Gerät verschlüsselt. Wählen Sie eine Kopie zur Prüfung vor dem Ersetzen. Sie ist nicht auf einem neuen Gerät nutzbar.</value>
   </data>
+  <data name="Import_ReviewedTitle" xml:space="preserve">
+    <value>Interpretierte Zeilen</value>
+  </data>
+  <data name="Import_ReviewedHint" xml:space="preserve">
+    <value>Prüfen Sie vor dem Import die interpretierten Daten, Konten, Arten und Beträge. Der Seitenwechsel speichert keine Buchungen.</value>
+  </data>
+  <data name="Import_ReviewedLine" xml:space="preserve">
+    <value>Zeile {0} · {1} · {2}</value>
+  </data>
+  <data name="Import_ReviewedNew" xml:space="preserve">
+    <value>Bereit zum Import</value>
+  </data>
+  <data name="Import_ReviewedInvalid" xml:space="preserve">
+    <value>Ungültige Zeile – wird nicht importiert</value>
+  </data>
+  <data name="Import_ReviewedDuplicateSkipped" xml:space="preserve">
+    <value>Mögliche Dublette – gemäß Ihrer Auswahl ausgelassen</value>
+  </data>
+  <data name="Import_ReviewedDuplicateIncluded" xml:space="preserve">
+    <value>Mögliche Dublette – gemäß Ihrer Auswahl einbezogen</value>
+  </data>
+  <data name="Import_InterpretationChanged" xml:space="preserve">
+    <value>Die Interpretation hat sich geändert. Aktualisieren Sie vor dem Import die Vorschau.</value>
+  </data>
+  <data name="Import_ReviewedAmount" xml:space="preserve">
+    <value>Interpretierter Betrag</value>
+  </data>
+  <data name="Import_ReviewedDestination" xml:space="preserve">
+    <value>Empfangener Betrag</value>
+  </data>
 </root>

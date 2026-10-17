@@ -8157,4 +8157,34 @@ Identificador de cotización original: {2}</value>
   <data name="Backup_SafetyHint" xml:space="preserve">
     <value>Datos anteriores de este perfil, cifrados para este dispositivo. Elige una copia para verificarla antes de reemplazar los datos. No sirve para recuperar un dispositivo nuevo.</value>
   </data>
+  <data name="Import_ReviewedTitle" xml:space="preserve">
+    <value>Filas interpretadas</value>
+  </data>
+  <data name="Import_ReviewedHint" xml:space="preserve">
+    <value>Revisa las fechas, cuentas, tipos e importes interpretados antes de importar. Cambiar de página no guarda movimientos.</value>
+  </data>
+  <data name="Import_ReviewedLine" xml:space="preserve">
+    <value>Fila {0} · {1} · {2}</value>
+  </data>
+  <data name="Import_ReviewedNew" xml:space="preserve">
+    <value>Lista para importar</value>
+  </data>
+  <data name="Import_ReviewedInvalid" xml:space="preserve">
+    <value>Fila no válida: no se importará</value>
+  </data>
+  <data name="Import_ReviewedDuplicateSkipped" xml:space="preserve">
+    <value>Posible duplicado: excluido según tu selección</value>
+  </data>
+  <data name="Import_ReviewedDuplicateIncluded" xml:space="preserve">
+    <value>Posible duplicado: incluido según tu selección</value>
+  </data>
+  <data name="Import_InterpretationChanged" xml:space="preserve">
+    <value>La interpretación ha cambiado. Actualiza la vista previa antes de importar.</value>
+  </data>
+  <data name="Import_ReviewedAmount" xml:space="preserve">
+    <value>Importe interpretado</value>
+  </data>
+  <data name="Import_ReviewedDestination" xml:space="preserve">
+    <value>Importe recibido</value>
+  </data>
 </root>

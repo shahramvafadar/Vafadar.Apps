@@ -128,6 +128,36 @@
                                     </VerticalStackLayout>
                                 </VerticalStackLayout>
                             </Border>
+                            <!-- Every interpreted ledger row remains reachable; only ten cards are realized at once. -->
+                            <VerticalStackLayout Spacing="8" IsVisible="{Binding HasLedgerPreview}">
+                                <Label Text="{v:Translate Import_ReviewedTitle}" Style="{StaticResource SectionHeader}" />
+                                <Label Text="{v:Translate Import_ReviewedHint}" Style="{StaticResource Secondary}" />
+                                <Label Text="{Binding LedgerPreviewPageText}" FontAttributes="Bold" />
+                                <VerticalStackLayout BindableLayout.ItemsSource="{Binding LedgerPreviewRows}" Spacing="8">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="local:ImportPreviewLine">
+                                            <Border Style="{StaticResource Card}">
+                                                <VerticalStackLayout Spacing="6">
+                                                    <Label Text="{Binding Heading}" FontAttributes="Bold" />
+                                                    <Label Text="{Binding Title}" IsVisible="{Binding HasTitle}" />
+                                                    <Label Text="{Binding Accounts}" />
+                                                    <Label Text="{Binding Category}" Style="{StaticResource Secondary}" />
+                                                    <Label Text="{v:Translate Import_ReviewedAmount}" Style="{StaticResource FieldLabel}"
+                                                           IsVisible="{Binding Amount, Converter={StaticResource IsNotNullConverter}}" />
+                                                    <p:AmountReadout AmountText="{Binding Amount}" CaptionStyle="{StaticResource FieldLabel}" />
+                                                    <Label Text="{v:Translate Import_ReviewedDestination}" Style="{StaticResource FieldLabel}" IsVisible="{Binding HasDestinationAmount}" />
+                                                    <p:AmountReadout AmountText="{Binding DestinationAmount}" CaptionStyle="{StaticResource FieldLabel}" />
+                                                    <Label Text="{v:Translate Entry_ForeignAmount}" Style="{StaticResource FieldLabel}" IsVisible="{Binding HasOriginalAmount}" />
+                                                    <p:AmountReadout AmountText="{Binding OriginalAmount}" CaptionStyle="{StaticResource FieldLabel}" />
+                                                    <Label Text="{Binding Status}" Style="{StaticResource Secondary}" />
+                                                </VerticalStackLayout>
+                                            </Border>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                                <p:WrappingAction Text="{v:Translate BankCsv_Previous}" Command="{Binding PreviousLedgerPageCommand}" />
+                                <p:WrappingAction Text="{v:Translate BankCsv_Next}" Command="{Binding NextLedgerPageCommand}" />
+                            </VerticalStackLayout>
                             <Border BackgroundColor="{DynamicResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8"
                                     IsVisible="{Binding WarningText, Converter={StaticResource IsNotNullConverter}}">
                                 <Label Text="{Binding WarningText}" TextColor="{DynamicResource WarningText}" />

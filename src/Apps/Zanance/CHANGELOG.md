@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Interpreted CSV rows (D-331)
+
+- Review dates, accounts, kinds and complete amounts before importing own-format or mapped CSV. Page through every source row, including invalid and already-known rows. Changing the interpretation requires a fresh preview before import.
+
 ### Physical own-format CSV checks (D-330)
 
 - Verify the app-produced CSV through real Android import, complete exported-field re-export comparison, duplicate refusal and Undo after restarting. Application behavior and APK remain unchanged.

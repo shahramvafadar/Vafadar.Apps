@@ -6483,3 +6483,14 @@ observation assertions pass; only the independent offline receiver is rebuilt wi
 No maintained unit count, main source/APK or unrelated successful suite/build changes. Bank/aggregate/
 malformed-file/full-device/iOS/release gates remain separate.
 See [physical roundtrip](quality/physical-csv-roundtrip.md).
+
+## D-331 — Expose interpreted ledger CSV rows before import
+
+Close D-330's observed count-only IO-09 presentation gap with bounded ten-row pages containing actual
+dates/kinds/accounts and separate source/destination/original-currency amounts. Retain invalid and known
+rows, current duplicate choices, cancellation and accepted-outcome retirement. A changed generic mapping
+invalidates the old review until explicit refresh; no financial writer/parser/schema change. Nineteen new
+behaviors and the related51 application/29 bank/23 resource cases pass. Complete signed offline Android
+build/upgrade pass; phone rendering remains pending after adb went offline. All18 native Windows contexts
+pass with900 complete scaled captions and zero ledger writes; failed review attempts are preserved in
+[evidence](quality/interpreted-csv-preview.md).

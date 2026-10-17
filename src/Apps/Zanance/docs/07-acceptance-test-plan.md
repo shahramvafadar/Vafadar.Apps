@@ -3752,3 +3752,11 @@ observation assertions pass; only the independent offline receiver is rebuilt wi
 No maintained unit count, main source/APK or unrelated successful suite/build changes. Bank/aggregate/
 malformed-file/full-device/iOS/release gates remain separate.
 Original native preview is count-only; source row values are checked independently. Notes inclusion is on, but the fixture has no notes. This is not bank-preset, arbitrary CSV or aggregate acceptance. See [evidence](quality/physical-csv-roundtrip.md).
+
+## AT-331 interpreted ledger review
+
+Verify actual row interpretation, full source/destination currency packets, bounded paging through every
+invalid/known row, duplicate inclusion and rejection of a changed generic mapping before refresh. Preserve
+the page after picker cancellation and retire it only after accepted import/Undo. Nineteen new behaviors
+are covered by focused application tests. Native/device scope and pending gates remain explicit in
+[qualification](quality/interpreted-csv-preview.md); this does not broaden D-330 to arbitrary bank files.

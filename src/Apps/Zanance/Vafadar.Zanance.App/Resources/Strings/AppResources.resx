@@ -8217,4 +8217,34 @@ Original quote identifier: {2}</value>
   <data name="Backup_SafetyHint" xml:space="preserve">
     <value>Earlier data from this profile, encrypted for this device. Select a copy to verify it before replacing data. It cannot recover a new device.</value>
   </data>
+  <data name="Import_ReviewedTitle" xml:space="preserve">
+    <value>Interpreted rows</value>
+  </data>
+  <data name="Import_ReviewedHint" xml:space="preserve">
+    <value>Review the interpreted dates, accounts, kinds and amounts before importing. Paging does not save transactions.</value>
+  </data>
+  <data name="Import_ReviewedLine" xml:space="preserve">
+    <value>Line {0} · {1} · {2}</value>
+  </data>
+  <data name="Import_ReviewedNew" xml:space="preserve">
+    <value>Ready to import</value>
+  </data>
+  <data name="Import_ReviewedInvalid" xml:space="preserve">
+    <value>Invalid row — will not be imported</value>
+  </data>
+  <data name="Import_ReviewedDuplicateSkipped" xml:space="preserve">
+    <value>Possible duplicate — left out by your selection</value>
+  </data>
+  <data name="Import_ReviewedDuplicateIncluded" xml:space="preserve">
+    <value>Possible duplicate — included by your selection</value>
+  </data>
+  <data name="Import_InterpretationChanged" xml:space="preserve">
+    <value>The interpretation changed. Refresh the preview before importing.</value>
+  </data>
+  <data name="Import_ReviewedAmount" xml:space="preserve">
+    <value>Interpreted amount</value>
+  </data>
+  <data name="Import_ReviewedDestination" xml:space="preserve">
+    <value>Amount received</value>
+  </data>
 </root>

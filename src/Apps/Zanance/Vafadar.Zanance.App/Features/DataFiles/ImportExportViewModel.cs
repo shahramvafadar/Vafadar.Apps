@@ -59,12 +59,18 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         _holdings = holdings;
         _files = files;
         _interaction = interaction;
+        _translator = translator;
         PropertyChanged += (_, e) =>
         {
             if (e.PropertyName is nameof(IsBusy) or nameof(CanImport) or nameof(HasPreview) or nameof(ImportError) or nameof(ImportResult) or nameof(UndoError)) RefreshActions();
+            if (HasLedgerPreview && !_ownFormat && e.PropertyName is nameof(Account) or nameof(DateColumn) or nameof(AmountColumn)
+                or nameof(TitleColumn) or nameof(CategoryColumn) or nameof(NoteColumn) or nameof(DateFormat)
+                or nameof(CalendarIndex) or nameof(SeparatorIndex) or nameof(SignIndex))
+            {
+                _previewStale = true; CanImport = false; ImportError = _translator["Import_InterpretationChanged"];
+            }
         };
         _store = store;
-        _translator = translator;
         _dates = dates;
         _localization = localization;
         _time = time;
@@ -94,7 +100,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     {
         OnPropertyChanged(nameof(CanRunImport)); OnPropertyChanged(nameof(CanReviewPreview)); OnPropertyChanged(nameof(HasImportDock));
         ImportCommand.NotifyCanExecuteChanged(); PreviewCommand.NotifyCanExecuteChanged(); RefreshPreviewCommand.NotifyCanExecuteChanged();
-        PickStarMoneyCommand.NotifyCanExecuteChanged();
+        PickStarMoneyCommand.NotifyCanExecuteChanged(); NotifyLedgerPreview();
         PickCommand.NotifyCanExecuteChanged(); ExportCommand.NotifyCanExecuteChanged(); ExportHoldingsCommand.NotifyCanExecuteChanged(); UndoCommand.NotifyCanExecuteChanged();
     }
 
@@ -305,7 +311,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         IsBankPreset = false; _bankRead = null; _bankOwner = null; BankAcknowledged = false; BankLines.Clear();
         // Only an actual new selection replaces the previous raw review or accepted result.
         ImportError = null; UndoError = null; ImportResult = null; HasPreview = false; CanImport = false; _previewAccepted = false;
-        _preview = []; _holdingsContent = null; Overlaps.Clear();
+        _preview = []; _holdingsContent = null; Overlaps.Clear(); ClearLedgerPreview();
         _rows = Csv.Read(file.Text, Csv.DetectSeparator(file.Text));
         FileName = file.Name;
         RefreshActions();
@@ -419,6 +425,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
 
         UpdateCount();
         HasPreview = true;
+        _ledgerPreviewPage = 0; PublishLedgerPreviewPage();
     }
 
     private async Task PreviewHoldingsAsync()
@@ -444,7 +451,11 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         HasPreview = true;
     }
 
-    partial void OnSkipDuplicatesChanged(bool value) => UpdateCount();
+    partial void OnSkipDuplicatesChanged(bool value)
+    {
+        UpdateCount();
+        if (HasLedgerPreview) PublishLedgerPreviewPage();
+    }
 
     private void UpdateCount()
     {
@@ -596,7 +607,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     {
         ImportError = null;
         _previewAccepted = true; CanImport = false; HasPreview = false; ShowMapping = false;
-        _preview = []; _holdingsContent = null;
+        _preview = []; _holdingsContent = null; ClearLedgerPreview();
         ImportResult = _translator.Format("Import_Done", imported, skipped);
         RefreshActions();
     }
@@ -637,7 +648,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
             ImportResult = _translator["Import_UndoDone"];
             // Original overlap evidence is retired. An explicit fresh review may intentionally import again.
             HasPreview = false; CanImport = false; _previewStale = true; _previewAccepted = false;
-            _preview = []; Overlaps.Clear();
+            _preview = []; Overlaps.Clear(); ClearLedgerPreview();
             try { await LoadBatchesAsync(); }
             catch (Exception ex) when (ex is not OutOfMemoryException) { publication ??= ex; }
             if (publication is not null)

@@ -211,6 +211,13 @@ internal static partial class DebugSnapshots
     private static async Task RunAsync(App app, IServiceProvider services, string folder)
     {
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "import-preview")
+        {
+            await app.WaitForStartupAsync();
+            await ReviewImportPreviewAsync(app, services, folder,
+                (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_LANGUAGES") ?? "en,fa,de").Split(','));
+            return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "transaction-summary")
         {
             await ReviewTransactionSummaryAsync(app, services, folder); return;
@@ -457,7 +464,7 @@ internal static partial class DebugSnapshots
             // The snapshot theme is selected after the first page is created; show that choice in its picker too.
             vm.ThemeIndex = (int)services.GetRequiredService<Presentation.ThemeService>().Choice;
             // D-111/D-113: focused draft presentation uses real fictitious setup without unrelated restore reviews.
-            var focusedDraftPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "entry-repeat-presentation" or "entry-categories" or "goals-warnings" or "goal-work-views" or "goal-review-integrity" or "filter-actions" or "goal-work-release-hint" or "goal-editor-work" or "active-items" or "active-items-entry" or "active-items-discard" or "active-items-save-feedback" or "active-budget-definitions" or "active-quick-resources" or "home-template-work" or "home-template-destination" or "profile-work" or "profile-file-work" or "profile-reminder-work" or "reminder-input-work" or "commercial-feedback" or "pre-save-readiness" or "product-plans" or "editor-writes" or "account-archive" or "editor-readiness" or "import-outcomes" or "restore-outcomes" or "forecast-work" or "forecast-currency-work" or "receipt-work" or "loan-work" or "report-work" or "report-pdf-work" or "budget-reminder" or "budget-editor-work" or "budget-actions-work";
+            var focusedDraftPresentation = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "entry-repeat-presentation" or "entry-categories" or "goals-warnings" or "goal-work-views" or "goal-review-integrity" or "filter-actions" or "goal-work-release-hint" or "goal-editor-work" or "active-items" or "active-items-entry" or "active-items-discard" or "active-items-save-feedback" or "active-budget-definitions" or "active-quick-resources" or "home-template-work" or "home-template-destination" or "profile-work" or "profile-file-work" or "profile-reminder-work" or "reminder-input-work" or "commercial-feedback" or "pre-save-readiness" or "product-plans" or "editor-writes" or "account-archive" or "editor-readiness" or "import-outcomes" or "import-preview" or "restore-outcomes" or "forecast-work" or "forecast-currency-work" or "receipt-work" or "loan-work" or "report-work" or "report-pdf-work" or "budget-reminder" or "budget-editor-work" or "budget-actions-work";
             if (focusedDraftPresentation)
             {
                 for (var step = 1; step < OnboardingViewModel.StepCount; step++)

@@ -1009,3 +1009,9 @@ physical/iOS/release acceptance remain distinct; historical whole-suite3753 was 
 The existing protected startup and finance behavior remain intact. Qualify only the changed Android compilation/native startup boundary; no schema or whole-suite replay is required for method metadata. Physical/iOS/two-second and publication acceptance remain separate.
 
 Current exact evidence: enhancements/2026-10-commercial-release/17-startup-responsiveness-delivery.md.
+
+## D-331 IO-09 interpretation review
+
+Own-format and mapped ledger CSV now expose bounded interpreted rows and invalidate changed mappings.
+Focused tests and the signed offline build/upgrade pass; native/device qualification remains scoped in
+[the evidence record](quality/interpreted-csv-preview.md). No financial schema/writer change or broad suite replay.

@@ -1420,3 +1420,10 @@ Original en/fa/de exports and repeated financial context are qualified on Samsun
 ## D-330 physical CSV boundary
 
 Original own-format export/import/re-export/duplicate/cold Undo is qualified for the five-row Samsung fixture; real bank specimens, aggregate/unsafe Undo, broader device and iOS/Store/release acceptance remain open. Main APK stays D-329; see quality/physical-csv-roundtrip.md.
+
+## D-331 interpreted preview boundary
+
+The new interpreted-row UI and stale-mapping gate have focused managed and independent native review.
+The complete offline candidate upgrades without reset; the new page's Samsung acceptance remains pending
+while its adb transport is unavailable. This does not repeat or broaden D-330's original financial cycle.
+See quality/interpreted-csv-preview.md for exact scope and retained failures; no publication gate closes.

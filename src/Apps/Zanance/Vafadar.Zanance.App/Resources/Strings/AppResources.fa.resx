@@ -8188,4 +8188,34 @@
   <data name="Backup_SafetyHint" xml:space="preserve">
     <value>داده‌های پیشین همین پروفایل، رمزنگاری‌شده برای این دستگاه. برای بررسی پیش از جایگزینی داده‌ها، یک نسخه را انتخاب کنید. این نسخه برای بازیابی روی دستگاه جدید قابل استفاده نیست.</value>
   </data>
+  <data name="Import_ReviewedTitle" xml:space="preserve">
+    <value>ردیف‌های تفسیرشده</value>
+  </data>
+  <data name="Import_ReviewedHint" xml:space="preserve">
+    <value>پیش از ورود، تاریخ، حساب، نوع و مبلغ تفسیرشده را بررسی کنید. جابه‌جایی بین صفحه‌ها تراکنشی ثبت نمی‌کند.</value>
+  </data>
+  <data name="Import_ReviewedLine" xml:space="preserve">
+    <value>ردیف {0} · {1} · {2}</value>
+  </data>
+  <data name="Import_ReviewedNew" xml:space="preserve">
+    <value>آمادهٔ ورود</value>
+  </data>
+  <data name="Import_ReviewedInvalid" xml:space="preserve">
+    <value>ردیف نامعتبر؛ وارد نمی‌شود</value>
+  </data>
+  <data name="Import_ReviewedDuplicateSkipped" xml:space="preserve">
+    <value>احتمال تکراری‌بودن؛ طبق انتخاب شما وارد نمی‌شود</value>
+  </data>
+  <data name="Import_ReviewedDuplicateIncluded" xml:space="preserve">
+    <value>احتمال تکراری‌بودن؛ طبق انتخاب شما وارد می‌شود</value>
+  </data>
+  <data name="Import_InterpretationChanged" xml:space="preserve">
+    <value>تفسیر فایل تغییر کرده است. پیش از ورود، پیش‌نمایش را تازه‌سازی کنید.</value>
+  </data>
+  <data name="Import_ReviewedAmount" xml:space="preserve">
+    <value>مبلغ تفسیرشده</value>
+  </data>
+  <data name="Import_ReviewedDestination" xml:space="preserve">
+    <value>مبلغ دریافتی</value>
+  </data>
 </root>

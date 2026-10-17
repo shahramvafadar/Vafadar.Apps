@@ -8165,4 +8165,34 @@ Identifiant de la cotation originale : {2}</value>
   <data name="Backup_SafetyHint" xml:space="preserve">
     <value>Données antérieures de ce profil, chiffrées pour cet appareil. Sélectionnez une copie pour la vérifier avant de remplacer les données. Elle ne permet pas la récupération sur un nouvel appareil.</value>
   </data>
+  <data name="Import_ReviewedTitle" xml:space="preserve">
+    <value>Lignes interprétées</value>
+  </data>
+  <data name="Import_ReviewedHint" xml:space="preserve">
+    <value>Vérifiez les dates, comptes, types et montants interprétés avant l’importation. Changer de page n’enregistre aucune opération.</value>
+  </data>
+  <data name="Import_ReviewedLine" xml:space="preserve">
+    <value>Ligne {0} · {1} · {2}</value>
+  </data>
+  <data name="Import_ReviewedNew" xml:space="preserve">
+    <value>Prête à importer</value>
+  </data>
+  <data name="Import_ReviewedInvalid" xml:space="preserve">
+    <value>Ligne non valide : elle ne sera pas importée</value>
+  </data>
+  <data name="Import_ReviewedDuplicateSkipped" xml:space="preserve">
+    <value>Doublon possible : exclu selon votre choix</value>
+  </data>
+  <data name="Import_ReviewedDuplicateIncluded" xml:space="preserve">
+    <value>Doublon possible : inclus selon votre choix</value>
+  </data>
+  <data name="Import_InterpretationChanged" xml:space="preserve">
+    <value>L’interprétation a changé. Actualisez l’aperçu avant d’importer.</value>
+  </data>
+  <data name="Import_ReviewedAmount" xml:space="preserve">
+    <value>Montant interprété</value>
+  </data>
+  <data name="Import_ReviewedDestination" xml:space="preserve">
+    <value>Montant reçu</value>
+  </data>
 </root>

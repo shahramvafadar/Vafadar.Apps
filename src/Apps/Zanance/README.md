@@ -72,6 +72,11 @@ Aggregate CSV import (D-72): review each overlapping aggregate and choose linkin
 amounts and the remaining total before saving. Linked imports retain safe Undo across restart and database backup;
 later changes or dependent imports require review. No automatic merging. See AT-79 for evidence and device gates.
 
+Ledger CSV review (D-331) shows interpreted source rows, dates/kinds, accounts and full currency amounts in
+bounded pages, including invalid/known status. Changing generic mappings requires refresh before import.
+Focused tests, native layout and phone qualification remain separately recorded in
+[the evidence](docs/quality/interpreted-csv-preview.md).
+
 Application flow coverage (D-73 / QA-03): 68 AT-80 cases compile actual non-UI onboarding, profiles, bulk commands,
 access, widget/reminder routing and theme sources with explicit native ports and real isolated SQLite. The full
 main suite has 1,263 passing tests. Native runtime/physical-device evidence remains separate; no commercial limits.

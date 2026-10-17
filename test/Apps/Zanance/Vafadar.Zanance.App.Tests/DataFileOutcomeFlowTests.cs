@@ -15,7 +15,7 @@ namespace Vafadar.Zanance.App.Tests;
 
 /// <summary>AT-168: actual CSV review/import/Undo sources retain refusals and retire accepted payloads before follow-through.</summary>
 [Trait("AT", "AT-168")]
-public sealed class DataFileOutcomeFlowTests
+public sealed partial class DataFileOutcomeFlowTests
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
     private sealed class Access : ICommercialWriteAccessSource

@@ -1171,3 +1171,14 @@ The independent export receiver now accepts original report PDFs as well as acco
 ## Physical original CSV producer/consumer
 
 The isolated export receiver supports the bounded original ledger CSV format. Its README and verify_csv_roundtrip.py cover exact-byte native grant receipt, matching zero-account fixture preparation, all-column re-export comparison, same-file duplicate refusal, cold Undo and exact owned cleanup. Main code/APK need no rebuild when unchanged; this does not qualify arbitrary bank revisions.
+
+## Independent interpreted import review (D-331)
+
+Build Windows Debug with ApplicationId=pro.vafadar.zanance.importpreview; its pre-start guard refuses
+the normal installation. Set VAFADAR_SNAPSHOT_ONLY=import-preview and an owned VAFADAR_SNAPSHOTS
+folder. After protected startup, the original page reviews a separate fictitious SQLite store and CSV
+through native Invoke/Scroll. It traverses en/fa/de, light/dark and360/412/1280 widths, retains completed
+contexts and never invokes Import or Undo. Source/destination identities remain in the independent
+fixture on continuation. Use sequential main Windows/Android restores; their shared assets file can race.
+Restore the normal ApplicationId and build before handoff. Exact outcomes and package boundary:
+src/Apps/Zanance/docs/quality/interpreted-csv-preview.md.

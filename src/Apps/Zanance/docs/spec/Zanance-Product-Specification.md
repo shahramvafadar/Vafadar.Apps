@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-10-18, D-330)
+## 31. Implementation Status (v1.1, scoped updates through 2026-10-18, D-331)
 
 This section records what the repository actually contains. "Verified" is qualified by each scenario's evidence:
 automated tests, running Windows layouts, targeted Android emulator checks or specifically recorded physical
@@ -6509,3 +6509,11 @@ new matching-account profile is retired; Main979 and three previous profiles rem
 observation assertions pass; only the independent offline receiver is rebuilt with zero warnings/errors.
 No maintained unit count, main source/APK or unrelated successful suite/build changes. Bank/aggregate/
 malformed-file/full-device/iOS/release gates remain separate.
+
+## D-331 IO-09 interpreted source rows
+
+Actual own-format/generic interpreted amounts, identities, dates/kinds and invalid/known status are now
+reachable through bounded pages. Changed mappings block old interpretations until refresh. Nineteen new
+behaviors pass within51 related application cases, with29 bank and23 resource cases; this is selective
+evidence rather than a new whole-suite count. Native Windows and complete offline APK/device scope
+remain qualified separately in [evidence](../quality/interpreted-csv-preview.md).

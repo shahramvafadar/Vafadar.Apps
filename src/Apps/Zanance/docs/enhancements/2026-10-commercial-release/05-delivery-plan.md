@@ -2224,3 +2224,10 @@ observation assertions pass; only the independent offline receiver is rebuilt wi
 No maintained unit count, main source/APK or unrelated successful suite/build changes. Bank/aggregate/
 malformed-file/full-device/iOS/release gates remain separate.
 Continue ready Android acceptance/actual defects; retain real-source, native environment and owner external gates. See [evidence](../../quality/physical-csv-roundtrip.md).
+
+## D-331 current complete batch
+
+The observed IO-09 interpreted-row gap and stale generic-mapping protection are locally delivered through
+focused tests,18 native layout contexts and the complete offline candidate. Preserve successful prior CSV roundtrip,
+bank, backend, cipher and PDF evidence. The phone upgrade succeeds but its page awaits an available
+transport; do not substitute installation for rendering. [Current evidence](../../quality/interpreted-csv-preview.md).

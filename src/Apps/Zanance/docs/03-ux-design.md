@@ -1539,3 +1539,11 @@ A protected safety-file list may briefly own native maintenance. Automatic readi
 ## Continued PDF tables (D-329)
 
 Keep section/account identity, exact period/currency/account scope and column names in the repeated table header. A continued balance must remain identifiable without turning back a page. Retain RTL mapping and numeric packets. Fixed A4 rendering does not depend on app viewport/theme; qualify actual native exported pages, not just the chooser or extracted text.
+
+## Interpreted import rows (D-331)
+
+Counts alone do not satisfy IO-09. Keep every source row reachable in bounded read-only pages, including
+invalid and known rows. Give interpreted date/kind, financial identities and each complete currency packet
+their own growing rows. Source and received amounts are distinct. Show inclusion/skip status explicitly;
+mapping changes retain the old review visibly but block import until refresh. Paging never saves money.
+See [qualification](quality/interpreted-csv-preview.md).
