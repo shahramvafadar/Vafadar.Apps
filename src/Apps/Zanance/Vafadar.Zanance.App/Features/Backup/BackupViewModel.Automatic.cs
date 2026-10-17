@@ -48,7 +48,7 @@ public sealed partial class BackupViewModel
     private async void OnAutomaticChanged(object? sender, EventArgs e)
     {
         if (_page is null || !CanUseBackupTools) return;
-        await Presentation.Failures.GuardAsync(RefreshAutomaticAsync);
+        await Presentation.Failures.GuardAsync(async () => { await RefreshAutomaticAsync(); await RefreshSafetyAsync(); });
     }
 
     private async Task RefreshAutomaticAsync()

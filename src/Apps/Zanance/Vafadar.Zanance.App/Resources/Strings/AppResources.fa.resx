@@ -8179,4 +8179,13 @@
   <data name="Billing_Owned_StateRevoked" xml:space="preserve">
     <value>لغوشده یا بازپرداخت‌شده</value>
   </data>
+  <data name="Backup_SafetyTitle" xml:space="preserve">
+    <value>نسخه‌های ایمنی پیش از بازیابی</value>
+  </data>
+  <data name="Backup_SafetyFile" xml:space="preserve">
+    <value>نسخهٔ ایمنی · {0}</value>
+  </data>
+  <data name="Backup_SafetyHint" xml:space="preserve">
+    <value>داده‌های پیشین همین پروفایل، رمزنگاری‌شده برای این دستگاه. برای بررسی پیش از جایگزینی داده‌ها، یک نسخه را انتخاب کنید. این نسخه برای بازیابی روی دستگاه جدید قابل استفاده نیست.</value>
+  </data>
 </root>

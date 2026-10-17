@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fixed (D-312)
+
+- Safety copies saved before a restore can be selected in Backup to recover earlier profile data. They stay separate from automatic copies and portable exports, with verification and confirmation before replacement.
+
 ### Read complete report and forecast figures (D-311)
 
 - Give dates and each trend, history and forecast-comparison amount their own growing row.

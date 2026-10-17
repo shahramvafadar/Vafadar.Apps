@@ -6296,3 +6296,14 @@ comes first, Mac/iOS afterward. Company registration precedes owner-created publ
 accounts. Use Cloudflare Tunnel for the approved current-machine hosting path; the owner signs in and
 enters tunnel credentials personally. These are execution decisions, not completed public DNS/tunnel,
 phone, Store/OAuth or release acceptance. Do not ask these settled choices again.
+
+## D-312 physical Android safety-copy recovery
+
+Actual fresh Samsung qualification found that a pre-restore encrypted safety file was retained but absent
+from the Backup page. Add a separate six-language current-profile safety candidate list. Capture exact
+profile/installation under drained original storage ownership, read only the bounded nonsecret header,
+and never read/create keys or decrypt financial packages for listing. A matching header is not authentication:
+reuse original full validation, preview, access checks and explicit replacement consent on selection.
+Automatic/portable cohorts remain separate; device-only rows cannot share a file. Existing keys/files are
+preserved. Seven focused tests and 18 original Windows layout contexts qualify the changed boundary;
+actual phone continuation and complete package evidence: [physical Android safety recovery](quality/physical-android-safety-recovery.md).

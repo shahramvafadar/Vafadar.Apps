@@ -929,3 +929,9 @@ Existing private verified purchase dates/state are displayed on the plan screen 
 verification feedback. There is no new data source, network request, permission or portable backup field.
 Raw receipt/purchase/account identifiers are excluded from presentation. Local fictional review does not
 claim genuine store or platform acceptance.
+
+### D-312 local safety candidate listing
+
+Backup shows profile/install-scoped device-only pre-restore candidates from bounded nonsecret headers.
+Listing does not decrypt content or read/create keys. Original complete authentication, access and explicit
+replacement remain required; no share/export, SDK, permission or network change is introduced.

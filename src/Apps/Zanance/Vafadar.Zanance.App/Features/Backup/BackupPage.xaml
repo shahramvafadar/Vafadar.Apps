@@ -112,6 +112,25 @@
                     </VerticalStackLayout>
                 </Border>
 
+                <!-- D-312: opaque current-profile safety candidates still require original full verification/consent. -->
+                <Label Text="{v:Translate Backup_SafetyTitle}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasSafetyBackups}" />
+                <Label Text="{v:Translate Backup_SafetyHint}" Style="{StaticResource Secondary}" IsVisible="{Binding HasSafetyBackups}" />
+                <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasSafetyBackups}">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding SafetyBackups}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="local:LocalBackup">
+                                <Grid Padding="16,10" RowDefinitions="Auto,Auto" MinimumHeightRequest="44">
+                                    <Label Text="{Binding Title}" LineBreakMode="WordWrap" />
+                                    <Label Grid.Row="1" Text="{Binding Details}" Style="{StaticResource Secondary}" />
+                                    <Button Grid.RowSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}"
+                                            Command="{Binding OpenLocalCommand, Source={RelativeSource AncestorType={x:Type local:BackupViewModel}}, x:DataType=local:BackupViewModel}"
+                                            CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding Details}" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+
                 <!-- Cloud backup (D-35): only with configured OAuth clients; an explicit choice of the user -->
                 <Label Text="{v:Translate Cloud_Title}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasCloud}" />
                 <Border x:Name="CloudSection" Style="{StaticResource Card}" IsVisible="{Binding HasCloud}">
@@ -179,7 +198,7 @@
                 </Border>
 
                 <!-- Restore -->
-                <!-- Before a restore the current data is kept as a safety copy on this device, unencrypted (ZEX-F20, disclosed) -->
+                <!-- Before a restore, native protected hosts retain a separate device-key encrypted safety copy (D-263). -->
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
                 <Label Text="{v:Translate Backup_Restore}" Style="{StaticResource SectionHeader}" />
                 <v:HelpButton Grid.Column="1" Topic="SafetyCopy" VerticalOptions="Center" />

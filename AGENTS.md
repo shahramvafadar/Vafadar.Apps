@@ -5,6 +5,8 @@
 The connected Samsung SM-A176B is authorized for Zanance Android qualification: install or upgrade the
 complete signed candidate without clearing data and exercise only fictitious profiles, navigation and
 performance. Preserve system settings, accounts and personal data; the owner performs actual authentication.
+The owner also authorized coordination of exclusive phone-test turns across the concurrent projects.
+Coordinate before device input, preserve each project's goal/data and refuse input when Zanance is not foreground.
 Finish Android qualification first, then continue Mac/iOS qualification. Windows product delivery remains
 in its separately deferred phase. Store/account-dependent acceptance waits for the owner's company
 registration and personal account setup; do not ask these settled choices again.

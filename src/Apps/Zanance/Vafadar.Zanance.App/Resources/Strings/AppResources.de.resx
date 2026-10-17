@@ -8179,4 +8179,13 @@ Ursprüngliche Kurskennung: {2}</value>
   <data name="Billing_Owned_StateRevoked" xml:space="preserve">
     <value>Widerrufen oder erstattet</value>
   </data>
+  <data name="Backup_SafetyTitle" xml:space="preserve">
+    <value>Sicherheitskopien vor einer Wiederherstellung</value>
+  </data>
+  <data name="Backup_SafetyFile" xml:space="preserve">
+    <value>Sicherheitskopie · {0}</value>
+  </data>
+  <data name="Backup_SafetyHint" xml:space="preserve">
+    <value>Frühere Daten dieses Profils, für dieses Gerät verschlüsselt. Wählen Sie eine Kopie zur Prüfung vor dem Ersetzen. Sie ist nicht auf einem neuen Gerät nutzbar.</value>
+  </data>
 </root>

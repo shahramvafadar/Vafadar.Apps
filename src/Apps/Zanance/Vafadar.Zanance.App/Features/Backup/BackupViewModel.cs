@@ -191,6 +191,7 @@ public sealed partial class BackupViewModel : ViewModelBase
 
         HasLocalBackups = LocalBackups.Count > 0;
         await RefreshAutomaticAsync();
+        await RefreshSafetyAsync();
 #if DEBUG
         if (IndependentAutomaticReview) return;
 #endif

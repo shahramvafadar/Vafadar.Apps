@@ -8208,4 +8208,13 @@ Original quote identifier: {2}</value>
   <data name="Billing_Owned_StateRevoked" xml:space="preserve">
     <value>Revoked or refunded</value>
   </data>
+  <data name="Backup_SafetyTitle" xml:space="preserve">
+    <value>Before-restore safety copies</value>
+  </data>
+  <data name="Backup_SafetyFile" xml:space="preserve">
+    <value>Safety copy · {0}</value>
+  </data>
+  <data name="Backup_SafetyHint" xml:space="preserve">
+    <value>Earlier data from this profile, encrypted for this device. Select a copy to verify it before replacing data. It cannot recover a new device.</value>
+  </data>
 </root>

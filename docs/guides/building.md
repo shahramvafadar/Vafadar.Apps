@@ -1087,3 +1087,11 @@ The original-source independent Android Home caller's `tables` phase checks the 
 surfaces, native text layout and real horizontal offsets in all three languages/themes. It uses a fresh
 explicit run/comparison with original-process observation, no main data or system setting changes. See its
 README. These native layout checks are not financial-calculation, statistical speed, phone or iOS acceptance.
+
+### D-312 original safety-row layout qualification
+
+The independent Windows Debug package pro.vafadar.zanance.safetycopies supports VAFADAR_SNAPSHOT_ONLY=safety-copies
+with a fresh VAFADAR_SNAPSHOTS directory and process-local VAFADAR_SNAPSHOT_FONT_SCALE=2. The hidden original page
+checks en/fa/de, both themes and 360/412/1280 widths using display-only candidates; it never invokes restore or
+opens their files. The original full restore is qualified separately on the authorized phone, preserving its
+existing fictitious data, safety files and keys across the signed upgrade. No system setting or credential entry.

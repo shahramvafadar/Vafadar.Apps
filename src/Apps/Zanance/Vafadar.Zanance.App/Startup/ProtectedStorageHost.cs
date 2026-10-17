@@ -14,7 +14,7 @@ namespace Vafadar.Zanance.App.Security;
 /// missing keys or identities cannot select a replacement installation or plaintext provider.</remarks>
 internal abstract partial class ProtectedStorageHost(IServiceProvider services,
     Func<CancellationToken, Task<ProtectedStorageInitialization>> initialization, Func<CancellationToken, Task> complete)
-    : IAppDatabaseStartup, IProfileCreationHost, IProfileRetirementHost, IBackupSafetyCopyProtection, IBackupPackageRestoreReceiver, IProtectedProfileSessionSource, IBackupSafetyCopyMaintenance, IAutomaticLocalBackupProtection
+    : IAppDatabaseStartup, IProfileCreationHost, IProfileRetirementHost, IBackupSafetyCopyProtection, IBackupPackageRestoreReceiver, IProtectedProfileSessionSource, IBackupSafetyCopyMaintenance, IAutomaticLocalBackupProtection, IBackupSafetyCopyDiscovery
 {
     private readonly SemaphoreSlim preparation = new(1, 1);
     private ProtectedProfileStorage? storage;

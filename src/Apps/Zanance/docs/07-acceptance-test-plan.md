@@ -3568,3 +3568,13 @@ contexts at process-local 200% stress and six original-source Release/AOT Androi
 stored data unchanged. Charts/PDF/calculations and schema are unchanged. No new unit-test count or unrelated
 successful suite replay is claimed. Exact scope, retained failures and package:
 [financial table readouts](quality/financial-table-readouts.md). A11Y-03, spoken readers, actual OS/device/iOS and release gates remain open.
+
+## AT-312 physical Android safety-copy recovery
+
+Actual Samsung fresh setup without online identity, income/expense/refund/transfer-fee and automatic-copy
+replacement exposed missing selection of pre-restore safety files. Seven new focused cases verify current
+profile/installation discovery, exact bounds, unchanged files, forged candidate/authentication separation
+and retired authority refusal. Original Windows layout has 18 qualified language/theme/width contexts.
+Actual same-file phone recovery, signed package and cold continuation are separated from those narrow
+checks in [physical Android safety recovery](quality/physical-android-safety-recovery.md). This does not
+close all device scenarios, real notification/OAuth/store/reader or iOS acceptance.

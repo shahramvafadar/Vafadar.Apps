@@ -6327,3 +6327,12 @@ contexts at process-local 200% stress and six original-source Release/AOT Androi
 stored data unchanged. Charts/PDF/calculations and schema are unchanged. No new unit-test count or unrelated
 successful suite replay is claimed. Exact scope, retained failures and package:
 [financial table readouts](../quality/financial-table-readouts.md). A11Y-03, spoken readers, actual OS/device/iOS and release gates remain open.
+
+### D-312 physical-device safety recovery follow-through
+
+The Samsung fresh financial/automatic-copy flow exposed omitted pre-restore safety selection. Backup now
+lists current-profile/install device-only candidates and reuses original authenticated validation, preview
+and replacement consent; no schema/cryptographic/key/retention change. Seven new focused cases pass;
+18 original Windows presentation contexts remain separate from actual device recovery. See
+[physical Android safety recovery](../quality/physical-android-safety-recovery.md). No full-suite rerun/count
+or broad physical-device/iOS/release completion is inferred.

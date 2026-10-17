@@ -277,6 +277,10 @@ internal static partial class DebugSnapshots
         {
             await ReviewAccountantAsync(app, services, folder); return;
         }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "safety-copies")
+        {
+            await ReviewSafetyCopiesAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "financial-tables")
         {
             await ReviewFinancialTablesAsync(app, services, folder);

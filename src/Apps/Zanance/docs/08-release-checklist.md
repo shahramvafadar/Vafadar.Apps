@@ -1343,3 +1343,10 @@ contexts at process-local 200% stress and six original-source Release/AOT Androi
 stored data unchanged. Charts/PDF/calculations and schema are unchanged. No new unit-test count or unrelated
 successful suite replay is claimed. Exact scope, retained failures and package:
 [financial table readouts](quality/financial-table-readouts.md). A11Y-03, spoken readers, actual OS/device/iOS and release gates remain open.
+
+### D-312 selectable encrypted safety copies
+
+Retained pre-restore safety candidates are now selectable only within the current profile/installation,
+separately from automatic/portable files. Listing reads no key/plaintext; original full authentication and
+explicit replacement remain mandatory. Exact focused/native/physical receipts and limits:
+[physical Android safety recovery](quality/physical-android-safety-recovery.md). This is not overall release acceptance.

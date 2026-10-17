@@ -8168,4 +8168,13 @@ Identificativo della quotazione originale: {2}</value>
   <data name="Billing_Owned_StateRevoked" xml:space="preserve">
     <value>Revocato o rimborsato</value>
   </data>
+  <data name="Backup_SafetyTitle" xml:space="preserve">
+    <value>Copie di sicurezza precedenti al ripristino</value>
+  </data>
+  <data name="Backup_SafetyFile" xml:space="preserve">
+    <value>Copia di sicurezza · {0}</value>
+  </data>
+  <data name="Backup_SafetyHint" xml:space="preserve">
+    <value>Dati precedenti di questo profilo, cifrati per questo dispositivo. Seleziona una copia per verificarla prima di sostituire i dati. Non consente il recupero su un nuovo dispositivo.</value>
+  </data>
 </root>

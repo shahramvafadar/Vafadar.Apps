@@ -8148,4 +8148,13 @@ Identificador de cotización original: {2}</value>
   <data name="Billing_Owned_StateRevoked" xml:space="preserve">
     <value>Revocado o reembolsado</value>
   </data>
+  <data name="Backup_SafetyTitle" xml:space="preserve">
+    <value>Copias de seguridad anteriores a la restauración</value>
+  </data>
+  <data name="Backup_SafetyFile" xml:space="preserve">
+    <value>Copia de seguridad · {0}</value>
+  </data>
+  <data name="Backup_SafetyHint" xml:space="preserve">
+    <value>Datos anteriores de este perfil, cifrados para este dispositivo. Elige una copia para verificarla antes de reemplazar los datos. No sirve para recuperar un dispositivo nuevo.</value>
+  </data>
 </root>

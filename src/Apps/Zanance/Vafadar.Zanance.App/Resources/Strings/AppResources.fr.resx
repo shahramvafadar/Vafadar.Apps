@@ -8156,4 +8156,13 @@ Identifiant de la cotation originale : {2}</value>
   <data name="Billing_Owned_StateRevoked" xml:space="preserve">
     <value>Révoqué ou remboursé</value>
   </data>
+  <data name="Backup_SafetyTitle" xml:space="preserve">
+    <value>Copies de sécurité avant restauration</value>
+  </data>
+  <data name="Backup_SafetyFile" xml:space="preserve">
+    <value>Copie de sécurité · {0}</value>
+  </data>
+  <data name="Backup_SafetyHint" xml:space="preserve">
+    <value>Données antérieures de ce profil, chiffrées pour cet appareil. Sélectionnez une copie pour la vérifier avant de remplacer les données. Elle ne permet pas la récupération sur un nouvel appareil.</value>
+  </data>
 </root>

@@ -1504,3 +1504,10 @@ hint; never split digits/decimals, shrink the old body size or omit currency/sig
 existing semantic colors. Trend income/expense/result and snapshot saved/actual/difference captions repeat
 with each original row rather than assuming hidden or clipped shared column headings. Native scroll ends
 must reach the original sign and unit; this is presentation only, not a new report calculation.
+
+### Selectable device-only pre-restore safety copies (D-312)
+
+Backup displays previous-state safety candidates separately from automatic copies and portable exports.
+Use growing translated title/date/size rows and real complete named targets. Explain device binding and
+verification before replacement; never imply a matching listing header is authenticated content or offer
+sharing. Selection uses the original protected restore and explicit replacement confirmation.

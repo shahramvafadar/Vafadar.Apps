@@ -2041,3 +2041,11 @@ using complete signed candidates and fictitious profiles without resetting data 
 settings. Continue Mac/iOS afterward. Company/account-dependent Store/OAuth gates wait for owner setup.
 Cloudflare Tunnel is the approved hosting path; prepare and qualify the project-owned configuration,
 with personal sign-in/credential entry by the owner. Public reachability is not inferred from approval.
+
+### D-312 device qualification fixes observed recovery gap
+
+Continue the same approved Samsung fictitious data and existing safety/key files after upgrading the signed
+candidate. Do not rebuild the financial scenario or replace keys just to obtain a green restore. Original
+current-profile safety discovery/listing is now complete; retain unrelated successful qualification and
+separate exact phone/cold recovery from Windows display-only checks. Full evidence and open gates:
+[physical Android safety recovery](../../quality/physical-android-safety-recovery.md).

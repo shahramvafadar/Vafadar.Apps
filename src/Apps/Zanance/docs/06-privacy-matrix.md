@@ -940,3 +940,9 @@ The plan screen displays already verified device/identity purchase lifecycle and
 existing private signed snapshots. No new collection, HTTP, storage, export or permission is introduced.
 Raw purchase references, receipts, identity hashes and provider diagnostics remain absent from labels.
 Fictitious native review metadata is independent from owner data and real store verification.
+
+### D-312 safety candidate presentation
+
+Only current profile/installation nonsecret envelope-header candidates and local file date/size appear in
+Backup. Discovery opens no key or plaintext package. Selection retains complete authentication and access/
+replacement checks. Device-only rows do not share/export files; no permission, SDK, network or new data class.

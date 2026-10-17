@@ -22,7 +22,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-263 Android all-profile migration/lifecycle and native interruption cases delivered; broader fault/platform acceptance remains) | SEC-02, SEC-03 |
 | ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | In progress (D-264 Android/Windows optional recovery and explicit portable recovery locally verified; iOS/device acceptance remain) | SEC-04, OD-04 approved |
 | ZCR-SEC-07 | Final OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | In progress (D-263 final coupled Android policy delivered; iOS exclusion/OEM acceptance remain) | OD-10 approved |
-| ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | In progress (D-264 Android/Windows encrypted safety and reference-aware retirement locally verified; iOS/device gates remain) | SEC-03 |
+| ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | In progress (D-264 local Android/Windows; D-312 actual Samsung safety recovery and profile isolation verified; broader device/iOS gates remain) | SEC-03 |
 | ZCR-SEC-10 | Owner-approved PIN, screenshot choice and ownership clarification (D-63) | Maintenance | P1 | M | Done | Owner request 2026-10-08 |
 | ZCR-SEC-09 | Network/SDK review of online builds; privacy texts | 1/3 | P2 | S | Done (current baseline; repeat for future SDKs) | – |
 | ZCR-LOC-01 | Release bug list from the owner's phone tests | 2 | P1 | M | Proposed | owner reports |
@@ -41,7 +41,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Done (D-268 browser/account copy and six-language drafts; real OAuth/publication remain open) | D-69 continuous delivery |
 | ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; other bank/relationship variants require original fixtures | original export specifications/samples |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
-| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | Blocked (owner runs) | – |
+| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 approved physical Android fictitious-data recovery/profile checks; broader device acceptance remains) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
@@ -2650,3 +2650,11 @@ contexts at process-local 200% stress and six original-source Release/AOT Androi
 stored data unchanged. Charts/PDF/calculations and schema are unchanged. No new unit-test count or unrelated
 successful suite replay is claimed. Exact scope, retained failures and package:
 [financial table readouts](../../quality/financial-table-readouts.md). A11Y-03, spoken readers, actual OS/device/iOS and release gates remain open.
+
+### D-312 actual-device pre-restore safety discovery
+
+Physical Samsung qualification observed an inaccessible retained safety file after automatic-copy restore.
+The original Backup page now exposes current-profile/install device-only candidates through bounded
+header-only discovery; original authenticated validation and explicit consent still own replacement.
+Seven focused tests and 18 native Windows layout contexts cover the changed boundary. Exact actual phone
+continuation, signed candidate and external limits: [physical Android safety recovery](../../quality/physical-android-safety-recovery.md).
