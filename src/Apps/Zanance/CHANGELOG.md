@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Android workflow qualification (D-316)
+
+- Verify the existing plan, partial/final payment, budget, savings goal and future forecast together on the approved phone, preserving the original profile. Application code and APK remain D-315.
+
 ### Faster complete history (D-315)
 
 - Read the full transaction history sequentially while retaining every field, original order and inclusive date filters. The complete signed upgrade is checked on the approved Android phone with existing data preserved. Large-data latency remains above target.

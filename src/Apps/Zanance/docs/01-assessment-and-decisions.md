@@ -6322,3 +6322,8 @@ Use the owner-approved Samsung and existing independent original-source caller w
 ## D-315 complete unbounded ledger reads on physical Android
 
 Actual same-file phone profiling isolated the old public full-history path: 7.77 seconds versus the existing complete Home path's 4.56 seconds for 100,000 entries. Reuse its sequential full-field reader only without date bounds; preserve original bounded SQL, exact order/values, transaction/interception and cancellation. Do not change the small timestamp converter cost or weaken encryption. 34 focused tests use independent EF oracles. Physical public/native reads and the data-preserving complete main upgrade are verified; large Home/cold/ANR/platform acceptance remains open. See [physical ledger read](quality/physical-ledger-read.md).
+
+
+## D-316 physical planned-work lifecycle without unrelated replay
+
+Use the unchanged complete signed D-315 main APK and ordinary original forms in an isolated retained fictitious profile. Partial 4 + final 6 yields exactly 10 spending, 990 balance, 40 budget left and the original account-balance goal; process restart preserves it. A separate future 20 appears only in Upcoming/forecast (970); exclude/reset changes the forecast, not the ledger. Return to original Main at 979. Retain observer failures and the undiagnosed first due-publication observation without speculative source changes. No new build/full-suite count. See [physical planned work](quality/physical-planned-work.md).
