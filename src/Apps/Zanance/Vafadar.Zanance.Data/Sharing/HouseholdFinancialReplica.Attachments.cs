@@ -243,6 +243,7 @@ public sealed partial class HouseholdFinancialReplica : IDisposable
         if (disposed) return;
         foreach (var part in attachments.Values) CryptographicOperations.ZeroMemory(part.Bytes);
         attachments.Clear(); attachmentLengths.Clear(); attachmentSources.Clear(); current.Clear(); history.Clear(); opaqueVersions.Clear();
+        referenceHistory.Clear(); VerifiedReferences = [];
         disposed = true;
     }
 }

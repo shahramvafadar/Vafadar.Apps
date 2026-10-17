@@ -47,6 +47,8 @@ public sealed class PersonalSyncLifetime : IDisposable
     internal PersonalSyncAccess CaptureBilling() => CaptureCore(Commerce.Billing.BillingBuild.IsAvailable);
     /// <summary>Shares the native foreground/profile boundary for local aggregate review, without enabling offline networking.</summary>
     internal PersonalSyncAccess CaptureAnalysis(bool network) => CaptureCore(!network || PersonalSyncBuild.IsAvailable || Commerce.Billing.BillingBuild.IsAvailable);
+    /// <summary>Captures public market-reference work without giving an offline edition a network capability.</summary>
+    internal PersonalSyncAccess CaptureMarket(bool network) => CaptureCore(!network || PersonalSyncBuild.IsAvailable || Commerce.Billing.BillingBuild.IsAvailable);
     private PersonalSyncAccess CaptureCore(bool available)
     {
         long captured; CancellationToken cancellation;

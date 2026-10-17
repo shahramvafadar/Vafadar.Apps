@@ -3,6 +3,7 @@ using System.Text.Json;
 using Vafadar.Cryptography;
 using Vafadar.Zanance.Core.Sharing;
 using Vafadar.Zanance.Core.Sync;
+using Vafadar.Zanance.Core.Rates;
 using Vafadar.Zanance.Data.Sync;
 
 namespace Vafadar.Zanance.Data.Sharing;
@@ -35,6 +36,9 @@ public sealed partial class HouseholdFinancialReplica
     private Dictionary<SyncRecordKey, SyncRecord> current = [];
     private Dictionary<(SyncRecordKey Record, long Version), SyncRecord> history = [];
     private Dictionary<string, long> opaqueVersions = new(StringComparer.Ordinal);
+    private Dictionary<Guid, MarketReferenceDocument> referenceHistory = [];
+    /// <summary>Only the last completely verified publication's bounded source companions, consumed in its original local transaction.</summary>
+    public IReadOnlyList<MarketReferenceDocument> VerifiedReferences { get; private set; } = [];
     /// <summary>Household resource fixed before receiving any financial packet.</summary>
     public Guid SpaceId { get; }
     /// <summary>Last completely verified atomic ciphertext cursor.</summary>
@@ -76,11 +80,13 @@ public sealed partial class HouseholdFinancialReplica
     /// <summary>Uses original linked-row/ledger/three-way review, then seals exact selected rows and attachment bytes for one observed CAS attempt.</summary>
     public HouseholdPreparedPublication Prepare(HouseholdVerifiedMembership membership, HouseholdEpochMaterial epoch, Guid authorDevice,
         SigningRecipientIdentity author, Guid operation, Guid attempt, IReadOnlyList<SyncProposal> proposals,
-        IReadOnlyList<SyncResolution> resolutions, IReadOnlyDictionary<string, byte[]> outgoingAttachments, HouseholdCryptography cryptography)
+        IReadOnlyList<SyncResolution> resolutions, IReadOnlyDictionary<string, byte[]> outgoingAttachments, HouseholdCryptography cryptography,
+        IReadOnlyList<MarketReferenceDocument>? references = null, TimeProvider? sourceTime = null)
     {
         var parts = new List<HouseholdOpaquePart>();
         var sealedMetadata = SealTo(membership, epoch, authorDevice, author, operation, attempt, proposals, resolutions,
-            new MemoryAttachmentSource(outgoingAttachments), cryptography, parts.Add, CancellationToken.None);
+            new MemoryAttachmentSource(outgoingAttachments), cryptography, parts.Add, CancellationToken.None,
+            references: references, sourceTime: sourceTime);
         return new(sealedMetadata.Open, parts.ToArray(), sealedMetadata.Commit, sealedMetadata.Plan, sealedMetadata.FinancialCursor);
     }
 
@@ -88,7 +94,8 @@ public sealed partial class HouseholdFinancialReplica
     internal HouseholdSealedPublication SealTo(HouseholdVerifiedMembership membership, HouseholdEpochMaterial epoch, Guid authorDevice,
         SigningRecipientIdentity author, Guid operation, Guid attempt, IReadOnlyList<SyncProposal> proposals,
         IReadOnlyList<SyncResolution> resolutions, IHouseholdAttachmentSource outgoingAttachments, HouseholdCryptography cryptography,
-        Action<HouseholdOpaquePart> sink, CancellationToken ct, IReadOnlyDictionary<SyncRecordKey, SyncRecord>? archivedBaselines = null, Func<string, long>? opaqueVersion = null)
+        Action<HouseholdOpaquePart> sink, CancellationToken ct, IReadOnlyDictionary<SyncRecordKey, SyncRecord>? archivedBaselines = null, Func<string, long>? opaqueVersion = null,
+        IReadOnlyList<MarketReferenceDocument>? references = null, TimeProvider? sourceTime = null)
     {
         ct.ThrowIfCancellationRequested();
         RequireScope(membership, epoch);
@@ -122,6 +129,19 @@ public sealed partial class HouseholdFinancialReplica
             }
         }
         AddOutgoingAttachments(plan.Projected.Values, outgoingAttachments, epoch, attempt, Add, () => parts.Count, ct);
+        if (references is not null)
+        {
+            if (references.Count > 8 || references.Any(document => document is null) || references.Select(document => document.Id).Distinct().Count() != references.Count)
+                throw Refusal();
+            foreach (var document in references)
+            {
+                _ = MarketReferenceDocuments.Digest(document, (sourceTime ?? TimeProvider.System).GetUtcNow());
+                // The source is a distinct typed part, bound by the existing author signature, complete manifest and membership horizon.
+                // It never becomes a financial proposal, changes a relational schema digest or consumes a financial-row version.
+                Add(new(2, HouseholdFinancialSchema.Hash, attempt, parts.Count, HouseholdFinancialContentKind.SourceDocument, null, null, Source: document),
+                    epoch.RecordAddress("source-document", document.Id.ToString("N")));
+            }
+        }
         if (parts.Count > HouseholdPublicationDigest.MaximumParts || encryptedBytes > HouseholdPublicationDigest.MaximumBytes)
             throw new SyncProfileBoundException();
         if (parts.Count == 0) return new(opening, new(authorDevice, ""), plan, sequence, [], 0);
@@ -155,16 +175,18 @@ public sealed partial class HouseholdFinancialReplica
 
     /// <summary>Verifies the complete signed ciphertext transaction and original complete financial graph before advancing any local replica state.</summary>
     public void Apply(HouseholdVerifiedMembership membershipAtPublication, HouseholdEpochMaterial epoch, HouseholdPublicationReceipt receipt,
-        IReadOnlyList<HouseholdOpaqueEvent> events, HouseholdCryptography cryptography, HouseholdVerifiedMembership? nextMembership = null)
+        IReadOnlyList<HouseholdOpaqueEvent> events, HouseholdCryptography cryptography, HouseholdVerifiedMembership? nextMembership = null,
+        TimeProvider? sourceTime = null)
     {
         if (events is null || events.Count is < 1 or > HouseholdPublicationDigest.MaximumParts || events.Any(item => item is null)) throw Refusal();
-        ApplyOrdered(membershipAtPublication, epoch, receipt, events.OrderBy(item => item.Index), events.Count, cryptography, nextMembership, CancellationToken.None);
+        ApplyOrdered(membershipAtPublication, epoch, receipt, events.OrderBy(item => item.Index), events.Count, cryptography, nextMembership, CancellationToken.None,
+            sourceTime: sourceTime);
     }
 
     /// <summary>Uses the same complete verifier with a bounded original native cursor; ciphertext packets are never materialized as a whole.</summary>
     internal void ApplyOrdered(HouseholdVerifiedMembership membershipAtPublication, HouseholdEpochMaterial epoch, HouseholdPublicationReceipt receipt,
         IEnumerable<HouseholdOpaqueEvent> events, int count, HouseholdCryptography cryptography, HouseholdVerifiedMembership? nextMembership, CancellationToken ct,
-        Func<string, long>? opaqueVersion = null, Action<SyncRecord, int, long, int>? recordSource = null)
+        Func<string, long>? opaqueVersion = null, Action<SyncRecord, int, long, int>? recordSource = null, TimeProvider? sourceTime = null)
     {
         RequireScope(membershipAtPublication, epoch);
         if (events is null || count is < 1 or > HouseholdPublicationDigest.MaximumParts) throw Refusal();
@@ -183,6 +205,8 @@ public sealed partial class HouseholdFinancialReplica
         var sources = new List<HouseholdAttachmentLocator>();
         var sourceKeys = new HashSet<(string Hash, int Index)>();
         var seenRecords = new HashSet<SyncRecordKey>(); var legacyRecords = false;
+        var referenceDocuments = new List<MarketReferenceDocument>();
+        var nextReferences = financialArchive is null ? new Dictionary<Guid, MarketReferenceDocument>(referenceHistory) : null;
         var eventIndex = -1; var streamStart = -1;
         HouseholdRecordStreamReader stream = null!;
         using var ownedStream = stream = new HouseholdRecordStreamReader(AcceptRecord);
@@ -204,7 +228,7 @@ public sealed partial class HouseholdFinancialReplica
             try
             {
                 var payload = StrictJsonPayload.Deserialize(clear, HouseholdFinancialJsonContext.Default.HouseholdFinancialPayload, HouseholdCryptography.MaximumPlaintextBytes);
-                if (payload.Format != 1 || payload.SchemaHash != HouseholdFinancialSchema.Hash || payload.AttemptId != first.AttemptId || payload.Index != index) throw Refusal();
+                if (!payload.SupportedFormat() || payload.SchemaHash != HouseholdFinancialSchema.Hash || payload.AttemptId != first.AttemptId || payload.Index != index) throw Refusal();
                 if (payload.Kind == HouseholdFinancialContentKind.Record)
                 {
                     if (payload.Record is not { } record || payload.Attachment is not null || payload.Stream is not null || payload.Blobs is not null || stream.Started) throw Refusal();
@@ -240,6 +264,21 @@ public sealed partial class HouseholdFinancialReplica
                     }
                     finally { foreach (var blob in blobs) if (blob?.Bytes is { } bytes) CryptographicOperations.ZeroMemory(bytes); }
                 }
+                else if (payload.Kind == HouseholdFinancialContentKind.SourceDocument)
+                {
+                    var document = payload.Source ?? throw Refusal();
+                    if (referenceDocuments.Count >= 8 || referenceDocuments.Any(candidate => candidate.Id == document.Id) ||
+                        stream.Started && !stream.Complete || epoch.RecordAddress("source-document", document.Id.ToString("N")) != item.RecordId)
+                        throw Refusal();
+                    try { _ = MarketReferenceDocuments.Digest(document, (sourceTime ?? TimeProvider.System).GetUtcNow()); }
+                    catch (Exception error) when (error is ArgumentException or InvalidDataException or JsonException or OverflowException) { throw Refusal(); }
+                    if (nextReferences is not null)
+                    {
+                        if (nextReferences.TryGetValue(document.Id, out var original) && original != document) throw Refusal();
+                        nextReferences[document.Id] = document;
+                    }
+                    referenceDocuments.Add(document);
+                }
                 else throw Refusal();
                 if (nextOpaque is not null) nextOpaque[item.RecordId] = commit.Cursor;
             }
@@ -259,6 +298,8 @@ public sealed partial class HouseholdFinancialReplica
         ct.ThrowIfCancellationRequested();
         current = projected; if (nextHistory is not null) history = nextHistory; if (nextOpaque is not null) opaqueVersions = nextOpaque; attachments = nextBlobs; attachmentLengths = verifiedBlobs;
         FinancialCursor = sequence; Cursor = commit.Cursor; PublicationHead = nextHead;
+        if (nextReferences is not null) referenceHistory = nextReferences;
+        VerifiedReferences = Array.AsReadOnly(referenceDocuments.ToArray());
         attachmentSources.AddRange(sources);
         foreach (var key in retired) { CryptographicOperations.ZeroMemory(attachments[key].Bytes); attachments.Remove(key); }
         }

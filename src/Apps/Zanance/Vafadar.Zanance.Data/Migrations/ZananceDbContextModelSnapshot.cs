@@ -1113,6 +1113,56 @@ namespace Vafadar.Zanance.Data.Migrations
                     b.ToTable("ExchangeRates");
                 });
 
+            modelBuilder.Entity("Vafadar.Zanance.Core.Rates.MarketReferenceReceipt", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("AcceptedAt")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("CreatedAt")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("MappingJson")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("QuoteDigest")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("QuoteJson")
+                        .IsRequired()
+                        .HasMaxLength(32768)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Target")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("TargetFingerprint")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("TargetId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("UpdatedAt")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Target", "TargetId", "AcceptedAt");
+
+                    b.HasIndex("Target", "TargetId", "TargetFingerprint", "QuoteDigest");
+
+                    b.ToTable("MarketReferenceReceipts", (string)null);
+                });
+
             modelBuilder.Entity("Vafadar.Zanance.Core.Settings.ZananceSettings", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1891,6 +1941,9 @@ namespace Vafadar.Zanance.Data.Migrations
                     b.Property<long?>("LastSuccessAt")
                         .HasColumnType("INTEGER");
 
+                    b.Property<long>("MarketSourceCursor")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("PeerKey")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -2062,6 +2115,34 @@ namespace Vafadar.Zanance.Data.Migrations
                     b.HasKey("TableName", "RecordKey");
 
                     b.ToTable("SyncKnown", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Data.Sync.SyncMarketSourceSend", b =>
+                {
+                    b.Property<Guid>("DocumentId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Acknowledged")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Digest")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Envelope")
+                        .HasMaxLength(524288)
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("Epoch")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("MembershipVersion")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("DocumentId");
+
+                    b.ToTable("SyncMarketSourcesSent", (string)null);
                 });
 
             modelBuilder.Entity("Vafadar.Zanance.Data.Sync.SyncOutboxRow", b =>

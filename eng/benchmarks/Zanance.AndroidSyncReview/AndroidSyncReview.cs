@@ -21,7 +21,9 @@ namespace Vafadar.Zanance.App;
 /// <summary>Renders the actual page/flow/native adapters over protected fictional data, without service credentials or HTTP.</summary>
 internal static partial class AndroidSyncReview
 {
-#if AI_PRIVATE_REVIEW
+#if MARKET_PRIVATE_REVIEW
+    internal const string Package = "pro.vafadar.zanance.marketprivatereview";
+#elif AI_PRIVATE_REVIEW
     internal const string Package = "pro.vafadar.zanance.analysisprivatereview";
 #elif BILLING_RECOVERY_REVIEW
     internal const string Package = "pro.vafadar.zanance.billingrecoveryreview";
@@ -47,7 +49,7 @@ internal static partial class AndroidSyncReview
     internal const string Package = "pro.vafadar.zanance.androidsyncreview";
     private static readonly bool LinkedGroup = false;
 #endif
-#if !SYNC_PUBLIC_REVIEW && !HOUSEHOLD_FILE_REVIEW && !BILLING_RECOVERY_REVIEW && !AI_PRIVATE_REVIEW
+#if !SYNC_PUBLIC_REVIEW && !HOUSEHOLD_FILE_REVIEW && !BILLING_RECOVERY_REVIEW && !AI_PRIVATE_REVIEW && !MARKET_PRIVATE_REVIEW
 #if SYNC_ATTACHMENT_REVIEW
     private static readonly bool AttachmentReview = true;
 #else
@@ -63,7 +65,9 @@ internal static partial class AndroidSyncReview
 
     internal static async Task RunAsync(App app, IServiceProvider services, string run, bool resume, string? fromLanguage = null)
     {
-#if AI_PRIVATE_REVIEW
+#if MARKET_PRIVATE_REVIEW
+        await AndroidMarketPrivateReview.RunAsync(run, resume);
+#elif AI_PRIVATE_REVIEW
         await AndroidAnalysisPrivateReview.RunAsync(run, resume);
 #elif BILLING_RECOVERY_REVIEW
         await AndroidBillingRecoveryReview.RunAsync(app, services, run, resume);

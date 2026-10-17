@@ -694,6 +694,43 @@ namespace Vafadar.Zanance.Api.Migrations
                     b.ToTable("Objects");
                 });
 
+            modelBuilder.Entity("Vafadar.Zanance.Api.Rates.PersonalMarketSourceRow", b =>
+                {
+                    b.Property<long>("Sequence")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Sequence"));
+
+                    b.Property<int>("Bytes")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Digest")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<Guid>("DocumentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ProtectedDocument")
+                        .IsRequired()
+                        .HasMaxLength(131072)
+                        .HasColumnType("character varying(131072)");
+
+                    b.HasKey("Sequence");
+
+                    b.HasIndex("ProfileId", "DocumentId")
+                        .IsUnique();
+
+                    b.HasIndex("ProfileId", "Sequence");
+
+                    b.ToTable("PersonalMarketSources", (string)null);
+                });
+
             modelBuilder.Entity("Vafadar.Zanance.Api.RequestWindow", b =>
                 {
                     b.Property<string>("Partition")
@@ -2094,6 +2131,15 @@ namespace Vafadar.Zanance.Api.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Rates.PersonalMarketSourceRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Sync.SyncSpaceRow", null)
+                        .WithMany()
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

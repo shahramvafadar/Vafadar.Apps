@@ -97,7 +97,10 @@ public sealed class PersonalSyncCoordinator(PersonalSyncStore store)
                     try { await store.StageBlobAsync(work, blob, index, bytes, ct); }
                     finally { CryptographicOperations.ZeroMemory(bytes); }
                 }
-            var applied = await store.ApplyFeedAsync(work, ct); return new(applied, !applied);
+            var applied = await store.ApplyFeedAsync(work, ct);
+            if (applied && transport.Kind == ProfileSynchronizationKind.Personal)
+                await PersonalMarketSourceCoordinator.SynchronizeAsync(store, transport, identity.Id, ct);
+            return new(applied, !applied);
         }
         finally { running.Release(); }
     }

@@ -6052,3 +6052,29 @@ migrations and the regenerated service compiled model; the financial application
 No live model/provider, price/package units, credit purchase or public activation is selected. Local qualification
 and exact negative evidence, native/package state and remaining gates are recorded in
 `enhancements/2026-10-commercial-release/15-ai-local-delivery.md`. Historical whole-suite3753 was not repeated.
+
+## D-299 Optional reference rates/prices and immutable source history
+
+Implement the approved OD-14 local prerequisites as one app/data/service delivery: explicit public-symbol/date
+lookup, original provider/licence/revision/unit/timestamps, bounded device-private cache, exact original native
+review and transactional rate/price application. Never infer a provider, licence, coin premium, purity, holding
+quantity or actual payment from a reference. Keep manual input independent; no automatic lookup or financial edit.
+Fine-troy-ounce conversion uses31.1034768 grams and the explicitly matching metal/purity; gram/piece mappings
+require explicit item consent. Amounts preserve exact financial units and direction-safe display packets.
+
+Immutable MarketReferenceReceipts retain accepted source/conversion and exact target fingerprints through manual
+correction, cache expiry, portable restoration and deletion of a target. A changed/deleted target retains history
+without current attribution or permission to recreate finance. Additive application migrations and regenerated
+compiled model add source metadata and separate source companion state; financial schema hashes stay unchanged.
+Personal transfer uses authenticated profile/device authority with original-id/digest replay and a separate
+source cursor. Shared transfer uses explicit format2 source companions in the existing signed/encrypted original
+publication and signed membership horizon. Legacy format1 bytes/meaning are unchanged; old readers require
+upgrade before reading source format2. Source metadata never creates a financial row or write grant.
+
+Use the existing active-page native interaction adapter for confirmation, including original Windows dialog
+target sizing. Native review is read-only until explicit confirmation and checks the same file, profile, lock,
+household membership and target definition in the actual writer. Exact focused, TLS/PostgreSQL, protected
+process-boundary, native and package evidence and remaining gates are recorded in
+`enhancements/2026-10-commercial-release/16-market-reference-delivery.md`. The live provider, coverage, rights,
+licence/redistribution, pricing, public activation and physical/iOS acceptance remain open. Current quotas remain
+inactive; local evidence is not a product release or a newly repeated full-suite total.

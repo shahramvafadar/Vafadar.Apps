@@ -3,6 +3,8 @@ namespace Vafadar.Zanance.App;
 /// <summary>Stable application routes shared by Shell and platform-independent link routing.</summary>
 public static class AppRoutes
 {
+    /// <summary>Explicit public market references, offline cache and individually reviewed value mapping.</summary>
+    public const string MarketReferenceRoute = "market-reference";
     /// <summary>Explicit local aggregate/optional analysis review, never an automatic provider request.</summary>
     public const string AnalysisRoute = "analysis";
 

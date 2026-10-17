@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <OutputType>Exe</OutputType>
+    <Description>Independent protected market-source household continuation qualification.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/Vafadar.Zanance.Data.csproj" />
+    <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Api/Vafadar.Zanance.Api.csproj" />
+    <PackageReference Include="Vafadar.Native.SqlCipher.Windows" />
+    <Compile Include="../ProtectedRoundtrip/ProtectedClient.cs" Link="ProtectedClient.cs" />
+    <Compile Include="../ProtectedRoundtrip/ProtectedSessions.cs" Link="ProtectedSessions.cs" />
+  </ItemGroup>
+</Project>

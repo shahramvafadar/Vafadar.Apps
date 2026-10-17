@@ -2303,3 +2303,15 @@ No client grant endpoint, subscription-implied units, stored API key, selected l
 Private state loss stays closed. Current quotas remain inactive. Keep original destination/model/max terms visible
 with retained historical packets, separate from fresh balances/quotes. Local PostgreSQL/TLS/native evidence does
 not activate a real provider, paid credit sale, public hosting or device/iOS/release acceptance.
+
+### Original optional reference sources (D-299)
+
+Fetch only explicitly selected approved public symbols/dates; never send private asset definitions, account or
+holding data to a source. Keep provider/licence/revision/unit/timestamps and exact target/conversion with immutable
+accepted history. Cache reads/fetches never post money, change quantity/cost or fill manual drafts silently.
+Recheck original file, lock, household membership and target inside the writer after active-page native consent.
+History survives changed/deleted targets but cannot recreate finance. Preserve frozen financial manifests;
+personal source companions have separate authority/cursors, shared format2 source parts use the existing signed
+encrypted publication and membership horizon. Older readers need upgrade; never claim forward compatibility.
+Bound pages/caches/in-flight originals and resume exact retained ciphertext. No inferred coin premium, provider,
+live-source licence/cost, automatic prices or release activation. Repeat only changed/failed related checks.

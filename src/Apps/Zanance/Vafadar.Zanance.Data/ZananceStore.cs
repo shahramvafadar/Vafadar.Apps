@@ -50,6 +50,9 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     /// <summary>Raised after data was written, e.g. to refresh reminders.</summary>
     public event EventHandler? Changed;
 
+    /// <summary>Publishes an already committed reviewed reference change through the original financial subscribers.</summary>
+    internal void NotifyReferenceChanged() => OnChanged();
+
     /// <summary>Captures read-only readiness from this original writer's exact factory and cached access source.</summary>
     public Task<EditorWorkReview> ReadEditorWorkAsync(CancellationToken cancellationToken = default) =>
         new EditorWorkStore(contextFactory, commercialAccess).ReadAsync(cancellationToken);

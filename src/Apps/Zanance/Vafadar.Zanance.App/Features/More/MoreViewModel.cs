@@ -39,6 +39,7 @@ public sealed partial class MoreViewModel(Translator translator) : ViewModelBase
             new(translator["More_Currency"],
             [
                 Item("Rates_Title", "More_RatesHint", Symbol.ArrowSwap, AppShell.RatesRoute),
+                Item("Market_Title", "Market_MoreHint", Symbol.Money, AppRoutes.MarketReferenceRoute),
                 Item("Unit_Title", "More_UnitsHint", Symbol.Money, AppShell.DisplayUnitsRoute),
             ]),
             new(translator["More_DataSecurity"],

@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:v="http://vafadar.pro/schemas/maui"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Rates"
     x:DataType="local:RatesViewModel"
     Title="{v:Translate Rates_Title}">
@@ -12,6 +13,7 @@
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="8">
             <Label Text="{v:Translate Rates_Intro}" Style="{StaticResource Secondary}" />
+            <p:WrappingAction Text="{v:Translate Market_Title}" Command="{Binding OpenReferencesCommand}" />
             <Border BackgroundColor="{DynamicResource WarningBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,10"
                     IsVisible="{Binding MissingText, Converter={StaticResource IsNotNullConverter}}">
                 <Label Text="{Binding MissingText}" TextColor="{DynamicResource WarningText}" />

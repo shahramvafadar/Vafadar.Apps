@@ -55,6 +55,10 @@
     <ApplicationId>pro.vafadar.zanance.analysisprivatereview</ApplicationId>
     <DefineConstants>$(DefineConstants);AI_PRIVATE_REVIEW</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(ReviewMarketPrivate)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.marketprivatereview</ApplicationId>
+    <DefineConstants>$(DefineConstants);MARKET_PRIVATE_REVIEW</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../sync/HouseholdRoundtrip/HistoryQualification.NativeBound.cs" Link="Native/HistoryQualification.NativeBound.cs"
              Condition="'$(ReviewHouseholdSnapshot)' == 'true'" />

@@ -149,7 +149,9 @@ public sealed partial class HouseholdJournal
                 replica.ApplyOrdered(origin, epoch, receipt, events, actualCount, cryptography, membership.ByVersion.GetValueOrDefault(origin.Version + 1), ct,
                     address => db.Set<HouseholdLocalEvent>().Where(row => row.RecordId == address && row.Cursor < cursor)
                         .Select(row => (long?)row.Cursor).Max() ?? 0,
-                    (record, eventIndex, offset, length) => sources.Record(record, cursor, eventIndex, offset, length));
+                    (record, eventIndex, offset, length) => sources.Record(record, cursor, eventIndex, offset, length), db.WorkClock);
+                foreach (var document in replica.VerifiedReferences)
+                    await Rates.VerifiedMarketSourcePersistence.AcceptAsync(db, document, ct);
                 await RecordAttachmentSourcesAsync(db, replica.DrainAttachmentSources(), ct);
                 if (cursor == through) break;
             }

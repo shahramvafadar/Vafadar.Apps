@@ -2302,3 +2302,16 @@ credit/request history. A stable provider operation id alone is not hosted resto
 provider idempotence/status/reconciliation and retention/erasure remain gates before activation. No client route
 issues credits, no purchased-credit expiry or current commercial activation is introduced. Exact qualification:
 src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/15-ai-local-delivery.md.
+
+## Original reference provenance (D-299)
+
+MarketReferenceReceipts is immutable profile metadata: exact original quote/conversion, accepted time and target
+fingerprint, with no authority to reconstruct a financial row. UPDATE is refused. Manual edits/delete preserve
+historical documents but remove exact-current attribution. Portable backup retains it while omitting trusted
+device-only companion cursors/acknowledgments. Application migrations MarketReferenceReceipts and
+MarketSourceCompanionState, plus service PersonalMarketSourceDocuments, regenerate their respective compiled
+models. Original personal/household financial hashes remain frozen. Personal original-id/digest documents use a
+separate bounded source feed; household format2 companions remain inside the existing signed/encrypted original
+publication and membership horizon. Store the original attempt before HTTP; no replacement ciphertext on resume.
+Device cache uses platform SecureStorage and no portable password. See the current16-market-reference-delivery.md
+for exact qualified scope and open live-source/platform/release gates.

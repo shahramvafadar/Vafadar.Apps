@@ -7978,4 +7978,154 @@ Höchstens {3} Guthabeneinheiten; Angebot gültig bis {4}.</value>
   <data name="Ai_ShareUnconfirmed" xml:space="preserve">
     <value>Das Ergebnis des Teilens wurde nicht bestätigt. Die gewählte App kann lesbare Daten bereits haben; prüfen Sie dort vor erneutem Teilen. Kein Zanance-KI-Guthaben wurde verwendet und keine Buchung geändert.</value>
   </data>
+  <data name="Market_Title" xml:space="preserve">
+    <value>Referenzkurse und Preise</value>
+  </data>
+  <data name="Market_MoreHint" xml:space="preserve">
+    <value>Optionale Quellen, Offline-Cache und bewusste Wertprüfung</value>
+  </data>
+  <data name="Market_Intro" xml:space="preserve">
+    <value>Nur das gewählte öffentliche Symbol und Datum werden abgefragt. Gespeicherte Referenzen bleiben von manuellen Kursen, tatsächlichen Zahlungen und Bestandsmengen getrennt.</value>
+  </data>
+  <data name="Market_Cached" xml:space="preserve">
+    <value>Auf diesem Gerät gespeicherte Referenzen</value>
+  </data>
+  <data name="Market_CacheEmptyHint" xml:space="preserve">
+    <value>Eine leere Liste bedeutet, dass hier keine noch aufbewahrte Referenz verfügbar ist. Manuelle Kurse und Preise bleiben verfügbar.</value>
+  </data>
+  <data name="Market_SelectReference" xml:space="preserve">
+    <value>Originalreferenz auswählen</value>
+  </data>
+  <data name="Market_Check" xml:space="preserve">
+    <value>Verfügbare Quelle prüfen</value>
+  </data>
+  <data name="Market_PublicSymbol" xml:space="preserve">
+    <value>Öffentliches Quellensymbol</value>
+  </data>
+  <data name="Market_RequestDate" xml:space="preserve">
+    <value>Referenz an oder vor diesem Datum</value>
+  </data>
+  <data name="Market_Fetch" xml:space="preserve">
+    <value>Diese Referenz einmal abrufen</value>
+  </data>
+  <data name="Market_AssetTarget" xml:space="preserve">
+    <value>Genauer Vermögenswert für eine Preisreferenz (nicht für Währungspaare erforderlich)</value>
+  </data>
+  <data name="Market_ExactItem" xml:space="preserve">
+    <value>Ich habe geprüft, dass diese Gramm- oder Stückreferenz genau diesen Vermögenswert einschließlich seiner Spezifikation beschreibt.</value>
+  </data>
+  <data name="Market_StaleConsent" xml:space="preserve">
+    <value>Nach Prüfung der Daten stimme ich ausdrücklich zu, eine ältere gespeicherte Referenz zu verwenden.</value>
+  </data>
+  <data name="Market_Review" xml:space="preserve">
+    <value>Originalwert und Ziel prüfen</value>
+  </data>
+  <data name="Market_Apply" xml:space="preserve">
+    <value>Diesen geprüften Referenzwert speichern</value>
+  </data>
+  <data name="Market_ExplicitCheck" xml:space="preserve">
+    <value>Keine Quelle wird automatisch kontaktiert. Prüfen Sie die Verfügbarkeit bewusst oder nutzen Sie eine gespeicherte Referenz bzw. die manuelle Eingabe.</value>
+  </data>
+  <data name="Market_OfflineEdition" xml:space="preserve">
+    <value>Diese Ausgabe bietet keinen Netzwerkabruf. Gespeicherte Referenzen und manuelle Eingaben bleiben verfügbar.</value>
+  </data>
+  <data name="Market_Unconfigured" xml:space="preserve">
+    <value>Es ist keine freigegebene Quelle eingerichtet. Es wurde kein Live-Preis angefordert. Nutzen Sie manuelle Kurse oder Preise.</value>
+  </data>
+  <data name="Market_ReadFailure" xml:space="preserve">
+    <value>Der ursprüngliche Cache oder die Vermögenswertliste konnte nicht gelesen werden. Nichts wurde zurückgesetzt oder abgerufen. Laden Sie bei Bedarf erneut.</value>
+  </data>
+  <data name="Market_NetworkFailure" xml:space="preserve">
+    <value>Die ursprüngliche Quellenanfrage konnte nicht bestätigt werden. Prüfen Sie die bestehende Anmeldung und Quellenverfügbarkeit. Es gab weder einen automatischen Wiederholungsversuch noch eine Finanzbuchung.</value>
+  </data>
+  <data name="Market_ReviewFailure" xml:space="preserve">
+    <value>Originalwert, Ziel oder Zugriff haben sich geändert, oder diese Zuordnung wird nicht unterstützt. Prüfen Sie erneut; ein ungewisser Abschluss bedeutet nicht, dass die Änderung zurückgenommen wurde.</value>
+  </data>
+  <data name="Market_StaleRequired" xml:space="preserve">
+    <value>Diese gespeicherte Referenz ist veraltet. Prüfen Sie die Daten und stimmen Sie ihrer Verwendung vor dem Speichern ausdrücklich zu.</value>
+  </data>
+  <data name="Market_Applied" xml:space="preserve">
+    <value>Der genau geprüfte Kurs oder Preis und seine ursprüngliche Quelle wurden gespeichert. Zahlungen und Bestandsmengen blieben unverändert.</value>
+  </data>
+  <data name="Market_AppliedRefreshFailure" xml:space="preserve">
+    <value>Der geprüfte Wert wurde gespeichert, aber die Anzeige konnte nicht aktualisiert werden. Speichern Sie keinen Ersatz; öffnen Sie den ursprünglichen Verlauf erneut.</value>
+  </data>
+  <data name="Market_TargetDate" xml:space="preserve">
+    <value>Gespeichertes Gültigkeitsdatum: {0}</value>
+  </data>
+  <data name="Market_TargetRate" xml:space="preserve">
+    <value>Geschätzter Kurs für eine Einheit {0}: {1}</value>
+  </data>
+  <data name="Market_TargetAsset" xml:space="preserve">
+    <value>Preis für {0}: {1} je {2}</value>
+  </data>
+  <data name="Market_ReviewedPurity" xml:space="preserve">
+    <value>Ursprünglich geprüfter Metallfeingehalt: {0}%</value>
+  </data>
+  <data name="Market_Replaces" xml:space="preserve">
+    <value>Dies ersetzt erst nach Bestätigung den vorhandenen Kurs oder Preis desselben Datums.</value>
+  </data>
+  <data name="Market_NewDatedValue" xml:space="preserve">
+    <value>Dies fügt einen einzeln geprüften datierten Kurs oder Preis hinzu.</value>
+  </data>
+  <data name="Market_OnlyReference" xml:space="preserve">
+    <value>Eine Referenz ist weder ein tatsächlicher Umtausch noch ein Händlerangebot oder Einzelhandelspreis. Gebuchte Beträge, Anschaffungskosten und Mengen bleiben unverändert. Die manuelle Eingabe bleibt getrennt.</value>
+  </data>
+  <data name="Market_SourceDetails" xml:space="preserve">
+    <value>Quelle: {0}
+Symbol: {1}
+Originalwert: {2} je {3}
+Marktdatum: {4}
+Beobachtet (UTC): {5}
+Abgerufen (UTC): {6}
+Aktualisierung fällig (UTC): {7}
+Cache-Aufbewahrung endet (UTC): {8}
+Quelle: {9}
+Lizenz: {10}
+Quellenangabe: {11}</value>
+  </data>
+  <data name="Market_Unit_Currency" xml:space="preserve">
+    <value>Einheit der Basiswährung</value>
+  </data>
+  <data name="Market_Unit_Gram" xml:space="preserve">
+    <value>Gramm</value>
+  </data>
+  <data name="Market_Unit_FineGram" xml:space="preserve">
+    <value>Gramm Feinmetall</value>
+  </data>
+  <data name="Market_Unit_Piece" xml:space="preserve">
+    <value>Stück</value>
+  </data>
+  <data name="Market_Unit_FineTroyOunce" xml:space="preserve">
+    <value>Feinunze Metall</value>
+  </data>
+  <data name="Help_Market_Title" xml:space="preserve">
+    <value>Referenzwerte bewusst verwenden</value>
+  </data>
+  <data name="Help_Market_Text" xml:space="preserve">
+    <value>Beim Öffnen werden nur geräteprivate gespeicherte Referenzen und lokale Vermögenswertdefinitionen gelesen. Quellenprüfung und Abruf sind getrennte, bewusste Netzwerkaktionen mit Ihrer bestehenden Identität. Gesendet werden nur öffentliches Symbol und Datum, keine Kontonamen, Salden oder Mengen. Standardmäßig ist keine freigegebene Quelle eingerichtet. Prüfen Sie Originalquelle, Lizenz, Einheit, Marktdatum und UTC-Zeiten. Abrufalter und Marktdatum unterscheiden sich; eine Wochenendreferenz kann ein älteres Beobachtungsdatum haben. Eine ältere Referenz erfordert ausdrückliche Zustimmung; ein abgelaufener Cache kann nicht neu angewendet werden. Die Feinmetallumrechnung setzt gleiches Metall und bekannten Feingehalt voraus; Verarbeitung, Handelsspannen und Münzaufschläge sind ausgeschlossen. Gramm- oder Stückreferenzen müssen Sie selbst genau zuordnen. Das Speichern benötigt eine gesonderte native Bestätigung und behält die Originalquelle im Profil und portablen Backup. Der Gerätecache ersetzt kein Backup für ein neues Gerät. Datierte Werte werden nur bewusst ersetzt; gebuchte Beträge, Mengen und Anschaffungskosten bleiben unverändert. Manuelle Kurse und Preise bleiben verfügbar.</value>
+  </data>
+  <data name="Help_Market_Example" xml:space="preserve">
+    <value>Eine Feingoldreferenz ist nicht der Preis Ihrer Münze. Prüfen Sie bei einem nach Gewicht geführten Vermögenswert mit bekanntem Feingehalt von 75% die Feinmetallumrechnung und das datierte Ergebnis; kein Einzelhandelsaufschlag wird automatisch addiert.</value>
+  </data>
+  <data name="Market_History" xml:space="preserve">
+    <value>Gespeicherte Referenzquellen</value>
+  </data>
+  <data name="Market_HistoryHint" xml:space="preserve">
+    <value>Wählen Sie eine gespeicherte Originalquelle für die Details. Der Verlauf bleibt nach Änderung oder Löschung eines Werts erhalten. Er kann keinen Wert wiederherstellen oder übernehmen.</value>
+  </data>
+  <data name="Market_HistoryCurrent" xml:space="preserve">
+    <value>Diese Originalquelle entspricht dem aktuell gespeicherten Wert und seiner Definition.</value>
+  </data>
+  <data name="Market_HistoryChanged" xml:space="preserve">
+    <value>Nur historische Quelle: Der aktuelle Wert oder seine Definition wurde geändert oder das Ziel wurde gelöscht.</value>
+  </data>
+  <data name="Market_HistoryMore" xml:space="preserve">
+    <value>Ältere gespeicherte Quellen laden</value>
+  </data>
+  <data name="Market_SourceIdentity" xml:space="preserve">
+    <value>Quellenkennung: {0}
+Quellenrevision: {1}
+Ursprüngliche Kurskennung: {2}</value>
+  </data>
 </root>

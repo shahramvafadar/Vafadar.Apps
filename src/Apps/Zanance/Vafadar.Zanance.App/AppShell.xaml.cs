@@ -182,6 +182,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(AppRoutes.HouseholdCostsRoute, typeof(Features.Sharing.HouseholdCostsPage));
         Routing.RegisterRoute(BudgetEditorRoute, typeof(BudgetEditorPage));
         Routing.RegisterRoute(RatesRoute, typeof(RatesPage));
+        Routing.RegisterRoute(AppRoutes.MarketReferenceRoute, typeof(Features.Rates.MarketReferencePage));
         Routing.RegisterRoute(HomeLayoutRoute, typeof(Features.Home.HomeLayoutPage));
         Routing.RegisterRoute(DisplayUnitsRoute, typeof(DisplayUnitsPage));
         Routing.RegisterRoute(ProfilesRoute, typeof(Features.Profiles.ProfilesPage));

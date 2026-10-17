@@ -1192,3 +1192,12 @@ licence/costs, unit packages/prices, trusted consumable verification, original p
 public routing and genuine device/Mac checks open. No API-key workflow or subscription-implied credits. Default
 service/provider remain closed and current commercial limits inactive. Manual native sharing is readable disclosure,
 not integrated AI or a result guarantee. Local/native/package evidence is in15-ai-local-delivery.md.
+
+## D-299 reference-source release gates
+
+Keep a live provider, explicit source/coverage/redistribution licence, cost/entitlement policy and public route
+activation gated. Local/native evidence cannot authorize them. New source format2 encrypted household content
+requires updated readers; legacy format1 and financial schema hashes remain unchanged, not forward compatible
+acceptance. Device-private cache is not a portable recovery promise; source history remains profile data.
+Exact package/native/main-app evidence and open gates:16-market-reference-delivery.md. Physical devices, actual
+arm64/API24/16KiB, iOS, store signing and release acceptance remain separate; quotas stay inactive.

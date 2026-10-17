@@ -6143,3 +6143,20 @@ Native UI18 contexts plus six retained-terms reads, actual64KiB Android private 
 manual chooser/cold Home are qualified; exact package, startup failure/22-second cold observation and limits are
 recorded separately in15-ai-local-delivery.md. Live provider/costs/packages/credit sales,
 public activation, shared-data disclosure, physical devices and native iOS are still open, not release acceptance.
+
+### Section31 current delivery: D-299 optional market reference prerequisites
+
+The approved local boundary now composes explicit source metadata/fetch, bounded private cache/manual fallback,
+original native value/unit/date review, immutable accepted provenance and personal/signed encrypted household
+source companions. No financial manifest was silently widened. Saved history explains changed/deleted targets
+without recreating finance; gram/piece identity and fine-metal purity conversion remain explicit. The closed
+default does not select a live vendor, licence, cost, automatic prices or public service activation.
+
+64 distinct focused new unit/source cases and one retained actual TLS/PostgreSQL personal acceptance fact passed;
+three independent protected household processes also verified exact original ciphertext and lost commit reply,
+real Viewer reception/refusal and cold unchanged source/value.18 native Windows contexts, actual Android private
+first/cold adapter checks and final strict builds are separately recorded. Resource completeness/usage23 and
+runtime enum keys6 are existing checks, not new behaviors. Historical3753 full-suite evidence was not replayed
+or recounted. Exact main-app/package state, retained failed observations and remaining external gates are in
+enhancements/2026-10-commercial-release/16-market-reference-delivery.md. Whole-product completion, live source,
+phone/iOS/performance and release acceptance remain open.

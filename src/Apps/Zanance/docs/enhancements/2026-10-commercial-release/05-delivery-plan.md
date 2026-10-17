@@ -1851,3 +1851,17 @@ billing, sync, household, cipher, bank-import, accountant or whole-suite checks.
 After this complete local prerequisite batch, continue the approved FX/assets provenance/cache/staleness/manual
 fallback work. Actual AI/rates providers, licence/costs/keys/credit sale and public release remain explicit gates;
 retain customer-bank corpora, Mac/store/phone/public requirements in their original current/deferred scopes.
+
+## D-299 local reference composition qualified; next ready work
+
+The approved app/data/service source boundary, bounded cache/manual fallback, original native review, immutable
+source history, portable preservation and personal/signed encrypted household companions are locally qualified
+together. Exact source/negative/native/package evidence is in16-market-reference-delivery.md. Do not replay its
+completed unit/TLS/protected-client/native stages. Actual provider/coverage/rights/redistribution/cost/public
+activation remains gated; no live source is invented to close that requirement. Retain native Mac/store/physical
+requirements and future unscheduled Windows commercial work in their approved scopes; new languages remain last.
+
+Prioritize the actually observed covered Android startup/ANR and startup cost in one measured complete batch
+against the retained current package/process evidence. Do not substitute unrelated full-suite, cipher, sync,
+UI or new prototype reruns for a measured cause and a focused correction. Activity start timing is separate
+from actual Home-ready timing and a physical-device performance target.

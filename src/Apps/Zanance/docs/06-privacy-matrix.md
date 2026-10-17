@@ -921,3 +921,15 @@ permission, auto-upload or financial write. Original private request state uses 
 public loss marker outside all portable preferences/financial sync. Marker/private loss fails closed. No raw
 financial payload is sent for metadata offers or original closure. Live provider/retention/legal/cost approval,
 real traffic, physical devices and iOS remain distinct gates; the default provider is unconfigured.
+
+## Optional reference sources (D-299)
+
+An explicit authenticated lookup sends only the approved public provider/revision/symbol/date. No account name,
+holding id/quantity, balance, ledger row, private asset name, arbitrary URL or credential enters its DTO. There is
+no automatic lookup, new SDK/permission, live provider selection or API-key input. Original quote cache is bounded
+and device-private in platform SecureStorage, outside portable preferences. Accepted source/conversion history
+is profile data and may contain the explicitly selected local asset definition. It follows the existing portable
+backup protection choice and actual personal-profile authority; shared copies are inside the existing signed
+encrypted membership/publication chain. Host ciphertext cannot grant financial authority. Do not imply erasure
+of previously downloaded history after membership removal. Local-only service qualification is separate from
+live provider/retention/redistribution/public/physical/iOS acceptance; see16-market-reference-delivery.md.

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Vafadar.Zanance.App.Features.Rates.MarketReferencePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui" xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
+    xmlns:r="clr-namespace:Vafadar.Zanance.Core.Rates;assembly=Vafadar.Zanance.Core"
+    xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Rates" x:DataType="local:MarketReferenceViewModel"
+    Title="{v:Translate Market_Title}">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="12" IsEnabled="{Binding IsNotBusy}">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Label Text="{v:Translate Market_Intro}" />
+                    <v:HelpButton Grid.Column="1" Topic="Market" VerticalOptions="Start" />
+                </Grid>
+                <Border Style="{StaticResource Card}" IsVisible="{Binding Loaded}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{v:Translate Market_Cached}" Style="{StaticResource FieldLabel}" />
+                        <Label Text="{v:Translate Market_CacheEmptyHint}" Style="{StaticResource Secondary}" />
+                        <Picker ItemsSource="{Binding Cached}" ItemDisplayBinding="{Binding Caption, x:DataType=local:MarketCachedChoice}"
+                            SelectedItem="{Binding Selected}" Title="{v:Translate Market_SelectReference}" MinimumHeightRequest="44"
+                            SemanticProperties.Description="{v:Translate Market_SelectReference}" />
+                        <Label Text="{Binding SourceText}" IsVisible="{Binding SourceText, Converter={StaticResource IsNotNullConverter}}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}" IsVisible="{Binding Loaded}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{Binding Availability}" />
+                        <p:WrappingAction Text="{v:Translate Market_Check}" Command="{Binding CheckCommand}" IsEnabled="{Binding CanCheck}" />
+                        <p:WrappingAction Text="{v:Translate BillingIdentity_Title}" Command="{Binding AccountCommand}" IsEnabled="{Binding CanCheck}" IsVisible="{Binding NetworkEnabled}" />
+                        <Label Text="{v:Translate Market_PublicSymbol}" Style="{StaticResource FieldLabel}" />
+                        <Picker ItemsSource="{Binding Symbols}" ItemDisplayBinding="{Binding Label, x:DataType=r:MarketSymbol}"
+                            SelectedItem="{Binding Symbol}" Title="{v:Translate Market_PublicSymbol}" MinimumHeightRequest="44"
+                            SemanticProperties.Description="{v:Translate Market_PublicSymbol}" />
+                        <Label Text="{v:Translate Market_RequestDate}" Style="{StaticResource FieldLabel}" />
+                        <v:DateField Date="{Binding Date}" AccessibilityLabel="{v:Translate Market_RequestDate}" />
+                        <p:WrappingAction Text="{v:Translate Market_Fetch}" Command="{Binding FetchCommand}" IsEnabled="{Binding CanFetch}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}" IsVisible="{Binding Loaded}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{v:Translate Market_AssetTarget}" Style="{StaticResource FieldLabel}" />
+                        <Picker ItemsSource="{Binding Assets}" ItemDisplayBinding="{Binding Caption, x:DataType=local:MarketAssetChoice}"
+                            SelectedItem="{Binding Asset}" Title="{v:Translate Market_AssetTarget}" MinimumHeightRequest="44"
+                            SemanticProperties.Description="{v:Translate Market_AssetTarget}" />
+                        <Label Text="{Binding Asset.Caption}" IsVisible="{Binding Asset, Converter={StaticResource IsNotNullConverter}}" />
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="{v:Translate Market_ExactItem}" VerticalOptions="Center" />
+                            <CheckBox Grid.Column="1" IsChecked="{Binding ExactItemAcknowledged}" WidthRequest="44" HeightRequest="44"
+                                SemanticProperties.Description="{v:Translate Market_ExactItem}" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="{v:Translate Market_StaleConsent}" VerticalOptions="Center" />
+                            <CheckBox Grid.Column="1" IsChecked="{Binding StaleAcknowledged}" WidthRequest="44" HeightRequest="44"
+                                SemanticProperties.Description="{v:Translate Market_StaleConsent}" />
+                        </Grid>
+                        <Label Text="{Binding ReviewText}" IsVisible="{Binding ReviewText, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{v:Translate Market_OnlyReference}" Style="{StaticResource Secondary}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}" IsVisible="{Binding Loaded}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{v:Translate Market_History}" Style="{StaticResource FieldLabel}" />
+                        <Label Text="{v:Translate Market_HistoryHint}" Style="{StaticResource Secondary}" />
+                        <Picker ItemsSource="{Binding History}" ItemDisplayBinding="{Binding Caption, x:DataType=local:MarketHistoryChoice}"
+                            SelectedItem="{Binding SavedSource}" Title="{v:Translate Market_History}" MinimumHeightRequest="44"
+                            SemanticProperties.Description="{v:Translate Market_History}" />
+                        <Label Text="{Binding SavedSource.Details}" IsVisible="{Binding SavedSource, Converter={StaticResource IsNotNullConverter}}" />
+                        <p:WrappingAction Text="{v:Translate Market_HistoryMore}" Command="{Binding MoreHistoryCommand}" IsVisible="{Binding HasMoreHistory}" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+        <VerticalStackLayout Grid.Row="1" Padding="16,8" Spacing="8" BackgroundColor="{DynamicResource PageBackground}">
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+            <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+            <Label Text="{Binding Outcome}" IsVisible="{Binding Outcome, Converter={StaticResource IsNotNullConverter}}" />
+            <p:WrappingAction Text="{v:Translate Settings_RetryLoad}" Command="{Binding LoadCommand}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+            <p:WrappingAction Text="{v:Translate Market_Review}" Command="{Binding ReviewCommand}" IsEnabled="{Binding CanReview}" />
+            <p:WrappingAction Text="{v:Translate Market_Apply}" Command="{Binding ApplyCommand}" IsEnabled="{Binding CanApply}" Appearance="Primary" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

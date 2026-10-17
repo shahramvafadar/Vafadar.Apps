@@ -75,7 +75,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-TAX-03 | Level 2: versioned rule set and report for the first country/year | 7 | P2 | L | Proposed | TAX-01, expert |
 | ZCR-AI-01 | Local AI credit ledger, provider interface, consent, minimal data | 8 | P3 | L | In progress: D-298 local aggregate/native-consent/private-client/service-credit prerequisites qualified; live provider/pricing/credit sales remain gated; see15-ai-local-delivery.md | OD-13 |
 | ZCR-BANK-01 | German-first bank/file/provider evaluation, then USA and other targets | 8 | P3 | M | Research approved; live bank connection deferred | OD-14, IMP-01 |
-| ZCR-FX-01 | Rates/prices provider boundary, caching, provenance, manual fallback | 8 | P3 | M | Local prerequisites approved; actual source/licence/cost remain gated | OD-14 |
+| ZCR-FX-01 | Rates/prices provider boundary, caching, provenance, manual fallback | 8 | P3 | M | In progress: D-299 app/data/service and protected personal/shared source prerequisites; current native/package evidence in16-market-reference-delivery.md; actual source/licence/cost remain gated | OD-14 |
 | ZCR-LANG-01 | Additional languages beyond the existing six | Deferred | P2 | L | Outside current delivery by owner decision; no current release dependency or ETA | later scope decision |
 | ZCR-REL-01 | Final QA, store metadata, staged rollout | 10 | P1 | M | Proposed | all P1 |
 

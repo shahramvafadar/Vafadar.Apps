@@ -33,6 +33,9 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
     /// <summary>Raised after holdings were written.</summary>
     public event EventHandler? Changed;
 
+    /// <summary>Publishes an already committed reviewed price without repeating its financial write.</summary>
+    internal void NotifyReferenceChanged() => Changed?.Invoke(this, EventArgs.Empty);
+
     /// <summary>Returns the asset types, ordered for display.</summary>
     public async Task<List<AssetType>> GetTypesAsync(CancellationToken cancellationToken = default)
     {

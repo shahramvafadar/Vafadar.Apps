@@ -970,3 +970,15 @@ Independent Windows native review: compile ApplicationId=pro.vafadar.zanance.air
 VAFADAR_SNAPSHOT_ONLY=ai-native and exact VAFADAR_SNAPSHOTS=<repository>/artifacts/ai-native-d298. Native
 Toggle/Invoke/Cancel and own-window rendering use original controls/fictitious source/effects only; completed cases
 are not replayed. Keep failures and original fixture. Exact current native/private/APK checks:15-ai-local-delivery.md.
+
+## Independent retained market-source qualification (D-299)
+
+`dotnet run --project eng/sync/MarketHousehold -c Release -p:ContinuousIntegrationBuild=true` requires an explicitly
+owned fictitious `ZANANCE_MARKET_QA_ROOT` containing its existing marker, protected service key ring and local
+non-superuser PostgreSQL fixture. It refuses any other database/root and completed stages. Invocation1 seals
+once; invocation2 reopens original keys/ciphertext and qualifies lost-response continuation plus Viewer
+reception/refusal; invocation3 verifies the same protected clients cold. Never rerun completed stages or use
+production data/credentials. Host provider selection remains independent. Native Windows market-native review
+requires the separate pro.vafadar.zanance.marketreview identity and its exact artifacts/market-native-d299 root;
+the independent Android caller uses ReviewMarketPrivate=true and its distinct package, never the main database.
+Exact retained logs/package/native state: src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/16-market-reference-delivery.md.

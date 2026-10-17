@@ -1441,3 +1441,16 @@ cannot silently use current data or new terms. Explain status-first identical ab
 closure; accepted uncertain work remains pending, without a guessed refund. Keep full model output read-only
 plain text with a visible fallibility warning and no generated financial commands. Navigation/cover/profile
 retirement refuses late publication. Identity selection uses the existing optional identity page.
+
+## Original market reference review (D-299)
+
+Reference lookup is separate from manual rate drafts. First appearance reads only the original file's retained
+cache, local asset definitions and saved history. Require explicit source metadata/fetch, symbol/date and asset
+choice; no default asset, silent form fill or sign-in. Show unavailable/error/manual fallback, full original
+source/licence/revision/quote identifiers, exact source unit and amount, observation/retrieval/freshness/retention
+and effective target date. Native confirmation keeps the complete original converted value, purity/item consent,
+same-date replacement and non-payment limitation. Aged references need their own explicit acknowledgment.
+Growing footer actions stay outside the scroll viewport; complete asset/history captions have separate labels.
+Saved history pages remain read-only, distinguish exact-current from changed/deleted targets, and never supply
+new financial consent. Invalidate review across scope edits/cover/retirement; recheck actual original membership
+and target at commit. Native Cancel and source identifiers are qualified without a live provider.

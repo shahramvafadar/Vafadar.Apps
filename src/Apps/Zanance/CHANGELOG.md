@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Optional reference rates and prices (D-299; no live source selected)
+
+- Review an explicitly selected reference with its original source, licence, unit, dates and expiry before saving an estimated rate or supported asset price.
+- Keep manual entry independent and explain stale data, exact item consent and fine-metal conversion; never change posted money, purchase cost or quantity automatically.
+- Retain read-only source history after manual correction or target deletion, including original source identifiers and accepted conversions.
+- Preserve source documents through portable backup, personal synchronization and signed encrypted household publications with their existing authority checks.
+- Keep live source selection, redistribution rights and costs unavailable until separately approved.
+
 ### Optional local aggregate analysis (D-298; live provider unavailable)
 
 - Select personal accounts/dates, review exact currency aggregates and optionally share a fixed readable summary through the system chooser.

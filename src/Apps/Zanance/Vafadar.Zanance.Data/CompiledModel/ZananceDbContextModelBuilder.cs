@@ -11,7 +11,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
     public partial class ZananceDbContextModel
     {
         private ZananceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("f9509ac3-b0cc-4ecd-917b-088bfe3f130a"), entityTypeCount: 48)
+            : base(skipDetectChanges: false, modelId: new Guid("7859af08-fe82-4b44-ab8b-652d812cd8e1"), entityTypeCount: 50)
         {
         }
 
@@ -39,6 +39,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
             var schedule = ScheduleEntityType.Create(this);
             var recurrenceRule0 = RecurrenceRule0EntityType.Create(this);
             var exchangeRate = ExchangeRateEntityType.Create(this);
+            var marketReferenceReceipt = MarketReferenceReceiptEntityType.Create(this);
             var zananceSettings = ZananceSettingsEntityType.Create(this);
             var householdContact = HouseholdContactEntityType.Create(this);
             var householdCost = HouseholdCostEntityType.Create(this);
@@ -64,6 +65,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
             var syncConflictRow = SyncConflictRowEntityType.Create(this);
             var syncIncomingRow = SyncIncomingRowEntityType.Create(this);
             var syncKnownRow = SyncKnownRowEntityType.Create(this);
+            var syncMarketSourceSend = SyncMarketSourceSendEntityType.Create(this);
             var syncOutboxRow = SyncOutboxRowEntityType.Create(this);
 
             BudgetCategoryLimitEntityType.CreateForeignKey1(budgetCategoryLimit, budget);
@@ -118,6 +120,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
             ScheduleEntityType.CreateAnnotations(schedule);
             RecurrenceRule0EntityType.CreateAnnotations(recurrenceRule0);
             ExchangeRateEntityType.CreateAnnotations(exchangeRate);
+            MarketReferenceReceiptEntityType.CreateAnnotations(marketReferenceReceipt);
             ZananceSettingsEntityType.CreateAnnotations(zananceSettings);
             HouseholdContactEntityType.CreateAnnotations(householdContact);
             HouseholdCostEntityType.CreateAnnotations(householdCost);
@@ -143,6 +146,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
             SyncConflictRowEntityType.CreateAnnotations(syncConflictRow);
             SyncIncomingRowEntityType.CreateAnnotations(syncIncomingRow);
             SyncKnownRowEntityType.CreateAnnotations(syncKnownRow);
+            SyncMarketSourceSendEntityType.CreateAnnotations(syncMarketSourceSend);
             SyncOutboxRowEntityType.CreateAnnotations(syncOutboxRow);
 
             AddAnnotation("ProductVersion", "10.0.12");

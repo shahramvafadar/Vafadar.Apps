@@ -8,6 +8,12 @@ namespace Vafadar.Zanance.Core.Rates;
 /// </summary>
 public sealed class ExchangeRate : Entity, IAuditableEntity
 {
+    /// <summary>Creates one user-entered rate identity.</summary>
+    public ExchangeRate() { }
+
+    /// <summary>Reconstructs an original rate identity for exact reviewed-source comparison.</summary>
+    public ExchangeRate(Guid id) : base(id) { }
+
     /// <summary>Gets or sets the date the rate applies to.</summary>
     public DateOnly Date { get; set; }
 

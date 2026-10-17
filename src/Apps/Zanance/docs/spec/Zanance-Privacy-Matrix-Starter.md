@@ -911,3 +911,14 @@ append-only purchased/gifted credits. Device-private pending state/loss markers 
 synchronization authority. Unknown transport outcomes keep their original reservation/id; no automatic retry,
 grant, API key, financial write or new SDK/permission. Default live provider and credit sales stay unavailable.
 Exact current local/native/package evidence and unpassed external gates: commercial-release/15-ai-local-delivery.
+
+## D-299 reference lookup and retained provenance
+
+Public symbol/date requests deliberately exclude personal finance and arbitrary destinations. The default
+provider is unavailable. Bounded private device cache is dispensable and not portable; accepted quote, original
+licence/timestamps/conversion and private target definition are immutable profile history. Portable backup keeps
+its existing optional-password choice; personal source companions require current profile/device/session access.
+Household source documents are signed/encrypted under the existing membership horizon, never readable provider
+HTTP or a financial write grant. No network SDK, permission, analytics or silent source refresh was introduced.
+Actual source/licence/coverage/cost, external retention and release gates remain open; exact local/native evidence
+is in enhancements/2026-10-commercial-release/16-market-reference-delivery.md.

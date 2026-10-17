@@ -66,6 +66,20 @@ public static class ZananceDataServiceCollectionExtensions
             .AddSingleton<ReportWorkStore>()
             .AddSingleton<Tax.AccountantExportStore>()
             .AddSingleton<Analysis.AiSnapshotStore>()
+            .AddSingleton(provider =>
+            {
+                var references = new Rates.MarketReferenceStore(provider.GetRequiredService<Microsoft.EntityFrameworkCore.IDbContextFactory<ZananceDbContext>>(),
+                    provider.GetRequiredService<ICommercialWriteAccessSource>(), provider.GetRequiredService<TimeProvider>());
+                references.Changed += (_, _) =>
+                {
+                    // Both existing subscriber sets observe the known commit; a failed observer never turns it into an uncommitted write.
+                    var failures = new List<Exception>();
+                    try { provider.GetRequiredService<ZananceStore>().NotifyReferenceChanged(); } catch (Exception error) when (error is not OutOfMemoryException) { failures.Add(error); }
+                    try { provider.GetRequiredService<HoldingStore>().NotifyReferenceChanged(); } catch (Exception error) when (error is not OutOfMemoryException) { failures.Add(error); }
+                    if (failures.Count != 0) throw new AggregateException(failures);
+                };
+                return references;
+            })
             .AddSingleton<BudgetChoiceStore>()
             .AddSingleton<GoalStore>()
             .AddSingleton<HoldingStore>()

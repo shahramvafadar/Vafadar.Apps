@@ -18,7 +18,7 @@ public sealed record PersonalSyncReview(string GenerationPath, Guid? RemoteProfi
 public sealed partial class PersonalSyncStore(IDbContextFactory<ZananceDbContext> factory, ICommercialWriteAccessSource commercialAccess,
     TimeProvider? time = null)
 {
-    private static readonly string[] MetadataTables = ["SyncBlobParts", "SyncBlobTransfers", "SyncConflicts", "SyncIncoming", "SyncClientRound", "SyncOutbox", "SyncKnown", "SyncBinding"];
+    private static readonly string[] MetadataTables = ["SyncMarketSourcesSent", "SyncBlobParts", "SyncBlobTransfers", "SyncConflicts", "SyncIncoming", "SyncClientRound", "SyncOutbox", "SyncKnown", "SyncBinding"];
     /// <summary>Exact owned metadata tables, shared only with the portable-copy scrubber.</summary>
     internal static IReadOnlyList<string> PortableMetadataTables => MetadataTables.Concat(Sharing.HouseholdLocalModel.PortableTables).ToArray();
 
@@ -48,6 +48,9 @@ public sealed partial class PersonalSyncStore(IDbContextFactory<ZananceDbContext
             var conflicts = await db.Set<SyncConflictRow>().CountAsync(ct);
             access.EnsureSnapshotCurrent();
             var restored = binding is not null && binding.GenerationPath != Generation(db);
+            if (binding?.Enabled == true && !restored)
+                changes += await db.MarketReferenceReceipts.LongCountAsync(row => !db.Set<SyncMarketSourceSend>().Any(sent => sent.DocumentId == row.Id && sent.Acknowledged), ct);
+            access.EnsureSnapshotCurrent();
             return new PersonalSyncStatus(binding?.Enabled == true && !restored, restored, binding?.RemoteName,
                 changes, conflicts, binding?.LastSuccessAt, binding?.LastFailure);
         }, ct);

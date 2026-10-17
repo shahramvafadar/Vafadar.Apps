@@ -59,6 +59,12 @@ public sealed partial class HouseholdJournal
             .Select(row => new SyncRecord(row.Record, row.BaseVersion, row.Values))), ct);
         var pending = new List<HouseholdLocalAttemptPart>(8);
         var root = Path.GetPathRoot(context.Path) ?? throw Refusal();
+        // Source capture occurs once in this same original sealing transaction. Later confirmations remain queued;
+        // a retained attempt is returned before this method, so interruption never regenerates its ciphertext.
+        var references = (await context.Db.MarketReferenceReceipts.AsNoTracking()
+            .Where(row => !context.Db.Set<SyncMarketSourceSend>().Any(sent => sent.DocumentId == row.Id && sent.Acknowledged))
+            .OrderBy(row => row.CreatedAt).ThenBy(row => row.Id).Take(8).ToArrayAsync(ct))
+            .Select(Core.Rates.MarketReferenceDocument.From).ToArray();
         var result = replica.SealTo(membership, epoch, binding.DeviceId, keys.Device, work.Operation, Guid.NewGuid(),
             work.Parts.SelectMany(part => part.Rows).ToArray(), work.Resolutions, source, cryptography, part =>
             {
@@ -66,7 +72,7 @@ public sealed partial class HouseholdJournal
                 var stored = StoredPart(part); context.Db.Add(stored); pending.Add(stored);
                 if (pending.Count == 8) Flush();
             }, ct, baselines, address => context.Db.Set<HouseholdLocalEvent>().Where(row => row.RecordId == address && row.Cursor <= replica.Cursor)
-                .Select(row => (long?)row.Cursor).Max() ?? 0);
+                .Select(row => (long?)row.Cursor).Max() ?? 0, references, context.Db.WorkClock);
         // A failed original planner emits nothing. Disposing this transaction rolls back without
         // recording review through a second connection while this protected writer is held.
         if (!result.Plan.Succeeded) return result;

@@ -8007,4 +8007,154 @@ Maximum: {3} credit units; offer valid through {4}.</value>
   <data name="Ai_ShareUnconfirmed" xml:space="preserve">
     <value>The share outcome was not confirmed. The chosen app may already have readable data; check there before sharing again. No Zanance AI credit was consumed and no ledger entry changed.</value>
   </data>
+  <data name="Market_Title" xml:space="preserve">
+    <value>Reference rates and prices</value>
+  </data>
+  <data name="Market_MoreHint" xml:space="preserve">
+    <value>Optional sources, offline cache and explicit value review</value>
+  </data>
+  <data name="Market_Intro" xml:space="preserve">
+    <value>Fetch only a selected public symbol and date. Cached references remain separate from manual rates, actual payments and holding quantities.</value>
+  </data>
+  <data name="Market_Cached" xml:space="preserve">
+    <value>Retained references on this device</value>
+  </data>
+  <data name="Market_CacheEmptyHint" xml:space="preserve">
+    <value>An empty list means no still-retained reference is available here. Manual rates and prices remain available.</value>
+  </data>
+  <data name="Market_SelectReference" xml:space="preserve">
+    <value>Choose an original reference</value>
+  </data>
+  <data name="Market_Check" xml:space="preserve">
+    <value>Check available source</value>
+  </data>
+  <data name="Market_PublicSymbol" xml:space="preserve">
+    <value>Public source symbol</value>
+  </data>
+  <data name="Market_RequestDate" xml:space="preserve">
+    <value>Reference on or before this date</value>
+  </data>
+  <data name="Market_Fetch" xml:space="preserve">
+    <value>Fetch this reference once</value>
+  </data>
+  <data name="Market_AssetTarget" xml:space="preserve">
+    <value>Exact asset for a price reference (not needed for a currency pair)</value>
+  </data>
+  <data name="Market_ExactItem" xml:space="preserve">
+    <value>I checked that this gram or item reference describes this exact asset, including its specification.</value>
+  </data>
+  <data name="Market_StaleConsent" xml:space="preserve">
+    <value>I explicitly accept using an aged retained reference after checking its dates.</value>
+  </data>
+  <data name="Market_Review" xml:space="preserve">
+    <value>Review original value and target</value>
+  </data>
+  <data name="Market_Apply" xml:space="preserve">
+    <value>Save this reviewed reference value</value>
+  </data>
+  <data name="Market_ExplicitCheck" xml:space="preserve">
+    <value>No source is contacted automatically. Check availability explicitly, or use a retained reference or manual entry.</value>
+  </data>
+  <data name="Market_OfflineEdition" xml:space="preserve">
+    <value>This edition has no network lookup. Retained references and manual entry remain available.</value>
+  </data>
+  <data name="Market_Unconfigured" xml:space="preserve">
+    <value>No approved source is configured. No live price was requested. Continue with manual rates or prices.</value>
+  </data>
+  <data name="Market_ReadFailure" xml:space="preserve">
+    <value>The original cache or asset list could not be read. Nothing was reset or fetched. Retry loading when ready.</value>
+  </data>
+  <data name="Market_NetworkFailure" xml:space="preserve">
+    <value>The original source request could not be confirmed. Check your existing sign-in and source availability. No automatic retry or financial write occurred.</value>
+  </data>
+  <data name="Market_ReviewFailure" xml:space="preserve">
+    <value>The original value, target or access changed, or this mapping is unsupported. Review again; never infer that an uncertain completion was rolled back.</value>
+  </data>
+  <data name="Market_StaleRequired" xml:space="preserve">
+    <value>This retained reference has aged. Review its dates and explicitly acknowledge using it before saving.</value>
+  </data>
+  <data name="Market_Applied" xml:space="preserve">
+    <value>The exact reviewed rate or price and its original source were saved. No payment or holding quantity changed.</value>
+  </data>
+  <data name="Market_AppliedRefreshFailure" xml:space="preserve">
+    <value>The reviewed value committed, but a display refresh failed. Do not save a replacement; reopen the original history.</value>
+  </data>
+  <data name="Market_TargetDate" xml:space="preserve">
+    <value>Effective saved date: {0}</value>
+  </data>
+  <data name="Market_TargetRate" xml:space="preserve">
+    <value>Estimated rate for one {0}: {1}</value>
+  </data>
+  <data name="Market_TargetAsset" xml:space="preserve">
+    <value>Price for {0}: {1} per {2}</value>
+  </data>
+  <data name="Market_ReviewedPurity" xml:space="preserve">
+    <value>Original reviewed metal purity: {0}%</value>
+  </data>
+  <data name="Market_Replaces" xml:space="preserve">
+    <value>This replaces the existing same-date rate or price only after confirmation.</value>
+  </data>
+  <data name="Market_NewDatedValue" xml:space="preserve">
+    <value>This adds an individually reviewed dated rate or price.</value>
+  </data>
+  <data name="Market_OnlyReference" xml:space="preserve">
+    <value>A reference is not an actual exchange, dealer offer or retail price. It changes no posted money, purchase cost or quantity. Manual entry remains separate.</value>
+  </data>
+  <data name="Market_SourceDetails" xml:space="preserve">
+    <value>Source: {0}
+Symbol: {1}
+Original value: {2} per {3}
+Market date: {4}
+Observed (UTC): {5}
+Retrieved (UTC): {6}
+Refresh due (UTC): {7}
+Cache retention ends (UTC): {8}
+Source: {9}
+Licence: {10}
+Attribution: {11}</value>
+  </data>
+  <data name="Market_Unit_Currency" xml:space="preserve">
+    <value>base currency unit</value>
+  </data>
+  <data name="Market_Unit_Gram" xml:space="preserve">
+    <value>gram</value>
+  </data>
+  <data name="Market_Unit_FineGram" xml:space="preserve">
+    <value>fine-metal gram</value>
+  </data>
+  <data name="Market_Unit_Piece" xml:space="preserve">
+    <value>piece</value>
+  </data>
+  <data name="Market_Unit_FineTroyOunce" xml:space="preserve">
+    <value>fine-metal troy ounce</value>
+  </data>
+  <data name="Help_Market_Title" xml:space="preserve">
+    <value>Using reference values safely</value>
+  </data>
+  <data name="Help_Market_Text" xml:space="preserve">
+    <value>Opening this page reads only device-private cached references and local asset definitions. Check source and Fetch are explicit separate network actions using your existing identity. Only a public symbol and date are sent; no account name, balance or quantity is sent. No approved source is configured by default. Examine the original source, licence, unit, market date and UTC times. Refresh age differs from the market date; a weekend quote can have an older observation date. A retained aged quote needs explicit acknowledgment, and expired cache cannot be newly applied. Fine-metal conversion requires matching metal and known purity; it excludes workmanship, spreads and coin premiums. Exact gram or piece references need your own specification check. Saving requires a separate native confirmation and keeps original provenance in the profile and portable backup. Device-only cache is not a new-device backup. Existing dated values are replaced only explicitly; ledger amounts, quantities and purchase costs never change. Manual rates and prices remain available.</value>
+  </data>
+  <data name="Help_Market_Example" xml:space="preserve">
+    <value>A fine-gold reference is not the price of your coin. For a mass asset with known 75% purity, review the fine-metal conversion and dated result; add no retail premium automatically.</value>
+  </data>
+  <data name="Market_History" xml:space="preserve">
+    <value>Saved reference sources</value>
+  </data>
+  <data name="Market_HistoryHint" xml:space="preserve">
+    <value>Select an original saved source to see its details. History remains after a value changes or is removed. It cannot restore or apply a value.</value>
+  </data>
+  <data name="Market_HistoryCurrent" xml:space="preserve">
+    <value>This original source matches the current saved value and definition.</value>
+  </data>
+  <data name="Market_HistoryChanged" xml:space="preserve">
+    <value>Historical source only: the current value or definition has changed, or the target was removed.</value>
+  </data>
+  <data name="Market_HistoryMore" xml:space="preserve">
+    <value>Load older saved sources</value>
+  </data>
+  <data name="Market_SourceIdentity" xml:space="preserve">
+    <value>Source identifier: {0}
+Source revision: {1}
+Original quote identifier: {2}</value>
+  </data>
 </root>

@@ -7955,4 +7955,154 @@ Maximum : {3} unités de crédit ; offre valable jusqu’au {4}.</value>
   <data name="Ai_ShareUnconfirmed" xml:space="preserve">
     <value>Le résultat du partage n’a pas été confirmé. L’application choisie peut déjà disposer des données lisibles ; vérifiez avant de partager à nouveau. Aucun crédit IA Zanance n’a été consommé et aucune écriture n’a changé.</value>
   </data>
+  <data name="Market_Title" xml:space="preserve">
+    <value>Taux et prix de référence</value>
+  </data>
+  <data name="Market_MoreHint" xml:space="preserve">
+    <value>Sources facultatives, cache hors ligne et vérification explicite de la valeur</value>
+  </data>
+  <data name="Market_Intro" xml:space="preserve">
+    <value>Consultez uniquement le symbole public et la date choisis. Les références conservées restent distinctes des taux manuels, des paiements réels et des quantités détenues.</value>
+  </data>
+  <data name="Market_Cached" xml:space="preserve">
+    <value>Références conservées sur cet appareil</value>
+  </data>
+  <data name="Market_CacheEmptyHint" xml:space="preserve">
+    <value>Une liste vide indique qu’aucune référence encore conservée n’est disponible ici. La saisie manuelle des taux et des prix reste possible.</value>
+  </data>
+  <data name="Market_SelectReference" xml:space="preserve">
+    <value>Choisissez une référence d’origine</value>
+  </data>
+  <data name="Market_Check" xml:space="preserve">
+    <value>Vérifier la source disponible</value>
+  </data>
+  <data name="Market_PublicSymbol" xml:space="preserve">
+    <value>Symbole public de la source</value>
+  </data>
+  <data name="Market_RequestDate" xml:space="preserve">
+    <value>Référence à cette date ou antérieure</value>
+  </data>
+  <data name="Market_Fetch" xml:space="preserve">
+    <value>Obtenir cette référence une fois</value>
+  </data>
+  <data name="Market_AssetTarget" xml:space="preserve">
+    <value>Bien exact pour une référence de prix (inutile pour une paire de devises)</value>
+  </data>
+  <data name="Market_ExactItem" xml:space="preserve">
+    <value>J’ai vérifié que cette référence par gramme ou par unité décrit exactement ce bien et ses caractéristiques.</value>
+  </data>
+  <data name="Market_StaleConsent" xml:space="preserve">
+    <value>Après vérification des dates, j’accepte explicitement d’utiliser une référence ancienne conservée.</value>
+  </data>
+  <data name="Market_Review" xml:space="preserve">
+    <value>Vérifier la valeur d’origine et sa destination</value>
+  </data>
+  <data name="Market_Apply" xml:space="preserve">
+    <value>Enregistrer cette valeur de référence vérifiée</value>
+  </data>
+  <data name="Market_ExplicitCheck" xml:space="preserve">
+    <value>Aucune source n’est contactée automatiquement. Vérifiez explicitement sa disponibilité ou utilisez une référence conservée ou la saisie manuelle.</value>
+  </data>
+  <data name="Market_OfflineEdition" xml:space="preserve">
+    <value>Cette édition ne propose pas de consultation réseau. Les références conservées et la saisie manuelle restent disponibles.</value>
+  </data>
+  <data name="Market_Unconfigured" xml:space="preserve">
+    <value>Aucune source approuvée n’est configurée. Aucun prix en direct n’a été demandé. Utilisez les taux ou prix manuels.</value>
+  </data>
+  <data name="Market_ReadFailure" xml:space="preserve">
+    <value>Le cache d’origine ou la liste des biens n’a pas pu être lu. Rien n’a été réinitialisé ni récupéré. Relancez le chargement lorsque vous le souhaitez.</value>
+  </data>
+  <data name="Market_NetworkFailure" xml:space="preserve">
+    <value>La requête d’origine n’a pas pu être confirmée. Vérifiez votre connexion existante et la disponibilité de la source. Aucun nouvel essai automatique ni aucune écriture financière n’a eu lieu.</value>
+  </data>
+  <data name="Market_ReviewFailure" xml:space="preserve">
+    <value>La valeur, la destination ou l’accès d’origine a changé, ou cette correspondance n’est pas prise en charge. Vérifiez à nouveau ; une fin incertaine ne signifie pas que l’opération a été annulée.</value>
+  </data>
+  <data name="Market_StaleRequired" xml:space="preserve">
+    <value>Cette référence conservée est ancienne. Vérifiez ses dates et acceptez explicitement son utilisation avant l’enregistrement.</value>
+  </data>
+  <data name="Market_Applied" xml:space="preserve">
+    <value>Le taux ou prix exact vérifié et sa source d’origine ont été enregistrés. Aucun paiement ni aucune quantité détenue n’a changé.</value>
+  </data>
+  <data name="Market_AppliedRefreshFailure" xml:space="preserve">
+    <value>La valeur vérifiée a été enregistrée, mais l’actualisation de l’affichage a échoué. N’enregistrez pas de remplacement ; rouvrez l’historique d’origine.</value>
+  </data>
+  <data name="Market_TargetDate" xml:space="preserve">
+    <value>Date d’effet enregistrée : {0}</value>
+  </data>
+  <data name="Market_TargetRate" xml:space="preserve">
+    <value>Taux estimé pour une unité de {0} : {1}</value>
+  </data>
+  <data name="Market_TargetAsset" xml:space="preserve">
+    <value>Prix de {0} : {1} par {2}</value>
+  </data>
+  <data name="Market_ReviewedPurity" xml:space="preserve">
+    <value>Pureté d’origine du métal vérifiée : {0}%</value>
+  </data>
+  <data name="Market_Replaces" xml:space="preserve">
+    <value>Cette valeur remplace le taux ou prix existant à la même date uniquement après confirmation.</value>
+  </data>
+  <data name="Market_NewDatedValue" xml:space="preserve">
+    <value>Cette opération ajoute un taux ou prix daté et vérifié individuellement.</value>
+  </data>
+  <data name="Market_OnlyReference" xml:space="preserve">
+    <value>Une référence n’est ni un change réel, ni une offre de négociant, ni un prix de détail. Elle ne modifie aucun montant comptabilisé, coût d’achat ou quantité. La saisie manuelle reste distincte.</value>
+  </data>
+  <data name="Market_SourceDetails" xml:space="preserve">
+    <value>Source : {0}
+Symbole : {1}
+Valeur d’origine : {2} par {3}
+Date du marché : {4}
+Observation (UTC) : {5}
+Récupération (UTC) : {6}
+Actualisation prévue (UTC) : {7}
+Fin de conservation en cache (UTC) : {8}
+Source : {9}
+Licence : {10}
+Attribution : {11}</value>
+  </data>
+  <data name="Market_Unit_Currency" xml:space="preserve">
+    <value>unité de devise de base</value>
+  </data>
+  <data name="Market_Unit_Gram" xml:space="preserve">
+    <value>gramme</value>
+  </data>
+  <data name="Market_Unit_FineGram" xml:space="preserve">
+    <value>gramme de métal fin</value>
+  </data>
+  <data name="Market_Unit_Piece" xml:space="preserve">
+    <value>pièce</value>
+  </data>
+  <data name="Market_Unit_FineTroyOunce" xml:space="preserve">
+    <value>once troy de métal fin</value>
+  </data>
+  <data name="Help_Market_Title" xml:space="preserve">
+    <value>Utiliser les références avec discernement</value>
+  </data>
+  <data name="Help_Market_Text" xml:space="preserve">
+    <value>L’ouverture de cette page lit uniquement les références privées du cache de l’appareil et les définitions locales des biens. La vérification de la source et la récupération sont deux actions réseau explicites et distinctes avec votre identité existante. Seuls un symbole public et une date sont envoyés, sans nom de compte, solde ni quantité. Aucune source approuvée n’est configurée par défaut. Vérifiez la source d’origine, la licence, l’unité, la date du marché et les heures UTC. L’ancienneté de la récupération diffère de la date du marché ; une référence du week-end peut avoir une observation antérieure. Une ancienne référence exige votre accord explicite ; un cache expiré ne peut plus être appliqué. La conversion du métal fin nécessite le même métal et une pureté connue ; elle exclut façonnage, marges et primes des pièces. Vérifiez vous-même les caractéristiques exactes des références par gramme ou par pièce. L’enregistrement nécessite une confirmation native distincte et conserve la provenance dans le profil et la sauvegarde portable. Le cache de l’appareil ne remplace pas une sauvegarde pour un nouvel appareil. Le remplacement d’une valeur datée est explicite ; montants comptabilisés, quantités et coûts d’achat restent inchangés. La saisie manuelle reste disponible.</value>
+  </data>
+  <data name="Help_Market_Example" xml:space="preserve">
+    <value>Une référence d’or fin n’est pas le prix de votre pièce. Pour un bien mesuré au poids avec une pureté connue de 75%, vérifiez la conversion et le résultat daté ; aucune prime de détail n’est ajoutée automatiquement.</value>
+  </data>
+  <data name="Market_History" xml:space="preserve">
+    <value>Sources de référence enregistrées</value>
+  </data>
+  <data name="Market_HistoryHint" xml:space="preserve">
+    <value>Sélectionnez une source originale enregistrée pour voir ses détails. L’historique reste disponible après modification ou suppression d’une valeur. Il ne permet ni de restaurer ni d’appliquer une valeur.</value>
+  </data>
+  <data name="Market_HistoryCurrent" xml:space="preserve">
+    <value>Cette source originale correspond à la valeur et à la définition actuellement enregistrées.</value>
+  </data>
+  <data name="Market_HistoryChanged" xml:space="preserve">
+    <value>Source historique uniquement : la valeur ou la définition actuelle a changé, ou la cible a été supprimée.</value>
+  </data>
+  <data name="Market_HistoryMore" xml:space="preserve">
+    <value>Charger les sources enregistrées plus anciennes</value>
+  </data>
+  <data name="Market_SourceIdentity" xml:space="preserve">
+    <value>Identifiant de la source : {0}
+Révision de la source : {1}
+Identifiant de la cotation originale : {2}</value>
+  </data>
 </root>

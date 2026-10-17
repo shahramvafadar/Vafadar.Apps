@@ -18,7 +18,8 @@ SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
 // Metadata only: this context is never opened, migrated or pointed at a financial file.
 using var context = new ZananceDbContext(new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite("Data Source=:memory:").Options);
 var model = context.GetService<IDesignTimeModel>().Model.GetRelationalModel();
-var excluded = new HashSet<string>(["ImportLinks", "ResourceSelections"], StringComparer.Ordinal);
+var excluded = new HashSet<string>(["ImportLinks", "ResourceSelections", "MarketReferenceReceipts"], StringComparer.Ordinal);
+// Reviewed source documents need their own bounded attachment transfer, not an implicit mutation of delivered v1/v2 financial authority.
 var settings = new HashSet<string>(["ReportCurrencyCode", "DefaultCurrencyCode", "ValuationCurrencyEnabled",
     "RateFreshnessDays", "HomeBudgetCurrencyCode", "DisplayUnits", "HomeLayout", "EssentialEstimate",
     "EssentialEstimatePeriod", "EssentialEstimateCurrency", "ReviewProgress", "DefaultAccountId", "Mode",

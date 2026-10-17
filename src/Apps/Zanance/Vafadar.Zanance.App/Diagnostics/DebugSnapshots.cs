@@ -257,6 +257,10 @@ internal static partial class DebugSnapshots
     private static async Task RunCoreAsync(App app, IServiceProvider services, string folder)
     {
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "market-native")
+        {
+            await ReviewMarketAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "ai-native")
         {
             await ReviewAiAsync(app, services, folder); return;
@@ -653,6 +657,7 @@ internal static partial class DebugSnapshots
         var screens = new (string Name, string Route, Dictionary<string, object>? Query)[]
         {
             ("home", "//home", null),
+            ("market-reference", AppRoutes.MarketReferenceRoute, null),
             ("home-layout-reuse", "//home", null),
             ("home-holdings-index", "//home", null),
             ("transactions", "//transactions", null),

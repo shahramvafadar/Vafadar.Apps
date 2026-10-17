@@ -81,7 +81,7 @@ public sealed partial class HouseholdJournal
                 finally { CryptographicOperations.ZeroMemory(clear); }
                 try
                 {
-                    if (payload.Format != 1 || payload.SchemaHash != HouseholdFinancialSchema.Hash || payload.AttemptId != item.AttemptId || payload.Index != item.Index ||
+                    if (!payload.SupportedFormat() || payload.SchemaHash != HouseholdFinancialSchema.Hash || payload.AttemptId != item.AttemptId || payload.Index != item.Index ||
                         payload.Record is not null || payload.Stream is not null) throw Refusal();
                     HouseholdAttachmentPiece piece;
                     if (source.ElementIndex == -1)

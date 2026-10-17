@@ -20,7 +20,7 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 "Vafadar.Zanance.Data.Sync.SyncBindingRow",
                 typeof(SyncBindingRow),
                 baseEntityType,
-                propertyCount: 14,
+                propertyCount: 15,
                 keyCount: 1);
 
             var id = runtimeEntityType.AddProperty(
@@ -88,6 +88,13 @@ namespace Vafadar.Zanance.Data.CompiledModel
                 fieldInfo: typeof(SyncBindingRow).GetField("<LastSuccessAt>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true,
                 valueConverter: new UtcTicksDateTimeOffsetConverter());
+
+            var marketSourceCursor = runtimeEntityType.AddProperty(
+                "MarketSourceCursor",
+                typeof(long),
+                propertyInfo: typeof(SyncBindingRow).GetProperty("MarketSourceCursor", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(SyncBindingRow).GetField("<MarketSourceCursor>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                sentinel: 0L);
 
             var peerKey = runtimeEntityType.AddProperty(
                 "PeerKey",

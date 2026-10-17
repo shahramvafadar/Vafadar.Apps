@@ -231,7 +231,7 @@ public sealed partial class HouseholdJournal
             try
             {
                 var payload = StrictJsonPayload.Deserialize(clear, HouseholdFinancialJsonContext.Default.HouseholdFinancialPayload, HouseholdCryptography.MaximumPlaintextBytes);
-                if (payload.Format == 1 && payload.SchemaHash == HouseholdFinancialSchema.Hash && payload.AttemptId == item.AttemptId && payload.Index == item.Index) return payload;
+                if (payload.SupportedFormat() && payload.SchemaHash == HouseholdFinancialSchema.Hash && payload.AttemptId == item.AttemptId && payload.Index == item.Index) return payload;
                 Clear(payload); throw Refusal();
             }
             finally { CryptographicOperations.ZeroMemory(clear); }

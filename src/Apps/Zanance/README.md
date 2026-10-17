@@ -443,3 +443,10 @@ Import/export offers an explicit StarMoney Giro preset for reviewed posted ordin
 encoding selection, complete preview, native confirmation, source-id replay protection and durable Undo.
 Transfers/refunds/reversals/pending/splits are excluded; this is not universal bank support or a live connection.
 [Exact format, privacy, limits and verification](docs/enhancements/2026-10-commercial-release/14-bank-csv-delivery.md) records the qualified boundary.
+
+### Optional reference-source prerequisites (D-299)
+
+Explicit source lookup/cache/review and retained provenance are separate from manual rates and actual payments.
+The default live source is unavailable. Current local, protected personal/shared, native and signed-package
+evidence and remaining source/licence/platform gates are recorded in
+docs/enhancements/2026-10-commercial-release/16-market-reference-delivery.md.

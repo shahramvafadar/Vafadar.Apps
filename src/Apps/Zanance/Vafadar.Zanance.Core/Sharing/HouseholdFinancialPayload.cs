@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Vafadar.Zanance.Core.Sync;
+using Vafadar.Zanance.Core.Rates;
 
 namespace Vafadar.Zanance.Core.Sharing;
 
@@ -14,6 +15,8 @@ public enum HouseholdFinancialContentKind
     RecordStream = 3,
     /// <summary>One bounded group of immutable small attachment pieces; cardinality does not force one ciphertext per attachment.</summary>
     AttachmentBatch = 4,
+    /// <summary>A separate original source document inside the same signed publication boundary, never a financial row proposal.</summary>
+    SourceDocument = 5,
 }
 
 /// <summary>Protected attachment piece; its plain digest remains inside client encryption and never becomes a service address.</summary>
@@ -29,8 +32,13 @@ public sealed record HouseholdFinancialPayload([property: JsonRequired] int Form
     [property: JsonRequired] Guid AttemptId, [property: JsonRequired] int Index, [property: JsonRequired] HouseholdFinancialContentKind Kind,
     [property: JsonRequired] SyncRecord? Record, [property: JsonRequired] HouseholdAttachmentPiece? Attachment,
     [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] HouseholdRecordBlock? Stream = null,
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] HouseholdAttachmentPiece[]? Blobs = null)
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] HouseholdAttachmentPiece[]? Blobs = null,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] MarketReferenceDocument? Source = null)
 {
+    /// <summary>Keeps delivered format1 byte/meaning compatibility and requires explicit format2 for source-only companion content.</summary>
+    public bool SupportedFormat() => Format == 1 && Kind != HouseholdFinancialContentKind.SourceDocument && Source is null ||
+        Format == 2 && Kind == HouseholdFinancialContentKind.SourceDocument && Source is not null &&
+        Record is null && Attachment is null && Stream is null && Blobs is null;
     /// <inheritdoc />
     public override string ToString() => nameof(HouseholdFinancialPayload);
 }

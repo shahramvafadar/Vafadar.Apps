@@ -995,3 +995,11 @@ Earlier in-progress notes are historical. Public/commercial activation, physical
 external security review and publication remain separate gates; identity erasure and ciphertext recall are not
 claimed. Continue the already approved complete billing/future-web-prerequisite batch without helper-only slices
 or repeated unrelated successful checks.
+
+## D-299 additive source metadata
+
+The established manual-rate, holdings, portable-backup and financial synchronization invariants remain intact.
+Optional reference provenance adds two application migrations and one service migration with regenerated compiled
+models; neither delivered financial manifest changes. Current complete-batch evidence and native/package state
+are in enhancements/2026-10-commercial-release/16-market-reference-delivery.md. Live source/rights/cost and
+physical/iOS/release acceptance remain distinct; historical whole-suite3753 was not repeated.

@@ -2005,3 +2005,10 @@ service-owned split credit journal together. Separate manual readable-summary sh
 leave actual provider/prices/credit sale unavailable. Shared-data disclosure is separately refused. Exact current
 whole-batch qualification and remaining external gates are in the canonical commercial backlog and
 `enhancements/2026-10-commercial-release/15-ai-local-delivery.md`; no new full-suite or release claim.
+
+## D-299 approved local rates/prices prerequisites
+
+Explicit source lookup, bounded private offline cache, native original review, immutable saved provenance and
+personal/shared source companions advance ZCR-FX-01. They do not select or license a live provider, infer item
+premiums or enable automatic financial changes. Keep source/coverage/redistribution/cost/public and actual
+device/Mac gates open. Exact current qualification: enhancements/2026-10-commercial-release/16-market-reference-delivery.md.

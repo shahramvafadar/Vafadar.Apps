@@ -3412,3 +3412,16 @@ The closed default has no automatic provider/model or public grant endpoint. Exi
 usage checks cover all six languages. Native UI, actual Android private adapter/share and signed package state
 remain separately recorded in15-ai-local-delivery.md; only its completed stages are accepted. Whole-suite3753
 is historical, not a newly executed count. Real provider/credit purchases/public/iOS/phone acceptance is open.
+
+## D-299 original reference acceptance (AT-299)
+
+Sixty-four distinct focused unit/source cases plus one retained real TLS/PostgreSQL two-client personal
+acceptance fact qualify bounded lookup/cache, exact source/target/conversion, immutable history, original-id lost
+reply continuation, authority refusal and compatible signed shared source content. The independent protected
+household executable also qualified three actual processes, original ciphertext/commit-reply continuation,
+Viewer reception/refusal and cold exact history without readable personal financial HTTP. Eighteen actual
+Windows en/fa/de light/dark360/412/1280 cases preserve the financial fingerprint through native stale consent
+and Cancel. Android private adapter first/cold processes passed exact64KiB, isolation and refusal/preservation
+checks. Resource completeness/usage23 and runtime enum keys6 are separately recorded existing checks.
+Exact current native/package/main-app state and retained failures are in16-market-reference-delivery.md.
+These are not a new whole-suite total, live-source/physical/iOS/performance/public-release acceptance.

@@ -31,6 +31,7 @@ public sealed class RuntimeResourceKeyTests
             where T : struct, Enum => Enum.GetValues<T>().Select(v => $"{prefix}{v}{suffix}");
 
         var expected = Of<HomeSection>("HomeSection_")
+            .Concat(Of<Vafadar.Zanance.Core.Rates.MarketUnit>("Market_Unit_"))
             .Concat(Of<BillingReplacementTiming>("Billing_Replacement_"))
             .Concat(Of<EntryKind>("EntryKind_"))
             .Concat(Of<AccountType>("AccountType_"))

@@ -30,10 +30,41 @@ internal sealed class SyncBindingRow
     public bool Applying { get; set; }
     /// <summary>Last completely applied immutable event sequence.</summary>
     public long Cursor { get; set; }
+    /// <summary>Last completely imported source-document feed sequence, independent from financial authority/cursors.</summary>
+    public long MarketSourceCursor { get; set; }
     /// <summary>Last successful synchronization, separate from financial dates.</summary>
     public DateTimeOffset? LastSuccessAt { get; set; }
     /// <summary>Content-free local failure category only.</summary>
     public string? LastFailure { get; set; }
+}
+
+/// <summary>Private original source companion publication state, scrubbed with its exact device binding on portable export/restore.</summary>
+internal sealed class SyncMarketSourceSend
+{
+    /// <summary>Original immutable source receipt; a different receipt remains a separate accepted history document.</summary>
+    public Guid DocumentId { get; set; }
+    /// <summary>Exact source document digest retained before network work; not a financial authority grant.</summary>
+    public string Digest { get; set; } = "";
+    /// <summary>Known server acknowledgment or an already verified incoming original, never an inferred successful send.</summary>
+    public bool Acknowledged { get; set; }
+    /// <summary>Reserved nullable companion slot; current shared ciphertext is retained only in the signed household attempt journal.</summary>
+    public string? Envelope { get; set; }
+    /// <summary>Reserved companion epoch, currently zero and never a membership or write grant.</summary>
+    public long Epoch { get; set; }
+    /// <summary>Reserved companion membership version, currently zero; actual verification uses the signed household journal.</summary>
+    public long MembershipVersion { get; set; }
+}
+
+/// <summary>Maps only device-private companion state; neither financial contracts nor portable source history includes it.</summary>
+internal sealed class SyncMarketSourceConfiguration : IEntityTypeConfiguration<SyncMarketSourceSend>
+{
+    /// <inheritdoc />
+    public void Configure(EntityTypeBuilder<SyncMarketSourceSend> builder)
+    {
+        builder.ToTable("SyncMarketSourcesSent"); builder.HasKey(row => row.DocumentId);
+        builder.Property(row => row.DocumentId).ValueGeneratedNever(); builder.Property(row => row.Digest).HasMaxLength(64);
+        builder.Property(row => row.Envelope).HasMaxLength(524288);
+    }
 }
 
 /// <summary>Same-transaction complete after-value or tombstone, never a network effect during Save.</summary>

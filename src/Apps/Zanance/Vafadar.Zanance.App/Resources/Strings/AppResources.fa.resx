@@ -7978,4 +7978,154 @@
   <data name="Ai_ShareUnconfirmed" xml:space="preserve">
     <value>نتیجهٔ اشتراک تأیید نشد. ممکن است برنامهٔ انتخابی قبلاً دادهٔ خوانا را دریافت کرده باشد؛ پیش از اشتراک دوباره، همان‌جا بررسی کنید. اعتبار هوش مصنوعی Zanance مصرف نشد و دفتر مالی تغییر نکرد.</value>
   </data>
+  <data name="Market_Title" xml:space="preserve">
+    <value>نرخ‌ها و قیمت‌های مرجع</value>
+  </data>
+  <data name="Market_MoreHint" xml:space="preserve">
+    <value>منابع اختیاری، مرجع آفلاین و بررسی صریح مقدار</value>
+  </data>
+  <data name="Market_Intro" xml:space="preserve">
+    <value>فقط نماد عمومی و تاریخ انتخاب‌شده دریافت می‌شود. مرجع ذخیره‌شده از نرخ دستی، پرداخت واقعی و مقدار دارایی جداست.</value>
+  </data>
+  <data name="Market_Cached" xml:space="preserve">
+    <value>مرجع‌های نگهداری‌شده در این دستگاه</value>
+  </data>
+  <data name="Market_CacheEmptyHint" xml:space="preserve">
+    <value>فهرست خالی یعنی مرجع قابل‌استفاده‌ای در این دستگاه نگهداری نشده است. نرخ و قیمت دستی همچنان در دسترس است.</value>
+  </data>
+  <data name="Market_SelectReference" xml:space="preserve">
+    <value>انتخاب یک مرجع اصلی</value>
+  </data>
+  <data name="Market_Check" xml:space="preserve">
+    <value>بررسی منبع در دسترس</value>
+  </data>
+  <data name="Market_PublicSymbol" xml:space="preserve">
+    <value>نماد عمومی منبع</value>
+  </data>
+  <data name="Market_RequestDate" xml:space="preserve">
+    <value>مرجع در این تاریخ یا پیش از آن</value>
+  </data>
+  <data name="Market_Fetch" xml:space="preserve">
+    <value>دریافت یک‌بارهٔ این مرجع</value>
+  </data>
+  <data name="Market_AssetTarget" xml:space="preserve">
+    <value>دارایی دقیق برای مرجع قیمت؛ برای جفت‌ارز لازم نیست</value>
+  </data>
+  <data name="Market_ExactItem" xml:space="preserve">
+    <value>بررسی کرده‌ام که مرجع هر گرم یا هر عدد، دقیقاً همین دارایی و مشخصاتش را توصیف می‌کند.</value>
+  </data>
+  <data name="Market_StaleConsent" xml:space="preserve">
+    <value>پس از بررسی تاریخ‌ها، استفاده از مرجع قدیمیِ نگهداری‌شده را صریحاً می‌پذیرم.</value>
+  </data>
+  <data name="Market_Review" xml:space="preserve">
+    <value>بررسی مقدار اصلی و مقصد آن</value>
+  </data>
+  <data name="Market_Apply" xml:space="preserve">
+    <value>ذخیرهٔ همین مقدار مرجعِ بررسی‌شده</value>
+  </data>
+  <data name="Market_ExplicitCheck" xml:space="preserve">
+    <value>هیچ منبعی خودکار فراخوانی نمی‌شود. دسترس‌پذیری را صریحاً بررسی کنید یا از مرجع نگهداری‌شده و ورود دستی استفاده کنید.</value>
+  </data>
+  <data name="Market_OfflineEdition" xml:space="preserve">
+    <value>این نسخه دریافت شبکه‌ای ندارد. مرجع‌های نگهداری‌شده و ورود دستی همچنان در دسترس‌اند.</value>
+  </data>
+  <data name="Market_Unconfigured" xml:space="preserve">
+    <value>هیچ منبع تأییدشده‌ای تنظیم نشده است. قیمت زنده‌ای درخواست نشد. از نرخ یا قیمت دستی استفاده کنید.</value>
+  </data>
+  <data name="Market_ReadFailure" xml:space="preserve">
+    <value>کش اصلی یا فهرست دارایی‌ها خوانده نشد. چیزی بازنشانی یا دریافت نشد. وقتی آماده بودید بارگذاری را دوباره امتحان کنید.</value>
+  </data>
+  <data name="Market_NetworkFailure" xml:space="preserve">
+    <value>نتیجهٔ درخواست اصلی منبع تأیید نشد. ورود فعلی و دسترس‌پذیری منبع را بررسی کنید. تلاش مجدد خودکار یا ثبت مالی انجام نشد.</value>
+  </data>
+  <data name="Market_ReviewFailure" xml:space="preserve">
+    <value>مقدار، مقصد یا دسترسی اصلی تغییر کرده یا این تبدیل پشتیبانی نمی‌شود. دوباره بررسی کنید؛ پایان نامشخص را به معنی بازگشت عملیات فرض نکنید.</value>
+  </data>
+  <data name="Market_StaleRequired" xml:space="preserve">
+    <value>این مرجع نگهداری‌شده قدیمی شده است. پیش از ذخیره، تاریخ‌هایش را بررسی و استفاده از آن را صریحاً تأیید کنید.</value>
+  </data>
+  <data name="Market_Applied" xml:space="preserve">
+    <value>همان نرخ یا قیمت بررسی‌شده و منبع اصلی‌اش ذخیره شد. هیچ پرداخت یا مقدار دارایی تغییر نکرد.</value>
+  </data>
+  <data name="Market_AppliedRefreshFailure" xml:space="preserve">
+    <value>مقدار بررسی‌شده ثبت شد، اما تازه‌سازی نمایش شکست خورد. مقدار جایگزین ذخیره نکنید؛ سابقهٔ اصلی را دوباره باز کنید.</value>
+  </data>
+  <data name="Market_TargetDate" xml:space="preserve">
+    <value>تاریخ مؤثر ذخیره: {0}</value>
+  </data>
+  <data name="Market_TargetRate" xml:space="preserve">
+    <value>نرخ تخمینی برای یک واحد «{0}»: {1}</value>
+  </data>
+  <data name="Market_TargetAsset" xml:space="preserve">
+    <value>قیمت دارایی «{0}»: {1} برای هر {2}</value>
+  </data>
+  <data name="Market_ReviewedPurity" xml:space="preserve">
+    <value>خلوص فلز در تعریف اصلی بررسی‌شده: {0}٪</value>
+  </data>
+  <data name="Market_Replaces" xml:space="preserve">
+    <value>این مقدار فقط پس از تأیید، جای نرخ یا قیمت موجود در همان تاریخ را می‌گیرد.</value>
+  </data>
+  <data name="Market_NewDatedValue" xml:space="preserve">
+    <value>این کار یک نرخ یا قیمت تاریخ‌دار با بررسی جداگانه اضافه می‌کند.</value>
+  </data>
+  <data name="Market_OnlyReference" xml:space="preserve">
+    <value>مرجع، تبدیل واقعی ارز، پیشنهاد معامله‌گر یا قیمت خرده‌فروشی نیست. پول ثبت‌شده، هزینهٔ خرید یا مقدار دارایی را تغییر نمی‌دهد. ورود دستی جدا می‌ماند.</value>
+  </data>
+  <data name="Market_SourceDetails" xml:space="preserve">
+    <value>منبع: {0}
+نماد: {1}
+مقدار اصلی: {2} برای هر {3}
+تاریخ بازار: {4}
+زمان مشاهده به UTC: {5}
+زمان دریافت به UTC: {6}
+موعد تازه‌سازی به UTC: {7}
+پایان نگهداری کش به UTC: {8}
+نشانی منبع: {9}
+مجوز: {10}
+انتساب: {11}</value>
+  </data>
+  <data name="Market_Unit_Currency" xml:space="preserve">
+    <value>واحد ارز پایه</value>
+  </data>
+  <data name="Market_Unit_Gram" xml:space="preserve">
+    <value>گرم</value>
+  </data>
+  <data name="Market_Unit_FineGram" xml:space="preserve">
+    <value>گرم فلز خالص</value>
+  </data>
+  <data name="Market_Unit_Piece" xml:space="preserve">
+    <value>عدد</value>
+  </data>
+  <data name="Market_Unit_FineTroyOunce" xml:space="preserve">
+    <value>اونس تروا فلز خالص</value>
+  </data>
+  <data name="Help_Market_Title" xml:space="preserve">
+    <value>استفادهٔ آگاهانه از مقدارهای مرجع</value>
+  </data>
+  <data name="Help_Market_Text" xml:space="preserve">
+    <value>بازکردن این صفحه فقط مرجع‌های خصوصیِ ذخیره‌شده در دستگاه و تعریف محلی دارایی‌ها را می‌خواند. بررسی منبع و دریافت مرجع، دو اقدام شبکه‌ای جداگانه و صریح با هویت فعلی شما هستند. فقط نماد عمومی و تاریخ ارسال می‌شود؛ نام حساب، موجودی یا مقدار دارایی ارسال نمی‌شود. به‌صورت پیش‌فرض منبع تأییدشده‌ای تنظیم نشده است. منبع اصلی، مجوز، واحد، تاریخ بازار و زمان‌های UTC را بررسی کنید. سن دریافت با تاریخ بازار متفاوت است؛ قیمت آخر هفته ممکن است تاریخ مشاهدهٔ قدیمی‌تری داشته باشد. استفاده از مرجع قدیمی تأیید صریح می‌خواهد و کش منقضی‌شده قابل اعمال تازه نیست. تبدیل فلز خالص به فلز همسان و خلوص مشخص نیاز دارد و اجرت، اختلاف خریدوفروش و ارزش افزودهٔ سکه را شامل نمی‌شود. مشخصات مرجع هر گرم یا هر عدد را خودتان با دارایی تطبیق دهید. ذخیره، تأیید جداگانهٔ بومی می‌خواهد و منشأ اصلی را در پروفایل و بکاپ قابل‌انتقال نگه می‌دارد. کش مخصوص دستگاه جای بکاپ دستگاه جدید نیست. جایگزینی مقدار تاریخ‌دار فقط صریح انجام می‌شود؛ مبلغ دفتر، مقدار دارایی و هزینهٔ خرید تغییر نمی‌کند. نرخ و قیمت دستی همچنان در دسترس‌اند.</value>
+  </data>
+  <data name="Help_Market_Example" xml:space="preserve">
+    <value>مرجع طلای خالص، قیمت سکهٔ شما نیست. برای دارایی وزنی با خلوص مشخص ۷۵٪، تبدیل فلز خالص و نتیجهٔ تاریخ‌دار را بررسی کنید؛ ارزش افزودهٔ خرده‌فروشی خودکار اضافه نمی‌شود.</value>
+  </data>
+  <data name="Market_History" xml:space="preserve">
+    <value>منشأهای مرجع ذخیره‌شده</value>
+  </data>
+  <data name="Market_HistoryHint" xml:space="preserve">
+    <value>برای دیدن جزئیات، منشأ ذخیره‌شده را انتخاب کنید. سابقه پس از تغییر یا حذف مقدار باقی می‌ماند و نمی‌توان از آن برای بازیابی یا اعمال مقدار استفاده کرد.</value>
+  </data>
+  <data name="Market_HistoryCurrent" xml:space="preserve">
+    <value>این منشأ اصلی با مقدار و تعریف ذخیره‌شدهٔ کنونی مطابقت دارد.</value>
+  </data>
+  <data name="Market_HistoryChanged" xml:space="preserve">
+    <value>این منشأ فقط سابقه است: مقدار یا تعریف کنونی تغییر کرده یا مقصد حذف شده است.</value>
+  </data>
+  <data name="Market_HistoryMore" xml:space="preserve">
+    <value>بارگیری منشأهای ذخیره‌شدهٔ قدیمی‌تر</value>
+  </data>
+  <data name="Market_SourceIdentity" xml:space="preserve">
+    <value>شناسهٔ منشأ: {0}
+ویرایش منشأ: {1}
+شناسهٔ مرجع اصلی: {2}</value>
+  </data>
 </root>

@@ -24,5 +24,6 @@ internal static class SyncServiceRoutes
         SyncCatalogRoutes.Map(group);
         SyncRoundRoutes.Map(group);
         SyncBlobRoutes.Map(group);
+        Rates.PersonalMarketSourceRoutes.Map(group);
     }
 }

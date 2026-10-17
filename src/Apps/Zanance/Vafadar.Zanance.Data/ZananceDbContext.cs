@@ -58,6 +58,9 @@ public sealed partial class ZananceDbContext : LocalDbContext
     /// <summary>Gets the manual exchange rates.</summary>
     public DbSet<ExchangeRate> ExchangeRates => Set<ExchangeRate>();
 
+    /// <summary>Gets immutable reviewed source documents, separate from the shipped financial row contracts and device cache.</summary>
+    public DbSet<MarketReferenceReceipt> MarketReferenceReceipts => Set<MarketReferenceReceipt>();
+
     /// <summary>Gets the saved transaction list filters (REP-08).</summary>
     public DbSet<SavedFilter> SavedFilters => Set<SavedFilter>();
 

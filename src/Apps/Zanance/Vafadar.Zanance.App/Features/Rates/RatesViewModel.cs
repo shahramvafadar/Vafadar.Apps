@@ -39,7 +39,7 @@ public sealed partial class RatesViewModel(ZananceStore store, Translator transl
     public partial string RateText { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial DateOnly Date { get; set; }
+    public partial DateOnly Date { get; set; } = DateOnly.FromDateTime(time.GetLocalNow().Date);
 
     [ObservableProperty]
     public partial bool IsEstimate { get; set; }
@@ -52,6 +52,9 @@ public sealed partial class RatesViewModel(ZananceStore store, Translator transl
 
     [ObservableProperty]
     public partial bool HasRates { get; set; }
+
+    /// <summary>Opens separate explicit reference review; it never copies a quote into this unsaved manual draft.</summary>
+    [RelayCommand] private Task OpenReferencesAsync() => Shell.Current.GoToAsync(AppRoutes.MarketReferenceRoute);
 
     public async Task LoadAsync()
     {

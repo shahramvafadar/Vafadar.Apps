@@ -12,7 +12,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
     public partial class ServiceDbContextModel
     {
         private ServiceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("d79e9538-2e64-4569-9fd1-361607f599bd"), entityTypeCount: 46)
+            : base(skipDetectChanges: false, modelId: new Guid("649215cf-3797-4d18-9ac4-bfda5fdce4ec"), entityTypeCount: 47)
         {
         }
 
@@ -37,6 +37,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
             var deviceSession = DeviceSessionEntityType.Create(this);
             var identityChallenge = IdentityChallengeEntityType.Create(this);
             var privateObject = PrivateObjectEntityType.Create(this);
+            var personalMarketSourceRow = PersonalMarketSourceRowEntityType.Create(this);
             var requestWindow = RequestWindowEntityType.Create(this);
             var serviceUser = ServiceUserEntityType.Create(this);
             var householdAuditRow = HouseholdAuditRowEntityType.Create(this);
@@ -87,6 +88,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
             DeviceSessionEntityType.CreateForeignKey1(deviceSession, serviceUser);
             IdentityChallengeEntityType.CreateForeignKey1(identityChallenge, serviceUser);
             PrivateObjectEntityType.CreateForeignKey1(privateObject, serviceUser);
+            PersonalMarketSourceRowEntityType.CreateForeignKey1(personalMarketSourceRow, syncSpaceRow);
             HouseholdAuditRowEntityType.CreateForeignKey1(householdAuditRow, householdSpaceRow);
             HouseholdDeviceRowEntityType.CreateForeignKey1(householdDeviceRow, householdMemberRow);
             HouseholdEventRowEntityType.CreateForeignKey1(householdEventRow, householdRoundRow);
@@ -137,6 +139,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
             DeviceSessionEntityType.CreateAnnotations(deviceSession);
             IdentityChallengeEntityType.CreateAnnotations(identityChallenge);
             PrivateObjectEntityType.CreateAnnotations(privateObject);
+            PersonalMarketSourceRowEntityType.CreateAnnotations(personalMarketSourceRow);
             RequestWindowEntityType.CreateAnnotations(requestWindow);
             ServiceUserEntityType.CreateAnnotations(serviceUser);
             HouseholdAuditRowEntityType.CreateAnnotations(householdAuditRow);

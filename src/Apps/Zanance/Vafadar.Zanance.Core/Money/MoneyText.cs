@@ -25,6 +25,14 @@ public static class MoneyText
         return $"{LeftToRightIsolate}{LeftToRightMark}{formattedPrice}{LeftToRightMark}{PopDirectionalIsolate}";
     }
 
+    /// <summary>Displays an exact positive per-unit reference in major currency units without rounding it to a posted minor-unit payment.</summary>
+    public static string ReferencePrice(decimal major, string currencyCode, CultureInfo culture)
+    {
+        ArgumentNullException.ThrowIfNull(culture);
+        if (major <= 0 || !Currencies.TryGet(currencyCode, out var currency)) throw new ArgumentException("A positive known-currency reference is required.");
+        return $"{LeftToRightIsolate}{LeftToRightMark}{major.ToString("G29", culture)} {currency.Code}{LeftToRightMark}{PopDirectionalIsolate}";
+    }
+
     /// <summary>Formats <paramref name="minor"/> units of <paramref name="currencyCode"/>, e.g. <c>−12.50 EUR</c>.</summary>
     /// <param name="minor">Amount in minor units.</param>
     /// <param name="currencyCode">ISO currency code.</param>
