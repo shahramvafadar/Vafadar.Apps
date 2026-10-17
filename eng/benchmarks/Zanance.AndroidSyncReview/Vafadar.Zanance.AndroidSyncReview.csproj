@@ -51,6 +51,10 @@
     <ApplicationId>pro.vafadar.zanance.billingrecoveryreview</ApplicationId>
     <DefineConstants>$(DefineConstants);BILLING_RECOVERY_REVIEW</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(ReviewAnalysisPrivate)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.analysisprivatereview</ApplicationId>
+    <DefineConstants>$(DefineConstants);AI_PRIVATE_REVIEW</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../sync/HouseholdRoundtrip/HistoryQualification.NativeBound.cs" Link="Native/HistoryQualification.NativeBound.cs"
              Condition="'$(ReviewHouseholdSnapshot)' == 'true'" />

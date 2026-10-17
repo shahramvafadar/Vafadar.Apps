@@ -43,3 +43,7 @@ Original goal views and reviewed actions: [source/native/APK evidence](quality/g
 Current Android encrypted application delivery:
 [protected storage evidence](quality/android-protected-storage.md). This distinguishes original main
 Release evidence from the earlier independent probes and retains pending platform/device/CI gates.
+
+Optional personal aggregate analysis and local credit prerequisites:
+[original consent, private continuation and service qualification](enhancements/2026-10-commercial-release/15-ai-local-delivery.md).
+This separates local prerequisites/manual sharing from unconfigured live models, credit sales and release gates.

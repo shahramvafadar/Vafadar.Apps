@@ -1425,3 +1425,19 @@ before-opening warning. Acknowledge posted ordinary income/expenses explicitly; 
 pending and splits are excluded. Invalid rows block the whole preset. Real native final count/account consent,
 Cancel and durable batch Undo retain their original meaning. Departure/account change invalidates consent;
 source/history changes require fresh review. Growing captions/native44-unit actions preserve all six languages.
+
+## D-298 Explicit optional aggregate disclosure
+
+Select no accounts initially; confirmed-only starts on and previous-period comparison off. Initialize both dates,
+show all field errors together, and invalidate an old review on every scope edit. The complete exact aggregate
+JSON has its own native read-only scrolling viewport and readable currency-separated summary. Manual sharing
+states readable-recipient retention, no guaranteed answer and no built-in credit use. Native Cancel precedes
+sharing/authentication effects. Clearly show when a provider is unavailable; no automatic network or sign-in.
+
+Metadata-only provider check and original offer precede per-request native recipient/model/max-unit consent.
+Fresh available/reserved purchased/gifted balances are distinct from cached historical result balances. Retained
+historical consent includes the original destination, provider/model/max units and exact packet; continuation
+cannot silently use current data or new terms. Explain status-first identical absent-id replay and unaccepted-id
+closure; accepted uncertain work remains pending, without a guessed refund. Keep full model output read-only
+plain text with a visible fallibility warning and no generated financial commands. Navigation/cover/profile
+retirement refuses late publication. Identity selection uses the existing optional identity page.

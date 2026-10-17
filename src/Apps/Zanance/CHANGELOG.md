@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Optional local aggregate analysis (D-298; live provider unavailable)
+
+- Select personal accounts/dates, review exact currency aggregates and optionally share a fixed readable summary through the system chooser.
+- Keep names, notes, documents and individual entries off the disclosed packet; leave all financial data unchanged.
+- Prepare explicit identity/provider/model/maximum credit consent, original private continuation and separate purchased/gifted service accounting.
+- Retain an uncertain original request rather than start another one; distinguish explicit continuation and closing an unaccepted id.
+- Keep model text read-only and fallible. No live model, credit purchase, API key, automatic upload or shared-data permission is enabled.
+
 ### Documented German bank-software CSV (D-297)
 
 - Choose the StarMoney Giro preset, explicit encoding and matching account; review every ordinary posted cashflow before native confirmation.

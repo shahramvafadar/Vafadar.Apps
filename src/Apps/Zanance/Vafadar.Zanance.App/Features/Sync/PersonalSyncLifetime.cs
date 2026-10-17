@@ -45,6 +45,8 @@ public sealed class PersonalSyncLifetime : IDisposable
     public PersonalSyncAccess Capture() => CaptureCore(PersonalSyncBuild.IsAvailable);
     /// <summary>Captures the same native lock/foreground/catalogue boundary for the separately selected billing edition.</summary>
     internal PersonalSyncAccess CaptureBilling() => CaptureCore(Commerce.Billing.BillingBuild.IsAvailable);
+    /// <summary>Shares the native foreground/profile boundary for local aggregate review, without enabling offline networking.</summary>
+    internal PersonalSyncAccess CaptureAnalysis(bool network) => CaptureCore(!network || PersonalSyncBuild.IsAvailable || Commerce.Billing.BillingBuild.IsAvailable);
     private PersonalSyncAccess CaptureCore(bool available)
     {
         long captured; CancellationToken cancellation;

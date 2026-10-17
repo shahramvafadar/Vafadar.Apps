@@ -45,6 +45,7 @@ public sealed partial class MoreViewModel(Translator translator) : ViewModelBase
             [
                 Item("Backup_Title", "More_BackupHint", Symbol.ShieldCheckmark, AppShell.BackupRoute),
                 Item("ImportExport_Title", "More_ImportExportHint", Symbol.DocumentTable, AppShell.ImportExportRoute),
+                Item("Ai_Title", "Ai_MenuHint", Symbol.Info, AppRoutes.AnalysisRoute),
                 Item("Profile_Title", "More_ProfilesHint", Symbol.PeopleSwap, AppShell.ProfilesRoute),
 #if PERSONAL_SYNC
                 Item("Sync_Title", "Sync_MoreHint", Symbol.ArrowSwap, AppRoutes.PersonalSyncRoute),

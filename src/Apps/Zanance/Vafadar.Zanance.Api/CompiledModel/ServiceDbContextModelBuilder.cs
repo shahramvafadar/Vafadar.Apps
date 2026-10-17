@@ -12,7 +12,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
     public partial class ServiceDbContextModel
     {
         private ServiceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("a57683e4-5481-420f-ba65-e4adae465c4a"), entityTypeCount: 43)
+            : base(skipDetectChanges: false, modelId: new Guid("d79e9538-2e64-4569-9fd1-361607f599bd"), entityTypeCount: 46)
         {
         }
 
@@ -24,6 +24,9 @@ namespace Vafadar.Zanance.Api.CompiledModel
             var identityUserLogin = IdentityUserLoginEntityType.Create(this);
             var identityUserRole = IdentityUserRoleEntityType.Create(this);
             var identityUserToken = IdentityUserTokenEntityType.Create(this);
+            var aiCreditRow = AiCreditRowEntityType.Create(this);
+            var aiOfferRow = AiOfferRowEntityType.Create(this);
+            var aiRequestRow = AiRequestRowEntityType.Create(this);
             var billingCommandRow = BillingCommandRowEntityType.Create(this);
             var billingCustomerRow = BillingCustomerRowEntityType.Create(this);
             var billingDevicePurchaseRow = BillingDevicePurchaseRowEntityType.Create(this);
@@ -68,6 +71,11 @@ namespace Vafadar.Zanance.Api.CompiledModel
             IdentityUserRoleEntityType.CreateForeignKey1(identityUserRole, identityRole);
             IdentityUserRoleEntityType.CreateForeignKey2(identityUserRole, serviceUser);
             IdentityUserTokenEntityType.CreateForeignKey1(identityUserToken, serviceUser);
+            AiCreditRowEntityType.CreateForeignKey1(aiCreditRow, aiRequestRow);
+            AiCreditRowEntityType.CreateForeignKey2(aiCreditRow, serviceUser);
+            AiOfferRowEntityType.CreateForeignKey1(aiOfferRow, serviceUser);
+            AiRequestRowEntityType.CreateForeignKey1(aiRequestRow, aiOfferRow);
+            AiRequestRowEntityType.CreateForeignKey2(aiRequestRow, serviceUser);
             BillingCommandRowEntityType.CreateForeignKey1(billingCommandRow, billingCustomerRow);
             BillingCustomerRowEntityType.CreateForeignKey1(billingCustomerRow, serviceUser);
             BillingDevicePurchaseRowEntityType.CreateForeignKey1(billingDevicePurchaseRow, billingCustomerRow);
@@ -116,6 +124,9 @@ namespace Vafadar.Zanance.Api.CompiledModel
             IdentityUserLoginEntityType.CreateAnnotations(identityUserLogin);
             IdentityUserRoleEntityType.CreateAnnotations(identityUserRole);
             IdentityUserTokenEntityType.CreateAnnotations(identityUserToken);
+            AiCreditRowEntityType.CreateAnnotations(aiCreditRow);
+            AiOfferRowEntityType.CreateAnnotations(aiOfferRow);
+            AiRequestRowEntityType.CreateAnnotations(aiRequestRow);
             BillingCommandRowEntityType.CreateAnnotations(billingCommandRow);
             BillingCustomerRowEntityType.CreateAnnotations(billingCustomerRow);
             BillingDevicePurchaseRowEntityType.CreateAnnotations(billingDevicePurchaseRow);

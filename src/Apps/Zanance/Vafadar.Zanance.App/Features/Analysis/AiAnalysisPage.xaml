@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="Vafadar.Zanance.App.Features.Analysis.AiAnalysisPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:v="http://vafadar.pro/schemas/maui" xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
+    xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Analysis" x:DataType="local:AiAnalysisViewModel" Title="{v:Translate Ai_Title}">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="12" IsEnabled="{Binding IsNotBusy}">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Label Text="{v:Translate Ai_Intro}" />
+                    <v:HelpButton Grid.Column="1" Topic="Ai" VerticalOptions="Start" />
+                </Grid>
+                <Border Style="{StaticResource Card}" IsVisible="{Binding Loaded}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{v:Translate Ai_Accounts}" Style="{StaticResource FieldLabel}" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Accounts}" Spacing="8">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="local:AiAccountChoice">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                        <Label Text="{Binding Caption}" VerticalOptions="Center" />
+                                        <CheckBox Grid.Column="1" IsChecked="{Binding Selected}" WidthRequest="44" HeightRequest="44" SemanticProperties.Description="{Binding Caption}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <Label Text="{Binding AccountsError}" Style="{StaticResource ErrorText}" IsVisible="{Binding AccountsError, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{v:Translate Ai_From}" Style="{StaticResource FieldLabel}" />
+                        <v:DateField Date="{Binding From}" AccessibilityLabel="{v:Translate Ai_From}" />
+                        <Label Text="{Binding FromError}" Style="{StaticResource ErrorText}" IsVisible="{Binding FromError, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{v:Translate Ai_To}" Style="{StaticResource FieldLabel}" />
+                        <v:DateField Date="{Binding To}" AccessibilityLabel="{v:Translate Ai_To}" />
+                        <Label Text="{Binding ToError}" Style="{StaticResource ErrorText}" IsVisible="{Binding ToError, Converter={StaticResource IsNotNullConverter}}" />
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="{v:Translate Ai_Confirmed}" VerticalOptions="Center" />
+                            <Switch Grid.Column="1" IsToggled="{Binding ConfirmedOnly}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Ai_Confirmed}" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="{v:Translate Ai_Compare}" VerticalOptions="Center" />
+                            <Switch Grid.Column="1" IsToggled="{Binding ComparePrevious}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Ai_Compare}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}" IsVisible="{Binding Disclosure, Converter={StaticResource IsNotNullConverter}}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{Binding Summary}" />
+                        <Label Text="{v:Translate Ai_Exact}" Style="{StaticResource Secondary}" />
+                        <Editor Text="{Binding Disclosure, Mode=OneWay}" IsReadOnly="True" HeightRequest="240" SemanticProperties.Description="{v:Translate Ai_Exact}" />
+                        <p:WrappingAction Text="{v:Translate Ai_ManualShare}" Command="{Binding ShareCommand}" IsEnabled="{Binding CanShare}" />
+                        <Label Text="{Binding ShareStatus}" IsVisible="{Binding ShareStatus, Converter={StaticResource IsNotNullConverter}}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{Binding ProviderText}" />
+                        <Label Text="{Binding BalanceText}" IsVisible="{Binding BalanceText, Converter={StaticResource IsNotNullConverter}}" />
+                        <p:WrappingAction Text="{v:Translate Ai_ProviderCheck}" Command="{Binding CheckProviderCommand}" IsEnabled="{Binding CanCheckProvider}" />
+                        <p:WrappingAction Text="{v:Translate Ai_IdentityRequired}" Command="{Binding IdentityCommand}" IsVisible="{Binding NetworkEnabled}" />
+                        <p:WrappingAction Text="{v:Translate Ai_Quote}" Command="{Binding QuoteCommand}" IsEnabled="{Binding CanQuote}" />
+                        <p:WrappingAction Text="{v:Translate Ai_Send}" Command="{Binding SendCommand}" IsEnabled="{Binding CanSend}" Appearance="Primary" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource Card}" IsVisible="{Binding ResultSnapshot, Converter={StaticResource IsNotNullConverter}}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{v:Translate Ai_ResultSnapshot}" />
+                        <Editor Text="{Binding ResultSnapshot, Mode=OneWay}" IsReadOnly="True" HeightRequest="200" SemanticProperties.Description="{v:Translate Ai_ResultSnapshot}" />
+                        <Label Text="{Binding ResultStatus}" />
+                        <p:WrappingAction Text="{v:Translate Ai_Continue}" Command="{Binding ContinueCommand}" IsEnabled="{Binding CanContinue}" />
+                        <p:WrappingAction Text="{v:Translate Ai_Close}" Command="{Binding CloseCommand}" IsEnabled="{Binding CanContinue}" />
+                        <Label Text="{v:Translate Ai_Fallible}" Style="{StaticResource Secondary}" />
+                        <Editor Text="{Binding ResultText, Mode=OneWay}" IsReadOnly="True" HeightRequest="240" IsVisible="{Binding ResultText, Converter={StaticResource IsNotNullConverter}}" SemanticProperties.Description="{v:Translate Ai_Fallible}" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+        <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" BackgroundColor="{DynamicResource PageBackground}">
+            <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{DynamicResource Primary}" HeightRequest="44" />
+            <p:WrappingAction Text="{v:Translate Ai_Reload}" Command="{Binding LoadCommand}" IsEnabled="{Binding IsNotBusy}" IsVisible="{Binding Loaded, Converter={StaticResource InvertedBoolConverter}}" />
+            <p:WrappingAction Text="{v:Translate Ai_Review}" Command="{Binding ReviewCommand}" IsEnabled="{Binding IsNotBusy}" Appearance="Primary" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

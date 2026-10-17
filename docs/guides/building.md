@@ -955,3 +955,18 @@ artifacts/bank-csv-native-d297 folder and resumes unfinished contexts. Native In
 fictitious independent sources, own-window rendering, unchanged financial fingerprint. Never reset its data
 or replay complete contexts. Main Android Release uses Build-AndroidApk.ps1 -Billing -BillingSandbox with the
 permanent identity; source-flow/native/APK evidence is in14-bank-csv-delivery.md.
+
+### Optional analysis prerequisites (D-298)
+
+Focused App.Tests classes: AiSnapshotTests, AiAnalysisFlowTests and AiResultBoundsTests. API qualifications have
+Qualification=AiLocal and require an independently owned PostgreSQL fixture on127.0.0.1:55478, database
+zanance_ai_d298 and ZANANCE_AI_QA_ROOT with exact fixture.marker text `Zanance fictional analysis d298`.
+Run AiCreditPersistenceTests, then AiHttpContinuationTests, then AiConcurrentCreditTests. They retain original
+stages/keys/ids and refuse completed replay. Never reset a completed fixture to inflate evidence. The identity-only
+CI job excludes this trait; the dedicated analysis job owns its ephemeral database and uploads bounded test reports.
+No real model, credentials, purchase or public hosted activation is involved.
+
+Independent Windows native review: compile ApplicationId=pro.vafadar.zanance.aireview, set
+VAFADAR_SNAPSHOT_ONLY=ai-native and exact VAFADAR_SNAPSHOTS=<repository>/artifacts/ai-native-d298. Native
+Toggle/Invoke/Cancel and own-window rendering use original controls/fictitious source/effects only; completed cases
+are not replayed. Keep failures and original fixture. Exact current native/private/APK checks:15-ai-local-delivery.md.

@@ -906,3 +906,18 @@ In-memory reviewed data includes source identity, exact dates/currencies/amounts
 source ending is shown and source IBAN field is not copied to the ledger. Original free text can still contain
 identifiers. Imported entries and Undo metadata follow existing profile-local encrypted storage/backup rules.
 Original files are read only. No automatic payment, upload, raw-file retention or device-security export.
+
+## D-298 Optional aggregate analysis
+
+Before explicit consent, account choices and coherent calculations stay local. Only selected currency totals,
+exact dates, account counts, confirmation scope, language and unreviewed counts enter the disclosed packet;
+no names, transaction ids, payees, notes, documents, device security or sync ciphertext. Shared sources are
+refused. Manual sharing deliberately offers readable exact JSON/prompt to a user-chosen system recipient;
+its retention/forwarding is outside Zanance and it is not a built-in model call.
+
+An explicitly enabled local service uses the existing pinned authenticated identity, protected original payload/
+result and append-only purchased/gifted reservation history. No analytics/network SDK, API-key input, new
+permission, auto-upload or financial write. Original private request state uses platform SecureStorage and a
+public loss marker outside all portable preferences/financial sync. Marker/private loss fails closed. No raw
+financial payload is sent for metadata offers or original closure. Live provider/retention/legal/cost approval,
+real traffic, physical devices and iOS remain distinct gates; the default provider is unconfigured.

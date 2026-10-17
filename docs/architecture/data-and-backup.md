@@ -2285,3 +2285,20 @@ metadata. ImportReviewedAsync revalidates those sources using the existing write
 transaction before original ledger/aggregate/Undo logic. No schema/compiled-model change or extra writer SQL
 pass. Stable source/account/software ids prevent replay without overwriting edits; equal date/amount alone is
 a warning. No transfer/refund/split relation, bank authenticity or encryption is inferred by the preset.
+
+
+## Optional analysis state and service credit data (D-298)
+
+Analysis does not add financial EF tables or put private continuation in Zanance portable preferences/exports.
+Selected personal aggregate payloads are explicit disclosures; manual text sharing is readable and separate from
+backup. The app retains original request/result in device-private SecureStorage with an outside loss marker.
+Missing private state stays closed; it is not a wallet grant or a portable recovery promise. Existing final Android
+all-domain OS backup exclusions apply. Native iOS/keychain/backup policy remains actual Mac qualification.
+
+The separate service adds AiOffers, AiRequests and AiCredits through AiConsentAndCredits and
+AiOriginalGrantIdentity migrations plus its regenerated compiled model. Original payload/result are protected
+with the existing service key ring; service database restoration must retain that ring and the original immutable
+credit/request history. A stable provider operation id alone is not hosted restoration acceptance: actual live
+provider idempotence/status/reconciliation and retention/erasure remain gates before activation. No client route
+issues credits, no purchased-credit expiry or current commercial activation is introduced. Exact qualification:
+src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/15-ai-local-delivery.md.

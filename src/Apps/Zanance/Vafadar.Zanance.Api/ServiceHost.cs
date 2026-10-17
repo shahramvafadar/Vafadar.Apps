@@ -27,6 +27,8 @@ public sealed class ServiceStorage
     public bool LocalHouseholdQualification { get; init; }
     /// <summary>Explicit independently owned billing qualification; it never enables real sale or commercial quotas.</summary>
     public bool LocalBillingQualification { get; init; }
+    /// <summary>Explicit isolated local analysis qualification, never a live provider or public credit sale.</summary>
+    public bool LocalAnalysisQualification { get; init; }
     /// <summary>Private immutable object path; identifiers originate on the server only.</summary>
     public string ObjectPath(Guid id) => Path.Combine(Root, "objects", id.ToString("N"));
 }
@@ -74,9 +76,15 @@ public static class ServiceHost
             selfHosted?.Origin.DnsSafeHost == "localhost" && File.Exists(Path.Combine(root, "fictitious-hosting.marker")) &&
             !File.Exists(Path.Combine(root, "production-hosting.marker"))))
             throw new InvalidOperationException("Billing local qualification cannot activate public purchases.");
+        var analysis = builder.Configuration.GetValue<bool>("Analysis:LocalQualification");
+        if (analysis && !(builder.Environment.IsDevelopment() || builder.Environment.IsEnvironment("Integration") ||
+            selfHosted?.Origin.DnsSafeHost == "localhost" && File.Exists(Path.Combine(root, "fictitious-hosting.marker")) &&
+            !File.Exists(Path.Combine(root, "production-hosting.marker"))))
+            throw new InvalidOperationException("Local analysis qualification cannot activate a public provider.");
         var storage = new ServiceStorage { Root = root, LocalMailbox = builder.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>("Service:LocalMailbox"),
             LocalHouseholdQualification = household,
             LocalBillingQualification = billing,
+            LocalAnalysisQualification = analysis,
             SyncLimits = Sync.SyncStorageLimits.Read(builder.Configuration) };
         var directory = Directory.CreateDirectory(root);
         if (OperatingSystem.IsWindows())
@@ -95,6 +103,7 @@ public static class ServiceHost
         Directory.CreateDirectory(Path.Combine(root, "mailbox"));
         builder.Services.AddSingleton(storage);
         Billing.BillingModule.Add(builder.Services);
+        Analysis.AiModule.Add(builder.Services);
         builder.Services.AddSingleton<Sharing.IHouseholdDeletionLedger, Sharing.HouseholdDeletionLedger>();
         builder.Services.AddSingleton<Sharing.HouseholdRetirement>();
         builder.Services.AddSingleton<Sync.LocalSyncCertificate>();
@@ -224,5 +233,6 @@ public static class ServiceHost
         Sync.SyncServiceRoutes.Map(app);
         Sharing.HouseholdRoutes.Map(app);
         Billing.BillingModule.Map(app);
+        Analysis.AiModule.Map(app);
     }
 }

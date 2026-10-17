@@ -1184,3 +1184,11 @@ fictional fixtures distinct from customer bank acceptance.29 focused new cases,3
 and23 resource checks are local evidence. Native contexts/package and negative evidence: enhancements/2026-10-commercial-release/14-bank-csv-delivery.md.
 Do not list all German banks as supported or count CAMT/MT940/OFX/QIF/live connections as implemented. Physical
 phone/iOS, current customer-export corpus and release acceptance remain open.
+
+## D-298 Optional analysis gate
+
+The local provider-neutral boundary does not select or enable a live model. Keep actual provider/privacy/retention,
+licence/costs, unit packages/prices, trusted consumable verification, original provider idempotence/status contract,
+public routing and genuine device/Mac checks open. No API-key workflow or subscription-implied credits. Default
+service/provider remain closed and current commercial limits inactive. Manual native sharing is readable disclosure,
+not integrated AI or a result guarantee. Local/native/package evidence is in15-ai-local-delivery.md.

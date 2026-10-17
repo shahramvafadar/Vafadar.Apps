@@ -2284,3 +2284,22 @@ preset requires explicit posted ordinary-cashflow acknowledgment, exact source/a
 review, native confirmation and writer-transaction revalidation. Reject unsupported revisions and relationships;
 keep generic CSV explicit and durable Undo unchanged. Stable software ids are source/account scoped, not bank
 authentication. No bank login or new provider is authorized by file-import research.
+
+### Optional local analysis and original credit consent (D-298)
+
+Aggregate financial explanations remain optional and independent from ledger calculations. Explicitly select
+personal accounts/period, disclose exact minimal figures/recipient/provider/model/max credit units and confirm
+natively before financial HTTP or manual sharing. Exclude names, notes, identities and documents; refuse shared
+sources until separate shared-data permission is qualified. Model text is fallible plain text, never executable
+instructions, money writes or investment/tax/legal decisions. Manual chooser handoff is separate from built-in
+analysis and consumes no credit; report uncertain handoff honestly.
+
+The actual authenticated service owns append-only purchased/gifted credit, original immutable terms and requests.
+Persist a private original id/payload before HTTP, reserve once before provider dispatch, settle/refund once only
+from definitive original evidence. Unknown/timeouts keep the reservation; provider status alone may resolve an
+accepted id. Explicit continuation may replay an identical never-arrived packet under the same id; an explicit
+metadata-only durable close prevents late execution of an unaccepted id. Never infer refunds from not-found.
+No client grant endpoint, subscription-implied units, stored API key, selected live provider or invented prices.
+Private state loss stays closed. Current quotas remain inactive. Keep original destination/model/max terms visible
+with retained historical packets, separate from fresh balances/quotes. Local PostgreSQL/TLS/native evidence does
+not activate a real provider, paid credit sale, public hosting or device/iOS/release acceptance.

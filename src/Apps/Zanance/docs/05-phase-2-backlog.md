@@ -1997,3 +1997,11 @@ One documented StarMoney Giro ordinary-cashflow preset is integrated end-to-end 
 atomic writer and durable Undo. This advances ZCR-IMP-01, not universal bank coverage. Exact current retail-bank
 schemas, mixed relationship imports and other market formats remain open; original-source research continues
 Germany, USA, then approved targets. IMP-02 formats/live connections remain separate. See enhancements/2026-10-commercial-release/14-bank-csv-delivery.md.
+
+## D-298 Approved local optional analysis prerequisites
+
+Implement aggregate-only personal scope/consent, existing pinned identity/private original continuation and
+service-owned split credit journal together. Separate manual readable-summary sharing from a configured model;
+leave actual provider/prices/credit sale unavailable. Shared-data disclosure is separately refused. Exact current
+whole-batch qualification and remaining external gates are in the canonical commercial backlog and
+`enhancements/2026-10-commercial-release/15-ai-local-delivery.md`; no new full-suite or release claim.

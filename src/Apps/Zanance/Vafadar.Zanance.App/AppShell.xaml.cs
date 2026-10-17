@@ -189,6 +189,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(NoticesRoute, typeof(Features.About.NoticesPage));
         Routing.RegisterRoute(ImportExportRoute, typeof(ImportExportPage));
         Routing.RegisterRoute(AppRoutes.AccountantExportRoute, typeof(AccountantExportPage));
+        Routing.RegisterRoute(AppRoutes.AnalysisRoute, typeof(Features.Analysis.AiAnalysisPage));
         Routing.RegisterRoute(TemplatesRoute, typeof(Features.Templates.TemplatesPage));
         Routing.RegisterRoute(GoalEditorRoute, typeof(Features.Goals.GoalEditorPage));
         Routing.RegisterRoute(GoalDetailRoute, typeof(Features.Goals.GoalDetailPage));

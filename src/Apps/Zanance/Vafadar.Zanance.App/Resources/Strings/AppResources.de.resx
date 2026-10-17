@@ -7838,4 +7838,144 @@ Status: {3}</value>
   <data name="Help_BankCsv_Example" xml:space="preserve">
     <value>Beispiel: gebuchtes Gehalt und Kartenausgabe aus derselben EUR-Girohistorie importieren. Kontoübertrag und Händlererstattung ausschließen; als ausdrückliche Umbuchung bzw. verknüpfte Erstattung erfassen, nicht als neue Einnahme. Dieselben Quell-IDs erzeugen beim erneuten Import keine zweite Kopie.</value>
   </data>
+  <data name="Ai_Title" xml:space="preserve">
+    <value>Analyse</value>
+  </data>
+  <data name="Ai_MenuHint" xml:space="preserve">
+    <value>Ausgewählte Summen und optionale Analyse; keine automatischen Geldänderungen.</value>
+  </data>
+  <data name="Ai_Intro" xml:space="preserve">
+    <value>Bereiten Sie eine Zusammenfassung lokal vor. Konten, Zeitraum und genaue Daten wählen Sie selbst. Teilen mit einer anderen App und integrierte Analyse sind getrennte, optionale Aktionen. Nichts startet oder verlässt das Gerät automatisch.</value>
+  </data>
+  <data name="Ai_Accounts" xml:space="preserve">
+    <value>Ausdrücklich ausgewählte Konten</value>
+  </data>
+  <data name="Ai_From" xml:space="preserve">
+    <value>Anfangsdatum der Zusammenfassung</value>
+  </data>
+  <data name="Ai_To" xml:space="preserve">
+    <value>Enddatum der Zusammenfassung</value>
+  </data>
+  <data name="Ai_Confirmed" xml:space="preserve">
+    <value>Nur bestätigte Buchungen verwenden</value>
+  </data>
+  <data name="Ai_Compare" xml:space="preserve">
+    <value>Vorherigen Zeitraum gleicher Länge ebenfalls offenlegen</value>
+  </data>
+  <data name="Ai_Review" xml:space="preserve">
+    <value>Ausgewählte Summen prüfen</value>
+  </data>
+  <data name="Ai_Reload" xml:space="preserve">
+    <value>Konten neu laden</value>
+  </data>
+  <data name="Ai_ChooseAccounts" xml:space="preserve">
+    <value>Wählen Sie mindestens ein Konto. Es wird keines automatisch ausgewählt.</value>
+  </data>
+  <data name="Ai_InvalidRange" xml:space="preserve">
+    <value>Wählen Sie einen gültigen Zeitraum von höchstens 366 Tagen; auch der optionale vorherige Zeitraum muss gültig sein.</value>
+  </data>
+  <data name="Ai_ScopeError" xml:space="preserve">
+    <value>Die ursprüngliche persönliche Quelle konnte nicht geprüft werden. Prüfen Sie Konten und Daten. Gemeinsame Daten benötigen eine eigene Freigabe und sind hier nicht unterstützt; geänderte oder zu große Quellen werden abgelehnt.</value>
+  </data>
+  <data name="Ai_Summary" xml:space="preserve">
+    <value>Zeitraum {0} bis {1}; ausgewählte Konten: {2}; ungeprüfte Zahlungszeilen: {3}.</value>
+  </data>
+  <data name="Ai_CurrencySummary" xml:space="preserve">
+    <value>Währung {0}: Nettoeinnahmen {1}; Nettoausgaben {2}; Differenz {3}.</value>
+  </data>
+  <data name="Ai_Exact" xml:space="preserve">
+    <value>Genaue Ausgangsdaten zum Durchscrollen: ISO-Daten und Währungen, ganzzahlige kleinste Geldeinheiten, Kontenanzahl, Bestätigungsumfang und ungeprüfte Anzahl. Keine Namen, Konto-IDs, Notizen, Einzelbuchungen oder Dokumente. Auch Summen sind sensible Finanzdaten.</value>
+  </data>
+  <data name="Ai_NoProvider" xml:space="preserve">
+    <value>Kein freigegebener integrierter Anbieter mit Guthabenpreisen ist eingerichtet. Lokale Vorbereitung und manuelles Teilen sind keine integrierte KI, liefern keine geprüfte Antwort und verbrauchen kein Zanance-KI-Guthaben.</value>
+  </data>
+  <data name="Ai_ProviderCheck" xml:space="preserve">
+    <value>Anbieter und Guthaben prüfen</value>
+  </data>
+  <data name="Ai_IdentityRequired" xml:space="preserve">
+    <value>Für integrierte Anfragen bei Zanance anmelden</value>
+  </data>
+  <data name="Ai_Quote" xml:space="preserve">
+    <value>Ziel und maximale Guthabeneinheiten prüfen</value>
+  </data>
+  <data name="Ai_Offer" xml:space="preserve">
+    <value>Ziel: {0}
+Anbieter: {1} · Modell: {2}
+Höchstens {3} Guthabeneinheiten; Angebot gültig bis {4}.</value>
+  </data>
+  <data name="Ai_Balance" xml:space="preserve">
+    <value>Verfügbar gekauft: {0}; geschenkt: {1}. Reserviert gekauft: {2}; geschenkt: {3}. Geschenkte Einheiten werden zuerst verwendet. Gekauftes Guthaben verfällt nicht; kein Abo enthält automatisch KI-Guthaben.</value>
+  </data>
+  <data name="Ai_Send" xml:space="preserve">
+    <value>Geprüfte Analyseanfrage senden</value>
+  </data>
+  <data name="Ai_SendConfirm" xml:space="preserve">
+    <value>Genau die geprüften Summen an {0} und Anbieter {1}, Modell {2}, senden und höchstens {3} Guthabeneinheiten reservieren? Die Offenlegung lässt sich nicht zurückholen; sie ist keine Zahlung oder Buchungsänderung. Modellausgabe bleibt ungeprüfter Text.</value>
+  </data>
+  <data name="Ai_ManualShare" xml:space="preserve">
+    <value>Ausgewählte Zusammenfassung mit anderer App teilen · kein Zanance-KI-Guthaben</value>
+  </data>
+  <data name="Ai_ManualConfirm" xml:space="preserve">
+    <value>Das genau geprüfte JSON und eine feste Erklärungsanfrage verlassen Zanance über das System-Teilen. Den tatsächlichen Empfänger wählen Sie dort; er kann lesbare Finanzdaten speichern oder weitergeben. Kein integriertes Modell läuft, keine Antwort ist garantiert und kein Zanance-KI-Guthaben wird verwendet. Fortfahren?</value>
+  </data>
+  <data name="Ai_ManualPrompt" xml:space="preserve">
+    <value>Erkläre ausschließlich diese ausgewählten erfassten Summen in der unter Language genannten Sprache. Beträge sind ganzzahlige kleinste Einheiten der jeweiligen ISO-Währung; Währungen nie ohne freigegebenen Kurs zusammenfassen. Überträge, Korrekturen und Kapitalbewegungen sind keine Einnahmen oder Ausgaben; Erstattungen mindern Ausgaben. Ungeprüfte Daten sind unsicher. Vergleiche nur ausdrücklich enthaltene Zeiträume. Erfinde keine fehlenden Fakten, versprich keinen Gewinn, triff keine Anlage-, Rechts- oder Steuerentscheidungen und fordere keine automatische Geldänderung. Die Antwort ist fehleranfälliger Text zur menschlichen Prüfung, keine geprüfte Beratung oder Anweisung.</value>
+  </data>
+  <data name="Ai_Offered" xml:space="preserve">
+    <value>Das System-Teilen wurde angeboten. Das bestätigt weder Empfang noch eine Antwort.</value>
+  </data>
+  <data name="Ai_ResultSnapshot" xml:space="preserve">
+    <value>Ursprünglich freigegebener Datenstand, keine Live-Daten; zum Prüfen scrollen. Das Ergebnis kann Ihre Buchungen nicht ändern.</value>
+  </data>
+  <data name="Ai_Fallible" xml:space="preserve">
+    <value>Ungeprüfter Modelltext kann falsch sein. Prüfen Sie die ursprünglichen Buchungen selbst. Kein Vorschlag, Link oder Befehl hier wird ausgeführt, ändert Geld oder ersetzt Anlage-, Rechts- oder Steuerfachwissen.</value>
+  </data>
+  <data name="Ai_ResultUnits" xml:space="preserve">
+    <value>Bestätigter Verbrauch: {0} Guthabeneinheiten. Nur der ungenutzte Teil der ursprünglichen Reservierung wurde zurückgegeben; keine Finanzbuchung.</value>
+  </data>
+  <data name="Ai_Pending" xml:space="preserve">
+    <value>Die ursprüngliche Anfrage ist offen oder ihr Ausgang unklar. Guthaben bleibt reserviert. Setzen Sie genau diese Anfrage fort oder schließen Sie sie vor einer neuen. Ein Timeout ist weder Erstattung noch Erlaubnis für eine erneute Belastung.</value>
+  </data>
+  <data name="Ai_Continue" xml:space="preserve">
+    <value>Ursprüngliche Anfrage fortsetzen</value>
+  </data>
+  <data name="Ai_ContinueConfirm" xml:space="preserve">
+    <value>Genau die oben gespeicherte Anfrage mit Empfänger, Datenstand und maximalen Guthabeneinheiten fortsetzen? Zuerst wird der Status geprüft. Nur wenn die Anfrage im Dienst fehlt, darf dasselbe freigegebene Paket mit derselben ID erneut gesendet werden. Keine neue ID und keine neuen Finanzdaten werden erzeugt oder gesammelt.</value>
+  </data>
+  <data name="Ai_Close" xml:space="preserve">
+    <value>Nicht angenommene Anfrage schließen</value>
+  </data>
+  <data name="Ai_CloseConfirm" xml:space="preserve">
+    <value>Genau diese Anfrage schließen, falls der Dienst sie noch nicht angenommen hat? Der Abschluss wird dauerhaft gespeichert, damit ein spätes Paket sie nicht doch startet. Bereits gesendete Arbeit lässt sich nicht zurückholen oder als erstattet annehmen; die Reservierung bleibt bis zum eindeutigen Anbieterergebnis. Zum Schließen werden keine Finanzdaten hochgeladen.</value>
+  </data>
+  <data name="Ai_NotAccepted" xml:space="preserve">
+    <value>Die ursprüngliche Anfrage wurde vor Reservierung oder Versand geschlossen. Kein Guthaben wurde verbraucht. Prüfen Sie vor einer neuen Anfrage neue Bedingungen.</value>
+  </data>
+  <data name="Ai_Refunded" xml:space="preserve">
+    <value>Der Anbieter hat eindeutig keinen Verbrauch bestätigt. Die ursprüngliche Reservierung wurde einmal zurückgegeben.</value>
+  </data>
+  <data name="Ai_Failed" xml:space="preserve">
+    <value>Der Vorgang wurde nicht bestätigt. Behalten Sie die ursprüngliche Anfrage und prüfen Sie deren Fortsetzung vor einer neuen. Finanzbuchungen wurden nicht geändert.</value>
+  </data>
+  <data name="Ai_Insufficient" xml:space="preserve">
+    <value>Verfügbares Guthaben liegt unter dem angezeigten Maximum. Die Anfrage kann nicht gesendet werden. Guthabenpaketpreise und Käufe sind hier nicht aktiviert.</value>
+  </data>
+  <data name="Ai_WaitStatus" xml:space="preserve">
+    <value>Der ursprüngliche Status wurde gerade geprüft. Behalten Sie dieselbe Anfrage und prüfen Sie später erneut; keine neue ID und keine wiederholten Sendungen.</value>
+  </data>
+  <data name="Ai_RefreshRequired" xml:space="preserve">
+    <value>Ursprüngliche Quelle, Auswahl oder Zugriff haben sich geändert. Vor dem Teilen erneut prüfen; dieser fehlgeschlagene Versuch sendete keine neuen Finanzdaten.</value>
+  </data>
+  <data name="Help_Ai_Title" xml:space="preserve">
+    <value>Ausgewählte Summen und optionale Analyse</value>
+  </data>
+  <data name="Help_Ai_Text" xml:space="preserve">
+    <value>Die Zahlen werden auf dem Gerät nach denselben Buchungsregeln wie Berichte berechnet, nie vom Modell. Wählen Sie Konten und Daten; nur bestätigte Buchungen ist anfangs aktiv, Vergleich aus. Die genaue Vorschau enthält Währungssummen und Anzahlen, keine Namen, Notizen, Dokumente oder Einzelbuchungen. Gemeinsame Profildaten werden bis zu einer eigenen geprüften Offenlegungsfreigabe abgelehnt. Manuelles Teilen bietet nur lesbares JSON und eine feste Anfrage an einen von Ihnen gewählten Empfänger; dieser kann die Daten speichern oder weitergeben, ohne Antwort- oder Integrationsgarantie. Integrierte Anfragen brauchen Ihre bestehende Zanance-Identität, einen gesondert freigegebenen Anbieter und ein Modell sowie eine ausdrückliche maximale Guthabenfreigabe je Anfrage. Kein API-Schlüssel wird verlangt. Gekauftes und geschenktes Guthaben bleibt getrennt; Geschenke werden zuerst genutzt, gekauftes Guthaben verfällt nicht. Eine verlorene Antwort behält die ursprüngliche ID; Fortsetzen prüft zuerst den Status und wiederholt nur das identische Paket, falls es im Dienst fehlt. Schließen verhindert späte Ausführung nur vor Annahme und unterstellt keine Erstattung. Modelle können irren; Text oder Beleganweisungen ändern niemals Geld. Keine Anlage-, Rechts- oder Steuerentscheidung wird geliefert.</value>
+  </data>
+  <data name="Help_Ai_Example" xml:space="preserve">
+    <value>Beispiel: ein EUR-Konto und einen Zeitraum wählen. Erfasste Ausgaben von 30 EUR mit 7 EUR Erstattung ergeben 23 EUR Nettoausgaben; ein 50 EUR-Übertrag ist keine Ausgabe. Prüfen Sie die genauen Felder und teilen Sie optional mit der gewählten App. Diese manuelle Übergabe verbraucht kein Zanance-KI-Guthaben.</value>
+  </data>
+  <data name="Ai_ShareUnconfirmed" xml:space="preserve">
+    <value>Das Ergebnis des Teilens wurde nicht bestätigt. Die gewählte App kann lesbare Daten bereits haben; prüfen Sie dort vor erneutem Teilen. Kein Zanance-KI-Guthaben wurde verwendet und keine Buchung geändert.</value>
+  </data>
 </root>

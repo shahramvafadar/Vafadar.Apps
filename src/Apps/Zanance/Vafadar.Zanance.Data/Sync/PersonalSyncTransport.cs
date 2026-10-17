@@ -43,7 +43,7 @@ public sealed class PersonalSyncHttpException(HttpStatusCode status) : Exception
 }
 
 /// <summary>Authenticated pinned local transport; no database ownership is held over its network requests.</summary>
-public sealed class PersonalSyncTransport : IProfileSynchronizationTransport, IDisposable
+public sealed partial class PersonalSyncTransport : IProfileSynchronizationTransport, IDisposable
 {
     private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, SemaphoreSlim> PeerRequests = new(StringComparer.Ordinal);
     private readonly HttpClient http;

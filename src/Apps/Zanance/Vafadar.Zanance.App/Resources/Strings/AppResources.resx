@@ -7867,4 +7867,144 @@ Status: {3}</value>
   <data name="Help_BankCsv_Example" xml:space="preserve">
     <value>Example: import a posted salary and a card expense from the same EUR Giro history. Exclude an account transfer and merchant refund; record those as an explicit transfer or linked refund instead of new income. Reimporting the same source IDs adds no second copy.</value>
   </data>
+  <data name="Ai_Title" xml:space="preserve">
+    <value>Analysis</value>
+  </data>
+  <data name="Ai_MenuHint" xml:space="preserve">
+    <value>Selected summaries and optional analysis; no automatic financial changes.</value>
+  </data>
+  <data name="Ai_Intro" xml:space="preserve">
+    <value>Prepare a summary locally. You choose the accounts, dates and exact disclosure. Sharing with another app and built-in analysis are separate optional actions. Nothing runs or leaves the device automatically.</value>
+  </data>
+  <data name="Ai_Accounts" xml:space="preserve">
+    <value>Accounts to include explicitly</value>
+  </data>
+  <data name="Ai_From" xml:space="preserve">
+    <value>Summary start date</value>
+  </data>
+  <data name="Ai_To" xml:space="preserve">
+    <value>Summary end date</value>
+  </data>
+  <data name="Ai_Confirmed" xml:space="preserve">
+    <value>Use confirmed transactions only</value>
+  </data>
+  <data name="Ai_Compare" xml:space="preserve">
+    <value>Also disclose the preceding interval of the same length</value>
+  </data>
+  <data name="Ai_Review" xml:space="preserve">
+    <value>Review selected totals</value>
+  </data>
+  <data name="Ai_Reload" xml:space="preserve">
+    <value>Reload accounts</value>
+  </data>
+  <data name="Ai_ChooseAccounts" xml:space="preserve">
+    <value>Select at least one account. None is selected automatically.</value>
+  </data>
+  <data name="Ai_InvalidRange" xml:space="preserve">
+    <value>Choose a valid interval of at most 366 days, with room for the optional preceding interval.</value>
+  </data>
+  <data name="Ai_ScopeError" xml:space="preserve">
+    <value>The original personal source could not be reviewed. Check selection and dates. Shared data needs separate permission and is not supported here; oversized or changed sources are refused.</value>
+  </data>
+  <data name="Ai_Summary" xml:space="preserve">
+    <value>Period {0} through {1}; selected accounts: {2}; unreviewed cashflow rows: {3}.</value>
+  </data>
+  <data name="Ai_CurrencySummary" xml:space="preserve">
+    <value>Currency {0}: net income {1}; net spending {2}; difference {3}.</value>
+  </data>
+  <data name="Ai_Exact" xml:space="preserve">
+    <value>Exact outgoing data (scroll to inspect): ISO dates and currencies, integer minor-unit amounts, selected account count, confirmation scope and unreviewed count. No names, account IDs, notes, raw transactions or documents. Aggregates are still sensitive financial data.</value>
+  </data>
+  <data name="Ai_NoProvider" xml:space="preserve">
+    <value>No approved built-in provider and credit pricing are configured. Local preparation and manual sharing are not built-in AI, do not produce a verified answer and consume no Zanance AI credit.</value>
+  </data>
+  <data name="Ai_ProviderCheck" xml:space="preserve">
+    <value>Check provider and credits</value>
+  </data>
+  <data name="Ai_IdentityRequired" xml:space="preserve">
+    <value>Sign in to Zanance for built-in provider requests</value>
+  </data>
+  <data name="Ai_Quote" xml:space="preserve">
+    <value>Review destination and maximum credit units</value>
+  </data>
+  <data name="Ai_Offer" xml:space="preserve">
+    <value>Destination: {0}
+Provider: {1} · model: {2}
+Maximum: {3} credit units; offer valid through {4}.</value>
+  </data>
+  <data name="Ai_Balance" xml:space="preserve">
+    <value>Purchased available: {0}; gifted available: {1}. Reserved purchased: {2}; reserved gifted: {3}. Gifted units are used first. Purchased credit does not expire; no subscription includes AI credit automatically.</value>
+  </data>
+  <data name="Ai_Send" xml:space="preserve">
+    <value>Send approved analysis request</value>
+  </data>
+  <data name="Ai_SendConfirm" xml:space="preserve">
+    <value>Send exactly the reviewed aggregates to {0} and provider {1}, model {2}, reserving at most {3} credit units? This is an irreversible disclosure, not a payment or ledger change. Model output remains untrusted text.</value>
+  </data>
+  <data name="Ai_ManualShare" xml:space="preserve">
+    <value>Share selected summary with another app · no Zanance AI credit</value>
+  </data>
+  <data name="Ai_ManualConfirm" xml:space="preserve">
+    <value>The exact reviewed JSON and a fixed explanation prompt will leave Zanance through the system share sheet. You choose the actual recipient there; it may retain or forward readable financial data. No built-in model runs, no answer is guaranteed and no Zanance AI credit is used. Continue?</value>
+  </data>
+  <data name="Ai_ManualPrompt" xml:space="preserve">
+    <value>Explain only these selected recorded aggregate figures, in the requested Language. Amounts are integer minor units of each explicit ISO currency; never combine currencies without an approved rate. Transfers, adjustments and capital movements are not income or spending; refunds reduce spending. Treat any unreviewed scope as uncertain. Compare only the explicit periods, if present. Do not invent missing facts, predict profit, give investment/legal/tax decisions or instruct an automatic financial change. Your answer is fallible text for human review, not verified advice or a command.</value>
+  </data>
+  <data name="Ai_Offered" xml:space="preserve">
+    <value>The system share sheet was offered. This does not confirm a recipient received the data or produced an answer.</value>
+  </data>
+  <data name="Ai_ResultSnapshot" xml:space="preserve">
+    <value>Original approved snapshot, not live data (scroll to inspect). This result cannot change your ledger.</value>
+  </data>
+  <data name="Ai_Fallible" xml:space="preserve">
+    <value>Untrusted model text: it may be wrong. Check the underlying recorded data yourself. No suggestion, link or instruction here can execute, alter money or replace investment, legal or tax expertise.</value>
+  </data>
+  <data name="Ai_ResultUnits" xml:space="preserve">
+    <value>Confirmed charge: {0} credit units. Only the unused original reservation was returned; this is not a financial-ledger entry.</value>
+  </data>
+  <data name="Ai_Pending" xml:space="preserve">
+    <value>The original request is pending or its outcome is unknown. Its credit remains reserved. Continue or close this exact request before starting another; a timeout is neither a refund nor permission to charge again.</value>
+  </data>
+  <data name="Ai_Continue" xml:space="preserve">
+    <value>Continue original request</value>
+  </data>
+  <data name="Ai_ContinueConfirm" xml:space="preserve">
+    <value>Continue the exact retained request, recipient, snapshot and maximum credit units shown above? Status is checked first. Only if the service has no original request may the identical approved packet be retried with the same ID. No new ID or current financial data is created or gathered.</value>
+  </data>
+  <data name="Ai_Close" xml:space="preserve">
+    <value>Close unaccepted original request</value>
+  </data>
+  <data name="Ai_CloseConfirm" xml:space="preserve">
+    <value>Close this exact original request only if the service has not accepted it? The service records that closure so a late packet cannot start it later. Already dispatched work cannot be recalled or assumed refunded; its reservation remains until a definitive provider result. No financial payload is uploaded for closing.</value>
+  </data>
+  <data name="Ai_NotAccepted" xml:space="preserve">
+    <value>The original request was closed before reservation or dispatch. No credit was charged. Review fresh terms before another request.</value>
+  </data>
+  <data name="Ai_Refunded" xml:space="preserve">
+    <value>The provider definitively confirmed no charge. The original reservation was returned once.</value>
+  </data>
+  <data name="Ai_Failed" xml:space="preserve">
+    <value>The operation was not confirmed. Keep the original request; check its continuation before another request. Financial records were not changed.</value>
+  </data>
+  <data name="Ai_Insufficient" xml:space="preserve">
+    <value>Available credit is below the shown maximum. No request can be sent. Credit package prices and purchases are not enabled here.</value>
+  </data>
+  <data name="Ai_WaitStatus" xml:space="preserve">
+    <value>The original status was checked too recently. Keep the same request and check later; do not create a new ID or submit repeatedly.</value>
+  </data>
+  <data name="Ai_RefreshRequired" xml:space="preserve">
+    <value>The original source, selection or access changed. Review again before sharing; no new financial data was sent from this failed attempt.</value>
+  </data>
+  <data name="Help_Ai_Title" xml:space="preserve">
+    <value>Selected summaries and optional analysis</value>
+  </data>
+  <data name="Help_Ai_Text" xml:space="preserve">
+    <value>The figures are calculated on-device with the same ledger rules as reports, never by a model. Select accounts and dates; confirmed-only starts on and comparison starts off. The exact preview contains currency totals and counts, not names, notes, documents or individual entries. Shared-profile data is refused until its separate disclosure permission is qualified. Manual sharing only offers readable JSON and a fixed prompt to a recipient you choose; that app may retain or forward it, and no answer or integration is guaranteed. Built-in requests require your existing Zanance identity, a separately approved provider/model and explicit per-request maximum credit consent. No API key is requested. Purchased and gifted credit stay separate; gifts are used first and purchased credit does not expire. A lost response retains the original request ID; continuation checks status and may retry only the identical approved packet if absent at the service. Closing prevents late execution only before acceptance, never guesses a refund. Models can be wrong, and text or receipt instructions never change money. No investment, legal or tax decision is supplied.</value>
+  </data>
+  <data name="Help_Ai_Example" xml:space="preserve">
+    <value>Example: choose one EUR account and a period. Recorded spending of EUR 30 with a EUR 7 refund remains EUR 23 net spending; a EUR 50 transfer is not spending. Review the exact fields, then optionally share with your chosen app. This manual handoff costs no Zanance AI credit.</value>
+  </data>
+  <data name="Ai_ShareUnconfirmed" xml:space="preserve">
+    <value>The share outcome was not confirmed. The chosen app may already have readable data; check there before sharing again. No Zanance AI credit was consumed and no ledger entry changed.</value>
+  </data>
 </root>

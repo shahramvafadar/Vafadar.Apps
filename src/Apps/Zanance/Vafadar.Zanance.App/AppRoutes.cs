@@ -3,6 +3,9 @@ namespace Vafadar.Zanance.App;
 /// <summary>Stable application routes shared by Shell and platform-independent link routing.</summary>
 public static class AppRoutes
 {
+    /// <summary>Explicit local aggregate/optional analysis review, never an automatic provider request.</summary>
+    public const string AnalysisRoute = "analysis";
+
     /// <summary>Route of the account list.</summary>
     public const string AccountsRoute = "accounts";
 

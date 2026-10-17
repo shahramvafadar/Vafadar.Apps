@@ -63,7 +63,7 @@ jobs:
       - name: Verify actual identity, private storage and isolated restore
         run: |
           mkdir -p TestResults
-          ./artifacts/identity-test-runtime/Vafadar.Zanance.Api.Tests -trait- "Qualification=BillingLocal" -failSkips -result-xml TestResults/identity.xml
+          ./artifacts/identity-test-runtime/Vafadar.Zanance.Api.Tests -trait- "Qualification=BillingLocal" -trait- "Qualification=AiLocal" -failSkips -result-xml TestResults/identity.xml
       - name: Upload bounded test results
         if: always()
         uses: actions/upload-artifact@v7
@@ -167,3 +167,46 @@ jobs:
       - name: Remove only this job's fictional database container
         if: always()
         run: docker rm -f zanance-personal-sync-ci
+
+  analysis:
+    name: Isolated analysis consent and credits
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      DOTNET_NOLOGO: true
+      ZANANCE_AI_QA_CONNECTION: Host=127.0.0.1;Port=55478;Database=zanance_ai_d298;Username=postgres
+      ZANANCE_AI_QA_ROOT: ${{ github.workspace }}/artifacts/analysis-ci-fixture
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+      - name: Prepare owned fictional PostgreSQL dependency
+        run: |
+          docker run -d --name zanance-analysis-ci -p 127.0.0.1:55478:5432 --tmpfs /var/lib/postgresql -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_DB=zanance_ai_d298 postgres@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15
+          for attempt in $(seq 1 30); do
+            if docker exec zanance-analysis-ci pg_isready -h 127.0.0.1 -U postgres -d zanance_ai_d298; then break; fi
+            sleep 1
+          done
+          docker exec zanance-analysis-ci pg_isready -h 127.0.0.1 -U postgres -d zanance_ai_d298
+          mkdir -p "$ZANANCE_AI_QA_ROOT" TestResults
+          printf '%s' 'Zanance fictional analysis d298' > "$ZANANCE_AI_QA_ROOT/fixture.marker"
+      - name: Publish patched independent analysis test runtime
+        run: dotnet publish test/Apps/Zanance/Vafadar.Zanance.Api.Tests/Vafadar.Zanance.Api.Tests.csproj --configuration Release -r linux-x64 --self-contained true -p:RuntimeFrameworkVersion=10.0.13 -p:ContinuousIntegrationBuild=true --output artifacts/analysis-test-runtime
+      - name: Verify durable original reservations and outcomes
+        run: ./artifacts/analysis-test-runtime/Vafadar.Zanance.Api.Tests -class '*AiCreditPersistenceTests' -failSkips -result-xml TestResults/analysis-store.xml
+      - name: Verify pinned HTTPS and private original continuation
+        run: ./artifacts/analysis-test-runtime/Vafadar.Zanance.Api.Tests -class '*AiHttpContinuationTests' -failSkips -result-xml TestResults/analysis-http.xml
+      - name: Verify separate worker credit ownership and closed default provider
+        run: ./artifacts/analysis-test-runtime/Vafadar.Zanance.Api.Tests -class '*AiConcurrentCreditTests' -failSkips -result-xml TestResults/analysis-workers.xml
+      - name: Upload bounded analysis reports only
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: analysis-consent-results
+          path: TestResults/analysis-*.xml
+          retention-days: 14
+      - name: Remove only the ephemeral analysis container
+        if: always()
+        run: docker rm -f zanance-analysis-ci

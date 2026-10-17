@@ -6123,3 +6123,23 @@ and changed original history/payload refuse. Transfers/refunds/reversals/pending
 29 new focused cases and32 affected existing import cases pass;23 resource checks pass. Historical3753 full-suite
 count is unchanged and was not rerun. No new schema/SDK/permission. IMP-01/BANK-01 remain In progress for actual
 bank revisions/other markets/relationships, not a universal support claim. Delivery record: enhancements/2026-10-commercial-release/14-bank-csv-delivery.md.
+
+### Section31 current delivery: D-298 optional aggregate analysis prerequisites
+
+OD-13 local prerequisites now compose the original app/data/identity/service boundary: explicit personal scope,
+coherent recorded aggregates, exact local preview/native consent, separate readable manual handoff and immutable
+private original continuation. Names/payees/notes/documents/transaction identities stay out; shared data is refused.
+Read-only model text never changes money or executes instructions. Original destination/model/max-unit consent
+is retained with historical requests; fresh wallet snapshots never come from cached historical balances.
+
+The separate service has additive AiConsentAndCredits/AiOriginalGrantIdentity migrations and regenerated compiled
+model, actual session-scoped owner locks and append-only purchased/gifted reserve/settle/refund. No purchased
+expiry or subscription-implied units, grant endpoint, automatic resend or guessed refund. Actual absent-id
+continuation reuses identical consent; durable unaccepted closure prevents late dispatch. Default provider is closed.
+34 distinct focused cases pass (11 source,14 application flow,5 final bounds,4 service facts including real TLS and
+separate-worker persistence); the retained-terms refinement repeats only its one affected application case.
+23 existing resource completeness/usage cases pass. Historical3753 full-suite evidence was not replayed/recounted.
+Native UI18 contexts plus six retained-terms reads, actual64KiB Android private cold/loss refusal and main Release
+manual chooser/cold Home are qualified; exact package, startup failure/22-second cold observation and limits are
+recorded separately in15-ai-local-delivery.md. Live provider/costs/packages/credit sales,
+public activation, shared-data disclosure, physical devices and native iOS are still open, not release acceptance.

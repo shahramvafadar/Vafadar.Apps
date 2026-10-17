@@ -7807,4 +7807,144 @@ Estado: {3}</value>
   <data name="Help_BankCsv_Example" xml:space="preserve">
     <value>Ejemplo: importa una nómina contabilizada y un gasto de tarjeta del mismo historial Giro en EUR. Excluye transferencias y reembolsos del comercio; regístralos como transferencia expresa o reembolso vinculado, no como ingreso nuevo. Reimportar los mismos identificadores no crea otra copia.</value>
   </data>
+  <data name="Ai_Title" xml:space="preserve">
+    <value>Análisis</value>
+  </data>
+  <data name="Ai_MenuHint" xml:space="preserve">
+    <value>Resúmenes seleccionados y análisis opcional; sin cambios financieros automáticos.</value>
+  </data>
+  <data name="Ai_Intro" xml:space="preserve">
+    <value>Prepara un resumen local. Tú eliges las cuentas, fechas y datos exactos. Compartir con otra app y el análisis integrado son acciones opcionales distintas. Nada se ejecuta ni sale del dispositivo automáticamente.</value>
+  </data>
+  <data name="Ai_Accounts" xml:space="preserve">
+    <value>Cuentas que eliges incluir</value>
+  </data>
+  <data name="Ai_From" xml:space="preserve">
+    <value>Fecha inicial del resumen</value>
+  </data>
+  <data name="Ai_To" xml:space="preserve">
+    <value>Fecha final del resumen</value>
+  </data>
+  <data name="Ai_Confirmed" xml:space="preserve">
+    <value>Usar solo movimientos confirmados</value>
+  </data>
+  <data name="Ai_Compare" xml:space="preserve">
+    <value>Incluir también el intervalo anterior de igual duración</value>
+  </data>
+  <data name="Ai_Review" xml:space="preserve">
+    <value>Revisar los totales seleccionados</value>
+  </data>
+  <data name="Ai_Reload" xml:space="preserve">
+    <value>Volver a cargar las cuentas</value>
+  </data>
+  <data name="Ai_ChooseAccounts" xml:space="preserve">
+    <value>Elige al menos una cuenta. Ninguna se selecciona automáticamente.</value>
+  </data>
+  <data name="Ai_InvalidRange" xml:space="preserve">
+    <value>Elige un intervalo válido de hasta 366 días; el intervalo anterior opcional también debe tener fechas válidas.</value>
+  </data>
+  <data name="Ai_ScopeError" xml:space="preserve">
+    <value>No se pudo revisar la fuente personal original. Comprueba cuentas y fechas. Los datos compartidos necesitan un permiso aparte y no se admiten aquí; se rechazan fuentes modificadas o demasiado grandes.</value>
+  </data>
+  <data name="Ai_Summary" xml:space="preserve">
+    <value>Período del {0} al {1}; cuentas elegidas: {2}; filas de flujo sin revisar: {3}.</value>
+  </data>
+  <data name="Ai_CurrencySummary" xml:space="preserve">
+    <value>Divisa {0}: ingresos netos {1}; gastos netos {2}; diferencia {3}.</value>
+  </data>
+  <data name="Ai_Exact" xml:space="preserve">
+    <value>Datos exactos que saldrán; desplázate para revisarlos: fechas y divisas ISO, importes enteros en unidades monetarias mínimas, número de cuentas, filtro de confirmación y recuento sin revisar. Sin nombres, identificadores, notas, movimientos individuales ni documentos. Los totales también son datos financieros sensibles.</value>
+  </data>
+  <data name="Ai_NoProvider" xml:space="preserve">
+    <value>No hay un proveedor integrado ni precios de créditos aprobados. La preparación local y el uso compartido manual no son IA integrada, no generan una respuesta verificada ni consumen créditos de IA de Zanance.</value>
+  </data>
+  <data name="Ai_ProviderCheck" xml:space="preserve">
+    <value>Consultar proveedor y créditos</value>
+  </data>
+  <data name="Ai_IdentityRequired" xml:space="preserve">
+    <value>Inicia sesión en Zanance para solicitudes al proveedor integrado</value>
+  </data>
+  <data name="Ai_Quote" xml:space="preserve">
+    <value>Revisar destino y unidades máximas de crédito</value>
+  </data>
+  <data name="Ai_Offer" xml:space="preserve">
+    <value>Destino: {0}
+Proveedor: {1} · modelo: {2}
+Máximo: {3} unidades de crédito; oferta válida hasta {4}.</value>
+  </data>
+  <data name="Ai_Balance" xml:space="preserve">
+    <value>Comprados disponibles: {0}; regalados disponibles: {1}. Comprados reservados: {2}; regalados reservados: {3}. Se usan primero los regalos. Los créditos comprados no caducan; ninguna suscripción incluye créditos de IA automáticamente.</value>
+  </data>
+  <data name="Ai_Send" xml:space="preserve">
+    <value>Enviar la solicitud de análisis aprobada</value>
+  </data>
+  <data name="Ai_SendConfirm" xml:space="preserve">
+    <value>¿Enviar exactamente los totales revisados a {0} y al proveedor {1}, modelo {2}, reservando como máximo {3} unidades de crédito? La divulgación no se puede deshacer; no es un pago ni un cambio del registro. La salida del modelo sigue siendo texto no fiable.</value>
+  </data>
+  <data name="Ai_ManualShare" xml:space="preserve">
+    <value>Compartir el resumen elegido con otra app · sin créditos de IA de Zanance</value>
+  </data>
+  <data name="Ai_ManualConfirm" xml:space="preserve">
+    <value>El JSON exacto revisado y una petición fija de explicación saldrán de Zanance mediante el menú de compartir. Allí eliges al destinatario real, que podría conservar o reenviar los datos financieros legibles. No se ejecuta un modelo integrado, no se garantiza respuesta ni se usan créditos de IA de Zanance. ¿Continuar?</value>
+  </data>
+  <data name="Ai_ManualPrompt" xml:space="preserve">
+    <value>Explica solo estos totales registrados seleccionados en el idioma indicado en Language. Los importes son enteros en la unidad mínima de cada divisa ISO; no combines divisas sin un tipo aprobado. Transferencias, ajustes y movimientos de capital no son ingresos ni gastos; los reembolsos reducen gastos. Considera incierto el ámbito sin revisar. Compara únicamente los períodos explícitos incluidos. No inventes datos, prometas beneficios, tomes decisiones de inversión, legales o fiscales ni indiques cambios financieros automáticos. Tu respuesta es texto falible para revisión humana, no consejo verificado ni una orden.</value>
+  </data>
+  <data name="Ai_Offered" xml:space="preserve">
+    <value>Se abrió el menú de compartir. No confirma que un destinatario recibiera los datos o generara una respuesta.</value>
+  </data>
+  <data name="Ai_ResultSnapshot" xml:space="preserve">
+    <value>Instantánea original aprobada, no datos en directo; desplázate para revisarla. Este resultado no puede cambiar tu registro.</value>
+  </data>
+  <data name="Ai_Fallible" xml:space="preserve">
+    <value>El texto del modelo no es fiable y puede equivocarse. Comprueba tú los datos originales. Ninguna sugerencia, enlace o instrucción se ejecuta, cambia dinero ni sustituye conocimientos de inversión, derecho o fiscalidad.</value>
+  </data>
+  <data name="Ai_ResultUnits" xml:space="preserve">
+    <value>Cargo confirmado: {0} unidades de crédito. Solo se devolvió la parte no utilizada de la reserva original; no es un asiento financiero.</value>
+  </data>
+  <data name="Ai_Pending" xml:space="preserve">
+    <value>La solicitud original está pendiente o se desconoce su resultado. Sus créditos siguen reservados. Continúa o cierra esta solicitud exacta antes de iniciar otra; un timeout no es un reembolso ni permiso para volver a cobrar.</value>
+  </data>
+  <data name="Ai_Continue" xml:space="preserve">
+    <value>Continuar la solicitud original</value>
+  </data>
+  <data name="Ai_ContinueConfirm" xml:space="preserve">
+    <value>¿Continuar la solicitud, destinatario, instantánea y máximo de créditos originales mostrados arriba? Primero se consulta el estado. Solo si no existe la solicitud original en el servicio se reintenta el mismo paquete aprobado con el mismo ID. No se crea otro ID ni se recopilan datos financieros actuales.</value>
+  </data>
+  <data name="Ai_Close" xml:space="preserve">
+    <value>Cerrar la solicitud original no aceptada</value>
+  </data>
+  <data name="Ai_CloseConfirm" xml:space="preserve">
+    <value>¿Cerrar esta solicitud exacta solo si el servicio aún no la aceptó? El cierre queda registrado para impedir que un paquete tardío la ejecute. Un trabajo enviado no se puede recuperar ni dar por reembolsado; su reserva sigue hasta un resultado definitivo del proveedor. Para cerrar no se suben datos financieros.</value>
+  </data>
+  <data name="Ai_NotAccepted" xml:space="preserve">
+    <value>La solicitud original se cerró antes de reservar o enviar. No se cobraron créditos. Revisa condiciones nuevas antes de otra solicitud.</value>
+  </data>
+  <data name="Ai_Refunded" xml:space="preserve">
+    <value>El proveedor confirmó definitivamente que no hay cargo. La reserva original se devolvió una sola vez.</value>
+  </data>
+  <data name="Ai_Failed" xml:space="preserve">
+    <value>La operación no se confirmó. Conserva la solicitud original y revisa su continuación antes de otra. No se cambiaron registros financieros.</value>
+  </data>
+  <data name="Ai_Insufficient" xml:space="preserve">
+    <value>El crédito disponible es inferior al máximo mostrado. No se puede enviar la solicitud. Aquí no están habilitados precios ni compras de paquetes de crédito.</value>
+  </data>
+  <data name="Ai_WaitStatus" xml:space="preserve">
+    <value>El estado original se consultó hace muy poco. Conserva la misma solicitud y consulta más tarde; no crees otro ID ni envíes repetidamente.</value>
+  </data>
+  <data name="Ai_RefreshRequired" xml:space="preserve">
+    <value>La fuente, selección o acceso original cambió. Revisa de nuevo antes de compartir; este intento fallido no envió datos financieros nuevos.</value>
+  </data>
+  <data name="Help_Ai_Title" xml:space="preserve">
+    <value>Resúmenes elegidos y análisis opcional</value>
+  </data>
+  <data name="Help_Ai_Text" xml:space="preserve">
+    <value>Las cifras se calculan en el dispositivo con las mismas reglas del registro que los informes, nunca con un modelo. Elige cuentas y fechas; solo confirmados está activado al principio y la comparación desactivada. La vista exacta contiene totales por divisa y recuentos, no nombres, notas, documentos ni movimientos individuales. Los datos de perfiles compartidos se rechazan hasta validar un permiso de divulgación separado. Compartir manualmente solo ofrece JSON legible y una petición fija al destinatario que eliges; esa app puede conservarlo o reenviarlo y no se garantiza respuesta ni integración. Las solicitudes integradas requieren tu identidad Zanance existente, un proveedor y modelo aprobados aparte y consentimiento explícito del máximo de créditos por solicitud. No se pide una clave API. Los créditos comprados y regalados están separados; se usan primero los regalos y los comprados no caducan. Una respuesta perdida conserva el ID original; continuar consulta primero el estado y solo reintenta el paquete idéntico si falta en el servicio. Cerrar impide ejecuciones tardías solo antes de la aceptación y no supone un reembolso. Los modelos pueden equivocarse; el texto o las instrucciones de recibos nunca cambian dinero. No se proporcionan decisiones de inversión, legales ni fiscales.</value>
+  </data>
+  <data name="Help_Ai_Example" xml:space="preserve">
+    <value>Ejemplo: elige una cuenta EUR y un período. Un gasto registrado de 30 EUR con un reembolso de 7 EUR deja 23 EUR netos; una transferencia de 50 EUR no es un gasto. Revisa los campos exactos y comparte opcionalmente con tu app elegida. Este envío manual no consume créditos de IA de Zanance.</value>
+  </data>
+  <data name="Ai_ShareUnconfirmed" xml:space="preserve">
+    <value>No se confirmó el resultado de compartir. La app elegida podría tener ya los datos legibles; compruébalo allí antes de volver a compartir. No se consumieron créditos de IA de Zanance ni se cambió el registro.</value>
+  </data>
 </root>

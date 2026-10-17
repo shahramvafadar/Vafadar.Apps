@@ -324,3 +324,14 @@ one non-overlapping selected continuation. New generic/full/partial money valida
 plan selection under the same writer; original account feedback and retained past payments remain. No activation,
 persistence/UI, schema or portable paid data. Reminder eligibility projection is Core only; actual reminder/snooze
 delivery remains open. [Evidence](../../quality/selected-plan-occurrences.md).
+
+
+## D-298 local implementation of the optional analysis boundary
+
+The original app/data/pinned identity/API composition now implements explicit personal aggregate disclosure,
+private immutable original request continuation and service-owned append-only purchased/gifted credits. The
+service reserves before one original provider dispatch, settles/refunds only definitive evidence and closes an
+unaccepted id durably. Native manual summary sharing is independent of built-in analysis and consumes no credit.
+Shared sources are refused. Output remains fallible plain text, with no financial commands. A live provider,
+real unit packages/pricing, trusted consumable verification, provider reconciliation and public activation remain
+unconfigured/gated. See15-ai-local-delivery.md for exact local/native/package evidence and remaining decisions.

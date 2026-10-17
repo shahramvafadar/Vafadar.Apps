@@ -3395,3 +3395,20 @@ complete paged review, explicit legacy/UTF-8 encoding, exact currency/minor unit
 invalid rows, stale finance/account/retired-form/payload and forbidden loan/asset target rejection are covered.
 This is not a repeated full-suite run or actual bank-account acceptance. Native Windows/Release Android and
 package results, including original failed fixture preparation, are recorded in enhancements/2026-10-commercial-release/14-bank-csv-delivery.md.
+
+## AT-298 Optional personal analysis, consent and original credits
+
+Actual application source/SQLite verifies selected aggregate math, per-currency refund/reversal rules, absence
+of identities/notes/documents, coherent unchanged financial data, source-change refusal and native-effect gates.
+The application-flow port checks manual Cancel/authentication, original scope/form/cover retirement, uncertainty,
+provider consent/continuation and fresh balance versus cached history. Hostile/null/bounded output stays text.
+
+Independent PostgreSQL stages verify protected original intent, immutable append-only credit events, global
+receipt ownership, gift-first reserve/actual settle/refund, no double dispatch, metadata-only durable closure,
+insufficient original consent and cold result. Actual Kestrel pinned TLS and identity middleware qualify private
+client persistence before HTTP, same-id absent replay, lost reply continuation without another financial POST,
+unusable output retention, expiry and session revocation. Separate worker stores qualify the actual owner lock.
+The closed default has no automatic provider/model or public grant endpoint. Existing resource completeness/
+usage checks cover all six languages. Native UI, actual Android private adapter/share and signed package state
+remain separately recorded in15-ai-local-delivery.md; only its completed stages are accepted. Whole-suite3753
+is historical, not a newly executed count. Real provider/credit purchases/public/iOS/phone acceptance is open.

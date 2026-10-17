@@ -1839,3 +1839,15 @@ import/reimport/durable Undo, retaining actual mixed-bank revision gaps in IMP-0
 or widen into unapproved IMP-02 merely to mark the research complete. Continue approved independent local AI
 consent/minimal-data/credit accounting and FX provenance/cache/manual fallback across unavailable customer-bank
 corpora and external provider gates. No replay of successful unrelated sync/billing/cipher/accountant checks.
+
+## D-298 aggregate consent and credit composition
+
+One complete approved local batch combines the original app review/native confirmation, minimal coherent personal
+source, existing pinned identity, private original continuation, service-owned immutable credit/request history,
+actual PostgreSQL/TLS/owner-lock checks, native review and signed package. Current qualification is recorded in
+15-ai-local-delivery.md; do not mark native/package completion from compilation alone. Do not replay completed
+billing, sync, household, cipher, bank-import, accountant or whole-suite checks.
+
+After this complete local prerequisite batch, continue the approved FX/assets provenance/cache/staleness/manual
+fallback work. Actual AI/rates providers, licence/costs/keys/credit sale and public release remain explicit gates;
+retain customer-bank corpora, Mac/store/phone/public requirements in their original current/deferred scopes.

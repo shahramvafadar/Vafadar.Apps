@@ -6032,3 +6032,23 @@ revalidate exact source history/rights/proposed entries in the writer, preserve 
 No schema, migration, SDK or permission change. Current commercial test limits remain inactive. Broader IMP-01
 and BANK-01 stay In progress; OFX/QIF/CAMT remain outside approved implementation. Exact original sources,
 focused verification, retained negative evidence and native/package qualification: enhancements/2026-10-commercial-release/14-bank-csv-delivery.md.
+
+## D-298 Optional personal aggregate analysis and local credit prerequisites
+
+Implement OD-13 through one app/data/service composition: explicit personal scope, original ledger aggregates,
+complete local disclosure, native consent, separate manual text sharing, pinned existing identity and device-private
+original continuation. Read-only untrusted output never executes instructions or financial writes. Shared data is
+refused until its separate provider-disclosure permission is qualified. No receipt/note/free-form instructions,
+account names/ids, payees or documents enter a provider payload. No API key is requested from the user.
+
+The separate service owns append-only purchased/gifted credits, gift-first reservations, actual-cost settlement,
+unused allocation refunds and immutable original consent. Purchased credit has no expiry. An internal trusted
+grant port is not a sale or client route. Literal request identity survives uncertain transport; never dispatch an
+accepted id twice or guess a refund. An absent original may be explicitly replayed identically or durably closed
+without financial upload; late packets cannot execute a closed id. Actual authentication/owner locks and unique
+grant receipt identity prevent cross-user grants and duplicate reservation. Service schema uses two additive EF
+migrations and the regenerated service compiled model; the financial application schema is unchanged.
+
+No live model/provider, price/package units, credit purchase or public activation is selected. Local qualification
+and exact negative evidence, native/package state and remaining gates are recorded in
+`enhancements/2026-10-commercial-release/15-ai-local-delivery.md`. Historical whole-suite3753 was not repeated.

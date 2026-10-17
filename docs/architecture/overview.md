@@ -266,3 +266,17 @@ The original MAUI comparison/identity pages use explicit billing effects; applic
 actual non-UI source rather than reproducing algorithms. Android has the selected maintained Play adapter; native
 StoreKit2 remains an actual Mac implementation/build gate. Web is reserved/identity-bound, without a checkout.
 Commercial Windows and public commercial activation are outside this local delivery.
+
+## Optional personal analysis (D-298)
+
+Zanance.Core defines bounded aggregate/offer/request contracts and fixed read-only purposes. Data reads selected
+minimal financial fields through one coherent original protected SQLite reader, reuses LedgerCalculator and hashes
+only private source/approved packet for stale-consent checks. No source financial write or raw-note/document upload.
+The original app view model has explicit native/remote ports; app-flow tests compile that source unchanged.
+
+The existing pinned personal identity transport owns rotating sessions. A separate platform-private client journal
+retains one literal request before HTTP and blocks fresh ids while uncertain. The API independently owns immutable
+original offers/requests, protected payload/results, append-only purchased/gifted credit and PostgreSQL owner locks.
+Two additive migrations/regenerated service compiled model qualify ordering, global grant identity and database
+triggers; the app financial model is unchanged. No real provider adapter, client grant route or invented price.
+See the D-298 delivery record for local qualification, failures and remaining live-provider/native gates.

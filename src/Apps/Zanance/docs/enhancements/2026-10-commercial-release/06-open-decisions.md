@@ -123,3 +123,12 @@ authorize paid hosting, household sharing or commercial activation. Do not ask t
 Purchase ownership/trial/discount,
 shared-space retention/storage/E2EE, tax scope and hosted/provider gates stay in the table above.
 Current ENT-05 test-build/upgrade evidence does not activate any customer commercial limit.
+
+## D-298 local AI authority boundary
+
+OD-13 permits local provider-neutral personal aggregates, native exact disclosure, private original continuation,
+service-owned purchased/gifted credit accounting and independent fictional-provider qualification. This is not
+selection of a live model, unit package/pricing, purchased consumable, API credential, public activation or shared
+financial-data disclosure. The default provider remains unconfigured. Manual readable-summary sharing is a
+separate deliberate recipient handoff, without integrated answer guarantee or Zanance credit use. Completed
+local evidence and remaining external decisions are recorded in15-ai-local-delivery.md; settled choices stand.

@@ -30,6 +30,8 @@
     <ProjectReference Include="../../../Shared/Vafadar.Testing/Vafadar.Testing.csproj" />
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <PackageReference Include="FluentIcons.Common" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Analysis/IAiRuntime.cs" Link="Application/IAiRuntime.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Analysis/AiAnalysisViewModel.cs" Link="Application/AiAnalysisViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Accounts/LoanScheduleViewModel.cs" Link="Application/LoanScheduleViewModel.cs" />

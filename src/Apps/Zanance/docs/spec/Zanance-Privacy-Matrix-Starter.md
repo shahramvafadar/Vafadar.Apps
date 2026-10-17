@@ -899,3 +899,15 @@ connection or permission. Source account participates in local idempotence; only
 its field is not saved to ledger. Original remittance/payee/comments can carry sensitive identifiers and are
 shown before import. Stored entries/Undo retain existing encrypted-profile and portable-export privacy rules.
 Original selected file is never changed/deleted.
+
+## D-298 Aggregate-only optional analysis
+
+Personal accounts/period require explicit local selection and exact packet review. Aggregate dates/currency
+figures/counts/confirmation/language may leave the device only through deliberate manual sharing or native
+consent to a named configured provider/model/max credit quantity. No names/payees/notes/documents/entry ids;
+shared data is refused. Manual recipients may retain/forward readable text and guarantee no integrated answer.
+Existing pinned identity/private service key ring protects original provider intent/result; the actual service owns
+append-only purchased/gifted credits. Device-private pending state/loss markers are not portable settings or
+synchronization authority. Unknown transport outcomes keep their original reservation/id; no automatic retry,
+grant, API key, financial write or new SDK/permission. Default live provider and credit sales stay unavailable.
+Exact current local/native/package evidence and unpassed external gates: commercial-release/15-ai-local-delivery.
