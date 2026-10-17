@@ -82,6 +82,6 @@ Local artifacts/phone-ocr-d325 holds image source/manifest/rendered contact shee
 fr-diagnosis.json, 118-test/cleanup/build logs, package proof and acceptance.json. QA-05 remains partial for
 real corpus/camera/scanned images, other devices/iOS and platform acceptance. No latency or full release claim.
 
-Separate observed ready defect: transfer-only Transactions currently prints Transactions: 1 · total: with
-an empty monetary suffix. Its one-entry count is valid but its caption needs correction; this is not repaired
-by the receipt change. Preserve count-transfers.xml and address the existing summary presentation next.
+Separate defect observed at D-325: transfer-only Transactions printed Transactions: 1 · total: with
+an empty monetary suffix. Preserve count-transfers.xml as the original failure; the separate D-326
+[summary correction](transaction-summary-result.md) now qualifies count-only presentation on the phone.

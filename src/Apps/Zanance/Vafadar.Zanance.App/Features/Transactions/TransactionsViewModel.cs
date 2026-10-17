@@ -339,7 +339,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         var matching = EntrySearch.Apply(_entries, filter, id => categories.Name(id), _accounts).ToList();
         var filtered = _categoryIds is not null || _customPeriod is not null || KindIndex != 0 || !string.IsNullOrWhiteSpace(SearchText);
         SummaryText = filtered && matching.Count > 0
-            ? _translator.Format("Tx_FilterTotal", matching.Count, string.Join("  ", EntrySearch.NetByCurrency(matching, _accounts).Select(n => MoneyText.Format(n.Value, n.Key, culture, showPlus: true))))
+            ? TransactionSummary.Format(matching, _accounts, _translator, culture)
             : null;
 
         // One new list instead of clearing and adding day by day: each added group made the list lay out again, which was

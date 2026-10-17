@@ -1524,3 +1524,8 @@ A zero outstanding balance stops the repayment estimate, not the existence of st
 ## Receipt OCR accent evidence (D-325)
 
 Latin accent differences may match a complete known total/exclusion phrase, but the existing review card keeps the actual OCR source. Never silently rewrite digits, currencies or spelling to populate a receipt amount. Missing/conflicting evidence keeps manual entry and explicit Save/Discard.
+
+
+## Filtered transaction summaries (D-326)
+
+A nonempty filtered list shows its count. Add the total caption only when the original income/spending result has a currency packet. Transfer/adjustment/asset movements never acquire a synthetic zero result; a real currency sum of zero remains visible. Reuse the existing six-language count text and MoneyText packets. Keep the original rows, filters and navigation unchanged. See [native and application evidence](quality/transaction-summary-result.md).

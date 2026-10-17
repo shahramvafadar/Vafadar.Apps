@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Filtered transaction summaries (D-326)
+
+- Show only the transaction count when transfers have no income/spending total. Keep real zero totals and separate currencies visible.
+
 ### Receipt OCR accent tolerance (D-325)
 
 - Recognize purchase-total labels when image reading changes a Latin accent, while retaining the original evidence and refusing damaged amounts or conflicting currencies. Verify the correction and safe review on the approved Android phone.

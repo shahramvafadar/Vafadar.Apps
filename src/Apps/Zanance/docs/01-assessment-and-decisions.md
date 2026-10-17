@@ -6402,3 +6402,20 @@ Three pre-fix successes are retained; four final cases and upgrade preserve five
 Save/reset. Exact owned inputs and diagnostic package are removed. Real corpus/camera/scanned/iOS and
 release gates remain open; a separate dangling transfer-summary caption is observed and queued next.
 See [physical evidence](quality/physical-receipt-ocr-accents.md).
+
+
+## D-326 — Complete transaction summaries without an empty total
+
+D-326 fixes the observed transfer-only transaction summary: show the existing translated count-only
+caption when the actual result-currency dictionary is empty. Retain a real zero result, separate currency
+packets, original matching rows and unchanged income/spending/transfer semantics. No new string, schema,
+financial write, dependency or native cipher change is introduced. All 18 focused application-source cases
+pass across six languages, followed by test cleanup; the Windows and complete signed offline Android
+builds have zero warnings/errors. The independent actual Windows page passes 18 en/fa/de light/dark
+360/412/1280 contexts with complete scaled captions and unchanged stored inputs. Six successful English
+contexts are retained; only the remaining contexts continue after correcting the diagnostic's Persian-digit
+comparison and hidden-root measurement order. The original Samsung upgrade shows transfer count 1 with
+no dangling total, expenses 3/net -21, income 1/net 1000 and final Home 979 without Save/reset. Phone
+preservation is displayed-state evidence, not raw main-store equality. Remaining receipt corpus/camera,
+performance/cold/ANR, iOS/provider/Store and release acceptance remain separate.
+See [qualified evidence](quality/transaction-summary-result.md).

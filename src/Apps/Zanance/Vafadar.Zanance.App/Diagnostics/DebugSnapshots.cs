@@ -211,6 +211,10 @@ internal static partial class DebugSnapshots
     private static async Task RunAsync(App app, IServiceProvider services, string folder)
     {
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "transaction-summary")
+        {
+            await ReviewTransactionSummaryAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "protected-profile-retirement")
         {
             await app.WaitForStartupAsync();

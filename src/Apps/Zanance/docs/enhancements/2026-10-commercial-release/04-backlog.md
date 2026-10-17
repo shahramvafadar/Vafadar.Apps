@@ -41,7 +41,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Done (D-268 browser/account copy and six-language drafts; real OAuth/publication remain open) | D-69 continuous delivery |
 | ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; other bank/relationship variants require original fixtures | original export specifications/samples |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
-| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; broader phone acceptance remains) | – |
+| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; broader phone acceptance remains) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
@@ -2751,5 +2751,22 @@ signed offline Android builds. Same-file French recognition now gives 24.50 with
 seven original raster cases include German EXIF and blank missing-total/currency-conflict drafts.
 Three pre-fix successes are retained; four final cases and upgrade preserve five rows/Home 979 without
 Save/reset. Exact owned inputs and diagnostic package are removed. Real corpus/camera/scanned/iOS and
-release gates remain open; a separate dangling transfer-summary caption is observed and queued next.
+release gates remain open; a separate dangling transfer-summary caption was observed and is resolved by D-326.
 See [physical evidence](../../quality/physical-receipt-ocr-accents.md).
+
+
+## D-326 observed summary defect resolved
+
+D-326 fixes the observed transfer-only transaction summary: show the existing translated count-only
+caption when the actual result-currency dictionary is empty. Retain a real zero result, separate currency
+packets, original matching rows and unchanged income/spending/transfer semantics. No new string, schema,
+financial write, dependency or native cipher change is introduced. All 18 focused application-source cases
+pass across six languages, followed by test cleanup; the Windows and complete signed offline Android
+builds have zero warnings/errors. The independent actual Windows page passes 18 en/fa/de light/dark
+360/412/1280 contexts with complete scaled captions and unchanged stored inputs. Six successful English
+contexts are retained; only the remaining contexts continue after correcting the diagnostic's Persian-digit
+comparison and hidden-root measurement order. The original Samsung upgrade shows transfer count 1 with
+no dangling total, expenses 3/net -21, income 1/net 1000 and final Home 979 without Save/reset. Phone
+preservation is displayed-state evidence, not raw main-store equality. Remaining receipt corpus/camera,
+performance/cold/ANR, iOS/provider/Store and release acceptance remain separate.
+See [qualified evidence](../../quality/transaction-summary-result.md).

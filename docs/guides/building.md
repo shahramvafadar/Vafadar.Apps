@@ -1141,3 +1141,18 @@ roots after the retained-load failure comparison. A compatible .NET10 profile re
 A no-op filter is not acceptance. Keep original capture provenance/history, never rewrite tokens/identities,
 and repeat only changed/failed/uncertain checks. See [native evidence](../../src/Apps/Zanance/docs/quality/physical-home-compilation.md)
 and the [independent caller](../../eng/benchmarks/Zanance.AndroidHome/README.md).
+
+
+### Independent filtered-summary review (D-326)
+
+Build the original Windows Debug app with ContinuousIntegrationBuild=true,
+ApplicationId=pro.vafadar.zanance.transactionsummary and an independent OutputPath. Launch its actual
+verified executable hidden with VAFADAR_SNAPSHOT_ONLY=transaction-summary and a fresh
+VAFADAR_SNAPSHOTS directory beneath artifacts/transaction-summary-d326/. Do not use the general
+snapshot wrapper or move existing development databases. The guarded early route owns only its
+independent transaction-summary.db, uses original page/view-model states and checks en/fa/de, both
+themes and 360/412/1280 widths. Render the original hidden root before inspecting native glyphs;
+compare rendered captions with the existing NativeDigits contract. Preserve the same fixture and
+completed-contexts.json across a failed observation, never repeat completed contexts or accept a
+partial matrix as complete. Phone filter interaction is a separate coordinated signed-main check.
+See [qualified scope](../../src/Apps/Zanance/docs/quality/transaction-summary-result.md).
