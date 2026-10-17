@@ -35,13 +35,13 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-08 | More holiday regions with source, validity years and "uncertain" state | 8 | P3 | M | Target coverage delivered (D-273); additional jurisdictions/years remain | official jurisdiction/year sources |
 | ZCR-LOC-09 | Automatic device-encrypted local backup; separate portable export | 2 | P2 | M | Done (local/native D-281; physical-device/iOS/release acceptance remains open) | SEC-08 |
 | ZCR-LOC-13 | Owner-approved plan and debt UX (D-65) | Maintenance | P1 | M | Done (local; AT-72 device gate remains) | owner approval 2026-10-08 |
-| ZCR-LOC-15 | Independent saved filters after report navigation (D-109 / AT-114) | Maintenance | P1 | S | Done (local/native, D-109; device/iOS acceptance remains open) | D-69 ready-defect delivery |
+| ZCR-LOC-15 | Independent saved filters after report navigation (D-109 / AT-114) | Maintenance | P1 | S | Done (local/native D-109; D-323 physical saved-filter/report-scope/cold acceptance; broader device/iOS gates remain) | D-69 ready-defect delivery |
 | ZCR-LOC-12 | Owner-requested receipt total detection and review (D-64) | Maintenance | P1 | M | Done (local; device/corpus gate remains QA-05) | owner request 2026-10-08 |
 | ZCR-LOC-11 | Owner-requested backup, onboarding and About corrections (D-62) | 2 | P2 | S | Done | owner approval 2026-10-08 |
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Done (D-268 browser/account copy and six-language drafts; real OAuth/publication remain open) | D-69 continuous delivery |
 | ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; other bank/relationship variants require original fixtures | original export specifications/samples |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
-| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; broader phone acceptance remains) | – |
+| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; broader phone acceptance remains) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
@@ -2713,3 +2713,16 @@ D-321 reduces the measured complete 100,000-row reader from 4231 to 3344 ms and 
 ## D-322 QA-06 trusted complete-row metadata
 
 D-322 reduces the measured tenfold complete Home input read from 3811 to 3306 ms using exact-query null metadata, retaining all original 32 fields/conversions and safe interceptor fallback. All 12 final en/fa/de phone Home cases retain full financial presentation and raw schema/typed rows; loaded Home remains 1.92-2.83s reference / 7.23-9.51s tenfold. 45 related cases pass (two added behaviors), strict Windows/complete signed offline Android builds and main Home/All-history/return upgrade pass. A recurrence candidate without reliable native gain and temporary worker probes are fully withdrawn. No whole-suite rerun, two-second/cold/ANR/platform or release acceptance is claimed. See [evidence](../../quality/physical-home-null-bitmap.md).
+
+
+## D-323 bounded physical report acceptance
+
+The unchanged D-322 signed offline main APK passes an original Samsung report/filter/PDF handoff batch:
+October income 1,000/spending 21/surplus 979 and five-row drill-down; empty September scope replaced by a
+saved October expense filter (three rows/net -21); actual PDF chooser offered and cancelled without a
+recipient; filter retained after cold PID 24409 -> 27876 and then explicitly deleted; original unpaid
+plan 3/headroom 976 and cash-account zero income/spending retain transfer semantics. Final report/ledger
+and Home return 979 without financial Save/reset. Eleven saved-device assertions pass; no new managed
+test count, build, APK or unrelated successful checks are repeated. This is English/light displayed-state
+acceptance, not raw main-store equality, inspected phone PDF pages, all reports/readers/iOS or release.
+See [physical evidence](../../quality/physical-report-filter-pdf.md).

@@ -6391,3 +6391,16 @@ D-321 reduces the measured complete 100,000-row reader from 4231 to 3344 ms and 
 ## D-322 complete row and remaining phone latency
 
 D-322 reduces the measured tenfold complete Home input read from 3811 to 3306 ms using exact-query null metadata, retaining all original 32 fields/conversions and safe interceptor fallback. All 12 final en/fa/de phone Home cases retain full financial presentation and raw schema/typed rows; loaded Home remains 1.92-2.83s reference / 7.23-9.51s tenfold. 45 related cases pass (two added behaviors), strict Windows/complete signed offline Android builds and main Home/All-history/return upgrade pass. A recurrence candidate without reliable native gain and temporary worker probes are fully withdrawn. No whole-suite rerun, two-second/cold/ANR/platform or release acceptance is claimed. See [evidence](../quality/physical-home-null-bitmap.md).
+
+
+## D-323 physical report and retained filter
+
+The unchanged D-322 signed offline main APK passes an original Samsung report/filter/PDF handoff batch:
+October income 1,000/spending 21/surplus 979 and five-row drill-down; empty September scope replaced by a
+saved October expense filter (three rows/net -21); actual PDF chooser offered and cancelled without a
+recipient; filter retained after cold PID 24409 -> 27876 and then explicitly deleted; original unpaid
+plan 3/headroom 976 and cash-account zero income/spending retain transfer semantics. Final report/ledger
+and Home return 979 without financial Save/reset. Eleven saved-device assertions pass; no new managed
+test count, build, APK or unrelated successful checks are repeated. This is English/light displayed-state
+acceptance, not raw main-store equality, inspected phone PDF pages, all reports/readers/iOS or release.
+See [physical evidence](../quality/physical-report-filter-pdf.md).

@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Physical report acceptance (D-323)
+
+- Verify existing report totals, saved-filter recovery after restart and PDF share cancellation on the approved Android phone; retain the original financial records. No application behavior changes.
+
 ### Complete history loading (D-322)
 
 - Reduce repeated native work when loading full transaction histories, preserving complete records and original validation. Qualify the offline phone upgrade; remaining Home latency is still open.
