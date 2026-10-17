@@ -54,6 +54,73 @@ public sealed class AutomaticBackupFlowTests
         Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f.Flow));
     }
 
+    [Fact, Trait("AT", "AT-281")]
+    public async Task Readiness_waits_for_original_maintenance_without_reporting_a_failed_copy()
+    {
+        using var f = new Fixture(databaseAvailability: true);
+        await f.Flow.Store.UpdateSettingsAsync(settings => settings.OnboardingCompleted = true, Ct);
+        var before = await GoalChooserFlowTests.SnapshotAsync(f.Flow);
+        var location = f.Flow.Services.GetRequiredService<LocalDatabaseLocation<Vafadar.Zanance.Data.ZananceDbContext>>();
+        using (var owner = await location.Access.AcquireExclusiveAsync(Ct))
+        {
+            Assert.Throws<InvalidOperationException>(() => f.Flow.Store.GetSettings());
+            var pending = f.Coordinator.RunAsync(Ct);
+            Assert.False(pending.IsCompleted); Assert.False(f.Coordinator.HasFailure); Assert.Equal(0, f.Captures);
+            owner.Dispose();
+            await pending;
+        }
+        Assert.False(f.Coordinator.HasFailure); Assert.Single(await f.Storage.ListAsync(Ct));
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f.Flow));
+    }
+
+    [Fact, Trait("AT", "AT-281")]
+    public async Task Cancelled_readiness_wait_releases_coordination_without_capturing_or_creating()
+    {
+        using var f = new Fixture(databaseAvailability: true);
+        var location = f.Flow.Services.GetRequiredService<LocalDatabaseLocation<Vafadar.Zanance.Data.ZananceDbContext>>();
+        using (var owner = await location.Access.AcquireExclusiveAsync(Ct))
+        {
+            using var cancelled = CancellationTokenSource.CreateLinkedTokenSource(Ct);
+            var pending = f.Coordinator.RunAsync(cancelled.Token);
+            Assert.False(pending.IsCompleted); cancelled.Cancel();
+            await Assert.ThrowsAnyAsync<OperationCanceledException>(() => pending);
+            Assert.False(f.Coordinator.HasFailure); Assert.Equal(0, f.Captures);
+        }
+        await f.Flow.Store.UpdateSettingsAsync(settings => settings.OnboardingCompleted = true, Ct);
+        await f.Coordinator.RunAsync(Ct); Assert.Single(await f.Storage.ListAsync(Ct));
+    }
+
+    [Fact, Trait("AT", "AT-281")]
+    public async Task Successful_not_due_check_clears_a_transient_failure_without_replacing_the_original_copy()
+    {
+        using var f = new Fixture();
+        await f.Coordinator.RunAsync(Ct);
+        var original = Assert.Single(await f.Storage.ListAsync(Ct)); var at = f.Coordinator.LastBackupAt;
+        f.RefuseCapture = true; await f.Coordinator.RunAsync(Ct); Assert.True(f.Coordinator.HasFailure);
+        f.RefuseCapture = false; await f.Coordinator.RunAsync(Ct);
+        Assert.False(f.Coordinator.HasFailure); Assert.Equal(at, f.Coordinator.LastBackupAt);
+        Assert.Equal(original.Id, Assert.Single(await f.Storage.ListAsync(Ct)).Id);
+    }
+
+    [Fact, Trait("AT", "AT-281")]
+    public async Task Profile_set_changed_during_readiness_wait_never_captures_or_creates_for_the_new_profile()
+    {
+        using var f = new Fixture(databaseAvailability: true);
+        await f.Flow.Store.UpdateSettingsAsync(settings => settings.OnboardingCompleted = true, Ct);
+        var before = await GoalChooserFlowTests.SnapshotAsync(f.Flow);
+        var location = f.Flow.Services.GetRequiredService<LocalDatabaseLocation<Vafadar.Zanance.Data.ZananceDbContext>>();
+        Task pending;
+        using (var owner = await location.Access.AcquireExclusiveAsync(Ct))
+        {
+            pending = f.Coordinator.RunAsync(Ct); Assert.False(pending.IsCompleted);
+            f.Set = "different-profile";
+        }
+        await pending;
+        Assert.Equal(0, f.Captures); Assert.Empty(await f.Storage.ListAsync(Ct)); Assert.False(f.Coordinator.HasFailure);
+        f.Set = null; Assert.True(f.Coordinator.HasFailure);
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f.Flow));
+    }
+
     private sealed class Fixture : IDisposable
     {
         internal readonly FlowFixture Flow = new();
@@ -64,7 +131,7 @@ public sealed class AutomaticBackupFlowTests
         internal bool Ready = true, RefuseCapture;
         internal string? Set;
         internal int Captures;
-        internal Fixture()
+        internal Fixture(bool databaseAvailability = false)
         {
             Storage = new(Flow.Directory.Combine("automatic"));
             var protection = new Protection(new DeviceKeySafetyCopyProtection(Guid.NewGuid(), Guid.NewGuid(), keys, () => { }));
@@ -82,7 +149,9 @@ public sealed class AutomaticBackupFlowTests
                     if (Flow.Services.GetRequiredService<LocalDatabaseLocation<Vafadar.Zanance.Data.ZananceDbContext>>().Path != original)
                         throw new IOException("Fictitious generation changed.");
                 };
-            }, () => Ready, action => action());
+            }, async ct => databaseAvailability
+                ? (await Flow.Store.GetSettingsAsync(ct)).OnboardingCompleted
+                : Ready, action => action());
         }
         public void Dispose() { keys.Dispose(); Flow.Dispose(); }
     }

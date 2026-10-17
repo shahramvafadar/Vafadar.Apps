@@ -89,8 +89,8 @@ public static class MauiProgram
                         validatePublication();
                     };
                 },
-                () => (OperatingSystem.IsAndroid() || OperatingSystem.IsWindows())
-                    && services.GetRequiredService<ZananceStore>().GetSettings().OnboardingCompleted,
+                async ct => (OperatingSystem.IsAndroid() || OperatingSystem.IsWindows())
+                    && (await services.GetRequiredService<ZananceStore>().GetSettingsAsync(ct).ConfigureAwait(false)).OnboardingCompleted,
                 action => MainThread.BeginInvokeOnMainThread(action)))
             .AddSingleton<Vafadar.Backup.IBackupSource>(services => new Vafadar.Backup.SettingsBackupSource(
                 services.GetRequiredService<Vafadar.Core.Settings.ISettingsStore>(), "display-settings.json", Vafadar.Localization.LocalizationService.PortableKeys))

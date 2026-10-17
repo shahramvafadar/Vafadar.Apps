@@ -170,6 +170,8 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data 
   backup password or silently create readable automatic files. Keep profile-bound schedule/status,
   separate automatic/safety retention and explicit restore confirmation. A device-only copy cannot
   replace a portable Zanance export for recovery on a new device.
+  Automatic readiness must await the cancellable settings read through temporary native maintenance (D-327);
+  keep profile/publication validation and clear stale transient feedback only after a successful due check.
 * Regional display and cloud discovery (D-67): language/RTL stay independent from numeric formatting culture,
   calendar, digit shapes, holiday region, week start and currency. Offer the choices in onboarding and Settings with
   examples; preserve them through language changes and new backup packages. Portable preference sources use an

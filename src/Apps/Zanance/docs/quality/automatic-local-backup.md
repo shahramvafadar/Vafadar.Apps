@@ -69,3 +69,8 @@ The earlier D-280 hosted runs remain historical failures ([Native](https://githu
 CI Windows toolchain/Android native preparation and Linux Test failed. Their causes are not claimed
 fixed by this feature or local success. Check the pushed D-281 commit once after the usual delay;
 hosted/native-security, real device/iOS/OEM/OAuth/Store acceptance and the full backlog remain open.
+
+
+## Scoped physical continuation (D-327)
+
+The original Samsung automatic creation, explicit changed-data restore, separate safety preview and profile isolation are now recorded in [D-327 evidence](automatic-copy-readiness.md). That continuation fixes the native readiness/safety-discovery overlap and preserves successful earlier stages. It does not supersede the broader hardware/key-loss/power-loss/iOS/retention or release gates above.

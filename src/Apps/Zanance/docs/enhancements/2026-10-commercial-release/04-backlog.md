@@ -33,7 +33,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-06 | Recurring payments easier to find (repeat option in the entry form or a clearer entry point) | 2 | P2 | S | Done (local/native, D-111; phone/iOS acceptance open) | – |
 | ZCR-LOC-07 | Currencies of the target markets (ISO list, minor digits) | 2/8 | P3 | S | Target coverage delivered (D-273); additional jurisdictions/years remain | official currency sources |
 | ZCR-LOC-08 | More holiday regions with source, validity years and "uncertain" state | 8 | P3 | M | Target coverage delivered (D-273); additional jurisdictions/years remain | official jurisdiction/year sources |
-| ZCR-LOC-09 | Automatic device-encrypted local backup; separate portable export | 2 | P2 | M | Done (local/native D-281; physical-device/iOS/release acceptance remains open) | SEC-08 |
+| ZCR-LOC-09 | Automatic device-encrypted local backup; separate portable export | 2 | P2 | M | Done (D-281 local/native; D-327 scoped Samsung creation/restore/isolation and readiness fix; broader device/iOS/release gates remain) | SEC-08 |
 | ZCR-LOC-13 | Owner-approved plan and debt UX (D-65) | Maintenance | P1 | M | Done (local; AT-72 device gate remains) | owner approval 2026-10-08 |
 | ZCR-LOC-15 | Independent saved filters after report navigation (D-109 / AT-114) | Maintenance | P1 | S | Done (local/native D-109; D-323 physical saved-filter/report-scope/cold acceptance; broader device/iOS gates remain) | D-69 ready-defect delivery |
 | ZCR-LOC-12 | Owner-requested receipt total detection and review (D-64) | Maintenance | P1 | M | Done (local; device/corpus gate remains QA-05) | owner request 2026-10-08 |
@@ -41,7 +41,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Done (D-268 browser/account copy and six-language drafts; real OAuth/publication remain open) | D-69 continuous delivery |
 | ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; other bank/relationship variants require original fixtures | original export specifications/samples |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
-| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; broader phone acceptance remains) | – |
+| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; broader phone acceptance remains) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
@@ -2770,3 +2770,22 @@ no dangling total, expenses 3/net -21, income 1/net 1000 and final Home 979 with
 preservation is displayed-state evidence, not raw main-store equality. Remaining receipt corpus/camera,
 performance/cold/ANR, iOS/provider/Store and release acceptance remain separate.
 See [qualified evidence](../../quality/transaction-summary-result.md).
+
+
+## D-327 complete automatic-copy device batch
+
+D-327 qualifies the original physical automatic-copy lifecycle on SM-A176B and fixes an observed
+maintenance overlap. A synchronous onboarding-readiness read raced the legitimate exclusive safety-file
+discovery; the native type/source stack identifies DatabaseAccessGate.EnterRead through GetSettings.
+Use cancellable GetSettingsAsync readiness, recheck the captured profile set and preserve the original
+publication/encryption/interval guards. A successful not-due check clears stale transient feedback without
+replacing its file/timestamp. Seven focused cases pass (six together, one final scope case alone; four
+added cases), test outputs are cleaned once and strict Windows/final signed offline Android builds pass
+without warnings/errors. Twenty-three saved-native observation assertions cover Off/no copy, Daily
+creation, one-entry preview, explicit 36-to-37 recovery, separate two-entry safety preview, cold persistence,
+final Weekly/Daily without the former error, original-copy preservation and retirement of only the new
+fictitious profile. Original successful creation/restore is retained, not repeated after the readiness fix.
+Final Main is 979 with its three original profiles/copies and original Daily/password choices; the phone
+is released. No native crypto/schema/SDK/permission change or full-suite rerun. Raw main-store/key equality,
+power loss, key loss, full hardware retention stress, other devices/iOS/OAuth/Store and release remain open.
+See [qualified evidence](../../quality/automatic-copy-readiness.md).

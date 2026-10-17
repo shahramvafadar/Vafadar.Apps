@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Automatic-copy readiness (D-327)
+
+- Wait for a short safety-copy discovery lock when checking automatic backup readiness, instead of showing a false creation failure. Keep existing copies and schedules unchanged and recover status after a valid not-due check.
+
 ### Filtered transaction summaries (D-326)
 
 - Show only the transaction count when transfers have no income/spending total. Keep real zero totals and separate currencies visible.

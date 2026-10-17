@@ -1529,3 +1529,8 @@ Latin accent differences may match a complete known total/exclusion phrase, but 
 ## Filtered transaction summaries (D-326)
 
 A nonempty filtered list shows its count. Add the total caption only when the original income/spending result has a currency packet. Transfer/adjustment/asset movements never acquire a synthetic zero result; a real currency sum of zero remains visible. Reuse the existing six-language count text and MoneyText packets. Keep the original rows, filters and navigation unchanged. See [native and application evidence](quality/transaction-summary-result.md).
+
+
+## Automatic-copy readiness (D-327)
+
+A protected safety-file list may briefly own native maintenance. Automatic readiness waits asynchronously and preserves cancellation/profile checks; it never blocks the page or treats that expected overlap as a failed creation. After a successful validated not-due check, show the existing last-success time rather than stale transient failure feedback. Do not manufacture a new copy or change its timestamp to clear the message. See [physical and focused evidence](quality/automatic-copy-readiness.md).

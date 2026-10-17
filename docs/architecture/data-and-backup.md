@@ -157,18 +157,22 @@ device. There is no automatic cloud backup yet.
 ### Scheduling
 
 * **Manual**: "Back up now" and "Restore" in each app's backup settings.
-* **Automatic** (planned in `Vafadar.Maui.Backup`, not in Zanance yet): when the app starts or resumes and `IsAutomaticBackupDue()`
-  (default: daily), a backup runs in the background to the storage the user configured. Later, Android WorkManager /
-  iOS background tasks can run it while the app is closed.
+* **Automatic local copies** (Zanance D-281/D-327): foreground checks coalesce one due device-encrypted copy
+  per profile, with Daily/Weekly/Off device preference and separate automatic/safety retention. They never
+  remember a portable password or fall back to readable/cloud files. Closed-app scheduling is not promised.
+  Cancellable asynchronous readiness waits through native safety discovery's exclusive maintenance, rechecks
+  profile scope and retains complete publication validation; a validated not-due result may clear stale failure
+  feedback without replacing a copy or changing its timestamp.
 * **Local export**: `CreatePackageAsync` produces the file so the user can share or save it anywhere (e-mail,
   USB, another cloud).
 
 ### Android system backup
 
-Android's built-in Auto Backup (`android:allowBackup="true"`) additionally backs up app data to the user's Google
-account and restores it on a new phone. It is kept enabled as an extra safety net (Zanance: owner decision D-16, including the financial data) and
-disclosed in the privacy policy and the [privacy matrix](../privacy/privacy-matrix.md). iOS includes app data in
-iCloud / computer backups by default.
+The final coupled encrypted-installation policy supersedes D-16 for Zanance (OD-10, D-263): the current
+Android backup_rules.xml and data_extraction_rules.xml exclude private storage from OS cloud backup and
+device transfer. Device-only keys/copies cannot recover a new phone; use a separate portable Zanance export.
+iOS exclusion/adoption still requires its actual Mac/native qualification; no OEM/OS transfer acceptance is
+inferred from these Android rules. See the [privacy matrix](../privacy/privacy-matrix.md).
 
 ### Limits and future work
 
@@ -2330,3 +2334,13 @@ qualify complete migration/materialization, ordering and Native AOT behavior. Th
 ## Complete current-row materialization (D-321 / D-322)
 
 The guarded complete ledger command still owns its original connection/transaction, mapping contract and 32 fields. Only an exact unwrapped SqliteDataReader with the expected width and matching actual prepared SQL uses its query-derived null bitmap and borrowed statement for equivalent native scalar access. Derive every original field and bitmap ordinal from the same guarded mapping; never trust requested command text alone. Preserve checked Int32 narrowing, null errors, SQLite coercion/decoder, model timestamp/tag converters and provider date parsing. Canonical GUID spans avoid temporary strings; alternate representations retain original parsing. Replaced/derived readers use their own getters. Never retain handles/types across operations or bypass reader advancement, cancellation, model drift or actual-file authority. No schema/compiled-model change belongs to this optimization.
+
+
+## Native automatic-readiness maintenance overlap (D-327)
+
+ProtectedStorageHost.ListSafetyCopiesAsync intentionally drains and owns the factory while reading bounded
+current-profile safety candidates. AutomaticBackupCoordinator must await GetSettingsAsync readiness instead
+of synchronously entering that same gate. Keep nonblocking coalescing, cancellation, captured profile-set
+revalidation and the original package/publication guards. A successful validated not-due result clears an
+earlier transient failure without a new file or success timestamp. Native exception-type/source evidence
+and the complete temporary-profile lifecycle are in [D-327 qualification](../../src/Apps/Zanance/docs/quality/automatic-copy-readiness.md).

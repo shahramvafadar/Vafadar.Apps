@@ -3690,3 +3690,22 @@ no dangling total, expenses 3/net -21, income 1/net 1000 and final Home 979 with
 preservation is displayed-state evidence, not raw main-store equality. Remaining receipt corpus/camera,
 performance/cold/ANR, iOS/provider/Store and release acceptance remain separate.
 See [qualified evidence](quality/transaction-summary-result.md).
+
+
+## D-327 AT-281 original phone continuation
+
+D-327 qualifies the original physical automatic-copy lifecycle on SM-A176B and fixes an observed
+maintenance overlap. A synchronous onboarding-readiness read raced the legitimate exclusive safety-file
+discovery; the native type/source stack identifies DatabaseAccessGate.EnterRead through GetSettings.
+Use cancellable GetSettingsAsync readiness, recheck the captured profile set and preserve the original
+publication/encryption/interval guards. A successful not-due check clears stale transient feedback without
+replacing its file/timestamp. Seven focused cases pass (six together, one final scope case alone; four
+added cases), test outputs are cleaned once and strict Windows/final signed offline Android builds pass
+without warnings/errors. Twenty-three saved-native observation assertions cover Off/no copy, Daily
+creation, one-entry preview, explicit 36-to-37 recovery, separate two-entry safety preview, cold persistence,
+final Weekly/Daily without the former error, original-copy preservation and retirement of only the new
+fictitious profile. Original successful creation/restore is retained, not repeated after the readiness fix.
+Final Main is 979 with its three original profiles/copies and original Daily/password choices; the phone
+is released. No native crypto/schema/SDK/permission change or full-suite rerun. Raw main-store/key equality,
+power loss, key loss, full hardware retention stress, other devices/iOS/OAuth/Store and release remain open.
+See [qualified evidence](quality/automatic-copy-readiness.md).

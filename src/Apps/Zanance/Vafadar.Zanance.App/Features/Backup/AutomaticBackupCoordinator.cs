@@ -6,7 +6,7 @@ namespace Vafadar.Zanance.App.Features.Backup;
 
 /// <summary>Coalesces foreground checks for device-only recovery points without relying on background execution.</summary>
 public sealed class AutomaticBackupCoordinator(IAutomaticLocalBackupService backup, ISettingsStore settings,
-    BackupOptions options, IBackupStorage storage, Func<Action> capture, Func<bool> available, Action<Action> publish)
+    BackupOptions options, IBackupStorage storage, Func<Action> capture, Func<CancellationToken, Task<bool>> available, Action<Action> publish)
 {
     private const string IntervalKey = "backup.automaticIntervalDays";
     private readonly SemaphoreSlim gate = new(1, 1);
@@ -42,16 +42,20 @@ public sealed class AutomaticBackupCoordinator(IAutomaticLocalBackupService back
         try
         {
             set = options.FileSet?.Invoke() ?? string.Empty;
-            if (!available()) return;
+            // Native safety discovery owns maintenance briefly; asynchronous readiness waits rather than failing its synchronous read gate.
+            if (!await available(ct).ConfigureAwait(false)) return;
+            if (!string.Equals(set, options.FileSet?.Invoke() ?? string.Empty, StringComparison.Ordinal))
+                throw new InvalidOperationException("Automatic backup readiness belongs to another profile set.");
             var days = IntervalDays;
             if (days == 0) return;
             var validate = capture();
-            var file = await backup.CreateWhenDueAsync(storage, TimeSpan.FromDays(days), () =>
+            await backup.CreateWhenDueAsync(storage, TimeSpan.FromDays(days), () =>
             {
                 validate();
                 if (days != IntervalDays) throw new InvalidOperationException("Automatic backup preference changed.");
             }, ct).ConfigureAwait(false);
-            if (file is not null) failures[set] = false;
+            // A fully validated not-due result also recovers an earlier transient failure without creating another copy.
+            failures[set] = false;
         }
         catch (OperationCanceledException) when (ct.IsCancellationRequested) { throw; }
         catch (Exception error) when (error is not OutOfMemoryException) { failures[set] = true; }
