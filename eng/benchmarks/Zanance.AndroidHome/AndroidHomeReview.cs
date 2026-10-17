@@ -18,7 +18,7 @@ using Vafadar.Zanance.Performance;
 namespace Vafadar.Zanance.App;
 
 /// <summary>Measures original Release/AOT Home publication against independently owned protected financial workloads.</summary>
-internal static class AndroidHomeReview
+internal static partial class AndroidHomeReview
 {
     /// <summary>The independent install allowed to own these fictitious workloads.</summary>
     internal const string Package = "pro.vafadar.zanance.androidhomereview";
@@ -42,6 +42,13 @@ internal static class AndroidHomeReview
             {
                 await Task.Run(() => PrepareAsync(root, ct), ct);
                 await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, MainPackageTouched = false }, ct);
+            }
+            else if (phase == "filters")
+            {
+                if (File.Exists(Path.Combine(root, "filters-" + comparison + "-result.json")))
+                    throw new ReviewCheckException("Completed filter review must not be repeated.");
+                Directory.CreateDirectory(root);
+                await WriteReportAsync(root, phase, await ReviewFilterActionsAsync(app, services, root, comparison!, ct), ct);
             }
             else
             {

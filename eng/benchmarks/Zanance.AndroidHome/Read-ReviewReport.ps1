@@ -1,13 +1,13 @@
 param(
     [Parameter(Mandatory)][ValidatePattern('^[0-9a-f]{32}$')][string]$Run,
-    [Parameter(Mandatory)][ValidateSet('prepare', 'measure', 'compare', 'guard')][string]$Phase,
+    [Parameter(Mandatory)][ValidateSet('prepare', 'measure', 'compare', 'guard', 'filters')][string]$Phase,
     [Parameter(Mandatory)][ValidateRange(1, 2147483647)][int]$ProcessId,
     [Parameter(Mandatory)][string]$OutputPath,
     [ValidatePattern('^[0-9a-f]{32}$')][string]$Comparison,
     [ValidateRange(1, 60)][int]$ObserveSeconds = 45
 )
 $ErrorActionPreference = 'Stop'
-if ($Phase -in @('measure','compare','guard') -and [string]::IsNullOrEmpty($Comparison)) { throw 'The original comparison identity is required.' }
+if ($Phase -in @('measure','compare','guard','filters') -and [string]::IsNullOrEmpty($Comparison)) { throw 'The original comparison identity is required.' }
 # Observe only the already launched independent process. Never install, restart or regenerate a fixture.
 $adb = 'C:\Program Files (x86)\Android\android-sdk\platform-tools\adb.exe'
 $serial = 'emulator-5570'
@@ -18,7 +18,7 @@ if (Test-Path -LiteralPath $target) { throw 'Fresh public report output required
 $deadline = [DateTime]::UtcNow.AddSeconds($ObserveSeconds)
 do {
     $actual = (& $adb -P 5038 -s $serial shell pidof pro.vafadar.zanance.androidhomereview) -join ''
-    if ($actual.Trim() -ne [string]$ProcessId) { throw 'Original review process is no longer alive; do not restart it.' }
+    if ($actual.Trim() -ne [string]$ProcessId) { throw 'Original process identity was not confirmed in this observation; preserve it and verify authoritative state before any restart.' }
     $lines = & $adb -P 5038 -s $serial logcat -d -v raw "--pid=$ProcessId" -s 'ZananceHomeReview:I' '*:S'
     if ($LASTEXITCODE -ne 0) { throw 'Public report observation failed; preserve the process.' }
     $chunks = @{}; $expected = $null

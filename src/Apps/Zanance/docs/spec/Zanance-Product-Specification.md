@@ -6282,3 +6282,12 @@ comparison. IMP-01 remains limited to the actually qualified D-297 preset and ex
 No additional bank support, financial writer, schema, SDK, live connector, permission or runtime test case
 is added. App and signed APK remain D-306; its related results are not a new whole-suite run. Exact country,
 source and pending qualification boundaries: [bank research](../enhancements/2026-10-commercial-release/24-target-bank-research.md).
+
+## D-308 named transaction filter accessibility
+
+Saved-filter captions now grow within the existing bounded filter viewport and retain their original native
+query commands/arguments and complete names. Original Windows overflow is reproduced; 18 process-local
+large-text contexts qualify full captions, 44-unit targets, 54 native selections and unchanged stored
+financial/settings/filter inputs. No schema, ledger algorithm, new string or unit-test count changes.
+[Exact native/package evidence](../quality/saved-filter-actions-readable.md) keeps Android qualification
+and OS/readers/phone/iOS/release gates separate. A11Y-03 remains In progress.

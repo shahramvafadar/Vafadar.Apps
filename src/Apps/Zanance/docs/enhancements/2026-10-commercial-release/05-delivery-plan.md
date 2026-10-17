@@ -1988,3 +1988,12 @@ first discovery pass, not BANK-01/IMP-01 implementation or live/provider accepta
 search set without new product/specimen evidence. Continue other ready engineering across those external
 format/provider gaps; no unrelated successful build, test, native or APK work is replayed for documentation.
 [Sources, conclusions and verification](24-target-bank-research.md).
+
+## D-308 original saved-filter action delivery
+
+Keep the concrete saved-name overflow correction scoped to the original Transactions surface. Qualify
+complete captions, real targets and exact query dispatch with preserved stored inputs; do not replay
+passed compact-control or financial/service suites. The maintained native fixture avoids the older
+unrelated generic-seed failure. Windows 18-context results and Android/package follow-through are in
+[saved-filter native evidence](../../quality/saved-filter-actions-readable.md). A11Y-03 and external release
+gates stay explicit; no test-count or whole-suite acceptance is invented.

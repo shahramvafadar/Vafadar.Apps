@@ -1045,3 +1045,13 @@ Invoke patterns. This is development/native evidence, not Windows commercial or 
 The independent Android Home guard phase covers altered original inputs against retained protected datasets;
 it is not another performance benchmark or new financial source. Scope/receipts:
 src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/23-reviewed-input-integrity-delivery.md.
+
+### Original saved-filter native checks (D-308)
+
+A caller-owned Windows Debug review build can select `VAFADAR_SNAPSHOT_ONLY=filter-actions` with a fresh
+VAFADAR_SNAPSHOTS directory. It creates only that directory's independent filter-actions.db and checks the
+original page/actions; it does not use the generic historical seed. Set languages en,fa,de, light/dark and
+360x820/412x820/1280x820. VAFADAR_SNAPSHOT_FONT_SCALE=2 is process-local layout stress, not an OS setting.
+Keep the own window hidden; preserve its process, native observations and negative fixture evidence.
+The independent Android Home caller's `filters` phase provides the original normal-scale counterpart;
+see eng/benchmarks/Zanance.AndroidHome/README.md. This does not replace phone, spoken-reader or iOS acceptance.

@@ -6233,3 +6233,12 @@ Country-set/link/status checks qualify this documentation-only delivery. Exact c
 financial relationship semantics remain required before another preset. No app/test/native/APK run is
 repeated, no test count increases, and D-306 remains the actual runtime/package baseline. Evidence and
 source limits: [target bank research](enhancements/2026-10-commercial-release/24-target-bank-research.md).
+
+## D-308 complete native saved-filter actions
+
+Original Transactions saved names now wrap on growing full-width rows inside the existing bounded filter
+viewport. One real overlay button retains each original query, argument and complete spoken name. Native
+normal-scale evidence reproduced a name/action wider than its viewport; shared compact choices already
+passed native 44-unit checks and are unchanged. Original typography/colors, query logic and financial rows
+are retained. The maintained independent Windows/Android callers qualify the original page without using
+owner data. Exact results, negative evidence and package: [saved-filter actions](quality/saved-filter-actions-readable.md).

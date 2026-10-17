@@ -58,31 +58,36 @@
                     <Picker Grid.Column="1" ItemsSource="{Binding CategoryOptions}" SelectedItem="{Binding SelectedCategory}"
                             Title="{v:Translate Entry_Category}" SemanticProperties.Description="{v:Translate Entry_Category}" />
                 </Grid>
-                <!-- Saved filters (REP-08): the menu saves or removes; a chip applies one -->
-                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
-                    <HorizontalStackLayout Spacing="8">
-                        <Grid>
-                            <Border StrokeShape="RoundRectangle 18" Stroke="{DynamicResource Primary}" StrokeThickness="1" HeightRequest="36" WidthRequest="44"
-                                    BackgroundColor="Transparent">
-                                <fi:SymbolIcon Symbol="Bookmark" FontSize="20" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
-                            </Border>
-                            <Button Style="{StaticResource OverlayButton}" CornerRadius="18" Command="{Binding SavedFilterMenuCommand}"
-                                    SemanticProperties.Description="{v:Translate Filter_Title}" />
-                        </Grid>
-                        <HorizontalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding SavedFilters}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="ledger:SavedFilter">
-                                    <Button Text="{Binding Name}" CornerRadius="18" MinimumHeightRequest="36" Padding="14,0" FontSize="14"
-                                            BackgroundColor="{DynamicResource CardBackground}" TextColor="{DynamicResource Primary}"
+                <!-- D-308: complete saved names wrap inside the existing bounded filter viewport. Each
+                     unchanged query keeps one real native target; long names never require horizontal clipping. -->
+                <VerticalStackLayout Spacing="8">
+                    <Grid HorizontalOptions="Start" MinimumWidthRequest="44" MinimumHeightRequest="44">
+                        <Border StrokeShape="RoundRectangle 18" Stroke="{DynamicResource Primary}" StrokeThickness="1" HeightRequest="36" WidthRequest="44"
+                                BackgroundColor="Transparent" VerticalOptions="Center">
+                            <fi:SymbolIcon Symbol="Bookmark" FontSize="20" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Button Style="{StaticResource OverlayButton}" CornerRadius="18" Command="{Binding SavedFilterMenuCommand}"
+                                SemanticProperties.Description="{v:Translate Filter_Title}" />
+                    </Grid>
+                    <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding SavedFilters}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="ledger:SavedFilter">
+                                <Grid MinimumHeightRequest="44">
+                                    <Border StrokeShape="RoundRectangle 18" StrokeThickness="0" BackgroundColor="{DynamicResource CardBackground}"
+                                            Padding="14,8" InputTransparent="True" AutomationProperties.IsInAccessibleTree="False">
+                                        <Label Text="{Binding Name}" FontSize="14" LineBreakMode="WordWrap" VerticalOptions="Center"
+                                               TextColor="{DynamicResource Primary}" />
+                                    </Border>
+                                    <Button Style="{StaticResource OverlayButton}" CornerRadius="18" SemanticProperties.Description="{Binding Name}"
                                             Command="{Binding ApplySavedFilterCommand, Source={RelativeSource AncestorType={x:Type local:TransactionsViewModel}}, x:DataType=local:TransactionsViewModel}"
                                             CommandParameter="{Binding .}" />
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </HorizontalStackLayout>
-                        <Label Text="{v:Translate Filter_Hint}" Style="{StaticResource Secondary}" VerticalOptions="Center"
-                               IsVisible="{Binding HasSavedFilters, Converter={StaticResource InvertedBoolConverter}}" />
-                    </HorizontalStackLayout>
-                </ScrollView>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Label Text="{v:Translate Filter_Hint}" Style="{StaticResource Secondary}" VerticalOptions="Center"
+                           IsVisible="{Binding HasSavedFilters, Converter={StaticResource InvertedBoolConverter}}" />
+                </VerticalStackLayout>
                 <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Bulk_Select}" Command="{Binding StartSelectingCommand}" HorizontalOptions="Start"
                         MinimumHeightRequest="44" Padding="16,8" FontSize="14"
                         IsVisible="{Binding IsSelecting, Converter={StaticResource InvertedBoolConverter}}" />

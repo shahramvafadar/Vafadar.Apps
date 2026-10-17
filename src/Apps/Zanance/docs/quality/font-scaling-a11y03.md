@@ -651,3 +651,8 @@ D-108 / AT-113 repairs observed off-page report-scope Clear controls and a zero-
 native captions/targets, actual header/result scrolling, Clear and original query/results/stored-data restoration
 pass in 21 Windows contexts. Normal Release Android report/Clear and signed APK remain separate from process-local
 200% stress and actual OS/readers/device/iOS acceptance. Evidence: [transaction-scope-readable.md](transaction-scope-readable.md).
+
+D-308 corrects reproduced saved-filter caption/action overflow using growing rows in the original bounded
+filter viewport. Eighteen native Windows contexts preserve complete labels, original query dispatch and
+stored inputs. Passed common compact controls are unchanged. Android, package and remaining actual OS,
+reader, phone and iOS boundaries: [saved-filter actions](saved-filter-actions-readable.md).

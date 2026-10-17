@@ -67,3 +67,20 @@ one original native English Home publication per shape, rejects changed in-memor
 accepts that same review after exact restoration. It compares the complete raw original database afterward.
 No DB Save, new preparation/key, repeated native-stepping profile or statistical performance claim belongs
 to this phase. Observe its exact process with Read-ReviewReport.ps1 -Phase guard -Comparison <original-pass>.
+
+## Original native saved-filter actions
+
+The `filters` phase qualifies the original TransactionsPage/TransactionsViewModel and unchanged saved-query
+commands using a separate fictitious `filter-actions.db` under its explicit review run. It does not prepare
+or measure the protected Home reference/tenfold workloads. Pass an explicit run/comparison to MainActivity,
+then use Read-ReviewReport.ps1 with the same `-Phase filters`, `-Run`, `-Comparison` and actual `-ProcessId`.
+
+The native original Shell must attach before theme/language root changes; logical publication alone does
+not prove Android fragment attachment. Real accessibility nodes, visible native rectangles, caption layouts
+and native button clicks are checked in en/fa/de and light/dark. Complete original fixture packets must be
+unchanged after setup. No main data, system setting, security flag or financial Save belongs to selection.
+
+After an actual failed caller, preserve its packet, original run directory and exact financial inputs. A
+corrected caller can continue that same fixture after explicit value validation, with a fresh comparison
+identity preserving the immutable failure packet. Completed comparisons refuse repetition. Observation
+failure does not prove process death: verify the original authoritative process rather than restarting it.

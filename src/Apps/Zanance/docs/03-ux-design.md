@@ -1478,3 +1478,11 @@ busy guard across confirmation/reload, preserve the unsaved amount and retain ex
 An altered reviewed plan/goal packet requires reload; it cannot become a valid new displayed source or writer
 review merely because the database is unchanged. Existing captions, layout and disclosure remain unchanged.
 Native en/fa/de light/dark command/confirmation evidence is in enhancements/2026-10-commercial-release/23-reviewed-input-integrity-delivery.md.
+
+## Complete named filter actions (D-308)
+
+Saved query names are user text and may consume their full allowed length. They wrap inside growing rows
+of the existing bounded filter viewport, preserving the result/action docks. A decorative caption surface
+keeps the original scalable typography/colors; its last real native button owns the unchanged query, argument
+and full spoken name. Horizontal overflow is not a substitute for a readable saved-query action. Native
+selection remains read-only. [Verification](quality/saved-filter-actions-readable.md).

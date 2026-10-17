@@ -3530,3 +3530,11 @@ format/specimen gates are recorded in [target bank research](enhancements/2026-1
 Country and link consistency are checked. No new preset, native action, bank connection or AT case is added;
 existing D-297 import and D-306 runtime results are retained without a repeat run. A published CSV button is
 not evidence for header/encoding, booked status, relationships, stable ids, completeness or Undo acceptance.
+
+## D-308 saved-filter native regression coverage
+
+The independently owned filter-actions route exercises the original Transactions page and saved queries.
+Windows en/fa/de, both themes and 360/412/1280 widths at process-local 200% stress qualify 216 native
+target observations and 54 saved-query invocations across 18 contexts. Complete original stored inputs
+remain unchanged. This adds maintained native coverage, not a new unit-test count or a fresh whole-suite
+run. Android/package results and separate platform gates: [evidence](quality/saved-filter-actions-readable.md).

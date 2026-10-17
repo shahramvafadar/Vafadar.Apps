@@ -1837,3 +1837,6 @@ Household work in progress: local service restoration preserves permanent deleti
 - The complete household delivery and final Release qualification remain in progress.
 
 D-294 local household delivery is complete at the recorded Windows/emulator/local-service scopes, including compact protected portable copies, bounded historical financial reads and growing native confirmation/cancel targets with correct Persian prompt direction. The current signed Android package and precise3753-case test union are recorded in docs/enhancements/2026-10-commercial-release/11-household-delivery.md; earlier in-progress entries retain chronology and do not claim public release.
+### Complete saved-filter names
+
+- Long saved transaction-filter names wrap in their existing filter area, with complete accessible buttons and the same saved query.

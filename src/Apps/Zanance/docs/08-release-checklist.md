@@ -1296,3 +1296,14 @@ benefit and completely removed; QA-06 and physical/iOS/release acceptance remain
 
 This is documentation only. App, tests and signed APK remain D-306; no release/support claim follows from
 [the research matrix](enhancements/2026-10-commercial-release/24-target-bank-research.md).
+
+## D-308 complete saved-filter actions
+
+- [x] Actual original normal-scale overflow reproduced in a fresh independently owned fixture.
+- [x] Eighteen Windows large-text contexts qualify native targets, complete captions and unchanged query/data.
+- [x] Six original-source Android contexts qualify 18 native saved-query clicks on the retained fixture.
+- [x] Complete signed main APK, original upgrade/Home and real Transactions/filter-menu navigation pass.
+- [ ] Actual OS-scale, spoken reader, physical phone and iOS acceptance remain separate.
+
+Current Android/package outcome is recorded in [the native evidence](quality/saved-filter-actions-readable.md);
+no product-release, commercial Windows or all-controls accessibility completion is inferred.
