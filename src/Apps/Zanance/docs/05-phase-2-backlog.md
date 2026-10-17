@@ -2153,3 +2153,16 @@ and Home return 979 without financial Save/reset. Eleven saved-device assertions
 test count, build, APK or unrelated successful checks are repeated. This is English/light displayed-state
 acceptance, not raw main-store equality, inspected phone PDF pages, all reports/readers/iOS or release.
 See [physical evidence](quality/physical-report-filter-pdf.md).
+
+
+## D-324 six source-language digital receipts
+
+The unchanged signed D-322 main APK passes six original Samsung digital-PDF receipt flows, one per
+en/fa/de/es/fr/it source language: distinct total phrases and Persian digits yield the reviewed 24.50 EUR,
+not cash 50/change 25.50/order 999999. Every original editor is explicitly cancelled/discarded without Save;
+the same PID 27876 retains five rows/net 979 and final Home 979. The incomplete picker observation alone
+continues, and only six exact hash-matched newly owned input files are removed. No managed test count,
+app build/install or unrelated successful check is repeated. English/light presentation, digital text and
+displayed preservation are the scope; evaluation notices limit merchant accuracy, and real corpus,
+image OCR/camera, raw main-store equality, other native/platform and release acceptance remain open.
+See [physical evidence](quality/physical-digital-receipts.md).

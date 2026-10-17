@@ -45,7 +45,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
-| ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-64 local evidence verified; device/corpus pending) | sample receipts |
+| ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-324 Samsung six source-language digital-PDF totals/native review/discard; real corpus/image OCR/camera/iOS remain) | sample receipts |
 | ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-322 trusted complete-row null metadata and 12 retained phone Home cases; loaded Home 1.92-2.83s reference / 7.23-9.51s tenfold; full cold/ANR statistics/low-memory/iOS remain) | – |
 | ZCR-QA-07 | Android/iOS parity (notifications, widget, file picker, lock, share, licences); existing Windows development checks | 2 | P2 | M | Mac readiness owner-reported; verification and iOS runs pending in that environment. Windows commercial delivery is outside current scope | platform access/signing |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | In progress (D-174 widget and D-175 contextual date names/drafts verified locally; spoken TalkBack and remaining screen/platform acceptance open) | – |
@@ -2726,3 +2726,16 @@ and Home return 979 without financial Save/reset. Eleven saved-device assertions
 test count, build, APK or unrelated successful checks are repeated. This is English/light displayed-state
 acceptance, not raw main-store equality, inspected phone PDF pages, all reports/readers/iOS or release.
 See [physical evidence](../../quality/physical-report-filter-pdf.md).
+
+
+## D-324 bounded physical digital-receipt acceptance
+
+The unchanged signed D-322 main APK passes six original Samsung digital-PDF receipt flows, one per
+en/fa/de/es/fr/it source language: distinct total phrases and Persian digits yield the reviewed 24.50 EUR,
+not cash 50/change 25.50/order 999999. Every original editor is explicitly cancelled/discarded without Save;
+the same PID 27876 retains five rows/net 979 and final Home 979. The incomplete picker observation alone
+continues, and only six exact hash-matched newly owned input files are removed. No managed test count,
+app build/install or unrelated successful check is repeated. English/light presentation, digital text and
+displayed preservation are the scope; evaluation notices limit merchant accuracy, and real corpus,
+image OCR/camera, raw main-store equality, other native/platform and release acceptance remain open.
+See [physical evidence](../../quality/physical-digital-receipts.md).

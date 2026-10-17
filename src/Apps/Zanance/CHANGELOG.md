@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Physical digital-receipt acceptance (D-324)
+
+- Verify purchase totals from six source-language digital PDFs on the approved Android phone, with explicit review and discard preserving existing records. Real receipt-image and camera acceptance remain separate.
+
 ### Physical report acceptance (D-323)
 
 - Verify existing report totals, saved-filter recovery after restart and PDF share cancellation on the approved Android phone; retain the original financial records. No application behavior changes.
