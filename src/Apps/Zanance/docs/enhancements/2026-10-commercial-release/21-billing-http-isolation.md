@@ -58,3 +58,13 @@ credential, original successful fixture, app screen or APK is reset. The new fix
 No unrelated application/UI, cipher, synchronization, whole-suite or APK check is repeated. Production bytes
 remain the D-303 main package; no user-visible behavior, schema, dependency, public purchase or release gate is
 changed. Hosted completion after the repair must be reported from its own actual execution.
+
+
+## Actual hosted repair result
+
+The one-use check of commit 534c883522dfdb919cbc75b36ea7f46e3bdf8d54 confirms completed/success for
+[Local identity backend](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39016047872),
+[CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39016047828) and
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39016047850). The backend qualifier therefore
+passes on its actual hosted runner after the isolated-peer repair. Its one-use follow-up is deleted;
+ci-once.json preserves the exact receipt. No unrelated workflow execution or release acceptance is inferred.

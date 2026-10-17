@@ -1013,3 +1013,22 @@ injected clock. Ordinary purchase HTTP retains its current server time. Linux In
 HTTP installation key can be ephemeral; retaining the billing signing/private-client authority is distinct from
 cold service-installation acceptance. Preserve failed roots and pending commands, then continue originals.
 The D-304 evidence records the exact retained sequence and targeted continuation without replaying successful cases.
+
+
+### Complete Home reader qualification (D-305)
+
+The typed complete ledger reader uses the public EF relational command pipeline and original model-owned
+converters. Refresh its explicit mapping contract when the persisted LedgerEntry mapping changes; do not
+silently drop fields or bypass query filters. Its drift guard and full-value/order/cancellation tests keep
+this boundary visible. The independent Android Home caller accepts a fresh review_pass plus original
+review_baseline for same-data comparison without replaying stale completed measurements. Temporary timing
+strategies are never shipping inputs. Refresh the real startup method profile after relevant startup changes;
+retain SDK defaults, remove development recorder/environment/forward before ordinary APK qualification.
+Current evidence: src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/22-home-materialization-delivery.md.
+
+Development-only capture must select Android alone and override recording properties globally; a project-local
+RunAOTCompilation value can be overwritten by later Release defaults. Use VafadarMauiTargetFrameworks=net10.0-android,
+RunAOTCompilation=false and RuntimeIdentifier/RuntimeIdentifiers=android-x64 for that isolated recording build.
+Confirm the recorder APK has no AOT libraries, reach actual Home in the original process, then collect names-only
+metadata. Restore central package bytes and remove the exact owned forward before the ordinary unmodified
+Build-AndroidApk.ps1 production build. Never apply those recording overrides to the final package.

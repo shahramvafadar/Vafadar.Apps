@@ -1,15 +1,16 @@
 # Android cold-start AOT profile
 
 `startup.aprof` is a Mono method profile captured from the actual Release Android cold-start path through
-protected storage, access initialization and the fully loaded Home page (D-300). It supplements the SDK's
-default profiles. It is a build input, not an application asset, database snapshot or production recorder.
+protected storage, access initialization and the fully loaded Home page (D-300; refreshed D-305). It supplements
+the SDK's default profiles. It is a build input, not an application asset, database snapshot or production recorder.
 
-The recording contains module, type and method metadata: 83 modules, 5,559 types and 24,170 methods in
-3,104,542 bytes. It contains no recorded argument values, heap, credentials or financial records. Capture
+The recording contains module, type and method metadata: 87 modules, 5,840 types and 24,359 methods in
+3,197,424 bytes. It contains no recorded argument values, heap, credentials or financial records. The D-305
+refresh includes the actual typed ledger reader and its original conversion/command boundary. Capture
 used the existing fictitious review installation, SDK 36.1.69 and serviced .NET runtime 10.0.13. The temporary
 recorder dependency and app-local execution environment were removed before the production candidate.
 
-SHA256: `08fbdfe3e358a3bed5dabaebdbf25e9ecc03f6ff0f678ab27befb8160fc2e951`.
+SHA256: `454e9b35b75bc7ee68233a2c5dd87b2861116862d7aa61cf71e2a34072e9e05d`.
 
 Mono's .NET 10 AOT compiler resolves profile entries by assembly/type/method signature; its reader discards
 the recorded module MVID. Thus a new deterministic build identifier does not require rewriting tokens or

@@ -27,7 +27,7 @@ internal static class AndroidHomeReview
     private static object? _balanceEvidence;
 
     /// <summary>Prepares a fresh workload or measures its existing protected generations.</summary>
-    internal static async Task RunAsync(App app, IServiceProvider services, string phase, string run, string? comparison)
+    internal static async Task RunAsync(App app, IServiceProvider services, string phase, string run, string? comparison, string? baseline)
     {
         if (AppInfo.Current.PackageName != Package) throw new ReviewCheckException("Independent compiled identity required.");
         // Android's /data/user/0 is an OS alias. Resolve it before applying the unchanged no-redirect fixture guard.
@@ -48,7 +48,9 @@ internal static class AndroidHomeReview
                 RequireRoot(root);
                 if (comparison is null || !System.Text.RegularExpressions.Regex.IsMatch(comparison, "^[0-9a-f]{32}$")
                     || phase is not ("measure" or "compare")) throw new ReviewCheckException("Explicit original comparison required.");
-                await MeasureAsync(app, services, root, phase, comparison, ct);
+                if (baseline is null || !System.Text.RegularExpressions.Regex.IsMatch(baseline, "^[0-9a-f]{32}$"))
+                    throw new ReviewCheckException("Original baseline presentation identity required.");
+                await MeasureAsync(app, services, root, phase, comparison, baseline, ct);
             }
         }
         catch (Exception error) when (error is not OutOfMemoryException)
@@ -104,7 +106,7 @@ internal static class AndroidHomeReview
         }
     }
 
-    private static async Task MeasureAsync(App app, IServiceProvider services, string root, string phase, string comparison, CancellationToken ct)
+    private static async Task MeasureAsync(App app, IServiceProvider services, string root, string phase, string comparison, string baseline, CancellationToken ct)
     {
         var local = services.GetRequiredService<ILocalizationService>();
         app.OpenReviewShell();
@@ -198,7 +200,7 @@ internal static class AndroidHomeReview
                             }
                             await Task.Delay(75, ct); timer.Stop();
                             var presentation = CapturePresentation(vm);
-                            var originalPath = Path.Combine(folder, "presentation-" + comparison + "-" + language + ".json");
+                            var originalPath = Path.Combine(folder, "presentation-" + baseline + "-" + language + ".json");
                             if (phase == "measure" && !File.Exists(originalPath))
                                 await File.WriteAllTextAsync(originalPath, presentation, ct);
                             if (!File.Exists(originalPath) || presentation != await File.ReadAllTextAsync(originalPath, ct))
@@ -227,7 +229,7 @@ internal static class AndroidHomeReview
                 finally { CryptographicOperations.ZeroMemory(rawKey); }
             }
         }
-        await WriteReportAsync(root, phase, new { Comparison = comparison, Results = results, NativeReadProfiles = nativeReadProfiles,
+        await WriteReportAsync(root, phase, new { Comparison = comparison, BaselineComparison = baseline, Results = results, NativeReadProfiles = nativeReadProfiles,
             DataModuleVersionId = typeof(ZananceStore).Module.ModuleVersionId, CallerModuleVersionId = typeof(HomePage).Module.ModuleVersionId,
             OriginalProductionPage = true,
             CompleteRawSchemaAndTypedRowsUnchanged = true, NoFinancialSave = true, ColdStartupOrPhoneAcceptance = false,

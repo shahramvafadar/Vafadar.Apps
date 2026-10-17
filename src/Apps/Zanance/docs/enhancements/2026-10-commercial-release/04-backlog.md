@@ -46,7 +46,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
 | ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-64 local evidence verified; device/corpus pending) | sample receipts |
-| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-283 coherent protected Home; D-278/280 protected read/search/save; D-284/285/286 loaded Windows; D-291 original Release/AOT Android loaded reference/tenfold Home and full preservation verified; D-303 complete sequential ledger/existing-id materialization halves loaded tenfold Android publication with full preservation; remaining managed conversion, phone/low-memory/cold/ANR/iOS acceptance remains) | – |
+| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-283 coherent protected Home; D-278/280 protected read/search/save; D-284/285/286 loaded Windows; D-291 original Release/AOT Android loaded reference/tenfold Home and full preservation verified; D-303 complete sequential ledger/existing-id materialization halves loaded tenfold Android publication with full preservation; D-305 complete typed materialization and startup refresh locally qualified; remaining composition, phone/low-memory/cold/ANR/iOS acceptance remains) | – |
 | ZCR-QA-07 | Android/iOS parity (notifications, widget, file picker, lock, share, licences); existing Windows development checks | 2 | P2 | M | Mac readiness owner-reported; verification and iOS runs pending in that environment. Windows commercial delivery is outside current scope | platform access/signing |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | In progress (D-174 widget and D-175 contextual date names/drafts verified locally; spoken TalkBack and remaining screen/platform acceptance open) | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
@@ -2576,3 +2576,12 @@ The D-303 hosted purchase-retirement failure is a shared null TestServer peer ex
 billing request window. The exact retained Linux continuation and a new cross-worker rate-boundary scenario
 pass after fixture-only peer isolation. Production code and APK remain D-303; hosted completion of the repair
 is still a separate gate. See [21-billing-http-isolation.md](21-billing-http-isolation.md).
+
+
+## D-305 complete Home materialization
+
+The bounded complete reader, original model conversions and fail-closed mapping check are locally qualified
+with full native/financial preservation, same-process tenfold source-read evidence and refreshed startup
+compilation. QA-06 retains its explicit remaining composition/memory/cold/ANR/device/iOS acceptance rather than
+claiming a two-second result. See [delivery](22-home-materialization-delivery.md). D-304 backend/CI/CodeQL are
+actually successful after its isolated-peer repair; the one-use follow-up is deleted.

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Less overhead reading complete Home histories (D-305)
+
+- Materialize the entire ledger with fewer conversion-layer operations while preserving all stored fields.
+- Retain original financial ordering, cancellation, transaction and access checks.
+- Refresh the measured Android startup compilation path; keep phone and cold-speed acceptance separate.
+
 ### Faster complete Home history (D-303)
 
 - Read complete large encrypted histories with fewer repeated page visits and unnecessary identifier allocations.

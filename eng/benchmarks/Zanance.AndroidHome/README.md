@@ -41,8 +41,10 @@ the same prepared fixtures; do not rerun preparation or reset app data. Complete
 cases in private progress are retained and skipped; full final preservation still runs for both
 shapes. Never reuse completed metrics after changing production sources; that requires a separately
 identified comparison against the same retained financial data. `measure` captures the canonical financial
-presentation; after an intended production change, `compare` uses the same comparison id and requires those
-original presentation packets. Per-comparison progress and immutable final report names preserve every prior
+presentation; after an intended production change, `compare` uses a fresh `review_pass` and an explicit
+`review_baseline` naming the original presentation packets. Omitting `review_baseline` retains the original
+same-id behavior. Separate comparison identities prevent stale completed cases from becoming new timings.
+Per-comparison progress and immutable final report names preserve every prior
 result. Each final result records the loaded Data/caller module identities; do not reuse timings after a rebuild.
 
 The original Home page runs twice in English, Persian and German for each shape. Navigation,

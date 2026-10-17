@@ -6181,5 +6181,22 @@ fixture, without trusting headers or changing the production limiter. The previo
 continues its retained pending command/authority. Separate Integration HTTP workers do not recreate a missing
 ephemeral installation key. The exact failed retirement case and a new 30/31-request, independent-peer,
 second-worker and next-window regression pass on the retained Linux fixture. Strict test builds pass;
-production app/API code and the D-303 APK are unchanged. Hosted completion after this fix remains separate.
+production app/API code and the D-303 APK are unchanged. Its one-use hosted repair check later completed successfully for backend, CI and CodeQL.
 Evidence: [21-billing-http-isolation.md](enhancements/2026-10-commercial-release/21-billing-http-isolation.md).
+
+
+## D-305 complete typed Home materialization
+
+Home retains complete 32-field ledger history and original order, transaction, conversion, cancellation and
+file/rights boundaries while replacing per-row EF materialization with a guarded typed reader through EF's
+original relational command pipeline. A mapping drift fails explicitly. Same-process Release/AOT tenfold
+source-read medians are 2707.56 ms (original EF) and 2211.90 ms (typed), with complete materialized equality;
+no stable reference improvement is claimed. Separate original Android Home publications in en/fa/de retain
+all canonical financial presentation and full raw database preservation. Four new AT-305 boundary/value cases
+and 24 distinct related Home/model cases are qualified across retained runs; no new whole-suite run is claimed.
+Original hidden Windows Home and complete portable preservation also pass. The actual loaded main Android
+startup method profile is refreshed, with development-only recording excluded from the ordinary candidate.
+Evidence, package and remaining limits: [22-home-materialization-delivery.md](enhancements/2026-10-commercial-release/22-home-materialization-delivery.md).
+
+QA-06 remains In progress for remaining composition, memory/cold/ANR, physical-phone and iOS acceptance.
+The D-304 one-use hosted repair result is now completed/success for backend, CI and CodeQL; its timer is deleted.

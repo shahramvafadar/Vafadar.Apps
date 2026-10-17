@@ -7,6 +7,7 @@ using Vafadar.Data;
 using Vafadar.Testing;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
+using Vafadar.Zanance.Core.Categories;
 using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Ledger;
@@ -115,6 +116,91 @@ public sealed class HomeReadSnapshotTests : IDisposable
         Assert.Contains(captured.Entries, entry => entry.Date < Today);
         Assert.Contains(captured.Entries, entry => entry.Date > Today);
         await store.ValidateHomeSnapshotAsync(captured, Ct);
+    }
+
+    /// <summary>Typed materialization preserves all persisted fields, null/empty distinctions, exact integers and independent tags.</summary>
+    [Theory, InlineData(false), InlineData(true)]
+    [Trait("AT", "AT-305")]
+    public async Task Typed_home_history_preserves_every_field_and_independent_collections(bool populateOptional)
+    {
+        var provider = Create();
+        await using (var db = await Factory(provider).CreateDbContextAsync(Ct))
+        {
+            var account = new Account { Name = "Typed original", CurrencyCode = "EUR", OpeningDate = Today };
+            var destination = new Account { Name = "Typed destination", CurrencyCode = "USD", OpeningDate = Today };
+            var category = new Category { Name = "Typed category" };
+            db.Accounts.AddRange(account, destination); db.Categories.Add(category);
+            var original = new LedgerEntry { AccountId = account.Id, Amount = 111, Date = Today.AddDays(-1) };
+            db.Entries.Add(original); await db.SaveChangesAsync(Ct);
+            foreach (var kind in Enum.GetValues<EntryKind>())
+            {
+                var row = new LedgerEntry { AccountId = account.Id, Kind = kind, Amount = 9_007_199_254_740_993L + (int)kind,
+                    Date = kind == EntryKind.Income ? DateOnly.MinValue : kind == EntryKind.Expense ? DateOnly.MaxValue : Today,
+                    ToAccountId = populateOptional ? destination.Id : null, ToAmount = populateOptional ? 12345678901234567 : null,
+                    CategoryId = populateOptional ? category.Id : null, Direction = populateOptional ? AdjustmentDirection.Decrease : null,
+                    GroupId = populateOptional ? Guid.NewGuid() : null, ImportBatchId = populateOptional ? Guid.NewGuid() : null,
+                    ScheduleId = populateOptional ? Guid.NewGuid() : null, OccurrenceDate = populateOptional ? Today : null,
+                    IsPartialPayment = populateOptional, IsAggregated = populateOptional,
+                    AggregatedFrom = populateOptional ? DateOnly.MinValue : null, AggregatedTo = populateOptional ? DateOnly.MaxValue : null,
+                    Icon = populateOptional ? "icon" : "", Note = populateOptional ? "Line one\nفارسی / € / \"quoted\"" : null,
+                    Payee = populateOptional ? "Original payee" : "", Title = populateOptional ? "Original title" : null,
+                    OriginalAmount = populateOptional ? 9007199254740993 : null, OriginalCurrencyCode = populateOptional ? "USD" : null,
+                    RefundOfId = populateOptional ? original.Id : null, ReimbursableAmount = populateOptional ? 321 : null,
+                    ReimbursedBy = populateOptional ? "Original source" : null, ReimbursementDueDate = populateOptional ? Today.AddDays(3) : null,
+                    Review = populateOptional ? ReviewState.Unreviewed : ReviewState.Confirmed,
+                    Source = populateOptional ? EntrySource.Import : EntrySource.Manual,
+                    Tags = populateOptional ? ["same original tag", "فارسی", "\"quoted\"\nnext line"] : [] };
+                db.Entries.Add(row); await db.SaveChangesAsync(Ct);
+                // Exercise original UTC-tick storage beyond millisecond precision without the audit writer changing it.
+                await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET CreatedAt = {1L + (int)kind}, UpdatedAt = {DateTimeOffset.MaxValue.UtcTicks - (int)kind} WHERE Id = {row.Id}", Ct);
+            }
+        }
+        var store = provider.GetRequiredService<ZananceStore>();
+        var expected = JsonSerializer.Serialize(await store.GetEntriesAsync(cancellationToken: Ct));
+        var packet = await store.GetHomeSnapshotAsync(Today, 0, Ct);
+        Assert.Equal(9, packet.Entries.Count);
+        Assert.Equal(expected, JsonSerializer.Serialize(packet.Entries));
+        var rowWithTags = packet.Entries.First(row => row.Tags.Count > 0 || !populateOptional);
+        var other = packet.Entries.First(row => row.Id != rowWithTags.Id);
+        Assert.NotSame(rowWithTags.Tags, other.Tags);
+        var otherTags = other.Tags.ToArray(); rowWithTags.Tags.Add("In-memory change only");
+        Assert.Equal(otherTags, other.Tags);
+        Assert.Equal(expected, JsonSerializer.Serialize(await store.GetEntriesAsync(cancellationToken: Ct)));
+    }
+
+    /// <summary>Cancellation at reader completion cannot return a partial Home or retain its SQLite reader transaction.</summary>
+    [Fact]
+    [Trait("AT", "AT-305")]
+    public async Task Typed_home_cancellation_after_command_refuses_partial_publication_and_releases_reader_transaction()
+    {
+        var provider = Create(); await SeedAsync(provider);
+        using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(Ct);
+        var path = provider.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>().Path;
+        var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite($"Data Source={path};Pooling=False")
+            .UseModel(ZananceDbContextModel.Instance).AddInterceptors(new CancelEntryRead(cancellation)).Options;
+        var store = Store(new DirectFactory(options), provider.GetRequiredService<ICommercialWriteAccessSource>());
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => store.GetHomeSnapshotAsync(Today, 0, cancellation.Token));
+        await using var connection = new Microsoft.Data.Sqlite.SqliteConnection(new Microsoft.Data.Sqlite.SqliteConnectionStringBuilder
+            { DataSource = path, Pooling = false, DefaultTimeout = 1 }.ToString());
+        await connection.OpenAsync(Ct);
+        using var exclusive = connection.CreateCommand(); exclusive.CommandText = "BEGIN EXCLUSIVE; ROLLBACK;";
+        await exclusive.ExecuteNonQueryAsync(Ct);
+    }
+
+    /// <summary>Malformed stored collection JSON stays a read failure rather than becoming empty or guessed metadata.</summary>
+    [Fact]
+    [Trait("AT", "AT-305")]
+    public async Task Typed_home_malformed_original_tags_are_refused_by_the_original_converter()
+    {
+        var provider = Create(); await SeedAsync(provider);
+        var malformed = "{broken";
+        await using (var db = await Factory(provider).CreateDbContextAsync(Ct))
+            await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET Tags = {malformed}", Ct);
+        var store = provider.GetRequiredService<ZananceStore>();
+        var original = await Record.ExceptionAsync(async () => await store.GetEntriesAsync(cancellationToken: Ct));
+        var typed = await Record.ExceptionAsync(async () => await store.GetHomeSnapshotAsync(Today, 0, Ct));
+        Assert.IsType<InvalidOperationException>(original);
+        Assert.IsType<InvalidOperationException>(typed);
     }
 
     /// <summary>Preserves null legacy fallback, explicit reset and custom profile order in the original captured read.</summary>
@@ -270,6 +356,16 @@ public sealed class HomeReadSnapshotTests : IDisposable
         {
             if (command.CommandText.Contains("\"ExchangeRates\"", StringComparison.Ordinal)) RateQueries++;
             return base.ReaderExecutingAsync(command, eventData, result, cancellationToken);
+        }
+    }
+    private sealed class CancelEntryRead(CancellationTokenSource cancellation) : DbCommandInterceptor
+    {
+        /// <inheritdoc />
+        public override ValueTask<DbDataReader> ReaderExecutedAsync(DbCommand command, CommandExecutedEventData eventData,
+            DbDataReader result, CancellationToken cancellationToken = default)
+        {
+            if (command.CommandText.Contains("FROM \"Entries\"", StringComparison.Ordinal)) cancellation.Cancel();
+            return ValueTask.FromResult(result);
         }
     }
     private sealed class PageCacheObservation : DbCommandInterceptor
