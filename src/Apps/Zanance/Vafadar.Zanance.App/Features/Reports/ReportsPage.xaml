@@ -15,6 +15,16 @@
     Title="{v:Translate Report_Title}">
 
     <ContentPage.Resources>
+        <!-- D-311: original compact typography on complete independent monetary viewports. -->
+        <Style x:Key="ReportTableFigure" TargetType="Label">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontFamily" Value="{DynamicResource AppFont}" />
+            <Setter Property="TextColor" Value="{DynamicResource AmountText}" />
+        </Style>
+        <Style x:Key="ReportTableTotal" TargetType="Label" BasedOn="{StaticResource ReportTableFigure}">
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+
         <!-- The "?" of a KPI card: opens its explanation sheet (ZEX-UI14) -->
         <Style x:Key="KpiHelp" TargetType="Button">
             <Setter Property="Text" Value="?" />
@@ -274,21 +284,18 @@
                             <chart:ColumnSeries ItemsSource="{Binding Trend}" XBindingPath="Label" YBindingPath="Income" Fill="{DynamicResource IncomeText}" Label="{v:Translate KindFilter_Income}" />
                             <chart:ColumnSeries ItemsSource="{Binding Trend}" XBindingPath="Label" YBindingPath="Expense" Fill="{DynamicResource Muted}" Label="{v:Translate KindFilter_Expenses}" />
                         </chart:SfCartesianChart>
-                        <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="10">
-                            <Label Text="{v:Translate Report_Month}" Style="{StaticResource Secondary}" FontSize="12" />
-                            <Label Grid.Column="1" Text="{v:Translate KindFilter_Income}" Style="{StaticResource Secondary}" FontSize="12" />
-                            <Label Grid.Column="2" Text="{v:Translate KindFilter_Expenses}" Style="{StaticResource Secondary}" FontSize="12" />
-                            <Label Grid.Column="3" Text="{v:Translate Home_Result}" Style="{StaticResource Secondary}" FontSize="12" />
-                        </Grid>
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Trend}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:TrendPoint">
-                                    <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="10" MinimumHeightRequest="32">
-                                        <Label Text="{Binding Label}" VerticalOptions="Center" FontSize="13" />
-                                        <Label Grid.Column="1" Text="{Binding IncomeText}" TextColor="{DynamicResource IncomeText}" VerticalOptions="Center" FontSize="13" />
-                                        <Label Grid.Column="2" Text="{Binding ExpenseText}" VerticalOptions="Center" FontSize="13" />
-                                        <Label Grid.Column="3" Text="{Binding ResultText}" TextColor="{Binding ResultColor}" FontAttributes="Bold" VerticalOptions="Center" FontSize="13" />
-                                    </Grid>
+                                    <VerticalStackLayout Spacing="4" Padding="0,6">
+                                        <Label Text="{Binding Label}" FontSize="13" LineBreakMode="WordWrap" />
+                                        <Label Text="{v:Translate KindFilter_Income}" Style="{StaticResource Secondary}" FontSize="12" />
+                                        <p:AmountReadout AmountText="{Binding IncomeText}" TextColor="{DynamicResource IncomeText}" CaptionStyle="{StaticResource ReportTableFigure}" />
+                                        <Label Text="{v:Translate KindFilter_Expenses}" Style="{StaticResource Secondary}" FontSize="12" />
+                                        <p:AmountReadout AmountText="{Binding ExpenseText}" CaptionStyle="{StaticResource ReportTableFigure}" />
+                                        <Label Text="{v:Translate Home_Result}" Style="{StaticResource Secondary}" FontSize="12" />
+                                        <p:AmountReadout AmountText="{Binding ResultText}" TextColor="{Binding ResultColor}" CaptionStyle="{StaticResource ReportTableTotal}" />
+                                    </VerticalStackLayout>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
@@ -648,10 +655,10 @@
                             <VerticalStackLayout BindableLayout.ItemsSource="{Binding HistoryRows}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate x:DataType="local:WealthHistoryRow">
-                                        <Grid ColumnDefinitions="*,Auto" MinimumHeightRequest="28">
-                                            <Label Text="{Binding Label}" FontSize="13" VerticalOptions="Center" />
-                                            <Label Grid.Column="1" Text="{Binding ValueText}" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" />
-                                        </Grid>
+                                        <VerticalStackLayout Spacing="4" Padding="0,6">
+                                            <Label Text="{Binding Label}" FontSize="13" LineBreakMode="WordWrap" />
+                                            <p:AmountReadout AmountText="{Binding ValueText}" CaptionStyle="{StaticResource ReportTableTotal}" />
+                                        </VerticalStackLayout>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </VerticalStackLayout>

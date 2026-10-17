@@ -1,5 +1,18 @@
 # AGENTS.md – working rules for this repository
 
+## Owner execution decisions on 2026-10-17
+
+The connected Samsung SM-A176B is authorized for Zanance Android qualification: install or upgrade the
+complete signed candidate without clearing data and exercise only fictitious profiles, navigation and
+performance. Preserve system settings, accounts and personal data; the owner performs actual authentication.
+Finish Android qualification first, then continue Mac/iOS qualification. Windows product delivery remains
+in its separately deferred phase. Store/account-dependent acceptance waits for the owner's company
+registration and personal account setup; do not ask these settled choices again.
+
+Use Cloudflare Tunnel for the approved current-machine public-hosting path under vafadar.pro. The owner
+signs in and enters any tunnel credential personally. Never read, copy or reuse another project's credentials.
+Approval of this path does not establish DNS, public reachability, provider acceptance or product release.
+
 This file is the starting point for anyone who works on this repository – a person or a tool, on any machine. It
 collects every rule the owner has set so far; follow them without being reminded, from the first message on. Details
 live in the linked guides. When the owner sets a new rule, add it here in the same commit as the work it came with.

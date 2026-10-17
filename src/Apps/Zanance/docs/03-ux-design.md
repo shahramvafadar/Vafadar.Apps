@@ -1495,3 +1495,12 @@ Explain saved verification and its refresh requirement. Label the original paid-
 never infer a next charge from it. Auto-renew reflects the last verified provider fact, and Lifetime has no
 invented renewal date. Keep each device/identity history horizon intact; never merge conflicting historical
 fields or expose raw account/purchase/receipt identifiers. Current regional calendar formatting stays live.
+
+## Complete report/snapshot table values (D-311)
+
+Alternative-to-chart financial tables use a wrapping identity/date row and a separately labeled complete
+monetary packet per row. Reuse AmountReadout for oversized signed values and its translated horizontal-scroll
+hint; never split digits/decimals, shrink the old body size or omit currency/sign. Keep total emphasis and
+existing semantic colors. Trend income/expense/result and snapshot saved/actual/difference captions repeat
+with each original row rather than assuming hidden or clipped shared column headings. Native scroll ends
+must reach the original sign and unit; this is presentation only, not a new report calculation.

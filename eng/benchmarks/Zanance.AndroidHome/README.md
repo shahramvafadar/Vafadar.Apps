@@ -108,3 +108,14 @@ and original stored settings/accounts/entries; never weaken flags, change device
 Observe the same exact live PID with `-Phase billing-owned -Comparison <pass>`. Preserve failure packets
 and continue the same fixture after a caller correction; completed comparisons cannot be repeated. This
 is native presentation qualification, not genuine signed-provider/store or physical/iOS acceptance.
+
+## Original financial tables (D-311)
+
+The `tables` phase uses a fresh explicit run/comparison and independent fictitious SQLite file. It renders
+actual ReportsPage trend/history and SnapshotPage comparison/decomposition templates with canonical
+MoneyText packets and original date formatting. Check native full text allocations, horizontal sign/unit
+scroll ends and original settings/accounts/entries in en/fa/de and light/dark. In-memory stress packets do
+not replace financial algorithms or persisted snapshots. No financial command or real source/provider call
+belongs to the phase. Observe the exact live PID with `-Phase tables -Comparison <pass>`; timeouts retain it.
+Never reset main data, recreate a failed fixture or change system settings/security flags. Completed
+comparisons refuse repetition. This is not current phone, OS scale, reader, iOS or product acceptance.

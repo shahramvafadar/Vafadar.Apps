@@ -6271,3 +6271,28 @@ All six existing languages receive real translations. Original growing labels ke
 commands and pinned Continue; no commercial activation, price, network provider, key, schema or permission
 changes. Exact source/test/native/package qualification and remaining real-store/Mac/device gates:
 [verified purchase lifecycle](quality/verified-purchase-lifecycle.md).
+
+## D-311 complete report and forecast-table monetary packets
+
+Original report trend/history and forecast comparison/decomposition tables still placed dates/identity
+beside trailing amount columns. The original native German 360-width run loses the canonical month caption
+and overflows monetary columns even at normal scale. Keep the alternative-to-chart tables readable with a
+whole identity row and separately labeled full-width original monetary packets. Reuse AmountReadout's
+existing native horizontal viewport/hint without parsing, splitting, changing or recomputing a value.
+Retain original 12/13/14-point scalable typography, total emphasis and semantic colors. Charts, PDF/report
+projections, source strings, snapshot content, permissions and financial calculations are unchanged.
+
+Actual original-page Windows and Release/AOT Android qualification uses independent fictitious display
+packets and preserves original stored data. No new unit count or repeated successful financial/backend/
+crypto/full-suite checks are claimed. Native scope, retained failures, final package and external limits:
+[financial table readouts](quality/financial-table-readouts.md).
+
+### D-311 owner execution order and external gates (2026-10-17)
+
+The owner authorized the connected Samsung SM-A176B for complete signed Android candidate installation/
+upgrade without data reset and qualification only in fictitious profiles. Preserve system settings,
+accounts and personal data; actual authentication remains the owner's action. Android qualification
+comes first, Mac/iOS afterward. Company registration precedes owner-created publication/provider
+accounts. Use Cloudflare Tunnel for the approved current-machine hosting path; the owner signs in and
+enters tunnel credentials personally. These are execution decisions, not completed public DNS/tunnel,
+phone, Store/OAuth or release acceptance. Do not ask these settled choices again.

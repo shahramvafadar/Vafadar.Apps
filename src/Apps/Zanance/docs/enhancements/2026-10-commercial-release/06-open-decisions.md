@@ -132,3 +132,16 @@ selection of a live model, unit package/pricing, purchased consumable, API crede
 financial-data disclosure. The default provider remains unconfigured. Manual readable-summary sharing is a
 separate deliberate recipient handoff, without integrated answer guarantee or Zanance credit use. Completed
 local evidence and remaining external decisions are recorded in15-ai-local-delivery.md; settled choices stand.
+
+## Owner execution approvals on 2026-10-17 (D-311)
+
+OD-02: Cloudflare Tunnel is the selected current-machine public network path under vafadar.pro.
+The owner performs account sign-in and credential entry. Public DNS, tunnel routing, TLS and scoped
+service acceptance remain to be verified; no other project's credentials/resources may be reused.
+
+The connected Samsung SM-A176B is authorized for signed candidate install/upgrade without clearing
+existing data, fictitious-profile navigation and performance qualification. No system/account/personal
+data changes; actual authentication is performed by the owner. Complete Android qualification first,
+then Mac/iOS. The owner needs company registration before creating publication/provider accounts;
+account-dependent genuine acceptance remains deferred until that setup. Settled choices need no new
+question. Existing separate deferral of the Windows product phase remains in force.

@@ -11,6 +11,25 @@
     x:DataType="local:SnapshotViewModel"
     Title="{Binding Name}">
 
+    <ContentPage.Resources>
+        <!-- D-311: retain table/body typography and complete original signed amounts. -->
+        <Style x:Key="SnapshotTableFigure" TargetType="Label">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontFamily" Value="{DynamicResource AppFont}" />
+            <Setter Property="TextColor" Value="{DynamicResource AmountText}" />
+        </Style>
+        <Style x:Key="SnapshotTableTotal" TargetType="Label" BasedOn="{StaticResource SnapshotTableFigure}">
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+        <Style x:Key="SnapshotPartFigure" TargetType="Label" BasedOn="{StaticResource SnapshotTableFigure}">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+        <Style x:Key="SnapshotPartTotal" TargetType="Label" BasedOn="{StaticResource SnapshotPartFigure}">
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+    </ContentPage.Resources>
+
+
     <Grid>
     <Grid IsVisible="{Binding Loading.IsReady}">
         <Label Text="{v:Translate Snapshot_NotFound}" Margin="32" HorizontalTextAlignment="Center" IsVisible="{Binding NotFound}" />
@@ -60,21 +79,18 @@
                             <chart:LineSeries ItemsSource="{Binding Points}" XBindingPath="Date" YBindingPath="Saved" Fill="{DynamicResource Muted}" StrokeWidth="2" Label="{v:Translate Snapshot_SavedPath}" />
                             <chart:LineSeries ItemsSource="{Binding Points}" XBindingPath="Date" YBindingPath="Actual" Fill="{DynamicResource Primary}" StrokeWidth="2" Label="{v:Translate Snapshot_ActualPath}" />
                         </chart:SfCartesianChart>
-                        <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="10">
-                            <Label Text="{v:Translate Entry_Date}" Style="{StaticResource Secondary}" FontSize="12" />
-                            <Label Grid.Column="1" Text="{v:Translate Snapshot_SavedPath}" Style="{StaticResource Secondary}" FontSize="12" />
-                            <Label Grid.Column="2" Text="{v:Translate Snapshot_ActualPath}" Style="{StaticResource Secondary}" FontSize="12" />
-                            <Label Grid.Column="3" Text="{v:Translate Snapshot_Difference}" Style="{StaticResource Secondary}" FontSize="12" />
-                        </Grid>
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Rows}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:ComparisonRow">
-                                    <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="10" MinimumHeightRequest="28">
-                                        <Label Text="{Binding DateText}" FontSize="12" VerticalOptions="Center" />
-                                        <Label Grid.Column="1" Text="{Binding SavedText}" FontSize="12" VerticalOptions="Center" />
-                                        <Label Grid.Column="2" Text="{Binding ActualText}" FontSize="12" VerticalOptions="Center" />
-                                        <Label Grid.Column="3" Text="{Binding DifferenceText}" TextColor="{Binding DifferenceColor}" FontSize="12" FontAttributes="Bold" VerticalOptions="Center" />
-                                    </Grid>
+                                    <VerticalStackLayout Spacing="4" Padding="0,6">
+                                        <Label Text="{Binding DateText}" FontSize="12" LineBreakMode="WordWrap" />
+                                        <Label Text="{v:Translate Snapshot_SavedPath}" Style="{StaticResource Secondary}" FontSize="12" />
+                                        <p:AmountReadout AmountText="{Binding SavedText}" CaptionStyle="{StaticResource SnapshotTableFigure}" />
+                                        <Label Text="{v:Translate Snapshot_ActualPath}" Style="{StaticResource Secondary}" FontSize="12" />
+                                        <p:AmountReadout AmountText="{Binding ActualText}" CaptionStyle="{StaticResource SnapshotTableFigure}" />
+                                        <Label Text="{v:Translate Snapshot_Difference}" Style="{StaticResource Secondary}" FontSize="12" />
+                                        <p:AmountReadout AmountText="{Binding DifferenceText}" TextColor="{Binding DifferenceColor}" CaptionStyle="{StaticResource SnapshotTableTotal}" />
+                                    </VerticalStackLayout>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
@@ -87,19 +103,19 @@
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Parts}" Spacing="8" IsVisible="{Binding CanCompare}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="reports:AmountLine">
-                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                                    <Label Text="{Binding Label}" VerticalOptions="Center" />
-                                    <Label Grid.Column="1" Text="{Binding Amount}" VerticalOptions="Center">
-                                        <Label.Triggers>
-                                            <DataTrigger TargetType="Label" Binding="{Binding IsTotal}" Value="True">
-                                                <Setter Property="FontAttributes" Value="Bold" />
+                                <VerticalStackLayout Spacing="4" Padding="0,4">
+                                    <Label Text="{Binding Label}" LineBreakMode="WordWrap" />
+                                    <p:AmountReadout AmountText="{Binding Amount}" CaptionStyle="{StaticResource SnapshotPartFigure}">
+                                        <p:AmountReadout.Triggers>
+                                            <DataTrigger TargetType="p:AmountReadout" Binding="{Binding IsTotal}" Value="True">
+                                                <Setter Property="CaptionStyle" Value="{StaticResource SnapshotPartTotal}" />
                                             </DataTrigger>
-                                            <DataTrigger TargetType="Label" Binding="{Binding IsNegative}" Value="True">
+                                            <DataTrigger TargetType="p:AmountReadout" Binding="{Binding IsNegative}" Value="True">
                                                 <Setter Property="TextColor" Value="{DynamicResource ExpenseText}" />
                                             </DataTrigger>
-                                        </Label.Triggers>
-                                    </Label>
-                                </Grid>
+                                        </p:AmountReadout.Triggers>
+                                    </p:AmountReadout>
+                                </VerticalStackLayout>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>

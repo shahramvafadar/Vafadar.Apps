@@ -1072,3 +1072,18 @@ purchase captions in en/fa/de, light/dark and 360/412/1280 widths; process-local
 setting. Completed cases are not repeated. Keep the own AppWindow hidden; no desktop activation/input.
 The independent original-source Android caller has `billing-owned` for native text layout without store,
 payment or financial effects. Actual store metadata/signature/provider lifecycle acceptance is separate.
+
+### Original financial table readouts (D-311)
+
+The Windows Debug `financial-tables` route requires independent ApplicationId pro.vafadar.zanance.financialtables
+and an owned artifacts/financial-tables-d311* directory. It uses a separate SQLite fixture and original pages,
+with in-memory canonical monetary/date presentation packets only. Default final review covers en/fa/de,
+light/dark and 360/412/1280 at requested process-local text scale; VAFADAR_TABLE_BEFORE=1 is the narrowly scoped
+original German/360 reproduction, not permission to replay it. Preserve failed fixtures. Template hashes
+prevent carrying accepted native packets across a production-template change; completed contexts and individual
+unchanged packets are skipped only for fixture corrections. Never activate or send desktop input.
+
+The original-source independent Android Home caller's `tables` phase checks the same original reports/snapshot
+surfaces, native text layout and real horizontal offsets in all three languages/themes. It uses a fresh
+explicit run/comparison with original-process observation, no main data or system setting changes. See its
+README. These native layout checks are not financial-calculation, statistical speed, phone or iOS acceptance.

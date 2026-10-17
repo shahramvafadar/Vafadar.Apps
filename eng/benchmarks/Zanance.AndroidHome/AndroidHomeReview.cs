@@ -43,6 +43,13 @@ internal static partial class AndroidHomeReview
                 await Task.Run(() => PrepareAsync(root, ct), ct);
                 await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, MainPackageTouched = false }, ct);
             }
+            else if (phase == "tables")
+            {
+                if (File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))
+                    throw new ReviewCheckException("Completed financial table review must not be repeated.");
+                Directory.CreateDirectory(root);
+                await WriteReportAsync(root, phase, await ReviewFinancialTablesAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "billing-owned")
             {
                 if (File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))

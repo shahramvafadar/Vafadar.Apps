@@ -2023,3 +2023,21 @@ refresh. No next debit, price, early scheduled access or cancellation is inferre
 receipt identifiers are shown. Seven new focused cases cover all six languages and original financial
 preservation, including live retranslation without store reads. Native/build/package evidence and retained
 failures: [verified purchase lifecycle](../../quality/verified-purchase-lifecycle.md). Genuine store, Mac/iOS, phone and release gates stay open.
+
+## D-311 readable report and forecast tables
+
+The original trend/history and forecast comparison/parts templates now separate identity/date from whole
+monetary packets, reusing the existing native horizontal AmountReadout and overflow hint. Native original
+German month/amount overflow is reproduced at 360 width. Eighteen Windows en/fa/de, light/dark, 360/412/1280
+contexts at process-local 200% stress and six original-source Release/AOT Android contexts pass with original
+stored data unchanged. Charts/PDF/calculations and schema are unchanged. No new unit-test count or unrelated
+successful suite replay is claimed. Exact scope, retained failures and package:
+[financial table readouts](../../quality/financial-table-readouts.md). A11Y-03, spoken readers, actual OS/device/iOS and release gates remain open.
+
+### Current owner execution order (2026-10-17)
+
+Finish the current qualified D-311 batch, then qualify Android on the authorized Samsung SM-A176B
+using complete signed candidates and fictitious profiles without resetting data or changing system
+settings. Continue Mac/iOS afterward. Company/account-dependent Store/OAuth gates wait for owner setup.
+Cloudflare Tunnel is the approved hosting path; prepare and qualify the project-owned configuration,
+with personal sign-in/credential entry by the owner. Public reachability is not inferred from approval.

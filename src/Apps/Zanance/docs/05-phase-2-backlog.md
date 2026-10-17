@@ -2067,3 +2067,13 @@ keys observes two opens becoming one, with complete raw schema/typed rows unchan
 Windows builds pass. This bounded callback improvement is not whole cold-start, two-second, ANR, phone,
 iOS or release acceptance. QA-06 stays In progress. Native/package receipts and exact limits:
 [protected schema connection lifetime](quality/protected-schema-connection-lifetime.md).
+
+## D-311 readable report and forecast tables
+
+The original trend/history and forecast comparison/parts templates now separate identity/date from whole
+monetary packets, reusing the existing native horizontal AmountReadout and overflow hint. Native original
+German month/amount overflow is reproduced at 360 width. Eighteen Windows en/fa/de, light/dark, 360/412/1280
+contexts at process-local 200% stress and six original-source Release/AOT Android contexts pass with original
+stored data unchanged. Charts/PDF/calculations and schema are unchanged. No new unit-test count or unrelated
+successful suite replay is claimed. Exact scope, retained failures and package:
+[financial table readouts](quality/financial-table-readouts.md). A11Y-03, spoken readers, actual OS/device/iOS and release gates remain open.

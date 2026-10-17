@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Read complete report and forecast figures (D-311)
+
+- Give dates and each trend, history and forecast-comparison amount their own growing row.
+- Keep original signs, currencies and precision; scroll oversized values with an explicit hint.
+- Preserve existing calculations, saved forecasts, charts and export data.
+
 ### Understand verified purchase validity (D-310)
 
 - Show original paid-through dates, grace, Lifetime and observed automatic renewal beside purchase offers.
