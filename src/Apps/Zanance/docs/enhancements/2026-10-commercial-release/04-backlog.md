@@ -46,7 +46,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
 | ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-64 local evidence verified; device/corpus pending) | sample receipts |
-| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-283 coherent protected Home; D-278/280 protected read/search/save; D-284/285/286 loaded Windows; D-291 original Release/AOT Android loaded reference/tenfold Home and full preservation verified; D-303 complete sequential ledger/existing-id materialization halves loaded tenfold Android publication with full preservation; D-305 complete typed materialization and startup refresh locally qualified; remaining composition, phone/low-memory/cold/ANR/iOS acceptance remains) | – |
+| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-283 coherent protected Home; D-278/280 protected read/search/save; D-284/285/286 loaded Windows; D-291 original Release/AOT Android loaded reference/tenfold Home and full preservation verified; D-303 complete sequential ledger/existing-id materialization halves loaded tenfold Android publication with full preservation; D-305 complete typed materialization and startup refresh locally qualified; D-309 one owned keyed connection during actual schema review locally qualified; remaining composition, phone/low-memory/cold/ANR/iOS acceptance remains) | – |
 | ZCR-QA-07 | Android/iOS parity (notifications, widget, file picker, lock, share, licences); existing Windows development checks | 2 | P2 | M | Mac readiness owner-reported; verification and iOS runs pending in that environment. Windows commercial delivery is outside current scope | platform access/signing |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | In progress (D-174 widget and D-175 contextual date names/drafts verified locally; spoken TalkBack and remaining screen/platform acceptance open) | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
@@ -2614,3 +2614,19 @@ original query/argument behind complete native buttons. Eighteen Windows 200% pr
 216 target observations and 54 actual queries without stored writes. Other compact choices pass and remain
 unchanged. [Native/package scope and negative evidence](../../quality/saved-filter-actions-readable.md).
 Other A11Y-03 controls and actual OS/readers/phone/iOS acceptance remain open; no new unit-test count.
+
+## D-309 protected schema connection follow-through
+
+The actual covered-startup upgrade callback now retains one supplied unpooled keyed connection during
+history/pending-migration review, then restores its caller's original state. Closed current/old/unknown
+history reproduces two/three/two opens before correction and one afterward; already-open ownership,
+cancellation and unknown-prefix refusal remain. Eight new cases plus two existing cases qualify ten
+distinct related behaviors across retained runs. The existing old-schema fact also preserves original
+account/entry/settings and balance through real migration; its final changed assertions alone are rerun.
+No new complete-suite count is claimed.
+
+Original-source Release/AOT Android reference/tenfold measurement on the same retained ciphertext and
+keys observes two opens becoming one, with complete raw schema/typed rows unchanged. Strict test and
+Windows builds pass. This bounded callback improvement is not whole cold-start, two-second, ANR, phone,
+iOS or release acceptance. QA-06 stays In progress. Native/package receipts and exact limits:
+[protected schema connection lifetime](../../quality/protected-schema-connection-lifetime.md).

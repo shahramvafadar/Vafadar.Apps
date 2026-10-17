@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Less repeated protected startup setup (D-309)
+
+- Reuse the original connection while checking and upgrading the protected database schema.
+- Preserve migration validation, cancellation, original financial data and caller ownership.
+- Keep database security parameters unchanged; full cold-start speed remains under review.
+
 ### Keep reviewed goal and plan data consistent (D-306)
 
 - Reject a changed reviewed plan or goal before publishing Home or saving a guarded action.

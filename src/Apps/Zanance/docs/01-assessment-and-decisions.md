@@ -6242,3 +6242,17 @@ normal-scale evidence reproduced a name/action wider than its viewport; shared c
 passed native 44-unit checks and are unchanged. Original typography/colors, query logic and financial rows
 are retained. The maintained independent Windows/Android callers qualify the original page without using
 owner data. Exact results, negative evidence and package: [saved-filter actions](quality/saved-filter-actions-readable.md).
+
+## D-309 one owned connection during protected schema review
+
+The actual protected-startup schema callback previously let EF independently open its supplied closed,
+unpooled keyed handle for history existence/read and a pending migration. Reproduced counts were two opens
+for current/unknown history and three for a supported old prefix. Retain one original connection only for
+this operation, close it on success/failure/cancellation if originally closed, and preserve already-open
+caller ownership. Keep the original supported-prefix refusal, real migration suffix, compiled model,
+maintenance scope, KDF and unpooled policy. No schema, key, native component or global cache changes.
+
+Eight new related AT-309 cases and the original two cases qualify the ownership/history boundary. The old
+schema fact also preserves original first-schema account, entry, settings and balance through migration.
+Native same-ciphertext evidence, final package and explicit remaining limits are recorded in
+[protected schema connection lifetime](quality/protected-schema-connection-lifetime.md).

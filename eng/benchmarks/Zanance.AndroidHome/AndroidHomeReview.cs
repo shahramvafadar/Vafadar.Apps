@@ -43,6 +43,11 @@ internal static partial class AndroidHomeReview
                 await Task.Run(() => PrepareAsync(root, ct), ct);
                 await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, MainPackageTouched = false }, ct);
             }
+            else if (phase == "schema")
+            {
+                RequireRoot(root);
+                await WriteReportAsync(root, phase, await ReviewSchemaConnectionAsync(root, comparison!, ct), ct);
+            }
             else if (phase == "filters")
             {
                 if (File.Exists(Path.Combine(root, "filters-" + comparison + "-result.json")))

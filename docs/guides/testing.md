@@ -178,3 +178,14 @@ overdue rights; retired read facts never publish. Run the canonical normal paral
 filter. Direct xUnit DLL filters use -class/-method, not MTP --filter-class. Native review uses the exact owned QA03
 profile selected through UI in the normal signed Release; inactive registration remains unrestricted. No native
 enabled-commercial, Windows-rendering, physical-device or publication claim. [Evidence](../../src/Apps/Zanance/docs/quality/selected-plan-occurrences.md).
+
+## Protected schema connection ownership (D-309 / AT-309)
+
+ProtectedSchemaUpgradeTests compile the actual non-UI production callback. Six current/old/unknown-history
+and original-open/closed combinations count real SQLite StateChange opens and compare original rows/history;
+two cancellation cases preserve ownership. The existing old-schema case writes only original raw columns
+and verifies real account/entry/settings/balance after pending migrations. Run the exact class through the
+built xUnit DLL with `-class Vafadar.Zanance.App.Tests.ProtectedSchemaUpgradeTests -result-xml <path>`;
+after a narrower assertion edit, repeat only its exact `-method`. Never confuse focused coverage with a new
+complete-suite pass. The retained independent Android `schema` phase qualifies real keyed native behavior;
+it does not duplicate the algorithm or replace main-package startup and external platform acceptance.

@@ -84,3 +84,16 @@ After an actual failed caller, preserve its packet, original run directory and e
 corrected caller can continue that same fixture after explicit value validation, with a fresh comparison
 identity preserving the immutable failure packet. Completed comparisons refuse repetition. Observation
 failure does not prove process death: verify the original authoritative process rather than restarting it.
+
+## Original protected schema callback (D-309)
+
+The `schema` phase takes the already prepared protected reference/tenfold run and a fresh `review_pass`.
+It refuses absent original ciphertext, identities or keys and calls the actual production
+ProtectedProfileStorage.UpgradeAsync on the original closed unpooled keyed connection under drained ownership.
+It reports physical Open state transitions and callback elapsed time, then compares complete raw schema,
+headers, integrity and typed rows against the existing encrypted rollback. It never prepares a replacement
+fixture, saves money or changes the KDF. Observe its exact live PID with `-Phase schema -Comparison <pass>`.
+
+For a production change, build a new caller and use a fresh comparison against the same retained run. Keep
+before/after process/module identities and failure packets. A timeout is not process death. This phase is
+not whole Home startup, rendered-frame, statistical timing, phone, iOS or two-second acceptance.

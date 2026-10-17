@@ -1997,3 +1997,19 @@ passed compact-control or financial/service suites. The maintained native fixtur
 unrelated generic-seed failure. Windows 18-context results and Android/package follow-through are in
 [saved-filter native evidence](../../quality/saved-filter-actions-readable.md). A11Y-03 and external release
 gates stay explicit; no test-count or whole-suite acceptance is invented.
+
+## D-309 protected schema connection follow-through
+
+The actual covered-startup upgrade callback now retains one supplied unpooled keyed connection during
+history/pending-migration review, then restores its caller's original state. Closed current/old/unknown
+history reproduces two/three/two opens before correction and one afterward; already-open ownership,
+cancellation and unknown-prefix refusal remain. Eight new cases plus two existing cases qualify ten
+distinct related behaviors across retained runs. The existing old-schema fact also preserves original
+account/entry/settings and balance through real migration; its final changed assertions alone are rerun.
+No new complete-suite count is claimed.
+
+Original-source Release/AOT Android reference/tenfold measurement on the same retained ciphertext and
+keys observes two opens becoming one, with complete raw schema/typed rows unchanged. Strict test and
+Windows builds pass. This bounded callback improvement is not whole cold-start, two-second, ANR, phone,
+iOS or release acceptance. QA-06 stays In progress. Native/package receipts and exact limits:
+[protected schema connection lifetime](../../quality/protected-schema-connection-lifetime.md).

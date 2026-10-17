@@ -3538,3 +3538,13 @@ Windows en/fa/de, both themes and 360/412/1280 widths at process-local 200% stre
 target observations and 54 saved-query invocations across 18 contexts. Complete original stored inputs
 remain unchanged. This adds maintained native coverage, not a new unit-test count or a fresh whole-suite
 run. Android/package results and separate platform gates: [evidence](quality/saved-filter-actions-readable.md).
+
+## AT-309 - Original protected schema connection lifetime (D-309)
+
+Eight new focused cases qualify current/old/unknown histories with original open/closed caller ownership
+and cancellation. The two original schema facts remain qualified; the old-schema fact now proves original
+financial ids, EUR expense and balance through actual pending migrations. Ten distinct class cases pass
+across retained runs, with only the final strengthened fact rerun after its assertion change. This is not
+a new full-suite run. Actual native keyed reference/tenfold files retain complete raw data and restore the
+closed state with one physical open. Main-package and external limits are recorded in
+[the delivery evidence](quality/protected-schema-connection-lifetime.md); QA-06 remains In progress.

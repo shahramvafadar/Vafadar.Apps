@@ -1055,3 +1055,11 @@ original page/actions; it does not use the generic historical seed. Set language
 Keep the own window hidden; preserve its process, native observations and negative fixture evidence.
 The independent Android Home caller's `filters` phase provides the original normal-scale counterpart;
 see eng/benchmarks/Zanance.AndroidHome/README.md. This does not replace phone, spoken-reader or iOS acceptance.
+
+### Original protected schema native check (D-309)
+
+The independent Android Home caller's `schema` phase uses the original protected reference/tenfold run,
+a fresh comparison id and the exact live PID. It invokes the actual protected-startup callback and counts
+physical opens before comparing complete original ciphertext data against the existing rollback. Follow
+eng/benchmarks/Zanance.AndroidHome/README.md; never reseed or replace keys for a comparison. Finish native
+measurement before running another compiler. A callback timing is not whole Home/cold readiness.

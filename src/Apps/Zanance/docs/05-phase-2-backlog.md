@@ -2051,3 +2051,19 @@ from 14,828.37 to 7,418.54 ms; reference median from 3,066.82 to 2,252.00 ms. Th
 observations, not two-second cold/phone/ANR/iOS acceptance. Windows native publication and complete portable
 preservation also pass. Full-suite historical counts are not a new full run. Exact evidence and package:
 [20-home-read-delivery.md](enhancements/2026-10-commercial-release/20-home-read-delivery.md).
+
+## D-309 protected schema connection follow-through
+
+The actual covered-startup upgrade callback now retains one supplied unpooled keyed connection during
+history/pending-migration review, then restores its caller's original state. Closed current/old/unknown
+history reproduces two/three/two opens before correction and one afterward; already-open ownership,
+cancellation and unknown-prefix refusal remain. Eight new cases plus two existing cases qualify ten
+distinct related behaviors across retained runs. The existing old-schema fact also preserves original
+account/entry/settings and balance through real migration; its final changed assertions alone are rerun.
+No new complete-suite count is claimed.
+
+Original-source Release/AOT Android reference/tenfold measurement on the same retained ciphertext and
+keys observes two opens becoming one, with complete raw schema/typed rows unchanged. Strict test and
+Windows builds pass. This bounded callback improvement is not whole cold-start, two-second, ANR, phone,
+iOS or release acceptance. QA-06 stays In progress. Native/package receipts and exact limits:
+[protected schema connection lifetime](quality/protected-schema-connection-lifetime.md).

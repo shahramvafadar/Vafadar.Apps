@@ -224,16 +224,31 @@ public sealed class ProtectedProfileStorage
         catch { generation.Dispose(); throw; }
     }
 
-    /// <summary>Applies only the pending suffix of the supported real application migrations on the supplied owned connection.</summary>
+    /// <summary>Applies only the supported pending migration suffix on one owned handle, restoring its original open state.</summary>
     internal static async Task UpgradeAsync(SqliteConnection connection, CancellationToken ct)
     {
-        var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(connection, contextOwnsConnection: false)
-            .UseModel(ZananceDbContextModel.Instance).Options;
-        await using var db = new ZananceDbContext(options);
-        var recorded = (await db.Database.GetAppliedMigrationsAsync(ct).ConfigureAwait(false)).ToArray();
-        var known = db.Database.GetMigrations().ToArray();
-        if (recorded.Length > known.Length || !recorded.SequenceEqual(known.Take(recorded.Length), StringComparer.Ordinal))
-            throw new InvalidDataException("Protected application schema history is not a supported migration prefix.");
-        if (recorded.Length != known.Length) await db.Database.MigrateAsync(ct).ConfigureAwait(false);
+        ArgumentNullException.ThrowIfNull(connection);
+        var closeWhenFinished = connection.State == System.Data.ConnectionState.Closed;
+        try
+        {
+            ct.ThrowIfCancellationRequested();
+            var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(connection, contextOwnsConnection: false)
+                .UseModel(ZananceDbContextModel.Instance).Options;
+            await using var db = new ZananceDbContext(options);
+            // D-309: EF's history-existence, history-read and optional migration calls would otherwise
+            // reopen this unpooled keyed handle independently. Retain it only for this owned operation;
+            // never change the KDF, enable pooling or keep a connection beyond its caller's original state.
+            if (closeWhenFinished) await connection.OpenAsync(ct).ConfigureAwait(false);
+            var recorded = (await db.Database.GetAppliedMigrationsAsync(ct).ConfigureAwait(false)).ToArray();
+            var known = db.Database.GetMigrations().ToArray();
+            if (recorded.Length > known.Length || !recorded.SequenceEqual(known.Take(recorded.Length), StringComparer.Ordinal))
+                throw new InvalidDataException("Protected application schema history is not a supported migration prefix.");
+            if (recorded.Length != known.Length) await db.Database.MigrateAsync(ct).ConfigureAwait(false);
+        }
+        finally
+        {
+            // Cleanup must still run after cancellation/open failure; an already-open caller keeps ownership.
+            if (closeWhenFinished) await connection.CloseAsync().ConfigureAwait(false);
+        }
     }
 }
