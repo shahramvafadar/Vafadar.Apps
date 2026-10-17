@@ -248,6 +248,59 @@ public sealed class HomeReadSnapshotTests : IDisposable
         Assert.Equal(1.2m, (await original.ExchangeRates.SingleAsync(Ct)).Rate);
     }
 
+    /// <summary>Original in-memory plans/goals cannot be changed after review and still authorize a covered publication.</summary>
+    [Theory]
+    [InlineData("plan-amount"), InlineData("plan-rule"), InlineData("plan-state")]
+    [InlineData("goal-target"), InlineData("goal-rule"), InlineData("goal-allocation")]
+    [Trait("AT", "AT-306")]
+    public async Task Altered_reviewed_plan_or_goal_inputs_refuse_home_publication_without_stored_writes(string change)
+    {
+        var provider = Create(); await SeedAsync(provider);
+        var store = provider.GetRequiredService<ZananceStore>();
+        var snapshot = await store.GetHomeSnapshotAsync(Today, 0, Ct);
+        var beforePlans = JsonSerializer.Serialize(await provider.GetRequiredService<PlanStore>().GetSchedulesAsync(Ct));
+        var beforeGoals = JsonSerializer.Serialize(snapshot.Goals.Goals);
+        switch (change)
+        {
+            case "plan-amount": snapshot.Plans.Schedules[0].Amount++; break;
+            case "plan-rule": snapshot.Plans.Schedules[0].Rule.Interval++; break;
+            case "plan-state": snapshot.Plans.States.Add(new OccurrenceState { ScheduleId = snapshot.Plans.Schedules[0].Id,
+                OriginalDate = Today, Amount = 999, PaidAmount = 123 }); break;
+            case "goal-target": snapshot.Goals.Goals[0].TargetAmount++; break;
+            case "goal-rule": snapshot.Goals.ContributionPlans.Add(new ContributionPlan { GoalId = snapshot.Goals.Goals[0].Id,
+                Rule = new() { Start = Today, Frequency = Frequency.Monthly }, Amount = 100 }); break;
+            case "goal-allocation": snapshot.Goals.Allocations.Add(new GoalAllocation { GoalId = snapshot.Goals.Goals[0].Id,
+                AccountId = snapshot.QuickResources.Accounts[0].Id, Amount = 200, Date = Today }); break;
+        }
+        await Assert.ThrowsAsync<InvalidOperationException>(() => store.ValidateHomeSnapshotAsync(snapshot, Ct));
+        Assert.Equal(beforePlans, JsonSerializer.Serialize(await provider.GetRequiredService<PlanStore>().GetSchedulesAsync(Ct)));
+        await using var db = await Factory(provider).CreateDbContextAsync(Ct);
+        Assert.Equal(beforeGoals, JsonSerializer.Serialize(await db.Goals.AsNoTracking().ToListAsync(Ct)));
+        Assert.Empty(await db.OccurrenceStates.ToListAsync(Ct)); Assert.Empty(await db.ContributionPlans.ToListAsync(Ct));
+        Assert.Empty(await db.GoalAllocations.ToListAsync(Ct));
+    }
+
+    /// <summary>A modified original goal review cannot authorize a new allocation in its actual writer transaction.</summary>
+    [Fact]
+    [Trait("AT", "AT-306")]
+    public async Task Altered_goal_review_refuses_allocation_without_changing_financial_rows()
+    {
+        var provider = Create(); await SeedAsync(provider);
+        var goals = provider.GetRequiredService<GoalStore>(); var store = provider.GetRequiredService<ZananceStore>();
+        var review = await goals.GetWorkSnapshotAsync(Ct);
+        var entries = JsonSerializer.Serialize(await store.GetEntriesAsync(cancellationToken: Ct));
+        review.Goals[0].TargetAmount++;
+        await using (var original = await Factory(provider).CreateDbContextAsync(Ct))
+        {
+            var account = await original.Accounts.SingleAsync(Ct);
+            var allocation = new GoalAllocation { GoalId = review.Goals[0].Id, AccountId = account.Id, Amount = 200, Date = Today };
+            await Assert.ThrowsAsync<InvalidOperationException>(() => goals.AddAllocationAsync(allocation, Ct, review));
+        }
+        Assert.Equal(entries, JsonSerializer.Serialize(await store.GetEntriesAsync(cancellationToken: Ct)));
+        await using var db = await Factory(provider).CreateDbContextAsync(Ct);
+        Assert.Equal(4000, (await db.Goals.SingleAsync(Ct)).TargetAmount); Assert.Empty(await db.GoalAllocations.ToListAsync(Ct));
+    }
+
     /// <summary>Read-only and ordinary operations retain complete ordering without leaking a connection-local cache target.</summary>
     [Theory, InlineData(false, false), InlineData(true, false), InlineData(false, true)]
     [Trait("AT", "AT-286")]

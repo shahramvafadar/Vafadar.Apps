@@ -60,3 +60,10 @@ This is a loaded emulator baseline, not cold startup, hardware-rendered/GPU fram
 physical phone speed/ANR, arm64/API24/16 KiB OS, iOS or two-second product acceptance. Do not run
 compilers or intrusive UI observers while measuring. No unchanged production APK/full test suite
 needs repetition for this independent caller alone.
+
+
+The D-306 `guard` phase uses the same run and explicit review_baseline with a fresh review_pass. It checks
+one original native English Home publication per shape, rejects changed in-memory plan/goal reviews and
+accepts that same review after exact restoration. It compares the complete raw original database afterward.
+No DB Save, new preparation/key, repeated native-stepping profile or statistical performance claim belongs
+to this phase. Observe its exact process with Read-ReviewReport.ps1 -Phase guard -Comparison <original-pass>.

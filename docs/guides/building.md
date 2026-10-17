@@ -1032,3 +1032,16 @@ RunAOTCompilation=false and RuntimeIdentifier/RuntimeIdentifiers=android-x64 for
 Confirm the recorder APK has no AOT libraries, reach actual Home in the original process, then collect names-only
 metadata. Restore central package bytes and remove the exact owned forward before the ordinary unmodified
 Build-AndroidApk.ps1 production build. Never apply those recording overrides to the final package.
+
+
+### Reviewed input and goal lifecycle qualification (D-306)
+
+The `goal-review-integrity` Windows snapshot route creates its own fresh SQLite fixture, invokes the actual
+GoalDetail buttons/native confirmation and checks complete/reopen/pause/resume with retained amount and no
+ledger/allocation writes. Use Run-Snapshots.ps1 -Languages 'en,fa,de' -Only goal-review-integrity -Theme light
+-WindowSize 412x820, then a fresh dark output. Existing fixture paths are refused; keep the original failure
+and continue only after its actual cause is understood. The review window stays hidden and uses only native
+Invoke patterns. This is development/native evidence, not Windows commercial or phone/iOS acceptance.
+The independent Android Home guard phase covers altered original inputs against retained protected datasets;
+it is not another performance benchmark or new financial source. Scope/receipts:
+src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/23-reviewed-input-integrity-delivery.md.

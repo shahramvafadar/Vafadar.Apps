@@ -568,12 +568,13 @@ public sealed partial class GoalDetailViewModel(
         await RunWriteAsync(async () => { await WriteStateAsync(goal, review, draft => draft.State = GoalState.Active); return true; });
     }
 
-    // Restore only the local rejected lifecycle draft. A failure after commit is handled separately below.
+    // D-306: lifecycle changes belong to a detached draft, never the original reviewed object. The same
+    // complete review must remain unchanged through confirmation, writer validation and a rejected Save.
     private async Task WriteStateAsync(Goal goal, GoalWorkSnapshot review, Action<Goal> change)
     {
-        var previous = (goal.State, goal.CompletedAt, goal.PausedAt, goal.HomePin, goal.Protect);
-        try { change(goal); await goals.SaveGoalAsync(goal, review: review); }
-        catch { (goal.State, goal.CompletedAt, goal.PausedAt, goal.HomePin, goal.Protect) = previous; throw; }
+        var draft = goal.Clone();
+        change(draft);
+        await goals.SaveGoalAsync(draft, review: review);
     }
 
     [RelayCommand(CanExecute = nameof(CanInteract))]

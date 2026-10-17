@@ -1468,3 +1468,13 @@ Currency code, editable search and list affordance remain complete at native tex
 identity and translated selected state. Keep the vendor's original filter/selection rather than another search
 algorithm. Reserve a whole row for each amount/currency input in constrained transaction, goal and rate groups;
 never fix currency width to 110, shrink fonts, hide errors or replace the original draft/control.
+
+
+## Original reviewed goal lifecycle (D-306)
+
+Completion/reopening, pause/resume, archive and restore change a detached complete goal draft. The original
+reviewed packet stays unchanged through native confirmation, writer validation and rejected Save. Keep the
+busy guard across confirmation/reload, preserve the unsaved amount and retain existing state-specific actions.
+An altered reviewed plan/goal packet requires reload; it cannot become a valid new displayed source or writer
+review merely because the database is unchanged. Existing captions, layout and disclosure remain unchanged.
+Native en/fa/de light/dark command/confirmation evidence is in enhancements/2026-10-commercial-release/23-reviewed-input-integrity-delivery.md.

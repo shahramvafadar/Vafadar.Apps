@@ -2585,3 +2585,15 @@ with full native/financial preservation, same-process tenfold source-read eviden
 compilation. QA-06 retains its explicit remaining composition/memory/cold/ANR/device/iOS acceptance rather than
 claiming a two-second result. See [delivery](22-home-materialization-delivery.md). D-304 backend/CI/CodeQL are
 actually successful after its isolated-peer repair; the one-use follow-up is deleted.
+
+
+## D-306 reviewed-input maintenance and rejected performance trial
+
+The actual in-memory plan/goal review defect and its GoalDetail lifecycle caller are corrected together;
+all database/choice/file/rights checks remain. New regressions, affected source flows, native goal commands,
+protected Android original Home/data and final main package are qualified locally. This is maintenance of
+QA-03/ENT-02/03 consistency with test limits inactive; it does not close their external release gates.
+The bounded recurrence-cache candidate is removed after full native and isolated worker evidence fails to
+justify its complexity. Do not repeat that trial without a new cause or add its discarded cases to the
+shipping count. QA-06 remains In progress. D-305's one-use actual hosted check passes all four workflows;
+its timer is deleted. [Evidence](23-reviewed-input-integrity-delivery.md).

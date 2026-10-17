@@ -3503,3 +3503,22 @@ Evidence, package and remaining limits: [22-home-materialization-delivery.md](en
 
 QA-06 remains In progress for remaining composition, memory/cold/ANR, physical-phone and iOS acceptance.
 The D-304 one-use hosted repair result is now completed/success for backend, CI and CodeQL; its timer is deleted.
+
+
+## D-306 original reviewed inputs and detached goal lifecycle drafts
+
+Original plan/goal reviews now reject changed in-memory model packets as well as changed database rows,
+while retaining original file, choice and rights validation. Six Home mutations reproduce the missing
+rejection before the fix; the goal allocation writer also refuses an altered source without money changes.
+GoalDetail lifecycle actions now write a complete detached clone, preserving the original review through
+confirmation and Save. Seven new regression cases and 179 distinct related Data / 169 original-source app
+cases are qualified across retained runs; only the three affected failing app methods are repeated after
+that caller correction. No new full-suite run or discarded prototype test count is claimed.
+
+Twenty-four actual native goal actions/confirmations pass across en/fa/de and light/dark in a fresh Windows
+fixture, preserving the unsaved amount and original ledger. The protected Release/AOT Android reference and
+tenfold cases reject altered reviews, accept the same review after restoration, retain original native Home
+presentation and complete raw data. Strict builds and the complete signed main APK pass; the original main
+installation reaches unchanged Home after upgrade. A recurrence-cache trial is rejected for insufficient
+benefit and completely removed; QA-06 and physical/iOS/release acceptance remain open. Exact evidence:
+[23-reviewed-input-integrity-delivery.md](enhancements/2026-10-commercial-release/23-reviewed-input-integrity-delivery.md).

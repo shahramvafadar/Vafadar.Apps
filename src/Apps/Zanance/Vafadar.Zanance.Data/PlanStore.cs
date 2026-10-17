@@ -80,6 +80,10 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
             throw new InvalidOperationException("The plan work snapshot belongs to another opened file.");
         snapshot.Access.DemandFeature(CommercialFeature.History);
         snapshot.Access.EnsureSnapshotCurrent();
+        // D-306: the database stamp alone cannot validate an in-memory packet a caller changed after review.
+        // Keep the original snapshot immutable for publication and guarded actions, as quick resources already do.
+        if (PlanWorkSnapshot.CaptureInputs(snapshot.Schedules, snapshot.States) != snapshot.InputStamp)
+            throw new InvalidOperationException("The reviewed original inputs changed in memory; reload them.");
         if (StoredResourceSelection.Capture(await StoredResourceSelection.ReadAsync(db, snapshot.Access, QuotaKind.RecurringPlans, cancellationToken)) != snapshot.SelectionStamp)
             throw new InvalidOperationException("The original plan choice changed during notification preparation.");
         var schedules = await db.Schedules.AsNoTracking().ToListAsync(cancellationToken);

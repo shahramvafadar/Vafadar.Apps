@@ -109,3 +109,14 @@ production sources contain no recording dependency/environment. No unrelated suc
 suite, cipher qualification or layout matrix is rerun. This bounded read/compilation/runtime/package delivery
 is locally complete. Its own hosted CI result must come from the one-use post-push check; physical-device,
 iOS, remaining composition/memory/cold/ANR and product release remain open.
+
+
+## Actual one-use hosted result
+
+Commit 063f77145fde0ccb1a0fe753cdb9a1e8c804fe2f completes successfully in
+[CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39017666217),
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39017666190),
+[Local identity backend](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39017666215) and
+[Self-hosted service qualification](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39017666258).
+The own one-use follow-up is deleted; artifacts/home-materialization-d305/ci-once.json retains the exact receipt.
+These are actual hosted results, separate from the local performance/runtime and open release/platform gates.

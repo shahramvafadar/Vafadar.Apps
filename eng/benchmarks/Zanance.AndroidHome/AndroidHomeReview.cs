@@ -47,7 +47,7 @@ internal static class AndroidHomeReview
             {
                 RequireRoot(root);
                 if (comparison is null || !System.Text.RegularExpressions.Regex.IsMatch(comparison, "^[0-9a-f]{32}$")
-                    || phase is not ("measure" or "compare")) throw new ReviewCheckException("Explicit original comparison required.");
+                    || phase is not ("measure" or "compare" or "guard")) throw new ReviewCheckException("Explicit original comparison required.");
                 if (baseline is null || !System.Text.RegularExpressions.Regex.IsMatch(baseline, "^[0-9a-f]{32}$"))
                     throw new ReviewCheckException("Original baseline presentation identity required.");
                 await MeasureAsync(app, services, root, phase, comparison, baseline, ct);
@@ -113,6 +113,7 @@ internal static class AndroidHomeReview
         await Task.Delay(1000, ct); // Let original empty-install foreground work settle outside the measurement.
         var results = new List<object>();
         var nativeReadProfiles = new List<object>();
+        var reviewedInputGuards = new List<object>();
         var completed = new HashSet<string>(StringComparer.Ordinal);
         if (File.Exists(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json")))
         {
@@ -123,7 +124,7 @@ internal static class AndroidHomeReview
                 if (name is not ("reference" or "tenfold") || language is not ("en" or "fa" or "de") ||
                     !item.GetProperty("OriginalBalancesAndNativeTextMatched").GetBoolean() ||
                     !item.GetProperty("OriginalFinancialPresentationMatched").GetBoolean() ||
-                    item.GetProperty("FirstThenSecondPublicationMilliseconds").GetArrayLength() != 2 ||
+                    item.GetProperty("FirstThenSecondPublicationMilliseconds").GetArrayLength() != (phase == "guard" ? 1 : 2) ||
                     !completed.Add(name + ":" + language)) throw new ReviewCheckException("Invalid retained completed case.");
                 results.Add(item.Clone());
             }
@@ -151,13 +152,13 @@ internal static class AndroidHomeReview
             }
             using (generation)
             {
-                nativeReadProfiles.Add(await ProfileNativeReadAsync(data, shape.Entries, ct));
+                if (phase != "guard") nativeReadProfiles.Add(await ProfileNativeReadAsync(data, shape.Entries, ct));
                 var today = DateOnly.FromDateTime(services.GetRequiredService<TimeProvider>().GetLocalNow().DateTime);
                 var expected = await data.GetRequiredService<ZananceStore>().GetHomeSnapshotAsync(today, 0, ct);
                 if (expected.Entries.Count != shape.Entries || expected.QuickResources.Accounts.Count != shape.Accounts || expected.Plans.Schedules.Count != shape.Schedules)
                     throw new ReviewCheckException("Retained complete workload shape differs.");
                 var balances = LedgerCalculator.TotalBalances(expected.QuickResources.Accounts, expected.Entries, today);
-                foreach (var language in new[] { "en", "fa", "de" })
+                foreach (var language in phase == "guard" ? new[] { "en" } : new[] { "en", "fa", "de" })
                 {
                     if (completed.Contains(name + ":" + language)) continue;
                     await SetLanguageAsync(app, local, language, ct);
@@ -165,7 +166,7 @@ internal static class AndroidHomeReview
                         throw new ReviewCheckException("Original native Shell/Home is unavailable.");
                     await originalHome.PendingPublication;
                     var samples = new List<double>(); var gaps = new List<double>();
-                    for (var sample = 0; sample < 2; sample++)
+                    for (var sample = 0; sample < (phase == "guard" ? 1 : 2); sample++)
                     {
                         var reads = new WindowReadFactory(data.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
                         var store = new ZananceStore(reads, data.GetRequiredService<TimeProvider>(), data.GetRequiredService<ICommercialWriteAccessSource>());
@@ -215,6 +216,34 @@ internal static class AndroidHomeReview
                     await File.WriteAllTextAsync(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json"), JsonSerializer.Serialize(results), ct);
                     _balanceEvidence = null;
                 }
+                if (phase == "guard")
+                {
+                    var store = data.GetRequiredService<ZananceStore>();
+                    await store.ValidateHomeSnapshotAsync(expected, ct);
+                    var originalAmount = expected.Plans.Schedules[0].Amount;
+                    var planRejected = false;
+                    try
+                    {
+                        expected.Plans.Schedules[0].Amount = (originalAmount ?? 0) + 1;
+                        try { await store.ValidateHomeSnapshotAsync(expected, ct); }
+                        catch (InvalidOperationException) { planRejected = true; }
+                    }
+                    finally { expected.Plans.Schedules[0].Amount = originalAmount; }
+                    await store.ValidateHomeSnapshotAsync(expected, ct);
+                    var added = new Core.Goals.Goal { Name = "Fictitious altered review only", CurrencyCode = "EUR", TargetAmount = 123 };
+                    var goalRejected = false;
+                    try
+                    {
+                        expected.Goals.Goals.Add(added);
+                        try { await store.ValidateHomeSnapshotAsync(expected, ct); }
+                        catch (InvalidOperationException) { goalRejected = true; }
+                    }
+                    finally { expected.Goals.Goals.Remove(added); }
+                    await store.ValidateHomeSnapshotAsync(expected, ct);
+                    if (!planRejected || !goalRejected) throw new ReviewCheckException("Altered original input review was accepted.");
+                    reviewedInputGuards.Add(new { Shape = name, AlteredPlanInputRefused = true, AlteredGoalInputRefused = true,
+                        SameRestoredOriginalReviewAccepted = true, NoDatabaseSave = true });
+                }
                 var rawKey = await keys.ReadAsync(generation.Binding, ct);
                 try
                 {
@@ -229,7 +258,7 @@ internal static class AndroidHomeReview
                 finally { CryptographicOperations.ZeroMemory(rawKey); }
             }
         }
-        await WriteReportAsync(root, phase, new { Comparison = comparison, BaselineComparison = baseline, Results = results, NativeReadProfiles = nativeReadProfiles,
+        await WriteReportAsync(root, phase, new { Comparison = comparison, BaselineComparison = baseline, Results = results, NativeReadProfiles = nativeReadProfiles, ReviewedInputGuards = reviewedInputGuards,
             DataModuleVersionId = typeof(ZananceStore).Module.ModuleVersionId, CallerModuleVersionId = typeof(HomePage).Module.ModuleVersionId,
             OriginalProductionPage = true,
             CompleteRawSchemaAndTypedRowsUnchanged = true, NoFinancialSave = true, ColdStartupOrPhoneAcceptance = false,

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep reviewed goal and plan data consistent (D-306)
+
+- Reject a changed reviewed plan or goal before publishing Home or saving a guarded action.
+- Keep goal completion, reopening, pause and resume on a separate draft so the original review stays intact.
+- Preserve native confirmation, unsaved input and original account/transaction data.
+
 ### Less overhead reading complete Home histories (D-305)
 
 - Materialize the entire ledger with fewer conversion-layer operations while preserving all stored fields.
