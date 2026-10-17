@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### First plan visibility (D-318)
+
+- Show the first saved plan without switching list tabs or saving again. Keep empty feedback scrollable and its translated Add caption complete at large text sizes. Verified on the approved Android phone without resetting existing data.
+
 ### Android import qualification (D-317)
 
 - Verify the original file picker, own-format duplicate detection and undo after reopening on the approved phone, with existing financial records preserved. Application code and APK remain D-315.

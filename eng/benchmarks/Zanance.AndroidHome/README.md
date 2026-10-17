@@ -168,3 +168,9 @@ executes zero successful financial writes again. Per-shape progress validates th
 count before continuation. Observe exact live PIDs with -Phase read-profile or ledger-read, same Run and
 Comparison, explicit PhysicalDevice/DeviceTransportId. No reseeding, reset or new keys; observation timeout
 is not process death. Finished comparisons refuse repetition. Actual receipts: app quality/physical-ledger-read.md.
+
+## First-plan native publication (D-318)
+
+plan-publication is a separate original protected-installation diagnostic, not a marked performance workload. Require the independent package and nonredirected run root, initially zero accounts/plans/entries and no prior intent. Record its fictitious account intent before setup; invoke actual original editor/native Save once and report stored count, VM/binding count, adapter/child count and realized caption independently. A blank native row does not imply missing persistence.
+
+plan-publication-fixed requires the same retained account, original intent, one known unpaid definition and zero ledger entries. It writes an exclusive plan-retirement receipt before deleting only that definition through the original history guard, then exercises a new first-row transition with the original editor. It never resets/reseeds the installation or replaces keys. Native caption realization is required; preserve all failure reports and definition receipts. Use a fresh comparison id, the original run id and Read-ReviewReport.ps1 with the exact already-running PID. On the approved physical phone use explicit ARM64 build, PhysicalDevice and DeviceTransportId opt-in, after exclusive-input coordination. See [evidence](../../../src/Apps/Zanance/docs/quality/first-plan-publication.md).

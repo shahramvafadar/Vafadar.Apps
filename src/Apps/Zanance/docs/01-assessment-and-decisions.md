@@ -6332,3 +6332,7 @@ Use the unchanged complete signed D-315 main APK and ordinary original forms in 
 ## D-317 original physical CSV consumer and durable Undo
 
 Continue the retained D-316 fictitious main-app profile with the unchanged signed D-315 APK. Actual DocumentsUI cancellation/selection, two-row own-format preview/import, fixed-ID duplicate refusal and cold persisted batch Undo pass. Exact multiline/tag/formula-like text and financial projections are checked; Undo preserves the prior two plan payments and restores 990 balance/40 budget left/970 forecast. Main returns to 979. Redact unrelated picker names and remove only the hash-matched owned CSV. This is not a producer-export roundtrip, real-bank/aggregate/hostile-file matrix or full raw equality. See [physical CSV and Undo](quality/physical-csv-undo.md).
+
+## D-318 first-plan native publication
+
+Actual main and independent original-source Samsung reproductions isolate correct stored/bound rows but blank native realization after leaving CollectionView.EmptyView. Retain the original list adapter and move existing empty feedback to a growing independent scroll viewport; reuse WrappingAction after the German large-text caption failed visually. Same protected fixture/native Save regression, 18 final hidden Windows contexts, zero-warning Windows/complete Android builds and the data-preserving main upgrade pass. No financial/model/crypto change or unrelated successful-suite replay. See [first plan publication](quality/first-plan-publication.md).

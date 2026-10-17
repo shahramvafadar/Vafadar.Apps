@@ -43,6 +43,18 @@ internal static partial class AndroidHomeReview
                 await Task.Run(() => PrepareAsync(root, ct), ct);
                 await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, MainPackageTouched = false, Device = DeviceEvidence() }, ct);
             }
+            else if (phase == "plan-publication-fixed")
+            {
+                if (!Directory.Exists(root) || RedirectedAncestors(root).Length != 0)
+                    throw new ReviewCheckException("Original nonredirected plan review root required.");
+                await WriteReportAsync(root, phase, await ReviewFirstPlanPublicationAsync(app, services, root, comparison!, ct, retainedFixture: true), ct);
+            }
+            else if (phase == "plan-publication")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0) throw new ReviewCheckException("Redirected plan review root refused.");
+                await WriteReportAsync(root, phase, await ReviewFirstPlanPublicationAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "read-profile")
             {
                 RequireRoot(root);

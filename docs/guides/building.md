@@ -1114,3 +1114,9 @@ and ledger-read (original native search without repeating financial writes). See
 semantics and physical/PID guards. Build the main candidate with Build-AndroidApk.ps1 -Offline -Output
 artifacts/android-sequential-ledger-d315-qualified. Actual final APK/signature, same-file phone evidence and
 focused test scope are recorded in the app quality/physical-ledger-read.md; this is not full cold/ANR acceptance.
+
+## Independent first-plan native regression (D-318)
+
+See the AndroidHome caller README and [first-plan evidence](../../src/Apps/Zanance/docs/quality/first-plan-publication.md). Its plan-publication phase owns an initially empty independent installation, records intent before the one account/plan setup and observes actual editor Save/native row realization. plan-publication-fixed requires that exact retained unpaid fixture, exclusively preserves its definition before guarded retirement and refuses mismatched account/plan packets or financial history; never reset it or use main identity.
+
+For Windows empty-layout qualification build the original app sequentially with ContinuousIntegrationBuild=true and ApplicationId=pro.vafadar.zanance.planpublication into an independent output. Launch only that verified executable hidden with VAFADAR_SNAPSHOTS pointing beneath artifacts/plan-publication-d318/, VAFADAR_SNAPSHOT_ONLY=plan-publication and VAFADAR_SNAPSHOT_FONT_SCALE=2. This early route bypasses the general seeded walk-through and owns plans-layout.db only. Preserve original progress/images when a changed template needs a new matrix; unchanged passed cases are not repeated. Never use the general snapshot wrapper to move existing development databases for this check.

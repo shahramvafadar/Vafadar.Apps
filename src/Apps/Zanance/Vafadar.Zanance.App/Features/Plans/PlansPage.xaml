@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Plans"
     x:DataType="local:PlansViewModel"
     Title="{v:Translate Plans_Title}">
@@ -46,13 +47,6 @@
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-            <CollectionView.EmptyView>
-                <VerticalStackLayout Padding="32,48" Spacing="16">
-                    <fi:SymbolIcon Symbol="CalendarClock" FontSize="44" HorizontalOptions="Center" ForegroundColor="{DynamicResource PlanText}" />
-                    <Label Text="{Binding EmptyText}" HorizontalTextAlignment="Center" />
-                    <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Plans_Add}" Command="{Binding AddCommand}" IsVisible="{Binding HasNoPlans}" />
-                </VerticalStackLayout>
-            </CollectionView.EmptyView>
             <CollectionView.Header>
                 <BoxView HeightRequest="8" Color="Transparent" />
             </CollectionView.Header>
@@ -60,6 +54,15 @@
                 <BoxView HeightRequest="12" Color="Transparent" />
             </CollectionView.Footer>
         </CollectionView>
+
+        <!-- D-318: keep empty feedback outside the Android adapter swap that can hide the first row. -->
+        <ScrollView x:Name="EmptyViewport" Grid.Row="1" IsVisible="{Binding IsEmpty}">
+            <VerticalStackLayout Padding="32,48" Spacing="16">
+                <fi:SymbolIcon Symbol="CalendarClock" FontSize="44" HorizontalOptions="Center" ForegroundColor="{DynamicResource PlanText}" />
+                <Label Text="{Binding EmptyText}" HorizontalTextAlignment="Center" />
+                <p:WrappingAction x:Name="EmptyAddAction" Appearance="Primary" Text="{v:Translate Plans_Add}" Command="{Binding AddCommand}" IsVisible="{Binding HasNoPlans}" />
+            </VerticalStackLayout>
+        </ScrollView>
 
         <Button x:Name="AddAction" Grid.Row="2" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
                 SemanticProperties.Description="{v:Translate Plans_Add}" />

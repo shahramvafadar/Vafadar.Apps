@@ -1511,3 +1511,7 @@ Backup displays previous-state safety candidates separately from automatic copie
 Use growing translated title/date/size rows and real complete named targets. Explain device binding and
 verification before replacement; never imply a matching listing header is authenticated content or offer
 sharing. Selection uses the original protected restore and explicit replacement confirmation.
+
+## Stable first-plan publication (D-318)
+
+Plans keeps the actual collection/row template and persistent bottom Add target. Empty feedback has its own growing scroll viewport controlled by the existing empty state, avoiding Android empty-adapter exchange. The optional first-plan Add caption uses WrappingAction: preserve full translation/native scaling and the original real command-owning target. No segment toggle or extra Save is required to reveal a newly saved first plan.
