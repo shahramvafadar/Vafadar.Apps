@@ -1889,3 +1889,11 @@ upgrade/cold Home/expense/Cancel. Producer success is separate from full normal-
 observed backend context repair and check the final commit once. Do not repeat any passed local native/crypto,
 app, financial, sync/provider/layout verification without a new change, failure or unresolved concern.
 Per-site native diagnostics, genuine physical/accessibility/Mac/iOS/provider/store and release gates remain open.
+
+### D-301 normal-main follow-through
+
+Finish the actual three failed qualifiers before the next delivery push: stale comparison expectation,
+Linux public-anchor readability and raw-versus-portable benchmark scope. Their focused local repairs pass;
+successful app/native/backend/stock qualification is retained. Preserve the pending independent currency
+accessibility work and its original runtime evidence; resume it after this CI correction. Do not conceal a
+hosted failure by suppressing checks, loosening a verifier, exporting private rows or replacing the original data.

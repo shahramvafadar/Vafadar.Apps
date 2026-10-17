@@ -172,3 +172,42 @@ qualification, not all SEC acceptance. Keep508 remaining per-site warnings, phys
 Mac/iOS, power loss, OAuth/provider/store and public-release gates open. Original source/build/negative/runtime
 evidence remains owned under artifacts/native-sqlcipher. Historical3753 and unrelated successful finance,
 sync/household, billing/provider/layout suites were not replayed or recounted.
+
+## Normal-main hosted result and focused qualifier repairs
+
+The one check of8b504c35 reports actual Windows/Android app builds, native Linux slices/stock suite,
+native Windows reproduction/schema/package/binary persistence, identity backend and CodeQL success.
+It does not report all CI green: [CI39003322044](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39003322044)
+fails only six comparison cases; [hosting39003321945](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39003321945)
+fails opening its public trust file; [native39003321916](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39003321916)
+fails only the final Windows benchmark preservation oracle. The one-shot schedule was deleted before the same
+single manual read could be duplicated. Original logs/results remain evidence; no successful native producer,
+stock suite, schema, package, binary or app build is repeated locally.
+
+1. ProductPlansFlowTests retained a19-row assertion from before D-296 accountant export. The actual current
+   comparison has20 rows. Keep all original quota/access/no-write/translation assertions, require the delivered
+   translated Tax row explicitly, and rerun only those six originally failed language cases:6 passed/0 failed/
+   0 skipped. These are existing behaviors, not six new tests or another complete-suite count.
+2. Linux docker cp retains the public Caddy root certificate's0600 mode under the runner owner; the independent
+   qualification UID1654 cannot open that host bind. Validate a regular non-link file and set0644 only on the
+   copied public trust anchor. Private authority/transport keys, read-only mounts and strict chain/hostname
+   validation remain unchanged. An isolated Linux volume with owner1001 reproduced denied UID1654 reads at0600;
+   the same owner's exact0644 change allowed the same independent read. Its marker-only proof is permission
+   evidence, not another certificate/TLS suite. Only this labeled fixture volume was removed. Bash syntax passes.
+3. The benchmark compared a raw authenticated rollback, containing device-only sync capture/sequence metadata,
+   with a portable backup intentionally omitting those rows. That is not a finance-loss or native-cipher result.
+   On a fresh fixture, compare every raw original schema/header/typed row against the live protected database
+   immediately after migration, before measured writes legitimately advance private capture history. Separately
+   capture the original production portable image before measurements and compare its complete schema/header/
+   typed rows against the final portable image. Both checks use the unchanged strict SqliteSnapshotVerifier;
+   no skipped-table list, guessed relationship, private-row export, changed key/format or production-policy change
+   is introduced. All validation/export work stays outside measured operations. A resumed fixture does not claim
+   another original migration check. Result names state these distinct raw-migration and portable boundaries.
+
+The actual source-built Windows executable now passes both fresh10,000-entry/20-account/100-schedule reference
+and100,000-entry/200-account/1,000-schedule workloads. Both full raw migration and final portable comparisons pass;
+each shape reads back and removes its own four test entries. Strict component/test builds have0warnings/errors.
+The app and signed APK remain exactly the D-301 package above; no app source, UI, financial algorithm, permission,
+native library or consumer pin changes in this repair, so those successful checks are not replayed. Failed
+original logs, isolated permission proof, six-case XML and actual workload measurements are retained under
+artifacts/ci-repair-d301 and artifacts/protected-ci-repair-d301. Final hosted success still requires its real run.

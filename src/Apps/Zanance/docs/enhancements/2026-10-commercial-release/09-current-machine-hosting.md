@@ -55,3 +55,11 @@ No new containers, public service, external mail sender or public DNS entry have
 this decision record. The existing uncommitted personal-sync batch is completed first; this
 dependency order avoids deploying an unfinished loopback prototype. A desktop host's power,
 sleep, restart, backup and network availability must be measured; it is not an HA commitment.
+
+## D-301 Linux qualification trust-anchor permissions
+
+The independent hosted caller UID1654 must read the copied public Caddy root anchor. Linux docker cp retains
+mode0600 under the runner owner, unlike the earlier Windows host bind behavior. The CI-only script validates
+the regular non-link copied root.crt and sets only that public file to0644. It changes no private key, deployed
+volume, TLS verifier, production endpoint or owner installation. A separate labeled Linux fixture proves the
+same-UID denial/correction; hosted full clients/private restore/transport renewal remain the actual gate.

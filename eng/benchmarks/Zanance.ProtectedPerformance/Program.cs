@@ -63,6 +63,27 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
     }
     using (generation)
     {
+        if (!existing)
+        {
+            var originalKey = await keys.ReadAsync(generation.Binding, ct);
+            try
+            {
+                await using var expected = new SqliteConnection(new SqliteConnectionStringBuilder
+                { DataSource = generation.Path + ".rollback.db", Mode = SqliteOpenMode.ReadOnly, Pooling = false,
+                    Password = Convert.ToBase64String(originalKey) }.ToString());
+                await expected.OpenAsync(ct);
+                await using var current = await services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(ct);
+                await current.Database.OpenConnectionAsync(ct);
+                // Verify every original raw schema/header/typed row before the measured writes can legitimately
+                // advance device-only capture history. The immutable pre-migration rollback stays unchanged.
+                await SqliteSnapshotVerifier.VerifyAsync(expected, (SqliteConnection)current.Database.GetDbConnection(), ct);
+            }
+            finally { CryptographicOperations.ZeroMemory(originalKey); }
+        }
+        using var beforeBytes = new MemoryStream();
+        await services.GetRequiredService<IBackupSource>().WriteAsync(beforeBytes, ct);
+        beforeBytes.Position = 0;
+        await using var beforePortable = await SqliteMemorySnapshot.OpenAsync(beforeBytes, 256 * 1024 * 1024, ct);
         var store = services.GetRequiredService<ZananceStore>(); var plans = services.GetRequiredService<PlanStore>();
         var metrics = new Dictionary<string, List<double>>();
         async Task Measure(string name, Func<Task> operation)
@@ -169,20 +190,12 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
         using var afterBytes = new MemoryStream(); await services.GetRequiredService<IBackupSource>().WriteAsync(afterBytes, ct);
         afterBytes.Position = 0;
         await using var portable = await SqliteMemorySnapshot.OpenAsync(afterBytes, 256 * 1024 * 1024, ct);
-        var retainedKey = await keys.ReadAsync(generation.Binding, ct);
-        try
-        {
-            await using var expected = new SqliteConnection(new SqliteConnectionStringBuilder
-            { DataSource = generation.Path + ".rollback.db", Mode = SqliteOpenMode.ReadOnly, Pooling = false,
-                Password = Convert.ToBase64String(retainedKey) }.ToString());
-            await expected.OpenAsync(ct);
-            // The authenticated pre-migration rollback preserves the actual complete original packet.
-            // Page layout differs in portable exports; compare every original schema/header/typed value instead.
-            await SqliteSnapshotVerifier.VerifyAsync(expected, portable.Connection, ct);
-        }
-        finally { CryptographicOperations.ZeroMemory(retainedKey); }
+        // Portable exports intentionally omit private sync/household rows and their sequence metadata.
+        // Compare the complete original portable projection, not that projection against a raw private rollback.
+        await SqliteSnapshotVerifier.VerifyAsync(beforePortable.Connection, portable.Connection, ct);
         results.Add(new { Shape = shape, ExistingFixtureResumed = existing, ProtectedPreparationMs = migrationMs,
-            FirstThenThreeWarmMilliseconds = metrics, CompleteSchemaAndTypedRowsUnchanged = true,
+            FirstThenThreeWarmMilliseconds = metrics, CompleteMigrationSchemaAndTypedRowsUnchanged = !existing,
+            CompletePortableSchemaAndTypedRowsUnchanged = true,
             SearchResultCounts = searchCounts, SavedRowsReadBackAndRemoved = savedTimes.Count,
             PlaintextOriginalRemoved = !File.Exists(original), CipherBytes = new FileInfo(generation.Path).Length });
     }

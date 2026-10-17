@@ -13,6 +13,10 @@ compose=(docker compose -f eng/hosting/compose.yml -f eng/hosting/compose.qualif
 docker volume create --label pro.vafadar.fixture=hosting-qualification zanance-selfhost-qualification-d293 >/dev/null
 "${compose[@]}" up -d --wait database api proxy
 docker cp zanance-selfhost-proxy-1:/data/caddy/pki/authorities/local/root.crt artifacts/hosting-proxy-root.crt
+# docker cp retains mode0600 on Linux; the public trust anchor must be readable by the independent UID1654.
+# Change only this public certificate, never the proxy's private authority or transport keys.
+[[ -f artifacts/hosting-proxy-root.crt && ! -L artifacts/hosting-proxy-root.crt ]] || exit 2
+chmod 0644 artifacts/hosting-proxy-root.crt
 docker run --rm --network none --read-only --cap-drop ALL --cap-add CHOWN --user 0 \
   --mount type=volume,source=zanance-selfhost-qualification-d293,target=/qualification \
   --entrypoint sh zanance-bootstrap:d293 -c 'chown 1654:1654 /qualification'

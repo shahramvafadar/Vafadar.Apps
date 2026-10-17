@@ -36,7 +36,8 @@ public sealed class ProductPlansFlowTests
         var limits = new[] { 3, 1, 1, 5, 3, 1, 1 };
         for (var plan = 0; plan < 3; plan++)
         {
-            vm.PlanIndex = plan; Assert.Equal(19, vm.Rows.Count); Assert.Equal(actual, vm.AccessText);
+            vm.PlanIndex = plan; Assert.Equal(20, vm.Rows.Count); Assert.Equal(actual, vm.AccessText);
+            Assert.Contains(vm.Rows, row => row.Title == f.Translator["Tax_Title"]);
             for (var row = 0; row < 7; row++)
                 if (plan == 0) Assert.Contains(limits[row].ToString(), vm.Rows[row].Value);
                 else Assert.Equal(f.Translator["ProductPlans_Unlimited"], vm.Rows[row].Value);

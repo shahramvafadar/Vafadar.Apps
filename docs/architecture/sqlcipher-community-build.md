@@ -423,3 +423,12 @@ servicing artifact is downloaded only to owned qualification evidence and verifi
 run/head/digest/source/compiler; normal dependency restoration continues building official sources, not fetching
 that binary as a substitute.508 current diagnostics retain no per-site safety acceptance; prior704 counts above
 are historical. Full original local/package/main and producer evidence is in18-native-storage-profile-delivery.md.
+
+### D-301 benchmark preservation scopes
+
+Raw pre-migration rollback is compared against the complete fresh protected database before benchmark writes.
+Before/after production portable images are then compared in full after readback/removal of the test entries.
+Device-only capture queues/sequence metadata legitimately advance and are deliberately absent from portable
+exports; never compare that public projection against raw private rows or weaken SqliteSnapshotVerifier to
+accept unequal finance. Resuming an existing fixture does not re-claim an original migration check. All capture/
+verification stays outside timings; both source-built reference/tenfold workloads qualify this boundary.

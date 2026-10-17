@@ -6182,3 +6182,13 @@ OpenSSL347-file/1348-reported-test suite with explicit skips, official SQLCipher
 evidence was not rerun or recounted.508 remaining Windows diagnostic occurrences have no per-site safety waiver.
 Exact local main package/runtime and real hosted-servicing status belong in18-native-storage-profile-delivery.md;
 physical arm64/API24/16KiB, iOS, complete upstream warning review and product release remain open.
+
+### D-301 current hosted qualifier correction
+
+Normal-main app builds, native source/package/schema/binary and Linux stock qualification, identity backend and
+CodeQL pass. The three actual qualifier failures and focused repairs are recorded in
+18-native-storage-profile-delivery.md: six old comparison cases now require the delivered20-row catalog; only the public copied trust
+anchor's Linux mode changes; raw migration and final portable preservation are checked against the right exact
+originals with the unchanged full typed verifier. Reference10,000 and tenfold100,000 entry checks both pass.
+Production app/APK/native/financial/privacy behavior is unchanged and historical whole-suite counts are not
+recounted. Actual hosted completion after this repair remains a separate result.

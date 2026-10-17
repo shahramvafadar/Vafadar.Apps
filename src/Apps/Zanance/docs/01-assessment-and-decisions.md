@@ -6126,3 +6126,15 @@ Place the identical private path in the two consuming step env maps, retaining p
 uploads. This is a parser/context repair, not a reason to repeat successful local backend/sync/app tests.
 Current full main-hosted completion remains distinct from the successful producer run. Exact evidence,
 failures, APK and open per-site/platform/release gates are in18-native-storage-profile-delivery.md.
+
+### D-301 normal-main qualifier repairs after actual hosted failures
+
+Actual main CI exposes three stale/environment-specific qualifier boundaries, while app builds, native source/
+schema/package/binary qualification, Linux stock suite, identity backend and CodeQL pass. Refresh the delivered
+20-row comparison expectation and require the accountant row in all six failed language cases. Make only the
+copied public Caddy certificate readable by the independent Linux caller; never loosen private-key or TLS policy.
+Separate complete raw pre-work migration preservation from complete before/after portable financial projection
+in the benchmark, retaining the original strict generic verifier and all production export/privacy rules.
+Six focused cases, the exact Linux UID/mode boundary and both actual protected reference/tenfold workloads pass;
+no successful unrelated suite/build/UI/APK is replayed. The same D-301 app/APK/native bytes remain current.
+Exact original failures and current evidence:18-native-storage-profile-delivery.md. Hosted completion is separate.
