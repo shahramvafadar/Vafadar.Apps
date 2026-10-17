@@ -205,3 +205,6 @@ only, never exception messages. The independent window stays awake only during i
 ## Bounded read-stage diagnostics (D-321)
 
 The existing read-profile phase additionally observes fixed-table EF execution/reader/open durations for its exact owned connection path and separately times fresh Home validation. It never serializes SQL, parameter values, paths or keys. Duration boundaries overlap and cannot be summed as independent work; EfReadCalls records EF wrapper calls, not the complete direct-reader row count. Complete ordered-entry digests and before/after typed-row verification remain mandatory. Use a fresh comparison on retained ciphertext/keys; a read comparison does not replace final original Home/native/package qualification.
+
+
+D-322 also records the actual Core module identity alongside Data/caller identities, separating an adopted materializer change from a rejected recurrence candidate. Temporary worker logging/defines and reduced-case loops are absent from the ordinary caller and shipping application. Limited read gains do not establish universal loaded-Home or cold-start acceptance.

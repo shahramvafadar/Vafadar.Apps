@@ -319,6 +319,23 @@ public sealed class HomeReadSnapshotTests : IDisposable
         Assert.Equal(2, replacement.Replaced);
     }
 
+    /// <summary>An interceptor-changed projection cannot reuse a derived bitmap describing different source values.</summary>
+    [Theory, InlineData(false), InlineData(true)]
+    [Trait("AT", "AT-322")]
+    public async Task Complete_history_refuses_required_null_from_an_interceptor_changed_projection(bool ledgerApi)
+    {
+        var provider = Create(); await SeedAsync(provider);
+        var path = provider.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>().Path;
+        var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite($"Data Source={path};Pooling=False")
+            .UseModel(ZananceDbContextModel.Instance).AddInterceptors(new NullAmountProjection()).Options;
+        var store = Store(new DirectFactory(options), provider.GetRequiredService<ICommercialWriteAccessSource>());
+        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        {
+            if (ledgerApi) await store.GetEntriesAsync(cancellationToken: Ct);
+            else await store.GetHomeSnapshotAsync(Today, 0, Ct);
+        });
+    }
+
     /// <summary>Preserves null legacy fallback, explicit reset and custom profile order in the original captured read.</summary>
     [Theory, InlineData(null), InlineData(""), InlineData("Budget,Recent,-Upcoming,-Accounts")]
     [Trait("AT", "AT-285")]
@@ -517,6 +534,22 @@ public sealed class HomeReadSnapshotTests : IDisposable
         public CommercialWriteAccess Current { get; set; } = CommercialWriteAccess.Inactive;
         public CommercialWriteAccess Capture(string databasePath) => Current;
     }
+    /// <summary>Changes one required result while leaving any source-derived expression untouched.</summary>
+    private sealed class NullAmountProjection : DbCommandInterceptor
+    {
+        /// <inheritdoc />
+        public override ValueTask<InterceptionResult<DbDataReader>> ReaderExecutingAsync(DbCommand command,
+            CommandEventData eventData, InterceptionResult<DbDataReader> result, CancellationToken cancellationToken = default)
+        {
+            if (command.CommandText.StartsWith("SELECT \"Id\",", StringComparison.Ordinal))
+            {
+                var offset = command.CommandText.IndexOf("\"Amount\"", StringComparison.Ordinal);
+                command.CommandText = command.CommandText[..offset] + "NULL AS \"Amount\"" + command.CommandText[(offset + 8)..];
+            }
+            return ValueTask.FromResult(result);
+        }
+    }
+
     /// <summary>Supplies a genuinely different typed reader; its boolean and Int32 getters cannot be replaced with GetInt64.</summary>
     private sealed class TypedEntryReader : DbCommandInterceptor
     {

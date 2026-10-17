@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Complete history loading (D-322)
+
+- Reduce repeated native work when loading full transaction histories, preserving complete records and original validation. Qualify the offline phone upgrade; remaining Home latency is still open.
+
 ### Complete history reading (D-321)
 
 - Load large transaction histories with less delay while preserving complete records and calculations. Verify the same protected phone data and offline upgrade; Home still needs further performance work.

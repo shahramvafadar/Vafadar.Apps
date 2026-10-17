@@ -347,6 +347,7 @@ internal static partial class AndroidHomeReview
         }
         await WriteReportAsync(root, phase, new { Comparison = comparison, BaselineComparison = baseline, Results = results, NativeReadProfiles = nativeReadProfiles, ReviewedInputGuards = reviewedInputGuards,
             DataModuleVersionId = typeof(ZananceStore).Module.ModuleVersionId, CallerModuleVersionId = typeof(HomePage).Module.ModuleVersionId,
+            CoreModuleVersionId = typeof(Core.Plans.Occurrences).Module.ModuleVersionId,
             OriginalProductionPage = true, RetainedCompletedCases = completed.ToArray(),
             ModuleIdentityScope = "Current completion caller; retained case packets preserve their original caller evidence",
             CompleteRawSchemaAndTypedRowsUnchanged = true, NoFinancialSave = true, Device = DeviceEvidence(), WholeAppColdStartupOrFullDeviceAcceptance = false,

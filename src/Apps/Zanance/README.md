@@ -460,3 +460,6 @@ are open. The qualified local APK is artifacts/android-aot-runtime-d320-qualifie
 
 
 D-321 qualifies faster complete ledger reading on retained physical data without changing cryptography or financial results. Final loaded Home and offline upgrade boundaries: [evidence](docs/quality/physical-home-row-reading.md).
+
+
+D-322 qualifies trusted complete-row null metadata, full retained native financial output and a signed offline upgrade. Home remains under performance review: [evidence](docs/quality/physical-home-null-bitmap.md).

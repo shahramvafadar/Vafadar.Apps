@@ -1,10 +1,12 @@
 using System.Runtime.CompilerServices;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using SQLitePCL;
 using Vafadar.Zanance.Core.Ledger;
 
 namespace Vafadar.Zanance.Data;
@@ -48,9 +50,12 @@ internal static class CompleteHomeLedgerReader
         (nameof(LedgerEntry.ToAmount), typeof(long?)),
         (nameof(LedgerEntry.UpdatedAt), typeof(DateTimeOffset))
     ];
-    private const string Sql = """
-        SELECT "Id", "AccountId", "AggregatedFrom", "AggregatedTo", "Amount", "CategoryId", "CreatedAt", "Date", "Direction", "GroupId", "Icon", "ImportBatchId", "IsAggregated", "IsPartialPayment", "Kind", "Note", "OccurrenceDate", "OriginalAmount", "OriginalCurrencyCode", "Payee", "RefundOfId", "ReimbursableAmount", "ReimbursedBy", "ReimbursementDueDate", "Review", "ScheduleId", "Source", "Tags", "Title", "ToAccountId", "ToAmount", "UpdatedAt" FROM "Entries" NOT INDEXED ORDER BY rowid DESC
-        """;
+    // Derive both projections from the same guarded field order. The extra value is only a null bitmap;
+    // every original financial value still travels through its complete original typed conversion.
+    private static readonly string Sql = "SELECT " + string.Join(", ", Columns.Select(column => $"\"{column.Name}\""))
+        + ", " + string.Join(" | ", Columns.Select((column, ordinal) =>
+            $"((\"{column.Name}\" IS NULL) << {ordinal.ToString(System.Globalization.CultureInfo.InvariantCulture)})"))
+        + " AS \"__OriginalNulls\" FROM \"Entries\" NOT INDEXED ORDER BY rowid DESC";
 
     /// <summary>Retains complete no-tracking rows, command interception, cancellation and the caller's captured transaction.</summary>
     internal static async Task<List<LedgerEntry>> ReadAsync(ZananceDbContext db, CancellationToken ct)
@@ -64,12 +69,16 @@ internal static class CompleteHomeLedgerReader
         await using var result = await command.ExecuteReaderAsync(parameters, ct);
         var reader = result.DbDataReader;
         var entries = new List<LedgerEntry>();
-        // One bounded buffer belongs to this reader, never a retained row or global native handle.
-        var storageTypes = new int[Columns.Length];
+        var statement = reader.GetType() == typeof(SqliteDataReader) ? ((SqliteDataReader)reader).Handle : null;
+        // Interceptors can rewrite the command or replace even a concrete SQLite reader. Trust the
+        // derived bitmap only when its actual prepared statement is our exact complete projection.
+        if (statement is not null && (Columns.Length > 32 || reader.FieldCount != Columns.Length + 1
+            || !string.Equals(raw.sqlite3_sql(statement).utf8_to_string()?.Trim(), Sql, StringComparison.Ordinal)))
+            statement = null;
         while (await reader.ReadAsync(ct))
         {
             ct.ThrowIfCancellationRequested();
-            var row = new CompleteHomeLedgerRow(reader, storageTypes);
+            var row = new CompleteHomeLedgerRow(reader, statement, Columns.Length);
             entries.Add(new LedgerEntry(row.GetGuid(0))
             {
                 AccountId = row.GetGuid(1),

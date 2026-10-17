@@ -46,7 +46,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
 | ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-64 local evidence verified; device/corpus pending) | sample receipts |
-| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-321 complete native reader improvement and 12 retained phone Home cases; loaded Home 1.83-2.73s / 8.47-9.58s; full cold/ANR statistics/low-memory/iOS remain) | – |
+| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-322 trusted complete-row null metadata and 12 retained phone Home cases; loaded Home 1.92-2.83s reference / 7.23-9.51s tenfold; full cold/ANR statistics/low-memory/iOS remain) | – |
 | ZCR-QA-07 | Android/iOS parity (notifications, widget, file picker, lock, share, licences); existing Windows development checks | 2 | P2 | M | Mac readiness owner-reported; verification and iOS runs pending in that environment. Windows commercial delivery is outside current scope | platform access/signing |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | In progress (D-174 widget and D-175 contextual date names/drafts verified locally; spoken TalkBack and remaining screen/platform acceptance open) | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
@@ -2708,3 +2708,8 @@ this is stability qualification, not a general speed improvement, full cold/ANR 
 ## D-321 QA-06 complete current-row read improvement
 
 D-321 reduces the measured complete 100,000-row reader from 4231 to 3344 ms and complete Home input read from 4653 to 3811 ms on retained Samsung ciphertext/keys. All 12 final en/fa/de native Home cases preserve complete financial presentation and raw schema/typed rows; loaded Home still takes 1.83-2.73s reference/ 8.47-9.58s tenfold. Related validation is 42 passing cases plus one final interceptor-reader case (nine added behaviors), not a full-suite rerun. Final strict Windows/complete signed offline Android builds and data-preserving main Home/All-history/return pass. QA-06, cold/ANR statistics and external platform/release gates remain open. See [evidence](../../quality/physical-home-row-reading.md).
+
+
+## D-322 QA-06 trusted complete-row metadata
+
+D-322 reduces the measured tenfold complete Home input read from 3811 to 3306 ms using exact-query null metadata, retaining all original 32 fields/conversions and safe interceptor fallback. All 12 final en/fa/de phone Home cases retain full financial presentation and raw schema/typed rows; loaded Home remains 1.92-2.83s reference / 7.23-9.51s tenfold. 45 related cases pass (two added behaviors), strict Windows/complete signed offline Android builds and main Home/All-history/return upgrade pass. A recurrence candidate without reliable native gain and temporary worker probes are fully withdrawn. No whole-suite rerun, two-second/cold/ANR/platform or release acceptance is claimed. See [evidence](../../quality/physical-home-null-bitmap.md).

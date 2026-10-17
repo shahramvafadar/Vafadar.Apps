@@ -1,32 +1,28 @@
 using System.Buffers.Text;
 using System.Data.Common;
 using System.Runtime.CompilerServices;
-using Microsoft.Data.Sqlite;
 using SQLitePCL;
 
 namespace Vafadar.Zanance.Data;
 
-/// <summary>Reads a complete current SQLite row without repeating its native row/type checks for every getter.</summary>
+/// <summary>Reads a complete current SQLite row using the exact prepared query's null bitmap.</summary>
 internal readonly struct CompleteHomeLedgerRow
 {
     private readonly DbDataReader _reader;
     private readonly sqlite3_stmt? _statement;
-    private readonly int[] _types;
+    private readonly uint _nulls;
 
-    /// <summary>Captures storage types only after the original reader advanced successfully; wrappers retain their own getters.</summary>
+    /// <summary>Captures one bounded bitmap after original advancement; rewritten or replaced readers keep their getters.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal CompleteHomeLedgerRow(DbDataReader reader, int[] types)
+    internal CompleteHomeLedgerRow(DbDataReader reader, sqlite3_stmt? statement, int nullOrdinal)
     {
-        _reader = reader; _types = types;
-        // An interceptor may replace or derive the reader. Never bypass its values or behavior.
-        _statement = reader.GetType() == typeof(SqliteDataReader) ? ((SqliteDataReader)reader).Handle : null;
-        if (_statement is not null)
-            for (var ordinal = 0; ordinal < types.Length; ordinal++) types[ordinal] = raw.sqlite3_column_type(_statement, ordinal);
+        _reader = reader; _statement = statement;
+        _nulls = statement is null ? 0 : checked((uint)reader.GetInt64(nullOrdinal));
     }
 
     /// <summary>Uses the captured row's null type, preserving provider behavior for intercepted readers.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal bool IsDBNull(int ordinal) => _statement is null ? _reader.IsDBNull(ordinal) : _types[ordinal] == raw.SQLITE_NULL;
+    internal bool IsDBNull(int ordinal) => _statement is null ? _reader.IsDBNull(ordinal) : (_nulls & (1u << ordinal)) != 0;
 
     /// <summary>Retains SQLite integer coercion and original provider refusal of a required null.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -52,12 +48,13 @@ internal readonly struct CompleteHomeLedgerRow
     {
         if (_statement is not null)
         {
-            if (_types[ordinal] == raw.SQLITE_BLOB)
+            var type = raw.sqlite3_column_type(_statement, ordinal);
+            if (type == raw.SQLITE_BLOB)
             {
                 var bytes = raw.sqlite3_column_blob(_statement, ordinal);
                 if (bytes.Length == 16) return new Guid(bytes);
             }
-            else if (_types[ordinal] == raw.SQLITE_TEXT)
+            else if (type == raw.SQLITE_TEXT)
             {
                 var text = raw.sqlite3_column_blob(_statement, ordinal);
                 if (text.Length == 36 && Utf8Parser.TryParse(text, out Guid value, out var consumed) && consumed == text.Length)
