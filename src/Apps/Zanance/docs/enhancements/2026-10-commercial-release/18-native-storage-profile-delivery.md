@@ -211,3 +211,16 @@ The app and signed APK remain exactly the D-301 package above; no app source, UI
 native library or consumer pin changes in this repair, so those successful checks are not replayed. Failed
 original logs, isolated permission proof, six-case XML and actual workload measurements are retained under
 artifacts/ci-repair-d301 and artifacts/protected-ci-repair-d301. Final hosted success still requires its real run.
+
+## Ordinary-main repair verified on the hosted runners
+
+Commit 300874858c2b5c48cb2c6d8ab4985e55efff156d completes all four applicable workflows successfully:
+[CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39005691039),
+[Native cipher candidates](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39005691051),
+[Self-hosted service qualification](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39005691205) and
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39005691045).
+The single follow-through read was made after 15 minutes on 2026-10-17. This is actual normal-main qualification,
+separate from the earlier producer-only result. The stale comparison, public Linux trust-anchor permissions
+and raw/portable benchmark scope repairs now have actual hosted success; no checks were suppressed or skipped
+to conceal the failures. Existing local native/app/UI/APK qualification was retained without replay.
+Physical-device, iOS, remaining per-site warning review and release acceptance remain open.

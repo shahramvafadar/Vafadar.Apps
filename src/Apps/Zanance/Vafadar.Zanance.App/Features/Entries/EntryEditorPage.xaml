@@ -309,10 +309,11 @@
                             </Grid>
                             <VerticalStackLayout IsVisible="{Binding ForeignEnabled}">
                                 <Label Text="{v:Translate Entry_ForeignAmount}" Style="{StaticResource FieldLabel}" />
-                                <Grid x:Name="ForeignInput" ColumnDefinitions="*,110" ColumnSpacing="8">
+                                <!-- Whole inputs retain their readable width at native text scale. -->
+                                <Grid x:Name="ForeignInput" RowDefinitions="Auto,Auto" RowSpacing="8">
                                     <Entry Text="{Binding ForeignAmountText}" Keyboard="Numeric" Placeholder="0"
                                            SemanticProperties.Description="{v:Translate Entry_ForeignAmount}" />
-                                    <Border Style="{StaticResource FieldBox}" Grid.Column="1">
+                                    <Border Style="{StaticResource FieldBox}" Grid.Row="1">
                                         <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ForeignCurrency, Mode=TwoWay}"
                                             SemanticProperties.Description="{v:Translate Account_Currency}" />
                                     </Border>

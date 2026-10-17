@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Readable searchable currency fields (D-302)
+
+- Keep currency codes and their list actions readable with larger text.
+- Give currency choices real accessible buttons and announce the selected code.
+- Show complete amount and currency inputs in transaction, goal and manual-rate forms without saving drafts.
+
 ### Reduced native encrypted-storage libraries (D-301)
 
 - Remove unused OpenSSL facilities through its official build configuration while preserving database format, keys and required cryptography.

@@ -990,3 +990,14 @@ src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/Profiles/startup.aprof. I
 metadata, digest, capture boundary and refresh rules. No profiler package, app-local profiler property or
 forwarded port belongs in the production package. Do not use capture targets that change global device settings.
 Qualification and actual package costs are recorded in the D-300 startup delivery document.
+
+## Independent original currency layout review (D-302)
+
+The Debug-only currency-text route requires pro.vafadar.zanance.currencyreview before startup and its owned
+artifacts/currency-text-d302 root. It uses actual unsaved production forms, native Invoke patterns and retained
+fictitious account data; never owner desktop input, focus, OS settings or the production database. The existing
+process-only font override is layout stress, not OS-scale acceptance. A hidden Win2D canvas does not schedule
+normal drawable layout: the review invokes the control's original IDrawable.Draw into its owned render target
+before measuring the common button, never a shipping layout override or invented coordinates. Preserve failed
+observations. The first row-selection fixture incorrectly requested an unrealized USD row; the corrected caller
+invokes a realized GBP row and restores EUR without Save.

@@ -3441,3 +3441,19 @@ skip counts and do not waive remaining diagnostics. The original main Android in
 ordinary signed new package and reaches its original loaded Home without data/key reset. Hosted servicing and
 final navigation evidence are recorded in18-native-storage-profile-delivery.md. No unrelated successful
 application, financial, sync, provider or layout suite was replayed; no new whole-suite count is asserted.
+
+## D-302 complete original currency fields
+
+The common editable Syncfusion currency input now explicitly retains native text scaling and a visible
+44-unit real list button with the original translated field name. Original filtering/selection stays in the
+vendor control. Its original currency rows have scalable app typography, real native actions and a translated
+selected-state description. Amount/currency groups in transaction, goal and manual-rate forms use complete
+rows rather than fixed 110-unit or split currency columns. Drafts, bindings, field errors and explicit Save
+remain unchanged; code selection does not save money.
+
+All 18 English/Persian/German light/dark 360/412/wide contexts qualify original native input and list actions
+at the requested process-only 200% font stress, including the three actual constrained forms and complete
+unchanged isolated account/entry rows. Current strict builds, signed main Android upgrade, native list/selection and typed search
+and Cancel evidence are in19-currency-accessibility-delivery.md. No unrelated successful whole-suite, native
+crypto, synchronization, billing or service qualification is replayed. This is no new unit-test count or actual
+OS-scale, spoken screen-reader, physical-device, iOS or release acceptance; A11Y-03 remains In progress.

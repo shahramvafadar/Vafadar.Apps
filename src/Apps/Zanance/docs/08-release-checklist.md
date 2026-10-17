@@ -1215,3 +1215,9 @@ Required primitive/format/key behavior is preserved;508 Windows diagnostic occur
 safety review. A reduced profile and passing stock suite are not blanket security acceptance. Retain physical
 arm64/API24/16KiB, actual Mac/iOS, phone, genuine store signing and release gates. Exact consumer/native/main APK
 and hosted status are in enhancements/2026-10-commercial-release/18-native-storage-profile-delivery.md.
+
+## Currency control qualification (D-302)
+
+Retain the local original-field/list matrix, strict builds and complete signed original Android upgrade/search/
+selection/Cancel evidence in enhancements/2026-10-commercial-release/19-currency-accessibility-delivery.md.
+Do not mark the general font-scaling, spoken-reader, physical-device, iOS or publication gates complete from it.

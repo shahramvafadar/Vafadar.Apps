@@ -1460,3 +1460,11 @@ and target at commit. Native Cancel and source identifiers are qualified without
 Measured Android AOT compilation changes no layout, captions, lock, retry, protected preparation or Home publication semantics. A ready Activity is not a loaded overview. Retain the cover through storage/access checks and report actual Home readiness separately.
 
 Current exact evidence: enhancements/2026-10-commercial-release/17-startup-responsiveness-delivery.md.
+
+## Growing searchable currency inputs (D-302)
+
+Currency code, editable search and list affordance remain complete at native text size. Give the list a real
+44-unit button and original live translated field name. Currency rows retain a real action, original code
+identity and translated selected state. Keep the vendor's original filter/selection rather than another search
+algorithm. Reserve a whole row for each amount/currency input in constrained transaction, goal and rate groups;
+never fix currency width to 110, shrink fonts, hide errors or replace the original draft/control.

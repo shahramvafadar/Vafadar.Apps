@@ -2339,3 +2339,11 @@ They export only qualified unpublished component packages, never keys/databases 
 Verify the actual workflow head, source/profile/compiler and package entries before new immutable consumer pins.
 Never reuse a consumer version for changed binary/metadata bytes. Ordinary main/PR consumer gates stay intact;
 source producer qualification is not an application/device/iOS or product-release claim.
+
+## D-302 complete native currency selection
+
+Preserve the original editable currency search/filter/selection. Currency inputs and rows use scalable app
+fonts, complete code viewports and real list/row buttons of at least 44 units with live field/selected names.
+Amount/currency and manual-rate groups reserve whole rows rather than fixed narrow currency columns. Keep
+original controls, bindings, errors and unsaved drafts. Hidden-window diagnostics may render the original Win2D
+drawable into their own target; never force shipping coordinates, change OS scale or activate owner windows.

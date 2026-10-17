@@ -46,7 +46,15 @@
         <Setter Property="IsFilteringEnabled" Value="True" />
         <Setter Property="TextSearchMode" Value="StartsWith" />
         <Setter Property="IsClearButtonVisible" Value="False" />
-        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="IsDropdownButtonVisible" Value="True" />
+        <Setter Property="FontFamily" Value="{DynamicResource AppFont}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontAutoScalingEnabled" Value="True" />
+        <Setter Property="DropDownItemFontFamily" Value="{DynamicResource AppFont}" />
+        <Setter Property="DropDownItemFontSize" Value="15" />
+        <Setter Property="DropDownItemHeight" Value="44" />
+        <!-- Android's inner entry chrome otherwise clips one unit from the 44-unit native list button. -->
+        <Setter Property="MinimumHeightRequest" Value="48" />
         <Setter Property="MaxDropDownHeight" Value="280" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="TextColor" Value="{DynamicResource AmountText}" />

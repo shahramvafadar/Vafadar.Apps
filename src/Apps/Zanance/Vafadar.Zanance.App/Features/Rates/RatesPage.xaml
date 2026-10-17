@@ -22,14 +22,15 @@
             <!-- Add a rate -->
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="0">
-                    <Grid ColumnDefinitions="Auto,*,Auto,*" ColumnSpacing="8">
+                    <!-- Keep each side of the equation whole, including its scalable currency editor. -->
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="8">
                         <Label Text="1" FontSize="18" VerticalOptions="Center" />
                         <Border Style="{StaticResource FieldBox}" Grid.Column="1">
                             <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding FromCurrency, Mode=TwoWay}"
                                 SemanticProperties.Description="{v:Translate Rates_From}" />
                         </Border>
-                        <Label Grid.Column="2" Text="=" FontSize="18" VerticalOptions="Center" />
-                        <Border Style="{StaticResource FieldBox}" Grid.Column="3">
+                        <Label Grid.Row="1" Text="=" FontSize="18" VerticalOptions="Center" />
+                        <Border Style="{StaticResource FieldBox}" Grid.Row="1" Grid.Column="1">
                             <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ToCurrency, Mode=TwoWay}"
                                 SemanticProperties.Description="{v:Translate Rates_To}" />
                         </Border>

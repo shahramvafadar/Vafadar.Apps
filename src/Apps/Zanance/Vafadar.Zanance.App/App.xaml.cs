@@ -205,6 +205,9 @@ public partial class App : Application
     protected override Window CreateWindow(IActivationState? activationState)
     {
 #if DEBUG
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "currency-text"
+            && AppInfo.Current.PackageName != "pro.vafadar.zanance.currencyreview")
+            throw new InvalidOperationException("Independent currency review identity required before startup.");
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "ai-native" && AppInfo.Current.PackageName != "pro.vafadar.zanance.aireview")
             throw new InvalidOperationException("Independent analysis installation required before startup.");
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "bank-csv-native" && AppInfo.Current.PackageName != "pro.vafadar.zanance.bankcsvreview")
