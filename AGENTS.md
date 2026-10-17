@@ -2315,3 +2315,11 @@ personal source companions have separate authority/cursors, shared format2 sourc
 encrypted publication and membership horizon. Older readers need upgrade; never claim forward compatibility.
 Bound pages/caches/in-flight originals and resume exact retained ciphertext. No inferred coin premium, provider,
 live-source licence/cost, automatic prices or release activation. Repeat only changed/failed related checks.
+
+## D-300 measured Android startup compilation
+
+Keep the SDK default AOT profiles alongside the actual startup method profile. Recording is isolated development
+instrumentation only: no shipping recorder/environment, global device property, changed telemetry/license order,
+weakened cryptography/access, reset fixture or early unlocked Home. Refresh from actual loaded Home after relevant
+startup/dependency changes and qualify consumption/native behavior. Activity timing is not Home readiness,
+reference-phone timing or general ANR acceptance. Repeat only changed, failed or unresolved related checks.

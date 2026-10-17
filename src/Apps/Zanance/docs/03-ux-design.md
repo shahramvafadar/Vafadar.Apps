@@ -1454,3 +1454,9 @@ Growing footer actions stay outside the scroll viewport; complete asset/history 
 Saved history pages remain read-only, distinguish exact-current from changed/deleted targets, and never supply
 new financial consent. Invalidate review across scope edits/cover/retirement; recheck actual original membership
 and target at commit. Native Cancel and source identifiers are qualified without a live provider.
+
+## D-300 Covered startup semantics retained
+
+Measured Android AOT compilation changes no layout, captions, lock, retry, protected preparation or Home publication semantics. A ready Activity is not a loaded overview. Retain the cover through storage/access checks and report actual Home readiness separately.
+
+Current exact evidence: enhancements/2026-10-commercial-release/17-startup-responsiveness-delivery.md.

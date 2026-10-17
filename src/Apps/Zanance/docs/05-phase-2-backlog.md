@@ -2012,3 +2012,9 @@ Explicit source lookup, bounded private offline cache, native original review, i
 personal/shared source companions advance ZCR-FX-01. They do not select or license a live provider, infer item
 premiums or enable automatic financial changes. Keep source/coverage/redistribution/cost/public and actual
 device/Mac gates open. Exact current qualification: enhancements/2026-10-commercial-release/16-market-reference-delivery.md.
+
+## D-300 Measured Android startup batch
+
+The observed bootstrap/ANR concern now has a concrete actual-path AOT candidate and retained native process evidence. Keep the general performance/reference-device objective open; do not infer whole-app ANR freedom, iOS or release acceptance.
+
+Current exact evidence: enhancements/2026-10-commercial-release/17-startup-responsiveness-delivery.md.

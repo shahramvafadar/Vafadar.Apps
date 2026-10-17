@@ -2551,3 +2551,11 @@ not implement TAX-03 or tax filing. See [13-accountant-export-delivery.md](13-ac
 for exact sources, source/privacy/size guards, failures, package hash and acceptance limits. Full-suite3753 remains
 historical, not a fresh full run. Next ready work is BANK-01 original-format research/import, then approved
 AI/FX prerequisites. Retain all current BIL/platform/provider/release gates and future Windows/web exclusions.
+
+## D-300 measured Android startup compilation
+
+The original observed process-startup failures are retained, and actual bootstrap/worker/Home phases are
+measured separately. Supplement Android SDK AOT profiles with the real cold-start path, preserving the original
+protected fixture, privacy order, cover and financial behavior. Exact native/package evidence is recorded in
+17-startup-responsiveness-delivery.md. General performance, two-second/reference-phone, iOS, native upstream
+warnings and release gates remain open. No unrelated full-suite/cipher/sync/provider/layout replay.

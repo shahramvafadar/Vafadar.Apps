@@ -1865,3 +1865,10 @@ Prioritize the actually observed covered Android startup/ANR and startup cost in
 against the retained current package/process evidence. Do not substitute unrelated full-suite, cipher, sync,
 UI or new prototype reruns for a measured cause and a focused correction. Activity start timing is separate
 from actual Home-ready timing and a physical-device performance target.
+
+## D-300 complete measured startup batch
+
+Finish the one measured Android compilation/startup batch against the retained actual installation, including
+background-triggered process ownership, loaded Home and final ordinary signed package. Keep general ANR/phone
+timing and iOS acceptance distinct. Continue only ready approved remaining work across external gates; do not
+repeat completed market/AI/bank/accountant/sync/billing/cipher checks or restart helper-only slices.

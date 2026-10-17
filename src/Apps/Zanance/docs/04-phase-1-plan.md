@@ -1003,3 +1003,9 @@ Optional reference provenance adds two application migrations and one service mi
 models; neither delivered financial manifest changes. Current complete-batch evidence and native/package state
 are in enhancements/2026-10-commercial-release/16-market-reference-delivery.md. Live source/rights/cost and
 physical/iOS/release acceptance remain distinct; historical whole-suite3753 was not repeated.
+
+## D-300 Android startup compilation
+
+The existing protected startup and finance behavior remain intact. Qualify only the changed Android compilation/native startup boundary; no schema or whole-suite replay is required for method metadata. Physical/iOS/two-second and publication acceptance remain separate.
+
+Current exact evidence: enhancements/2026-10-commercial-release/17-startup-responsiveness-delivery.md.

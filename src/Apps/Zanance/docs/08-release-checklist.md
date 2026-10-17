@@ -1201,3 +1201,9 @@ requires updated readers; legacy format1 and financial schema hashes remain unch
 acceptance. Device-private cache is not a portable recovery promise; source history remains profile data.
 Exact package/native/main-app evidence and open gates:16-market-reference-delivery.md. Physical devices, actual
 arm64/API24/16KiB, iOS, store signing and release acceptance remain separate; quotas stay inactive.
+
+## D-300 Startup evidence boundary
+
+The measured Android cold-start profile is a build-only method input, with no shipping recorder or changed privacy/cryptography/access policy. Keep physical arm64/API24/16KiB, genuine phone timing, iOS, two-second target, general ANR freedom and release gates open.
+
+Current exact evidence: enhancements/2026-10-commercial-release/17-startup-responsiveness-delivery.md.

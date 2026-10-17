@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Android startup compilation (D-300)
+
+- Precompile the measured cold-start path while preserving encrypted storage, access checks and the startup cover.
+- Keep loaded Home readiness separate from first-window timing; phone performance and general ANR acceptance remain open.
+
+
 ### Optional reference rates and prices (D-299; no live source selected)
 
 - Review an explicitly selected reference with its original source, licence, unit, dates and expiry before saving an estimated rate or supported asset price.

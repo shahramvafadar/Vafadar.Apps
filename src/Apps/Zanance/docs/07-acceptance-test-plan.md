@@ -3425,3 +3425,9 @@ and Cancel. Android private adapter first/cold processes passed exact64KiB, isol
 checks. Resource completeness/usage23 and runtime enum keys6 are separately recorded existing checks.
 Exact current native/package/main-app state and retained failures are in16-market-reference-delivery.md.
 These are not a new whole-suite total, live-source/physical/iOS/performance/public-release acceptance.
+
+## D-300 Actual startup and unchanged native navigation
+
+Qualify the original retained protected installation through cold Activity, covered preparation, loaded Home, expense opening and native Cancel without Save. Compare actual process reasons; do not replace Home readiness with Activity timings. No new unit behaviors or historical full-suite total are asserted.
+
+Current exact evidence: enhancements/2026-10-commercial-release/17-startup-responsiveness-delivery.md.

@@ -6078,3 +6078,19 @@ process-boundary, native and package evidence and remaining gates are recorded i
 `enhancements/2026-10-commercial-release/16-market-reference-delivery.md`. The live provider, coverage, rights,
 licence/redistribution, pricing, public activation and physical/iOS acceptance remain open. Current quotas remain
 inactive; local evidence is not a product release or a newly repeated full-suite total.
+
+## D-300 Measured Android cold-start method compilation
+
+Preserve startup, license/privacy and protected-storage ordering. Actual Release phase measurements showed
+substantial synchronous managed bootstrap cost before the window, including license initialization; storage
+already ran behind the cover on a worker. Supplement the SDK profiles with a captured actual cold-start method
+profile instead of moving cryptography, disabling telemetry too late or repeating rejected asynchronous roots.
+The recorder/environment are development-only and removed before production compilation. No global emulator
+property, OS setting, credentials, schema, financial algorithm or access rule changes.
+
+The production candidate reaches its first Activity in10624ms and actual loaded Home is observed by33485ms
+on the original fictitious installation, without an ANR in that process. These are distinct observations, not
+a GPU-ready measurement or a repeatable reference-phone/two-second result. Original account/balance and native
+expense/Cancel survive. Exact compilation, package tradeoff, final qualification and limitations are recorded
+in enhancements/2026-10-commercial-release/17-startup-responsiveness-delivery.md. Historical full-suite counts
+are unchanged; successful unrelated tests are not repeated.

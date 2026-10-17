@@ -27,6 +27,12 @@
     <SelfContained Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">true</SelfContained>
   </PropertyGroup>
 
+  <!-- D-300: compile the measured cold-start path in addition to the SDK's default profiles.
+       This is method metadata only; the recorder and its environment are never shipped. -->
+  <ItemGroup Condition="'$(Configuration)' == 'Release' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+    <AndroidAotProfile Include="Platforms\Android\Profiles\startup.aprof" />
+  </ItemGroup>
+
   <ItemGroup Label="MAUI resources">
     <!--
       Brand assets (D-26), generated from the approved master by branding/zanance/scripts/integrate.mjs.

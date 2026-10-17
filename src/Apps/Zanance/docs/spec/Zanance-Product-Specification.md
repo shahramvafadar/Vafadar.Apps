@@ -6160,3 +6160,12 @@ runtime enum keys6 are existing checks, not new behaviors. Historical3753 full-s
 or recounted. Exact main-app/package state, retained failed observations and remaining external gates are in
 enhancements/2026-10-commercial-release/16-market-reference-delivery.md. Whole-product completion, live source,
 phone/iOS/performance and release acceptance remain open.
+
+### Section31 current delivery: D-300 startup compilation qualification
+
+The existing Android covered startup now uses an additional actual-path AOT profile. License telemetry remains
+disabled before component initialization, and all protected storage/access order and financial rules remain
+unchanged. The native candidate starts its Activity in10624ms and loaded Home is observed by33485ms with the
+same account/balance; this is emulator evidence, not a two-second, physical-device or general ANR claim. No new
+unit-test behavior is introduced; historical full-suite3753 and later focused evidence are not replayed/recounted.
+See enhancements/2026-10-commercial-release/17-startup-responsiveness-delivery.md for final qualification.

@@ -982,3 +982,11 @@ production data/credentials. Host provider selection remains independent. Native
 requires the separate pro.vafadar.zanance.marketreview identity and its exact artifacts/market-native-d299 root;
 the independent Android caller uses ReviewMarketPrivate=true and its distinct package, never the main database.
 Exact retained logs/package/native state: src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/16-market-reference-delivery.md.
+
+## D-300 Android startup AOT input
+
+Release Android builds supplement the installed SDK profiles with
+src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/Profiles/startup.aprof. Its adjacent README records method
+metadata, digest, capture boundary and refresh rules. No profiler package, app-local profiler property or
+forwarded port belongs in the production package. Do not use capture targets that change global device settings.
+Qualification and actual package costs are recorded in the D-300 startup delivery document.
