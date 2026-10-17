@@ -63,7 +63,10 @@ Complete signed package: `artifacts/android-currency-d302-qualified/pro.vafadar.
   `artifacts/currency-d302-diagnostic-final-build.log`.
 
 D-301's preceding normal-main CI repair is now actually successful in all four applicable workflows; see
-18-native-storage-profile-delivery.md for exact execution links. This D-302 commit has its own subsequent CI check.
+18-native-storage-profile-delivery.md for exact execution links. D-302 commit `4b9396663fa32354be64508b149eab7c1936b0e3` was checked once on 2026-10-17:
+[CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39007884499) and
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39007884625) both completed successfully.
+Its one-use follow-up was deleted; no second check was performed.
 A11Y-03 remains In progress: actual OS font scaling, spoken screen readers, physical devices, remaining controls,
 iOS and release acceptance are not inferred. Windows remains a development check; commercial Windows delivery
 stays outside the current approved execution scope.

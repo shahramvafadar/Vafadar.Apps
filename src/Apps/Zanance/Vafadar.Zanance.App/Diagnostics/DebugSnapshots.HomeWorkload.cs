@@ -1,6 +1,5 @@
 #if DEBUG && WINDOWS
 using System.Diagnostics;
-using System.Security.Cryptography;
 using System.Text.Json;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -62,13 +61,20 @@ internal static partial class DebugSnapshots
             }
             using (generation)
             {
+                using var beforeBytes = new MemoryStream();
+                await data.GetRequiredService<IBackupSource>().WriteAsync(beforeBytes, ct); beforeBytes.Position = 0;
+                await using var beforePortable = await SqliteMemorySnapshot.OpenAsync(beforeBytes, 256 * 1024 * 1024, ct);
                 var store = data.GetRequiredService<ZananceStore>();
                 var today = DateOnly.FromDateTime(services.GetRequiredService<TimeProvider>().GetLocalNow().DateTime);
                 var expected = await store.GetHomeSnapshotAsync(today, 0, ct);
                 if (expected.Entries.Count != entryCount || expected.QuickResources.Accounts.Count != accountCount)
                     throw new IOException("The retained complete reference workload differs from its declared shape.");
                 var balances = LedgerCalculator.TotalBalances(expected.QuickResources.Accounts, expected.Entries, today);
-                foreach (var language in new[] { "en", "fa", "de" })
+                var languages = (Environment.GetEnvironmentVariable("VAFADAR_HOME_PERFORMANCE_LANGUAGES") ?? "en,fa,de").Split(',');
+                if (languages.Length == 0 || languages.Distinct(StringComparer.Ordinal).Count() != languages.Length
+                    || languages.Any(language => language is not ("en" or "fa" or "de")))
+                    throw new IOException("Use explicit original Home review languages only.");
+                foreach (var language in languages)
                 {
                     await SetLanguageAsync(app, local, language);
                     app.Windows[0].Width = 412; app.Windows[0].Height = 820;
@@ -129,20 +135,11 @@ internal static partial class DebugSnapshots
                 }
                 using var bytes = new MemoryStream(); await data.GetRequiredService<IBackupSource>().WriteAsync(bytes, ct); bytes.Position = 0;
                 await using var portable = await SqliteMemorySnapshot.OpenAsync(bytes, 256 * 1024 * 1024, ct);
-                var key = await keys.ReadAsync(generation.Binding, ct);
-                try
-                {
-                    await using var rollback = new SqliteConnection(new SqliteConnectionStringBuilder
-                    { DataSource = generation.Path + ".rollback.db", Mode = SqliteOpenMode.ReadOnly, Pooling = false,
-                        Password = Convert.ToBase64String(key) }.ToString());
-                    await rollback.OpenAsync(ct);
-                    await SqliteSnapshotVerifier.VerifyAsync(rollback, portable.Connection, ct);
-                }
-                finally { CryptographicOperations.ZeroMemory(key); }
+                await SqliteSnapshotVerifier.VerifyAsync(beforePortable.Connection, portable.Connection, ct);
             }
         }
         await File.WriteAllTextAsync(Path.Combine(folder, "home-workload-proof.json"), JsonSerializer.Serialize(new
-        { Results = results, OriginalProductionPage = true, CompleteSchemaAndTypedRowsUnchanged = true,
+        { Results = results, OriginalProductionPage = true, CompletePortableSchemaAndTypedRowsUnchanged = true,
             NoFinancialSave = true, ColdStartupOrPhoneAcceptance = false }), ct);
     }
 

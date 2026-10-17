@@ -27,7 +27,7 @@ internal static class AndroidHomeReview
     private static object? _balanceEvidence;
 
     /// <summary>Prepares a fresh workload or measures its existing protected generations.</summary>
-    internal static async Task RunAsync(App app, IServiceProvider services, string phase, string run)
+    internal static async Task RunAsync(App app, IServiceProvider services, string phase, string run, string? comparison)
     {
         if (AppInfo.Current.PackageName != Package) throw new ReviewCheckException("Independent compiled identity required.");
         // Android's /data/user/0 is an OS alias. Resolve it before applying the unchanged no-redirect fixture guard.
@@ -46,18 +46,20 @@ internal static class AndroidHomeReview
             else
             {
                 RequireRoot(root);
-                await MeasureAsync(app, services, root, ct);
+                if (comparison is null || !System.Text.RegularExpressions.Regex.IsMatch(comparison, "^[0-9a-f]{32}$")
+                    || phase is not ("measure" or "compare")) throw new ReviewCheckException("Explicit original comparison required.");
+                await MeasureAsync(app, services, root, phase, comparison, ct);
             }
         }
         catch (Exception error) when (error is not OutOfMemoryException)
         {
             // Never serialize exception messages: native command errors can contain key-bearing connection text.
-            var report = new { Failed = true, ErrorType = error.GetType().FullName, Stack = error.StackTrace,
+            var report = new { Failed = true, Comparison = comparison, ErrorType = error.GetType().FullName, Stack = error.StackTrace,
                 ReviewCheck = error is ReviewCheckException check ? check.Message : null,
                 WindowPageType = app.Windows.FirstOrDefault()?.Page?.GetType().Name,
                 ShellPageType = (app.Windows.FirstOrDefault()?.Page as AppShell)?.CurrentPage?.GetType().Name,
                 BalanceEvidence = _balanceEvidence,
-                CompletedCases = File.Exists(Path.Combine(root, "progress.json")) ? await File.ReadAllTextAsync(Path.Combine(root, "progress.json")) : null,
+                CompletedCases = File.Exists(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json")) ? await File.ReadAllTextAsync(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json")) : null,
                 RootExists = Directory.Exists(root), MarkerExists = File.Exists(Path.Combine(root, "fictitious-performance.marker")),
                 RedirectedAncestors = RedirectedAncestors(root) };
             var path = Directory.Exists(root) ? Path.Combine(root, "failure-" + Guid.NewGuid().ToString("N") + ".json")
@@ -102,21 +104,23 @@ internal static class AndroidHomeReview
         }
     }
 
-    private static async Task MeasureAsync(App app, IServiceProvider services, string root, CancellationToken ct)
+    private static async Task MeasureAsync(App app, IServiceProvider services, string root, string phase, string comparison, CancellationToken ct)
     {
         var local = services.GetRequiredService<ILocalizationService>();
         app.OpenReviewShell();
         await Task.Delay(1000, ct); // Let original empty-install foreground work settle outside the measurement.
         var results = new List<object>();
+        var nativeReadProfiles = new List<object>();
         var completed = new HashSet<string>(StringComparer.Ordinal);
-        if (File.Exists(Path.Combine(root, "progress.json")))
+        if (File.Exists(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json")))
         {
-            using var previous = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(root, "progress.json"), ct));
+            using var previous = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json"), ct));
             foreach (var item in previous.RootElement.EnumerateArray())
             {
                 var name = item.GetProperty("Shape").GetString(); var language = item.GetProperty("Language").GetString();
                 if (name is not ("reference" or "tenfold") || language is not ("en" or "fa" or "de") ||
                     !item.GetProperty("OriginalBalancesAndNativeTextMatched").GetBoolean() ||
+                    !item.GetProperty("OriginalFinancialPresentationMatched").GetBoolean() ||
                     item.GetProperty("FirstThenSecondPublicationMilliseconds").GetArrayLength() != 2 ||
                     !completed.Add(name + ":" + language)) throw new ReviewCheckException("Invalid retained completed case.");
                 results.Add(item.Clone());
@@ -145,6 +149,7 @@ internal static class AndroidHomeReview
             }
             using (generation)
             {
+                nativeReadProfiles.Add(await ProfileNativeReadAsync(data, shape.Entries, ct));
                 var today = DateOnly.FromDateTime(services.GetRequiredService<TimeProvider>().GetLocalNow().DateTime);
                 var expected = await data.GetRequiredService<ZananceStore>().GetHomeSnapshotAsync(today, 0, ct);
                 if (expected.Entries.Count != shape.Entries || expected.QuickResources.Accounts.Count != shape.Accounts || expected.Plans.Schedules.Count != shape.Schedules)
@@ -192,32 +197,80 @@ internal static class AndroidHomeReview
                                     throw new ReviewCheckException("Real native balance differs from the complete original ledger.");
                             }
                             await Task.Delay(75, ct); timer.Stop();
+                            var presentation = CapturePresentation(vm);
+                            var originalPath = Path.Combine(folder, "presentation-" + comparison + "-" + language + ".json");
+                            if (phase == "measure" && !File.Exists(originalPath))
+                                await File.WriteAllTextAsync(originalPath, presentation, ct);
+                            if (!File.Exists(originalPath) || presentation != await File.ReadAllTextAsync(originalPath, ct))
+                                throw new ReviewCheckException("Original complete financial presentation differs.");
                             samples.Add(clock.Elapsed.TotalMilliseconds); gaps.Add(largest);
                         }
                         finally { timer.Stop(); page.RetirePublication(); await shell.Navigation.PopAsync(false); await originalHome.PendingPublication; }
                     }
                     results.Add(new { Shape = name, Language = language, shape.Entries, shape.Accounts, shape.Schedules,
                         FirstThenSecondPublicationMilliseconds = samples, LargestDispatcherGapMilliseconds = gaps,
-                        OriginalBalancesAndNativeTextMatched = true, ActualNativeLayout = true, NoSynchronousSettingsRead = true });
-                    await File.WriteAllTextAsync(Path.Combine(root, "progress.json"), JsonSerializer.Serialize(results), ct);
+                        OriginalBalancesAndNativeTextMatched = true, OriginalFinancialPresentationMatched = true, ActualNativeLayout = true, NoSynchronousSettingsRead = true });
+                    await File.WriteAllTextAsync(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json"), JsonSerializer.Serialize(results), ct);
                     _balanceEvidence = null;
                 }
-                using var bytes = new MemoryStream(); await data.GetRequiredService<IBackupSource>().WriteAsync(bytes, ct); bytes.Position = 0;
-                await using var portable = await SqliteMemorySnapshot.OpenAsync(bytes, 256 * 1024 * 1024, ct);
-                var key = await keys.ReadAsync(generation.Binding, ct);
+                var rawKey = await keys.ReadAsync(generation.Binding, ct);
                 try
                 {
-                    await using var rollback = new SqliteConnection(new SqliteConnectionStringBuilder { DataSource = generation.Path + ".rollback.db",
-                        Mode = SqliteOpenMode.ReadOnly, Pooling = false, Password = Convert.ToBase64String(key) }.ToString());
-                    await rollback.OpenAsync(ct); await SqliteSnapshotVerifier.VerifyAsync(rollback, portable.Connection, ct);
+                    await using var retainedRollback = new SqliteConnection(new SqliteConnectionStringBuilder
+                    { DataSource = generation.Path + ".rollback.db", Mode = SqliteOpenMode.ReadOnly, Pooling = false,
+                        Password = Convert.ToBase64String(rawKey) }.ToString());
+                    await retainedRollback.OpenAsync(ct);
+                    await using var current = await data.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(ct);
+                    await current.Database.OpenConnectionAsync(ct);
+                    await SqliteSnapshotVerifier.VerifyAsync(retainedRollback, (SqliteConnection)current.Database.GetDbConnection(), ct);
                 }
-                finally { CryptographicOperations.ZeroMemory(key); }
+                finally { CryptographicOperations.ZeroMemory(rawKey); }
             }
         }
-        await WriteReportAsync(root, "measure", new { Results = results, OriginalProductionPage = true,
-            CompleteSchemaAndTypedRowsUnchanged = true, NoFinancialSave = true, ColdStartupOrPhoneAcceptance = false,
+        await WriteReportAsync(root, phase, new { Comparison = comparison, Results = results, NativeReadProfiles = nativeReadProfiles,
+            DataModuleVersionId = typeof(ZananceStore).Module.ModuleVersionId, CallerModuleVersionId = typeof(HomePage).Module.ModuleVersionId,
+            OriginalProductionPage = true,
+            CompleteRawSchemaAndTypedRowsUnchanged = true, NoFinancialSave = true, ColdStartupOrPhoneAcceptance = false,
             Boundary = "Original navigation/read/projection/publication plus Android layout and frame callbacks; excludes fixture preparation and cold startup" }, ct);
     }
+
+    /// <summary>Separates native stepping from entity materialization, with the original operation-local cache and no financial writes.</summary>
+    private static Task<object> ProfileNativeReadAsync(IServiceProvider data, int expected, CancellationToken ct) => Task.Run(async () =>
+    {
+        await using var db = await data.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(ct);
+        await db.Database.OpenConnectionAsync(ct);
+        await db.Database.ExecuteSqlRawAsync("PRAGMA cache_size = -32768", ct);
+        var connection = (SqliteConnection)db.Database.GetDbConnection();
+        using var transaction = connection.BeginTransaction(deferred: true);
+        using var command = connection.CreateCommand(); command.Transaction = transaction;
+        command.CommandText = "SELECT * FROM Entries NOT INDEXED ORDER BY rowid DESC";
+        var clock = Stopwatch.StartNew(); var rows = 0;
+        await using (var reader = await command.ExecuteReaderAsync(ct))
+            while (await reader.ReadAsync(ct)) rows++;
+        clock.Stop();
+        if (rows != expected) throw new ReviewCheckException("Native read profile lost original rows.");
+        var entity = db.Model.FindEntityType(typeof(LedgerEntry)) as Microsoft.EntityFrameworkCore.Metadata.RuntimeEntityType
+            ?? throw new ReviewCheckException("Original compiled runtime model unavailable.");
+        var binding = entity.ConstructorBinding as Microsoft.EntityFrameworkCore.Metadata.ConstructorBinding
+            ?? throw new ReviewCheckException("Original ledger materialization binding unavailable.");
+        return (object)new { Entries = rows, NativeSteppingMilliseconds = clock.Elapsed.TotalMilliseconds,
+            ConstructorParameters = binding.Constructor.GetParameters().Select(parameter => parameter.Name).ToArray(),
+            Boundary = "native full-row stepping only; excludes key opening, CLR field conversion and managed sorting" };
+    }, ct);
+
+    /// <summary>Captures original financial presentation without commands, colours or copied calculation algorithms.</summary>
+    private static string CapturePresentation(HomeViewModel vm) => JsonSerializer.Serialize(new
+    {
+        Balances = vm.Balances.Select(value => new { value.CurrencyCode, value.Text }),
+        Periods = vm.Periods.Select(value => new { value.IncomeText, value.ExpenseText, value.ResultText, value.RefundsText }),
+        Accounts = vm.Accounts.Select(value => new { value.Id, value.Name, value.TypeName, value.BalanceText, value.IsNegative, value.NotInTotals, value.OpeningUnknown }),
+        Upcoming = vm.Upcoming.Select(value => new { value.ScheduleId, value.OriginalDate, value.Title, value.Subtitle, value.AmountText, value.Badge }),
+        Slices = vm.Slices.Select(value => new { value.CategoryIds, value.Name, value.Value, value.AmountText, value.PercentText }),
+        vm.BudgetText, vm.BudgetDailyText, vm.BudgetProgress, vm.ForecastEndText, vm.ForecastLowText, vm.ForecastNote,
+        vm.LowBalanceText, vm.DueCount, vm.DueText, vm.Next30Text, vm.ContractText, vm.ReimbursementText,
+        vm.UnreviewedCount, vm.UnreviewedText, vm.ConfirmedBalanceText, vm.CombinedText, vm.CombinedIncomplete,
+        vm.HoldingsText, vm.GoalAttentionText, vm.ScopeText,
+    });
 
     private static async Task SetLanguageAsync(App app, ILocalizationService local, string language, CancellationToken ct)
     {
@@ -256,7 +309,9 @@ internal static class AndroidHomeReview
 
     private static async Task WriteReportAsync(string root, string phase, object report, CancellationToken ct)
     {
-        await using (var output = new FileStream(Path.Combine(root, phase + "-result.json"), FileMode.CreateNew, FileAccess.Write, FileShare.Read))
+        var packet = JsonSerializer.SerializeToElement(report);
+        var suffix = packet.TryGetProperty("Comparison", out var comparison) ? "-" + comparison.GetString() : "";
+        await using (var output = new FileStream(Path.Combine(root, phase + suffix + "-result.json"), FileMode.CreateNew, FileAccess.Write, FileShare.Read))
             await JsonSerializer.SerializeAsync(output, report, cancellationToken: ct);
         LogReport(phase, Path.GetFileName(root), report);
     }

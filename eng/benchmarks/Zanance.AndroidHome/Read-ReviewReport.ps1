@@ -1,11 +1,13 @@
 param(
     [Parameter(Mandatory)][ValidatePattern('^[0-9a-f]{32}$')][string]$Run,
-    [Parameter(Mandatory)][ValidateSet('prepare', 'measure')][string]$Phase,
+    [Parameter(Mandatory)][ValidateSet('prepare', 'measure', 'compare')][string]$Phase,
     [Parameter(Mandatory)][ValidateRange(1, 2147483647)][int]$ProcessId,
     [Parameter(Mandatory)][string]$OutputPath,
+    [ValidatePattern('^[0-9a-f]{32}$')][string]$Comparison,
     [ValidateRange(1, 60)][int]$ObserveSeconds = 45
 )
 $ErrorActionPreference = 'Stop'
+if ($Phase -in @('measure','compare') -and [string]::IsNullOrEmpty($Comparison)) { throw 'The original comparison identity is required.' }
 # Observe only the already launched independent process. Never install, restart or regenerate a fixture.
 $adb = 'C:\Program Files (x86)\Android\android-sdk\platform-tools\adb.exe'
 $serial = 'emulator-5570'
@@ -35,7 +37,8 @@ do {
                 $part = [Convert]::FromBase64String($chunks[$index]); $bytes.Write($part, 0, $part.Length)
             }
             $json = [Text.Encoding]::UTF8.GetString($bytes.ToArray())
-            $null = $json | ConvertFrom-Json
+            $report = $json | ConvertFrom-Json
+            if ($Comparison -and $report.Comparison -ne $Comparison) { throw 'The original comparison differs.' }
             $file = [IO.File]::Open($target, 'CreateNew', 'Write', 'Read')
             try { $data = [Text.Encoding]::UTF8.GetBytes($json); $file.Write($data, 0, $data.Length) } finally { $file.Dispose() }
             $json

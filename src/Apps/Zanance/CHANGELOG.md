@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Faster complete Home history (D-303)
+
+- Read complete large encrypted histories with fewer repeated page visits and unnecessary identifier allocations.
+- Preserve every financial value, original history order and covered publication while reducing loaded Android delays.
+- Keep cold-start, physical-phone and two-second performance acceptance open.
+
 ### Readable searchable currency fields (D-302)
 
 - Keep currency codes and their list actions readable with larger text.

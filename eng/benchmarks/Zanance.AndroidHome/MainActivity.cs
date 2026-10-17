@@ -20,17 +20,19 @@ public sealed class MainActivity : MauiAppCompatActivity
         if (savedInstanceState is not null || PackageName != AndroidHomeReview.Package) return;
         var phase = Intent?.GetStringExtra("review_phase");
         var run = Intent?.GetStringExtra("review_run");
-        if (phase is not ("prepare" or "measure") || run is null || !System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$")) return;
-        _ = RunAsync(phase, run);
+        var comparison = Intent?.GetStringExtra("review_pass");
+        if (phase is not ("prepare" or "measure" or "compare") || run is null || !System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$")) return;
+        if (phase != "prepare" && (comparison is null || !System.Text.RegularExpressions.Regex.IsMatch(comparison, "^[0-9a-f]{32}$"))) return;
+        _ = RunAsync(phase, run, comparison);
     }
 
-    private async Task RunAsync(string phase, string run)
+    private async Task RunAsync(string phase, string run, string? comparison)
     {
         var services = IPlatformApplication.Current!.Services;
         // MAUI registers IApplication, not the concrete App; use the instance owning the real window.
         var app = (App)Microsoft.Maui.Controls.Application.Current!;
         await app.WaitForStartupAsync();
-        await AndroidHomeReview.RunAsync(app, services, phase, run);
+        await AndroidHomeReview.RunAsync(app, services, phase, run, comparison);
     }
 
     /// <inheritdoc />

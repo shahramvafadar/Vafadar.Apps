@@ -38,8 +38,8 @@ public sealed partial class ZananceStore
             // D-283: SQLite async APIs execute synchronously. Both key derivation and materialization belong
             // off the UI thread; keep the unchanged KDF and non-pooled handle scoped to this operation only.
             await db.Database.OpenConnectionAsync(cancellationToken);
-            // D-286: newest-first full-history reads revisit encrypted table pages through the date index.
-            // Suggest a 32 MiB page cache for this non-pooled reader only; close releases it.
+            // D-286: retain the operation-local 32 MiB cache for the complete captured read. D-303 reads
+            // ledger pages sequentially instead of revisiting them through the date index.
             // This is SQLite's cache target, not a process-memory cap or a persistent database setting.
             // Ordinary pooled callers retain their original allowance so it cannot leak to later operations.
             var connection = (SqliteConnection)db.Database.GetDbConnection();
@@ -50,7 +50,7 @@ public sealed partial class ZananceStore
             var quick = await GetQuickResourceReviewAsync(db, null, cancellationToken);
             var plans = await new PlanStore(contextFactory, this, commercialAccess).GetWorkSnapshotAsync(db, cancellationToken);
             var goals = await new GoalStore(contextFactory, commercialAccess).GetWorkSnapshotAsync(db, cancellationToken);
-            var entries = await db.Entries.AsNoTracking().OrderByDescending(e => e.Date).ThenByDescending(e => e.CreatedAt).ToListAsync(cancellationToken);
+            var entries = await ReadCompleteHomeLedgerAsync(db, cancellationToken);
             var budgets = await db.Budgets.AsNoTracking().OrderByDescending(b => b.Year).ThenByDescending(b => b.Month).ToListAsync(cancellationToken);
             var settings = quick.Settings ?? new Core.Settings.ZananceSettings();
             var currencies = LedgerCalculator.InScope(quick.Accounts, null).Where(account => !account.IsArchived)
@@ -76,6 +76,20 @@ public sealed partial class ZananceStore
             planAccess.EnsureSnapshotCurrent(); goalAccess.EnsureSnapshotCurrent();
             return new HomeReadSnapshot(quick, plans, goals, entries, budgets, rates, types, events, budget, carry, periodIndex);
         }, cancellationToken);
+    }
+
+    /// <summary>Reads each ledger page in physical order, then retains the original newest-first financial packet.</summary>
+    private static async Task<List<LedgerEntry>> ReadCompleteHomeLedgerAsync(ZananceDbContext db, CancellationToken ct)
+    {
+        // The date index visits full encrypted rows out of page order. A reverse table scan avoids repeated
+        // decryption, and supplies the same descending row identity used by the original reverse date scan
+        // when both visible sort keys tie. Stable managed ordering needs no SQLite temporary sort file.
+        var entries = await db.Entries.FromSqlRaw("SELECT * FROM \"Entries\" NOT INDEXED ORDER BY rowid DESC")
+            .AsNoTracking().ToListAsync(ct);
+        ct.ThrowIfCancellationRequested();
+        var ordered = entries.OrderByDescending(entry => entry.Date).ThenByDescending(entry => entry.CreatedAt).ToList();
+        ct.ThrowIfCancellationRequested();
+        return ordered;
     }
 
     /// <summary>Revalidates original file, definitions and work rights before the covered Home becomes actionable.</summary>

@@ -83,6 +83,40 @@ public sealed class HomeReadSnapshotTests : IDisposable
         await store.ValidateHomeSnapshotAsync(packet, Ct);
     }
 
+    /// <summary>Complete history retains original ties, opening boundaries and every typed row value.</summary>
+    [Theory, InlineData(false), InlineData(true)]
+    [Trait("AT", "AT-303")]
+    public async Task Complete_history_preserves_original_order_and_every_value_with_equal_dates_timestamps_and_deleted_rows(bool removeRow)
+    {
+        var provider = Create();
+        await using (var db = await Factory(provider).CreateDbContextAsync(Ct))
+        {
+            var account = new Account { Name = "Original ordered history", CurrencyCode = "EUR", OpeningDate = Today };
+            db.Accounts.Add(account); await db.SaveChangesAsync(Ct);
+            var stamp = new DateTimeOffset(2026, 10, 1, 0, 0, 0, TimeSpan.Zero);
+            LedgerEntry? removed = null;
+            for (var index = 0; index < 12; index++)
+            {
+                var entry = new LedgerEntry { AccountId = account.Id,
+                    Kind = EntryKind.Expense, Amount = 100 + index, Title = $"Original € / فارسی {index}",
+                    Date = index % 3 == 0 ? Today.AddYears(1) : index % 3 == 1 ? Today : Today.AddYears(-1),
+                    CreatedAt = (index % 4 == 0 ? stamp.AddTicks(17) : stamp).ToOffset(TimeSpan.FromHours(index % 2 == 0 ? 2 : -7)),
+                    UpdatedAt = stamp.AddTicks(index) };
+                db.Entries.Add(entry); await db.SaveChangesAsync(Ct);
+                if (index == 4) removed = entry;
+            }
+            if (removeRow) { db.Entries.Remove(removed!); await db.SaveChangesAsync(Ct); }
+        }
+        var store = provider.GetRequiredService<ZananceStore>();
+        var original = await store.GetEntriesAsync(cancellationToken: Ct);
+        var captured = await store.GetHomeSnapshotAsync(Today, 0, Ct);
+        Assert.Equal(removeRow ? 11 : 12, captured.Entries.Count);
+        Assert.Equal(JsonSerializer.Serialize(original), JsonSerializer.Serialize(captured.Entries));
+        Assert.Contains(captured.Entries, entry => entry.Date < Today);
+        Assert.Contains(captured.Entries, entry => entry.Date > Today);
+        await store.ValidateHomeSnapshotAsync(captured, Ct);
+    }
+
     /// <summary>Preserves null legacy fallback, explicit reset and custom profile order in the original captured read.</summary>
     [Theory, InlineData(null), InlineData(""), InlineData("Budget,Recent,-Upcoming,-Accounts")]
     [Trait("AT", "AT-285")]

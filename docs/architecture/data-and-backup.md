@@ -2315,3 +2315,13 @@ separate bounded source feed; household format2 companions remain inside the exi
 publication and membership horizon. Store the original attempt before HTTP; no replacement ciphertext on resume.
 Device cache uses platform SecureStorage and no portable password. See the current16-market-reference-delivery.md
 for exact qualified scope and open live-source/platform/release gates.
+
+## Complete Home materialization (D-303)
+
+The protected Home reader retains all ledger rows under the same read lease/transaction and operation-local
+cache. It scans physical rows in descending rowid order, then stably sorts by the original Date/CreatedAt keys.
+Equal sort-key rows retain the original reverse-index tie order, including deleted-row gaps. It never limits
+history to the current period, changes cryptographic parameters or creates a SQLite sort file. The compiled
+LedgerEntry entity uses the supported Customize hook and public ConstructorBinding to bind its existing-id
+constructor. Keep new-entry identifier generation unchanged; regenerate the compiled model after changes and
+qualify complete migration/materialization, ordering and Native AOT behavior. This is no schema change.

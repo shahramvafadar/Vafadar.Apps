@@ -33,19 +33,25 @@ indexed Base64 fragment of derived JSON, not key material or exception messages.
 conflicting/missing chunks and overwriting output. Observation timeout does not restart a process.
 
 After successful preparation, force-stop only the independent package and launch its `measure`
-phase with the same run id. Record the new exact PID and observe with `-Phase measure`. Measurement
+phase with the same run id and a fresh `--es review_pass <32-hex-comparison>` identity. Record the new exact PID
+and observe with `-Phase measure -Comparison <comparison>`. Measurement
 requires existing ciphertext/identities/keys, never reseeds data or creates replacement keys. Failed
 attempt reports and private failure files remain retained. Fix the observed cause, then continue
 the same prepared fixtures; do not rerun preparation or reset app data. Completed language/shape
 cases in private progress are retained and skipped; full final preservation still runs for both
 shapes. Never reuse completed metrics after changing production sources; that requires a separately
-identified comparison against the same retained financial data.
+identified comparison against the same retained financial data. `measure` captures the canonical financial
+presentation; after an intended production change, `compare` uses the same comparison id and requires those
+original presentation packets. Per-comparison progress and immutable final report names preserve every prior
+result. Each final result records the loaded Data/caller module identities; do not reuse timings after a rebuild.
 
 The original Home page runs twice in English, Persian and German for each shape. Navigation,
 read/projection/publication and actual Android layout/frame callbacks are timed; complete native
 balance text and actual covered publication are checked. It also measures dispatcher gaps and
-compares final in-memory portable exports to authenticated encrypted rollbacks, including complete
-schema/header/integrity/typed rows. No financial Save occurs. Stop the exact independent package
+compares the actual protected database directly to its existing authenticated encrypted rollback after timing,
+including complete schema/header/integrity/typed rows. No in-memory backup image is held during measurement.
+The raw read profile separates physical stepping from entity materialization, and reports the actual compiled
+ledger constructor parameters without exposing keys or rows. No financial Save occurs. Stop the exact independent package
 after reading the completed result. Preserve its fixtures for later same-data comparisons.
 
 This is a loaded emulator baseline, not cold startup, hardware-rendered/GPU frame completion,

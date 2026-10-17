@@ -1913,3 +1913,20 @@ unchanged isolated account/entry rows. Current strict builds, signed main Androi
 and Cancel evidence are in19-currency-accessibility-delivery.md. No unrelated successful whole-suite, native
 crypto, synchronization, billing or service qualification is replayed. This is no new unit-test count or actual
 OS-scale, spoken screen-reader, physical-device, iOS or release acceptance; A11Y-03 remains In progress.
+
+## D-303 complete ledger read without discarded identities
+
+Home reads the entire ledger in physical row order, then applies the original stable newest-first date/time
+order in memory. This avoids repeated encrypted-page visits through the date index without dropping history,
+changing the operation-local cache, using SQLite temporary sort files or weakening encryption. The supported
+compiled-model extension binds the existing-id LedgerEntry constructor, so materialization no longer creates
+and discards a fresh identifier. New entries keep their original identifier generation. The compiled model is
+regenerated; schema, financial rules, keys, backup and privacy policy are unchanged.
+
+All 881 Data tests pass, including two new AT-303 complete-value/order cases. Actual Release/AOT Android
+reference/tenfold Home in English/Persian/German retains every canonical financial presentation and complete
+raw schema/header/integrity/typed rows on the same ciphertext and keys. Tenfold publication median decreases
+from 14,828.37 to 7,418.54 ms; reference median from 3,066.82 to 2,252.00 ms. These are controlled loaded-emulator
+observations, not two-second cold/phone/ANR/iOS acceptance. Windows native publication and complete portable
+preservation also pass. Full-suite historical counts are not a new full run. Exact evidence and package:
+[20-home-read-delivery.md](20-home-read-delivery.md).
