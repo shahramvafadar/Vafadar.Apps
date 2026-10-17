@@ -6327,3 +6327,8 @@ Actual same-file phone profiling isolated the old public full-history path: 7.77
 ## D-316 physical planned-work lifecycle without unrelated replay
 
 Use the unchanged complete signed D-315 main APK and ordinary original forms in an isolated retained fictitious profile. Partial 4 + final 6 yields exactly 10 spending, 990 balance, 40 budget left and the original account-balance goal; process restart preserves it. A separate future 20 appears only in Upcoming/forecast (970); exclude/reset changes the forecast, not the ledger. Return to original Main at 979. Retain observer failures and the undiagnosed first due-publication observation without speculative source changes. No new build/full-suite count. See [physical planned work](quality/physical-planned-work.md).
+
+
+## D-317 original physical CSV consumer and durable Undo
+
+Continue the retained D-316 fictitious main-app profile with the unchanged signed D-315 APK. Actual DocumentsUI cancellation/selection, two-row own-format preview/import, fixed-ID duplicate refusal and cold persisted batch Undo pass. Exact multiline/tag/formula-like text and financial projections are checked; Undo preserves the prior two plan payments and restores 990 balance/40 budget left/970 forecast. Main returns to 979. Redact unrelated picker names and remove only the hash-matched owned CSV. This is not a producer-export roundtrip, real-bank/aggregate/hostile-file matrix or full raw equality. See [physical CSV and Undo](quality/physical-csv-undo.md).

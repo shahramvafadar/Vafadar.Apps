@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Android import qualification (D-317)
+
+- Verify the original file picker, own-format duplicate detection and undo after reopening on the approved phone, with existing financial records preserved. Application code and APK remain D-315.
+
 ### Android workflow qualification (D-316)
 
 - Verify the existing plan, partial/final payment, budget, savings goal and future forecast together on the approved phone, preserving the original profile. Application code and APK remain D-315.

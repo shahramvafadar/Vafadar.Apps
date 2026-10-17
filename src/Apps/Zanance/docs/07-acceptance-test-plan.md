@@ -58,10 +58,10 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-49 | Switch Simple/Advanced | UX-02 | Unit + manual | S13 | Implemented (mode never deletes data; hidden plan and budget settings summarised); manual check pending |
 | AT-50 | Drill-down equals report number | REP-01 | Unit | S8 | Verified (unit + Home and report drill-downs with the same filter) |
 | AT-51 | Import with ambiguous date/decimal | IO-08 | Unit | S12 | Verified (unit) |
-| AT-52 | Re-import own CSV | IO-10 | Unit | S12 | Verified (unit) |
+| AT-52 | Re-import own CSV | IO-10 | Unit + bounded physical Android | S12 | Unit verified; D-317 same own-format fixture yields zero new/two known and a disabled action; actual producer-export roundtrip remains distinct |
 | AT-53 | Two identical real purchases | IO-10 | Unit | S12 | Verified (unit) |
-| AT-54 | Import failure / cancel | IO-11 | Integration | S12 | Verified (integration, SQLite) |
-| AT-55 | Multi-line / formula-like CSV text | IO-06 | Unit | S12 | Verified (unit) |
+| AT-54 | Import failure / cancel | IO-11 | Integration + bounded physical Android | S12 | SQLite verified; D-317 native picker cancel and cold persisted ordinary Undo pass; other failure/aggregate/platform matrices remain distinct |
+| AT-55 | Multi-line / formula-like CSV text | IO-06 | Unit + bounded physical Android | S12 | Unit verified; D-317 imported multiline note/tag and literal formula-like title display pass; export/spreadsheet acceptance is separate |
 | AT-56 | Wrong password / damaged / other app | BAK-10 | Unit (library: verified) + integration | S6 | Verified (library + integration, SQLite) |
 | AT-57 | Restore on fresh install | BAK-12 | Integration + manual | S6 | Verified (integration: fresh install, balances/plans/states; D-62 adds protected/unprotected restore, preferences and no duplicate account. Windows UI Automation: cancel returns to step 3, encrypted restore opens Home with the original 3 accounts. Device uninstall/reinstall pending) |
 | AT-58 | 11th backup, failed upload | BAK-07 | Unit (library: verified) | S6 | Library verified |
@@ -3598,3 +3598,8 @@ Actual Samsung ARM64/API36/4KiB: six original Home language/shape groups, three 
 ## D-316 actual planned-work device scenario
 
 The unchanged signed D-315 APK now has actual Samsung main-app evidence for original setup, optional budget and balance goal, manual 4/6 partial/final settlement, future-plan/forecast exclusion/reset, process restart and return to the original Main profile. The two actual expense rows total 10, balance is 990, budget left 40; future 20 gives forecast 970 without a third posting. Native displayed-state acceptance is distinct from full database equality. All data is fictitious and retained; no system setting, reinstall or personal data change. No unchanged builds, unit suites or APK qualification were repeated. Broader recurrence/notification/platform/performance/release gates remain open. See [physical planned work](quality/physical-planned-work.md).
+
+
+## D-317 physical own-format CSV and cold Undo
+
+Actual Samsung original file-picker cancellation/selection, own-format two-row preview/import, zero-new/two-known duplicate preview with disabled action and persisted Undo after process restart pass in the retained D-316 fictitious profile. Exact note/tag/literal formula-like text is retained; financial balance 990 -> 980 -> 990, original two payments, 40 budget left and 970 forecast are verified. Return to Main at 979 and hash-matched exact-file cleanup are complete. Unchanged app/APK and successful builds/tests remain D-315. No producer-export roundtrip, real-bank/aggregate/hostile-file/full raw equality or complete device/platform/release claim. See [physical CSV and Undo](quality/physical-csv-undo.md).
