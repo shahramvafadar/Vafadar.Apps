@@ -60,7 +60,7 @@ internal static class RecoveryCompatibility
             {
                 var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(connection, contextOwnsConnection: false).UseModel(ZananceDbContextModel.Instance).Options;
                 await using var db = new ZananceDbContext(options); await db.Database.MigrateAsync(ct);
-                if ((await db.Database.GetAppliedMigrationsAsync(ct)).Count() != 32) throw new IOException("Actual schema is incomplete.");
+                if (!(await db.Database.GetAppliedMigrationsAsync(ct)).SequenceEqual(db.Database.GetMigrations())) throw new IOException("Actual schema is incomplete.");
             }
             if (create)
             {

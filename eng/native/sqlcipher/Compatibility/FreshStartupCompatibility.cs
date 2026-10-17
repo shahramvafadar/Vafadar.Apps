@@ -42,7 +42,7 @@ internal static class FreshStartupCompatibility
             var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(connection, contextOwnsConnection: false)
                 .UseModel(ZananceDbContextModel.Instance).Options;
             await using var db = new ZananceDbContext(options); await db.Database.MigrateAsync(ct);
-            if ((await db.Database.GetAppliedMigrationsAsync(ct)).Count() != 32) throw new IOException("Real schema is incomplete.");
+            if (!(await db.Database.GetAppliedMigrationsAsync(ct)).SequenceEqual(db.Database.GetMigrations())) throw new IOException("Real schema is incomplete.");
         }
         var session = new SqlCipherProfileSession<ZananceDbContext>(location, async (path, owner, ct) =>
         {
@@ -71,7 +71,7 @@ internal static class FreshStartupCompatibility
             try { await startup.PrepareAsync(); }
             catch (IOException) { refused = true; }
             if (!refused || !location.IsProtected) throw new IOException("Actual post-publication failure was not observed.");
-            var retainedEndpoint = location.Capture();
+            var requireRetainedEndpoint = location.CaptureValidation();
             if ((await services.GetRequiredService<ZananceStore>().GetAccountsAsync()).Single().OpeningBalance != 321)
                 throw new IOException("Published key owner was retired after observer failure.");
             var reads = keys.Reads;
@@ -82,7 +82,8 @@ internal static class FreshStartupCompatibility
             finally { preferences.Remove("profiles.current"); }
             if (!changed || keys.Reads != reads) throw new IOException("Changed retry repeated key work or was accepted.");
             await startup.PrepareAsync();
-            if (keys.Reads != reads || !ReferenceEquals(location.Capture(), retainedEndpoint) || completedObservers != 1)
+            requireRetainedEndpoint();
+            if (keys.Reads != reads || completedObservers != 1)
                 throw new IOException("Observer retry changed publication/keys or skipped remaining observers.");
         }
         var startupClock = System.Diagnostics.Stopwatch.StartNew();

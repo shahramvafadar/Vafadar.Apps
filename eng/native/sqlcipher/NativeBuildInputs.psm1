@@ -138,4 +138,32 @@ function Restore-NativeSource {
     $archive
 }
 
-Export-ModuleMember -Function Get-NativeInputRoot,Get-NativeFreeSpace,Get-NativeContainerHostIdentity,Get-NativeContainerRunArguments,Restore-NativeZipTool,Restore-NativeSource
+function Resolve-NativeProducerVersion {
+    <# .SYNOPSIS Selects an explicit unpublished candidate version without reusing an immutable consumer identity. #>
+    param([Parameter(Mandatory)]$InputLock, [Parameter(Mandatory)]$Contents,
+        [Parameter(Mandatory)][object[]]$KnownContents, [AllowEmptyString()][string]$CandidateVersion = '')
+    if (-not $CandidateVersion) { return $Contents.version }
+    $sourceText = $InputLock.sources.sqlcipher.tag.TrimStart('v')
+    if ($sourceText -cnotmatch '^[0-9]+\.[0-9]+\.[0-9]+$') { throw 'Producer qualification requires a reviewed stable source version.' }
+    $sourceVersion = [Version]$sourceText
+    $prefix = $sourceText + '-candidate.'
+    $pattern = '^' + [regex]::Escape($prefix) + '(?<number>[1-9][0-9]*)$'
+    [long]$requested = 0
+    if ($CandidateVersion -cnotmatch $pattern -or -not [long]::TryParse($Matches.number, [ref]$requested)) {
+        throw 'Producer version must name a fresh candidate of the currently reviewed stable source.'
+    }
+    foreach ($known in $KnownContents) {
+        [long]$existing = 0
+        if ($known.version -cnotmatch '^(?<source>[0-9]+\.[0-9]+\.[0-9]+)-candidate\.(?<number>[1-9][0-9]*)$') {
+            throw 'Immutable consumer version has an unsupported identity.'
+        }
+        $knownSource = [Version]$Matches.source
+        if (-not [long]::TryParse($Matches.number, [ref]$existing) -or $knownSource -gt $sourceVersion -or
+            ($knownSource -eq $sourceVersion -and $requested -le $existing)) {
+            throw 'Producer version must be newer than every immutable consumer candidate.'
+        }
+    }
+    return $CandidateVersion
+}
+
+Export-ModuleMember -Function Get-NativeInputRoot,Get-NativeFreeSpace,Get-NativeContainerHostIdentity,Get-NativeContainerRunArguments,Restore-NativeZipTool,Restore-NativeSource,Resolve-NativeProducerVersion

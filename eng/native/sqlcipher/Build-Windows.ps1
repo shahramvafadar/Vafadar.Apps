@@ -19,7 +19,7 @@ if ($cryptoProfile.schemaVersion -ne 1 -or $cryptoProfile.sourceForkOrWarningSup
     @($cryptoProfile.opensslConfigureOptions | Where-Object { $_ -notmatch '^no-[a-z0-9-]+$' }).Count) { throw 'Invalid reviewed Windows crypto profile.' }
 # SQLCipher requires AES, SHA/HMAC, PBKDF2 and the upstream random provider.
 # Keep the reviewed removals explicit rather than accepting arbitrary no-* options.
-$allowedCryptoOptions = @('no-dsa','no-dh','no-cms','no-cmp','no-ocsp','no-ts','no-quic')
+$allowedCryptoOptions = @('no-dsa','no-dh','no-cms','no-cmp','no-ocsp','no-ts','no-quic','no-deprecated','no-legacy','no-engine','no-dso','no-ec','no-ecx','no-tls','no-dtls','no-sock','no-dgram','no-http','no-winstore','no-ui-console','no-ml-dsa','no-ml-kem','no-slh-dsa','no-sm2','no-sm3','no-sm4','no-aria','no-bf','no-blake2','no-camellia','no-cast','no-chacha','no-cmac','no-des','no-idea','no-md4','no-mdc2','no-ocb','no-poly1305','no-rc2','no-rc4','no-rc5','no-rmd160','no-scrypt','no-seed','no-siphash','no-siv','no-srp','no-whirlpool','no-argon2')
 if (@($cryptoProfile.opensslConfigureOptions | Where-Object { $_ -notin $allowedCryptoOptions }).Count -or
     @($cryptoProfile.opensslConfigureOptions | Select-Object -Unique).Count -ne @($cryptoProfile.opensslConfigureOptions).Count) {
     throw 'Windows crypto profile removes an unreviewed facility or repeats an option.'

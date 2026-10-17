@@ -66,8 +66,14 @@ internal static class WindowsKeyCompatibility
             }
             command.CommandText = "SELECT amount FROM packet";
             if ((long)(await command.ExecuteScalarAsync())! != long.MinValue) throw new InvalidOperationException("Protected key did not preserve encrypted data.");
-            if (!create) await File.WriteAllTextAsync(Path.Combine(folder, "key-reopen-proof.json"),
-                "{\"CurrentUserDpapiAcrossProcesses\":true,\"ActualGenerationKeyStore\":true,\"NativeFileAndDirectoryFlush\":true,\"ColdReadOnly\":true,\"EncryptedNativeDatabaseReopened\":true,\"FictitiousFilesOnly\":true}");
+            if (!create)
+            {
+                // A later native-engine qualification reuses this original fixture without replacing its evidence.
+                var proofPath = Path.Combine(folder, "key-reopen-proof.json");
+                if (File.Exists(proofPath)) proofPath = Path.Combine(folder, $"key-reopen-proof-{Guid.NewGuid():N}.json");
+                await using var proof = new FileStream(proofPath, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+                await proof.WriteAsync("{\"CurrentUserDpapiAcrossProcesses\":true,\"ActualGenerationKeyStore\":true,\"NativeFileAndDirectoryFlush\":true,\"ColdReadOnly\":true,\"EncryptedNativeDatabaseReopened\":true,\"FictitiousFilesOnly\":true}"u8.ToArray());
+            }
             Console.WriteLine(create ? "Fictitious protected key and encrypted database created." : "Protected key and encrypted database reopened in a new process.");
         }
         finally { CryptographicOperations.ZeroMemory(key); }

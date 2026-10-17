@@ -29,11 +29,8 @@
     <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Core/Vafadar.Zanance.Core.csproj" />
     <ProjectReference Include="$(RepoRoot)src/Libraries/Vafadar.Backup/Vafadar.Backup.csproj" />
     <ProjectReference Include="$(RepoRoot)src/Libraries/Vafadar.Localization/Vafadar.Localization.csproj" />
-    <!-- Compile actual original infrastructure/model/migrations without importing a default native bundle. -->
-    <Compile Include="$(RepoRoot)src/Libraries/Vafadar.Data/**/*.cs"
-             Exclude="$(RepoRoot)src/Libraries/Vafadar.Data/bin/**;$(RepoRoot)src/Libraries/Vafadar.Data/obj/**" />
-    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/**/*.cs"
-             Exclude="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/bin/**;$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/obj/**" />
+    <!-- Provider-neutral production assemblies retain their real dependency graph and frozen migration resources. -->
+    <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/Vafadar.Zanance.Data.csproj" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidDatabaseKeyProtector.cs" Link="AndroidDatabaseKeyProtector.cs" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidDatabaseKeyEnvelopeStore.Recovery.cs" Link="AndroidDatabaseKeyEnvelopeStore.Recovery.cs" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidDatabaseKeyEnvelopeStore.cs" Link="AndroidDatabaseKeyEnvelopeStore.cs" />

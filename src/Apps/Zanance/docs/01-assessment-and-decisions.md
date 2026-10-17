@@ -6094,3 +6094,21 @@ a GPU-ready measurement or a repeatable reference-phone/two-second result. Origi
 expense/Cancel survive. Exact compilation, package tradeoff, final qualification and limitations are recorded
 in enhancements/2026-10-commercial-release/17-startup-responsiveness-delivery.md. Historical full-suite counts
 are unchanged; successful unrelated tests are not repeated.
+
+## D-301 Reduced official storage crypto and immutable producer qualification
+
+Reduce unnecessary deprecated/legacy/plugin/network/algorithm facilities through the current official OpenSSL
+Configure interface, retaining SQLCipher's AES/SHA/HMAC/PBKDF2/RAND, secure memory, threads, assembly and format
+parameters. Use the same closed profile on Windows/Android and the independent Linux suite. Local producers,
+actual50-migration/native original-key evidence and official configured suites are qualified together; remaining
+508 diagnostics have no safety waiver. Do not suppress warnings or introduce a custom cryptographic provider.
+
+Reference provider-neutral production Data assemblies in compatibility hosts so real dependencies and frozen
+migration resources cannot diverge through source globs. Keep complete current migration checks and public
+publication validation. Native report paths bind an explicit fresh run and publish complete results atomically.
+Producer-only branches/export versions qualify actual compiler output before immutable consumer entry pinning;
+ordinary main/PR consumer gates stay intact. No automatic feed, application or release adoption follows.
+
+The complete batch, real failures, evidence and remaining hosted/adoption work are recorded in
+enhancements/2026-10-commercial-release/18-native-storage-profile-delivery.md. At this producer stage the main
+APK is still D-300; application/package adoption, per-site warning safety and device/iOS/release gates remain.

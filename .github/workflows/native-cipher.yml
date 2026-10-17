@@ -2,7 +2,7 @@ name: Native cipher candidates
 
 on:
   push:
-    branches: [main]
+    branches: [main, 'shahram/native-producer-*']
     paths:
       - 'eng/native/sqlcipher/**'
       - 'eng/benchmarks/Zanance.ProtectedPerformance/**'
@@ -15,6 +15,17 @@ on:
       - 'eng/benchmarks/Zanance.Performance/PerformanceFixture.cs'
       - '.github/workflows/native-cipher.yml'
   workflow_dispatch:
+    inputs:
+      producer_qualification:
+        description: Export qualified producer bytes before updating immutable consumer pins
+        type: boolean
+        required: false
+        default: false
+      candidate_version:
+        description: New unpublished Windows candidate version for producer qualification only
+        type: string
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -38,6 +49,9 @@ jobs:
       - uses: actions/setup-dotnet@v6
         with:
           global-json-file: global.json
+      - name: Refuse immutable producer identity reuse
+        shell: pwsh
+        run: ./eng/native/sqlcipher/Test-ProducerVersion.ps1
       - name: Qualify exact installed Windows compiler
         shell: pwsh
         run: ./eng/native/sqlcipher/Test-WindowsToolchain.ps1
@@ -52,23 +66,39 @@ jobs:
           Write-Host ('Fresh Windows native SHA256: {0}; {1}' -f $first.Hash, $second.Hash)
           if ($first.Hash -ne $second.Hash) { throw 'Fresh Windows native outputs differ.' }
       - name: Verify original schema and immutable package entries
+        if: ${{ !(inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-')) }}
         shell: pwsh
         run: |
           ./eng/native/sqlcipher/Ensure-WindowsPackage.ps1 -RunName windows-ci-b
+      - name: Qualify original schema and export unpublished producer package
+        if: ${{ inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-') }}
+        shell: pwsh
+        env:
+          CANDIDATE_VERSION: ${{ inputs.candidate_version }}
+          PRODUCER_BRANCH: ${{ github.ref_name }}
+        run: |
+          if (-not $env:CANDIDATE_VERSION -and $env:PRODUCER_BRANCH -cmatch '^shahram/native-producer-(?<version>[0-9]+\.[0-9]+\.[0-9]+-candidate\.[1-9][0-9]*)$') {
+            $env:CANDIDATE_VERSION = $Matches.version
+          }
+          if (-not $env:CANDIDATE_VERSION) { throw 'Producer qualification requires an explicit new candidate identity.' }
+          ./eng/native/sqlcipher/Test-Windows.ps1 -RunName windows-ci-b
+          ./eng/native/sqlcipher/Pack-Windows.ps1 -RunName windows-ci-b -PackageName producer-qualification -CandidateVersion $env:CANDIDATE_VERSION
       - name: Exercise native diagnostic drift refusals
         shell: pwsh
         run: ./eng/native/sqlcipher/Test-WindowsWarningPolicy.ps1 -RunName windows-ci-b
       - name: Verify production assemblies across fresh process reopening
+        if: ${{ !(inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-')) }}
         shell: pwsh
         run: ./eng/native/sqlcipher/Test-BinaryWindows.ps1 -RunName windows-ci-b
       - name: Measure protected reference and tenfold workloads
+        if: ${{ !(inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-')) }}
         shell: pwsh
         run: |
           dotnet build eng/benchmarks/Zanance.ProtectedPerformance -c Release -p:ContinuousIntegrationBuild=true
           if ($LASTEXITCODE -ne 0) { throw 'Protected workload build failed; do not execute stale output.' }
           dotnet run --project eng/benchmarks/Zanance.ProtectedPerformance -c Release --no-build -- artifacts/protected-ci-workloads
           if ($LASTEXITCODE -ne 0) { throw 'Protected workload failed; preserve the original evidence.' }
-      # Export only logs, public native provenance and measurements. DPAPI/key/database fixtures stay private.
+      # Only producer qualification also exports its unpublished component package; keys/databases stay private.
       - name: Preserve Windows qualification evidence
         if: always()
         uses: actions/upload-artifact@v7
@@ -85,6 +115,8 @@ jobs:
             artifacts/native-sqlcipher/build/windows-ci-*/candidate/manifest.json
             artifacts/native-sqlcipher/build/windows-ci-*/compatibility-proof.json
             artifacts/native-sqlcipher/build/windows-ci-*/compatibility-*/ef-proof.json
+            artifacts/native-sqlcipher/build/windows-ci-*/producer-qualification/*.nupkg
+            artifacts/native-sqlcipher/build/windows-ci-*/producer-qualification/package-proof.json
             artifacts/native-sqlcipher/build/windows-ci-*/consumer-*/package-proof.json
             artifacts/native-sqlcipher/binary-host/*/restore.log
             artifacts/native-sqlcipher/binary-host/*/build.log
@@ -94,11 +126,14 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
   linux:
+    if: ${{ !(inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-')) }}
     name: Official Android slices and stock cipher suite
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v7
+      - name: Refuse unreviewed storage capability removals
+        run: python3 eng/native/sqlcipher/Linux/test-storage-profile.py
       - name: Check non-root Linux workspace ownership
         shell: pwsh
         run: |

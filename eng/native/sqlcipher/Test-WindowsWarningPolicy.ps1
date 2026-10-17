@@ -1,6 +1,6 @@
 <# .SYNOPSIS Exercises diagnostic drift, original-source bindings and resumed producer evidence without rebuilding. #>
 [CmdletBinding()]
-param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'windows-storage-d260-ec')
+param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'windows-x64')
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
 Import-Module (Join-Path $PSScriptRoot 'WindowsWarnings.psm1') -Force
@@ -22,10 +22,10 @@ function Copy-Record($Value) {
     return ($Value | ConvertTo-Json -Depth 12 | ConvertFrom-Json)
 }
 $valid = Test-WindowsWarningSet -Baseline $baseline -Rows $rows
-if ($valid.occurrences -ne 704 -or $valid.sites -ne 689 -or $valid.securitySafetyAcceptance) { throw 'The actual complete baseline differs.' }
-$cases.Add('actual-704-diagnostic-baseline')
-if ((Test-WindowsWarningSources -Root $root -Baseline $baseline) -ne 224) { throw 'Original source coverage differs.' }
-$cases.Add('224-official-source-bindings')
+if ($valid.occurrences -ne 508 -or $valid.sites -ne 503 -or $valid.securitySafetyAcceptance) { throw 'The actual complete baseline differs.' }
+$cases.Add('actual-508-diagnostic-baseline')
+if ((Test-WindowsWarningSources -Root $root -Baseline $baseline) -ne 160) { throw 'Original source coverage differs.' }
+$cases.Add('160-official-source-bindings')
 $changed = @(Copy-Record $rows); $changed[0].code = 'C9999'
 Expect-Refusal 'new-code' 'added or changed' { Test-WindowsWarningSet $baseline $changed }
 $changed = @(Copy-Record $rows); $changed[0].message += ' changed'
@@ -38,7 +38,7 @@ Expect-Refusal 'partial-log' 'coverage is incomplete' { Test-WindowsWarningSet $
 Expect-Refusal 'empty-log' 'coverage is incomplete' { Test-WindowsWarningSet -Baseline $baseline -Rows @() }
 Expect-Refusal 'fresh-multiplicity-drift' 'multiplicity differs' { Test-WindowsWarningSet $baseline @($rows + $rows[0]) }
 $resumed = Test-WindowsWarningSet -Baseline $baseline -Rows @($rows + $rows[0]) -ResumedHistory
-if ($resumed.occurrences -ne 705 -or -not $resumed.resumedHistory) { throw 'Known repeated resume evidence was lost.' }
+if ($resumed.occurrences -ne 509 -or -not $resumed.resumedHistory) { throw 'Known repeated resume evidence was lost.' }
 $cases.Add('known-resume-duplicates-retained')
 $duplicate = @($baseline.diagnostics | Where-Object occurrences -gt 1)[0]
 $at = 0

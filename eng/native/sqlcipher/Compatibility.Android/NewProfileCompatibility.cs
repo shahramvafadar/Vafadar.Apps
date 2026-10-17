@@ -40,7 +40,7 @@ internal static class NewProfileCompatibility
         if (digest != await File.ReadAllTextAsync(Path.Combine(folder, "new-key-digest.txt"))) throw new IOException("New-profile restart replaced its prepared key envelope.");
         await using (var db = await services.GetRequiredService<ILocalDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(owner))
         {
-            if ((await db.Database.GetAppliedMigrationsAsync()).Count() != 32 || await db.Accounts.AnyAsync()) throw new IOException("New profile schema differs.");
+            if (!(await db.Database.GetAppliedMigrationsAsync()).SequenceEqual(db.Database.GetMigrations()) || await db.Accounts.AnyAsync()) throw new IOException("New profile schema differs.");
             if (phase == "new-profile-resume")
             {
                 if (await db.Entries.AnyAsync()) throw new IOException("New profile opened with ledger data.");

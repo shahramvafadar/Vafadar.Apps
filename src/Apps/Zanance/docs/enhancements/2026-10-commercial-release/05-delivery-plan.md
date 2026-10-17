@@ -1872,3 +1872,11 @@ Finish the one measured Android compilation/startup batch against the retained a
 background-triggered process ownership, loaded Home and final ordinary signed package. Keep general ANR/phone
 timing and iOS acceptance distinct. Continue only ready approved remaining work across external gates; do not
 repeat completed market/AI/bank/accountant/sync/billing/cipher checks or restart helper-only slices.
+
+## D-301 one complete native maintenance batch
+
+Carry the reduced official storage profile through local producer qualification, real hosted servicing output,
+new immutable consumer pins, actual original main upgrade/cold behavior and final signed package. Do not finish
+at a helper-only source gate or invent hosted bytes. Producer branches isolate source qualification from normal
+consumer adoption. Keep original key/data/proof files and pending live processes; avoid unrelated successful
+verification. Remaining per-site warnings, physical/Mac/iOS and public release stay explicit separate gates.

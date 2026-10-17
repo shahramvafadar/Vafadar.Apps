@@ -391,3 +391,26 @@ are rechecked on reuse. Export-WindowsWarningProposal.ps1 verifies restored offi
 and writes a proposed inventory to fresh ignored evidence, never the tracked acceptance file.
 See [the complete maintenance/verification record](../../src/Apps/Zanance/docs/quality/windows-warning-drift.md).
 Existing 704 upstream warning occurrences remain unresolved safety-wise; this gate detects drift.
+
+## D-301 reduced storage profile and unpublished producer workflow
+
+The historical windows.crypto.profile.json now supplies the same closed official Configure removals to Windows,
+Android and the independent Linux cipher suite. Its required AES/SHA/HMAC/PBKDF2/RAND contract, threads,
+assembly and secure memory stay enabled. New profile inputs fail before Configure if they remove an unreviewed
+capability. Neither current4.19 storage format nor keys change; SQLCipher5 beta is not production adoption.
+
+Qualify source candidates before updating consumer inventories. Producer-only branches follow
+shahram/native-producer-4.19.0-candidate.8 for the current servicing proposal; explicit workflow dispatch also
+accepts a fresh candidate_version. Two fresh Windows outputs, actual production Data/model/resources and
+diagnostic/source gates still run. This mode exports its unpublished nupkg and public proof only, skipping
+unrelated Linux/consumer/performance stages. Verify actual run head and source/profile/compiler provenance
+before recording package entry hashes. No default branch, feed, release, account or credentials change from
+the producer export. Main/pull-request execution retains full immutable consumer qualification.
+
+Pack-Windows.ps1 and Pack-Android.ps1 accept an explicit CandidateVersion only for a fresh unpublished identity.
+Known/lower identities, wrong stable source, overflow and path injection fail. Ordinary packaging retains all
+reviewed entry names/hashes and refuses changed metadata as well as native bytes. Preserve original producer
+files and never fix drift by rewriting an immutable version. Independent callers now reference actual
+provider-neutral Data assemblies so cryptography dependencies and frozen migration SQL resources cannot drift
+away from a duplicated Compile glob. Exact current qualification and remaining adoption work:
+src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/18-native-storage-profile-delivery.md.

@@ -155,6 +155,7 @@ internal static class GenerationMigrationCompatibility
         DatabaseGenerationCheckpoint initial;
         Guid installation;
         var original = Path.Combine(folder, "profile.db");
+        var createdMigrations = 0;
         if (phase == "migration-create")
         {
             if (Directory.Exists(folder)) throw new InvalidOperationException("Use a fresh migration proof folder.");
@@ -162,7 +163,7 @@ internal static class GenerationMigrationCompatibility
             initial = new(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()); installation = Guid.NewGuid();
             await File.WriteAllTextAsync(contextPath, string.Join("\n", initial.ProfileId.ToString("N"), initial.OriginalGeneration.ToString("N"),
                 initial.CandidateGeneration.ToString("N"), installation.ToString("N")));
-            await CreateOriginalAsync(original);
+            createdMigrations = await CreateOriginalAsync(original);
             await File.WriteAllTextAsync(Path.Combine(folder, "original-digest.txt"), Convert.ToHexString(SHA256.HashData(await File.ReadAllBytesAsync(original))));
         }
         else
@@ -180,7 +181,7 @@ internal static class GenerationMigrationCompatibility
         {
             await journal.CreateNewAsync();
             await File.WriteAllTextAsync(Path.Combine(folder, "candidate-path.txt"), Path.GetFileName(session.CandidatePath));
-            return "{\"OriginalModelCreated\":true,\"Migrations\":32}";
+            return "{\"OriginalModelCreated\":true,\"Migrations\":" + createdMigrations.ToString(System.Globalization.CultureInfo.InvariantCulture) + ",\"CurrentMigrationSetApplied\":true}";
         }
         if (phase == "migration-key-prepare")
         {
@@ -259,7 +260,7 @@ internal static class GenerationMigrationCompatibility
         await using (var old = new ZananceDbContext(sourceOptions))
         {
             var migrations = old.Database.GetMigrations().ToList();
-            if (migrations.Count != 32) throw new IOException("Review actual restored migration baseline.");
+            if (migrations.Count < 32) throw new IOException("The original restored migration baseline is missing.");
             await old.GetService<IMigrator>().MigrateAsync(migrations[0]);
             await old.Database.ExecuteSqlAsync($"INSERT INTO Settings (Id, ReportCurrencyCode, Mode, BudgetCalendar, WeekStart, ReminderDaysBefore, ReminderTime, NotificationsShowDetails, AppLockEnabled, OnboardingCompleted, CreatedAt, UpdatedAt) VALUES ({settingsId}, 'EUR', 0, 0, 1, 3, '09:00:00', 0, 0, 1, 0, 0)");
             await old.Database.ExecuteSqlAsync($"INSERT INTO Accounts (Id, Name, Type, CurrencyCode, OpeningBalance, OpeningDate, OpeningBalanceKnown, IncludeInTotals, IsArchived, SortOrder, CreatedAt, UpdatedAt) VALUES ({accountId}, 'Fictitious old restore بانک Ü', 0, 'EUR', 9100, '2025-01-01', 1, 1, 0, 0, 0, 0)");
@@ -604,7 +605,7 @@ internal static class GenerationMigrationCompatibility
     }
 
     /// <summary>Creates only the original fictitious app model for independent lifecycle checks.</summary>
-    internal static Task CreateOriginalAsync(string original) => Vafadar.SqlCipher.Compatibility.OriginalProfileFixture.CreateOriginalAsync(original);
+    internal static Task<int> CreateOriginalAsync(string original) => Vafadar.SqlCipher.Compatibility.OriginalProfileFixture.CreateOriginalAsync(original);
 
     private static async Task CheckDigestsAsync(string folder, string original, DatabaseGenerationCheckpoint initial)
     {

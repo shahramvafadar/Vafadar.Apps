@@ -362,7 +362,7 @@ foreach ($scenario in $scenarios) {
         if ($LASTEXITCODE -ne 0) { throw 'Recorded original-model context is missing.' }
         $created = (& $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat files/result.json | Out-String) | ConvertFrom-Json
     } else { $created = Invoke-OwnedMigration 'migration-create' $identity }
-    if (-not $created.OriginalModelCreated -or $created.Migrations -ne 32) { throw 'Actual original model fixture missing.' }
+    if (-not $created.OriginalModelCreated -or $created.Migrations -lt 32 -or -not $created.CurrentMigrationSetApplied) { throw 'Actual current model fixture missing.' }
     $prepared = Invoke-OwnedMigration 'migration-key-prepare' $identity
     if (-not $prepared.KeyDurablyPrepared) { throw 'Actual native protected key preparation missing.' }
     if ($scenario -eq 'factory-layer') {

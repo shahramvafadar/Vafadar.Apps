@@ -32,6 +32,9 @@ foreach ($name in @('openssl','sqlcipher')) {
 }
 $sources | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $root 'inputs/source-manifest.json') -Encoding UTF8
 Copy-Item -LiteralPath $androidLockPath -Destination (Join-Path $root 'inputs/android.inputs.lock.json')
+# Keep the exact storage capability profile with this producer instead of reading a later mutable recipe file.
+$profilePath = Join-Path $PSScriptRoot 'windows.crypto.profile.json'
+Copy-Item -LiteralPath $profilePath -Destination (Join-Path $root 'inputs/storage.crypto.profile.json')
 $imageId = & docker image inspect $image --format '{{.Id}}'
 if ($LASTEXITCODE -ne 0) { throw 'Native host image identity unavailable.' }
 $containerArguments = @(Get-NativeContainerRunArguments -RunRoot $root -OutputName candidate -WorkTarget '/home/nativebuild/work')
@@ -47,6 +50,7 @@ foreach ($abi in @('arm64-v8a','x86_64')) {
     $files += [ordered]@{ abi=$abi; bytes=(Get-Item -LiteralPath $library).Length; sha256=(Get-FileHash -LiteralPath $library).Hash.ToLowerInvariant() }
 }
 [ordered]@{ schemaVersion=1; status='candidate-not-app-or-release-accepted'; minimumApi=24;
+    cryptoProfileSha256=(Get-FileHash -LiteralPath (Join-Path $root 'inputs/storage.crypto.profile.json') -Algorithm SHA256).Hash.ToLowerInvariant();
     sourceInputsSha256=(Get-FileHash -LiteralPath (Join-Path $PSScriptRoot 'inputs.lock.json')).Hash.ToLowerInvariant();
     androidInputsSha256=(Get-FileHash -LiteralPath $androidLockPath).Hash.ToLowerInvariant();
     hostImageId=$imageId; sources=$sources; files=$files } | ConvertTo-Json -Depth 8 |

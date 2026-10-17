@@ -180,9 +180,10 @@ internal static class ProfileCreationCompatibility
                 runtime.Session.Close(retainedOwner);
                 return "{\"CreationIntentRetained\":true,\"PreparedProfileUnpublished\":true,\"MainBalance\":250}";
             }
-            var endpoint = location.Capture();
+            var requireEndpoint = location.CaptureValidation();
             var work = await profiles.CreateReviewedAsync(profiles.ReadWorkReview(), "Fictitious prepared work");
-            if (location.Capture() != endpoint || !profiles.Current.IsMain || profiles.All.Count != 2) throw new IOException("Creation changed active finance context.");
+            requireEndpoint();
+            if (!profiles.Current.IsMain || profiles.All.Count != 2) throw new IOException("Creation changed active finance context.");
             if (!await profiles.SwitchToAsync(work) || (await store.GetAccountsAsync()).Count != 0) throw new IOException("New profile was not empty.");
             await store.SaveAccountAsync(new Account { Name = "Fictitious retained work", CurrencyCode = "EUR", OpeningDate = new(2026, 1, 1), OpeningBalance = 880 });
             if (recoveredRetirement)

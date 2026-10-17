@@ -4,7 +4,8 @@
 #>
 [CmdletBinding()]
 param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'windows-x64',
-    [ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$PackageName = 'package')
+    [ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$PackageName = 'package',
+    [string]$CandidateVersion = '')
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
 Import-Module (Join-Path $PSScriptRoot 'WindowsToolchain.psm1') -Force
@@ -52,7 +53,15 @@ $packageManifest = $manifest | ConvertTo-Json -Depth 8 | ConvertFrom-Json
 $packageManifest.PSObject.Properties.Remove('compilerExecutableSha256')
 $packageManifest | Add-Member -NotePropertyName reviewedCompilerExecutables -NotePropertyValue @($compilerPolicy.compilers | Sort-Object sha256)
 $packageManifestBytes = [Text.Encoding]::UTF8.GetBytes((($packageManifest | ConvertTo-Json -Depth 8).Replace("`r`n","`n")) + "`n")
-$version = $contents.version
+# Producer qualification exports only to this owned artifact directory, never the consumer feed.
+# It keeps all source, diagnostic, native, compatibility and compiler gates before proposing new immutable bytes.
+$knownContents = @('windows.package.contents.json','windows.servicing.package.contents.json') | ForEach-Object {
+    Get-Content -LiteralPath (Join-Path $PSScriptRoot $_) -Raw -Encoding UTF8 | ConvertFrom-Json
+}
+$version = Resolve-NativeProducerVersion -InputLock $inputLock -Contents $contents -KnownContents $knownContents -CandidateVersion $CandidateVersion
+if (-not $CandidateVersion -and $contents.entries.'runtimes/win-x64/native/sqlcipher.dll' -cne $manifest.librarySha256) {
+    throw 'Unpinned native bytes require a fresh explicit producer version; never reuse an immutable consumer identity.'
+}
 $packageId = 'Vafadar.Native.SqlCipher.Windows'
 $nuspec = @"
 <?xml version="1.0" encoding="utf-8"?>
@@ -65,6 +74,24 @@ $nuspec = @"
   </metadata>
 </package>
 "@
+$entries = [ordered]@{
+    ($packageId + '.nuspec')=[Text.Encoding]::UTF8.GetBytes($nuspec.Replace("`r`n","`n"))
+    'licenses/ThirdPartyNotices.txt'=[Text.Encoding]::UTF8.GetBytes($notices.Replace("`r`n","`n"))
+    'manifest.json'=$packageManifestBytes
+    ('buildTransitive/' + $packageId + '.targets')=[IO.File]::ReadAllBytes((Join-Path $PSScriptRoot 'windows-package.targets'))
+    'runtimes/win-x64/native/sqlcipher.dll'=$bytes
+}
+if (-not $CandidateVersion) {
+    if ((@($entries.Keys | Sort-Object) -join '|') -cne (@($contents.entries.PSObject.Properties.Name | Sort-Object) -join '|')) {
+        throw 'Normal packaging cannot change immutable consumer entry names.'
+    }
+    foreach ($name in $entries.Keys) {
+        $hash = [Security.Cryptography.SHA256]::Create()
+        try { $actual = ([BitConverter]::ToString($hash.ComputeHash($entries[$name]))).Replace('-','').ToLowerInvariant() }
+        finally { $hash.Dispose() }
+        if ($actual -cne $contents.entries.($name)) { throw 'Changed consumer entry bytes require a fresh producer identity.' }
+    }
+}
 $output = Join-Path $root $PackageName
 if (Test-Path -LiteralPath $output) { throw 'Use a fresh package directory; preserve earlier evidence.' }
 New-Item -ItemType Directory $output | Out-Null
@@ -74,13 +101,6 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 $archive = [IO.Compression.ZipFile]::Open($package,[IO.Compression.ZipArchiveMode]::Create)
 $timestamp = [DateTimeOffset]::FromUnixTimeSeconds([long]$manifest.sourceDateEpoch)
 try {
-    $entries = [ordered]@{
-        ($packageId + '.nuspec')=[Text.Encoding]::UTF8.GetBytes($nuspec.Replace("`r`n","`n"))
-        'licenses/ThirdPartyNotices.txt'=[Text.Encoding]::UTF8.GetBytes($notices.Replace("`r`n","`n"))
-        'manifest.json'=$packageManifestBytes
-        ('buildTransitive/' + $packageId + '.targets')=[IO.File]::ReadAllBytes((Join-Path $PSScriptRoot 'windows-package.targets'))
-        'runtimes/win-x64/native/sqlcipher.dll'=$bytes
-    }
     foreach ($name in $entries.Keys) {
         $entry = $archive.CreateEntry($name,[IO.Compression.CompressionLevel]::Optimal)
         $entry.LastWriteTime = $timestamp

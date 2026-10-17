@@ -3,6 +3,8 @@ set -euo pipefail
 export LANG=C LC_ALL=C
 export SOURCE_DATE_EPOCH="$(python3 -c 'import json; print(next(x for x in json.load(open("/inputs/source-manifest.json", encoding="utf-8-sig")) if x["name"]=="openssl")["sourceDateEpoch"])' )"
 python3 "$(dirname "$0")/verify-host.py" /inputs/android.inputs.lock.json > /output/host-proof.json
+python3 "$(dirname "$0")/read-storage-profile.py" /inputs/storage.crypto.profile.json --proof /output/crypto-profile-proof.json > /output/crypto-profile-options.txt
+mapfile -t storage_options < /output/crypto-profile-options.txt
 mkdir -p /home/nativebuild/work
 cd /home/nativebuild/work
 mkdir openssl sqlcipher amalgamation
@@ -26,7 +28,7 @@ for abi in arm64-v8a x86_64; do
  esac
  mkdir "crypto-$abi" "/output/$abi"
  cd "crypto-$abi"
- perl ../openssl/Configure "$target" -D__ANDROID_API__=24 -U__ANDROID_API__ no-shared no-module no-autoload-config no-filenames -fPIC -fstack-protector-strong "-ffile-prefix-map=/home/nativebuild/work=/usr/src/sqlcipher" > "/output/$abi/configure.log" 2>&1
+ perl ../openssl/Configure "$target" -D__ANDROID_API__=24 -U__ANDROID_API__ no-shared no-module no-autoload-config no-filenames "${storage_options[@]}" -fPIC -fstack-protector-strong "-ffile-prefix-map=/home/nativebuild/work=/usr/src/sqlcipher" > "/output/$abi/configure.log" 2>&1
  make -j2 build_generated libcrypto.a > "/output/$abi/crypto-build.log" 2>&1
  "$triple"24-clang -shared -O2 -fPIC -fstack-protector-strong -fvisibility=hidden '-DSQLITE_API=__attribute__((visibility("default")))' -DSQLITE_HAS_CODEC -DSQLITE_TEMP_STORE=3 -DSQLITE_THREADSAFE=1 -DSQLITE_DEFAULT_FOREIGN_KEYS=1 -DSQLITE_EXTRA_INIT=sqlcipher_extra_init -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown -DSQLCIPHER_CRYPTO_OPENSSL -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_FTS5 -Iinclude -I../openssl/include -I../amalgamation ../amalgamation/sqlite3.c libcrypto.a -ldl -lm -llog -Wl,-z,relro,-z,now,--exclude-libs,ALL,-z,max-page-size=16384,--build-id=sha1,-soname,libsqlcipher.so -o "/output/$abi/libsqlcipher.so" > "/output/$abi/cipher-build.log" 2>&1
  "$triple"24-clang -O2 -fPIE -pie -Wall -Wextra -Werror -I../amalgamation "$(dirname "$0")/android-probe.c" -L"/output/$abi" -lsqlcipher '-Wl,-rpath,$ORIGIN' -Wl,-z,relro,-z,now,-z,max-page-size=16384 -o "/output/$abi/native-probe" > "/output/$abi/probe-build.log" 2>&1

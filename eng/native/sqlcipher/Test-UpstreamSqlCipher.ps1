@@ -32,6 +32,7 @@ foreach ($name in @('openssl','sqlcipher')) {
 }
 $sources | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $root 'inputs/source-manifest.json') -Encoding UTF8
 Copy-Item -LiteralPath $androidLockPath -Destination (Join-Path $root 'inputs/android.inputs.lock.json')
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'windows.crypto.profile.json') -Destination (Join-Path $root 'inputs/storage.crypto.profile.json')
 $imageId = & docker image inspect $image --format '{{.Id}}'
 if ($LASTEXITCODE -ne 0) { throw 'Native host image identity unavailable.' }
 $containerArguments = @(Get-NativeContainerRunArguments -RunRoot $root -OutputName evidence -WorkTarget '/home/nativebuild/upstream')

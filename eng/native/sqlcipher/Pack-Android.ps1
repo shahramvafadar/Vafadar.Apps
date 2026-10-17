@@ -3,7 +3,8 @@
 #>
 [CmdletBinding()]
 param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'android-x64',
-    [ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$PackageName = 'candidate')
+    [ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$PackageName = 'candidate',
+    [string]$CandidateVersion = '')
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
@@ -12,6 +13,7 @@ $manifestPath = Join-Path $candidate 'manifest.json'
 $manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $inputLock = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'inputs.lock.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 if ($manifest.schemaVersion -ne 1 -or $manifest.files.Count -ne 2 -or
+    $manifest.cryptoProfileSha256 -ne (Get-FileHash -LiteralPath (Join-Path $PSScriptRoot 'windows.crypto.profile.json') -Algorithm SHA256).Hash.ToLowerInvariant() -or
     $manifest.sourceInputsSha256 -ne (Get-FileHash -LiteralPath (Join-Path $PSScriptRoot 'inputs.lock.json')).Hash.ToLowerInvariant() -or
     $manifest.status -ne 'candidate-not-app-or-release-accepted' -or $manifest.minimumApi -ne 24 -or
     $manifest.androidInputsSha256 -ne (Get-FileHash -LiteralPath (Join-Path $PSScriptRoot 'android.inputs.lock.json')).Hash.ToLowerInvariant()) {
@@ -49,7 +51,17 @@ $notices = 'Owner-written Zanance source remains all rights reserved. Component 
 foreach ($license in @('SQLCipher.txt','OpenSSL.txt','NDK-CompilerRuntime.txt')) {
     $notices += "`n`n" + (Get-Content -LiteralPath (Join-Path $candidate ('licenses/' + $license)) -Raw -Encoding UTF8)
 }
-$id = 'Vafadar.Native.SqlCipher.Android'; $version = $inputLock.sources.sqlcipher.tag.TrimStart('v') + '-candidate.4'
+$contents = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'android.package.contents.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+$id = 'Vafadar.Native.SqlCipher.Android'
+$version = Resolve-NativeProducerVersion -InputLock $inputLock -Contents $contents -KnownContents @($contents) -CandidateVersion $CandidateVersion
+if (-not $CandidateVersion) {
+    foreach ($slice in $manifest.files) {
+        $rid = if ($slice.abi -eq 'arm64-v8a') { 'android-arm64' } else { 'android-x64' }
+        if ($contents.entries.('runtimes/' + $rid + '/native/libsqlcipher.so') -cne $slice.sha256) {
+            throw 'Unpinned Android bytes require a fresh producer version; never reuse an immutable consumer identity.'
+        }
+    }
+}
 $nuspec = @"
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd"><metadata>
@@ -67,9 +79,21 @@ $entries['licenses/ThirdPartyNotices.txt'] = [Text.Encoding]::UTF8.GetBytes($not
 # Package identity is stable across independently reproduced hosts. Keep hostImageId in the
 # producer manifest/evidence, rather than changing immutable package bytes with each Docker image.
 $packageManifest = [ordered]@{ schemaVersion=$manifest.schemaVersion; status=$manifest.status; minimumApi=$manifest.minimumApi;
+    cryptoProfileSha256=$manifest.cryptoProfileSha256;
     sourceInputsSha256=$manifest.sourceInputsSha256; androidInputsSha256=$manifest.androidInputsSha256;
     sources=$manifest.sources; files=$manifest.files }
 $entries['manifest.json'] = [Text.Encoding]::UTF8.GetBytes(($packageManifest | ConvertTo-Json -Depth 8).Replace("`r`n","`n"))
+if (-not $CandidateVersion) {
+    if ((@($entries.Keys | Sort-Object) -join '|') -cne (@($contents.entries.PSObject.Properties.Name | Sort-Object) -join '|')) {
+        throw 'Normal Android packaging cannot change immutable consumer entry names.'
+    }
+    foreach ($name in $entries.Keys) {
+        $hash = [Security.Cryptography.SHA256]::Create()
+        try { $actual = ([BitConverter]::ToString($hash.ComputeHash($entries[$name]))).Replace('-','').ToLowerInvariant() }
+        finally { $hash.Dispose() }
+        if ($actual -cne $contents.entries.($name)) { throw 'Changed Android consumer entries require a fresh producer identity.' }
+    }
+}
 $packageDirectory = Join-Path $root ('packages/' + $PackageName)
 New-Item -ItemType Directory -Force $packageDirectory | Out-Null
 $path = Join-Path $packageDirectory ($id + '.' + $version + '.nupkg')

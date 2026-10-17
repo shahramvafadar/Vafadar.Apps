@@ -2323,3 +2323,19 @@ instrumentation only: no shipping recorder/environment, global device property, 
 weakened cryptography/access, reset fixture or early unlocked Home. Refresh from actual loaded Home after relevant
 startup/dependency changes and qualify consumption/native behavior. Activity timing is not Home readiness,
 reference-phone timing or general ANR acceptance. Repeat only changed, failed or unresolved related checks.
+
+## D-301 native storage-crypto producer qualification
+
+Use the reviewed common storage profile for Windows/Android and the independent upstream fixture; preserve
+required primitives, assembly acceleration, threads, secure memory and format/KDF parameters. Reducing unused
+facilities is not per-warning safety acceptance. Keep diagnostic drift closed and never suppress new warnings.
+Native compatibility callers reference the provider-neutral production Data assemblies and their real migration
+resources. Require the complete current migration set instead of a historical count; use public publication
+validation rather than exposing private endpoints. Android qualification reports bind an explicit fresh run and
+publish atomically; retain the original live process and observation identity across slow callbacks.
+
+Producer-only branches use shahram/native-producer-<fresh-candidate-version>, or explicit workflow-dispatch input.
+They export only qualified unpublished component packages, never keys/databases or automatic consumer adoption.
+Verify the actual workflow head, source/profile/compiler and package entries before new immutable consumer pins.
+Never reuse a consumer version for changed binary/metadata bytes. Ordinary main/PR consumer gates stay intact;
+source producer qualification is not an application/device/iOS or product-release claim.

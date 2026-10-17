@@ -3,6 +3,8 @@ set -euo pipefail
 export LANG=C LC_ALL=C
 export SOURCE_DATE_EPOCH="$(python3 -c 'import json; print(next(x for x in json.load(open("/inputs/source-manifest.json", encoding="utf-8-sig")) if x["name"]=="openssl")["sourceDateEpoch"])')"
 python3 "$(dirname "$0")/verify-host.py" /inputs/android.inputs.lock.json > /output/host-proof.json
+python3 "$(dirname "$0")/read-storage-profile.py" /inputs/storage.crypto.profile.json --proof /output/crypto-profile-proof.json > /output/crypto-profile-options.txt
+mapfile -t storage_options < /output/crypto-profile-options.txt
 mkdir -p /home/nativebuild/upstream
 cd /home/nativebuild/upstream
 mkdir openssl sqlcipher crypto fixture
@@ -14,7 +16,7 @@ PY
 tar -xf /inputs/openssl.tar -C openssl
 tar -xf /inputs/sqlcipher.tar -C sqlcipher
 cd crypto
-perl ../openssl/Configure linux-x86_64 no-shared no-module no-autoload-config no-filenames -fPIC -fstack-protector-strong > /output/crypto-configure.log 2>&1
+perl ../openssl/Configure linux-x86_64 no-shared no-module no-autoload-config no-filenames "${storage_options[@]}" -fPIC -fstack-protector-strong > /output/crypto-configure.log 2>&1
 make -j2 build_generated libcrypto.a > /output/crypto-build.log 2>&1
 cd ../fixture
 ../sqlcipher/configure --with-tempstore=always --enable-fts5 CFLAGS="-O2 -DSQLITE_HAS_CODEC -DSQLITE_EXTRA_INIT=sqlcipher_extra_init -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown -DSQLCIPHER_CRYPTO_OPENSSL -DSQLCIPHER_TEST -DSQLITE_DEFAULT_FOREIGN_KEYS=1 -DSQLITE_ENABLE_COLUMN_METADATA -I/home/nativebuild/upstream/crypto/include -I/home/nativebuild/upstream/openssl/include" LDFLAGS="/home/nativebuild/upstream/crypto/libcrypto.a -pthread -ldl" > /output/fixture-configure.log 2>&1

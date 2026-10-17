@@ -88,7 +88,7 @@ internal static class BinaryPersistenceCompatibility
                     ActualProductionReadAndValidation = true, NoGlobalPool = true, KeyDerivationUnchanged = true }));
             await using (var db = await services.GetRequiredService<ILocalDbContextFactory<ZananceDbContext>>().CreateDbContextAsync())
             {
-                if ((await db.Accounts.SingleAsync()).OpeningBalance != -321 || (await db.Database.GetAppliedMigrationsAsync()).Count() != 32)
+                if ((await db.Accounts.SingleAsync()).OpeningBalance != -321 || !(await db.Database.GetAppliedMigrationsAsync()).SequenceEqual(db.Database.GetMigrations()))
                     throw new IOException("Actual production model/financial packet differs.");
             }
             using var portable = new MemoryStream();

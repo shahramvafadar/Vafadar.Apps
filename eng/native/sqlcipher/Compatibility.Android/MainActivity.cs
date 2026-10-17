@@ -15,12 +15,29 @@ public sealed class MainActivity : Activity
         base.OnCreate(savedInstanceState);
         var label = new TextView(this) { Text = "Independent fictitious schema check running" };
         SetContentView(label);
-        foreach (var name in new[] { "result.json", "error.txt" })
-            File.Delete(Path.Combine(FilesDir!.AbsolutePath, name));
+        var schemaRunText = Intent?.GetStringExtra("schema_run");
+        var resultName = "result.json";
+        var errorName = "error.txt";
         var owned = Path.Combine(FilesDir!.AbsolutePath, "native-compatibility");
         var evidence = Path.Combine(owned, "run-" + Guid.NewGuid().ToString("N"));
         try
         {
+            if (schemaRunText is not null)
+            {
+                if (!Guid.TryParseExact(schemaRunText, "N", out var schemaRun) || schemaRun == Guid.Empty)
+                    throw new ArgumentException("Schema qualification requires a fresh run identity.");
+                resultName = "schema-result-" + schemaRun.ToString("N") + ".json";
+                errorName = "schema-error-" + schemaRun.ToString("N") + ".txt";
+                evidence = Path.Combine(owned, "run-" + schemaRun.ToString("N"));
+                if (File.Exists(Path.Combine(FilesDir.AbsolutePath, resultName)))
+                    throw new InvalidOperationException("Preserve the original qualification report.");
+            }
+            else
+            {
+                // Existing explicit lifecycle callers retain their original fixed report contract.
+                foreach (var name in new[] { resultName, errorName })
+                    File.Delete(Path.Combine(FilesDir.AbsolutePath, name));
+            }
             var keyPhase = Intent?.GetStringExtra("key_phase");
             var journalPhase = Intent?.GetStringExtra("journal_phase");
             var migrationPhase = Intent?.GetStringExtra("migration_phase");
@@ -58,17 +75,33 @@ public sealed class MainActivity : Activity
                 : keyPhase is null
                 ? await Task.Run(() => SchemaCompatibility.RunAsync(evidence, owned))
                 : await Task.Run(() => AndroidKeyCompatibility.RunAsync(keyRoot, keyPhase));
-            await File.WriteAllTextAsync(Path.Combine(FilesDir.AbsolutePath, "result.json"), result);
+            await PublishResultAsync(resultName, result, schemaRunText is not null);
             label.Text = "Independent schema check passed";
         }
         catch (Exception error)
         {
             // Report type/stack without a message that might include a library's key-bearing command.
             Directory.CreateDirectory(owned);
-            await File.WriteAllTextAsync(Path.Combine(FilesDir.AbsolutePath, "error.txt"), error.GetType().FullName + "\n" + error.StackTrace);
+            await File.WriteAllTextAsync(Path.Combine(FilesDir.AbsolutePath, errorName), error.GetType().FullName + "\n" + error.StackTrace);
             var result = "{\"Failed\":true}";
-            await File.WriteAllTextAsync(Path.Combine(FilesDir.AbsolutePath, "result.json"), result);
+            if (!File.Exists(Path.Combine(FilesDir.AbsolutePath, resultName)))
+                await PublishResultAsync(resultName, result, schemaRunText is not null);
             label.Text = "Independent schema check failed";
         }
+    }
+
+    /// <summary>Publishes a complete identity-bound observation without replacing an earlier result.</summary>
+    private async Task PublishResultAsync(string name, string result, bool identityBound)
+    {
+        var path = Path.Combine(FilesDir!.AbsolutePath, name);
+        if (!identityBound)
+        {
+            await File.WriteAllTextAsync(path, result);
+            return;
+        }
+        var staging = path + ".tmp";
+        await using (var output = new FileStream(staging, FileMode.CreateNew, FileAccess.Write, FileShare.None))
+            await output.WriteAsync(System.Text.Encoding.UTF8.GetBytes(result));
+        File.Move(staging, path, overwrite: false);
     }
 }

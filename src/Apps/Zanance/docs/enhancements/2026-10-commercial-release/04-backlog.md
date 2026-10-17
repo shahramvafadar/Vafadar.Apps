@@ -2559,3 +2559,13 @@ measured separately. Supplement Android SDK AOT profiles with the real cold-star
 protected fixture, privacy order, cover and financial behavior. Exact native/package evidence is recorded in
 17-startup-responsiveness-delivery.md. General performance, two-second/reference-phone, iOS, native upstream
 warnings and release gates remain open. No unrelated full-suite/cipher/sync/provider/layout replay.
+
+## D-301 native producer qualification in progress
+
+The approved official Community maintenance batch now has a reduced shared Windows/Android storage profile,
+two fresh reproducible outputs on each local target, actual50-migration assembly/native checks, retained old
+DPAPI data reopening, official configured OpenSSL/SQLCipher suites and closed producer identity policy.
+The remaining508 Windows diagnostics retain no per-site safety waiver. Hosted servicing bytes, immutable
+consumer adoption and final main package/runtime qualification still belong to this same batch; do not close
+SEC-01/02 or infer device/Mac/physical/release acceptance. Follow18-native-storage-profile-delivery.md and do
+not replay successful unrelated app/UI/provider/sync/financial tests.
