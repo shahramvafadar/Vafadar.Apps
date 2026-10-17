@@ -1978,3 +1978,13 @@ presentation and complete raw data. Strict builds and the complete signed main A
 installation reaches unchanged Home after upgrade. A recurrence-cache trial is rejected for insufficient
 benefit and completely removed; QA-06 and physical/iOS/release acceptance remain open. Exact evidence:
 [23-reviewed-input-integrity-delivery.md](23-reviewed-input-integrity-delivery.md).
+
+## D-307 complete first target-market bank discovery pass
+
+Germany/USA-first bank research now has separate source-qualified discovery rows for all fourteen current
+target markets and a provider comparison. The result chooses exact consumer specimen priorities, records
+retired/inapplicable export routes and prevents guessed bank-wide presets. This completes the current
+first discovery pass, not BANK-01/IMP-01 implementation or live/provider acceptance. Do not repeat this
+search set without new product/specimen evidence. Continue other ready engineering across those external
+format/provider gaps; no unrelated successful build, test, native or APK work is replayed for documentation.
+[Sources, conclusions and verification](24-target-bank-research.md).

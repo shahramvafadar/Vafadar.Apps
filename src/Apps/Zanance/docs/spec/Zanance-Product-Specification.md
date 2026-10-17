@@ -6273,3 +6273,12 @@ presentation and complete raw data. Strict builds and the complete signed main A
 installation reaches unchanged Home after upgrade. A recurrence-cache trial is rejected for insufficient
 benefit and completely removed; QA-06 and physical/iOS/release acceptance remain open. Exact evidence:
 [23-reviewed-input-integrity-delivery.md](../enhancements/2026-10-commercial-release/23-reviewed-input-integrity-delivery.md).
+
+## D-307 target-market bank research status
+
+BANK-01 now has a first original-source discovery pass across the fourteen existing target countries,
+including practical consumer export routes, unsupported/unverified schemas and a separate live-provider
+comparison. IMP-01 remains limited to the actually qualified D-297 preset and explicit generic import.
+No additional bank support, financial writer, schema, SDK, live connector, permission or runtime test case
+is added. App and signed APK remain D-306; its related results are not a new whole-suite run. Exact country,
+source and pending qualification boundaries: [bank research](../enhancements/2026-10-commercial-release/24-target-bank-research.md).

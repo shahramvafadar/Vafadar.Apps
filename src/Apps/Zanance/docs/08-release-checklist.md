@@ -1286,3 +1286,13 @@ presentation and complete raw data. Strict builds and the complete signed main A
 installation reaches unchanged Home after upgrade. A recurrence-cache trial is rejected for insufficient
 benefit and completely removed; QA-06 and physical/iOS/release acceptance remain open. Exact evidence:
 [23-reviewed-input-integrity-delivery.md](enhancements/2026-10-commercial-release/23-reviewed-input-integrity-delivery.md).
+
+## D-307 target bank research boundary
+
+- [x] First discovery pass covers all fourteen current target countries with primary references and explicit gaps.
+- [x] Consumer/business/statement formats, failed retrievals and provider candidates remain distinguished.
+- [ ] Exact revision/specimen and original importer acceptance for each additional bank preset.
+- [ ] Separately accepted live-provider coverage, merchant role, consent, terms/costs and native/device acceptance.
+
+This is documentation only. App, tests and signed APK remain D-306; no release/support claim follows from
+[the research matrix](enhancements/2026-10-commercial-release/24-target-bank-research.md).

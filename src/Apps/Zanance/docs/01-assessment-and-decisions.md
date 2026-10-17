@@ -6219,3 +6219,17 @@ presentation and complete raw data. Strict builds and the complete signed main A
 installation reaches unchanged Home after upgrade. A recurrence-cache trial is rejected for insufficient
 benefit and completely removed; QA-06 and physical/iOS/release acceptance remain open. Exact evidence:
 [23-reviewed-input-integrity-delivery.md](enhancements/2026-10-commercial-release/23-reviewed-input-integrity-delivery.md).
+
+## D-307 target-market bank/export discovery and provider comparison
+
+Complete the first source-based discovery pass for all fourteen current target markets, retaining the
+Germany/USA-first order. Prefer original consumer export evidence over a guessed group-wide format or
+asset-based popularity rank. Postbank/AIB consumer CSV, configurable George Business output, ABN AMRO's
+non-CSV format list, NatWest's retired midata and unresolved small-market contracts lead to different
+qualification actions. Compare Tink/Plaid/TrueLayer/Basiq as candidates only; no contract, live connector,
+credentials, fees or financial HTTP is authorized or added.
+
+Country-set/link/status checks qualify this documentation-only delivery. Exact consumer specimens and
+financial relationship semantics remain required before another preset. No app/test/native/APK run is
+repeated, no test count increases, and D-306 remains the actual runtime/package baseline. Evidence and
+source limits: [target bank research](enhancements/2026-10-commercial-release/24-target-bank-research.md).

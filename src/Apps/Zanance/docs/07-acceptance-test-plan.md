@@ -3522,3 +3522,11 @@ presentation and complete raw data. Strict builds and the complete signed main A
 installation reaches unchanged Home after upgrade. A recurrence-cache trial is rejected for insufficient
 benefit and completely removed; QA-06 and physical/iOS/release acceptance remain open. Exact evidence:
 [23-reviewed-input-integrity-delivery.md](enhancements/2026-10-commercial-release/23-reviewed-input-integrity-delivery.md).
+
+## D-307 bank research evidence, not importer acceptance
+
+The fourteen target-market discovery rows, original bank/regulator/provider references and exact remaining
+format/specimen gates are recorded in [target bank research](enhancements/2026-10-commercial-release/24-target-bank-research.md).
+Country and link consistency are checked. No new preset, native action, bank connection or AT case is added;
+existing D-297 import and D-306 runtime results are retained without a repeat run. A published CSV button is
+not evidence for header/encoding, booked status, relationships, stable ids, completeness or Undo acceptance.

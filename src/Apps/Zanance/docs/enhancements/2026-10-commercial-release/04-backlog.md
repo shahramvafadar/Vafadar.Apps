@@ -74,7 +74,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-TAX-02 | Level 1: Germany data/document export for an accountant (Plus) | 7 | P1 | M | Locally delivered D-296; physical/iOS/expert acceptance separate | TAX-01 |
 | ZCR-TAX-03 | Level 2: versioned rule set and report for the first country/year | 7 | P2 | L | Proposed | TAX-01, expert |
 | ZCR-AI-01 | Local AI credit ledger, provider interface, consent, minimal data | 8 | P3 | L | In progress: D-298 local aggregate/native-consent/private-client/service-credit prerequisites qualified; live provider/pricing/credit sales remain gated; see15-ai-local-delivery.md | OD-13 |
-| ZCR-BANK-01 | German-first bank/file/provider evaluation, then USA and other targets | 8 | P3 | M | Research approved; live bank connection deferred | OD-14, IMP-01 |
+| ZCR-BANK-01 | German-first bank/file/provider evaluation, then USA and other targets | 8 | P3 | M | In progress: D-307 first discovery pass across fourteen targets and provider comparison delivered; exact consumer specimens and later live-provider acceptance remain | OD-14, IMP-01 |
 | ZCR-FX-01 | Rates/prices provider boundary, caching, provenance, manual fallback | 8 | P3 | M | In progress: D-299 app/data/service and protected personal/shared source prerequisites; current native/package evidence in16-market-reference-delivery.md; actual source/licence/cost remain gated | OD-14 |
 | ZCR-LANG-01 | Additional languages beyond the existing six | Deferred | P2 | L | Outside current delivery by owner decision; no current release dependency or ETA | later scope decision |
 | ZCR-REL-01 | Final QA, store metadata, staged rollout | 10 | P1 | M | Proposed | all P1 |
@@ -2597,3 +2597,12 @@ The bounded recurrence-cache candidate is removed after full native and isolated
 justify its complexity. Do not repeat that trial without a new cause or add its discarded cases to the
 shipping count. QA-06 remains In progress. D-305's one-use actual hosted check passes all four workflows;
 its timer is deleted. [Evidence](23-reviewed-input-integrity-delivery.md).
+
+## D-307 target-market bank discovery follow-through
+
+First source-based discovery now covers all fourteen current target countries, with separate consumer,
+business, document-only and unresolved export evidence plus a live-provider comparison. Postbank and
+later-market AIB/KBC specimen priorities are explicit; no guessed schema, new preset or connection is
+shipped. BANK-01 and IMP-01 remain In progress for exact format/fixture and separately accepted provider
+work. No app or test count changes; D-306 package/native results are retained without repetition.
+[Country matrix and original references](24-target-bank-research.md).

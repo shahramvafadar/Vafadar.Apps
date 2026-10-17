@@ -99,3 +99,12 @@ United Kingdom, Ireland, Canada and Australia in the individually extensible res
 remains the later separate variant. Exact customer-export corpora are an external evidence gap, not a reason
 to replay successful unrelated engineering or advertise unsupported formats. Live-bank provider/licence/cost,
 consent and payment/account linking remain separate owner/provider gates.
+
+## D-307 complete first target-market discovery pass
+
+The earlier later-country research queue is now expanded in the [fourteen-country matrix](24-target-bank-research.md),
+checked 2026-10-17. It records original consumer/business export distinctions, regulator-based discovery,
+failed retrievals and provider candidates. Germany/USA-first priority remains. No additional bank preset or
+live connection is implied; exact original revision/specimen/finality/id evidence remains the next format
+gate. Do not replay completed discovery or successful unrelated runtime checks merely because a bank lacks
+an admissible public field specimen.
