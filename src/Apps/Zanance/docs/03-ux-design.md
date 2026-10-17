@@ -1534,3 +1534,8 @@ A nonempty filtered list shows its count. Add the total caption only when the or
 ## Automatic-copy readiness (D-327)
 
 A protected safety-file list may briefly own native maintenance. Automatic readiness waits asynchronously and preserves cancellation/profile checks; it never blocks the page or treats that expected overlap as a failed creation. After a successful validated not-due check, show the existing last-success time rather than stale transient failure feedback. Do not manufacture a new copy or change its timestamp to clear the message. See [physical and focused evidence](quality/automatic-copy-readiness.md).
+
+
+## Continued PDF tables (D-329)
+
+Keep section/account identity, exact period/currency/account scope and column names in the repeated table header. A continued balance must remain identifiable without turning back a page. Retain RTL mapping and numeric packets. Fixed A4 rendering does not depend on app viewport/theme; qualify actual native exported pages, not just the chooser or extracted text.

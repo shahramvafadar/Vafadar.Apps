@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Continued report PDF context (D-329)
+
+- Repeat account names, exact report scope and column headings when a table continues on another PDF page, so a balance keeps its financial context. Original figures and row membership are unchanged.
+
 ### Physical accountant packet checks (D-328)
 
 - Verify the original readable Germany ZIP and cash-only disclosure on the approved Android phone, including actual CSV contents and linked account identity. Application behavior and APK remain unchanged.

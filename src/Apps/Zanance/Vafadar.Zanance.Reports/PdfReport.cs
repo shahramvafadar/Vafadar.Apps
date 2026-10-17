@@ -68,7 +68,7 @@ public static class PdfReport
 
         if (report.Summary.Count > 0)
         {
-            (page, y) = Table(page, y, new ReportTable(string.Empty, [string.Empty, string.Empty], [.. report.Summary.Select(l => (IReadOnlyList<string>)[l.Label, l.Value])], new HashSet<int> { 1 }), body, heading, rtl, header: false);
+            (page, y) = Table(page, y, new ReportTable(string.Empty, [string.Empty, string.Empty], [.. report.Summary.Select(l => (IReadOnlyList<string>)[l.Label, l.Value])], new HashSet<int> { 1 }), body, heading, small, rtl, header: false);
         }
 
         foreach (var table in report.Tables)
@@ -80,9 +80,7 @@ public static class PdfReport
                 y = 0;
             }
 
-            y = Text(page, table.Title, heading, y, width, rtl) + 2;
-            y = Text(page, table.Scope ?? string.Empty, small, y, width, rtl, PdfBrushes.DimGray) + 4;
-            (page, y) = Table(page, y, table, body, heading, rtl, header: true);
+            (page, y) = Table(page, y, table, body, heading, small, rtl, header: true);
         }
 
         // The disclaimer on every page (REP-07).
@@ -109,7 +107,7 @@ public static class PdfReport
         return result.Bounds.Bottom;
     }
 
-    private static (PdfPage Page, float Y) Table(PdfPage page, float y, ReportTable table, PdfFont font, PdfFont bold, bool rtl, bool header)
+    private static (PdfPage Page, float Y) Table(PdfPage page, float y, ReportTable table, PdfFont font, PdfFont bold, PdfFont small, bool rtl, bool header)
     {
         var count = table.Columns.Count;
         int Map(int column) => rtl ? count - 1 - column : column;
@@ -129,7 +127,26 @@ public static class PdfReport
         }
         if (header)
         {
-            var headerRow = grid.Headers.Add(1)[0];
+            var headerRows = grid.Headers.Add(1 + (string.IsNullOrWhiteSpace(table.Title) ? 0 : 1)
+                + (string.IsNullOrWhiteSpace(table.Scope) ? 0 : 1));
+            var headerIndex = 0;
+            // D-329: these rows travel with the grid's repeated header. A continued balance must retain
+            // its account identity and exact scope instead of becoming an anonymous amount on a new page.
+            void ContextRow(string? text, PdfFont contextFont, PdfBrush brush)
+            {
+                if (string.IsNullOrWhiteSpace(text)) return;
+                var context = headerRows[headerIndex++].Cells[0];
+                context.ColumnSpan = count;
+                context.Value = Clean(text);
+                context.Style.Font = contextFont;
+                context.Style.TextBrush = brush;
+                context.Style.Borders = new PdfBorders { All = none };
+                context.Style.CellPadding = new PdfPaddings(0, 0, 2, 4);
+                context.StringFormat = Format(rtl, StartsLatin(text));
+            }
+            ContextRow(table.Title, bold, PdfBrushes.Black);
+            ContextRow(table.Scope, small, PdfBrushes.DimGray);
+            var headerRow = headerRows[headerIndex];
             for (var i = 0; i < count; i++)
             {
                 var cell = headerRow.Cells[Map(i)];
@@ -139,6 +156,7 @@ public static class PdfReport
                 Borders(cell);
                 cell.StringFormat = Format(rtl, numeric: false, alignEnd: table.NumericColumns.Contains(i));
             }
+            grid.RepeatHeader = true;
         }
 
         foreach (var values in table.Rows)

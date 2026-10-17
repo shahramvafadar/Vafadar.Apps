@@ -61,3 +61,8 @@ targets were used. No app restart, reseed or product fix was attributed to those
 QA-01 and LOC-15 now have this bounded physical evidence. Broader report/device scenarios, PDF content
 inspection on the physical export, all reader/platform/provider/store and release gates remain open.
 QA-06 latency is unchanged; this batch does not repeat the performance workload.
+
+
+## D-329 content continuation
+
+D-329 receives the original native PDFs and inspects all six English/Persian/German pages. It fixes missing account/scope/column context on continuation pages, while keeping original figures and displayed Main979. This supersedes only the earlier PDF-content gap for that scoped fixture, not every report/device scenario. See [current evidence](physical-report-pagination.md).

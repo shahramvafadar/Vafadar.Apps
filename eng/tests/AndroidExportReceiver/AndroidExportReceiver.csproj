@@ -4,8 +4,8 @@
     <OutputType>Exe</OutputType>
     <ApplicationId>pro.vafadar.zanance.exportreview</ApplicationId>
     <ApplicationTitle>Zanance export review</ApplicationTitle>
-    <ApplicationVersion>1</ApplicationVersion>
-    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
+    <ApplicationVersion>2</ApplicationVersion>
+    <ApplicationDisplayVersion>0.2</ApplicationDisplayVersion>
     <SupportedOSPlatformVersion>33</SupportedOSPlatformVersion>
     <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
     <AndroidManifest>AndroidManifest.xml</AndroidManifest>

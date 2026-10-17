@@ -6453,3 +6453,21 @@ No production code/APK, schema, permission or managed test count changes; succes
 are not repeated. Physical documents/notes-enabled/all-layout, iOS, tax specialist/calculation/filing and
 release acceptance remain open.
 See [actual packet evidence](quality/physical-accountant-export.md).
+
+
+## D-329 — Keep financial context on continued PDF pages
+
+D-329 fixes an actual anonymous balance row on page2 of the original Samsung report PDF. Repeat each
+table's account/section title, exact scope and column headings as one grid header, retaining all original
+values, RTL mapping, row membership and footer exclusion. Three new en/fa/de continuation cases reproduce
+the original failure; all eight related Reports cases pass. Strict Windows and the complete signed offline
+Android build have no warnings/errors. Data-preserving upgrade and six pages from three original native
+English/Persian/German PDF exports are checked; final Home979 and original display choices remain. The
+receiver is removed and phone turn released. Seven saved-native/receipt assertions and an original-byte
+host verifier retain actual context/figures/visible footer evidence. A suspected footer defect is disproved
+by pixels; its experimental source/build are withdrawn and not installed. Initial stale uncompressed
+Samsung chooser coordinates opened an unrelated app; no further interaction occurred there, and temporary
+fictitious-file grant absence is not proven. Final selection uses a fresh compressed hierarchy and exact
+local receiver. No financial/schema/native-crypto change or full-suite/performance replay. Wider device,
+reader/iOS/provider/Store and release gates remain open.
+See [physical PDF evidence](quality/physical-report-pagination.md).

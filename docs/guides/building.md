@@ -1161,3 +1161,8 @@ See [qualified scope](../../src/Apps/Zanance/docs/quality/transaction-summary-re
 ## Physical accountant export receiver
 
 Use eng/tests/AndroidExportReceiver/README.md for the isolated native URI-grant receiver and original-packet host verifier. It is a local qualification fixture, not a production dependency. Coordinate the approved phone turn and never inspect main private storage or select a network recipient.
+
+
+## Native continued report PDF qualification
+
+The independent export receiver now accepts original report PDFs as well as accountant ZIPs. Use its README and verify_report_pages.py with local pypdf/Pillow and Poppler to inspect actual original bytes and rendered footer visibility. Samsung expanded chooser observations require the current compressed hierarchy; never reuse underlying-grid coordinates. Do not inspect main private storage or infer a valid export from a stale receipt.

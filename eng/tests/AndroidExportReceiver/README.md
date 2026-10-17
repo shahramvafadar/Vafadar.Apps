@@ -1,7 +1,7 @@
-# Isolated physical accountant export receiver
+# Isolated physical export receiver
 
 This independent .NET Android fixture verifies the original native sharing grant and received fictitious
-accountant ZIP. It is not referenced by the application and must never become a production dependency.
+accountant ZIP or report PDF. It is not referenced by the application and must never become a production dependency.
 The intentionally debuggable receiver has no declared network permissions or backup, removes inherited
 AppSecret items and writes only its own private test storage. Minimum API33, ARM64, no MAUI dependency.
 
@@ -60,3 +60,32 @@ Return to the original Home, confirm the original displayed balance and uninstal
 Remove only the review's own temporary UI hierarchy files. Release the coordinated device turn. Keep local
 fictitious evidence outside Git; never upload private artifacts or change main offered-cache expiry.
 See src/Apps/Zanance/docs/quality/physical-accountant-export.md for D-328 results and remaining boundaries.
+
+## Original report PDFs (D-329)
+
+The receiver also accepts ACTION_SEND/application/pdf from the same main FileProvider, with the exact
+zanance-report-<32-hex-token>.pdf filename and a %PDF- signature, under the same 2 MiB read limit.
+It never renders or executes PDF content on the device; use local PDF extraction and page rendering after
+the original byte-length/hash match. MediaType in the receipt records the actual received native type.
+Run the explicit no-grant check first after installing a fresh receiver and let its own activity finish;
+do not bring another task forward during its first runtime initialization.
+
+Samsung's expanded More app grid can leave the uncompressed hierarchy showing the underlying chooser.
+Use a fresh `uiautomator dump --compressed` and the current focused chooser window, and require the
+observed exact Zanance export review target before selection. Never reuse underlying-grid coordinates.
+Refuse further input when a different package is foreground; bring only the original main task forward.
+Do not enumerate direct-share contact suggestions or retain outside-app content.
+
+
+## Rendered English report fixture verification
+
+Use the bundled Python runtime with pypdf/Pillow and the already installed Poppler pdftoppm on PATH:
+
+```powershell
+python eng/tests/AndroidExportReceiver/verify_report_pages.py <original-two-page-English-D312-report.pdf>
+```
+
+This fixture-specific check rejects a continued cash row without its account/scope/headings, retains the
+known original figures and renders both pages to verify actual footer pixels independently of extracted
+text. It does not prove all document layout or legal correctness. D-329 also visually inspects the original
+Persian/German exports. Temporary render files are removed when the verifier exits.

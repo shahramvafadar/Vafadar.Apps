@@ -2379,3 +2379,13 @@ including large histories, before adoption. Never rewrite profile tokens/MVIDs m
 may keep only their own foreground display awake; no OS-setting/authentication change. Exception diagnostics
 are type/source stack only, never messages/keys/values. Retain live processes after observation loss; a scoped
 actual crash or authoritative ANR is different. Do not repeat successful unrelated verification.
+
+
+## D-329 continued PDF financial context
+
+Report table title, exact period/currency/account scope and column labels belong to the repeated table
+header. A continued balance must never become an anonymous row on a new page. Preserve original amounts,
+RTL mapping, complete row membership and the footer exclusion on every page. Physical PDF acceptance uses
+an original native URI grant and actual received bytes; chooser-only evidence does not prove content.
+For Samsung expanded chooser observations, use the current compressed active hierarchy and refuse stale
+underlying-window targets. Independent local receivers remain offline, secret-free and removable.

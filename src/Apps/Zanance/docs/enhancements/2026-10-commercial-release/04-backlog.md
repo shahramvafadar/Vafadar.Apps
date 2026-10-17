@@ -41,7 +41,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Done (D-268 browser/account copy and six-language drafts; real OAuth/publication remain open) | D-69 continuous delivery |
 | ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; other bank/relationship variants require original fixtures | original export specifications/samples |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
-| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; D-328 accountant ZIP receiving/content; broader phone acceptance remains) | – |
+| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; D-328 accountant ZIP receiving/content; D-329 original en/fa/de PDF contents and continued-table fix; broader phone acceptance remains) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
@@ -2803,3 +2803,21 @@ zero warnings/errors. The new receiver is removed, final Home remains 979 and th
 No production code/APK, schema, permission or managed test count changes; successful unrelated tests/builds
 are not repeated. Physical documents/notes-enabled/all-layout, iOS, tax specialist/calculation/filing and
 release acceptance remain open.
+
+
+## D-329 QA-01 physical PDF contents
+
+D-329 fixes an actual anonymous balance row on page2 of the original Samsung report PDF. Repeat each
+table's account/section title, exact scope and column headings as one grid header, retaining all original
+values, RTL mapping, row membership and footer exclusion. Three new en/fa/de continuation cases reproduce
+the original failure; all eight related Reports cases pass. Strict Windows and the complete signed offline
+Android build have no warnings/errors. Data-preserving upgrade and six pages from three original native
+English/Persian/German PDF exports are checked; final Home979 and original display choices remain. The
+receiver is removed and phone turn released. Seven saved-native/receipt assertions and an original-byte
+host verifier retain actual context/figures/visible footer evidence. A suspected footer defect is disproved
+by pixels; its experimental source/build are withdrawn and not installed. Initial stale uncompressed
+Samsung chooser coordinates opened an unrelated app; no further interaction occurred there, and temporary
+fictitious-file grant absence is not proven. Final selection uses a fresh compressed hierarchy and exact
+local receiver. No financial/schema/native-crypto change or full-suite/performance replay. Wider device,
+reader/iOS/provider/Store and release gates remain open.
+See [qualified output](../../quality/physical-report-pagination.md).

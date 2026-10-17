@@ -88,4 +88,37 @@ public sealed class PdfReportTests
             Assert.All(lines.TextLine.Where(l => l.Text.Contains("Row ", StringComparison.Ordinal)), row => Assert.True(row.Bounds.Bottom <= disclaimer.Bounds.Top, $"Page {i + 1}: '{row.Text}' reaches the disclaimer."));
         }
     }
+
+    [Theory]
+    [InlineData(false, "Cash account", "Item", "Amount")]
+    [InlineData(false, "Bargeldkonto", "Posten", "Betrag")]
+    [InlineData(true, "حساب نقدی", "عنوان", "مبلغ")]
+    [Trait("AT", "AT-329")]
+    public void Every_continued_table_keeps_its_account_scope_and_column_headers(bool rtl, string account, string item, string amount)
+    {
+        // A final account balance on another page must still identify its account, scope and columns.
+        const string scope = "October 2026 - EUR - selected cash";
+        var rows = Enumerable.Range(1, 120).Select(i => (IReadOnlyList<string>)[$"row-{i:0000}", $"{i}.00 EUR"]).ToList();
+        var report = new ReportDocument("Report", "2026", "All", "today", rtl ? "این گزارش رسمی نیست." : "Not official.", rtl, [],
+            [new ReportTable(account, [item, amount], rows, new HashSet<int> { 1 }, scope)]);
+        var bytes = PdfReport.Write(report);
+        if (Environment.GetEnvironmentVariable("VAFADAR_PDF_SAMPLES") is { Length: > 0 } output)
+            File.WriteAllBytes(Path.Combine(output, rtl ? "continued-fa.pdf" : item == "Item" ? "continued-en.pdf" : "continued-de.pdf"), bytes);
+        using var loaded = new PdfLoadedDocument(new MemoryStream(bytes));
+        Assert.True(loaded.Pages.Count > 1);
+        var allText = new System.Text.StringBuilder();
+        for (var i = 0; i < loaded.Pages.Count; i++)
+        {
+            // PDF extraction returns Arabic presentation forms; compare their canonical text equivalents.
+            var text = loaded.Pages[i].ExtractText().Normalize(System.Text.NormalizationForm.FormKC);
+            allText.Append(text);
+            Assert.Contains(account, text, StringComparison.Ordinal);
+            Assert.Contains(scope, text, StringComparison.Ordinal);
+            Assert.Contains(item, text, StringComparison.Ordinal);
+            Assert.Contains(amount, text, StringComparison.Ordinal);
+            Assert.Contains(report.Disclaimer, text, StringComparison.Ordinal);
+        }
+        foreach (var i in Enumerable.Range(1, 120))
+            Assert.Equal(1, allText.ToString().Split($"row-{i:0000}", StringSplitOptions.None).Length - 1);
+    }
 }

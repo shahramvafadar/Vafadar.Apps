@@ -959,3 +959,13 @@ offline test receiver, copied into only its private test storage and inspected l
 inherited AppSecret items, has no network permission/backup and is uninstalled after the check. Main private
 files/keys are not read. No production data collection, SDK, permission, forwarding or retention change;
 main offered-cache expiry and recipient-copy disclosure remain unchanged. Local fictitious artifacts are not uploaded.
+
+
+### D-329 original fictitious report PDF qualification
+
+The independent offline test receiver adds only report PDF MIME/owned-name validation and bounded local
+copies under native read grants; it is removed afterward. Main export disclosure, permissions, storage,
+SDKs and network behavior do not change. One initial stale chooser action opened an unrelated app and
+no temporary fictitious-file grant absence is claimed; subsequent explicit local selection is verified.
+No real financial data or keys are inspected/uploaded. The original report footer and main privacy policy
+are unchanged; local fictitious PDF/raster evidence stays outside Git.

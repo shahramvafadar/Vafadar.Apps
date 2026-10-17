@@ -1410,3 +1410,8 @@ D-322 reduces the measured tenfold complete Home input read from 3811 to 3306 ms
 ## D-328 qualification boundary
 
 Physical accountant default/no-document all-account and cash-only ZIP receiving/content checks pass on the approved Samsung. Main remains the D-327 candidate. This does not close tax specialist, notes/documents, full device, iOS, Store or release gates; see quality/physical-accountant-export.md.
+
+
+## D-329 physical report PDF
+
+Original en/fa/de exports and repeated financial context are qualified on Samsung; raw main-store equality, full device/reader, iOS/provider/Store and release acceptance remain open. See quality/physical-report-pagination.md.
