@@ -2090,3 +2090,8 @@ Seven new focused cases and original native layout evidence are recorded in
 ## D-313 public-path engineering
 
 The Tunnel composition and gateway-preserving operators are locally qualified. No live connector, DNS or real mail is configured; application/APK remain D-312. See [outbound tunnel origin](quality/outbound-tunnel-origin.md).
+
+
+## D-314 physical loaded-workload evidence
+
+Reference/tenfold original Home, native search and validated write/read-back/cleanup now have actual Samsung ARM64 receipts, with complete raw/portable preservation. Initial publication still misses the performance objective; full cold/low-memory/ANR and broader device/iOS gates remain. App/APK remain D-312. See [physical protected workload](quality/physical-protected-workload.md).

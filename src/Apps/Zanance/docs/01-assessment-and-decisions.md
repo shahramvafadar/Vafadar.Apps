@@ -6312,3 +6312,8 @@ actual phone continuation and complete package evidence: [physical Android safet
 ## D-313 outbound-only approved hosting path
 
 Implement the approved Tunnel origin and separate credential-file connector with exact TLS/forwarding authority and production classification. Preserve gateway mode across snapshot/restore/maintenance; never expose fictional services or read owner credentials. Seven operational checks and nine distinct protocol cases pass locally. Public tunnel/DNS/real mail/legal acceptance remains open. See [outbound tunnel origin](quality/outbound-tunnel-origin.md).
+
+
+## D-314 physical ARM64 protected workload
+
+Use the owner-approved Samsung and existing independent original-source caller with a complete signed ARM64 package. Prepare once, retain the same ciphertext/keys, preserve five completed Home groups after a caller-only layout-window failure, and continue only the incomplete group. Original native search and eight validated writes/read-back/exact cleanup preserve full financial data. The reference/tenfold initial-publication latency remains a measured concern, not two-second or cold/ANR acceptance. See [physical protected workload](quality/physical-protected-workload.md).

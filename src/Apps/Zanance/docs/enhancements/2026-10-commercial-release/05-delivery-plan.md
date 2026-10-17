@@ -2054,3 +2054,8 @@ separate exact phone/cold recovery from Windows display-only checks. Full eviden
 ## D-313 local tunnel gateway batch
 
 Composition/operator/protocol checks qualify one complete local gateway batch: seven focused operational and nine distinct real TLS/forwarding cases, with retained failures and selective continuation. Owner credential entry, DNS, real mail and public/processor acceptance remain separate. No unrelated mobile build/APK replay. See [outbound tunnel origin](../../quality/outbound-tunnel-origin.md).
+
+
+## D-314 complete physical loaded-workload batch
+
+Qualify the original source on the approved phone using one independent protected reference/tenfold fixture, with serialized device input. Loaded Home, native queries and validated writes/read-back/exact cleanup pass; retain completed groups and all failure evidence. Do not replay unchanged emulator/Windows/full suites or build the unchanged main APK. The next performance work must locate the measured multi-second initial publication cause before a production optimization, preserving complete financial inputs and the same retained data. See [physical protected workload](../../quality/physical-protected-workload.md).

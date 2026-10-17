@@ -41,12 +41,12 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Done (D-268 browser/account copy and six-language drafts; real OAuth/publication remain open) | D-69 continuous delivery |
 | ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; other bank/relationship variants require original fixtures | original export specifications/samples |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
-| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 approved physical Android fictitious-data recovery/profile checks; broader device acceptance remains) | – |
+| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 physical recovery/profile; D-314 protected reference/tenfold Home/search/store-write checks; broader phone acceptance remains) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
 | ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-64 local evidence verified; device/corpus pending) | sample receipts |
-| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-283 coherent protected Home; D-278/280 protected read/search/save; D-284/285/286 loaded Windows; D-291 original Release/AOT Android loaded reference/tenfold Home and full preservation verified; D-303 complete sequential ledger/existing-id materialization halves loaded tenfold Android publication with full preservation; D-305 complete typed materialization and startup refresh locally qualified; D-309 one owned keyed connection during actual schema review locally qualified; remaining composition, phone/low-memory/cold/ANR/iOS acceptance remains) | – |
+| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-314 physical ARM64 loaded Home/native search/validated Save and full preservation qualified; reference Home reaches 2.54s, tenfold Home 7.4-9.9s and initial ledger 10.4s; actual remaining-stage optimization, full cold/ANR/low-memory/iOS acceptance remain) | – |
 | ZCR-QA-07 | Android/iOS parity (notifications, widget, file picker, lock, share, licences); existing Windows development checks | 2 | P2 | M | Mac readiness owner-reported; verification and iOS runs pending in that environment. Windows commercial delivery is outside current scope | platform access/signing |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | In progress (D-174 widget and D-175 contextual date names/drafts verified locally; spoken TalkBack and remaining screen/platform acceptance open) | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
@@ -2663,3 +2663,8 @@ continuation, signed candidate and external limits: [physical Android safety rec
 ### D-313 approved tunnel path
 
 No-port production origin, exact TLS/client metadata boundary and separate owner-credential connector are locally qualified, including gateway-preserving operations. No unrelated successful mobile or financial scenario was repeated. See [outbound tunnel origin](../../quality/outbound-tunnel-origin.md).
+
+
+### D-314 actual physical workload and remaining latency
+
+The complete independent original-source ARM64 batch qualifies Home/search/validated writes and preservation on the approved Samsung. Five successful groups remain retained; only the incomplete layout-observation group continued. Initial Home/ledger still misses its objective; investigate the actual remaining managed-read/projection/validation/layout work without speculative caching or weaker integrity/KDF scope. See [physical protected workload](../../quality/physical-protected-workload.md).

@@ -13,7 +13,7 @@
     <RunAOTCompilation>true</RunAOTCompilation>
     <PublishTrimmed>true</PublishTrimmed>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
-    <RuntimeIdentifier>android-x64</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">android-x64</RuntimeIdentifier>
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>

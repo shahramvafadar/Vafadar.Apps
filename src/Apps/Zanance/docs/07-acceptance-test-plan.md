@@ -3583,3 +3583,8 @@ close all device scenarios, real notification/OAuth/store/reader or iOS acceptan
 ## D-313 hosting gateway acceptance
 
 Seven focused operator cases, nine distinct original-proxy TLS/forwarding cases and official ingress/no-port composition checks pass locally. Failed observations and selective continuation are retained. No live Cloudflare, public DNS/mail, phone-network or release acceptance. See [outbound tunnel origin](quality/outbound-tunnel-origin.md).
+
+
+## D-314 physical protected reference/tenfold batch
+
+Actual Samsung ARM64/API36/4KiB: six original Home language/shape groups, three native query outcomes per shape and eight validated store writes/read-back/exact cleanup pass with preserved data. Five complete groups were retained after the eight-frame caller limit, not replayed. Initial Home/ledger latency remains slow; no whole cold/ANR/low-memory or native Save-button timing acceptance. See [physical protected workload](quality/physical-protected-workload.md).

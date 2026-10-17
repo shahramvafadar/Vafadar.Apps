@@ -6341,3 +6341,8 @@ or broad physical-device/iOS/release completion is inferred.
 ### D-313 approved public ingress engineering
 
 Outbound-only origin and separate non-root connector are locally qualified with preserved operational gateway mode. Seven focused operator checks and nine distinct TLS/forwarding cases are not a new application full-suite count. Live tunnel/DNS/mail/legal acceptance remains open; APK remains D-312. See [outbound tunnel origin](../quality/outbound-tunnel-origin.md).
+
+
+### D-314 physical ARM64 workload
+
+The retained protected reference/tenfold data now has original-source physical Home/native search/validated Save receipts and complete preservation. No new application unit-test count, production source change or main APK is claimed. Initial reference/large publication remains above target; full cold/ANR/low-memory and iOS are not accepted. See [physical protected workload](../quality/physical-protected-workload.md).

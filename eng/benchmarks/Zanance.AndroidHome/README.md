@@ -1,6 +1,6 @@
 # Original protected Android Home review
 
-This independent Release/AOT/trimmed x64 caller compiles the original application sources/XAML
+This independent Release/AOT/trimmed caller (x64 emulator by default, explicit arm64 phone override) compiles the original application sources/XAML
 and supplied production native package. The application never references it. Its distinct package
 is `pro.vafadar.zanance.androidhomereview`; it must never run under the main application identity.
 It keeps foreground screenshot protection, has no Internet permission and does not enable debugging.
@@ -11,7 +11,7 @@ Build with the existing Android workload and native package:
 dotnet build eng/benchmarks/Zanance.AndroidHome/Vafadar.Zanance.AndroidHome.csproj -c Release -f net10.0-android -p:ContinuousIntegrationBuild=true
 ```
 
-Only use the repository-owned `Zanance_Storage_Review` emulator (`emulator-5570`, adb port 5038).
+By default use only the repository-owned `Zanance_Storage_Review` emulator (`emulator-5570`, adb port 5038).
 Check its AVD name first. Verify the signed APK's package, signature, embedded AOT and qualified
 native-library hash before installing that exact independent package. Resolve its actual activity
 with `shell cmd package resolve-activity --brief`; never guess the generated Java activity name.
@@ -119,3 +119,36 @@ not replace financial algorithms or persisted snapshots. No financial command or
 belongs to the phase. Observe the exact live PID with `-Phase tables -Comparison <pass>`; timeouts retain it.
 Never reset main data, recreate a failed fixture or change system settings/security flags. Completed
 comparisons refuse repetition. This is not current phone, OS scale, reader, iOS or product acceptance.
+
+
+## Owner-approved physical Android workload (D-314)
+
+The owner authorized Samsung SM-A176B for fictitious-data qualification. Coordinate an exclusive phone
+turn with other projects before installing, launching or driving this package, and release it afterward.
+Build the complete independent Release package with the additional -p:RuntimeIdentifier=android-arm64.
+Verify its exact independent identity, local signature, AOT, absent INTERNET/debugging and reviewed ARM64
+SQLCipher bytes before a data-preserving install. Never clear/reset/uninstall the main application.
+No system setting, screenshot-security exception, owner credential or personal data belongs to this run.
+
+Read-ReviewReport.ps1 retains its original emulator guard. Explicit -PhysicalDevice -DeviceTransportId N
+selects only the observed approved Samsung model and refuses an emulator; transport metadata is runtime
+input, never a committed hardware identifier. Observe the exact PID and public result only. Lost observation
+or a timeout never authorizes restarting a live phase or regenerating its ciphertext/keys.
+
+A fresh prepare creates the same independent reference/tenfold workloads. The existing measure phase then
+qualifies original loaded Home publication and full raw preservation in en/fa/de; its hardware/runtime
+metadata distinguishes physical ARM64 evidence from the earlier x64 baseline. These timings exclude the
+initial empty-install startup and preparation, not proof of complete loaded cold startup or the two-second target.
+
+The new ledger phase uses that same retained run and a fresh review_pass. Original TransactionsPage and
+native SearchView deliver exact/empty/wide queries through their real debounce, grouping and native layout;
+the exact row must be realized. Four original validated store saves per shape are timed separately, read
+back, then only their exact owned rows are removed. This is the production data write, not a timed native
+Save-button/form interaction. Complete portable schema/typed rows before/after must match. Private sync
+journal evolution is deliberately distinct from the unchanged financial portable projection. Before Save,
+the exact fictitious pending intent is retained privately. If interrupted, preserve it for explicit same-fixture
+inspection rather than guessing cleanup or repeating Save. Completed shapes are retained and skipped.
+
+Largest dispatcher gaps cover the actual ledger phase and caller assertions; they are diagnostic samples,
+not a statistical Android ANR or low-memory acceptance. Full cold startup, OS pressure, genuine provider,
+spoken accessibility, other API/page-size matrices and iOS remain separate requirements.

@@ -1100,3 +1100,8 @@ existing fictitious data, safety files and keys across the signed upgrade. No sy
 ### D-313 outbound tunnel qualification
 
 eng/hosting/README.md documents the production origin and owner-maintained connector. The CI-only eng/hosting/qualify-tunnel.sh checks original Caddy TLS/forwarding in an independent no-port fixture plus focused operator tests; it never uses a Cloudflare credential or opens a tunnel. Local receipts are not public acceptance.
+
+
+### D-314 approved physical ARM64 workload
+
+eng/benchmarks/Zanance.AndroidHome/README.md documents the explicit ARM64 override, exact independent signed package, physical model/transport/PID guard and prepare/measure/ledger phases. Coordinate exclusive phone turns; never reset fixtures after an observation failure. The bounded frame observation extension retains the original success condition. Physical receipts are in the app quality/physical-protected-workload.md report; main APK remains D-312.

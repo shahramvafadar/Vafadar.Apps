@@ -41,7 +41,12 @@ internal static partial class AndroidHomeReview
             if (phase == "prepare")
             {
                 await Task.Run(() => PrepareAsync(root, ct), ct);
-                await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, MainPackageTouched = false }, ct);
+                await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, MainPackageTouched = false, Device = DeviceEvidence() }, ct);
+            }
+            else if (phase == "ledger")
+            {
+                RequireRoot(root);
+                await WriteReportAsync(root, phase, await ReviewPhoneLedgerAsync(app, services, root, comparison!, ct), ct);
             }
             else if (phase == "tables")
             {
@@ -286,8 +291,9 @@ internal static partial class AndroidHomeReview
         }
         await WriteReportAsync(root, phase, new { Comparison = comparison, BaselineComparison = baseline, Results = results, NativeReadProfiles = nativeReadProfiles, ReviewedInputGuards = reviewedInputGuards,
             DataModuleVersionId = typeof(ZananceStore).Module.ModuleVersionId, CallerModuleVersionId = typeof(HomePage).Module.ModuleVersionId,
-            OriginalProductionPage = true,
-            CompleteRawSchemaAndTypedRowsUnchanged = true, NoFinancialSave = true, ColdStartupOrPhoneAcceptance = false,
+            OriginalProductionPage = true, RetainedCompletedCases = completed.ToArray(),
+            ModuleIdentityScope = "Current completion caller; retained case packets preserve their original caller evidence",
+            CompleteRawSchemaAndTypedRowsUnchanged = true, NoFinancialSave = true, Device = DeviceEvidence(), WholeAppColdStartupOrFullDeviceAcceptance = false,
             Boundary = "Original navigation/read/projection/publication plus Android layout and frame callbacks; excludes fixture preparation and cold startup" }, ct);
     }
 
@@ -346,7 +352,8 @@ internal static partial class AndroidHomeReview
 
     private static async Task WaitLayoutAsync(Android.Views.View view, CancellationToken ct)
     {
-        for (var frame = 0; frame < 8; frame++)
+        // Keep the original successful frame boundary; allow the same real layout to settle on slower hardware.
+        for (var frame = 0; frame < 300; frame++)
         {
             using var callback = new FrameCompletion();
             Choreographer.Instance!.PostFrameCallback(callback);

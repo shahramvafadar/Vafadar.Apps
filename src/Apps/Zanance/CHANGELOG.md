@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Android qualification (D-314)
+
+- Exercise protected reference and large workloads on the approved Samsung. Original search and validated writes preserve data; slow initial publication remains under investigation. The main application package is unchanged.
+
 ### Hosting operations (D-313)
 
 - Prepare the approved outbound tunnel and preserve its gateway during maintenance/restoration. Public activation awaits dedicated owner setup and real mail; the application package is unchanged.

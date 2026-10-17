@@ -1355,3 +1355,8 @@ explicit replacement remain mandatory. Exact focused/native/physical receipts an
 ## D-313 outbound gateway remains externally gated
 
 Do not expose fictional deployments. Owner-created tunnel/DNS, real mail and processor/public acceptance are required before activation. APK remains D-312. See [outbound tunnel origin](quality/outbound-tunnel-origin.md).
+
+
+## D-314 device performance is partial
+
+Loaded original-source ARM64 Home/search/store-write and data-preservation receipts exist on the approved Samsung. Several reference Home samples exceed two seconds and tenfold Home/ledger is much slower. QA-06 and full cold/ANR/low-memory/platform acceptance remain open. No new main APK or release signature. See [physical protected workload](quality/physical-protected-workload.md).
