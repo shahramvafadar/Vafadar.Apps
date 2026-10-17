@@ -1156,3 +1156,8 @@ compare rendered captions with the existing NativeDigits contract. Preserve the 
 completed-contexts.json across a failed observation, never repeat completed contexts or accept a
 partial matrix as complete. Phone filter interaction is a separate coordinated signed-main check.
 See [qualified scope](../../src/Apps/Zanance/docs/quality/transaction-summary-result.md).
+
+
+## Physical accountant export receiver
+
+Use eng/tests/AndroidExportReceiver/README.md for the isolated native URI-grant receiver and original-packet host verifier. It is a local qualification fixture, not a production dependency. Coordinate the approved phone turn and never inspect main private storage or select a network recipient.

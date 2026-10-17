@@ -153,3 +153,18 @@ Next ready independent batch is approved bank-file import research/implementatio
 working markets, followed by approved local AI consent/credit and FX/source/cache/manual prerequisites.
 Native StoreKit2/Mac, genuine store/OAuth/provider, actual physical device and public/commercial release gates
 remain retained; no current or future gate is marked accepted by these local results.
+
+
+### D-328 actual physical recipient and byte inspection
+
+D-328 completes a scoped physical Germany accountant export on SM-A176B using the unchanged signed offline
+D-327 app. The original native chooser delivers two readable ZIPs only to a separately installed offline
+receiver: both accounts/five rows, then cash only/the same one transfer plus its unselected Main identity.
+The host verifier checks actual CSV/manifest bytes, six member digests, default redactions, blank tax fields,
+refund/fee references and separate recorded-kind totals. Empty selection, confirmation Cancel and stale-review
+invalidation are exercised. Twelve saved-observation/receipt assertions pass; the receiver strict build has
+zero warnings/errors. The new receiver is removed, final Home remains 979 and the phone turn is released.
+No production code/APK, schema, permission or managed test count changes; successful unrelated tests/builds
+are not repeated. Physical documents/notes-enabled/all-layout, iOS, tax specialist/calculation/filing and
+release acceptance remain open.
+See [physical evidence](../../quality/physical-accountant-export.md). The earlier next-batch paragraph is historical; current remaining work is the canonical backlog.

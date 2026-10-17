@@ -961,3 +961,12 @@ The separate offline signed package records model/API/architecture/page size, ti
 ### D-315 bounded local read diagnostics
 
 Independent fictitious same-data diagnostics add only local derived counts, timings, packet digests and preservation outcomes. No owner records, hardware identifier, key, new app telemetry/SDK/permission or upload is introduced. Main unbounded reads retain every existing mapped field and original security boundaries; no new storage schema or backup content.
+
+
+### D-328 local receiver qualification only
+
+Two original fictitious readable accountant ZIPs are explicitly sent by the native chooser to an independent
+offline test receiver, copied into only its private test storage and inspected locally. The receiver removes
+inherited AppSecret items, has no network permission/backup and is uninstalled after the check. Main private
+files/keys are not read. No production data collection, SDK, permission, forwarding or retention change;
+main offered-cache expiry and recipient-copy disclosure remain unchanged. Local fictitious artifacts are not uploaded.

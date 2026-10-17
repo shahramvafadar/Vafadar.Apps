@@ -41,7 +41,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Done (D-268 browser/account copy and six-language drafts; real OAuth/publication remain open) | D-69 continuous delivery |
 | ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; other bank/relationship variants require original fixtures | original export specifications/samples |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
-| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; broader phone acceptance remains) | – |
+| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; D-328 accountant ZIP receiving/content; broader phone acceptance remains) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
@@ -71,7 +71,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-SHR-03 | Audit trail, revocation, ownership transfer, end of subscription | 5 | P1 | M | D-294 local delivery qualified: consent-bound transfer, audit, revocation, expiry/privacy retirement and latest-marker-aware full restoration; no identity-erasure claim | SHR-01, OD-05 approved |
 | ZCR-SHR-04 | E2EE from the first shared delivery, including membership/key/recovery lifecycle | 5 | P1 | L | D-294 local delivery qualified: pinned membership/epoch/recovery lifecycle, original native persistence, bounded historical reads and portable scrubbing; external audit/device/iOS separate | OD-09 approved |
 | ZCR-TAX-01 | Germany/current-year tax research, expert and official examples; country expansion without ETA | 0→7 | P1 | M | D-296 official-source boundary research; expert/rule acceptance open | OD-01 approved |
-| ZCR-TAX-02 | Level 1: Germany data/document export for an accountant (Plus) | 7 | P1 | M | Locally delivered D-296; physical/iOS/expert acceptance separate | TAX-01 |
+| ZCR-TAX-02 | Level 1: Germany data/document export for an accountant (Plus) | 7 | P1 | M | Locally delivered D-296; D-328 physical default/no-document and selected-account ZIP contents qualified; wider device/iOS/expert acceptance separate | TAX-01 |
 | ZCR-TAX-03 | Level 2: versioned rule set and report for the first country/year | 7 | P2 | L | Proposed | TAX-01, expert |
 | ZCR-AI-01 | Local AI credit ledger, provider interface, consent, minimal data | 8 | P3 | L | In progress: D-298 local aggregate/native-consent/private-client/service-credit prerequisites qualified; live provider/pricing/credit sales remain gated; see15-ai-local-delivery.md | OD-13 |
 | ZCR-BANK-01 | German-first bank/file/provider evaluation, then USA and other targets | 8 | P3 | M | In progress: D-307 first discovery pass across fourteen targets and provider comparison delivered; exact consumer specimens and later live-provider acceptance remain | OD-14, IMP-01 |
@@ -2789,3 +2789,17 @@ Final Main is 979 with its three original profiles/copies and original Daily/pas
 is released. No native crypto/schema/SDK/permission change or full-suite rerun. Raw main-store/key equality,
 power loss, key loss, full hardware retention stress, other devices/iOS/OAuth/Store and release remain open.
 See [qualified evidence](../../quality/automatic-copy-readiness.md).
+
+
+## D-328 TAX-02 physical packet continuation
+
+D-328 completes a scoped physical Germany accountant export on SM-A176B using the unchanged signed offline
+D-327 app. The original native chooser delivers two readable ZIPs only to a separately installed offline
+receiver: both accounts/five rows, then cash only/the same one transfer plus its unselected Main identity.
+The host verifier checks actual CSV/manifest bytes, six member digests, default redactions, blank tax fields,
+refund/fee references and separate recorded-kind totals. Empty selection, confirmation Cancel and stale-review
+invalidation are exercised. Twelve saved-observation/receipt assertions pass; the receiver strict build has
+zero warnings/errors. The new receiver is removed, final Home remains 979 and the phone turn is released.
+No production code/APK, schema, permission or managed test count changes; successful unrelated tests/builds
+are not repeated. Physical documents/notes-enabled/all-layout, iOS, tax specialist/calculation/filing and
+release acceptance remain open.

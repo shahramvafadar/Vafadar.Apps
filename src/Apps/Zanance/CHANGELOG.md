@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Physical accountant packet checks (D-328)
+
+- Verify the original readable Germany ZIP and cash-only disclosure on the approved Android phone, including actual CSV contents and linked account identity. Application behavior and APK remain unchanged.
+
 ### Automatic-copy readiness (D-327)
 
 - Wait for a short safety-copy discovery lock when checking automatic backup readiness, instead of showing a false creation failure. Keep existing copies and schedules unchanged and recover status after a valid not-due check.

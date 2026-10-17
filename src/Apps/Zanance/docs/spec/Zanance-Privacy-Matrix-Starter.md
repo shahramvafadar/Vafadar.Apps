@@ -950,3 +950,12 @@ The separate offline signed package records model/API/architecture/page size, ti
 ### D-315 same-data ledger qualification
 
 Local independent fictitious reports contain derived digests/timings/counts, never personal financial rows, keys or hardware identifiers. Main uses the existing complete reader without new collection, permission, SDK, schema or upload. Offline complete candidate remains without INTERNET; optional online-build disclosures remain distinct.
+
+
+### D-328 local receiver qualification only
+
+Two original fictitious readable accountant ZIPs are explicitly sent by the native chooser to an independent
+offline test receiver, copied into only its private test storage and inspected locally. The receiver removes
+inherited AppSecret items, has no network permission/backup and is uninstalled after the check. Main private
+files/keys are not read. No production data collection, SDK, permission, forwarding or retention change;
+main offered-cache expiry and recipient-copy disclosure remain unchanged. Local fictitious artifacts are not uploaded.
