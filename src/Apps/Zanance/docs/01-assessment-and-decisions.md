@@ -6171,3 +6171,15 @@ from 14,828.37 to 7,418.54 ms; reference median from 3,066.82 to 2,252.00 ms. Th
 observations, not two-second cold/phone/ANR/iOS acceptance. Windows native publication and complete portable
 preservation also pass. Full-suite historical counts are not a new full run. Exact evidence and package:
 [20-home-read-delivery.md](enhancements/2026-10-commercial-release/20-home-read-delivery.md).
+
+## D-304 isolated billing HTTP fixture peers
+
+The D-303 hosted backend qualifier failed because separate TestServer hosts shared a null remote peer and
+consumed the same durable 30-request billing window. The same limited Linux sequence reproduces HTTP429;
+standalone Windows/Linux cases pass. A test-only startup filter supplies a stable documentation peer per
+fixture, without trusting headers or changing the production limiter. The previously failed original client
+continues its retained pending command/authority. Separate Integration HTTP workers do not recreate a missing
+ephemeral installation key. The exact failed retirement case and a new 30/31-request, independent-peer,
+second-worker and next-window regression pass on the retained Linux fixture. Strict test builds pass;
+production app/API code and the D-303 APK are unchanged. Hosted completion after this fix remains separate.
+Evidence: [21-billing-http-isolation.md](enhancements/2026-10-commercial-release/21-billing-http-isolation.md).

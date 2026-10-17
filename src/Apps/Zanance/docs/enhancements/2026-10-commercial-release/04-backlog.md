@@ -2569,3 +2569,10 @@ The remaining508 Windows diagnostics retain no per-site safety waiver. Real host
 servicing bytes, immutable consumer adoption and final original main upgrade/navigation are recorded; do not close
 SEC-01/02 or infer device/Mac/physical/release acceptance. Follow18-native-storage-profile-delivery.md and do
 not replay successful unrelated app/UI/provider/sync/financial tests.
+
+## D-304 bounded backend qualifier repair
+
+The D-303 hosted purchase-retirement failure is a shared null TestServer peer exhausting the unchanged durable
+billing request window. The exact retained Linux continuation and a new cross-worker rate-boundary scenario
+pass after fixture-only peer isolation. Production code and APK remain D-303; hosted completion of the repair
+is still a separate gate. See [21-billing-http-isolation.md](21-billing-http-isolation.md).

@@ -86,3 +86,14 @@ Complete main signed Release APK: `artifacts/android-home-read-d303-qualified/pr
 No Store, physical-device, iOS, OAuth, real biometric, screen-reader or release acceptance follows from these
 local checks or subsequent CI.
 QA-06 remains In progress for the explicit remaining performance/platform work.
+
+
+## Actual one-use hosted result
+
+D-303 commit `f5e673fb5f38a75f703c4c9e22bc0eb5b8dde838` was checked once; its follow-up was deleted.
+[CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39012610787),
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39012610825) and
+[Self-hosted service qualification](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39012610790)
+completed successfully. [Local identity backend](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39012610813)
+failed in the HTTP purchase-retirement fixture. D-304 reproduces its shared-peer HTTP429 and repairs only the
+fixture isolation; the application Home read is unrelated. Do not report the original backend run as successful.

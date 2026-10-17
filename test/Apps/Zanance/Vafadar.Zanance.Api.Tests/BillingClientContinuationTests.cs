@@ -1,4 +1,8 @@
 using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using System.Net;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Hosting;
@@ -240,7 +244,10 @@ public sealed partial class BillingClientContinuationTests
         Assert.False(File.Exists(Path.Combine(root, "complete.json")), "Do not replay successful HTTP retirement qualification.");
         var provider = new Provider();
         var protection = DataProtectionProvider.Create(new DirectoryInfo(Path.Combine(parent, "protection")));
-        await using var host = new BillingHttpHost(connection, parent, protection, provider);
+        // Integration's unrelated HTTP installation key is ephemeral. Another explicit worker may
+        // continue the same persisted billing authority/client, without recreating a missing installation key.
+        var worker = "http-retired-cache-" + Guid.NewGuid().ToString("N");
+        await using var host = new BillingHttpHost(connection, parent, protection, provider, worker, peerName: "http-retired-cache");
         using var http = host.CreateClient(new() { BaseAddress = new Uri("https://localhost") });
         var transport = new HttpTransport(http); var native = new NativeAccess();
         var storage = new Storage(root, protection.CreateProtector("fictional-http-retired-cache-v1"));
@@ -248,7 +255,16 @@ public sealed partial class BillingClientContinuationTests
         var client = Open(); var fresh = await client.ObserveAsync(native, ct);
         provider.Binding = BillingAccountBinding.Google(fresh.Snapshot!.AccountToken, false);
         // Server time is current; this fictional provider's October term remains inside its actual verification window.
-        await client.VerifyAsync(native, "fictional-http-retirement-purchase", BillingProduct.PlusMonthly, true, ct);
+        try
+        {
+            // A prior rate refusal may have left the original unaccepted command private. Resolve those same
+            // bytes first; only a definitive non-finish receipt permits this fixture's explicit restore retry.
+            var continued = await client.ContinueAsync(native, ct);
+            if (continued is not { MayFinish: true })
+                await client.VerifyAsync(native, "fictional-http-retirement-purchase", BillingProduct.PlusMonthly, true, ct);
+        }
+        catch (PersonalSyncHttpException error)
+        { Assert.Fail($"Original HTTP purchase refused: {(int)error.Status}."); }
         var paid = await client.ObserveAsync(native, ct); Assert.Equal(ProductPlan.Plus, paid.Decision.Plan);
         await using (var db = new Factory(connection).CreateDbContext())
             await db.Set<BillingCustomerRow>().Where(row => row.Id == paid.Snapshot!.CustomerId)
@@ -264,7 +280,7 @@ public sealed partial class BillingClientContinuationTests
     }
 
     private sealed class BillingHttpHost(string connection, string root, IDataProtectionProvider protection, IBillingProvider provider,
-        string hostName = "http-retired-cache") : WebApplicationFactory<Program>
+        string hostName = "http-retired-cache", TimeProvider? fixtureClock = null, string? peerName = null) : WebApplicationFactory<Program>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -274,9 +290,13 @@ public sealed partial class BillingClientContinuationTests
             {
                 // Retain the original isolated signing/protection authority and previous fixtures; no background cleanup or query.
                 services.RemoveAll<IHostedService>();
+                // D-304: independent in-memory hosts must not share TestServer's null network peer. Keep
+                // the real durable limiter and one stable documentation-only peer per original host fixture.
+                services.AddSingleton<IStartupFilter>(new FictionalBillingPeer(peerName ?? hostName));
+                if (fixtureClock is not null) { services.RemoveAll<TimeProvider>(); services.AddSingleton(fixtureClock); }
                 services.RemoveAll<IBillingProvider>(); services.AddSingleton<IBillingProvider>(provider);
-                // Keep the normal host protection ring/installation marker together. Only the already existing
-                // billing fixture uses its original independently retained protection authority and signing file.
+                // Retain the platform's normal host protection policy; Unix Integration can be ephemeral.
+                // The billing fixture alone uses its original retained authority, not a recreated service key.
                 services.RemoveAll<BillingAuthority>(); services.AddSingleton(sp => new BillingAuthority(new ServiceStorage { Root = root, LocalMailbox = false }, protection,
                     sp.GetRequiredService<IDbContextFactory<ServiceDbContext>>()));
                 services.RemoveAll<BillingRegistry>(); services.AddSingleton(sp => new BillingRegistry(sp.GetRequiredService<IDbContextFactory<ServiceDbContext>>(),
@@ -287,6 +307,25 @@ public sealed partial class BillingClientContinuationTests
                     sp.GetRequiredService<BillingAuthority>(), sp.GetRequiredService<BillingRegistry>(), sp.GetRequiredService<BillingPurchaseCoordinator>(), protection, sp.GetRequiredService<TimeProvider>()));
             });
         }
+    }
+    /// <summary>Supplies only test-server connection metadata; never trusts a forwarded header or changes production limiting.</summary>
+    private sealed class FictionalBillingPeer : IStartupFilter
+    {
+        private readonly IPAddress address;
+        /// <summary>Derives a stable unrouted documentation address from the explicit fixture peer name.</summary>
+        internal FictionalBillingPeer(string name)
+        {
+            var bytes = new byte[16]; bytes[0] = 0x20; bytes[1] = 0x01; bytes[2] = 0x0d; bytes[3] = 0xb8;
+            SHA256.HashData(Encoding.UTF8.GetBytes(name)).AsSpan(0, 12).CopyTo(bytes.AsSpan(4));
+            address = new IPAddress(bytes);
+        }
+        /// <inheritdoc />
+        public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next) => app =>
+        {
+            app.Use((HttpContext context, RequestDelegate continuation) =>
+            { context.Connection.RemoteIpAddress = address; return continuation(context); });
+            next(app);
+        };
     }
     private sealed class HttpTransport(HttpClient http) : IBillingServiceTransport
     {

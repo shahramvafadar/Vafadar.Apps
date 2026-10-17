@@ -1001,3 +1001,15 @@ normal drawable layout: the review invokes the control's original IDrawable.Draw
 before measuring the common button, never a shipping layout override or invented coordinates. Preserve failed
 observations. The first row-selection fixture incorrectly requested an unrealized USD row; the corrected caller
 invokes a realized GBP row and restores EUR without Save.
+
+
+## Durable billing HTTP qualifier peers (D-304)
+
+BillingClientContinuationTests gives each independent in-memory HTTP fixture a stable documentation-only
+connection peer. Do not disable the service's RequestWindows accounting, raise its limits, delete its counters,
+trust a forwarded header or wait for a minute boundary to make a test pass. Explicitly shared fixture peers
+must retain the same real PostgreSQL budget across separate workers. Only the rate-boundary test freezes its
+injected clock. Ordinary purchase HTTP retains its current server time. Linux Integration's unrelated default
+HTTP installation key can be ephemeral; retaining the billing signing/private-client authority is distinct from
+cold service-installation acceptance. Preserve failed roots and pending commands, then continue originals.
+The D-304 evidence records the exact retained sequence and targeted continuation without replaying successful cases.
