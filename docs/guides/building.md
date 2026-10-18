@@ -1347,3 +1347,12 @@ a production fix from stripped nearest symbols or another user's workaround. Ser
 not adopted after the D-346 actual ANR. Preserve live PID after observation expiry and restore
 captured emulator accessibility settings.
 [Evidence](../../src/Apps/Zanance/docs/quality/android-os-accessibility-qualification.md).
+
+## D-347 foreground-only financial observations
+
+AndroidHome requires Activity.HasWindowFocus before root/context construction and rendered-caption
+checks. Its retained OS receipts must prove OriginalWindowFocusRequired as well as GC mode, actual
+scale/width, cases and unchanged inputs. Keep old geometry-only evidence provisional. A real ANR
+can coexist with realized controls and does not become a pass after later progress. The rejected
+precise-Tarjan environment/property/marker are removed; do not reintroduce them as a production fix.
+[Evidence](../../src/Apps/Zanance/docs/quality/android-os-accessibility-qualification.md).

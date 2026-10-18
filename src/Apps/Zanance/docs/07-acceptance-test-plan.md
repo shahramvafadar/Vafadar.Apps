@@ -3927,3 +3927,17 @@ CRC matching supports fault-location evidence, not a proven corrupt-object cause
 ineffective serial-major GC trial and silent TalkBack navigation attempt. No managed count or
 unrelated suite/build is repeated.
 [Evidence and limits](quality/android-os-accessibility-qualification.md).
+
+## D-347 distinguish realized controls from unobscured native windows
+
+The native observer pauses under the actual Android ANR dialog and continues only after observed
+Wait restores the original Activity focus. Every native text assertion checks focus; retained
+receipts without that contract are refused. Two guarded six-case groups pass with unchanged
+original inputs, while the whole trial has a real mid-budget ANR. Do not convert provisional
+Home/plan geometry into complete interactive acceptance or count a rejected GC policy as a fix.
+[Evidence and ordinary follow-through](quality/android-os-accessibility-qualification.md).
+
+D-347 final ordinary follow-through passes24 Home-category/total and original Home/Plans plan-row
+amount viewports across12 en/fa/de xLight/Dark contexts at actual OS200%/412dp with real Activity
+focus and unchanged stored inputs. These two original runs have no observed ANR through completion;
+this is not a general runtime/stress fix. Captured settings restore and MainPID7654 is preserved.

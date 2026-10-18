@@ -6682,3 +6682,17 @@ serial-major trial is ineffective and does not change production. Native TTS con
 not pass TalkBack app navigation. App/APK and managed counts remain D-344; A11Y-01/03, QA-06/07,
 phone/iOS and release gates remain open.
 [Evidence](../quality/android-os-accessibility-qualification.md).
+
+### 31. D-347 foreground-only acceptance evidence
+
+Native financial observations now require actual Activity window focus, including retained receipt
+validation. Controls under an ANR dialog are not unobscured-window acceptance. Preserve completed
+guarded groups and reject the ineffective precise-Tarjan trial after its actual mid-budget ANR;
+remove experimental runtime inputs. No Main behavior/APK or managed-count change. A11Y-01/03,
+QA-06/07 and external/platform acceptance remain open.
+[Evidence and limits](../quality/android-os-accessibility-qualification.md).
+
+D-347 final ordinary follow-through passes24 Home-category/total and original Home/Plans plan-row
+amount viewports across12 en/fa/de xLight/Dark contexts at actual OS200%/412dp with real Activity
+focus and unchanged stored inputs. These two original runs have no observed ANR through completion;
+this is not a general runtime/stress fix. Captured settings restore and MainPID7654 is preserved.

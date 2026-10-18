@@ -51,6 +51,7 @@ internal static partial class AndroidHomeReview
                     || packet.GetProperty("OsFontScale").GetDouble() != 2 || packet.GetProperty("WidthDp").GetInt32() != 412
                     || !packet.TryGetProperty("MonoGcMode", out var priorGcMode) || priorGcMode.GetString() != gcMode
                     || !packet.GetProperty("Result").GetProperty("OriginalStoredInputsUnchanged").GetBoolean()
+                    || !packet.GetProperty("Result").TryGetProperty("OriginalWindowFocusRequired", out var focused) || !focused.GetBoolean()
                     || packet.GetProperty("Result").GetProperty("Observations").GetArrayLength() != 6)
                     throw new ReviewCheckException("Retained OS cohort does not match the original comparison.");
                 reports.Add(packet.Clone());
@@ -73,8 +74,19 @@ internal static partial class AndroidHomeReview
     private static async Task<object> ReviewFinancialTablesAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct,
         bool legendsOnly = false, bool budgetTitlesOnly = false, bool homeLegendsOnly = false, bool planRowsOnly = false, bool ledgerRowsOnly = false)
     {
+        async Task RequireReviewFocusAsync()
+        {
+            ct.ThrowIfCancellationRequested();
+            if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.HasWindowFocus == true) return;
+            Android.Util.Log.Info("ZananceHomeStage", comparison + "|await-original-window-focus");
+            // D-347: an ANR dialog can cover otherwise realized native controls. Never accept those checks.
+            while (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.HasWindowFocus != true)
+                await Task.Delay(100, ct);
+            Android.Util.Log.Info("ZananceHomeStage", comparison + "|original-window-focus-restored");
+        }
         async Task RootAsync()
         {
+            await RequireReviewFocusAsync();
             for (var i = 0; i < 300; i++)
             {
                 if (Shell.Current?.CurrentPage?.Handler?.PlatformView is Android.Views.View { IsAttachedToWindow: true } native)
@@ -83,6 +95,14 @@ internal static partial class AndroidHomeReview
             }
             throw new ReviewCheckException("Original review Shell did not attach.");
         }
+        var actualConfig = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Resources?.Configuration
+            ?? throw new ReviewCheckException("Actual Activity configuration required.");
+        var actualFontScale = actualConfig.FontScale;
+        var actualWidthDp = actualConfig.ScreenWidthDp;
+        var observedGcMode = Environment.GetEnvironmentVariable("MONO_GC_PARAMS");
+        var publicGcMode = observedGcMode is "major=marksweep" or "major=marksweep-conc" ? observedGcMode : "unrecognized";
+        void SurfaceStage(string step) => Android.Util.Log.Info("ZananceHomeStage", comparison + "|" + step);
+        await RequireReviewFocusAsync();
         app.OpenReviewShell(); await RootAsync();
         var path = Path.Combine(root, "financial-tables.db"); var retained = File.Exists(path);
         using var fixture = new ServiceCollection().AddZananceData(path).BuildServiceProvider();
@@ -129,6 +149,7 @@ internal static partial class AndroidHomeReview
                 }
                 if (planRowsOnly)
                 {
+                    SurfaceStage("plan-" + language + "-" + theme + "-construct-home");
                     var home = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store);
                     var homePage = new HomePage(home).WithFlowDirection(local);
                     await Shell.Current.Navigation.PushAsync(homePage);
@@ -171,10 +192,13 @@ internal static partial class AndroidHomeReview
                 }
                 if (homeLegendsOnly)
                 {
+                    SurfaceStage("home-legend-" + language + "-" + theme + "-construct");
                     var home = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store);
                     var homePage = new HomePage(home).WithFlowDirection(local);
                     await Shell.Current.Navigation.PushAsync(homePage);
+                    SurfaceStage("home-legend-" + language + "-" + theme + "-await-publication");
                     await homePage.PendingPublication;
+                    SurfaceStage("home-legend-" + language + "-" + theme + "-publish-values");
                     var original = home.Slices.First();
                     home.Slices[0] = original with
                     {
@@ -293,6 +317,8 @@ internal static partial class AndroidHomeReview
             OriginalReportLegends = legendsOnly, OriginalBudgetTitles = budgetTitlesOnly, OriginalHomeLegends = homeLegendsOnly,
             OriginalPlanRows = planRowsOnly,
             OriginalLedgerRows = ledgerRowsOnly,
+            ActualOsFontScale = actualFontScale, ActualWidthDp = actualWidthDp, MonoGcMode = publicGcMode,
+            OriginalWindowFocusRequired = true,
             OriginalStoredInputsUnchanged = true, NoMainDataTouched = true,
             NoFinancialSaveOrSystemSettings = true, ActualPhoneAcceptance = false, Observations = observations };
 
@@ -321,6 +347,7 @@ internal static partial class AndroidHomeReview
         }
         async Task<int> CheckAsync(ContentPage page, string date, string positive, string negative)
         {
+            await RequireReviewFocusAsync();
             // The plan fixture has one realized CollectionView item, rather than a vertical ScrollView host.
             var outer = page is PlansPage or TransactionsPage ? null : Views(page).OfType<ScrollView>().First(value => value.Orientation != ScrollOrientation.Horizontal);
             var identity = Views(page).OfType<Label>().First(label => label.Text == date && Visible(label));
@@ -365,6 +392,8 @@ internal static partial class AndroidHomeReview
         }
         static void CheckText(Label label)
         {
+            if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.HasWindowFocus != true)
+                throw new ReviewCheckException("Covered financial captions are not visible-window acceptance.");
             if (label.Handler?.PlatformView is not Android.Widget.TextView native || native.Layout is not { } layout ||
                 layout.Height > native.Height - native.TotalPaddingTop - native.TotalPaddingBottom + 1)
                 throw new ReviewCheckException("Original financial caption has no complete native allocation.");

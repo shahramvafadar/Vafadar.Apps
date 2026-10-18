@@ -1547,3 +1547,11 @@ Observed Mono bridge SIGSEGV, serial-major-GC trial ANR and TalkBack silent clie
 unaccepted. No runtime policy or experimental SDK enters Main. App/APK remain D-344; no phone,
 iOS, spoken-reader, two-second startup, Windows Canvas stability or release claim.
 [Evidence](quality/android-os-accessibility-qualification.md).
+
+## D-347 observed-window fidelity and remaining runtime gate
+
+Native geometry alone cannot pass accessibility when Android's ANR dialog covers the application.
+Require real window focus and stronger receipt provenance. The precise-Tarjan candidate remains
+ineffective after an actual mid-budget ANR and is removed; Main and its complete signed APK remain
+D-344. Startup/ANR, broader accessibility, physical Android, iOS, providers and release stay open.
+[Evidence](quality/android-os-accessibility-qualification.md).

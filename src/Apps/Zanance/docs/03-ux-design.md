@@ -1645,3 +1645,11 @@ stored inputs. Retain completed cohorts and actual native/ANR failures separatel
 workaround is promoted after an ineffective trial; speech controls do not establish TalkBack app
 acceptance. App/APK remain D-344; broader A11Y-01/03, QA-06/07 and release gates stay open.
 [Evidence and limits](quality/android-os-accessibility-qualification.md).
+
+## D-347 actual foreground review boundary
+
+A native layout under Android's ANR cover is provisional geometry, not unobscured-window acceptance.
+Require actual Activity focus and reject retained receipts lacking that proof. Preserve completed
+groups and actual failures separately; the ineffective precise-Tarjan trial is removed. Main/APK
+remain D-344 and broader accessibility/runtime/platform gates stay open.
+[Evidence and limits](quality/android-os-accessibility-qualification.md).

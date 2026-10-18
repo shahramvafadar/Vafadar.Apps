@@ -2508,3 +2508,11 @@ bounded to code addresses/frame pointers, without raw memory/register/stack fiel
 native fault only with exact official ELF BuildId and GNU debuglink CRC matching. A related upstream
 issue or supported GC setting is not a production fix: the ineffective serial-major trial is rejected.
 Keep actual ANR/crash evidence even if the same process subsequently progresses after Wait.
+
+## D-347 foreground-only native acceptance
+
+A realized native layout can still sit under an Android ANR dialog. Independent financial review
+requires actual Activity window focus before root/context construction and at every rendered-caption assertion.
+Retained receipts must explicitly prove this guard; older geometry-only reports cannot be upgraded
+to unobscured-window acceptance. Keep completed groups after actual failures. The precise-Tarjan
+trial also has a persistent mid-route ANR; remove its experimental policy and do not promote it.

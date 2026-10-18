@@ -293,3 +293,17 @@ The supported `AndroidEnableSGenConcurrent=false` trial is not a production fix 
 Do not replay passed cohorts or mistake continued CPU activity/observation expiry for success or
 process death. Standalone existing presentation phases can isolate only the missing cohorts on the
 same fixture; retain the aggregate failures and never claim all cohorts passed in one process.
+
+## Foreground-native observations (D-347)
+
+The original Activity window must hold focus before root/context construction and synchronously
+before every rendered-caption assertion. ANR-covered controls can have valid layouts, so realized
+geometry alone is insufficient. Completed receipts now require OriginalWindowFocusRequired before
+reuse, alongside the exact recognized GC mode. Earlier unguarded component reports remain
+provisional and cannot silently become unobscured-window acceptance.
+
+A separate upstream-recommended precise-Tarjan trial retains the concurrent major collector but
+still has an actual persistent mid-budget ANR. The experimental environment file/property and
+runtime marker are removed after preserving local evidence; neither enters the ordinary caller
+or Main. No change to the native runtime, bridge implementation, crypto, SDK or nursery size is
+adopted. Preserve the negative evidence and do not schedule the same ineffective trial again.

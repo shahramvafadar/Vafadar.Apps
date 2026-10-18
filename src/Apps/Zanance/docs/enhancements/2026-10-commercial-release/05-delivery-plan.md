@@ -2393,3 +2393,17 @@ components. Do not promote an ineffective runtime trial or repeat unchanged doma
 suites. Observe the same original process after delayed startup progress; actual failure receipts
 remain even when a later stage completes. Restore captured emulator settings.
 [Evidence and open acceptance](../../quality/android-os-accessibility-qualification.md).
+
+## D-347 qualify actual unobscured windows
+
+Preserve provisional component reports and the native ANR covering them. Add real Activity-focus
+gates, refuse older weaker receipts, then exercise the previously failing sequence under the
+changed runtime/observation contract. Keep two completed guarded groups, reject the new actual
+mid-budget ANR, and remove the ineffective runtime experiment. Qualify only still-unaccepted
+contexts with the ordinary restored caller; do not replay successful unrelated suites or Main builds.
+[Evidence and remaining gates](../../quality/android-os-accessibility-qualification.md).
+
+D-347 final ordinary follow-through passes24 Home-category/total and original Home/Plans plan-row
+amount viewports across12 en/fa/de xLight/Dark contexts at actual OS200%/412dp with real Activity
+focus and unchanged stored inputs. These two original runs have no observed ANR through completion;
+this is not a general runtime/stress fix. Captured settings restore and MainPID7654 is preserved.

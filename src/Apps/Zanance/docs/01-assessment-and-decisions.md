@@ -6680,3 +6680,19 @@ Production source, native libraries, complete APK and managed test count remain 
 and QA-06/07 remain open; no unrelated successful suite or build is repeated.
 
 [Evidence and limits](quality/android-os-accessibility-qualification.md).
+
+## D-347 - Require actual foreground focus for native financial checks
+
+The original observer can measure realized controls while Android's ANR dialog covers the app.
+Require Activity window focus before original root/context construction and every native text
+assertion, bind it into new receipts, and reject older receipts without that proof. Preserve a
+negative pause and positive continuation on the same process. A separate maintainer-guided
+precise-Tarjan trial still has a persistent actual mid-budget ANR and is not adopted; its temporary
+environment/property/marker are removed. Main runtime, financial algorithms and APK remain D-344.
+
+[Evidence and limits](quality/android-os-accessibility-qualification.md).
+
+D-347 final ordinary follow-through passes24 Home-category/total and original Home/Plans plan-row
+amount viewports across12 en/fa/de xLight/Dark contexts at actual OS200%/412dp with real Activity
+focus and unchanged stored inputs. These two original runs have no observed ANR through completion;
+this is not a general runtime/stress fix. Captured settings restore and MainPID7654 is preserved.

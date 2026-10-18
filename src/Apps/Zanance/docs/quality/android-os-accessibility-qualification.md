@@ -207,3 +207,119 @@ A11Y-03 remains In progress: this turn adds60 monetary viewport checks and12 gro
 actual OS200%/412dp; it does not accept all controls,360px, Home/plan real-OS cases, spoken readers,
 physical devices or iOS. A11Y-01, QA-06/ANR, the separate Windows Canvas AV and external release
 acceptance remain open. No new managed test count, unchanged suite rerun or Main build is claimed.
+
+## D-347 precise-Tarjan investigation and uncovered-window guard
+
+Official .NET10 release metadata on2026-10-18 still lists10.0.13 as the latest security/runtime
+patch. Do not downgrade or adopt a preview runtime. In the related upstream issue, the runtime
+maintainer recommends disabling two Tarjan optimizations as a separate trial. The exact runtime
+source accepts disable-non-bridge-scc and bridge-require-precise-merge. Preserve the original
+concurrent major collector and crypto/runtime bytes; do not change bridge implementation or
+nursery size. This is a scoped hypothesis, not proof of the entire corruption cause.
+
+EnablePreciseBridgeReview=true includes a nonsecret environment file only in the independent
+AndroidHome caller. Default is off; Main has no reference to this candidate file. The first compile
+rejects ambiguous Environment because MainActivity imports Android.OS; explicitly qualify System.
+Environment and repeat only that failed build. Strict Release/AOT final build passes0warnings/0errors
+in2:09.52. Signed x64 APK is54,562,588bytes/SHA256
+899d91115d993a88e4b6f0d476f27f8a40401cb66bd2dcaf4515d73bfbda4aa1,192AOT images,
+profileable trial only, no Internet/debuggable, same signing identity and unchanged Mono/SQLCipher
+bytes. Both generated/package environment and actual runtime stage confirm the exact precise mode.
+
+Retain the same ordinary fictitious financial-tables.db, no prepare/reset/reseed. PID14245 Home
+comparisonbf59f81d7b6d4416a0f03968c29cdf5d completes six cases/12 monetary observations after
+the original startup ANR and one observed Wait. PID14641 plan comparison8c586911eb2b4131ae80716c4f901c77
+also returns six cases/12 monetary observations with original targets/identities/inputs intact.
+However, its final native hierarchy still shows the Android ANR dialog. These unguarded receipts
+are provisional component geometry only, not unobscured-window or usable-flow acceptance. Do not
+call startup/ANR fixed, infer production adoption, or erase the negative observation.
+
+Strengthen only the independent native observer: await actual Activity.HasWindowFocus before each
+context, and require focus at every rendered-caption assertion. Retained cohorts must prove this guard
+as well as matching comparison, actual OS2.0/412dp, GC mode, six cases and unchanged inputs. This
+prevents an older covered-window receipt from being reused as stronger evidence. Requalify the
+previously failing long sequence under the changed runtime/focus contract; unchanged domain,
+backend, OCR, full managed suites and the shipping APK are not repeated for this observer change.
+
+[Current release metadata](https://builds.dotnet.microsoft.com/dotnet/release-metadata/10.0/releases.json),
+[maintainer trial guidance](https://github.com/dotnet/runtime/issues/123537),
+[exact runtime parameter parser](https://github.com/dotnet/dotnet/blob/4099f83977f4d29604a9aeb971fb0a7bc1d5f699/src/runtime/src/mono/mono/metadata/sgen-bridge.c).
+
+### D-347 guarded sequence rejects the runtime candidate
+
+Guarded comparison13bb484bdb0a4d31bf06cbd0c962c3b5 uses originalPID15055 and the same retained
+fixture. After the actual startup ANR, the observer logs await-original-window-focus and makes
+no financial text assertions while Android's dialog covers it. An observed Wait restores focus
+on the same PID, then the table and report-legend cohorts complete: six cases each,60 readouts,
+explicit focus contract and unchanged inputs. One observer initially assumes a single log chunk
+for the legend packet; decode both existing chunks without restarting or repeating either group.
+
+The last German/Dark budget navigation then stops advancing. Before any native input, verify
+that this caller owns the foreground Activity. Send Tab only, without a financial command.
+Android records an actual input-dispatch ANR after5014ms for that key event. Preserve that event,
+startup failure, stages and both completed guarded group receipts. Stop only the persistently
+unresponsive independent PID after retaining the actual failure; no observation timeout is used
+as a restart reason. Budget/Home/plan groups are not accepted from this complete-sequence trial.
+The precise-Tarjan policy therefore does not resolve the remaining runtime/ANR problem.
+
+Remove the experimental environment input/property and trial-only policy marker. Retain their
+exact public candidate value only in ignored local evidence. The delivered change is the native
+focus/provenance guard, not a production GC workaround. Preserve public recognized GC mode and
+actual OS scale/width in ordinary presentation reports without logging arbitrary environment text.
+Require focus even before constructing the original review root, so a covered window does not
+accumulate more review controls while awaiting Wait.
+
+The ordinary caller strict Release build passes0warnings/0errors in1:44.13. APK is54,165,106bytes,
+SHA25698bbc4d03fba46a928e15a3f30dcdcc079aa4947b2b22461989d98ac91d54237,192AOT images,
+unchanged Mono/SQLCipher bytes and original development certificate. Generated/packaged GC mode
+is major=marksweep-conc; rejected flags, profileable, debuggable and Internet permission are absent.
+No Main source, runtime policy, native package, financial/schema/translation or APK change occurs.
+
+After the rejected trial, readback restores font1.0/accessibility0/services absent and all five
+TTS keys absent. MainPID7654 remains alive. Three exact owned hierarchy copies are removed only
+after local/remote SHA256 matching. Ordinary missing-cohort follow-through below is a new scoped
+qualification of the changed observer/foreground contract, not replay of an unchanged passed suite.
+
+### D-347 ordinary Home follow-through
+
+Ordinary comparisonacb789f0e2994b98a701b6de4a9d3d5a/originalPID16074 uses the restored SDK default
+major=marksweep-conc and the final foreground guard before root construction. Six en/fa/de xLight/
+Dark cases complete12 original Home category/total amount viewports at actual OS2.0/412dp. Each
+case retains complete name/percentage, native accessible identity, original command/target and
+hidden/visible complete-source behavior. Original stored inputs remain unchanged. The new final
+report explicitly requires actual window focus; no ANR/process-death event is observed for this
+original run. This is scoped component acceptance, not a general native/ANR fix or speed benchmark.
+
+Stop the completed independent process only after validating its final public report, then qualify
+the still-unaccepted Home-upcoming/Plans hosts separately with the same ordinary APK/retained data.
+Do not reuse the earlier unguarded or experimental-policy plan packet as default foreground proof.
+
+### D-347 ordinary plan completion and final state
+
+Ordinary comparison70e60b0503ce43c1b5288f624055ac12/originalPID16301 completes six cases and12
+monetary viewports in both original Home-upcoming/Plans hosts. Actual OS2.0/412dp, default
+major=marksweep-conc, original-window focus contract, complete native accessible identities,
+commands/targets/date/icon variants and unchanged stored inputs pass. No financial command is
+invoked. An existing final report is read rather than recreated; the reader correctly refuses an
+attempt to overwrite it. There is no process restart or repeated qualifier because of that guard.
+
+The final native hierarchy contains the independent app and no ANR controls; the original PID is
+alive. No ANR/process-death event is observed for either ordinary HomePID16074 or planPID16301
+through their final checks. Together these ordinary runs provide24 monetary observations across
+12 contexts under the actual foreground contract. They do not pass a combined whole-app stress
+run, prove a runtime fix, or replace retained D-346/D-347 native failure evidence.
+
+Stop only the completed independent process after validating its public receipt and final window.
+Restore font_scale1.0/accessibility_enabled0/services absent and all five captured TTS keys absent;
+readback matches the original values. Hash-match/remove the exact owned final hierarchy. MainPID7654
+still exists and its existing task is brought forward without reinstall/reset, authentication or Save.
+The rejected trial's three other hierarchy copies were already hash-matched/removed.
+
+No actual Samsung, Mac, provider/account, Windows setting, OS density, private key or owner data is
+changed. Main/APK and managed count remain D-344; no successful unrelated suite, Windows matrix
+or Main build is replayed. A11Y-03 gains ordinary foreground Home/plan OS evidence; other controls,
+360px/platform combinations, spoken readers, native crash/ANR, phone/iOS and release remain open.
+
+The final restored Main hierarchy again shows the app with0.00EUR and no ANR controls on the same
+PID7654. Its exact temporary hierarchy is hash-matched/removed, bringing D-347 owned hierarchy
+cleanup to five files. This is final-state restoration evidence, not a new startup/performance pass.

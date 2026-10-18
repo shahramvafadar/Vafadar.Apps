@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Verification fidelity (D-347)
+
+- Exclude large-text observations made while an Android error dialog covers the app. Preserve failed runtime experiments separately; application behavior and APK are unchanged.
+
 ### Accessibility verification (D-346)
 
 - Extend actual Android text-scale checks on fictitious financial screens. Preserve unresolved native/runtime and spoken-reader failures; no application behavior or APK changes in this verification step.
