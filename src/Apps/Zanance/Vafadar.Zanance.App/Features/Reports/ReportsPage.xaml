@@ -24,6 +24,16 @@
         <Style x:Key="ReportTableTotal" TargetType="Label" BasedOn="{StaticResource ReportTableFigure}">
             <Setter Property="FontAttributes" Value="Bold" />
         </Style>
+        <Style x:Key="ReportLegendFigure" TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontFamily" Value="{DynamicResource AppFont}" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="{DynamicResource AmountText}" />
+        </Style>
+        <Style x:Key="ReportLegendSecondary" TargetType="Label" BasedOn="{StaticResource ReportLegendFigure}">
+            <Setter Property="FontAttributes" Value="None" />
+            <Setter Property="TextColor" Value="{DynamicResource SecondaryText}" />
+        </Style>
 
         <!-- The "?" of a KPI card: opens its explanation sheet (ZEX-UI14) -->
         <Style x:Key="KpiHelp" TargetType="Button">
@@ -244,12 +254,13 @@
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding CategoryRows}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:CategoryReportRow">
-                                    <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="8" Padding="0,6">
+                                    <!-- D-339: identity grows independently; the amount viewport is outside the navigation overlay. -->
+                                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="4" ColumnSpacing="8" Padding="0,6" MinimumHeightRequest="44">
                                         <BoxView WidthRequest="10" HeightRequest="10" CornerRadius="5" Color="{Binding Color}" VerticalOptions="Center" />
-                                        <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" LineBreakMode="TailTruncation" />
-                                        <Label Grid.Column="2" Text="{Binding NetText}" VerticalOptions="Center" FontAttributes="Bold" TextColor="{Binding NetColor}" />
-                                        <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding DetailText}" Style="{StaticResource Secondary}" FontSize="12" />
-                                        <Button Grid.RowSpan="2" Grid.ColumnSpan="3" Margin="-4,-6" Style="{StaticResource OverlayButton}" CornerRadius="8"
+                                        <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding DetailText}" Style="{StaticResource Secondary}" FontSize="12" />
+                                        <p:AmountReadout Grid.Row="2" Grid.ColumnSpan="2" AmountText="{Binding NetText}" TextColor="{Binding NetColor}" CaptionStyle="{StaticResource ReportLegendFigure}" />
+                                        <Button Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="-4,0" MinimumHeightRequest="44" Style="{StaticResource OverlayButton}" CornerRadius="8"
                                                 Command="{Binding OpenCategoryCommand, Source={RelativeSource AncestorType={x:Type local:ReportsViewModel}}, x:DataType=local:ReportsViewModel}"
                                                 CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding NetText}" />
                                     </Grid>
@@ -577,11 +588,12 @@
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding CompositionRows}" Spacing="6">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:CompositionRow">
-                                    <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="8">
+                                    <!-- Keep a complete composition identity, share and amount on independent growing rows. -->
+                                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="4" ColumnSpacing="8">
                                         <BoxView WidthRequest="10" HeightRequest="10" CornerRadius="5" Color="{Binding Color}" VerticalOptions="Center" />
-                                        <Label Grid.Column="1" Text="{Binding Label}" VerticalOptions="Center" />
-                                        <Label Grid.Column="2" Text="{Binding ShareText}" FontAttributes="Bold" VerticalOptions="Center" />
-                                        <Label Grid.Column="3" Text="{Binding ValueText}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
+                                        <Label Grid.Column="1" Text="{Binding Label}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding ShareText}" FontAttributes="Bold" VerticalOptions="Center" />
+                                        <p:AmountReadout Grid.Row="2" Grid.ColumnSpan="2" AmountText="{Binding ValueText}" TextColor="{DynamicResource SecondaryText}" CaptionStyle="{StaticResource ReportLegendSecondary}" />
                                     </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>

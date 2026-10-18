@@ -2444,3 +2444,12 @@ initialization. Start only the owned process on a non-input desktop; never switc
 move/reset Main files. Retain original PID and observations after timeout. Await actual nested
 budget publication and shell replacement. Preserve original opaque RGB pixels without resizing or
 retouching. Replace only verified rejected frames. Development drafts are not device/Store acceptance.
+
+## D-339 report legend identity and monetary viewports
+
+Report category/composition identity, share/detail and amount each reserve growing rows. Keep
+complete native-scaled names and original MoneyText through AmountReadout. The category button
+retains its command/parameter/spoken identity but covers only name/detail, at least 44 units high;
+even a negative margin must not overlap the real amount viewport. Check actual native glyphs,
+page bounds, both scroll ends and target rectangles. Presentation fixtures do not prove financial
+calculations, system scale/readers, phone/iOS, startup ANR resolution or publication.

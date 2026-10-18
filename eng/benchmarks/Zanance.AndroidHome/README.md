@@ -208,3 +208,15 @@ The existing read-profile phase additionally observes fixed-table EF execution/r
 
 
 D-322 also records the actual Core module identity alongside Data/caller identities, separating an adopted materializer change from a rejected recurrence candidate. Temporary worker logging/defines and reduced-case loops are absent from the ordinary caller and shipping application. Limited read gains do not establish universal loaded-Home or cold-start acceptance.
+
+## D-339 original report legend rows
+
+The `legends` phase accepts a fresh review_run/review_pass and owns only a separate fictitious
+financial-tables.db. Do not run prepare or repeat reference/tenfold performance phases for this UI
+change. It renders original category/composition templates in en/fa/de and both themes with explicit
+fictitious long names and extreme canonical amounts. Native text, both horizontal ends and actual
+target/value separation are checked; source settings/accounts/entries remain unchanged.
+Observe the exact original PID with Read-ReviewReport.ps1 -Phase legends -Comparison <pass>.
+Observation expiry is not terminal. D-339 retained an actual initial ANR, selected Wait on that
+independent emulator dialog and received the completed six-case report from the same original PID.
+This is not ANR resolution, OS text scaling, phone/iOS or financial calculation acceptance.

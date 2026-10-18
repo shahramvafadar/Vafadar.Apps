@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Complete report names and amounts (D-339)
+
+- Read long category and wealth-composition names at larger text sizes. Values keep their own row and scroll when needed so the sign, decimals and currency remain reachable; category navigation does not cover the amount.
+
 ### Six-language store preparation (D-338)
 
 - Refresh fictitious development screenshot drafts in all six languages, with isolated capture and exact pixel provenance. Mobile screenshot acceptance and publication remain open.

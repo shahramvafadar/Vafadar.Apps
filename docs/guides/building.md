@@ -1265,3 +1265,12 @@ the unique package before financial startup and renders on a non-input desktop w
 data. Preserve live original processes after observation expiry. Export exact opaque RGB with
 `eng/scripts/Export-StoreDrafts.ps1`; no upload occurs. Restore the ordinary Windows build afterwards.
 See [commands, refusal cases and one-frame repair](../../src/Apps/Zanance/docs/quality/store-drafts.md).
+
+## D-339 original report row stress
+
+`eng/scripts/Run-StoreDrafts.ps1 -ReportRowsReview` reuses the fresh independent package/storage and
+non-input desktop guard for 18 en/fa/de/theme/width contexts at process-local 200% text. These are
+read-only UI fixtures, not the 48-image store export; the store encoder rejects this receipt shape.
+Keep original processes and failures after observation expiry and restore the normal Windows build
+afterward. The independent AndroidHome `legends` phase checks six current native report contexts.
+See [evidence and current signed APK](../../src/Apps/Zanance/docs/quality/report-legends-readable.md).

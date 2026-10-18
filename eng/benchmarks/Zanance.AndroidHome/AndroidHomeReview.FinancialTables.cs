@@ -21,7 +21,7 @@ namespace Vafadar.Zanance.App;
 internal static partial class AndroidHomeReview
 {
     /// <summary>Checks original table templates and complete canonical amount viewports without invoking financial commands.</summary>
-    private static async Task<object> ReviewFinancialTablesAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct)
+    private static async Task<object> ReviewFinancialTablesAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct, bool legendsOnly = false)
     {
         async Task RootAsync()
         {
@@ -59,9 +59,12 @@ internal static partial class AndroidHomeReview
         {
             var rebuilt = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
             void Rebuilt(object? sender, EventArgs args) => rebuilt.TrySetResult();
-            app.ShellRebuilt += Rebuilt;
-            try { themes.Set(theme); await rebuilt.Task.WaitAsync(TimeSpan.FromSeconds(30), ct); }
-            finally { app.ShellRebuilt -= Rebuilt; }
+            if (themes.Choice != theme)
+            {
+                app.ShellRebuilt += Rebuilt;
+                try { themes.Set(theme); await rebuilt.Task.WaitAsync(TimeSpan.FromSeconds(30), ct); }
+                finally { app.ShellRebuilt -= Rebuilt; }
+            }
             await RootAsync();
             foreach (var language in new[] { "en", "fa", "de" })
             {
@@ -74,6 +77,27 @@ internal static partial class AndroidHomeReview
                     translator, dates, local, time, services.GetRequiredService<Security.AppLockService>(), fixture.GetRequiredService<ReportWorkStore>());
                 var page = new ReportsPage(reports).WithFlowDirection(local); await Shell.Current.Navigation.PushAsync(page); await reports.LoadAsync();
                 reports.IsEmpty = false; reports.CanUseAdvancedReports = true; reports.IsAdvanced = true;
+                if (legendsOnly)
+                {
+                    const string categoryName = "Food, household groceries and everyday essentials / Lebensmittel und Haushaltsbedarf / خوراک و نیازهای روزانه";
+                    const string compositionName = "Savings and long-term household reserves / Langfristige Haushaltsruecklagen / پس‌انداز بلندمدت خانواده";
+                    reports.CategoryRows.Clear();
+                    reports.CategoryRows.Add(new CategoryReportRow([], categoryName, Palette.ExpenseText, positive, zero,
+                        negative, Palette.ExpenseText, translator["Report_Gross"] + " " + positive));
+                    await Task.Delay(250, ct);
+                    var categoryAmounts = await CheckAsync(page, categoryName, positive, negative);
+                    reports.PackageIndex = 3; await reports.LoadAsync();
+                    reports.CanUseAdvancedReports = true; reports.IsAdvanced = true; reports.HasComposition = true;
+                    reports.CompositionRows.Clear(); reports.CompositionRows.Add(new CompositionRow(compositionName, 1, positive, "100 %",
+                        Palette.IncomeText, new SolidColorBrush(Palette.IncomeText)));
+                    await Task.Delay(250, ct);
+                    var compositionAmounts = await CheckAsync(page, compositionName, positive, negative);
+                    await Shell.Current.Navigation.PopAsync();
+                    if (before != await StoredAsync()) throw new ReviewCheckException("Legend review changed original financial inputs.");
+                    observations.Add(new { Language = language, Theme = theme.ToString(), CategoryAmounts = categoryAmounts,
+                        CompositionAmounts = compositionAmounts, CompleteTextAndScrollEnds = true, FictitiousPresentationOnly = true });
+                    continue;
+                }
                 reports.Trend.Clear(); reports.Trend.Add(new TrendPoint(month, 1, 0, positive, zero, positive, Palette.IncomeText));
                 reports.Trend.Add(new TrendPoint(month + " *", 0, 1, zero, positive, negative, Palette.ExpenseText));
                 await Task.Delay(250, ct); var trend = await CheckAsync(page, month, positive, negative);
@@ -90,7 +114,8 @@ internal static partial class AndroidHomeReview
                 observations.Add(new { Language = language, Theme = theme.ToString(), TrendAmounts = trend, HistoryAmounts = history, ComparisonAmounts = comparisonCount, CompleteTextAndScrollEnds = true });
             }
         }
-        return new { Comparison = comparison, OriginalReportsAndSnapshotPages = true, OriginalStoredInputsUnchanged = true, NoMainDataTouched = true,
+        return new { Comparison = comparison, OriginalReportsAndSnapshotPages = !legendsOnly, OriginalReportLegends = legendsOnly,
+            OriginalStoredInputsUnchanged = true, NoMainDataTouched = true,
             NoFinancialSaveOrSystemSettings = true, ActualPhoneAcceptance = false, Observations = observations };
 
         static IEnumerable<Microsoft.Maui.Controls.View> Views(IVisualTreeElement node)
@@ -121,6 +146,19 @@ internal static partial class AndroidHomeReview
                 await scroll.ScrollToAsync(0, 0, false); await Task.Delay(100, ct);
                 if (scroll.ScrollX > 1) throw new ReviewCheckException("Original sign/start cannot be restored.");
                 if (amount.Width > page.Width + 1) throw new ReviewCheckException("Original amount viewport exceeds the page.");
+                if (legendsOnly && amount.Parent is Grid row)
+                {
+                    foreach (var button in row.Children.OfType<Button>())
+                    {
+                        if (button.Handler?.PlatformView is not Android.Views.View target
+                            || scroll.Handler?.PlatformView is not Android.Views.View viewport)
+                            throw new ReviewCheckException("Original legend target geometry unavailable.");
+                        var targetPosition = new int[2]; var viewportPosition = new int[2];
+                        target.GetLocationOnScreen(targetPosition); viewport.GetLocationOnScreen(viewportPosition);
+                        if (targetPosition[1] + target.Height > viewportPosition[1] + 1)
+                            throw new ReviewCheckException("Native category target overlaps the amount viewport.");
+                    }
+                }
             }
             return amounts.Length;
         }

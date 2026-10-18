@@ -116,6 +116,11 @@ internal static partial class DebugSnapshots
         await SeedBudgetAsync(services, food);
         await store.UpdateSettingsAsync(settings => settings.OnboardingCompleted = true);
         app.ShowMainShell();
+        if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "report-rows")
+        {
+            await ReviewReportRowsAsync(app, services, folder);
+            return;
+        }
         var original = JsonSerializer.Serialize(await store.GetEntriesAsync());
         var captured = new List<object>();
         var screens = new (string File, string Route)[]

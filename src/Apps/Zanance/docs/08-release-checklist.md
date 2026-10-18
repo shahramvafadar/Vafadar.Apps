@@ -1470,3 +1470,17 @@ Keep the original SDK compression, serviced runtime, AOT profile, key/data and p
 successful financial, OCR, backend or More-layout suite is repeated or new managed count claimed.
 QA-06 startup ANR, two-second loaded Home, broader Android, Mac/iOS and owner release gates remain open.
 [Evidence, failures and limits](quality/android-compression-cache.md).
+
+## D-339 scoped report readability qualification
+
+Category/composition report names, shares and monetary packets occupy independent growing rows.
+Names retain native scaling and complete wrapping; oversized amounts use the existing horizontal
+readout, outside the original category navigation button. The 18 final Windows contexts (en/fa/de,
+Light/Dark, 360/412/wide at process-local 200%) and six original Release/AOT Android contexts pass
+native glyph/viewport/scroll/target checks. Fictitious presentation inputs are explicitly separate
+from report calculations; no financial commands execute. Strict builds and the full offline signed
+APK pass. The Android caller's initial startup ANR is retained: Wait continued the same original PID,
+without restarting its scenario. QA-06/ANR, broader A11Y/OS readers, physical Android, iOS and release
+gates remain open. Managed test counts are unchanged; unrelated passed suites were not repeated.
+
+[Evidence and limits](quality/report-legends-readable.md).

@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory)][ValidatePattern('^[0-9a-f]{32}$')][string]$Run,
-    [Parameter(Mandatory)][ValidateSet('prepare', 'measure', 'compare', 'guard', 'filters', 'schema', 'billing-owned', 'tables', 'ledger', 'read-profile', 'ledger-read', 'plan-publication', 'plan-publication-fixed', 'home-stages')][string]$Phase,
+    [Parameter(Mandatory)][ValidateSet('prepare', 'measure', 'compare', 'guard', 'filters', 'schema', 'billing-owned', 'tables', 'legends', 'ledger', 'read-profile', 'ledger-read', 'plan-publication', 'plan-publication-fixed', 'home-stages')][string]$Phase,
     [Parameter(Mandatory)][ValidateRange(1, 2147483647)][int]$ProcessId,
     [Parameter(Mandatory)][string]$OutputPath,
     [ValidatePattern('^[0-9a-f]{32}$')][string]$Comparison,
@@ -9,7 +9,7 @@ param(
     [switch]$PhysicalDevice
 )
 $ErrorActionPreference = 'Stop'
-if ($Phase -in @('measure','compare','guard','filters','schema','billing-owned','tables','ledger','read-profile','ledger-read','plan-publication', 'plan-publication-fixed', 'home-stages') -and [string]::IsNullOrEmpty($Comparison)) { throw 'The original comparison identity is required.' }
+if ($Phase -in @('measure','compare','guard','filters','schema','billing-owned','tables','legends','ledger','read-profile','ledger-read','plan-publication', 'plan-publication-fixed', 'home-stages') -and [string]::IsNullOrEmpty($Comparison)) { throw 'The original comparison identity is required.' }
 # Observe only the already launched independent process. Never install, restart or regenerate a fixture.
 $adb = 'C:\Program Files (x86)\Android\android-sdk\platform-tools\adb.exe'
 $deviceArguments = @('-P', '5038', '-s', 'emulator-5570')
