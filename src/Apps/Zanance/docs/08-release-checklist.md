@@ -1640,3 +1640,10 @@ without clean. Ordered content fingerprints and focused process cases protect th
 the independent profiling on/off APKs are inspected separately from the ordinary offline app.
 Actual GoalEditor/Shell ANRs, spoken accessibility, wider physical Android, iOS and all provider/
 Store/release gates remain open. [Evidence](quality/android-manifest-overlay-incremental.md).
+
+## D-360 native navigation ownership boundary
+
+Original root retirement and translated native Back are scoped checks. Release only the renderer's
+own fragments through reordered transactions, including initial pending adds. Preserve actual
+failed candidates. General GC/finalizer/ANR, full phone, spoken reader, iOS, provider and release
+acceptance remain independent gates. [Evidence](quality/android-retired-navigation.md).

@@ -6821,3 +6821,18 @@ no runtime/event/GC workaround is promoted. Temporary diagnostic source is remov
 upgrade, English Simple-goal Cancel and Home979 pass without Save or settings changes. QA-06,
 broader A11Y/phone/iOS/release remain open.
 [Original failures, correction and qualification](quality/android-manifest-overlay-incremental.md).
+
+## D-360 - Release owned native fragments when retiring Android navigation
+
+Actual root replacement retains eight AppShell trees and grows translated toolbar subscriptions
+from one to nine. Removing a subscription alone does not release the roots. The Activity fragment
+manager retains original item fragments after ShellRenderer disconnects. Track only weak references
+to fragments created by this renderer and remove them at the existing managed retirement boundary;
+leave destruction/disposal to Android. Pending initial adds must also be removed through reordered
+transactions. A candidate that missed that boundary actually crashed and is not promoted.
+
+Eight final native root-retirement groups and six original translated Back operations pass with
+stored inputs and original preferences preserved. No financial algorithm, schema, runtime engine
+or GC policy changes. This is a scoped ownership correction, not proof that every ANR/finalizer,
+physical device, reader, iOS or release gate is closed.
+[Original failures and qualification](quality/android-retired-navigation.md).

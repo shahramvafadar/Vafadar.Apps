@@ -1446,3 +1446,15 @@ Run eng/tests/AndroidManifestOverlays.Tests.ps1 for the seven isolated process r
 an application build or device. The AndroidHome caller's existing EnableCodeSampling option is
 independent-only; the ordinary app must remain non-profileable and satisfy its explicit privacy
 variant. [Qualified packages and runtime limits](../../src/Apps/Zanance/docs/quality/android-manifest-overlay-incremental.md).
+
+## Original Android root retirement (D-360)
+
+The independent AndroidHome caller's root-retirement phase requires an existing nonredirected
+owned root. review_assert_roots checks eight replaced original Shell instances, one active native
+root and one translated toolbar subscription. review_back_names adds the actual About/native Back
+operations for en/fa/de xLight/Dark, preserving the open detail through display changes. Derived
+receipts bind comparison identity, PID and source MVID; explicit collections belong only to this
+independent ownership check, never production. Capture and exactly restore emulator settings for
+any separately authorized OS-scale continuation. Do not rerun completed matching native matrices
+or infer general finalizer/ANR, physical-device, reader or release acceptance.
+[Original failures and final evidence](../../src/Apps/Zanance/docs/quality/android-retired-navigation.md).

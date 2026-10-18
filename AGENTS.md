@@ -2612,3 +2612,12 @@ manifest for an optional variant and its return to the default. Missing requeste
 unchanged merges stay cached. Do not edit SDK targets or copy manifest/placeholder values into
 the local fingerprint cache. Profiling remains an explicit independent-caller-only option, never
 a main-app permission or an excuse for root, security-policy changes or production GC diagnostics.
+
+## Retired Android root ownership (D-360)
+
+Retiring a Shell must release only its own native item fragments before detaching its container.
+Keep weak ownership records and Android-managed destruction/disposal. Include pending initial adds
+and use reordered transactions matching the SDK, so rapid display updates cannot attach an old
+fragment to a removed container. Never remove another renderer's fragments or force synchronous
+transaction execution. Qualify original root collection and translated native Back independently;
+limited ownership evidence does not close general GC/finalizer/ANR or release gates.

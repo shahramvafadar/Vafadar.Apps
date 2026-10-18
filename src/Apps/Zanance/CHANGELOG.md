@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Retired Android navigation (D-360)
+
+- Release old Android navigation trees when display changes rebuild the main page, while preserving open forms and the original Back action.
+
 ### Reliable Android build variants (D-359)
 
 - Apply selected Android package settings correctly when switching variants without a clean build.

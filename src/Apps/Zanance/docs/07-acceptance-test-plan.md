@@ -4042,3 +4042,11 @@ Record the coordinated Samsung ordinary upgrade/unsaved Simple-goal Cancel and u
 without broadening it to actual OS200%, advanced choices or whole-device acceptance. These are
 process/native cases, not new managed Trait counts.
 [Exact qualification and limits](quality/android-manifest-overlay-incremental.md).
+
+## AT-360 retired Android navigation ownership
+
+Retain weak references to original replaced Shell roots; await the same retired cohort and check
+one active native root and toolbar subscription. Exercise original translated native Back after
+display changes on an open detail in en/fa/de xLight/Dark. Preserve stored inputs/preferences,
+actual failed candidates and pending add/remove coverage. No substituted controls/commands or
+managed-count inflation. [Results and boundaries](quality/android-retired-navigation.md).

@@ -55,6 +55,12 @@ internal static partial class AndroidHomeReview
                 if (RedirectedAncestors(root).Length != 0) throw new ReviewCheckException("Redirected plan review root refused.");
                 await WriteReportAsync(root, phase, await ReviewFirstPlanPublicationAsync(app, services, root, comparison!, ct), ct);
             }
+            else if (phase == "root-retirement")
+            {
+                if (!Directory.Exists(root) || RedirectedAncestors(root).Length != 0)
+                    throw new ReviewCheckException("Retained independent diagnostic root required.");
+                await WriteReportAsync(root, phase, await ReviewRootRetirementAsync(app, services, run, comparison!, ct), ct);
+            }
             else if (phase == "editor-text")
             {
                 Directory.CreateDirectory(root);

@@ -1692,3 +1692,10 @@ Original choice chips do not shrink after intrinsic measurement: the complete su
 as one unit. Preserve scalable captions, original padding, selected names/colors and real
 buttons. A fractional Flex reduction can otherwise create an unmeasured second native line.
 [Actual OS and Windows evidence](quality/work-editor-os-text.md).
+
+## D-360 retired Android navigation trees
+
+Display-driven root replacement releases the retired root's native fragment ownership while
+preserving active forms, native Back commands and translated descriptions. Keep the queued initial
+add/removal in reordered transactions; never dispose active widgets or another root's fragments.
+[Scoped original-navigation evidence](quality/android-retired-navigation.md).

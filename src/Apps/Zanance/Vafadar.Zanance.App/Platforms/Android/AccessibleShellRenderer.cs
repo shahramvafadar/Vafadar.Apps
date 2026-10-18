@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using NativeToolbar = AndroidX.AppCompat.Widget.Toolbar;
 using AndroidX.DrawerLayout.Widget;
+using AndroidX.Fragment.App;
 using Microsoft.Maui.Controls.Handlers.Compatibility;
 using Microsoft.Maui.Controls.Platform.Compatibility;
 using Vafadar.Localization;
@@ -10,8 +11,52 @@ namespace Vafadar.Zanance.App;
 /// <summary>Keeps the native back arrow and navigation handling, with an app-language accessible description.</summary>
 internal sealed class AccessibleShellRenderer : ShellRenderer
 {
+    private readonly List<WeakReference<Fragment>> _ownedItemFragments = [];
+    private bool _navigationRetired;
+
     /// <summary>Creates the platform renderer through the existing Shell handler factory.</summary>
     public AccessibleShellRenderer() { }
+
+    /// <inheritdoc />
+    protected override IShellItemRenderer CreateShellItemRenderer(ShellItem shellItem)
+    {
+        var item = base.CreateShellItemRenderer(shellItem);
+        _ownedItemFragments.Add(new WeakReference<Fragment>(item.Fragment));
+        item.Destroyed += OnOwnedItemDestroyed;
+        return item;
+    }
+
+    private void OnOwnedItemDestroyed(object? sender, EventArgs args)
+    {
+        if (sender is IShellItemRenderer item) item.Destroyed -= OnOwnedItemDestroyed;
+        _ownedItemFragments.RemoveAll(reference => !reference.TryGetTarget(out var fragment) || ReferenceEquals(fragment, sender));
+    }
+
+    /// <summary>Removes only this retired root's fragments; Android still owns their destruction and disposal.</summary>
+    internal void RetireNavigation()
+    {
+        if (_navigationRetired) return;
+        _navigationRetired = true;
+        // D-360: ShellRenderer disconnects its current item but does not remove that root
+        // fragment from the Activity manager. Detached containers otherwise accumulate whole
+        // navigation trees. Never enumerate/remove another renderer's active fragments.
+        foreach (var reference in _ownedItemFragments)
+        {
+            if (!reference.TryGetTarget(out var fragment) || !((Java.Interop.IJavaPeerable)fragment).PeerReference.IsValid
+                || fragment.IsRemoving) continue;
+            var manager = fragment.ParentFragmentManager;
+            if (manager is null || manager.IsDestroyed) continue;
+            var transaction = manager.BeginTransaction()
+                ?? throw new InvalidOperationException("Android did not create a retired-root fragment transaction.");
+            // An initial add can still be queued when another display update replaces this
+            // root. Match the SDK's reordered initial add, so its add/remove can be collapsed
+            // before Android tries to create a view in the now-detached old container.
+            transaction.SetReorderingAllowed(true);
+            transaction.Remove(fragment);
+            transaction.CommitAllowingStateLoss();
+        }
+        _ownedItemFragments.Clear();
+    }
 
     /// <inheritdoc />
     protected override IShellToolbarTracker CreateTrackerForToolbar(NativeToolbar toolbar)

@@ -6799,3 +6799,15 @@ Original binding/Shell retirement still records ANRs; exact native GC/JNI symbol
 evidence, not a runtime fix. Scoped Samsung Simple-goal Cancel preserves empty goals and Home979;
 whole-device, A11Y, iOS and release acceptance remain open.
 [Exact source/build/package/restoration boundaries](../quality/android-manifest-overlay-incremental.md).
+
+### Section31 update - D-360 Android root ownership
+
+Retired Android navigation trees now relinquish their native fragment owner, including queued
+initial adds. Eight root-retirement groups and six original Back operations cover en/fa/de and
+Light/Dark with unchanged inputs/preferences. These native cases do not add managed unit counts
+or close general GC/finalizer/ANR, phone, spoken-reader, iOS or release acceptance.
+[Exact evidence and limits](../quality/android-retired-navigation.md).
+
+The retained original 36-group GoalEditor/root sequence also passes after this correction: 4860
+Labels retired, all six stored collections unchanged, no Save and exact OS restoration. The earlier
+finalizer exception is not declared globally resolved by this bounded reproduction.

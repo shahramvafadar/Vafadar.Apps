@@ -222,6 +222,9 @@ public partial class AppShell : Shell
     internal void RetireNavigationBindings()
     {
         _navigationRetired = true;
+#if ANDROID
+        if (Handler is AccessibleShellRenderer renderer) renderer.RetireNavigation();
+#endif
         foreach (var home in _publishedHomes) home.RetirePublication();
         // D-82: Android's retired ShellItemRenderer can retain section events after its Shell handler is cleared.
         // A later translated title then reads a missing MauiContext and aborts the entire language notification.

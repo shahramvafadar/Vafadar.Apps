@@ -2455,3 +2455,9 @@ Focused build regressions and signed independent on/off checks qualify packaging
 main features or managed suite counts. Actual runtime ANRs remain retained and open in canonical
 QA-06; scoped Samsung unsaved-goal cancellation is separate from full physical/A11Y/iOS/release
 acceptance. [Complete evidence](quality/android-manifest-overlay-incremental.md).
+
+## D-360 Android root retirement
+
+Release owned native navigation fragments at managed retirement, with reordered pending add/remove.
+Eight original root groups and six actual translated Back actions preserve inputs/preferences.
+Broader QA-06/physical/reader/iOS/release remain open. [Evidence](quality/android-retired-navigation.md).
