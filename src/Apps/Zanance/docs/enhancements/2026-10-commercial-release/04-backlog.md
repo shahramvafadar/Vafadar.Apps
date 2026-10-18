@@ -46,7 +46,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
 | ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-324 six source-language digital PDFs; D-325 physical Latin image OCR/EXIF/refusal and French accent fix; real corpus/camera/scanned/iOS remain) | sample receipts |
-| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-322 trusted complete-row null metadata and 12 retained phone Home cases; loaded Home 1.92-2.83s reference / 7.23-9.51s tenfold; full cold/ANR statistics/low-memory/iOS remain) | – |
+| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-322 trusted complete-row null metadata and 12 retained phone Home cases; loaded Home 1.92-2.83s reference / 7.23-9.51s tenfold; D-332 two actual x64 background-receiver startup ANRs reproduced; full cold/ANR/low-memory/iOS remain) | – |
 | ZCR-QA-07 | Android/iOS parity (notifications, widget, file picker, lock, share, licences); existing Windows development checks | 2 | P2 | M | Mac readiness owner-reported; verification and iOS runs pending in that environment. Windows commercial delivery is outside current scope | platform access/signing |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | In progress (D-174 widget and D-175 contextual date names/drafts verified locally; spoken TalkBack and remaining screen/platform acceptance open) | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
@@ -2841,3 +2841,12 @@ changed-mapping refusal are implemented. The19 new behaviors,51 related applicat
 cases pass; signed offline Android build/upgrade and18 native Windows contexts pass. Phone rendering
 remains pending in [evidence](../../quality/interpreted-csv-preview.md). QA-01 remains in progress; no
 arbitrary-bank, wider-device, iOS, performance or release gate closes.
+
+## D-332 IO-09 Android page arrival
+
+Locally verified: actual Android pages now arrive at the review heading after Next/Previous, with
+three-page traversal, final invalid/disabled boundary and stale generic mapping/refreshed income.
+One focused regression,18 native Windows contexts and the complete offline candidate pass; no financial
+import or broad suite is repeated. Eleven saved Android assertions retain the English x64/API36/412x800
+scope. QA-06 now has two reproduced background ScheduledAlarmReceiver startup-timeout ANRs; their
+cause/fix remains open. Samsung/other device/iOS and release gates stay open. [Evidence](../../quality/android-import-preview-arrival.md).

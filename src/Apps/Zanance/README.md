@@ -77,6 +77,10 @@ bounded pages, including invalid/known status. Changing generic mappings require
 Focused tests, native layout and phone qualification remain separately recorded in
 [the evidence](docs/quality/interpreted-csv-preview.md).
 
+D-332 makes Next/Previous return to the actual review heading. Original Android page traversal and stale
+interpretation refusal are checked without importing money; background-receiver startup ANRs remain open.
+See [native arrival evidence](docs/quality/android-import-preview-arrival.md).
+
 Application flow coverage (D-73 / QA-03): 68 AT-80 cases compile actual non-UI onboarding, profiles, bulk commands,
 access, widget/reminder routing and theme sources with explicit native ports and real isolated SQLite. The full
 main suite has 1,263 passing tests. Native runtime/physical-device evidence remains separate; no commercial limits.

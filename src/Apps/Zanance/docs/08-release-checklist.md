@@ -1427,3 +1427,10 @@ The new interpreted-row UI and stale-mapping gate have focused managed and indep
 The complete offline candidate upgrades without reset; the new page's Samsung acceptance remains pending
 while its adb transport is unavailable. This does not repeat or broaden D-330's original financial cycle.
 See quality/interpreted-csv-preview.md for exact scope and retained failures; no publication gate closes.
+
+## D-332 native arrival and remaining startup gate
+
+The original Android preview and corrected Next/Previous are qualified on the x64/API36 emulator in
+English at412x800, with no Import/financial Save and final Home0. The new offline signed candidate and
+18 Windows arrival contexts pass. Samsung is absent; two actual ScheduledAlarmReceiver startup ANRs
+remain unresolved and are not release acceptance. [Evidence](quality/android-import-preview-arrival.md).

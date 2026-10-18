@@ -3760,3 +3760,11 @@ invalid/known row, duplicate inclusion and rejection of a changed generic mappin
 the page after picker cancellation and retire it only after accepted import/Undo. Nineteen new behaviors
 are covered by focused application tests. Native/device scope and pending gates remain explicit in
 [qualification](quality/interpreted-csv-preview.md); this does not broaden D-330 to arbitrary bank files.
+
+## AT-332 actual review-page arrival
+
+Require first-row/header visibility after original Next and Previous, before any inspection scroll.
+One new application-source behavior and18 native Windows contexts pass; actual Android three-page
+traversal/refusal boundaries and eleven saved-observation assertions pass on the412x800 x64 emulator.
+There is no financial import/Save. Startup ANR and Samsung/iOS/platform acceptance remain separate;
+[exact evidence](quality/android-import-preview-arrival.md).

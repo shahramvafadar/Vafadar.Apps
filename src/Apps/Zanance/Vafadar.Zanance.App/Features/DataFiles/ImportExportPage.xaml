@@ -10,7 +10,7 @@
     Title="{v:Translate ImportExport_Title}">
 
     <Grid RowDefinitions="*,Auto">
-        <ScrollView>
+        <ScrollView x:Name="ImportViewport">
 
             <VerticalStackLayout Padding="16" Spacing="8" IsEnabled="{Binding IsNotBusy}">
 
@@ -129,7 +129,7 @@
                                 </VerticalStackLayout>
                             </Border>
                             <!-- Every interpreted ledger row remains reachable; only ten cards are realized at once. -->
-                            <VerticalStackLayout Spacing="8" IsVisible="{Binding HasLedgerPreview}">
+                            <VerticalStackLayout x:Name="LedgerPreviewSection" Spacing="8" IsVisible="{Binding HasLedgerPreview}">
                                 <Label Text="{v:Translate Import_ReviewedTitle}" Style="{StaticResource SectionHeader}" />
                                 <Label Text="{v:Translate Import_ReviewedHint}" Style="{StaticResource Secondary}" />
                                 <Label Text="{Binding LedgerPreviewPageText}" FontAttributes="Bold" />

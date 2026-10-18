@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### CSV review page arrival (D-332)
+
+- Show the beginning of the selected CSV review page after Next or Previous, instead of keeping the previous page's bottom position.
+
 ### Interpreted CSV rows (D-331)
 
 - Review dates, accounts, kinds and complete amounts before importing own-format or mapped CSV. Page through every source row, including invalid and already-known rows. Changing the interpretation requires a fresh preview before import.

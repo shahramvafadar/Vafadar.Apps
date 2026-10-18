@@ -23,6 +23,7 @@ internal static partial class DebugSnapshots
     {
         if (AppInfo.Current.PackageName != "pro.vafadar.zanance.importpreview")
             throw new IOException("Independent import preview identity required.");
+        var arrivalOnly = Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "import-page-arrival";
         var path = Path.Combine(folder, "import-preview.db");
         await using var fixture = new ServiceCollection().AddSingleton<TimeProvider>(TimeProvider.System)
             .AddSingleton<ICommercialWriteAccessSource>(new EditorReadinessAccess()).AddZananceData(path).BuildServiceProvider();
@@ -56,7 +57,8 @@ internal static partial class DebugSnapshots
             services.GetRequiredService<ThemeService>().Set(theme);
             app.Windows[0].Width = width; app.Windows[0].Height = 820;
             var context = language + "-" + theme + "-" + width;
-            if (File.Exists(Path.Combine(folder, context + "-import-preview-proof.json"))) continue;
+            var proofSuffix = arrivalOnly ? "-import-arrival-proof.json" : "-import-preview-proof.json";
+            if (File.Exists(Path.Combine(folder, context + proofSuffix))) continue;
             await SetLanguageAsync(app, localization, language);
             var vm = new ImportExportViewModel(store, translator, new DateFormatter(localization), localization,
                 TimeProvider.System, holdings, effects, new EditorWriteReviewInteraction());
@@ -74,6 +76,7 @@ internal static partial class DebugSnapshots
                 throw new InvalidOperationException("The real source/destination interpretation is missing.");
             async Task InspectAsync(string suffix)
             {
+                if (arrivalOnly) return; // D-331 caption qualification is unchanged; check actual page arrival separately.
                 await CaptureAsync(app, folder, context + "-before-inspection-" + suffix);
                 foreach (var row in vm.LedgerPreviewRows)
                 {
@@ -92,19 +95,40 @@ internal static partial class DebugSnapshots
                 await ScrollToViewIfNeededAsync(scroll, first);
                 await CaptureAsync(app, folder, context + "-import-preview-" + suffix);
             }
+            object CheckArrival()
+            {
+                var section = page.FindByName<VerticalStackLayout>("LedgerPreviewSection");
+                if (section.Handler?.PlatformView is not Microsoft.UI.Xaml.FrameworkElement anchor
+                    || scroll.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ScrollViewer viewport)
+                    throw new IOException("Actual page-arrival anchor/viewport is missing.");
+                var point = anchor.TransformToVisual(viewport).TransformPoint(new Windows.Foundation.Point(0, 0));
+                if (point.Y < -1 || point.Y > 16)
+                    throw new IOException("A newly selected source page retained the previous bottom offset: " + point.Y);
+                return new { HeaderY = point.Y, viewport.VerticalOffset, viewport.ViewportHeight, FirstSourceLine = vm.LedgerPreviewRows[0].SourceLine };
+            }
             await InspectAsync("first");
             var next = WrappingActions(page).Single(item => item.Command == vm.NextLedgerPageCommand);
             await ScrollToViewIfNeededAsync(scroll, next);
             InvokeChoiceReview(VisualDescendants(next).OfType<Button>().Single(), ProfileNativeReads); await Task.Delay(300);
             if (vm.LedgerPreviewRows.Count != 3 || vm.LedgerPreviewRows[^1].Amount is not null || vm.CanShowNextLedgerPage)
                 throw new InvalidOperationException("The final original invalid row is unreachable.");
+            var nextArrival = CheckArrival();
+            if (arrivalOnly) await CaptureAsync(app, folder, context + "-next-arrival");
             await InspectAsync("last");
             var previous = WrappingActions(page).Single(item => item.Command == vm.PreviousLedgerPageCommand);
             await ScrollToViewIfNeededAsync(scroll, previous);
             InvokeChoiceReview(VisualDescendants(previous).OfType<Button>().Single(), ProfileNativeReads); await Task.Delay(200);
             if (vm.LedgerPreviewRows[0].SourceLine != 2 || (await store.GetEntriesAsync()).Count != 0)
                 throw new InvalidOperationException("Native paging changed the original financial store.");
+            var previousArrival = CheckArrival();
+            if (arrivalOnly) await CaptureAsync(app, folder, context + "-previous-arrival");
             await root.Navigation.PopModalAsync(false);
+            if (arrivalOnly)
+            {
+                await File.WriteAllTextAsync(Path.Combine(folder, context + proofSuffix), JsonSerializer.Serialize(new
+                { ActualNativeNextAndPrevious = true, nextArrival, previousArrival, StoredEntryCount = 0, NoImportOrUndo = true }));
+                continue;
+            }
             await File.WriteAllTextAsync(Path.Combine(folder, context + "-import-preview-proof.json"), JsonSerializer.Serialize(new
             {
                 OriginalPageNativePickCommandAndPaging = true, OriginalThirteenSourceRowsReachable = true,

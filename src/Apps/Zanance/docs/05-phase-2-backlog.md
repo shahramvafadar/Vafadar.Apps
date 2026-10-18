@@ -2265,3 +2265,9 @@ See [evidence](quality/physical-csv-roundtrip.md).
 IO-09's count-only preview is replaced with interpreted read-only pages and a fresh-review gate after
 mapping changes. This does not add a bank format or change aggregate/Undo authority. Current scope and
 remaining device qualification: [evidence](quality/interpreted-csv-preview.md).
+
+## D-332 scoped Android continuation
+
+D-331 interpretation is exercised in the original Android page without financial writes; the new-page
+viewport defect is corrected. No bank preset or financial writer changes. Preserve the observed two
+background-receiver startup ANRs as an open QA-06 boundary. [Evidence](quality/android-import-preview-arrival.md).

@@ -205,7 +205,7 @@ public partial class App : Application
     protected override Window CreateWindow(IActivationState? activationState)
     {
 #if DEBUG
-        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "import-preview"
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "import-preview" or "import-page-arrival"
             && AppInfo.Current.PackageName != "pro.vafadar.zanance.importpreview")
             throw new InvalidOperationException("Independent import preview identity required before startup.");
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "currency-text"

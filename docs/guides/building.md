@@ -1182,3 +1182,14 @@ contexts and never invokes Import or Undo. Source/destination identities remain 
 fixture on continuation. Use sequential main Windows/Android restores; their shared assets file can race.
 Restore the normal ApplicationId and build before handoff. Exact outcomes and package boundary:
 src/Apps/Zanance/docs/quality/interpreted-csv-preview.md.
+
+## Focused CSV page arrival (D-332)
+
+The same independent importpreview Windows identity supports VAFADAR_SNAPSHOT_ONLY=import-page-arrival.
+It invokes original Next/Previous and measures the actual review header before inspection scrolling,
+without replaying900 prior caption checks. Requested18 contexts persist their own import-arrival-proof
+records; no Import/Undo is invoked. Restore the normal identity and build sequentially after Android
+publish. Native Android qualification uses the exact full offline candidate and owned inputs only; stage
+all inputs before opening a picker, search the exact filename and verify the returned original filename.
+A root/foreground observation failure does not authorize replaying the preceding native command.
+Current startup ANR and package scope: src/Apps/Zanance/docs/quality/android-import-preview-arrival.md.

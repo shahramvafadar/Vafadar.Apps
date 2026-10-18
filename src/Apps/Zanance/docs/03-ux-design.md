@@ -1547,3 +1547,8 @@ invalid and known rows. Give interpreted date/kind, financial identities and eac
 their own growing rows. Source and received amounts are distinct. Show inclusion/skip status explicitly;
 mapping changes retain the old review visibly but block import until refresh. Paging never saves money.
 See [qualification](quality/interpreted-csv-preview.md).
+
+Next/Previous source-page navigation must bring the selected page's review heading and first row into
+the actual viewport (D-332). Do not retain the previous bottom offset or move the viewport for ordinary
+status/duplicate updates. A retired page must ignore a queued arrival callback. Qualify native arrival
+before an inspection scroll can hide a misplaced position; [evidence](quality/android-import-preview-arrival.md).

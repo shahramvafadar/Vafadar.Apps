@@ -22,6 +22,8 @@ public sealed partial class ImportExportViewModel
 {
     private const int LedgerPreviewPageSize = 10;
     private int _ledgerPreviewPage;
+    /// <summary>Signals an actual retained-page change after its rows are published; ordinary status refreshes do not move the viewport.</summary>
+    public event EventHandler? LedgerPreviewPageChanged;
     /// <summary>Gets only the current bounded page of original own-format or generic interpretations.</summary>
     public ObservableCollection<ImportPreviewLine> LedgerPreviewRows { get; } = [];
     /// <summary>Gets whether a ledger interpretation is available, independently of bank and holdings previews.</summary>
@@ -37,10 +39,18 @@ public sealed partial class ImportExportViewModel
 
     /// <summary>Returns to a previous original page; this never imports or refreshes a financial source.</summary>
     [RelayCommand(CanExecute = nameof(CanShowPreviousLedgerPage))]
-    private void PreviousLedgerPage() { if (CanShowPreviousLedgerPage) { _ledgerPreviewPage--; PublishLedgerPreviewPage(); } }
+    private void PreviousLedgerPage()
+    {
+        if (!CanShowPreviousLedgerPage) return;
+        _ledgerPreviewPage--; PublishLedgerPreviewPage(); LedgerPreviewPageChanged?.Invoke(this, EventArgs.Empty);
+    }
     /// <summary>Shows the next original page, including invalid lines beyond the first summary errors.</summary>
     [RelayCommand(CanExecute = nameof(CanShowNextLedgerPage))]
-    private void NextLedgerPage() { if (CanShowNextLedgerPage) { _ledgerPreviewPage++; PublishLedgerPreviewPage(); } }
+    private void NextLedgerPage()
+    {
+        if (!CanShowNextLedgerPage) return;
+        _ledgerPreviewPage++; PublishLedgerPreviewPage(); LedgerPreviewPageChanged?.Invoke(this, EventArgs.Empty);
+    }
 
     private void ClearLedgerPreview()
     {

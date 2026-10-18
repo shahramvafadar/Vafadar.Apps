@@ -2231,3 +2231,11 @@ The observed IO-09 interpreted-row gap and stale generic-mapping protection are 
 focused tests,18 native layout contexts and the complete offline candidate. Preserve successful prior CSV roundtrip,
 bank, backend, cipher and PDF evidence. The phone upgrade succeeds but its page awaits an available
 transport; do not substitute installation for rendering. [Current evidence](../../quality/interpreted-csv-preview.md).
+
+## D-332 actual Android continuation and next ready defect
+
+The original Android interpretation and actual page-arrival correction are locally qualified without
+financial writes. Retain D-331 successful caption/resource/bank evidence. Next prioritize the observed
+repeated background ScheduledAlarmReceiver startup timeout under QA-06; original launch/ANR/PID evidence
+is preserved, and Wait is not a fix. Samsung is absent; do not wait for it before independent approved
+diagnosis. [Evidence](../../quality/android-import-preview-arrival.md).

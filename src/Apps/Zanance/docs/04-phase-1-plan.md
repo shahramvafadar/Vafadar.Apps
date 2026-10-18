@@ -1015,3 +1015,9 @@ Current exact evidence: enhancements/2026-10-commercial-release/17-startup-respo
 Own-format and mapped ledger CSV now expose bounded interpreted rows and invalidate changed mappings.
 Focused tests and the signed offline build/upgrade pass; native/device qualification remains scoped in
 [the evidence record](quality/interpreted-csv-preview.md). No financial schema/writer change or broad suite replay.
+
+## D-332 interpreted-page navigation
+
+The observed Android previous-bottom arrival is corrected and checked with actual Next/Previous,
+stale generic review and the last invalid row. Native Windows18-context arrival and the complete
+offline candidate pass; startup ANR/physical/iOS remain open. [Evidence](quality/android-import-preview-arrival.md).

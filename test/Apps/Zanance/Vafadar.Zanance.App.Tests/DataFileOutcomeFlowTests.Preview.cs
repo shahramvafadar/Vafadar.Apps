@@ -9,6 +9,31 @@ namespace Vafadar.Zanance.App.Tests;
 
 public sealed partial class DataFileOutcomeFlowTests
 {
+    [Fact]
+    [Trait("AT", "AT-332")]
+    public async Task Page_arrival_signal_follows_only_actual_published_page_changes_without_writing()
+    {
+        using var f = new FlowFixture(); var files = new Files(); var (account, _) = await LedgerAsync(f, files);
+        var rows = Enumerable.Range(1, 23).Select(index => new LedgerEntry
+            { AccountId = account.Id, Date = new(2026, 10, 9), Kind = EntryKind.Expense, Amount = index }).ToArray();
+        files.Picked = new("fictitious-arrival.csv", CsvExport.Write(rows,
+            new Dictionary<Guid, Account> { [account.Id] = account }, _ => "", true));
+        var (_, _, _, vm) = Create(f, new(), files); await vm.LoadAsync();
+        var arrivals = new List<(int FirstLine, int Count)>();
+        vm.LedgerPreviewPageChanged += (_, _) => arrivals.Add((vm.LedgerPreviewRows[0].SourceLine, vm.LedgerPreviewRows.Count));
+        var before = await GoalChooserFlowTests.SnapshotAsync(f);
+        await vm.PickCommand.ExecuteAsync(null); vm.PreviousLedgerPageCommand.Execute(null); Assert.Empty(arrivals);
+        vm.NextLedgerPageCommand.Execute(null); vm.NextLedgerPageCommand.Execute(null);
+        Assert.Equal(new[] { (12, 10), (22, 3) }, arrivals);
+        vm.NextLedgerPageCommand.Execute(null); vm.IsBusy = true; vm.PreviousLedgerPageCommand.Execute(null);
+        Assert.Equal(2, arrivals.Count);
+        vm.IsBusy = false; vm.PreviousLedgerPageCommand.Execute(null);
+        Assert.Equal((12, 10), arrivals[^1]);
+        vm.SkipDuplicates = true; await vm.RefreshPreviewCommand.ExecuteAsync(null);
+        Assert.Equal(3, arrivals.Count); Assert.Equal(2, vm.LedgerPreviewRows[0].SourceLine);
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+    }
+
     [Theory]
     [InlineData("en")][InlineData("fa")][InlineData("de")][InlineData("es")][InlineData("fr")][InlineData("it")]
     [Trait("AT", "AT-331")]

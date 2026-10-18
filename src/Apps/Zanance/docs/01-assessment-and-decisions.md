@@ -6494,3 +6494,15 @@ behaviors and the related51 application/29 bank/23 resource cases pass. Complete
 build/upgrade pass; phone rendering remains pending after adb went offline. All18 native Windows contexts
 pass with900 complete scaled captions and zero ledger writes; failed review attempts are preserved in
 [evidence](quality/interpreted-csv-preview.md).
+
+## D-332 — Return CSV page navigation to the review heading
+
+Actual Android Next retained the old bottom offset and exposed row20 before row11. Signal only actual
+published page changes; the appearing page dispatches a scroll to its review section and unsubscribes
+when leaving. One focused regression,18 native Windows contexts/36 arrivals, strict builds and the
+complete signed offline candidate pass. Original Android Next/Previous, last invalid row/disabled Next,
+stale generic interpretation/refreshed income and unchanged Home0/current-month empty history pass.
+Eleven saved-observation assertions retain this x64/API36 English/412x800 boundary. No previous full or
+unrelated suite is replayed. Two real startup ANRs originate in ScheduledAlarmReceiver launches; Wait
+preserves each process, without establishing a cause or fix. Samsung remains absent. Exact evidence:
+[native CSV arrival](quality/android-import-preview-arrival.md).
