@@ -6704,3 +6704,11 @@ Retained Main shows actual Recorded balance accessibility focus and captured aud
 unreliable offline transcripts are rejected. Spoken acceptance and A11Y/native QA gates remain open.
 All captured emulator settings restore exactly; Main/APK and managed count remain D-344. Relevant
 Java/DEX/native observation is verified without repeating successful unrelated builds or suites.
+
+### Section31 update - D-349 reader input validity
+
+Actual retained Main entry/cancel navigation with ordinary adb injection does not establish TalkBack
+activation. No expected-focus assertion passes; further activation is refused. Exact settings and
+notification restoration, unchanged MainPID and Home0.00EUR are verified. Direct kernel input is
+denied without escalation. Product/APK/count remain D-344; no unrelated successful build/test replay.
+Actual reader activation/speech and remaining native/device/iOS/release acceptance remain open.

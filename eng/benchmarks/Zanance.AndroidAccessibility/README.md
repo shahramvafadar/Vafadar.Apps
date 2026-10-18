@@ -26,3 +26,12 @@ from keyboard focus. Outside-owner/unavailable-root statuses are observation fai
 failures or acceptance. Event streams can miss focus changes; an empty stream is not proof of none.
 Capture and exactly restore authorized settings separately. Check actual foreground before input.
 Accessible metadata and waveform energy do not establish correct audible speech or financial behavior.
+
+## D-349 input validity
+
+This observer does not prove that an adb tap/swipe passed through TalkBack. In the retained Main
+qualification, one injected tap directly opened an unedited expense draft; planned reader activation
+was refused without expected focus. Console OK and retained focus are also insufficient. Do not
+repeat those unchanged input trials or elevate denied kernel writes. Keep optional input release
+in a separate cleanup branch so its failure cannot skip exact settings/JAR restoration. Empty
+transient trees require retained observation, not a process restart or a false reader pass.

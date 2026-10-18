@@ -6707,3 +6707,13 @@ focus and captured audio, but reject unreliable offline transcripts. Exact setti
 restoration, retained MainPID and hash-matched remote cleanup pass. No Main/APK/managed-count change
 or unrelated successful verification repeats. Spoken-reader and native ANR acceptance stay open.
 [Evidence and limitations](quality/android-os-accessibility-qualification.md).
+
+## D-349 - Reject injected navigation as reader acceptance
+
+The real Main entry/cancel assessment shows that ordinary adb tap directly opens an unedited draft,
+without proven TalkBack focus. Refuse further activation, cancel only through original UI after
+restoration, and preserve the same MainPID/data. Console key/touch trials do not establish delivery;
+direct kernel input is denied and is not escalated. Exact settings/notification state and Home0.00EUR
+restore; owned remote files are removed. Strengthen input-evidence and independent-cleanup rules.
+No product/API/runtime/APK/count change or successful unrelated test/build replay.
+[Actual observations and remaining acceptance](quality/android-os-accessibility-qualification.md).

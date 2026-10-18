@@ -2525,3 +2525,11 @@ observer with that flag. Android permits one UiAutomation client: await an event
 starting a snapshot. Preserve original processes after observer failures. Decode native JSON as UTF-8.
 Capture actual audio packets before sending authorized gestures; recorder startup text alone is not
 capture readiness. Focus metadata and waveform energy do not establish correct audible speech.
+
+## D-349 reader input and cleanup boundaries
+
+Ordinary adb input navigation is not proof of TalkBack gesture handling. Prove actual reader focus
+and activation separately; refuse activation when expected focus is absent. Console OK and retained
+focus are insufficient evidence of delivered hardware input. Do not escalate a denied kernel-input
+attempt. Optional input-release failure must never skip mandatory settings restoration or exact
+owned-file cleanup. An empty transient native tree is observation uncertainty, not app acceptance.

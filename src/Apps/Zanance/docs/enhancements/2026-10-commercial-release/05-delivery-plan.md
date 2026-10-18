@@ -2416,3 +2416,12 @@ produce Recorded balance accessibility focus and captured audio; offline transcr
 so spoken-reader acceptance remains open. Settings restore exactly, notification flags and MainPID
 are preserved, and the owned remote JAR is removed. Main/APK/count remain D-344. No unrelated
 successful suites/builds repeat. A11Y-01/03, native ANR, remaining device/iOS and release gates stay open.
+
+## D-349 actual reader input boundary
+
+The retained Main assessment opens an unedited expense draft directly with ordinary adb injection,
+not proven TalkBack activation. Further activation is refused without expected focus; original
+Cancel returns to Home0.00EUR on the same PID. Console commands do not prove delivered reader input;
+denied kernel input is not escalated. Captured settings/notification flags restore and exact remote
+files are removed. No app/APK/count change or unrelated successful verification repeats. Stop these
+unchanged injection trials; A11Y/native/device/iOS and external release gates remain open.

@@ -370,3 +370,49 @@ and its final owned snapshot contains0.00EUR. Hash-match/remove the exact transf
 No Samsung, Windows setting, auth, account or personal data is touched. Relevant Java/DEX compilation
 and actual native observation are checked; unchanged managed suites, Main/Windows builds and prior
 passed OS-layout cohorts are not replayed. A11Y-01/03 and native ANR/QA gates remain open.
+
+## D-349 distinguish injected navigation from actual reader gestures
+
+Continue the still-unaccepted real-reader entry/cancel path on retained fictitious MainPID7654,
+without replaying D-348 audio or prior OS-layout cohorts. Capture actual New expense bounds from
+the service-preserving observer, check Main foreground, then send one ordinary adb tap. The next
+observation temporarily contains only three native containers and no focus. Refuse the planned
+double-tap because New expense is not proven accessibility-focused. After restoring settings,
+the final native form shows New expense, Cancel, the unedited Amount field and Save. Thus this
+injection opened the draft directly; it is not evidence of TalkBack touch exploration/activation.
+Invoke only original Cancel after verifying the app foreground, without editing or Save.
+
+Official Android16 source explains the separate paths: InputShellCommand delegates to
+InputManager injection; InputDispatcher::notifyMotion sends through filterInputEvent, while
+InputDispatcher::injectInputEvent queues injected motion separately. Sources:
+[InputShellCommand](https://android.googlesource.com/platform/frameworks/base/+/refs/tags/android-16.0.0_r1/services/core/java/com/android/server/input/InputShellCommand.java),
+[InputDispatcher](https://android.googlesource.com/platform/frameworks/native/+/refs/tags/android-16.0.0_r1/services/inputflinger/dispatcher/InputDispatcher.cpp).
+This is a source-supported explanation consistent with the observed direct opening, not an exact
+installed native binary disassembly or proof of every injection API on every Android release.
+
+The installed accessibility dump explicitly shows TouchExplorer and KeyboardInterceptor with
+TalkBack bound/eventTypes TYPES_ALL_MASK. Console hardware-key first-item navigation yields no
+proven focus; do not activate without the expected Cancel node. Console event mouse reports OK,
+but the target is not proven focused and the form does not open. A bounded passive kernel-motion
+observation sees no events for an unpressed pointer move; this does not establish a delivered
+press. Console success text and unchanged Recorded balance focus cannot qualify a gesture.
+D-348 Recorded balance focus/audio remain observations, not causally verified swipe navigation.
+
+Read-only input metadata identifies virtio_input_multi_touch_1/event2 with the active412x800
+internal display and0..32767 axes. Direct shell sendevent is denied before its first slot event.
+Do not retry with root, change device-node permissions, disable SELinux or bypass authentication.
+The failed cleanup's same denied input call initially interrupted that helper's finally block;
+restore captured settings immediately through the independent restoration path and hash-match/
+remove its exact JAR. No kernel touch was successfully pressed. This is a qualification-helper
+failure, not a Main crash or a product fix. Future cleanup must isolate optional input-release
+failure from mandatory settings/file restoration.
+
+Final readbacks match all ten captured secure settings and font_scale1.0 exactly; absent values
+remain absent. Notification denial/flags are unchanged. MainPID7654 stays alive, the native Home
+again exposes Recorded balance and0.00EUR, and no financial field or Save was used. All four
+D-349 observer JARs and both native hierarchy files are individually hash-matched/removed from
+owned remote paths. Local failure/evidence files remain retained under android-reader-navigation-d349.
+No Samsung, Windows setting, owner data, account, authentication, app code, runtime, APK or managed
+count changes. No unchanged successful suite/build is repeated. Actual TalkBack activation/speech,
+OS-reader matrix, native ANR, physical/iOS and release acceptance remain open. Stop these unchanged
+input attempts; a future route needs verified reader input delivery or genuine device evidence.
