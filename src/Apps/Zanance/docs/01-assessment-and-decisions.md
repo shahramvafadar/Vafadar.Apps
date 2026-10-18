@@ -6696,3 +6696,14 @@ D-347 final ordinary follow-through passes24 Home-category/total and original Ho
 amount viewports across12 en/fa/de xLight/Dark contexts at actual OS200%/412dp with real Activity
 focus and unchanged stored inputs. These two original runs have no observed ANR through completion;
 this is not a general runtime/stress fix. Captured settings restore and MainPID7654 is preserved.
+
+## D-348 - Preserve the real reader while observing accessibility
+
+Installed framework bytecode proves stock uiautomator connects with default service suppression.
+Add an independent bounded shell observer using the explicit preservation flag; serialize clients,
+handle missing shell looper/window metadata and decode Unicode correctly. Exercise retained fictitious
+Main with actual TalkBack swipes after audio packets arrive, observe Recorded balance accessibility
+focus and captured audio, but reject unreliable offline transcripts. Exact settings/permission
+restoration, retained MainPID and hash-matched remote cleanup pass. No Main/APK/managed-count change
+or unrelated successful verification repeats. Spoken-reader and native ANR acceptance stay open.
+[Evidence and limitations](quality/android-os-accessibility-qualification.md).

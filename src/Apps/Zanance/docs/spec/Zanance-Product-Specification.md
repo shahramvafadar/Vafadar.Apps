@@ -6696,3 +6696,11 @@ D-347 final ordinary follow-through passes24 Home-category/total and original Ho
 amount viewports across12 en/fa/de xLight/Dark contexts at actual OS200%/412dp with real Activity
 focus and unchanged stored inputs. These two original runs have no observed ANR through completion;
 this is not a general runtime/stress fix. Captured settings restore and MainPID7654 is preserved.
+
+### Section31 update - D-348 reader observation
+
+The independent reader observer now preserves other services and serializes UiAutomation clients.
+Retained Main shows actual Recorded balance accessibility focus and captured audio after gestures;
+unreliable offline transcripts are rejected. Spoken acceptance and A11Y/native QA gates remain open.
+All captured emulator settings restore exactly; Main/APK and managed count remain D-344. Relevant
+Java/DEX/native observation is verified without repeating successful unrelated builds or suites.

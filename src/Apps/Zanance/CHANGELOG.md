@@ -1994,3 +1994,9 @@ D-294 local household delivery is complete at the recorded Windows/emulator/loca
 ### Complete saved-filter names
 
 - Long saved transaction-filter names wrap in their existing filter area, with complete accessible buttons and the same saved query.
+
+### D-348 qualification tooling
+
+- Preserve TalkBack during independent native observations instead of suppressing the reader.
+- Retain real focus/audio evidence and exact emulator restoration; spoken acceptance remains open.
+- No shipped app or APK change.

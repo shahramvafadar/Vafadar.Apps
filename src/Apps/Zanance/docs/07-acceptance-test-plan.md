@@ -3941,3 +3941,12 @@ D-347 final ordinary follow-through passes24 Home-category/total and original Ho
 amount viewports across12 en/fa/de xLight/Dark contexts at actual OS200%/412dp with real Activity
 focus and unchanged stored inputs. These two original runs have no observed ANR through completion;
 this is not a general runtime/stress fix. Captured settings restore and MainPID7654 is preserved.
+
+## D-348 reader observation correction
+
+Installed stock UI automation suppresses other accessibility services. The independent bounded
+observer preserves TalkBack and serializes its single native client. Actual retained Main gestures
+produce Recorded balance accessibility focus and captured audio; offline transcripts are unreliable,
+so spoken-reader acceptance remains open. Settings restore exactly, notification flags and MainPID
+are preserved, and the owned remote JAR is removed. Main/APK/count remain D-344. No unrelated
+successful suites/builds repeat. A11Y-01/03, native ANR, remaining device/iOS and release gates stay open.

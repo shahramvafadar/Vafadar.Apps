@@ -323,3 +323,50 @@ or Main build is replayed. A11Y-03 gains ordinary foreground Home/plan OS eviden
 The final restored Main hierarchy again shows the app with0.00EUR and no ANR controls on the same
 PID7654. Its exact temporary hierarchy is hash-matched/removed, bringing D-347 owned hierarchy
 cleanup to five files. This is final-state restoration evidence, not a new startup/performance pass.
+
+## D-348 remove observer suppression and exercise the retained Main reader
+
+The installed Android16 /system/framework/uiautomator.jar is412874bytes, SHA256
+ a76f2710634810ea17a0f84f8195e8d2550aaffd5ef6d71e8ef7b663593d3f17.
+Its UiAutomationShellWrapper.connect bytecode invokes UiAutomation.connect() without flags.
+The official [platform contract](https://developer.android.com/reference/android/app/UiAutomation#FLAG_DONT_SUPPRESS_ACCESSIBILITY_SERVICES)
+requires FLAG_DONT_SUPPRESS_ACCESSIBILITY_SERVICES to retain other accessibility services.
+Stock observations can therefore invalidate prior TalkBack lifecycle/speech observations; repeated
+reader reconnects are not sufficient evidence of an original Zanance defect.
+
+The independent eng/benchmarks/Zanance.AndroidAccessibility shell observer explicitly connects with
+flag1, bounds owner packages/nodes/depth/text/events/time, redacts password values, separates actual
+accessibility focus from keyboard focus, and has no input/screenshots/private files/network. Installed
+Java21 compiles release11 with -Xlint:all -Werror; installed d8 produces minAPI24 DEX. Final4527byte
+JAR SHA2564fdc665b69dc7781b32b004573d862513d0225c0a32cf612c6b90e982243fcd4 passes a final
+real Main snapshot. No app dependency, permissions, runtime, Main code, APK or managed count changes.
+
+Initial shell observations failed because no main looper existed and root metadata was not ready.
+Match platform shell looper initialization and bound same-client root retries. A later observation
+failed because a snapshot attempted registration while events still owned Android's single client.
+Await that listener before the snapshot. Preserve these observer failures separately; MainPID7654
+was never reset. UTF-8 decoding also failed before input and was corrected without restarting Main.
+
+TalkBack16.0.0.738667889 and installed Google TTS are retained. Public TalkBack master16.2 is not
+asserted to be the installed implementation. With the service-preserving observer, the live reader's
+TTS connection stays established through the first paired capture until deliberate restoration.
+Nominal output/playback captures after a keyboard shortcut have zero energy and no observed focus
+events; actual packet durations are shorter than requested. Neither proves permanent engine failure.
+Do not repeat the unchanged TTS control or grant notifications to manufacture acceptance.
+
+The corrected gesture run waits for262144 captured bytes before input, checks Main foreground,
+then sends three right swipes without activation or financial Save. Awaiting the15second listener
+avoids the simultaneous-client failure. Before focus is empty; the final real accessibility-focused
+node is Button Recorded balance at[33,105,379,149]. The event listener still emits no focus event;
+its empty result cannot establish that focus did not change. The playback WAV has573440frames,
+48kHz/stereo16bit, peak18947 and417161 nonzero samples. This establishes captured audio, not its
+correct spoken content. Offline en-GB dictation on a derived mono copy yields two incorrect phrases
+at confidence0.014/0.023: reject those transcripts. No cloud transcription, microphone, volume,
+engine download or notification-permission change is used. Spoken-reader acceptance remains open.
+
+Finally read back every captured secure key and font_scale1.0 exactly, preserving absent keys as
+absent. Notifications remain denied with unchanged flags. The existing MainPID7654 remains foreground,
+and its final owned snapshot contains0.00EUR. Hash-match/remove the exact transferred observer JAR.
+No Samsung, Windows setting, auth, account or personal data is touched. Relevant Java/DEX compilation
+and actual native observation are checked; unchanged managed suites, Main/Windows builds and prior
+passed OS-layout cohorts are not replayed. A11Y-01/03 and native ANR/QA gates remain open.

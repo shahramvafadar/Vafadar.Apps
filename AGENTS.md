@@ -2516,3 +2516,12 @@ requires actual Activity window focus before root/context construction and at ev
 Retained receipts must explicitly prove this guard; older geometry-only reports cannot be upgraded
 to unobscured-window acceptance. Keep completed groups after actual failures. The precise-Tarjan
 trial also has a persistent mid-route ANR; remove its experimental policy and do not promote it.
+
+## D-348 service-preserving accessibility observations
+
+Do not use stock uiautomator dump/events while qualifying TalkBack: the installed framework wrapper
+connects without FLAG_DONT_SUPPRESS_ACCESSIBILITY_SERVICES. Use the independent bounded read-only
+observer with that flag. Android permits one UiAutomation client: await an event listener before
+starting a snapshot. Preserve original processes after observer failures. Decode native JSON as UTF-8.
+Capture actual audio packets before sending authorized gestures; recorder startup text alone is not
+capture readiness. Focus metadata and waveform energy do not establish correct audible speech.

@@ -1356,3 +1356,11 @@ scale/width, cases and unchanged inputs. Keep old geometry-only evidence provisi
 can coexist with realized controls and does not become a pass after later progress. The rejected
 precise-Tarjan environment/property/marker are removed; do not reintroduce them as a production fix.
 [Evidence](../../src/Apps/Zanance/docs/quality/android-os-accessibility-qualification.md).
+
+## Reader-preserving Android observation (D-348)
+
+Use eng/benchmarks/Zanance.AndroidAccessibility/README.md and its installed-tool Build.ps1 for the
+independent shell-only observer. Do not run stock uiautomator dump/events while qualifying TalkBack.
+Allow only one UiAutomation client, decode UTF-8, preserve failed observations, and remove only the
+hash-matched owned JAR. Settings/input remain separately authorized and require exact restoration
+and actual foreground checks. Audio energy or native names alone do not qualify spoken output.

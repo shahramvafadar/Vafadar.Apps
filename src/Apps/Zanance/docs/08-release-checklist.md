@@ -1555,3 +1555,12 @@ Require real window focus and stronger receipt provenance. The precise-Tarjan ca
 ineffective after an actual mid-budget ANR and is removed; Main and its complete signed APK remain
 D-344. Startup/ANR, broader accessibility, physical Android, iOS, providers and release stay open.
 [Evidence](quality/android-os-accessibility-qualification.md).
+
+## D-348 reader observation correction
+
+Installed stock UI automation suppresses other accessibility services. The independent bounded
+observer preserves TalkBack and serializes its single native client. Actual retained Main gestures
+produce Recorded balance accessibility focus and captured audio; offline transcripts are unreliable,
+so spoken-reader acceptance remains open. Settings restore exactly, notification flags and MainPID
+are preserved, and the owned remote JAR is removed. Main/APK/count remain D-344. No unrelated
+successful suites/builds repeat. A11Y-01/03, native ANR, remaining device/iOS and release gates stay open.
