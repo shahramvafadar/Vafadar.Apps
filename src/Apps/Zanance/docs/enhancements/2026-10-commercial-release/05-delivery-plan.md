@@ -2464,3 +2464,12 @@ unchanged financial/crypto/OCR suites. [Qualification](../../quality/home-templa
 Complete-row correctness alone is insufficient: tenfold public/history input reads regress, so withdraw
 the candidate before main builds and broader successful-matrix replay. Keep nine original-reader boundary
 regressions and current best production source. [Evidence](../../quality/complete-history-row-packet.md).
+
+## D-356 whole original-editor caption delivery
+
+Review account/debt/expense/transfer/once/monthly forms together at real authorized Android text
+scale; fix the observed causes as one batch. Preserve original negative cases, narrow follow-up
+measurement, complete final changed-surface matrices and exact setting restoration. A later
+Windows image finding receives only its own disclosure continuation; passed unrelated controls
+and financial/crypto/OCR/backend suites are not replayed.
+[Final evidence and open gates](../../quality/android-editor-os-text.md).

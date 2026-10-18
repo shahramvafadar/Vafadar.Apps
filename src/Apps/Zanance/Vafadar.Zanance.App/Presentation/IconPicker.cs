@@ -43,7 +43,8 @@ public sealed class IconPicker : ContentView
             View symbol;
             if (key is null)
             {
-                symbol = new Label { Text = "–", FontSize = 18, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.Center };
+                // D-356: this decorative default glyph shares the fixed icon tile; its real button retains the translated scalable name.
+                symbol = new Label { Text = "–", FontSize = 18, FontAutoScalingEnabled = false, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.Center };
             }
             else
             {

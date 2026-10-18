@@ -1677,3 +1677,11 @@ No visual redesign or financial activation accompanies this lifecycle correction
 The closed native Picker must show the complete selected value at inherited OS text scale. Allow
 wrapped growing captions, preserve native dialog/selection and editing restrictions, and do not
 replace accessibility scaling with smaller type. [Native evidence](quality/android-settings-os-text.md).
+
+## D-356 intrinsic choice captions and debt disclosures
+
+A decorative Border must not subtract its stroke from the chip caption's measured width. Keep
+padded text as a sibling over the outline and the real button last, preserving selected semantics.
+Both optional debt disclosures grow with complete scalable captions through WrappingAction/Text.
+The default-icon dash is a decorative glyph; its real button retains the translated default/selected
+name. [Original-form evidence](quality/android-editor-os-text.md).

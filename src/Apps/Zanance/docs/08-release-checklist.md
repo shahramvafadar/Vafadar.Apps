@@ -1617,3 +1617,10 @@ No new performance/platform acceptance is claimed. [Evidence](quality/complete-h
 Grow complete native selected captions without changing selection, OS scale or keyboard authority.
 Keep actual startup ANR and helper failures separate from successful geometry checks. Broader
 Android/reader/iOS/release gates remain open. [Evidence](quality/android-settings-os-text.md).
+
+## D-356 scoped original-editor caption candidate
+
+Keep complete selected choices and debt disclosure captions without changing financial behavior.
+Native metadata qualification is not spoken-reader acceptance. Preserve exact emulator restoration,
+failed helper checks and original successful cases; keep ANR, wider device/iOS and release gates open.
+[Qualification and signed candidate](quality/android-editor-os-text.md).

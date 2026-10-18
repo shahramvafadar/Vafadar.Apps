@@ -206,20 +206,27 @@ public sealed class ChoiceChips : ContentView
             var label = new Label { Text = text, FontSize = IsCompact ? 13 : 14, VerticalOptions = LayoutOptions.Center };
             var face = new Border
             {
-                Padding = IsCompact ? new Thickness(14, 6) : new Thickness(16, 10),
                 StrokeThickness = 1,
                 StrokeShape = new RoundRectangle { CornerRadius = 20 },
                 MinimumHeightRequest = IsCompact ? 36 : 44,
-                Content = label,
                 InputTransparent = true,
             };
             AutomationProperties.SetIsInAccessibleTree(face, false);
+            // D-356: Android Border content loses the two stroke pixels at arrangement, clipping intrinsic
+            // chip words into an unmeasured second line. Paint the border behind a separately padded caption.
+            var caption = new Grid
+            {
+                Padding = IsCompact ? new Thickness(14, 6) : new Thickness(16, 10),
+                InputTransparent = true,
+                Children = { label },
+            };
+            AutomationProperties.SetIsInAccessibleTree(caption, false);
 
             // The transparent button over the chip takes taps, keyboard focus and the spoken name.
             var button = new Button { Text = string.Empty, Padding = 0, BorderWidth = 0, CornerRadius = 20, BackgroundColor = Colors.Transparent };
             button.Clicked += (_, _) => SelectedIndex = index;
 
-            var chip = new Grid { Margin = IsCompact ? new Thickness(0, 0, 8, 0) : new Thickness(0, 0, 8, 8), Children = { face, button } };
+            var chip = new Grid { Margin = IsCompact ? new Thickness(0, 0, 8, 0) : new Thickness(0, 0, 8, 8), Children = { face, caption, button } };
             _chips.Add(new Chip(face, label, button, text));
             _panel.Children.Add(chip);
         }

@@ -1405,3 +1405,13 @@ Run-StoreDrafts.ps1 -HomeTemplatesReview runs six independent private-desktop la
 at412px with original controls and no financial commands. AndroidHome phase home-template-reload uses
 a small independent fixture and the original Release/AOT Home source. Keep baseline failures and
 observe the same PID after timeouts. [Evidence](../../src/Apps/Zanance/docs/quality/home-template-publication.md).
+
+## D-356 independent original editor reviews
+
+Run eng/scripts/Run-StoreDrafts.ps1 -EditorTextReview for original account-choice/default-icon/debt
+components, or add -EditorDebtDetailsOnly for the isolated second disclosure continuation. Both
+use a fresh owned package/private non-input desktop and18 en/fa/de xLight/Dark x360/412/1280
+Windows layout-stress contexts. No owner desktop input or system scale change is permitted.
+The Android editor-text phase uses actual authorized emulator font_scale2.0/412dp and the
+original modal forms; the host owns exact prior-settings capture/restoration.
+[Current checks and limits](../../src/Apps/Zanance/docs/quality/android-editor-os-text.md).

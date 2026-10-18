@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Complete editor choices (D-356)
+
+- Keep account-type captions complete at large text sizes.
+- Let both optional debt disclosures grow with their full captions, and keep the default-icon symbol inside its tile.
+
 ### Android large text (D-355)
 
 - Let long selected choices in Android wrap completely, including numeric formats and account names in Settings.

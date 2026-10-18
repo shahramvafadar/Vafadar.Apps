@@ -6776,3 +6776,11 @@ original read-only picker and dialog while allowing selected text to wrap and he
 font scale, selection, keyboard restrictions, direction and semantic names. The independent caller
 uses fictitious Settings without invoking security or financial actions.
 [Cause, retained failures, final checks and limits](quality/android-settings-os-text.md).
+
+## D-356 - Complete original editor choices and disclosure captions
+
+One real OS-scale matrix across six original editor states exposes debt disclosure, decorative
+default-icon and intrinsic account-chip clipping. Separate chip drawing from text allocation,
+reuse growing debt actions and keep only the drawn icon glyph unscaled. Preserve the original
+commands, selected names, financial drafts/data and owner-authorized OS restoration.
+[Negative baseline, measurements, final checks and limits](quality/android-editor-os-text.md).

@@ -362,3 +362,16 @@ invoked. settings-text-page retains first-page failures before popup checks. Wai
 focus rather than accepting elapsed time. The caller writes no OS setting: its external authorized
 controller captures/restores exact previous values. Do not infer all controls, spoken TalkBack,
 360dp, physical/iOS, ANR or release acceptance.
+
+## D-356 original modal editor text
+
+The editor-text phase requires actual authorized OS2.0/412dp, a marked separate editor-text.db
+and a fresh comparison. Default states are account,debt,entry,transfer,plan,monthly in en/fa/de
+and both themes. Explicit review_editor_forms/review_editor_contexts restrict an actual diagnosis.
+Retain each completed case with exact caller MVID/stored-input hash; refuse changed or completed
+comparisons rather than overwrite evidence. Leaf scope is original Label/selected Picker/nonempty
+Entry/Button text, excluding placeholder hints/formatted spans and unshown combinations. Require
+the original modal view's native window focus; MAUI uses a separate DialogFragment. Read names
+through actual accessibility node info, and exercise only original nonfinancial disclosure toggles.
+No editor Save, notification/security operation, Main package data or OS setting write occurs
+inside the caller. The external authorized host restores exact captured OS settings.

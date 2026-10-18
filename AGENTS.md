@@ -2585,3 +2585,12 @@ Keep the original Android read-only Picker/dialog and KeyListener restrictions. 
 captions wrap at inherited OS font size, without single-line scrolling or ellipsis, and native
 height grows. Do not shrink fonts or infer whole-Settings/reader/ANR acceptance from scoped text
 geometry. Independent actual-OS reviews restore exact captured settings and preserve failed starts.
+
+## D-356 original editor caption geometry
+
+Paint choice-chip outlines separately from their padded captions so the Border stroke does not
+consume text allocation. Preserve original selected colors/names and the last-child real button.
+Debt disclosures use complete growing Text actions with their original commands. Only the decorative
+default-icon glyph opts out of scaling; its real button keeps the translated selected/default name.
+Native modal reviews require the modal window's focus and accessibility node info, not Activity
+focus or View.ContentDescription. Retain exact-source/input case receipts and restore OS settings.

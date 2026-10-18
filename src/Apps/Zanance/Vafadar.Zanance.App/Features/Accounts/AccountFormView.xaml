@@ -91,7 +91,7 @@
             </Grid>
             <v:DateField Date="{Binding DueDate}" AccessibilityLabel="{v:Translate Account_HasDueDate}" IsVisible="{Binding HasDueDate}" />
         </VerticalStackLayout>
-        <Button Text="{v:Translate Debt_EstimateOptions}" Command="{Binding ToggleDebtTermsCommand}" Style="{StaticResource TextButton}" HorizontalOptions="Start" />
+        <p:WrappingAction Text="{v:Translate Debt_EstimateOptions}" Command="{Binding ToggleDebtTermsCommand}" Appearance="Text" />
         <Label Text="{v:Translate Debt_EstimateHint}" Style="{StaticResource Secondary}" />
         <VerticalStackLayout IsVisible="{Binding ShowDebtTerms}">
             <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
@@ -113,8 +113,8 @@
         </VerticalStackLayout>
     </VerticalStackLayout>
 
-    <Button Text="{v:Translate Debt_AccountDetails}" Command="{Binding ToggleAccountDetailsCommand}" Style="{StaticResource TextButton}"
-            HorizontalOptions="Start" IsVisible="{Binding IsDebtType}" />
+    <p:WrappingAction Text="{v:Translate Debt_AccountDetails}" Command="{Binding ToggleAccountDetailsCommand}" Appearance="Text"
+                      IsVisible="{Binding IsDebtType}" />
     <VerticalStackLayout IsVisible="{Binding ShowAccountDetails}">
         <Label Text="{Binding DebtHint}" Style="{StaticResource Secondary}" IsVisible="{Binding IsDebtType}" />
         <!-- The icon: a preview of what the account shows and a real button that opens the choice. -->

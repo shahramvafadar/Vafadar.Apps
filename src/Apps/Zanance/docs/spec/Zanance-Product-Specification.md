@@ -6764,3 +6764,11 @@ numeric-format/default-account clipping is the target; original binding/selectio
 restrictions remain. Scope and final native evidence are separate from whole-suite counts,
 all-Settings/reader/ANR/physical/iOS/release acceptance.
 [Evidence](../quality/android-settings-os-text.md).
+
+### Section31 update - D-356 original editor captions
+
+Choice-chip captions no longer share content allocation with their decorative stroke. Optional
+debt action captions grow fully; only the default-icon drawn glyph opts out of scaling. Native
+checks use original editor models/controls and preserve drafts/stored inputs. No new managed
+case count or full-suite execution is inferred; A11Y/ANR/device/iOS/release remain partial.
+[Exact scope and final evidence](../quality/android-editor-os-text.md).

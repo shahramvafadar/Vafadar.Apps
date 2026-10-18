@@ -424,3 +424,10 @@ clipping, then completes en/fa/de light/dark original labels/pickers/entries and
 Cancel with stored fictitious inputs unchanged. Captured font/accessibility values restore
 exactly; no Samsung or display-size setting changes. Startup ANR remains observed and open.
 [Negative baseline, final receipts and explicit coverage limits](android-settings-os-text.md).
+
+## D-356 original editor caption continuation
+
+The original six editor states receive one actual OS200%/412dp matrix, preserving negative
+cases and the same marked financial fixture. Scoped fixes preserve native selection, disclosure
+commands and readable scaling. Restore exact captured settings; no Samsung or display-size change.
+[Complete case receipts and remaining limits](android-editor-os-text.md).

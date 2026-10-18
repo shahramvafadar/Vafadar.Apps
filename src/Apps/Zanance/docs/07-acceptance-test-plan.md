@@ -4012,3 +4012,12 @@ corrected original page in English, Persian and German, light/dark, with unchang
 accounts/entries/settings and original account-dialog Cancel. Restore exact captured OS values.
 This scoped native matrix does not close A11Y-01/03 or qualify every Settings control or spoken
 reader. [Exact outcomes and limits](quality/android-settings-os-text.md).
+
+## AT-356 complete original editor captions
+
+The actual OS200%/412dp baseline spans account/debt/expense/transfer/once-plan/monthly-plan,
+en/fa/de and both themes. Retain failed native geometry and input-equivalent comparisons. Final
+checks include complete leaf captions, native node names and both original debt disclosure
+commands without editor Save. Separate Windows native component/disclosure matrices retain
+360/412/1280 development stress and real UI Automation, not system-scale/phone/reader acceptance.
+[Exact receipts, refusals, restoration and limits](quality/android-editor-os-text.md).
