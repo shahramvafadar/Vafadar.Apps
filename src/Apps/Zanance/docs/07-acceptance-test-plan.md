@@ -4050,3 +4050,13 @@ one active native root and toolbar subscription. Exercise original translated na
 display changes on an open detail in en/fa/de xLight/Dark. Preserve stored inputs/preferences,
 actual failed candidates and pending add/remove coverage. No substituted controls/commands or
 managed-count inflation. [Results and boundaries](quality/android-retired-navigation.md).
+
+## AT-361 physical display navigation and goal draft
+
+On the coordinated Samsung turn, upgrade the qualified complete APK without reset. Exercise
+original Settings language/theme and translated native Back; inspect actual advanced goal type/
+method choices and Cancel/Keep editing/Discard without financial Save. Preserve original input
+data and return English/Light/Simple/Home979; verify installed bytes and actual OS readbacks.
+The 51 derived receipt assertions are not unit tests, a full database comparison, spoken reader,
+all phone settings/scales, general ANR or complete device acceptance.
+[Exact physical scope](quality/physical-navigation-and-goal-drafts.md).

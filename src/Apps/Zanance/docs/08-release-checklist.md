@@ -1647,3 +1647,11 @@ Original root retirement and translated native Back are scoped checks. Release o
 own fragments through reordered transactions, including initial pending adds. Preserve actual
 failed candidates. General GC/finalizer/ANR, full phone, spoken reader, iOS, provider and release
 acceptance remain independent gates. [Evidence](quality/android-retired-navigation.md).
+
+## D-361 physical navigation boundary
+
+Samsung D-360 upgrade, original en/fa/de display/Back states, advanced goal choices and dirty
+unsaved-draft cancellation pass. Original preferences, exact Home/account/balance and four OS
+readbacks are preserved; one native root remains. These receipts do not accept general ANR,
+all financial writes/device scenarios, spoken TalkBack, OS200% phone, iOS or release.
+[Evidence and retained host-guard corrections](quality/physical-navigation-and-goal-drafts.md).

@@ -2461,3 +2461,11 @@ acceptance. [Complete evidence](quality/android-manifest-overlay-incremental.md)
 Release owned native navigation fragments at managed retirement, with reordered pending add/remove.
 Eight original root groups and six actual translated Back actions preserve inputs/preferences.
 Broader QA-06/physical/reader/iOS/release remain open. [Evidence](quality/android-retired-navigation.md).
+
+## D-361 physical original-navigation continuation
+
+D-360 installed bytes are verified on Samsung. Original three-language/two-theme Settings/Back
+paths, three goal types/methods and dirty-draft cancellation preserve Home979 and empty goals.
+Native roots remain bounded to one; exact original display/system settings restore. No app code,
+APK or managed count changes; broader device/ANR/reader/iOS/release remain open.
+[Evidence](quality/physical-navigation-and-goal-drafts.md).

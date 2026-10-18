@@ -41,7 +41,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Done (D-268 browser/account copy and six-language drafts; real OAuth/publication remain open) | D-69 continuous delivery |
 | ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; other bank/relationship variants require original fixtures | original export specifications/samples |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
-| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; D-328 accountant ZIP receiving/content; D-329 original en/fa/de PDF contents and continued-table fix; D-330 own-format producer/consumer/refund/transfer/cold Undo; broader phone acceptance remains) | – |
+| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; D-328 accountant ZIP receiving/content; D-329 original en/fa/de PDF contents and continued-table fix; D-330 own-format producer/consumer/refund/transfer/cold Undo; D-361 original en/fa/de display/Back and advanced goal choices/dirty discard, exact preference/Home restoration and one native root; broader phone acceptance remains) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
@@ -3105,3 +3105,13 @@ count inflation or unrelated successful suite replay. [Evidence](../../quality/a
 The retained original D-359 36-group GoalEditor/theme/language sequence now completes with 4860
 Labels retired, all six stored collections unchanged, no Save and exact OS settings restoration.
 This closes that bounded reproduction, without asserting every ANR/finalizer path is corrected.
+
+## D-361 original physical display navigation and goal draft
+
+The unchanged D-360 signed APK upgrades Samsung without reset. Original en/fa/de xLight/Dark
+Settings/Back paths, advanced goal types/contribution methods and Keep editing/Discard pass
+without Save, preserving empty goals and exact Home979. One native root remains after the
+transitions. English/Light/Simple and all four captured OS settings restore; the phone turn is
+released. Fifty-one assertions over stored observations are not new unit cases or complete
+database/device/ANR/reader/iOS/release acceptance; no successful unrelated suite/build repeats.
+[Exact evidence and observation corrections](../../quality/physical-navigation-and-goal-drafts.md).

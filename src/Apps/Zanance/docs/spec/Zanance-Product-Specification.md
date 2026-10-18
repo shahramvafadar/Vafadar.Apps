@@ -6811,3 +6811,12 @@ or close general GC/finalizer/ANR, phone, spoken-reader, iOS or release acceptan
 The retained original 36-group GoalEditor/root sequence also passes after this correction: 4860
 Labels retired, all six stored collections unchanged, no Save and exact OS restoration. The earlier
 finalizer exception is not declared globally resolved by this bounded reproduction.
+
+### Section31 update - D-361 original physical navigation and unsaved goals
+
+The unchanged D-360 APK is qualified on Samsung for original en/fa/de xLight/Dark display
+selection/native Back and advanced goal types/contribution choices/dirty discard without Save.
+Fifty-one assertions over stored observations, one remaining native root, exact original Home979
+and English/Light/Simple/system-setting readbacks are evidence within that scope. No unit-count
+increase, app change or repeated successful build/suite; full device/ANR/reader/iOS/release remain
+open. [Complete physical boundaries](../quality/physical-navigation-and-goal-drafts.md).

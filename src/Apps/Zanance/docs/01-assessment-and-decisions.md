@@ -6836,3 +6836,14 @@ stored inputs and original preferences preserved. No financial algorithm, schema
 or GC policy changes. This is a scoped ownership correction, not proof that every ANR/finalizer,
 physical device, reader, iOS or release gate is closed.
 [Original failures and qualification](quality/android-retired-navigation.md).
+
+## D-361 - Qualify original physical display navigation and unsaved goal choices
+
+The complete D-360 signed APK upgrades Samsung without reset. Original Settings language/theme
+choices and translated Back cover en/fa/de and Light/Dark at the unchanged device scale. The
+original advanced goal type/contribution choices and dirty Keep editing/Discard flow pass without
+Save. One native root remains; initial English/Light/Simple and the exact Home hierarchy/account/
+balance979 are restored. Fifty-one stored-observation assertions are not new managed cases.
+App/APK/builds remain D-360; no unrelated successful verification repeats. General ANR/finalizer,
+full financial/device/reader/iOS/release gates remain open.
+[Original physical evidence and limits](quality/physical-navigation-and-goal-drafts.md).
