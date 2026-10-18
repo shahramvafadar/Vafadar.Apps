@@ -1457,3 +1457,16 @@ Growing More title/explanation captions pass36 independent native Windows contex
 and sync editions. The complete signed offline Android candidate is
 artifacts/android-more-text-d335/pro.vafadar.zanance-Signed.apk. Actual package/navigation receipts
 and remaining reader/phone/iOS/ANR/release gates are separate in [evidence](quality/more-menu-readable.md).
+
+
+## D-336 package consistency gate
+
+The observed pre-managed assembly-store abort comes from a cached CoreLib header retaining
+index193 while the current descriptor table assigns CoreLib192 and Java.Interop193. Validate the
+SDK's current compression-item metadata before its incremental timestamp check and regenerate only
+incompatible owned cache entries. Seven focused behavior cases preserve valid cache timestamps,
+invalidate stale index/size/magic/truncation, accept missing files and refuse outside destinations.
+Keep the original SDK compression, serviced runtime, AOT profile, key/data and permissions. No unrelated
+successful financial, OCR, backend or More-layout suite is repeated or new managed count claimed.
+QA-06 startup ANR, two-second loaded Home, broader Android, Mac/iOS and owner release gates remain open.
+[Evidence, failures and limits](quality/android-compression-cache.md).

@@ -1,4 +1,5 @@
 <Project>
+  <Import Project="$(MSBuildThisFileDirectory)AndroidAssemblyCompression.targets" />
   <!-- D-320: compile with the same serviced Mono toolchain as the packaged runtime, without changing installed workloads. -->
   <ItemGroup Condition="'$(Configuration)' == 'Release' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
     <PackageDownload Include="Microsoft.NET.Runtime.MonoAOTCompiler.Task" Version="[$(VafadarSecurityRuntimeVersion)]" />

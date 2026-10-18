@@ -2272,3 +2272,16 @@ financial/cipher/backend/import evidence. The full goal remains active; continue
 Android acceptance and actual observed defects, including the unresolved startup binding path.
 Do not repeat D-334 rejected packaging variants or settled owner decisions.
 [Evidence and limits](../../quality/more-menu-readable.md).
+
+
+## D-336 packaging correction and remaining startup work
+
+The observed pre-managed assembly-store abort comes from a cached CoreLib header retaining
+index193 while the current descriptor table assigns CoreLib192 and Java.Interop193. Validate the
+SDK's current compression-item metadata before its incremental timestamp check and regenerate only
+incompatible owned cache entries. Seven focused behavior cases preserve valid cache timestamps,
+invalidate stale index/size/magic/truncation, accept missing files and refuse outside destinations.
+Keep the original SDK compression, serviced runtime, AOT profile, key/data and permissions. No unrelated
+successful financial, OCR, backend or More-layout suite is repeated or new managed count claimed.
+QA-06 startup ANR, two-second loaded Home, broader Android, Mac/iOS and owner release gates remain open.
+[Evidence, failures and limits](../../quality/android-compression-cache.md).

@@ -128,6 +128,9 @@ jobs:
       - name: Android privacy policy regressions
         run: ./eng/tests/AndroidPrivacy.Tests.ps1
 
+      - name: Android compression cache regressions
+        run: ./eng/tests/AndroidCompression.Tests.ps1
+
       - name: Install MAUI Windows workload
         run: dotnet workload install maui-windows
 

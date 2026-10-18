@@ -6562,3 +6562,16 @@ suite is repeated or new unit count claimed. Broader A11Y-03, real OS scaling/re
 ANR and release gates remain open.
 This changes presentation only; no financial model or migration changes.
 See [native and package evidence](../quality/more-menu-readable.md).
+
+
+## D-336 Android packaging consistency
+
+The observed pre-managed assembly-store abort comes from a cached CoreLib header retaining
+index193 while the current descriptor table assigns CoreLib192 and Java.Interop193. Validate the
+SDK's current compression-item metadata before its incremental timestamp check and regenerate only
+incompatible owned cache entries. Seven focused behavior cases preserve valid cache timestamps,
+invalidate stale index/size/magic/truncation, accept missing files and refuse outside destinations.
+Keep the original SDK compression, serviced runtime, AOT profile, key/data and permissions. No unrelated
+successful financial, OCR, backend or More-layout suite is repeated or new managed count claimed.
+QA-06 startup ANR, two-second loaded Home, broader Android, Mac/iOS and owner release gates remain open.
+[Evidence, failures and limits](../quality/android-compression-cache.md).

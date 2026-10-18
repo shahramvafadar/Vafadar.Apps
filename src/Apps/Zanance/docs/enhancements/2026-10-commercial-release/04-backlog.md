@@ -2886,3 +2886,16 @@ ANR and release gates remain open.
 The D-77 blank-editor Back finding is not reproduced with the keyboard closed on D-333 x64/API36;
 no navigation code or financial Save is changed. Keep broader platform acceptance separate.
 [Evidence](../../quality/more-menu-readable.md).
+
+
+## D-336 QA-06 packaging continuation
+
+The observed pre-managed assembly-store abort comes from a cached CoreLib header retaining
+index193 while the current descriptor table assigns CoreLib192 and Java.Interop193. Validate the
+SDK's current compression-item metadata before its incremental timestamp check and regenerate only
+incompatible owned cache entries. Seven focused behavior cases preserve valid cache timestamps,
+invalidate stale index/size/magic/truncation, accept missing files and refuse outside destinations.
+Keep the original SDK compression, serviced runtime, AOT profile, key/data and permissions. No unrelated
+successful financial, OCR, backend or More-layout suite is repeated or new managed count claimed.
+QA-06 startup ANR, two-second loaded Home, broader Android, Mac/iOS and owner release gates remain open.
+[Evidence, failures and limits](../../quality/android-compression-cache.md).

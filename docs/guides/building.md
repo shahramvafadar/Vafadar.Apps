@@ -1231,3 +1231,16 @@ Qualify both ordinary and ZanancePersonalSyncEnabled=true builds sequentially. R
 through observation expiry; preserve partial/error receipts. Restore the permanent application id
 and offline edition for final builds. No system text setting or desktop input is used.
 [Evidence](../../src/Apps/Zanance/docs/quality/more-menu-readable.md).
+
+
+## D-336 incremental Android assembly cache
+
+The observed pre-managed assembly-store abort comes from a cached CoreLib header retaining
+index193 while the current descriptor table assigns CoreLib192 and Java.Interop193. Validate the
+SDK's current compression-item metadata before its incremental timestamp check and regenerate only
+incompatible owned cache entries. Seven focused behavior cases preserve valid cache timestamps,
+invalidate stale index/size/magic/truncation, accept missing files and refuse outside destinations.
+Keep the original SDK compression, serviced runtime, AOT profile, key/data and permissions. No unrelated
+successful financial, OCR, backend or More-layout suite is repeated or new managed count claimed.
+QA-06 startup ANR, two-second loaded Home, broader Android, Mac/iOS and owner release gates remain open.
+[Evidence, failures and limits](../../src/Apps/Zanance/docs/quality/android-compression-cache.md).

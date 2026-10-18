@@ -2418,3 +2418,12 @@ compact RowTitle ellipsis or cap descriptions at two lines. Keep the original wh
 command/route/parameter, spoken title/hint and semantic palette. Independent Debug menu reviews must
 match their package before startup and never invoke financial commands. Native layout stress is
 separate from OS text settings, screen readers, physical devices and iOS acceptance.
+
+## D-336 consistent Android compression cache
+
+Before incremental Release compression, compare each SDK compression item's XALZ header index and
+uncompressed byte count with its current descriptor metadata/source. Invalidate only incompatible
+files inside this build's intermediate cache; preserve valid entries and refuse outside paths.
+Use the original SDK compressor, never patch binary headers, disable compression or clean unrelated
+outputs to mask stale indices. A repaired native size-mismatch crash is separate from startup ANR
+and performance acceptance. Remove all temporary profiling/phase instrumentation before handoff.

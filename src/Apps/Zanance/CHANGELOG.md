@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Reliable incremental Android packaging (D-336)
+
+- Regenerate stale compressed-assembly cache entries before packaging so a changed build order cannot produce the observed pre-launch native size-mismatch crash. Valid cached entries remain reusable; the earlier startup ANR remains under investigation.
+
 ### Complete More menu text (D-335)
 
 - Read full menu titles and explanations at larger text sizes. Rows grow to fit instead of shortening names or hiding descriptions after two lines; the same buttons and destinations remain.

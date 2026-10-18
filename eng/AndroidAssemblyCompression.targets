@@ -1,0 +1,58 @@
+<Project>
+  <!-- D-336: SDK timestamp checks omit the compression descriptor index. A changed assembly
+       order can therefore reuse a blob whose header points into a different runtime slot. -->
+  <UsingTask TaskName="FindStaleAndroidCompressionHeaders" TaskFactory="RoslynCodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)/Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <Assemblies ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <CacheRoot ParameterType="System.String" Required="true" />
+      <StaleFiles ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Collections.Generic" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        var stale = new List<Microsoft.Build.Framework.ITaskItem>();
+        string root = Path.GetFullPath(CacheRoot).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+            + Path.DirectorySeparatorChar;
+        foreach (var assembly in Assemblies) {
+            string destination = Path.GetFullPath(assembly.GetMetadata("DestinationPath"));
+            // Never invalidate a caller-selected path outside this build's owned compression cache.
+            if (!destination.StartsWith(root, Path.DirectorySeparatorChar == '\\'
+                    ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal)) {
+                Log.LogError("Android compression destination is outside the current intermediate cache.");
+                return false;
+            }
+            uint expectedIndex;
+            if (!UInt32.TryParse(assembly.GetMetadata("DescriptorIndex"), out expectedIndex)) {
+                Log.LogError("Android compression descriptor metadata is missing or invalid.");
+                return false;
+            }
+            if (!File.Exists(destination)) continue;
+            bool valid;
+            using (var stream = File.OpenRead(destination)) {
+                using (var reader = new BinaryReader(stream)) {
+                    // Official XALZ header: magic, runtime descriptor index, uncompressed byte count.
+                    valid = stream.Length >= 12 && reader.ReadUInt32() == 0x5A4C4158
+                        && reader.ReadUInt32() == expectedIndex
+                        && reader.ReadUInt32() == new FileInfo(assembly.ItemSpec).Length;
+                }
+            }
+            if (!valid) stale.Add(new Microsoft.Build.Utilities.TaskItem(destination));
+        }
+        StaleFiles = stale.ToArray();
+      ]]></Code>
+    </Task>
+  </UsingTask>
+  <Target Name="InvalidateStaleAndroidCompressionHeaders" AfterTargets="_CollectAssembliesToCompress"
+          BeforeTargets="_CompressAssemblies"
+          Condition="'$(Configuration)' == 'Release' and '$(AndroidEnableAssemblyCompression)' == 'True' and '@(_AssembliesToCompress)' != ''">
+    <FindStaleAndroidCompressionHeaders Assemblies="@(_AssembliesToCompress)" CacheRoot="$(IntermediateOutputPath)android/lz4/">
+      <Output TaskParameter="StaleFiles" ItemName="_VafadarStaleCompressionFiles" />
+    </FindStaleAndroidCompressionHeaders>
+    <Message Importance="high" Condition="'@(_VafadarStaleCompressionFiles)' != ''"
+             Text="Regenerating incompatible Android compression cache headers: @(_VafadarStaleCompressionFiles->Count())" />
+    <Delete Files="@(_VafadarStaleCompressionFiles)" />
+  </Target>
+</Project>
