@@ -2453,3 +2453,11 @@ retains its command/parameter/spoken identity but covers only name/detail, at le
 even a negative margin must not overlap the real amount viewport. Check actual native glyphs,
 page bounds, both scroll ends and target rectangles. Presentation fixtures do not prove financial
 calculations, system scale/readers, phone/iOS, startup ANR resolution or publication.
+
+## D-340 complete default row identities
+
+RowTitle wraps at its original scalable font size instead of inheriting compact-list ellipsis.
+Keep existing explicit complete-caption overrides and growing original containers. Verify actual
+translated Flex bill-group captions without saving the budget method. Source equivalence of
+unchanged explicit consumers avoids repeating their successful reviews; native page checks are
+still required for a changed effective setting. Debug process scale is not OS/TalkBack acceptance.

@@ -26,7 +26,7 @@
                                                 </Border>
                                                 <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="1">
                                                     <!-- D-335: menu identities and explanations grow at native text scale;
-                                                         override RowTitle's compact-list ellipsis without changing its font. -->
+                                                         retain explicit complete wrapping without changing the shared font. -->
                                                     <Label Text="{Binding Title}" Style="{StaticResource RowTitle}" LineBreakMode="WordWrap" />
                                                     <Label Text="{Binding Subtitle}" Style="{StaticResource Secondary}" FontSize="12.5" LineBreakMode="WordWrap" />
                                                 </VerticalStackLayout>

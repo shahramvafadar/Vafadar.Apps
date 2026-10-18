@@ -1274,3 +1274,12 @@ read-only UI fixtures, not the 48-image store export; the store encoder rejects 
 Keep original processes and failures after observation expiry and restore the normal Windows build
 afterward. The independent AndroidHome `legends` phase checks six current native report contexts.
 See [evidence and current signed APK](../../src/Apps/Zanance/docs/quality/report-legends-readable.md).
+
+## D-340 budget title review
+
+`eng/scripts/Run-StoreDrafts.ps1 -BudgetTitlesReview` qualifies 18 independent Windows contexts at
+process-local scale 2 using original translated Flex titles, without a saved method change. Do not
+combine it with ReportRowsReview or export its receipt as store images. Restore the ordinary
+Windows build identity afterward. AndroidHome phase budget-titles qualifies six native contexts;
+retain its original live PID after observation expiry. See
+[evidence and full signed APK](../../src/Apps/Zanance/docs/quality/budget-group-titles-readable.md).

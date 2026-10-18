@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Complete bill-group captions (D-340)
+
+- Read the complete fixed and non-monthly bill headings in Flex budgets at larger text sizes. Row titles wrap instead of shortening the translated names; their font size stays unchanged.
+
 ### Complete report names and amounts (D-339)
 
 - Read long category and wealth-composition names at larger text sizes. Values keep their own row and scroll when needed so the sign, decimals and currency remain reachable; category navigation does not cover the amount.

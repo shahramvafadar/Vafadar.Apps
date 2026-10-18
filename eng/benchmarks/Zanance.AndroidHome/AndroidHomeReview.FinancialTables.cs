@@ -15,13 +15,16 @@ using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.Commerce;
+using Vafadar.Zanance.App.Features.Budget;
+using Vafadar.Zanance.App.Interaction;
 
 namespace Vafadar.Zanance.App;
 
 internal static partial class AndroidHomeReview
 {
     /// <summary>Checks original table templates and complete canonical amount viewports without invoking financial commands.</summary>
-    private static async Task<object> ReviewFinancialTablesAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct, bool legendsOnly = false)
+    private static async Task<object> ReviewFinancialTablesAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct,
+        bool legendsOnly = false, bool budgetTitlesOnly = false)
     {
         async Task RootAsync()
         {
@@ -52,7 +55,8 @@ internal static partial class AndroidHomeReview
                 || entries[0].AccountId != accounts[0].Id || entries[0].Amount != 1234 || entries[0].Kind != EntryKind.Expense)
                 throw new ReviewCheckException("Original failed fixture differs; never recreate it.");
         }
-        async Task<string> StoredAsync() => JsonSerializer.Serialize(new { Settings = await store.GetSettingsAsync(), Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync() });
+        async Task<string> StoredAsync() => JsonSerializer.Serialize(new { Settings = await store.GetSettingsAsync(), Accounts = await store.GetAccountsAsync(),
+            Entries = await store.GetEntriesAsync(), Budgets = await store.GetBudgetsAsync() });
         var before = await StoredAsync(); var local = services.GetRequiredService<ILocalizationService>(); var translator = services.GetRequiredService<Translator>();
         var themes = services.GetRequiredService<ThemeService>(); var observations = new List<object>();
         foreach (var theme in new[] { ThemeChoice.Light, ThemeChoice.Dark })
@@ -69,6 +73,29 @@ internal static partial class AndroidHomeReview
             foreach (var language in new[] { "en", "fa", "de" })
             {
                 await SetLanguageAsync(app, local, language, ct); await RootAsync(); var dates = new DateFormatter(local);
+                if (budgetTitlesOnly)
+                {
+                    var budget = new BudgetViewModel(store, fixture.GetRequiredService<PlanStore>(), fixture.GetRequiredService<GoalStore>(),
+                        translator, dates, local, time, services.GetRequiredService<IAppInteraction>());
+                    var budgetPage = new BudgetPage(budget).WithFlowDirection(local);
+                    await Shell.Current.Navigation.PushAsync(budgetPage); await budget.LoadAsync();
+                    budget.HasBudget = true; budget.IsFlex = true; budget.FlexLines.Clear();
+                    foreach (var key in new[] { "Flex_Fixed", "Flex_NonMonthly" })
+                        budget.FlexLines.Add(new FlexLine(translator[key], "Fictitious presentation only", FluentIcons.Common.Symbol.CalendarClock,
+                            Palette.PlanText, Palette.PlanBackground, Palette.PlanLine));
+                    await Task.Delay(250, ct);
+                    var outer = Views(budgetPage).OfType<ScrollView>().First(value => value.Orientation != ScrollOrientation.Horizontal);
+                    foreach (var line in budget.FlexLines)
+                    {
+                        var label = Views(budgetPage).OfType<Label>().Single(value => value.Text == line.Title && Visible(value));
+                        await outer.ScrollToAsync(label, ScrollToPosition.Center, false); await Task.Delay(100, ct); CheckText(label);
+                    }
+                    await Shell.Current.Navigation.PopAsync();
+                    if (before != await StoredAsync()) throw new ReviewCheckException("Caption-only budget review changed original inputs.");
+                    observations.Add(new { Language = language, Theme = theme.ToString(), OriginalFlexCaptions = 2,
+                        CompleteText = true, BudgetMethodNeverSaved = true });
+                    continue;
+                }
                 var positive = MoneyText.Format(long.MaxValue, "EUR", local.CurrentCulture); var negative = MoneyText.Format(-long.MaxValue, "EUR", local.CurrentCulture);
                 var zero = MoneyText.Format(0, "EUR", local.CurrentCulture); var month = dates.Format(today, DateFormatStyle.MonthYear);
                 var reports = new ReportsViewModel(store, fixture.GetRequiredService<PlanStore>(), fixture.GetRequiredService<GoalStore>(),
@@ -114,7 +141,8 @@ internal static partial class AndroidHomeReview
                 observations.Add(new { Language = language, Theme = theme.ToString(), TrendAmounts = trend, HistoryAmounts = history, ComparisonAmounts = comparisonCount, CompleteTextAndScrollEnds = true });
             }
         }
-        return new { Comparison = comparison, OriginalReportsAndSnapshotPages = !legendsOnly, OriginalReportLegends = legendsOnly,
+        return new { Comparison = comparison, OriginalReportsAndSnapshotPages = !legendsOnly && !budgetTitlesOnly,
+            OriginalReportLegends = legendsOnly, OriginalBudgetTitles = budgetTitlesOnly,
             OriginalStoredInputsUnchanged = true, NoMainDataTouched = true,
             NoFinancialSaveOrSystemSettings = true, ActualPhoneAcceptance = false, Observations = observations };
 

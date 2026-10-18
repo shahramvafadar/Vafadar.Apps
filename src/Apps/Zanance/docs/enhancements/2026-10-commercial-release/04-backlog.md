@@ -50,7 +50,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-07 | Android/iOS parity (notifications, widget, file picker, lock, share, licences); existing Windows development checks | 2 | P2 | M | Mac readiness owner-reported; verification and iOS runs pending in that environment. Windows commercial delivery is outside current scope | platform access/signing |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | In progress (D-174 widget and D-175 contextual date names/drafts verified locally; spoken TalkBack and remaining screen/platform acceptance open) | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
-| ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; D-96 complete account type/status descriptions; D-97 complete debt entry action; D-98 single readable modal headers; D-99 visible complete plan validation; D-100 complete transaction-field feedback; D-101 retained visible existing transfer fees in Simple; D-102 complete settlement fields/action; D-103 complete occurrence actions/field feedback; D-107 complete growing native selected/popup picker captions; D-108 complete report-scope captions/Clear targets and reachable result viewport locally delivered; D-302 complete searchable currency controls and constrained transaction/goal/rate fields; D-308 complete native saved-filter names/actions; D-311 full monetary packets in report/forecast tables; D-335 complete More titles/explanations in offline/sync editions; D-339 complete category/composition report names and amount viewports; other controls and platform acceptance open) | – |
+| ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; D-96 complete account type/status descriptions; D-97 complete debt entry action; D-98 single readable modal headers; D-99 visible complete plan validation; D-100 complete transaction-field feedback; D-101 retained visible existing transfer fees in Simple; D-102 complete settlement fields/action; D-103 complete occurrence actions/field feedback; D-107 complete growing native selected/popup picker captions; D-108 complete report-scope captions/Clear targets and reachable result viewport locally delivered; D-302 complete searchable currency controls and constrained transaction/goal/rate fields; D-308 complete native saved-filter names/actions; D-311 full monetary packets in report/forecast tables; D-335 complete More titles/explanations in offline/sync editions; D-339 complete category/composition report names and amount viewports; D-340 complete default RowTitle and Flex bill-group captions; other controls and platform acceptance open) | – |
 | ZCR-A11Y-04 | VoiceOver pass on iOS | 2 | P2 | S | Blocked (iOS) | QA-07 |
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Implemented (D-117 / approved OD-03; 76 policy cases; no app enforcement) | OD-03 approved |
 | ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | Implemented locally (D-173 bounded review closed; enforcement inactive; activation/native release gates remain) | ENT-01 |
@@ -2938,3 +2938,17 @@ without restarting its scenario. QA-06/ANR, broader A11Y/OS readers, physical An
 gates remain open. Managed test counts are unchanged; unrelated passed suites were not repeated.
 
 [Evidence and limits](../../quality/report-legends-readable.md).
+
+## D-340 complete default row captions
+
+The remaining inherited RowTitle ellipsis truncates the original Non-monthly bills caption at
+200% Windows process-local scale/360 width. The shared default now wraps with its original 15-unit
+font and semantic color. All 26 other current consumers already explicitly wrap, so their effective
+behavior is unchanged. Eighteen final Windows contexts/36 native captions and six Release/AOT
+Android contexts/12 captions pass; original account/entry/budget inputs stay unchanged and no method
+is saved. Strict builds and a complete signed offline APK pass. The independent Android startup
+ANR remains an actual failure; Wait continued the same PID 1753 to its completed caption result.
+Actual OS text scale/TalkBack, broader device/iOS/performance and release gates remain open. No
+system setting, financial algorithm, schema, translation or managed unit count changes.
+
+[Evidence and limits](../../quality/budget-group-titles-readable.md).

@@ -7,8 +7,10 @@ param(
     [ValidateRange(30, 1800)][int]$TimeoutSeconds = 600,
     [ValidatePattern('^[0-9a-f]{32}$')][string]$RunId,
     [switch]$UseExistingBuild,
-    [switch]$ReportRowsReview)
+    [switch]$ReportRowsReview,
+    [switch]$BudgetTitlesReview)
 $ErrorActionPreference = 'Stop'
+if ($ReportRowsReview -and $BudgetTitlesReview) { throw 'Choose one original review matrix.' }
 $root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
 Set-Location -LiteralPath $root
 if ($UseExistingBuild -and !$RunId) { throw 'An existing build requires its exact original run id.' }
@@ -44,8 +46,8 @@ try {
     $env:VAFADAR_SNAPSHOT_ONLY = 'store-draft'
     $env:VAFADAR_STORE_DRAFT_RUN = $run
     $env:VAFADAR_WINDOW_SIZE = '412x800'
-    $env:VAFADAR_SNAPSHOT_FONT_SCALE = if ($ReportRowsReview) { '2' } else { '' }
-    $env:VAFADAR_STORE_DRAFT_REVIEW = if ($ReportRowsReview) { 'report-rows' } else { '' }
+    $env:VAFADAR_SNAPSHOT_FONT_SCALE = if ($ReportRowsReview -or $BudgetTitlesReview) { '2' } else { '' }
+    $env:VAFADAR_STORE_DRAFT_REVIEW = if ($ReportRowsReview) { 'report-rows' } elseif ($BudgetTitlesReview) { 'budget-titles' } else { '' }
     $env:VAFADAR_START_ROUTE = ''
     Add-Type -Path (Join-Path $PSScriptRoot '../modules/StoreDraftProcess.cs')
     $inputBefore = [Vafadar.Build.StoreDraftProcess]::ReadInputDesktopName()
@@ -61,7 +63,7 @@ try {
     $receiptPath = Join-Path $output 'complete.json'
     if (!(Test-Path -LiteralPath $receiptPath)) { throw 'No completed original draft receipt.' }
     $receipt = Get-Content -LiteralPath $receiptPath -Raw | ConvertFrom-Json
-    $expectedCount = if ($ReportRowsReview) { 18 } else { 48 }
+    $expectedCount = if ($ReportRowsReview -or $BudgetTitlesReview) { 18 } else { 48 }
     if ($receipt.Package -ne $identity -or $receipt.ProcessId -ne $process.Id -or
         !$receipt.FinancialRowsUnchangedAfterSeeding -or $receipt.Captures.Count -ne $expectedCount) {
         throw 'Draft completion does not match the original run.'

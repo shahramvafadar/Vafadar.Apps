@@ -220,3 +220,13 @@ Observe the exact original PID with Read-ReviewReport.ps1 -Phase legends -Compar
 Observation expiry is not terminal. D-339 retained an actual initial ANR, selected Wait on that
 independent emulator dialog and received the completed six-case report from the same original PID.
 This is not ANR resolution, OS text scaling, phone/iOS or financial calculation acceptance.
+
+## D-340 translated Flex group titles
+
+Phase budget-titles uses a fresh review_run/review_pass and the existing separately owned
+financial-tables.db fixture. It renders original BudgetPage/FlexLine captions in en/fa/de and both
+themes, checking actual TextView allocation/ellipsis. Presentation-only IsFlex and rows never save
+a budget method. Settings/accounts/entries/budgets compare unchanged. Observe the exact original
+PID with Read-ReviewReport.ps1 -Phase budget-titles -Comparison <pass>. No Home preparation,
+performance matrix, report calculation or system text-scale change belongs to this phase.
+An observed startup ANR remains separate from completed caption checks on that same process.
