@@ -1441,3 +1441,11 @@ Focused refusal/disposal and original process-cold Android action/persisted meta
 Main offline APK is artifacts/android-cold-reminder-main-d333/pro.vafadar.zanance-Signed.apk, with
 unchanged native crypto/runtime hashes and original emulator Home0 after upgrade. This does not close
 startup ANR, interrupted-action/power-loss, phone, iOS, OAuth/provider/Store or release gates. See [evidence](quality/cold-protected-reminder-startup.md).
+
+
+## D-334 rejected startup variants
+
+The experimental APKs are not handoff candidates. Retain the qualified ordinary D-333 APK; assembly
+compression-off crashes before managed entry, and direct native-library loading still produces a
+startup ANR. No publication or performance gate closes. Temporary source/manifest changes are removed.
+[Actual evidence and binary scope](quality/android-startup-packaging.md).

@@ -3780,3 +3780,15 @@ saved/native pending snooze and preserved fixture account/plan/zero ledger. PID2
 persisted native/snooze metadata without preparing the financial store. Strict builds, complete signed
 offline upgrade and original emulator Home0 pass. Phone/iOS, scheduled delivery and interruption during
 the action remain separate. Startup ANRs are not fixed. See [evidence](quality/cold-protected-reminder-startup.md).
+
+
+## D-334 QA-06 negative packaging evidence
+
+Both finite packaging alternatives are rejected: disabling assembly compression fails before
+managed startup with a missing compressed_assembly_count native symbol; direct native-library loading
+records a real binding ANR and takes24.422s through OnCreate versus the17.755s control. Single samples,
+native rebuild differences and public memory counters do not establish the original root cause.
+All temporary source/manifest changes are removed; ordinary application/APK remain D-333. No unchanged
+successful suite is repeated or new test count claimed. QA-06 and wider device/iOS/release gates remain open.
+Neither experiment qualifies an ANR fix. Preserve their terminal crash/actual ANR rather than treating
+a completed callback or signed build as acceptance. [Evidence](quality/android-startup-packaging.md).

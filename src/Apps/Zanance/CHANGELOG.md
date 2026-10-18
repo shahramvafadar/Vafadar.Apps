@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Startup investigation (D-334)
+
+- Keep the existing Android packaging after two alternatives fail native startup or still produce an ANR. Application behavior and the qualified D-333 APK are unchanged; startup performance remains under investigation.
+
 ### Cold notification snoozes (D-333)
 
 - Snooze an Android reminder after the app process has ended without opening a window. Prepare the protected database before reading its original plan; unavailable storage preserves valid queued reminders. A snooze disposed during preparation stops before reading or scheduling.

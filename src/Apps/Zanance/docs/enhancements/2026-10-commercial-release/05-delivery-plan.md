@@ -2249,3 +2249,16 @@ Keep the full development goal active. Continue unresolved startup/ANR diagnosis
 timing evidence and remaining Android acceptance; no repeated licence/AOT recording or unrelated passed
 suites without a new cause. Physical Samsung, Mac/iOS and owner/provider/Store gates remain separate.
 [Evidence](../../quality/cold-protected-reminder-startup.md).
+
+
+## D-334 finite investigation and next work
+
+Both finite packaging alternatives are rejected: disabling assembly compression fails before
+managed startup with a missing compressed_assembly_count native symbol; direct native-library loading
+records a real binding ANR and takes24.422s through OnCreate versus the17.755s control. Single samples,
+native rebuild differences and public memory counters do not establish the original root cause.
+All temporary source/manifest changes are removed; ordinary application/APK remain D-333. No unchanged
+successful suite is repeated or new test count claimed. QA-06 and wider device/iOS/release gates remain open.
+The next ready work remains the unresolved Android application-binding path and outstanding Android
+acceptance. These rejected variants are not a new completed feature. Keep the full goal active and
+preserve settled owner/external gates. [Evidence](../../quality/android-startup-packaging.md).

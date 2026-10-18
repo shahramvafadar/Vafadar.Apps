@@ -2278,3 +2278,14 @@ Cold snooze publication and refusal/disposal preservation are locally qualified 
 application sources and an actual x64/API36 action with zero windows. Reuse the existing bootstrap and
 source guards; no new financial algorithm/schema or product decision. QA-06 ANRs and broader device/
 iOS/interrupted-action/release acceptance remain open. See [evidence](quality/cold-protected-reminder-startup.md).
+
+
+## D-334 startup packaging decision
+
+Both finite packaging alternatives are rejected: disabling assembly compression fails before
+managed startup with a missing compressed_assembly_count native symbol; direct native-library loading
+records a real binding ANR and takes24.422s through OnCreate versus the17.755s control. Single samples,
+native rebuild differences and public memory counters do not establish the original root cause.
+All temporary source/manifest changes are removed; ordinary application/APK remain D-333. No unchanged
+successful suite is repeated or new test count claimed. QA-06 and wider device/iOS/release gates remain open.
+See [evidence](quality/android-startup-packaging.md).

@@ -6520,3 +6520,14 @@ metadata read retains that snooze. Strict builds, full signed offline main upgra
 Startup ANRs remain unresolved; temporary profiling does not justify changing licence/telemetry order or
 repeating AOT capture. Samsung is absent; broader device/iOS/lifetime/release gates remain open.
 See [native action and retained failures](quality/cold-protected-reminder-startup.md).
+
+
+## D-334 — Reject unqualified startup packaging alternatives
+
+Both finite packaging alternatives are rejected: disabling assembly compression fails before
+managed startup with a missing compressed_assembly_count native symbol; direct native-library loading
+records a real binding ANR and takes24.422s through OnCreate versus the17.755s control. Single samples,
+native rebuild differences and public memory counters do not establish the original root cause.
+All temporary source/manifest changes are removed; ordinary application/APK remain D-333. No unchanged
+successful suite is repeated or new test count claimed. QA-06 and wider device/iOS/release gates remain open.
+See [exact failures and cleanup](quality/android-startup-packaging.md).

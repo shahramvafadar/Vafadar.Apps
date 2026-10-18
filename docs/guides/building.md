@@ -1203,3 +1203,17 @@ explicit fixture initialization and read-only synthetic status; wrong identities
 Qualify the original notification action's actual new PID and zero-window state before another Activity.
 A later metadata-only process intentionally does not prepare financial storage. See
 [native boundaries](../../src/Apps/Zanance/docs/quality/cold-protected-reminder-startup.md).
+
+
+## D-334 retained startup packaging
+
+Keep the qualified default Android assembly compression and extraction configuration. A local complete
+Release experiment with AndroidEnableAssemblyCompression=false crashes before Application.OnCreate
+because libmonodroid.so requires missing compressed_assembly_count. Do not add custom symbols or
+substitute runtime libraries. The alternative extractNativeLibs=false APK still has a real binding ANR
+and nearly doubles the side-loaded package size. Neither is adopted.
+
+Existing SDK lazy AOT/preload settings were already effective; do not repeat their setup or successful
+unrelated tests. Observations must retain the exact actual process after a timeout. Restore all temporary
+source/manifest bytes and the qualified ordinary APK after a rejected trial. Exact receipts and limits:
+[src/Apps/Zanance/docs/quality/android-startup-packaging.md](../../src/Apps/Zanance/docs/quality/android-startup-packaging.md).

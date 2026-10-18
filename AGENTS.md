@@ -2398,3 +2398,14 @@ Startup refusal/missing publication is not evidence that queued reminders lost t
 preserve them and the unsaved snooze. Recheck disposal before the first read. Keep the original source,
 profile, commercial/privacy and queue-retirement guards after preparation. Native action/persisted
 metadata qualification is separate from arbitrary interrupted-action durability and startup ANR acceptance.
+
+
+## D-334 retained Android startup packaging
+
+Keep the qualified assembly compression/extraction configuration. The compression-off trial fails
+native binding before managed entry; direct native-library loading still records an actual startup
+ANR. Do not repeat these rejected variants without changed build/runtime evidence, manufacture native
+symbols, change licence/telemetry order or infer an environmental root cause from public counters.
+Remove temporary markers/manifest changes and restore the ordinary candidate without resetting data.
+A completed OnCreate callback after an ANR is not acceptance; preserve the same live process after
+observation expiry. QA-06, broader device/iOS and release gates remain open.

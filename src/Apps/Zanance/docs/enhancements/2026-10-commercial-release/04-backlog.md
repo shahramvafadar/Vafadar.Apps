@@ -2860,3 +2860,15 @@ QA-07 gains this scoped local reminder boundary; broader phone/iOS and interrupt
 remain. QA-06 retains repeated startup ANRs, now also observed in an independent provider-only start;
 neither their cause/fix nor two-second/low-memory acceptance is established. Reuse existing successful
 financial/bank/cipher/backend/layout evidence. [Details](../../quality/cold-protected-reminder-startup.md).
+
+
+## D-334 QA-06 packaging result
+
+Both finite packaging alternatives are rejected: disabling assembly compression fails before
+managed startup with a missing compressed_assembly_count native symbol; direct native-library loading
+records a real binding ANR and takes24.422s through OnCreate versus the17.755s control. Single samples,
+native rebuild differences and public memory counters do not establish the original root cause.
+All temporary source/manifest changes are removed; ordinary application/APK remain D-333. No unchanged
+successful suite is repeated or new test count claimed. QA-06 and wider device/iOS/release gates remain open.
+Continue the unresolved binding path; do not repeat these variants without changed build/runtime
+evidence. The full development goal remains active. [Evidence](../../quality/android-startup-packaging.md).

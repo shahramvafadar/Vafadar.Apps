@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-10-18, D-333)
+## 31. Implementation Status (v1.1, scoped updates through 2026-10-18, D-334)
 
 This section records what the repository actually contains. "Verified" is qualified by each scenario's evidence:
 automated tests, running Windows layouts, targeted Android emulator checks or specifically recorded physical
@@ -6537,3 +6537,15 @@ snooze while preserving fixture account/plan fields and zero ledger. Another col
 the same snooze without preparing financial storage. Strict Windows/Android builds, complete signed
 offline main upgrade and original emulator Home0 pass. QA-06 startup ANRs, phone/iOS/OAuth/provider/
 interrupted-action/Store/release gates remain open. See [qualification](../quality/cold-protected-reminder-startup.md).
+
+
+## D-334 bounded startup packaging investigation
+
+Both finite packaging alternatives are rejected: disabling assembly compression fails before
+managed startup with a missing compressed_assembly_count native symbol; direct native-library loading
+records a real binding ANR and takes24.422s through OnCreate versus the17.755s control. Single samples,
+native rebuild differences and public memory counters do not establish the original root cause.
+All temporary source/manifest changes are removed; ordinary application/APK remain D-333. No unchanged
+successful suite is repeated or new test count claimed. QA-06 and wider device/iOS/release gates remain open.
+This is a rejected experiment, not a completed performance requirement or changed product behavior.
+See [evidence](../quality/android-startup-packaging.md).
