@@ -2376,3 +2376,11 @@ remove native observers before the ordinary build. Do not count component checks
 stability or repeat successful unrelated domain, OCR, cipher, backend or performance suites.
 
 [Evidence and limitations](../../quality/ledger-account-amounts-readable.md).
+
+## D-345 - Authorized real OS accessibility pass
+
+Use the already built independent caller and retained fixture for actual OS200%/412dp:36 monetary
+checks pass; restore captured settings. Preserve the unresolved TalkBack speech/prompt/connection
+attempt. Do not replay successful unchanged suites, builds or component cases. Continue Android
+qualification; all-controls/360px/spoken readers, ANR, phone/iOS and release gates remain open.
+[Evidence](../../quality/android-os-accessibility-qualification.md).

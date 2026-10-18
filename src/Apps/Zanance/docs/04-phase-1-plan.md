@@ -1115,3 +1115,9 @@ runs; six original Release/AOT Android contexts pass. No financial writes or uni
 The independent Windows Canvas root-change failure is recorded separately, not fixed by this batch.
 
 [Evidence and limitations](quality/ledger-account-amounts-readable.md).
+
+## D-345 - Emulator accessibility qualification
+
+Actual OS200%/412dp passes36 original monetary checks on retained fictitious data. Captured settings
+are restored; TalkBack speech/navigation remains unaccepted. App/APK remain D-344, without replaying
+unchanged successful builds or suites. [Evidence](quality/android-os-accessibility-qualification.md).

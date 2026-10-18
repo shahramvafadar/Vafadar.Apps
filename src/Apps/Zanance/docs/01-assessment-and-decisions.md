@@ -6657,3 +6657,14 @@ Owner follow-up on 2026-10-18 authorizes temporary accessibility settings only o
 Zanance emulator with restoration to exact prior values. It excludes Samsung, Windows, accounts
 and authentication. This decision unblocks the next real OS font-scale/TalkBack qualification;
 D-344 component checks above did not change those settings or establish that acceptance.
+
+## D-345 - Actual emulator OS text scale and unaccepted TalkBack attempt
+
+Apply the owner's scoped emulator accessibility exception. The existing independent Release/AOT
+caller passes36 original monetary viewports across six language/theme cases at actual OS2.0/412dp,
+with original stored inputs unchanged. Restore captured font/accessibility settings exactly. Preserve
+the same-PID startup ANR/Wait and unaccepted TalkBack audio/prompt/connection evidence; no source or
+APK change and no unrelated successful verification replay. Notification permission stays denied;
+uncaptured permission flags are not claimed restored. A11Y-01/03 remain In progress.
+
+[Evidence and limits](quality/android-os-accessibility-qualification.md).

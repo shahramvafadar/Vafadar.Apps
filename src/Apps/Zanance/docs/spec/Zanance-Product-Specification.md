@@ -6665,3 +6665,11 @@ financial/schema/permission/translation or managed-count change occurs. The sepa
 root-change fault is uncorrected. A11Y-03, QA-06/07, physical/OS-reader, iOS and external gates stay open.
 
 [Evidence and limitations](../quality/ledger-account-amounts-readable.md).
+
+### 31. D-345 actual emulator OS scaling
+
+The existing independent Release/AOT caller qualifies36 original ledger/account amount surfaces in
+six language/theme cases at actual OS font_scale2.0/412dp. Captured font/accessibility settings restore
+exactly. Startup ANR remains; TalkBack speech/navigation is not accepted from service binding or
+low-confidence audio recognition. App/APK and managed count remain D-344. A11Y-01/03, phone/iOS and
+release gates stay open. [Evidence](../quality/android-os-accessibility-qualification.md).

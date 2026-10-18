@@ -1324,3 +1324,15 @@ a completed component context does not clear an unrelated native renderer crash.
 Windows identity and remove all temporary native observers before handoff. AndroidHome phase
 `ledger-rows` uses a fresh comparison on retained financial-tables data, without prepare/reset.
 [Evidence and remaining gates](../../src/Apps/Zanance/docs/quality/ledger-account-amounts-readable.md).
+
+## D-345 - Owner-scoped emulator accessibility qualification
+
+Only on verified Zanance_Storage_Review/emulator-5570, the owner permits temporary accessibility
+settings with exact prior-value restoration. Capture system font_scale and secure accessibility_enabled/
+enabled_accessibility_services first, including whether a key is absent. Restore an absent key by
+deleting only that exact key, not by writing the literal null. Verify readback and bound services.
+Existing caller ledger-rows can qualify retained monetary fixtures at real OS2.0 without a rebuild.
+Do not confuse its NoFinancialSaveOrSystemSettings result with the external authorized OS mutation.
+The D-345 case passes36 viewports; TalkBack binding/audio remain unaccepted speech evidence.
+No Samsung, Windows settings, account, authentication, microphone or desktop playback is covered.
+See [evidence](../../src/Apps/Zanance/docs/quality/android-os-accessibility-qualification.md).

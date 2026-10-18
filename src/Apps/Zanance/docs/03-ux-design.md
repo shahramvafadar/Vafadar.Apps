@@ -1629,3 +1629,11 @@ headers preserve all original currency packets at existing secondary typography.
 checkmark, review dot and native account-details handler stay intact.
 
 [Evidence and limitations](quality/ledger-account-amounts-readable.md).
+
+## D-345 - Real OS scaling remains distinct from Debug stress
+
+At actual emulator font_scale2.0/412dp, six original ledger/account amount surfaces pass complete
+native allocation/scroll/target/color/selection checks across en/fa/de and both themes. This is not
+all-controls,360px or phone acceptance. TalkBack binding and low-confidence captured audio do not
+prove spoken navigation. Restore captured emulator settings after the authorized test; keep the
+failed reader attempt open. [Evidence](quality/android-os-accessibility-qualification.md).

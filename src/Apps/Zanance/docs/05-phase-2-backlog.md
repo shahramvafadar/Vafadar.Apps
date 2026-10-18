@@ -2387,3 +2387,10 @@ Windows Canvas root-change failure remains open; no SDK/root lifecycle workaroun
 Android, broader accessibility, performance, iOS and external release acceptance stay distinct.
 
 [Evidence and limitations](quality/ledger-account-amounts-readable.md).
+
+## D-345 - Actual OS text-scale evidence
+
+A11Y-03 advances with six language/theme cases and36 original monetary surfaces at emulator OS2.0/412dp;
+other controls/widths/devices remain. A11Y-01 stays open after bound TalkBack yields unaccepted
+audio/prompt behavior. Restore the three captured settings exactly; do not claim uncaptured flags
+or broader acceptance. [Evidence](quality/android-os-accessibility-qualification.md).

@@ -3909,3 +3909,11 @@ Win2D root-change crashes and the independent Android startup ANR remain failure
 whole-platform/stability acceptance. No unchanged managed suite or unit count is replayed/increased.
 
 [Evidence and limitations](quality/ledger-account-amounts-readable.md).
+
+## D-345 - Actual OS200% and TalkBack boundary
+
+Six en/fa/de xLight/Dark cases at actual emulator OS2.0/412dp pass36 ledger/account monetary
+viewports, original target/color/name/selection and unchanged stored inputs. Startup ANR and Wait
+on the originalPID are retained. Exact captured OS settings restore; no phone input. TalkBack
+service binding and five low-confidence offline fragments do not pass spoken navigation. No test
+count increase or unrelated suite/build rerun. [Evidence](quality/android-os-accessibility-qualification.md).

@@ -1532,3 +1532,10 @@ devices, OS/spoken readers, iOS, providers, Store and publication remain uncheck
 observer, rejected root teardown, SDK downgrade/fork or security-policy change enters the candidate.
 
 [Evidence and limitations](quality/ledger-account-amounts-readable.md).
+
+## D-345 - Accessibility acceptance remains partial
+
+Real emulator OS200% qualifies six original ledger/account surfaces at412dp,36 checks, with exact
+captured settings restored. TalkBack speech/navigation is unaccepted; notification permission stays
+denied and uncaptured flags are not claimed restored. Broader A11Y-03, phone, iOS, ANR and external
+release gates remain open. App/APK unchanged D-344. [Evidence](quality/android-os-accessibility-qualification.md).
