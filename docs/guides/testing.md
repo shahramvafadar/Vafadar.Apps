@@ -198,3 +198,11 @@ states, renewal on/off, grace, Lifetime, scheduled changes, separate scope and c
 original stored financial inputs and ensure live translation needs no store read. No snapshot means no
 invented history; retirement clears it. The focused six-language theory and separate absent-state case
 are seven distinct cases, not a whole-suite baseline. Native original-page checks remain separate.
+
+## D-354 focused actual-history regressions
+
+When launching this repository's compiled xUnit test DLL directly, use its single-dash CLI filters
+(for example -method '*Complete_history_storage_boundaries_match_independent_ef'). Multiple -method
+filters select the relevant methods. Do not assume another runner's --filter-class option applies;
+inspect discovery/summary and reject zero selected tests. A dotnet test/Microsoft.Testing.Platform
+invocation has a different argument surface. [Current evidence](../../src/Apps/Zanance/docs/quality/complete-history-row-packet.md).

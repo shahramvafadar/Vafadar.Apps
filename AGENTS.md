@@ -2571,3 +2571,10 @@ and force native teardown. Preserve original order, identity, theme/translation 
 commands. Native qualification includes same-count control retention and legitimate shrink/zero/restore
 transitions, with stored inputs unchanged. Scoped lifecycle evidence does not close general COM/GC/ANR
 or cold/phone/reader/iOS/release gates.
+
+## D-354 rejected complete-row packet
+
+A bounded JSON complete-row transport preserves tested data but regresses native tenfold history/Home
+input reads. Keep the original scalar reader and nine maintained storage/error-order regressions.
+Do not ship or repeat the unchanged packet/date candidates without materially new evidence. Limited
+component timing, prototype correctness and unrun prepared helpers do not establish Home acceptance.

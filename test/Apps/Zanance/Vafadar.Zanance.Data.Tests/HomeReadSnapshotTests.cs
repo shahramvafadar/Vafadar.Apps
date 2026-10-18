@@ -284,6 +284,78 @@ public sealed class HomeReadSnapshotTests : IDisposable
         Assert.Equal(expected, JsonSerializer.Serialize((await store.GetHomeSnapshotAsync(Today, 0, Ct)).Entries));
     }
 
+    /// <summary>Complete history preserves escaped text and unusual or oversized provider storage without dropping fields.</summary>
+    [Theory, InlineData("escaped-text"), InlineData("invalid-utf8"), InlineData("large-note"),
+        InlineData("numeric-text"), InlineData("guid-whitespace"),
+        InlineData("large-tags"), InlineData("signed-booleans")]
+    [Trait("AT", "AT-354")]
+    public async Task Complete_history_storage_boundaries_match_independent_ef(string representation)
+    {
+        var provider = Create(); await SeedAsync(provider);
+        await using (var db = await Factory(provider).CreateDbContextAsync(Ct))
+        {
+            switch (representation)
+            {
+                case "escaped-text":
+                    var text = "Original \"quoted\"\0 text\r\n\t \u2067فارسی\u2069 \U0001F4B6";
+                    await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET Title = {text}, Note = {text}, Payee = {text}", Ct); break;
+                case "invalid-utf8":
+                    await db.Database.ExecuteSqlRawAsync("UPDATE Entries SET Note = CAST(x'6180ff0062' AS TEXT)", Ct); break;
+                case "large-note":
+                    await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET Note = {new string('n', 200000)}", Ct); break;
+                case "numeric-text":
+                    await db.Database.ExecuteSqlRawAsync("UPDATE Entries SET Amount = '123tail'", Ct); break;
+                case "guid-whitespace":
+                    await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET GroupId = {"  a502b17e-74c6-4d1b-b174-e52764c44f72  "}", Ct); break;
+                case "empty-identity":
+                    await db.Database.ExecuteSqlRawAsync("UPDATE Entries SET GroupId = ''", Ct); break;
+                case "large-tags":
+                    var tags = JsonSerializer.Serialize(new[] { new string('t', 70000), "Original \"tag\"\0" });
+                    await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET Tags = {tags}", Ct); break;
+                case "signed-booleans":
+                    await db.Database.ExecuteSqlRawAsync("UPDATE Entries SET IsAggregated = -1, IsPartialPayment = 2", Ct); break;
+            }
+        }
+        string? expected = null;
+        var originalError = await Record.ExceptionAsync(async () =>
+        {
+            await using var oracle = await Factory(provider).CreateDbContextAsync(Ct);
+            expected = JsonSerializer.Serialize(await oracle.Entries.AsNoTracking()
+                .OrderByDescending(row => row.Date).ThenByDescending(row => row.CreatedAt).ToListAsync(Ct));
+        });
+        var store = provider.GetRequiredService<ZananceStore>();
+        if (originalError is not null)
+        {
+            var ledgerError = await Record.ExceptionAsync(async () => await store.GetEntriesAsync(cancellationToken: Ct));
+            var homeError = await Record.ExceptionAsync(async () => await store.GetHomeSnapshotAsync(Today, 0, Ct));
+            Assert.NotNull(ledgerError); Assert.NotNull(homeError);
+            Assert.Equal(originalError.GetBaseException().GetType(), ledgerError.GetBaseException().GetType());
+            Assert.Equal(originalError.GetBaseException().GetType(), homeError.GetBaseException().GetType());
+        }
+        else
+        {
+            Assert.Equal(expected, JsonSerializer.Serialize(await store.GetEntriesAsync(cancellationToken: Ct)));
+            Assert.Equal(expected, JsonSerializer.Serialize((await store.GetHomeSnapshotAsync(Today, 0, Ct)).Entries));
+        }
+    }
+
+    /// <summary>A malformed optional identity retains the original provider's refusal without publishing partial history.</summary>
+    [Fact, Trait("AT", "AT-354")]
+    public Task Complete_history_refuses_empty_identity_like_independent_ef() =>
+        Complete_history_storage_boundaries_match_independent_ef("empty-identity");
+
+    /// <summary>Multiple malformed model values retain the original tag-conversion refusal ahead of the update timestamp.</summary>
+    [Fact, Trait("AT", "AT-354")]
+    public async Task Complete_history_keeps_original_model_conversion_failure_order()
+    {
+        var provider = Create(); await SeedAsync(provider);
+        await using (var db = await Factory(provider).CreateDbContextAsync(Ct))
+            await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET Tags = {"{broken"}, UpdatedAt = {long.MaxValue}", Ct);
+        var store = provider.GetRequiredService<ZananceStore>();
+        await Assert.ThrowsAsync<InvalidOperationException>(async () => await store.GetEntriesAsync(cancellationToken: Ct));
+        await Assert.ThrowsAsync<InvalidOperationException>(async () => await store.GetHomeSnapshotAsync(Today, 0, Ct));
+    }
+
     /// <summary>All original required/optional date fields match independent EF parsing at calendar and legacy boundaries.</summary>
     [Theory, InlineData("0001-01-01"), InlineData("9999-12-31"), InlineData("2000-02-29"),
         InlineData("1900-02-28"), InlineData("2024-02-29"), InlineData("2026-10-15"),

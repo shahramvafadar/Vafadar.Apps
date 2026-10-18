@@ -6761,3 +6761,10 @@ Prepare fresh rows before one existing SnapshotCollection Reset, preserving revi
 metadata, enablement and command parameters. Verify unchanged native controls and legitimate shrink/empty/
 restore transitions; do not suppress exceptions or claim a general runtime fix.
 [Cause, negative baseline and qualification](quality/home-template-publication.md).
+
+## D-354 - Withdraw slower complete-row packet; retain actual storage regressions
+
+A bounded JSON transport keeps complete native data but regresses the100,000-row Android public read
+and Home input. Withdraw it before main adoption; restore production/harness sources and keep nine new
+provider-compatibility/error-order regressions against the original reader. Do not reinterpret a smaller
+reference sample or passing unit tests as a speed result. [Exact evidence](quality/complete-history-row-packet.md).

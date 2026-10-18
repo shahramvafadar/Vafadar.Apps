@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Complete-history verification (D-354)
+
+- Add compatibility checks for unusual stored text, numbers and identities. The installed release is unchanged; a slower read experiment was withdrawn.
+
 ### Home template reload (D-353)
 
 - Keep unchanged quick-template controls when Home reloads, with current captions, colours and reviewed actions.

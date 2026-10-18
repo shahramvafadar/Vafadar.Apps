@@ -1605,3 +1605,9 @@ release acceptance remain open. [Current exact evidence and APK](quality/reimbur
 Complete template publication prevents unnecessary native teardown during Home reload. Native lifecycle
 evidence is scoped to its actual environments; all broader GC/ANR, cold, phone/iOS, reader and release
 gates remain open. [Current evidence](quality/home-template-publication.md).
+
+## D-354 rejected performance candidate
+
+Do not release the row-packet prototype: tenfold native reads regress despite complete data equality.
+Production/App/APK remain D-353; retain nine restored-reader regressions and exact negative evidence.
+No new performance/platform acceptance is claimed. [Evidence](quality/complete-history-row-packet.md).

@@ -2458,3 +2458,9 @@ root failures remain the next independent ready defect, without waiting for sett
 Address the actual QuickTemplates.Clear failure path with complete fresh snapshot publication; test
 unchanged-control retention and legitimate removal/restoration on original native controls. No repeated
 unchanged financial/crypto/OCR suites. [Qualification](../../quality/home-template-publication.md).
+
+## D-354 native performance gate rejects packet transport
+
+Complete-row correctness alone is insufficient: tenfold public/history input reads regress, so withdraw
+the candidate before main builds and broader successful-matrix replay. Keep nine original-reader boundary
+regressions and current best production source. [Evidence](../../quality/complete-history-row-packet.md).

@@ -6749,3 +6749,10 @@ Quick-template reload now prepares fresh complete rows and publishes one snapsho
 native controls while preserving original reviewed metadata/commands. Shrink/empty/restore paths receive
 native checks. Financial semantics, unit-suite counts and broader runtime/platform gates are unchanged.
 [Evidence](../quality/home-template-publication.md).
+
+### Section31 update - D-354 complete-history boundaries
+
+Nine new actual Data regressions pass on the unchanged scalar reader after withdrawing a slower native
+complete-row transport. Production/app/APK are unchanged from D-353. The final focused run has9cases;
+this is not a new full-suite execution/count or closure of QA-06.
+[Evidence and rejected direction](../quality/complete-history-row-packet.md).

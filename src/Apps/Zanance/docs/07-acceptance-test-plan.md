@@ -3997,3 +3997,10 @@ The unchanged-source Windows baseline fails retained-native-control assertions. 
 original Home language/theme contexts, same-count reload, fresh reordered metadata, disabled original
 commands and2/1/0/2/0/2 count transitions with stored inputs preserved. No new full-suite count is inferred.
 [Receipts, failures and platform limits](quality/home-template-publication.md).
+
+## AT-354 complete-history storage compatibility
+
+Nine new maintained cases cover complete escaped/invalid/large text, textual numbers, legacy/malformed
+identities, large tags, signed booleans and original conversion-failure order. Final restored-source
+run:9passed,0failed/skipped. Earlier prototype60-case and simulated capability runs remain separate;
+no full-suite/native user-acceptance count is inferred. [Evidence](quality/complete-history-row-packet.md).

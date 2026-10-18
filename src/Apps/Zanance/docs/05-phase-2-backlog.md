@@ -2441,3 +2441,9 @@ iOS/release gates remain open. [Evidence](quality/reimbursement-page.md).
 Remove unnecessary clear/add native teardown using complete snapshot publication. Original-source native
 checks cover retained controls and real count changes without posting money. This does not close QA-06
 or platform acceptance. [Evidence](quality/home-template-publication.md).
+
+## D-354 rejected complete-row transport
+
+The complete-row JSON candidate passes correctness but regresses tenfold native reads and is withdrawn.
+Nine new actual-history boundary tests pass against restored production. QA-06 and current best scalar
+reader remain unchanged; no failed experiment is shipped. [Evidence](quality/complete-history-row-packet.md).
