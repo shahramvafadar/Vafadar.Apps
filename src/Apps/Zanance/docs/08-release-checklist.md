@@ -1611,3 +1611,9 @@ gates remain open. [Current evidence](quality/home-template-publication.md).
 Do not release the row-packet prototype: tenfold native reads regress despite complete data equality.
 Production/App/APK remain D-353; retain nine restored-reader regressions and exact negative evidence.
 No new performance/platform acceptance is claimed. [Evidence](quality/complete-history-row-packet.md).
+
+## D-355 Android picker selected text
+
+Grow complete native selected captions without changing selection, OS scale or keyboard authority.
+Keep actual startup ANR and helper failures separate from successful geometry checks. Broader
+Android/reader/iOS/release gates remain open. [Evidence](quality/android-settings-os-text.md).

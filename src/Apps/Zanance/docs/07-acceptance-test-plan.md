@@ -4004,3 +4004,11 @@ Nine new maintained cases cover complete escaped/invalid/large text, textual num
 identities, large tags, signed booleans and original conversion-failure order. Final restored-source
 run:9passed,0failed/skipped. Earlier prototype60-case and simulated capability runs remain separate;
 no full-suite/native user-acceptance count is inferred. [Evidence](quality/complete-history-row-packet.md).
+
+## D-355 scoped actual-OS Settings picker regression
+
+Retain the original clipped English Light negative baseline at412dp/font_scale2.0. Check the
+corrected original page in English, Persian and German, light/dark, with unchanged fictitious
+accounts/entries/settings and original account-dialog Cancel. Restore exact captured OS values.
+This scoped native matrix does not close A11Y-01/03 or qualify every Settings control or spoken
+reader. [Exact outcomes and limits](quality/android-settings-os-text.md).

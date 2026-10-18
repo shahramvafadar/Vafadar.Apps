@@ -350,3 +350,15 @@ disabled commands, then counts 2/1/0/2/0/2 and original store reload in en/fa/de
 Require actual Activity focus and complete stored account/entry/settings/template equality. No
 financial command, main-package data or OS setting is changed. This is a scoped lifecycle check,
 not cold/GC/ANR, phone, reader, encryption or release acceptance.
+
+## D-355 actual OS Settings text
+
+The settings-text phase requires the owner-authorized independent emulator at actual font_scale2.0
+and412dp. A marked separate database retains fictitious accounts/settings across failures; refuse
+completed comparison packets. Inspect original Labels, selected Pickers and Entries in en/fa/de and
+both themes, plus original default-account popup rows/Cancel, with complete stored inputs unchanged.
+The synthetic LockAvailable flag exposes only a caption; no security/permission/financial action is
+invoked. settings-text-page retains first-page failures before popup checks. Wait for actual dialog
+focus rather than accepting elapsed time. The caller writes no OS setting: its external authorized
+controller captures/restores exact previous values. Do not infer all controls, spoken TalkBack,
+360dp, physical/iOS, ANR or release acceptance.

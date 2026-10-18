@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Android large text (D-355)
+
+- Let long selected choices in Android wrap completely, including numeric formats and account names in Settings.
+
 ### Complete-history verification (D-354)
 
 - Add compatibility checks for unusual stored text, numbers and identities. The installed release is unchanged; a slower read experiment was withdrawn.

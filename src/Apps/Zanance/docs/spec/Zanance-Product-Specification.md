@@ -6756,3 +6756,11 @@ Nine new actual Data regressions pass on the unchanged scalar reader after withd
 complete-row transport. Production/app/APK are unchanged from D-353. The final focused run has9cases;
 this is not a new full-suite execution/count or closure of QA-06.
 [Evidence and rejected direction](../quality/complete-history-row-packet.md).
+
+### Section31 update - D-355 Android selected picker captions
+
+Native Android selected values can wrap and grow at inherited OS scale. The observed Settings
+numeric-format/default-account clipping is the target; original binding/selection and keyboard
+restrictions remain. Scope and final native evidence are separate from whole-suite counts,
+all-Settings/reader/ANR/physical/iOS/release acceptance.
+[Evidence](../quality/android-settings-os-text.md).

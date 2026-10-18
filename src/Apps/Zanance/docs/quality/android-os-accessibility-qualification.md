@@ -416,3 +416,11 @@ No Samsung, Windows setting, owner data, account, authentication, app code, runt
 count changes. No unchanged successful suite/build is repeated. Actual TalkBack activation/speech,
 OS-reader matrix, native ANR, physical/iOS and release acceptance remain open. Stop these unchanged
 input attempts; a future route needs verified reader input delivery or genuine device evidence.
+
+## D-355 Settings selected-picker continuation
+
+The scoped actual200% Settings review finds and fixes single-line Android selected-caption
+clipping, then completes en/fa/de light/dark original labels/pickers/entries and account-dialog
+Cancel with stored fictitious inputs unchanged. Captured font/accessibility values restore
+exactly; no Samsung or display-size setting changes. Startup ANR remains observed and open.
+[Negative baseline, final receipts and explicit coverage limits](android-settings-os-text.md).

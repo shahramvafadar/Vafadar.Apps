@@ -263,6 +263,9 @@ public static class MauiProgram
 #endif
 #endif
 
+#if ANDROID
+        Presentation.AndroidPickerText.Register();
+#endif
 #if WINDOWS
         Presentation.WindowsPickerText.Register();
         // The keyboard focus ring in the action blue of the palette instead of black and white (D-40, D-42). WinUI 3 reads

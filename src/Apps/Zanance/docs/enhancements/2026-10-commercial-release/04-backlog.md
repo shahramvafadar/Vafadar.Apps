@@ -3046,3 +3046,10 @@ and control; complete data/presentation preservation passes. Measured pages now 
 focus and reject older unguarded receipts. Real startup/Main ANRs remain recorded; Main/APK stay D-344.
 No full suite or successful unrelated verification is replayed. QA-06/device/iOS/release remain open.
 [Evidence and limits](../../quality/home-date-materialization.md).
+
+## D-355 scoped Android Settings text
+
+Correct observed single-line native picker clipping at actual OS200% text, preserving native
+selection and original font scale. Retain scoped original-page checks and exact settings
+restoration. A11Y-01/03, QA-06/ANR and platform/external acceptance remain open.
+[Evidence](../../quality/android-settings-os-text.md).

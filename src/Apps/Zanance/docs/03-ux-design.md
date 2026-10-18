@@ -1671,3 +1671,9 @@ separation; allocated bounds alone do not prove readability. No system setting c
 Reload the complete template strip atomically with fresh presentation records. Preserve unchanged native
 controls and complete current spoken captions/commands; support real reduction to zero and restoration.
 No visual redesign or financial activation accompanies this lifecycle correction.
+
+## D-355 Android native picker captions
+
+The closed native Picker must show the complete selected value at inherited OS text scale. Allow
+wrapped growing captions, preserve native dialog/selection and editing restrictions, and do not
+replace accessibility scaling with smaller type. [Native evidence](quality/android-settings-os-text.md).

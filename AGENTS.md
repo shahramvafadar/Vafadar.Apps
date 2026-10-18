@@ -2578,3 +2578,10 @@ A bounded JSON complete-row transport preserves tested data but regresses native
 input reads. Keep the original scalar reader and nine maintained storage/error-order regressions.
 Do not ship or repeat the unchanged packet/date candidates without materially new evidence. Limited
 component timing, prototype correctness and unrun prepared helpers do not establish Home acceptance.
+
+## D-355 Android growing selected picker text
+
+Keep the original Android read-only Picker/dialog and KeyListener restrictions. Closed selected
+captions wrap at inherited OS font size, without single-line scrolling or ellipsis, and native
+height grows. Do not shrink fonts or infer whole-Settings/reader/ANR acceptance from scoped text
+geometry. Independent actual-OS reviews restore exact captured settings and preserve failed starts.

@@ -55,6 +55,13 @@ internal static partial class AndroidHomeReview
                 if (RedirectedAncestors(root).Length != 0) throw new ReviewCheckException("Redirected plan review root refused.");
                 await WriteReportAsync(root, phase, await ReviewFirstPlanPublicationAsync(app, services, root, comparison!, ct), ct);
             }
+            else if (phase == "settings-text")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0 || File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))
+                    throw new ReviewCheckException("Fresh original Settings text review required.");
+                await WriteReportAsync(root, phase, await ReviewSettingsTextAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "read-profile")
             {
                 RequireRoot(root);

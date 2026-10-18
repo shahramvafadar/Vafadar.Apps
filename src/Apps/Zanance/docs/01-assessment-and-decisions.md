@@ -6768,3 +6768,11 @@ A bounded JSON transport keeps complete native data but regresses the100,000-row
 and Home input. Withdraw it before main adoption; restore production/harness sources and keep nine new
 provider-compatibility/error-order regressions against the original reader. Do not reinterpret a smaller
 reference sample or passing unit tests as a speed result. [Exact evidence](quality/complete-history-row-packet.md).
+
+## D-355 - Grow Android selected picker captions at actual OS text scale
+
+Actual OS200% Settings exposes clipped native numeric-format/default-account captions. Preserve the
+original read-only picker and dialog while allowing selected text to wrap and height to grow. Keep
+font scale, selection, keyboard restrictions, direction and semantic names. The independent caller
+uses fictitious Settings without invoking security or financial actions.
+[Cause, retained failures, final checks and limits](quality/android-settings-os-text.md).
