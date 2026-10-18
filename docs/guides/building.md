@@ -1257,3 +1257,11 @@ shipped. The original AVD/data remain; ordinary D-336 signed APK and same-PID Ho
 App code, APK and managed counts remain D-336; no unchanged successful suite/build is repeated.
 QA-06/phone/iOS/release remain open. Continue ready release preparation independently of those gates.
 [Evidence and limitations](../../src/Apps/Zanance/docs/quality/android-startup-clock-cost.md).
+
+## D-338 isolated store drafts
+
+Use `eng/scripts/Run-StoreDrafts.ps1` for independent six-language native development drafts. It checks
+the unique package before financial startup and renders on a non-input desktop without moving Main
+data. Preserve live original processes after observation expiry. Export exact opaque RGB with
+`eng/scripts/Export-StoreDrafts.ps1`; no upload occurs. Restore the ordinary Windows build afterwards.
+See [commands, refusal cases and one-frame repair](../../src/Apps/Zanance/docs/quality/store-drafts.md).

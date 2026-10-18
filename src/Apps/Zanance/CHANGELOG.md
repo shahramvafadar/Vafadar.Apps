@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Six-language store preparation (D-338)
+
+- Refresh fictitious development screenshot drafts in all six languages, with isolated capture and exact pixel provenance. Mobile screenshot acceptance and publication remain open.
+
 ### Reliable incremental Android packaging (D-336)
 
 - Regenerate stale compressed-assembly cache entries before packaging so a changed build order cannot produce the observed pre-launch native size-mismatch crash. Valid cached entries remain reusable; the earlier startup ANR remains under investigation.

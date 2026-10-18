@@ -2436,3 +2436,11 @@ clock-reading cost in the current emulator; this is not proof of a sole hypervis
 fix. Preserve clock precision, security and licence order. Never change kernel profiling restrictions
 or stop/reset the retained AVD to compensate for weak observations. Qualify independent controls,
 remove only their verified owned files and restore the ordinary signed application afterwards.
+
+## D-338 independent store draft capture
+
+Store drafts use a fresh Debug Windows package and empty private storage, validated before shared
+initialization. Start only the owned process on a non-input desktop; never switch desktops or
+move/reset Main files. Retain original PID and observations after timeout. Await actual nested
+budget publication and shell replacement. Preserve original opaque RGB pixels without resizing or
+retouching. Replace only verified rejected frames. Development drafts are not device/Store acceptance.

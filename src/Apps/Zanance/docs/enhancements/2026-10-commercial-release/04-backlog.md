@@ -2912,3 +2912,15 @@ shipped. The original AVD/data remain; ordinary D-336 signed APK and same-PID Ho
 App code, APK and managed counts remain D-336; no unchanged successful suite/build is repeated.
 QA-06/phone/iOS/release remain open. Continue ready release preparation independently of those gates.
 [Evidence and limitations](../../quality/android-startup-clock-cost.md).
+
+## D-338 REL-03/04 draft assets
+
+Eight current native Windows draft screenshots in each existing language (en/fa/de/es/fr/it)
+are delivered with exact RGB/source hashes and independent fictitious package/storage/non-input
+desktop isolation. Five actual native pre-startup refusals, strict Windows/Android Debug builds and
+48 visual/pixel checks passed. Only the rejected English budget loading frame was recaptured from
+the same fictitious data; 47 successful frames were retained. Shipping UI/APK and managed counts
+remain D-336. These are development drafts, not mobile or Store acceptance/publication. QA-06,
+broader physical Android, Mac/iOS, provider/accounts and owner release gates remain open.
+
+[Evidence and limits](../../quality/store-drafts.md).

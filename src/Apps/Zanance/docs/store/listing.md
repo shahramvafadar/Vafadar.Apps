@@ -7,7 +7,7 @@ open. These drafts do not authorize publication. iOS texts require its separate 
 Re-check the limits in Play Console
 before publishing: title 30 characters, short description 80, full description 4,000.
 
-Screenshots: `eng/scripts/Run-Snapshots.ps1` with fictitious data, light and dark, one set per language
+Screenshots: `eng/scripts/Run-StoreDrafts.ps1` with fictitious data, light and dark, one set per language
 (`store/screenshots/<language>/`, see the list at the end).
 
 ## English
@@ -378,6 +378,13 @@ Zanance registra e organizza i dati: non esegue pagamenti o trasferimenti bancar
 3. New entry – amount and categories
 4. Plans – date tiles, overdue and upcoming
 5. Insights – budget (limits or flex)
-6. Insights – reports with the category chart
+6. Insights – current period overview report
 7. Accounts – cash, savings and a loan
 8. Home in the dark theme
+
+## D-338 screenshot provenance
+
+All six folders contain eight current fictitious native Windows development drafts. Exact source,
+RGB and image hashes are in `screenshots/capture-manifest.json`. The 596 x 1189 opaque RGB files
+preserve actual UI pixels. They are not mobile screenshots and do not meet recommended 1080 x 1920
+featured portrait resolution. No upload/publication occurred. [Evidence](../quality/store-drafts.md).

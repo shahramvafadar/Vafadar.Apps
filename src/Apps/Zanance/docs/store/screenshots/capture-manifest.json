@@ -1,0 +1,444 @@
+{
+  "Origin": "Windows development render - not Android/iOS device acceptance",
+  "SourceRun": "13b0e0648c0c40159fba817e8c199973",
+  "ReviewPackage": "pro.vafadar.zanance.storepreview.13b0e0648c0c",
+  "ReviewDesktop": "ZananceStore_13b0e0648c0c40159fba817e8c199973",
+  "Encoding": "24-bit RGB PNG, no alpha",
+  "ExactOriginalRgbPixels": true,
+  "Resized": false,
+  "Captures": [
+    {
+      "Language": "en",
+      "File": "01-home.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "2ca03020451bc59e953e8bd8e026a8783a567ec2412317cc6e959a9fd8ecb562",
+      "SourceSha256": "6caeeb8d7eb440a7db44389a239d3a81b6458c15391ed184cebc5211f4a8cbab",
+      "Sha256": "41ffca4a2ddf23212a53f3402cc4790db87a58ed604612889e776139d5b30907"
+    },
+    {
+      "Language": "en",
+      "File": "02-transactions.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "a3a3296dc9679d07f6760f7afbfb1422d7173b4612308579a715f64df23dd428",
+      "SourceSha256": "586ac850f36fc70ab0989a9a843ce393f26a1854527dde878e0b305c1862b415",
+      "Sha256": "9a04ca9188878ae076c171ada22a267e9f38d582280307a8e4ae5a54ff87250b"
+    },
+    {
+      "Language": "en",
+      "File": "03-new-entry.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "3337c8a7d80ee2c8a8b956b0a42294afcff8e4af4242d8305041f9a5de00f1c4",
+      "SourceSha256": "383f96c88d4d45411da4b9d6c7bc8f12725de58a32a1c627410bc7efd85e88cc",
+      "Sha256": "554334e9ec1e5bc64a986c751d2432d5ef71fe61f8a389d95b81c151e287cf21"
+    },
+    {
+      "Language": "en",
+      "File": "04-plans.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "a4aab53f4bd111d74bb7bdb47c597675a439e71d66cad3b31877d24e6d88bf62",
+      "SourceSha256": "52bef1e9f833fb083f9b0e0a838767c4e5ce0c728d6ffefa6421b42ebea764b9",
+      "Sha256": "0d76f72d604f1d5a7c2e2f70986812bb43b7a6fd57603b4554db663370f86d08"
+    },
+    {
+      "Language": "en",
+      "File": "05-budget.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "16b29a67a7491d2de29eb1ba5445576407b9994dc9ff448f4a77a5b7739afedf",
+      "SourceSha256": "3eab0bdd7724a2411746f2d5acf372607c25230a10f30049edf6b57299e080a2",
+      "Sha256": "b90c55212decccf7da93c3f8073248b2742ac33d3f12e186fdb8ce204b1ee0bc",
+      "SourceOverride": "repair-en-budget/05-budget.png"
+    },
+    {
+      "Language": "en",
+      "File": "06-reports.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "21f2e4ce14cfb11f5e418ea7489a519985ec71805f5e0c57d6713b3b434978d7",
+      "SourceSha256": "57734a6b4b0eb6a015dde3d370b6b5a298c4b5f764543c9ccca91f0d6785495e",
+      "Sha256": "4195080deffd7db1d89483fa4cb1a5b0526c0ba73d97f1bdc031e8f314942e27"
+    },
+    {
+      "Language": "en",
+      "File": "07-accounts.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "21f166fce1bdf990331d51a3b6f352f56e91fe5475641b2ed35f140ffecc0106",
+      "SourceSha256": "6b019b75c9cdea7555e8566e2b6b708bcff58f4ee487cb9eaad8d39473f6774d",
+      "Sha256": "e10cfd4dc85c66e3fcf98d1a5d5a4870a61828fd02f09cf32bdf21e7d9130bea"
+    },
+    {
+      "Language": "en",
+      "File": "08-home-dark.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "bcdafc15f9ede8b65bd339ed8b0a81ec6d3ab114cfa0f526a7642fa33f7678ff",
+      "SourceSha256": "47a74367317aec0679273c64c95388e54073b4b18a3024198512cb7dd2e7de74",
+      "Sha256": "396b19223a6e6e78613b6dd2a75fc3f6dd1e9cc43dc9ea2cde0fefaeb5c60064"
+    },
+    {
+      "Language": "fa",
+      "File": "01-home.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "8d26f8204528f15985440c3849c2cd06bea8dcf4e3b00443b0ab3a4a0190e288",
+      "SourceSha256": "5214b437dcfb532aa36d15796282a4764710f6d6a8b8b8fcc3e949704c97851e",
+      "Sha256": "df768e9532a9d7a59dbab57ec2ea46878a6c5f6ec9196bcfa8dcd05e043508d7"
+    },
+    {
+      "Language": "fa",
+      "File": "02-transactions.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "4d6975e39f31b2e295501b3bdf1c82a8fa75b9ce96d7e5c1f8451d175b86a177",
+      "SourceSha256": "d1b4e1de71270de85a904e3324c8b3a0e6c6798f113dda2c4646e3eb36df6814",
+      "Sha256": "6c4a03478da3c021c3f44a1c31ccd5fa0f00b95cf5056affea575e13e5f9f11b"
+    },
+    {
+      "Language": "fa",
+      "File": "03-new-entry.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "60fecc4d6342b912af7f6648b4ecb32b84c27ba8f167a3d11f8c2fb001b9ad67",
+      "SourceSha256": "23faaf978ebe3e96a1a4d477b1cd32ffb2dba92c3275bf304dfdb9d4a9ca6ab5",
+      "Sha256": "5d0f5719de3f3dc8085218fb27d4e81ff439df88d758b2b1bbc0a1ec7078d4f9"
+    },
+    {
+      "Language": "fa",
+      "File": "04-plans.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "46adf0c8d4dab11e0f4457ae5e0bb118f722f0d7f444f5d27bc0f4c24aa281c8",
+      "SourceSha256": "09365ae326d541098434c0b9e98ca3b1e9a052d8ba6f6bca3c9f8d3297c48076",
+      "Sha256": "6a2689411fd60a2ccdeff64d3025a2f715f14e6217e6b3ae7aa11ade50f763c9"
+    },
+    {
+      "Language": "fa",
+      "File": "05-budget.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "006526e8ffa950a3a5848a9ef0712beb954a5e5ab043a3761e60794c4f884af5",
+      "SourceSha256": "6072917c7348dcef8b1367a8f322a60d8ffcee2196aca722e52fd887cdc11080",
+      "Sha256": "091f0ccbf5207979375a792929d232d2186daeea012a24abfdcf5a6b198c3220"
+    },
+    {
+      "Language": "fa",
+      "File": "06-reports.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "3eea58f66ca55ab9eb767089b14852652d32e3ab44eec5f184999a8a62ee0057",
+      "SourceSha256": "4fd425f39ef25fe452f5ef6ebfea160c175f469520a7afd36ae6bd4d795b85fc",
+      "Sha256": "10597fafd3f78a0085256c979b0e44ca5dc60786164b3f48fa48ba10227954cc"
+    },
+    {
+      "Language": "fa",
+      "File": "07-accounts.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "79695de806d78c47e951756372fac7328ec9d6a150841a96ba1cafb89a853042",
+      "SourceSha256": "bfff237a75dce3d17593723f12e2a12d94c9d1f5cac8547bc82bd0254b5b6ccc",
+      "Sha256": "c3dd02c131e4565d4bd4025e403189d3b60a5f5bb597616af1e19a6a76382134"
+    },
+    {
+      "Language": "fa",
+      "File": "08-home-dark.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "efd93b9e50c5a93e5d8c4a8460b49bf842781b65004f948977fb6165a85f425d",
+      "SourceSha256": "8180a66e82ecfd5d88c9b2985d970200bfd8748a8276916dc1d9bc1eaaa0f468",
+      "Sha256": "34ccb87c1dabb2a704c477b17c254c72cbdcb8115507c79be81aec745660dab6"
+    },
+    {
+      "Language": "de",
+      "File": "01-home.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "1e20de642f5aec2833024890e2782e6aac6bd091e0a638e7eb1d4cea0be4af49",
+      "SourceSha256": "069e7a8cd4127972a57b05d2aed00551995ebd4e42cb95fcfef94573826454c2",
+      "Sha256": "6f586dbdecf5314b1ecc807b3a4a8812199ce453c6bcd713d1efc609dbe0af14"
+    },
+    {
+      "Language": "de",
+      "File": "02-transactions.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "e76de9f8ab22889dd99c31b71d56c9e8eb79336509fa4f239b724b271ad71f73",
+      "SourceSha256": "3b0a97d5c5df1a55f29fe9a8e3812bfe6e6f3a8a6f29bda534c2e5e6bcf804f3",
+      "Sha256": "b87ca04081f1155fdb9d6f86cb9b6a7e26bfe113eb27372a632b9e509a35fdfc"
+    },
+    {
+      "Language": "de",
+      "File": "03-new-entry.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "04888e95d7e57d1564120f0af541e63800a7874eaba8f17bf5ead2a254617a2c",
+      "SourceSha256": "ceb68069e6986544cfc7744763519590522e554ddcf5086705c1d22121297d1e",
+      "Sha256": "bf4785fe7ce6d5d434e8c285e25d3cdc1b81a7f53744f61c3ab07d574b3da948"
+    },
+    {
+      "Language": "de",
+      "File": "04-plans.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "cc473dec7313d5ee99c869b2b0911adce8ac85e46804bc80f53cb344aa1eaef8",
+      "SourceSha256": "7f59e0af31428cbfefd949dd1fe7469077b23bce0e341ad9827bb9b3940e9515",
+      "Sha256": "ab149c7315da66cdd9308e849f1802e7ee4f5b63654c8f312ab29c7d293abf9d"
+    },
+    {
+      "Language": "de",
+      "File": "05-budget.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "3dfed46b8fbca0420c650411f4bb58f352cd8b5f44567c15747c0ff8c48d8df7",
+      "SourceSha256": "ac2d2ed36e49be682d3c5da05c3fde2ab768164d74095ad11d3227e42dc8820e",
+      "Sha256": "25669733f4b22c8ffaa6e51b248f0a437f1db8dee48a71ec255ab900e5ad4899"
+    },
+    {
+      "Language": "de",
+      "File": "06-reports.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "bafac7857119a9938f949296b3b4a2867717c2855be1373567aaa4c37b23dba8",
+      "SourceSha256": "adeb06d88e6754ba90a1c5d172094e37c54265c3101267e8da1bcd066f402574",
+      "Sha256": "771ead010aaba82c5b7092b69d6863f07423a61f11958dc23721620abad9df7e"
+    },
+    {
+      "Language": "de",
+      "File": "07-accounts.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "6bfcd06376e8136647aab04db5e6cb79fd03dc8613040f681115f66b39ade5e8",
+      "SourceSha256": "0b67ca62c53dc515527d12a12b1f0ca714148baea6f60274739c3b1286117d5d",
+      "Sha256": "1839510370f4bb658e6232dbccdabe07a78c5e9eeaf58c631f1a7bd1aafbda7a"
+    },
+    {
+      "Language": "de",
+      "File": "08-home-dark.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "05565183a29193c22beca691fc55676fcf486054a93cf701113de21c1cb45d4b",
+      "SourceSha256": "d0e1f69a6673b2cca4a8bf3c6b597a57feb2b70b29ee7ee60f7fca7e18e70e1d",
+      "Sha256": "a4d666e7d9ccdf7abf43e0225151db23b5611ef21e11f4f4914d7ee2925544b1"
+    },
+    {
+      "Language": "es",
+      "File": "01-home.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "7d8ecd5d3f7ed0f6ecdaae55e80a03e4dfd7deba14471bd5b244a0e83bc0ec67",
+      "SourceSha256": "bcac719f3d45c8ec874b766d333e685779e4d9da2fc0f4c5db2d62126ffb17e5",
+      "Sha256": "7a9fe738aaeeb3334fca8bed34326bccdd71b18a48bfa20357cae3b46a19339c"
+    },
+    {
+      "Language": "es",
+      "File": "02-transactions.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "15bb295485a2f7407f2ca1c9e97f53e15fad4c9b62234e5fbc59c6777e29dcad",
+      "SourceSha256": "a13b8fe4ff992690e574e68808209dffba07ce6eb2cd7a31a661caa1fc5e0dd5",
+      "Sha256": "019b3b981ac019dbaff3013b75277d276f12537f8bf10d702356936d41ec9fdf"
+    },
+    {
+      "Language": "es",
+      "File": "03-new-entry.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "01e210eb538fbe051d4133a524d2a222391d5d7da92406438892715cf251229a",
+      "SourceSha256": "a1f92d4450fcafd9e1f79f46534df0b15dfdac34ee34a9f96481e370940ce338",
+      "Sha256": "6212a9787befdb88542921c56e01b289da07d23cbe52682acc405851e45b8231"
+    },
+    {
+      "Language": "es",
+      "File": "04-plans.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "4e6c161b55a2f45ccf0f920a021fecc5f94344c2bbfff4b0e020000b7ea343e7",
+      "SourceSha256": "e052cd630c7c5e64627f791a7301d93613cc2d9ff8be50b0372b11c4370d3bd8",
+      "Sha256": "16cb519bbd3067478d3945384266cf81fa2e6eeb3e424670f69e10f1ab03bc2b"
+    },
+    {
+      "Language": "es",
+      "File": "05-budget.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "7fc10a2057391b3bdb0df8cd0759d37ad1890ee604023b2ca85f084c66a0bcc1",
+      "SourceSha256": "82f0221e0989d5175beb3ca80f3bf3da483da0f3f271974e0fc661a597bf4bc8",
+      "Sha256": "246ee355f2064e5db8bff522ef72b1db4fa38c3d4ae65d6d3a2026fcf72d420c"
+    },
+    {
+      "Language": "es",
+      "File": "06-reports.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "0d0af4dd656c4b93d31bc773fc475735602eff1a735eb523539d25779df95ae5",
+      "SourceSha256": "aa39a0f40ca9bcb107c01e6b3f011bcf883ebb6887e0ded3fcf4ef428febbb96",
+      "Sha256": "cae2f6b5baf8f3291d935a750d88909475f9738a45c22c6451c7fe22a20547c0"
+    },
+    {
+      "Language": "es",
+      "File": "07-accounts.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "e04fe5bef7076356ef43a51aa7742e3221b0be126dc2a4355d27c2a775510990",
+      "SourceSha256": "cf1493dd25bd01b5d65e7fddf92b8aa0974ee4cc072148646ec5c650e7277924",
+      "Sha256": "8dcf03f3c5d71823f43eb1b51e91cd5c10b31f5f4b93200440f9a1f11af637c9"
+    },
+    {
+      "Language": "es",
+      "File": "08-home-dark.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "1fca915a3c2038f23b1122750e530b38e450072c5a6cfdf7d8cca5a7eb449880",
+      "SourceSha256": "9bf1cadf3f831fd1390b1cd9af224bc1d1b97ccecb14cb4959aebc57045a706c",
+      "Sha256": "b2d6636ea5ed1f902fcecc76964f92bb95e65fdaad81aa34bd087140f658804d"
+    },
+    {
+      "Language": "fr",
+      "File": "01-home.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "9c3218f89d4fe70cb9f6ce82606e46490485d7de5f67bf4ff1a75e730f0bc6c8",
+      "SourceSha256": "a3c69d0f1e1a11974e41e939df6b87a96f463b6f04f0d9765205d7c5d765778a",
+      "Sha256": "c1e2dbfbed56b8b13551bc702d3f028201f62e60b54592f6f7cf8a3f16851e9a"
+    },
+    {
+      "Language": "fr",
+      "File": "02-transactions.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "0d74e9f0c2a5a5c9e35eb7bdb7e951931c3dcabdcff57d349e56eb030e953e1a",
+      "SourceSha256": "a5a832f10f88f05974c18bfe5b82b806988bbcf2dec5564cb5bbe9380ddec51d",
+      "Sha256": "d898af0611f90a34db62a1bb0b2af62ea0f6aa1f63e79bf73b3b62ac15d1202e"
+    },
+    {
+      "Language": "fr",
+      "File": "03-new-entry.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "9c17272b9062fbe5ada1a7c2a7457c051518e436df257402c32e2bbb438d24d1",
+      "SourceSha256": "648dc2d8dfcbc1b9914fc781f49e9069581e6b749dc15ea5e3337add4f3da59d",
+      "Sha256": "20d1a0be7680ef55943e374d85139064bda80164ac4cd9d28801f0bf827bd5d5"
+    },
+    {
+      "Language": "fr",
+      "File": "04-plans.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "b4951f97054dbfc9854b3e34b3348372e4796d4c25309d5b51362fcd3ebce069",
+      "SourceSha256": "22edbb371334c395f33309125503d9b436ff10c8957452d697449dafecfbdf25",
+      "Sha256": "d223689b844c1ba796f2e7efa275a9582b1c454ea059652293f2fe891afa98b4"
+    },
+    {
+      "Language": "fr",
+      "File": "05-budget.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "2d4b96a66b89425673259df33a3c8452cd08e6c1e3a53e402602af7c6737125e",
+      "SourceSha256": "ac35a092ff26ac3307dbfff0a36001cd09249d13020186e7f54c428e4f44b8ad",
+      "Sha256": "2720a2abb99f78451fe1681a67f21ab15f4a1f3cd7070b03ad03a175bce6beab"
+    },
+    {
+      "Language": "fr",
+      "File": "06-reports.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "0edec63f11cf39507beb1f8aa2e951ed00a36f58926b950fad7a4fd4c37b6d60",
+      "SourceSha256": "333cccce8065a774a005f31ab117e1ffcbcdf37af1ef7e595db5e6481d6b7de6",
+      "Sha256": "032a80eb7e9f33ff4b474bdbf0bcb5613fc7b7e233343d430efe8f38bdf65723"
+    },
+    {
+      "Language": "fr",
+      "File": "07-accounts.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "e479cec7c4a7d73d9a04d8a3b7fb9cc1669a71dd1b9af75ecf58ff9337bba6b4",
+      "SourceSha256": "8d12a6440ce34491c7f612b47e4c698ad3dac9e6661d7e2d7ff71b43c946a3c2",
+      "Sha256": "2b8d2341e7a2747f715b9f15ddc808124168a8bb8e4c03b12501a93c16394f0c"
+    },
+    {
+      "Language": "fr",
+      "File": "08-home-dark.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "b48002e566a87f82b71972ceb2b92d0c9489aa04d20362e0a64577991be84929",
+      "SourceSha256": "a89fbedae318ba87898c685dab987417922ae044b6951777d9214acf2847fb40",
+      "Sha256": "a463e71b812f4913b4abd27ebadf8d643d1c3dd2b8e1b531a99b7b9d8a63dc8d"
+    },
+    {
+      "Language": "it",
+      "File": "01-home.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "1db4332b8dccddc4dc14f03bb93c8f0312cb38f979b73cc06f80b42263f73566",
+      "SourceSha256": "d03b72daafdecb91a12652df77223f6b3d1be36809c134d2198d193f039bb457",
+      "Sha256": "f595a4ab2ea6aa4f88d25feaa1164757e3402141f423255d3a994a25847457d3"
+    },
+    {
+      "Language": "it",
+      "File": "02-transactions.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "701d476f0216549d7d9fe8e88308185083a43ed2c05950f8fc2cd31997e69764",
+      "SourceSha256": "9590ab287bd9c5062ea70c7292928328d3f08dee22349c9415913787258b447a",
+      "Sha256": "cf0da4bdf06983919078214dde7ad5af0d4238e7c026efeff4e4507623c4dac5"
+    },
+    {
+      "Language": "it",
+      "File": "03-new-entry.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "62c4a70a35fa94ef380fd787c7f45ef8db0f9a0fe3c5478c18c08746886270eb",
+      "SourceSha256": "43b0d9b93c2a734ec9649ae6981acfa6e03b53247d14d9f1bf9b0dc44253eba9",
+      "Sha256": "74b60626ce8c53a1a932fec3ba8ae2235b3c09579700df7b33100d875db03005"
+    },
+    {
+      "Language": "it",
+      "File": "04-plans.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "bd2130eaad47f55681c6e712b9328d644890e6a07b2cc7b58b5a8ffdd31ed44f",
+      "SourceSha256": "8ef2ff8d757c91cb4458bdd684e9ca948639d8fb2b44bc5793a11267436ed21f",
+      "Sha256": "08fb16c0fc45c2da08641b649d18278e64577489bb7a75de1824fad0986e10d9"
+    },
+    {
+      "Language": "it",
+      "File": "05-budget.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "6ab7173dc0fa4f7cca45b2ea4b90763f5eac904f55d5ea3b3d52324b646c80af",
+      "SourceSha256": "c307fbcd9ac8064fc3ca74e92f047bcfcd8509f7abc6740a2aac8a21f604e612",
+      "Sha256": "5d8910dee44818e43489154e7665fc1794780a1c326f7755b71eb5abfdb7e42e"
+    },
+    {
+      "Language": "it",
+      "File": "06-reports.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "6856f4d913baae5d94d44505bcb42cf7becfd1802623ce7b2f07bdee9bc43b32",
+      "SourceSha256": "9e0cf92bc1f6a6f356279efed6c4e42948ef5d13167c4e26b71a39e2dc9cbf1c",
+      "Sha256": "7d21ce7ee95d8aef7acb923dc9d626cd61bcb6689521f3a3c02f4e72e055f37b"
+    },
+    {
+      "Language": "it",
+      "File": "07-accounts.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "4f403cd4fb8dd7e1b15eb7d635170fe79b6999b5e0c0ddef37b45ba2c51a7af4",
+      "SourceSha256": "7ff7f062f1972aba0504c2878334a1e0b061a4be826362014aa0db39641150ce",
+      "Sha256": "05d2d5d0f70c6716774edc5e77c23b2dd1f6938fc535033d873448cadfca0972"
+    },
+    {
+      "Language": "it",
+      "File": "08-home-dark.png",
+      "Width": 596,
+      "Height": 1189,
+      "RgbSha256": "53f416733553440f523985134b75e883099407cc3431fc740734c007288f4cdc",
+      "SourceSha256": "ae79bb41f8a34d0e551a4bc7e1a7ea490c3187957e23c75c9d8181c6decc3f8d",
+      "Sha256": "15778e0774558f7100ebef761d7ebf67f890423277c9e2e23d6a18b7dadb4c88"
+    }
+  ]
+}

@@ -110,7 +110,8 @@ internal static partial class DebugSnapshots
             }
             catch (Exception ex)
             {
-                await File.WriteAllTextAsync(Path.Combine(folder, "error.txt"), ex.ToString());
+                // Keep an earlier observed publication failure when the walk-through later refuses its frame (D-338).
+                await File.AppendAllTextAsync(Path.Combine(folder, "error.txt"), ex + Environment.NewLine);
             }
             finally
             {
@@ -268,6 +269,11 @@ internal static partial class DebugSnapshots
     private static async Task RunCoreAsync(App app, IServiceProvider services, string folder)
     {
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "store-draft")
+        {
+            await CaptureStoreDraftAsync(app, services, folder);
+            return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "more-text")
         {
             await ReviewMoreTextAsync(app, services, folder); return;

@@ -1567,3 +1567,9 @@ More menu titles and explanations wrap completely in growing rows, including syn
 Do not inherit compact financial-row ellipsis, cap the explanation at two lines or shrink its font.
 Keep the original whole-row semantic button, full spoken title/hint, route and readable wide column.
 Native Windows200% stress is separate from OS/device/reader acceptance; [evidence](quality/more-menu-readable.md).
+
+## D-338 screenshot fidelity
+
+Render actual UI with fictitious data, preserving original values, warnings and scroll viewports.
+Await nested budget publication and shell replacement. No retouching, invented mobile frames or
+device acceptance claims. No shipping layout, theme, binding, command or financial algorithm changed.

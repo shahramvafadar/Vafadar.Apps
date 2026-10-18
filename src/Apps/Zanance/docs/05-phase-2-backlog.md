@@ -2314,3 +2314,15 @@ Keep the original SDK compression, serviced runtime, AOT profile, key/data and p
 successful financial, OCR, backend or More-layout suite is repeated or new managed count claimed.
 QA-06 startup ANR, two-second loaded Home, broader Android, Mac/iOS and owner release gates remain open.
 [Evidence, failures and limits](quality/android-compression-cache.md).
+
+## D-338 draft completion boundary
+
+Eight current native Windows draft screenshots in each existing language (en/fa/de/es/fr/it)
+are delivered with exact RGB/source hashes and independent fictitious package/storage/non-input
+desktop isolation. Five actual native pre-startup refusals, strict Windows/Android Debug builds and
+48 visual/pixel checks passed. Only the rejected English budget loading frame was recaptured from
+the same fictitious data; 47 successful frames were retained. Shipping UI/APK and managed counts
+remain D-336. These are development drafts, not mobile or Store acceptance/publication. QA-06,
+broader physical Android, Mac/iOS, provider/accounts and owner release gates remain open.
+
+[Evidence and limits](quality/store-drafts.md).

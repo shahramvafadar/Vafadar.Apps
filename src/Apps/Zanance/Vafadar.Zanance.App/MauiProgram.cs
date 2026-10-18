@@ -41,6 +41,10 @@ public static class MauiProgram
 #endif
     public static MauiApp CreateMauiApp()
     {
+#if DEBUG && WINDOWS
+        // D-338: store drafts must refuse the main installation before shared initialization or storage resolution.
+        Diagnostics.DebugSnapshots.ValidateStoreDraftBeforeStartup();
+#endif
 #if ANDROID || WINDOWS
         // The source-built provider is selected before any SQLite consumer; startup still owns all file/key work.
         SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
