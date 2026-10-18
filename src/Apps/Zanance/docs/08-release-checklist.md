@@ -1498,3 +1498,11 @@ Actual OS text scale/TalkBack, broader device/iOS/performance and release gates 
 system setting, financial algorithm, schema, translation or managed unit count changes.
 
 [Evidence and limits](quality/budget-group-titles-readable.md).
+
+## D-341 no performance promotion
+
+The shared-connection prototype is not a release candidate or speed acceptance. Production and
+the full signed APK stay D-340; the Data-test project receives its missing original startup source.
+Physical Android, OS accessibility, cold/ANR/low-memory, Mac/iOS and owner release gates remain open.
+
+[Evidence and limits](quality/home-publication-session.md).

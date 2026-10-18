@@ -2952,3 +2952,12 @@ Actual OS text scale/TalkBack, broader device/iOS/performance and release gates 
 system setting, financial algorithm, schema, translation or managed unit count changes.
 
 [Evidence and limits](../../quality/budget-group-titles-readable.md).
+
+## D-341 QA-06 experiment not adopted
+
+QA-06 remains In progress. Reject shared-connection Home adoption after actual Android page
+qualification, preserving all negative receipts and restoring production source. Repair the
+standalone Data-test compilation dependency; do not count removed prototype tests as delivery.
+The application and complete signed APK remain D-340.
+
+[Evidence and limits](../../quality/home-publication-session.md).

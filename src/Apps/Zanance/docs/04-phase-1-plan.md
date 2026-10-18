@@ -1081,3 +1081,11 @@ Actual OS text scale/TalkBack, broader device/iOS/performance and release gates 
 system setting, financial algorithm, schema, translation or managed unit count changes.
 
 [Evidence and limits](quality/budget-group-titles-readable.md).
+
+## D-341 verification maintenance
+
+Repair standalone Data-test compilation against the original startup contract. The Home reuse
+candidate is withdrawn after native qualification; application behavior and the D-340 signed APK
+remain unchanged. QA-06 remains open.
+
+[Evidence and limits](quality/home-publication-session.md).

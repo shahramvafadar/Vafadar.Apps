@@ -9,6 +9,7 @@
 
   <!-- The notification coordinator is platform independent; exercise it against real stores and app resources. -->
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/IAppDatabaseStartup.cs" Link="Application/IAppDatabaseStartup.cs" />
     <Compile Include="..\..\..\..\eng\benchmarks\Zanance.Performance\PerformanceFixture.cs" Link="Performance\PerformanceFixture.cs" />
     <Compile Include="..\..\..\..\src\Apps\Zanance\Vafadar.Zanance.App\Reminders\ReminderService.cs" Link="Reminders\ReminderService.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/IProfileCatalogueChanges.cs" Link="Application/IProfileCatalogueChanges.cs" />

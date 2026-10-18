@@ -2338,3 +2338,11 @@ Actual OS text scale/TalkBack, broader device/iOS/performance and release gates 
 system setting, financial algorithm, schema, translation or managed unit count changes.
 
 [Evidence and limits](../../quality/budget-group-titles-readable.md).
+
+## D-341 qualification outcome
+
+The end-to-end Home experiment is complete as a rejected candidate, not a delivered optimization.
+Retain original financial behavior and D-340 APK. The fresh test-project compilation repair is
+independently reviewable; continue remaining work without repeating unchanged successful suites.
+
+[Evidence and limits](../../quality/home-publication-session.md).

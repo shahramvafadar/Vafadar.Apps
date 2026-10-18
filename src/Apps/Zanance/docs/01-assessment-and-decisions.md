@@ -6609,3 +6609,15 @@ Actual OS text scale/TalkBack, broader device/iOS/performance and release gates 
 system setting, financial algorithm, schema, translation or managed unit count changes.
 
 [Evidence and limits](quality/budget-group-titles-readable.md).
+
+## D-341 - Repair fresh Data-test compilation and reject unproven Home connection reuse
+
+The standalone Data-test project linked the original ReminderService but omitted its actual
+IAppDatabaseStartup dependency, causing fresh CS0234/CS0246 compilation failures. Link the same
+original source already compiled by application-flow tests; do not invent a substitute contract.
+The complete Home connection experiment passes financial preservation but fails reliable Android
+loaded-Home improvement, including after profile-identity and cache/disposal corrections. Withdraw
+all experimental application/benchmark APIs and eight experimental tests. Main remains D-340;
+QA-06 and external acceptance stay open. Windows-only isolated gains are insufficient for adoption.
+
+[Evidence and limits](quality/home-publication-session.md).

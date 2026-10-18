@@ -1283,3 +1283,12 @@ combine it with ReportRowsReview or export its receipt as store images. Restore 
 Windows build identity afterward. AndroidHome phase budget-titles qualifies six native contexts;
 retain its original live PID after observation expiry. See
 [evidence and full signed APK](../../src/Apps/Zanance/docs/quality/budget-group-titles-readable.md).
+
+## D-341 fresh linked-source test compilation
+
+The Data-test project links the actual ReminderService and must also compile its original
+Startup/IAppDatabaseStartup.cs dependency, as application-flow tests already do. A stale binary
+cannot prove that fresh compilation succeeds. No replacement contract or copied startup behavior
+belongs in the fixture. The Home-only check uses `--filter-class '*HomeReadSnapshotTests'` and an
+explicit minimum expected count. Prototype checks are not current coverage after withdrawal. See
+[the compilation repair and rejected native candidate](../../src/Apps/Zanance/docs/quality/home-publication-session.md).

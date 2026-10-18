@@ -3867,3 +3867,12 @@ Actual OS text scale/TalkBack, broader device/iOS/performance and release gates 
 system setting, financial algorithm, schema, translation or managed unit count changes.
 
 [Evidence and limits](quality/budget-group-titles-readable.md).
+
+## D-341 current coverage and rejected prototype
+
+The current original Home regressions are rechecked after removing the prototype. Its 53-case
+checks included eight experimental session behaviors that are removed, not added to current
+coverage. Native baseline and three candidates each preserve twelve full Home presentations and
+raw rows; their timing does not close QA-06. No broad unrelated suite or unchanged APK is repeated.
+
+[Evidence and limits](quality/home-publication-session.md).

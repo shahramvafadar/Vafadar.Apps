@@ -2354,3 +2354,11 @@ Actual OS text scale/TalkBack, broader device/iOS/performance and release gates 
 system setting, financial algorithm, schema, translation or managed unit count changes.
 
 [Evidence and limits](quality/budget-group-titles-readable.md).
+
+## D-341 rejected Home optimization
+
+Whole-page Android timing does not support adopting the scoped-connection experiment despite
+correct financial packets and an isolated Windows gain. Restore production sources and keep QA-06
+In progress. The only committed code change repairs the original Data-test startup dependency.
+
+[Evidence and limits](quality/home-publication-session.md).

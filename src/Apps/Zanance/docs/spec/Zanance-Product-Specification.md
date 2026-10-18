@@ -6628,3 +6628,12 @@ Actual OS text scale/TalkBack, broader device/iOS/performance and release gates 
 system setting, financial algorithm, schema, translation or managed unit count changes.
 
 [Evidence and limits](../quality/budget-group-titles-readable.md).
+
+## D-341 QA-06 remains open
+
+Fresh standalone Data-test compilation is repaired with the original startup source. The Home
+connection prototype and its eight new cases are withdrawn after Android whole-page timing fails
+adoption. No production source, financial algorithm/schema, unit coverage count or main APK changes;
+the D-340 candidate remains current. QA-06 and platform/owner release gates remain In progress.
+
+[Evidence and limits](../quality/home-publication-session.md).

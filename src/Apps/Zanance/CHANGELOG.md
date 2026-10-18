@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Verification maintenance (D-341)
+
+- Restore fresh standalone Data-test compilation against the original database startup contract. The Home connection experiment is not adopted; application behavior and the complete D-340 APK stay unchanged.
+
 ### Complete bill-group captions (D-340)
 
 - Read the complete fixed and non-monthly bill headings in Flex budgets at larger text sizes. Row titles wrap instead of shortening the translated names; their font size stays unchanged.
