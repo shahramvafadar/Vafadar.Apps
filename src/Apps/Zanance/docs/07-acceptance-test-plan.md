@@ -3990,3 +3990,10 @@ en/fa/de, Light/Dark and360/412/1280 at process-local200%; Android contexts span
 in independent Release/AOT. These are runtime assertions, not a new full-unit-suite count. Synthetic
 empty presentation does not qualify empty-store recovery. Retain earlier false/partial geometry,
 actual root failures and successful immutable cases. [Results and limits](quality/reimbursement-page.md).
+
+## D-353 scoped template lifecycle regression
+
+The unchanged-source Windows baseline fails retained-native-control assertions. The candidate checks six
+original Home language/theme contexts, same-count reload, fresh reordered metadata, disabled original
+commands and2/1/0/2/0/2 count transitions with stored inputs preserved. No new full-suite count is inferred.
+[Receipts, failures and platform limits](quality/home-template-publication.md).

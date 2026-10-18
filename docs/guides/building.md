@@ -1398,3 +1398,10 @@ AndroidHome's reimbursement-page-fixed phase reuses its completed fictitious bas
 migration/reseed and retains immutable source/input-bound cases. Read only the original live PID;
 observation expiry is not failure or permission to restart. Restore the ordinary Windows identity
 with its strict build after private review. [Evidence](../../src/Apps/Zanance/docs/quality/reimbursement-page.md).
+
+## D-353 original Home template reload
+
+Run-StoreDrafts.ps1 -HomeTemplatesReview runs six independent private-desktop language/theme contexts
+at412px with original controls and no financial commands. AndroidHome phase home-template-reload uses
+a small independent fixture and the original Release/AOT Home source. Keep baseline failures and
+observe the same PID after timeouts. [Evidence](../../src/Apps/Zanance/docs/quality/home-template-publication.md).

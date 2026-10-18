@@ -6742,3 +6742,10 @@ complete history, provider/key policy, model and unit counts are unchanged fromD
 is scoped to the original sources and owned fictitious inputs. QA-06/ANR/two-second, broader Android/
 OS-reader, actual Mac/iOS and external release gates remain open.
 [Exact evidence and candidate](../quality/reimbursement-page.md).
+
+### Section31 update - D-353 Home template publication
+
+Quick-template reload now prepares fresh complete rows and publishes one snapshot, retaining unchanged
+native controls while preserving original reviewed metadata/commands. Shrink/empty/restore paths receive
+native checks. Financial semantics, unit-suite counts and broader runtime/platform gates are unchanged.
+[Evidence](../quality/home-template-publication.md).

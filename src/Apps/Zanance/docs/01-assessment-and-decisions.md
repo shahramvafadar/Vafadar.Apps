@@ -6753,3 +6753,11 @@ native edges and no overlap rather than treating allocated bounds as visual acce
 rules, history, provider/keys, schema, dependencies and unit-suite counts unchanged. Preserve actual
 Home/native failures and scoped failed checks; do not reinterpret them as runtime fixes.
 [Final evidence, retained failures and limits](quality/reimbursement-page.md).
+
+## D-353 - Preserve original native Home templates on reload
+
+The retained live-Home COM failure reaches QuickTemplates.Clear and native BindableLayout teardown.
+Prepare fresh rows before one existing SnapshotCollection Reset, preserving reviewed identity/order,
+metadata, enablement and command parameters. Verify unchanged native controls and legitimate shrink/empty/
+restore transitions; do not suppress exceptions or claim a general runtime fix.
+[Cause, negative baseline and qualification](quality/home-template-publication.md).

@@ -109,7 +109,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     public partial string? GoalAttentionText { get; set; }
 
     /// <summary>Gets the quick templates shown under the quick add buttons (at most six, in the user's order).</summary>
-    public ObservableCollection<QuickTemplate> QuickTemplates { get; } = [];
+    public SnapshotCollection<QuickTemplate> QuickTemplates { get; } = [];
 
     [ObservableProperty]
     public partial bool HasQuickTemplates { get; set; }
@@ -471,15 +471,16 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         RequireCurrentPublication();
         if (snapshot.PeriodIndex != PeriodIndex) { await LoadCoreAsync(); return; }
         TemplateNavigation.Publish(templateReview);
-        QuickTemplates.Clear();
-        foreach (var template in TemplateNavigation.Items)
+        // Publish complete rows together: clearing first makes MAUI disconnect unchanged native template controls (D-353).
+        var quickTemplates = TemplateNavigation.Items.Select(template =>
         {
             var transfer = template.Kind == EntryKind.Transfer;
-            QuickTemplates.Add(new QuickTemplate(template.Id, template.Name,
+            return new QuickTemplate(template.Id, template.Name,
                 transfer ? FluentIcons.Common.Symbol.ArrowSwap : Icons.Parse(template.Icon, categories.Icon(template.CategoryId)),
                 transfer ? Palette.TransferText : categories.Color(template.CategoryId),
-                _translator.Format("Home_TemplateDescription", template.Name)) { CanUse = templateReview.Work.CanApplyTemplate(template.Id) });
-        }
+                _translator.Format("Home_TemplateDescription", template.Name)) { CanUse = templateReview.Work.CanApplyTemplate(template.Id) };
+        }).ToArray();
+        QuickTemplates.ReplaceAll(quickTemplates);
         HasQuickTemplates = QuickTemplates.Count > 0;
         CapturedHomeLayout = settings.HomeLayout;
         PresentingSnapshot?.Invoke();

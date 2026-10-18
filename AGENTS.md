@@ -2563,3 +2563,11 @@ intro/card layout. Native acceptance requires effective ancestor visibility, bot
 edges and no intro/empty-caption overlap, plus original horizontal scroll ends. Independent retained
 case receipts bind actual source MVID and fictitious input hash; never replay completed matching cases
 or accept controls under a system dialog. Component qualification is not whole-Home/ANR/release acceptance.
+
+## D-353 complete Home template publication
+
+Prepare fresh quick-template records before one SnapshotCollection Reset. Do not clear unchanged rows
+and force native teardown. Preserve original order, identity, theme/translation metadata and reviewed
+commands. Native qualification includes same-count control retention and legitimate shrink/zero/restore
+transitions, with stored inputs unchanged. Scoped lifecycle evidence does not close general COM/GC/ANR
+or cold/phone/reader/iOS/release gates.

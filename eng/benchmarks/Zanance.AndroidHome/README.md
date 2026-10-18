@@ -340,3 +340,13 @@ non-overlap. Give its original baseline through review_baseline. Matching comple
 the caller MVID and complete fictitious input hash; reuse them after a real failure instead of replay.
 Actual focus is required; a system dialog pauses acceptance on the same process. No phase touches Main
 finance, changes OS settings or qualifies whole-Home, cold/ANR, physical/iOS or product release.
+
+## D-353 Home template reload
+
+The home-template-reload phase uses a fresh marked run and comparison identity, a small separate
+SQLite fixture and original Release/AOT Home controls. An existing fixture is retained rather than
+reseeded. Check same-count native row retention, fresh reordered captions/semantics and original
+disabled commands, then counts 2/1/0/2/0/2 and original store reload in en/fa/de and both themes.
+Require actual Activity focus and complete stored account/entry/settings/template equality. No
+financial command, main-package data or OS setting is changed. This is a scoped lifecycle check,
+not cold/GC/ANR, phone, reader, encryption or release acceptance.

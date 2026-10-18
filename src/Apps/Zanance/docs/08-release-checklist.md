@@ -1599,3 +1599,9 @@ Use actual original-source/native checks and visually reviewed own-window images
 actual vertical visibility or overlap refusal is insufficient. Managed/full-suite counts do not grow
 from these native assertions. Root Home/ANR, two-second timing, physical/OS-reader, iOS, provider and
 release acceptance remain open. [Current exact evidence and APK](quality/reimbursement-page.md).
+
+## D-353 scoped Home template candidate
+
+Complete template publication prevents unnecessary native teardown during Home reload. Native lifecycle
+evidence is scoped to its actual environments; all broader GC/ANR, cold, phone/iOS, reader and release
+gates remain open. [Current evidence](quality/home-template-publication.md).

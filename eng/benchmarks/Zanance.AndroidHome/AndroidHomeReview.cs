@@ -106,6 +106,13 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Original reimbursement component acceptance incomplete.");
                 await WriteReportAsync(root, phase, await ReviewReimbursementPageAsync(app, services, root, comparison!, ct, visibilityOnly: phase == "reimbursement-visibility", retainedFixture: true), ct);
             }
+            else if (phase == "home-template-reload")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0 || (File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")) || File.Exists(Path.Combine(root, phase + "-result.json"))))
+                    throw new ReviewCheckException("Fresh nonredirected template review required.");
+                await WriteReportAsync(root, phase, await ReviewHomeTemplatesAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "reimbursement-page")
             {
                 Directory.CreateDirectory(root);

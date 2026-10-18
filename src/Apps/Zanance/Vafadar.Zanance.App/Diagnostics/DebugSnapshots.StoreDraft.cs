@@ -116,6 +116,11 @@ internal static partial class DebugSnapshots
         await SeedBudgetAsync(services, food);
         await store.UpdateSettingsAsync(settings => settings.OnboardingCompleted = true);
         app.ShowMainShell();
+        if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "home-templates")
+        {
+            await ReviewHomeTemplatesAsync(app, services, folder);
+            return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "reimbursements")
         {
             await ReviewReimbursementsAsync(app, services, folder);

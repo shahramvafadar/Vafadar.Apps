@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Home template reload (D-353)
+
+- Keep unchanged quick-template controls when Home reloads, with current captions, colours and reviewed actions.
+
 ### Outstanding reimbursements (D-352)
 
 - Load the complete outstanding-expense result before showing it, with clear loading feedback and a retry after failure.

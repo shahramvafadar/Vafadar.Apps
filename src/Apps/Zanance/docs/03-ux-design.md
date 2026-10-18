@@ -1665,3 +1665,9 @@ introduction/card in one separate sibling ScrollView, mutually exclusive with re
 ready gate. Qualify actual visible vertical edges, complete horizontal endpoints and intro/empty
 separation; allocated bounds alone do not prove readability. No system setting changes are needed.
 [Evidence and limits](quality/reimbursement-page.md).
+
+## D-353 Home template publication
+
+Reload the complete template strip atomically with fresh presentation records. Preserve unchanged native
+controls and complete current spoken captions/commands; support real reduction to zero and restoration.
+No visual redesign or financial activation accompanies this lifecycle correction.

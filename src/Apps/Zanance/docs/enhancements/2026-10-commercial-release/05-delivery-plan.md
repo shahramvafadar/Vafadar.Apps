@@ -2452,3 +2452,9 @@ header overlap. Perform one combined final native matrix after that source chang
 successes/failures and do not replay unrelated financial/crypto/OCR/full suites. Actual Home/native
 root failures remain the next independent ready defect, without waiting for settled owner decisions.
 [Evidence and limits](../../quality/reimbursement-page.md).
+
+## D-353 observed Home template teardown batch
+
+Address the actual QuickTemplates.Clear failure path with complete fresh snapshot publication; test
+unchanged-control retention and legitimate removal/restoration on original native controls. No repeated
+unchanged financial/crypto/OCR suites. [Qualification](../../quality/home-template-publication.md).

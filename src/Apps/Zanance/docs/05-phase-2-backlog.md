@@ -2435,3 +2435,9 @@ under their existing financial authority. A separately scrolling empty flow fixe
 Windows header/empty overlap. Native assertions and images qualify the original sources; managed
 counts are unchanged and unrelated successful suites are not repeated. Canonical QA-06/A11Y/device/
 iOS/release gates remain open. [Evidence](quality/reimbursement-page.md).
+
+## D-353 Home template reload
+
+Remove unnecessary clear/add native teardown using complete snapshot publication. Original-source native
+checks cover retained controls and real count changes without posting money. This does not close QA-06
+or platform acceptance. [Evidence](quality/home-template-publication.md).
