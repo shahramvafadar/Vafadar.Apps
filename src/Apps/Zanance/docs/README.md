@@ -47,3 +47,6 @@ Release evidence from the earlier independent probes and retains pending platfor
 Optional personal aggregate analysis and local credit prerequisites:
 [original consent, private continuation and service qualification](enhancements/2026-10-commercial-release/15-ai-local-delivery.md).
 This separates local prerequisites/manual sharing from unconfigured live models, credit sales and release gates.
+
+Incremental Android manifest variants and retained binding/GC investigation:
+[packaged on/off correction and scoped Samsung continuation](quality/android-manifest-overlay-incremental.md) (D-359).

@@ -1632,3 +1632,11 @@ The scoped actual-OS work-form matrix,18 Windows selection contexts and signed o
 upgrade are checked with stored inputs/settings preserved. Retain the observed original
 binding finalizer failure; do not claim a general crash/ANR or full accessibility qualification.
 [Exact cohort, candidate and open gates](quality/work-editor-os-text.md).
+
+## D-359 incremental variant boundary
+
+Requested optional manifest overlays must reach the packaged binary manifest even when toggled
+without clean. Ordered content fingerprints and focused process cases protect the SDK merger;
+the independent profiling on/off APKs are inspected separately from the ordinary offline app.
+Actual GoalEditor/Shell ANRs, spoken accessibility, wider physical Android, iOS and all provider/
+Store/release gates remain open. [Evidence](quality/android-manifest-overlay-incremental.md).

@@ -3079,3 +3079,16 @@ changed goal/budget consumers. Eighteen Windows goal-choice contexts, preserved 
 exact settings restoration and signed main upgrade pass. No managed count increase; the
 observed finalizer fault, broader A11Y/QA-06/physical/iOS/release gates remain open.
 [Evidence and bounded coverage](../../quality/work-editor-os-text.md).
+
+## D-359 incremental Android manifest and retained runtime continuation
+
+Correct the actual ignored optional overlay in an incremental signed Android build. Ordered
+file/content fingerprints invalidate only a changed merger; seven focused process cases and real
+on/off binary-manifest checks preserve native engine bytes and default offline boundaries.
+The main source remains D-358. This does not resolve QA-06: original GoalEditor/Shell retirement
+stalls after12 completed input-preserving groups and records actual ANRs. Bounded exact-symbol
+GC/JNI samples do not establish the earlier managed finalizer root cause. Temporary diagnostic
+phases/forced collections are removed; exact emulator settings restore. D-358's complete signed
+APK also upgrades Samsung without reset, permits original Simple-goal cancellation and returns
+Home979. This narrow physical evidence is not glyph-fit/OS200%/reader/full-device acceptance.
+[Evidence and remaining boundaries](../../quality/android-manifest-overlay-incremental.md).

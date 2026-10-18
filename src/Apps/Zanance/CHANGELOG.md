@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Reliable Android build variants (D-359)
+
+- Apply selected Android package settings correctly when switching variants without a clean build.
+
 ### Complete goal choices (D-358)
 
 - Keep goal contribution choices fully readable when large text wraps them onto separate rows.

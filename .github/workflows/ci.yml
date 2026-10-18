@@ -131,6 +131,9 @@ jobs:
       - name: Android compression cache regressions
         run: ./eng/tests/AndroidCompression.Tests.ps1
 
+      - name: Android manifest overlay regressions
+        run: ./eng/tests/AndroidManifestOverlays.Tests.ps1
+
       - name: Install MAUI Windows workload
         run: dotnet workload install maui-windows
 

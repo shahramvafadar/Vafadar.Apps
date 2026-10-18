@@ -1,0 +1,25 @@
+<Project>
+  <!-- The Android SDK's _ManifestMerger timestamp inputs omit AndroidManifestOverlay.
+       Changes to an optional overlay can otherwise leave the previously merged manifest
+       in an incremental APK. Track ordered paths and contents, including an empty list. -->
+  <Target Name="TrackAndroidManifestOverlays" BeforeTargets="_ManifestMerger"
+          Condition="'$(AndroidApplication)' == 'true' and '$(AndroidManifestMerger)' == 'manifestmerger.jar'">
+    <PropertyGroup>
+      <_VafadarManifestOverlaysCache>$(IntermediateOutputPath)vafadar.manifest-overlays.cache</_VafadarManifestOverlaysCache>
+    </PropertyGroup>
+    <GetFileHash Files="@(AndroidManifestOverlay)" Algorithm="SHA256" HashEncoding="hex">
+      <Output TaskParameter="Items" ItemName="_VafadarHashedManifestOverlays" />
+    </GetFileHash>
+    <!-- A stable sentinel also invalidates the previous overlay when the last item is removed.
+         No manifest contents or placeholder values are copied into this local cache. -->
+    <WriteLinesToFile File="$(_VafadarManifestOverlaysCache)"
+                      Lines="manifest-overlays-v1;@(_VafadarHashedManifestOverlays->'%(FullPath)|%(FileHash)')"
+                      Overwrite="true" WriteOnlyWhenDifferent="true" />
+    <!-- Reuse an existing SDK input list before the merger's incremental check. Do not
+         edit SDK targets, delete the output, or force an unchanged merge to run again. -->
+    <ItemGroup>
+      <_AndroidMSBuildAllProjects Include="$(_VafadarManifestOverlaysCache)" />
+      <FileWrites Include="$(_VafadarManifestOverlaysCache)" />
+    </ItemGroup>
+  </Target>
+</Project>

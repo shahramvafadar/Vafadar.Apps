@@ -6804,3 +6804,20 @@ fonts, padding, selected state, translated names or commands. Reject ineffective
 trials before production. Continue changed/missing native cohorts and retain the actual independent
 process finalizer failure as an open runtime issue.
 [Cause, exact cases, correction and limits](quality/work-editor-os-text.md).
+
+## D-359 - Track optional Android manifest overlays during incremental builds
+
+The requested independent profiling flag is absent from a successful incremental APK: the installed
+Android SDK merger inputs omit project AndroidManifestOverlay items. Fingerprint ordered full paths
+and content hashes, including the empty list, in an unchanged-preserving intermediate file and add
+it to the merger's existing input list. Missing overlays fail; no SDK edits, forced clean/merge,
+permission changes or production profiling are introduced. Seven focused process cases and real
+signed profileable-on/off APK checks pass. Windows strict build is warning-free; final ordinary
+APK verification is recorded with the complete evidence. Managed case counts are unchanged.
+
+Bounded original binding/goal/Shell retirement retains actual ANRs and completed stored-input
+checks. Exact-symbol native samples locate GC/JNI work without proving the finalizer's root cause;
+no runtime/event/GC workaround is promoted. Temporary diagnostic source is removed. Scoped Samsung
+upgrade, English Simple-goal Cancel and Home979 pass without Save or settings changes. QA-06,
+broader A11Y/phone/iOS/release remain open.
+[Original failures, correction and qualification](quality/android-manifest-overlay-incremental.md).

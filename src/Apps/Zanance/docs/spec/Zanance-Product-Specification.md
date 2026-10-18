@@ -6789,3 +6789,13 @@ The36 accepted contexts combine32 final checks with four retained unchanged sett
 this is not a managed-suite count. Signed main upgrade/Home and exact OS restoration pass.
 Retained finalizer/ANR, all optional forms/controls, phone, TalkBack and iOS/release remain open.
 [Exact scope and original evidence](../quality/work-editor-os-text.md).
+
+### Section31 update - D-359 incremental Android manifest variants
+
+Optional project manifest overlays now invalidate the SDK merger by ordered path/content hash,
+including removal. Seven focused build cases and actual signed independent on/off variants qualify
+the correction without new managed counts or replaying successful financial/full-suite checks.
+Original binding/Shell retirement still records ANRs; exact native GC/JNI symbols are diagnostic
+evidence, not a runtime fix. Scoped Samsung Simple-goal Cancel preserves empty goals and Home979;
+whole-device, A11Y, iOS and release acceptance remain open.
+[Exact source/build/package/restoration boundaries](../quality/android-manifest-overlay-incremental.md).

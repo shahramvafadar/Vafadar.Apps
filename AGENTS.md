@@ -2603,3 +2603,12 @@ Label styling, padding, buttons and selected semantics. Diagnose actual ancestor
 before adding custom measurements. Retain exact original cases across terminal runtime failures,
 qualify every changed consumer and restore captured emulator settings. A native text correction
 does not close finalizer/GC/ANR, physical-device, spoken-reader or iOS/release gates.
+
+## Incremental Android manifest fidelity (D-359)
+
+Keep ordered project AndroidManifestOverlay paths/content/removal in the merger's incremental
+inputs. A successful build or evaluated overlay item is insufficient: verify the actual packaged
+manifest for an optional variant and its return to the default. Missing requested overlays fail;
+unchanged merges stay cached. Do not edit SDK targets or copy manifest/placeholder values into
+the local fingerprint cache. Profiling remains an explicit independent-caller-only option, never
+a main-app permission or an excuse for root, security-policy changes or production GC diagnostics.

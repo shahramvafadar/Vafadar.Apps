@@ -1434,3 +1434,15 @@ Windows layout-stress contexts. No owner desktop input or system scale change is
 The Android editor-text phase uses actual authorized emulator font_scale2.0/412dp and the
 original modal forms; the host owns exact prior-settings capture/restoration.
 [Current checks and limits](../../src/Apps/Zanance/docs/quality/android-editor-os-text.md).
+
+## Incremental Android manifest overlays (D-359)
+
+AndroidManifestOverlays.targets tracks requested overlay paths, precedence and SHA256 content in
+the current intermediate directory before the SDK merger. Switching a project-specific overlay
+option on/off, editing with a preserved timestamp or removing the last overlay invalidates the
+merge; unchanged inputs keep the output. A missing requested file fails the build. Never infer
+variant fidelity only from evaluated MSBuild items: inspect the actual APK manifest.
+Run eng/tests/AndroidManifestOverlays.Tests.ps1 for the seven isolated process regressions, without
+an application build or device. The AndroidHome caller's existing EnableCodeSampling option is
+independent-only; the ordinary app must remain non-profileable and satisfy its explicit privacy
+variant. [Qualified packages and runtime limits](../../src/Apps/Zanance/docs/quality/android-manifest-overlay-incremental.md).

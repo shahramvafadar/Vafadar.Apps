@@ -2447,3 +2447,11 @@ or platform acceptance. [Evidence](quality/home-template-publication.md).
 The complete-row JSON candidate passes correctness but regresses tenfold native reads and is withdrawn.
 Nine new actual-history boundary tests pass against restored production. QA-06 and current best scalar
 reader remain unchanged; no failed experiment is shipped. [Evidence](quality/complete-history-row-packet.md).
+
+## D-359 Android incremental variant correction
+
+Track requested manifest-overlay order/content/removal before the SDK's incremental merger.
+Focused build regressions and signed independent on/off checks qualify packaging, without changing
+main features or managed suite counts. Actual runtime ANRs remain retained and open in canonical
+QA-06; scoped Samsung unsaved-goal cancellation is separate from full physical/A11Y/iOS/release
+acceptance. [Complete evidence](quality/android-manifest-overlay-incremental.md).

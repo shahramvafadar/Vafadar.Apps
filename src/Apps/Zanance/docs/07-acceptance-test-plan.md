@@ -4031,3 +4031,14 @@ inputs. Check original goal-choice selection/restoration in18 independent Window
 without Save. Exact settings restoration and ordinary signed main upgrade/Home are separate.
 This adds native receipts, not a managed case count or closure of A11Y/QA-06/device/iOS/release.
 [Failures, correction and final evidence](quality/work-editor-os-text.md).
+
+## AT-359 incremental manifest variant fidelity
+
+Exercise absent/added/unchanged/same-timestamp-edit/removed/reordered/missing project overlays through
+the real imported target and SDK-style incremental inputs. Inspect actual signed independent APKs
+when switching profiling on then off without clean, including runtime bytes and default privacy.
+Preserve original runtime failures separately; native sampling is not a fixed finalizer or ANR.
+Record the coordinated Samsung ordinary upgrade/unsaved Simple-goal Cancel and unchanged Home979
+without broadening it to actual OS200%, advanced choices or whole-device acceptance. These are
+process/native cases, not new managed Trait counts.
+[Exact qualification and limits](quality/android-manifest-overlay-incremental.md).
