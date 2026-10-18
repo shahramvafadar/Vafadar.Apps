@@ -3061,3 +3061,12 @@ disclosures and the decorative default glyph. Keep original commands/names, scal
 text, complete financial drafts and stored inputs. Reuse passed unchanged native surfaces;
 A11Y-01/03, QA-06/ANR and remaining platform/external gates stay open.
 [Evidence and exact scope](../../quality/android-editor-os-text.md).
+
+## D-357 shared recent CI failure
+
+Fix the compression test process exit after its expected outside-cache rejection. Preserve all
+assertions and the actual production target. Runner-equivalent baseline/correction and retained
+failure propagation are checked locally; hosted confirmation follows the push. The earlier linked
+startup dependency is already fixed and both Linux tests/Android build pass at D-356. App/APK,
+managed counts, QA-06 and all external acceptance gates remain unchanged.
+[Log evidence and bounded verification](../../quality/android-compression-cache.md).

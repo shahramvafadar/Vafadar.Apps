@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Build verification (D-357)
+
+- Correct a false CI failure after the compression-cache safety checks pass. The installed application is unchanged.
+
 ### Complete editor choices (D-356)
 
 - Keep account-type captions complete at large text sizes.

@@ -6784,3 +6784,14 @@ default-icon and intrinsic account-chip clipping. Separate chip drawing from tex
 reuse growing debt actions and keep only the drawn icon glyph unscaled. Preserve the original
 commands, selected names, financial drafts/data and owner-authorized OS restoration.
 [Negative baseline, measurements, final checks and limits](quality/android-editor-os-text.md).
+
+## D-357 - Report the compression regression process result correctly
+
+Hosted Windows jobs from D-336 through D-356 print the successful compression assertions and then
+exit 1. The final native MSBuild call deliberately rejects an outside-cache path; PowerShell retains
+its LASTEXITCODE for the runner epilogue. Exit successfully only after every positive and negative
+assertion passes. Do not ignore native failures, remove the refusal or change the compression target.
+The runner-equivalent baseline exits 1, the corrected process exits 0, and an injected assertion
+failure still exits 1. Older Linux/Android missing-IAppDatabaseStartup compilation failures were
+already corrected in D-341; both jobs pass at D-356. No application/native bytes or APK change.
+Hosted verification follows this commit; it is not inferred from the local process check.

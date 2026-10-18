@@ -6772,3 +6772,11 @@ debt action captions grow fully; only the default-icon drawn glyph opts out of s
 checks use original editor models/controls and preserve drafts/stored inputs. No new managed
 case count or full-suite execution is inferred; A11Y/ANR/device/iOS/release remain partial.
 [Exact scope and final evidence](../quality/android-editor-os-text.md).
+
+### Section31 update - D-357 CI process exit correction
+
+Recent Windows CI reports fail after successful compression assertions because the expected
+negative native command leaves exit 1. Correct only the test process's successful completion;
+all refusal/failure checks remain. Local runner-equivalent and failure propagation checks pass;
+hosted confirmation follows the commit. No managed case count, app/APK or acceptance gate changes.
+[Evidence](../quality/android-compression-cache.md).

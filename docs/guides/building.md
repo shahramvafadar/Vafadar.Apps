@@ -1233,6 +1233,15 @@ and offline edition for final builds. No system text setting or desktop input is
 [Evidence](../../src/Apps/Zanance/docs/quality/more-menu-readable.md).
 
 
+## D-357 expected negative native command results in CI
+
+`eng/tests/AndroidCompression.Tests.ps1` deliberately invokes MSBuild with an unsafe destination.
+After checking that refusal and preserving the outside file, it explicitly exits 0. Otherwise the
+Windows runner's PowerShell epilogue forwards that expected native exit 1 even after PASS output.
+Do not replace this with unconditional workflow success or remove any assertions. A runner-equivalent
+child process reproduced exit 1 before the correction and exit 0 afterwards; an intentionally unmatched
+refusal assertion still exited 1. The compression task and installed application remain unchanged.
+
 ## D-336 incremental Android assembly cache
 
 The observed pre-managed assembly-store abort comes from a cached CoreLib header retaining

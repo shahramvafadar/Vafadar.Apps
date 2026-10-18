@@ -49,3 +49,6 @@ $refusal = dotnet msbuild $unsafePath -t:_CompressAssemblies -nologo -v:minimal 
 if ($LASTEXITCODE -eq 0 -or !($refusal -match 'outside the current intermediate cache')) { throw 'Outside-path refusal was not observed.' }
 if (([IO.File]::ReadAllBytes($outside)).Length -ne 3) { throw 'Outside file was changed.' }
 'PASS: valid cache preserved; stale index, size, magic and truncated headers invalidated; missing cache accepted; outside path refused.'
+# The final native command deliberately fails to prove the outside-path refusal. Only after
+# every assertion succeeds, clear that expected failure for the runner's LASTEXITCODE epilogue.
+exit 0

@@ -1,5 +1,25 @@
 # Android compression cache consistency (D-336)
 
+## Hosted CI follow-through (D-357)
+
+The D-336 Windows job117580632665 and retained D-344/D-354/D-356 Windows jobs117635669079,
+117732567391 and117760031908 all print the complete compression PASS before process exit 1.
+The expected outside-cache MSBuild rejection is the last native command; GitHub's PowerShell
+epilogue propagates its LASTEXITCODE despite all assertions succeeding. The test now exits 0
+only after those assertions. The unchanged target still refuses unsafe paths and unexpected
+assertion failures still terminate unsuccessfully. No workflow continue-on-error is introduced.
+
+The exact runner-equivalent local invocation exits 1 before the correction and 0 afterwards.
+A separate isolated copy with intentionally unmatched refusal evidence throws and exits 1,
+proving that the successful epilogue does not conceal assertion failures. These are build-tool
+process checks, not new managed unit cases or application/device tests.
+
+Older D-336 Linux/Android logs also show missing IAppDatabaseStartup in the linked Data test sources.
+D-341 already adds that source dependency; D-356's hosted Libraries and tests and Android build
+both succeed. Do not reapply that correction or rerun their successful local suites. The D-357
+hosted result is pending at commit creation. Main code, signed APK and all runtime acceptance
+limits remain D-356; no phone, UI, financial, OCR, crypto or performance verification is repeated.
+
 ## Observed native failure
 
 An ordinary incremental rebuild of the temporary Release profiling candidate installs successfully,

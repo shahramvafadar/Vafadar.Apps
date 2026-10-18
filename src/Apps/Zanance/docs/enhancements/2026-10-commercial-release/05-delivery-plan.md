@@ -2467,6 +2467,10 @@ regressions and current best production source. [Evidence](../../quality/complet
 
 ## D-356 whole original-editor caption delivery
 
+Subsequent CI follow-through D-357 corrects the shared Windows compression-test process exit,
+without repeating the qualified editor batch. Preserve hosted successful Linux/Android evidence
+and inspect only failed jobs; confirm the newest pushed commit's actual CI result.
+
 Review account/debt/expense/transfer/once/monthly forms together at real authorized Android text
 scale; fix the observed causes as one batch. Preserve original negative cases, narrow follow-up
 measurement, complete final changed-surface matrices and exact setting restoration. A later
