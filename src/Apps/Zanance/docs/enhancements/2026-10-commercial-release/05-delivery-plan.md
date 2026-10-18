@@ -2262,3 +2262,13 @@ successful suite is repeated or new test count claimed. QA-06 and wider device/i
 The next ready work remains the unresolved Android application-binding path and outstanding Android
 acceptance. These rejected variants are not a new completed feature. Keep the full goal active and
 preserve settled owner/external gates. [Evidence](../../quality/android-startup-packaging.md).
+
+
+## D-335 completed More menu batch
+
+Complete the observed More title/explanation clipping in both editions, then qualify all36 native
+layout contexts and the complete signed offline Android candidate. Preserve the successful unrelated
+financial/cipher/backend/import evidence. The full goal remains active; continue remaining ready
+Android acceptance and actual observed defects, including the unresolved startup binding path.
+Do not repeat D-334 rejected packaging variants or settled owner decisions.
+[Evidence and limits](../../quality/more-menu-readable.md).

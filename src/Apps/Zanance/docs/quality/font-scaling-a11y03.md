@@ -656,3 +656,12 @@ D-308 corrects reproduced saved-filter caption/action overflow using growing row
 filter viewport. Eighteen native Windows contexts preserve complete labels, original query dispatch and
 stored inputs. Passed common compact controls are unchanged. Android, package and remaining actual OS,
 reader, phone and iOS boundaries: [saved-filter actions](saved-filter-actions-readable.md).
+
+
+## D-335 complete More titles and descriptions
+
+Fourteen original titles/explanations are natively trimmed at360 units/200% in English/light.
+Local WordWrap overrides remove both compact-title ellipsis and the explanation line cap while
+retaining native font scaling. All36 final offline/sync language/theme/width contexts pass, with
+1224 realized caption observations and612 original semantic targets. This does not close broader
+A11Y-03, actual OS/readers/device/iOS acceptance. [Evidence](more-menu-readable.md).

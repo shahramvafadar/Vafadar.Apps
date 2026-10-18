@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-10-18, D-334)
+## 31. Implementation Status (v1.1, scoped updates through 2026-10-18, D-335)
 
 This section records what the repository actually contains. "Verified" is qualified by each scenario's evidence:
 automated tests, running Windows layouts, targeted Android emulator checks or specifically recorded physical
@@ -6549,3 +6549,16 @@ All temporary source/manifest changes are removed; ordinary application/APK rema
 successful suite is repeated or new test count claimed. QA-06 and wider device/iOS/release gates remain open.
 This is a rejected experiment, not a completed performance requirement or changed product behavior.
 See [evidence](../quality/android-startup-packaging.md).
+
+
+## D-335 A11Y-03 More menu continuation
+
+The More menu now grows complete titles and explanations at native font scale instead of
+inheriting compact title ellipsis and a two-line explanation limit. The original360/200% native case
+reproduces14 trimmed captions. Both offline and personal-sync editions pass18 en/fa/de, Light/Dark,
+360/412/1280 contexts each:1224 native caption observations and612 original command targets. Commands,
+routes, fonts, semantic names/hints, palette and financial data flow are unchanged. No unrelated successful
+suite is repeated or new unit count claimed. Broader A11Y-03, real OS scaling/readers, phone/iOS, startup
+ANR and release gates remain open.
+This changes presentation only; no financial model or migration changes.
+See [native and package evidence](../quality/more-menu-readable.md).

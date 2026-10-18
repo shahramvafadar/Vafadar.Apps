@@ -3792,3 +3792,12 @@ All temporary source/manifest changes are removed; ordinary application/APK rema
 successful suite is repeated or new test count claimed. QA-06 and wider device/iOS/release gates remain open.
 Neither experiment qualifies an ANR fix. Preserve their terminal crash/actual ANR rather than treating
 a completed callback or signed build as acceptance. [Evidence](quality/android-startup-packaging.md).
+
+
+## AT-335 complete More menu identity and explanation
+
+Require complete realized native title/explanation glyphs at200% process-local scale and44-unit
+original semantic targets. Both16-item offline and18-item personal-sync menus pass all18 language/
+theme/width contexts, with unchanged route/command parameters and full names/hints. These are36
+layout contexts, not a new unit-test total or whole-app/OS/phone/iOS acceptance.
+See [scope and final Android/package evidence](quality/more-menu-readable.md).

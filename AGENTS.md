@@ -2409,3 +2409,12 @@ symbols, change licence/telemetry order or infer an environmental root cause fro
 Remove temporary markers/manifest changes and restore the ordinary candidate without resetting data.
 A completed OnCreate callback after an ANR is not acceptance; preserve the same live process after
 observation expiry. QA-06, broader device/iOS and release gates remain open.
+
+
+## D-335 complete More menu captions
+
+Menu titles and explanations retain native scaling and wrap fully in growing rows; do not inherit
+compact RowTitle ellipsis or cap descriptions at two lines. Keep the original whole-row button,
+command/route/parameter, spoken title/hint and semantic palette. Independent Debug menu reviews must
+match their package before startup and never invoke financial commands. Native layout stress is
+separate from OS text settings, screen readers, physical devices and iOS acceptance.

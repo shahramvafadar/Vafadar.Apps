@@ -1559,3 +1559,11 @@ A snooze can start the process while the application stays closed. Preparing dev
 open a page, remove an app-lock cover or change a plan's due date. An unavailable protected store must
 not erase other valid queued reminders. A snooze disposed during preparation stops before reading or scheduling. Existing
 notification-detail consent and lock-protected navigation remain. See [evidence](quality/cold-protected-reminder-startup.md).
+
+
+## D-335 complete menu explanations
+
+More menu titles and explanations wrap completely in growing rows, including sync/household entries.
+Do not inherit compact financial-row ellipsis, cap the explanation at two lines or shrink its font.
+Keep the original whole-row semantic button, full spoken title/hint, route and readable wide column.
+Native Windows200% stress is separate from OS/device/reader acceptance; [evidence](quality/more-menu-readable.md).

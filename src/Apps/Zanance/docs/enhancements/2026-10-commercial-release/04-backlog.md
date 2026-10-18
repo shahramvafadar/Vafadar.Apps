@@ -50,7 +50,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-07 | Android/iOS parity (notifications, widget, file picker, lock, share, licences); existing Windows development checks | 2 | P2 | M | Mac readiness owner-reported; verification and iOS runs pending in that environment. Windows commercial delivery is outside current scope | platform access/signing |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | In progress (D-174 widget and D-175 contextual date names/drafts verified locally; spoken TalkBack and remaining screen/platform acceptance open) | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
-| ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; D-96 complete account type/status descriptions; D-97 complete debt entry action; D-98 single readable modal headers; D-99 visible complete plan validation; D-100 complete transaction-field feedback; D-101 retained visible existing transfer fees in Simple; D-102 complete settlement fields/action; D-103 complete occurrence actions/field feedback; D-107 complete growing native selected/popup picker captions; D-108 complete report-scope captions/Clear targets and reachable result viewport locally delivered; D-302 complete searchable currency controls and constrained transaction/goal/rate fields; D-308 complete native saved-filter names/actions; D-311 full monetary packets in report/forecast tables; other controls and platform acceptance open) | – |
+| ZCR-A11Y-03 | Font scaling to 200 %, 360/412 px, both themes, RTL | 2 | P1 | M | In progress (D-77 through D-91 Home/rows/action docks, Settings/reopened languages/drafts, actions/dates/amounts, growing child headers/live Back visible Insights destinations and complete budget figures/signed formatting and visible period choices and complete selectable tags and state-matched detail actions and complete onboarding restore alternatives; D-94 complete Home customization names/targets; D-96 complete account type/status descriptions; D-97 complete debt entry action; D-98 single readable modal headers; D-99 visible complete plan validation; D-100 complete transaction-field feedback; D-101 retained visible existing transfer fees in Simple; D-102 complete settlement fields/action; D-103 complete occurrence actions/field feedback; D-107 complete growing native selected/popup picker captions; D-108 complete report-scope captions/Clear targets and reachable result viewport locally delivered; D-302 complete searchable currency controls and constrained transaction/goal/rate fields; D-308 complete native saved-filter names/actions; D-311 full monetary packets in report/forecast tables; D-335 complete More titles/explanations in offline/sync editions; other controls and platform acceptance open) | – |
 | ZCR-A11Y-04 | VoiceOver pass on iOS | 2 | P2 | S | Blocked (iOS) | QA-07 |
 | ZCR-ENT-01 | Plan policy and quota model in Core (no UI, no store) | 3 | P1 | M | Implemented (D-117 / approved OD-03; 76 policy cases; no app enforcement) | OD-03 approved |
 | ZCR-ENT-02 | Enforcement in services: create, import, restore, template, deep link, widget, OCR | 3 | P1 | L | Implemented locally (D-173 bounded review closed; enforcement inactive; activation/native release gates remain) | ENT-01 |
@@ -2872,3 +2872,17 @@ All temporary source/manifest changes are removed; ordinary application/APK rema
 successful suite is repeated or new test count claimed. QA-06 and wider device/iOS/release gates remain open.
 Continue the unresolved binding path; do not repeat these variants without changed build/runtime
 evidence. The full development goal remains active. [Evidence](../../quality/android-startup-packaging.md).
+
+
+## D-335 A11Y-03 complete menu captions
+
+The More menu now grows complete titles and explanations at native font scale instead of
+inheriting compact title ellipsis and a two-line explanation limit. The original360/200% native case
+reproduces14 trimmed captions. Both offline and personal-sync editions pass18 en/fa/de, Light/Dark,
+360/412/1280 contexts each:1224 native caption observations and612 original command targets. Commands,
+routes, fonts, semantic names/hints, palette and financial data flow are unchanged. No unrelated successful
+suite is repeated or new unit count claimed. Broader A11Y-03, real OS scaling/readers, phone/iOS, startup
+ANR and release gates remain open.
+The D-77 blank-editor Back finding is not reproduced with the keyboard closed on D-333 x64/API36;
+no navigation code or financial Save is changed. Keep broader platform acceptance separate.
+[Evidence](../../quality/more-menu-readable.md).

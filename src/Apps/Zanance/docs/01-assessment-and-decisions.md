@@ -6531,3 +6531,15 @@ native rebuild differences and public memory counters do not establish the origi
 All temporary source/manifest changes are removed; ordinary application/APK remain D-333. No unchanged
 successful suite is repeated or new test count claimed. QA-06 and wider device/iOS/release gates remain open.
 See [exact failures and cleanup](quality/android-startup-packaging.md).
+
+
+## D-335 — Complete growing More menu captions
+
+The More menu now grows complete titles and explanations at native font scale instead of
+inheriting compact title ellipsis and a two-line explanation limit. The original360/200% native case
+reproduces14 trimmed captions. Both offline and personal-sync editions pass18 en/fa/de, Light/Dark,
+360/412/1280 contexts each:1224 native caption observations and612 original command targets. Commands,
+routes, fonts, semantic names/hints, palette and financial data flow are unchanged. No unrelated successful
+suite is repeated or new unit count claimed. Broader A11Y-03, real OS scaling/readers, phone/iOS, startup
+ANR and release gates remain open.
+See [native evidence](quality/more-menu-readable.md).

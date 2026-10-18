@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Complete More menu text (D-335)
+
+- Read full menu titles and explanations at larger text sizes. Rows grow to fit instead of shortening names or hiding descriptions after two lines; the same buttons and destinations remain.
+
 ### Startup investigation (D-334)
 
 - Keep the existing Android packaging after two alternatives fail native startup or still produce an ANR. Application behavior and the qualified D-333 APK are unchanged; startup performance remains under investigation.

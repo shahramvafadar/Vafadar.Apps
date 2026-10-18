@@ -1449,3 +1449,11 @@ The experimental APKs are not handoff candidates. Retain the qualified ordinary 
 compression-off crashes before managed entry, and direct native-library loading still produces a
 startup ANR. No publication or performance gate closes. Temporary source/manifest changes are removed.
 [Actual evidence and binary scope](quality/android-startup-packaging.md).
+
+
+## D-335 menu text
+
+Growing More title/explanation captions pass36 independent native Windows contexts across offline
+and sync editions. The complete signed offline Android candidate is
+artifacts/android-more-text-d335/pro.vafadar.zanance-Signed.apk. Actual package/navigation receipts
+and remaining reader/phone/iOS/ANR/release gates are separate in [evidence](quality/more-menu-readable.md).

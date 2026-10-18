@@ -6,7 +6,7 @@ using Vafadar.Maui.Mvvm;
 
 namespace Vafadar.Zanance.App.Features.More;
 
-/// <summary>An entry of the More menu: title, one line on what it holds, icon and route.</summary>
+/// <summary>An entry of the More menu: complete title and explanation, icon and route.</summary>
 public sealed record MoreItem(string Title, string Subtitle, Symbol Icon, string Route);
 
 /// <summary>A titled group of the More menu.</summary>

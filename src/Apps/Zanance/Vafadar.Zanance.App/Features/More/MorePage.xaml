@@ -25,8 +25,10 @@
                                                     <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="17" ForegroundColor="{DynamicResource SecondaryText}" HorizontalOptions="Center" VerticalOptions="Center" />
                                                 </Border>
                                                 <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="1">
-                                                    <Label Text="{Binding Title}" Style="{StaticResource RowTitle}" />
-                                                    <Label Text="{Binding Subtitle}" Style="{StaticResource Secondary}" FontSize="12.5" LineBreakMode="TailTruncation" MaxLines="2" />
+                                                    <!-- D-335: menu identities and explanations grow at native text scale;
+                                                         override RowTitle's compact-list ellipsis without changing its font. -->
+                                                    <Label Text="{Binding Title}" Style="{StaticResource RowTitle}" LineBreakMode="WordWrap" />
+                                                    <Label Text="{Binding Subtitle}" Style="{StaticResource Secondary}" FontSize="12.5" LineBreakMode="WordWrap" />
                                                 </VerticalStackLayout>
                                                 <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
                                                 <!-- The whole row is one real button: keyboard, screen readers and touch feedback on every platform. -->

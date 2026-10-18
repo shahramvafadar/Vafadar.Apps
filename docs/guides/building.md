@@ -1217,3 +1217,17 @@ Existing SDK lazy AOT/preload settings were already effective; do not repeat the
 unrelated tests. Observations must retain the exact actual process after a timeout. Restore all temporary
 source/manifest bytes and the qualified ordinary APK after a rejected trial. Exact receipts and limits:
 [src/Apps/Zanance/docs/quality/android-startup-packaging.md](../../src/Apps/Zanance/docs/quality/android-startup-packaging.md).
+
+
+## D-335 independent More text review
+
+The Debug-only VAFADAR_SNAPSHOT_ONLY=more-text route requires an independently compiled
+ApplicationId=pro.vafadar.zanance.moretextreview before startup and output below
+artifacts/more-text-d335. Set VAFADAR_SNAPSHOTS to a fresh owned subdirectory,
+VAFADAR_SNAPSHOT_FONT_SCALE=2 and VAFADAR_WINDOW_SIZE=360x800. Launch only that verified build
+with a hidden window. It loops en/fa/de, both themes and360/412/1280 widths and measures original
+MorePage rows after actual native scrolling; it does not seed or invoke financial commands.
+Qualify both ordinary and ZanancePersonalSyncEnabled=true builds sequentially. Retain original PIDs
+through observation expiry; preserve partial/error receipts. Restore the permanent application id
+and offline edition for final builds. No system text setting or desktop input is used.
+[Evidence](../../src/Apps/Zanance/docs/quality/more-menu-readable.md).
