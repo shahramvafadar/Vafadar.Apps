@@ -1244,3 +1244,16 @@ Keep the original SDK compression, serviced runtime, AOT profile, key/data and p
 successful financial, OCR, backend or More-layout suite is repeated or new managed count claimed.
 QA-06 startup ANR, two-second loaded Home, broader Android, Mac/iOS and owner release gates remain open.
 [Evidence, failures and limits](../../src/Apps/Zanance/docs/quality/android-compression-cache.md).
+
+
+## D-337 bounded native startup profiling
+
+Exact-PID, frame-pointer native captures retain the actual background startup ANR. Monotonic
+phase filtering places75.34% of888 main-thread OnCreate samples in the clock-reading path; an
+isolated native executable reproduces expensive precise clocks without application code in both
+original and fresh same-image emulators. Broken callchains and single-sample limits remain explicit.
+No clock substitution, kernel restriction, runtime/licence change or speculative app workaround is
+shipped. The original AVD/data remain; ordinary D-336 signed APK and same-PID Home are restored.
+App code, APK and managed counts remain D-336; no unchanged successful suite/build is repeated.
+QA-06/phone/iOS/release remain open. Continue ready release preparation independently of those gates.
+[Evidence and limitations](../../src/Apps/Zanance/docs/quality/android-startup-clock-cost.md).

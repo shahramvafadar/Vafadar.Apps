@@ -2427,3 +2427,12 @@ files inside this build's intermediate cache; preserve valid entries and refuse 
 Use the original SDK compressor, never patch binary headers, disable compression or clean unrelated
 outputs to mask stale indices. A repaired native size-mismatch crash is separate from startup ANR
 and performance acceptance. Remove all temporary profiling/phase instrumentation before handoff.
+
+## D-337 scoped startup clock evidence
+
+Separate exact monotonic startup intervals from later rendering before interpreting profiler
+percentages. Exact-PID frame-pointer samples and an isolated native control locate substantial
+clock-reading cost in the current emulator; this is not proof of a sole hypervisor defect or an ANR
+fix. Preserve clock precision, security and licence order. Never change kernel profiling restrictions
+or stop/reset the retained AVD to compensate for weak observations. Qualify independent controls,
+remove only their verified owned files and restore the ordinary signed application afterwards.
