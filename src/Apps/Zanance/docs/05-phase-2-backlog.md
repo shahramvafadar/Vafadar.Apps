@@ -2469,3 +2469,11 @@ paths, three goal types/methods and dirty-draft cancellation preserve Home979 an
 Native roots remain bounded to one; exact original display/system settings restore. No app code,
 APK or managed count changes; broader device/ANR/reader/iOS/release remain open.
 [Evidence](quality/physical-navigation-and-goal-drafts.md).
+
+## D-362 finite managed-startup investigation
+
+Separate native/preparation/settings/security phases in original independent Release/AOT startup.
+Reject immutable-model overlap after no end-to-end benefit; retain native engine/guards, original
+Home/data and exact settings. Next isolate actual protected factory/context creation from the
+first EF settings query before another implementation. App/APK and managed counts stay D-360.
+[Scoped original evidence](quality/android-managed-startup-phases.md).

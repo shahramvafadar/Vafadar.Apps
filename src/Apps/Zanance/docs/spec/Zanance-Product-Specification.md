@@ -6820,3 +6820,12 @@ Fifty-one assertions over stored observations, one remaining native root, exact 
 and English/Light/Simple/system-setting readbacks are evidence within that scope. No unit-count
 increase, app change or repeated successful build/suite; full device/ANR/reader/iOS/release remain
 open. [Complete physical boundaries](../quality/physical-navigation-and-goal-drafts.md).
+
+### Section31 update - D-362 original managed startup boundaries
+
+Fixed independent markers identify the first settings path as an unresolved cost after native
+protected preparation; context creation is not yet separated from first query work. Pure compiled
+model overlap takes 46ms and demonstrates no end-to-end benefit, so the candidate is removed.
+Same native Home/settings and ordinary main restoration pass. No application/APK or managed-count
+change; general startup/ANR, loaded-Home speed, device/reader/iOS/release remain open.
+[Exact diagnostic samples and limits](../quality/android-managed-startup-phases.md).

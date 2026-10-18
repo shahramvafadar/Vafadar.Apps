@@ -4060,3 +4060,12 @@ data and return English/Light/Simple/Home979; verify installed bytes and actual 
 The 51 derived receipt assertions are not unit tests, a full database comparison, spoken reader,
 all phone settings/scales, general ANR or complete device acceptance.
 [Exact physical scope](quality/physical-navigation-and-goal-drafts.md).
+
+## AT-362 managed startup boundaries, not a speed acceptance
+
+Bind each original process/trigger/APK to fixed monotonic phase markers. Keep Welcome separate
+from retained Home; distinguish context/query and native pre-entry cost from Application timing.
+Reject an unchanged-model overlap without end-to-end benefit, preserve the same native Home,
+remove all probes/candidates and restore the ordinary package/settings. These are diagnostic
+cases, not new unit tests or closure of general ANR/loaded-Home/physical/iOS/release acceptance.
+[Results and unresolved causal split](quality/android-managed-startup-phases.md).

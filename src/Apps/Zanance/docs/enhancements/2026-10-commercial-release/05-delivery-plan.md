@@ -2486,3 +2486,12 @@ settlement cases; do not replay unrelated editor/financial/OCR/backend suites. R
 finalizer failure separately from successful text cases and exact OS restoration. Continue
 ready remaining platform/runtime work without treating this correction as full acceptance.
 [Final native and signed-package evidence](../../quality/work-editor-os-text.md).
+
+## D-362 startup causal continuation
+
+The original managed-startup phase batch is complete; immutable-model overlap is rejected and
+all temporary source/package changes are removed. Continue QA-06 by separating original protected
+context creation from the first EF settings query, with native key/publication/access guards
+unchanged. Do not replay resource deferral, model warming or earlier packaging/clock variants
+without materially new evidence. Ready work continues under D-69; no owner choice is reopened.
+[Retained samples and restoration](../../quality/android-managed-startup-phases.md).

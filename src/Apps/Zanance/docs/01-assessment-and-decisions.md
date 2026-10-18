@@ -6847,3 +6847,15 @@ balance979 are restored. Fifty-one stored-observation assertions are not new man
 App/APK/builds remain D-360; no unrelated successful verification repeats. General ANR/finalizer,
 full financial/device/reader/iOS/release gates remain open.
 [Original physical evidence and limits](quality/physical-navigation-and-goal-drafts.md).
+
+## D-362 - Isolate original managed startup and reject unsupported model warming
+
+Independent fixed markers separate original Application construction from protected storage, first
+settings and lock reads. The original Home sample spends 443ms in the Application callback and
+777ms in the first settings call after protected preparation. That call still includes actual
+context construction and query work; no SQL-only cause is claimed. A bounded immutable-model
+overlap initializes the model in 46ms and does not improve application-entry-to-ready (2747ms
+original versus 2779ms candidate). Reject it and restore all original source/package bytes;
+retain the same zero-balance independent Home. Application/APK remain D-360, physical evidence
+D-361. No general startup/ANR/two-second acceptance or new managed test count follows.
+[Actual phase boundaries, candidate and restoration](quality/android-managed-startup-phases.md).

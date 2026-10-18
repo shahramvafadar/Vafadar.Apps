@@ -1655,3 +1655,10 @@ unsaved-draft cancellation pass. Original preferences, exact Home/account/balanc
 readbacks are preserved; one native root remains. These receipts do not accept general ANR,
 all financial writes/device scenarios, spoken TalkBack, OS200% phone, iOS or release.
 [Evidence and retained host-guard corrections](quality/physical-navigation-and-goal-drafts.md).
+
+## D-362 startup diagnostic boundary
+
+Application callback timing does not include native pre-entry work or prove loaded Home. The
+first settings path still needs a context-versus-query causal split. Rejected immutable-model
+overlap and all temporary markers are absent from production; no general ANR or two-second
+claim follows. App/APK remain D-360. [Evidence](quality/android-managed-startup-phases.md).

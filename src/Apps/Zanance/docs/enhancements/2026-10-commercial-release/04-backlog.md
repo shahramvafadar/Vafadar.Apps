@@ -46,7 +46,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
 | ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-324 six source-language digital PDFs; D-325 physical Latin image OCR/EXIF/refusal and French accent fix; real corpus/camera/scanned/iOS remain) | sample receipts |
-| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-322 retained physical workloads; D-350 rejects unproven date decoder; D-351 indexes aggregation; D-352 completes worker/atomic virtualized reimbursement-page publication and non-overlapping empty flow; D-353 removes unnecessary template reload teardown; D-354 rejects slower complete-row JSON transport and retains scalar production reader; D-358 retains an independent binding-finalizer fault; D-360 releases owned retired Android root fragments and passes the previously failing 36-group goal/root sequence; actual Main/startup ANRs, two-second objective, cold/low-memory and broader device/iOS gates remain) | – |
+| ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-322 retained physical workloads; D-350 rejects unproven date decoder; D-351 indexes aggregation; D-352 completes worker/atomic virtualized reimbursement-page publication and non-overlapping empty flow; D-353 removes unnecessary template reload teardown; D-354 rejects slower complete-row JSON transport and retains scalar production reader; D-358 retains an independent binding-finalizer fault; D-360 releases owned retired Android root fragments and passes the previously failing 36-group goal/root sequence; D-362 isolates original managed startup and rejects model overlap without benefit; actual Main/startup ANRs, two-second objective, cold/low-memory and broader device/iOS gates remain) | – |
 | ZCR-QA-07 | Android/iOS parity (notifications, widget, file picker, lock, share, licences); existing Windows development checks | 2 | P2 | M | Mac readiness owner-reported; verification and iOS runs pending in that environment. Windows commercial delivery is outside current scope; D-344 native Canvas root-change AV remains a separate development limitation | platform access/signing |
 | ZCR-A11Y-01 | TalkBack pass on Android | 2 | P1 | M | In progress (D-174/175 local names; D-348 service-preserving observer captures audio/focus; D-349 rejects injected navigation as gesture acceptance; correct spoken navigation and remaining platform/device acceptance open) | – |
 | ZCR-A11Y-02 | Narrator and keyboard pass on Windows | 2 | P2 | S | Proposed | – |
@@ -3115,3 +3115,13 @@ transitions. English/Light/Simple and all four captured OS settings restore; the
 released. Fifty-one assertions over stored observations are not new unit cases or complete
 database/device/ANR/reader/iOS/release acceptance; no successful unrelated suite/build repeats.
 [Exact evidence and observation corrections](../../quality/physical-navigation-and-goal-drafts.md).
+
+## D-362 original managed startup and rejected model overlap
+
+Application construction is 443ms in the retained Home sample; the original first settings call
+is 777ms after native preparation. This is not yet a factory-versus-query causal profile.
+Immutable compiled-model overlap completes in 46ms but does not improve application-entry-to-ready
+(2747ms original,2779ms candidate); reject it and remove all temporary code. Same zero-balance
+Home, original package/source and exact settings restore. App/APK remain D-360; D-361 physical
+evidence is retained. No managed count, full-suite repeat or general ANR/loaded-Home acceptance.
+[Exact stages, fixture distinction and next boundary](../../quality/android-managed-startup-phases.md).
