@@ -239,3 +239,12 @@ using explicit fictitious long captions/extreme amounts. Check native complete g
 original command/parameter/target and accessible name, detached hidden rows and complete visible
 source. No layout or financial input is saved. Observe the original PID with Read-ReviewReport.ps1;
 Activity observation expiry is not process failure. Native metadata is not spoken TalkBack evidence.
+
+## D-343 shared original plan rows
+
+Phase `plan-rows` qualifies original Home upcoming and PlansPage collection templates in six
+language/theme contexts on the retained financial-tables fixture. Explicit fictitious date/icon
+rows and signed extreme captions never save a schedule or entry. Check both amount scroll ends,
+original commands/44-unit targets and actual native complete accessible descriptions. The original
+empty Plans publication must finish before view-only rows replace it. No prepare/performance rerun,
+OS setting change or spoken-reader acceptance belongs to this phase.

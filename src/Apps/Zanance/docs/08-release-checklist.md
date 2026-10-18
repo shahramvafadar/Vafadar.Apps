@@ -1515,3 +1515,11 @@ phone, performance, iOS, Store or publication acceptance. No privacy data, permi
 financial schema or portable format changes. Existing owner/external gates remain open.
 
 [Evidence and complete candidate](quality/home-category-legends-readable.md).
+
+## D-343 scoped plan-row candidate
+
+Shared plan-row monetary packets and navigation separation pass focused native qualification.
+The complete offline candidate still needs the existing OS-reader, phone, performance/ANR, iOS,
+provider/Store and publication gates. No privacy data, permission, SDK, key, schema or backup format changes.
+
+[Evidence and limits](quality/plan-row-amounts-readable.md).

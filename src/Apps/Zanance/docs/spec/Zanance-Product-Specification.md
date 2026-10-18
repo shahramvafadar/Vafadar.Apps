@@ -6647,3 +6647,12 @@ contexts pass. Managed counts remain unchanged; successful unrelated suites are 
 A11Y-03/QA-06, OS readers, physical Android, iOS and release gates remain In progress/open.
 
 [Evidence](../quality/home-category-legends-readable.md).
+
+## D-343 Section31 update - complete plan-row values
+
+The shared original Home/Plans plan-row template now reserves an independent horizontal amount
+viewport while preserving its original packet, typography/color and navigation identity. Eighteen
+Windows and six Android contexts pass; unit counts are unchanged. A11Y-03, QA-06/ANR, physical
+Android, iOS and external release gates remain In progress/open.
+
+[Evidence and limits](../quality/plan-row-amounts-readable.md).

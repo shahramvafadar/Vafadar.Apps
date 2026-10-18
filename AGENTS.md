@@ -2470,3 +2470,12 @@ full-width viewport. Hidden optional category rows detach from the original comp
 like account rows, without saved layout changes or cached financial substitutes. Native verification
 must account for mirrored RTL transforms by checking both physical edges. Presentation fixtures,
 accessible metadata and process-local scaling are not OS readers, financial or startup acceptance.
+
+## D-343 complete plan-row amounts
+
+PlanRowView keeps identity/status in growing rows and preserves original MoneyText through
+AmountReadout below them. Keep the original scalable typography, semantic color, command,
+parameter and complete description. The real navigation target covers only identity/status;
+its margins must not intercept the amount viewport. Check both original Home/Plans hosts,
+real scroll ends and native names without invoking financial commands. Windows TextPointer
+character rectangles are zero-width caret positions; use their positions, not glyph-width assumptions.

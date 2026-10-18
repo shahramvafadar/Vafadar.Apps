@@ -3888,3 +3888,13 @@ No financial Save or layout persistence is invoked. No new managed test count is
 OS200%/spoken readers, physical Android, startup/ANR, iOS and release acceptance remain open.
 
 [Exact runs, failures and limits](quality/home-category-legends-readable.md).
+
+## D-343 original plan-row qualification
+
+Pass:18 en/fa/de xLight/Dark x360/412/1280 Windows contexts at Debug process-local scale2, each
+checking both original Home/Plans rows; six Release/AOT Android contexts check both hosts, date/icon
+variants, native complete descriptions, original commands/targets and twelve monetary viewports.
+Both scroll ends and unchanged stored inputs are checked; no financial command executes. A focused
+English360 probe confirms the actual post-layout sign at nativeX0 after correcting diagnostic APIs.
+
+[Evidence and limits](quality/plan-row-amounts-readable.md).

@@ -17,6 +17,7 @@ using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.Commerce;
 using Vafadar.Zanance.App.Features.Budget;
 using Vafadar.Zanance.App.Features.Home;
+using Vafadar.Zanance.App.Features.Plans;
 using Vafadar.Zanance.App.Interaction;
 
 namespace Vafadar.Zanance.App;
@@ -25,7 +26,7 @@ internal static partial class AndroidHomeReview
 {
     /// <summary>Checks original table templates and complete canonical amount viewports without invoking financial commands.</summary>
     private static async Task<object> ReviewFinancialTablesAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct,
-        bool legendsOnly = false, bool budgetTitlesOnly = false, bool homeLegendsOnly = false)
+        bool legendsOnly = false, bool budgetTitlesOnly = false, bool homeLegendsOnly = false, bool planRowsOnly = false)
     {
         async Task RootAsync()
         {
@@ -74,6 +75,48 @@ internal static partial class AndroidHomeReview
             foreach (var language in new[] { "en", "fa", "de" })
             {
                 await SetLanguageAsync(app, local, language, ct); await RootAsync(); var dates = new DateFormatter(local);
+                if (planRowsOnly)
+                {
+                    var home = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store);
+                    var homePage = new HomePage(home).WithFlowDirection(local);
+                    await Shell.Current.Navigation.PushAsync(homePage);
+                    await homePage.PendingPublication;
+                    var due = new PlanRow(Guid.NewGuid(), today, "Fictitious rent / Miete / اجاره", "Fictitious account",
+                        MoneyText.Format(long.MinValue, "EUR", local.CurrentCulture), Palette.ExpenseText,
+                        FluentIcons.Common.Symbol.CalendarClock, Palette.PlanText, Palette.PlanBackground,
+                        translator["Plan_Tomorrow"], Palette.PlanText, Palette.PlanBackground)
+                    { DayText = "18", MonthText = "Oct", TileText = Palette.PlanText, TileBackground = Palette.PlanBackground, TileStroke = Palette.PlanLine, BadgeStroke = Palette.PlanLine };
+                    home.Upcoming.Clear(); home.Upcoming.Add(due); home.HasUpcoming = true;
+                    await Task.Delay(250, ct);
+                    var homeCount = await CheckAsync(homePage, due.Title, due.AmountText, due.AmountText);
+                    CheckPlanTarget(homePage, due, home.OpenOccurrenceCommand);
+                    await Shell.Current.Navigation.PopAsync();
+
+                    var plans = ActivatorUtilities.CreateInstance<PlansViewModel>(services, store, fixture.GetRequiredService<PlanStore>());
+                    var plansPage = new PlansPage(plans).WithFlowDirection(local);
+                    await Shell.Current.Navigation.PushAsync(plansPage);
+                    // The original empty-page caption is published after the original appearance read completes.
+                    for (var wait = 0; wait < 300; wait++)
+                    {
+                        if (plansPage.Handler?.PlatformView is Android.Views.View nativePage
+                            && NativeTexts(nativePage).Contains(translator["Plans_Empty"])) break;
+                        if (wait == 299) throw new ReviewCheckException("Original empty plan publication did not finish.");
+                        await Task.Delay(50, ct);
+                    }
+                    var definition = due with { OriginalDate = null, DayText = null,
+                        AmountText = MoneyText.Format(long.MaxValue, "EUR", local.CurrentCulture) };
+                    plans.Rows = new[] { definition }; plans.HasNoPlans = false; plans.IsEmpty = false;
+                    await Task.Delay(250, ct);
+                    var planCount = await CheckAsync(plansPage, definition.Title, definition.AmountText, definition.AmountText);
+                    CheckPlanTarget(plansPage, definition, plans.OpenCommand);
+                    await Shell.Current.Navigation.PopAsync();
+                    if (homeCount != 1 || planCount != 1 || before != await StoredAsync())
+                        throw new ReviewCheckException("Original plan-row presentation or stored inputs changed.");
+                    observations.Add(new { Language = language, Theme = theme.ToString(), OriginalHomeAndPlansHosts = true,
+                        CompleteMonetaryViewports = homeCount + planCount, OriginalCommandsAndTargets = true,
+                        DateAndIconVariants = true, ActualNativeAccessibleNames = true, FinancialCommandsInvoked = false });
+                    continue;
+                }
                 if (homeLegendsOnly)
                 {
                     var home = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store);
@@ -185,8 +228,9 @@ internal static partial class AndroidHomeReview
                 observations.Add(new { Language = language, Theme = theme.ToString(), TrendAmounts = trend, HistoryAmounts = history, ComparisonAmounts = comparisonCount, CompleteTextAndScrollEnds = true });
             }
         }
-        return new { Comparison = comparison, OriginalReportsAndSnapshotPages = !legendsOnly && !budgetTitlesOnly && !homeLegendsOnly,
+        return new { Comparison = comparison, OriginalReportsAndSnapshotPages = !legendsOnly && !budgetTitlesOnly && !homeLegendsOnly && !planRowsOnly,
             OriginalReportLegends = legendsOnly, OriginalBudgetTitles = budgetTitlesOnly, OriginalHomeLegends = homeLegendsOnly,
+            OriginalPlanRows = planRowsOnly,
             OriginalStoredInputsUnchanged = true, NoMainDataTouched = true,
             NoFinancialSaveOrSystemSettings = true, ActualPhoneAcceptance = false, Observations = observations };
 
@@ -200,16 +244,32 @@ internal static partial class AndroidHomeReview
             for (Element? node = value; node is not null; node = node.Parent) if (node is VisualElement { IsVisible: false }) return false;
             return true;
         }
+        static void CheckPlanTarget(ContentPage page, PlanRow model, System.Windows.Input.ICommand command)
+        {
+            var row = Views(page).OfType<PlanRowView>().Single(value => ReferenceEquals(value.BindingContext, model));
+            var button = ((Grid)row.Content).Children.OfType<Button>().Single();
+            if (!ReferenceEquals(button.Command, command) || !ReferenceEquals(button.CommandParameter, model)
+                || button.Width < 44 || button.Height < 44 || SemanticProperties.GetDescription(button) != model.Description
+                || button.Handler?.PlatformView is not Android.Views.View native)
+                throw new ReviewCheckException("Original plan command, target or complete accessible identity changed.");
+            using var node = native.CreateAccessibilityNodeInfo();
+            var name = node?.ContentDescription?.ToString() ?? node?.Text?.ToString() ?? string.Empty;
+            if (!name.Contains(model.Description, StringComparison.Ordinal))
+                throw new ReviewCheckException("Original native plan accessible name is incomplete.");
+        }
         async Task<int> CheckAsync(ContentPage page, string date, string positive, string negative)
         {
-            var outer = Views(page).OfType<ScrollView>().First(value => value.Orientation != ScrollOrientation.Horizontal);
+            // The plan fixture has one realized CollectionView item, rather than a vertical ScrollView host.
+            var outer = page is PlansPage ? null : Views(page).OfType<ScrollView>().First(value => value.Orientation != ScrollOrientation.Horizontal);
             var identity = Views(page).OfType<Label>().First(label => label.Text == date && Visible(label));
-            await outer.ScrollToAsync(identity, ScrollToPosition.Start, false); await Task.Delay(100, ct); CheckText(identity);
+            if (outer is not null) await outer.ScrollToAsync(identity, ScrollToPosition.Start, false);
+            await Task.Delay(100, ct); CheckText(identity);
             var amounts = Views(page).OfType<AmountReadout>().Where(value => (value.AmountText == positive || value.AmountText == negative) && Visible(value)).ToArray();
             if (amounts.Length == 0) throw new ReviewCheckException("Original amount viewports are not realized.");
             foreach (var amount in amounts)
             {
-                await outer.ScrollToAsync(amount, ScrollToPosition.Start, false); await Task.Delay(100, ct);
+                if (outer is not null) await outer.ScrollToAsync(amount, ScrollToPosition.Start, false);
+                await Task.Delay(100, ct);
                 var caption = Views(amount).OfType<Label>().Single(label => label.Text == amount.AmountText); CheckText(caption);
                 var scroll = Views(amount).OfType<ScrollView>().Single();
                 if (scroll.Content is not VisualElement content) throw new ReviewCheckException("Original complete amount is missing.");
@@ -218,7 +278,7 @@ internal static partial class AndroidHomeReview
                 await scroll.ScrollToAsync(0, 0, false); await Task.Delay(100, ct);
                 if (scroll.ScrollX > 1) throw new ReviewCheckException("Original sign/start cannot be restored.");
                 if (amount.Width > page.Width + 1) throw new ReviewCheckException("Original amount viewport exceeds the page.");
-                if ((legendsOnly || homeLegendsOnly) && amount.Parent is Grid row)
+                if ((legendsOnly || homeLegendsOnly || planRowsOnly) && amount.Parent is Grid row)
                 {
                     foreach (var button in row.Children.OfType<Button>())
                     {

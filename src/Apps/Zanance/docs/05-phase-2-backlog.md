@@ -2370,3 +2370,11 @@ category controls detach from their unchanged source. Eighteen Windows and six A
 pass; no managed count increases. Broad accessibility, performance and release acceptance stay open.
 
 [Evidence](quality/home-category-legends-readable.md).
+
+## D-343 complete original plan-row values
+
+The actual shared plan-row packet splitting is corrected in both current hosts. Focused native
+checks pass with original actions/accessible names and unchanged stored inputs. No managed count
+increases. Broad accessibility, physical Android, performance, iOS and external gates stay open.
+
+[Evidence and limits](quality/plan-row-amounts-readable.md).

@@ -6633,3 +6633,12 @@ No financial algorithm, schema, translation or managed unit count changes. QA-06
 physical Android, iOS and release remain open.
 
 [Evidence and limits](quality/home-category-legends-readable.md).
+
+## D-343 - Preserve complete plan-row monetary packets
+
+The original shared PlanRowView splits an extreme amount and even EUR across lines. Use the existing
+AmountReadout at the original scalable typography/color, outside the unchanged real navigation target.
+Both Home upcoming and Plans hosts pass18 Windows and six Release/AOT Android contexts. Original
+commands, native accessible identities and stored inputs remain intact; no financial calculation changes.
+
+[Evidence and limits](quality/plan-row-amounts-readable.md).

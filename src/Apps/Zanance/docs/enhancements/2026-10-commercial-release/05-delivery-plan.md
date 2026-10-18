@@ -2356,3 +2356,12 @@ complete on the same original process after Activity observation expires. Do not
 financial/crypto/backend suites or the rejected D-341 connection experiment.
 
 [Evidence and remaining gates](../../quality/home-category-legends-readable.md).
+
+## D-343 complete plan-row presentation batch
+
+Observe the original currency splitting, correct the shared template for both hosts, then qualify
+18 Windows and six Android contexts without financial Save. Retain the passed matrix and investigate
+only the English360 visual-edge concern with a focused probe. Preserve its diagnostic failures.
+Do not repeat unchanged crypto, financial, OCR, backend or previously qualified category/budget checks.
+
+[Evidence and limits](../../quality/plan-row-amounts-readable.md).

@@ -1098,3 +1098,11 @@ no financial operation or saved layout change occurs. Existing unrelated success
 A11Y-03, QA-06/ANR, physical Android, Mac/iOS and external release gates remain open.
 
 [Evidence](quality/home-category-legends-readable.md).
+
+## D-343 shared plan-row correction
+
+The original monetary packet no longer splits its digits/unit across lines in Home upcoming and
+Plans rows. Eighteen Windows and six Release/AOT Android contexts qualify the shared correction,
+with stored inputs unchanged. No unchanged domain or financial suite is repeated.
+
+[Evidence and limits](quality/plan-row-amounts-readable.md).

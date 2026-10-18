@@ -10,10 +10,13 @@ param(
     [switch]$ReportRowsReview,
     [switch]$BudgetTitlesReview,
     [switch]$HomeLegendsReview,
+    [switch]$PlanRowsReview,
+    [switch]$PlanRowsEdgeProbe,
     [ValidateSet('en,fa,de', 'fa,de')][string]$HomeLegendsLanguages = 'en,fa,de')
 $ErrorActionPreference = 'Stop'
-$reviewCount = @($ReportRowsReview.IsPresent, $BudgetTitlesReview.IsPresent, $HomeLegendsReview.IsPresent | Where-Object { $_ }).Count
+$reviewCount = @($ReportRowsReview.IsPresent, $BudgetTitlesReview.IsPresent, $HomeLegendsReview.IsPresent, $PlanRowsReview.IsPresent | Where-Object { $_ }).Count
 if ($reviewCount -gt 1) { throw 'Choose one original review matrix.' }
+if ($PlanRowsEdgeProbe -and !$PlanRowsReview) { throw 'Plan amount edge probe requires its original review mode.' }
 $root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
 Set-Location -LiteralPath $root
 if ($UseExistingBuild -and !$RunId) { throw 'An existing build requires its exact original run id.' }
@@ -41,7 +44,7 @@ if (!(Test-Path -LiteralPath $manifest)) { throw 'Independent compiled manifest 
 [xml]$metadata = Get-Content -LiteralPath $manifest -Raw
 if ($metadata.Package.Identity.Name -ne $identity) { throw 'Compiled draft identity does not match the requested run.' }
 $variables = @('VAFADAR_SNAPSHOTS','VAFADAR_SNAPSHOT_ONLY','VAFADAR_STORE_DRAFT_RUN',
-    'VAFADAR_WINDOW_SIZE','VAFADAR_SNAPSHOT_FONT_SCALE','VAFADAR_START_ROUTE','VAFADAR_STORE_DRAFT_REVIEW','VAFADAR_HOME_LEGEND_LANGUAGES')
+    'VAFADAR_WINDOW_SIZE','VAFADAR_SNAPSHOT_FONT_SCALE','VAFADAR_START_ROUTE','VAFADAR_STORE_DRAFT_REVIEW','VAFADAR_HOME_LEGEND_LANGUAGES','VAFADAR_PLAN_ROWS_EDGE_PROBE')
 $previous = @{}
 foreach ($name in $variables) { $previous[$name] = [Environment]::GetEnvironmentVariable($name, 'Process') }
 try {
@@ -49,9 +52,10 @@ try {
     $env:VAFADAR_SNAPSHOT_ONLY = 'store-draft'
     $env:VAFADAR_STORE_DRAFT_RUN = $run
     $env:VAFADAR_WINDOW_SIZE = '412x800'
-    $env:VAFADAR_SNAPSHOT_FONT_SCALE = if ($ReportRowsReview -or $BudgetTitlesReview -or $HomeLegendsReview) { '2' } else { '' }
-    $env:VAFADAR_STORE_DRAFT_REVIEW = if ($ReportRowsReview) { 'report-rows' } elseif ($BudgetTitlesReview) { 'budget-titles' } elseif ($HomeLegendsReview) { 'home-legends' } else { '' }
+    $env:VAFADAR_SNAPSHOT_FONT_SCALE = if ($ReportRowsReview -or $BudgetTitlesReview -or $HomeLegendsReview -or $PlanRowsReview) { '2' } else { '' }
+    $env:VAFADAR_STORE_DRAFT_REVIEW = if ($ReportRowsReview) { 'report-rows' } elseif ($BudgetTitlesReview) { 'budget-titles' } elseif ($HomeLegendsReview) { 'home-legends' } elseif ($PlanRowsReview) { 'plan-rows' } else { '' }
     $env:VAFADAR_HOME_LEGEND_LANGUAGES = if ($HomeLegendsReview) { $HomeLegendsLanguages } else { '' }
+    $env:VAFADAR_PLAN_ROWS_EDGE_PROBE = if ($PlanRowsEdgeProbe) { '1' } else { '' }
     $env:VAFADAR_START_ROUTE = ''
     Add-Type -Path (Join-Path $PSScriptRoot '../modules/StoreDraftProcess.cs')
     $inputBefore = [Vafadar.Build.StoreDraftProcess]::ReadInputDesktopName()
@@ -67,7 +71,7 @@ try {
     $receiptPath = Join-Path $output 'complete.json'
     if (!(Test-Path -LiteralPath $receiptPath)) { throw 'No completed original draft receipt.' }
     $receipt = Get-Content -LiteralPath $receiptPath -Raw | ConvertFrom-Json
-    $expectedCount = if ($HomeLegendsReview) { $HomeLegendsLanguages.Split(',').Count * 6 } elseif ($ReportRowsReview -or $BudgetTitlesReview) { 18 } else { 48 }
+    $expectedCount = if ($PlanRowsEdgeProbe) { 1 } elseif ($HomeLegendsReview) { $HomeLegendsLanguages.Split(',').Count * 6 } elseif ($ReportRowsReview -or $BudgetTitlesReview -or $PlanRowsReview) { 18 } else { 48 }
     if ($receipt.Package -ne $identity -or $receipt.ProcessId -ne $process.Id -or
         !$receipt.FinancialRowsUnchangedAfterSeeding -or $receipt.Captures.Count -ne $expectedCount) {
         throw 'Draft completion does not match the original run.'

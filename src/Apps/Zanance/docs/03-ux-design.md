@@ -1610,3 +1610,12 @@ viewport below the chart. Preserve original scalable sizes and complete spoken i
 native category rows while their optional section is hidden without filtering the original collection.
 
 [Native evidence and remaining acceptance](quality/home-category-legends-readable.md).
+
+## D-343 independent plan-row value viewport
+
+Plan identity/subtitle and status stay in growing rows beside the original date/icon. Reserve a
+full-width AmountReadout below them using the unchanged MoneyText packet, scalable15-unit bold font
+and semantic amount color. The real original navigation button covers only identity/status, retains
+its complete description and44-unit target, and never covers the amount scroll surface.
+
+[Evidence and limits](quality/plan-row-amounts-readable.md).

@@ -1303,3 +1303,13 @@ ordinary Windows build identity afterward. AndroidHome phase `home-legends` uses
 on the existing independent financial-tables fixture; observe its exact original PID after timeout.
 
 [Evidence and candidate](../../src/Apps/Zanance/docs/quality/home-category-legends-readable.md).
+
+## D-343 shared plan-row review
+
+`eng/scripts/Run-StoreDrafts.ps1 -PlanRowsReview` checks18 original Home/Plans contexts using
+fresh isolated Windows storage/non-input desktop and process-local scale2. `-PlanRowsEdgeProbe`
+checks only English Light360 for a concrete post-layout sign concern; do not replay the full passed
+matrix for diagnostic repairs. Original native Scroll patterns, descriptions and stored inputs are
+checked without financial commands. Restore the permanent Windows identity after review.
+AndroidHome phase `plan-rows` reuses the retained financial-tables fixture with a fresh comparison;
+observe the same original PID after timeout. [Evidence](../../src/Apps/Zanance/docs/quality/plan-row-amounts-readable.md).
