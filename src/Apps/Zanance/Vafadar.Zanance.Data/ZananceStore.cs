@@ -121,7 +121,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     {
         await using var db = owner is null ? await contextFactory.CreateDbContextAsync(cancellationToken)
             : await ((Vafadar.Data.ILocalDbContextFactory<ZananceDbContext>)contextFactory).CreateDbContextAsync(owner, cancellationToken);
-        var settings = await db.Settings.AsNoTracking().OrderBy(s => s.CreatedAt).FirstOrDefaultAsync(cancellationToken);
+        var settings = await SettingsRowReader.ReadAsync(db, cancellationToken);
         if (settings is not null)
         {
             return settings;
@@ -131,7 +131,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         await _settingsGate.WaitAsync(cancellationToken);
         try
         {
-            settings = await db.Settings.AsNoTracking().OrderBy(s => s.CreatedAt).FirstOrDefaultAsync(cancellationToken);
+            settings = await SettingsRowReader.ReadAsync(db, cancellationToken);
             if (settings is not null)
             {
                 return settings;

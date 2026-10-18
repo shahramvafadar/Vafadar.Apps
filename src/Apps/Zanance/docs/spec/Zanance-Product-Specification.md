@@ -6829,3 +6829,15 @@ model overlap takes 46ms and demonstrates no end-to-end benefit, so the candidat
 Same native Home/settings and ordinary main restoration pass. No application/APK or managed-count
 change; general startup/ANR, loaded-Home speed, device/reader/iOS/release remain open.
 [Exact diagnostic samples and limits](../quality/android-managed-startup-phases.md).
+
+### Section31 update - D-363 complete first-settings read
+
+The asynchronous startup/maintenance settings reader preserves all25 fields, original earliest-row
+identity/order/converters and EF command/protection/transaction/cancellation boundaries without
+caching preferences or credentials. Eight new regression cases plus two existing concurrency cases
+pass in selective retained runs; the full suite is not repeated. Release/AOT reference/tenfold keyed
+reads match original EF values and complete schema/typed rows, including maintenance and retired-key
+refusal. Original/candidate/reverse-confirmation samples reduce managed Application-entry-to-Home
+publication by222-297ms; part of the first-query gain moves into later EF work. No whole-startup,
+two-second, general ANR, physical-device, reader, iOS or release acceptance is inferred.
+[Exact evidence and final handoff](../quality/settings-startup-reader.md).

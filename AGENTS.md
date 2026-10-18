@@ -2621,3 +2621,13 @@ and use reordered transactions matching the SDK, so rapid display updates cannot
 fragment to a removed container. Never remove another renderer's fragments or force synchronous
 transaction execution. Qualify original root collection and translated native Back independently;
 limited ownership evidence does not close general GC/finalizer/ANR or release gates.
+
+## Complete startup settings reads (D-363)
+
+The asynchronous earliest-settings reader must preserve every mapped field, exact identity, nulls,
+original timestamp/scalar conversions and ordering. Execute through the captured EF relational
+connection/command and its interception, cancellation and joined transaction; keep creation/update
+serialization and exclusive-maintenance ownership. Refuse changed mapping/query filters before SQL.
+Cache only immutable weakly owned model metadata, never preferences or key-bearing state. Measure
+through original Home publication as well as settings, since shared EF startup work can move later.
+Temporary phase instrumentation is independent-only and must be removed before the finished handoff.

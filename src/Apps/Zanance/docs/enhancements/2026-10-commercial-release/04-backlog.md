@@ -3125,3 +3125,15 @@ Immutable compiled-model overlap completes in 46ms but does not improve applicat
 Home, original package/source and exact settings restore. App/APK remain D-360; D-361 physical
 evidence is retained. No managed count, full-suite repeat or general ANR/loaded-Home acceptance.
 [Exact stages, fixture distinction and next boundary](../../quality/android-managed-startup-phases.md).
+
+## D-363 complete first-settings query delivery
+
+Replace measured cold LINQ preparation with the complete guarded settings row, preserving the
+original EF command/protection/maintenance and first-row creation contracts. Eight new cases and
+two existing concurrency regressions pass selectively; Release/AOT protected reference/tenfold
+reads preserve all25 settings fields and complete stored schema/rows, and refuse retired key owners.
+Four process-cold original/candidate samples show222-297ms total managed entry-to-Home-publication
+reduction, including EF cost shifted into Home. This is a limited improvement, not QA-06 closure.
+Continue ready native startup/ANR, reader and remaining Android qualification without replaying
+unchanged successful matrices. External/Mac/store/company gates remain separately open.
+[Evidence and explicit limits](../../quality/settings-startup-reader.md).

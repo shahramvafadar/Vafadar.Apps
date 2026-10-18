@@ -1662,3 +1662,13 @@ Application callback timing does not include native pre-entry work or prove load
 first settings path still needs a context-versus-query causal split. Rejected immutable-model
 overlap and all temporary markers are absent from production; no general ANR or two-second
 claim follows. App/APK remain D-360. [Evidence](quality/android-managed-startup-phases.md).
+
+## D-363 measured first-settings path
+
+The complete typed asynchronous settings reader passes focused value/identity/concurrency/filter/
+transaction/cancellation regressions and actual protected Release/AOT reference/tenfold maintenance
+and retired-owner checks with complete original schema/rows unchanged. Whole-path paired timing
+includes later EF work;222-297ms measured improvement is not two-second or general ANR acceptance.
+Temporary phase code is removed; ordinary package/runtime qualification is recorded with the
+[final evidence](quality/settings-startup-reader.md). Device/reader/Mac/iOS/provider/store/release
+gates remain open; no unrelated passed suite or native matrix is repeated.

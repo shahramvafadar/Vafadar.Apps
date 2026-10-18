@@ -206,3 +206,16 @@ When launching this repository's compiled xUnit test DLL directly, use its singl
 filters select the relevant methods. Do not assume another runner's --filter-class option applies;
 inspect discovery/summary and reject zero selected tests. A dotnet test/Microsoft.Testing.Platform
 invocation has a different argument surface. [Current evidence](../../src/Apps/Zanance/docs/quality/complete-history-row-packet.md).
+
+## D-363 complete settings regressions
+
+SettingsReadTests has eight cases for all original EF values/nulls, earliest identity, detached/fresh
+reads, cancellation, borrowed transaction rollback and future-filter refusal. Combine direct runner
+method filters with OR, for example -method '*SettingsReadTests.*' plus the two existing settings
+creation/update concurrency methods. Do not combine a class filter with unrelated method filters:
+that selects zero tests, which is not verification. Retain XML and inspect the nonzero summary.
+After a later test-only addition, run only that new method instead of replaying the passed cohort.
+The independent Android settings-read phase requires retained marked protected workloads and a fresh
+comparison, checks ordinary/exclusive reads and retired key owners, and compares complete portable
+schema/typed rows in memory. It does not seed data, make keys, save money or qualify general startup.
+[Cases, actual native results and timing limits](../../src/Apps/Zanance/docs/quality/settings-startup-reader.md).

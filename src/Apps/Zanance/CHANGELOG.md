@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### First settings read (D-363)
+
+- Reduce settings preparation during startup while preserving fresh preferences and all storage/access checks.
+
 ### Retired Android navigation (D-360)
 
 - Release old Android navigation trees when display changes rebuild the main page, while preserving open forms and the original Back action.

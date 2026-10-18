@@ -2495,3 +2495,15 @@ context creation from the first EF settings query, with native key/publication/a
 unchanged. Do not replay resource deferral, model warming or earlier packaging/clock variants
 without materially new evidence. Ready work continues under D-69; no owner choice is reopened.
 [Retained samples and restoration](../../quality/android-managed-startup-phases.md).
+
+## D-363 first-settings whole-path follow-through
+
+The context/query/command split identifies cold preparation, not slow row SQL. Qualify the complete
+typed reader against all original values, concurrency, cancellation, joined transactions and future
+filter refusal. Compare original whole Home publication in both APK orders before promotion: isolated
+settings timing alone would overstate the benefit because some EF work moves later. Final protected
+reference/tenfold native reads preserve complete original data and key-owner boundaries. Remove every
+temporary marker and provide the ordinary signed package after strict builds. Continue QA-06's actual
+remaining native startup/ANR causes and ready Android work; this bounded improvement does not reopen
+settled owner choices or accept general performance/device/iOS/release gates.
+[Completed causal comparison and preserved fixtures](../../quality/settings-startup-reader.md).

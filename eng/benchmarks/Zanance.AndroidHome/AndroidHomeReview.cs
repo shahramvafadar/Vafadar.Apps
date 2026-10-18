@@ -109,6 +109,13 @@ internal static partial class AndroidHomeReview
                 Directory.CreateDirectory(root);
                 await WriteReportAsync(root, phase, await ReviewOwnedBillingAsync(app, services, root, comparison!, ct), ct);
             }
+            else if (phase == "settings-read")
+            {
+                RequireRoot(root);
+                if (File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))
+                    throw new ReviewCheckException("Completed original settings review must not be repeated.");
+                await WriteReportAsync(root, phase, await ReviewSettingsReadAsync(root, comparison!, ct), ct);
+            }
             else if (phase == "schema")
             {
                 RequireRoot(root);

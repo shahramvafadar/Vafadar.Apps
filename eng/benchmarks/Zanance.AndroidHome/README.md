@@ -385,3 +385,15 @@ complete case. Original source/input receipts and native ancestor geometry retai
 fractional Flex allocation failures. No editor Save, reminder/security action, quantity-goal
 or populated-budget coverage is inferred. Keep terminal runtime faults distinct from passed
 native text cohorts; preserve the same fixture and restore exact captured OS settings.
+
+## D-363 protected settings contract
+
+The settings-read phase requires an existing marked root with reference/tenfold protected generations,
+identity catalogues and original keys. Never prepare/reseed a replacement to recover a failure. Pass
+review_run and a fresh review_pass; a completed same-comparison receipt is refused. The phase runs on
+a worker after original covered startup, compares all25 original settings properties with independent
+EF and actual exclusive-maintenance reads, refuses cancellation and retired generation key owners,
+and compares complete schema/typed rows in in-memory portable snapshots. It writes no financial data
+or replacement keys and touches no main installation or OS settings. Observe the exact live PID with
+Read-ReviewReport.ps1 -Phase settings-read; an observation deadline never permits a restart. This is
+correctness/protection evidence, not whole-Home timing, phone/iOS or release acceptance.

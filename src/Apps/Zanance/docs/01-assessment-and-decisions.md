@@ -6859,3 +6859,19 @@ original versus 2779ms candidate). Reject it and restore all original source/pac
 retain the same zero-balance independent Home. Application/APK remain D-360, physical evidence
 D-361. No general startup/ANR/two-second acceptance or new managed test count follows.
 [Actual phase boundaries, candidate and restoration](quality/android-managed-startup-phases.md).
+
+## D-363 - Read complete startup settings without cold LINQ preparation
+
+The original split measures context9ms/pre-command643ms/command4ms, so row SQL is not the dominant
+first-settings cost. Replace only the two asynchronous earliest-row queries with a guarded complete
+25-field reader on the original EF relational command. Retain converters, identity/nulls/order,
+interception, cancellation, transaction, fresh app-lock preferences and maintenance/creation ownership.
+Refuse future mapping/filter drift; cache only weakly owned immutable model metadata, never settings,
+contexts or keys. Whole original Home publication is measured because shared EF cost moves later:
+paired Application-entry-to-publication reductions are297ms and222ms on the retained emulator.
+Eight new managed cases and two existing settings concurrency cases pass in selective runs. Final
+Release/AOT reference/tenfold protected reads match all25 fields and complete schema/typed rows,
+including exclusive maintenance, cancellation and refusal of retired generation key owners.
+Remove all temporary phase code. No schema/SDK/KDF/licence/access fallback change or general
+startup/ANR/two-second/device/iOS/release acceptance follows.
+[Exact comparison, preservation and handoff](quality/settings-startup-reader.md).

@@ -2354,3 +2354,14 @@ Bootstrap refusal/nonpublication is handled before a source-read failure could r
 disposal is checked again before reading. Existing genuine profile/source/privacy retirement guards remain.
 No financial schema, key format, portable backup data or app-lock navigation changes. See
 [native/managed qualification](../../src/Apps/Zanance/docs/quality/cold-protected-reminder-startup.md).
+
+## Complete first-settings read (D-363)
+
+GetSettingsCoreAsync reads the earliest CreatedAt row through SettingsRowReader on the context's
+original EF relational command. Keep all25 mapped fields, exact private-set identity, nulls and
+model-owned UTC-tick/scalar conversions. Immutable model metadata is weakly cached; settings,
+contexts, native handles and credentials are never cached. Mapping, table/schema or filter drift
+fails before SQL rather than silently bypassing a new rule. Original cancellation, interception,
+joined transaction, protected factory publication, exclusive maintenance and creation/update gates
+remain authoritative. The synchronous getter and tracked writes are unchanged. There is no schema
+change or new export format. See the [native preservation proof](../../src/Apps/Zanance/docs/quality/settings-startup-reader.md).
