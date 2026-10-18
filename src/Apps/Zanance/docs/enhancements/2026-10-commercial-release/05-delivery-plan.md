@@ -2346,3 +2346,13 @@ Retain original financial behavior and D-340 APK. The fresh test-project compila
 independently reviewable; continue remaining work without repeating unchanged successful suites.
 
 [Evidence and limits](../../quality/home-publication-session.md).
+
+## D-342 completed Home category presentation batch
+
+Fix the observed constrained Home category legend as a whole, then qualify original page geometry,
+amount scrolling, hidden/visible attachment and preserved stored inputs. Keep six successful English
+Windows cases; after correcting the RTL verifier run only the 12 remaining cases. Six Android cases
+complete on the same original process after Activity observation expires. Do not repeat passed
+financial/crypto/backend suites or the rejected D-341 connection experiment.
+
+[Evidence and remaining gates](../../quality/home-category-legends-readable.md).

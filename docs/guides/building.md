@@ -1292,3 +1292,14 @@ cannot prove that fresh compilation succeeds. No replacement contract or copied 
 belongs in the fixture. The Home-only check uses `--filter-class '*HomeReadSnapshotTests'` and an
 explicit minimum expected count. Prototype checks are not current coverage after withdrawal. See
 [the compilation repair and rejected native candidate](../../src/Apps/Zanance/docs/quality/home-publication-session.md).
+
+## D-342 optional Home category review
+
+Use `eng/scripts/Run-StoreDrafts.ps1 -HomeLegendsReview` for the guarded independent Windows
+18-context matrix. `-HomeLegendsLanguages 'fa,de'` resumes only those language cases after an
+English success; retain the original receipts/failures. Do not combine original review modes or
+export their receipts as Store images. Process-local scale 2 never changes OS settings. Restore
+ordinary Windows build identity afterward. AndroidHome phase `home-legends` uses a fresh comparison
+on the existing independent financial-tables fixture; observe its exact original PID after timeout.
+
+[Evidence and candidate](../../src/Apps/Zanance/docs/quality/home-category-legends-readable.md).

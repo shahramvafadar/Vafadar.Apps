@@ -16,6 +16,7 @@ using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.Commerce;
 using Vafadar.Zanance.App.Features.Budget;
+using Vafadar.Zanance.App.Features.Home;
 using Vafadar.Zanance.App.Interaction;
 
 namespace Vafadar.Zanance.App;
@@ -24,7 +25,7 @@ internal static partial class AndroidHomeReview
 {
     /// <summary>Checks original table templates and complete canonical amount viewports without invoking financial commands.</summary>
     private static async Task<object> ReviewFinancialTablesAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct,
-        bool legendsOnly = false, bool budgetTitlesOnly = false)
+        bool legendsOnly = false, bool budgetTitlesOnly = false, bool homeLegendsOnly = false)
     {
         async Task RootAsync()
         {
@@ -73,6 +74,49 @@ internal static partial class AndroidHomeReview
             foreach (var language in new[] { "en", "fa", "de" })
             {
                 await SetLanguageAsync(app, local, language, ct); await RootAsync(); var dates = new DateFormatter(local);
+                if (homeLegendsOnly)
+                {
+                    var home = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store);
+                    var homePage = new HomePage(home).WithFlowDirection(local);
+                    await Shell.Current.Navigation.PushAsync(homePage);
+                    await homePage.PendingPublication;
+                    var original = home.Slices.First();
+                    home.Slices[0] = original with
+                    {
+                        Name = "Food, household groceries and everyday essentials / Lebensmittel und Haushaltsbedarf / خوراک و نیازهای روزانه",
+                        AmountText = MoneyText.Format(long.MinValue, "EUR", local.CurrentCulture),
+                        PercentText = 1d.ToString("P0", local.CurrentCulture),
+                    };
+                    home.SliceTotalText = MoneyText.Format(long.MaxValue, "EUR", local.CurrentCulture);
+                    var categoryRows = homePage.FindByName<VerticalStackLayout>("CategoryRows");
+                    homePage.PreviewCategorySectionForReview(false);
+                    if (BindableLayout.GetItemsSource(categoryRows) is not null)
+                        throw new ReviewCheckException("Hidden Home category rows remain attached.");
+                    homePage.PreviewCategorySectionForReview(true);
+                    if (!ReferenceEquals(BindableLayout.GetItemsSource(categoryRows), home.Slices))
+                        throw new ReviewCheckException("Visible Home category source is incomplete.");
+                    await Task.Delay(250, ct);
+                    var amounts = await CheckAsync(homePage, home.Slices[0].Name, home.SliceTotalText, home.Slices[0].AmountText);
+                    if (amounts != 2) throw new ReviewCheckException("Both complete Home monetary viewports are required.");
+                    var row = Views(homePage).OfType<Grid>().Single(value => ReferenceEquals(value.BindingContext, home.Slices[0]) && value.Children.OfType<Button>().Any());
+                    CheckText(row.Children.OfType<Label>().Single(value => value.Text == home.Slices[0].PercentText));
+                    var action = row.Children.OfType<Button>().Single();
+                    if (!ReferenceEquals(action.Command, home.OpenSliceCommand) || !ReferenceEquals(action.CommandParameter, home.Slices[0])
+                        || action.Width < 44 || action.Height < 44 || SemanticProperties.GetDescription(action) != home.Slices[0].Name)
+                        throw new ReviewCheckException("Original category target, command or accessible name changed.");
+                    if (action.Handler?.PlatformView is not Android.Views.View nativeAction)
+                        throw new ReviewCheckException("Original native category action is unavailable.");
+                    using var node = nativeAction.CreateAccessibilityNodeInfo();
+                    var nativeName = node?.ContentDescription?.ToString() ?? node?.Text?.ToString() ?? string.Empty;
+                    if (!nativeName.Contains(home.Slices[0].Name, StringComparison.Ordinal))
+                        throw new ReviewCheckException("Native category accessible name is incomplete.");
+                    await Shell.Current.Navigation.PopAsync();
+                    if (before != await StoredAsync()) throw new ReviewCheckException("Home presentation review changed original stored inputs.");
+                    observations.Add(new { Language = language, Theme = theme.ToString(), CompleteNameAndPercent = true,
+                        CompleteMonetaryViewports = amounts, ActualNativeAccessibleName = true, OriginalCommandAndTarget = true,
+                        HiddenRowsDetached = true, VisibleOriginalSourceComplete = true, LayoutNeverSaved = true });
+                    continue;
+                }
                 if (budgetTitlesOnly)
                 {
                     var budget = new BudgetViewModel(store, fixture.GetRequiredService<PlanStore>(), fixture.GetRequiredService<GoalStore>(),
@@ -141,8 +185,8 @@ internal static partial class AndroidHomeReview
                 observations.Add(new { Language = language, Theme = theme.ToString(), TrendAmounts = trend, HistoryAmounts = history, ComparisonAmounts = comparisonCount, CompleteTextAndScrollEnds = true });
             }
         }
-        return new { Comparison = comparison, OriginalReportsAndSnapshotPages = !legendsOnly && !budgetTitlesOnly,
-            OriginalReportLegends = legendsOnly, OriginalBudgetTitles = budgetTitlesOnly,
+        return new { Comparison = comparison, OriginalReportsAndSnapshotPages = !legendsOnly && !budgetTitlesOnly && !homeLegendsOnly,
+            OriginalReportLegends = legendsOnly, OriginalBudgetTitles = budgetTitlesOnly, OriginalHomeLegends = homeLegendsOnly,
             OriginalStoredInputsUnchanged = true, NoMainDataTouched = true,
             NoFinancialSaveOrSystemSettings = true, ActualPhoneAcceptance = false, Observations = observations };
 
@@ -174,7 +218,7 @@ internal static partial class AndroidHomeReview
                 await scroll.ScrollToAsync(0, 0, false); await Task.Delay(100, ct);
                 if (scroll.ScrollX > 1) throw new ReviewCheckException("Original sign/start cannot be restored.");
                 if (amount.Width > page.Width + 1) throw new ReviewCheckException("Original amount viewport exceeds the page.");
-                if (legendsOnly && amount.Parent is Grid row)
+                if ((legendsOnly || homeLegendsOnly) && amount.Parent is Grid row)
                 {
                     foreach (var button in row.Children.OfType<Button>())
                     {

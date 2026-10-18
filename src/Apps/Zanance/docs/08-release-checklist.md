@@ -1506,3 +1506,12 @@ the full signed APK stay D-340; the Data-test project receives its missing origi
 Physical Android, OS accessibility, cold/ANR/low-memory, Mac/iOS and owner release gates remain open.
 
 [Evidence and limits](quality/home-publication-session.md).
+
+## D-342 optional Home category candidate
+
+Complete category identities and original amounts pass focused native qualification; hidden rows
+avoid unnecessary native construction. Do not promote these geometry checks into OS/TalkBack,
+phone, performance, iOS, Store or publication acceptance. No privacy data, permission, SDK, key,
+financial schema or portable format changes. Existing owner/external gates remain open.
+
+[Evidence and complete candidate](quality/home-category-legends-readable.md).

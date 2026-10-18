@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Complete Home category names and values (D-342)
+
+- Read complete category names and percentages on Home at larger text sizes. Category amounts and the chart total have their own horizontal readouts, so long values stay reachable without covering navigation.
+
 ### Verification maintenance (D-341)
 
 - Restore fresh standalone Data-test compilation against the original database startup contract. The Home connection experiment is not adopted; application behavior and the complete D-340 APK stay unchanged.

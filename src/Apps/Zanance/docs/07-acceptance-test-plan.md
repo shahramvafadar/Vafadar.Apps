@@ -3876,3 +3876,15 @@ coverage. Native baseline and three candidates each preserve twelve full Home pr
 raw rows; their timing does not close QA-06. No broad unrelated suite or unchanged APK is repeated.
 
 [Evidence and limits](quality/home-publication-session.md).
+
+## D-342 Home category presentation qualification
+
+Pass: original Home category template in en/fa/de, both themes, 360/412/1280 Windows at Debug
+process-local 200%, and six original Release/AOT Android contexts. Check complete native names,
+percentages, two original monetary packets, both scroll ends, original command/parameter/44-unit
+target, hidden detachment, complete visible source and unchanged stored inputs. Six English Windows
+cases are retained before fixing the RTL verifier; only 12 remaining contexts run afterward.
+No financial Save or layout persistence is invoked. No new managed test count is claimed.
+OS200%/spoken readers, physical Android, startup/ANR, iOS and release acceptance remain open.
+
+[Exact runs, failures and limits](quality/home-category-legends-readable.md).

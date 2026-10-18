@@ -100,5 +100,21 @@ public partial class HomePage : ContentPage
         {
             BindableLayout.SetItemsSource(AccountRows, source);
         }
+
+        // D-342: a hidden category section must not construct complete readout/scroll controls.
+        // Retain the same source during visible reloads, just as the account rows do above.
+        var categories = CategoriesSection.IsVisible ? _viewModel.Slices : null;
+        if (!ReferenceEquals(BindableLayout.GetItemsSource(CategoryRows), categories))
+            BindableLayout.SetItemsSource(CategoryRows, categories);
     }
+
+#if DEBUG && WINDOWS
+    /// <summary>Exercises original optional-section attachment with a fictitious view-only layout, without saving preferences.</summary>
+    internal void PreviewCategorySectionForReview(bool visible)
+    {
+        _layout.SetVisible(HomeSection.Categories, visible);
+        UpdateVisibility();
+    }
+#endif
+
 }

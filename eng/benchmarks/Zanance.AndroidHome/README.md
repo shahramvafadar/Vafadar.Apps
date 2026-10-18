@@ -230,3 +230,12 @@ a budget method. Settings/accounts/entries/budgets compare unchanged. Observe th
 PID with Read-ReviewReport.ps1 -Phase budget-titles -Comparison <pass>. No Home preparation,
 performance matrix, report calculation or system text-scale change belongs to this phase.
 An observed startup ANR remains separate from completed caption checks on that same process.
+
+## D-342 original optional Home category legends
+
+Phase `home-legends` uses a fresh comparison and the retained separate financial-tables fixture,
+without prepare or workload repetition. It renders the original HomePage category rows and total
+using explicit fictitious long captions/extreme amounts. Check native complete glyphs/scroll ends,
+original command/parameter/target and accessible name, detached hidden rows and complete visible
+source. No layout or financial input is saved. Observe the original PID with Read-ReviewReport.ps1;
+Activity observation expiry is not process failure. Native metadata is not spoken TalkBack evidence.

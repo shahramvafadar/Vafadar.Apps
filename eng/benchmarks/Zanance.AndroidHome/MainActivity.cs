@@ -22,7 +22,7 @@ public sealed class MainActivity : MauiAppCompatActivity
         var run = Intent?.GetStringExtra("review_run");
         var comparison = Intent?.GetStringExtra("review_pass");
         var baseline = Intent?.GetStringExtra("review_baseline") ?? comparison;
-        if (phase is not ("prepare" or "measure" or "compare" or "guard" or "filters" or "schema" or "billing-owned" or "tables" or "legends" or "budget-titles" or "ledger" or "read-profile" or "ledger-read" or "plan-publication" or "plan-publication-fixed" or "home-stages") || run is null || !System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$")) return;
+        if (phase is not ("prepare" or "measure" or "compare" or "guard" or "filters" or "schema" or "billing-owned" or "tables" or "legends" or "budget-titles" or "home-legends" or "ledger" or "read-profile" or "ledger-read" or "plan-publication" or "plan-publication-fixed" or "home-stages") || run is null || !System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$")) return;
         if (phase != "prepare" && (comparison is null || !System.Text.RegularExpressions.Regex.IsMatch(comparison, "^[0-9a-f]{32}$"))) return;
         if (phase == "compare" && (baseline is null || !System.Text.RegularExpressions.Regex.IsMatch(baseline, "^[0-9a-f]{32}$"))) return;
         // D-320: sleeping display invalidates native frame/layout observations. Keep only this

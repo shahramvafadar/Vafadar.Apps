@@ -2362,3 +2362,11 @@ correct financial packets and an isolated Windows gain. Restore production sourc
 In progress. The only committed code change repairs the original Data-test startup dependency.
 
 [Evidence and limits](quality/home-publication-session.md).
+
+## D-342 complete optional Home categories
+
+Names, percentages and complete monetary viewports now occupy growing independent rows. Hidden
+category controls detach from their unchanged source. Eighteen Windows and six Android contexts
+pass; no managed count increases. Broad accessibility, performance and release acceptance stay open.
+
+[Evidence](quality/home-category-legends-readable.md).

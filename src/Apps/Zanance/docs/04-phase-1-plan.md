@@ -1089,3 +1089,12 @@ candidate is withdrawn after native qualification; application behavior and the 
 remain unchanged. QA-06 remains open.
 
 [Evidence and limits](quality/home-publication-session.md).
+
+## D-342 optional Home category correction
+
+The actual constrained category name/amount and chart-hole total are corrected and checked in
+18 Windows and six Release/AOT Android contexts. Original settings/accounts/entries are preserved;
+no financial operation or saved layout change occurs. Existing unrelated successful checks are retained.
+A11Y-03, QA-06/ANR, physical Android, Mac/iOS and external release gates remain open.
+
+[Evidence](quality/home-category-legends-readable.md).

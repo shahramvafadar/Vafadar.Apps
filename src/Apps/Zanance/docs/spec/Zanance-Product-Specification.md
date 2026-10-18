@@ -6637,3 +6637,13 @@ adoption. No production source, financial algorithm/schema, unit coverage count 
 the D-340 candidate remains current. QA-06 and platform/owner release gates remain In progress.
 
 [Evidence and limits](../quality/home-publication-session.md).
+
+## D-342 Section 31 update - optional Home category readability
+
+The actual optional Home category legend now wraps complete names/shares and reserves independent
+AmountReadout viewports for category values and the total. Original bindings/financial behavior stay
+intact; hidden native rows detach without filtering the source. Eighteen Windows and six Android
+contexts pass. Managed counts remain unchanged; successful unrelated suites are not rerun.
+A11Y-03/QA-06, OS readers, physical Android, iOS and release gates remain In progress/open.
+
+[Evidence](../quality/home-category-legends-readable.md).

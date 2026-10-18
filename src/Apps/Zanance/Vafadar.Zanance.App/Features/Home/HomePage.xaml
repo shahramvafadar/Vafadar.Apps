@@ -15,6 +15,18 @@
     x:DataType="local:HomeViewModel"
     Title="{v:Translate App_Name}">
 
+    <ContentPage.Resources>
+        <Style x:Key="HomeLegendFigure" TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontFamily" Value="{DynamicResource AppFont}" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="{DynamicResource AmountText}" />
+        </Style>
+        <Style x:Key="HomeChartTotalFigure" TargetType="Label" BasedOn="{StaticResource HomeLegendFigure}">
+            <Setter Property="FontSize" Value="15" />
+        </Style>
+    </ContentPage.Resources>
+
     <!-- Home (D-27, D-37): the balance first, quick add right below it, what needs attention, then the sections the user
          keeps (§21.5). One job per card; the first screen answers "where do I stand?" and "add an expense" without scrolling. -->
     <!-- D-78: reserve the Add action below the viewport so it never covers readable content. -->
@@ -502,21 +514,26 @@
                                     <chart:DoughnutSeries ItemsSource="{Binding Slices}" XBindingPath="Name" YBindingPath="Value"
                                                           PaletteBrushes="{Binding SliceBrushes}" InnerRadius="0.66" StrokeWidth="2" EnableTooltip="True" Stroke="{DynamicResource CardBackground}" />
                                 </chart:SfCircularChart>
-                                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" InputTransparent="True" Spacing="0">
-                                    <Label Text="{v:Translate Chart_Total}" Style="{StaticResource Secondary}" FontSize="12" HorizontalTextAlignment="Center" />
-                                    <Label Text="{Binding SliceTotalText}" FontAttributes="Bold" FontSize="15" HorizontalTextAlignment="Center" />
-                                </VerticalStackLayout>
+
                             </Grid>
-                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Slices}" IsVisible="{Binding HasSlices}">
+                            <!-- D-342: reserve a full scalable monetary viewport outside the decorative chart hole. -->
+                            <VerticalStackLayout Spacing="2" IsVisible="{Binding HasSlices}">
+                                <Label Text="{v:Translate Chart_Total}" Style="{StaticResource Secondary}" FontSize="12" />
+                                <p:AmountReadout x:Name="CategoryTotalReadout" AmountText="{Binding SliceTotalText}"
+                                                 CaptionStyle="{StaticResource HomeChartTotalFigure}" />
+                            </VerticalStackLayout>
+                            <!-- Attach original rows only while this optional section is visible. -->
+                            <VerticalStackLayout x:Name="CategoryRows" IsVisible="{Binding HasSlices}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate x:DataType="local:CategorySlice">
-                                        <Grid ColumnDefinitions="Auto,*,Auto,52" ColumnSpacing="10" MinimumHeightRequest="40">
+                                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="2" Padding="0,4">
                                             <BoxView WidthRequest="10" HeightRequest="10" CornerRadius="3" Color="{Binding Color}" VerticalOptions="Center" />
-                                            <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" LineBreakMode="TailTruncation" />
-                                            <Label Grid.Column="2" Text="{Binding AmountText}" FontAttributes="Bold" VerticalOptions="Center" />
-                                            <Label Grid.Column="3" Text="{Binding PercentText}" Style="{StaticResource Secondary}" VerticalOptions="Center" HorizontalTextAlignment="End" />
-                                            <!-- The whole row is one real button to the entries of the category -->
-                                            <Button Grid.ColumnSpan="4" Margin="-6,0" Style="{StaticResource OverlayButton}" CornerRadius="8"
+                                            <Label Grid.Column="1" Text="{Binding Name}" VerticalOptions="Center" LineBreakMode="WordWrap" />
+                                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding PercentText}" Style="{StaticResource Secondary}" LineBreakMode="WordWrap" />
+                                            <p:AmountReadout Grid.Row="2" Grid.ColumnSpan="2" AmountText="{Binding AmountText}"
+                                                             CaptionStyle="{StaticResource HomeLegendFigure}" />
+                                            <!-- The real category button leaves the amount's native scroll area independent. -->
+                                            <Button Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="-4,0" MinimumHeightRequest="44" Style="{StaticResource OverlayButton}" CornerRadius="8"
                                                     Command="{Binding OpenSliceCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
                                                     CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding AmountText}" />
                                         </Grid>

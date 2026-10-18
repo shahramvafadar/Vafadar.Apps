@@ -2461,3 +2461,12 @@ Keep existing explicit complete-caption overrides and growing original container
 translated Flex bill-group captions without saving the budget method. Source equivalence of
 unchanged explicit consumers avoids repeating their successful reviews; native page checks are
 still required for a changed effective setting. Debug process scale is not OS/TalkBack acceptance.
+
+## D-342 complete optional Home category legends
+
+Keep category names and shares in growing rows with original scalable fonts. Preserve complete
+MoneyText in AmountReadout outside the real category target; put the total below the chart in a
+full-width viewport. Hidden optional category rows detach from the original complete collection,
+like account rows, without saved layout changes or cached financial substitutes. Native verification
+must account for mirrored RTL transforms by checking both physical edges. Presentation fixtures,
+accessible metadata and process-local scaling are not OS readers, financial or startup acceptance.

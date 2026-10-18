@@ -6621,3 +6621,15 @@ all experimental application/benchmark APIs and eight experimental tests. Main r
 QA-06 and external acceptance stay open. Windows-only isolated gains are insufficient for adoption.
 
 [Evidence and limits](quality/home-publication-session.md).
+
+## D-342 - Complete optional Home category identities and values
+
+Replace the constrained four-column category legend and chart-hole total with growing name/share
+rows and original AmountReadout viewports. Preserve the real command/parameter, scalable fonts,
+original financial packets and chart values. Attach the complete category source only while visible.
+Eighteen Windows and six original Release/AOT Android contexts pass; preserve the failed RTL
+verifier and continue only its remaining cases. Stored inputs remain unchanged and no layout is saved.
+No financial algorithm, schema, translation or managed unit count changes. QA-06/ANR, OS readers,
+physical Android, iOS and release remain open.
+
+[Evidence and limits](quality/home-category-legends-readable.md).

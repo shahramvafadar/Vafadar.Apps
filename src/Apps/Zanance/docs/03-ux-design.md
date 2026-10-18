@@ -1601,3 +1601,12 @@ Actual OS text scale/TalkBack, broader device/iOS/performance and release gates 
 system setting, financial algorithm, schema, translation or managed unit count changes.
 
 [Evidence and limits](quality/budget-group-titles-readable.md).
+
+## D-342 growing optional Home category legends
+
+Category identity and percentage use independent wrapping rows. The unchanged amount packet uses
+AmountReadout outside the real category navigation target; the total receives the same full-width
+viewport below the chart. Preserve original scalable sizes and complete spoken identity. Detach
+native category rows while their optional section is hidden without filtering the original collection.
+
+[Native evidence and remaining acceptance](quality/home-category-legends-readable.md).
