@@ -6717,3 +6717,13 @@ direct kernel input is denied and is not escalated. Exact settings/notification 
 restore; owned remote files are removed. Strengthen input-evidence and independent-cleanup rules.
 No product/API/runtime/APK/count change or successful unrelated test/build replay.
 [Actual observations and remaining acceptance](quality/android-os-accessibility-qualification.md).
+
+## D-350 - Keep original date parsing after complete native comparison
+
+Add fifteen independent-EF date compatibility/refusal cases and a real foreground contract for each
+measured original Home page. Reject legacy unguarded case receipts. The temporary ASCII-date decoder
+preserves all rows but has no consistent complete loaded-Home benefit, so both production reader files
+are restored. Qualify the original-getter control in twelve native observations, retaining all actual
+startup/Main focus ANRs and verified Android process deaths. New cases pass on the restored getter;
+no full-suite run/count or new production APK is claimed.
+[Evidence, exact scope and open gates](quality/home-date-materialization.md).

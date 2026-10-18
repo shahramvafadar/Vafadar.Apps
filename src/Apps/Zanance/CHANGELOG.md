@@ -2000,3 +2000,9 @@ D-294 local household delivery is complete at the recorded Windows/emulator/loca
 - Preserve TalkBack during independent native observations instead of suppressing the reader.
 - Retain real focus/audio evidence and exact emulator restoration; spoken acceptance remains open.
 - No shipped app or APK change.
+
+### D-350 qualification and regression coverage
+
+- Add date-storage compatibility/refusal coverage against independent EF reads.
+- Refuse native Home measurements covered by another window; preserve actual startup failures.
+- Withdraw the unproven date decoder; the production application and APK are unchanged.

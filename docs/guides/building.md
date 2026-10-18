@@ -1364,3 +1364,13 @@ independent shell-only observer. Do not run stock uiautomator dump/events while 
 Allow only one UiAutomation client, decode UTF-8, preserve failed observations, and remove only the
 hash-matched owned JAR. Settings/input remain separately authorized and require exact restoration
 and actual foreground checks. Audio energy or native names alone do not qualify spoken output.
+
+## Original Home measured-window contract (D-350)
+
+The independent AndroidHome measure/compare/home-stages caller requires actual window focus before
+each measured page/read-factory and after native layout. Legacy case packets without the explicit
+flag refuse; unmeasured shell setup and cold startup are outside this receipt. Use retained marked
+ciphertext/keys and a fresh comparison for a changed getter; never infer full-page speed from an
+isolated provider microbenchmark. Current production dates keep original provider parsing after the
+rejected D-350 trial. New focused tests use the already built Data test DLL with -method filters;
+no unchanged full suite, native matrix or production APK needs replay for a withdrawn prototype.

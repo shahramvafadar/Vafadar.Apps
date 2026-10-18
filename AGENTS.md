@@ -2533,3 +2533,12 @@ and activation separately; refuse activation when expected focus is absent. Cons
 focus are insufficient evidence of delivered hardware input. Do not escalate a denied kernel-input
 attempt. Optional input-release failure must never skip mandatory settings restoration or exact
 owned-file cleanup. An empty transient native tree is observation uncertainty, not app acceptance.
+
+## D-350 original Home acceptance and rejected date path
+
+Require actual Activity focus before each measured original Home page/read-factory and after layout,
+before native text acceptance. Old completed case packets without that flag are refused. Empty-shell
+setup/cold startup remain outside those measured-case receipts. Correct rows and faster isolated
+Windows timings do not authorize a native performance change. The unchanged ASCII-date decoder is
+rejected after actual whole-Home comparison; do not repeat it without materially new evidence.
+Keep actual startup/focus ANRs and distinguish Android-killed processes from observation expiry.

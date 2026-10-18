@@ -307,3 +307,13 @@ still has an actual persistent mid-budget ANR. The experimental environment file
 runtime marker are removed after preserving local evidence; neither enters the ordinary caller
 or Main. No change to the native runtime, bridge implementation, crypto, SDK or nursery size is
 adopted. Preserve the negative evidence and do not schedule the same ineffective trial again.
+
+## D-350 actual measured Home foreground
+
+measure/compare/home-stages now require actual Activity window focus before each measured page/read
+factory and after native layout, before text assertions. Each result records OriginalWindowFocusRequired;
+retained legacy cases without it refuse. The unmeasured initial empty shell and cold startup are outside
+that contract. Preserve actual ANR failures even when a later resumed/recovered comparison completes.
+Never promote a faster isolated store operation without the original loaded-page comparison. D-350
+rejects its date decoder; production getters stay unchanged. Current original-getter control completes
+all twelve original native page observations with complete financial presentation/typed-row preservation.

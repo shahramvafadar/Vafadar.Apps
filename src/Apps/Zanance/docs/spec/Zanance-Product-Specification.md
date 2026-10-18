@@ -6712,3 +6712,12 @@ activation. No expected-focus assertion passes; further activation is refused. E
 notification restoration, unchanged MainPID and Home0.00EUR are verified. Direct kernel input is
 denied without escalation. Product/APK/count remain D-344; no unrelated successful build/test replay.
 Actual reader activation/speech and remaining native/device/iOS/release acceptance remain open.
+
+### Section31 update - D-350 original Home/date qualification
+
+Fifteen new date compatibility/refusal cases pass on current production getters after the unsuccessful
+optimization is withdrawn. The earlier60-case prototype run is separate; no full-suite count is claimed.
+Twenty-four original native Home observations across two callers preserve all financial presentation
+and typed rows, with explicit measured-page foreground guards. Isolated faster reads do not justify
+inconsistent whole-page latency. Product source/APK remain D-344; actual Main/startup ANRs, QA-06,
+physical/reader/iOS and external release acceptance remain open. See [evidence and limits](../quality/home-date-materialization.md).

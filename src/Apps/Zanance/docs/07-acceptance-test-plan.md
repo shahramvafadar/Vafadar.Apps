@@ -3959,3 +3959,12 @@ Cancel returns to Home0.00EUR on the same PID. Console commands do not prove del
 denied kernel input is not escalated. Captured settings/notification flags restore and exact remote
 files are removed. No app/APK/count change or unrelated successful verification repeats. Stop these
 unchanged injection trials; A11Y/native/device/iOS and external release gates remain open.
+
+## D-350 complete original Home comparison
+
+Fifteen new independent-EF date-storage cases pass on the restored original getter. The correct but
+inconsistently slower decoder is rejected after24 original native Home observations across candidate
+and control; complete data/presentation preservation passes. Measured pages now require actual window
+focus and reject older unguarded receipts. Real startup/Main ANRs remain recorded; Main/APK stay D-344.
+No full suite or successful unrelated verification is replayed. QA-06/device/iOS/release remain open.
+[Evidence and limits](quality/home-date-materialization.md).

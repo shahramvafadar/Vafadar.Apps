@@ -164,6 +164,13 @@ internal static partial class AndroidHomeReview
         }
     }
 
+    /// <summary>Refuses a rendered Home measured behind a native dialog or another foreground window.</summary>
+    private static void RequireHomeWindowFocus()
+    {
+        if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.HasWindowFocus != true)
+            throw new ReviewCheckException("Original Home Activity must own actual window focus.");
+    }
+
     private static async Task MeasureAsync(App app, IServiceProvider services, string root, string phase, string comparison, string baseline, CancellationToken ct)
     {
         var local = services.GetRequiredService<ILocalizationService>();
@@ -182,6 +189,7 @@ internal static partial class AndroidHomeReview
                 if (name is not ("reference" or "tenfold") || language is not ("en" or "fa" or "de") ||
                     !item.GetProperty("OriginalBalancesAndNativeTextMatched").GetBoolean() ||
                     !item.GetProperty("OriginalFinancialPresentationMatched").GetBoolean() ||
+                    !item.TryGetProperty("OriginalWindowFocusRequired", out var focused) || !focused.GetBoolean() ||
                     item.GetProperty("FirstThenSecondPublicationMilliseconds").GetArrayLength() != (phase == "guard" ? 1 : 2) ||
                     !completed.Add(name + ":" + language)) throw new ReviewCheckException("Invalid retained completed case.");
                 results.Add(item.Clone());
@@ -226,6 +234,7 @@ internal static partial class AndroidHomeReview
                     var samples = new List<double>(); var gaps = new List<double>(); var notificationSamples = new List<object>();
                     for (var sample = 0; sample < (phase == "guard" ? 1 : 2); sample++)
                     {
+                        RequireHomeWindowFocus();
                         var reads = new WindowReadFactory(data.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
                         var store = new ZananceStore(reads, data.GetRequiredService<TimeProvider>(), data.GetRequiredService<ICommercialWriteAccessSource>());
                         var vm = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store);
@@ -275,6 +284,7 @@ internal static partial class AndroidHomeReview
                                 throw new ReviewCheckException("Complete original Home publication differs.");
                             if (page.Handler?.PlatformView is not Android.Views.View native) throw new ReviewCheckException("Android native Home tree unavailable.");
                             await WaitLayoutAsync(native, ct); Mark("native-layout-ready"); clock.Stop();
+                            RequireHomeWindowFocus();
                             var texts = NativeTexts(native).ToHashSet(StringComparer.Ordinal);
                             foreach (var balance in balances)
                             {
@@ -309,7 +319,7 @@ internal static partial class AndroidHomeReview
                     }
                     results.Add(new { Shape = name, Language = language, shape.Entries, shape.Accounts, shape.Schedules,
                         FirstThenSecondPublicationMilliseconds = samples, LargestDispatcherGapMilliseconds = gaps, PublicNotificationSamples = notificationSamples,
-                        OriginalBalancesAndNativeTextMatched = true, OriginalFinancialPresentationMatched = true, ActualNativeLayout = true, NoSynchronousSettingsRead = true });
+                        OriginalBalancesAndNativeTextMatched = true, OriginalFinancialPresentationMatched = true, ActualNativeLayout = true, OriginalWindowFocusRequired = true, NoSynchronousSettingsRead = true });
                     await File.WriteAllTextAsync(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json"), JsonSerializer.Serialize(results), ct);
                     _balanceEvidence = null;
                 }
@@ -358,7 +368,7 @@ internal static partial class AndroidHomeReview
         await WriteReportAsync(root, phase, new { Comparison = comparison, BaselineComparison = baseline, Results = results, NativeReadProfiles = nativeReadProfiles, ReviewedInputGuards = reviewedInputGuards,
             DataModuleVersionId = typeof(ZananceStore).Module.ModuleVersionId, CallerModuleVersionId = typeof(HomePage).Module.ModuleVersionId,
             CoreModuleVersionId = typeof(Core.Plans.Occurrences).Module.ModuleVersionId,
-            OriginalProductionPage = true, RetainedCompletedCases = completed.ToArray(),
+            OriginalProductionPage = true, OriginalWindowFocusRequired = true, RetainedCompletedCases = completed.ToArray(),
             ModuleIdentityScope = "Current completion caller; retained case packets preserve their original caller evidence",
             CompleteRawSchemaAndTypedRowsUnchanged = true, NoFinancialSave = true, Device = DeviceEvidence(), WholeAppColdStartupOrFullDeviceAcceptance = false,
             Boundary = "Original navigation/read/projection/publication plus Android layout and frame callbacks; excludes fixture preparation and cold startup" }, ct);

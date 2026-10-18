@@ -284,6 +284,46 @@ public sealed class HomeReadSnapshotTests : IDisposable
         Assert.Equal(expected, JsonSerializer.Serialize((await store.GetHomeSnapshotAsync(Today, 0, Ct)).Entries));
     }
 
+    /// <summary>All original required/optional date fields match independent EF parsing at calendar and legacy boundaries.</summary>
+    [Theory, InlineData("0001-01-01"), InlineData("9999-12-31"), InlineData("2000-02-29"),
+        InlineData("1900-02-28"), InlineData("2024-02-29"), InlineData("2026-10-15"),
+        InlineData("10/15/2026"), InlineData("2026-1-5"), InlineData(" 2026-10-15 ")]
+    [Trait("AT", "AT-350")]
+    public async Task Complete_history_retains_every_date_field_at_canonical_and_legacy_boundaries(string stored)
+    {
+        var provider = Create(); await SeedAsync(provider);
+        await using (var db = await Factory(provider).CreateDbContextAsync(Ct))
+            await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET Date = {stored}, AggregatedFrom = {stored}, AggregatedTo = {stored}, OccurrenceDate = {stored}, ReimbursementDueDate = {stored}", Ct);
+        string expected;
+        await using (var oracle = await Factory(provider).CreateDbContextAsync(Ct))
+            expected = JsonSerializer.Serialize(await oracle.Entries.AsNoTracking()
+                .OrderByDescending(row => row.Date).ThenByDescending(row => row.CreatedAt).ToListAsync(Ct));
+        var store = provider.GetRequiredService<ZananceStore>();
+        Assert.Equal(expected, JsonSerializer.Serialize(await store.GetEntriesAsync(cancellationToken: Ct)));
+        Assert.Equal(expected, JsonSerializer.Serialize((await store.GetHomeSnapshotAsync(Today, 0, Ct)).Entries));
+    }
+
+    /// <summary>Invalid canonical-looking date bytes retain the provider's refusal rather than publishing a partial ledger.</summary>
+    [Theory, InlineData("1900-02-29"), InlineData("2026-13-01"), InlineData("2026-10-00"),
+        InlineData("0000-01-01"), InlineData("2026-1x-15"), InlineData("2026-10-15x")]
+    [Trait("AT", "AT-350")]
+    public async Task Complete_history_refuses_invalid_date_storage_like_independent_ef(string stored)
+    {
+        var provider = Create(); await SeedAsync(provider);
+        await using (var db = await Factory(provider).CreateDbContextAsync(Ct))
+            await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET Date = {stored}", Ct);
+        Exception? expected;
+        await using (var oracle = await Factory(provider).CreateDbContextAsync(Ct))
+            expected = await Record.ExceptionAsync(async () => await oracle.Entries.AsNoTracking().ToListAsync(Ct));
+        Assert.NotNull(expected);
+        var store = provider.GetRequiredService<ZananceStore>();
+        var ledger = await Record.ExceptionAsync(async () => await store.GetEntriesAsync(cancellationToken: Ct));
+        var home = await Record.ExceptionAsync(async () => await store.GetHomeSnapshotAsync(Today, 0, Ct));
+        Assert.NotNull(ledger); Assert.NotNull(home);
+        Assert.Equal(expected.GetBaseException().GetType(), ledger.GetBaseException().GetType());
+        Assert.Equal(expected.GetBaseException().GetType(), home.GetBaseException().GetType());
+    }
+
     /// <summary>Native checked narrowing preserves refusal of an out-of-range stored enum instead of publishing a partial history.</summary>
     [Fact]
     [Trait("AT", "AT-321")]
