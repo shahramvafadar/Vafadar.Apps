@@ -4021,3 +4021,13 @@ checks include complete leaf captions, native node names and both original debt 
 commands without editor Save. Separate Windows native component/disclosure matrices retain
 360/412/1280 development stress and real UI Automation, not system-scale/phone/reader acceptance.
 [Exact receipts, refusals, restoration and limits](quality/android-editor-os-text.md).
+
+## AT-358 complete measured goal and budget choices
+
+Retain negative actual OS200%/412dp work-form evidence and compare original goal balance/earmark/
+share/cut, empty-budget choices and zero-advance settlement in en/fa/de/both themes. Recheck
+all changed ChoiceChips contexts, preserving unchanged settlement cases and stored financial
+inputs. Check original goal-choice selection/restoration in18 independent Windows contexts
+without Save. Exact settings restoration and ordinary signed main upgrade/Home are separate.
+This adds native receipts, not a managed case count or closure of A11Y/QA-06/device/iOS/release.
+[Failures, correction and final evidence](quality/work-editor-os-text.md).

@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Complete goal choices (D-358)
+
+- Keep goal contribution choices fully readable when large text wraps them onto separate rows.
+
 ### Build verification (D-357)
 
 - Correct a false CI failure after the compression-cache safety checks pass. The installed application is unchanged.

@@ -6795,3 +6795,12 @@ The runner-equivalent baseline exits 1, the corrected process exits 0, and an in
 failure still exits 1. Older Linux/Android missing-IAppDatabaseStartup compilation failures were
 already corrected in D-341; both jobs pass at D-356. No application/native bytes or APK change.
 Hosted verification follows this commit; it is not inferred from the local process check.
+
+## D-358 - Preserve complete measured choice surfaces
+
+Actual OS200% goal forms expose fractional Flex shrink after correct caption measurement.
+Keep each existing chip's measured width with Shrink0 so the whole surface wraps without changing
+fonts, padding, selected state, translated names or commands. Reject ineffective custom measurement
+trials before production. Continue changed/missing native cohorts and retain the actual independent
+process finalizer failure as an open runtime issue.
+[Cause, exact cases, correction and limits](quality/work-editor-os-text.md).

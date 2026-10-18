@@ -1685,3 +1685,10 @@ padded text as a sibling over the outline and the real button last, preserving s
 Both optional debt disclosures grow with complete scalable captions through WrappingAction/Text.
 The default-icon dash is a decorative glyph; its real button retains the translated default/selected
 name. [Original-form evidence](quality/android-editor-os-text.md).
+
+## D-358 complete measured choice surfaces
+
+Original choice chips do not shrink after intrinsic measurement: the complete surface wraps
+as one unit. Preserve scalable captions, original padding, selected names/colors and real
+buttons. A fractional Flex reduction can otherwise create an unmeasured second native line.
+[Actual OS and Windows evidence](quality/work-editor-os-text.md).

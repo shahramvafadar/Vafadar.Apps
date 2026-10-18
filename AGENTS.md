@@ -2594,3 +2594,12 @@ Debt disclosures use complete growing Text actions with their original commands.
 default-icon glyph opts out of scaling; its real button keeps the translated selected/default name.
 Native modal reviews require the modal window's focus and accessibility node info, not Activity
 focus or View.ContentDescription. Retain exact-source/input case receipts and restore OS settings.
+
+## D-358 original measured choice surfaces
+
+Choice chips preserve their complete intrinsic measurement with Flex Shrink0; a fractional
+reduction can otherwise wrap native text without allocating its second line. Keep original
+Label styling, padding, buttons and selected semantics. Diagnose actual ancestor allocation
+before adding custom measurements. Retain exact original cases across terminal runtime failures,
+qualify every changed consumer and restore captured emulator settings. A native text correction
+does not close finalizer/GC/ANR, physical-device, spoken-reader or iOS/release gates.

@@ -1624,3 +1624,11 @@ Keep complete selected choices and debt disclosure captions without changing fin
 Native metadata qualification is not spoken-reader acceptance. Preserve exact emulator restoration,
 failed helper checks and original successful cases; keep ANR, wider device/iOS and release gates open.
 [Qualification and signed candidate](quality/android-editor-os-text.md).
+
+## D-358 measured choice follow-through
+
+Goal choices preserve their original text allocation instead of fractional Flex shrinking.
+The scoped actual-OS work-form matrix,18 Windows selection contexts and signed offline main
+upgrade are checked with stored inputs/settings preserved. Retain the observed original
+binding finalizer failure; do not claim a general crash/ANR or full accessibility qualification.
+[Exact cohort, candidate and open gates](quality/work-editor-os-text.md).

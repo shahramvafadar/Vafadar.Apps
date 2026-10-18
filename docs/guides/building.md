@@ -1233,6 +1233,16 @@ and offline edition for final builds. No system text setting or desktop input is
 [Evidence](../../src/Apps/Zanance/docs/quality/more-menu-readable.md).
 
 
+## D-358 original work-editor text continuation
+
+For the subsequent D-358 actual-OS work-editor continuation, restrict `editor-text` explicitly
+through `review_editor_forms` and `review_editor_contexts`; new work forms use a marked separate
+work-editor-text.db and compare goals/budgets too. `Run-StoreDrafts.ps1 -EditorTextReview
+-EditorGoalChoicesOnly` checks only original Windows goal choices in a fresh isolated package;
+it refuses combination with the debt-only mode and restores the new process environment flag.
+Preserve completed matching source/input cases and verify actual native ancestry before proposing
+layout fixes. [Bounded final evidence](../../src/Apps/Zanance/docs/quality/work-editor-os-text.md).
+
 ## D-357 expected negative native command results in CI
 
 `eng/tests/AndroidCompression.Tests.ps1` deliberately invokes MSBuild with an unsafe destination.

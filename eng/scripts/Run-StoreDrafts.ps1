@@ -17,6 +17,7 @@ param(
     [switch]$HomeTemplatesReview,
     [switch]$EditorTextReview,
     [switch]$EditorDebtDetailsOnly,
+    [switch]$EditorGoalChoicesOnly,
     [switch]$ReimbursementsVisibilityOnly,
     [switch]$ReimbursementsEmptyOnly,
     [ValidateSet('en,fa,de','de')][string]$ReimbursementsLanguages = 'en,fa,de',
@@ -37,6 +38,7 @@ if ($LedgerRowsContexts) {
     }
 }
 if ($EditorDebtDetailsOnly -and !$EditorTextReview) { throw 'Debt-details continuation requires the original editor review.' }
+if ($EditorGoalChoicesOnly -and (!$EditorTextReview -or $EditorDebtDetailsOnly)) { throw 'Goal-choice review requires only the original editor review.' }
 $root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
 Set-Location -LiteralPath $root
 if ($UseExistingBuild -and !$RunId) { throw 'An existing build requires its exact original run id.' }
@@ -63,7 +65,7 @@ $manifest = Join-Path $root ($project + '/obj/Debug/' + $framework + '/win-x64/r
 if (!(Test-Path -LiteralPath $manifest)) { throw 'Independent compiled manifest is missing.' }
 [xml]$metadata = Get-Content -LiteralPath $manifest -Raw
 if ($metadata.Package.Identity.Name -ne $identity) { throw 'Compiled draft identity does not match the requested run.' }
-$variables = @('VAFADAR_EDITOR_DEBT_DETAILS_ONLY','VAFADAR_SNAPSHOTS','VAFADAR_SNAPSHOT_ONLY','VAFADAR_STORE_DRAFT_RUN',
+$variables = @('VAFADAR_EDITOR_GOAL_CHOICES_ONLY','VAFADAR_EDITOR_DEBT_DETAILS_ONLY','VAFADAR_SNAPSHOTS','VAFADAR_SNAPSHOT_ONLY','VAFADAR_STORE_DRAFT_RUN',
     'VAFADAR_WINDOW_SIZE','VAFADAR_SNAPSHOT_FONT_SCALE','VAFADAR_START_ROUTE','VAFADAR_STORE_DRAFT_REVIEW','VAFADAR_HOME_LEGEND_LANGUAGES','VAFADAR_PLAN_ROWS_EDGE_PROBE','VAFADAR_LEDGER_ROWS_LANGUAGES','VAFADAR_LEDGER_ROWS_CONTEXTS','VAFADAR_REIMBURSEMENTS_LANGUAGES','VAFADAR_REIMBURSEMENTS_VISIBILITY_ONLY','VAFADAR_REIMBURSEMENTS_EMPTY_ONLY')
 $previous = @{}
 foreach ($name in $variables) { $previous[$name] = [Environment]::GetEnvironmentVariable($name, 'Process') }
@@ -73,6 +75,7 @@ try {
     $env:VAFADAR_STORE_DRAFT_RUN = $run
     $env:VAFADAR_WINDOW_SIZE = '412x800'
     $env:VAFADAR_EDITOR_DEBT_DETAILS_ONLY = if ($EditorDebtDetailsOnly) { '1' } else { '' }
+    $env:VAFADAR_EDITOR_GOAL_CHOICES_ONLY = if ($EditorGoalChoicesOnly) { '1' } else { '' }
     $env:VAFADAR_SNAPSHOT_FONT_SCALE = if ($EditorTextReview -or $ReportRowsReview -or $BudgetTitlesReview -or $HomeLegendsReview -or $PlanRowsReview -or $LedgerRowsReview -or $ReimbursementsReview) { '2' } else { '' }
     $env:VAFADAR_STORE_DRAFT_REVIEW = if ($ReportRowsReview) { 'report-rows' } elseif ($BudgetTitlesReview) { 'budget-titles' } elseif ($HomeLegendsReview) { 'home-legends' } elseif ($PlanRowsReview) { 'plan-rows' } elseif ($LedgerRowsReview) { 'ledger-rows' } elseif ($ReimbursementsReview) { 'reimbursements' } elseif ($HomeTemplatesReview) { 'home-templates' } elseif ($EditorTextReview) { 'editor-text' } else { '' }
     $env:VAFADAR_HOME_LEGEND_LANGUAGES = if ($HomeLegendsReview) { $HomeLegendsLanguages } else { '' }

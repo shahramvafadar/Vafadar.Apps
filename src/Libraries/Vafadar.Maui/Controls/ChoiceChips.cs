@@ -227,6 +227,10 @@ public sealed class ChoiceChips : ContentView
             button.Clicked += (_, _) => SelectedIndex = index;
 
             var chip = new Grid { Margin = IsCompact ? new Thickness(0, 0, 8, 0) : new Thickness(0, 0, 8, 8), Children = { face, caption, button } };
+            // D-358: FlexLayout can shrink an intrinsically measured chip by a fractional pixel.
+            // Native rounding then wraps its caption without remeasuring the line height. Move
+            // the complete measured surface to the next row instead of compressing its text.
+            FlexLayout.SetShrink(chip, 0);
             _chips.Add(new Chip(face, label, button, text));
             _panel.Children.Add(chip);
         }

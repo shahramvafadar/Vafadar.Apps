@@ -14,6 +14,11 @@ internal static partial class DebugSnapshots
     /// <summary>Checks the original account choices, decorative default icon and debt-options action without saving a draft.</summary>
     private static async Task ReviewEditorTextWindowsAsync(App app, IServiceProvider services, string folder)
     {
+        if (Environment.GetEnvironmentVariable("VAFADAR_EDITOR_GOAL_CHOICES_ONLY") == "1")
+        {
+            await ReviewGoalChoicesWindowsAsync(app, services, folder);
+            return;
+        }
         var store = services.GetRequiredService<ZananceStore>(); var plans = services.GetRequiredService<PlanStore>();
         async Task<string> StoredAsync() => JsonSerializer.Serialize(new { Accounts = await store.GetAccountsAsync(),
             Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync(), Plans = await plans.GetSchedulesAsync() });

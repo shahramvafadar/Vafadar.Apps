@@ -2477,3 +2477,12 @@ measurement, complete final changed-surface matrices and exact setting restorati
 Windows image finding receives only its own disclosure continuation; passed unrelated controls
 and financial/crypto/OCR/backend suites are not replayed.
 [Final evidence and open gates](../../quality/android-editor-os-text.md).
+
+## D-358 whole measured-choice correction
+
+Finish the remaining scoped original work-editor text batch, correct the actual Flex allocation
+cause and qualify every changed goal/budget choice consumer. Preserve successful unchanged
+settlement cases; do not replay unrelated editor/financial/OCR/backend suites. Retain the real
+finalizer failure separately from successful text cases and exact OS restoration. Continue
+ready remaining platform/runtime work without treating this correction as full acceptance.
+[Final native and signed-package evidence](../../quality/work-editor-os-text.md).

@@ -4,10 +4,13 @@ using Vafadar.Data;
 using Vafadar.Localization;
 using Vafadar.Zanance.App.Features.Accounts;
 using Vafadar.Zanance.App.Features.Entries;
+using Vafadar.Zanance.App.Features.Budget;
+using Vafadar.Zanance.App.Features.Goals;
 using Vafadar.Zanance.App.Features.Plans;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Settings;
+using Vafadar.Zanance.Core.Plans;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App;
@@ -20,7 +23,14 @@ internal static partial class AndroidHomeReview
         var configuration = Platform.CurrentActivity?.Resources?.Configuration;
         if (configuration is null || Math.Abs(configuration.FontScale - 2f) > .001f || configuration.ScreenWidthDp != 412)
             throw new ReviewCheckException("Editor review requires actual OS scale2.0 at412dp.");
-        var path = Path.Combine(root, "editor-text.db"); var fresh = !File.Exists(path);
+        var selectedForms = (Platform.CurrentActivity?.Intent?.GetStringExtra("review_editor_forms") ?? "account,debt,entry,transfer,plan,monthly").Split(',');
+        if (selectedForms.Length == 0 || selectedForms.Distinct().Count() != selectedForms.Length
+            || selectedForms.Any(value => value is not ("account" or "debt" or "entry" or "transfer" or "plan" or "monthly"
+                or "goal" or "earmark" or "goal-share" or "goal-cut" or "budget" or "settlement")))
+            throw new ReviewCheckException("Explicit known editor states required.");
+        var workForms = selectedForms.Any(value => value is "goal" or "earmark" or "goal-share" or "goal-cut" or "budget" or "settlement");
+        var fixtureName = workForms ? "work-editor-text" : "editor-text";
+        var path = Path.Combine(root, fixtureName + ".db"); var fresh = !File.Exists(path);
         using var fixture = new ServiceCollection().AddZananceData(path).BuildServiceProvider();
         var store = fixture.GetRequiredService<ZananceStore>(); var plans = fixture.GetRequiredService<PlanStore>();
         if (fresh)
@@ -30,15 +40,15 @@ internal static partial class AndroidHomeReview
             await store.SaveAccountAsync(account, ct);
             await store.SaveAccountAsync(new Account { Name = "Fictitious savings account", CurrencyCode = "EUR", OpeningDate = account.OpeningDate }, ct);
             await store.UpdateSettingsAsync(value => { value.Mode = ExperienceMode.Advanced; value.DefaultAccountId = account.Id; }, ct);
-            File.WriteAllText(Path.Combine(root, "editor-text-prepared.marker"), "Fictitious unsaved editor geometry only.");
+            if (workForms)
+                await plans.SaveScheduleAsync(new Schedule { Name = "Fictitious household advance settlement", AccountId = account.Id,
+                    Amount = 12345, Rule = new RecurrenceRule { Start = account.OpeningDate } }, ct);
+            File.WriteAllText(Path.Combine(root, fixtureName + "-prepared.marker"), "Fictitious unsaved editor geometry only.");
         }
-        if (!File.Exists(Path.Combine(root, "editor-text-prepared.marker"))) throw new ReviewCheckException("Incomplete editor fixture retained; never reseed.");
+        if (!File.Exists(Path.Combine(root, fixtureName + "-prepared.marker"))) throw new ReviewCheckException("Incomplete editor fixture retained; never reseed.");
         async Task<string> StoredAsync() => JsonSerializer.Serialize(new { Accounts = await store.GetAccountsAsync(cancellationToken: ct),
-            Entries = await store.GetEntriesAsync(cancellationToken: ct), Plans = await plans.GetSchedulesAsync(ct), Settings = await store.GetSettingsAsync(ct) });
-        var selectedForms = (Platform.CurrentActivity?.Intent?.GetStringExtra("review_editor_forms") ?? "account,debt,entry,transfer,plan,monthly").Split(',');
-        if (selectedForms.Length == 0 || selectedForms.Distinct().Count() != selectedForms.Length
-            || selectedForms.Any(value => value is not ("account" or "debt" or "entry" or "transfer" or "plan" or "monthly")))
-            throw new ReviewCheckException("Explicit known editor states required.");
+            Entries = await store.GetEntriesAsync(cancellationToken: ct), Plans = await plans.GetSchedulesAsync(ct), Settings = await store.GetSettingsAsync(ct),
+            Goals = await fixture.GetRequiredService<GoalStore>().GetGoalsAsync(ct), Budgets = await store.GetBudgetsAsync(ct) });
         var selectedContexts = (Platform.CurrentActivity?.Intent?.GetStringExtra("review_editor_contexts") ?? "en-Light,fa-Light,de-Light,en-Dark,fa-Dark,de-Dark").Split(',');
         if (selectedContexts.Distinct().Count() != selectedContexts.Length || selectedContexts.Any(value => value is not ("en-Light" or "fa-Light" or "de-Light" or "en-Dark" or "fa-Dark" or "de-Dark")))
             throw new ReviewCheckException("Known unique editor contexts required.");
@@ -91,6 +101,33 @@ internal static partial class AndroidHomeReview
                         vm.AmountText = "1234.56"; vm.EntryTitle = "D356 fictitious draft";
                         page = new EntryEditorPage(vm);
                     }
+                    else if (form is "goal" or "earmark" or "goal-share" or "goal-cut")
+                    {
+                        var vm = ActivatorUtilities.CreateInstance<GoalEditorViewModel>(services, store, fixture.GetRequiredService<GoalStore>(), fixture.GetRequiredService<HoldingStore>());
+                        await vm.ApplyQueryAsync(new Dictionary<string, object>());
+                        vm.Name = "Fictitious original goal draft"; vm.AmountText = "1234.56";
+                        vm.TypeIndex = form == "earmark" ? 1 : 0;
+                        vm.MethodIndex = form == "goal-share" ? 1 : form == "goal-cut" ? 2 : 0;
+                        vm.ContributionText = "12.34"; vm.PercentText = "15"; vm.HasTargetDate = true;
+                        if (vm.ReminderEnabled) throw new ReviewCheckException("No notification action is authorized.");
+                        page = new GoalEditorPage(vm, local);
+                    }
+                    else if (form == "budget")
+                    {
+                        var vm = ActivatorUtilities.CreateInstance<BudgetEditorViewModel>(services, store);
+                        await vm.ApplyQueryAsync(new Dictionary<string, object> { ["year"] = 2026, ["month"] = 10, ["currency"] = "EUR" });
+                        page = new BudgetEditorPage(vm, local);
+                    }
+                    else if (form == "settlement")
+                    {
+                        var vm = ActivatorUtilities.CreateInstance<SettlementViewModel>(services, store, plans);
+                        var load = typeof(SettlementViewModel).GetMethod("ApplyQueryAsync", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                            ?? throw new ReviewCheckException("Original settlement loader unavailable.");
+                        var schedule = (await plans.GetSchedulesAsync(ct)).Single();
+                        await ((Task)load.Invoke(vm, [new Dictionary<string, object> { ["id"] = schedule.Id }])!).WaitAsync(ct);
+                        vm.ActualText = "123.45";
+                        page = new SettlementPage(vm);
+                    }
                     else
                     {
                         var vm = ActivatorUtilities.CreateInstance<PlanEditorViewModel>(services, store, plans);
@@ -114,10 +151,13 @@ internal static partial class AndroidHomeReview
                         await Task.Delay(75, ct); await WaitLayoutAsync(native, ct);
                         if (!native.HasWindowFocus) throw new ReviewCheckException("Original modal editor lost native focus after layout.");
                         var issue = SettingsTextIssue(native);
+                        var ancestors = new List<object>();
+                        for (Element? ancestor = control; ancestor is VisualElement visual; ancestor = ancestor.Parent)
+                            ancestors.Add(new { Type = visual.GetType().FullName, visual.Width, visual.Height, DesiredWidth = ((IView)visual).DesiredSize.Width });
                         var item = new { Control = control.GetType().Name, Text = expected, Issue = issue, Width = native.Width, Height = native.Height,
                             NativeTextSize = native.TextSize, NativeLines = native.Layout?.LineCount, FullNativeText = native.Text,
                             NativeTextWidth = native.Paint?.MeasureText(expected), LogicalWidth = control.Width, DesiredWidth = ((IView)control).DesiredSize.Width,
-                            ParentWidth = (control.Parent as VisualElement)?.Width, NativeLayoutHeight = native.Layout?.Height };
+                            ParentWidth = (control.Parent as VisualElement)?.Width, NativeLayoutHeight = native.Layout?.Height, Ancestors = ancestors };
                         controls.Add(item); if (issue is not null) failures.Add(item);
                     }
                     var nativeChoiceTargets = 0;

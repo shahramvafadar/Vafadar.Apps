@@ -375,3 +375,13 @@ the original modal view's native window focus; MAUI uses a separate DialogFragme
 through actual accessibility node info, and exercise only original nonfinancial disclosure toggles.
 No editor Save, notification/security operation, Main package data or OS setting write occurs
 inside the caller. The external authorized host restores exact captured OS settings.
+
+## D-358 original work-editor continuation
+
+Explicit editor forms additionally accept goal,earmark,goal-share,goal-cut,budget,settlement.
+These states use a separate marked work-editor-text.db with two fictitious EUR accounts and
+one unposted schedule. Compare accounts/entries/plans/settings/goals/budgets before/after each
+complete case. Original source/input receipts and native ancestor geometry retain actual
+fractional Flex allocation failures. No editor Save, reminder/security action, quantity-goal
+or populated-budget coverage is inferred. Keep terminal runtime faults distinct from passed
+native text cohorts; preserve the same fixture and restore exact captured OS settings.

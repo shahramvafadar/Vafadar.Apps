@@ -6780,3 +6780,12 @@ negative native command leaves exit 1. Correct only the test process's successfu
 all refusal/failure checks remain. Local runner-equivalent and failure propagation checks pass;
 hosted confirmation follows the commit. No managed case count, app/APK or acceptance gate changes.
 [Evidence](../quality/android-compression-cache.md).
+
+### Section31 update - D-358 complete measured choice surfaces
+
+Choice-chip surfaces no longer shrink below their measured captions. Actual OS200% work-editor
+checks and original Windows goal selection preserve text, commands, drafts and stored inputs.
+The36 accepted contexts combine32 final checks with four retained unchanged settlement cases;
+this is not a managed-suite count. Signed main upgrade/Home and exact OS restoration pass.
+Retained finalizer/ANR, all optional forms/controls, phone, TalkBack and iOS/release remain open.
+[Exact scope and original evidence](../quality/work-editor-os-text.md).
