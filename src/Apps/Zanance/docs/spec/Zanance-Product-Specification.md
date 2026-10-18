@@ -6656,3 +6656,12 @@ Windows and six Android contexts pass; unit counts are unchanged. A11Y-03, QA-06
 Android, iOS and external release gates remain In progress/open.
 
 [Evidence and limits](../quality/plan-row-amounts-readable.md).
+
+## D-344 Section31 update - ledger/account monetary packets
+
+Six original ledger/account value surfaces now preserve complete original packets in independent
+scroll viewports. Eighteen retained Windows and six Android contexts pass component checks; no
+financial/schema/permission/translation or managed-count change occurs. The separate Win2D
+root-change fault is uncorrected. A11Y-03, QA-06/07, physical/OS-reader, iOS and external gates stay open.
+
+[Evidence and limitations](../quality/ledger-account-amounts-readable.md).

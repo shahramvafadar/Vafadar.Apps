@@ -8,11 +8,12 @@
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Accounts"
+    xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     x:DataType="local:AccountItem"
     Style="{StaticResource ListRow}"
     ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" RowSpacing="6">
 
-    <Border Grid.RowSpan="2" Grid.Column="0" Style="{StaticResource IconTile}" BackgroundColor="{Binding TileBackground}" Stroke="{Binding TileStroke}">
+    <Border Grid.Column="0" Style="{StaticResource IconTile}" BackgroundColor="{Binding TileBackground}" Stroke="{Binding TileStroke}">
         <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding TileText}" HorizontalOptions="Center" VerticalOptions="Center" />
     </Border>
     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
@@ -30,14 +31,15 @@
                    MaximumWidthRequest="{Binding Width, Source={x:Reference AccountDescriptions}, x:DataType=FlexLayout}" />
         </FlexLayout>
     </VerticalStackLayout>
-    <Label Grid.Row="1" Grid.Column="1" Text="{Binding BalanceText}" FontSize="15" FontAttributes="Bold" HorizontalTextAlignment="End">
-        <Label.Triggers>
-            <DataTrigger TargetType="Label" Binding="{Binding IsNegative}" Value="True">
+    <p:AmountReadout Grid.Row="1" Grid.ColumnSpan="2" AmountText="{Binding BalanceText}" CaptionStyle="{StaticResource RowMoneyFigure}"
+                     TextColor="{DynamicResource AmountText}">
+        <p:AmountReadout.Triggers>
+            <DataTrigger TargetType="p:AmountReadout" Binding="{Binding IsNegative}" Value="True">
                 <Setter Property="TextColor" Value="{DynamicResource ExpenseText}" />
             </DataTrigger>
-        </Label.Triggers>
-    </Label>
-    <!-- The whole row is one real button: keyboard, screen readers and touch -->
-    <Button Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0" Clicked="OnTapped"
+        </p:AmountReadout.Triggers>
+    </p:AmountReadout>
+    <!-- D-344: the unchanged account-details handler owns identity/status, not the amount scroll viewport. -->
+    <Button Grid.ColumnSpan="2" Margin="-16,0" MinimumHeightRequest="44" Style="{StaticResource OverlayButton}" CornerRadius="0" Clicked="OnTapped"
             SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding BalanceText}" />
 </Grid>

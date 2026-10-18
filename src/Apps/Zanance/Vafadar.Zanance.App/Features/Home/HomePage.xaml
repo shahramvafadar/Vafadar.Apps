@@ -402,7 +402,7 @@
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="p:EntryRow">
                                     <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" RowSpacing="6">
-                                        <Border Grid.RowSpan="2" Style="{StaticResource IconTile}" BackgroundColor="{Binding IconBackground}" Stroke="{Binding IconStroke}">
+                                        <Border Style="{StaticResource IconTile}" BackgroundColor="{Binding IconBackground}" Stroke="{Binding IconStroke}">
                                             <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding IconColor}" HorizontalOptions="Center" VerticalOptions="Center" />
                                         </Border>
                                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
@@ -414,8 +414,10 @@
                                                 <Label Grid.Column="1" Text="{Binding Subtitle}" Style="{StaticResource Secondary}" LineBreakMode="WordWrap" />
                                             </Grid>
                                         </VerticalStackLayout>
-                                        <Label Grid.Row="1" Grid.Column="1" HorizontalTextAlignment="End" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
-                                        <Button Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                        <p:AmountReadout Grid.Row="1" Grid.ColumnSpan="2" AmountText="{Binding AmountText}" TextColor="{Binding AmountColor}"
+                                                         CaptionStyle="{StaticResource RowMoneyFigure}" />
+                                        <!-- D-344: retain original details navigation outside the monetary scroll surface. -->
+                                        <Button Grid.ColumnSpan="2" Margin="-16,0" MinimumHeightRequest="44" Style="{StaticResource OverlayButton}" CornerRadius="0"
                                                 Command="{Binding OpenEntryCommand, Source={RelativeSource AncestorType={x:Type local:HomeViewModel}}, x:DataType=local:HomeViewModel}"
                                                 CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding AmountText}" />
                                     </Grid>

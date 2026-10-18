@@ -6642,3 +6642,18 @@ Both Home upcoming and Plans hosts pass18 Windows and six Release/AOT Android co
 commands, native accessible identities and stored inputs remain intact; no financial calculation changes.
 
 [Evidence and limits](quality/plan-row-amounts-readable.md).
+
+## D-344 - Complete ledger/account packets and retain the Windows renderer boundary
+
+Replace six constrained monetary captions across Home recent/accounts, grouped transactions/day net,
+and shared account/group templates with existing AmountReadout surfaces. Preserve original actions,
+selection, colors and typography. Eighteen retained Windows contexts and six native Android contexts
+qualify the component changes with unchanged stored inputs. The separate Windows Win2D root-change
+AV remains open. Reject the ineffective retired-handler cleanup and remove temporary observers.
+
+[Evidence and limitations](quality/ledger-account-amounts-readable.md).
+
+Owner follow-up on 2026-10-18 authorizes temporary accessibility settings only on the independent
+Zanance emulator with restoration to exact prior values. It excludes Samsung, Windows, accounts
+and authentication. This decision unblocks the next real OS font-scale/TalkBack qualification;
+D-344 component checks above did not change those settings or establish that acceptance.

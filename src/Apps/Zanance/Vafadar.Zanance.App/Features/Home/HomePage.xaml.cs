@@ -109,6 +109,13 @@ public partial class HomePage : ContentPage
     }
 
 #if DEBUG && WINDOWS
+    /// <summary>Exercises original account-row visibility in an isolated presentation fixture without saving layout.</summary>
+    internal void PreviewAccountSectionForReview(bool visible)
+    {
+        _layout.SetVisible(HomeSection.Accounts, visible);
+        UpdateVisibility();
+    }
+
     /// <summary>Exercises original optional-section attachment with a fictitious view-only layout, without saving preferences.</summary>
     internal void PreviewCategorySectionForReview(bool visible)
     {

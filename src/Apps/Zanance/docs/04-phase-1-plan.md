@@ -1106,3 +1106,12 @@ Plans rows. Eighteen Windows and six Release/AOT Android contexts qualify the sh
 with stored inputs unchanged. No unchanged domain or financial suite is repeated.
 
 [Evidence and limits](quality/plan-row-amounts-readable.md).
+
+## D-344 monetary list-row correction
+
+Complete all six original ledger/account value surfaces together, including day/group headers,
+selection and account color triggers. Eighteen Windows contexts are retained across failed/completed
+runs; six original Release/AOT Android contexts pass. No financial writes or unit-count increase.
+The independent Windows Canvas root-change failure is recorded separately, not fixed by this batch.
+
+[Evidence and limitations](quality/ledger-account-amounts-readable.md).

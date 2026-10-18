@@ -1523,3 +1523,12 @@ The complete offline candidate still needs the existing OS-reader, phone, perfor
 provider/Store and publication gates. No privacy data, permission, SDK, key, schema or backup format changes.
 
 [Evidence and limits](quality/plan-row-amounts-readable.md).
+
+## D-344 scoped monetary-row candidate
+
+Complete ledger/account packet viewports pass focused component qualification, with original actions,
+selection and colors preserved. Windows Canvas root-change stability, Android startup/ANR, physical
+devices, OS/spoken readers, iOS, providers, Store and publication remain unchecked/open. No native
+observer, rejected root teardown, SDK downgrade/fork or security-policy change enters the candidate.
+
+[Evidence and limitations](quality/ledger-account-amounts-readable.md).

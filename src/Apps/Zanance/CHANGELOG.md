@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Complete transaction and account amounts (D-344)
+
+- Keep long transaction amounts, account balances and daily/group currency totals together. Values scroll separately from navigation and selection, while existing financial colors and selection feedback stay unchanged.
+
 ### Complete plan amounts (D-343)
 
 - Keep the complete amount, sign and currency together in upcoming payments and the Plans list. Long values scroll independently of the button that opens plan details.

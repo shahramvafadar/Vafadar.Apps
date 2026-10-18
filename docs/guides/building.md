@@ -1313,3 +1313,14 @@ matrix for diagnostic repairs. Original native Scroll patterns, descriptions and
 checked without financial commands. Restore the permanent Windows identity after review.
 AndroidHome phase `plan-rows` reuses the retained financial-tables fixture with a fresh comparison;
 observe the same original PID after timeout. [Evidence](../../src/Apps/Zanance/docs/quality/plan-row-amounts-readable.md).
+
+## D-344 original ledger/account review
+
+`eng/scripts/Run-StoreDrafts.ps1 -LedgerRowsReview` checks18 original Windows contexts at Debug
+process-local scale2 using fresh isolated storage/non-input desktops. Explicit unique
+`-LedgerRowsContexts 'de-Light-1280,de-Dark-360,de-Dark-412,de-Dark-1280'` can continue only missing
+contexts, inside the selected `-LedgerRowsLanguages`. Retain earlier complete receipts and failures;
+a completed component context does not clear an unrelated native renderer crash. Restore ordinary
+Windows identity and remove all temporary native observers before handoff. AndroidHome phase
+`ledger-rows` uses a fresh comparison on retained financial-tables data, without prepare/reset.
+[Evidence and remaining gates](../../src/Apps/Zanance/docs/quality/ledger-account-amounts-readable.md).

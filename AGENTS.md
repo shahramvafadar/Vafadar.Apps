@@ -2479,3 +2479,23 @@ parameter and complete description. The real navigation target covers only ident
 its margins must not intercept the amount viewport. Check both original Home/Plans hosts,
 real scroll ends and native names without invoking financial commands. Windows TextPointer
 character rectangles are zero-width caret positions; use their positions, not glyph-width assumptions.
+
+## D-344 ledger/account monetary viewports and native failure evidence
+
+Keep original ledger/account packets in independent AmountReadout rows, preserving semantic
+colors, original typography, selection feedback and unchanged commands/Clicked handlers. Day/net
+and account-group headers retain their complete multi-currency packets without recalculation.
+Reveal and reacquire loaded native collection targets before invoking selection; cached/offscreen
+controls are not visible-target proof. Retain actual Win2D/ANR failures separately from completed
+component contexts. Native fault diagnostics must not enter managed code or allocate during an
+exception; record bounded code offsets only, never dumps/registers/heap/raw stack. Remove temporary
+observers and rejected lifecycle/SDK changes before the ordinary build and handoff.
+
+## Owner emulator accessibility exception (2026-10-18)
+
+The owner authorizes temporary accessibility-setting changes only on the independent Zanance
+emulator, with exact prior values captured and restored after qualification. This exception covers
+real OS font scaling and TalkBack preparation/testing; it does not authorize changes on Samsung,
+Windows, accounts, authentication or other projects. Verify the emulator identity before mutation,
+retain restoration evidence, and never infer physical-device or spoken-reader acceptance from
+Debug-only font overrides.

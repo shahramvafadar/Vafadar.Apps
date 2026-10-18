@@ -50,7 +50,7 @@
                             <VerticalStackLayout Spacing="4">
                                 <Grid RowDefinitions="Auto,Auto" RowSpacing="4" Margin="4,8,4,0">
                                     <Label Text="{Binding Title}" Style="{StaticResource SectionHeader}" SemanticProperties.HeadingLevel="Level2" />
-                                    <Label Grid.Row="1" Text="{Binding TotalsText}" Style="{StaticResource Secondary}" FontAttributes="Bold" HorizontalTextAlignment="End" />
+                                    <p:AmountReadout Grid.Row="1" AmountText="{Binding TotalsText}" CaptionStyle="{StaticResource RowMoneySecondary}" />
                                 </Grid>
                                 <Border Style="{StaticResource Card}" Padding="0">
                                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Items}">

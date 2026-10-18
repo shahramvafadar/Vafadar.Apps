@@ -1619,3 +1619,13 @@ and semantic amount color. The real original navigation button covers only ident
 its complete description and44-unit target, and never covers the amount scroll surface.
 
 [Evidence and limits](quality/plan-row-amounts-readable.md).
+
+## D-344 complete ledger/account monetary rows
+
+Ledger and account identity/status keep growing rows beside their icon; original real navigation
+or selection targets cover only identity/status and retain44-unit targets. A full-width AmountReadout
+below them preserves complete sign/digits/currency and semantic colors. Day-net and account-group
+headers preserve all original currency packets at existing secondary typography. Selection highlight,
+checkmark, review dot and native account-details handler stay intact.
+
+[Evidence and limitations](quality/ledger-account-amounts-readable.md).

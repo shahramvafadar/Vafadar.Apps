@@ -3898,3 +3898,14 @@ Both scroll ends and unchanged stored inputs are checked; no financial command e
 English360 probe confirms the actual post-layout sign at nativeX0 after correcting diagnostic APIs.
 
 [Evidence and limits](quality/plan-row-amounts-readable.md).
+
+## D-344 original ledger/account qualification
+
+Pass18 retained en/fa/de xLight/Dark x360/412/1280 Windows contexts at process-local scale2,
+108 monetary checks across original templates, plus six Release/AOT Android contexts/36 viewports
+with native colors/names and actual native selection/deselection. Original stored inputs stay intact.
+The final four Windows contexts reveal/reacquire real collection targets before invocation. Native
+Win2D root-change crashes and the independent Android startup ANR remain failures, not passing
+whole-platform/stability acceptance. No unchanged managed suite or unit count is replayed/increased.
+
+[Evidence and limitations](quality/ledger-account-amounts-readable.md).

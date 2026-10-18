@@ -138,6 +138,17 @@
     </Style>
 
     <!-- The bold display face (Urbanist in English and German, Vazirmatn Bold in Persian), so no synthetic bold. -->
+    <!-- D-344: regular list figures retain their original scalable typography in independent amount viewports. -->
+    <Style x:Key="RowMoneyFigure" TargetType="Label">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontFamily" Value="{DynamicResource AppFont}" />
+        <Setter Property="TextColor" Value="{DynamicResource AmountText}" />
+    </Style>
+    <Style x:Key="RowMoneySecondary" TargetType="Label" BasedOn="{StaticResource Secondary}">
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
     <Style x:Key="AmountLarge" TargetType="Label">
         <Setter Property="FontSize" Value="32" />
         <Setter Property="FontFamily" Value="{DynamicResource DisplayFont}" />

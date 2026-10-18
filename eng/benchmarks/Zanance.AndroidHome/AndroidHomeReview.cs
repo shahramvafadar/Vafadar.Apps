@@ -65,13 +65,13 @@ internal static partial class AndroidHomeReview
                 RequireRoot(root);
                 await WriteReportAsync(root, phase, await ReviewPhoneLedgerAsync(app, services, root, comparison!, ct, includeWrites: phase == "ledger"), ct);
             }
-            else if (phase is "tables" or "legends" or "budget-titles" or "home-legends" or "plan-rows")
+            else if (phase is "tables" or "legends" or "budget-titles" or "home-legends" or "plan-rows" or "ledger-rows")
             {
                 if (File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))
                     throw new ReviewCheckException("Completed financial table review must not be repeated.");
                 Directory.CreateDirectory(root);
                 await WriteReportAsync(root, phase, await ReviewFinancialTablesAsync(app, services, root, comparison!, ct,
-                    legendsOnly: phase == "legends", budgetTitlesOnly: phase == "budget-titles", homeLegendsOnly: phase == "home-legends", planRowsOnly: phase == "plan-rows"), ct);
+                    legendsOnly: phase == "legends", budgetTitlesOnly: phase == "budget-titles", homeLegendsOnly: phase == "home-legends", planRowsOnly: phase == "plan-rows", ledgerRowsOnly: phase == "ledger-rows"), ct);
             }
             else if (phase == "billing-owned")
             {

@@ -2378,3 +2378,12 @@ checks pass with original actions/accessible names and unchanged stored inputs. 
 increases. Broad accessibility, physical Android, performance, iOS and external gates stay open.
 
 [Evidence and limits](quality/plan-row-amounts-readable.md).
+
+## D-344 ledger/account readability and open renderer limit
+
+Original ledger/account packets now scroll independently of actions in all four current hosts and
+two group headers. Focused native checks preserve original inputs, selection and colors. The known
+Windows Canvas root-change failure remains open; no SDK/root lifecycle workaround is adopted.
+Android, broader accessibility, performance, iOS and external release acceptance stay distinct.
+
+[Evidence and limitations](quality/ledger-account-amounts-readable.md).

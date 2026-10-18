@@ -130,7 +130,7 @@
                 <DataTemplate x:DataType="local:EntryDayGroup">
                     <Grid RowDefinitions="Auto,Auto" RowSpacing="4" Padding="16,14,16,6">
                         <Label Text="{Binding Header}" Style="{StaticResource Secondary}" FontAttributes="Bold" />
-                        <Label Grid.Row="1" Text="{Binding NetText}" Style="{StaticResource Secondary}" HorizontalTextAlignment="End" />
+                        <p:AmountReadout Grid.Row="1" AmountText="{Binding NetText}" CaptionStyle="{StaticResource Secondary}" />
                     </Grid>
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
@@ -144,7 +144,7 @@
                                     <Setter Property="BackgroundColor" Value="{DynamicResource PrimarySoft}" />
                                 </DataTrigger>
                             </Grid.Triggers>
-                            <Border Grid.RowSpan="2" Style="{StaticResource IconTile}" BackgroundColor="{Binding IconBackground}" Stroke="{Binding IconStroke}">
+                            <Border Style="{StaticResource IconTile}" BackgroundColor="{Binding IconBackground}" Stroke="{Binding IconStroke}">
                                 <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding IconColor}"
                                                HorizontalOptions="Center" VerticalOptions="Center" />
                             </Border>
@@ -157,10 +157,10 @@
                                     <Label Grid.Column="1" Text="{Binding Subtitle}" Style="{StaticResource Secondary}" LineBreakMode="WordWrap" />
                                 </Grid>
                             </VerticalStackLayout>
-                            <Label Grid.Row="1" Grid.Column="1" HorizontalTextAlignment="End" Text="{Binding AmountText}" TextColor="{Binding AmountColor}" FontSize="15"
-                                   FontAttributes="Bold" VerticalOptions="Center" />
-                            <!-- The whole row is one real button: keyboard, screen readers and touch -->
-                            <Button Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                            <p:AmountReadout Grid.Row="1" Grid.ColumnSpan="2" AmountText="{Binding AmountText}" TextColor="{Binding AmountColor}"
+                                             CaptionStyle="{StaticResource RowMoneyFigure}" />
+                            <!-- D-344: the original detail/selection button leaves the complete amount viewport independent. -->
+                            <Button Grid.ColumnSpan="2" Margin="-16,0" MinimumHeightRequest="44" Style="{StaticResource OverlayButton}" CornerRadius="0"
                                     Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:TransactionsViewModel}}, x:DataType=local:TransactionsViewModel}"
                                     CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding AmountText}" />
                             <fi:SymbolIcon Symbol="CheckmarkCircle" FontSize="22" ForegroundColor="{DynamicResource Primary}" VerticalOptions="Start" HorizontalOptions="Start"

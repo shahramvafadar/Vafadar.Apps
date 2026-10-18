@@ -248,3 +248,13 @@ rows and signed extreme captions never save a schedule or entry. Check both amou
 original commands/44-unit targets and actual native complete accessible descriptions. The original
 empty Plans publication must finish before view-only rows replace it. No prepare/performance rerun,
 OS setting change or spoken-reader acceptance belongs to this phase.
+
+## D-344 original ledger/account monetary rows
+
+Phase `ledger-rows` reuses the retained financial-tables fixture with a fresh comparison. Six
+language/theme contexts exercise original Home recent/accounts, Transactions item/day net and
+Accounts item/group templates:36 complete monetary viewports, native semantic colors/names,
+original actions and actual native selection/deselection. Presentation-only extreme and multi-currency
+packets never save entries/accounts. Observe the same original process after a transient PID read
+or timeout; the recorded startup ANR is not a pass. No prepare/performance replay or OS change belongs
+in this phase. The Windows-only rejected root lifecycle candidate does not change Android source behavior.

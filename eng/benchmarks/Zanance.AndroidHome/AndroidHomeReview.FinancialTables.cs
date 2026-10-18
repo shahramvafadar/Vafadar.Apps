@@ -18,6 +18,7 @@ using Vafadar.Zanance.Data.Commerce;
 using Vafadar.Zanance.App.Features.Budget;
 using Vafadar.Zanance.App.Features.Home;
 using Vafadar.Zanance.App.Features.Plans;
+using Vafadar.Zanance.App.Features.Transactions;
 using Vafadar.Zanance.App.Interaction;
 
 namespace Vafadar.Zanance.App;
@@ -26,7 +27,7 @@ internal static partial class AndroidHomeReview
 {
     /// <summary>Checks original table templates and complete canonical amount viewports without invoking financial commands.</summary>
     private static async Task<object> ReviewFinancialTablesAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct,
-        bool legendsOnly = false, bool budgetTitlesOnly = false, bool homeLegendsOnly = false, bool planRowsOnly = false)
+        bool legendsOnly = false, bool budgetTitlesOnly = false, bool homeLegendsOnly = false, bool planRowsOnly = false, bool ledgerRowsOnly = false)
     {
         async Task RootAsync()
         {
@@ -75,6 +76,13 @@ internal static partial class AndroidHomeReview
             foreach (var language in new[] { "en", "fa", "de" })
             {
                 await SetLanguageAsync(app, local, language, ct); await RootAsync(); var dates = new DateFormatter(local);
+                if (ledgerRowsOnly)
+                {
+                    var result = await ReviewLedgerRowPagesAsync(app, services, fixture, local, translator, CheckAsync, ct);
+                    if (before != await StoredAsync()) throw new ReviewCheckException("Ledger presentation changed original stored inputs.");
+                    observations.Add(new { Language = language, Theme = theme.ToString(), result });
+                    continue;
+                }
                 if (planRowsOnly)
                 {
                     var home = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store);
@@ -228,9 +236,10 @@ internal static partial class AndroidHomeReview
                 observations.Add(new { Language = language, Theme = theme.ToString(), TrendAmounts = trend, HistoryAmounts = history, ComparisonAmounts = comparisonCount, CompleteTextAndScrollEnds = true });
             }
         }
-        return new { Comparison = comparison, OriginalReportsAndSnapshotPages = !legendsOnly && !budgetTitlesOnly && !homeLegendsOnly && !planRowsOnly,
+        return new { Comparison = comparison, OriginalReportsAndSnapshotPages = !legendsOnly && !budgetTitlesOnly && !homeLegendsOnly && !planRowsOnly && !ledgerRowsOnly,
             OriginalReportLegends = legendsOnly, OriginalBudgetTitles = budgetTitlesOnly, OriginalHomeLegends = homeLegendsOnly,
             OriginalPlanRows = planRowsOnly,
+            OriginalLedgerRows = ledgerRowsOnly,
             OriginalStoredInputsUnchanged = true, NoMainDataTouched = true,
             NoFinancialSaveOrSystemSettings = true, ActualPhoneAcceptance = false, Observations = observations };
 
@@ -260,7 +269,7 @@ internal static partial class AndroidHomeReview
         async Task<int> CheckAsync(ContentPage page, string date, string positive, string negative)
         {
             // The plan fixture has one realized CollectionView item, rather than a vertical ScrollView host.
-            var outer = page is PlansPage ? null : Views(page).OfType<ScrollView>().First(value => value.Orientation != ScrollOrientation.Horizontal);
+            var outer = page is PlansPage or TransactionsPage ? null : Views(page).OfType<ScrollView>().First(value => value.Orientation != ScrollOrientation.Horizontal);
             var identity = Views(page).OfType<Label>().First(label => label.Text == date && Visible(label));
             if (outer is not null) await outer.ScrollToAsync(identity, ScrollToPosition.Start, false);
             await Task.Delay(100, ct); CheckText(identity);
@@ -269,6 +278,13 @@ internal static partial class AndroidHomeReview
             foreach (var amount in amounts)
             {
                 if (outer is not null) await outer.ScrollToAsync(amount, ScrollToPosition.Start, false);
+                if (page is TransactionsPage tx && tx.FindByName<CollectionView>("ContentViewport").Handler?.PlatformView
+                    is AndroidX.RecyclerView.Widget.RecyclerView recycler)
+                {
+                    if (amount.BindingContext is Vafadar.Zanance.App.Features.Transactions.EntryDayGroup) recycler.ScrollToPosition(0);
+                    else recycler.ScrollBy(0, 10000);
+                    await WaitLayoutAsync(recycler, ct);
+                }
                 await Task.Delay(100, ct);
                 var caption = Views(amount).OfType<Label>().Single(label => label.Text == amount.AmountText); CheckText(caption);
                 var scroll = Views(amount).OfType<ScrollView>().Single();
@@ -278,7 +294,7 @@ internal static partial class AndroidHomeReview
                 await scroll.ScrollToAsync(0, 0, false); await Task.Delay(100, ct);
                 if (scroll.ScrollX > 1) throw new ReviewCheckException("Original sign/start cannot be restored.");
                 if (amount.Width > page.Width + 1) throw new ReviewCheckException("Original amount viewport exceeds the page.");
-                if ((legendsOnly || homeLegendsOnly || planRowsOnly) && amount.Parent is Grid row)
+                if ((legendsOnly || homeLegendsOnly || planRowsOnly || ledgerRowsOnly) && amount.Parent is Grid row)
                 {
                     foreach (var button in row.Children.OfType<Button>())
                     {

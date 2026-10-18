@@ -2365,3 +2365,14 @@ only the English360 visual-edge concern with a focused probe. Preserve its diagn
 Do not repeat unchanged crypto, financial, OCR, backend or previously qualified category/budget checks.
 
 [Evidence and limits](../../quality/plan-row-amounts-readable.md).
+
+## D-344 complete monetary-row batch and remaining native boundary
+
+Qualify the original packet-splitting failure across six surfaces, correct their shared display rules,
+then check original actions, selection and colors together. Retain completed contexts after actual
+process failures; never restart a live process after observation expiry. The Android startup ANR is
+continued with Wait in the same process. Reject the ineffective Windows lifecycle candidate and
+remove native observers before the ordinary build. Do not count component checks as renderer
+stability or repeat successful unrelated domain, OCR, cipher, backend or performance suites.
+
+[Evidence and limitations](../../quality/ledger-account-amounts-readable.md).
