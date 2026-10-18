@@ -472,3 +472,11 @@ D-321 qualifies faster complete ledger reading on retained physical data without
 
 
 D-322 qualifies trusted complete-row null metadata, full retained native financial output and a signed offline upgrade. Home remains under performance review: [evidence](docs/quality/physical-home-null-bitmap.md).
+
+## D-333 cold notification snoozes
+
+An Android snooze can prepare its original protected store without creating a window; unavailable
+storage/disposal preserves valid queued reminders. Focused managed cases, actual x64/API36 original
+action and separate cold metadata persistence pass. The complete offline signed candidate upgrades the
+original emulator without reset and retains My account/Home0. Startup ANRs and broader phone/iOS/
+provider/Store/release acceptance remain open. See [evidence](docs/quality/cold-protected-reminder-startup.md).

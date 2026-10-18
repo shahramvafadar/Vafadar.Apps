@@ -2344,3 +2344,13 @@ of synchronously entering that same gate. Keep nonblocking coalescing, cancellat
 revalidation and the original package/publication guards. A successful validated not-due result clears an
 earlier transient failure without a new file or success timestamp. Native exception-type/source evidence
 and the complete temporary-profile lifecycle are in [D-327 qualification](../../src/Apps/Zanance/docs/quality/automatic-copy-readiness.md).
+
+## D-333 notification-only protected preparation
+
+IAppDatabaseStartup also supplies cold snooze preparation after application binding, on a worker and
+without a window. ReminderService only requests it for required-protection endpoints not yet published.
+Construction/WatchSnoozes remain no-I/O, and ordinary published reads keep their original authority.
+Bootstrap refusal/nonpublication is handled before a source-read failure could retire valid notifications;
+disposal is checked again before reading. Existing genuine profile/source/privacy retirement guards remain.
+No financial schema, key format, portable backup data or app-lock navigation changes. See
+[native/managed qualification](../../src/Apps/Zanance/docs/quality/cold-protected-reminder-startup.md).

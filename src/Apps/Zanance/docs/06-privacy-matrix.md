@@ -989,3 +989,12 @@ native read grant. Its fictitious local output and one hash-matched public picke
 producer/consumer test; the input, fresh profile and receiver are removed afterward. Main collection/SDKs,
 permissions and export defaults do not change. CSV notes inclusion was on, with no notes in this fixture;
 nonempty-note redaction is not claimed. No owner data/keys are read or uploaded.
+
+## D-333 device-only cold reminder access
+
+A notification-only action prepares the existing device-bound protected store on a worker before its
+financial read; it creates no window or unlock/navigation event. Original detail consent, profile/source
+checks and existing device-local snooze/native queue remain. There is no new production SDK, permission,
+portable field or network flow. The independent offline qualification provider exposes only synthetic
+state/counts, is absent from main and is removed with its fixture package. Startup ANR, physical-device,
+iOS and interrupted-action acceptance remain separate. See [scope](quality/cold-protected-reminder-startup.md).

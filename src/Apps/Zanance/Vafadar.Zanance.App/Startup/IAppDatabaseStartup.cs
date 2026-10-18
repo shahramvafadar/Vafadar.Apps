@@ -5,10 +5,10 @@ using Vafadar.Zanance.Core;
 
 namespace Vafadar.Zanance.App.Startup;
 
-/// <summary>Prepares all required storage before any financial page, app-lock database read or foreground writer starts.</summary>
+/// <summary>Prepares required storage before financial pages, cold reminder reads, app-lock database reads or foreground writers.</summary>
 public interface IAppDatabaseStartup
 {
-    /// <summary>Runs under the covered startup worker; protected hosts must register their complete bootstrap.</summary>
+    /// <summary>Runs on a worker before financial access; foreground startup keeps its cover and notification-only startup creates no window.</summary>
     Task PrepareAsync(CancellationToken cancellationToken = default);
 }
 

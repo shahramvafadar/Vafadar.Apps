@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Cold notification snoozes (D-333)
+
+- Snooze an Android reminder after the app process has ended without opening a window. Prepare the protected database before reading its original plan; unavailable storage preserves valid queued reminders. A snooze disposed during preparation stops before reading or scheduling.
+
 ### CSV review page arrival (D-332)
 
 - Show the beginning of the selected CSV review page after Next or Previous, instead of keeping the previous page's bottom position.

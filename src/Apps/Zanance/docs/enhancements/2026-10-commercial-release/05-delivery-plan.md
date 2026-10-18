@@ -2239,3 +2239,13 @@ financial writes. Retain D-331 successful caption/resource/bank evidence. Next p
 repeated background ScheduledAlarmReceiver startup timeout under QA-06; original launch/ANR/PID evidence
 is preserved, and Wait is not a fix. Samsung is absent; do not wait for it before independent approved
 diagnosis. [Evidence](../../quality/android-import-preview-arrival.md).
+
+## D-333 completed cold reminder correction and next work
+
+Prepare unpublished protected storage before a notification snooze reads its original financial source;
+preserve valid queues on startup refusal/disposal. Managed cases, actual original Android action with
+zero windows, separate persisted-metadata read, strict builds and the complete signed main upgrade pass.
+Keep the full development goal active. Continue unresolved startup/ANR diagnosis from the retained native
+timing evidence and remaining Android acceptance; no repeated licence/AOT recording or unrelated passed
+suites without a new cause. Physical Samsung, Mac/iOS and owner/provider/Store gates remain separate.
+[Evidence](../../quality/cold-protected-reminder-startup.md).

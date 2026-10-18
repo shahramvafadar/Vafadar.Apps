@@ -1193,3 +1193,13 @@ publish. Native Android qualification uses the exact full offline candidate and 
 all inputs before opening a picker, search the exact filename and verify the returned original filename.
 A root/foreground observation failure does not authorize replaying the preceding native command.
 Current startup ANR and package scope: src/Apps/Zanance/docs/quality/android-import-preview-arrival.md.
+
+## D-333 independent cold reminder qualification
+
+The original application can be built through eng/benchmarks/Zanance.AndroidReminders under its fixed
+independent Android id. Build a full signed offline Release package with Build-AndroidApk.ps1 -Project
+eng/benchmarks/Zanance.AndroidReminders/Vafadar.Zanance.AndroidReminders.csproj -Offline. Its README documents
+explicit fixture initialization and read-only synthetic status; wrong identities fail before window/fixture effects.
+Qualify the original notification action's actual new PID and zero-window state before another Activity.
+A later metadata-only process intentionally does not prepare financial storage. See
+[native boundaries](../../src/Apps/Zanance/docs/quality/cold-protected-reminder-startup.md).

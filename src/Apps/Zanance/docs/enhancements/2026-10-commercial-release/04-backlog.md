@@ -2850,3 +2850,13 @@ One focused regression,18 native Windows contexts and the complete offline candi
 import or broad suite is repeated. Eleven saved Android assertions retain the English x64/API36/412x800
 scope. QA-06 now has two reproduced background ScheduledAlarmReceiver startup-timeout ANRs; their
 cause/fix remains open. Samsung/other device/iOS and release gates stay open. [Evidence](../../quality/android-import-preview-arrival.md).
+
+## D-333 notification-only protected ownership
+
+The newly reproduced cold-snooze queue loss is fixed through the original storage host, with focused
+managed refusal/disposal coverage and original native action/separate cold metadata persistence on the
+x64/API36 emulator. Strict builds, complete signed offline main upgrade and original Home0 pass.
+QA-07 gains this scoped local reminder boundary; broader phone/iOS and interrupted-action acceptance
+remain. QA-06 retains repeated startup ANRs, now also observed in an independent provider-only start;
+neither their cause/fix nor two-second/low-memory acceptance is established. Reuse existing successful
+financial/bank/cipher/backend/layout evidence. [Details](../../quality/cold-protected-reminder-startup.md).

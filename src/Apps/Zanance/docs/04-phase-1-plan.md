@@ -1021,3 +1021,10 @@ Focused tests and the signed offline build/upgrade pass; native/device qualifica
 The observed Android previous-bottom arrival is corrected and checked with actual Next/Previous,
 stale generic review and the last invalid row. Native Windows18-context arrival and the complete
 offline candidate pass; startup ANR/physical/iOS remain open. [Evidence](quality/android-import-preview-arrival.md).
+
+## D-333 existing reminder lifecycle correction
+
+The original cold notification action now prepares protected storage before financial reads; startup
+failure/disposal preserves the original queue. Focused managed/native action and separate cold metadata
+persistence pass, with strict builds and complete signed main upgrade. No Phase1/full-device/release gate
+is broadly closed. See [evidence](quality/cold-protected-reminder-startup.md).

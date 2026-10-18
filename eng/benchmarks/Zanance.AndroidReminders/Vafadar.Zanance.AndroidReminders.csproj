@@ -1,0 +1,79 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(RepoRoot)eng/Maui.props" />
+  <PropertyGroup>
+    <VafadarMauiTargetFrameworks>net10.0-android</VafadarMauiTargetFrameworks>
+    <TargetFrameworks>net10.0-android</TargetFrameworks>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Vafadar.Zanance.App</RootNamespace>
+    <AssemblyName>Vafadar.Zanance.App</AssemblyName>
+    <ApplicationTitle>Zanance reminder review</ApplicationTitle>
+    <ApplicationId>pro.vafadar.zanance.androidreminderreview</ApplicationId>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RunAOTCompilation>true</RunAOTCompilation>
+    <PublishTrimmed>true</PublishTrimmed>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">android-x64</RuntimeIdentifier>
+    <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
+    <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
+  </PropertyGroup>
+  <!-- D-320: measure the original release compilation inputs as well as its source/native library. -->
+  <ItemGroup Condition="'$(Configuration)' == 'Release'">
+    <AndroidAotProfile Include="$(OriginalAppRoot)Platforms/Android/Profiles/startup.aprof" />
+  </ItemGroup>
+  <!-- Compile original production sources and XAML; the application never references this independent caller. -->
+  <ItemGroup>
+    <Compile Include="$(OriginalAppRoot)**/*.cs"
+             Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)Platforms/Windows/**;$(OriginalAppRoot)Platforms/iOS/**;$(OriginalAppRoot)Platforms/Android/MainActivity.cs"
+             Link="%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="*.cs" />
+    <MauiXaml Include="$(OriginalAppRoot)**/*.xaml"
+              Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)Platforms/Windows/**"
+              Link="%(RecursiveDir)%(Filename)%(Extension)" />
+    <EmbeddedResource Include="$(OriginalAppRoot)Resources/Strings/*.resx" Link="Resources/Strings/%(Filename)%(Extension)" />
+    <AndroidResource Include="$(OriginalAppRoot)Platforms/Android/Resources/**" Link="Resources/%(RecursiveDir)%(Filename)%(Extension)" />
+    <AndroidManifestOverlay Include="$(OriginalAppRoot)Platforms/Android/ReleaseManifest.xml" />
+    <MauiIcon Include="$(OriginalAppRoot)Resources/AppIcon/appicon.svg" ForegroundFile="$(OriginalAppRoot)Resources/AppIcon/appiconfg.svg" Color="#F4F6F8" />
+    <MauiSplashScreen Include="$(OriginalAppRoot)Resources/Splash/splash.svg" Color="#F4F6F8" BaseSize="128,128" />
+    <MauiImage Include="$(OriginalAppRoot)Resources/Images/*" />
+    <MauiFont Include="$(OriginalAppRoot)Resources/Fonts/*.ttf" />
+    <MauiAsset Include="$(OriginalAppRoot)Resources/Raw/**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(RepoRoot)src/Libraries/Vafadar.Authentication.Maui/Vafadar.Authentication.Maui.csproj" />
+    <ProjectReference Include="$(RepoRoot)src/Libraries/Vafadar.Backup/Vafadar.Backup.csproj" />
+    <ProjectReference Include="$(RepoRoot)src/Libraries/Vafadar.Backup.GoogleDrive/Vafadar.Backup.GoogleDrive.csproj" />
+    <ProjectReference Include="$(RepoRoot)src/Libraries/Vafadar.Backup.OneDrive/Vafadar.Backup.OneDrive.csproj" />
+    <ProjectReference Include="$(RepoRoot)src/Libraries/Vafadar.Documents.Maui/Vafadar.Documents.Maui.csproj" />
+    <ProjectReference Include="$(RepoRoot)src/Libraries/Vafadar.Maui/Vafadar.Maui.csproj" />
+    <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Core/Vafadar.Zanance.Core.csproj" />
+    <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/Vafadar.Zanance.Data.csproj" />
+    <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Reports/Vafadar.Zanance.Reports.csproj" />
+    <PackageReference Include="Vafadar.Native.SqlCipher.Android" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
+    <PackageReference Include="Syncfusion.Maui.Charts" />
+    <PackageReference Include="Syncfusion.Maui.Inputs" />
+    <PackageReference Include="Syncfusion.Maui.ProgressBar" />
+    <PackageReference Include="Plugin.LocalNotification" />
+    <AppSecret Include="MicrosoftEntraClientId" Value="" />
+    <AppSecret Include="GoogleOAuthClientIdAndroid" Value="" />
+    <AppSecret Include="GoogleOAuthClientIdIos" Value="" />
+    <AppSecret Include="GoogleOAuthClientIdWindows" Value="" />
+  </ItemGroup>
+  <Target Name="SelectPatchedCoreRuntime" BeforeTargets="ProcessFrameworkReferences">
+    <ItemGroup>
+      <FrameworkReference Condition="'%(FrameworkReference.Identity)' == 'Microsoft.NETCore.App'">
+        <RuntimeFrameworkVersion>$(VafadarSecurityRuntimeVersion)</RuntimeFrameworkVersion>
+      </FrameworkReference>
+    </ItemGroup>
+  </Target>
+  <Target Name="PrepareAndroidCipherDependency" BeforeTargets="_GenerateRestoreGraphProjectEntry">
+    <Exec Command="pwsh -NoProfile -File &quot;$(RepoRoot)eng/native/sqlcipher/Ensure-AndroidPackage.ps1&quot;" />
+  </Target>
+  <Target Name="ValidateIndependentReminderIdentity" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.androidreminderreview'"
+           Text="Native reminder qualification must keep its independent Android application id." />
+  </Target>
+  <Import Project="$(RepoRoot)eng/AndroidAotRuntime.targets" />
+</Project>

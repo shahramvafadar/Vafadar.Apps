@@ -2271,3 +2271,10 @@ remaining device qualification: [evidence](quality/interpreted-csv-preview.md).
 D-331 interpretation is exercised in the original Android page without financial writes; the new-page
 viewport defect is corrected. No bank preset or financial writer changes. Preserve the observed two
 background-receiver startup ANRs as an open QA-06 boundary. [Evidence](quality/android-import-preview-arrival.md).
+
+## D-333 protected notification-only reads
+
+Cold snooze publication and refusal/disposal preservation are locally qualified through original
+application sources and an actual x64/API36 action with zero windows. Reuse the existing bootstrap and
+source guards; no new financial algorithm/schema or product decision. QA-06 ANRs and broader device/
+iOS/interrupted-action/release acceptance remain open. See [evidence](quality/cold-protected-reminder-startup.md).

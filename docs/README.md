@@ -33,3 +33,9 @@
 * [Roadmap](roadmap.md)
 
 App-specific documentation lives with each app, e.g. [`src/Apps/Zanance`](../src/Apps/Zanance/README.md).
+
+## D-333 Android notification-only storage
+
+[Cold protected snoozes](../src/Apps/Zanance/docs/quality/cold-protected-reminder-startup.md) records the
+source regression, original native receiver action, separate persisted metadata, package and remaining
+startup/device boundaries. The independent maintained caller is under eng/benchmarks/Zanance.AndroidReminders.

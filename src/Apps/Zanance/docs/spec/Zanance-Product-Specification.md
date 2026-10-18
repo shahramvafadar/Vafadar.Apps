@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-10-18, D-332)
+## 31. Implementation Status (v1.1, scoped updates through 2026-10-18, D-333)
 
 This section records what the repository actually contains. "Verified" is qualified by each scenario's evidence:
 automated tests, running Windows layouts, targeted Android emulator checks or specifically recorded physical
@@ -6525,3 +6525,15 @@ review, stale generic mapping/refreshed income and last invalid boundary pass wi
 One new behavior,18 native Windows contexts/36 arrivals, strict builds and the full offline candidate
 pass; this is selective evidence, not a new full-suite count. Two background-receiver startup ANRs and
 Samsung/iOS/release acceptance remain open. [Evidence](../quality/android-import-preview-arrival.md).
+
+## D-333 notification-only protected startup
+
+Four new application-source cases cover cold startup refusal/missing host/nonpublication and disposal;
+the original defect erased four valid notifications before a financial endpoint existed.100 related
+cases pass, then only the four final changed-state cases after the disposal correction:101 distinct
+covered cases across those runs, no final whole-suite execution/count. Actual x64/API36 native In1hour
+creates a new process with zero windows, prepares the original encrypted store and saves/schedules one
+snooze while preserving fixture account/plan fields and zero ledger. Another cold metadata read retains
+the same snooze without preparing financial storage. Strict Windows/Android builds, complete signed
+offline main upgrade and original emulator Home0 pass. QA-06 startup ANRs, phone/iOS/OAuth/provider/
+interrupted-action/Store/release gates remain open. See [qualification](../quality/cold-protected-reminder-startup.md).

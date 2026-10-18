@@ -2389,3 +2389,12 @@ RTL mapping, complete row membership and the footer exclusion on every page. Phy
 an original native URI grant and actual received bytes; chooser-only evidence does not prove content.
 For Samsung expanded chooser observations, use the current compressed active hierarchy and refuse stale
 underlying-window targets. Independent local receivers remain offline, secret-free and removable.
+
+## D-333 protected notification-only reads
+
+A cold snooze must prepare an unpublished required-protection endpoint through the original storage
+host on a worker after binding, without creating a window or adding storage work to Application.onCreate.
+Startup refusal/missing publication is not evidence that queued reminders lost their financial authority:
+preserve them and the unsaved snooze. Recheck disposal before the first read. Keep the original source,
+profile, commercial/privacy and queue-retirement guards after preparation. Native action/persisted
+metadata qualification is separate from arbitrary interrupted-action durability and startup ANR acceptance.

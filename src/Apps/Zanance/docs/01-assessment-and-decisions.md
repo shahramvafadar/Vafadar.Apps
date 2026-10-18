@@ -6506,3 +6506,17 @@ Eleven saved-observation assertions retain this x64/API36 English/412x800 bounda
 unrelated suite is replayed. Two real startup ANRs originate in ScheduledAlarmReceiver launches; Wait
 preserves each process, without establishing a cause or fix. Samsung remains absent. Exact evidence:
 [native CSV arrival](quality/android-import-preview-arrival.md).
+
+## D-333 — Preserve protected notification snoozes after process loss
+
+A real application-source/SQLite regression reproduced four valid pending notifications becoming zero
+when a cold snooze read an unpublished protected endpoint. Use the original storage startup on a worker
+before the read; missing/refused/unpublished startup and disposal preserve the queue and pending draft.
+Keep original financial/source/privacy guards and no storage work in Application.onCreate. One hundred
+related cases pass, followed by only the four final changed-state cases after the disposal correction.
+Actual original Android action starts a new process with zero windows, prepares real protected storage,
+saves/schedules exactly one snooze and preserves fixture amounts/identities/zero ledger. A separate cold
+metadata read retains that snooze. Strict builds, full signed offline main upgrade and original Home0 pass.
+Startup ANRs remain unresolved; temporary profiling does not justify changing licence/telemetry order or
+repeating AOT capture. Samsung is absent; broader device/iOS/lifetime/release gates remain open.
+See [native action and retained failures](quality/cold-protected-reminder-startup.md).

@@ -3768,3 +3768,15 @@ One new application-source behavior and18 native Windows contexts pass; actual A
 traversal/refusal boundaries and eleven saved-observation assertions pass on the412x800 x64 emulator.
 There is no financial import/Save. Startup ANR and Samsung/iOS/platform acceptance remain separate;
 [exact evidence](quality/android-import-preview-arrival.md).
+
+## AT-333 protected cold notification snooze
+
+Original application-source regression: four valid pending notifications incorrectly clear before
+protected startup. Final refused/missing/nonpublishing startup and disposal cases preserve the queue,
+original SQLite rows and unsaved snooze state.100 related cases pass before the final disposal guard;
+the four final changed cases pass afterward, not a new whole-suite run. Actual native In1hour starts
+PID26475 directly from the original action receiver, with zero windows, protected publication, one
+saved/native pending snooze and preserved fixture account/plan/zero ledger. PID26586 then reads the
+persisted native/snooze metadata without preparing the financial store. Strict builds, complete signed
+offline upgrade and original emulator Home0 pass. Phone/iOS, scheduled delivery and interruption during
+the action remain separate. Startup ANRs are not fixed. See [evidence](quality/cold-protected-reminder-startup.md).

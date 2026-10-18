@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text.Json;
 using Vafadar.Core.Settings;
+using Vafadar.Data;
 using Vafadar.Localization.Formatting;
 using Vafadar.Localization;
 using Vafadar.Zanance.Core.Budgets;
@@ -11,6 +12,7 @@ using Vafadar.Zanance.Core.Reminders;
 using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.Commerce;
+using Vafadar.Zanance.App.Startup;
 
 namespace Vafadar.Zanance.App.Reminders;
 
@@ -31,7 +33,9 @@ public sealed class ReminderService(
     ILocalizationService localization,
     TimeProvider time,
     ResourceChoiceStore? choices = null,
-    BudgetChoiceStore? budgetChoices = null) : IDisposable, IAsyncDisposable
+    BudgetChoiceStore? budgetChoices = null,
+    IAppDatabaseStartup? databaseStartup = null,
+    LocalDatabaseLocation<ZananceDbContext>? databaseLocation = null) : IDisposable, IAsyncDisposable
 {
     private const string BudgetAlertKey = "budget.alert.";
     private const string SnoozeKey = "reminders.snoozed";
@@ -130,6 +134,8 @@ public sealed class ReminderService(
         try
         {
             if (Volatile.Read(ref _disposed) != 0 || !await scheduler.AreEnabledAsync()) return;
+            await PrepareColdStorageAsync().ConfigureAwait(false);
+            if (Volatile.Read(ref _disposed) != 0) return;
             await RefreshUnderGateAsync(request);
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
@@ -138,6 +144,24 @@ public sealed class ReminderService(
             System.Diagnostics.Debug.WriteLine($"Snooze failed: {ex}");
         }
         finally { _gate.Release(); }
+    }
+
+    /// <summary>Prepares a notification-only protected process before a missing endpoint can retire valid reminders.</summary>
+    private async Task PrepareColdStorageAsync()
+    {
+        if (databaseLocation is not { RequiresProtection: true, IsProtected: false }) return;
+        if (databaseStartup is null)
+            throw new InvalidOperationException("Protected reminders require their original startup host.");
+
+        // D-333: a snooze can arrive without any window. Keep native key/migration work out of Application.onCreate
+        // and the receiver's UI thread, using the same serialized host as covered foreground startup.
+        // Startup failure must preserve the original queue: it is not evidence of retired financial authority.
+        await Task.Run(async () =>
+        {
+            if (!databaseLocation.IsProtected) await databaseStartup.PrepareAsync().ConfigureAwait(false);
+            if (!databaseLocation.IsProtected)
+                throw new InvalidOperationException("Protected reminder startup did not publish an endpoint.");
+        }).ConfigureAwait(false);
     }
 
     /// <summary>Schedules a refresh after a short delay; later calls within the delay replace earlier ones.</summary>

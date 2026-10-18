@@ -1434,3 +1434,10 @@ The original Android preview and corrected Next/Previous are qualified on the x6
 English at412x800, with no Import/financial Save and final Home0. The new offline signed candidate and
 18 Windows arrival contexts pass. Samsung is absent; two actual ScheduledAlarmReceiver startup ANRs
 remain unresolved and are not release acceptance. [Evidence](quality/android-import-preview-arrival.md).
+
+## D-333 cold reminder boundary
+
+Focused refusal/disposal and original process-cold Android action/persisted metadata are qualified locally.
+Main offline APK is artifacts/android-cold-reminder-main-d333/pro.vafadar.zanance-Signed.apk, with
+unchanged native crypto/runtime hashes and original emulator Home0 after upgrade. This does not close
+startup ANR, interrupted-action/power-loss, phone, iOS, OAuth/provider/Store or release gates. See [evidence](quality/cold-protected-reminder-startup.md).

@@ -1552,3 +1552,10 @@ Next/Previous source-page navigation must bring the selected page's review headi
 the actual viewport (D-332). Do not retain the previous bottom offset or move the viewport for ordinary
 status/duplicate updates. A retired page must ignore a queued arrival callback. Qualify native arrival
 before an inspection scroll can hide a misplaced position; [evidence](quality/android-import-preview-arrival.md).
+
+## D-333 notification action continuity
+
+A snooze can start the process while the application stays closed. Preparing device storage must not
+open a page, remove an app-lock cover or change a plan's due date. An unavailable protected store must
+not erase other valid queued reminders. A snooze disposed during preparation stops before reading or scheduling. Existing
+notification-detail consent and lock-protected navigation remain. See [evidence](quality/cold-protected-reminder-startup.md).
