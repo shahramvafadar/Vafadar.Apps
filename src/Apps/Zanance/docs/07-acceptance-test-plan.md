@@ -3978,3 +3978,15 @@ unchanged complete inputs, duplicate identities and relevant/unrelated overflow 
 The independent original native page and exact delivery receipts are recorded in
 [the reimbursement qualification](quality/reimbursement-batch.md). Large-list rendering, whole-Home
 latency, runtime/ANR, physical phone, OS readers, iOS and release are separate open acceptance gates.
+
+## AT-352 - Original reimbursement page
+
+Use the actual application VM/page, real independent SQLite and original context factory. Qualify a
+4,096-result list's original values/order, bounded realized rows and first/last targets, complete
+native captions/amount scroll ends, effective loading cover, coalesced reads, worker context attempts,
+failed-read preservation, native retry and covered/retired command refusal. Check empty presentation
+and actual non-overlapping intro/text, not just full allocated rectangles. Windows contexts span
+en/fa/de, Light/Dark and360/412/1280 at process-local200%; Android contexts span en/fa/de xLight/Dark
+in independent Release/AOT. These are runtime assertions, not a new full-unit-suite count. Synthetic
+empty presentation does not qualify empty-store recovery. Retain earlier false/partial geometry,
+actual root failures and successful immutable cases. [Results and limits](quality/reimbursement-page.md).

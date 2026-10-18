@@ -1590,3 +1590,12 @@ semantics. All39 affected selected tests pass (15 new), strict Windows build pas
 Release/AOT Android reimbursement page and three bounded comparison sizes pass on independent fictitious
 inputs. No full-suite total, large-list rendering, whole-Home/two-second, cold/ANR, phone, TalkBack, iOS or
 release acceptance is inferred. [Exact handoff and limits](quality/reimbursement-batch.md).
+
+## D-352 scoped reimbursement-page candidate
+
+The original page uses worker snapshot reads, one complete publication, bounded result rows and a
+separate non-overlapping empty flow. Keep complete amount packets and original navigation independent.
+Use actual original-source/native checks and visually reviewed own-window images; geometry without
+actual vertical visibility or overlap refusal is insufficient. Managed/full-suite counts do not grow
+from these native assertions. Root Home/ANR, two-second timing, physical/OS-reader, iOS, provider and
+release acceptance remain open. [Current exact evidence and APK](quality/reimbursement-page.md).

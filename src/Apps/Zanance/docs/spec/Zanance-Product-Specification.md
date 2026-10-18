@@ -6731,3 +6731,14 @@ This is not an updated full-suite total. Production source now includes this Cor
 cryptography, access policy or UI-layout change. QA-06/two-second Home, large-list/native ANR, broader
 Android/reader, actual Mac/iOS and owner/external release gates remain open.
 [Evidence and current candidate qualification](../quality/reimbursement-batch.md).
+
+### Section31 update - D-352 reimbursement page
+
+Outstanding reimbursements now read/calculate off the presentation thread and expose one complete
+snapshot with loading/failure/retry. Results virtualize native rows; identity and full MoneyText have
+separate growing/scrollable surfaces and original targets. Empty content has a sequential separate
+viewport after actual Windows image review rejects Header/EmptyView overlap. Financial algorithms,
+complete history, provider/key policy, model and unit counts are unchanged fromD-351. Native evidence
+is scoped to the original sources and owned fictitious inputs. QA-06/ANR/two-second, broader Android/
+OS-reader, actual Mac/iOS and external release gates remain open.
+[Exact evidence and candidate](../quality/reimbursement-page.md).

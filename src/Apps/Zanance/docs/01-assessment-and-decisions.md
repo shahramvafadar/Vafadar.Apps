@@ -6740,3 +6740,16 @@ Fifteen new regression cases and the affected existing reimbursement/report/KPI 
 key/recovery, schema, dependency or runtime change is included. Large-list rendering and QA-06/ANR remain
 open separately from this algorithmic correction.
 [Native follow-through and exact qualification limits](quality/reimbursement-batch.md).
+
+## D-352 - Complete reimbursement-page loading and virtualized presentation
+
+D-351 removes the shared quadratic aggregation, while the page still creates every native row and
+publishes individual additions. Read complete facts on a worker, prepare every row and currency total,
+then publish one complete snapshot through the existing loading/failure/retry coordinator. Use a bounded
+CollectionView with growing identity and independent complete monetary viewports; refuse old/covered
+navigation parameters. Actual Windows images reject Header/EmptyView overlap, so empty content uses a
+mutually exclusive sibling ScrollView with sequential introduction/card layout. Require actual visible
+native edges and no overlap rather than treating allocated bounds as visual acceptance. Keep financial
+rules, history, provider/keys, schema, dependencies and unit-suite counts unchanged. Preserve actual
+Home/native failures and scoped failed checks; do not reinterpret them as runtime fixes.
+[Final evidence, retained failures and limits](quality/reimbursement-page.md).

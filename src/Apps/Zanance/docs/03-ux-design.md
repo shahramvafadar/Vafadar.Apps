@@ -1653,3 +1653,15 @@ Require actual Activity focus and reject retained receipts lacking that proof. P
 groups and actual failures separately; the ineffective precise-Tarjan trial is removed. Main/APK
 remain D-344 and broader accessibility/runtime/platform gates stay open.
 [Evidence and limits](quality/android-os-accessibility-qualification.md).
+
+## D-352 reimbursement results and empty flow
+
+Large reimbursement lists have one bounded CollectionView with a scrolling introduction/total header.
+Identity/date grow above the independent AmountReadout; the real original button covers identity only.
+Use existing scalable row typography and refund semantics. Prepare the entire snapshot and currency
+totals before one Reset, keeping loading/failure covered and offering the real translated retry.
+Reject stale native parameters after reload. Windows Header/EmptyView can overlap: keep the empty
+introduction/card in one separate sibling ScrollView, mutually exclusive with results under the same
+ready gate. Qualify actual visible vertical edges, complete horizontal endpoints and intro/empty
+separation; allocated bounds alone do not prove readability. No system setting changes are needed.
+[Evidence and limits](quality/reimbursement-page.md).

@@ -2443,3 +2443,12 @@ actual native consumers independently of large-list layout and whole-Home timing
 regressions/report/KPI cases and required builds/native handoff. Continue ready work without waiting on
 settled decisions; QA-06 and owner/platform gates remain open.
 [Evidence](../../quality/reimbursement-batch.md).
+
+## D-352 complete reimbursement-page batch
+
+After D-351, finish the entire page path: worker reads, complete publication, loading/failure/retry,
+bounded rows and reachable complete monetary packets. Correct the actually observed Windows empty
+header overlap. Perform one combined final native matrix after that source change; preserve earlier
+successes/failures and do not replay unrelated financial/crypto/OCR/full suites. Actual Home/native
+root failures remain the next independent ready defect, without waiting for settled owner decisions.
+[Evidence and limits](../../quality/reimbursement-page.md).

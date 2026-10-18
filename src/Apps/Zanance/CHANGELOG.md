@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Outstanding reimbursements (D-352)
+
+- Load the complete outstanding-expense result before showing it, with clear loading feedback and a retry after failure.
+- Keep large lists bounded to visible rows. Long amounts scroll separately from the button that opens the expense.
+- Keep the empty message below its introduction without overlapping text, including large text and right-to-left layouts.
+
 ### Reimbursement calculation (D-351)
 
 - Calculate outstanding reimbursable expenses without scanning the entire transaction history again for each expense. Preserve partial refunds, original ordering and amount checks.

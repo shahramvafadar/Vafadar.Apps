@@ -94,6 +94,24 @@ internal static partial class AndroidHomeReview
                 RequireRoot(root);
                 await WriteReportAsync(root, phase, await ReviewSchemaConnectionAsync(root, comparison!, ct), ct);
             }
+            else if (phase is "reimbursement-visibility" or "reimbursement-page-fixed")
+            {
+                if (baseline is null || !System.Text.RegularExpressions.Regex.IsMatch(baseline, "^[0-9a-f]{32}$")
+                    || !File.Exists(Path.Combine(root, "reimbursement-page-" + baseline + "-result.json"))
+                    || RedirectedAncestors(root).Length != 0)
+                    throw new ReviewCheckException("Original completed large reimbursement fixture required.");
+                using var previous = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(root, "reimbursement-page-" + baseline + "-result.json"), ct));
+                if (!previous.RootElement.GetProperty("CompleteStoredInputsUnchanged").GetBoolean()
+                    || previous.RootElement.GetProperty("Observations").GetArrayLength() != 6)
+                    throw new ReviewCheckException("Original reimbursement component acceptance incomplete.");
+                await WriteReportAsync(root, phase, await ReviewReimbursementPageAsync(app, services, root, comparison!, ct, visibilityOnly: phase == "reimbursement-visibility", retainedFixture: true), ct);
+            }
+            else if (phase == "reimbursement-page")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0) throw new ReviewCheckException("Redirected reimbursement page root refused.");
+                await WriteReportAsync(root, phase, await ReviewReimbursementPageAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "reimbursements")
             {
                 Directory.CreateDirectory(root);

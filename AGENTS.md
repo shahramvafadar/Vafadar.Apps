@@ -2551,3 +2551,15 @@ amount contract, stable oldest-first ordering, duplicate original expense object
 metadata. Do not sum unrelated groups and introduce new overflow refusals. Enumeration-bound regressions
 prove the cost improvement without flaky clock thresholds; native arithmetic/page receipts do not
 qualify whole-Home timing, large-list rendering, cold/ANR, phone, OS readers or release.
+
+## D-352 complete reimbursement-page publication
+
+Read/aggregate the complete reimbursement snapshot on a worker and prepare all presentation/currency
+totals before one SnapshotCollection Reset through SnapshotLoadState. Keep loading/failure covered;
+refuse covered and retired row parameters. Results use one bounded CollectionView; keep monetary
+viewports separate from navigation. Windows CollectionView Header/EmptyView can overlap: render empty
+content in a mutually exclusive sibling ScrollView under the same readiness gate, with sequential
+intro/card layout. Native acceptance requires effective ancestor visibility, both vertical target
+edges and no intro/empty-caption overlap, plus original horizontal scroll ends. Independent retained
+case receipts bind actual source MVID and fictitious input hash; never replay completed matching cases
+or accept controls under a system dialog. Component qualification is not whole-Home/ANR/release acceptance.

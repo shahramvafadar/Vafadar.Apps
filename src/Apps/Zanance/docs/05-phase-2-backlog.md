@@ -2426,3 +2426,12 @@ Replace repeated full-history scans with one relevant-refund index while preserv
 overflow semantics. Fifteen new regressions and affected existing report/KPI cases pass in39 selected
 cases. No full-suite count or whole-Home speed acceptance is inferred. Current evidence and limits:
 [reimbursement batch](quality/reimbursement-batch.md). Canonical QA-06 and native/platform gates stay open.
+
+## D-352 complete reimbursement-page integration
+
+Worker snapshot reads, atomic publication, bounded result rows and original loading/failure/retry
+replace per-row native construction. Original amounts/ordering and complete monetary packets stay
+under their existing financial authority. A separately scrolling empty flow fixes the actual
+Windows header/empty overlap. Native assertions and images qualify the original sources; managed
+counts are unchanged and unrelated successful suites are not repeated. Canonical QA-06/A11Y/device/
+iOS/release gates remain open. [Evidence](quality/reimbursement-page.md).

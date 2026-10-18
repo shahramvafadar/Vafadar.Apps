@@ -1385,3 +1385,16 @@ identities. Read only the launched PID's report through Read-ReviewReport.ps1; o
 failure. This phase checks Core tuples and original page publication on fictitious inputs, not whole-Home,
 large native lists, device encryption or production data. Do not replay successful unrelated suites.
 [Evidence and limits](../../src/Apps/Zanance/docs/quality/reimbursement-batch.md).
+
+## D-352 original reimbursement-page qualification
+
+Run-StoreDrafts.ps1 -ReimbursementsReview uses a fresh private installation/desktop and qualifies
+18 original en/fa/de xLight/Dark x360/412/1280 contexts. -ReimbursementsLanguages de selects only the
+missing German contexts; -ReimbursementsVisibilityOnly and -ReimbursementsEmptyOnly select narrower
+rendering checks instead of replaying completed failures/retry. The final combined mode checks both
+visible boundaries, loading/failure/retry and the separate empty viewport's actual non-overlap.
+Review its actual images; passing bounds alone did not detect the initial Header/EmptyView overlap.
+AndroidHome's reimbursement-page-fixed phase reuses its completed fictitious baseline without
+migration/reseed and retains immutable source/input-bound cases. Read only the original live PID;
+observation expiry is not failure or permission to restart. Restore the ordinary Windows identity
+with its strict build after private review. [Evidence](../../src/Apps/Zanance/docs/quality/reimbursement-page.md).

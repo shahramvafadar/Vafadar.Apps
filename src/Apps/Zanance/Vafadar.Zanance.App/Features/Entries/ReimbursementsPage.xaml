@@ -10,40 +10,60 @@
     x:DataType="local:ReimbursementsViewModel"
     Title="{v:Translate Reimbursements_Title}">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="8">
-            <Label Text="{v:Translate Reimbursements_Intro}" Style="{StaticResource Secondary}" />
-            <Border Style="{StaticResource Card}" IsVisible="{Binding IsEmpty}">
-                <VerticalStackLayout Spacing="8">
-                    <fi:SymbolIcon Symbol="ArrowUndo" FontSize="36" ForegroundColor="{DynamicResource Muted}" HorizontalOptions="Center" />
-                    <Label Text="{v:Translate Reimbursements_Empty}" HorizontalTextAlignment="Center" />
+    <Grid>
+        <!-- D-352: one bounded native viewport; never put this collection inside a ScrollView. -->
+        <Grid IsVisible="{Binding Loading.IsReady}">
+        <CollectionView x:Name="ReimbursementList" ItemsSource="{Binding Items}" SelectionMode="None" IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}" Margin="16">
+            <CollectionView.Header>
+                <VerticalStackLayout Spacing="8" Padding="0,0,0,8">
+                    <Label Text="{v:Translate Reimbursements_Intro}" Style="{StaticResource Secondary}" />
+                    <Border Style="{StaticResource Card}" IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="{v:Translate Reimbursements_Total}" Style="{StaticResource Secondary}" />
+                            <p:AmountReadout AmountText="{Binding TotalText}" TextColor="{DynamicResource RefundText}" />
+                        </VerticalStackLayout>
+                    </Border>
                 </VerticalStackLayout>
-            </Border>
-            <Border Style="{StaticResource Card}" IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}">
-                <VerticalStackLayout Spacing="2">
-                    <Label Text="{v:Translate Reimbursements_Total}" Style="{StaticResource Secondary}" />
-                    <p:AmountReadout AmountText="{Binding TotalText}" TextColor="{DynamicResource RefundText}" />
-                </VerticalStackLayout>
-            </Border>
-            <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding IsEmpty, Converter={StaticResource InvertedBoolConverter}}">
-                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Items}">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="p:EntryRow">
-                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
-                                <VerticalStackLayout VerticalOptions="Center">
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="p:EntryRow">
+                    <Border Style="{StaticResource Card}" Padding="0" Margin="0,0,0,8">
+                        <Grid Style="{StaticResource ListRow}" RowDefinitions="Auto,Auto" RowSpacing="6">
+                            <Grid>
+                                <VerticalStackLayout>
                                     <Label Text="{Binding Title}" FontSize="16" />
                                     <Label Text="{Binding Subtitle}" Style="{StaticResource Secondary}" />
                                 </VerticalStackLayout>
-                                <Label Grid.Column="1" Text="{Binding AmountText}" FontAttributes="Bold" TextColor="{DynamicResource RefundText}" VerticalOptions="Center" />
-                                <!-- The whole row is one real button: keyboard, screen readers and touch -->
-                                <Button Grid.ColumnSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                <Button Style="{StaticResource OverlayButton}" CornerRadius="0"
                                         Command="{Binding OpenCommand, Source={RelativeSource AncestorType={x:Type local:ReimbursementsViewModel}}, x:DataType=local:ReimbursementsViewModel}"
                                         CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Title}" SemanticProperties.Hint="{Binding AmountText}" />
                             </Grid>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </VerticalStackLayout>
-            </Border>
+                            <p:AmountReadout Grid.Row="1" AmountText="{Binding AmountText}" TextColor="{DynamicResource RefundText}" CaptionStyle="{StaticResource RowMoneyFigure}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <!-- D-352: EmptyView can overlay a CollectionView header on Windows. Keep the empty flow in its own viewport. -->
+        <ScrollView x:Name="EmptyReimbursementViewport" IsVisible="{Binding IsEmpty}">
+            <VerticalStackLayout Padding="16" Spacing="8">
+                <Label Text="{v:Translate Reimbursements_Intro}" Style="{StaticResource Secondary}" />
+                <Border Style="{StaticResource Card}">
+                    <VerticalStackLayout Spacing="8">
+                        <fi:SymbolIcon Symbol="ArrowUndo" FontSize="36" ForegroundColor="{DynamicResource Muted}" HorizontalOptions="Center" />
+                        <Label Text="{v:Translate Reimbursements_Empty}" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+        </Grid>
+        <VerticalStackLayout Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
+            <Label Text="{v:Translate Tx_Loading}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
         </VerticalStackLayout>
-    </ScrollView>
+        <VerticalStackLayout Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+            <Label Text="{v:Translate Error_Unexpected}" HorizontalTextAlignment="Center" />
+            <Button x:Name="RetryLoadButton" Text="{v:Translate Tx_RetryLoad}" Style="{StaticResource SecondaryButton}" Clicked="OnReloadClicked" />
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

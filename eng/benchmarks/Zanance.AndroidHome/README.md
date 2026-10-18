@@ -327,3 +327,16 @@ is descriptive, not a flaky pass threshold. Then load the original Reimbursement
 with an independent fictitious partial refund, require native window focus and title/amount, and
 compare complete stored inputs. No financial UI command is activated. This is not large-list rendering,
 protected-storage, whole-Home, phone, OS-reader, cold/ANR or release qualification.
+
+## D-352 complete reimbursement-page modes
+
+reimbursement-page seeds one independent4,096-expense/4,096-refund fixture and checks the original
+VM/page with a real worker-only context factory, coalesced load and native retry after explicit factory
+failure. Retain its result and inputs. reimbursement-visibility requires that completed baseline and
+reuses its file without migration/reseed for visible original values/amount endpoints and synthetic
+empty presentation. reimbursement-page-fixed combines the full current source contract on the retained
+fixture, including original amounts/total, effective ancestor visibility and separate empty-flow
+non-overlap. Give its original baseline through review_baseline. Matching completed case files bind
+the caller MVID and complete fictitious input hash; reuse them after a real failure instead of replay.
+Actual focus is required; a system dialog pauses acceptance on the same process. No phase touches Main
+finance, changes OS settings or qualifies whole-Home, cold/ANR, physical/iOS or product release.

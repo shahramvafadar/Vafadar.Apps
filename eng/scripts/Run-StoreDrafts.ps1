@@ -13,12 +13,17 @@ param(
     [switch]$PlanRowsReview,
     [switch]$PlanRowsEdgeProbe,
     [switch]$LedgerRowsReview,
+    [switch]$ReimbursementsReview,
+    [switch]$ReimbursementsVisibilityOnly,
+    [switch]$ReimbursementsEmptyOnly,
+    [ValidateSet('en,fa,de','de')][string]$ReimbursementsLanguages = 'en,fa,de',
     [ValidateSet('en,fa,de', 'fa,de', 'de')][string]$LedgerRowsLanguages = 'en,fa,de',
     [ValidatePattern('^$|^(en|fa|de)-(Light|Dark)-(360|412|1280)(,(en|fa|de)-(Light|Dark)-(360|412|1280))*$')][string]$LedgerRowsContexts = '',
     [ValidateSet('en,fa,de', 'fa,de')][string]$HomeLegendsLanguages = 'en,fa,de')
 $ErrorActionPreference = 'Stop'
-$reviewCount = @($ReportRowsReview.IsPresent, $BudgetTitlesReview.IsPresent, $HomeLegendsReview.IsPresent, $PlanRowsReview.IsPresent, $LedgerRowsReview.IsPresent | Where-Object { $_ }).Count
+$reviewCount = @($ReportRowsReview.IsPresent, $BudgetTitlesReview.IsPresent, $HomeLegendsReview.IsPresent, $PlanRowsReview.IsPresent, $LedgerRowsReview.IsPresent, $ReimbursementsReview.IsPresent | Where-Object { $_ }).Count
 if ($reviewCount -gt 1) { throw 'Choose one original review matrix.' }
+if (($ReimbursementsVisibilityOnly -or $ReimbursementsEmptyOnly) -and !$ReimbursementsReview) { throw 'Visible reimbursement checks require their original review mode.' }
 if ($PlanRowsEdgeProbe -and !$PlanRowsReview) { throw 'Plan amount edge probe requires its original review mode.' }
 if ($LedgerRowsContexts) {
     if (!$LedgerRowsReview) { throw 'Explicit ledger contexts require their original review mode.' }
@@ -55,7 +60,7 @@ if (!(Test-Path -LiteralPath $manifest)) { throw 'Independent compiled manifest 
 [xml]$metadata = Get-Content -LiteralPath $manifest -Raw
 if ($metadata.Package.Identity.Name -ne $identity) { throw 'Compiled draft identity does not match the requested run.' }
 $variables = @('VAFADAR_SNAPSHOTS','VAFADAR_SNAPSHOT_ONLY','VAFADAR_STORE_DRAFT_RUN',
-    'VAFADAR_WINDOW_SIZE','VAFADAR_SNAPSHOT_FONT_SCALE','VAFADAR_START_ROUTE','VAFADAR_STORE_DRAFT_REVIEW','VAFADAR_HOME_LEGEND_LANGUAGES','VAFADAR_PLAN_ROWS_EDGE_PROBE','VAFADAR_LEDGER_ROWS_LANGUAGES','VAFADAR_LEDGER_ROWS_CONTEXTS')
+    'VAFADAR_WINDOW_SIZE','VAFADAR_SNAPSHOT_FONT_SCALE','VAFADAR_START_ROUTE','VAFADAR_STORE_DRAFT_REVIEW','VAFADAR_HOME_LEGEND_LANGUAGES','VAFADAR_PLAN_ROWS_EDGE_PROBE','VAFADAR_LEDGER_ROWS_LANGUAGES','VAFADAR_LEDGER_ROWS_CONTEXTS','VAFADAR_REIMBURSEMENTS_LANGUAGES','VAFADAR_REIMBURSEMENTS_VISIBILITY_ONLY','VAFADAR_REIMBURSEMENTS_EMPTY_ONLY')
 $previous = @{}
 foreach ($name in $variables) { $previous[$name] = [Environment]::GetEnvironmentVariable($name, 'Process') }
 try {
@@ -63,12 +68,16 @@ try {
     $env:VAFADAR_SNAPSHOT_ONLY = 'store-draft'
     $env:VAFADAR_STORE_DRAFT_RUN = $run
     $env:VAFADAR_WINDOW_SIZE = '412x800'
-    $env:VAFADAR_SNAPSHOT_FONT_SCALE = if ($ReportRowsReview -or $BudgetTitlesReview -or $HomeLegendsReview -or $PlanRowsReview -or $LedgerRowsReview) { '2' } else { '' }
-    $env:VAFADAR_STORE_DRAFT_REVIEW = if ($ReportRowsReview) { 'report-rows' } elseif ($BudgetTitlesReview) { 'budget-titles' } elseif ($HomeLegendsReview) { 'home-legends' } elseif ($PlanRowsReview) { 'plan-rows' } elseif ($LedgerRowsReview) { 'ledger-rows' } else { '' }
+    $env:VAFADAR_SNAPSHOT_FONT_SCALE = if ($ReportRowsReview -or $BudgetTitlesReview -or $HomeLegendsReview -or $PlanRowsReview -or $LedgerRowsReview -or $ReimbursementsReview) { '2' } else { '' }
+    $env:VAFADAR_STORE_DRAFT_REVIEW = if ($ReportRowsReview) { 'report-rows' } elseif ($BudgetTitlesReview) { 'budget-titles' } elseif ($HomeLegendsReview) { 'home-legends' } elseif ($PlanRowsReview) { 'plan-rows' } elseif ($LedgerRowsReview) { 'ledger-rows' } elseif ($ReimbursementsReview) { 'reimbursements' } else { '' }
     $env:VAFADAR_HOME_LEGEND_LANGUAGES = if ($HomeLegendsReview) { $HomeLegendsLanguages } else { '' }
-    $env:VAFADAR_PLAN_ROWS_EDGE_PROBE = if ($PlanRowsEdgeProbe) { '1' } else { '' }
+    $env:VAFADAR_PLAN_ROWS_EDGE_PROBE = if (($ReimbursementsVisibilityOnly -or $ReimbursementsEmptyOnly) -and !$ReimbursementsReview) { throw 'Visible reimbursement checks require their original review mode.' }
+if ($PlanRowsEdgeProbe) { '1' } else { '' }
     $env:VAFADAR_LEDGER_ROWS_LANGUAGES = if ($LedgerRowsReview) { $LedgerRowsLanguages } else { '' }
     $env:VAFADAR_LEDGER_ROWS_CONTEXTS = if ($LedgerRowsReview) { $LedgerRowsContexts } else { '' }
+    $env:VAFADAR_REIMBURSEMENTS_LANGUAGES = if ($ReimbursementsReview) { $ReimbursementsLanguages } else { '' }
+    $env:VAFADAR_REIMBURSEMENTS_VISIBILITY_ONLY = if ($ReimbursementsVisibilityOnly) { '1' } else { '' }
+    $env:VAFADAR_REIMBURSEMENTS_EMPTY_ONLY = if ($ReimbursementsEmptyOnly) { '1' } else { '' }
     $env:VAFADAR_START_ROUTE = ''
     Add-Type -Path (Join-Path $PSScriptRoot '../modules/StoreDraftProcess.cs')
     $inputBefore = [Vafadar.Build.StoreDraftProcess]::ReadInputDesktopName()
@@ -84,7 +93,8 @@ try {
     $receiptPath = Join-Path $output 'complete.json'
     if (!(Test-Path -LiteralPath $receiptPath)) { throw 'No completed original draft receipt.' }
     $receipt = Get-Content -LiteralPath $receiptPath -Raw | ConvertFrom-Json
-    $expectedCount = if ($LedgerRowsReview -and $LedgerRowsContexts) { $LedgerRowsContexts.Split(',').Count } elseif ($LedgerRowsReview) { $LedgerRowsLanguages.Split(',').Count * 6 } elseif ($PlanRowsEdgeProbe) { 1 } elseif ($HomeLegendsReview) { $HomeLegendsLanguages.Split(',').Count * 6 } elseif ($ReportRowsReview -or $BudgetTitlesReview -or $PlanRowsReview) { 18 } else { 48 }
+    $expectedCount = if ($ReimbursementsReview) { $ReimbursementsLanguages.Split(',').Count * 6 } elseif ($LedgerRowsReview -and $LedgerRowsContexts) { $LedgerRowsContexts.Split(',').Count } elseif ($LedgerRowsReview) { $LedgerRowsLanguages.Split(',').Count * 6 } elseif (($ReimbursementsVisibilityOnly -or $ReimbursementsEmptyOnly) -and !$ReimbursementsReview) { throw 'Visible reimbursement checks require their original review mode.' }
+if ($PlanRowsEdgeProbe) { 1 } elseif ($HomeLegendsReview) { $HomeLegendsLanguages.Split(',').Count * 6 } elseif ($ReportRowsReview -or $BudgetTitlesReview -or $PlanRowsReview -or $ReimbursementsReview) { 18 } else { 48 }
     if ($receipt.Package -ne $identity -or $receipt.ProcessId -ne $process.Id -or
         !$receipt.FinancialRowsUnchangedAfterSeeding -or $receipt.Captures.Count -ne $expectedCount) {
         throw 'Draft completion does not match the original run.'
