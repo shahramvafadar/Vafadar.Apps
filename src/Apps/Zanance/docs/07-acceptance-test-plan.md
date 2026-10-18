@@ -3917,3 +3917,13 @@ viewports, original target/color/name/selection and unchanged stored inputs. Sta
 on the originalPID are retained. Exact captured OS settings restore; no phone input. TalkBack
 service binding and five low-confidence offline fragments do not pass spoken navigation. No test
 count increase or unrelated suite/build rerun. [Evidence](quality/android-os-accessibility-qualification.md).
+
+## D-346 retained OS font cohorts and actual failure receipts
+
+At real emulator OS2.0/412dp, six en/fa/de xLight/Dark cases pass48 table readouts,12 report-legend
+readouts and12 Flex captions, with unchanged original stored inputs. Preserve native SIGSEGV and
+ANR failures separately; no whole-runtime/whole-platform acceptance. Exact official BuildId/debuglink
+CRC matching supports fault-location evidence, not a proven corrupt-object cause. Reject the
+ineffective serial-major GC trial and silent TalkBack navigation attempt. No managed count or
+unrelated suite/build is repeated.
+[Evidence and limits](quality/android-os-accessibility-qualification.md).

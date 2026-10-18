@@ -6673,3 +6673,12 @@ six language/theme cases at actual OS font_scale2.0/412dp. Captured font/accessi
 exactly. Startup ANR remains; TalkBack speech/navigation is not accepted from service binding or
 low-confidence audio recognition. App/APK and managed count remain D-344. A11Y-01/03, phone/iOS and
 release gates stay open. [Evidence](../quality/android-os-accessibility-qualification.md).
+
+### 31. D-346 real OS cohorts and unaccepted runtime mitigation
+
+Actual OS200%/412dp adds60 complete report/forecast/legend monetary viewports and12 Flex captions
+on retained fictitious inputs. Preserve actual native Mono bridge SIGSEGV/ANR evidence; a supported
+serial-major trial is ineffective and does not change production. Native TTS control speech does
+not pass TalkBack app navigation. App/APK and managed counts remain D-344; A11Y-01/03, QA-06/07,
+phone/iOS and release gates remain open.
+[Evidence](../quality/android-os-accessibility-qualification.md).

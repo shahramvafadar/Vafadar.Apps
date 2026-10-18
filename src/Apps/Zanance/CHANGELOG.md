@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Accessibility verification (D-346)
+
+- Extend actual Android text-scale checks on fictitious financial screens. Preserve unresolved native/runtime and spoken-reader failures; no application behavior or APK changes in this verification step.
+
 ### Complete transaction and account amounts (D-344)
 
 - Keep long transaction amounts, account balances and daily/group currency totals together. Values scroll separately from navigation and selection, while existing financial colors and selection feedback stay unchanged.

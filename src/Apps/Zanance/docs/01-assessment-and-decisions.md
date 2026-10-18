@@ -6668,3 +6668,15 @@ APK change and no unrelated successful verification replay. Notification permiss
 uncaptured permission flags are not claimed restored. A11Y-01/03 remain In progress.
 
 [Evidence and limits](quality/android-os-accessibility-qualification.md).
+
+## D-346 - Preserve actual OS cohorts and reject an unproven runtime workaround
+
+Qualify remaining monetary/caption surfaces at real emulator OS200%/412dp on the retained fictitious
+fixture. Preserve completed immutable cohorts and actual native/ANR failures instead of restarting
+a live process after observation expiry. Exact matching public runtime symbols locate a Mono bridge
+SIGSEGV; a supported serial-major GC trial still stalls with an actual ANR and is not adopted.
+The native TTS control can speak, but the renewed TalkBack client path still produces silent output.
+Production source, native libraries, complete APK and managed test count remain D-344. A11Y-01/03
+and QA-06/07 remain open; no unrelated successful suite or build is repeated.
+
+[Evidence and limits](quality/android-os-accessibility-qualification.md).

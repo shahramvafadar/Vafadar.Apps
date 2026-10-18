@@ -1121,3 +1121,11 @@ The independent Windows Canvas root-change failure is recorded separately, not f
 Actual OS200%/412dp passes36 original monetary checks on retained fictitious data. Captured settings
 are restored; TalkBack speech/navigation remains unaccepted. App/APK remain D-344, without replaying
 unchanged successful builds or suites. [Evidence](quality/android-os-accessibility-qualification.md).
+
+## D-346 actual OS qualification boundary
+
+Original scalable financial surfaces gain real emulator OS200%/412dp evidence with unchanged
+stored inputs. Retain completed cohorts and actual native/ANR failures separately. No serial-GC
+workaround is promoted after an ineffective trial; speech controls do not establish TalkBack app
+acceptance. App/APK remain D-344; broader A11Y-01/03, QA-06/07 and release gates stay open.
+[Evidence and limits](quality/android-os-accessibility-qualification.md).

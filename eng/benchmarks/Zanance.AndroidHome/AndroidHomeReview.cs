@@ -65,6 +65,15 @@ internal static partial class AndroidHomeReview
                 RequireRoot(root);
                 await WriteReportAsync(root, phase, await ReviewPhoneLedgerAsync(app, services, root, comparison!, ct, includeWrites: phase == "ledger"), ct);
             }
+            else if (phase == "font-scale")
+            {
+                // Reuse the retained financial presentation fixture, not a performance workload/reseed.
+                if (!File.Exists(Path.Combine(root, "financial-tables.db")) || RedirectedAncestors(root).Length != 0)
+                    throw new ReviewCheckException("Retained independent financial presentation fixture required.");
+                if (File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))
+                    throw new ReviewCheckException("Completed OS font-scale qualification must not be repeated.");
+                await WriteReportAsync(root, phase, await ReviewOsFontScaleAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase is "tables" or "legends" or "budget-titles" or "home-legends" or "plan-rows" or "ledger-rows")
             {
                 if (File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))

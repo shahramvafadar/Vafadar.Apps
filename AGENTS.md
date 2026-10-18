@@ -2499,3 +2499,12 @@ real OS font scaling and TalkBack preparation/testing; it does not authorize cha
 Windows, accounts, authentication or other projects. Verify the emulator identity before mutation,
 retain restoration evidence, and never infer physical-device or spoken-reader acceptance from
 Debug-only font overrides.
+
+## D-346 bounded Android runtime/accessibility evidence
+
+Retain immutable completed OS-font cohorts with the actual Activity scale/width and Mono GC mode;
+never reuse another mode's passes. Native code sampling is explicit independent-caller-only opt-in,
+bounded to code addresses/frame pointers, without raw memory/register/stack fields. Resolve a
+native fault only with exact official ELF BuildId and GNU debuglink CRC matching. A related upstream
+issue or supported GC setting is not a production fix: the ineffective serial-major trial is rejected.
+Keep actual ANR/crash evidence even if the same process subsequently progresses after Wait.

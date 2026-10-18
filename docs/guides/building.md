@@ -1336,3 +1336,14 @@ Do not confuse its NoFinancialSaveOrSystemSettings result with the external auth
 The D-345 case passes36 viewports; TalkBack binding/audio remain unaccepted speech evidence.
 No Samsung, Windows settings, account, authentication, microphone or desktop playback is covered.
 See [evidence](../../src/Apps/Zanance/docs/quality/android-os-accessibility-qualification.md).
+
+## D-346 bounded independent runtime diagnostics
+
+AndroidHome font-scale receipts require actual OS2.0/412dp and bind exact Mono GC mode; do not
+reuse another mode's passes. EnableCodeSampling=true is explicit independent-caller-only opt-in.
+Bound simpleperf to exact PID/user code/fp/time/size; verify absence of raw memory/register/stack
+fields. Official debug data requires both matching ELF BuildId and GNU debuglink CRC. Never infer
+a production fix from stripped nearest symbols or another user's workaround. Serial-major GC is
+not adopted after the D-346 actual ANR. Preserve live PID after observation expiry and restore
+captured emulator accessibility settings.
+[Evidence](../../src/Apps/Zanance/docs/quality/android-os-accessibility-qualification.md).

@@ -2384,3 +2384,12 @@ checks pass; restore captured settings. Preserve the unresolved TalkBack speech/
 attempt. Do not replay successful unchanged suites, builds or component cases. Continue Android
 qualification; all-controls/360px/spoken readers, ANR, phone/iOS and release gates remain open.
 [Evidence](../../quality/android-os-accessibility-qualification.md).
+
+## D-346 bounded OS/native investigation
+
+Retain each completed six-case OS font cohort before proceeding, including original GC mode and
+unchanged input checks. Keep actual default-GC SIGSEGV and serial-GC ANR separate from passing
+components. Do not promote an ineffective runtime trial or repeat unchanged domain/backend/OCR
+suites. Observe the same original process after delayed startup progress; actual failure receipts
+remain even when a later stage completes. Restore captured emulator settings.
+[Evidence and open acceptance](../../quality/android-os-accessibility-qualification.md).

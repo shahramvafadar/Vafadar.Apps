@@ -2394,3 +2394,11 @@ A11Y-03 advances with six language/theme cases and36 original monetary surfaces 
 other controls/widths/devices remain. A11Y-01 stays open after bound TalkBack yields unaccepted
 audio/prompt behavior. Restore the three captured settings exactly; do not claim uncaptured flags
 or broader acceptance. [Evidence](quality/android-os-accessibility-qualification.md).
+
+## D-346 actual OS qualification boundary
+
+Original scalable financial surfaces gain real emulator OS200%/412dp evidence with unchanged
+stored inputs. Retain completed cohorts and actual native/ANR failures separately. No serial-GC
+workaround is promoted after an ineffective trial; speech controls do not establish TalkBack app
+acceptance. App/APK remain D-344; broader A11Y-01/03, QA-06/07 and release gates stay open.
+[Evidence and limits](quality/android-os-accessibility-qualification.md).

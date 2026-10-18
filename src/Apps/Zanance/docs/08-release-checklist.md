@@ -1539,3 +1539,11 @@ Real emulator OS200% qualifies six original ledger/account surfaces at412dp,36 c
 captured settings restored. TalkBack speech/navigation is unaccepted; notification permission stays
 denied and uncaptured flags are not claimed restored. Broader A11Y-03, phone, iOS, ANR and external
 release gates remain open. App/APK unchanged D-344. [Evidence](quality/android-os-accessibility-qualification.md).
+
+## D-346 native and spoken-reader gates remain open
+
+Real OS scaling adds focused report/forecast/legend/budget evidence, with original data unchanged.
+Observed Mono bridge SIGSEGV, serial-major-GC trial ANR and TalkBack silent client path remain
+unaccepted. No runtime policy or experimental SDK enters Main. App/APK remain D-344; no phone,
+iOS, spoken-reader, two-second startup, Windows Canvas stability or release claim.
+[Evidence](quality/android-os-accessibility-qualification.md).

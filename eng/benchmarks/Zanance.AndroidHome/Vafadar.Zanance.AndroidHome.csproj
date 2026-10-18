@@ -35,6 +35,8 @@
     <EmbeddedResource Include="$(OriginalAppRoot)Resources/Strings/*.resx" Link="Resources/Strings/%(Filename)%(Extension)" />
     <AndroidResource Include="$(OriginalAppRoot)Platforms/Android/Resources/**" Link="Resources/%(RecursiveDir)%(Filename)%(Extension)" />
     <AndroidManifestOverlay Include="$(OriginalAppRoot)Platforms/Android/ReleaseManifest.xml" />
+    <!-- Explicitly opt in only this fictitious caller for code-address sampling; never the shipping app. -->
+    <AndroidManifestOverlay Include="SamplingManifest.xml" Condition="'$(EnableCodeSampling)' == 'true'" />
     <MauiIcon Include="$(OriginalAppRoot)Resources/AppIcon/appicon.svg" ForegroundFile="$(OriginalAppRoot)Resources/AppIcon/appiconfg.svg" Color="#F4F6F8" />
     <MauiSplashScreen Include="$(OriginalAppRoot)Resources/Splash/splash.svg" Color="#F4F6F8" BaseSize="128,128" />
     <MauiImage Include="$(OriginalAppRoot)Resources/Images/*" />

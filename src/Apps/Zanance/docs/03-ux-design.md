@@ -1637,3 +1637,11 @@ native allocation/scroll/target/color/selection checks across en/fa/de and both 
 all-controls,360px or phone acceptance. TalkBack binding and low-confidence captured audio do not
 prove spoken navigation. Restore captured emulator settings after the authorized test; keep the
 failed reader attempt open. [Evidence](quality/android-os-accessibility-qualification.md).
+
+## D-346 actual OS qualification boundary
+
+Original scalable financial surfaces gain real emulator OS200%/412dp evidence with unchanged
+stored inputs. Retain completed cohorts and actual native/ANR failures separately. No serial-GC
+workaround is promoted after an ineffective trial; speech controls do not establish TalkBack app
+acceptance. App/APK remain D-344; broader A11Y-01/03, QA-06/07 and release gates stay open.
+[Evidence and limits](quality/android-os-accessibility-qualification.md).

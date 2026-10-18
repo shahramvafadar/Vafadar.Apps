@@ -258,3 +258,38 @@ original actions and actual native selection/deselection. Presentation-only extr
 packets never save entries/accounts. Observe the same original process after a transient PID read
 or timeout; the recorded startup ANR is not a pass. No prepare/performance replay or OS change belongs
 in this phase. The Windows-only rejected root lifecycle candidate does not change Android source behavior.
+
+## Remaining actual OS-scale matrix (D-346)
+
+Phase `font-scale` requires a retained financial-tables.db and actual Activity configuration
+font_scale2.0/width412dp. It never changes settings itself. Under the owner's emulator-only
+exception, capture prior OS settings and restore them after completion. No phone opt-in is
+implied. Use one fresh review_pass and the retained review_run, not prepare or a reset.
+
+One original startup attempts tables, report legends, budget titles, Home legends and plan rows.
+D-346 does not establish successful completion of all five in one process.
+Each complete six language/theme-case cohort writes an immutable `font-scale-<group>-<pass>-result.json`
+receipt before proceeding. On a failed observation, retain the original PID; after an actual
+terminal failure, the same comparison can continue only missing cohorts after validating its
+retained receipts, including the exact Mono GC mode. A complete aggregate is refused on replay. Ledger/account rows already have
+D-345 real-OS evidence and are excluded from this remaining matrix. Observe the final public
+result with Read-ReviewReport.ps1 -Phase font-scale and its exact original PID/comparison.
+
+Do not equate font configuration with linearly doubled pixels, complete platform acceptance,
+spoken TalkBack or absence of startup ANRs. No shipping app source or financial algorithm changes.
+
+## Bounded native code sampling (D-346)
+
+`-p:EnableCodeSampling=true` adds a shell-profileable overlay only to this independent fictitious
+caller. It defaults off and never enters the shipping application. Use exact-PID user-mode
+`simpleperf` frame-pointer/code-address sampling with bounded duration/output; never request raw
+memory, registers, user stack bytes, dumps or kernel symbols. Verify the perf attribute mask before
+retaining the result. A stripped nearest symbol is not exact fault attribution. Match the official
+symbol file by both ELF BuildId and GNU debuglink CRC before resolving functions/source lines.
+Hash-match and remove only the exact owned remote recording after collecting the public metadata.
+
+D-346 records a real default-GC Mono bridge SIGSEGV and a separate serial-major-GC trial ANR.
+The supported `AndroidEnableSGenConcurrent=false` trial is not a production fix and is not adopted.
+Do not replay passed cohorts or mistake continued CPU activity/observation expiry for success or
+process death. Standalone existing presentation phases can isolate only the missing cohorts on the
+same fixture; retain the aggregate failures and never claim all cohorts passed in one process.

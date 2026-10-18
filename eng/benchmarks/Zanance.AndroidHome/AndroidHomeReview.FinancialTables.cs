@@ -25,6 +25,50 @@ namespace Vafadar.Zanance.App;
 
 internal static partial class AndroidHomeReview
 {
+    /// <summary>Qualifies remaining original financial surfaces at actual OS scale in one retained startup.</summary>
+    private static async Task<object> ReviewOsFontScaleAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct)
+    {
+        var reports = new List<JsonElement>();
+        var gcMode = Environment.GetEnvironmentVariable("MONO_GC_PARAMS");
+        if (gcMode is not ("major=marksweep" or "major=marksweep-conc"))
+            throw new ReviewCheckException("An explicit supported Mono GC mode is required for comparable cohorts.");
+        Android.Util.Log.Info("ZananceHomeStage", comparison + "|" + gcMode);
+        // D-346: completed immutable cohorts survive observation expiry/failure without replaying passed work.
+        // Ledger/account rows already have D-345 OS evidence and are deliberately outside this remaining matrix.
+        foreach (var group in new[] { "tables", "legends", "budget-titles", "home-legends", "plan-rows" })
+        {
+            var config = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Resources?.Configuration
+                ?? throw new ReviewCheckException("Actual Android Activity configuration is unavailable.");
+            if (Math.Abs(config.FontScale - 2f) > .001f || config.ScreenWidthDp != 412)
+                throw new ReviewCheckException("This remaining matrix requires actual OS scale2.0 at412dp.");
+            var phase = "font-scale-" + group;
+            var receipt = Path.Combine(root, phase + "-" + comparison + "-result.json");
+            if (File.Exists(receipt))
+            {
+                using var retained = JsonDocument.Parse(await File.ReadAllTextAsync(receipt, ct));
+                var packet = retained.RootElement;
+                if (packet.GetProperty("Comparison").GetString() != comparison || packet.GetProperty("Group").GetString() != group
+                    || packet.GetProperty("OsFontScale").GetDouble() != 2 || packet.GetProperty("WidthDp").GetInt32() != 412
+                    || !packet.TryGetProperty("MonoGcMode", out var priorGcMode) || priorGcMode.GetString() != gcMode
+                    || !packet.GetProperty("Result").GetProperty("OriginalStoredInputsUnchanged").GetBoolean()
+                    || packet.GetProperty("Result").GetProperty("Observations").GetArrayLength() != 6)
+                    throw new ReviewCheckException("Retained OS cohort does not match the original comparison.");
+                reports.Add(packet.Clone());
+                continue;
+            }
+            Android.Util.Log.Info("ZananceHomeStage", comparison + "|" + phase);
+            var result = await ReviewFinancialTablesAsync(app, services, root, comparison, ct,
+                legendsOnly: group == "legends", budgetTitlesOnly: group == "budget-titles",
+                homeLegendsOnly: group == "home-legends", planRowsOnly: group == "plan-rows");
+            var report = new { Comparison = comparison, Group = group, OsFontScale = config.FontScale,
+                WidthDp = config.ScreenWidthDp, MonoGcMode = gcMode, Result = result };
+            await WriteReportAsync(root, phase, report, ct);
+            reports.Add(JsonSerializer.SerializeToElement(report));
+        }
+        return new { Comparison = comparison, ActualOsFontScale = 2, WidthDp = 412,
+            MonoGcMode = gcMode, PreviouslyQualifiedLedgerRowsExcluded = true, SystemSettingsWrittenByCaller = false, Groups = reports };
+    }
+
     /// <summary>Checks original table templates and complete canonical amount viewports without invoking financial commands.</summary>
     private static async Task<object> ReviewFinancialTablesAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct,
         bool legendsOnly = false, bool budgetTitlesOnly = false, bool homeLegendsOnly = false, bool planRowsOnly = false, bool ledgerRowsOnly = false)
@@ -170,10 +214,16 @@ internal static partial class AndroidHomeReview
                 }
                 if (budgetTitlesOnly)
                 {
+                    void BudgetStage(string step) => Android.Util.Log.Info("ZananceHomeStage", comparison + "|budget-" + language + "-" + theme + "-" + step);
+                    BudgetStage("construct");
                     var budget = new BudgetViewModel(store, fixture.GetRequiredService<PlanStore>(), fixture.GetRequiredService<GoalStore>(),
                         translator, dates, local, time, services.GetRequiredService<IAppInteraction>());
                     var budgetPage = new BudgetPage(budget).WithFlowDirection(local);
-                    await Shell.Current.Navigation.PushAsync(budgetPage); await budget.LoadAsync();
+                    BudgetStage("navigate");
+                    await Shell.Current.Navigation.PushAsync(budgetPage);
+                    BudgetStage("load");
+                    await budget.LoadAsync();
+                    BudgetStage("publish-captions");
                     budget.HasBudget = true; budget.IsFlex = true; budget.FlexLines.Clear();
                     foreach (var key in new[] { "Flex_Fixed", "Flex_NonMonthly" })
                         budget.FlexLines.Add(new FlexLine(translator[key], "Fictitious presentation only", FluentIcons.Common.Symbol.CalendarClock,
@@ -183,7 +233,10 @@ internal static partial class AndroidHomeReview
                     foreach (var line in budget.FlexLines)
                     {
                         var label = Views(budgetPage).OfType<Label>().Single(value => value.Text == line.Title && Visible(value));
-                        await outer.ScrollToAsync(label, ScrollToPosition.Center, false); await Task.Delay(100, ct); CheckText(label);
+                        BudgetStage("scroll-caption");
+                        await outer.ScrollToAsync(label, ScrollToPosition.Center, false); await Task.Delay(100, ct);
+                        BudgetStage("measure-caption");
+                        CheckText(label);
                     }
                     await Shell.Current.Navigation.PopAsync();
                     if (before != await StoredAsync()) throw new ReviewCheckException("Caption-only budget review changed original inputs.");
