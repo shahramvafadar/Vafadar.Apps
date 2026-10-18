@@ -6727,3 +6727,16 @@ are restored. Qualify the original-getter control in twelve native observations,
 startup/Main focus ANRs and verified Android process deaths. New cases pass on the restored getter;
 no full-suite run/count or new production APK is claimed.
 [Evidence, exact scope and open gates](quality/home-date-materialization.md).
+
+## D-351 - Index open reimbursements without repeated history scans
+
+A deterministic original-code regression proves quadratic history enumeration for multiple reimbursable
+expenses. Build a per-call refund index for only positive eligible expense identities, preserving checked
+intermediate sums, stable oldest-first ordering, duplicate identities and original entry objects. Keep
+the single-entry API as the independent amount oracle; do not drop any ledger fields or introduce cached
+financial results. The shared Core change serves Home, Reimbursements, net worth and KPI consumers.
+Fifteen new regression cases and the affected existing reimbursement/report/KPI cases pass in one focused
+39-case run. No unchanged full suite is replayed or full-suite count inferred. No UI design, encryption,
+key/recovery, schema, dependency or runtime change is included. Large-list rendering and QA-06/ANR remain
+open separately from this algorithmic correction.
+[Native follow-through and exact qualification limits](quality/reimbursement-batch.md).

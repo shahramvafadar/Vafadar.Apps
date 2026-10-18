@@ -3968,3 +3968,13 @@ and control; complete data/presentation preservation passes. Measured pages now 
 focus and reject older unguarded receipts. Real startup/Main ANRs remain recorded; Main/APK stay D-344.
 No full suite or successful unrelated verification is replayed. QA-06/device/iOS/release remain open.
 [Evidence and limits](quality/home-date-materialization.md).
+
+## AT-351 - Original reimbursement batch contract (D-351)
+
+Two original-code cases reproduce excess ledger visits without timing assumptions. All15 new cases
+then pass with the indexed batch, including exact single-entry equivalence, stable identity/date order,
+unchanged complete inputs, duplicate identities and relevant/unrelated overflow boundaries. The focused
+39-case run includes affected existing reimbursement/report/KPI cases; no full suite is replayed.
+The independent original native page and exact delivery receipts are recorded in
+[the reimbursement qualification](quality/reimbursement-batch.md). Large-list rendering, whole-Home
+latency, runtime/ANR, physical phone, OS readers, iOS and release are separate open acceptance gates.

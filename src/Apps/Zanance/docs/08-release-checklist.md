@@ -1582,3 +1582,11 @@ and control; complete data/presentation preservation passes. Measured pages now 
 focus and reject older unguarded receipts. Real startup/Main ANRs remain recorded; Main/APK stay D-344.
 No full suite or successful unrelated verification is replayed. QA-06/device/iOS/release remain open.
 [Evidence and limits](quality/home-date-materialization.md).
+
+## D-351 scoped reimbursement correction
+
+The shared Core batch removes repeated history scans while preserving original financial and overflow
+semantics. All39 affected selected tests pass (15 new), strict Windows build passes, and the original
+Release/AOT Android reimbursement page and three bounded comparison sizes pass on independent fictitious
+inputs. No full-suite total, large-list rendering, whole-Home/two-second, cold/ANR, phone, TalkBack, iOS or
+release acceptance is inferred. [Exact handoff and limits](quality/reimbursement-batch.md).

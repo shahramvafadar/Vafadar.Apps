@@ -6721,3 +6721,13 @@ Twenty-four original native Home observations across two callers preserve all fi
 and typed rows, with explicit measured-page foreground guards. Isolated faster reads do not justify
 inconsistent whole-page latency. Product source/APK remain D-344; actual Main/startup ANRs, QA-06,
 physical/reader/iOS and external release acceptance remain open. See [evidence and limits](../quality/home-date-materialization.md).
+
+### Section31 update - D-351 reimbursement aggregation
+
+The shared open-reimbursement calculation indexes relevant refunds once, retaining the unchanged
+single-entry amount contract, checked source-order sums and stable original expense rows. Fifteen new
+regressions plus affected existing reimbursement/report/KPI tests pass:39 selected, no failed/skipped.
+This is not an updated full-suite total. Production source now includes this Core correction; no model,
+cryptography, access policy or UI-layout change. QA-06/two-second Home, large-list/native ANR, broader
+Android/reader, actual Mac/iOS and owner/external release gates remain open.
+[Evidence and current candidate qualification](../quality/reimbursement-batch.md).

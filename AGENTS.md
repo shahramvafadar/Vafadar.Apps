@@ -2542,3 +2542,12 @@ setup/cold startup remain outside those measured-case receipts. Correct rows and
 Windows timings do not authorize a native performance change. The unchanged ASCII-date decoder is
 rejected after actual whole-Home comparison; do not repeat it without materially new evidence.
 Keep actual startup/focus ANRs and distinguish Android-killed processes from observation expiry.
+
+## D-351 bounded reimbursement aggregation
+
+Open-reimbursement batches index only positive eligible expense identities and accumulate relevant
+Refund rows in original source order with checked long additions. Preserve the unchanged single-entry
+amount contract, stable oldest-first ordering, duplicate original expense objects and complete ledger
+metadata. Do not sum unrelated groups and introduce new overflow refusals. Enumeration-bound regressions
+prove the cost improvement without flaky clock thresholds; native arithmetic/page receipts do not
+qualify whole-Home timing, large-list rendering, cold/ANR, phone, OS readers or release.

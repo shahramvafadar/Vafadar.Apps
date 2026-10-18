@@ -2434,3 +2434,12 @@ and control; complete data/presentation preservation passes. Measured pages now 
 focus and reject older unguarded receipts. Real startup/Main ANRs remain recorded; Main/APK stay D-344.
 No full suite or successful unrelated verification is replayed. QA-06/device/iOS/release remain open.
 [Evidence and limits](../../quality/home-date-materialization.md).
+
+## D-351 actual reimbursement cost
+
+Fix the demonstrated repeated-history scan before another speculative storage/runtime optimization.
+Keep one shared Core authority, unchanged ledger fields and single-entry amount semantics; qualify
+actual native consumers independently of large-list layout and whole-Home timing. Run only affected
+regressions/report/KPI cases and required builds/native handoff. Continue ready work without waiting on
+settled decisions; QA-06 and owner/platform gates remain open.
+[Evidence](../../quality/reimbursement-batch.md).

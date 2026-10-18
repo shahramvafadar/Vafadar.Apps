@@ -273,11 +273,25 @@ public static class EntryActions
     public static IReadOnlyList<(LedgerEntry Expense, long Open)> OpenReimbursements(IReadOnlyCollection<LedgerEntry> entries)
     {
         ArgumentNullException.ThrowIfNull(entries);
+        var expenses = entries.Where(e => e.Kind == EntryKind.Expense && e.ReimbursableAmount is > 0).ToArray();
+        if (expenses.Length == 0) return [];
+
+        // D-351: index only relevant refunds once instead of scanning the entire ledger for every expense.
+        // Unrelated groups must not introduce overflow that the single-expense calculation never observes.
+        var received = expenses.Select(e => e.Id).Distinct().ToDictionary(id => id, _ => 0L);
+        foreach (var entry in entries)
+        {
+            if (entry.Kind == EntryKind.Refund && entry.RefundOfId is { } target && received.TryGetValue(target, out var amount))
+            {
+                // Preserve Sum<long>'s checked intermediate additions in original refund order for each target.
+                received[target] = checked(amount + entry.Amount);
+            }
+        }
+
         return
         [
-            .. entries
-                .Where(e => e.Kind == EntryKind.Expense && e.ReimbursableAmount is > 0)
-                .Select(e => (Expense: e, Open: OpenReimbursement(e, entries)))
+            .. expenses
+                .Select(e => (Expense: e, Open: Math.Max(0, e.ReimbursableAmount!.Value - received[e.Id])))
                 .Where(x => x.Open > 0)
                 .OrderBy(x => x.Expense.Date),
         ];

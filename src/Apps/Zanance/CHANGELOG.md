@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Reimbursement calculation (D-351)
+
+- Calculate outstanding reimbursable expenses without scanning the entire transaction history again for each expense. Preserve partial refunds, original ordering and amount checks.
+
+
 ### Verification fidelity (D-347)
 
 - Exclude large-text observations made while an Android error dialog covers the app. Preserve failed runtime experiments separately; application behavior and APK are unchanged.

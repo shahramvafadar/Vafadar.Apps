@@ -317,3 +317,13 @@ that contract. Preserve actual ANR failures even when a later resumed/recovered 
 Never promote a faster isolated store operation without the original loaded-page comparison. D-350
 rejects its date decoder; production getters stay unchanged. Current original-getter control completes
 all twelve original native page observations with complete financial presentation/typed-row preservation.
+
+## D-351 reimbursement phase
+
+reimbursements requires a fresh independent run/comparison and rejects an existing page fixture
+instead of reseeding it. Compare actual unchanged single-entry results against the Core batch for
+64/1,024/8,192 reimbursable expenses, preserving original ordered tuples and complete inputs. Timing
+is descriptive, not a flaky pass threshold. Then load the original ReimbursementsViewModel/Page once
+with an independent fictitious partial refund, require native window focus and title/amount, and
+compare complete stored inputs. No financial UI command is activated. This is not large-list rendering,
+protected-storage, whole-Home, phone, OS-reader, cold/ANR or release qualification.

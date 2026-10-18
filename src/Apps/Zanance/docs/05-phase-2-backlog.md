@@ -2419,3 +2419,10 @@ produce Recorded balance accessibility focus and captured audio; offline transcr
 so spoken-reader acceptance remains open. Settings restore exactly, notification flags and MainPID
 are preserved, and the owned remote JAR is removed. Main/APK/count remain D-344. No unrelated
 successful suites/builds repeat. A11Y-01/03, native ANR, remaining device/iOS and release gates stay open.
+
+## D-351 shared reimbursement calculation
+
+Replace repeated full-history scans with one relevant-refund index while preserving financial and
+overflow semantics. Fifteen new regressions and affected existing report/KPI cases pass in39 selected
+cases. No full-suite count or whole-Home speed acceptance is inferred. Current evidence and limits:
+[reimbursement batch](quality/reimbursement-batch.md). Canonical QA-06 and native/platform gates stay open.

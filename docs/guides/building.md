@@ -1374,3 +1374,14 @@ ciphertext/keys and a fresh comparison for a changed getter; never infer full-pa
 isolated provider microbenchmark. Current production dates keep original provider parsing after the
 rejected D-350 trial. New focused tests use the already built Data test DLL with -method filters;
 no unchanged full suite, native matrix or production APK needs replay for a withdrawn prototype.
+
+## D-351 focused reimbursement verification
+
+Build the Core test project with ContinuousIntegrationBuild=true, then run its compiled DLL with
+-class '*ReimbursementTests' -class '*ReimbursementBatchTests' -class '*ZexPhase4ReportTests'
+-class '*ZexPhase4KpiTests'. A wildcard is valid only at the start/end of each filter, not in its middle.
+The independent AndroidHome caller accepts review_phase=reimbursements with fresh hexadecimal run/pass
+identities. Read only the launched PID's report through Read-ReviewReport.ps1; observation expiry is not
+failure. This phase checks Core tuples and original page publication on fictitious inputs, not whole-Home,
+large native lists, device encryption or production data. Do not replay successful unrelated suites.
+[Evidence and limits](../../src/Apps/Zanance/docs/quality/reimbursement-batch.md).

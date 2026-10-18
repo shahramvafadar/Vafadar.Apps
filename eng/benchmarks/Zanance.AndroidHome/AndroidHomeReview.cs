@@ -94,6 +94,12 @@ internal static partial class AndroidHomeReview
                 RequireRoot(root);
                 await WriteReportAsync(root, phase, await ReviewSchemaConnectionAsync(root, comparison!, ct), ct);
             }
+            else if (phase == "reimbursements")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0) throw new ReviewCheckException("Redirected reimbursement review root refused.");
+                await WriteReportAsync(root, phase, await ReviewReimbursementsAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "filters")
             {
                 if (File.Exists(Path.Combine(root, "filters-" + comparison + "-result.json")))
