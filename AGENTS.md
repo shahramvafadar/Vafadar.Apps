@@ -2831,3 +2831,12 @@ dependent imports/refunds require review without deleting data. Retain original 
 backup/restore. Existing aggregates expose their complete original range in Simple mode after all
 loaded values are published; an unsaved off/on change must not hide the switch. Qualify actual
 financial failures using the same fixture and immutable input, repeating only failed changed paths.
+
+## D-393 - Original physical bulk command qualification
+
+Bulk financial qualification uses a fresh fictitious profile, exact original selections and explicit
+native actions. Preserve selection across filters, cancellation and reload; never substitute a new
+financial action for a failed observer. Observe Delete and invoke original Undo within its unchanged
+deadline, without navigation, clock replacement or renewed offers. Planned cold persistence follows
+terminal Undo only. Retain complete original metadata/relationships and restore Main/profiles/OS/APK,
+remove only owned matched inputs and release the coordinated phone turn before ending the batch.

@@ -7143,3 +7143,16 @@ known public rows/three profiles/OS and owned cleanup pass. Only the failed phys
 repeats after the fix; original successes and negative evidence remain. No general crash/ANR, A11Y,
 full private database, iOS/provider/store or publication acceptance.
 [Evidence and limitations](../quality/import-undo-and-retained-aggregates.md).
+
+### Section31 update - D-393 physical bulk corrections and Undo
+
+AT-80/QA-03 gains actual Samsung evidence for original selected-row retention across search/Home,
+cancel, intended tag/review/category changes and mixed-kind refusal. One positive Delete of a purchase
+and fee-bearing transfer observes984EUR; unchanged-deadline Undo returns within5.047seconds and net/Home
+returns973EUR. Planned cold native details retain all six original monetary/date/account/payee/note
+packets, only two added tags, intended category, refund link and transfer fee relation.
+
+Retire only the new profile and matched input, restoring Main979/five known packets/original three
+profiles/meaningful Home/OS/D-392 APK and releasing the phone. Production and managed counts remain
+D-392; no successful unrelated suite/build repeats or broader device/runtime/release acceptance.
+[Bounded evidence and observer failures](../quality/physical-bulk-corrections.md).

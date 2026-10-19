@@ -4368,3 +4368,18 @@ profiles/OS and owned cleanup pass. Profile transient empty-tree/footer-height/a
 failures are retained; financial actions are not replayed to repair observations.
 Broader QA-03, QA-06/A11Y, hostile/bank corpus, iOS/provider/store/release acceptance remain open.
 [Exact original/final package boundaries](quality/import-undo-and-retained-aggregates.md).
+
+## D-393 - AT-80/QA-03 original physical bulk lifecycle
+
+Samsung original controls pass retained selection across searches/Home, tag/category cancellation,
+two-row tag/review, one-row category and mixed-kind refusal. One positive Delete of purchase plus
+fee-bearing transfer observes984EUR; original Undo returns within5.047seconds of Delete under the
+unchanged eight-second deadline. Original day net/Home973 returns before planned cold persistence.
+All six cold native details preserve complete original money/date/account/payee/multiline-note packets,
+intended tags/category, refund link and transfer fee relation. No original accepted financial action
+is replayed for observer failures; no new managed cases or unchanged test/build reruns.
+
+Only the new profile and matched input are retired. Main979/five known public packets/three profiles,
+meaningful Home/OS/D-392 APK and phone release pass. This closes the bounded physical bulk gap, not
+all AT-80/device/runtime/A11Y/iOS/provider/store/release gates.
+[Original evidence and observer limits](quality/physical-bulk-corrections.md).

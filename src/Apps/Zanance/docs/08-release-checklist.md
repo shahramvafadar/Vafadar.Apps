@@ -1928,3 +1928,13 @@ Samsung D-385; no unchanged successful suite/build replay.
 - [ ] Broader device/runtime/A11Y/iOS/provider/store and publication acceptance.
 
 No unchanged successful financial or full-suite replay. [Bounded evidence](quality/import-undo-and-retained-aggregates.md).
+
+## D-393 - Bounded physical bulk acceptance
+
+- [x] Original selection, cancel, tag/review/category and mixed-kind refusal on the authorized Samsung.
+- [x] Original Delete/Undo deadline, restored973EUR and six complete cold native metadata/relationship packets.
+- [x] Only owned new profile/input removed; Main979/five packets/three profiles/OS/APK restored; phone released.
+- [ ] Remaining device/runtime/A11Y/iOS/provider/store/public-hosting and publication acceptance.
+
+Source/package and managed counts remain D-392; no successful unrelated suite/build replay.
+[Scope and retained observations](quality/physical-bulk-corrections.md).

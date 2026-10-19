@@ -7238,3 +7238,17 @@ and-187EUR; original restored aggregate fields1-7Oct remain. Only the failed one
 Main979/five known native rows/three original profiles/OS/APK and owned cleanup pass; phone released.
 No full-suite, general crash/ANR, all-device/iOS/provider/store or publication acceptance.
 [Complete failures, evidence and limits](quality/import-undo-and-retained-aggregates.md).
+
+## D-393 - Qualify original physical bulk corrections and Undo
+
+Close the AT-80/QA-03 physical bulk gap on the authorized Samsung with a fresh two-account/six-row
+fictitious fixture. Original selection survives search/Home and prompt cancellation; tag/review/category
+changes affect only intended rows, and mixed category kinds are refused. One positive deletion observes
+day net984EUR and original Undo returns within5.047seconds of Delete, before its unchanged eight-second
+deadline. Original net/Home973 returns; planned cold details preserve all six original monetary/metadata
+packets, only two added tags, only the intended Housing category, refund link and transfer fee relation.
+
+Only the new profile/matched input are removed. Original Main979/five known public packets/three profiles,
+meaningful Home/OS and D-392 APK remain; the phone turn is released. No production or managed-count change,
+unchanged successful test/build replay or broad device/runtime/release acceptance.
+[Original evidence and retained observer failures](quality/physical-bulk-corrections.md).

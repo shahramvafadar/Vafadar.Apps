@@ -51,7 +51,7 @@ priority/order descriptions below.
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
 | ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; D-328 accountant ZIP receiving/content; D-329 original en/fa/de PDF contents and continued-table fix; D-330 own-format producer/consumer/refund/transfer/cold Undo; D-361 original en/fa/de display/Back and advanced goal choices/dirty discard, exact preference/Home restoration and one native root; D-365 original changed account/debt/monthly disclosures in 18 normal-scale Samsung cases with draft/data/preference preservation; broader phone acceptance remains) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
-| ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical-device/iOS acceptance open) | – |
+| ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical bulk D-393; remaining device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator, D-74; phone/iOS acceptance open) | QA-03 |
 | ZCR-QA-05 | Receipt/PDF reading quality on devices, all six languages | 2 | P2 | M | In progress (D-324 six source-language digital PDFs; D-325 physical Latin image OCR/EXIF/refusal and French accent fix; real corpus/camera/scanned/iOS remain) | sample receipts |
 | ZCR-QA-06 | Performance: cold start, search, migration with the reference and a 10× data set | 2 | P2 | M | In progress (D-322 retained physical workloads; D-350 rejects unproven date decoder; D-351 indexes aggregation; D-352 completes worker/atomic virtualized reimbursement-page publication and non-overlapping empty flow; D-353 removes unnecessary template reload teardown; D-354 rejects slower complete-row JSON transport and retains scalar production reader; D-358 retains an independent binding-finalizer fault; D-360 releases owned retired Android root fragments and passes the previously failing 36-group goal/root sequence; D-362 isolates original managed startup and rejects model overlap without benefit; D-363 guards complete first-settings reads with measured whole-managed-publication reductions; D-377 preserves complete original empty-tag semantics; D-383 bounds original recent-row selection on the existing worker with complete native/data/packet equality and no-reset Main upgrades, preserving actual native crashes and making no whole-Home speedup claim; D-384 leaves combined serial-major/64MiB nursery unaccepted after longer dispatcher pauses; D-390 rejects the supported new-bridge candidate after all twelve corresponding dispatcher gaps lengthen and restores ordinary production; actual Main/startup ANRs, two-second objective, cold/low-memory and broader device/iOS gates remain) | – |
@@ -3421,3 +3421,13 @@ APK and final same-profile failed-case refusal pass. Only the failed one-row inp
 fix. Original Main979/five public packets/three profiles and exact OS/owned cleanup are restored.
 This bounded gap is closed; QA-03 broader device paths, QA-06, A11Y and external release gates remain
 In progress under D-386. [Evidence](../../quality/import-undo-and-retained-aggregates.md).
+
+## D-393 - Physical bulk correction gap closed
+
+Original Samsung selection/search/Home/cancellation and financial tag/review/category/mixed-kind guards
+pass on one new six-row/two-account fixture. One positive Delete/Undo respects the original deadline;
+day net973-to984-to973 and planned cold metadata preserve all six original rows, intended corrections,
+refund and transfer-fee relationships. Restore Main979/five public packets/three profiles/OS/D-392 APK,
+remove only the new profile and matched input and release the phone. No production change, new managed
+count or successful unrelated build/suite replay. Broader QA-03, QA-06/A11Y and external gates stay open
+under D-386. [Qualification](../../quality/physical-bulk-corrections.md).

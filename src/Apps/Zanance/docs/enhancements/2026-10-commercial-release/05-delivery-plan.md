@@ -2779,3 +2779,13 @@ original Main/five public rows/three profiles/OS, remove only the new profile an
 release the phone turn. Preserve failures and observer corrections; no full-suite or unchanged
 successful financial replay. Continue ready work under D-386; external/device/runtime gates stay open.
 [Qualification](../../quality/import-undo-and-retained-aggregates.md).
+
+## D-393 - Complete the physical bulk lifecycle without replay
+
+Finish the remaining AT-80 bulk gap as one original financial sequence: exact selection/reload/cancel,
+tag/review/category and mixed refusal, then one original Delete/Undo and planned cold readback. Preserve
+the actual deadline and completed native facts; correct observers from retained evidence rather than
+replaying accepted money actions. Six native packets and restored original Main/profiles/OS/APK/owned
+cleanup qualify this bounded path. No production/APK/managed-count change or unrelated successful
+suite/build replay. Continue ready approved work under D-386; broader device/runtime/external gates
+remain separate. [Evidence](../../quality/physical-bulk-corrections.md).
