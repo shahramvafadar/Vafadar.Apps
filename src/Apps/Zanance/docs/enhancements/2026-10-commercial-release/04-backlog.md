@@ -3299,3 +3299,12 @@ Home cases/full stored-data and presentation proofs on the same retained keys an
 This bounded non-reproduction does not close QA-06/runtime stability. Ordinary caller and unchanged
 Main D-377/Home979/OS restore exactly; no new managed count or unrelated suite/build repetition.
 [Exact result and limits](../../quality/android-home-bridge-fault.md).
+
+## D-379 original constructor-list experiment withdrawn
+
+QA-06 retains D-377: a candidate removes one explicit empty-tag-list replacement but complete native
+x64 Home is slower in five of six corresponding samples per shape. Related78 cases and builds pass;
+this does not establish a product benefit. Restore exact source, default independent package/Main0/
+OS and clean outputs. No ARM/phone experiment, new managed count or Main APK rebuild. Wider runtime,
+performance, reader/iOS/provider/release work remains open.
+[Evidence](../../quality/home-tag-list-candidate.md).

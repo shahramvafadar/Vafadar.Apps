@@ -7006,3 +7006,11 @@ installation because it dumps object/nursery bytes. Main code, runtime, APK and 
 remain D-377 (78 related cases, no new count/full-suite claim). Restore exact original Main979 and
 system values; general runtime/ANR/Q-02/device/reader/iOS/provider/release gates remain open.
 [Evidence](../quality/android-home-bridge-fault.md).
+
+### Section31 update - D-379 allocation candidate withdrawn
+
+A constructor-owned empty-tag list candidate passes all78 existing related Data cases but the full
+original x64 Home comparison does not justify adoption: reference/tenfold medians are951.53->1086.01
+and2664.23->2955.07ms. Restore the exact D-377 reader and ordinary packages, preserving complete data,
+native Main and OS. No production/app/APK/test-count change, ARM/phone trial or broader gate closure.
+[Original observations](../quality/home-tag-list-candidate.md).

@@ -4241,3 +4241,12 @@ canary-dump mode, exact runtime remset-only marker, six full original Home cases
 complete protected schema/typed-row and presentation equality. Ordinary independent package and
 unchanged Main979/OS restoration pass. No fatal remset assertion in this cohort is not acceptance
 of general native stability or a loading target. [Evidence](quality/android-home-bridge-fault.md).
+
+## AT-379 - Withdrawn constructor-owned empty tags
+
+No new test cases: all78 related original HomeReadSnapshot cases pass for the candidate, including
+independent mutable lists, noncanonical/error/intercepted representations and captured data. Six
+original x64 Home contexts preserve full raw schema/typed rows and financial/native presentation.
+Their slower timing cohort rejects promotion. Exact reader, ordinary caller/Main/OS restoration
+passes; no ARM/phone input or general performance/stability acceptance.
+[Evidence](quality/home-tag-list-candidate.md).

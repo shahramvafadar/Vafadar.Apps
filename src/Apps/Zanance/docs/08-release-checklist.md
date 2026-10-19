@@ -1811,3 +1811,10 @@ Exact official ARM64 symbols locate the real original fault; one remset-only coh
 without a fatal assertion. Preserve both facts. Do not ship diagnostic settings or call the crash,
 ANR, cold/low-memory or two-second requirement fixed. App/runtime/APK remain D-377; phone/Main/OS
 and normal caller are restored. [Detailed boundary](quality/android-home-bridge-fault.md).
+
+## D-379 - Keep the qualified reader after a rejected allocation trial
+
+No new application package: exact source and installed Main APK remain D-377. Related tests and
+native data equality do not override the slower complete x64 Home result. The candidate is withdrawn,
+ordinary packages/Main/OS restored and phone input skipped. All open runtime/performance/platform/
+provider/Store gates remain. [Evidence](quality/home-tag-list-candidate.md).

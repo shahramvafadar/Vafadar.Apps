@@ -2716,3 +2716,12 @@ A separate local remset-consistency trial may retain only fixed mode/stage/compl
 without heap/register/raw-stack collection. Keep GC policy unchanged in Main, restore the ordinary
 independent package, exact Main/OS state and phone turn, and never count one clean diagnostic cohort
 as proof that a random native fault is fixed.
+
+## D-379 withdrawn constructor tag-list candidate
+
+Do not repeat constructor-owned empty-tag reuse without new evidence. Its complete current x64 Home
+cohort preserves behavior/data but is descriptively slower in five of six corresponding samples per
+shape. Keep the D-377 reader, exact standard-empty conversion/interception guards and original error
+order. Source allocation reasoning alone is not a whole-page benefit; retain the rejected source/
+package/receipts and original data instead of promoting it, selecting fast cases or extending an
+already rejected trial to the phone.

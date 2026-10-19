@@ -7070,3 +7070,14 @@ schema/typed-row/presentation proofs in PID20385, without a fatal remset asserti
 fix or use its timings. Restore ordinary caller/Main979/exact settings and release the phone. No
 application/runtime/schema/security change, new tests or repeated unrelated checks.
 [Exact investigation](quality/android-home-bridge-fault.md).
+
+## D-379 - Reject constructor tag-list reuse after original Home comparison
+
+LedgerEntry already initializes an independent empty Tags list. A candidate avoids replacing it for
+D-377's exact standard empty-array case, keeping parsing before later columns and all field/error/
+interceptor contracts. All78 related cases and strict Windows/x64 builds pass. Nevertheless, complete
+same-data original x64 Home is descriptively slower: reference median951.53->1086.01ms, tenfold
+2664.23->2955.07ms; only one of six corresponding samples is shorter for each shape. Do not infer
+benefit from the removed source allocation or fish for a faster cohort. Withdraw the candidate,
+restore exact reader/default caller/Main6661/Home0/OS and recompile restored Windows. No ARM trial,
+phone input, Main APK rebuild or new managed count. [Evidence](quality/home-tag-list-candidate.md).

@@ -2645,3 +2645,11 @@ package/Main/OS and releasing the phone. Do not promote diagnostic GC settings, 
 preview runtimes or a non-reproduction into a product fix. Continue ready observed allocation and
 application work while retaining the native stability gate; Main remains the signed D-377 package.
 [Investigation](../../quality/android-home-bridge-fault.md).
+
+## D-379 - Reject the original-page allocation candidate
+
+Complete the candidate's related behavioral tests and original complete-page comparison before
+considering promotion. The slower x64 result ends this trial; do not extend it to ARM or repeat
+successful contexts to obtain a different answer. Preserve data/evidence, restore exact source and
+ordinary packages and leave Main D-377 unchanged. Continue other ready observed work.
+[Detailed result](../../quality/home-tag-list-candidate.md).
