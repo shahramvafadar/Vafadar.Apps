@@ -1700,3 +1700,13 @@ Main Home restoration are checked; main code/APK and managed-unit count do not c
 Remaining controls, spoken TalkBack/gestures, phone, general ANR/GC/performance, Mac/iOS and
 provider/Store/release gates stay open.
 [Exact native scope](quality/narrow-original-surfaces.md).
+
+## D-367 scoped Android reader correction
+
+- Decorative glyph descendants no longer enter actual reader focus in six original en/fa/de
+  Light/Dark contexts;24 scenes/36 safe activations pass with original modal/page behavior.
+- Strict Windows/full offline signed Android builds, no-reset emulator upgrade, exact settings/
+  English-Dark-Simple Home restoration and independent helper removal pass.
+- Correct speech, remaining reader controls, phone/general ANR/performance/iOS and release gates
+  remain open. Native observations do not increase managed test counts.
+[Evidence](quality/android-reader-glyphs.md).

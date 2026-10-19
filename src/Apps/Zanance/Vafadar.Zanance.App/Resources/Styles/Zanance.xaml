@@ -74,6 +74,8 @@
     <!-- Icons are decoration: their meaning is in the text or the description next to them. Screen readers would read
          the icon font's private character otherwise. -->
     <Style TargetType="fi:SymbolIcon" ApplyToDerivedTypes="True">
+        <!-- D-367: the icon hosts a native glyph child; excluding only the parent still exposes that private character to TalkBack. -->
+        <Setter Property="AutomationProperties.ExcludedWithChildren" Value="True" />
         <Setter Property="AutomationProperties.IsInAccessibleTree" Value="False" />
         <Setter Property="p:IconTextScale.IsFixed" Value="True" />
     </Style>

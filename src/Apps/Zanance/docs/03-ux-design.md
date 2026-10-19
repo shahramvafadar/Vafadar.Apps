@@ -1712,3 +1712,12 @@ before treating horizontal overflow as a static-caption failure.
 
 Opening the wizard copies its active theme without publishing a new theme change. A genuine
 choice still previews immediately; constructor publication must not retire the pending modal owner.
+
+## Decorative reader subtrees (D-367)
+
+Exclude decorative SymbolIcon descendants as well as their parent. Native glyph children can
+otherwise expose private characters to TalkBack. Keep the complete meaningful label and real
+button outside the excluded subtree. Require actual reader focus and original page transitions,
+not just gesture callbacks or node metadata. Six scoped original navigation contexts pass;
+correct audible speech and remaining platform/reader acceptance stay open.
+[Evidence](quality/android-reader-glyphs.md).

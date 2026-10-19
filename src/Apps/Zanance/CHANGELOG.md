@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Decorative screen-reader glyphs (D-367)
+
+- Keep decorative icon characters out of Android screen-reader focus while preserving the original labels and navigation actions.
+
 ### Minimum-width Android qualification (D-366)
 
 - Verify original financial views and Settings at 200% system text and 360dp width on the independent Android emulator, preserving existing data and settings. Application behavior and its package are unchanged.

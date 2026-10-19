@@ -1479,3 +1479,14 @@ Each store-draft run now uses the SDK artifacts output layout under its own buil
 including distinct dependency outputs and intermediates. Resolve exactly one original executable
 and compiled manifest there. This preserves live prior review binaries/PRI resources and ordinary
 development output; never reuse a shared OutDir for parallel or retained independent processes.
+
+## Independent Android reader gestures (D-367)
+
+The service-only eng/benchmarks/Zanance.ReaderGestures project is outside the shipping graph.
+Use only the explicitly authorized emulator, fresh original focused windows and safe original
+captions; preserve installed TalkBack. Public gesture completion requires actual reader focus/
+page evidence. Capture and restore exact accessibility/TTS/font/display values and remove only
+the helper after terminal evidence. Do not use ordinary adb input as reader-gesture acceptance,
+stock uiautomator alongside TalkBack, root or system/security changes on a phone.
+[Build/transport limits](../../eng/benchmarks/Zanance.ReaderGestures/README.md) and
+[scoped original qualification](../../src/Apps/Zanance/docs/quality/android-reader-glyphs.md).

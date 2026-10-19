@@ -2532,3 +2532,12 @@ translated/theme batch. Reuse original fixtures and page readers, keep immutable
 source/input/configuration evidence, and restore exact emulator settings and original Main Home.
 No prior successful 412dp/editor cohort or unchanged main build/managed suite is repeated.
 [Completed evidence and outstanding scope](../../quality/narrow-original-surfaces.md).
+
+## D-367 completed original reader defect batch
+
+Remove decorative native glyph descendants from TalkBack focus and qualify the complete original
+expense/Cancel, More, About/Back and Home paths in six Settings-bound en/fa/de Light/Dark contexts.
+Retain failed observations and successful cases; restore exact emulator state and remove helper.
+Windows/full offline Android strict builds pass; no unchanged successful suites replayed.
+Remaining spoken-reader, broader controls/QA-06/device/iOS/provider/release work stays open.
+[Evidence](../../quality/android-reader-glyphs.md).

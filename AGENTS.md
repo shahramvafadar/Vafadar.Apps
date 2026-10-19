@@ -2641,3 +2641,14 @@ Accept a retained case only when those exact identities match and its original o
 passed. Preserve failed evidence; never replay successful 412dp/editor cohorts or infer full
 database, spoken-reader, phone/ANR/iOS/release acceptance. Capture/restore exact authorized
 emulator settings and original Main Home; the caller itself never writes OS settings.
+
+## D-367 decorative reader descendants
+
+Exclude native descendants of decorative SymbolIcon controls, preserving meaningful labels and
+real action owners outside that subtree. Require actual reader focus and original page/modal
+transitions after public gesture dispatch; callbacks or audio energy alone are not acceptance.
+Independent service gestures require the explicitly authorized emulator, fresh original focused
+windows, finite safe-caption commands and exact accessibility/TTS/font/display restoration.
+Retain successful scenes across observer failures, reject unbound display contexts and remove
+only the independent helper after terminal evidence. Ordinary adb injection does not establish
+TalkBack gesture acceptance; correct speech and broader device/ANR/iOS/release gates remain open.

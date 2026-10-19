@@ -6922,3 +6922,15 @@ retain failed evidence and require original native window focus. Preserve captur
 original commands/selection/Cancel, restore exact OS values and original Main Home.
 Only independent qualification sources change; production app/APK and managed counts remain.
 [Exact matrix, observations and remaining gates](quality/narrow-original-surfaces.md).
+
+## D-367 - Exclude decorative glyph descendants from Android readers
+
+Actual TalkBack focused the private character below an already excluded SymbolIcon parent.
+Exclude its descendants in the global decorative style, preserving meaningful labels/action owners.
+Qualify original expense/Cancel, More, About/Back and Home in six native Settings-bound en/fa/de
+Light/Dark contexts:24 scenes,36 real reader activations and209 original trees. Preserve controller
+failures and reject the unbound-theme run; retain successful scenes across observation corrections.
+Strict Windows/full offline Android builds pass. Restore exact authorized emulator settings,
+original English/Dark/Simple Home and remove the independent service. No financial Save or new
+managed tests; correct speech/general ANR/physical/iOS/release remain open.
+[Original defect, exact evidence and limits](quality/android-reader-glyphs.md).

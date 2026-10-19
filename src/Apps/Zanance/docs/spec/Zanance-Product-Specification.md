@@ -6874,3 +6874,13 @@ rows and Settings. Original retained inputs, native commands/selection/Cancel an
 Main Home restoration pass. This independent-caller change adds no managed test count or
 production app/APK change. Broader A11Y/device/ANR/iOS/provider/release acceptance remains open.
 [Source-bound original receipts](../quality/narrow-original-surfaces.md).
+
+### Section31 update - D-367 original Android reader glyphs
+
+The global decorative icon style now excludes its native descendants after actual TalkBack
+focused a private glyph. Six en/fa/de Light/Dark contexts complete24 original scenes and36
+nonfinancial reader activations, retaining original controls, process and Home. Strict Windows/
+full offline Android builds pass; exact settings/preferences restore and helper removal pass.
+Zero new managed tests;209 native trees/435 derived checks are observations. Correct audible
+speech, other reader controls, general ANR/GC/performance, phone/iOS/release remain open.
+[Exact proof and failures](../quality/android-reader-glyphs.md).

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
+    <OutputType>Exe</OutputType>
+    <ApplicationId>pro.vafadar.zanance.readergesturereview</ApplicationId>
+    <ApplicationTitle>Zanance independent reader gestures</ApplicationTitle>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
+    <RuntimeIdentifier>android-x64</RuntimeIdentifier>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <RunAOTCompilation>true</RunAOTCompilation>
+    <AndroidPackageFormats>apk</AndroidPackageFormats>
+    <AndroidKeyStore>false</AndroidKeyStore>
+    <AndroidManifest>AndroidManifest.xml</AndroidManifest>
+  </PropertyGroup>
+  <!-- Original public captions constrain activation; no application/library/SDK dependency is added. -->
+  <ItemGroup>
+    <AndroidAsset Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Resources/Strings/AppResources*.resx" Link="captions/%(Filename)%(Extension)" />
+    <AndroidAsset Include="$(RepoRoot)src/Libraries/Vafadar.Localization/Resources/SharedStrings*.resx" Link="captions/%(Filename)%(Extension)" />
+  </ItemGroup>
+  <Target Name="SelectServicedReaderRuntime" BeforeTargets="ProcessFrameworkReferences">
+    <ItemGroup>
+      <FrameworkReference Condition="'%(FrameworkReference.Identity)' == 'Microsoft.NETCore.App'">
+        <RuntimeFrameworkVersion>$(VafadarSecurityRuntimeVersion)</RuntimeFrameworkVersion>
+      </FrameworkReference>
+    </ItemGroup>
+  </Target>
+  <Import Project="$(RepoRoot)eng/AndroidAotRuntime.targets" />
+</Project>

@@ -4108,3 +4108,15 @@ Bind each retained case to exact source/input/configuration and preserve all ori
 Restore settings and original Main Home; never infer spoken reader, full device/ANR/iOS or
 release acceptance. No successful 412dp cohort, managed suite or unchanged main build is replayed.
 [Complete 42-case evidence and limitations](quality/narrow-original-surfaces.md).
+
+## AT-367 original decorative glyph exclusion and reader navigation
+
+On the explicitly authorized independent emulator, retain installed TalkBack and verify actual
+original accessibility focus through public gestures. Reproduce the private glyph before the
+style correction; require no private glyph in focus or saved original trees afterwards. Qualify
+expense/Cancel, More, About/Back and Home in six native Settings-bound en/fa/de Light/Dark contexts.
+Require actual modal/page transitions and preserve successful receipts across observer failures.
+All24 scenes/36 activations pass without financial Save; restore exact OS values and original
+English/Dark/Simple Home, remove only the helper. No spoken-output/full reader/phone/ANR/iOS/
+release acceptance follows from focus or audio energy.
+[Original paths and build/package evidence](quality/android-reader-glyphs.md).
