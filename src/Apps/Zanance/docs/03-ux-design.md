@@ -1807,3 +1807,10 @@ after loading the whole range and retain the switch during unsaved off/on change
 entries remain unchanged. Undo requires immutable original imported metadata even without aggregate
 linking; edited/attached/extra rows or missing legacy evidence stay for review instead of deletion.
 Original native confirmations and six-language conflict feedback remain.
+
+## D-394 - Account values after tab navigation
+
+Reactivating a retained account after a transaction edit must refresh its covered snapshot even
+when the platform omits another OnAppearing callback. Share pending reads, retain the same page,
+and preserve unsaved reconciliation amount/reason/date. Never require a manual refresh for newly
+saved money or issue another financial write. Native digit conversion remains display-only.

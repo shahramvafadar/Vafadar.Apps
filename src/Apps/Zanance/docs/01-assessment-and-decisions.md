@@ -7252,3 +7252,19 @@ Only the new profile/matched input are removed. Original Main979/five known publ
 meaningful Home/OS and D-392 APK remain; the phone turn is released. No production or managed-count change,
 unchanged successful test/build replay or broad device/runtime/release acceptance.
 [Original evidence and retained observer failures](quality/physical-bulk-corrections.md).
+
+## D-394 - Correct retained account balances and qualify physical asset consent
+
+Original Samsung AT-81 new/edit Income/Expense Cancel and fresh Record anyway preserve complete
+drafts and write only explicitly accepted fictitious rows. Internal transfer remains one principal
+movement. Actual accepted expense edit reveals stale More-tab account presentation despite correct
+stored detail; reuse the covered account loader on tab activation, preserving reconciliation drafts.
+Six native Windows contexts retain successful observations and continue the same partial fixture;
+strict Windows/complete offline signed Android builds pass. Upgrade the same phone fixture without
+reset and repeat only the failed path with the next edit: automatic balance7,905.66, no manual Refresh.
+
+The D-393 hosted failure is the exact feature-policy scan of an independent diagnostic fixture.
+Bound the one-path exception by its original build/package guards and prove refusal of Release
+fallback/unapproved readers; the exact existing managed case passes, with no count increase or
+unrelated/full-suite replay. Original failures, cold persistence/restoration and hosted-result limits:
+[complete qualification](quality/physical-asset-consent-and-account-refresh.md). D-386 remains in force.

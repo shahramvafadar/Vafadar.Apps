@@ -1620,3 +1620,14 @@ outgoing edge connectivity, without a new listening port. Base deployment isolat
 validates configuration only. Public DNS, mail, tunnel sign-in and merchant activation remain separate.
 No production deployment was performed for D-389. The actual public source probe is an explicit test,
 excluded from ordinary CI; do not repeatedly call it or treat a test-server HTTPS scheme as real TLS.
+
+## Retained account activation review (D-394)
+
+Run eng/scripts/Run-StoreDrafts.ps1 -AccountTabRefreshReview for six en/fa/de light/dark original
+Windows Shell/account contexts on the existing isolated non-input desktop. This review uses a
+separate fictitious SQLite fixture with explicit edits; its completion requires that fixture's
+identity/metadata and the unrelated base store to remain intact, not an unchanged financial fixture.
+Use -AccountTabRefreshContinuation <exact32hexOriginalRun> only for the documented partial fixture:
+retain two completed English images/receipts and the already accepted13EUR edit; qualify native
+Persian digits without repeating that save, then finish remaining contexts. No restart of an
+expired live process or general restart/reseed option is added. Exact package/fixture guards remain.

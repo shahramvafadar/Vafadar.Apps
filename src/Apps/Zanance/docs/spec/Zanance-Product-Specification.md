@@ -7156,3 +7156,15 @@ Retire only the new profile and matched input, restoring Main979/five known pack
 profiles/meaningful Home/OS/D-392 APK and releasing the phone. Production and managed counts remain
 D-392; no successful unrelated suite/build repeats or broader device/runtime/release acceptance.
 [Bounded evidence and observer failures](../quality/physical-bulk-corrections.md).
+
+### Section31 update - D-394 physical asset consent and retained account refresh
+
+QA-04/AT-81 gains bounded physical new/edit cancellation and explicit save, transfer and cold native
+metadata evidence. Correct the observed stale retained-account tab through the existing covered
+loader without replacing reconciliation drafts or changing financial persistence. Six Windows
+native contexts, strict builds and same-fixture complete offline APK upgrade qualify automatic
+7,905.66EUR after the changed follow-up expense edit. The existing managed architecture case is
+corrected for one independently gated diagnostic; two negative controls preserve ordinary source
+enforcement. Managed counts do not increase and successful unrelated checks are not repeated.
+Broader device/ANR/A11Y/iOS/provider/store and publication gates remain separate under D-386.
+[Complete qualification and limits](../quality/physical-asset-consent-and-account-refresh.md).

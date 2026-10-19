@@ -98,9 +98,9 @@ verify secure startup, widget drafts after unlocking, PIN/device confirmations, 
 profiles, bulk validation/delete/Undo and theme changes with unsaved input using the complete signed APK. No result
 from isolated SQLite, a native port double, the emulator or CI substitutes for those physical-device release checks.
 
-D-74 / QA-04: repeat manual Income/Expense on a valued asset on the physical phone. Cancel must keep the draft and
-asset value; Record anyway must save only once after validation. Transfers/adjustments must keep their meanings.
-AT-81 local/emulator results and the complete signed APK do not close physical-device, iOS or product acceptance.
+D-74 / QA-04: D-394 qualifies bounded original physical new/edit Income/Expense cancellation and explicit
+Record anyway, plus internal transfer persistence. Retain separate valuation-adjustment, broader device,
+iOS and product acceptance; the original local/emulator results alone did not close those gates.
 
 D-75 / Q-02: select an actual physical reference device and record process-cold Home, search and save with the
 10,000/20/100 workload and explicit tenfold stress shape. Include native rendering and input response, not only
@@ -1938,3 +1938,12 @@ No unchanged successful financial or full-suite replay. [Bounded evidence](quali
 
 Source/package and managed counts remain D-392; no successful unrelated suite/build replay.
 [Scope and retained observations](quality/physical-bulk-corrections.md).
+
+## D-394 - Bounded QA-04 phone evidence and account activation correction
+
+Original physical new/edit asset-consent and transfer paths now have bounded Samsung evidence;
+retain broader device/iOS/valuation/provider gates. Returning to an existing account after a saved
+edit refreshes automatically, preserving reconciliation drafts. Strict builds, six native Windows
+contexts and a same-data complete signed offline APK upgrade qualify the change. Cold persistence,
+restoration, prior CI failure/negative controls and actual hosted-result limits are recorded in
+[D-394](quality/physical-asset-consent-and-account-refresh.md). No general stability/release acceptance.

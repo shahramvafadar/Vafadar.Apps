@@ -4383,3 +4383,15 @@ Only the new profile and matched input are retired. Main979/five known public pa
 meaningful Home/OS/D-392 APK and phone release pass. This closes the bounded physical bulk gap, not
 all AT-80/device/runtime/A11Y/iOS/provider/store/release gates.
 [Original evidence and observer limits](quality/physical-bulk-corrections.md).
+
+## D-394 - AT-81 physical asset consent and retained account refresh
+
+Bounded original Samsung new Expense/Income and edit cancellation preserve drafts and asset values;
+fresh accepted writes and an internal100EUR transfer preserve original meanings/metadata. Actual
+stale tab presentation is reproduced, corrected, and the same installed fixture verifies automatic
+7,905.66EUR after only the changed follow-up edit. Six actual Windows Shell/account contexts preserve
+reconciliation drafts; two successful English contexts are retained during native-digit continuation.
+Strict builds/complete offline signed APK pass. Existing architecture case and two meaningful negative
+controls pass; no new managed count or unchanged suite replay. Planned cold persistence and exact
+restoration are qualified separately from broad device/iOS/runtime/release gates.
+[Full evidence](quality/physical-asset-consent-and-account-refresh.md).

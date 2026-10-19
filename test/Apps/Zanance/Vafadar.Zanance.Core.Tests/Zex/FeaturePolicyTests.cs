@@ -54,10 +54,38 @@ public sealed class FeaturePolicyTests
     [Fact]
     public void No_page_reads_the_mode_itself()
     {
-        // Settings switches the mode, onboarding sets Simple and the snapshot walk-through sets Advanced; pages ask the
-        // policy (S0501 acceptance).
-        string[] writers = ["Features/Settings/SettingsViewModel.cs", "Features/Onboarding/OnboardingViewModel.cs", "Diagnostics/DebugSnapshots.cs"];
+        // Settings and onboarding configure the choice; independent snapshot fixtures set their own review context.
+        // Keep the additional fixture exception exact and unavailable to ordinary Release, rather than exempting Diagnostics.
+        const string retainedFixture = "Diagnostics/RetainedAggregateReview.cs";
         var root = RepositoryPaths.Combine(App);
+        var fixtureSource = File.ReadAllText(Path.Combine(root, retainedFixture));
+        var fixtureConditions = fixtureSource.Split('\n').Select(line => line.Trim())
+            .Where(line => line.StartsWith("#if", StringComparison.Ordinal)
+                || line.StartsWith("#elif", StringComparison.Ordinal)
+                || line.StartsWith("#else", StringComparison.Ordinal)
+                || line.StartsWith("#endif", StringComparison.Ordinal)).ToArray();
+        Assert.NotEmpty(fixtureConditions);
+        Assert.Equal("#if DEBUG || ZANANCE_INDEPENDENT_HOME_REVIEW", fixtureConditions[0]);
+        Assert.StartsWith(fixtureConditions[0], fixtureSource, StringComparison.Ordinal);
+        Assert.EndsWith("#endif", fixtureSource.TrimEnd(), StringComparison.Ordinal);
+        // Nested platform branches are valid; the outer independent-build gate must never have a Release fallback.
+        var depth = 0;
+        for (var index = 0; index < fixtureConditions.Length; index++)
+        {
+            var condition = fixtureConditions[index];
+            if (condition.StartsWith("#if", StringComparison.Ordinal)) { depth++; }
+            else if (condition.StartsWith("#endif", StringComparison.Ordinal))
+            {
+                Assert.True(depth > 0, "The independent fixture condition must remain balanced.");
+                depth--;
+                Assert.True(depth > 0 || index == fixtureConditions.Length - 1, "The fixture must stay inside its outer build condition.");
+            }
+            else { Assert.True(depth > 1, "The independent fixture must not compile an ordinary Release fallback."); }
+        }
+        Assert.Equal(0, depth);
+        Assert.Contains("AppInfo.Current.PackageName.StartsWith(\"pro.vafadar.zanance.storepreview.\", StringComparison.Ordinal)", fixtureSource, StringComparison.Ordinal);
+        Assert.Contains("AppInfo.Current.PackageName == \"pro.vafadar.zanance.androidhomereview\"", fixtureSource, StringComparison.Ordinal);
+        string[] writers = ["Features/Settings/SettingsViewModel.cs", "Features/Onboarding/OnboardingViewModel.cs", "Diagnostics/DebugSnapshots.cs", retainedFixture];
         var readers = Directory.EnumerateFiles(root, "*.*", SearchOption.AllDirectories)
             .Where(path => path.EndsWith(".cs", StringComparison.Ordinal) || path.EndsWith(".xaml", StringComparison.Ordinal))
             .Where(path => !path.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}", StringComparison.Ordinal)

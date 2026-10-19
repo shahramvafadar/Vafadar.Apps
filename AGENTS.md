@@ -2840,3 +2840,12 @@ financial action for a failed observer. Observe Delete and invoke original Undo 
 deadline, without navigation, clock replacement or renewed offers. Planned cold persistence follows
 terminal Undo only. Retain complete original metadata/relationships and restore Main/profiles/OS/APK,
 remove only owned matched inputs and release the coordinated phone turn before ending the batch.
+
+## D-394 - Refresh retained account tabs without financial replay
+
+Account detail activation after another Shell tab must use its original covered/coalesced loader,
+preserving unsaved reconciliation amount/reason/date and removing retired-shell subscriptions.
+Distinguish correctly persisted money from stale retained presentation. Repeat only the failed
+changed navigation path, never an accepted save to repair an observer. Native review preserves
+completed contexts, actual digit conversion and the same partially edited fixture. Architecture
+source exceptions stay exact, build/package bounded and negative-tested; never exempt Diagnostics.

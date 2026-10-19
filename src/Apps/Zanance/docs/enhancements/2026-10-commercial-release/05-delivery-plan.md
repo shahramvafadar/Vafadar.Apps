@@ -2789,3 +2789,11 @@ replaying accepted money actions. Six native packets and restored original Main/
 cleanup qualify this bounded path. No production/APK/managed-count change or unrelated successful
 suite/build replay. Continue ready approved work under D-386; broader device/runtime/external gates
 remain separate. [Evidence](../../quality/physical-bulk-corrections.md).
+
+## D-394 continuation
+
+The next genuine QA-04 physical gap exposes a retained account refresh defect; deliver the whole
+correction, focused native/managed checks, same-fixture phone upgrade, cold persistence/restoration,
+documentation and push together. Preserve successful contexts and accepted money. The exact D-393
+hosted policy-scan failure is corrected within this batch and requires actual latest-commit CI success.
+Do not replace remaining approved development with repeated stability/accessibility work.

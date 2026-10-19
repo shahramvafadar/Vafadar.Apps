@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Fresh account balances after tab navigation (D-394)
+
+- Refresh a retained account automatically after editing a transaction in another tab, while keeping unsaved reconciliation inputs.
+
 ### Safer import Undo and complete existing aggregate fields (D-392)
 
 - Keep later edits and attachments when a transaction import cannot be safely undone; older imports without original review stay for manual review.

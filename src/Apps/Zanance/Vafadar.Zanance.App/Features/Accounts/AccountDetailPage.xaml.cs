@@ -13,6 +13,9 @@ public partial class AccountDetailPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
+        await Presentation.Failures.GuardAsync(RefreshForNavigationAsync);
     }
+
+    /// <summary>Shares the covered read when the original page or its retained Shell tab becomes visible.</summary>
+    internal Task RefreshForNavigationAsync() => _viewModel.LoadAsync();
 }
