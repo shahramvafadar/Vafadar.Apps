@@ -271,3 +271,13 @@ artifacts/market-local-d299/runtime; archive202486 bytes, SHA256
 38398b866284a7903424ff226cf0adc8b53fcbbf740b23144022cb5969a039f0. None is portable source/configuration or committed.
 Live provider/coverage/redistribution/cost, genuine Android arm64/API24/16KiB, physical device, Mac/iOS, store
 signing, performance and public release remain open. Do not reinterpret this local prerequisite as those gates.
+
+
+## D-388 - Concrete next source decision
+
+The provider-neutral delivery remains unchanged. [Reviewed ECB proposal](25-ecb-reference-source-decision.md)
+adds actual public-feed and complete six-currency pair evidence, zero-upstream-fee terms and explicit
+paid-context free-original obligations. It identifies missing date-precision/derived-source metadata
+that must be implemented compatibly before a selected source can be activated. The unavailable default,
+original financial writers and current D-387 app/APK remain unchanged; no new managed tests or repeated
+successful native/build checks. Owner OD-14 source/terms approval is still required.

@@ -2727,3 +2727,13 @@ Finish the observed financial parser defect as one batch: preserve old negative 
 quote boundaries, qualify only changed error and compatible valid inputs, deliver the full signed
 main APK and restore original emulator state without reset. Keep Samsung's existing package/data
 unchanged in this batch. [Qualification](../../quality/csv-quotation-integrity.md). D-386 remains authoritative.
+
+
+## D-388 - Decision-ready ECB source before a complete integration
+
+The original provider-neutral rate batch is delivered; actual OD-14 source/terms choice is still
+required. Prepare the free ECB candidate with verified public feed, complete target-pair arithmetic,
+usage/disclosure conditions and exact timestamp/derivation compatibility work. Do not substitute a
+registered helper, invented observation time or default source activation for the complete adapter/
+gateway/persistence/native batch. [Reviewable proposal](25-ecb-reference-source-decision.md). Retain
+unchanged successful D-387 source/native/package evidence; do not replay it for a source decision.

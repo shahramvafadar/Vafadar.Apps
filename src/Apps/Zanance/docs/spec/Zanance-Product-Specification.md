@@ -7081,3 +7081,13 @@ bank syntax/encoding and complete100000-row compatibility checks. Original error
 review are qualified in18 Windows/six Android contexts. No new bank preset, financial/schema/budget/
 permission/SDK change or full-suite replay. [Exact evidence](../quality/csv-quotation-integrity.md).
 D-386's later dedicated runtime/accessibility completion and external release gates remain unchanged.
+
+
+### Section31 update - D-388 concrete reference-FX source proposal
+
+The live FX source is not selected. An actual normally validated public ECB read and complete30-pair
+six-currency arithmetic review now support a [decision-ready candidate](../enhancements/2026-10-commercial-release/25-ecb-reference-source-decision.md).
+Source-date precision, explicit derived-value evidence and free-original disclosure before payment/
+at access belong in its complete compatible integration. Source/terms approval, public/provider and
+platform acceptance remain open. No runtime/financial/schema/SDK/permission or APK/count change;
+D-387 qualified source/native evidence is retained without repeating successful unrelated work.

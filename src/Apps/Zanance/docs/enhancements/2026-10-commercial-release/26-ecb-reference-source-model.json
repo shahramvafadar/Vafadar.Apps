@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "status": "proposal-not-approved",
+  "reviewedOn": "2026-10-19",
+  "candidate": "European Central Bank euro reference data",
+  "dataKind": "daily informational reference FX, not tradable quotes or asset prices",
+  "currencies": [
+    "EUR",
+    "USD",
+    "GBP",
+    "CHF",
+    "CAD",
+    "AUD"
+  ],
+  "orderedPairs": 30,
+  "directPairs": 5,
+  "calculatedPairs": 25,
+  "perDataRequestFeeEUR": 0,
+  "monthlyProviderFeeEUR": 0,
+  "separateCosts": [
+    "existing current-machine hosting and maintenance",
+    "future store commissions and taxes are not estimated here"
+  ],
+  "requiresAccountOrApiKey": false,
+  "ownerDecisionRequired": true,
+  "publicActivationApproved": false,
+  "sourceTerms": "https://www.ecb.europa.eu/services/using-our-site/disclaimer/html/index.en.html",
+  "sourceUrl": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
+  "observedFeedDate": "2026-10-16",
+  "observedFeedBytes": 1547,
+  "observedFeedSha256": "4422161311c3c02cf2d1571db07bdf9884b3f42fdeb16a4926903236ae6ab42d",
+  "sourceHasIntradayObservationTime": false,
+  "httpLastModifiedIsFixingTime": false,
+  "applicationCurrentlyUnconfigured": true
+}

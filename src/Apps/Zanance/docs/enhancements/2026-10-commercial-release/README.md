@@ -27,3 +27,10 @@ earlier monetization model of the specification (MON-02 one-time Pro purchase, M
 Ids: `ZCR-<area>-nn` for work items (areas GOV, SEC, LOC, IMP, QA, A11Y, ENT, BIL, ID, SYNC, SHR, TAX, AI, BANK, FX,
 LANG, REL) and `OD-nn` for open decisions. Open stories of enhancement ZEX continue under the ZCR ids named in the
 backlog.
+
+
+## D-388 - Decision-ready ECB reference FX candidate
+
+[Source/terms/coverage and complete integration proposal](25-ecb-reference-source-decision.md) with
+[machine-readable cost/scope model](26-ecb-reference-source-model.json). This does not activate a
+provider or change current app/service behavior; owner OD-14 selection remains open.

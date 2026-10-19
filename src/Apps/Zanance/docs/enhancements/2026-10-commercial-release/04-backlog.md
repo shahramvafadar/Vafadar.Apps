@@ -3366,3 +3366,13 @@ IMP-01/IO-06/IO-08 refuse malformed quoted/unquoted digit concatenation before r
 Twenty-two new cases, affected valid exports/large inputs/bank syntax and original native error pages
 qualify the correction. No guessed bank preset or unrelated runtime/accessibility/full-suite work.
 [Evidence and remaining native/provider/platform gates](../../quality/csv-quotation-integrity.md).
+
+
+## D-388 - Decision-ready ECB source and usage conditions
+
+FX-01/OD-14 now have a concrete no-upstream-account/zero-data-fee source proposal, validated public
+feed and all30 ordered target-currency calculations. Five are direct and25 derived; date-only source
+precision and paid-context free-original disclosure require complete compatible integration before
+activation. [Proposal and exact boundaries](25-ecb-reference-source-decision.md). Owner source/terms
+choice remains open; no provider/SDK/API, default availability, app/APK or new managed-count change.
+Bank/AI/metal providers, external hosting/store/iOS and D-386's later qualification tracks are separate.

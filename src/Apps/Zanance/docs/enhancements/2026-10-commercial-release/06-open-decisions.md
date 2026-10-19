@@ -145,3 +145,15 @@ data changes; actual authentication is performed by the owner. Complete Android 
 then Mac/iOS. The owner needs company registration before creating publication/provider accounts;
 account-dependent genuine acceptance remains deferred until that setup. Settled choices need no new
 question. Existing separate deferral of the Windows product phase remains in force.
+
+
+## D-388 - Concrete OD-14 FX source choice awaiting the owner
+
+[ECB source proposal](25-ecb-reference-source-decision.md) and its [model](26-ecb-reference-source-model.json)
+record zero upstream data fees/no upstream account, direct and explicitly derived pairs for the six
+current target currencies, source-date precision and mandatory reuse/free-original disclosures.
+Recommendation: select this optional informational FX source and complete the whole compatible
+integration, preserving manual entry and current publication gates. Alternative: keep manual-only
+references; a commercial intraday/metal source needs a later separate offer and approval. Nothing is
+selected/activated by the research or by continued local development. Existing hosting/company/Mac/
+store decisions are settled and are not asked again.

@@ -7170,3 +7170,16 @@ CSV/export cases, the complete100000-row round trip and six affected bank syntax
 The changed error caption and original retained review are checked in18 Windows/six Release/AOT
 Android contexts. No writer/schema/budget/permission/SDK change or unrelated full-suite replay.
 [Complete qualification and binary/platform limits](quality/csv-quotation-integrity.md).
+
+
+## D-388 - Decision-ready ECB reference source, not activation
+
+Review the actual free daily ECB FX feed, reuse conditions and complete six-target-currency mapping
+before the still-open OD-14 source choice. A normally validated read returns29 currency entries,
+including all five required non-EUR values, and a date-only2026-10-16 set. All30 ordered target pairs
+are reviewed with exact rational arithmetic;25 are calculated and must be labelled. HTTP modified
+time is not a market fixing timestamp. Paid-context free-original disclosure and compatible precise
+source/derivation metadata are part of the whole future integration, not optional About copy.
+[Concrete proposal and costs](enhancements/2026-10-commercial-release/25-ecb-reference-source-decision.md).
+No source is selected, adapter/feature activated, account/payment created or runtime/APK changed.
+D-387 evidence and managed count remain current; successful builds/suites are not replayed for this research.
