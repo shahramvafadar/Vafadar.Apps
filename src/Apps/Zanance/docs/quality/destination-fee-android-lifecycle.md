@@ -110,3 +110,5 @@ Broader GC/ANR, two-second startup, low-memory, spoken readers, phone, Mac/iOS a
 remain open. Successful builds and this bounded original sequence do not close those gates.
 
 The later [D-370 Samsung currency continuation](physical-currency-lifecycle.md) reuses these exact APK bytes. Its bounded physical popup scope does not qualify physical financial fee Saves.
+
+[D-371](physical-destination-fee.md) later qualifies the bounded original editor/store sequence on Samsung with standalone fictitious SQLite. This is not main encrypted-adapter/full-device acceptance.

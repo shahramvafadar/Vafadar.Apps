@@ -60,3 +60,5 @@ successful original Release/AOT stored-fee retain/edit/remove in twelve translat
 contexts, preserving nine original native Saves and executing only27 remaining Saves.
 [Separate source-bound evidence, observed lifecycle failure and limits](destination-fee-android-lifecycle.md).
 Physical/iOS, general GC/ANR, spoken readers and release gates remain open.
+
+[D-371](physical-destination-fee.md) later qualifies the bounded original editor/store sequence on Samsung with standalone fictitious SQLite. This is not main encrypted-adapter/full-device acceptance.

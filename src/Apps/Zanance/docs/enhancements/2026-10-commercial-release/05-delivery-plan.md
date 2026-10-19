@@ -2568,3 +2568,13 @@ same launch and release the coordinated phone turn. Preserve failed observations
 case receipts; do not replay unchanged successful builds or financial suites. Physical fee edits,
 general GC/ANR/performance/readers/iOS/provider/Store/release remain separate unfinished scope.
 [Exact result](../../quality/physical-currency-lifecycle.md).
+
+## D-371 complete original physical stored-fee batch
+
+Use a distinct complete signed ARM64 caller on Samsung, preserving former fixtures and main data.
+All 12 contexts/36 native Saves pass with exact original fields, fee identities/effects, creation
+policy and Cancel. Keep one process through observation deadlines; stop only after full terminal
+proof and restore original main Home/profile 979 EUR/system/APK before releasing the phone turn.
+No unchanged successful main build or suite repeats. Standalone SQLite evidence is bounded;
+main encrypted-adapter, wider device/runtime/latency/readers/iOS/provider/release scope remains.
+[Qualified evidence](../../quality/physical-destination-fee.md).

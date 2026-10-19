@@ -59,3 +59,5 @@ uploaded. Main source/APK and managed counts remain D-369. No unchanged successf
 crypto/backend or complete suite is repeated. Physical successful stored-fee edits, other devices,
 general GC/ANR/low-memory/performance, spoken readers, Mac/iOS, providers/Store and release remain
 open. This is bounded original currency-popup evidence, not full-device/database acceptance.
+
+[D-371](physical-destination-fee.md) later qualifies the bounded original editor/store sequence on Samsung with standalone fictitious SQLite. This is not main encrypted-adapter/full-device acceptance.

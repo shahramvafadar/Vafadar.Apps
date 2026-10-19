@@ -6915,3 +6915,15 @@ process; installed bytes remain D-369. The coordinated turn is released. Zero ne
 application source or APK changes; no unchanged successful builds/suites repeated. Native surface
 checks do not establish physical fee Saves, general GC/ANR/speech/iOS or release acceptance.
 [Actual hardware observations and limits](../quality/physical-currency-lifecycle.md).
+
+### Section31 update - D-371 original hardware stored-fee edits
+
+Twelve original Samsung contexts complete 36 native fee Saves across en/fa/de, both themes and
+both modes. Exact ids/values/net effects and unrelated serialized data remain; original Cancel
+and fee-free creation policy pass. Strict independent ARM64 build/package and exact native-engine
+bytes match the unchanged main D-369 package. Native physical transport/source/PID evidence binds
+the standalone SQLite fixture, not the main encrypted storage adapter or whole-device acceptance.
+Main PID/Home/profile 979 EUR/system/APK restore and the turn is released. Zero managed-count or
+main-source/APK change; no unchanged successful suites/builds replayed. Broader runtime, latency,
+low-memory, reader, iOS, provider and release gates remain open.
+[Exact evidence and limitations](../quality/physical-destination-fee.md).

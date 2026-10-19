@@ -3212,3 +3212,15 @@ focus/hierarchy and host-coordinate failures, retain successful cases and releas
 No new managed tests/app/APK or repeated unchanged build/suite. QA-06 remains open for general
 GC/ANR/performance, physical fee Saves, spoken readers, other devices/iOS and external release.
 [Physical evidence](../../quality/physical-currency-lifecycle.md).
+
+## D-371 bounded original physical stored-fee completion
+
+Close AT-106's original editor/store hardware gap in 12 Samsung contexts/36 native Saves with exact
+fee identities/net effects and unrelated serialized fields. Preserve original Cancel/creation
+policy, signed ARM64/source/PID evidence and completed cases across two observation deadlines.
+The fixture is standalone SQLite; main encrypted-adapter/full-device acceptance remains distinct.
+Independent strict build passes; main source/APK remain D-369. Original main PID 11372/Home/profile 979 EUR,
+exact system state and installed bytes restore; terminal independent caller stops and turn releases.
+No new managed tests or repeated unchanged successful main/full-suite verification. QA-06 general
+GC/ANR/low-memory/latency, readers/iOS and external release gates remain open.
+[Original physical proof](../../quality/physical-destination-fee.md).

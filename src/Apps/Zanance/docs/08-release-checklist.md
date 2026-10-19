@@ -1737,3 +1737,14 @@ continues after initial unavailable focus; no reset or observer-driven restart. 
 or repeated unchanged successful build/test suite. Physical fee edits/general GC/ANR/reader/iOS/
 release gates remain open; the coordinated phone turn is released.
 [Evidence](quality/physical-currency-lifecycle.md).
+
+## D-371 bounded physical stored-fee qualification
+
+The original ARM64 editor/store completes 12 translated/theme/mode contexts and 36 native Saves
+on Samsung with fee identities/effects, unrelated fields and original Cancel policy preserved.
+Independent strict build/signature/offline/AOT/native-byte checks pass; main source/APK remain
+D-369. Preserve completed cases across observation deadlines, stop only after terminal success,
+restore original main PID/Home/profile 979 EUR/system state and release the phone turn. This
+standalone SQLite fixture does not close main encrypted-adapter, full-device/GC/ANR/low-memory,
+startup target, speech/iOS/provider/Store or release gates.
+[Evidence](quality/physical-destination-fee.md).

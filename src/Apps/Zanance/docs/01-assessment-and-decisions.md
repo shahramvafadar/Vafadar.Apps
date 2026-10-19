@@ -6970,3 +6970,15 @@ the corrected host coordinate bound; no app restart repairs an observer. No fina
 managed tests, source/APK change or repeated unchanged build/suite. Release the coordinated phone
 turn after terminal evidence. Physical fee Saves, general GC/ANR/readers/iOS/release remain open.
 [Original device evidence and limits](quality/physical-currency-lifecycle.md).
+
+## D-371 - Qualify original stored-fee edits on Samsung
+
+The independent original Release/AOT ARM64 editor completes 12 en/fa/de/theme/mode contexts and 36
+native Saves with exact retain/edit/remove fee identities, localized effects, unrelated serialized
+fields and original Cancel policies. Original physical transport/model, signed bytes/PID and source
+MVIDs bind the evidence; the fixture is standalone SQLite, not main encrypted-profile acceptance.
+Two observation deadlines retain the same process and completed cases; the third reads success.
+The independent build has zero warnings/errors. Stop only the independent caller after terminal
+proof, preserve its fixtures, restore unchanged main PID/Home/profile 979 EUR/system/APK and release
+the phone. Zero new managed tests; no unchanged successful main build or full suite repeated.
+[Bounded original hardware evidence and limits](quality/physical-destination-fee.md).

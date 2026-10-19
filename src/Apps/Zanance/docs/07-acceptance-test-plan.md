@@ -581,7 +581,7 @@ clear/zero it. Reopen fee-free and new forms; verify Simple/Advanced creation po
 writes. Compare all financial fields and unrelated rows, allowing only intended changes and audit updates.
 Final local status: 24 Windows contexts/72 valid Saves, native input/glyph checks, 1,456 tests, strict builds,
 signed APK, 12 normal Android new-form checks and original three-profile financial/preference values and expected settings audit pass.
-D-369 qualifies successful stored-fee edits on the independent original Android Release/AOT editor; physical/iOS remain unaccepted. Historical evidence: quality/destination-fee-retention.md; Android continuation: quality/destination-fee-android-lifecycle.md.
+D-369 qualifies the independent original Android Release/AOT editor; D-371 extends that bounded standalone-SQLite editor/store evidence to Samsung. Main encrypted-adapter/full-device and iOS acceptance remain open. Historical evidence: quality/destination-fee-retention.md; Android continuation: quality/destination-fee-android-lifecycle.md.
 
 ## AT-107 - Visible advance-settlement fields and safe actual differences (D-102)
 
@@ -4152,3 +4152,15 @@ keep 979 EUR/profile and matching installed D-369 bytes, then release the phone 
 Save, managed-count increase or successful unchanged suite/build replay. This does not qualify
 physical stored-fee Saves, general GC/ANR, speech, other devices, iOS or release.
 [Exact observations and preserved controller failures](quality/physical-currency-lifecycle.md).
+
+## AT-371 - Original physical stored destination-fee continuation (D-371)
+
+AT-106's original editor/store hardware scope completes 12 contexts/36 native Saves on Samsung:
+retain 75, edit 125 with the same id, explicit blank/zero removal only, source fee 150 and one transfer.
+Exact net effects and every unrelated serialized ledger/account/category/settings field match.
+Original fee-free creation/Cancel and native navigation pass. Physical model/transport, actual
+ARM64 APK/PID and source MVIDs qualify execution separately from the caller's generic boundary.
+The fixture is standalone SQLite; main encrypted-adapter/full-device acceptance is not implied.
+Preserve original main PID 11372/Home/profile 979 EUR/system/APK, stop only the terminal independent caller
+and release the turn. No new managed count, repeated unchanged suite or general runtime/release claim.
+[Exact proof](quality/physical-destination-fee.md).

@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Physical stored-fee qualification (D-371)
+
+- Verify existing transfer destination-fee retention, edits and explicit removal through the original Android editor/store on Samsung using isolated fictitious data. The main application package is unchanged.
+
 ### Physical currency control qualification (D-370)
 
 - Verify original currency lists and return navigation on Samsung while preserving selections, saved data and system settings. The application package remains D-369.
