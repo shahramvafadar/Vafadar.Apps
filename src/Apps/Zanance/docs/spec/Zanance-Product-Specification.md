@@ -7168,3 +7168,12 @@ corrected for one independently gated diagnostic; two negative controls preserve
 enforcement. Managed counts do not increase and successful unrelated checks are not repeated.
 Broader device/ANR/A11Y/iOS/provider/store and publication gates remain separate under D-386.
 [Complete qualification and limits](../quality/physical-asset-consent-and-account-refresh.md).
+
+### Section31 update - D-395 consistent Plans Add
+
+Owner-requested Plans UI now uses Home's physical-right48px title action instead of a separate bottom
+band. Preserve AddCommand, complete translated name, pushed Back, filters/warnings and separate empty
+invitation. Eighteen Windows filled/empty contexts/36 native images and focused Android Add/Cancel
+qualify the change with unchanged financial inputs. Strict builds and complete offline APK evidence
+are recorded in [D-395](../quality/plans-add-header.md). Managed counts and D-386's later dedicated
+stability/accessibility order remain unchanged; no general platform/provider/store release acceptance.

@@ -1814,3 +1814,10 @@ Reactivating a retained account after a transaction edit must refresh its covere
 when the platform omits another OnAppearing callback. Share pending reads, retain the same page,
 and preserve unsaved reconciliation amount/reason/date. Never require a manual refresh for newly
 saved money or issue another financial write. Native digit conversion remains display-only.
+
+## D-395 - Consistent Plans title action
+
+Plans mirrors Home: a growing title and real48px Add button on its physical right replace the native
+title and full-width lower action band. Preserve translated spoken name and the same command. The
+optional44px Back target retains original navigation when pushed. Segment chips/warnings remain
+above the full remaining list/empty viewport; the empty-state invitation remains inside its content.

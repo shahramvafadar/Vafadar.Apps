@@ -1631,3 +1631,11 @@ Use -AccountTabRefreshContinuation <exact32hexOriginalRun> only for the document
 retain two completed English images/receipts and the already accepted13EUR edit; qualify native
 Persian digits without repeating that save, then finish remaining contexts. No restart of an
 expired live process or general restart/reseed option is added. Exact package/fixture guards remain.
+
+## Plans title action review (D-395)
+
+eng/scripts/Run-StoreDrafts.ps1 -PlansAddHeaderReview uses the existing independent non-input Windows
+desktop and original fictitious seeded data. It checks18 en/fa/de light/dark width contexts and saves
+plans.png/empty.png plus geometry in each directory. Only view-model presentation is emptied; stored
+schedules are not deleted. The independent AndroidHome caller's plans-add-header phase checks the
+original native Add and unsaved Cancel, without touching the Main package or changing OS settings.

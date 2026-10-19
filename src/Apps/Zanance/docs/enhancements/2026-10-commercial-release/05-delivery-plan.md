@@ -2797,3 +2797,10 @@ correction, focused native/managed checks, same-fixture phone upgrade, cold pers
 documentation and push together. Preserve successful contexts and accepted money. The exact D-393
 hosted policy-scan failure is corrected within this batch and requires actual latest-commit CI success.
 Do not replace remaining approved development with repeated stability/accessibility work.
+
+## D-395 - Complete requested Plans header consistency
+
+Deliver the requested Home-style Plans Add as one visual batch: preserve original navigation and
+financial commands, inspect only changed filled/empty surfaces, native Add/Cancel, strict builds,
+complete offline signed APK, documentation and push. Do not reopen unrelated successful matrices or
+dedicated stability/accessibility under D-386. [Evidence](../../quality/plans-add-header.md).

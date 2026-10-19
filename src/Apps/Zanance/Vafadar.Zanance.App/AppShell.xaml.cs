@@ -149,7 +149,7 @@ public partial class AppShell : Shell
         Navigated += (_, _) =>
         {
             // D-375: Home already owns its growing title/Add row; never wrap it in a second header.
-            if (CurrentPage is not { } page || page is Features.Home.HomePage || GetTitleView(page) is not null)
+            if (CurrentPage is not { } page || page is Features.Home.HomePage or Features.Plans.PlansPage || GetTitleView(page) is not null)
             {
                 return;
             }

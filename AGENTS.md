@@ -2849,3 +2849,10 @@ Distinguish correctly persisted money from stale retained presentation. Repeat o
 changed navigation path, never an accepted save to repair an observer. Native review preserves
 completed contexts, actual digit conversion and the same partially edited fixture. Architecture
 source exceptions stay exact, build/package bounded and negative-tested; never exempt Diagnostics.
+
+## D-395 - Plans Add follows Home's title action
+
+Home and Plans keep the original real Add command in their own growing title row, physically right,
+with a48px visual/target and complete translated name. Do not reserve a bottom action band or add a
+second Shell/Windows title. Preserve original Back for a pushed page, plan filters/warnings and the
+separate empty-state action. Qualify only the changed page; no financial Save is needed for layout.

@@ -8,11 +8,22 @@
     xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Plans"
     x:DataType="local:PlansViewModel"
+    Shell.NavBarIsVisible="False"
     Title="{v:Translate Plans_Title}">
 
-    <!-- D-78: separate scrollable rows from persistent Add/bulk/Undo actions. -->
-    <Grid RowDefinitions="Auto,*,Auto">
-        <VerticalStackLayout Padding="16,8,16,4" Spacing="8">
+    <!-- D-395: match Home's title action and give the list the former bottom action band. -->
+    <Grid RowDefinitions="Auto,Auto,*">
+        <Grid x:Name="PlansHeader" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8" Padding="16,8" FlowDirection="LeftToRight">
+            <ImageButton x:Name="HeaderBack" IsVisible="False" WidthRequest="44" HeightRequest="44" Padding="11"
+                         BackgroundColor="{DynamicResource PrimarySoft}" CornerRadius="22" VerticalOptions="Center"
+                         SemanticProperties.Description="{v:Translate Common_Back}" Clicked="OnHeaderBackClicked" />
+            <Label Grid.Column="1" Text="{v:Translate Plans_Title}" Style="{StaticResource PageTitle}"
+                   LineBreakMode="WordWrap" VerticalOptions="Center" />
+            <Button x:Name="AddAction" Grid.Column="2" Style="{StaticResource FloatingAddButton}" Text="+"
+                    WidthRequest="48" HeightRequest="48" Margin="0" CornerRadius="16" VerticalOptions="Center"
+                    Command="{Binding AddCommand}" SemanticProperties.Description="{v:Translate Plans_Add}" />
+        </Grid>
+        <VerticalStackLayout Grid.Row="1" Padding="16,8,16,4" Spacing="8">
             <v:ChoiceChips IsCompact="True" ItemsSource="{Binding SegmentNames}" SelectedIndex="{Binding SegmentIndex}" />
 
             <!-- Notifications not allowed (REM-02, AT-34) -->
@@ -36,7 +47,7 @@
             </Border>
         </VerticalStackLayout>
 
-        <CollectionView x:Name="ContentViewport" Grid.Row="1" ItemsSource="{Binding Rows}" SelectionMode="None">
+        <CollectionView x:Name="ContentViewport" Grid.Row="2" ItemsSource="{Binding Rows}" SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="local:PlanRow">
                     <Grid Padding="16,0,16,8">
@@ -56,7 +67,7 @@
         </CollectionView>
 
         <!-- D-318: keep empty feedback outside the Android adapter swap that can hide the first row. -->
-        <ScrollView x:Name="EmptyViewport" Grid.Row="1" IsVisible="{Binding IsEmpty}">
+        <ScrollView x:Name="EmptyViewport" Grid.Row="2" IsVisible="{Binding IsEmpty}">
             <VerticalStackLayout Padding="32,48" Spacing="16">
                 <fi:SymbolIcon Symbol="CalendarClock" FontSize="44" HorizontalOptions="Center" ForegroundColor="{DynamicResource PlanText}" />
                 <Label Text="{Binding EmptyText}" HorizontalTextAlignment="Center" />
@@ -64,7 +75,5 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <Button x:Name="AddAction" Grid.Row="2" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
-                SemanticProperties.Description="{v:Translate Plans_Add}" />
     </Grid>
 </ContentPage>

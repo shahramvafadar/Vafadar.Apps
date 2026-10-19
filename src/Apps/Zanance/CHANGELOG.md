@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Plans Add beside its title (D-395)
+
+- Put the Plans plus button beside its title, matching Home and freeing the lower band for the plan list.
+
 ### Fresh account balances after tab navigation (D-394)
 
 - Refresh a retained account automatically after editing a transaction in another tab, while keeping unsaved reconciliation inputs.

@@ -4395,3 +4395,12 @@ Strict builds/complete offline signed APK pass. Existing architecture case and t
 controls pass; no new managed count or unchanged suite replay. Planned cold persistence and exact
 restoration are qualified separately from broad device/iOS/runtime/release gates.
 [Full evidence](quality/physical-asset-consent-and-account-refresh.md).
+
+## D-395 - Plans title Add and remaining content height
+
+Check original Plans in en/fa/de, light/dark and360/412/1280 Windows widths: same48px title action,
+full command/name, no duplicate native header, unchanged chips/warnings and list/empty viewport to
+the bottom. Eighteen contexts and36 original app-window images qualify the changed geometry while
+stored accounts/entries/plans/settings remain unchanged. Android native open/Cancel, final package
+and preserved Main/OS observations are bounded in [D-395](quality/plans-add-header.md). Native cases
+do not add managed test counts or establish broader platform/stability/accessibility acceptance.

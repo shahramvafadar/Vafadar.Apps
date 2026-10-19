@@ -1947,3 +1947,10 @@ edit refreshes automatically, preserving reconciliation drafts. Strict builds, s
 contexts and a same-data complete signed offline APK upgrade qualify the change. Cold persistence,
 restoration, prior CI failure/negative controls and actual hosted-result limits are recorded in
 [D-394](quality/physical-asset-consent-and-account-refresh.md). No general stability/release acceptance.
+
+## D-395 - Plans header action
+
+Original Plans Add now matches Home beside the title, with no bottom action band. Retain original
+filters, empty action and pushed Back. Changed-page native layout/open/Cancel and final offline
+signed candidate evidence: [D-395](quality/plans-add-header.md). No commercial Windows delivery,
+general Android stability/accessibility, iOS or publication claim follows from these focused checks.

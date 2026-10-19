@@ -162,17 +162,24 @@ internal static class DebugLayoutChecks
             foreach (var actionName in new[] { "AddAction", "BulkActions", "UndoNotice" })
             {
                 if (page.FindByName<VisualElement>(actionName) is not { IsVisible: true } action) { continue; }
-                // D-78: both siblings are measured in their common grid, so scrolling cannot hide overlap.
+                // D-395: title actions are above the viewport and nested in their own header.
+                // Compare page coordinates; bottom docks still have to remain completely outside the viewport.
+                var actionTop = action.Y;
+                for (var parent = action.Parent as VisualElement; parent is not null && parent != page; parent = parent.Parent as VisualElement)
+                    actionTop += parent.Y;
+                var viewportTop = viewport.Y;
+                for (var parent = viewport.Parent as VisualElement; parent is not null && parent != page; parent = parent.Parent as VisualElement)
+                    viewportTop += parent.Y;
                 if (viewport.Width <= 0 || viewport.Height <= 0 || action.Height < 44
-                    || action.Y < viewport.Y + viewport.Height - 1)
+                    || actionTop + action.Height > viewportTop + 1 && actionTop < viewportTop + viewport.Height - 1)
                 {
                     File.WriteAllText(Path.Combine(folder, name + "-action-layout-failure.json"),
                         JsonSerializer.Serialize(new { actionName, viewport.Width, viewport.Height, viewport.Y,
-                            actionTop = action.Y, actionHeight = action.Height }, new JsonSerializerOptions { WriteIndented = true }));
+                            actionTop, actionHeight = action.Height }, new JsonSerializerOptions { WriteIndented = true }));
                     throw new InvalidOperationException("A persistent action covers its viewport or has no usable target.");
                 }
-                evidence.Add(new { kind = "action dock", actionName, viewport.Width, viewport.Height,
-                    viewportBottom = viewport.Y + viewport.Height, actionTop = action.Y, actionHeight = action.Height });
+                evidence.Add(new { kind = "persistent action", actionName, viewport.Width, viewport.Height,
+                    viewportBottom = viewportTop + viewport.Height, actionTop, actionHeight = action.Height });
             }
         }
 

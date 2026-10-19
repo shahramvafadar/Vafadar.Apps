@@ -3442,3 +3442,10 @@ The actual D-393 CI failure is narrowed to its independent fixture source bounda
 managed case and two negative controls qualify the correction, without a count increase or full suite.
 General QA-03/device, dedicated QA-06/A11Y under D-386, iOS and external gates remain open.
 [Evidence and retained failures](../../quality/physical-asset-consent-and-account-refresh.md).
+
+## D-395 - Owner-requested Plans UI consistency
+
+Plans now follows D-375 Home with a48px real Add action beside the growing title, no lower action
+band and full remaining list/empty height. Same command, translated name, filters/warnings and
+pushed Back remain. Changed-page native evidence is [D-395](../../quality/plans-add-header.md);
+no financial Save or successful unrelated test replay. Broader QA/A11Y/runtime/external gates stay open.

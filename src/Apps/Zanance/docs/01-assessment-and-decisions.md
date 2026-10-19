@@ -7268,3 +7268,17 @@ Bound the one-path exception by its original build/package guards and prove refu
 fallback/unapproved readers; the exact existing managed case passes, with no count increase or
 unrelated/full-suite replay. Original failures, cold persistence/restoration and hosted-result limits:
 [complete qualification](quality/physical-asset-consent-and-account-refresh.md). D-386 remains in force.
+
+## D-395 - Put Plans Add beside its title
+
+The owner requested the same UI as D-375 Home. Move the original Plans AddCommand button into a
+48px physical-right title row with zero docking margin, hide the replaced native title, and retain
+Back for pushed instances. Filters and permission/review warnings keep their own row; list and
+separate empty content use the remaining height without a bottom band. Avoid a duplicate Windows
+PageHeader. No financial algorithm, new translation, permission or schema changes.
+
+Eighteen actual Windows contexts (en/fa/de, light/dark,360/412/1280) check filled and empty geometry,
+original command/name and stored account/ledger/plan/settings preservation;36 app-window images are
+inspected. Dedicated Release/AOT Android Add/Cancel and complete offline signed APK evidence are
+recorded in [the scoped qualification](quality/plans-add-header.md). No unrelated suite replay or
+new managed case count, broad A11Y/stability/iOS/store/release acceptance. D-386 priorities remain.
