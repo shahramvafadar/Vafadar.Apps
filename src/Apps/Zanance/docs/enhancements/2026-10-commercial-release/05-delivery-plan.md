@@ -2587,3 +2587,15 @@ qualified independent package and normal Data build; preserve all evidence and f
 product/source/APK change or replay of unrelated successful verification. Continue ready original
 Home performance/ANR work; device/readers/iOS/provider/Store/release remain separate open gates.
 [Exact paired result](../../quality/home-native-row-transport.md).
+
+## D-373 complete unreviewed-scope delivery
+
+Implement stable local account lookup and checked totals as one batch, then qualify new boundary
+cases and original protected/native Home. Do not reuse confirmed-only timings for unreviewed work.
+Keep the original raw-function preparation failure and original context guard, exact failed
+reference and all completed cases. Paired emulator/Samsung data/presentation pass with bounded
+about 13.7% tenfold median reduction. Preserve both native GC crashes; continuation is not a GC fix.
+Strict main builds/full signed offline APK and no-reset upgrades/native restoration pass; release
+the phone and clean test output. Remaining ready work continues; general latency/GC/ANR/cold,
+readers/iOS/provider/Store/release gates remain separate.
+[Qualified scope and failures](../../quality/unreviewed-account-scope.md).

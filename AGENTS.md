@@ -2661,3 +2661,13 @@ on cleanup. Do not suppress vendor finalizers, change GC policy, retain retired 
 foreign children. Bind native financial cases to original source/input and complete stored-row
 readback; missing runtime input/navigation receipts cannot be reconstructed from persisted money.
 A bounded original sequence/popup continuation does not close general GC/ANR/device/iOS gates.
+
+## D-373 original unreviewed scope
+
+Unreviewed scope indices are operation-local and retain every original account record/order,
+ordinal currency group and legacy/self/destination effect. Merge endpoint groups by original
+position; preserve checked within-entry sums and refuse cross-entry long/count overflow. The
+old confirmed-only workload cannot qualify this path. Prepare a distinct fresh fictitious corpus
+through the original context's native guard, never a permissive replacement or removed trigger.
+Keep failed preparation files, existing keys and complete same-source case receipts. Actual native
+GC death permits a bounded retained-case continuation, not a stability claim or observation reset.

@@ -4175,3 +4175,16 @@ presentation checks. Mixed page timings reject the extra native boundary. Restor
 PID/Home/APK/OS, qualified independent bytes and ordinary Data output after terminal evidence.
 No phone, two-second/general ANR, speech/iOS/provider/release acceptance is inferred.
 [Exact paired result and restoration](quality/home-native-row-transport.md).
+
+## AT-373 - Original unreviewed scope and checked total boundaries (D-373)
+
+Fourteen new Core cases protect ordered duplicate/endpoint/self-transfer routing, explicit/default
+scope, original per-currency counts, legacy metadata and overflow. All48 related cases pass;
+original Release/AOT x64 and Samsung ARM64 each refuse Income/Expense cross-entry overflow without
+storing those inputs. Native assertion counts are separate from managed tests. Distinct protected
+unreviewed reference/tenfold workloads compare complete original Home/native focus/publication/
+layout and raw schema/typed data. Preserve the failed raw pre-encryption update, original context
+function/triggers, failed native processes and completed cases. Bounded tenfold improvement is
+about 13.7%, with reference unchanged/mixed; general GC/ANR/two-second/cold/release is not accepted.
+Strict builds, complete signed offline APK and no-reset main Home/system/profile restoration pass.
+[Exact evidence and open gates](quality/unreviewed-account-scope.md).

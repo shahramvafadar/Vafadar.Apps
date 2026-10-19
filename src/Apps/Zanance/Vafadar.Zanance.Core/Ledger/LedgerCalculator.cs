@@ -177,20 +177,54 @@ public static class LedgerCalculator
     /// <summary>Unreviewed entries per currency with their net balance effect on the accounts in scope.</summary>
     public static IReadOnlyList<UnreviewedSummary> Unreviewed(IEnumerable<Account> accounts, IEnumerable<LedgerEntry> entries, IReadOnlyCollection<Guid>? accountIds = null)
     {
-        var scope = InScope(accounts, accountIds).ToList();
+        // D-373: route each entry to its two possible accounts instead of rescanning the whole
+        // scope. Keep original positions: duplicate ids and checked per-currency sums are order-sensitive.
+        var scope = InScope(accounts, accountIds).Select((account, order) => (Account: account, Order: order))
+            .ToLookup(row => row.Account.Id);
         var result = new SortedDictionary<string, (int Count, long Sum)>(StringComparer.Ordinal);
 
         foreach (var entry in entries.Where(e => e.Review == ReviewState.Unreviewed))
         {
             // Once per entry and currency: a transfer between two accounts in scope is one unreviewed entry with net 0.
-            foreach (var currency in scope.Where(a => a.Id == entry.AccountId || a.Id == entry.ToAccountId).GroupBy(a => a.CurrencyCode))
+            foreach (var currency in TouchedScopeAccounts(entry, scope).GroupBy(a => a.CurrencyCode))
             {
                 var current = result.GetValueOrDefault(currency.Key);
-                result[currency.Key] = (current.Count + 1, current.Sum + currency.Sum(a => entry.EffectOn(a.Id)));
+                result[currency.Key] = (checked(current.Count + 1), checked(current.Sum + currency.Sum(a => entry.EffectOn(a.Id))));
             }
         }
 
         return [.. result.Select(pair => new UnreviewedSummary(pair.Key, pair.Value.Count, pair.Value.Sum))];
+    }
+
+    /// <summary>Enumerates only touched scope records in their original order, including repeated ids once per record.</summary>
+    private static IEnumerable<Account> TouchedScopeAccounts(LedgerEntry entry, ILookup<Guid, (Account Account, int Order)> scope)
+    {
+        var source = scope[entry.AccountId];
+        if (entry.ToAccountId is not { } destinationId || destinationId == entry.AccountId)
+        {
+            foreach (var row in source) yield return row.Account;
+            yield break;
+        }
+
+        // Merge the two existing ordered groups instead of concatenating them. Concatenation can
+        // change whether the original checked currency sum overflows when scope ids are repeated.
+        using var from = source.GetEnumerator();
+        using var to = scope[destinationId].GetEnumerator();
+        var hasFrom = from.MoveNext();
+        var hasTo = to.MoveNext();
+        while (hasFrom || hasTo)
+        {
+            if (!hasTo || hasFrom && from.Current.Order < to.Current.Order)
+            {
+                yield return from.Current.Account;
+                hasFrom = from.MoveNext();
+            }
+            else
+            {
+                yield return to.Current.Account;
+                hasTo = to.MoveNext();
+            }
+        }
     }
 
     /// <summary>Returns the entries that make up a number of a view, with the same filter (REP-01).</summary>

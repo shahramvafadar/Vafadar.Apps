@@ -6993,3 +6993,17 @@ presentation refusal, use a fresh unweakened original control, retain live proce
 observation deadlines, restore original independent bytes/main PID/Home/OS and ordinary Data output.
 No managed-count, product source/APK or unchanged full-suite repetition. QA-06 remains open.
 [Exact experiment, original paired observations and withdrawal](quality/home-native-row-transport.md).
+
+## D-373 - Index unreviewed scopes and reject overflowing totals
+
+Replace per-entry full-account scans with one local lookup and ordered endpoint-group merge.
+Preserve repeated account records, legacy/self/destination metadata, ordinal currency counts and
+original EffectOn/checked within-entry sums; additionally refuse cross-entry long overflow rather
+than wrapping. Fourteen new Core cases and all 48 related cases pass; original Release/AOT x64 and
+Samsung ARM64 each refuse both boundary inputs. A distinct protected unreviewed corpus preserves
+all other typed fields, context write guards and old fixtures/keys. Paired complete Home tenfold
+medians reduce 3030.53 ->2613.96ms emulator and 7535.41 ->6500.89ms Samsung; reference is mixed/flat.
+Retain both actual old/new native GC failures and continue only unfinished same-binary cases.
+Strict Windows/full signed offline Android, no-reset main upgrades and exact native/OS restoration
+pass; release the phone turn. No runtime/GC or crypto weakening; broader QA-06 remains open.
+[Detailed failures, complete retained comparisons and packages](quality/unreviewed-account-scope.md).

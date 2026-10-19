@@ -38,10 +38,11 @@ internal static partial class AndroidHomeReview
         using var deadline = new CancellationTokenSource(TimeSpan.FromMinutes(12)); var ct = deadline.Token;
         try
         {
-            if (phase == "prepare")
+            if (phase is "prepare" or "prepare-unreviewed")
             {
-                await Task.Run(() => PrepareAsync(root, ct), ct);
-                await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, MainPackageTouched = false, Device = DeviceEvidence() }, ct);
+                var resumeUnreviewed = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_resume_unreviewed", false) == true;
+                await Task.Run(() => PrepareAsync(root, ct, unreviewed: phase == "prepare-unreviewed", resumeUnreviewed), ct);
+                await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, UnreviewedCorpus = phase == "prepare-unreviewed", NativeOverflowRefusals = phase == "prepare-unreviewed" ? CheckUnreviewedOverflow() : 0, CoreModuleVersionId = typeof(LedgerCalculator).Module.ModuleVersionId, MainPackageTouched = false, Device = DeviceEvidence() }, ct);
             }
             else if (phase == "plan-publication-fixed")
             {
@@ -228,14 +229,32 @@ internal static partial class AndroidHomeReview
             if ((item.Attributes & FileAttributes.ReparsePoint) != 0) throw new ReviewCheckException("Redirected workload root refused.");
     }
 
-    private static async Task PrepareAsync(string root, CancellationToken ct)
+    private static async Task PrepareAsync(string root, CancellationToken ct, bool unreviewed = false, bool resumeUnreviewed = false)
     {
-        FixtureDirectory.Create(root);
+        if (resumeUnreviewed)
+        {
+            // Only the observed terminal pre-encryption reference failure can use this continuation.
+            if (!unreviewed || Path.GetFileName(root) != "25b9dab64bf849fcb24e39246d773215"
+                || !Directory.Exists(Path.Combine(root, "reference")) || Directory.Exists(Path.Combine(root, "tenfold")))
+                throw new ReviewCheckException("Original failed unreviewed preparation required.");
+            RequireRoot(root);
+            var failures = Directory.GetFiles(root, "failure-*.json");
+            if (failures.Length != 1) throw new ReviewCheckException("Exact retained preparation failure required.");
+            using var failure = JsonDocument.Parse(await File.ReadAllTextAsync(failures[0], ct));
+            if (failure.RootElement.GetProperty("ErrorType").GetString() != typeof(SqliteException).FullName
+                || !failure.RootElement.GetProperty("Stack").GetString()!.Contains("PrepareAsync", StringComparison.Ordinal))
+                throw new ReviewCheckException("Retained failure is not the original pre-encryption update.");
+        }
+        else FixtureDirectory.Create(root);
         foreach (var (name, shape) in new[] { ("reference", Workload.Reference), ("tenfold", Workload.Tenfold) })
         {
             var folder = Path.Combine(root, name);
-            await PerformanceFixture.CreateAsync(folder, shape, ct);
+            if (!(resumeUnreviewed && name == "reference")) await PerformanceFixture.CreateAsync(folder, shape, ct);
             var original = Path.Combine(folder, "fixture.db");
+            if (unreviewed)
+            {
+                await PrepareUnreviewedRowsAsync(folder, shape, ct);
+            }
             using var data = new ServiceCollection().AddZananceData(original, protectionRequired: true).BuildServiceProvider();
             var location = data.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
             var keyFolder = Path.Combine(folder, "keys"); Directory.CreateDirectory(keyFolder);
@@ -246,6 +265,78 @@ internal static partial class AndroidHomeReview
                 (_, _) => throw new ReviewCheckException("No restored intent belongs to a new workload."), () => RequireRoot(folder),
                 256 * 1024 * 1024, "4.19.0", ct);
         }
+    }
+
+    /// <summary>Marks only a validated pre-encryption corpus through the original context, preserving all other typed rows.</summary>
+    private static async Task PrepareUnreviewedRowsAsync(string folder, Workload shape, CancellationToken ct)
+    {
+        RequireRoot(folder);
+        var original = Path.Combine(folder, "fixture.db");
+        if (!File.Exists(original) || Directory.Exists(Path.Combine(folder, "keys")) || File.Exists(Path.Combine(folder, "identities.sqlite")))
+            throw new ReviewCheckException("Unprotected original fixture required before first bootstrap.");
+        // Observe the original raw-connection failure without executing another financial update.
+        var missingFunction = false;
+        await using (var rawConnection = new SqliteConnection(new SqliteConnectionStringBuilder
+            { DataSource = original, Mode = SqliteOpenMode.ReadWrite, Pooling = false }.ToString()))
+        {
+            await rawConnection.OpenAsync(ct);
+            using var explain = rawConnection.CreateCommand(); explain.CommandText = "EXPLAIN UPDATE Entries SET Review = 1";
+            try { await using var unused = await explain.ExecuteReaderAsync(ct); }
+            catch (SqliteException error) when (error.SqliteErrorCode == 1
+                && error.Message.Contains("no such function: zanance_household_write", StringComparison.Ordinal)) { missingFunction = true; }
+        }
+        if (!missingFunction) throw new ReviewCheckException("Original raw write-function refusal not established.");
+        using var data = new ServiceCollection().AddZananceData(original).BuildServiceProvider();
+        await using var db = await data.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(ct);
+        var applied = (await db.Database.GetAppliedMigrationsAsync(ct)).ToArray();
+        if (!applied.SequenceEqual(db.Database.GetMigrations()) || await db.Entries.CountAsync(ct) != shape.Entries
+            || await db.Entries.AnyAsync(entry => entry.Review != ReviewState.Confirmed, ct)
+            || await db.Accounts.CountAsync(ct) != shape.Accounts || await db.Schedules.CountAsync(ct) != shape.Schedules
+            || await db.Settings.CountAsync(ct) != 1)
+            throw new ReviewCheckException("Original completed confirmed corpus differs; preserve its files.");
+        await db.Database.OpenConnectionAsync(ct);
+        var actual = (SqliteConnection)db.Database.GetDbConnection();
+        using (var check = actual.CreateCommand())
+        {
+            check.CommandText = "SELECT (SELECT count(*) FROM HouseholdLocalBinding) + (SELECT count(*) FROM SyncBinding)";
+            if (Convert.ToInt64(await check.ExecuteScalarAsync(ct), System.Globalization.CultureInfo.InvariantCulture) != 0)
+                throw new ReviewCheckException("Only unbound independent fixtures can be prepared.");
+        }
+        await using var expected = new SqliteConnection("Data Source=:memory:;Pooling=False");
+        await expected.OpenAsync(ct); actual.BackupDatabase(expected);
+        // Keep the original native guard function on both connections; never replace or disable a trigger.
+        var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(expected)
+            .UseModel(Vafadar.Zanance.Data.CompiledModel.ZananceDbContextModel.Instance).Options;
+        await using var expectedContext = new ZananceDbContext(options);
+        if (await expectedContext.Database.ExecuteSqlRawAsync("UPDATE Entries SET Review = 1", ct) != shape.Entries
+            || await db.Database.ExecuteSqlRawAsync("UPDATE Entries SET Review = 1", ct) != shape.Entries)
+            throw new ReviewCheckException("Exact fresh review transition required.");
+        await SqliteSnapshotVerifier.VerifyAsync(expected, actual, ct);
+        LogReport("unreviewed-preparation-rows", Path.GetFileName(Path.GetDirectoryName(folder)!), new
+        {
+            Shape = Path.GetFileName(folder), shape.Entries, RawMissingFunctionConfirmed = true,
+            OriginalContextGuardPreserved = true, CompleteSchemaAndTypedRowsExceptIntendedReviewMatched = true,
+            BeforeFirstEncryption = true,
+        });
+    }
+
+    /// <summary>Checks the original AOT calculator's two total boundaries without any stored or financial write.</summary>
+    private static int CheckUnreviewedOverflow()
+    {
+        var refused = 0;
+        foreach (var kind in new[] { EntryKind.Income, EntryKind.Expense })
+        {
+            var account = new Core.Accounts.Account { Name = "Independent review boundary", CurrencyCode = "EUR" };
+            var first = new LedgerEntry { AccountId = account.Id, Amount = long.MaxValue, Kind = kind, Review = ReviewState.Unreviewed };
+            var second = new LedgerEntry { AccountId = account.Id, Amount = 2, Kind = kind, Review = ReviewState.Unreviewed };
+            try
+            {
+                _ = LedgerCalculator.Unreviewed([account], [first, second]);
+                throw new ReviewCheckException("Unreviewed total overflow was not refused.");
+            }
+            catch (OverflowException) { refused++; }
+        }
+        return refused;
     }
 
     /// <summary>Refuses a rendered Home measured behind a native dialog or another foreground window.</summary>

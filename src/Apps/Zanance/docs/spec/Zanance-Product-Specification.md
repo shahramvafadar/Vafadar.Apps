@@ -6938,3 +6938,17 @@ presentation refusal and fresh exact current control, all fixtures/keys and orig
 Default Data output is restored with zero warnings/errors; no production source, managed-count,
 main APK, financial algorithm or schema change. QA-06/ANR and external acceptance remain open.
 [Result and limits](../quality/home-native-row-transport.md).
+
+### Section31 update - D-373 original unreviewed scope and checked totals
+
+The Core review calculation replaces repeated full-scope scans with an ordered local endpoint
+lookup, preserving original currency effects/counts and duplicate/legacy order. Cross-entry long
+overflow now refuses rather than wrapping. Fourteen new Core cases/all 48 related cases pass; two
+original AOT refusals on both x64/actual ARM64 add no managed count. Distinct protected unreviewed
+workloads preserve complete typed data and all original financial/native presentation. Tenfold
+medians 3030.53 ->2613.96ms emulator and 7535.41 ->6500.89ms Samsung describe bounded improvement;
+reference is mixed/flat and the two-second/general-startup target remains unaccepted. Both real
+native GC failures remain open; only unfinished same-source cases continue. Strict Windows/full
+signed offline Android and no-reset main upgrades pass with original Home/OS/profile state.
+No schema, crypto/runtime policy or permission change, and no unrelated full-suite repetition.
+[Native failures, comparisons and actual packages](../quality/unreviewed-account-scope.md).

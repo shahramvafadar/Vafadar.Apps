@@ -1515,3 +1515,15 @@ processes across observation deadlines. After rejecting an artifact-only build o
 ordinary Data output and remove the experimental independent package bytes while preserving its
 fixtures/main data. Never add a native build/runtime dependency for an unproven whole-page gain.
 [Measured scope and restoration](../../src/Apps/Zanance/docs/quality/home-native-row-transport.md).
+
+## Original unreviewed Home qualification (D-373)
+
+Use the independent prepare-unreviewed phase on a new marked corpus; confirmed-only workloads
+cannot qualify its account-scope path. Keep the original context's native write guard when setting
+fictitious review state before first encryption. A narrowly validated failed reference can continue
+without reseeding or replacing keys; existing protected datasets never become preparation targets.
+Original context-bound in-memory expected data and full typed-row verification protect other fields.
+Require native focus, original complete presentation and exact source/APK/comparison through any
+terminal continuation. Preserve actual GC crashes; skip only completed same-source cases and never
+call a retained completion a GC fix. Restore exact original main/profile/OS and release the phone.
+[Build, failure and timing receipts](../../src/Apps/Zanance/docs/quality/unreviewed-account-scope.md).

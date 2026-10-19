@@ -3234,3 +3234,17 @@ Preserve the rejected historical presentation comparison and fresh exact control
 fixtures/keys, terminal-process restoration and ordinary Data output. Main source/APK remain D-369;
 no unchanged successful main/full-suite repeat. QA-06's actual latency/ANR requirement stays open.
 [Evidence and explicit withdrawal](../../quality/home-native-row-transport.md).
+
+## D-373 original unreviewed scope correctness/performance batch
+
+Deliver one local account-scope index with stable endpoint merging and checked cross-entry totals.
+Fourteen new/48 related Core cases and two original AOT overflow refusals on each platform pass.
+Use a distinct protected all-unreviewed corpus; the old all-confirmed workload is insufficient.
+Retain/resume only the exact pre-encryption reference failure through the original write-function
+context, without replacing triggers/keys or recreating completed data. Complete original Home and
+raw schema/typed rows match for both shapes/languages on emulator/Samsung. Tenfold descriptive
+medians improve about 13.7%; reference and two-second/full-startup acceptance do not improve.
+Preserve old/new native GC failures and all completed cases across terminal continuations.
+Main strict builds/full offline signed APK and no-reset original Home/profile/system restoration
+pass. Phone turn released; QA-06 general native stability, readers/iOS/provider/release remain open.
+[Exact result](../../quality/unreviewed-account-scope.md).

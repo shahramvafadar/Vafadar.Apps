@@ -1757,3 +1757,14 @@ reader/main D-369 APK and system/data state remain; normal Data output is restor
 count or repeated unchanged successful main/full suite. QA-06/two-second/general GC/ANR/startup,
 phone/readers/iOS/provider/Store/release gates remain open.
 [Measured withdrawal](quality/home-native-row-transport.md).
+
+## D-373 checked unreviewed calculation
+
+Stable local scope routing and checked cross-entry totals pass 14 new/48 related Core cases,
+original AOT boundary refusals and paired complete protected/native Home on emulator/Samsung.
+Tenfold median reduction about 13.7% is scoped to the distinct unreviewed corpus. Both old/new native
+GC crashes are retained, not fixed by successful same-source continuations. Complete strict main
+builds/signed offline APK and no-reset original Home/profile 979 EUR/system restoration pass.
+No new native dependency, runtime/GC setting or crypto weakening. Wider device/reader, two-second/
+cold/GC/ANR/low-memory, iOS/provider/Store and release gates remain open.
+[Source, packages and failures](quality/unreviewed-account-scope.md).

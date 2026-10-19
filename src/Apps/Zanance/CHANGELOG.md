@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Unreviewed calculation boundaries (D-373)
+
+- Avoid repeatedly scanning every account for each unreviewed transaction while preserving existing transfer and currency rules.
+- Reject an unreviewed currency total outside the supported amount range instead of wrapping to an incorrect number.
+- Verify complete protected Home workloads and no-reset upgrades on Android; general native GC stability and the loading target remain open.
+
 ### Home transport qualification (D-372)
 
 - Keep the existing complete Home reader after an independent native prototype failed to show a consistent whole-page benefit. Saved data and the application package are unchanged.

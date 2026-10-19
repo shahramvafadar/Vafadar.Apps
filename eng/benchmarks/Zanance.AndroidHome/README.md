@@ -68,6 +68,23 @@ accepts that same review after exact restoration. It compares the complete raw o
 No DB Save, new preparation/key, repeated native-stepping profile or statistical performance claim belongs
 to this phase. Observe its exact process with Read-ReviewReport.ps1 -Phase guard -Comparison <original-pass>.
 
+## Separate unreviewed workload (D-373)
+
+The original reference/tenfold corpus contains confirmed entries only. It cannot qualify the
+unreviewed account-scope path. Use `prepare-unreviewed` only with a new run id: retain the same
+original shapes/fields, mark that fresh plaintext fixture's rows Unreviewed before the original
+protected bootstrap, and require the exact updated row count. This never modifies an existing
+protected workload or regenerates its keys. The preparation report includes the actual Core MVID
+and two original AOT calculator overflow refusals without stored writes.
+
+Use the existing `measure`/`compare` phases on this newly protected run. Capture current complete
+financial presentation using the original-reader/control package, then compare the changed
+calculator on the same ciphertext, keys, date, languages and shape. Preserve full schema/typed
+rows, actual Activity focus, covered publication and native-layout checks; unreviewed counts,
+confirmed balances and all other financial fields remain in the canonical presentation. Keep
+failed/partial observation receipts and the original live PID. Never claim this distinct workload
+improves the previous all-confirmed cohort or closes general device/ANR/startup/release gates.
+
 ## Original native saved-filter actions
 
 The `filters` phase qualifies the original TransactionsPage/TransactionsViewModel and unchanged saved-query
