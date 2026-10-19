@@ -7198,3 +7198,13 @@ Six-language free-original notices appear before affected payment and on referen
 access, with full external-browser links. Serialized source evidence preserves the notice and
 calculation for export/sync. The original writer still rechecks exact consent, target, profile,
 staleness and unchanged financial data. [Qualification and limits](quality/ecb-reference-integration.md).
+
+## D-390 - Reject the supported new bridge responsiveness candidate
+
+Test a distinct exact-runtime-supported new bridge while retaining concurrent major/default nursery,
+only in the independent caller. All six complete protected Home cases preserve original native and
+financial/schema/typed-row behavior in one process, but all twelve public dispatcher gaps exceed
+their historical corresponding samples; reference maximum2465.7064ms. Reject promotion/phone extension
+and further lifecycle replay. Ordinary caller, same Main15560, exact Home/OS/APK and owned cleanup
+are verified. Production code/APK and managed counts remain D-389; general stability stays open.
+[Full evidence and limits](quality/android-new-bridge-trial.md).

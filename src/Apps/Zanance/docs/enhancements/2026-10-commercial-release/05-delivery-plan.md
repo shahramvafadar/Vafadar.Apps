@@ -2748,3 +2748,12 @@ default and explicit approved-source deployment overlay. This source decision is
 public hosting, genuine store/company accounts, metal/item feeds and iOS. Continue ready approved
 feature development without repeating successful unrelated work; dedicated runtime/accessibility
 completion remains after development under D-386.
+
+## D-390 - Close a distinct runtime hypothesis without promotion
+
+The supported new bridge preserves the original six-case correctness cohort but fails the observed
+responsiveness gate. Reject it before phone/additional lifecycle extension; restore ordinary caller,
+unchanged Main/Home/OS and clean owned output. Do not repeat default or rejected configurations without
+new evidence. Continue ready approved work under D-386, including independent final qualification
+while concrete provider/account/Mac gates remain unavailable. No full-suite/Main build replay.
+[Evidence and open boundaries](../../quality/android-new-bridge-trial.md).

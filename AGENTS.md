@@ -2803,3 +2803,11 @@ A closing field quote must meet the delimiter, record end or EOF; quotes inside 
 are refused. Preserve escaped literal quotes, Unicode, multiline values, existing delimiter/record
 choices and unquoted whitespace. Refuse the whole replacement through the existing retained-review
 path with accurate six-language feedback. This is source integrity, not a new bank-format claim.
+
+## D-390 unaccepted supported new bridge candidate
+
+The isolated concurrent-major/new-bridge cohort preserves complete original native/data behavior but
+has longer dispatcher gaps than every historical corresponding sample. Do not promote it, extend it
+to the phone or repeat it unchanged. Keep ordinary Main/runtime policy and original negative evidence;
+finite correctness is not general crash/ANR acceptance. Restore ordinary caller/Main/OS state and
+distinguish terminal aggregate memory from peak/leak/low-memory claims. No raw memory collection.

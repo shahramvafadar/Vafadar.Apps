@@ -1898,3 +1898,12 @@ See [exact scope](quality/csv-input-safety.md); successful checks do not close g
 - [ ] Final Android runtime/accessibility qualification follows ready feature development (D-386).
 
 See quality/ecb-reference-integration.md for exact source/native/package evidence and its limits.
+
+## D-390 - Preserve the ordinary bridge configuration
+
+- [x] Independent supported-new-bridge correctness, package/mode and exact restoration qualified.
+- [x] Candidate rejected for observed responsiveness; ordinary Main/APK unchanged, no phone extension.
+- [ ] General native crash/ANR, two-second target and final Android accessibility remain unaccepted.
+
+Terminal memory is not peak/leak/low-memory evidence. Main remains D-389, Samsung D-385.
+[Full trial](quality/android-new-bridge-trial.md).

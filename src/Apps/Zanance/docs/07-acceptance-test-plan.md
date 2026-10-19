@@ -4331,3 +4331,12 @@ The HTTP route check uses synthetic authentication/upstream effects; it is not r
 The separate actual fixed-feed probe uses normal platform TLS and no account/financial payload.
 Source layout cases and main-package upgrade evidence are recorded in quality/ecb-reference-integration.md;
 these do not accept genuine purchases, public hosting, all phone behavior, iOS or release.
+
+## D-390 - Distinct supported bridge candidate remains rejected
+
+The complete original six-case protected Home native/data cohort passes in PID15917, including
+full schema/typed-row preservation and original focus. All twelve corresponding historical dispatcher
+gaps worsen; no causal speed or random-crash fix is established. Do not extend the rejected mode to
+phone/lifecycle cohorts. Exact ordinary caller and same Main/Home/OS restoration plus owned cleanup
+pass. No new managed case or unrelated successful suite/build replay. QA-06 stays open.
+[Evidence and scope](quality/android-new-bridge-trial.md).

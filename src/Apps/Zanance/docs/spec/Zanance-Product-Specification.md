@@ -7106,3 +7106,12 @@ and twenty existing gateway/cache compatibility cases also pass. Native observat
 from managed counts. [Full source/native qualification](../quality/ecb-reference-integration.md).
 Public hosting, genuine store/company acceptance, phone/iOS and final runtime/accessibility remain
 separate gates; this source choice does not approve another provider or release.
+
+### Section31 update - D-390 rejected supported new bridge trial
+
+Six complete native protected Home cases preserve full data/schema/typed rows in one process;
+observed dispatcher gaps worsen, so the candidate is rejected before phone/additional lifecycle
+extension. Exact ordinary caller/Main/Home/OS restoration and owned cleanup pass. No production
+source/APK/schema/permission/SDK or managed-count change: Main D-389, Samsung D-385 remain current.
+No full suite or unrelated successful build is replayed; QA-06/general stability, accessibility,
+device/iOS/provider/Store/release acceptance remain open. See [trial](../quality/android-new-bridge-trial.md).

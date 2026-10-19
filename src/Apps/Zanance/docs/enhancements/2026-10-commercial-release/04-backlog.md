@@ -3391,3 +3391,11 @@ See ../../quality/ecb-reference-integration.md for original native/package proof
 OD-14 FX source choice is settled for ECB; metal/item feeds, other providers, real public hosting, store
 and iOS acceptance remain separate. Continue remaining approved development before D-386 stability/
 accessibility tracks. Do not repeat completed source discovery or successful unrelated suites.
+
+## D-390 - QA-06 supported new bridge candidate rejected
+
+All six original protected Home cases pass correctness in one process; dispatcher gaps worsen in
+all twelve historical corresponding samples, reaching2465.7064ms reference. No unchanged baseline
+replay or phone extension. Ordinary caller and exact unchanged Main/Home/OS are restored; cleanup
+passes. QA-06 remains In progress, with native crash/ANR and target acceptance open. Production/APK
+and managed counts remain D-389. [Evidence](../../quality/android-new-bridge-trial.md).

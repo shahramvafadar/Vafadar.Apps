@@ -127,3 +127,11 @@ read of a still-writing observation file was incomplete; the completed retained 
 No prior successful unit/UI/cipher/provider/sync fixture, whole-suite run or physical-device claim is repeated.
 The coherent compilation/native/documentation/package batch is complete locally. General performance, actual
 arm64/API24/16KiB, physical device, iOS, upstream native warning review and release remain separate open work.
+
+## D-390 - New bridge does not qualify as a responsiveness fix
+
+An isolated exact-runtime-supported new bridge passes complete original Home correctness, but all
+twelve historical corresponding dispatcher gaps are longer. It is rejected; ordinary caller and
+same Main/Home/OS are restored, without phone extension or unrelated successful verification replay.
+Main/APK remain D-389; runtime/ANR and speed acceptance remain open.
+[Complete trial](../../quality/android-new-bridge-trial.md).
