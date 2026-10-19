@@ -1771,3 +1771,13 @@ startup, responsiveness or general native stability.
 Use the existing newest-first snapshot and worker to select three nonfuture original records. Keep
 original row identities, ties, presenter, amounts, review state and dates. Do not filter financial
 history or change loading cover/layout to improve timing. [Qualification](quality/home-recent-selection.md).
+
+
+## D-385 - Complete bounded CSV review
+
+Keep the last complete selected filename and review when a replacement is too large, malformed,
+empty or fails analysis. Explicit feedback says the prior source remains; an already accepted result
+must stay accepted and cannot become importable again. Keep picker interaction native, prepare reads
+and matching off-window and publish complete values only for current profile/mapping. Never silently
+truncate financial inputs or change a stale generic interpretation without explicit Refresh.
+[Original running-page scope](quality/csv-input-safety.md).

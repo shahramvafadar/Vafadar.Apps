@@ -116,6 +116,10 @@ internal static partial class DebugSnapshots
         await SeedBudgetAsync(services, food);
         await store.UpdateSettingsAsync(settings => settings.OnboardingCompleted = true);
         app.ShowMainShell();
+        if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") is "csv-input" or "csv-input-empty")
+        {
+            await ReviewCsvInputAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") is "home-review-count" or "home-add-header" or "getting-started")
         {
             var countCaptures = new List<object>();

@@ -1313,7 +1313,7 @@
     <value>انتخاب فایل CSV</value>
   </data>
   <data name="Import_Empty" xml:space="preserve">
-    <value>فایل هیچ ردیف داده‌ای ندارد.</value>
+    <value>فایل CSV انتخاب‌شده ردیف داده ندارد. فایل و بازبینی قبلی شما بدون تغییر می‌مانند.</value>
   </data>
   <data name="Import_NoColumn" xml:space="preserve">
     <value>– در فایل نیست –</value>
@@ -8217,5 +8217,29 @@
   </data>
   <data name="Import_ReviewedDestination" xml:space="preserve">
     <value>مبلغ دریافتی</value>
+  </data>
+  <data name="Import_ReadLimit" xml:space="preserve">
+    <value>فایل CSV از حد ایمنی عبور می‌کند: «{0}». خروجی کوچک‌تری انتخاب کنید. فایل و بازبینی قبلی تغییر نکرده‌اند.</value>
+  </data>
+  <data name="Import_ReadMalformed" xml:space="preserve">
+    <value>فایل CSV فیلدی با نقل‌قول ناتمام دارد. فایل کامل را انتخاب کنید. فایل و بازبینی قبلی تغییر نکرده‌اند.</value>
+  </data>
+  <data name="Import_Limit_Bytes" xml:space="preserve">
+    <value>در هر فایل، {0:N0} MiB</value>
+  </data>
+  <data name="Import_Limit_Characters" xml:space="preserve">
+    <value>تعداد نویسه‌های رمزگشایی‌شده، {0:N0}</value>
+  </data>
+  <data name="Import_Limit_Rows" xml:space="preserve">
+    <value>تعداد ردیف‌ها با احتساب سرستون، {0:N0}</value>
+  </data>
+  <data name="Import_Limit_Columns" xml:space="preserve">
+    <value>در هر ردیف، {0:N0} ستون</value>
+  </data>
+  <data name="Import_Limit_Cells" xml:space="preserve">
+    <value>تعداد خانه‌ها، {0:N0}</value>
+  </data>
+  <data name="Import_Limit_FieldCharacters" xml:space="preserve">
+    <value>در هر فیلد، {0:N0} نویسه</value>
   </data>
 </root>

@@ -1158,3 +1158,11 @@ Reduce repeated parsing of standard empty tags without removing fields, weakenin
 changing UI/security. Nine new behavior cases, related Data tests and same-data native complete-page
 comparisons qualify the bounded change. Preserve the observed native crash; general runtime and
 loading acceptance remain unfinished. [Evidence](quality/home-empty-tag-materialization.md).
+
+
+## D-385 - Complete bounded CSV replacement
+
+Deliver the original native picker/worker/parser/publication flow together: reject whole oversized,
+incomplete and empty replacements while preserving complete reviews/outcomes. Forty-six new managed
+cases and focused native error checks qualify this behavior; no financial/schema or unrelated suite
+change. [Exact evidence](quality/csv-input-safety.md). Broader acceptance remains in the canonical backlog.

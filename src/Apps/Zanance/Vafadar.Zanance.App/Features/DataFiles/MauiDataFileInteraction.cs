@@ -11,9 +11,12 @@ internal sealed class MauiDataFileInteraction(AppLockService appLock) : IDataFil
     {
         var file = await FilePicker.Default.PickAsync(new PickOptions { PickerTitle = title });
         if (file is null) return null;
-        await using var stream = await file.OpenReadAsync();
-        using var reader = new StreamReader(stream, Encoding.UTF8, detectEncodingFromByteOrderMarks: true);
-        return new(file.FileName, await reader.ReadToEndAsync());
+        // D-385: providers may finish reads synchronously; keep stream opening/decoding off the window thread.
+        return await Task.Run(async () =>
+        {
+            await using var stream = await file.OpenReadAsync();
+            return new PickedDataFile(file.FileName, await Core.DataFiles.CsvInput.ReadTextAsync(stream));
+        });
     }
     /// <inheritdoc />
     public Task<bool> ConfirmExportAsync(string reason) => appLock.ConfirmAsync(reason);

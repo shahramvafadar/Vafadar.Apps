@@ -27,8 +27,13 @@ public sealed partial class DataFileOutcomeFlowTests
     {
         internal bool Refuse;
         public ZananceDbContext CreateDbContext() => Refuse ? throw new IOException("Fictitious reader refusal.") : original.CreateDbContext();
-        public Task<ZananceDbContext> CreateDbContextAsync(CancellationToken cancellationToken = default) => Refuse
-            ? Task.FromException<ZananceDbContext>(new IOException("Fictitious reader refusal.")) : original.CreateDbContextAsync(cancellationToken);
+        internal Func<Task>? BeforeCreateAsync;
+        public async Task<ZananceDbContext> CreateDbContextAsync(CancellationToken cancellationToken = default)
+        {
+            if (BeforeCreateAsync is { } before) await before();
+            if (Refuse) throw new IOException("Fictitious reader refusal.");
+            return await original.CreateDbContextAsync(cancellationToken);
+        }
     }
     private sealed class Files : IDataFileInteraction
     {

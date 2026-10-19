@@ -7060,3 +7060,14 @@ public dispatcher pauses and unqualified memory/stability prevent production ado
 ordinary caller/Main/OS. No production, test-count, permission, runtime binary, schema or APK change;
 D-383 remains current. No full-suite rerun or native/ANR/two-second/device/iOS acceptance.
 [Evidence](../quality/android-gc-nursery-trial.md).
+
+
+### Section31 update - D-385 complete bounded CSV input
+
+Complete transient CSV input has technical byte/text/shape budgets, fragmented BOM compatibility,
+strict unfinished-quote refusal and background decode/analysis. A refused or empty replacement keeps
+the previous complete review or accepted result. Final profile/mapping guards prevent late stale
+publication. Forty-six new managed cases pass in selective runs; this is not a full-suite replay or
+new whole-app performance claim. Native error pages and signed offline packages are qualified with
+explicit platform/source boundaries in [evidence](../quality/csv-input-safety.md). No schema, financial
+rules, SDK/permission or raw input archive change; general device/iOS/provider/release gates remain.

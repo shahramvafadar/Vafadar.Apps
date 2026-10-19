@@ -2772,3 +2772,15 @@ cohorts pass but observed dispatcher pauses worsen and memory/long-term stabilit
 Do not repeat it unchanged, extend it to the phone or promote it from a clean sample/upstream report.
 Keep ordinary Main/runtime policy, original full workloads and actual negative evidence. Separate
 post-terminal aggregate memory from peak, leak, low-memory and comparative claims; no raw memory dumps.
+
+
+## D-385 - Complete bounded CSV input
+
+Selected CSV is a complete transient review, never a truncated financial stream. Count actual bytes
+rather than provider Length; retain BOM-aware decoding across fragmented reads and bound decoded
+characters, fields, rows, columns and cells independently of commercial quotas. Refuse unfinished
+quotes and empty/header-only replacements before retiring the previous review or accepted outcome.
+Keep stream opening/decoding/parsing and original matching work off the window thread; publish only
+a complete prepared result for the still-current profile and interpretation, including final awaits.
+Never archive or log raw selected CSV. Preserve stricter bank limits and explicit consent policies.
+Qualify only changed behavior; D-386's later stability/accessibility execution order remains in force.

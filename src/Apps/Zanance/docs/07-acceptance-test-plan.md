@@ -4301,3 +4301,14 @@ checks. Public dispatcher-gap medians worsen; memory observations are neither pe
 acceptance. Do not infer a native stability fix, extend to the phone or ship it. Restore the ordinary
 D-383 caller and exact original Main/OS; preserve all actual old crashes/ANR. No new managed tests,
 production/APK change or unrelated suite. [Evidence](quality/android-gc-nursery-trial.md).
+
+
+## AT-385 - Complete bounded CSV input and retained review
+
+Actual source tests cover all byte/decoded/shape boundaries, fragmented encodings, cancellation/I/O,
+100000 original exported rows, complete ledger/holding review and accepted-outcome retention, empty/
+header-only sources and mapping changes at both asynchronous validation boundaries. Forty-six new
+cases pass selectively. Original Windows and independent Release/AOT Android pages prove translated
+errors and retained state; actual native-provider scope is recorded separately. No Import/Undo is
+invoked by the running-page qualification. [Exact receipts and limits](quality/csv-input-safety.md).
+Unchanged successful suites, financial rules and external acceptance are not replayed or inferred.

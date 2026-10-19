@@ -1313,7 +1313,7 @@
     <value>CSV-Datei wählen</value>
   </data>
   <data name="Import_Empty" xml:space="preserve">
-    <value>Die Datei enthält keine Zeilen.</value>
+    <value>Die gewählte CSV enthält keine Datenzeilen. Deine bisherige Datei und Vorschau bleiben unverändert.</value>
   </data>
   <data name="Import_NoColumn" xml:space="preserve">
     <value>– nicht in der Datei –</value>
@@ -8217,5 +8217,29 @@ Ursprüngliche Kurskennung: {2}</value>
   </data>
   <data name="Import_ReviewedDestination" xml:space="preserve">
     <value>Empfangener Betrag</value>
+  </data>
+  <data name="Import_ReadLimit" xml:space="preserve">
+    <value>Diese CSV überschreitet eine Sicherheitsgrenze: {0}. Bitte eine kleinere Exportdatei auswählen. Die bisherige Datei und Vorschau bleiben unverändert.</value>
+  </data>
+  <data name="Import_ReadMalformed" xml:space="preserve">
+    <value>Die CSV enthält ein Feld mit nicht geschlossenem Anführungszeichen. Bitte eine vollständige Datei auswählen. Die bisherige Datei und Vorschau bleiben unverändert.</value>
+  </data>
+  <data name="Import_Limit_Bytes" xml:space="preserve">
+    <value>{0:N0} MiB pro Datei</value>
+  </data>
+  <data name="Import_Limit_Characters" xml:space="preserve">
+    <value>{0:N0} dekodierte Zeichen</value>
+  </data>
+  <data name="Import_Limit_Rows" xml:space="preserve">
+    <value>{0:N0} Zeilen einschließlich Kopfzeile</value>
+  </data>
+  <data name="Import_Limit_Columns" xml:space="preserve">
+    <value>{0:N0} Spalten pro Zeile</value>
+  </data>
+  <data name="Import_Limit_Cells" xml:space="preserve">
+    <value>{0:N0} Zellen</value>
+  </data>
+  <data name="Import_Limit_FieldCharacters" xml:space="preserve">
+    <value>{0:N0} Zeichen pro Feld</value>
   </data>
 </root>

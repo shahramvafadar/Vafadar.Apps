@@ -2709,3 +2709,13 @@ lifecycle checks but worsens public dispatcher pauses. Restore ordinary D-383 ca
 not extend the unaccepted trial to the phone. No source/APK or managed-count change; actual native
 GC/ANR, whole-page target and platform gates stay open. Continue from a materially new observed cause,
 not another run of this unchanged configuration. [Evidence](../../quality/android-gc-nursery-trial.md).
+
+
+## D-385 - Complete original CSV input batch
+
+Complete actual adapter, bounded compatible decoding, parser, worker review and current-profile/
+interpretation publication as one batch. Preserve previous reviews and accepted outcomes on refused
+replacements, including empty/header-only inputs. Retain successful 126 Windows/42 Android checks;
+qualify only the added empty branch in18/six contexts. Keep old negative results and exact synthetic
+inputs, deliver the final complete signed offline package without reset and document actual native
+picker scope separately. [Evidence](../../quality/csv-input-safety.md). Follow D-386 for remaining work.

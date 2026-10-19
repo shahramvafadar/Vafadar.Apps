@@ -1270,7 +1270,7 @@
     <value>Elegir archivo CSV</value>
   </data>
   <data name="Import_Empty" xml:space="preserve">
-    <value>El archivo no contiene filas.</value>
+    <value>El CSV seleccionado no contiene filas de datos. Tu archivo y revisión anteriores se conservan sin cambios.</value>
   </data>
   <data name="Import_NoColumn" xml:space="preserve">
     <value>— No está en el archivo —</value>
@@ -8186,5 +8186,29 @@ Identificador de cotización original: {2}</value>
   </data>
   <data name="Import_ReviewedDestination" xml:space="preserve">
     <value>Importe recibido</value>
+  </data>
+  <data name="Import_ReadLimit" xml:space="preserve">
+    <value>Este CSV supera un límite de seguridad: {0}. Selecciona una exportación más pequeña. El archivo y la revisión anteriores no han cambiado.</value>
+  </data>
+  <data name="Import_ReadMalformed" xml:space="preserve">
+    <value>El CSV tiene un campo con comillas sin cerrar. Selecciona un archivo completo. El archivo y la revisión anteriores no han cambiado.</value>
+  </data>
+  <data name="Import_Limit_Bytes" xml:space="preserve">
+    <value>{0:N0} MiB por archivo</value>
+  </data>
+  <data name="Import_Limit_Characters" xml:space="preserve">
+    <value>{0:N0} caracteres decodificados</value>
+  </data>
+  <data name="Import_Limit_Rows" xml:space="preserve">
+    <value>{0:N0} filas incluida la cabecera</value>
+  </data>
+  <data name="Import_Limit_Columns" xml:space="preserve">
+    <value>{0:N0} columnas por fila</value>
+  </data>
+  <data name="Import_Limit_Cells" xml:space="preserve">
+    <value>{0:N0} celdas</value>
+  </data>
+  <data name="Import_Limit_FieldCharacters" xml:space="preserve">
+    <value>{0:N0} caracteres por campo</value>
   </data>
 </root>

@@ -1869,3 +1869,13 @@ checks. Public dispatcher-gap medians worsen; memory observations are neither pe
 acceptance. Do not infer a native stability fix, extend to the phone or ship it. Restore the ordinary
 D-383 caller and exact original Main/OS; preserve all actual old crashes/ANR. No new managed tests,
 production/APK change or unrelated suite. [Evidence](quality/android-gc-nursery-trial.md).
+
+
+## D-385 - Bounded CSV evidence
+
+- [x] Technical complete-read and parser budgets, unfinished/empty replacement refusal, retained reviews/
+  accepted outcomes and late interpretation/profile guards have focused passing source/native evidence.
+- [x] Complete signed offline APK and no-reset Main updates preserve native Home and exact OS state.
+- [ ] Arbitrary bank/provider/hostile corpus, full device/iOS and publication acceptance remain separate.
+
+See [exact scope](quality/csv-input-safety.md); successful checks do not close general stability or reader gates.

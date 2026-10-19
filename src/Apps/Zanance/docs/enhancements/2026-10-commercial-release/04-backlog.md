@@ -3348,3 +3348,13 @@ withdrawn for lack of whole-page benefit. Restore ordinary independent package/M
 outputs and retain the negative receipts. No Main APK, phone trial, broader suite or performance claim.
 [Evidence and remaining boundaries](../../quality/home-guid-storage-candidate.md). QA-06, native GC/ANR,
 reader/full-device/iOS/provider/Store and release remain open; continue ready work from measured causes.
+
+
+## D-385 - Complete bounded CSV input
+
+IMP-01 gains technical complete-read limits, off-window analysis and non-destructive replacement,
+including malformed/empty/header-only inputs and late mapping changes. Forty-six new managed cases
+pass selectively; native error surfaces/build/package and actual-picker scope are recorded in
+[qualification](../../quality/csv-input-safety.md). Original bank specimens and broader device/iOS/
+provider/release gates remain open. D-386's development-first order remains authoritative; this is
+not a new generic ANR/crash or accessibility experiment.

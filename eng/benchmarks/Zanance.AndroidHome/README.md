@@ -494,3 +494,14 @@ unchanged and do not prewarm formatting. OriginalRecentEntryPacketsMatched quali
 proof. Public recent:Reset-to-first-Add intervals include formatting/event overhead, not exact CPU
 profiling or full-Home speed. Native terminal failures retain completed cases before same-source
 continuation, never observation-timeout restarts or a stability claim.
+
+
+## D-385 - Original CSV error and retained-review phases
+
+`csv-input` checks six technical refusals and unfinished quotes across six en/fa/de/theme contexts.
+`csv-input-empty` checks only the added empty-source branch, without replaying successful refusals.
+Both invoke the real focused native picker button but supply its selected-file effect; neither is
+native-provider acceptance. Complete original review/input equality, visible full error text and
+exact configuration/theme/language restoration are required. Receipts bind source MVID, comparison
+and complete synthetic input hash. No Import/Undo or Main data access. Stop only the terminal caller
+and restore ordinary Main/OS. [Qualification](../../../src/Apps/Zanance/docs/quality/csv-input-safety.md).

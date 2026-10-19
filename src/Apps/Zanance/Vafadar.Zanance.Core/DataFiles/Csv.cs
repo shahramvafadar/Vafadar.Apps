@@ -79,14 +79,34 @@ public static class Csv
     }
 
     /// <summary>Reads all rows; quoted cells may contain separators, quotes ("") and line breaks. Empty lines are skipped.</summary>
-    public static IReadOnlyList<IReadOnlyList<string>> Read(string text, char separator)
+    public static IReadOnlyList<IReadOnlyList<string>> Read(string text, char separator, CsvReadLimits? limits = null)
     {
         ArgumentNullException.ThrowIfNull(text);
+        var budget = limits ?? CsvReadLimits.Import; budget.Validate();
+        if (text.Length > budget.MaximumCharacters) throw new CsvReadLimitException(CsvReadLimit.Characters, budget.MaximumCharacters);
+        var cells = 0;
         var rows = new List<IReadOnlyList<string>>();
         var row = new List<string>();
         var cell = new StringBuilder();
         var quoted = false;
         var start = text.Length > 0 && text[0] == '﻿' ? 1 : 0;
+        void Append(char value)
+        {
+            if (cell.Length >= budget.MaximumFieldCharacters) throw new CsvReadLimitException(CsvReadLimit.FieldCharacters, budget.MaximumFieldCharacters);
+            cell.Append(value);
+        }
+        void EndCell()
+        {
+            if (row.Count >= budget.MaximumColumns) throw new CsvReadLimitException(CsvReadLimit.Columns, budget.MaximumColumns);
+            if (cells >= budget.MaximumCells) throw new CsvReadLimitException(CsvReadLimit.Cells, budget.MaximumCells);
+            cells++; row.Add(cell.ToString()); cell.Clear();
+        }
+        void EndRow()
+        {
+            if (rows.Count >= budget.MaximumRows) throw new CsvReadLimitException(CsvReadLimit.Rows, budget.MaximumRows);
+            rows.Add(row);
+        }
+
 
         for (var i = start; i < text.Length; i++)
         {
@@ -97,7 +117,7 @@ public static class Csv
                 {
                     if (i + 1 < text.Length && text[i + 1] == '"')
                     {
-                        cell.Append('"');
+                        Append('"');
                         i++;
                     }
                     else
@@ -107,7 +127,7 @@ public static class Csv
                 }
                 else
                 {
-                    cell.Append(c);
+                    Append(c);
                 }
             }
             else if (c == '"' && cell.Length == 0)
@@ -116,8 +136,7 @@ public static class Csv
             }
             else if (c == separator)
             {
-                row.Add(cell.ToString());
-                cell.Clear();
+                EndCell();
             }
             else if (c is '\r' or '\n')
             {
@@ -126,28 +145,37 @@ public static class Csv
                     i++;
                 }
 
-                row.Add(cell.ToString());
-                cell.Clear();
+                EndCell();
                 if (row.Count > 1 || row[0].Length > 0)
                 {
-                    rows.Add(row);
+                    EndRow();
                 }
 
                 row = [];
             }
             else
             {
-                cell.Append(c);
+                Append(c);
             }
         }
 
+        if (quoted) throw new CsvMalformedInputException();
         if (cell.Length > 0 || row.Count > 0)
         {
-            row.Add(cell.ToString());
-            rows.Add(row);
+            EndCell();
+            EndRow();
         }
 
         return rows;
+    }
+
+    /// <summary>Checks the decoded size before detecting the separator and parsing a complete selected file.</summary>
+    public static IReadOnlyList<IReadOnlyList<string>> ReadDetected(string text, CsvReadLimits? limits = null)
+    {
+        ArgumentNullException.ThrowIfNull(text);
+        var budget = limits ?? CsvReadLimits.Import; budget.Validate();
+        if (text.Length > budget.MaximumCharacters) throw new CsvReadLimitException(CsvReadLimit.Characters, budget.MaximumCharacters);
+        return Read(text, DetectSeparator(text), budget);
     }
 
     /// <summary>Removes the protective apostrophe added by <see cref="Text"/>.</summary>

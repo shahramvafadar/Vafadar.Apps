@@ -6,7 +6,7 @@ public sealed record PickedDataFile(string Name, string Text);
 /// <summary>Explicit native picker, authentication and cache/share effects; application import logic stays independent.</summary>
 public interface IDataFileInteraction
 {
-    /// <summary>Reads the selected UTF-8 CSV; cancellation returns null without discarding an existing review.</summary>
+    /// <summary>Reads the complete BOM-aware CSV within technical budgets; picker cancellation keeps the existing review.</summary>
     Task<PickedDataFile?> PickCsvAsync(string title);
     /// <summary>Reads a bounded original bank CSV in its explicitly chosen strict encoding.</summary>
     Task<PickedDataFile?> PickBankCsvAsync(string title, Core.DataFiles.BankCsvEncoding encoding) => PickCsvAsync(title);

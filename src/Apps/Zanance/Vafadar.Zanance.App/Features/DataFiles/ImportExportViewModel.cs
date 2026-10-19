@@ -50,6 +50,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     private IReadOnlyList<ImportRow> _preview = [];
     private bool _ownFormat;
     private bool _previewStale;
+    private long _interpretationEpoch;
     private IReadOnlyList<LedgerEntry> _existingEntries = [];
     private IReadOnlyDictionary<Guid, Core.Accounts.Account> _previewAccounts = new Dictionary<Guid, Core.Accounts.Account>();
     private CategoryLookup? _previewCategories;
@@ -63,11 +64,13 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         PropertyChanged += (_, e) =>
         {
             if (e.PropertyName is nameof(IsBusy) or nameof(CanImport) or nameof(HasPreview) or nameof(ImportError) or nameof(ImportResult) or nameof(UndoError)) RefreshActions();
-            if (HasLedgerPreview && !_ownFormat && e.PropertyName is nameof(Account) or nameof(DateColumn) or nameof(AmountColumn)
+            if (!_ownFormat && e.PropertyName is nameof(Account) or nameof(DateColumn) or nameof(AmountColumn)
                 or nameof(TitleColumn) or nameof(CategoryColumn) or nameof(NoteColumn) or nameof(DateFormat)
                 or nameof(CalendarIndex) or nameof(SeparatorIndex) or nameof(SignIndex))
             {
-                _previewStale = true; CanImport = false; ImportError = _translator["Import_InterpretationChanged"];
+                Interlocked.Increment(ref _interpretationEpoch);
+                if (HasLedgerPreview)
+                { _previewStale = true; CanImport = false; ImportError = _translator["Import_InterpretationChanged"]; }
             }
         };
         _store = store;
@@ -300,42 +303,55 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         if (IsBusy) return;
         IsBusy = true;
         try { await PickFileAsync(); }
+        catch (CsvReadLimitException ex) { ImportError = _translator.Format("Import_ReadLimit", _translator.Format("Import_Limit_" + ex.Limit,
+            ex.Limit == CsvReadLimit.Bytes ? ex.Maximum / (1024 * 1024) : ex.Maximum)); }
+        catch (CsvMalformedInputException) { ImportError = _translator["Import_ReadMalformed"]; }
         catch (Exception ex) when (ex is not OutOfMemoryException) { await _interaction.ShowFailureAsync(ex); }
         finally { IsBusy = false; }
     }
 
     private async Task PickFileAsync()
     {
+        var epoch = _bankEpoch;
+        var owner = await _store.CaptureImportFileAsync();
         var file = await _files.PickCsvAsync(_translator["Import_Pick"]);
-        if (file is null) return;
+        if (file is null || epoch != _bankEpoch) return;
+        // D-385: a rejected new input must not retire the last complete source/review/result.
+        var selectedRows = await Task.Run(() => Csv.ReadDetected(file.Text));
+        if (epoch != _bankEpoch) return;
+        if (selectedRows.Count < 2)
+        {
+            ImportError = _translator["Import_Empty"];
+            return;
+        }
+        var selectedHoldings = selectedRows.Count > 1 && HoldingsCsv.IsHoldingsFormat(selectedRows[0]);
+        var selectedOwn = selectedRows.Count > 1 && !selectedHoldings && CsvImport.IsOwnFormat(selectedRows[0]);
+        var ledger = selectedOwn ? await PrepareLedgerPreviewAsync(selectedRows, true, null) : null;
+        var holdings = selectedHoldings ? await PrepareHoldingsPreviewAsync(selectedRows) : null;
+        var currentOwner = await _store.CaptureImportFileAsync();
+        if (epoch != _bankEpoch) return;
+        if (owner != currentOwner) throw new InvalidOperationException("The selected CSV profile changed.");
         IsBankPreset = false; _bankRead = null; _bankOwner = null; BankAcknowledged = false; BankLines.Clear();
         // Only an actual new selection replaces the previous raw review or accepted result.
         ImportError = null; UndoError = null; ImportResult = null; HasPreview = false; CanImport = false; _previewAccepted = false;
         _preview = []; _holdingsContent = null; Overlaps.Clear(); ClearLedgerPreview();
-        _rows = Csv.Read(file.Text, Csv.DetectSeparator(file.Text));
+        _rows = selectedRows;
         FileName = file.Name;
         RefreshActions();
-        if (_rows.Count < 2)
-        {
-            ImportError = _translator["Import_Empty"];
-            ShowMapping = false;
-            return;
-        }
-
         // A holdings file is read as it is; nothing to map (ZEX-S0409).
         _holdingsContent = null;
-        if (HoldingsCsv.IsHoldingsFormat(_rows[0]))
+        if (holdings is not null)
         {
             ShowMapping = false;
-            await PreviewHoldingsAsync();
+            PublishHoldingsPreview(holdings);
             return;
         }
 
-        _ownFormat = CsvImport.IsOwnFormat(_rows[0]);
+        _ownFormat = selectedOwn;
         ShowMapping = !_ownFormat;
         if (_ownFormat)
         {
-            await ReadPreviewAsync();
+            PublishLedgerPreview(ledger!);
             return;
         }
 
@@ -368,46 +384,62 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanReviewPreview))]
     private Task PreviewAsync() => RefreshPreviewAsync();
 
+    /// <summary>Complete prepared values; no UI-bound collection is changed by the file-analysis worker.</summary>
+    private sealed record LedgerPreviewData(IReadOnlyList<ImportRow> Preview, List<LedgerEntry> Existing,
+        List<Account> Accounts, List<Core.Categories.Category> Categories, int Valid, int Known, int Invalid,
+        int Duplicates, int BeforeOpening, IReadOnlyList<ImportRow> InvalidRows);
+
+    /// <summary>Retains the original matching/rule algorithms and read order, running potentially synchronous provider work off-window.</summary>
+    private Task<LedgerPreviewData> PrepareLedgerPreviewAsync(IReadOnlyList<IReadOnlyList<string>> rows, bool own, ImportMapping? mapping) => Task.Run(async () =>
+    {
+        var accounts = await _store.GetAccountsAsync();
+        var categories = await _store.GetCategoriesAsync();
+        var existing = await _store.GetEntriesAsync();
+        string Name(Core.Categories.Category category) => CategoryLookup.NameOf(category, _translator);
+        var preview = own ? CsvImport.PreviewOwn(rows, accounts, categories, Name, existing, await _store.GetConsumedImportIdsAsync())
+            : CsvImport.PreviewGeneric(rows, mapping!, accounts, categories, Name, existing, await _store.GetCategoryRulesAsync());
+        return new LedgerPreviewData(preview, existing, accounts, categories,
+            preview.Count(row => row.Entry is not null && !row.AlreadyImported), preview.Count(row => row.AlreadyImported),
+            preview.Count(row => row.Error is not null), preview.Count(row => row.PossibleDuplicate),
+            preview.Count(row => row.BeforeOpening && !row.AlreadyImported), preview.Where(row => row.Error is not null).Take(8).ToArray());
+    });
+
     private async Task ReadPreviewAsync()
     {
         ImportError = null;
         if (IsBankPreset) { await ReadBankPreviewAsync(); return; }
-        _previewStale = false;
-        var accounts = await _store.GetAccountsAsync();
-        var categories = await _store.GetCategoriesAsync();
-        var existing = await _store.GetEntriesAsync();
-        string Name(Core.Categories.Category c) => CategoryLookup.NameOf(c, _translator);
-
-        if (_ownFormat)
-        {
-            _preview = CsvImport.PreviewOwn(_rows, accounts, categories, Name, existing, await _store.GetConsumedImportIdsAsync());
-        }
-        else
+        var interpretationEpoch = Interlocked.Read(ref _interpretationEpoch);
+        ImportMapping? mapping = null;
+        if (!_ownFormat)
         {
             if (Account is null || DateColumn?.Index is not { } date || AmountColumn?.Index is not { } amount || DateFormat is null)
-            {
-                ImportError = _translator["Import_MappingIncomplete"];
-                return;
-            }
-
-            var mapping = new ImportMapping(Account.Id, date, DateFormat, Presentation.Calendars.All[Math.Clamp(CalendarIndex, 0, Presentation.Calendars.All.Count - 1)], amount,
+            { ImportError = _translator["Import_MappingIncomplete"]; return; }
+            mapping = new ImportMapping(Account.Id, date, DateFormat, Presentation.Calendars.All[Math.Clamp(CalendarIndex, 0, Presentation.Calendars.All.Count - 1)], amount,
                 SeparatorIndex == 1 ? ',' : '.', (SignMode)SignIndex, TitleColumn?.Index, CategoryColumn?.Index, NoteColumn?.Index);
-            _preview = CsvImport.PreviewGeneric(_rows, mapping, accounts, categories, Name, existing, await _store.GetCategoryRulesAsync());
         }
+        var epoch = _bankEpoch; var owner = await _store.CaptureImportFileAsync();
+        var prepared = await PrepareLedgerPreviewAsync(_rows, _ownFormat, mapping);
+        var currentOwner = await _store.CaptureImportFileAsync();
+        if (epoch != _bankEpoch) return;
+        if (owner != currentOwner) throw new InvalidOperationException("The reviewed CSV profile changed.");
+        // A user may change visible mapping while the worker runs; never publish that older interpretation as current.
+        if (interpretationEpoch != Interlocked.Read(ref _interpretationEpoch))
+        { _previewStale = true; CanImport = false; ImportError = _translator["Import_InterpretationChanged"]; return; }
+        PublishLedgerPreview(prepared);
+    }
 
+    /// <summary>Publishes one fully prepared original review after successful input analysis.</summary>
+    private void PublishLedgerPreview(LedgerPreviewData prepared)
+    {
+        var (preview, existing, accounts, categories, valid, known, invalid, duplicates, beforeOpening, invalidRows) = prepared;
+        _previewStale = false; _preview = preview;
         _existingEntries = existing;
         _previewAccounts = accounts.ToDictionary(a => a.Id);
         _previewCategories = new CategoryLookup(categories, _translator);
 
-        var valid = _preview.Count(r => r.Entry is not null && !r.AlreadyImported);
-        var known = _preview.Count(r => r.AlreadyImported);
-        var invalid = _preview.Where(r => r.Error is not null).ToList();
-        var duplicates = _preview.Count(r => r.PossibleDuplicate);
-        var beforeOpening = _preview.Count(r => r.BeforeOpening && !r.AlreadyImported);
-
-        PreviewText = _translator.Format("Import_Preview", valid, known, invalid.Count);
+        PreviewText = _translator.Format("Import_Preview", valid, known, invalid);
         InvalidLines.Clear();
-        foreach (var row in invalid.Take(8))
+        foreach (var row in invalidRows)
         {
             InvalidLines.Add(_translator.Format("Import_InvalidLine", row.Line, _translator[$"Import_Error_{row.Error}"]));
         }
@@ -428,10 +460,24 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         _ledgerPreviewPage = 0; PublishLedgerPreviewPage();
     }
 
+    /// <summary>Parses complete original holding records without running provider/CSV work on the window thread.</summary>
+    private Task<HoldingsCsvContent> PrepareHoldingsPreviewAsync(IReadOnlyList<IReadOnlyList<string>> rows) => Task.Run(async () =>
+        HoldingsCsv.Read(rows, await _holdings.GetTypesAsync(), await _holdings.GetLocationsAsync()));
+
     private async Task PreviewHoldingsAsync()
     {
         ImportError = null;
-        var content = HoldingsCsv.Read(_rows, await _holdings.GetTypesAsync(), await _holdings.GetLocationsAsync());
+        var epoch = _bankEpoch; var owner = await _store.CaptureImportFileAsync();
+        var content = await PrepareHoldingsPreviewAsync(_rows);
+        var currentOwner = await _store.CaptureImportFileAsync();
+        if (epoch != _bankEpoch) return;
+        if (owner != currentOwner) throw new InvalidOperationException("The holding-import profile changed.");
+        PublishHoldingsPreview(content);
+    }
+
+    /// <summary>Publishes only a complete original holding-file analysis.</summary>
+    private void PublishHoldingsPreview(HoldingsCsvContent content)
+    {
         _holdingsContent = content;
         _preview = [];
         Overlaps.Clear();

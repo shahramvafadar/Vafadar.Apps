@@ -1273,7 +1273,7 @@
     <value>Choisir un fichier CSV</value>
   </data>
   <data name="Import_Empty" xml:space="preserve">
-    <value>Le fichier ne contient aucune ligne.</value>
+    <value>Le CSV sélectionné ne contient aucune ligne de données. Votre fichier et votre vérification précédents restent inchangés.</value>
   </data>
   <data name="Import_NoColumn" xml:space="preserve">
     <value>– absent du fichier –</value>
@@ -8194,5 +8194,29 @@ Identifiant de la cotation originale : {2}</value>
   </data>
   <data name="Import_ReviewedDestination" xml:space="preserve">
     <value>Montant reçu</value>
+  </data>
+  <data name="Import_ReadLimit" xml:space="preserve">
+    <value>Ce CSV dépasse une limite de sécurité : {0}. Sélectionnez une exportation plus petite. Le fichier et la vérification précédents restent inchangés.</value>
+  </data>
+  <data name="Import_ReadMalformed" xml:space="preserve">
+    <value>Le CSV contient un champ dont les guillemets ne sont pas fermés. Sélectionnez un fichier complet. Le fichier et la vérification précédents restent inchangés.</value>
+  </data>
+  <data name="Import_Limit_Bytes" xml:space="preserve">
+    <value>{0:N0} Mio par fichier</value>
+  </data>
+  <data name="Import_Limit_Characters" xml:space="preserve">
+    <value>{0:N0} caractères décodés</value>
+  </data>
+  <data name="Import_Limit_Rows" xml:space="preserve">
+    <value>{0:N0} lignes, y compris l’en-tête</value>
+  </data>
+  <data name="Import_Limit_Columns" xml:space="preserve">
+    <value>{0:N0} colonnes par ligne</value>
+  </data>
+  <data name="Import_Limit_Cells" xml:space="preserve">
+    <value>{0:N0} cellules</value>
+  </data>
+  <data name="Import_Limit_FieldCharacters" xml:space="preserve">
+    <value>{0:N0} caractères par champ</value>
   </data>
 </root>

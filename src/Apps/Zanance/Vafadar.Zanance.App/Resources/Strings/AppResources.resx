@@ -1318,7 +1318,7 @@
     <value>Choose CSV file</value>
   </data>
   <data name="Import_Empty" xml:space="preserve">
-    <value>The file has no rows.</value>
+    <value>The selected CSV has no data rows. Your previous file and review remain unchanged.</value>
   </data>
   <data name="Import_NoColumn" xml:space="preserve">
     <value>– not in the file –</value>
@@ -8246,5 +8246,29 @@ Original quote identifier: {2}</value>
   </data>
   <data name="Import_ReviewedDestination" xml:space="preserve">
     <value>Amount received</value>
+  </data>
+  <data name="Import_ReadLimit" xml:space="preserve">
+    <value>This CSV exceeds a safety limit: {0}. Select a smaller export. The previous file and review are unchanged.</value>
+  </data>
+  <data name="Import_ReadMalformed" xml:space="preserve">
+    <value>The CSV has an unfinished quoted field. Choose a complete file. The previous file and review are unchanged.</value>
+  </data>
+  <data name="Import_Limit_Bytes" xml:space="preserve">
+    <value>{0:N0} MiB per file</value>
+  </data>
+  <data name="Import_Limit_Characters" xml:space="preserve">
+    <value>{0:N0} decoded characters</value>
+  </data>
+  <data name="Import_Limit_Rows" xml:space="preserve">
+    <value>{0:N0} rows including the header</value>
+  </data>
+  <data name="Import_Limit_Columns" xml:space="preserve">
+    <value>{0:N0} columns per row</value>
+  </data>
+  <data name="Import_Limit_Cells" xml:space="preserve">
+    <value>{0:N0} cells</value>
+  </data>
+  <data name="Import_Limit_FieldCharacters" xml:space="preserve">
+    <value>{0:N0} characters per field</value>
   </data>
 </root>

@@ -7145,3 +7145,16 @@ not a verified root cause, and does not invalidate existing phone or emulator fa
 provider/account gates remain separate from ready independent development. Updated AGENTS, canonical
 backlog and delivery plan record the same order. Documentation-only decision: no runtime change,
 build, test, device input or new acceptance claim.
+
+
+## D-385 - Complete bounded CSV input without losing the previous review
+
+Bound actual provider reads, decoded text and complete parsed shape without commercial restriction
+or silent truncation. Preserve fragmented UTF-8/16/32 BOM decoding; reject unfinished quoted fields,
+empty/header-only inputs and failed analyses before replacing original review/result. Move decoding,
+parsing and original matching to workers, publish complete values and revalidate profile/retirement/
+interpretation after all awaits. Forty-six new Core/App cases pass through selective continuations;
+old failure/oracle evidence is retained. Original native error surfaces and complete signed builds
+are qualified without replaying unrelated suites. No financial-write, schema, permission, SDK or raw
+CSV cache change. Full receipts and physical scope: [qualification](quality/csv-input-safety.md).
+D-386 schedules dedicated ANR/crash/accessibility completion later; this is a feature correctness batch.

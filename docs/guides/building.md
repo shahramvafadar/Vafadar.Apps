@@ -1585,3 +1585,15 @@ runtime mode receipt; never promote it or persist it in Main/global settings. Cl
 outputs and restore the exact ordinary independent APK/Main/OS after the bounded run. No arbitrary
 environment logging, registers, raw stack, heap dump or private key/database export.
 [Exact D-378 result](../../src/Apps/Zanance/docs/quality/android-home-bridge-fault.md).
+
+
+## D-385 - Original retained CSV input reviews
+
+Run `eng/scripts/Run-StoreDrafts.ps1 -CsvInputReview` for the original seven-refusal18-context matrix.
+For a newly changed empty-only branch, add `-CsvInputEmptyOnly` instead of replaying successful refusal
+checks. Each fresh private non-input desktop/application identity owns its fictitious data, build,
+images and terminal receipt. Keep process-local font stress distinct from real OS/reader acceptance.
+Independent Android phases `csv-input` and `csv-input-empty` run the original page/commands with only
+selected-file effects supplied. Retained receipts bind comparison, input digest and source MVID;
+never reuse a receipt across source changes. No financial Import/Undo or raw-file archive is authorized.
+[Exact D-385 scope](../../src/Apps/Zanance/docs/quality/csv-input-safety.md).
