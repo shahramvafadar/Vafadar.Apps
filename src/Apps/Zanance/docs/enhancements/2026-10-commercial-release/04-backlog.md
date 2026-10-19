@@ -3180,3 +3180,12 @@ en/fa/de Light/Dark contexts, retaining successful scenes across observer failur
 signed offline APK, exact authorized emulator restoration and helper removal pass. A11Y-01 remains
 partial: correct speech and remaining controls/physical/platform acceptance are not inferred.
 [Exact evidence](../../quality/android-reader-glyphs.md).
+
+## D-368 physical original glyph preservation
+
+D-367's actual signed bytes upgrade Samsung without reset. Nine private glyph nodes disappear,
+30 meaningful Home names/roles/geometry remain and six original expense/history/menu actions
+return to the same979EUR/profile in one process. System settings remain exact and the phone
+turn is released. No code/APK/build/managed-count change. A11Y-01 speech/phone-reader, broader
+QA-01/QA-06, iOS/provider/release gates remain.
+[Exact physical scope](../../quality/physical-reader-glyphs.md).

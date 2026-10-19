@@ -6884,3 +6884,12 @@ full offline Android builds pass; exact settings/preferences restore and helper 
 Zero new managed tests;209 native trees/435 derived checks are observations. Correct audible
 speech, other reader controls, general ANR/GC/performance, phone/iOS/release remain open.
 [Exact proof and failures](../quality/android-reader-glyphs.md).
+
+### Section31 update - D-368 physical glyph preservation
+
+The complete D-367 APK upgrades Samsung without reset. Nine decorative native glyph nodes
+become zero;30 meaningful Home names/roles/geometry remain. Six original nonfinancial actions
+qualify expense/Cancel, history/return and menu/return in one retained process with979EUR and
+exact system settings preserved. The phone turn is released. No managed-count/app/APK change;
+phone TalkBack/speech, exact startup speed, general stability/iOS/release remain unaccepted.
+[Physical observations and scope](../quality/physical-reader-glyphs.md).

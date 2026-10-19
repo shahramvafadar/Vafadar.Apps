@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Physical decorative-glyph qualification (D-368)
+
+- Verify the decorative-icon correction and original expense, history and menu navigation on Samsung without changing saved data or system settings. The application package is unchanged from D-367.
+
 ### Decorative screen-reader glyphs (D-367)
 
 - Keep decorative icon characters out of Android screen-reader focus while preserving the original labels and navigation actions.

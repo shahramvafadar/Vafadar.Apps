@@ -6934,3 +6934,14 @@ Strict Windows/full offline Android builds pass. Restore exact authorized emulat
 original English/Dark/Simple Home and remove the independent service. No financial Save or new
 managed tests; correct speech/general ANR/physical/iOS/release remain open.
 [Original defect, exact evidence and limits](quality/android-reader-glyphs.md).
+
+## D-368 - Qualify the original reader glyph correction on Samsung
+
+Upgrade the signed D-367 package without reset under a coordinated exclusive phone turn.
+Nine original decorative glyph nodes disappear while30 meaningful Home nodes retain original
+names/roles/geometry. In one retained process, qualify expense/Cancel, history/Home and More/Home
+with six native actions and no Save. Keep original979EUR/profile and exact system settings;
+release the turn after terminal evidence. Preserve the initial unavailable-focus observation,
+continue the same process and make no precise startup or phone TalkBack/speech acceptance claim.
+App/APK remain D-367; no successful unchanged builds or managed suites repeated.
+[Actual device scope and limits](quality/physical-reader-glyphs.md).

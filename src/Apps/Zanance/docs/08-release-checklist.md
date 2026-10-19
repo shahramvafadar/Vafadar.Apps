@@ -1710,3 +1710,11 @@ provider/Store/release gates stay open.
 - Correct speech, remaining reader controls, phone/general ANR/performance/iOS and release gates
   remain open. Native observations do not increase managed test counts.
 [Evidence](quality/android-reader-glyphs.md).
+
+## D-368 physical scoped glyph qualification
+
+Signed D-367 bytes, no-reset Samsung upgrade, original expense/history/menu return, meaningful
+Home/profile/979EUR and exact system settings pass; the exclusive phone turn is released.
+Application and package remain D-367. This is not phone TalkBack, correct speech, exact startup,
+general ANR/GC, full database/iOS or release acceptance.
+[Evidence](quality/physical-reader-glyphs.md).

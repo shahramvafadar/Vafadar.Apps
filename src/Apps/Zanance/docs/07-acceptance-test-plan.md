@@ -4120,3 +4120,13 @@ All24 scenes/36 activations pass without financial Save; restore exact OS values
 English/Dark/Simple Home, remove only the helper. No spoken-output/full reader/phone/ANR/iOS/
 release acceptance follows from focus or audio energy.
 [Original paths and build/package evidence](quality/android-reader-glyphs.md).
+
+## AT-368 physical glyph correction and original navigation
+
+Coordinate the Samsung turn; upgrade the complete signed D-367 APK without resetting fictitious
+data. Compare the original Home: nine private glyphs become zero while30 meaningful node names,
+roles and bounds remain identical. Qualify original expense/Cancel, history/Home and More/Home
+through six actual targets in the same process. Require original979EUR/profile and exact
+system-settings preservation, then release the phone. Initial unfocused-window refusal is
+retained and the same launch continues. No phone reader/speech or precise startup claim follows.
+[Original native evidence](quality/physical-reader-glyphs.md).

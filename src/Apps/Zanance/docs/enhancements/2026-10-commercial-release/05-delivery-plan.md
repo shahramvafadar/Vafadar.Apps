@@ -2541,3 +2541,11 @@ Retain failed observations and successful cases; restore exact emulator state an
 Windows/full offline Android strict builds pass; no unchanged successful suites replayed.
 Remaining spoken-reader, broader controls/QA-06/device/iOS/provider/release work stays open.
 [Evidence](../../quality/android-reader-glyphs.md).
+
+## D-368 completed original physical glyph continuation
+
+Reuse D-367's signed APK for coordinated Samsung no-reset upgrade and original expense/Cancel,
+history/Home and More/Home. Require actual glyph removal, identical meaningful Home geometry,
+original profile/979EUR and exact settings; release the phone turn. No successful unchanged
+build or financial suite is repeated. Reader speech/general stability/iOS/release remain open.
+[Physical result](../../quality/physical-reader-glyphs.md).
