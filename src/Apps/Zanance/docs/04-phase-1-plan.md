@@ -1183,3 +1183,7 @@ scope or full-suite/device acceptance is claimed.
 D-396 strengthens existing ACC-08/AT-11 reconciliation with original-file reviewed consent and atomic
 account/adjustment persistence. Focused local/native qualification is recorded in
 quality/reconciliation-review.md and the canonical backlog; no new Phase1 feature scope is introduced.
+
+D-397 corrects the existing final advance-bill form's post-commit/return lifetime with focused original
+application and native evidence. See quality/settlement-commit-lifetime.md and the canonical backlog;
+it introduces no new Phase1 scope or claim of complete runtime/device/release acceptance.

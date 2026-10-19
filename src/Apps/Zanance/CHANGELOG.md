@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep an accepted advance bill recorded once (D-397)
+
+- Preserve a saved settlement if screen refresh or returning fails; the action then only goes back.
+- Keep the original bill draft after a rejected write, with clear loading, retry and result feedback.
+
 ### Reliable balance reconciliation (D-396)
 
 - Compare again after editing the observed balance or date; an old comparison can no longer post an adjustment.

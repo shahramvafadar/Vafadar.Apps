@@ -8236,4 +8236,16 @@ SHA-256 del XML original: {5}</value>
   <data name="Reconcile_ReviewAgain" xml:space="preserve">
     <value>No se pudo guardar la comparación. Vuelve a comparar el saldo actual antes de registrar un ajuste.</value>
   </data>
+  <data name="Settlement_Loading" xml:space="preserve">
+    <value>Cargando los anticipos originales…</value>
+  </data>
+  <data name="Settlement_ReadFailed" xml:space="preserve">
+    <value>No se pudieron cargar los anticipos. Se conserva tu borrador. Inténtalo de nuevo.</value>
+  </data>
+  <data name="Settlement_Recorded" xml:space="preserve">
+    <value>La liquidación se ha registrado. Volver desde esta página no la registrará otra vez.</value>
+  </data>
+  <data name="Settlement_RecordedFollowUpFailed" xml:space="preserve">
+    <value>La liquidación se ha registrado, pero no se pudo actualizar la pantalla. Vuelve y revisa el asiento guardado; no lo registres otra vez.</value>
+  </data>
 </root>

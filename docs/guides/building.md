@@ -1650,3 +1650,14 @@ never restart a live process or reseed its financial file. After all six financi
 `-ReconciliationVisualOnly` with that original continuation file refreshes only visible error images,
 with no financial Save and complete accepted-input preservation. Incompatible/incomplete flags refuse
 before build/desktop work. See the D-396 quality evidence for the original failures and exact limits.
+
+## Retained original settlement outcome (D-397)
+
+`eng/scripts/Run-StoreDrafts.ps1 -SettlementCommitReview` exercises original modal Save/Back in six
+en/fa/de light/dark contexts with18 scoped width images and separate fictitious rows. Preserve
+accepted receipts and any global error: the scoped completion receipt does not override an unrelated
+Home read failure or make the whole runner green. Never repeat accepted money to repair observation.
+The independent AndroidHome settlement-commit phases compile original Release/AOT sources and use
+only their exact owned run. Fixed/observed continuations require the original terminal evidence and
+actual saved-row checks; the already accepted first case is read back, never posted again. The
+native owned-modal return port is scoped to the independent caller, not main-route acceptance.

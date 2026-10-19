@@ -1020,3 +1020,7 @@ unverifiable legacy batches require review. No new permission, SDK, network or s
 D-396: reconciliation review is a transient in-memory copy of existing account/related ledger facts.
 It adds no persisted/exported field, SDK, network call or permission; native evidence uses fictitious
 data and app-only views. No raw database/key extraction or general device logs are collected.
+
+D-397 adds no stored data category, export field, SDK, permission or network call. The coherent original
+advance-bill draft is transient and actual-file bound. Independent native evidence uses fictitious
+data; no Main database/key extraction or general device-log collection is used.

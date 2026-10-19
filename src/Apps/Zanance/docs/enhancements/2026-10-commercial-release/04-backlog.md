@@ -3462,3 +3462,15 @@ exact adjustment and account metadata. Original Main/profiles/OS are restored wi
 replay; test output is cleaned. Documentation and final commit accompany this batch; hosted success
 remains subject to the exact final CI result. Broader physical-phone/iOS, stability/accessibility and
 external release gates remain. [Evidence](../../quality/reconciliation-review.md).
+
+## D-397 - Retain the original committed advance-bill outcome
+
+F2-CON-04/AT-133 exposes an ordinary failure after actual commit, with no consumed form before return.
+Retain accepted money across subscriber/navigation errors and let the original action retry only Back.
+Sixteen original application/SQLite cases and55 related retained-policy regressions pass. Six original
+Windows consent-free Save/Back cases and18 inspected images preserve original sources and never replay
+accepted money. A separate Home stale-quick-resource refresh error remains recorded; the whole Windows
+runner is not green. Six original Android contexts finish with retained accepted money and no replay;
+strict builds, complete signed offline APK, original Main/OS restoration and test-output cleanup
+complete. Documentation and push accompany this correction; hosted CI remains an exact-head gate.
+[Evidence and retained failures](../../quality/settlement-commit-lifetime.md).

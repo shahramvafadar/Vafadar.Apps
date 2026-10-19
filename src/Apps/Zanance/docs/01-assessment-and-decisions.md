@@ -7299,3 +7299,21 @@ required reason, Cancel/Accept and cold persistence qualify this path. Financial
 through diagnostic corrections. [Exact evidence and boundaries](quality/reconciliation-review.md).
 No schema, new persisted data, privacy permission or provider change; broader device/iOS/release and
 D-386's deferred stability/accessibility gates remain separate.
+
+## D-397 - Preserve committed advance-bill outcomes
+
+Actual SQLite regression first proves the original settlement writer reports an ordinary exception
+after commit, while the original form can offer Save again after subscriber or navigation failure.
+Retain the committed result, mark the form accepted before follow-through, lock its input and turn
+the same original action into Back. Coherent original-file reads and currency/draft checks preserve
+the reviewed context; rejected writes retain typed input. Keep the native route bridge separate so
+the actual portable view model, original effects and real SQLite can be tested without fake controls.
+
+Sixteen new original application/SQLite cases and55 related retained-policy cases pass. Strict
+Windows Release/Android builds and the complete offline signed package are warning-free. Six
+Windows financial cases and18 inspected images qualify original accepted feedback and Back-only
+return; a separate Home stale-resource error remains recorded, so the overall Windows runner is
+not claimed green. Android original compiled sources retain six distinct cases with first-case
+observation repair/readback and no financial replay. Main0/OS/current-candidate restoration passes.
+See [exact evidence and limitations](quality/settlement-commit-lifetime.md). No schema, permission,
+provider, commercial activation or broader device/iOS/stability/accessibility acceptance follows.

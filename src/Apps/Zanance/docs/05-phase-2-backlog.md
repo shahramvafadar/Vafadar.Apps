@@ -2511,3 +2511,8 @@ commercial backlog and quality/import-undo-and-retained-aggregates.md; broader a
 D-396 addresses the ready original reconciliation financial gap with immutable review, edited-consent
 retirement and atomic persistence. See the canonical commercial backlog and
 quality/reconciliation-review.md; dedicated stability/accessibility stays deferred under D-386.
+
+D-397 keeps final advance-bill acceptance separate from notification/navigation: return retries never
+post the difference again. Focused original application/native qualification is in
+quality/settlement-commit-lifetime.md. Preserve the observed Home stale-resource error as ready
+development; dedicated stability/accessibility remains after development under D-386.

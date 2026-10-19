@@ -8256,4 +8256,16 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Reconcile_ReviewAgain" xml:space="preserve">
     <value>Non è stato possibile salvare il confronto. Confronta di nuovo il saldo attuale prima di registrare una rettifica.</value>
   </data>
+  <data name="Settlement_Loading" xml:space="preserve">
+    <value>Caricamento degli anticipi originali…</value>
+  </data>
+  <data name="Settlement_ReadFailed" xml:space="preserve">
+    <value>Non è stato possibile caricare gli anticipi. La bozza è conservata. Riprova.</value>
+  </data>
+  <data name="Settlement_Recorded" xml:space="preserve">
+    <value>Il conguaglio è stato registrato. Tornare da questa pagina non lo registrerà di nuovo.</value>
+  </data>
+  <data name="Settlement_RecordedFollowUpFailed" xml:space="preserve">
+    <value>Il conguaglio è stato registrato, ma non è stato possibile aggiornare la schermata. Torna indietro e controlla la registrazione salvata; non registrarla di nuovo.</value>
+  </data>
 </root>

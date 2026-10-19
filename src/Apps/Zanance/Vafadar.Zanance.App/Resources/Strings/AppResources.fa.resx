@@ -8267,4 +8267,16 @@
   <data name="Reconcile_ReviewAgain" xml:space="preserve">
     <value>ذخیرهٔ مقایسه انجام نشد. پیش از ثبت تعدیل، موجودی فعلی را دوباره مقایسه کنید.</value>
   </data>
+  <data name="Settlement_Loading" xml:space="preserve">
+    <value>در حال خواندن پیش‌پرداخت‌های اصلی…</value>
+  </data>
+  <data name="Settlement_ReadFailed" xml:space="preserve">
+    <value>خواندن پیش‌پرداخت‌ها انجام نشد. پیش‌نویس شما حفظ شده است. دوباره تلاش کنید.</value>
+  </data>
+  <data name="Settlement_Recorded" xml:space="preserve">
+    <value>تسویه ثبت شد. بازگشت از این صفحه باعث ثبت دوبارهٔ آن نمی‌شود.</value>
+  </data>
+  <data name="Settlement_RecordedFollowUpFailed" xml:space="preserve">
+    <value>تسویه ثبت شد، اما تازه‌سازی صفحه انجام نشد. پس از بازگشت، رکورد ذخیره‌شده را بررسی کنید؛ آن را دوباره ثبت نکنید.</value>
+  </data>
 </root>

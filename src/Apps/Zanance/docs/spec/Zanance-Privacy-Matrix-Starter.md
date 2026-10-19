@@ -1002,3 +1002,7 @@ for review instead of unsafe deletion.
 D-396 keeps original reconciliation review transient and profile/file-bound. Existing account/ledger
 data categories, storage encryption, backup format and permissions are unchanged; no new SDK or
 network processing is introduced. Qualification uses only fictitious app data and scoped app views.
+
+D-397 retains an advance bill's accepted UI lifetime and transient original-file read context only.
+Existing account/ledger storage, encryption, portable backup and permissions remain unchanged.
+Qualification is restricted to fictitious app data and scoped public outcome/native-view evidence.

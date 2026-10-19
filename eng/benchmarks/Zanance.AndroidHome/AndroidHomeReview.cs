@@ -144,6 +144,13 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Retained independent diagnostic root required.");
                 await WriteReportAsync(root, phase, await ReviewRootRetirementAsync(app, services, run, comparison!, ct), ct);
             }
+            else if (phase is "settlement-commit" or "settlement-commit-fixed" or "settlement-commit-observed")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0 || File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))
+                    throw new ReviewCheckException("Fresh independent settlement review required.");
+                await WriteReportAsync(root, phase, await ReviewSettlementCommitAsync(app, services, root, comparison!, ct, resume: phase != "settlement-commit", acceptedFirst: phase == "settlement-commit-observed"), ct);
+            }
             else if (phase == "plans-add-header")
             {
                 Directory.CreateDirectory(root);

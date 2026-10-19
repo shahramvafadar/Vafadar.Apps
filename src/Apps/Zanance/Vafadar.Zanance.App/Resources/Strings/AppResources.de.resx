@@ -8267,4 +8267,16 @@ Original-XML SHA-256: {5}</value>
   <data name="Reconcile_ReviewAgain" xml:space="preserve">
     <value>Der Vergleich konnte nicht gespeichert werden. Vergleiche den aktuellen Kontostand erneut, bevor du eine Korrektur buchst.</value>
   </data>
+  <data name="Settlement_Loading" xml:space="preserve">
+    <value>Die ursprünglichen Vorauszahlungen werden geladen…</value>
+  </data>
+  <data name="Settlement_ReadFailed" xml:space="preserve">
+    <value>Die Vorauszahlungen konnten nicht geladen werden. Dein Entwurf bleibt erhalten. Versuche es erneut.</value>
+  </data>
+  <data name="Settlement_Recorded" xml:space="preserve">
+    <value>Die Abrechnung wurde gespeichert. Beim Zurückgehen wird sie nicht erneut gebucht.</value>
+  </data>
+  <data name="Settlement_RecordedFollowUpFailed" xml:space="preserve">
+    <value>Die Abrechnung wurde gespeichert, aber die Ansicht konnte nicht aktualisiert werden. Prüfe nach dem Zurückgehen die gespeicherte Buchung; buche sie nicht erneut.</value>
+  </data>
 </root>

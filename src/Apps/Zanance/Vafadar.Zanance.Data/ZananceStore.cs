@@ -1005,17 +1005,29 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
 
     /// <summary>Recomputes an owned advance bill under the same writer that saves its correction entries.</summary>
     public async Task<SaveResult> SaveAdvanceSettlementAsync(Schedule reviewedPlan, DateOnly from, DateOnly to,
-        SettlementResult reviewed, string title, CancellationToken cancellationToken = default)
+        SettlementResult reviewed, string title, CancellationToken cancellationToken = default,
+        string? expectedPath = null, string? expectedCurrency = null, Func<bool>? isCurrent = null)
     {
         ArgumentNullException.ThrowIfNull(reviewedPlan);
         ArgumentNullException.ThrowIfNull(reviewed);
         if (from > to || reviewed.Actual < 0) throw new ArgumentException("The settlement requires an ordered period and non-negative actual bill.");
         ArgumentNullException.ThrowIfNull(title);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        var path = DatabaseFileIdentity.ConfiguredPath(db);
+        if (expectedPath is not null && path != expectedPath) throw new InvalidOperationException("The original advance-bill profile changed.");
+        var access = new CommercialFileAccess(commercialAccess, path);
+        void ValidateReview()
+        {
+            access.EnsureSnapshotCurrent();
+            if (isCurrent?.Invoke() == false) throw new InvalidOperationException("The advance-bill draft changed before commit.");
+        }
+        ValidateReview();
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         write.DemandFeature(CommercialFeature.Corrections);
         var plan = await db.Schedules.AsNoTracking().SingleAsync(p => p.Id == reviewedPlan.Id, cancellationToken);
         if (plan.Kind != EntryKind.Expense) throw new InvalidOperationException("Only an expense plan has advance bills.");
+        if (expectedCurrency is not null && await db.Accounts.Where(a => a.Id == plan.AccountId).Select(a => a.CurrencyCode).SingleAsync(cancellationToken) != expectedCurrency)
+            throw new InvalidOperationException("The reviewed bill currency changed.");
         var history = await db.Entries.AsNoTracking().ToListAsync(cancellationToken);
         var result = AdvanceSettlement.Compute(plan, history, from, to, reviewed.Actual);
         // A reviewed bill must not silently acquire changed amounts, refund links or a different account.
@@ -1028,7 +1040,8 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         // Caller-supplied entry flags cannot grant correction rights; these entries come from reviewed stored advances.
         var created = AdvanceSettlement.CreateEntries(plan, result, history, DateOnly.FromDateTime(time.GetLocalNow().DateTime), title);
         if (created.Count == 0) return SaveResult.Success;
-        return await SaveEntriesUnderWriterAsync(db, write, created, [], null, created.Select(e => e.Id).ToHashSet(), cancellationToken);
+        return await SaveEntriesUnderWriterAsync(db, write, created, [], null, created.Select(e => e.Id).ToHashSet(), cancellationToken,
+            committedPublication: true, validateReview: ValidateReview);
     }
 
     /// <summary>Validates the complete ledger batch within its caller's writer; correction grants are private identities.</summary>

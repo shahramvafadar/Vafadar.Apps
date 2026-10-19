@@ -2396,3 +2396,12 @@ that packet before the correction and atomically saves both ledger and current a
 Application draft retirement is checked before save/commit; rollback preserves all original fields.
 After commit, notification failure retains accepted semantics and cannot grant another posting.
 There is no EF model/migration/compiled-model or backup format change.
+
+## D-397 - Advance-bill commit versus follow-through
+
+Read advance plan/account/history coherently in the original actual-file snapshot. The existing
+writer retains original plan/advance validation, commercial/household correction rights and atomic
+ledger semantics; file/currency and application draft guards run before commit. Once committed,
+publish notification with an explicit retained result. The original form consumes acceptance before
+native return, so subscriber/navigation failure cannot create another expense/refund. This lifetime
+adds no EF model/migration/compiled-model, stored record or backup schema change.

@@ -14,12 +14,12 @@
         <!-- D-98: whole title/action groups wrap at native text scale without adding a second modal header. -->
         <Grid Padding="8,8" BackgroundColor="{DynamicResource CardBackground}">
             <FlexLayout x:Name="ModalHeaderLayout" Direction="Row" Wrap="Wrap" AlignItems="Center">
-                <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" FlexLayout.Shrink="0" Margin="4,0" Style="{StaticResource TextButton}" />
+                <Button Text="{Binding CancelText}" Command="{Binding CancelCommand}" IsEnabled="{Binding IsNotBusy}" FlexLayout.Shrink="0" Margin="4,0" Style="{StaticResource TextButton}" />
                 <Label Text="{Binding PlanName}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" FlexLayout.Shrink="0" FlexLayout.Grow="1" MaximumWidthRequest="{Binding Width, Source={x:Reference ModalHeaderLayout}, x:DataType=FlexLayout}" />
             </FlexLayout>
         </Grid>
 
-        <ScrollView x:Name="ValidationViewport" Grid.Row="1">
+        <ScrollView x:Name="ValidationViewport" Grid.Row="1" IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding CanEdit}">
             <VerticalStackLayout Padding="16" Spacing="8">
                 <Label Text="{v:Translate Settlement_Intro}" Style="{StaticResource Secondary}" />
                 <Border Style="{StaticResource Card}">
@@ -36,14 +36,24 @@
                         <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding ResultText}" TextColor="{DynamicResource WarningText}" FontSize="16" FontAttributes="Bold"
                                IsVisible="{Binding ResultText, Converter={StaticResource IsNotNullConverter}}" />
-                        <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
                     </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>
         </ScrollView>
 
         <!-- D-102: keep the full scaled action caption and let an invalid attempt explain its fields. -->
-        <p:WrappingAction x:Name="SaveAction" Grid.Row="2" Margin="16" Appearance="Primary" Text="{v:Translate Settlement_Save}"
-                          Command="{Binding SaveCommand}" IsEnabled="{Binding IsNotBusy}" />
+        <VerticalStackLayout Grid.Row="1" Padding="24" VerticalOptions="Center" Spacing="12" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" />
+            <Label Text="{v:Translate Settlement_Loading}" HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="1" Padding="24" VerticalOptions="Center" Spacing="12" IsVisible="{Binding Loading.HasFailed}">
+            <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" />
+            <p:WrappingAction Text="{v:Translate Startup_Retry}" Command="{Binding ReloadCommand}" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="2" Margin="16" Spacing="8" IsVisible="{Binding Loading.IsReady}">
+            <Label Text="{Binding SaveFeedback}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding SaveFeedback, Converter={StaticResource IsNotNullConverter}}" />
+            <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+            <p:WrappingAction x:Name="SaveAction" Appearance="Primary" Text="{Binding SaveText}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsNotBusy}" />
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

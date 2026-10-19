@@ -1962,3 +1962,11 @@ refusal. Focused original managed, Windows native and Android emulator evidence,
 the complete offline signed candidate are bounded in [D-396](quality/reconciliation-review.md).
 This does not qualify a physical phone, all reconciliation histories, general stability/accessibility,
 iOS, commercial signing or publication. External account/provider gates remain unchanged.
+
+## D-397 - Original settlement outcome qualification
+
+Post-commit advance bills retain one accepted result and Back-only follow-through. Focused real
+SQLite/application, Windows native and Release/AOT Android evidence plus the complete signed offline
+candidate are in [D-397](quality/settlement-commit-lifetime.md). The observed Home stale-resource
+refresh failure remains separate ready work; do not call the whole Windows run or release green.
+No phone/iOS/general stability/accessibility, store signing or publication acceptance is inferred.

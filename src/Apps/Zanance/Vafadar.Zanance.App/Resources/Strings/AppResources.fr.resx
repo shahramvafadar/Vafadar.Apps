@@ -8244,4 +8244,16 @@ SHA-256 du XML original : {5}</value>
   <data name="Reconcile_ReviewAgain" xml:space="preserve">
     <value>La comparaison n’a pas pu être enregistrée. Comparez à nouveau le solde actuel avant d’enregistrer un ajustement.</value>
   </data>
+  <data name="Settlement_Loading" xml:space="preserve">
+    <value>Chargement des avances d’origine…</value>
+  </data>
+  <data name="Settlement_ReadFailed" xml:space="preserve">
+    <value>Les avances n’ont pas pu être chargées. Votre brouillon est conservé. Réessayez.</value>
+  </data>
+  <data name="Settlement_Recorded" xml:space="preserve">
+    <value>Le règlement a été enregistré. Revenir depuis cette page ne l’enregistrera pas à nouveau.</value>
+  </data>
+  <data name="Settlement_RecordedFollowUpFailed" xml:space="preserve">
+    <value>Le règlement a été enregistré, mais l’écran n’a pas pu être actualisé. Revenez vérifier l’écriture enregistrée ; ne l’enregistrez pas à nouveau.</value>
+  </data>
 </root>

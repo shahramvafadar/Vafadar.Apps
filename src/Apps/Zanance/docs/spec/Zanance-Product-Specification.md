@@ -7189,3 +7189,16 @@ Windows consent contexts, eighteen corrected visible error images and original A
 reason/Cancel/Accept/cold persistence qualify the changed path with strict builds and a complete signed
 offline APK. [Detailed evidence](../quality/reconciliation-review.md). Full device/iOS/provider/store/
 release and D-386 stability/accessibility acceptance remain separate.
+
+### Section31 update - D-397 final advance-bill lifetime
+
+F2-CON-04/AT-133 now retains the original accepted extra expense/refund before native follow-through.
+Subscriber or return failure cannot turn it into another Save. Original-file/currency and late draft
+checks retain the reviewed context; coherent reads cover the form until complete and rejected writes
+keep input. Sixteen new actual application/SQLite behaviors and55 related retained-policy cases pass,
+without a full-suite rerun or repeated-execution count inflation. Six Windows original financial cases/
+eighteen inspected images and six original Android compiled-source cases qualify accepted feedback,
+read-only inputs and Back-only return. The first Android accepted case is observed/read back without
+another Save after observer repair. Strict builds, signed offline candidate and Main0/OS restoration
+pass. The separate Home stale-resource error remains ready work; broader phone/iOS/provider/store,
+general stability/accessibility and publication gates stay open. [Evidence](../quality/settlement-commit-lifetime.md).

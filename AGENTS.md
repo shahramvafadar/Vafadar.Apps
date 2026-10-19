@@ -2865,3 +2865,12 @@ pending drafts require a fresh comparison. Keep adjustment and current stored ac
 metadata in the same existing financial writer. Never overwrite a stale form account, regress a
 later reconciled date or replay a committed write after notification failure. Independent native
 qualification preserves accepted financial cases; repair only failed observation on the same fixture.
+
+## D-397 - Retained final advance-bill outcome
+
+The original settlement form owns one accepted financial outcome. Mark acceptance before native
+return and preserve it through nonfatal subscriber/navigation failures. Original Save and Cancel
+become Back-only after commit; never reload, retarget or repost that form as another bill. Keep
+pre-write drafts and actual-file/currency/retired-input guards. Coherent reads publish before input
+is enabled. Native observer failures preserve accepted money; continue only the failed observation
+or not-yet-executed contexts, with explicit retained-case readback rather than another Save.

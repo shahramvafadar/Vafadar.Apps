@@ -2813,3 +2813,11 @@ only changed observation, never financial replay. Focus managed/native checks on
 ledger writer. Complete Android runtime qualification, docs and push before selecting another section.
 The Windows finite review and signed Android build are prerequisites, not full device/release acceptance.
 See [current evidence and pending work](../../quality/reconciliation-review.md).
+
+## D-397 - Complete retained advance-bill commit lifetime
+
+Reproduce the actual post-commit exception boundary, then deliver the original form's accepted state,
+read-only outcome, single writer and native return together. Retain completed financial cases even
+when unrelated Home observation fails. Finish scoped Android/runtime/build/documentation evidence
+and push before the next section; preserve the observed Home stale-snapshot defect as separate ready
+development, without expanding into D-386's deferred general stability/accessibility work.

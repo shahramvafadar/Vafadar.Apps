@@ -8296,4 +8296,16 @@ Original XML SHA-256: {5}</value>
   <data name="Reconcile_ReviewAgain" xml:space="preserve">
     <value>The comparison could not be saved. Compare the current balance again before recording an adjustment.</value>
   </data>
+  <data name="Settlement_Loading" xml:space="preserve">
+    <value>Loading the original advance payments…</value>
+  </data>
+  <data name="Settlement_ReadFailed" xml:space="preserve">
+    <value>The advance payments could not be loaded. Your draft is kept. Try again.</value>
+  </data>
+  <data name="Settlement_Recorded" xml:space="preserve">
+    <value>The settlement was recorded. Returning from this page will not record it again.</value>
+  </data>
+  <data name="Settlement_RecordedFollowUpFailed" xml:space="preserve">
+    <value>The settlement was recorded, but the screen could not be refreshed. Review the saved entry after going back; do not record it again.</value>
+  </data>
 </root>

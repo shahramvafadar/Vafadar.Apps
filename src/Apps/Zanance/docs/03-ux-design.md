@@ -1829,3 +1829,11 @@ retaining typed drafts. Compare again before adjustment. Require a reason and or
 disable form input during the operation. Cancel retains the draft without posting. Changed original
 account/history/access requires a fresh comparison with six-language feedback. A known committed
 outcome remains successful even if refresh notification fails; never invite a second financial write.
+
+## D-397 - Accepted advance bills offer only Back
+
+Keep the settlement form covered while its original plan/account/history snapshot loads, with
+explicit translated failure/retry. Pre-write rejection preserves the draft and field explanations.
+After acceptance, preserve a complete fixed-footer success notice independently of follow-through
+errors, make the original inputs read-only and relabel both original exit actions Back. A return
+retry never invokes the writer. Keep complete scalable result/error captions and44px native targets.

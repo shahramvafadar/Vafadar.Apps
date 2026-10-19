@@ -4416,3 +4416,16 @@ pass. Original Android native edits retire old comparison, missing reason refuse
 the draft and one Accept records112.34EUR correction to212.34EUR. The original row/reason/date/account
 and reconciled date persist across one planned cold process without financial replay.
 See [D-396](quality/reconciliation-review.md) for restoration, candidate and remaining platform gates.
+
+## D-397 - AT-133 retained advance-bill commit
+
+The original post-commit exception regression fails before correction. Sixteen new actual application/
+SQLite cases then pass: extra/refund bills, committed subscriber failure, native-return refusal,
+overlapping actions, stale advances, discard, independent validation, SQL rollback/retry, exact-file/
+currency refusal, late input retirement, failed-load retry and accepted-form retirement. Fifty-five
+related retained-write-policy cases pass; no full/unrelated suite replay or double-counted execution.
+Six Windows original financial Save/Back cases and18 images retain accepted money. A separate Home
+read failure remains explicitly unaccepted. Six Android compiled-source cases preserve first accepted
+native evidence/readback while executing only the five unfinished contexts; Main0/OS/APK restore.
+[Scope and retained failures](quality/settlement-commit-lifetime.md) do not establish phone/iOS/release
+or all-histories/general runtime/accessibility acceptance.
