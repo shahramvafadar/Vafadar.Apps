@@ -4223,3 +4223,13 @@ steps remain incomplete, visible, enabled and unstruck in 18 Windows contexts (e
 complete account/entry/settings/plan/budget fields are preserved. Restore exact emulator settings,
 upgrade main without reset and match original native Home. No financial Save in main, new phone
 acceptance, benchmark claim or full-suite repetition. [Evidence](quality/home-getting-started.md).
+
+## AT-377 - Original empty tag materialization
+
+Nine new related cases compare exact/noncanonical/escaped/null/duplicate tag JSON and failure types
+against independent EF, require separate mutable empty lists and preserve an intercepted nonempty
+projection despite the original empty marker. All 78 HomeReadSnapshot cases pass; repeat only the
+nine affected cases after the final binary-collation guard. Current original protected Home x64 and
+Samsung reports compare all schema/typed rows and original native/financial presentation. Keep the
+actual native SIGSEGV and retained-case continuation; this does not accept general device stability,
+cold startup or a two-second Home target. [Evidence](quality/home-empty-tag-materialization.md).

@@ -1560,3 +1560,15 @@ actual OS 200%/360 dp. The new getting-started.db is separate from every retaine
 fixture and main profile. Compare all account/entry/settings/plan/budget fields before/after. Exact
 emulator configuration restoration and same-process public-report rules remain mandatory. This mode
 does not save financial data in the main application or repeat unrelated tests/benchmarks.
+
+## D-377 original empty-tag comparison
+
+Use retained independently owned protected workloads and `home-stages` on the current original page.
+Record standard tag converter/reader type names outside the measured interval; preserve the exact
+baseline and comparison identities plus complete schema/typed-data proofs. A command-line-only
+artifact-local `CustomAfterMicrosoftCommonTargets` override can compile the two exact HEAD reader
+sources for an ARM control without modifying tracked production files. Verify the original member
+absence and subsequent ordinary candidate member presence; never persist the override or reuse an
+ambiguous build output. Copy immutable signed packages before installing. An authoritative native
+exit may continue only unfinished retained cases on the same package/data; a timeout never authorizes
+a restart. [Exact D-377 evidence](../../src/Apps/Zanance/docs/quality/home-empty-tag-materialization.md).

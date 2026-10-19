@@ -629,6 +629,82 @@ public sealed class HomeReadSnapshotTests : IDisposable
         await Assert.ThrowsAsync<InvalidOperationException>(() => store.ValidateHomeSnapshotAsync(packet, Ct));
     }
 
+    /// <summary>Canonical empty tags and every noncanonical representation retain independent EF values or refusals.</summary>
+    [Theory, Trait("AT", "AT-377")]
+    [InlineData("[]")]
+    [InlineData("[ ]")]
+    [InlineData("[] \r\n")]
+    [InlineData("[\"\"]")]
+    [InlineData("[\"\\u0061\"]")]
+    [InlineData("[null]")]
+    [InlineData("null")]
+    [InlineData("[\"a\",\"a\"]")]
+    public async Task Complete_history_empty_tag_marker_preserves_original_json_semantics(string json)
+    {
+        var provider = Create(); await SeedAsync(provider);
+        await using (var db = await Factory(provider).CreateDbContextAsync(Ct))
+            await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE Entries SET Tags = {json}", Ct);
+        List<LedgerEntry>? expected = null;
+        var originalFailure = await Record.ExceptionAsync(async () =>
+        {
+            await using var oracle = await Factory(provider).CreateDbContextAsync(Ct);
+            expected = await oracle.Entries.AsNoTracking().OrderByDescending(row => row.Date)
+                .ThenByDescending(row => row.CreatedAt).ToListAsync(Ct);
+        });
+        var store = provider.GetRequiredService<ZananceStore>();
+        if (originalFailure is not null)
+        {
+            var ledgerFailure = await Record.ExceptionAsync(async () => await store.GetEntriesAsync(cancellationToken: Ct));
+            var homeFailure = await Record.ExceptionAsync(async () => await store.GetHomeSnapshotAsync(Today, 0, Ct));
+            Assert.NotNull(ledgerFailure); Assert.NotNull(homeFailure);
+            Assert.Equal(originalFailure.GetBaseException().GetType(), ledgerFailure.GetBaseException().GetType());
+            Assert.Equal(originalFailure.GetBaseException().GetType(), homeFailure.GetBaseException().GetType());
+            return;
+        }
+        Assert.NotNull(expected);
+        var entries = await store.GetEntriesAsync(cancellationToken: Ct);
+        Assert.Equal(JsonSerializer.Serialize(expected), JsonSerializer.Serialize(entries));
+        Assert.Equal(JsonSerializer.Serialize(expected), JsonSerializer.Serialize((await store.GetHomeSnapshotAsync(Today, 0, Ct)).Entries));
+        if (json is "[]" or "[ ]" or "[] \r\n")
+        {
+            Assert.Equal(2, entries.Count); Assert.NotSame(entries[0].Tags, entries[1].Tags);
+            entries[0].Tags.Add("In-memory only"); Assert.Empty(entries[1].Tags);
+        }
+    }
+
+    /// <summary>A source-derived empty marker cannot erase tags supplied by an actual EF command interceptor.</summary>
+    [Fact, Trait("AT", "AT-377")]
+    public async Task Complete_history_empty_tag_marker_cannot_override_an_intercepted_projection()
+    {
+        var provider = Create(); await SeedAsync(provider);
+        var path = provider.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>().Path;
+        var projection = new TagProjection();
+        var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite($"Data Source={path};Pooling=False")
+            .UseModel(ZananceDbContextModel.Instance).AddInterceptors(projection).Options;
+        var store = Store(new DirectFactory(options), provider.GetRequiredService<ICommercialWriteAccessSource>());
+        Assert.All(await store.GetEntriesAsync(cancellationToken: Ct), row => Assert.Equal(["intercepted"], row.Tags));
+        Assert.All((await store.GetHomeSnapshotAsync(Today, 0, Ct)).Entries, row => Assert.Equal(["intercepted"], row.Tags));
+        Assert.Equal(2, projection.Replaced);
+        await using var original = await Factory(provider).CreateDbContextAsync(Ct);
+        Assert.All(await original.Entries.AsNoTracking().ToListAsync(Ct), row => Assert.Empty(row.Tags));
+    }
+
+    private sealed class TagProjection : DbCommandInterceptor
+    {
+        internal int Replaced { get; private set; }
+        /// <inheritdoc />
+        public override ValueTask<InterceptionResult<DbDataReader>> ReaderExecutingAsync(DbCommand command,
+            CommandEventData eventData, InterceptionResult<DbDataReader> result, CancellationToken cancellationToken = default)
+        {
+            if (command.CommandText.StartsWith("SELECT \"Id\",", StringComparison.Ordinal))
+            {
+                command.CommandText = command.CommandText.Replace("\"Tags\",", "'[\"intercepted\"]' AS \"Tags\",", StringComparison.Ordinal);
+                Replaced++;
+            }
+            return ValueTask.FromResult(result);
+        }
+    }
+
     /// <inheritdoc />
     public void Dispose() { foreach (var provider in _providers) provider.Dispose(); SqliteTestPools.Clear(_directory); _directory.Dispose(); }
     private sealed class CountedFactory(IDbContextFactory<ZananceDbContext> inner) : IDbContextFactory<ZananceDbContext>

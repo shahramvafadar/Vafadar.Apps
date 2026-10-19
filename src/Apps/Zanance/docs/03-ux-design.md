@@ -1757,3 +1757,11 @@ budget. Income, transfers, refunds, Once plans and weekly/fortnightly budgets le
 steps visible and actionable. Hide the card automatically only when all three match; preserve explicit
 dismissal and account guards. Do not alter the user's creation defaults or existing financial data.
 [Original application/native evidence](quality/home-getting-started.md).
+
+## D-377 - Preserve complete Home while reducing materialization work
+
+An empty-tag read optimization must leave all original sections, amounts, order, commands, loading
+cover, title action and native text/layout unchanged. Compare the complete original financial/native
+presentation, not a reduced sample page. Bounded original navigation timings do not establish cold
+startup, responsiveness or general native stability.
+[Qualification](quality/home-empty-tag-materialization.md).

@@ -7045,3 +7045,15 @@ OS 200%/360 dp Android contexts pass with unchanged complete fixture fields. Str
 offline APK and emulator no-reset/native Home restoration pass. No money/schema/permission change or
 unrelated full-suite/benchmark repetition; Samsung remains on D-375.
 [Detailed evidence](quality/home-getting-started.md).
+
+## D-377 - Avoid redundant parsing of original empty tag lists
+
+Current original Home stage observations place substantial time before the first data publication.
+Keep the complete existing row path; extend its null descriptor with an exact binary-text empty-tag
+marker and recognize only the standard immutable model's list conversion. Return a fresh empty list
+for that case; retain original parsing/refusals for all other storage and overridden projections.
+Nine new behavior cases and all 78 related Data cases pass. Same-data original native Home cohorts
+improve descriptively on x64 and Samsung ARM64, with full schema/typed-row and presentation equality.
+Preserve Samsung's actual Mono SIGSEGV and the four completed cases before continuing only the two
+unfinished ones. This is no stability, cold-start or two-second acceptance.
+[Exact evidence and package qualification](quality/home-empty-tag-materialization.md).

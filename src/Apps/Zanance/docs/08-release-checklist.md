@@ -1796,3 +1796,11 @@ emulator no-reset upgrade preserves native Home and exact OS values. Samsung is 
 No financial, schema, permission or creation-default changes; general performance/runtime, spoken
 reader, iOS/provider/Store and release gates remain open.
 [Package and qualification](quality/home-getting-started.md).
+
+## D-377 - Empty-tag read qualification boundary
+
+Related original-conversion regressions and complete protected native Home cohorts qualify a bounded
+read optimization. All data/presentation checks pass, but the Samsung caller actually crashes in
+Mono and completes through a retained-case continuation. Do not use the shorter descriptive timings
+as native stability, cold/ANR, two-second, iOS/provider/Store or release acceptance.
+[Packages, restoration and results](quality/home-empty-tag-materialization.md).

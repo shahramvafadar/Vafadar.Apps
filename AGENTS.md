@@ -2697,3 +2697,12 @@ Yearly) and a Month budget. Income/transfer/refund, Once plans and Week/TwoWeeks
 silently hide those steps. Read the same captured Home snapshot on its existing worker; keep
 account availability, explicit dismissal and creation defaults unchanged. Test the actual non-UI
 application policy and original native actions; do not replace them with duplicated test logic.
+
+## D-377 original empty-tag materialization
+
+The complete Home reader may bypass JSON parsing only for an exact text `[]` under binary equality,
+the original prepared SQLite projection and the exact standard model-owned list reader/converter.
+Every row receives its own mutable list. Keep all original columns, null refusals, custom/intercepted
+reader behavior, dates, timestamps, transaction/cancellation and financial calculations. Qualify
+current whole-page protected workloads, not only decoder loops; retain native failures and completed
+same-source cases. Do not infer general runtime stability or a loading target from bounded timings.

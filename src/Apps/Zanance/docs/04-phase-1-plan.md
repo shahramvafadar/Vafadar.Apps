@@ -1151,3 +1151,10 @@ Done: replace unrelated record-count completion with exact expense/recurrence/mo
 Fourteen focused policy cases, 18 Windows and six OS 200%/360 dp native Android contexts pass; strict
 builds/full signed offline APK and no-reset emulator restoration pass. Existing financial algorithms,
 creation defaults and dismissal choices are unchanged. [Evidence](quality/home-getting-started.md).
+
+## D-377 - Original complete Home materialization
+
+Reduce repeated parsing of standard empty tags without removing fields, weakening conversions or
+changing UI/security. Nine new behavior cases, related Data tests and same-data native complete-page
+comparisons qualify the bounded change. Preserve the observed native crash; general runtime and
+loading acceptance remain unfinished. [Evidence](quality/home-empty-tag-materialization.md).

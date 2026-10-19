@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.EntityFrameworkCore.Storage.Json;
 using SQLitePCL;
 using Vafadar.Zanance.Core.Ledger;
 
@@ -50,11 +51,13 @@ internal static class CompleteHomeLedgerReader
         (nameof(LedgerEntry.ToAmount), typeof(long?)),
         (nameof(LedgerEntry.UpdatedAt), typeof(DateTimeOffset))
     ];
-    // Derive both projections from the same guarded field order. The extra value is only a null bitmap;
+    // Derive both projections from the same guarded field order. The extra value carries the null bitmap and one exact empty-tag marker;
     // every original financial value still travels through its complete original typed conversion.
+    // Bit 32 uses binary text equality so column collations cannot reinterpret a different JSON value.
     private static readonly string Sql = "SELECT " + string.Join(", ", Columns.Select(column => $"\"{column.Name}\""))
         + ", " + string.Join(" | ", Columns.Select((column, ordinal) =>
             $"((\"{column.Name}\" IS NULL) << {ordinal.ToString(System.Globalization.CultureInfo.InvariantCulture)})"))
+        + " | CASE WHEN typeof(\"Tags\") = 'text' AND \"Tags\" COLLATE BINARY = '[]' THEN (1 << 32) ELSE 0 END"
         + " AS \"__OriginalNulls\" FROM \"Entries\" NOT INDEXED ORDER BY rowid DESC";
 
     /// <summary>Retains complete no-tracking rows, command interception, cancellation and the caller's captured transaction.</summary>
@@ -107,7 +110,7 @@ internal static class CompleteHomeLedgerReader
                 Review = (ReviewState)row.GetInt32(24),
                 ScheduleId = row.IsDBNull(25) ? null : row.GetGuid(25),
                 Source = (EntrySource)row.GetInt32(26),
-                Tags = contract.ReadTags(row.GetString(27)),
+                Tags = contract.CanonicalEmptyTags && row.HasCanonicalEmptyTags ? [] : contract.ReadTags(row.GetString(27)),
                 Title = row.IsDBNull(28) ? null : row.GetString(28),
                 ToAccountId = row.IsDBNull(29) ? null : row.GetGuid(29),
                 ToAmount = row.IsDBNull(30) ? null : row.GetInt64(30),
@@ -141,7 +144,13 @@ internal static class CompleteHomeLedgerReader
             ?? throw new InvalidOperationException("The original creation timestamp conversion is unavailable.");
         var updated = entity.FindProperty(nameof(LedgerEntry.UpdatedAt))!.GetTypeMapping().Converter
             ?? throw new InvalidOperationException("The original update timestamp conversion is unavailable.");
-        return new(readTags, created, updated);
+        // D-377: only this exact model-owned collection implementation has the canonical empty result.
+        // Custom converters/readers retain their original parsing and error behavior, even for the same JSON text.
+        var collectionReader = tags.Converter is null ? tags.JsonValueReaderWriter
+            : tags.Converter.GetType() == typeof(CollectionToJsonStringConverter<string>)
+                ? ((CollectionToJsonStringConverter<string>)tags.Converter).JsonReaderWriter : null;
+        var canonicalEmptyTags = collectionReader?.GetType() == typeof(JsonCollectionOfReferencesReaderWriter<List<string>, string>);
+        return new(readTags, created, updated, canonicalEmptyTags);
     }
 
     /// <summary>Rejects a new scalar conversion instead of interpreting it with obsolete provider getters.</summary>
@@ -158,5 +167,5 @@ internal static class CompleteHomeLedgerReader
     }
 
     /// <summary>Original model-owned conversions, retained only as long as their immutable model.</summary>
-    private sealed record ReadContract(Func<string, List<string>> ReadTags, ValueConverter CreatedAt, ValueConverter UpdatedAt);
+    private sealed record ReadContract(Func<string, List<string>> ReadTags, ValueConverter CreatedAt, ValueConverter UpdatedAt, bool CanonicalEmptyTags);
 }

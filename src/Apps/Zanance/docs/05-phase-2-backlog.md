@@ -2491,3 +2491,10 @@ Completed the observed guidance defect without adding a Phase2 feature: unrelate
 complete or hide the three named tasks. Actual source tests and native publication pass; no new
 financial posting, schema, permission, commercial or provider scope.
 [Qualification and limits](quality/home-getting-started.md).
+
+## D-377 - Complete Home materialization cost
+
+Improve existing complete Home reads through an exact standard-empty-list path; no new Phase2
+feature, financial posting, schema, permission or provider authority. Original native cohorts retain
+all data and presentation; the actual Samsung crash remains a wider runtime concern.
+[Results and limits](quality/home-empty-tag-materialization.md).

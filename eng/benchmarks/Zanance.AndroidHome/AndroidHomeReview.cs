@@ -429,6 +429,7 @@ internal static partial class AndroidHomeReview
         await Task.Delay(1000, ct); // Let original empty-install foreground work settle outside the measurement.
         var results = new List<object>();
         var nativeReadProfiles = new List<object>();
+        var tagReaderContracts = new List<object>();
         var reviewedInputGuards = new List<object>();
         var completed = new HashSet<string>(StringComparer.Ordinal);
         if (File.Exists(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json")))
@@ -474,6 +475,16 @@ internal static partial class AndroidHomeReview
                 var expected = await data.GetRequiredService<ZananceStore>().GetHomeSnapshotAsync(today, 0, ct);
                 if (expected.Entries.Count != shape.Entries || expected.QuickResources.Accounts.Count != shape.Accounts || expected.Plans.Schedules.Count != shape.Schedules)
                     throw new ReviewCheckException("Retained complete workload shape differs.");
+                await using (var metadata = await data.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(ct))
+                {
+                    var mapping = metadata.Model.FindEntityType(typeof(LedgerEntry))!.FindProperty(nameof(LedgerEntry.Tags))!.GetTypeMapping();
+                    var collectionReader = mapping.Converter is null ? mapping.JsonValueReaderWriter
+                        : mapping.Converter.GetType() == typeof(Microsoft.EntityFrameworkCore.Storage.ValueConversion.CollectionToJsonStringConverter<string>)
+                            ? ((Microsoft.EntityFrameworkCore.Storage.ValueConversion.CollectionToJsonStringConverter<string>)mapping.Converter).JsonReaderWriter : null;
+                    tagReaderContracts.Add(new { Shape = name, Converter = mapping.Converter?.GetType().Name,
+                        Reader = collectionReader?.GetType().Name, CanonicalEmptyArrayReader = collectionReader?.GetType()
+                            == typeof(Microsoft.EntityFrameworkCore.Storage.Json.JsonCollectionOfReferencesReaderWriter<List<string>, string>) });
+                }
                 var balances = LedgerCalculator.TotalBalances(expected.QuickResources.Accounts, expected.Entries, today);
                 foreach (var language in phase == "guard" ? new[] { "en" } : new[] { "en", "fa", "de" })
                 {
@@ -616,7 +627,7 @@ internal static partial class AndroidHomeReview
                 finally { CryptographicOperations.ZeroMemory(rawKey); }
             }
         }
-        await WriteReportAsync(root, phase, new { Comparison = comparison, BaselineComparison = baseline, Results = results, NativeReadProfiles = nativeReadProfiles, ReviewedInputGuards = reviewedInputGuards,
+        await WriteReportAsync(root, phase, new { Comparison = comparison, BaselineComparison = baseline, Results = results, NativeReadProfiles = nativeReadProfiles, TagReaderContracts = tagReaderContracts, ReviewedInputGuards = reviewedInputGuards,
             DataModuleVersionId = typeof(ZananceStore).Module.ModuleVersionId, CallerModuleVersionId = typeof(HomePage).Module.ModuleVersionId,
             CoreModuleVersionId = typeof(Core.Plans.Occurrences).Module.ModuleVersionId,
             OriginalProductionPage = true, OriginalWindowFocusRequired = true, RetainedCompletedCases = completed.ToArray(),

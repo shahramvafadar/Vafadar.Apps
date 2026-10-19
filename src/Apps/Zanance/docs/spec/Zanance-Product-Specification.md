@@ -6985,3 +6985,14 @@ Original 18 Windows and six OS 200%/360 dp Release/AOT Android contexts preserve
 Strict Windows/full signed offline APK and emulator no-reset/native Home restoration pass. Samsung
 remains D-375; broader physical-device/runtime/performance/reader/iOS/provider/release gates stay open.
 [Exact qualification](../quality/home-getting-started.md).
+
+### Section31 update - D-377 complete Home empty tags
+
+The original complete ledger reader skips redundant JSON parsing only for exact standard empty lists,
+with original EF/interception/null/date/error/security behavior retained. Nine new cases bring this
+related Data class to 78 passing cases; these are not a fresh full-suite run or a new overall total.
+The final binary-collation guard is qualified by repeating only the nine affected cases. Complete
+protected Home x64/Samsung cohorts preserve schema, typed rows and financial/native presentation.
+Samsung tenfold median is 6279.32 to 5158.13 ms; a native Mono crash and retained-case continuation
+remain explicit negative evidence. QA-06, cold/GC/ANR/reader/iOS/provider/Store/release gates stay open.
+[Detailed evidence](../quality/home-empty-tag-materialization.md).

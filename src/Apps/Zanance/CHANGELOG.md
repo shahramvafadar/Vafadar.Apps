@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Less repeated work when loading Home (D-377)
+
+- Avoid parsing standard empty transaction tags repeatedly while retaining complete history, original financial values and error handling.
+- Qualify the original protected page on emulator and Samsung; general native stability and the loading target remain open.
+
 ### Accurate getting-started steps (D-376)
 
 - Keep the first-expense step open after income, transfers or refunds.

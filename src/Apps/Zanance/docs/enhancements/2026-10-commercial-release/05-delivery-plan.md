@@ -2628,3 +2628,12 @@ Qualify actual linked application source, original native unfinished actions, fu
 complete signed offline package/no-reset emulator. Fourteen new tests, 18 final Windows and six native
 large-text cases pass; unrelated successful suites and financial benchmarks are not repeated.
 [Detailed result](../../quality/home-getting-started.md).
+
+## D-377 - Whole Home materialization batch
+
+Profile the current original page, optimize only the observed standard empty-tag conversion cost,
+prove original JSON/error/interceptor behavior and compare complete protected current Home on x64
+and ARM64. Preserve successful cases and native failures without restarting an observation timeout.
+Use the ordinary complete signed offline package for no-reset upgrades; unrelated successful suites
+and withdrawn transport/date experiments are not repeated. Runtime stability remains a separate
+unfinished requirement. [Evidence](../../quality/home-empty-tag-materialization.md).

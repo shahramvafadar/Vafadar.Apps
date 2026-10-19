@@ -5,24 +5,27 @@ using SQLitePCL;
 
 namespace Vafadar.Zanance.Data;
 
-/// <summary>Reads a complete current SQLite row using the exact prepared query's null bitmap.</summary>
+/// <summary>Reads a complete current SQLite row using the exact prepared query's null/empty descriptor.</summary>
 internal readonly struct CompleteHomeLedgerRow
 {
     private readonly DbDataReader _reader;
     private readonly sqlite3_stmt? _statement;
-    private readonly uint _nulls;
+    private readonly ulong _nulls;
 
     /// <summary>Captures one bounded bitmap after original advancement; rewritten or replaced readers keep their getters.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal CompleteHomeLedgerRow(DbDataReader reader, sqlite3_stmt? statement, int nullOrdinal)
     {
         _reader = reader; _statement = statement;
-        _nulls = statement is null ? 0 : checked((uint)reader.GetInt64(nullOrdinal));
+        _nulls = statement is null ? 0 : checked((ulong)reader.GetInt64(nullOrdinal));
     }
 
     /// <summary>Uses the captured row's null type, preserving provider behavior for intercepted readers.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal bool IsDBNull(int ordinal) => _statement is null ? _reader.IsDBNull(ordinal) : (_nulls & (1u << ordinal)) != 0;
+    internal bool IsDBNull(int ordinal) => _statement is null ? _reader.IsDBNull(ordinal) : (_nulls & (1UL << ordinal)) != 0;
+
+    /// <summary>Identifies only an exact text empty array from the original prepared projection.</summary>
+    internal bool HasCanonicalEmptyTags => _statement is not null && (_nulls & (1UL << 32)) != 0;
 
     /// <summary>Retains SQLite integer coercion and original provider refusal of a required null.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
