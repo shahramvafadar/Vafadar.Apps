@@ -2664,3 +2664,13 @@ Retire only that profile and preserve original three profiles/Main979/samePID/OS
 hash-matched owned input are removed. No new unit count or production/APK change; D-377 remains current.
 See [bounded evidence](../../quality/physical-accountant-document-disclosure.md).
 Expert/legal, arbitrary documents, full-device stability, iOS and publication are not accepted here.
+
+
+## D-381 - Finish physical CSV interpretation qualification
+
+Close the D-331/D-332 physical gap using only original picker/native controls, retained known synthetic
+own-format/generic sources and a fresh profile. Four page arrivals, invalid last-row refusal and stale
+sign interpretation until explicit Refresh pass. No Import/Undo; all-history remains empty. Retire only
+the new profile/owned inputs and preserve original Main979/three profiles/OS/APK. No production/APK
+change, new managed count, successful suite or build replay. Other QA/native/reader/iOS/provider/release
+work remains open. [Full scope](../../quality/physical-import-preview.md).

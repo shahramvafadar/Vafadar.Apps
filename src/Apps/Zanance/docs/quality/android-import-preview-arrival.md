@@ -78,3 +78,12 @@ a cold-start speed acceptance, a low-memory acceptance or a reason to discard th
 
 Samsung, real OS text scaling, screen-reader, other device/API/page-size, iOS, provider/store and release
 acceptance remain independent gates.
+
+
+## D-381 physical continuation
+
+[Original Samsung qualification](physical-import-preview.md) now closes the previously open English
+normal-scale physical picker/page-arrival/stale-mapping scope, without Import or Undo. The original
+D-331/D-332 failures and emulator receipts remain historical evidence. This continuation uses the
+unchanged D-377 APK, preserves prior profiles/Main/OS and does not establish wider runtime stability,
+arbitrary-bank, all-language/scaling, TalkBack, iOS or publication acceptance.

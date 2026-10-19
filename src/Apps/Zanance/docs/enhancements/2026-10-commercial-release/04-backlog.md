@@ -39,7 +39,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-LOC-12 | Owner-requested receipt total detection and review (D-64) | Maintenance | P1 | M | Done (local; device/corpus gate remains QA-05) | owner request 2026-10-08 |
 | ZCR-LOC-11 | Owner-requested backup, onboarding and About corrections (D-62) | 2 | P2 | S | Done | owner approval 2026-10-08 |
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Done (D-268 browser/account copy and six-language drafts; real OAuth/publication remain open) | D-69 continuous delivery |
-| ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; other bank/relationship variants require original fixtures | original export specifications/samples |
+| ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; D-381 physical interpreted paging/stale-mapping review; other bank/relationship variants require original fixtures | original export specifications/samples |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
 | ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; D-328 accountant ZIP receiving/content; D-329 original en/fa/de PDF contents and continued-table fix; D-330 own-format producer/consumer/refund/transfer/cold Undo; D-361 original en/fa/de display/Back and advanced goal choices/dirty discard, exact preference/Home restoration and one native root; D-365 original changed account/debt/monthly disclosures in 18 normal-scale Samsung cases with draft/data/preference preservation; broader phone acceptance remains) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
@@ -3319,3 +3319,13 @@ Retire only that profile and preserve original three profiles/Main979/samePID/OS
 hash-matched owned input are removed. No new unit count or production/APK change; D-377 remains current.
 See [bounded evidence](../../quality/physical-accountant-document-disclosure.md).
 Expert/legal, arbitrary documents, full-device stability, iOS and publication are not accepted here.
+
+
+## D-381 physical interpreted CSV continuation
+
+Close the D-331/D-332 physical gap using only original picker/native controls, retained known synthetic
+own-format/generic sources and a fresh profile. Four page arrivals, invalid last-row refusal and stale
+sign interpretation until explicit Refresh pass. No Import/Undo; all-history remains empty. Retire only
+the new profile/owned inputs and preserve original Main979/three profiles/OS/APK. No production/APK
+change, new managed count, successful suite or build replay. Other QA/native/reader/iOS/provider/release
+work remains open. [Full scope](../../quality/physical-import-preview.md).

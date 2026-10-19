@@ -7091,3 +7091,15 @@ bytes, financial equality and explicit redaction. Changing flags invalidates the
 build passes without warnings; both phone packets pass. Retire only the new profile, remove owned input
 and receiver, preserve original three profiles/Main979/samePID/OS/APK and release the phone. No production
 change or new unit-test count. See [full evidence and limits](quality/physical-accountant-document-disclosure.md).
+
+
+## D-381 - Close the physical CSV preview acceptance gap
+
+Qualify the original D-331/D-332 interpretation and page-arrival behavior on Samsung with retained known
+own-format/generic inputs and a fresh fictitious profile. Four Next/Previous arrivals expose the heading,
+correct first row and amount without corrective scrolling. The invalid final row and disabled final Next
+remain reachable. Changing generic sign leaves the old Expense visible but disables Import with feedback;
+explicit Refresh publishes Income and re-enables it. No Import/Undo is invoked; all-history stays empty.
+Retire only the new profile and hash-matched owned files. Original three profiles/Main979/samePID/OS/APK
+match; release the phone. No production change, new managed count or repeated successful build/suite.
+[Original observations, failures and limits](quality/physical-import-preview.md).

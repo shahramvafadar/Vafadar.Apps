@@ -7023,3 +7023,12 @@ opt-out paths, including review invalidation, original financial-field equality 
 Only the fresh fictitious profile is retired; prior profiles/Main979/OS and APK are preserved. No unit
 count increase or product change: application/APK remain D-377. Expert/legal/original-document and wider
 platform/release acceptance remain open; see quality/physical-accountant-document-disclosure.md.
+
+
+### Section31 update - D-381 physical CSV review
+
+Original Samsung picker, three-page own-format traversal/arrival, invalid last row and generic stale-sign
+review are now qualified in English at normal device scale. No import or financial row is posted; the
+fresh fictitious profile/input files are retired and original Main979/three profiles/OS/APK match. App
+and APK remain D-377, with no new unit count. Other languages/scales, arbitrary bank files, full-device
+stability, iOS and publication remain open. See quality/physical-import-preview.md.

@@ -4261,3 +4261,13 @@ Retire only that profile and preserve original three profiles/Main979/samePID/OS
 hash-matched owned input are removed. No new unit count or production/APK change; D-377 remains current.
 See [bounded evidence](quality/physical-accountant-document-disclosure.md).
 Expert/legal, arbitrary documents, full-device stability, iOS and publication are not accepted here.
+
+
+## AT-381 - Physical read-only import preview
+
+Samsung original picker and retained three-page preview pass four native Next/Previous arrivals, visible
+invalid final row/final-Next refusal, and stale generic sign invalidation until explicit Refresh. No
+Import/Undo; all-history empty and zero balance before retiring only the fictitious profile and owned
+inputs. Original Main979/three profiles/samePID/OS/APK match. No production change or new unit count.
+[Evidence and remaining boundaries](quality/physical-import-preview.md). This is not all-device stability,
+all languages/scales, arbitrary bank input, iOS or publication acceptance.
