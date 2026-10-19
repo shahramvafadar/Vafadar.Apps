@@ -7041,3 +7041,13 @@ independent EF values/refusals. All96 related candidate cases pass and the18 new
 exact restored production. The descriptor candidate is withdrawn after its complete native Home cohort
 fails to show benefit. App/APK remain D-377; no full-suite count or speed/native-stability acceptance.
 See quality/home-guid-storage-candidate.md. Remaining QA-06/platform/provider/release gates stay open.
+
+### Section31 update - D-383 original recent Home selection
+
+Home selects three eligible original newest-first records on its existing worker, without rescanning
+and sorting the older history on the window thread. Complete financial inputs/formatting remain.
+Ten new actual App-source cases pass, strict Windows and complete offline Android builds are warning-free,
+and all six x64/Samsung protected cases match original recent/financial/native packets and complete
+schema/typed rows. Both actual native crashes remain negative evidence; only missing cases continue.
+No-reset Main upgrades preserve original Home/data/settings. App/APK advance to D-383, not a full-suite
+count, two-second Home, native stability or release acceptance. [Evidence](../quality/home-recent-selection.md).

@@ -353,6 +353,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
                 AccountBalances = accounts.ToDictionary(account => account.Id, account => LedgerCalculator.Balance(account, index.For(account.Id), today)),
                 OpenReimbursementCount = EntryActions.OpenReimbursements(entries).Count,
                 GettingStarted = GettingStartedProgress.From(entries, snapshot.Plans.Schedules, snapshot.Budgets),
+                Recent = HomeRecentEntries.FromNewestFirst(entries, today),
             };
         });
         RequireCurrentPublication();
@@ -450,7 +451,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         // The last entries show at a glance what was recorded and that a quick add worked.
         var presenter = new EntryPresenter(byId, categories, _translator, culture);
         RecentEntries.Clear();
-        foreach (var entry in entries.Where(e => e.Date <= today).OrderByDescending(e => e.Date).ThenByDescending(e => e.CreatedAt).Take(3))
+        foreach (var entry in facts.Recent)
         {
             var row = presenter.Row(entry);
             var day = entry.Date == today ? _translator["Common_Today"]

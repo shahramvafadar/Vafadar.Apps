@@ -1765,3 +1765,9 @@ cover, title action and native text/layout unchanged. Compare the complete origi
 presentation, not a reduced sample page. Bounded original navigation timings do not establish cold
 startup, responsiveness or general native stability.
 [Qualification](quality/home-empty-tag-materialization.md).
+
+## D-383 - Preserve original recent-entry presentation
+
+Use the existing newest-first snapshot and worker to select three nonfuture original records. Keep
+original row identities, ties, presenter, amounts, review state and dates. Do not filter financial
+history or change loading cover/layout to improve timing. [Qualification](quality/home-recent-selection.md).

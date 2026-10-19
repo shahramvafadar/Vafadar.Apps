@@ -7114,3 +7114,13 @@ samples improve; medians951.5312/2664.2326 become999.69905/2974.9265ms. Restore 
 exactly and the ordinary independent package/Main/OS state. Retain18 required-identity compatibility
 cases, all18 passing on restored production; restored Windows compilation is warning-free. No phone
 trial, Main APK or unrelated suite. [Original receipts and limits](quality/home-guid-storage-candidate.md).
+
+## D-383 - Select recent Home rows on the existing worker
+
+The complete Home snapshot is already stable newest-first. Select its first three eligible original
+records on the facts worker instead of filtering/sorting all history after the UI collection reset.
+Preserve every original financial source and presenter. Ten new actual-source cases and strict builds
+pass; all six original x64 and Samsung contexts match complete data/native/recent packets. Retain both
+native SIGSEGVs and continue only missing cases. Measured recent-publication intervals shrink, but
+whole-Home timings do not establish improvement. Complete offline APK and no-reset Main upgrades pass.
+[Original evidence, control justification and limits](quality/home-recent-selection.md).

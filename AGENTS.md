@@ -2744,3 +2744,12 @@ Fewer per-row native calls did not improve the complete original Home cohort. Ke
 and retain required identity TEXT/BLOB/legacy/error behavior against an independent EF oracle. Preserve
 all original fields, conversion/refusal order, query/interceptor/transaction and actual-file authority;
 do not promote a micro-level rationale, select fast samples or extend a rejected candidate to the phone.
+
+## D-383 bounded recent Home selection
+
+Home's captured complete ledger is already stable Date/CreatedAt descending. Select the first three
+nonfuture original rows on its existing facts worker; never rescan/sort older history on the window
+thread or reduce financial calculation inputs. Preserve references, stable ties and original presenter.
+Independent original-order/packet oracles run outside measured clocks/heartbeat and do not alter old
+financial baseline files. Retain native crashes and completed cases; bounded public notification
+intervals do not establish whole-Home speed, general runtime stability or release acceptance.

@@ -483,3 +483,14 @@ Native captions use the same NativeDigits conversion as the original label handl
 values unchanged. The main Release does not activate the independent diagnostic constant.
 Full protected Home comparison remains a distinct `compare` phase on the retained unreviewed corpus;
 reuse exact passed baselines rather than replaying them or claiming a speedup from mixed samples.
+
+## D-383 original recent-entry oracle
+
+The historical CapturePresentation projection does not include recent rows. The existing original
+Home phase independently selects original expected rows with the prior stable Date/CreatedAt order,
+then checks identities/count/HasRecent, title, amount, review state and original subtitle suffix.
+Formatting oracles execute after measured clocks and heartbeat stop; keep original baseline JSON
+unchanged and do not prewarm formatting. OriginalRecentEntryPacketsMatched qualifies this separate
+proof. Public recent:Reset-to-first-Add intervals include formatting/event overhead, not exact CPU
+profiling or full-Home speed. Native terminal failures retain completed cases before same-source
+continuation, never observation-timeout restarts or a stability claim.

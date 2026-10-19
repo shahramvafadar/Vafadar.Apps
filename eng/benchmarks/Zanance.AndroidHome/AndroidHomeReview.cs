@@ -486,6 +486,9 @@ internal static partial class AndroidHomeReview
                             == typeof(Microsoft.EntityFrameworkCore.Storage.Json.JsonCollectionOfReferencesReaderWriter<List<string>, string>) });
                 }
                 var balances = LedgerCalculator.TotalBalances(expected.QuickResources.Accounts, expected.Entries, today);
+                // D-383: preserve an independent old-order oracle outside every timed publication.
+                var expectedRecent = expected.Entries.Where(entry => entry.Date <= today)
+                    .OrderByDescending(entry => entry.Date).ThenByDescending(entry => entry.CreatedAt).Take(3).ToArray();
                 foreach (var language in phase == "guard" ? new[] { "en" } : new[] { "en", "fa", "de" })
                 {
                     if (completed.Contains(name + ":" + language)) continue;
@@ -560,6 +563,16 @@ internal static partial class AndroidHomeReview
                                     throw new ReviewCheckException("Real native balance differs from the complete original ledger.");
                             }
                             await Task.Delay(75, ct); timer.Stop();
+                            var recentPresenter = new Presentation.EntryPresenter(expected.QuickResources.Accounts.ToDictionary(account => account.Id),
+                                new Presentation.CategoryLookup(expected.QuickResources.Categories, services.GetRequiredService<Translator>()),
+                                services.GetRequiredService<Translator>(), local.CurrentCulture);
+                            var recentPackets = expectedRecent.Select(entry => recentPresenter.Row(entry)).ToArray();
+                            if (!vm.RecentEntries.Select(row => row.Id).SequenceEqual(expectedRecent.Select(entry => entry.Id))
+                                || vm.HasRecent != (expectedRecent.Length > 0)
+                                || vm.RecentEntries.Where((row, index) => row.Title != recentPackets[index].Title
+                                    || row.AmountText != recentPackets[index].AmountText || row.IsUnreviewed != recentPackets[index].IsUnreviewed
+                                    || !row.Subtitle.EndsWith(" · " + recentPackets[index].Subtitle, StringComparison.Ordinal)).Any())
+                                throw new ReviewCheckException("Original recent entry identities or formatted packets differ.");
                             var presentation = CapturePresentation(vm);
                             var originalPath = Path.Combine(folder, "presentation-" + baseline + "-" + language + ".json");
                             if ((phase == "measure" || phase == "home-stages" && comparison == baseline) && !File.Exists(originalPath))
@@ -581,7 +594,8 @@ internal static partial class AndroidHomeReview
                     }
                     results.Add(new { Shape = name, Language = language, shape.Entries, shape.Accounts, shape.Schedules,
                         FirstThenSecondPublicationMilliseconds = samples, LargestDispatcherGapMilliseconds = gaps, PublicNotificationSamples = notificationSamples,
-                        OriginalBalancesAndNativeTextMatched = true, OriginalFinancialPresentationMatched = true, ActualNativeLayout = true, OriginalWindowFocusRequired = true, NoSynchronousSettingsRead = true });
+                        OriginalBalancesAndNativeTextMatched = true, OriginalFinancialPresentationMatched = true, OriginalRecentEntryPacketsMatched = true,
+                        ActualNativeLayout = true, OriginalWindowFocusRequired = true, NoSynchronousSettingsRead = true });
                     await File.WriteAllTextAsync(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json"), JsonSerializer.Serialize(results), ct);
                     _balanceEvidence = null;
                 }

@@ -2685,3 +2685,12 @@ withdrawn for lack of whole-page benefit. Restore ordinary independent package/M
 outputs and retain the negative receipts. No Main APK, phone trial, broader suite or performance claim.
 [Evidence and remaining boundaries](../../quality/home-guid-storage-candidate.md). QA-06, native GC/ANR,
 reader/full-device/iOS/provider/Store and release remain open; continue ready work from measured causes.
+
+## D-383 bounded Home publication, broader qualification continues
+
+Reuse the existing complete newest-first snapshot and worker for three recent rows. Ten new App
+cases, strict builds, complete original x64/Samsung native/data/packet comparisons and no-reset signed
+Main upgrades pass. Both actual native crashes remain negative evidence. The measured publication
+interval improves; full Home/GC/ANR/cold/low-memory and external platform gates remain open. Continue
+ready work; do not replay successful unrelated suites or relabel component timings as full acceptance.
+See [evidence](../../quality/home-recent-selection.md).

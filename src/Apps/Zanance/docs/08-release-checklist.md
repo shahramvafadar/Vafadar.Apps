@@ -1850,3 +1850,13 @@ withdrawn for lack of whole-page benefit. Restore ordinary independent package/M
 outputs and retain the negative receipts. No Main APK, phone trial, broader suite or performance claim.
 [Evidence and remaining boundaries](quality/home-guid-storage-candidate.md). QA-06, native GC/ANR,
 reader/full-device/iOS/provider/Store and release remain open; continue ready work from measured causes.
+
+## D-383 - Bounded publication is not full-Home acceptance
+
+Ten new actual-source recent-selection cases and strict Windows/complete offline Android builds pass.
+The original six x64 and six Samsung contexts preserve full schema/typed rows, financial/native text and
+explicit recent identities/packets. Native SIGSEGVs are retained; only unfinished cases continue on the
+same immutable source/package/data. Targeted recent publication work shrinks; whole Home has no proven
+speedup. No-reset Main upgrades preserve original Home0/Home979, settings and package identity.
+[Evidence and boundaries](quality/home-recent-selection.md). General GC/ANR, cold/low-memory, reader,
+full-device/iOS/provider/Store and release acceptance remain open.

@@ -5,6 +5,11 @@ versions follow [Semantic Versioning](https://semver.org/). Nothing has been rel
 the first release candidate. Requirement ids refer to the [specification](docs/spec/Zanance-Product-Specification.md).
 
 ## [Unreleased]
+### Less window-thread work for recent Home entries (D-383)
+
+- Reuse the complete history's existing order when choosing three recent entries, keeping the same records and formatting.
+- Move selection to the existing background calculation; overall loading speed and native stability remain under review.
+
 
 ### Less repeated work when loading Home (D-377)
 
