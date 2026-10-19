@@ -1804,3 +1804,10 @@ read optimization. All data/presentation checks pass, but the Samsung caller act
 Mono and completes through a retained-case continuation. Do not use the shorter descriptive timings
 as native stability, cold/ANR, two-second, iOS/provider/Store or release acceptance.
 [Packages, restoration and results](quality/home-empty-tag-materialization.md).
+
+## D-378 - Native crash remains an open release concern
+
+Exact official ARM64 symbols locate the real original fault; one remset-only cohort completes
+without a fatal assertion. Preserve both facts. Do not ship diagnostic settings or call the crash,
+ANR, cold/low-memory or two-second requirement fixed. App/runtime/APK remain D-377; phone/Main/OS
+and normal caller are restored. [Detailed boundary](quality/android-home-bridge-fault.md).

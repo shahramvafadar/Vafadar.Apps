@@ -2637,3 +2637,11 @@ and ARM64. Preserve successful cases and native failures without restarting an o
 Use the ordinary complete signed offline package for no-reset upgrades; unrelated successful suites
 and withdrawn transport/date experiments are not repeated. Runtime stability remains a separate
 unfinished requirement. [Evidence](../../quality/home-empty-tag-materialization.md).
+
+## D-378 - Preserve the precise native failure and diagnostic boundary
+
+Complete exact-symbol resolution and a bounded same-source diagnostic cohort, restoring the ordinary
+package/Main/OS and releasing the phone. Do not promote diagnostic GC settings, raw-memory logging,
+preview runtimes or a non-reproduction into a product fix. Continue ready observed allocation and
+application work while retaining the native stability gate; Main remains the signed D-377 package.
+[Investigation](../../quality/android-home-bridge-fault.md).

@@ -1572,3 +1572,16 @@ absence and subsequent ordinary candidate member presence; never persist the ove
 ambiguous build output. Copy immutable signed packages before installing. An authoritative native
 exit may continue only unfinished retained cases on the same package/data; a timeout never authorizes
 a restart. [Exact D-377 evidence](../../src/Apps/Zanance/docs/quality/home-empty-tag-materialization.md).
+
+## D-378 exact native code and safe local diagnostics
+
+Resolve the actual packaged Mono ELF against official debug data using both GNU BuildId and
+.gnu_debuglink CRC, then containing symbols and DWARF lines. A containing push_object frame may
+point into inlined bridge_object_forward; nearest exports cannot identify that site. Reuse the
+verified pyelftools wheel without installing it. Inspect runtime diagnostic implementation first:
+nursery-canaries prints raw object/nearby heap bytes and is incompatible with code-only diagnostics.
+A command-line artifact-only independent override may enable check-remset-consistency with a fixed
+runtime mode receipt; never promote it or persist it in Main/global settings. Clean its generated
+outputs and restore the exact ordinary independent APK/Main/OS after the bounded run. No arbitrary
+environment logging, registers, raw stack, heap dump or private key/database export.
+[Exact D-378 result](../../src/Apps/Zanance/docs/quality/android-home-bridge-fault.md).

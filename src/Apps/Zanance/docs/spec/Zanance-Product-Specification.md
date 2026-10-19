@@ -6996,3 +6996,13 @@ protected Home x64/Samsung cohorts preserve schema, typed rows and financial/nat
 Samsung tenfold median is 6279.32 to 5158.13 ms; a native Mono crash and retained-case continuation
 remain explicit negative evidence. QA-06, cold/GC/ANR/reader/iOS/provider/Store/release gates stay open.
 [Detailed evidence](../quality/home-empty-tag-materialization.md).
+
+### Section31 update - D-378 original native fault boundary
+
+Exact ARM64 symbols locate the D-377 native crash in inlined Tarjan bridge header access. A separate
+remset-only diagnostic cohort preserves complete protected data/presentation in six native cases;
+this neither reproduces nor disproves a random crash. Reject nursery-canaries before device
+installation because it dumps object/nursery bytes. Main code, runtime, APK and managed test baseline
+remain D-377 (78 related cases, no new count/full-suite claim). Restore exact original Main979 and
+system values; general runtime/ANR/Q-02/device/reader/iOS/provider/release gates remain open.
+[Evidence](../quality/android-home-bridge-fault.md).

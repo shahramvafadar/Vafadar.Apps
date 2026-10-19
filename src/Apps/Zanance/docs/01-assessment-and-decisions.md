@@ -7057,3 +7057,16 @@ improve descriptively on x64 and Samsung ARM64, with full schema/typed-row and p
 Preserve Samsung's actual Mono SIGSEGV and the four completed cases before continuing only the two
 unfinished ones. This is no stability, cold-start or two-second acceptance.
 [Exact evidence and package qualification](quality/home-empty-tag-materialization.md).
+
+## D-378 - Resolve the original ARM64 bridge fault precisely
+
+D-377's actual ARM64 SIGSEGV resolves through exact official BuildId/debuglink/DWARF to
+push_object+16, inlined bridge_object_forward at sgen-tarjan-bridge.c:373:7. This locates an invalid
+object-header read but does not identify the corrupt object or its full cause. Current stable .NET10
+runtime remains10.0.13; prior serial/precise-bridge candidates remain rejected. Inspect the local GC
+validation implementation before execution: nursery-canaries writes raw memory and is not installed.
+A remset-only independent cohort completes all six current original Home cases and full protected
+schema/typed-row/presentation proofs in PID20385, without a fatal remset assertion. Do not infer a
+fix or use its timings. Restore ordinary caller/Main979/exact settings and release the phone. No
+application/runtime/schema/security change, new tests or repeated unrelated checks.
+[Exact investigation](quality/android-home-bridge-fault.md).

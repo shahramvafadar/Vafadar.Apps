@@ -3290,3 +3290,12 @@ original native x64 and Samsung comparisons preserve full schema/typed rows and 
 Tenfold medians improve descriptively 3025.61 to 2664.23 ms and 6279.32 to 5158.13 ms. Preserve the
 actual ARM64 native crash and four retained successful cases; do not close QA-06 or runtime gates.
 [Qualification](../../quality/home-empty-tag-materialization.md).
+
+## D-378 exact original native fault investigation
+
+Locate the actual ARM64 fault through verified official symbols, not nearest exports. Reject the
+raw-memory-emitting canary mode before installation; remset-only validation completes six original
+Home cases/full stored-data and presentation proofs on the same retained keys and financial corpus.
+This bounded non-reproduction does not close QA-06/runtime stability. Ordinary caller and unchanged
+Main D-377/Home979/OS restore exactly; no new managed count or unrelated suite/build repetition.
+[Exact result and limits](../../quality/android-home-bridge-fault.md).

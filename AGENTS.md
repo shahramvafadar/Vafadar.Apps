@@ -2706,3 +2706,13 @@ Every row receives its own mutable list. Keep all original columns, null refusal
 reader behavior, dates, timestamps, transaction/cancellation and financial calculations. Qualify
 current whole-page protected workloads, not only decoder loops; retain native failures and completed
 same-source cases. Do not infer general runtime stability or a loading target from bounded timings.
+
+## D-378 bounded original runtime diagnosis
+
+Native symbolization must match the exact packaged ELF BuildId and debuglink CRC before naming a
+faulting source line; distinguish inlined code from the containing function. Do not enable
+nursery-canaries: the serviced runtime writes raw object and surrounding nursery bytes on failure.
+A separate local remset-consistency trial may retain only fixed mode/stage/completion evidence,
+without heap/register/raw-stack collection. Keep GC policy unchanged in Main, restore the ordinary
+independent package, exact Main/OS state and phone turn, and never count one clean diagnostic cohort
+as proof that a random native fault is fixed.

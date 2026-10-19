@@ -4233,3 +4233,11 @@ nine affected cases after the final binary-collation guard. Current original pro
 Samsung reports compare all schema/typed rows and original native/financial presentation. Keep the
 actual native SIGSEGV and retained-case continuation; this does not accept general device stability,
 cold startup or a two-second Home target. [Evidence](quality/home-empty-tag-materialization.md).
+
+## AT-378 - Bounded original native runtime diagnosis
+
+Native-only evidence, no new unit cases: exact ELF/debuglink/DWARF identification, no installed
+canary-dump mode, exact runtime remset-only marker, six full original Home cases in PID20385 with
+complete protected schema/typed-row and presentation equality. Ordinary independent package and
+unchanged Main979/OS restoration pass. No fatal remset assertion in this cohort is not acceptance
+of general native stability or a loading target. [Evidence](quality/android-home-bridge-fault.md).
