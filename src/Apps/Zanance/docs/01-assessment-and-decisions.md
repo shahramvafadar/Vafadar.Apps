@@ -6982,3 +6982,14 @@ The independent build has zero warnings/errors. Stop only the independent caller
 proof, preserve its fixtures, restore unchanged main PID/Home/profile 979 EUR/system/APK and release
 the phone. Zero new managed tests; no unchanged successful main build or full suite repeated.
 [Bounded original hardware evidence and limits](quality/physical-destination-fee.md).
+
+## D-372 - Reject current-row native transport after paired original Home
+
+Keep the original complete reader and main D-369 APK. A bounded native 32-field prototype passes
+57 real-SQLite protocol cases, strict independent Android build and protected full-row comparisons,
+but paired original Home medians are 761.11 ->773.59ms reference and 2472.96 ->2392.47ms tenfold.
+Mixed whole-page results do not justify another native/unsafe/build boundary. Preserve historical
+presentation refusal, use a fresh unweakened original control, retain live processes across
+observation deadlines, restore original independent bytes/main PID/Home/OS and ordinary Data output.
+No managed-count, product source/APK or unchanged full-suite repetition. QA-06 remains open.
+[Exact experiment, original paired observations and withdrawal](quality/home-native-row-transport.md).

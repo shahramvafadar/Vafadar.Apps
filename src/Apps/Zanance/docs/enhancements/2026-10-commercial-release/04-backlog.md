@@ -3224,3 +3224,13 @@ exact system state and installed bytes restore; terminal independent caller stop
 No new managed tests or repeated unchanged successful main/full-suite verification. QA-06 general
 GC/ANR/low-memory/latency, readers/iOS and external release gates remain open.
 [Original physical proof](../../quality/physical-destination-fee.md).
+
+## D-372 original Home transport experiment withdrawn
+
+Do not add the independently tested native current-row bridge to the application. All 32 fields,
+provider dates, original EF/ownership boundaries and protected typed rows match; 57 native protocol
+cases are not new managed tests. Original paired Home is mixed and tenfold median gain only 3.3%.
+Preserve the rejected historical presentation comparison and fresh exact control, unchanged
+fixtures/keys, terminal-process restoration and ordinary Data output. Main source/APK remain D-369;
+no unchanged successful main/full-suite repeat. QA-06's actual latency/ANR requirement stays open.
+[Evidence and explicit withdrawal](../../quality/home-native-row-transport.md).

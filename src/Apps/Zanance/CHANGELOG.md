@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Home transport qualification (D-372)
+
+- Keep the existing complete Home reader after an independent native prototype failed to show a consistent whole-page benefit. Saved data and the application package are unchanged.
+
 ### Physical stored-fee qualification (D-371)
 
 - Verify existing transfer destination-fee retention, edits and explicit removal through the original Android editor/store on Samsung using isolated fictitious data. The main application package is unchanged.

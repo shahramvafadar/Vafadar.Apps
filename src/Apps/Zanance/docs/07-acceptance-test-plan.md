@@ -4164,3 +4164,14 @@ The fixture is standalone SQLite; main encrypted-adapter/full-device acceptance 
 Preserve original main PID 11372/Home/profile 979 EUR/system/APK, stop only the terminal independent caller
 and release the turn. No new managed count, repeated unchanged suite or general runtime/release claim.
 [Exact proof](quality/physical-destination-fee.md).
+
+## AT-372 - Reject unhelpful native row transport (D-372)
+
+Status: experiment withdrawn; original Home performance requirement remains open. Verify all 32
+fields/provider dates and complete protected schema/typed rows before paired original Home/native
+focus/publication/layout.57 real-SQLite protocol cases are not new managed unit tests. Keep the
+historical baseline refusal, capture a fresh exact original control and compare without weakened
+presentation checks. Mixed page timings reject the extra native boundary. Restore original main
+PID/Home/APK/OS, qualified independent bytes and ordinary Data output after terminal evidence.
+No phone, two-second/general ANR, speech/iOS/provider/release acceptance is inferred.
+[Exact paired result and restoration](quality/home-native-row-transport.md).

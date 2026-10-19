@@ -2578,3 +2578,12 @@ proof and restore original main Home/profile 979 EUR/system/APK before releasing
 No unchanged successful main build or suite repeats. Standalone SQLite evidence is bounded;
 main encrypted-adapter, wider device/runtime/latency/readers/iOS/provider/release scope remains.
 [Qualified evidence](../../quality/physical-destination-fee.md).
+
+## D-372 completed bounded native-transport decision
+
+The separate 32-field bridge is rejected after complete current protected data and paired original
+Home comparison; isolated read timing is insufficient. Restore original main Home/system/APK,
+qualified independent package and normal Data build; preserve all evidence and fixtures. No
+product/source/APK change or replay of unrelated successful verification. Continue ready original
+Home performance/ANR work; device/readers/iOS/provider/Store/release remain separate open gates.
+[Exact paired result](../../quality/home-native-row-transport.md).

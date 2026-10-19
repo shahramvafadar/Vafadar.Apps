@@ -1504,3 +1504,14 @@ uiautomator tree. Bind visible surface/parent/package/session-PID evidence to th
 close without currency selection and recheck after actual child navigation. This is not list-row
 selection, TalkBack/speech or general GC/ANR acceptance. Preserve exact original app/OS state.
 [Recorded failures, seven-migration continuation and packages](../../src/Apps/Zanance/docs/quality/destination-fee-android-lifecycle.md).
+
+## Withdrawn current-row native experiment (D-372)
+
+Native protocol or isolated read timing is not original Home acceptance. Require exact original
+financial presentation, full protected schema/typed rows, actual window focus and paired complete
+page publication/layout. An incompatible historical presentation baseline must refuse; retain it
+and establish a fresh original control rather than weakening equality. Preserve exact live
+processes across observation deadlines. After rejecting an artifact-only build override, restore
+ordinary Data output and remove the experimental independent package bytes while preserving its
+fixtures/main data. Never add a native build/runtime dependency for an unproven whole-page gain.
+[Measured scope and restoration](../../src/Apps/Zanance/docs/quality/home-native-row-transport.md).

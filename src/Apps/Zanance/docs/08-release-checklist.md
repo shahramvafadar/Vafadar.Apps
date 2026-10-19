@@ -1748,3 +1748,12 @@ restore original main PID/Home/profile 979 EUR/system state and release the phon
 standalone SQLite fixture does not close main encrypted-adapter, full-device/GC/ANR/low-memory,
 startup target, speech/iOS/provider/Store or release gates.
 [Evidence](quality/physical-destination-fee.md).
+
+## D-372 withdrawn Home transport
+
+The independent native current-row prototype is not a shipping dependency. Protocol/strict build/
+complete protected rows pass, but paired whole-Home results do not justify promotion. Original
+reader/main D-369 APK and system/data state remain; normal Data output is restored. No new managed
+count or repeated unchanged successful main/full suite. QA-06/two-second/general GC/ANR/startup,
+phone/readers/iOS/provider/Store/release gates remain open.
+[Measured withdrawal](quality/home-native-row-transport.md).

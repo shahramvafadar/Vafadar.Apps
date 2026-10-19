@@ -6927,3 +6927,14 @@ Main PID/Home/profile 979 EUR/system/APK restore and the turn is released. Zero 
 main-source/APK change; no unchanged successful suites/builds replayed. Broader runtime, latency,
 low-memory, reader, iOS, provider and release gates remain open.
 [Exact evidence and limitations](../quality/physical-destination-fee.md).
+
+### Section31 update - D-372 native row transport withdrawn
+
+Retain the original complete Home reader/main D-369 package. An artifact-only native prototype
+passes 57 real-SQLite protocol cases, strict independent Android build and complete protected data
+checks, but the paired original Home result is mixed: reference median761.11 ->773.59ms and
+tenfold 2472.96 ->2392.47ms. No useful persistent whole-page gain is accepted. Preserve historical
+presentation refusal and fresh exact current control, all fixtures/keys and original main/OS state.
+Default Data output is restored with zero warnings/errors; no production source, managed-count,
+main APK, financial algorithm or schema change. QA-06/ANR and external acceptance remain open.
+[Result and limits](../quality/home-native-row-transport.md).
