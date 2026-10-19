@@ -81,7 +81,7 @@ jobs:
 
       # Reuse unchanged qualified native outputs; entry hashes are checked before restore.
       - name: Cache source-built Android cipher
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             artifacts/native-sqlcipher/build/application-android/candidate
@@ -144,7 +144,7 @@ jobs:
       # Cache only exact immutable package entries. Candidate-only caches lose the producer
       # logs/source required by the diagnostic gate; never treat those fragments as a build.
       - name: Cache reviewed Windows source-built package
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             artifacts/native-sqlcipher/feed/Vafadar.Native.SqlCipher.Windows.*.nupkg

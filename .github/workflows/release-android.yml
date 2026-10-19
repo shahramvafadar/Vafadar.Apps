@@ -73,7 +73,7 @@ jobs:
 
       # Share the qualified producer cache with CI; validate exact package entries before restore.
       - name: Cache source-built Android cipher
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             artifacts/native-sqlcipher/build/application-android/candidate
