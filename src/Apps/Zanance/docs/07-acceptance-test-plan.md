@@ -4188,3 +4188,16 @@ function/triggers, failed native processes and completed cases. Bounded tenfold 
 about 13.7%, with reference unchanged/mixed; general GC/ANR/two-second/cold/release is not accepted.
 Strict builds, complete signed offline APK and no-reset main Home/system/profile restoration pass.
 [Exact evidence and open gates](quality/unreviewed-account-scope.md).
+
+## AT-374 - One review item per transaction (D-374)
+
+Seven new Core cases cover same/FX-currency transfers, destination/explicit/default scope,
+unrelated/confirmed rows, repeated records/occurrences, historical metadata, dates, one source
+enumeration and count independence from monetary overflow. All36 related cases pass. Actual Home
+publication passes18 Windows, six emulator and six Samsung contexts; preserve original fixture
+fields and native count/confirmed captions. Retain the managed observer failures and the two passed
+English cases when correcting Persian display-digit expectations. The affected protected large
+Home path preserves original financial/native presentation and complete raw schema/typed rows.
+Strict builds/full signed offline APK, no-reset main Home/profile/OS restoration and phone release
+pass. No two-second, broader GC/ANR/device, spoken-reader, iOS or release claim.
+[Exact evidence](quality/home-review-count.md).

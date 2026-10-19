@@ -470,3 +470,16 @@ Observe the exact PID with Read-ReviewReport.ps1 -Phase destination-fee (or the 
 phase), original Run/Comparison and a fresh OutputPath. A timeout or empty tree never permits
 restart. Actual terminal runtime failures require ApplicationExitInfo and exact mono-rt evidence,
 not only AndroidRuntime/am_crash. Native case counts are not new managed tests.
+
+## One review count per FX transaction (D-374)
+
+`home-review-count` uses a fresh run/comparison and separate original SQLite fixture, publishes actual
+Home in en/fa/de Light/Dark, and verifies both count captions plus complete original fixture fields.
+The Android context records actual logical display width; never relabel the Samsung384dp screen as
+412dp. `home-review-count-fixed` may continue only the original fixture after a terminal observer
+failure. Its retained English packet guard is intentionally bounded to the existing412dp failure;
+do not infer source/configuration for unrelated cases. Preserve failed reports and old fixtures/keys.
+Native captions use the same NativeDigits conversion as the original label handler, keeping bound
+values unchanged. The main Release does not activate the independent diagnostic constant.
+Full protected Home comparison remains a distinct `compare` phase on the retained unreviewed corpus;
+reuse exact passed baselines rather than replaying them or claiming a speedup from mixed samples.

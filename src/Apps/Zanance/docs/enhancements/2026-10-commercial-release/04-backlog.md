@@ -3248,3 +3248,15 @@ Preserve old/new native GC failures and all completed cases across terminal cont
 Main strict builds/full offline signed APK and no-reset original Home/profile/system restoration
 pass. Phone turn released; QA-06 general native stability, readers/iOS/provider/release remain open.
 [Exact result](../../quality/unreviewed-account-scope.md).
+
+## D-374 original Home review-count defect
+
+Done locally/native: count an unreviewed transaction once across currency groups in both Home
+notices. Seven new/36 related Core cases,18 Windows, six emulator and six Samsung original contexts
+pass with complete fixture-field preservation. Retain the two native-observer failures, correct
+only the expected Persian display digits, and preserve already completed English cases. The new
+affected protected Home run preserves full raw data and original presentation without replaying
+the old baseline; no performance gain is accepted. Complete signed offline APK/no-reset upgrades
+and native Home0/979/exact OS restoration pass, phone turn released. General QA-06/reader/iOS/
+provider/Store/release scope remains unfinished.
+[Evidence and remaining gates](../../quality/home-review-count.md).

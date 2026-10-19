@@ -1768,3 +1768,13 @@ builds/signed offline APK and no-reset original Home/profile 979 EUR/system rest
 No new native dependency, runtime/GC setting or crypto weakening. Wider device/reader, two-second/
 cold/GC/ANR/low-memory, iOS/provider/Store and release gates remain open.
 [Source, packages and failures](quality/unreviewed-account-scope.md).
+
+## D-374 global review count
+
+Home counts an FX transfer once; per-currency effects remain unchanged. Seven new/36 related Core
+cases,18 Windows and six emulator/six Samsung original native contexts pass. Protected complete
+Home/data comparison passes without replaying the old successful baseline; timings do not establish
+an improvement. Strict main builds/full signed offline APK and no-reset original Home0/979/OS
+restoration pass, phone turn released. General runtime/performance/readers/iOS/provider/Store/release
+gates remain open.
+[Package, preserved failures and limits](quality/home-review-count.md).

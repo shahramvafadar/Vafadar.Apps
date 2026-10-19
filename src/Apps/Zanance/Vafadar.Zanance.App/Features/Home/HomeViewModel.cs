@@ -343,7 +343,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         var facts = await Task.Run(() =>
         {
             var index = new AccountEntryIndex(entries);
-            var unreviewedCount = LedgerCalculator.Unreviewed(allAccounts, entries).Sum(value => value.Count);
+            var unreviewedCount = LedgerCalculator.UnreviewedEntryCount(allAccounts, entries);
             return new
             {
                 Balances = LedgerCalculator.TotalBalances(allAccounts, entries, today),

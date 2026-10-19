@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Correct Home review count (D-374)
+
+- Count a transfer between two currencies once in Home's review notices, while preserving each currency's financial amounts.
+
 ### Unreviewed calculation boundaries (D-373)
 
 - Avoid repeatedly scanning every account for each unreviewed transaction while preserving existing transfer and currency rules.

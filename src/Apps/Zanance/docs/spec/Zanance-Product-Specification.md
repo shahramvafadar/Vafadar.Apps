@@ -6952,3 +6952,16 @@ native GC failures remain open; only unfinished same-source cases continue. Stri
 signed offline Android and no-reset main upgrades pass with original Home/OS/profile state.
 No schema, crypto/runtime policy or permission change, and no unrelated full-suite repetition.
 [Native failures, comparisons and actual packages](../quality/unreviewed-account-scope.md).
+
+### Section31 update - D-374 global transaction review count
+
+FIN-02/FIN-12 Home review notices now count one FX transfer once instead of summing two currency
+groups. Preserve financial calculations, scope and display choices. Seven new/36 related Core cases,
+18 original Windows contexts and six emulator/six actual Samsung contexts pass with unchanged
+fixture fields. Original native display digits are respected; retain failed observer evidence and
+continue only the unfinished contexts. Full protected Home/raw-data comparison passes, but the
+tenfold median2613.96->2714.35ms supplies no speedup or two-second acceptance. Strict builds, full
+signed offline APK and no-reset main/native Home0/979/OS restoration pass; phone released.
+No schema/permission/font/layout change or repetition of unrelated successful suites. Broader
+runtime, cold/low-memory, reader, iOS, provider and release gates remain open.
+[Detailed qualification](../quality/home-review-count.md).

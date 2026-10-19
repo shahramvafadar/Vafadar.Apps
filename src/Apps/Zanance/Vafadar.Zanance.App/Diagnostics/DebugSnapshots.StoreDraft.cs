@@ -116,6 +116,29 @@ internal static partial class DebugSnapshots
         await SeedBudgetAsync(services, food);
         await store.UpdateSettingsAsync(settings => settings.OnboardingCompleted = true);
         app.ShowMainShell();
+        if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "home-review-count")
+        {
+            var countCaptures = new List<object>();
+            var result = await HomeReviewCountReview.RunAsync(app, services, folder, [360, 412, 1280],
+                language => SetLanguageAsync(app, local, language), async (page, context) =>
+                {
+                    var model = (Features.Home.HomeViewModel)page.BindingContext;
+                    var viewport = page.FindByName<ScrollView>("ContentViewport");
+                    foreach (var text in new[] { model.ConfirmedBalanceText, model.UnreviewedText })
+                    {
+                        var label = VisualDescendants(page).OfType<Label>().Single(value => value.Text == text);
+                        await viewport.ScrollToAsync(label, ScrollToPosition.Center, false); await Task.Delay(150);
+                        CheckCaption(label);
+                    }
+                    var destination = Path.Combine(folder, context); Directory.CreateDirectory(destination);
+                    await CaptureWindowAsync(app.Windows[0], Path.Combine(destination, "home-review.png"));
+                    countCaptures.Add(new { Language = context, File = "home-review.png" });
+                }, CancellationToken.None);
+            await File.WriteAllTextAsync(Path.Combine(folder, "complete.json"), JsonSerializer.Serialize(new
+            { Package = AppInfo.Current.PackageName, ProcessId = Environment.ProcessId, FinancialRowsUnchangedAfterSeeding = true,
+                Captures = countCaptures, Qualification = result }));
+            return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "editor-text")
         {
             await ReviewEditorTextWindowsAsync(app, services, folder);

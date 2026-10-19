@@ -44,6 +44,53 @@ internal static partial class AndroidHomeReview
                 await Task.Run(() => PrepareAsync(root, ct, unreviewed: phase == "prepare-unreviewed", resumeUnreviewed), ct);
                 await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, UnreviewedCorpus = phase == "prepare-unreviewed", NativeOverflowRefusals = phase == "prepare-unreviewed" ? CheckUnreviewedOverflow() : 0, CoreModuleVersionId = typeof(LedgerCalculator).Module.ModuleVersionId, MainPackageTouched = false, Device = DeviceEvidence() }, ct);
             }
+            else if (phase is "home-review-count" or "home-review-count-fixed")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0) throw new ReviewCheckException("Nonredirected review root required.");
+                app.OpenReviewShell();
+                await AwaitReimbursementFocusAsync(ct);
+                var local = services.GetRequiredService<ILocalizationService>();
+                var display = DeviceDisplay.Current.MainDisplayInfo;
+                var logicalWidth = Math.Round(display.Width / display.Density);
+                var result = await Diagnostics.HomeReviewCountReview.RunAsync(app, services, root, [logicalWidth],
+                    language => SetLanguageAsync(app, local, language, ct), async (page, context) =>
+                    {
+                        var model = (HomeViewModel)page.BindingContext;
+                        var viewport = page.FindByName<ScrollView>("ContentViewport");
+                        foreach (var text in new[] { model.ConfirmedBalanceText, model.UnreviewedText })
+                        {
+                            var label = ReimbursementViews(page).OfType<Label>().Single(value => value.Text == text);
+                            await viewport.ScrollToAsync(label, ScrollToPosition.Center, false);
+                            if (label.Handler?.PlatformView is not Android.Widget.TextView native)
+                                throw new ReviewCheckException("Original native review caption unavailable.");
+                            // The original label mapper changes display digits without changing the bound value.
+                            var expectedNative = label.FlowDirection == FlowDirection.LeftToRight
+                                ? text : Vafadar.Localization.Formatting.NativeDigits.Apply(text);
+                            await WaitLayoutAsync(native, ct); RequireHomeWindowFocus();
+                            using var visible = new Android.Graphics.Rect();
+                            var samples = new List<object>(); var complete = false;
+                            for (var attempt = 0; attempt < 40; attempt++)
+                            {
+                                var layout = native.Layout;
+                                var shown = native.GetGlobalVisibleRect(visible);
+                                var ellipsis = layout is null ? -1 : Enumerable.Range(0, layout.LineCount).Sum(line => layout.GetEllipsisCount(line));
+                                complete = label.Text == text && native.Text == expectedNative && shown && layout is not null && ellipsis == 0
+                                    && native.Height - native.TotalPaddingTop - native.TotalPaddingBottom >= layout.Height;
+                                samples.Add(new { Attempt = attempt, Context = context, CaptionMatched = native.Text == expectedNative, BoundTextMatched = label.Text == text, Shown = shown,
+                                    native.Width, native.Height, native.TotalPaddingTop, native.TotalPaddingBottom, LayoutHeight = layout?.Height,
+                                    Ellipsis = ellipsis, VisibleHeight = visible.Height(), Complete = complete });
+                                if (complete) break;
+                                await Task.Delay(50, ct);
+                            }
+                            _balanceEvidence = samples;
+                            if (!complete)
+                                throw new ReviewCheckException("Original review caption differs.");
+                        }
+                    }, ct, retainedFixture: phase == "home-review-count-fixed");
+                await WriteReportAsync(root, phase, new { Comparison = comparison, Qualification = result, LogicalWidth = logicalWidth,
+                    Device = DeviceEvidence(), MainPackageTouched = false }, ct);
+            }
             else if (phase == "plan-publication-fixed")
             {
                 if (!Directory.Exists(root) || RedirectedAncestors(root).Length != 0)

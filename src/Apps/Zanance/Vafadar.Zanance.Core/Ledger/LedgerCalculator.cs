@@ -174,6 +174,16 @@ public static class LedgerCalculator
         ];
     }
 
+    /// <summary>Counts unreviewed transactions touching the account scope, once per input entry regardless of currencies.</summary>
+    public static int UnreviewedEntryCount(IEnumerable<Account> accounts, IEnumerable<LedgerEntry> entries, IReadOnlyCollection<Guid>? accountIds = null)
+    {
+        // D-374: currency summaries describe financial effects, not a global transaction count.
+        // In particular, one FX transfer touches two currencies but remains one item to review.
+        var scope = InScope(accounts, accountIds).Select(account => account.Id).ToHashSet();
+        return entries.Count(entry => entry.Review == ReviewState.Unreviewed
+            && (scope.Contains(entry.AccountId) || entry.ToAccountId is { } destination && scope.Contains(destination)));
+    }
+
     /// <summary>Unreviewed entries per currency with their net balance effect on the accounts in scope.</summary>
     public static IReadOnlyList<UnreviewedSummary> Unreviewed(IEnumerable<Account> accounts, IEnumerable<LedgerEntry> entries, IReadOnlyCollection<Guid>? accountIds = null)
     {

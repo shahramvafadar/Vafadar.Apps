@@ -2671,3 +2671,11 @@ old confirmed-only workload cannot qualify this path. Prepare a distinct fresh f
 through the original context's native guard, never a permissive replacement or removed trigger.
 Keep failed preparation files, existing keys and complete same-source case receipts. Actual native
 GC death permits a bounded retained-case continuation, not a stability claim or observation reset.
+
+## D-374 count review transactions, not currency effects
+
+Global Home review notices count each unreviewed input entry once when either endpoint touches the
+existing account scope. Never sum per-currency counts to obtain a transaction count; one FX transfer
+remains one operation. Preserve the separate checked monetary summaries and original scope/date/
+duplicate semantics. Native caption checks apply the original display-digit mapper without changing
+bound values, fonts or digit preferences; retain failed observations and already completed cases.

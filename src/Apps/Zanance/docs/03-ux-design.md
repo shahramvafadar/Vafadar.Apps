@@ -1732,3 +1732,12 @@ remove another owner's children. Actual popup windows can be non-focusable: an a
 accessibility dump alone cannot prove their absence. Require owned visible native windows and
 unchanged selections; row-selection/speech/device acceptance are separate.
 [Native lifecycle evidence](quality/destination-fee-android-lifecycle.md).
+
+## D-374 - Truthful global review notices
+
+The attention item and confirmed-balance explanation show one transaction for one FX transfer,
+even when both currencies affect included accounts. Currency-specific counts/amounts stay separate.
+Preserve original action, scope, scalable captions and language/region/digit choices. Native review
+checks compare the actual display-digit mapping while the bound count stays Latin; do not change
+product formatting to satisfy an incorrect observer.
+[Original page qualification](quality/home-review-count.md).

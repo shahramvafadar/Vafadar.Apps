@@ -2599,3 +2599,14 @@ Strict main builds/full signed offline APK and no-reset upgrades/native restorat
 the phone and clean test output. Remaining ready work continues; general latency/GC/ANR/cold,
 readers/iOS/provider/Store/release gates remain separate.
 [Qualified scope and failures](../../quality/unreviewed-account-scope.md).
+
+## D-374 complete global-count correctness batch
+
+Correct the actual Home FX count while preserving currency-specific money and scope. Qualify
+behavioural regressions, original translated/theme/native pages, the affected protected workload,
+ordinary complete signed package and no-reset emulator/Samsung restoration as one batch. Keep the
+observer's false Persian mismatch and original data; retain passed contexts and run only the changed
+performance candidate. Do not claim a speedup from the mixed/descriptively slower tenfold result.
+Unchanged successful suites remain untouched; continue remaining ready work with QA-06 and external
+gates intact.
+[Completed bounded delivery](../../quality/home-review-count.md).

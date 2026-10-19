@@ -11,6 +11,7 @@
     <ApplicationVersion>1</ApplicationVersion>
     <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DefineConstants>$(DefineConstants);ZANANCE_INDEPENDENT_HOME_REVIEW</DefineConstants>
     <RunAOTCompilation>true</RunAOTCompilation>
     <PublishTrimmed>true</PublishTrimmed>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>

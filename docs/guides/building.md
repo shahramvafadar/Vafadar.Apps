@@ -1527,3 +1527,15 @@ Require native focus, original complete presentation and exact source/APK/compar
 terminal continuation. Preserve actual GC crashes; skip only completed same-source cases and never
 call a retained completion a GC fix. Restore exact original main/profile/OS and release the phone.
 [Build, failure and timing receipts](../../src/Apps/Zanance/docs/quality/unreviewed-account-scope.md).
+
+## Original Home review-count qualification (D-374)
+
+Run `./eng/scripts/Run-StoreDrafts.ps1 -HomeReviewCountReview` for18 original Home contexts in a fresh
+guarded Windows identity/non-input desktop. It uses a distinct two-account/one-FX-transfer SQLite
+fixture and checks both review captions without modifying main data. The independent Android Home
+caller has `home-review-count`; `home-review-count-fixed` explicitly continues the preserved fixture
+after terminal observer failure and retains only its qualified English packets. It uses the actual
+device width and native display-digit mapper. The review constant is scoped to the independent
+project; ordinary main Release does not include the diagnostic. Never restart after mere observation
+expiry, reseed an existing fixture, change OS digits or treat geometry checks as spoken-reader proof.
+[Exact runtime evidence](../../src/Apps/Zanance/docs/quality/home-review-count.md).

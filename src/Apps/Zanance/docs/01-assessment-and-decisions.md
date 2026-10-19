@@ -7007,3 +7007,17 @@ Retain both actual old/new native GC failures and continue only unfinished same-
 Strict Windows/full signed offline Android, no-reset main upgrades and exact native/OS restoration
 pass; release the phone turn. No runtime/GC or crypto weakening; broader QA-06 remains open.
 [Detailed failures, complete retained comparisons and packages](quality/unreviewed-account-scope.md).
+
+## D-374 - Count an FX transfer once in Home review notices
+
+The original Home expression sums currency review groups, incorrectly showing two transactions for
+one EUR/USD transfer. Use a dedicated operation-local scope counter for both Home notices; preserve
+all currency effects, checked sums, dates and explicit/default scope. Seven new/36 related cases pass.
+Original publication passes18 Windows, six emulator and six Samsung contexts with complete fixture
+field preservation. Preserve the Persian native-digit observer failures, then continue the same
+fixture and retain successful English cases; the application's digit mapping does not change.
+Only the changed candidate's complete protected Home is measured against retained D-373 results.
+The tenfold median2714.35ms is not an accepted speedup or two-second result. Strict builds/full signed
+offline APK and no-reset main upgrades pass; original Home0/979 and exact settings are restored and
+the phone is released. No schema, permission, financial formula or layout change; wider gates stay open.
+[Source, native evidence and limits](quality/home-review-count.md).
