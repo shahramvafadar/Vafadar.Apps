@@ -2735,3 +2735,12 @@ and never replay Save after an observer timeout. Accountant receiver document qu
 the exact known synthetic PDF under the existing native-grant/envelope/size gates, not arbitrary files.
 Use a fresh fictitious profile, retire only that profile through original confirmations, verify prior
 public profiles/Home/OS/APK and remove only owned hash-matched inputs/receiver before releasing the turn.
+
+
+## D-382 withdrawn required GUID storage markers
+
+Do not repeat the two-required-GUID storage-descriptor candidate without new measured evidence.
+Fewer per-row native calls did not improve the complete original Home cohort. Keep the D-377 reader
+and retain required identity TEXT/BLOB/legacy/error behavior against an independent EF oracle. Preserve
+all original fields, conversion/refusal order, query/interceptor/transaction and actual-file authority;
+do not promote a micro-level rationale, select fast samples or extend a rejected candidate to the phone.

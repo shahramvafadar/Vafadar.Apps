@@ -3329,3 +3329,14 @@ sign interpretation until explicit Refresh pass. No Import/Undo; all-history rem
 the new profile/owned inputs and preserve original Main979/three profiles/OS/APK. No production/APK
 change, new managed count, successful suite or build replay. Other QA/native/reader/iOS/provider/release
 work remains open. [Full scope](../../quality/physical-import-preview.md).
+
+
+## D-382 required identity characterization and withdrawal
+
+Eighteen new required-identity representation cases retain independent EF values or exact refusal types.
+All96 related candidate cases pass; all18 new cases pass after exact source restoration. Six original
+protected native Home cases preserve complete schema/typed rows/presentation, but the candidate is
+withdrawn for lack of whole-page benefit. Restore ordinary independent package/Main/OS, clean owned
+outputs and retain the negative receipts. No Main APK, phone trial, broader suite or performance claim.
+[Evidence and remaining boundaries](../../quality/home-guid-storage-candidate.md). QA-06, native GC/ANR,
+reader/full-device/iOS/provider/Store and release remain open; continue ready work from measured causes.

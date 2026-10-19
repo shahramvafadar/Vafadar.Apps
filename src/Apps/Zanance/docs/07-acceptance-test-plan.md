@@ -4271,3 +4271,14 @@ Import/Undo; all-history empty and zero balance before retiring only the fictiti
 inputs. Original Main979/three profiles/samePID/OS/APK match. No production change or new unit count.
 [Evidence and remaining boundaries](quality/physical-import-preview.md). This is not all-device stability,
 all languages/scales, arbitrary bank input, iOS or publication acceptance.
+
+
+## AT-382 - Required identity storage and rejected descriptor
+
+Eighteen new required-identity representation cases retain independent EF values or exact refusal types.
+All96 related candidate cases pass; all18 new cases pass after exact source restoration. Six original
+protected native Home cases preserve complete schema/typed rows/presentation, but the candidate is
+withdrawn for lack of whole-page benefit. Restore ordinary independent package/Main/OS, clean owned
+outputs and retain the negative receipts. No Main APK, phone trial, broader suite or performance claim.
+[Evidence and remaining boundaries](quality/home-guid-storage-candidate.md). QA-06, native GC/ANR,
+reader/full-device/iOS/provider/Store and release remain open; continue ready work from measured causes.

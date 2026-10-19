@@ -339,6 +339,72 @@ public sealed class HomeReadSnapshotTests : IDisposable
         }
     }
 
+    /// <summary>Required identity storage markers retain independent EF values and refusals for every original representation.</summary>
+    [Theory]
+    [InlineData("Id", "canonical"), InlineData("AccountId", "canonical")]
+    [InlineData("Id", "upper"), InlineData("AccountId", "upper")]
+    [InlineData("Id", "compact"), InlineData("AccountId", "compact")]
+    [InlineData("Id", "braces"), InlineData("AccountId", "braces")]
+    [InlineData("Id", "blob"), InlineData("AccountId", "blob")]
+    [InlineData("Id", "utf8-blob"), InlineData("AccountId", "utf8-blob")]
+    [InlineData("Id", "whitespace"), InlineData("AccountId", "whitespace")]
+    [InlineData("Id", "empty"), InlineData("AccountId", "empty")]
+    [InlineData("Id", "integer"), InlineData("AccountId", "integer")]
+    [Trait("AT", "AT-382")]
+    public async Task Required_identity_storage_preserves_independent_provider_semantics(string column, string representation)
+    {
+        Assert.True(column is nameof(LedgerEntry.Id) or nameof(LedgerEntry.AccountId));
+        var provider = Create(); await SeedAsync(provider);
+        await using (var db = await Factory(provider).CreateDbContextAsync(Ct))
+        {
+            var original = await db.Entries.AsNoTracking().FirstAsync(Ct);
+            var identity = column == nameof(LedgerEntry.Id) ? original.Id : original.AccountId;
+            object stored = representation switch
+            {
+                "canonical" => identity.ToString("D"),
+                "upper" => identity.ToString("D").ToUpperInvariant(),
+                "compact" => identity.ToString("N"),
+                "braces" => identity.ToString("B"),
+                "blob" => identity.ToByteArray(),
+                "utf8-blob" => System.Text.Encoding.UTF8.GetBytes(identity.ToString("D")),
+                "whitespace" => "  " + identity.ToString("D") + "  ",
+                "empty" => string.Empty,
+                "integer" => 123L,
+                _ => throw new ArgumentOutOfRangeException(nameof(representation))
+            };
+            await db.Database.OpenConnectionAsync(Ct);
+            // Deliberately inject noncanonical storage in this isolated fixture, independently of relationship writes.
+            await db.Database.ExecuteSqlRawAsync("PRAGMA foreign_keys=OFF", Ct);
+            await using var command = db.Database.GetDbConnection().CreateCommand();
+            command.CommandText = $"UPDATE Entries SET \"{column}\" = $stored WHERE Id = $original";
+            var value = command.CreateParameter(); value.ParameterName = "$stored"; value.Value = stored;
+            var key = command.CreateParameter(); key.ParameterName = "$original"; key.Value = original.Id;
+            command.Parameters.Add(value); command.Parameters.Add(key);
+            Assert.Equal(1, await command.ExecuteNonQueryAsync(Ct));
+        }
+        string? expected = null;
+        var originalError = await Record.ExceptionAsync(async () =>
+        {
+            await using var oracle = await Factory(provider).CreateDbContextAsync(Ct);
+            expected = JsonSerializer.Serialize(await oracle.Entries.AsNoTracking()
+                .OrderByDescending(row => row.Date).ThenByDescending(row => row.CreatedAt).ToListAsync(Ct));
+        });
+        var store = provider.GetRequiredService<ZananceStore>();
+        if (originalError is not null)
+        {
+            var ledgerError = await Record.ExceptionAsync(async () => await store.GetEntriesAsync(cancellationToken: Ct));
+            var homeError = await Record.ExceptionAsync(async () => await store.GetHomeSnapshotAsync(Today, 0, Ct));
+            Assert.NotNull(ledgerError); Assert.NotNull(homeError);
+            Assert.Equal(originalError.GetBaseException().GetType(), ledgerError.GetBaseException().GetType());
+            Assert.Equal(originalError.GetBaseException().GetType(), homeError.GetBaseException().GetType());
+        }
+        else
+        {
+            Assert.Equal(expected, JsonSerializer.Serialize(await store.GetEntriesAsync(cancellationToken: Ct)));
+            Assert.Equal(expected, JsonSerializer.Serialize((await store.GetHomeSnapshotAsync(Today, 0, Ct)).Entries));
+        }
+    }
+
     /// <summary>A malformed optional identity retains the original provider's refusal without publishing partial history.</summary>
     [Fact, Trait("AT", "AT-354")]
     public Task Complete_history_refuses_empty_identity_like_independent_ef() =>

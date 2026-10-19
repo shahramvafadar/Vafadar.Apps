@@ -7032,3 +7032,12 @@ review are now qualified in English at normal device scale. No import or financi
 fresh fictitious profile/input files are retired and original Main979/three profiles/OS/APK match. App
 and APK remain D-377, with no new unit count. Other languages/scales, arbitrary bank files, full-device
 stability, iOS and publication remain open. See quality/physical-import-preview.md.
+
+
+### Section31 update - D-382 required identity compatibility
+
+Add18 behavior cases for the original required Id/AccountId storage representations, comparing actual
+independent EF values/refusals. All96 related candidate cases pass and the18 new cases also pass against
+exact restored production. The descriptor candidate is withdrawn after its complete native Home cohort
+fails to show benefit. App/APK remain D-377; no full-suite count or speed/native-stability acceptance.
+See quality/home-guid-storage-candidate.md. Remaining QA-06/platform/provider/release gates stay open.

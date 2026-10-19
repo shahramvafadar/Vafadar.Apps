@@ -7103,3 +7103,14 @@ explicit Refresh publishes Income and re-enables it. No Import/Undo is invoked; 
 Retire only the new profile and hash-matched owned files. Original three profiles/Main979/samePID/OS/APK
 match; release the phone. No production change, new managed count or repeated successful build/suite.
 [Original observations, failures and limits](quality/physical-import-preview.md).
+
+
+## D-382 - Reject required GUID storage markers after complete Home measurement
+
+A candidate replaces two per-row native type calls with trusted descriptor bits for required Id/AccountId.
+All96 related cases and strict Windows/x64 builds pass, and all six original protected Home/native/data
+cases finish in one process. Full-page timings do not justify adoption: only1/6 reference and2/6 tenfold
+samples improve; medians951.5312/2664.2326 become999.69905/2974.9265ms. Restore both production files
+exactly and the ordinary independent package/Main/OS state. Retain18 required-identity compatibility
+cases, all18 passing on restored production; restored Windows compilation is warning-free. No phone
+trial, Main APK or unrelated suite. [Original receipts and limits](quality/home-guid-storage-candidate.md).
