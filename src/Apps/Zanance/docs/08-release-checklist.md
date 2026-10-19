@@ -1787,3 +1787,12 @@ Main no-reset upgrades and native Add/Cancel pass on emulator/Samsung with origi
 about 88 dp more viewport height. Exact emulator settings restored; phone released. No money/schema/
 security/permission changes or unrelated suite replay. General runtime/performance, spoken-reader,
 iOS/provider/Store and release gates remain open. [Actual package](quality/home-add-header.md).
+
+## D-376 Home guidance correctness
+
+Fourteen new focused application cases and original 18 Windows/six native large-text Android contexts
+pass, with exact fixture-field preservation. Strict builds and complete signed offline APK pass;
+emulator no-reset upgrade preserves native Home and exact OS values. Samsung is unchanged on D-375.
+No financial, schema, permission or creation-default changes; general performance/runtime, spoken
+reader, iOS/provider/Store and release gates remain open.
+[Package and qualification](quality/home-getting-started.md).

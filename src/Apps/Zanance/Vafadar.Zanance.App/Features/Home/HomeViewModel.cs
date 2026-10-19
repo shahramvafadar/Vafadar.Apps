@@ -352,6 +352,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
                 Totals = LedgerCalculator.Totals(allAccounts, entries, new LedgerFilter(from, to)),
                 AccountBalances = accounts.ToDictionary(account => account.Id, account => LedgerCalculator.Balance(account, index.For(account.Id), today)),
                 OpenReimbursementCount = EntryActions.OpenReimbursements(entries).Count,
+                GettingStarted = GettingStartedProgress.From(entries, snapshot.Plans.Schedules, snapshot.Budgets),
             };
         });
         RequireCurrentPublication();
@@ -431,7 +432,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         await LoadBudgetAsync(snapshot, settings.BudgetCalendar, allAccounts, entries, categoryList, today, culture);
         RequireCurrentPublication();
         await LoadPlansAsync(byId, categories, schedules, states, today, planSnapshot.Work);
-        LoadGettingStarted(entries.Count, schedules.Count, snapshot.Budgets.Count);
+        LoadGettingStarted(facts.GettingStarted);
         RequireCurrentPublication();
         await LoadForecastAsync(settings.Shows(Feature.ForecastDetails), allAccounts, entries, schedules, states, today, culture);
         await BuildSlicesAsync(allAccounts, entries, categories, from, to, culture);
@@ -779,12 +780,13 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
 
     private const string GettingStartedKey = "home.getting_started.hidden";
 
-    private void LoadGettingStarted(int entryCount, int planCount, int budgetCount)
+    private void LoadGettingStarted(GettingStartedProgress progress)
     {
-        FirstEntryDone = entryCount > 0;
-        PlanDone = planCount > 0;
-        BudgetDone = budgetCount > 0;
-        ShowGettingStarted = HasAccounts && !Preferences.Default.Get(GettingStartedKey, false) && !(FirstEntryDone && PlanDone && BudgetDone);
+        // D-376: complete the task named by each caption, not merely any record of that family.
+        FirstEntryDone = progress.FirstExpenseDone;
+        PlanDone = progress.RecurringPlanDone;
+        BudgetDone = progress.MonthlyBudgetDone;
+        ShowGettingStarted = HasAccounts && !Preferences.Default.Get(GettingStartedKey, false) && !progress.IsComplete;
     }
 
     [RelayCommand]

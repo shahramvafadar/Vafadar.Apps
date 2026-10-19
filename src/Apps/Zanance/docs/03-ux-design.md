@@ -1749,3 +1749,11 @@ single header replaces the native page title bar; do not add another title band.
 fills the remaining height down to the tab bar, without bottom Add row, overlay or reserved padding.
 Keep the original command, translated description and loading/failure guards. Other page docks and
 financial typography remain unchanged. [Native qualification](quality/home-add-header.md).
+
+## D-376 - Truthful getting-started completion
+
+A step is completed only by its named saved fact: first Expense, recurring payment plan and Month
+budget. Income, transfers, refunds, Once plans and weekly/fortnightly budgets leave their unrelated
+steps visible and actionable. Hide the card automatically only when all three match; preserve explicit
+dismissal and account guards. Do not alter the user's creation defaults or existing financial data.
+[Original application/native evidence](quality/home-getting-started.md).

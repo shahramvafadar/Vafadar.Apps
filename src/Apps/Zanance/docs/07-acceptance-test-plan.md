@@ -4212,3 +4212,14 @@ explicitly discarded without Save. Main emulator/Samsung repeat only the changed
 after no-reset upgrade, retaining Home 0/979 and exact settings. The Windows separate-desktop modal
 COM failure remains a separate limitation; actual modal acceptance comes from Android. These native
 observations are not new managed unit tests. [Evidence](quality/home-add-header.md).
+
+## AT-376 / D-376 named getting-started tasks
+
+Fourteen linked original application-policy cases distinguish all entry kinds, Once versus every
+supported recurrence, Week/TwoWeeks versus Month, independent completion and removal/empty state.
+Native fixture: two accounts, one FX transfer, one Once plan and one Week budget. All three original
+steps remain incomplete, visible, enabled and unstruck in 18 Windows contexts (en/fa/de, Light/Dark,
+360/412/1280) and six actual OS 200%/360 dp Release/AOT Android contexts. Original labels/actions and
+complete account/entry/settings/plan/budget fields are preserved. Restore exact emulator settings,
+upgrade main without reset and match original native Home. No financial Save in main, new phone
+acceptance, benchmark claim or full-suite repetition. [Evidence](quality/home-getting-started.md).

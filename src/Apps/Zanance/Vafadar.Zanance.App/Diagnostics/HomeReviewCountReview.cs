@@ -16,7 +16,7 @@ internal static class HomeReviewCountReview
 {
     /// <summary>Publishes original pages, checks native captions and preserves every seeded fixture field.</summary>
     internal static async Task<object> RunAsync(App app, IServiceProvider services, string folder, double[] widths,
-        Func<string, Task> setLanguage, Func<HomePage, string, Task> inspect, CancellationToken ct, bool retainedFixture = false)
+        Func<string, Task> setLanguage, Func<HomePage, string, Task> inspect, CancellationToken ct, bool retainedFixture = false, bool gettingStarted = false)
     {
         var package = AppInfo.Current.PackageName;
         if (package != "pro.vafadar.zanance.androidhomereview" && !package.StartsWith("pro.vafadar.zanance.storepreview.", StringComparison.Ordinal))
@@ -24,7 +24,7 @@ internal static class HomeReviewCountReview
         Directory.CreateDirectory(folder);
         for (var item = new DirectoryInfo(folder); item is not null; item = item.Parent)
             if ((item.Attributes & FileAttributes.ReparsePoint) != 0) throw new IOException("Redirected review folder refused.");
-        var path = Path.Combine(folder, "review-count.db");
+        var path = Path.Combine(folder, gettingStarted ? "getting-started.db" : "review-count.db");
         if (File.Exists(path) != retainedFixture) throw new IOException("Review-count fixture ownership does not match the requested continuation.");
         using var data = new ServiceCollection().AddZananceData(path).BuildServiceProvider();
         if (!retainedFixture) await Task.Run(() => data.MigrateLocalDatabase<ZananceDbContext>(), ct);
@@ -53,8 +53,24 @@ internal static class HomeReviewCountReview
                 || entry.Title != "Fictitious FX review" || !entry.Tags.SequenceEqual(new[] { "preserved" }))
                 throw new IOException("Retained original review inputs differ; do not replace them.");
         }
+        var plans = data.GetRequiredService<PlanStore>();
+        if (gettingStarted)
+        {
+            if (retainedFixture) throw new IOException("Fresh original getting-started fixture required.");
+            await plans.SaveScheduleAsync(new Vafadar.Zanance.Core.Plans.Schedule
+            {
+                Name = "Fictitious one-off payment", AccountId = source.Id, Amount = 50,
+                Rule = new() { Start = today.AddDays(10), Frequency = Vafadar.Zanance.Core.Plans.Frequency.Once },
+            }, ct);
+            await store.SaveBudgetAsync(new Vafadar.Zanance.Core.Budgets.Budget
+            {
+                CurrencyCode = "EUR", Period = Vafadar.Zanance.Core.Budgets.BudgetPeriod.Week,
+                PeriodStart = today, AccountIds = [source.Id],
+            }, ct);
+        }
         async Task<string> StoredAsync() => JsonSerializer.Serialize(new { Accounts = await store.GetAccountsAsync(cancellationToken: ct),
-            Entries = await store.GetEntriesAsync(cancellationToken: ct), Settings = await store.GetSettingsAsync(ct) });
+            Entries = await store.GetEntriesAsync(cancellationToken: ct), Settings = await store.GetSettingsAsync(ct),
+            Plans = await plans.GetSchedulesAsync(ct), Budgets = await store.GetBudgetsAsync(ct) });
         var before = await StoredAsync();
         var actualEntries = await store.GetEntriesAsync(cancellationToken: ct);
         if (actualEntries.Count != 1 || actualEntries[0].Id != entry.Id || actualEntries[0].Review != ReviewState.Unreviewed)
@@ -107,10 +123,12 @@ internal static class HomeReviewCountReview
                         if (!model.Loading.IsReady || model.UnreviewedCount != 1 || model.UnreviewedText != expectedText
                             || model.ConfirmedBalanceText is null || model.Balances.Count != 2 || !model.OpenUnreviewedCommand.CanExecute(null))
                             throw new IOException("One FX transaction did not publish as one original Home review item.");
+                        if (gettingStarted && (model.FirstEntryDone || model.PlanDone || model.BudgetDone || !model.ShowGettingStarted))
+                            throw new IOException("Transfer, one-off plan or weekly budget incorrectly completed a named Home step.");
                         await inspect(page, context);
                         if (before != await StoredAsync()) throw new IOException("Read-only Home review changed stored fixture fields.");
                         observations.Add(new { Context = context, Count = model.UnreviewedCount, model.UnreviewedText,
-                            model.ConfirmedBalanceText, CompleteFixtureUnchanged = true });
+                            model.ConfirmedBalanceText, CompleteFixtureUnchanged = true, GettingStarted = gettingStarted, model.FirstEntryDone, model.PlanDone, model.BudgetDone, model.ShowGettingStarted });
                         await File.WriteAllTextAsync(progress, JsonSerializer.Serialize(observations), ct);
                     }
                     finally { await shell.Navigation.PopAsync(false); }

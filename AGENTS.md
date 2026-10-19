@@ -2689,3 +2689,11 @@ exception leaves other pages' persistent Add/bulk/Undo docks unchanged. Preserve
 semantic colors, translated action names and original Shell Back handling. Native modal actions
 require their own shown/focused window rather than the covered Activity's focus. Preserve failed
 observers and original fictitious data; restore authorized emulator settings exactly.
+
+## D-376 truthful getting-started tasks
+
+Home guidance completes the named saved task: an Expense, a recurring plan (Daily/Weekly/Monthly/
+Yearly) and a Month budget. Income/transfer/refund, Once plans and Week/TwoWeeks budgets cannot
+silently hide those steps. Read the same captured Home snapshot on its existing worker; keep
+account availability, explicit dismissal and creation defaults unchanged. Test the actual non-UI
+application policy and original native actions; do not replace them with duplicated test logic.

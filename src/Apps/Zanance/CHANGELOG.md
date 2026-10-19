@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Accurate getting-started steps (D-376)
+
+- Keep the first-expense step open after income, transfers or refunds.
+- Complete regular-payment and monthly-budget guidance only for a recurring plan and a monthly budget; unrelated one-off plans or weekly budgets no longer hide the guide.
+
 ### More room on Home (D-375)
 
 - Move the plus button beside the title, slightly reduce it to 48 px and remove its full-width bottom band so more content fits.

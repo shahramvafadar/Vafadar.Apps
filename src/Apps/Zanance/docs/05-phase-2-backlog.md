@@ -2484,3 +2484,10 @@ Completed independently of new Phase2 capabilities: reclaim the bottom Add band 
 button beside the growing title. Native layouts, no-reset main upgrades and open/Cancel pass; other
 docks and money/security behavior are unchanged. Wider runtime, reader and external acceptance gates
 remain open. [Evidence](quality/home-add-header.md).
+
+## D-376 - Existing Home guidance correctness
+
+Completed the observed guidance defect without adding a Phase2 feature: unrelated records cannot
+complete or hide the three named tasks. Actual source tests and native publication pass; no new
+financial posting, schema, permission, commercial or provider scope.
+[Qualification and limits](quality/home-getting-started.md).

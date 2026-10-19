@@ -1144,3 +1144,10 @@ Done: replace Home's bottom Add band with one compact title action. Preserve ori
 sections, bottom scroll reach, command and loading guard. Original Windows/Android layout and native
 open/Cancel pass, including Samsung with unchanged Home 979 and about 88 dp more content height. No
 financial writes or unrelated suite/benchmark repetition. [Evidence](quality/home-add-header.md).
+
+## D-376 - Accurate Home guidance
+
+Done: replace unrelated record-count completion with exact expense/recurrence/monthly-budget facts.
+Fourteen focused policy cases, 18 Windows and six OS 200%/360 dp native Android contexts pass; strict
+builds/full signed offline APK and no-reset emulator restoration pass. Existing financial algorithms,
+creation defaults and dismissal choices are unchanged. [Evidence](quality/home-getting-started.md).

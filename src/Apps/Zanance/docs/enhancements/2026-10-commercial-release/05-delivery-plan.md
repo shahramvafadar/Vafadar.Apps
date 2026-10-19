@@ -2619,3 +2619,12 @@ geometry. Eighteen Windows and six OS 200%/360 dp Android contexts plus main emu
 open/Cancel and no-reset upgrades pass. Preserve failed observations and original fixture data;
 restore exact emulator settings and release the phone. Unchanged successful suites and financial
 benchmarks are not repeated. [Evidence](../../quality/home-add-header.md).
+
+## D-376 - Complete truthful Home guidance batch
+
+Correct all three observed record-count shortcuts as one batch: resolve actual Expense, recurring plan
+and Month budget, retain original visibility/dismissal/defaults and keep history scans on the worker.
+Qualify actual linked application source, original native unfinished actions, full fixture equality and
+complete signed offline package/no-reset emulator. Fourteen new tests, 18 final Windows and six native
+large-text cases pass; unrelated successful suites and financial benchmarks are not repeated.
+[Detailed result](../../quality/home-getting-started.md).

@@ -116,7 +116,7 @@ internal static partial class DebugSnapshots
         await SeedBudgetAsync(services, food);
         await store.UpdateSettingsAsync(settings => settings.OnboardingCompleted = true);
         app.ShowMainShell();
-        if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") is "home-review-count" or "home-add-header")
+        if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") is "home-review-count" or "home-add-header" or "getting-started")
         {
             var countCaptures = new List<object>();
             var result = await HomeReviewCountReview.RunAsync(app, services, folder, [360, 412, 1280],
@@ -127,6 +127,19 @@ internal static partial class DebugSnapshots
                         {
                             InvokeChoiceReview(button); return Task.CompletedTask;
                         }, CancellationToken.None, exerciseNavigation: false);
+                    if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "getting-started")
+                    {
+                        foreach (var key in new[] { "Home_StartEntry", "Home_StartPlan", "Home_StartBudget" })
+                        {
+                            var text = services.GetRequiredService<Translator>()[key];
+                            var label = VisualDescendants(page).OfType<Label>().Single(value => value.Text == text);
+                            await page.FindByName<ScrollView>("ContentViewport").ScrollToAsync(label, ScrollToPosition.Center, false);
+                            await Task.Delay(100); CheckCaption(label);
+                            var button = VisualDescendants(page).OfType<Button>().Single(value => SemanticProperties.GetDescription(value) == text);
+                            if (!button.IsVisible || !button.IsEnabled || button.Command is null || label.TextDecorations != TextDecorations.None)
+                                throw new IOException("Original unfinished guidance action is unavailable.");
+                        }
+                    }
                     var model = (Features.Home.HomeViewModel)page.BindingContext;
                     var viewport = page.FindByName<ScrollView>("ContentViewport");
                     foreach (var text in new[] { model.ConfirmedBalanceText, model.UnreviewedText })
@@ -138,7 +151,7 @@ internal static partial class DebugSnapshots
                     var destination = Path.Combine(folder, context); Directory.CreateDirectory(destination);
                     await CaptureWindowAsync(app.Windows[0], Path.Combine(destination, "home-review.png"));
                     countCaptures.Add(new { Language = context, File = "home-review.png" });
-                }, CancellationToken.None);
+                }, CancellationToken.None, gettingStarted: Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "getting-started");
             await File.WriteAllTextAsync(Path.Combine(folder, "complete.json"), JsonSerializer.Serialize(new
             { Package = AppInfo.Current.PackageName, ProcessId = Environment.ProcessId, FinancialRowsUnchangedAfterSeeding = true,
                 Captures = countCaptures, Qualification = result }));

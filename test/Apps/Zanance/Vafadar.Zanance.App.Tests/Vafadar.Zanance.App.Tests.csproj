@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Home/GettingStartedProgress.cs" Link="Application/GettingStartedProgress.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Rates/IMarketRuntime.cs" Link="Application/IMarketRuntime.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Rates/MarketReferenceViewModel.cs" Link="Application/MarketReferenceViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sharing/HouseholdViewModel.cs" Link="Application/HouseholdViewModel.cs" />

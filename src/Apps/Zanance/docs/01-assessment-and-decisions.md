@@ -7033,3 +7033,15 @@ emulator/Samsung native open/Cancel and no-reset upgrades pass; physical viewpor
 Retain Windows modal COM and diagnostic focus failures; do not call wider platform faults fixed.
 No managed unit count increase or unrelated suite/financial benchmark repetition.
 [Exact evidence and limits](quality/home-add-header.md).
+
+## D-376 - Complete the named Home getting-started tasks
+
+D-375's original FX-only screenshot exposes an incorrect completed first-expense step. The same
+record-count shortcut marks any Once plan as a regular payment and a weekly budget as a monthly one;
+all three unrelated records can hide guidance. Resolve the exact saved kinds in GettingStartedProgress
+from the same original Home snapshot on its existing worker. Preserve account/dismissal guards and all
+creation defaults. Fourteen original application-policy cases, 18 final Windows contexts and six actual
+OS 200%/360 dp Android contexts pass with unchanged complete fixture fields. Strict builds/full signed
+offline APK and emulator no-reset/native Home restoration pass. No money/schema/permission change or
+unrelated full-suite/benchmark repetition; Samsung remains on D-375.
+[Detailed evidence](quality/home-getting-started.md).

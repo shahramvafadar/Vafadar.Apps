@@ -3270,3 +3270,13 @@ Add/Cancel pass without reset or Save; physical viewport gains 87.82 dp and Home
 emulator settings restored and phone turn released. No new unit count or unrelated suite/benchmark
 replay; broader QA-06/reader/iOS/provider/Store/release remains open.
 [Evidence](../../quality/home-add-header.md).
+
+## D-376 observed Home guidance correctness
+
+Done locally/native: unrelated Income/Transfer/Refund, Once plans and Week/TwoWeeks budgets no longer
+complete the named first-expense/regular-payment/monthly-budget steps or hide the whole guidance card.
+Use the captured snapshot on the existing worker, retaining dismissal/account/default behavior.
+Fourteen new source-policy tests, 18 final Windows and six real OS 200%/360 dp Android contexts pass with
+complete fixture preservation. Strict builds/full offline signed APK and no-reset emulator restoration
+pass. No unchanged suite/benchmark replay, physical-phone update or broader gate completion.
+[Evidence](../../quality/home-getting-started.md).

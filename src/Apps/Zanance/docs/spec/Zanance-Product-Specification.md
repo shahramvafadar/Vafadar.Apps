@@ -6975,3 +6975,13 @@ and Samsung with original Home 0/979, exact settings and about 88 dp more conten
 unit-test count is unchanged; unrelated successful suites and financial benchmarks are not rerun.
 Strict Windows/full signed offline Android pass. General runtime/performance, spoken-reader, iOS,
 provider/Store and release gates remain open. [Evidence](../quality/home-add-header.md).
+
+### Section31 update - D-376 Home getting-started facts
+
+ONB-04/D-41 guidance now completes only the named Expense, recurring plan and Month budget. Preserve
+creation defaults, explicit dismissal and account availability; compute on the existing Home worker.
+Fourteen new application-policy cases pass; this is not a full-suite rerun or an inferred new total.
+Original 18 Windows and six OS 200%/360 dp Release/AOT Android contexts preserve complete fixture fields.
+Strict Windows/full signed offline APK and emulator no-reset/native Home restoration pass. Samsung
+remains D-375; broader physical-device/runtime/performance/reader/iOS/provider/release gates stay open.
+[Exact qualification](../quality/home-getting-started.md).

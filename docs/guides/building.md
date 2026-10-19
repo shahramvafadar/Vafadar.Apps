@@ -1550,3 +1550,13 @@ retained; this mode does not claim Windows modal acceptance. The distinct Androi
 shown/focused windows and await async Cancel. Keep original draft confirmation, data and public
 same-process reports; observation expiry alone never authorizes restarting the process or fixture.
 Only the explicitly authorized independent emulator changes OS text/display settings, restored exactly.
+
+## D-376 original getting-started review
+
+`./eng/scripts/Run-StoreDrafts.ps1 -GettingStartedReview` runs the guarded fresh Windows fixture and
+original Home at18 en/fa/de Light/Dark, 360/412/1280 contexts. The distinct AndroidHome caller accepts
+`getting-started`; it checks original native action availability and absence of strikethrough at
+actual OS 200%/360 dp. The new getting-started.db is separate from every retained count/performance
+fixture and main profile. Compare all account/entry/settings/plan/budget fields before/after. Exact
+emulator configuration restoration and same-process public-report rules remain mandatory. This mode
+does not save financial data in the main application or repeat unrelated tests/benchmarks.

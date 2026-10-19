@@ -44,7 +44,7 @@ internal static partial class AndroidHomeReview
                 await Task.Run(() => PrepareAsync(root, ct, unreviewed: phase == "prepare-unreviewed", resumeUnreviewed), ct);
                 await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, UnreviewedCorpus = phase == "prepare-unreviewed", NativeOverflowRefusals = phase == "prepare-unreviewed" ? CheckUnreviewedOverflow() : 0, CoreModuleVersionId = typeof(LedgerCalculator).Module.ModuleVersionId, MainPackageTouched = false, Device = DeviceEvidence() }, ct);
             }
-            else if (phase is "home-review-count" or "home-review-count-fixed" or "home-add-header" or "home-add-header-fixed")
+            else if (phase is "home-review-count" or "home-review-count-fixed" or "home-add-header" or "home-add-header-fixed" or "getting-started")
             {
                 Directory.CreateDirectory(root);
                 if (RedirectedAncestors(root).Length != 0) throw new ReviewCheckException("Nonredirected review root required.");
@@ -67,6 +67,22 @@ internal static partial class AndroidHomeReview
                                     throw new ReviewCheckException("Original native header action refused.");
                                 return Task.CompletedTask;
                             }, ct);
+                        if (phase == "getting-started")
+                        {
+                            foreach (var key in new[] { "Home_StartEntry", "Home_StartPlan", "Home_StartBudget" })
+                            {
+                                var text = services.GetRequiredService<Translator>()[key];
+                                var label = ReimbursementViews(page).OfType<Label>().Single(value => value.Text == text);
+                                await page.FindByName<ScrollView>("ContentViewport").ScrollToAsync(label, ScrollToPosition.Center, false);
+                                if (label.Handler?.PlatformView is not Android.Widget.TextView native)
+                                    throw new ReviewCheckException("Original guidance caption unavailable.");
+                                await WaitLayoutAsync(native, ct); RequireHomeWindowFocus();
+                                var button = ReimbursementViews(page).OfType<Button>().Single(value => SemanticProperties.GetDescription(value) == text);
+                                if (!button.IsVisible || !button.IsEnabled || button.Command is null || label.TextDecorations != TextDecorations.None
+                                    || (native.PaintFlags & Android.Graphics.PaintFlags.StrikeThruText) != 0)
+                                    throw new ReviewCheckException("Original unfinished guidance action differs.");
+                            }
+                        }
                         var model = (HomeViewModel)page.BindingContext;
                         var viewport = page.FindByName<ScrollView>("ContentViewport");
                         foreach (var text in new[] { model.ConfirmedBalanceText, model.UnreviewedText })
@@ -98,7 +114,7 @@ internal static partial class AndroidHomeReview
                             if (!complete)
                                 throw new ReviewCheckException("Original review caption differs.");
                         }
-                    }, ct, retainedFixture: phase is "home-review-count-fixed" or "home-add-header-fixed");
+                    }, ct, retainedFixture: phase is "home-review-count-fixed" or "home-add-header-fixed", gettingStarted: phase == "getting-started");
                 await WriteReportAsync(root, phase, new { Comparison = comparison, Qualification = result, LogicalWidth = logicalWidth,
                     Device = DeviceEvidence(), MainPackageTouched = false }, ct);
             }
