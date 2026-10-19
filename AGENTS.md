@@ -2874,3 +2874,12 @@ become Back-only after commit; never reload, retarget or repost that form as ano
 pre-write drafts and actual-file/currency/retired-input guards. Coherent reads publish before input
 is enabled. Native observer failures preserve accepted money; continue only the failed observation
 or not-yet-executed contexts, with explicit retained-case readback rather than another Save.
+
+## D-398 - Same-file Home supersession under the original cover
+
+Only persisted source changes with unchanged original Home/plan/goal packets and current actual-file
+authority permit bounded full rereads. Validate all retained inputs before classifying a refusal
+and again on its typed boundary; never catch arbitrary InvalidOperationException as a retry signal.
+Keep the original cover and file across at most three attempts, then explicit Retry. Normal reviewed
+writes, choices and template handoffs stay strict. Preserve completed native contexts; qualify new
+reference-addition paths without replaying accepted money or unchanged successful matrices.

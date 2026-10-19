@@ -116,6 +116,10 @@ internal static partial class DebugSnapshots
         await SeedBudgetAsync(services, food);
         await store.UpdateSettingsAsync(settings => settings.OnboardingCompleted = true);
         app.ShowMainShell();
+        if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") is "home-refresh" or "home-refresh-references")
+        {
+            await ReviewHomeRefreshAsync(app, services, folder, referencesOnly: Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "home-refresh-references"); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "settlement-commit")
         {
             await ReviewSettlementCommitAsync(app, services, folder); return;

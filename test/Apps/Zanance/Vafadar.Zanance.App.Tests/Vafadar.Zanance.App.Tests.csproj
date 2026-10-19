@@ -3,6 +3,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/SettlementViewModel.cs" Link="Application/SettlementViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Accounts/AccountReconciliationSession.cs" Link="Application/AccountReconciliationSession.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Home/GettingStartedProgress.cs" Link="Application/GettingStartedProgress.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Home/HomeRefreshSession.cs" Link="Application/HomeRefreshSession.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Home/HomeRecentEntries.cs" Link="Application/HomeRecentEntries.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Rates/IMarketRuntime.cs" Link="Application/IMarketRuntime.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Rates/MarketReferenceViewModel.cs" Link="Application/MarketReferenceViewModel.cs" />

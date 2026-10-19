@@ -1837,3 +1837,10 @@ explicit translated failure/retry. Pre-write rejection preserves the draft and f
 After acceptance, preserve a complete fixed-footer success notice independently of follow-through
 errors, make the original inputs read-only and relabel both original exit actions Back. A return
 retry never invokes the writer. Keep complete scalable result/error captions and44px native targets.
+
+## D-398 - Keep normal Home refresh races covered
+
+If saved sources change during preparation, rebuild the complete same-profile Home while its
+existing loading cover remains. Publish shortcuts/layout only with the current complete result.
+Bound rereads to three attempts; repeated edits or genuine failures retain the existing translated
+failure/Retry surface. Never show a stale intermediate packet as ready or silently switch profiles.

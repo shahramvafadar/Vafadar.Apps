@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep Home refreshes on current saved data (D-398)
+
+- Rebuild Home under its loading cover when saved sources change during preparation.
+- Keep profile/access checks strict and offer Retry after repeated edits or genuine failures.
+
 ### Keep an accepted advance bill recorded once (D-397)
 
 - Preserve a saved settlement if screen refresh or returning fails; the action then only goes back.

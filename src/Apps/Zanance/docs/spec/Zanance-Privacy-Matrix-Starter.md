@@ -1006,3 +1006,8 @@ network processing is introduced. Qualification uses only fictitious app data an
 D-397 retains an advance bill's accepted UI lifetime and transient original-file read context only.
 Existing account/ledger storage, encryption, portable backup and permissions remain unchanged.
 Qualification is restricted to fictitious app data and scoped public outcome/native-view evidence.
+
+## D-398 - Home refresh
+
+Covered same-file rereads retain existing local sources and authority. No new collection, SDK,
+permission, network, backup/export field or retention behavior is introduced.

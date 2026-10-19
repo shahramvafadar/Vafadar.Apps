@@ -87,3 +87,10 @@ write occurs. Test output is cleaned with zero warnings/errors. Documentation ac
 finished correction; the separate Windows Home failure remains open. Hosted CI,
 physical phone, all financial histories, iOS, generic stability/accessibility and publication remain
 separate evidence gates. No new spending/provider/account decision is needed for this local correction.
+
+## Subsequent D-398 Home correction
+
+The original failed global Windows receipt remains unchanged. D-398 separately reproduces and
+corrects same-file Home source supersession, including a new native account-reference addition;
+none of this batch's accepted bills is replayed. See home-refresh-supersession.md for its bounded
+current-source evidence and remaining acceptance limits.

@@ -1661,3 +1661,13 @@ The independent AndroidHome settlement-commit phases compile original Release/AO
 only their exact owned run. Fixed/observed continuations require the original terminal evidence and
 actual saved-row checks; the already accepted first case is read back, never posted again. The
 native owned-modal return port is scoped to the independent caller, not main-route acceptance.
+
+## D-398 - Original Home refresh qualification
+
+Run-StoreDrafts.ps1 -HomeRefreshReview checks six actual native Home contexts in its independent
+installation/desktop. Preserve those completed cases; -HomeRefreshReview -HomeRefreshReferencesOnly
+qualifies one additional account-reference change on final logic without repeating the matrix.
+The independent AndroidHome phases home-refresh and home-refresh-references use original production
+VM/page sources and isolated plain SQLite files. Preserve the exact run/report identities and
+completed cases when upgrading the caller for the additional path. They do not qualify Main
+encryption, phone/iOS, performance or general stability. Restore Main and OS and retain failures.

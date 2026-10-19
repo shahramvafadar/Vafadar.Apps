@@ -61,12 +61,15 @@ public sealed partial class ZananceStore
     }
 
     // D-154: all reviewed writes share this actual-context overload after acquiring their own SQLite writer.
-    private async Task ValidateQuickResourceReviewAsync(QuickResourceReview review, ZananceDbContext db, CancellationToken cancellationToken)
+    private async Task ValidateQuickResourceReviewAsync(QuickResourceReview review, ZananceDbContext db, CancellationToken cancellationToken, bool homeRefresh = false)
     {
         ArgumentNullException.ThrowIfNull(review);
         var choices = new ResourceChoiceStore(contextFactory, commercialAccess);
-        await choices.ValidateAsync(review.TemplateChoice, db, cancellationToken);
-        await choices.ValidateAsync(review.FilterChoice, db, cancellationToken);
+        if (review.InputStamp != QuickResourceReview.Capture(review.Templates, review.Filters,
+            review.Accounts, review.Categories, review.Settings, review.SourceEntry))
+            throw new InvalidOperationException("The reviewed original quick-resource inputs changed in memory; reload them.");
+        await choices.ValidateAsync(review.TemplateChoice, db, cancellationToken, homeRefresh);
+        await choices.ValidateAsync(review.FilterChoice, db, cancellationToken, homeRefresh);
         var stamp = QuickResourceReview.Capture(
             (await db.Templates.AsNoTracking().ToListAsync(cancellationToken)).OrderBy(t => t.Id).ToArray(),
             (await db.SavedFilters.AsNoTracking().ToListAsync(cancellationToken)).OrderBy(f => f.Id).ToArray(),
@@ -74,9 +77,14 @@ public sealed partial class ZananceStore
             (await db.Categories.AsNoTracking().ToListAsync(cancellationToken)).OrderBy(c => c.Id).ToArray(),
             await db.Settings.AsNoTracking().SingleOrDefaultAsync(cancellationToken),
             review.SourceEntry is { } source ? await db.Entries.AsNoTracking().SingleOrDefaultAsync(e => e.Id == source.Id, cancellationToken) : null);
-        if (stamp != review.InputStamp || review.InputStamp != QuickResourceReview.Capture(review.Templates, review.Filters,
-            review.Accounts, review.Categories, review.Settings, review.SourceEntry))
-            throw new InvalidOperationException("The original quick-resource definitions, source or references changed; reload them.");
+        var originalUnchanged = review.InputStamp == QuickResourceReview.Capture(review.Templates, review.Filters,
+            review.Accounts, review.Categories, review.Settings, review.SourceEntry);
         review.TemplateChoice.Access.EnsureSnapshotCurrent(); review.FilterChoice.Access.EnsureSnapshotCurrent();
+        // D-398: only a persisted same-file change may restart covered Home. Mutated input and access
+        // refusals stay strict; ordinary reviewed actions/writes also retain their original choice checks.
+        if (homeRefresh && originalUnchanged && stamp != review.InputStamp)
+            throw new HomeSnapshotSupersededException();
+        if (stamp != review.InputStamp || !originalUnchanged)
+            throw new InvalidOperationException("The original quick-resource definitions, source or references changed; reload them.");
     }
 }

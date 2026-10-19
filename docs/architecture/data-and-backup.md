@@ -2405,3 +2405,12 @@ ledger semantics; file/currency and application draft guards run before commit. 
 publish notification with an explicit retained result. The original form consumes acceptance before
 native return, so subscriber/navigation failure cannot create another expense/refund. This lifetime
 adds no EF model/migration/compiled-model, stored record or backup schema change.
+
+## D-398 - Original Home snapshot supersession
+
+HomeReadSnapshot exposes its actual configured file only to retain a same-file covered refresh.
+Home validation checks all original immutable stamps/file/access before and after its classified
+source-change refusal. Plan/goal/resource-choice validators opt in internally only for Home; their
+ordinary public validation and financial writers keep strict InvalidOperationException refusals.
+The application retries the whole projection under one loading cover, with a three-attempt limit.
+No database model, compiled model, migration, backup schema, entitlement rule or money algorithm changes.

@@ -1187,3 +1187,9 @@ quality/reconciliation-review.md and the canonical backlog; no new Phase1 featur
 D-397 corrects the existing final advance-bill form's post-commit/return lifetime with focused original
 application and native evidence. See quality/settlement-commit-lifetime.md and the canonical backlog;
 it introduces no new Phase1 scope or claim of complete runtime/device/release acceptance.
+
+## D-398 - Home publication source race
+
+The observed stale-source load failure is corrected with bounded covered same-file rereads and
+strict original-input/access checks. Focused managed/native evidence and final offline candidate
+are recorded in quality/home-refresh-supersession.md; wider acceptance remains separate.

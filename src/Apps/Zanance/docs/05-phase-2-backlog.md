@@ -2516,3 +2516,9 @@ D-397 keeps final advance-bill acceptance separate from notification/navigation:
 post the difference again. Focused original application/native qualification is in
 quality/settlement-commit-lifetime.md. Preserve the observed Home stale-resource error as ready
 development; dedicated stability/accessibility remains after development under D-386.
+
+## D-398 - Original Home refresh source changes
+
+Ready feature correctness continues: unchanged original Home packets superseded by saved sources
+are reread under the original cover/file, without bypassing reviewed actions or rights. The bounded
+gap is locally qualified; see quality/home-refresh-supersession.md. D-386's later runtime/A11Y order remains.

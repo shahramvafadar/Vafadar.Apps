@@ -2821,3 +2821,11 @@ read-only outcome, single writer and native return together. Retain completed fi
 when unrelated Home observation fails. Finish scoped Android/runtime/build/documentation evidence
 and push before the next section; preserve the observed Home stale-snapshot defect as separate ready
 development, without expanding into D-386's deferred general stability/accessibility work.
+
+## D-398 - Complete original Home supersession correction
+
+Deliver the observed same-file refresh failure as a complete current-source publication correction.
+Keep the original cover and exact-file/access guards across bounded rereads; preserve unrelated
+native successes and all accepted financial writes. Finish focused managed/native Windows and
+Release/AOT Android checks, signed offline candidate, Main/OS restoration, documentation and push.
+Do not substitute an unrelated runtime/ANR/A11Y investigation for ready feature correctness.

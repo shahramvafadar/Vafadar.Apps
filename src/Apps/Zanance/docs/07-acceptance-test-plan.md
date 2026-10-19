@@ -4429,3 +4429,15 @@ read failure remains explicitly unaccepted. Six Android compiled-source cases pr
 native evidence/readback while executing only the five unfinished contexts; Main0/OS/APK restore.
 [Scope and retained failures](quality/settlement-commit-lifetime.md) do not establish phone/iOS/release
 or all-histories/general runtime/accessibility acceptance.
+
+## D-398 - AT-50 original Home supersession boundary
+
+Seventeen focused application/SQLite behaviors pass, including seven persisted-source additions,
+combined mutated plan/goal plus legitimate edits, same-file binding, bounded failure/explicit retry,
+native retirement, ordinary failure and cancellation.96 related Home reader contracts and21 original
+template-navigation cases pass; earlier subsets are not additional distinct tests or a full-suite run.
+Six retained en/fa/de light/dark native contexts per platform plus one new account-reference context
+prove original covered/current publication and preserved values. Windows7 own-window captures are
+inspected; Android uses actual Release/AOT Home with an isolated plain SQLite fixture. Final Main
+upgrade preserves Home0/meaningful controls and original OS state. This is not broader AT-50/device,
+performance, generic stability, screen-reader, iOS or release acceptance.

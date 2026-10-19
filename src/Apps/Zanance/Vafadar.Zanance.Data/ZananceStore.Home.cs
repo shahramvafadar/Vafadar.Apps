@@ -22,7 +22,11 @@ namespace Vafadar.Zanance.Data;
 /// <param name="PeriodIndex">The original current or previous period requested by the page.</param>
 public sealed record HomeReadSnapshot(QuickResourceReview QuickResources, PlanWorkSnapshot Plans,
     GoalWorkSnapshot Goals, List<LedgerEntry> Entries, List<Budget> Budgets, List<ExchangeRate> Rates,
-    List<AssetType> AssetTypes, List<AssetEvent> AssetEvents, Budget? MonthBudget, BudgetCarry Carry, int PeriodIndex);
+    List<AssetType> AssetTypes, List<AssetEvent> AssetEvents, Budget? MonthBudget, BudgetCarry Carry, int PeriodIndex)
+{
+    /// <summary>Gets the captured actual file so one covered refresh cannot move to another selected profile.</summary>
+    public string DatabasePath => QuickResources.TemplateChoice.DatabasePath;
+}
 
 public sealed partial class ZananceStore
 {
@@ -101,9 +105,37 @@ public sealed partial class ZananceStore
             await db.Database.OpenConnectionAsync(cancellationToken);
             await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
             await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
-            await ValidateQuickResourceReviewAsync(snapshot.QuickResources, db, cancellationToken);
-            await PlanStore.ValidateWorkSnapshotAsync(snapshot.Plans, db, cancellationToken);
-            await GoalStore.ValidateWorkSnapshotAsync(snapshot.Goals, db, cancellationToken);
+            (snapshot.Plans.Access ?? throw new InvalidOperationException("Original Home plan authority is missing.")).EnsureSnapshotCurrent();
+            (snapshot.Goals.Access ?? throw new InvalidOperationException("Original Home goal authority is missing.")).EnsureSnapshotCurrent();
+            void RequireOriginalInputs()
+            {
+                var quick = snapshot.QuickResources;
+                var path = DatabaseFileIdentity.ConfiguredPath(db);
+                if (snapshot.Plans.DatabasePath != path || snapshot.Goals.DatabasePath != path
+                    || quick.TemplateChoice.DatabasePath != path || quick.FilterChoice.DatabasePath != path)
+                    throw new InvalidOperationException("The original Home refresh belongs to another opened file.");
+                snapshot.Plans.Access.DemandFeature(Core.Commerce.CommercialFeature.History);
+                snapshot.Goals.Access.DemandFeature(Core.Commerce.CommercialFeature.History);
+                snapshot.Plans.Access.EnsureSnapshotCurrent(); snapshot.Goals.Access.EnsureSnapshotCurrent();
+                quick.TemplateChoice.Access.EnsureSnapshotCurrent(); quick.FilterChoice.Access.EnsureSnapshotCurrent();
+                if (PlanWorkSnapshot.CaptureInputs(snapshot.Plans.Schedules, snapshot.Plans.States) != snapshot.Plans.InputStamp
+                    || GoalWorkSnapshot.CaptureInputs(snapshot.Goals.Goals, snapshot.Goals.ContributionPlans, snapshot.Goals.Allocations) != snapshot.Goals.InputStamp
+                    || QuickResourceReview.Capture(quick.Templates, quick.Filters, quick.Accounts, quick.Categories, quick.Settings, quick.SourceEntry) != quick.InputStamp)
+                    throw new InvalidOperationException("The original Home inputs changed in memory; reload them.");
+            }
+            // D-398: no persisted-source change may hide a different-file, retired-access or altered-input refusal.
+            RequireOriginalInputs();
+            try
+            {
+                await PlanStore.ValidateWorkSnapshotAsync(snapshot.Plans, db, cancellationToken, homeRefresh: true);
+                await GoalStore.ValidateWorkSnapshotAsync(snapshot.Goals, db, cancellationToken, homeRefresh: true);
+                await ValidateQuickResourceReviewAsync(snapshot.QuickResources, db, cancellationToken, homeRefresh: true);
+            }
+            catch (HomeSnapshotSupersededException)
+            {
+                RequireOriginalInputs();
+                throw;
+            }
         }, cancellationToken);
     }
 }

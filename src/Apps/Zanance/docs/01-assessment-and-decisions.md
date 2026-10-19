@@ -7317,3 +7317,21 @@ not claimed green. Android original compiled sources retain six distinct cases w
 observation repair/readback and no financial replay. Main0/OS/current-candidate restoration passes.
 See [exact evidence and limitations](quality/settlement-commit-lifetime.md). No schema, permission,
 provider, commercial activation or broader device/iOS/stability/accessibility acceptance follows.
+
+## D-398 - Retain covered Home refresh through genuine same-file source changes
+
+The retained D-397 Home failure is reproduced with real SQLite. Rename-only classification is
+insufficient: account additions also change goal references, and plan/goal/template/filter changes
+have their own guards. Classify persisted-source supersession only at Home's validation boundary,
+after every original packet/file/access check and again before propagating that typed refusal.
+Recompute the complete projection under the same original cover and file, at most three attempts.
+Ordinary actions/writers keep their existing rejection semantics; mutated input and retired access
+cannot be hidden by a concurrent legitimate edit. There is no model, migration or financial-rule change.
+
+Seventeen new application/SQLite behaviors,96 related Home read contracts and21 template-navigation
+contracts pass on final logic. Preserve earlier rename contexts, then qualify only the additional
+reference-addition case: Windows6+1 inspected own-window images and Android Release/AOT6+1 contexts
+retain one accepted publication, original financial values and zero ledger writes. Strict final
+Windows and complete offline Android builds pass, Main/OS are restored, test output is cleaned and
+the finished correction is committed/pushed. Exact-head hosted CI remains separate. General ANR,
+crash/A11Y under D-386, physical phone/iOS and external release acceptance are not claimed.

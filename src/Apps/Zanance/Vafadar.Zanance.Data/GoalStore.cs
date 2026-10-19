@@ -62,7 +62,7 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     }
 
     /// <summary>Rechecks a reviewed form under the same SQLite writer that will commit its explicit action.</summary>
-    internal static async Task ValidateWorkSnapshotAsync(GoalWorkSnapshot snapshot, ZananceDbContext db, CancellationToken cancellationToken)
+    internal static async Task ValidateWorkSnapshotAsync(GoalWorkSnapshot snapshot, ZananceDbContext db, CancellationToken cancellationToken, bool homeRefresh = false)
     {
         if (snapshot.Access is null || !string.Equals(snapshot.DatabasePath,
             ProfileFilePath(db), StringComparison.Ordinal))
@@ -74,15 +74,15 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         if (GoalWorkSnapshot.CaptureInputs(snapshot.Goals, snapshot.ContributionPlans, snapshot.Allocations) != snapshot.InputStamp)
             throw new InvalidOperationException("The reviewed original inputs changed in memory; reload them.");
         if (StoredResourceSelection.Capture(await StoredResourceSelection.ReadAsync(db, snapshot.Access, QuotaKind.Goals, cancellationToken)) != snapshot.SelectionStamp)
-            throw new InvalidOperationException("The original goal choice changed during notification preparation.");
+            throw HomeSnapshotSupersededException.SourceChanged(homeRefresh, "The original goal choice changed during notification preparation.");
         var originals = await db.Goals.AsNoTracking().ToListAsync(cancellationToken);
         var plans = await db.ContributionPlans.AsNoTracking().ToListAsync(cancellationToken);
         var allocations = await db.GoalAllocations.AsNoTracking().ToListAsync(cancellationToken);
         if (GoalWorkSnapshot.CaptureInputs(originals, plans, allocations) != snapshot.InputStamp)
-            throw new InvalidOperationException("Goal notification inputs changed during preparation.");
+            throw HomeSnapshotSupersededException.SourceChanged(homeRefresh, "Goal notification inputs changed during preparation.");
         if (GoalWorkSnapshot.CaptureReferences(await db.Accounts.AsNoTracking().ToListAsync(cancellationToken),
             await db.AssetTypes.AsNoTracking().ToListAsync(cancellationToken)) != snapshot.ReferenceStamp)
-            throw new InvalidOperationException("Goal account or holding units changed after the form was reviewed.");
+            throw HomeSnapshotSupersededException.SourceChanged(homeRefresh, "Goal account or holding units changed after the form was reviewed.");
         snapshot.Access.EnsureSnapshotCurrent();
     }
 

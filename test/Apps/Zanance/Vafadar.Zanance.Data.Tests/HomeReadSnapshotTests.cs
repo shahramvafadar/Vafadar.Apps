@@ -664,7 +664,8 @@ public sealed class HomeReadSnapshotTests : IDisposable
         }
         else source.Current = new(provider.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>().Path,
             new(ProductPlan.Free, new(EntitlementScopeKind.PersonalProfile, Guid.NewGuid())));
-        await Assert.ThrowsAsync<InvalidOperationException>(() => store.ValidateHomeSnapshotAsync(packet, Ct));
+        if (editPlan) await Assert.ThrowsAsync<HomeSnapshotSupersededException>(() => store.ValidateHomeSnapshotAsync(packet, Ct));
+        else await Assert.ThrowsAsync<InvalidOperationException>(() => store.ValidateHomeSnapshotAsync(packet, Ct));
     }
 
     /// <summary>A concurrent committed writer cannot mix old references with newer ledger rows inside Home's reader.</summary>
@@ -692,7 +693,7 @@ public sealed class HomeReadSnapshotTests : IDisposable
         var packet = await pending;
         Assert.Equal(-123, Assert.Single(packet.QuickResources.Accounts).OpeningBalance);
         Assert.Equal(456, packet.Entries.Single(e => e.Kind == EntryKind.Expense).Amount);
-        await Assert.ThrowsAsync<InvalidOperationException>(() => store.ValidateHomeSnapshotAsync(packet, Ct));
+        await Assert.ThrowsAsync<HomeSnapshotSupersededException>(() => store.ValidateHomeSnapshotAsync(packet, Ct));
     }
 
     /// <summary>Canonical empty tags and every noncanonical representation retain independent EF values or refusals.</summary>

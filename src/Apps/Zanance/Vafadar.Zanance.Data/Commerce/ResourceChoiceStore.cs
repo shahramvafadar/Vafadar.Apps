@@ -108,7 +108,7 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
     }
 
     /// <summary>Shares validation with the actual writer, never an unrelated read connection.</summary>
-    internal async Task ValidateAsync(ResourceChoiceSnapshot reviewed, ZananceDbContext db, CancellationToken cancellationToken)
+    internal async Task ValidateAsync(ResourceChoiceSnapshot reviewed, ZananceDbContext db, CancellationToken cancellationToken, bool homeRefresh = false)
     {
         ArgumentNullException.ThrowIfNull(reviewed); DemandKind(reviewed.Kind);
         if (DatabaseFileIdentity.ConfiguredPath(db) != reviewed.DatabasePath)
@@ -117,7 +117,10 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
         var current = await StoredResourceSelection.ReadAsync(db, reviewed.Access, reviewed.Kind, cancellationToken);
         if (current?.Revision != reviewed.Revision || current?.IdentitySet != reviewed.StoredValue
             || !(await ReadItemsAsync(db, reviewed.Kind, cancellationToken)).SequenceEqual(reviewed.Items))
-            throw new InvalidOperationException("The original resource list or choice changed; reload it.");
+        {
+            reviewed.Access.EnsureSnapshotCurrent();
+            throw HomeSnapshotSupersededException.SourceChanged(homeRefresh, "The original resource list or choice changed; reload it.");
+        }
         reviewed.Access.EnsureSnapshotCurrent();
     }
 

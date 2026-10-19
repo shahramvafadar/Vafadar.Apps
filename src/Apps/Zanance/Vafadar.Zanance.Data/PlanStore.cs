@@ -73,7 +73,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     }
 
     /// <summary>Rechecks complete original packets inside an existing coherent read or financial writer.</summary>
-    internal static async Task ValidateWorkSnapshotAsync(PlanWorkSnapshot snapshot, ZananceDbContext db, CancellationToken cancellationToken)
+    internal static async Task ValidateWorkSnapshotAsync(PlanWorkSnapshot snapshot, ZananceDbContext db, CancellationToken cancellationToken, bool homeRefresh = false)
     {
         if (snapshot.Access is null || !string.Equals(snapshot.DatabasePath,
             DatabaseFileIdentity.ConfiguredPath(db), StringComparison.Ordinal))
@@ -85,11 +85,11 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         if (PlanWorkSnapshot.CaptureInputs(snapshot.Schedules, snapshot.States) != snapshot.InputStamp)
             throw new InvalidOperationException("The reviewed original inputs changed in memory; reload them.");
         if (StoredResourceSelection.Capture(await StoredResourceSelection.ReadAsync(db, snapshot.Access, QuotaKind.RecurringPlans, cancellationToken)) != snapshot.SelectionStamp)
-            throw new InvalidOperationException("The original plan choice changed during notification preparation.");
+            throw HomeSnapshotSupersededException.SourceChanged(homeRefresh, "The original plan choice changed during notification preparation.");
         var schedules = await db.Schedules.AsNoTracking().ToListAsync(cancellationToken);
         var states = await db.OccurrenceStates.AsNoTracking().ToListAsync(cancellationToken);
         if (PlanWorkSnapshot.CaptureInputs(schedules, states) != snapshot.InputStamp)
-            throw new InvalidOperationException("Original plan rules or occurrence states changed during preparation.");
+            throw HomeSnapshotSupersededException.SourceChanged(homeRefresh, "Original plan rules or occurrence states changed during preparation.");
         snapshot.Access.EnsureSnapshotCurrent();
     }
 

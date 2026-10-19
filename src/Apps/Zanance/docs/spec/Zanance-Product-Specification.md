@@ -7202,3 +7202,14 @@ read-only inputs and Back-only return. The first Android accepted case is observ
 another Save after observer repair. Strict builds, signed offline candidate and Main0/OS restoration
 pass. The separate Home stale-resource error remains ready work; broader phone/iOS/provider/store,
 general stability/accessibility and publication gates stay open. [Evidence](../quality/settlement-commit-lifetime.md).
+
+### 31. D-398 - Covered same-file Home refresh
+
+Home retains its loading cover and actual file through at most three complete rereads after a
+classified persisted-source change. Validate unchanged original quick-resource, plan and goal
+inputs and current file/access first; ordinary actions and altered inputs remain strict failures.
+Seventeen new focused behaviors,96 related reader contracts and21 template-command contracts pass.
+Windows/Release-AOT Android each retain six original native contexts plus one new reference-addition
+case, without financial replay. Final strict builds, offline APK and original Main/OS restoration
+complete; no full-suite count increase is inferred from these runs. Dedicated runtime/A11Y work
+stays after ready development under D-386; phone/iOS and external acceptance remain open.

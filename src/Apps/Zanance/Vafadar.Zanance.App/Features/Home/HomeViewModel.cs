@@ -301,7 +301,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         {
             if (_publicationRetired) return;
             TemplateNavigation.BeginLoad();
-            try { await Loading.RunAsync(LoadCoreAsync, RequireCurrentPublication); }
+            try { await Loading.RunAsync(() => HomeRefreshSession.RunAsync(LoadCoreAsync, RequireCurrentPublication), RequireCurrentPublication); }
             catch (OperationCanceledException) when (_publicationRetired) { /* The retired native graph receives no further state publication. */ }
             catch { TemplateNavigation.FailLoad(); throw; }
         }
@@ -311,14 +311,18 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         }
     }
 
-    private async Task LoadCoreAsync()
+    private async Task LoadCoreAsync(HomeRefreshSession refresh)
     {
         var today = Today;
         var culture = _localization.CurrentCulture;
         var snapshot = await _store.GetHomeSnapshotAsync(today, PeriodIndex);
+        refresh.RequireOriginalFile(snapshot.DatabasePath);
         // A period change while the worker reads is queued separately; never project its old budget as the new period.
         while (snapshot.PeriodIndex != PeriodIndex)
+        {
             snapshot = await _store.GetHomeSnapshotAsync(today, PeriodIndex);
+            refresh.RequireOriginalFile(snapshot.DatabasePath);
+        }
         var templateReview = snapshot.QuickResources;
         RequireCurrentPublication();
         var settings = templateReview.Settings ?? new ZananceSettings();
@@ -471,7 +475,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null || ReimbursementText is not null || LowBalanceText is not null || GoalAttentionText is not null || ReviewText is not null || BackupText is not null;
         await _store.ValidateHomeSnapshotAsync(snapshot);
         RequireCurrentPublication();
-        if (snapshot.PeriodIndex != PeriodIndex) { await LoadCoreAsync(); return; }
+        if (snapshot.PeriodIndex != PeriodIndex) { await LoadCoreAsync(refresh); return; }
         TemplateNavigation.Publish(templateReview);
         // Publish complete rows together: clearing first makes MAUI disconnect unchanged native template controls (D-353).
         var quickTemplates = TemplateNavigation.Items.Select(template =>

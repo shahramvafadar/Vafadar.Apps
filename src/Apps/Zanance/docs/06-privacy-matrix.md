@@ -1024,3 +1024,9 @@ data and app-only views. No raw database/key extraction or general device logs a
 D-397 adds no stored data category, export field, SDK, permission or network call. The coherent original
 advance-bill draft is transient and actual-file bound. Independent native evidence uses fictitious
 data; no Main database/key extraction or general device-log collection is used.
+
+## D-398 - Home reread privacy boundary
+
+Only transient original-file identity and source supersession classification are added. No new
+collected data, network/permission, persistent preference, portable field or SDK is introduced.
+Native qualification uses independently owned fictitious files; Main/OS are preserved.

@@ -1970,3 +1970,11 @@ SQLite/application, Windows native and Release/AOT Android evidence plus the com
 candidate are in [D-397](quality/settlement-commit-lifetime.md). The observed Home stale-resource
 refresh failure remains separate ready work; do not call the whole Windows run or release green.
 No phone/iOS/general stability/accessibility, store signing or publication acceptance is inferred.
+
+## D-398 - Bounded original Home refresh evidence
+
+Focused managed contracts, retained6+1 native Windows/Android contexts, strict final builds,
+complete offline development-signed APK, original emulator Main/OS restoration and test cleanup
+complete locally. The D-397 failed receipt remains unchanged; a new same-file account-addition case
+qualifies its Home cause without replaying a settlement. Latest hosted CI and all wider device,
+stability/A11Y, iOS, provider/store/signing and publication gates remain separate.

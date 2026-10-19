@@ -3474,3 +3474,14 @@ runner is not green. Six original Android contexts finish with retained accepted
 strict builds, complete signed offline APK, original Main/OS restoration and test-output cleanup
 complete. Documentation and push accompany this correction; hosted CI remains an exact-head gate.
 [Evidence and retained failures](../../quality/settlement-commit-lifetime.md).
+
+## D-398 - Covered original Home source refresh
+
+The retained D-397 failure and incomplete rename-only case are corrected across original account,
+plan, goal, template, filter, category and settings source changes. Original mutable packets,
+different files, retired access and arbitrary errors still refuse; rereads stay covered and bounded.
+Seventeen focused application behaviors,96 related reader contracts and21 template-action cases
+pass. Preserve six native contexts per platform and qualify only one additional account-reference
+case. Final strict builds, signed offline APK, original emulator Main/OS restoration and test cleanup
+complete locally; documentation and push accompany delivery. Hosted CI and broader/external gates
+remain separate under D-386. [Evidence](../../quality/home-refresh-supersession.md).
