@@ -1682,3 +1682,15 @@ run and actual original page/buttons/alerts in Release/AOT. Its narrow fictitiou
 identifies17 original answers; preserve the exact PID/fixture and one invocation intent per answer.
 Native dialog focus may carry its title; match the original activity and exact owned UI content.
 Store receipts as UTF-8, keep initial observer refusals and restore Main/OS after terminal proof.
+
+## D-400 - Original state-conflict qualification
+
+Run-StoreDrafts.ps1 -OccurrenceStateReview uses four separate original financial fixtures and six
+unchanged en/fa/de light/dark412px native message views. Test-OccurrenceStateReview.ps1 validates an
+already completed original receipt without process launch/input. Exactly four known deliberate
+InvalidOperationException reports are accepted only with matching process/case/refusal/image proof;
+all other failure lines remain rejected. Preserve original error.txt and original completion.
+Three negative synthetic receipts prove unexpected-failure, changed-row and wrong-process refusal;
+the positive shape is separately checked. These are tooling checks, not new app unit tests.
+The independent Android phase occurrence-state uses four original commands and11 exact owned
+native answers. Do not repeat accepted fixtures after a capture/parameter/observation failure.

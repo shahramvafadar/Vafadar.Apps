@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Keep a newer accepted plan payment or skip when an older occurrence form attempts a conflicting correction.
+
 ### Keep saved plan payments saved (D-399)
 
 - Preserve successful payments and occurrence changes when a refresh notification fails.

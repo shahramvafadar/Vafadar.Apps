@@ -4456,3 +4456,13 @@ refreshes to remaining600, full1234 settles, manual950 retains its identity/valu
 automatic recreation.18 inspected Windows popup images and six Android message views are read-only
 copy checks after accepted actions. Android17 exact answers, Main0/meaningful controls and OS restoration
 pass. This is not all-history/phone/iOS, durable process-death idempotency, performance or release acceptance.
+
+## D-400 - AT-66 / AT-138 retained state conflicts
+
+Five new actual-command/SQLite cases preserve complete pre-attempt table snapshots when a newer
+settlement or skip conflicts with the retained form.55 related application cases and70 existing
+policy cases pass; tightened completion/exception assertions rerun only the five changed cases.
+Four original VM/page/native-button refusals on each Windows and Release/AOT Android keep accepted
+entries/state and the original draft, including the native consent boundary. Six en/fa/de light/dark
+412px unchanged native messages per platform and11 single Android answers pass. Main/OS restored;
+Samsung/iOS and broad runtime/accessibility acceptance are not inferred. See quality/occurrence-state-conflicts.md.

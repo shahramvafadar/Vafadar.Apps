@@ -2529,3 +2529,10 @@ The observed committed-notification gap is locally qualified across foreground f
 link/skip/override/undo/reopen. Preserve accepted results and retire the original form before native
 follow-through; no money/schema change. See quality/occurrence-commit-lifetime.md. D-386 still defers
 dedicated general runtime/accessibility work until ready approved development is finished.
+
+## D-400 - Bounded occurrence state conflict delivery
+
+Original stale correction refusal is locally complete:55 related app/70 SQLite cases, four actual
+native commands per Windows/Release AOT Android, six original translated message views per platform,
+strict builds, signed offline candidate and Main/OS preservation. No unrelated full-suite replay or
+whole-device/iOS/ANR/A11Y/provider/release acceptance. See quality/occurrence-state-conflicts.md.

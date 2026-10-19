@@ -10,7 +10,7 @@ namespace Vafadar.Zanance.App;
 internal static partial class AndroidHomeReview
 {
     /// <summary>Uses original occurrence pages/buttons/native dialogs; the host answers only exact owned fictitious dialogs.</summary>
-    private static async Task<object> ReviewOccurrenceCommitAsync(App app, IServiceProvider services, string root, string run, string comparison, CancellationToken ct)
+    private static async Task<object> ReviewOccurrenceCommitAsync(App app, IServiceProvider services, string root, string run, string comparison, CancellationToken ct, bool stateConflict = false)
     {
         var local = services.GetRequiredService<ILocalizationService>(); var theme = services.GetRequiredService<ThemeService>();
         var text = services.GetRequiredService<Translator>(); var native = services.GetRequiredService<IAppInteraction>();
@@ -31,7 +31,8 @@ internal static partial class AndroidHomeReview
             finally { app.ShellRebuilt -= Rebuilt; }
         }
         await AwaitReimbursementFocusAsync(ct); app.OpenReviewShell(); await Theme(ThemeChoice.Light); await SetLanguageAsync(app, local, "en", ct);
-        var cases = await OccurrenceCommitNativeReview.RunAsync(services, root,
+        Func<IServiceProvider, string, Func<Features.Plans.OccurrencePage, Task>, Func<Features.Plans.OccurrencePage, System.Windows.Input.ICommand, object?, Task>, Func<OccurrenceCommitNativeReview.Dialog, string, Task>, Func<Features.Plans.OccurrencePage, Task>, CancellationToken, Task<object[]>> review = stateConflict ? OccurrenceStateNativeReview.RunAsync : OccurrenceCommitNativeReview.RunAsync;
+        var cases = await review(services, root,
             async page => { await Shell.Current.Navigation.PushAsync(page, false); },
             async (page, command, parameter) =>
             {
@@ -52,7 +53,7 @@ internal static partial class AndroidHomeReview
             foreach (var language in new[] { "en", "fa", "de" })
             {
                 await SetLanguageAsync(app, local, language, ct); await AwaitReimbursementFocusAsync(ct);
-                var dialog = new OccurrenceCommitNativeReview.Dialog(false, text["Error_Title"], text["Occurrence_SavedNotificationFailed"], text["Common_Ok"], text["Common_Ok"]);
+                var dialog = new OccurrenceCommitNativeReview.Dialog(false, text["Error_Title"], text[stateConflict ? "Error_Unexpected" : "Occurrence_SavedNotificationFailed"], text["Common_Ok"], text["Common_Ok"]);
                 var showing = native.AlertAsync(dialog.Title, dialog.Message, dialog.Accept);
                 await PublishDialog(dialog, language + "-" + choice + "-saved-message"); await showing;
                 captions.Add(new { Language = language, Theme = choice.ToString(), FinancialCommandInvoked = false });

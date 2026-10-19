@@ -2893,3 +2893,12 @@ ledger deletion and automatic posting keep their existing contracts. Do not turn
 or cancelled consent into acceptance. Native dialogs may have title-named windows: require the
 original focused activity plus exact owned message/button, preserving one input intent per answer.
 Observer/encoding repairs continue the same process and accepted fixtures without financial replay.
+
+## D-400 - Newer accepted occurrence state owns the correction boundary
+
+Before any foreground link SQL or occurrence-state mutation, recheck the actual state in the same
+writer. A retained open/skipped form cannot replace a newer settlement; pending link consent cannot
+replace a newer skip. Preserve same-entry link idempotency and the separate explicit reopen path.
+Native refusal diagnostics retain accepted rows and drafts. Classify only the exact four deliberate
+failure records with complete original receipts; unexpected failures remain rejected. Do not replay
+accepted financial actions to repair a diagnostic observer.

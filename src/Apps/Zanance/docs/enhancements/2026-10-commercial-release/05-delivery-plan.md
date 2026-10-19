@@ -2837,3 +2837,11 @@ Retain accepted results through both store layers for all foreground occurrence 
 the original form retirement before any fallible refresh/navigation/feedback. Preserve pre-write
 consent and failures. Qualify changed paths through actual native adapters and focused contracts,
 then package, restore Main/OS, document and push without repeating unrelated successful checks.
+
+## D-400 - Finish retained occurrence state correctness
+
+Complete the reproduced original-form conflict as one atomic correction batch. Preserve accepted
+settlement/skip and unchanged ledger relationships, same-link idempotency and explicit reopen.
+Qualify only affected command/policy/native paths; classify deliberate diagnostic refusals from the
+retained receipts rather than replaying financial actions. Main/OS restoration and push complete
+this batch. Continue ready backlog work before D-386's dedicated stability/accessibility completion.

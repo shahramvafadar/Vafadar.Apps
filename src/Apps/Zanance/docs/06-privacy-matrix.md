@@ -1036,3 +1036,9 @@ Native qualification uses independently owned fictitious files; Main/OS are pres
 Only transient accepted results and six-language native feedback change. No new financial field,
 permission, network, SDK, persistent preference or export/backup format is introduced. Qualification
 uses isolated fictitious stores; native message traces contain only those controlled public values.
+
+## D-400 - Retained occurrence state refusal
+
+Only existing local transaction state is read before an existing correction writer. No new stored
+data, migration, export, key, permission, SDK or network behavior. Separate fictitious native cases
+preserve accepted money and original Main/OS; no phone or private external data is used.

@@ -7224,3 +7224,12 @@ six translations.21 new focused behaviors plus29 existing command cases and70 re
 pass; no new complete-suite count is claimed. Eight native commands per platform, translated message
 views and signed offline candidate/Main restoration qualify the bounded path. Wider/device/iOS,
 durable crash/idempotency, runtime/A11Y and external acceptance remain open.
+
+## D-400 - Section31 continuation: original occurrence conflicts
+
+Five new command cases extend the retained financial-correction boundary.55 related app and70 policy
+cases, four original native refusals per Windows/Release AOT Android, six native message views per
+platform, strict builds and complete signed offline APK pass. Accepted settlement/skip cannot be
+overwritten from an older form; same-link idempotency and explicit reopening remain. Original Main
+and OS match after no-reset upgrade. This is scoped local acceptance, not a complete suite replay,
+whole-device/iOS/runtime/accessibility, hosted CI or release acceptance.

@@ -1198,3 +1198,10 @@ are recorded in quality/home-refresh-supersession.md; wider acceptance remains s
 
 The foreground payment/correction form now retains actual committed outcomes through notification
 failure. Focused/native evidence is in quality/occurrence-commit-lifetime.md; wider acceptance is separate.
+
+## D-400 - Bounded occurrence state conflict delivery
+
+Original stale correction refusal is locally complete:55 related app/70 SQLite cases, four actual
+native commands per Windows/Release AOT Android, six original translated message views per platform,
+strict builds, signed offline candidate and Main/OS preservation. No unrelated full-suite replay or
+whole-device/iOS/ANR/A11Y/provider/release acceptance. See quality/occurrence-state-conflicts.md.

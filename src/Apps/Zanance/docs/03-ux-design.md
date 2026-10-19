@@ -1851,3 +1851,9 @@ A successful payment/link/skip/change/reopen remains saved when its notification
 old occurrence before refresh, Back or feedback; a partial payment reloads the actual remaining
 amount before another deliberate action. Keep the native saved warning separate from rejected-write
 feedback and hold the command gate until it closes. New warning copy is complete in the six languages.
+
+## D-400 - Retained occurrence corrections
+
+A retained form does not grant authority to replace a newer accepted settlement or skip. The original
+failure adapter reports the refusal while the same draft remains; Busy spans its native message.
+Return and reopen to review current state. No layout, caption or automatic draft reload changed.

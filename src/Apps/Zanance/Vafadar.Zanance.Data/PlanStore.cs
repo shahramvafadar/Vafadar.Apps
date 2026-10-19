@@ -385,7 +385,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
             await db.Entries.Where(e => e.Id == entryId).ExecuteUpdateAsync(
                 e => e.SetProperty(x => x.ScheduleId, plan.Id).SetProperty(x => x.OccurrenceDate, occurrence.OriginalDate),
                 cancellationToken);
-        });
+        }, linkedEntryId: entryId);
     }
 
     /// <summary>
@@ -418,18 +418,24 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         }, cancellationToken);
 
     // alsoInTransaction runs in the same transaction as the state change: both are saved or neither.
-    private async Task UpdateStateAsync(Occurrence occurrence, Action<OccurrenceState> change, CancellationToken cancellationToken, Func<ZananceDbContext, Task>? alsoInTransaction = null)
+    private async Task UpdateStateAsync(Occurrence occurrence, Action<OccurrenceState> change, CancellationToken cancellationToken,
+        Func<ZananceDbContext, Task>? alsoInTransaction = null, Guid? linkedEntryId = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         write.DemandFeature(CommercialFeature.Corrections);
+        var state = await db.OccurrenceStates.FirstOrDefaultAsync(
+            s => s.ScheduleId == occurrence.Schedule.Id && s.OriginalDate == occurrence.OriginalDate, cancellationToken);
+        // D-400: a retained open/skipped form cannot replace money accepted by another operation.
+        // Check before linking any entry, inside the same writer. Repeating the same explicit link stays idempotent.
+        if ((state?.Status == OccurrenceStatus.Settled && (linkedEntryId is null || state.EntryId != linkedEntryId))
+            || (state?.Status == OccurrenceStatus.Skipped && linkedEntryId is not null))
+            throw new InvalidOperationException("The occurrence was settled or skipped; reload it before correcting it.");
         if (alsoInTransaction is not null)
         {
             await alsoInTransaction(db);
         }
 
-        var state = await db.OccurrenceStates.FirstOrDefaultAsync(
-            s => s.ScheduleId == occurrence.Schedule.Id && s.OriginalDate == occurrence.OriginalDate, cancellationToken);
         if (state is null)
         {
             state = new OccurrenceState { ScheduleId = occurrence.Schedule.Id, OriginalDate = occurrence.OriginalDate };

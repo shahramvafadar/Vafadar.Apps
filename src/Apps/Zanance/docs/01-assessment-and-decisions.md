@@ -7353,3 +7353,15 @@ dialog views qualify new feedback without repeating accepted commands. Android17
 answers preserve initial observer/encoding refusals and the same PID. Strict builds, signed offline
 APK, original Main/OS restoration, test cleanup, docs and push finish this batch. Exact hosted CI,
 broader device/iOS, durable crash/replay and general runtime/A11Y acceptance remain separate.
+
+## D-400 - Preserve accepted occurrence state against retained corrections
+
+An original open/skipped form could overwrite a settlement accepted after it loaded; linking could
+also replace a newly skipped occurrence after consent began. Recheck actual stored state inside the
+existing writer before any link SQL or state mutation. Refuse skip/unskip/override of a settled
+occurrence and linking a skipped occurrence; retain same-entry link idempotency and explicit reopen.
+Five new original command cases,55 related app cases and70 actual SQLite policy cases pass. Four
+original native correction refusals per Windows/Release AOT Android preserve accepted rows and drafts;
+six unchanged native message views per platform and11 Android answers are qualified without replay.
+Strict builds/full offline signed APK and Main/OS restoration pass. General stability/A11Y under
+D-386, physical-device/iOS/provider/release gates remain separate. See [scope and retained evidence](quality/occurrence-state-conflicts.md).

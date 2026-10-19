@@ -3495,3 +3495,12 @@ failure and retires the original form before native follow-through.50 focused ap
 exact answers and final Main0/OS restoration pass. Strict builds, full signed offline APK, cleanup,
 docs and push complete locally. Latest hosted CI and wider/external acceptance remain separate.
 General runtime/A11Y priority stays under D-386. [Evidence](../../quality/occurrence-commit-lifetime.md).
+
+## D-400 - Original occurrence state conflicts
+
+AT-66/AT-138 observed retained forms overwriting newer accepted state. The atomic writer now refuses
+these conflicting corrections before link SQL/state mutation. Five new cases,55 app/70 policy cases,
+four original Windows/Android native refusals each, six message views per platform, strict builds,
+signed offline candidate, Main/OS preservation and documentation are locally complete. Hosted CI and
+external/device/iOS gates remain separate; no unrelated successful financial or suite replay.
+[Qualification](../../quality/occurrence-state-conflicts.md).

@@ -13,7 +13,7 @@ namespace Vafadar.Zanance.App.Diagnostics;
 internal static partial class DebugSnapshots
 {
     /// <summary>Invokes original occurrence commands and their actual native post-commit dialogs in an isolated installation.</summary>
-    private static async Task ReviewOccurrenceCommitAsync(App app, IServiceProvider services, string folder)
+    private static async Task ReviewOccurrenceCommitAsync(App app, IServiceProvider services, string folder, bool stateConflict = false)
     {
         if (!AppInfo.Current.PackageName.StartsWith("pro.vafadar.zanance.storepreview.", StringComparison.Ordinal)) throw new IOException("Independent occurrence review required.");
         var local = services.GetRequiredService<ILocalizationService>(); var text = services.GetRequiredService<Translator>();
@@ -53,7 +53,8 @@ internal static partial class DebugSnapshots
             await CaptureWindowAsync(app.Windows[0], Path.Combine(folder, context + ".png"));
             Invoke(FindNativeButton(dialog, expected.Accept) ?? throw new IOException("The original native dialog answer is missing."));
         }
-        var cases = await OccurrenceCommitNativeReview.RunAsync(services, folder,
+        Func<IServiceProvider, string, Func<Features.Plans.OccurrencePage, Task>, Func<Features.Plans.OccurrencePage, System.Windows.Input.ICommand, object?, Task>, Func<OccurrenceCommitNativeReview.Dialog, string, Task>, Func<Features.Plans.OccurrencePage, Task>, CancellationToken, Task<object[]>> review = stateConflict ? OccurrenceStateNativeReview.RunAsync : OccurrenceCommitNativeReview.RunAsync;
+        var cases = await review(services, folder,
             async page => await Shell.Current.Navigation.PushAsync(page, false),
             async (page, command, parameter) =>
             {
@@ -68,11 +69,11 @@ internal static partial class DebugSnapshots
         // Inspect translations/widths through the original native adapter only; never replay accepted financial commands.
         foreach (var language in new[] { "en", "fa", "de" })
         foreach (var choice in new[] { ThemeChoice.Light, ThemeChoice.Dark })
-        foreach (var width in new[] { 360d, 412d, 1280d })
+        foreach (var width in stateConflict ? new[] { 412d } : new[] { 360d, 412d, 1280d })
         {
             await SetStoreThemeAsync(app, theme, choice); await SetLanguageAsync(app, local, language); app.Windows[0].Width = width;
             var context = language + "-" + choice + "-" + width; var path = Path.Combine(folder, context); Directory.CreateDirectory(path);
-            var expected = new OccurrenceCommitNativeReview.Dialog(false, text["Error_Title"], text["Occurrence_SavedNotificationFailed"], text["Common_Ok"], text["Common_Ok"]);
+            var expected = new OccurrenceCommitNativeReview.Dialog(false, text["Error_Title"], text[stateConflict ? "Error_Unexpected" : "Occurrence_SavedNotificationFailed"], text["Common_Ok"], text["Common_Ok"]);
             var showing = native.AlertAsync(expected.Title, expected.Message, expected.Accept);
             await Answer(expected, context + "-saved-message"); await showing;
             File.Move(Path.Combine(folder, context + "-saved-message.png"), Path.Combine(path, "saved-message.png"));

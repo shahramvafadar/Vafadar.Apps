@@ -1016,3 +1016,9 @@ permission, network, backup/export field or retention behavior is introduced.
 
 No new collection, permission, network, SDK, retention or portable field. Existing local results stay
 available after a notification error; all qualification traces are isolated fictitious values.
+
+## D-400 - Retained occurrence state refusal
+
+Only existing local transaction state is read before an existing correction writer. No new stored
+data, migration, export, key, permission, SDK or network behavior. Separate fictitious native cases
+preserve accepted money and original Main/OS; no phone or private external data is used.

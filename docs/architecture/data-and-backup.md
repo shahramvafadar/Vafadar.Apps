@@ -2424,3 +2424,10 @@ empty deletion result. Plan-store notifications also retain their exact result. 
 delete and automatic-post paths retain their existing contracts; no broader exception catch authorizes
 a retry. The actual application command retires the original view before saved feedback and holds
 its gate through native effects. No entity/compiled model, migration or portable backup changes.
+
+## D-400 - Atomic occurrence state refusal
+
+PlanStore.UpdateStateAsync loads current state before alsoInTransaction. Settled state rejects
+skip/unskip/override or a different link; skipped state rejects a new link. The same explicit link
+retains idempotency after its original relationship checks. The existing writer/access/rollback and
+committed-publication contracts are unchanged; no model/migration or backup-format change.
