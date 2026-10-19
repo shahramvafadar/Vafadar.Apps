@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Physical Android qualification (D-365)
+
+- Verify the changed account, debt-detail and monthly-repeat actions on Samsung without changing saved financial data. The application package is unchanged.
+
 ### Complete editor and wizard actions (D-364)
 
 - Keep icon choices and monthly-pattern actions complete at minimum width with large text.

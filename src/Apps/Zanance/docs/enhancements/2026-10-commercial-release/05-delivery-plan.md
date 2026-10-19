@@ -2516,3 +2516,11 @@ native input endpoints and newly affected footer steps. Preserve already passed 
 original live processes and failures; distinguish native observations from managed test counts.
 General ANR, spoken reader, remaining controls and external platform/release gates stay open.
 [Current evidence](../../quality/narrow-editor-actions.md).
+
+### D-365 complete physical changed-editor batch
+
+After D-364's ready changes, qualify all three affected original consumers on coordinated Samsung
+in en/fa/de Light/Dark at unchanged OS scale. Preserve successful observations and original
+processes, restore original app/OS state and do not replay unchanged suites/builds. The 18 cases
+and 36 native clicks are physical evidence, not managed tests or broader release acceptance.
+[Completed scope and remaining gates](../../quality/physical-editor-actions.md).

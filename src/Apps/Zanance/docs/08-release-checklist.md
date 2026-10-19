@@ -1682,3 +1682,12 @@ settings restoration; inspect final Windows footer receipts and complete signed 
 handoff separately. Native cases add no unit count; three constructor regressions are separate. No
 phone/reader/ANR/iOS/store/release closure follows.
 [Source-bound case evidence](quality/narrow-editor-actions.md).
+
+## D-365 physical changed-editor continuation
+
+The unchanged complete D-364 APK and original Samsung forms pass 18 normal-scale translated/theme
+cases with no financial Save. Original native actions, observed draft values, visible account/
+plan/Home and exact OS settings are preserved; app preferences and the coordinated turn are
+restored/released. No new managed test count or repeated build. Physical first-run, OS200%/
+spoken reader, all financial actions, general ANR/performance, Mac/iOS/provider/store/release remain.
+[Source-bound physical evidence](quality/physical-editor-actions.md).

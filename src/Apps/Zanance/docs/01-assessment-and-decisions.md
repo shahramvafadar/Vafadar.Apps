@@ -6899,3 +6899,15 @@ apply. Three new real-source regressions first show two failures and then all pa
 existing open-draft language/theme case. Initial native footer assertions are insufficient where
 the corresponding step2 image shows Home: reject those nine contexts and qualify their actual
 rendered original modal under the corrected owner checks. Keep all earlier failures/receipts.
+
+## D-365 - Qualify original changed disclosures on Samsung
+
+Reuse the complete signed D-364 APK after coordinating the phone turn. Upgrade without reset and
+qualify original account, expanded debt-details and monthly-rule actions in en/fa/de Light/Dark:
+18 normal-scale forms, 36 disclosure clicks and 54 actual native name/target states. Preserve draft
+inputs and original calendar/day panel behavior; discard unsaved monthly drafts without Save.
+Keep the original process, visible account/plan/Home data and exact OS settings; restore English,
+Light and Simple. Retain and correct only failed observations, not successful interactions.
+This is physical scoped qualification, not new app/APK/managed tests, OS200% phone, first-run,
+spoken reader, general ANR/performance, full database or release acceptance.
+[Original physical evidence and limits](quality/physical-editor-actions.md).

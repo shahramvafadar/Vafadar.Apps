@@ -4086,3 +4086,14 @@ Three constructor theme cases require no application/event for an unchanged save
 Dark choice, then one actual subsequent user change. These are managed regressions; native footer
 receipts alone do not accept a wrong-page image. Check the actual original rendered modal and
 zero constructor theme events for every final Windows footer case.
+
+## AT-365 original physical editor disclosures
+
+Coordinate the Samsung turn and reuse the qualified complete signed candidate. Exercise account,
+expanded debt account-details and monthly-rule disclosures in en/fa/de Light/Dark at unchanged
+phone scale. Require complete original native names, visible 44dp targets, two original clicks,
+restored edit values and actual original rule-panel topology. Cancel without Save; explicitly
+discard monthly drafts. Keep the same process and restore original app/OS state and visible
+account/plan/Home evidence. Do not count native receipt assertions as new unit tests or accept
+whole-phone/OS200%/spoken reader/first-run/performance/iOS/release from this scoped batch.
+[Physical cases, observation failures and restoration](quality/physical-editor-actions.md).

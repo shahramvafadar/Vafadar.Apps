@@ -6855,3 +6855,13 @@ Strict Windows/Android builds and the full signed offline package pass; upgrade 
 Home without reset. No financial/schema/privacy change. A11Y-03, general startup/ANR, spoken
 reader, physical-device/iOS/provider/store/release acceptance remain open.
 [Evidence and scope](../quality/narrow-editor-actions.md).
+
+### Section31 update - D-365 physical changed-editor qualification
+
+The complete unchanged D-364 signed APK upgrades Samsung without reset. Original account,
+expanded debt-details and monthly-rule disclosures pass 18 en/fa/de Light/Dark normal-scale
+cases, preserving names, 44dp targets, observed draft values and original discard behavior.
+Original visible accounts/plan/Home, preferences and OS settings are preserved. No new managed
+test count, build, app code or package. Broader physical, OS reader/200%, first-run, ANR,
+Mac/iOS, provider/store and release gates remain.
+[Evidence and exact scope](../quality/physical-editor-actions.md).
