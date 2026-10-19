@@ -413,3 +413,21 @@ only the original native command twice and compare the original draft. Footer ch
 step commands/names/targets and busy disablement without Back/Next/Finish or financial Save.
 Preserve baseline failures, exact emulator settings and original process/comparison/MVID receipts.
 These are native cases, not a managed-unit count or spoken-reader/whole-device acceptance.
+
+## D-366 retained minimum-width surfaces
+
+The narrow-surfaces phase requires actual OS font scale 2.0 and 360dp width on the authorized
+independent emulator. Supply review_run for the existing financial-tables.db root and an explicit
+review_settings_run for the existing marked settings-text.db root. Missing or redirected inputs
+are refused; no fixture is created or migrated by this continuation. The application writes no
+OS settings: the external authorized controller captures/restores their exact prior values.
+
+Run the original tables, report legends, budget captions, Home legends, shared plan rows,
+ledger/account rows and Settings in en/fa/de, Light/Dark: 42 separately retained cases. Financial
+readers select just one original context; the prior 412dp cohorts are not replayed. Each private
+case receipt binds comparison, group, context, actual width/scale, caller/Data MVIDs and complete
+fixture-input hash. Continue only matching successful receipts; preserve a failed receipt as such.
+Original native window focus, original amount endpoints/commands and complete stored inputs remain
+required. Settings checks its original selected controls and actual account-picker Cancel, without
+security or financial actions. Derived native checks are not a new managed-unit count, spoken
+TalkBack, physical-phone, whole-Home/ANR, iOS or publication acceptance.

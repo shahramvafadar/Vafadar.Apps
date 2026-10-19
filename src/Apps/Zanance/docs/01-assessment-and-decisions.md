@@ -6911,3 +6911,14 @@ Light and Simple. Retain and correct only failed observations, not successful in
 This is physical scoped qualification, not new app/APK/managed tests, OS200% phone, first-run,
 spoken reader, general ANR/performance, full database or release acceptance.
 [Original physical evidence and limits](quality/physical-editor-actions.md).
+
+## D-366 - Qualify retained original surfaces at actual minimum width
+
+Complete seven original financial/Settings groups in en/fa/de Light/Dark at real Android
+OS200%/360dp: 42 cases on the original fictitious financial and Settings fixtures. Reuse
+original page readers with one explicit context; do not repeat successful 412dp/editor cohorts.
+Bind each immutable case to exact comparison, source MVIDs, input hash and configuration;
+retain failed evidence and require original native window focus. Preserve captured inputs,
+original commands/selection/Cancel, restore exact OS values and original Main Home.
+Only independent qualification sources change; production app/APK and managed counts remain.
+[Exact matrix, observations and remaining gates](quality/narrow-original-surfaces.md).

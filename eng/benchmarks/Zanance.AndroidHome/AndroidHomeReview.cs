@@ -85,6 +85,12 @@ internal static partial class AndroidHomeReview
                 RequireRoot(root);
                 await WriteReportAsync(root, phase, await ReviewPhoneLedgerAsync(app, services, root, comparison!, ct, includeWrites: phase == "ledger"), ct);
             }
+            else if (phase == "narrow-surfaces")
+            {
+                if (File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))
+                    throw new ReviewCheckException("Completed narrow-surface qualification must not be repeated.");
+                await WriteReportAsync(root, phase, await ReviewNarrowSurfacesAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "font-scale")
             {
                 // Reuse the retained financial presentation fixture, not a performance workload/reseed.

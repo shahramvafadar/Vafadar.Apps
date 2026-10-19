@@ -72,7 +72,7 @@ internal static partial class AndroidHomeReview
 
     /// <summary>Checks original table templates and complete canonical amount viewports without invoking financial commands.</summary>
     private static async Task<object> ReviewFinancialTablesAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct,
-        bool legendsOnly = false, bool budgetTitlesOnly = false, bool homeLegendsOnly = false, bool planRowsOnly = false, bool ledgerRowsOnly = false)
+        bool legendsOnly = false, bool budgetTitlesOnly = false, bool homeLegendsOnly = false, bool planRowsOnly = false, bool ledgerRowsOnly = false, string? onlyContext = null)
     {
         async Task RequireReviewFocusAsync()
         {
@@ -104,9 +104,11 @@ internal static partial class AndroidHomeReview
         void SurfaceStage(string step) => Android.Util.Log.Info("ZananceHomeStage", comparison + "|" + step);
         await RequireReviewFocusAsync();
         app.OpenReviewShell(); await RootAsync();
+        ValidateSurfaceContext(onlyContext);
         var path = Path.Combine(root, "financial-tables.db"); var retained = File.Exists(path);
+        if (onlyContext is not null && !retained) throw new ReviewCheckException("Narrow continuation requires the original financial fixture.");
         using var fixture = new ServiceCollection().AddZananceData(path).BuildServiceProvider();
-        await Task.Run(() => fixture.MigrateLocalDatabase<ZananceDbContext>(), ct);
+        if (onlyContext is null) await Task.Run(() => fixture.MigrateLocalDatabase<ZananceDbContext>(), ct);
         var store = fixture.GetRequiredService<ZananceStore>(); var time = services.GetRequiredService<TimeProvider>();
         var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         if (!retained)
@@ -128,6 +130,7 @@ internal static partial class AndroidHomeReview
         var themes = services.GetRequiredService<ThemeService>(); var observations = new List<object>();
         foreach (var theme in new[] { ThemeChoice.Light, ThemeChoice.Dark })
         {
+            if (onlyContext is not null && !onlyContext.EndsWith("-" + theme, StringComparison.Ordinal)) continue;
             var rebuilt = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
             void Rebuilt(object? sender, EventArgs args) => rebuilt.TrySetResult();
             if (themes.Choice != theme)
@@ -139,6 +142,7 @@ internal static partial class AndroidHomeReview
             await RootAsync();
             foreach (var language in new[] { "en", "fa", "de" })
             {
+                if (onlyContext is not null && onlyContext != language + "-" + theme) continue;
                 await SetLanguageAsync(app, local, language, ct); await RootAsync(); var dates = new DateFormatter(local);
                 if (ledgerRowsOnly)
                 {

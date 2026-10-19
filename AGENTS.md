@@ -2631,3 +2631,13 @@ serialization and exclusive-maintenance ownership. Refuse changed mapping/query 
 Cache only immutable weakly owned model metadata, never preferences or key-bearing state. Measure
 through original Home publication as well as settings, since shared EF startup work can move later.
 Temporary phase instrumentation is independent-only and must be removed before the finished handoff.
+
+## D-366 retained minimum-width qualification
+
+Independent surface continuations use actual OS200%/360dp and existing nonredirected financial/
+Settings fixtures. Qualify each original context through the existing native page reader; retain
+immutable comparison/group/context, caller/Data MVIDs, input hash and configuration receipts.
+Accept a retained case only when those exact identities match and its original observation
+passed. Preserve failed evidence; never replay successful 412dp/editor cohorts or infer full
+database, spoken-reader, phone/ANR/iOS/release acceptance. Capture/restore exact authorized
+emulator settings and original Main Home; the caller itself never writes OS settings.

@@ -4097,3 +4097,14 @@ discard monthly drafts. Keep the same process and restore original app/OS state 
 account/plan/Home evidence. Do not count native receipt assertions as new unit tests or accept
 whole-phone/OS200%/spoken reader/first-run/performance/iOS/release from this scoped batch.
 [Physical cases, observation failures and restoration](quality/physical-editor-actions.md).
+
+## AT-366 retained minimum-width financial and Settings surfaces
+
+On the authorized independent emulator, capture exact prior settings and use actual OS200%/
+360dp. Reuse original financial/Settings fixtures for all seven groups across en/fa/de and
+both themes. Require original focused native pages, complete amount endpoints/captions,
+command/name/target contracts and real nonfinancial selection or picker Cancel where applicable.
+Bind each retained case to exact source/input/configuration and preserve all original inputs.
+Restore settings and original Main Home; never infer spoken reader, full device/ANR/iOS or
+release acceptance. No successful 412dp cohort, managed suite or unchanged main build is replayed.
+[Complete 42-case evidence and limitations](quality/narrow-original-surfaces.md).

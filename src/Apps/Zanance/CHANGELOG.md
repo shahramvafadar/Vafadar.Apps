@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Minimum-width Android qualification (D-366)
+
+- Verify original financial views and Settings at 200% system text and 360dp width on the independent Android emulator, preserving existing data and settings. Application behavior and its package are unchanged.
+
 ### Physical Android qualification (D-365)
 
 - Verify the changed account, debt-detail and monthly-repeat actions on Samsung without changing saved financial data. The application package is unchanged.

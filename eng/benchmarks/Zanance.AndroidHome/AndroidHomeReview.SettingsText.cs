@@ -14,12 +14,15 @@ namespace Vafadar.Zanance.App;
 internal static partial class AndroidHomeReview
 {
     /// <summary>Examines original read-only Settings controls at actual authorized OS scale, without invoking security or save actions.</summary>
-    private static async Task<object> ReviewSettingsTextAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct)
+    private static async Task<object> ReviewSettingsTextAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct, string? onlyContext = null)
     {
         var configuration = Platform.CurrentActivity?.Resources?.Configuration;
-        if (configuration is null || Math.Abs(configuration.FontScale - 2f) > .001f || configuration.ScreenWidthDp != 412)
-            throw new ReviewCheckException("Settings review requires actual OS scale2.0 at412dp.");
+        if (configuration is null || Math.Abs(configuration.FontScale - 2f) > .001f || configuration.ScreenWidthDp is not (360 or 412))
+            throw new ReviewCheckException("Settings review requires actual OS scale2.0 at360dp or412dp.");
+        ValidateSurfaceContext(onlyContext);
         var path = Path.Combine(root, "settings-text.db"); var fresh = !File.Exists(path);
+        if (configuration.ScreenWidthDp == 360 && (fresh || !File.Exists(Path.Combine(root, "settings-text-prepared.marker"))))
+            throw new ReviewCheckException("Narrow continuation requires the original marked Settings fixture.");
         using var fixture = new ServiceCollection().AddZananceData(path).BuildServiceProvider();
         var store = fixture.GetRequiredService<ZananceStore>();
         if (fresh)
@@ -41,6 +44,7 @@ internal static partial class AndroidHomeReview
         await AwaitReimbursementFocusAsync(ct); app.OpenReviewShell();
         foreach (var choice in new[] { ThemeChoice.Light, ThemeChoice.Dark })
         {
+            if (onlyContext is not null && !onlyContext.EndsWith("-" + choice, StringComparison.Ordinal)) continue;
             var rebuilt = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
             void Rebuilt(object? sender, EventArgs args) => rebuilt.TrySetResult();
             app.ShellRebuilt += Rebuilt;
@@ -48,6 +52,7 @@ internal static partial class AndroidHomeReview
             finally { app.ShellRebuilt -= Rebuilt; }
             foreach (var language in new[] { "en", "fa", "de" })
             {
+                if (onlyContext is not null && onlyContext != language + "-" + choice) continue;
                 await SetLanguageAsync(app, localization, language, ct); await AwaitReimbursementFocusAsync(ct);
                 var vm = ActivatorUtilities.CreateInstance<SettingsViewModel>(services, store);
                 var page = new SettingsPage(vm, localization) { FlowDirection = localization.CurrentLanguage.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight };
@@ -128,6 +133,7 @@ internal static partial class AndroidHomeReview
         }
         return new { Comparison = comparison, OsFontScale = configuration.FontScale, WidthDp = configuration.ScreenWidthDp,
             SourceMvid = typeof(AndroidHomeReview).Module.ModuleVersionId, Observations = observations, StoredInputsUnchanged = before == await StoredAsync(),
+            OriginalWindowFocusRequired = true,
             MainPackageTouched = false, SecurityOrFinancialActionsInvoked = false, SystemSettingsWrittenByCaller = false };
     }
 

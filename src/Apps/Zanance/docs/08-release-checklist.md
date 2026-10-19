@@ -1691,3 +1691,12 @@ plan/Home and exact OS settings are preserved; app preferences and the coordinat
 restored/released. No new managed test count or repeated build. Physical first-run, OS200%/
 spoken reader, all financial actions, general ANR/performance, Mac/iOS/provider/store/release remain.
 [Source-bound physical evidence](quality/physical-editor-actions.md).
+
+## D-366 actual minimum-width surface qualification
+
+Seven original financial/Settings groups pass all 42 translated/theme cases at actual Android
+OS200%/360dp on retained fictitious data. Independent Release/AOT build/package and exact OS/
+Main Home restoration are checked; main code/APK and managed-unit count do not change.
+Remaining controls, spoken TalkBack/gestures, phone, general ANR/GC/performance, Mac/iOS and
+provider/Store/release gates stay open.
+[Exact native scope](quality/narrow-original-surfaces.md).

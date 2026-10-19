@@ -2524,3 +2524,11 @@ in en/fa/de Light/Dark at unchanged OS scale. Preserve successful observations a
 processes, restore original app/OS state and do not replay unchanged suites/builds. The 18 cases
 and 36 native clicks are physical evidence, not managed tests or broader release acceptance.
 [Completed scope and remaining gates](../../quality/physical-editor-actions.md).
+
+### D-366 complete minimum-width surface batch
+
+Finish the seven original financial/Settings groups at actual OS200%/360dp in one 42-case
+translated/theme batch. Reuse original fixtures and page readers, keep immutable per-case
+source/input/configuration evidence, and restore exact emulator settings and original Main Home.
+No prior successful 412dp/editor cohort or unchanged main build/managed suite is repeated.
+[Completed evidence and outstanding scope](../../quality/narrow-original-surfaces.md).

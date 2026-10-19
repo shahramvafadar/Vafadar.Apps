@@ -6865,3 +6865,12 @@ Original visible accounts/plan/Home, preferences and OS settings are preserved. 
 test count, build, app code or package. Broader physical, OS reader/200%, first-run, ANR,
 Mac/iOS, provider/store and release gates remain.
 [Evidence and exact scope](../quality/physical-editor-actions.md).
+
+### Section31 update - D-366 original minimum-width surfaces
+
+Actual Android OS200%/360dp qualification completes 42 original financial/Settings contexts:
+reports/forecast tables, report legends, budget titles, Home legends, plan rows, ledger/account
+rows and Settings. Original retained inputs, native commands/selection/Cancel and exact OS/
+Main Home restoration pass. This independent-caller change adds no managed test count or
+production app/APK change. Broader A11Y/device/ANR/iOS/provider/release acceptance remains open.
+[Source-bound original receipts](../quality/narrow-original-surfaces.md).
