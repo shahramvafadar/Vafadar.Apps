@@ -2753,3 +2753,11 @@ thread or reduce financial calculation inputs. Preserve references, stable ties 
 Independent original-order/packet oracles run outside measured clocks/heartbeat and do not alter old
 financial baseline files. Retain native crashes and completed cases; bounded public notification
 intervals do not establish whole-Home speed, general runtime stability or release acceptance.
+
+## D-384 unaccepted combined GC/nursery configuration
+
+The isolated serial-major/64MiB-nursery trial is not a production fix: complete finite native/data
+cohorts pass but observed dispatcher pauses worsen and memory/long-term stability remain unqualified.
+Do not repeat it unchanged, extend it to the phone or promote it from a clean sample/upstream report.
+Keep ordinary Main/runtime policy, original full workloads and actual negative evidence. Separate
+post-terminal aggregate memory from peak, leak, low-memory and comparative claims; no raw memory dumps.

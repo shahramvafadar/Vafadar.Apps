@@ -4292,3 +4292,12 @@ same immutable source/package/data. Targeted recent publication work shrinks; wh
 speedup. No-reset Main upgrades preserve original Home0/Home979, settings and package identity.
 [Evidence and boundaries](quality/home-recent-selection.md). General GC/ANR, cold/low-memory, reader,
 full-device/iOS/provider/Store and release acceptance remain open.
+
+## AT-384 - Unaccepted combined GC configuration
+
+A distinct artifact-only serial-major/64MiB-nursery configuration completes the original six x64
+Home contexts with complete financial/native/recent/data equality and eight root/six native Back
+checks. Public dispatcher-gap medians worsen; memory observations are neither peak nor comparative
+acceptance. Do not infer a native stability fix, extend to the phone or ship it. Restore the ordinary
+D-383 caller and exact original Main/OS; preserve all actual old crashes/ANR. No new managed tests,
+production/APK change or unrelated suite. [Evidence](quality/android-gc-nursery-trial.md).

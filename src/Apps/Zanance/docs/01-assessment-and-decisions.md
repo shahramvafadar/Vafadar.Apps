@@ -7124,3 +7124,12 @@ pass; all six original x64 and Samsung contexts match complete data/native/recen
 native SIGSEGVs and continue only missing cases. Measured recent-publication intervals shrink, but
 whole-Home timings do not establish improvement. Complete offline APK and no-reset Main upgrades pass.
 [Original evidence, control justification and limits](quality/home-recent-selection.md).
+
+## D-384 - Do not adopt serial major plus a larger nursery from a clean sample
+
+A distinct artifact-only64MiB nursery/serial-major trial preserves complete original Home in one x64
+process and passes eight original root retirements/six native Back actions. Public dispatcher pauses
+are longer in5/6 tenfold pairs; aggregate post-HomePSS is about818MiB, without a comparable baseline or
+peak/low-memory claim. One clean finite cohort is not a native fix. Keep Main unchanged, restore the
+ordinary independent package and exact Main/OS state, and retain prior actual failures. No phone,
+new unit count or successful unrelated suite. [Evidence and limits](quality/android-gc-nursery-trial.md).

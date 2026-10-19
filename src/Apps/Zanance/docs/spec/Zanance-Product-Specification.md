@@ -7051,3 +7051,12 @@ and all six x64/Samsung protected cases match original recent/financial/native p
 schema/typed rows. Both actual native crashes remain negative evidence; only missing cases continue.
 No-reset Main upgrades preserve original Home/data/settings. App/APK advance to D-383, not a full-suite
 count, two-second Home, native stability or release acceptance. [Evidence](../quality/home-recent-selection.md).
+
+### Section31 update - D-384 bounded GC/nursery hypothesis rejected
+
+The existing serial-major/default-nursery failure is not repeated. A distinct isolated64MiB-nursery
+combination completes six original Home contexts plus eight root/six native Back checks, but longer
+public dispatcher pauses and unqualified memory/stability prevent production adoption. Restore exact
+ordinary caller/Main/OS. No production, test-count, permission, runtime binary, schema or APK change;
+D-383 remains current. No full-suite rerun or native/ANR/two-second/device/iOS acceptance.
+[Evidence](../quality/android-gc-nursery-trial.md).

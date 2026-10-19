@@ -2694,3 +2694,11 @@ Main upgrades pass. Both actual native crashes remain negative evidence. The mea
 interval improves; full Home/GC/ANR/cold/low-memory and external platform gates remain open. Continue
 ready work; do not replay successful unrelated suites or relabel component timings as full acceptance.
 See [evidence](../../quality/home-recent-selection.md).
+
+## D-384 combined GC trial remains outside production
+
+The distinct64MiB nursery/serial-major hypothesis completes full original x64 Home and root/Back
+lifecycle checks but worsens public dispatcher pauses. Restore ordinary D-383 caller/Main/OS and do
+not extend the unaccepted trial to the phone. No source/APK or managed-count change; actual native
+GC/ANR, whole-page target and platform gates stay open. Continue from a materially new observed cause,
+not another run of this unchanged configuration. [Evidence](../../quality/android-gc-nursery-trial.md).
