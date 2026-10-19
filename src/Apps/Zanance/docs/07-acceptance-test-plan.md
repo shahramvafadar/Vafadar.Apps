@@ -581,7 +581,7 @@ clear/zero it. Reopen fee-free and new forms; verify Simple/Advanced creation po
 writes. Compare all financial fields and unrelated rows, allowing only intended changes and audit updates.
 Final local status: 24 Windows contexts/72 valid Saves, native input/glyph checks, 1,456 tests, strict builds,
 signed APK, 12 normal Android new-form checks and original three-profile financial/preference values and expected settings audit pass.
-Successful stored-fee edits on Android/physical/iOS remain unaccepted. Evidence: quality/destination-fee-retention.md.
+D-369 qualifies successful stored-fee edits on the independent original Android Release/AOT editor; physical/iOS remain unaccepted. Historical evidence: quality/destination-fee-retention.md; Android continuation: quality/destination-fee-android-lifecycle.md.
 
 ## AT-107 - Visible advance-settlement fields and safe actual differences (D-102)
 
@@ -4130,3 +4130,14 @@ through six actual targets in the same process. Require original979EUR/profile a
 system-settings preservation, then release the phone. Initial unfocused-window refusal is
 retained and the same launch continues. No phone reader/speech or precise startup claim follows.
 [Original native evidence](quality/physical-reader-glyphs.md).
+
+## AT-369 - Original Android stored fees and currency retirement (D-369)
+
+AT-106's Android stored-fee gap is qualified on the independent original Release/AOT editor:
+12 contexts,36 native Saves (nine retained,27 new), exact fee identities/net effects, all other
+serialized ledger fields and unrelated Accounts/Categories/Settings preserved. Blank/zero removes
+only the destination fee; reopening and original Cancel preserve creation policy without writes.
+Retain terminal finalizer evidence and exact-source case receipts. Six main en/fa/de Light/Dark contexts complete 24 original owned native popup open/close pairs
+without selecting a new currency before/after Settings child navigation. Original Home/app/OS
+state and installed bytes match after restoration. No managed-count increase or phone/general GC/ANR/iOS/release claim.
+[Detailed qualification](quality/destination-fee-android-lifecycle.md).

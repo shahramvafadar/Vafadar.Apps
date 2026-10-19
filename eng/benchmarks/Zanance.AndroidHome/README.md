@@ -431,3 +431,25 @@ Original native window focus, original amount endpoints/commands and complete st
 required. Settings checks its original selected controls and actual account-picker Cancel, without
 security or financial actions. Derived native checks are not a new managed-unit count, spoken
 TalkBack, physical-phone, whole-Home/ANR, iOS or publication acceptance.
+
+## D-369 original stored destination-fee sequence
+
+The destination-fee phase uses fresh independently marked fictitious SQLite directories and the
+original EntryEditorPage/ViewModel, actual Shell id-query delivery, original native input/Save/Cancel
+and complete serialized financial readback. It completes en/fa/de, Light/Dark and Simple/Advanced;
+no main-package data or OS settings are written. Retain source/input-bound successful receipts.
+Historical destination-fee-* phases preserve unique terminal reports for observed corrections.
+review_fee_baseline_mvid binds the original run intent; review_fee_passed_mvid and the finite
+review_fee_passed_contexts bind actual original completed cases; review_fee_input_mvid binds the
+interrupted prepared input. Never fill a missing native-operation receipt from persisted rows.
+
+The review_fee_resume_empty/review_fee_dead_pid continuation is limited to the exact recorded
+D-369 empty fa-Light-Advanced file and terminal PID 10391. It requires zero domain rows, the exact
+43-of 50 migration prefix, original lock row/timestamp and explicit original comparison/run. Only
+seven pending migrations and previously unwritten preparation continue. It is not a general
+production lock-recovery or migration feature. No reset/replacement/replay of completed cases.
+
+Observe the exact PID with Read-ReviewReport.ps1 -Phase destination-fee (or the actual historical
+phase), original Run/Comparison and a fresh OutputPath. A timeout or empty tree never permits
+restart. Actual terminal runtime failures require ApplicationExitInfo and exact mono-rt evidence,
+not only AndroidRuntime/am_crash. Native case counts are not new managed tests.

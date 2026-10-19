@@ -1718,3 +1718,13 @@ Home/profile/979EUR and exact system settings pass; the exclusive phone turn is 
 Application and package remain D-367. This is not phone TalkBack, correct speech, exact startup,
 general ANR/GC, full database/iOS or release acceptance.
 [Evidence](quality/physical-reader-glyphs.md).
+
+## D-369 scoped Android currency lifetime and fee edits
+
+Original Android stored-fee retain/edit/remove and Cancel paths complete 12 contexts/36 Saves
+(nine retained,27 new) with complete unrelated-field preservation. Release only the owned custom
+chevron child during Android unload; restore under unchanged ownership. Strict Windows and complete
+signed offline Android builds pass. Exact package/main-popup evidence and preserved failures are
+recorded below: six main contexts/24 native popup pairs, unchanged EUR, original Home/OS state
+and installed bytes match; this does not close general GC/ANR, two-second startup, phone/readers/iOS or release.
+[Qualification](quality/destination-fee-android-lifecycle.md).

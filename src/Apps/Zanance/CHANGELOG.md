@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Android currency control lifetime (D-369)
+
+- Release and restore the app-owned currency dropdown button as Android pages unload and reload, avoiding the reproduced access to a disposed native group.
+- Verify stored destination-fee edits and explicit removal in both modes without changing unrelated financial data.
+
 ### Physical decorative-glyph qualification (D-368)
 
 - Verify the decorative-icon correction and original expense, history and menu navigation on Samsung without changing saved data or system settings. The application package is unchanged from D-367.

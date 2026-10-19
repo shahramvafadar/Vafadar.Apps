@@ -2549,3 +2549,13 @@ history/Home and More/Home. Require actual glyph removal, identical meaningful H
 original profile/979EUR and exact settings; release the phone turn. No successful unchanged
 build or financial suite is repeated. Reader speech/general stability/iOS/release remain open.
 [Physical result](../../quality/physical-reader-glyphs.md).
+
+## D-369 original Android transfer/lifetime batch
+
+Complete the Android stored-destination-fee acceptance gap as one 12-context batch; retain exact
+successful source-bound operations after terminal failures rather than restarting their fixtures.
+Correct the observed owned-currency-child finalizer interaction and check original main popup
+return paths: six contexts/24 popup pairs pass with unchanged selections and exact Home/OS/bytes
+restoration. Strict Windows/full signed offline Android pass; no unchanged financial/crypto/backend
+suite replay. General runtime/ANR/startup, wider physical/readers/iOS and external release remain open.
+[Evidence and explicit limits](../../quality/destination-fee-android-lifecycle.md).

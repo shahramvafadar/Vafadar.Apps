@@ -6893,3 +6893,15 @@ qualify expense/Cancel, history/return and menu/return in one retained process w
 exact system settings preserved. The phone turn is released. No managed-count/app/APK change;
 phone TalkBack/speech, exact startup speed, general stability/iOS/release remain unaccepted.
 [Physical observations and scope](../quality/physical-reader-glyphs.md).
+
+### Section31 update - D-369 original Android transfer edits and currency lifetime
+
+The original Release/AOT Android editor completes 12 en/fa/de Light/Dark Simple/Advanced contexts
+and 36 native Saves: nine retained successes,27 new operations. Existing destination-fee identity,
+explicit edit/removal, one transfer, original source fee and all unrelated serialized data match.
+A reproduced SfComboBox finalizer/disposed-ViewGroup failure is addressed by releasing/reloading
+only the application's owned chevron child on Android. Strict Windows/full offline signed Android
+builds pass. Six original main contexts complete 24 owned currency-popup open/close pairs with
+unchanged EUR selections, restored original Home/OS state and exact installed bytes. This adds zero managed tests; retained runtime cases are not unit counts. General
+GC/ANR, startup target, phone/spoken-reader/Mac/iOS/provider/release gates remain open.
+[Exact evidence, failures and package](../quality/destination-fee-android-lifecycle.md).

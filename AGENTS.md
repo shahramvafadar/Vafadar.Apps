@@ -2652,3 +2652,12 @@ windows, finite safe-caption commands and exact accessibility/TTS/font/display r
 Retain successful scenes across observer failures, reject unbound display contexts and remove
 only the independent helper after terminal evidence. Ordinary adb injection does not establish
 TalkBack gesture acceptance; correct speech and broader device/ANR/iOS/release gates remain open.
+
+## D-369 owned currency-child retirement
+
+On Android unload, detach only ComboChevron's own surface while its original native group is
+live; reload it only under unchanged DropDownButtonSettings ownership. Remove event subscriptions
+on cleanup. Do not suppress vendor finalizers, change GC policy, retain retired pages or dispose
+foreign children. Bind native financial cases to original source/input and complete stored-row
+readback; missing runtime input/navigation receipts cannot be reconstructed from persisted money.
+A bounded original sequence/popup continuation does not close general GC/ANR/device/iOS gates.

@@ -1721,3 +1721,14 @@ button outside the excluded subtree. Require actual reader focus and original pa
 not just gesture callbacks or node metadata. Six scoped original navigation contexts pass;
 correct audible speech and remaining platform/reader acceptance stay open.
 [Evidence](quality/android-reader-glyphs.md).
+
+## Owned Android currency-button lifetime (D-369)
+
+A retiring currency input releases only its own chevron child on Android Unloaded, before its
+retained native group can be disposed. Loaded restores that same child only while the original
+DropDownButtonSettings ownership matches. Preserve the real button/name/44-unit target, filtering,
+selection and scalable typography. Never suppress vendor finalizers, keep retired pages alive or
+remove another owner's children. Actual popup windows can be non-focusable: an active-window
+accessibility dump alone cannot prove their absence. Require owned visible native windows and
+unchanged selections; row-selection/speech/device acceptance are separate.
+[Native lifecycle evidence](quality/destination-fee-android-lifecycle.md).

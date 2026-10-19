@@ -1490,3 +1490,17 @@ the helper after terminal evidence. Do not use ordinary adb input as reader-gest
 stock uiautomator alongside TalkBack, root or system/security changes on a phone.
 [Build/transport limits](../../eng/benchmarks/Zanance.ReaderGestures/README.md) and
 [scoped original qualification](../../src/Apps/Zanance/docs/quality/android-reader-glyphs.md).
+
+## Original Android fee/lifecycle continuation (D-369)
+
+The independent Zanance.AndroidHome destination-fee phase qualifies original native stored-fee
+Saves against complete fictitious ledger fields. Retained receipts bind actual caller/Data MVIDs,
+original comparison/input and committed rows; missing original native-operation receipts refuse
+acceptance. Do not replay successful cohorts, reset fixtures or restart on observation expiry.
+
+For ComboChevron retirement, check the original signed main APK after no-reset upgrade. Original
+Settings dropdowns can create non-focusable native PopupWindows absent from the active-window
+uiautomator tree. Bind visible surface/parent/package/session-PID evidence to the original action;
+close without currency selection and recheck after actual child navigation. This is not list-row
+selection, TalkBack/speech or general GC/ANR acceptance. Preserve exact original app/OS state.
+[Recorded failures, seven-migration continuation and packages](../../src/Apps/Zanance/docs/quality/destination-fee-android-lifecycle.md).

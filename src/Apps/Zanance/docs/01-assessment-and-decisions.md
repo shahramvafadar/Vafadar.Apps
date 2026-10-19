@@ -6945,3 +6945,17 @@ release the turn after terminal evidence. Preserve the initial unavailable-focus
 continue the same process and make no precise startup or phone TalkBack/speech acceptance claim.
 App/APK remain D-367; no successful unchanged builds or managed suites repeated.
 [Actual device scope and limits](quality/physical-reader-glyphs.md).
+
+## D-369 - Qualify original Android fee edits and retire owned currency surfaces
+
+The original Android editor completes 12 translated/theme/mode contexts and 36 native fee Saves,
+retaining nine successful original Saves and executing only 27 remaining operations. Compare exact
+fee identities, net effects and every unrelated serialized field; keep original Cancel policies.
+The first terminal process exposes SfComboBox finalization removing an owned chevron from a
+disposed Android group. Detach only that child on Android Unloaded, restore on Loaded while
+ownership is unchanged, and retain cleanup. No GC/runtime/dependency or financial algorithm change.
+Keep exact-source receipts, seven pending migrations on the original empty 43/50-schema fixture,
+failed observations and corrected host UTF-8 expectations. Strict Windows/full signed offline
+Android builds pass. Six original main contexts complete 24 currency open/close pairs before/after
+child navigation; EUR selections, exact original Home/OS state and installed bytes match. No new managed tests; broader GC/ANR/phone/iOS/release gates remain open.
+[Original sequence, package and bounded main qualification](quality/destination-fee-android-lifecycle.md).

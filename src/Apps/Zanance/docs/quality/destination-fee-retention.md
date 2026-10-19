@@ -52,3 +52,11 @@ remain unchanged. There is no schema, data type, permission, SDK, credential or 
 
 Physical-phone, iOS, OS large text/readers, other A11Y-03 controls and owner/provider/encryption/licence/release
 gates remain open. This closes the specific runtime concern recorded after D-100.
+
+## D-369 original Android stored-fee continuation
+
+The historical D-101 Android scope above covers creation/Cancel only. D-369 later completes
+successful original Release/AOT stored-fee retain/edit/remove in twelve translated/theme/mode
+contexts, preserving nine original native Saves and executing only27 remaining Saves.
+[Separate source-bound evidence, observed lifecycle failure and limits](destination-fee-android-lifecycle.md).
+Physical/iOS, general GC/ANR, spoken readers and release gates remain open.

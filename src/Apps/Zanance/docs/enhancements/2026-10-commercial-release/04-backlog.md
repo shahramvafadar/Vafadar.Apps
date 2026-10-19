@@ -513,7 +513,7 @@ visible/editable in both modes; new destination-fee creation remains Advanced-on
 edit/removal and reopened/new Cancel/Discard preserve financial fields/ids and unrelated rows. The final
 Windows matrix has 24 contexts/72 valid Saves; main tests remain 1,456 (App.Tests 220), strict builds and signed
 APK pass. Normal Android creation-policy checks and original financial/preference values and expected settings audit pass; successful stored-fee
-editing on Android/physical/iOS and other owner/platform/release gates remain open.
+editing remained open at D-101. D-369 later qualifies the independent original Android Release/AOT edits; physical/iOS and other owner/platform/release gates remain open.
 Evidence: [quality/destination-fee-retention.md](../../quality/destination-fee-retention.md).
 
 D-102 / AT-107 delivers complete settlement period/bill feedback and a growing Record the difference
@@ -3189,3 +3189,16 @@ return to the same979EUR/profile in one process. System settings remain exact an
 turn is released. No code/APK/build/managed-count change. A11Y-01 speech/phone-reader, broader
 QA-01/QA-06, iOS/provider/release gates remain.
 [Exact physical scope](../../quality/physical-reader-glyphs.md).
+
+## D-369 original Android destination-fee completion and observed lifetime defect
+
+Complete AT-106's original Android stored-fee scope through 12 en/fa/de/theme/mode contexts and 36
+native Saves, preserving nine original successes and executing only 27 remaining operations. Exact
+fee identities/net effects and all unrelated serialized rows/settings match; original Cancel and
+creation policy remain. A terminal SfComboBox finalizer accesses a disposed native group; retire
+only the application's owned chevron child on Android unload and restore on load under unchanged
+ownership. QA-06's general GC/finalizer/ANR and performance/device/reader/iOS gates remain open.
+Six original main contexts complete 24 currency-popup pairs and restore unchanged EUR/Home/OS
+state with matching installed bytes. No new managed tests or repeated unchanged successful suite;
+strict Windows/full offline Android pass.
+[Failure, continuation and actual main evidence](../../quality/destination-fee-android-lifecycle.md).

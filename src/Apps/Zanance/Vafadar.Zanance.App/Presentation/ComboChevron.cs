@@ -62,6 +62,22 @@ public static class ComboChevron
         surface.Children.Add(target);
         var prior = box.DropDownButtonSettings;
         var owned = new DropDownButtonSettings { View = surface, Width = 44, Height = 44 };
+#if ANDROID
+        // D-369: SfDropdownEntry's finalizer removes its custom button through a retained handler,
+        // which can already hold a disposed Android ViewGroup. Detach only our own button while
+        // the control unloads on the UI thread; keep the vendor's finalizer and other children intact.
+        var children = (ICollection<IView>)box;
+        void UnloadOwnedButton(object? sender, EventArgs args)
+        {
+            if (ReferenceEquals(box.DropDownButtonSettings, owned) && children.Contains(surface)) children.Remove(surface);
+        }
+        void LoadOwnedButton(object? sender, EventArgs args)
+        {
+            if (ReferenceEquals(box.DropDownButtonSettings, owned) && !children.Contains(surface)) children.Add(surface);
+        }
+        box.Unloaded += UnloadOwnedButton;
+        box.Loaded += LoadOwnedButton;
+#endif
         void RefreshName(object? sender, PropertyChangedEventArgs args)
         {
             if (args.PropertyName == SemanticProperties.DescriptionProperty.PropertyName)
@@ -108,6 +124,10 @@ public static class ComboChevron
         box.ItemTemplate = template;
         box.SetValue(CleanupProperty, (Action)(() =>
         {
+#if ANDROID
+            box.Unloaded -= UnloadOwnedButton;
+            box.Loaded -= LoadOwnedButton;
+#endif
             box.PropertyChanged -= RefreshName;
             if (ReferenceEquals(box.DropDownButtonSettings, owned)) box.DropDownButtonSettings = prior;
             if (ReferenceEquals(box.ItemTemplate, template)) box.ItemTemplate = priorTemplate;

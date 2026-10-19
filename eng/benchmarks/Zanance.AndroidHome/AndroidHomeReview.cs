@@ -85,6 +85,26 @@ internal static partial class AndroidHomeReview
                 RequireRoot(root);
                 await WriteReportAsync(root, phase, await ReviewPhoneLedgerAsync(app, services, root, comparison!, ct, includeWrites: phase == "ledger"), ct);
             }
+            else if (phase is "destination-fee" or "destination-fee-fixed" or "destination-fee-native" or "destination-fee-lifecycle" or "destination-fee-owned" or "destination-fee-resume" or "destination-fee-inspect" or "destination-fee-prepared" or "destination-fee-migrations" or "destination-fee-effect" or "destination-fee-unicode")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0) throw new ReviewCheckException("Nonredirected transfer fixture required.");
+                var intent = Path.Combine(root, "destination-fee-intent.json");
+                var expected = JsonSerializer.Serialize(new { Comparison = comparison, SourceMvid = typeof(AndroidHomeReview).Module.ModuleVersionId });
+                if (File.Exists(intent))
+                {
+                    if (await File.ReadAllTextAsync(intent, ct) != expected)
+                    {
+                        using var prior = JsonDocument.Parse(await File.ReadAllTextAsync(intent, ct));
+                        if (phase is not ("destination-fee-fixed" or "destination-fee-native" or "destination-fee-lifecycle" or "destination-fee-owned" or "destination-fee-resume" or "destination-fee-inspect" or "destination-fee-prepared" or "destination-fee-migrations" or "destination-fee-effect" or "destination-fee-unicode") || prior.RootElement.GetProperty("Comparison").GetString() != comparison
+                            || !Guid.TryParse(Platform.CurrentActivity?.Intent?.GetStringExtra("review_fee_baseline_mvid"), out var baselineMvid)
+                            || prior.RootElement.GetProperty("SourceMvid").GetGuid() != baselineMvid)
+                            throw new ReviewCheckException("Retained transfer source/comparison changed.");
+                    }
+                }
+                else await File.WriteAllTextAsync(intent, expected, ct);
+                await WriteReportAsync(root, phase, await ReviewDestinationFeeAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "narrow-surfaces")
             {
                 if (File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))
