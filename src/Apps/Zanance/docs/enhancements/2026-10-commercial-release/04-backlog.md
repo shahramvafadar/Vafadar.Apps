@@ -3202,3 +3202,13 @@ Six original main contexts complete 24 currency-popup pairs and restore unchange
 state with matching installed bytes. No new managed tests or repeated unchanged successful suite;
 strict Windows/full offline Android pass.
 [Failure, continuation and actual main evidence](../../quality/destination-fee-android-lifecycle.md).
+
+## D-370 original physical currency lifetime continuation
+
+Qualify the unchanged signed D-369 APK on Samsung without reset: six translated/theme contexts,
+24 original owned popup open/close pairs and Settings child returns. Preserve EUR, profile 979 EUR,
+original English/Light/Simple Home and exact system state in the same process. Keep initial
+focus/hierarchy and host-coordinate failures, retain successful cases and release the phone turn.
+No new managed tests/app/APK or repeated unchanged build/suite. QA-06 remains open for general
+GC/ANR/performance, physical fee Saves, spoken readers, other devices/iOS and external release.
+[Physical evidence](../../quality/physical-currency-lifecycle.md).

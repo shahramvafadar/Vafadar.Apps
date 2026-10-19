@@ -1728,3 +1728,12 @@ signed offline Android builds pass. Exact package/main-popup evidence and preser
 recorded below: six main contexts/24 native popup pairs, unchanged EUR, original Home/OS state
 and installed bytes match; this does not close general GC/ANR, two-second startup, phone/readers/iOS or release.
 [Qualification](quality/destination-fee-android-lifecycle.md).
+
+## D-370 physical currency-button return
+
+The unchanged signed D-369 package passes six original Samsung contexts/24 popup pairs with
+unchanged EUR and original English/Light/Simple Home/profile 979 EUR/system state. The same launch
+continues after initial unavailable focus; no reset or observer-driven restart. No financial Save
+or repeated unchanged successful build/test suite. Physical fee edits/general GC/ANR/reader/iOS/
+release gates remain open; the coordinated phone turn is released.
+[Evidence](quality/physical-currency-lifecycle.md).

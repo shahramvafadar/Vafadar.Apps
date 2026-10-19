@@ -6959,3 +6959,14 @@ failed observations and corrected host UTF-8 expectations. Strict Windows/full s
 Android builds pass. Six original main contexts complete 24 currency open/close pairs before/after
 child navigation; EUR selections, exact original Home/OS state and installed bytes match. No new managed tests; broader GC/ANR/phone/iOS/release gates remain open.
 [Original sequence, package and bounded main qualification](quality/destination-fee-android-lifecycle.md).
+
+## D-370 - Qualify original currency-button return on Samsung
+
+Reuse D-369's complete signed APK without reset. Six en/fa/de Light/Dark contexts complete 24
+original popup open/close pairs for both currency inputs before/after Settings child navigation.
+Require owned native windows, actual phone geometry, unchanged EUR, original English/Light/Simple
+Home and exact system state in the same process. Preserve initial focus/hierarchy uncertainty and
+the corrected host coordinate bound; no app restart repairs an observer. No financial Save, new
+managed tests, source/APK change or repeated unchanged build/suite. Release the coordinated phone
+turn after terminal evidence. Physical fee Saves, general GC/ANR/readers/iOS/release remain open.
+[Original device evidence and limits](quality/physical-currency-lifecycle.md).

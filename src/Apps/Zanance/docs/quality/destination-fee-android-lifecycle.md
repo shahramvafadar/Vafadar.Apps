@@ -108,3 +108,5 @@ fatal/ANR/crash filters return zero. This is a bounded original sequence, not ge
 
 Broader GC/ANR, two-second startup, low-memory, spoken readers, phone, Mac/iOS and release gates
 remain open. Successful builds and this bounded original sequence do not close those gates.
+
+The later [D-370 Samsung currency continuation](physical-currency-lifecycle.md) reuses these exact APK bytes. Its bounded physical popup scope does not qualify physical financial fee Saves.

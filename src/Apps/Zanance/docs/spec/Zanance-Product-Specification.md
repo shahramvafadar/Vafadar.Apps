@@ -6905,3 +6905,13 @@ builds pass. Six original main contexts complete 24 owned currency-popup open/cl
 unchanged EUR selections, restored original Home/OS state and exact installed bytes. This adds zero managed tests; retained runtime cases are not unit counts. General
 GC/ANR, startup target, phone/spoken-reader/Mac/iOS/provider/release gates remain open.
 [Exact evidence, failures and package](../quality/destination-fee-android-lifecycle.md).
+
+### Section31 update - D-370 physical currency-popup continuation
+
+Six original Samsung en/fa/de Light/Dark contexts complete 24 owned currency-popup open/close
+pairs before/after actual Settings child navigation, preserving EUR selections and original
+Home/profile 979 EUR. English/Light/Simple and exact captured OS settings restore in the same
+process; installed bytes remain D-369. The coordinated turn is released. Zero new managed tests,
+application source or APK changes; no unchanged successful builds/suites repeated. Native surface
+checks do not establish physical fee Saves, general GC/ANR/speech/iOS or release acceptance.
+[Actual hardware observations and limits](../quality/physical-currency-lifecycle.md).

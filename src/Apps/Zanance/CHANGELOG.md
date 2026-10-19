@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Physical currency control qualification (D-370)
+
+- Verify original currency lists and return navigation on Samsung while preserving selections, saved data and system settings. The application package remains D-369.
+
 ### Android currency control lifetime (D-369)
 
 - Release and restore the app-owned currency dropdown button as Android pages unload and reload, avoiding the reproduced access to a disposed native group.

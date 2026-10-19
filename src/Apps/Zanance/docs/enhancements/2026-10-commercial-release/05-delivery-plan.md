@@ -2559,3 +2559,12 @@ return paths: six contexts/24 popup pairs pass with unchanged selections and exa
 restoration. Strict Windows/full signed offline Android pass; no unchanged financial/crypto/backend
 suite replay. General runtime/ANR/startup, wider physical/readers/iOS and external release remain open.
 [Evidence and explicit limits](../../quality/destination-fee-android-lifecycle.md).
+
+## D-370 completed original physical currency batch
+
+Reuse D-369's exact signed bytes for six original Samsung display contexts and 24 currency-popup
+pairs across actual Settings child navigation. Restore original app/OS/Home/profile state in the
+same launch and release the coordinated phone turn. Preserve failed observations and completed
+case receipts; do not replay unchanged successful builds or financial suites. Physical fee edits,
+general GC/ANR/performance/readers/iOS/provider/Store/release remain separate unfinished scope.
+[Exact result](../../quality/physical-currency-lifecycle.md).

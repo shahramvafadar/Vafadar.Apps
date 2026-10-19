@@ -4141,3 +4141,14 @@ Retain terminal finalizer evidence and exact-source case receipts. Six main en/f
 without selecting a new currency before/after Settings child navigation. Original Home/app/OS
 state and installed bytes match after restoration. No managed-count increase or phone/general GC/ANR/iOS/release claim.
 [Detailed qualification](quality/destination-fee-android-lifecycle.md).
+
+## AT-370 - Original physical currency-popup lifetime (D-370)
+
+On the approved Samsung, qualify original DefaultCurrency/ReportCurrency popups before/after
+Settings -> Available items -> Back in en/fa/de Light/Dark: six contexts/24 open-close pairs.
+Actual owned native window/session PID, on-screen geometry, complete names/targets and unchanged
+EUR pass. Restore original English/Light/Simple Home, native meaningful state and exact OS values;
+keep 979 EUR/profile and matching installed D-369 bytes, then release the phone turn. No financial
+Save, managed-count increase or successful unchanged suite/build replay. This does not qualify
+physical stored-fee Saves, general GC/ANR, speech, other devices, iOS or release.
+[Exact observations and preserved controller failures](quality/physical-currency-lifecycle.md).
