@@ -1639,3 +1639,14 @@ desktop and original fictitious seeded data. It checks18 en/fa/de light/dark wid
 plans.png/empty.png plus geometry in each directory. Only view-model presentation is emptied; stored
 schedules are not deleted. The independent AndroidHome caller's plans-add-header phase checks the
 original native Add and unsaved Cancel, without touching the Main package or changing OS settings.
+
+## Focused original reconciliation review (D-396)
+
+Run `eng/scripts/Run-StoreDrafts.ps1 -ReconciliationReview` for original account commands/native
+consent in six en/fa/de light/dark contexts, using a separate fictitious financial file and18 scoped
+width images. It does not drive the owner input desktop. The optional exact32-hex
+`-ReconciliationContinuation` is restricted to the retained terminal input-pattern observation;
+never restart a live process or reseed its financial file. After all six financial cases are accepted,
+`-ReconciliationVisualOnly` with that original continuation file refreshes only visible error images,
+with no financial Save and complete accepted-input preservation. Incompatible/incomplete flags refuse
+before build/desktop work. See the D-396 quality evidence for the original failures and exact limits.

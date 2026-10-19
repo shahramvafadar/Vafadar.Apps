@@ -1821,3 +1821,11 @@ Plans mirrors Home: a growing title and real48px Add button on its physical righ
 title and full-width lower action band. Preserve translated spoken name and the same command. The
 optional44px Back target retains original navigation when pushed. Segment chips/warnings remain
 above the full remaining list/empty viewport; the empty-state invitation remains inside its content.
+
+## D-396 - Reconciliation belongs to the current review
+
+Changing observed amount or date removes the old comparison/hints/adjust action immediately, while
+retaining typed drafts. Compare again before adjustment. Require a reason and original native consent;
+disable form input during the operation. Cancel retains the draft without posting. Changed original
+account/history/access requires a fresh comparison with six-language feedback. A known committed
+outcome remains successful even if refresh notification fails; never invite a second financial write.

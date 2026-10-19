@@ -7177,3 +7177,15 @@ invitation. Eighteen Windows filled/empty contexts/36 native images and focused 
 qualify the change with unchanged financial inputs. Strict builds and complete offline APK evidence
 are recorded in [D-395](../quality/plans-add-header.md). Managed counts and D-386's later dedicated
 stability/accessibility order remain unchanged; no general platform/provider/store release acceptance.
+
+### Section31 update - D-396 original balance review
+
+ACC-08/AT-11 retires stale observed amount/date consent and revalidates one opaque original-file/account/
+history review under the existing writer. Adjustment and current account reconciled metadata commit
+together; changed inputs/sources cannot guess a new amount, and subscriber failure cannot repost an
+accepted correction. Twenty new application/SQLite cases and thirty related ledger regressions pass;
+the earlier14/18-case executions are not additional distinct tests or a full-suite rerun. Six original
+Windows consent contexts, eighteen corrected visible error images and original Android amount edit,
+reason/Cancel/Accept/cold persistence qualify the changed path with strict builds and a complete signed
+offline APK. [Detailed evidence](../quality/reconciliation-review.md). Full device/iOS/provider/store/
+release and D-386 stability/accessibility acceptance remain separate.

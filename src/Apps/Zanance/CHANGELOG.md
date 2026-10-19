@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Reliable balance reconciliation (D-396)
+
+- Compare again after editing the observed balance or date; an old comparison can no longer post an adjustment.
+- Save the adjustment and reconciliation status together, preserving the accepted result if refresh notification fails.
+
 ### Plans Add beside its title (D-395)
 
 - Put the Plans plus button beside its title, matching Home and freeing the lower band for the plan list.

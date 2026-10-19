@@ -3449,3 +3449,16 @@ Plans now follows D-375 Home with a48px real Add action beside the growing title
 band and full remaining list/empty height. Same command, translated name, filters/warnings and
 pushed Back remain. Changed-page native evidence is [D-395](../../quality/plans-add-header.md);
 no financial Save or successful unrelated test replay. Broader QA/A11Y/runtime/external gates stay open.
+
+## D-396 - Original reconciliation review and atomic correction
+
+Continue the ready AT-11/ACC-08 financial gap. Retire stale amount/date consent and save only the
+unchanged actual-file review, with adjustment and current account metadata in one existing writer.
+Twenty focused application/SQLite cases and thirty related ledger regressions pass; six original
+Windows consent contexts and eighteen corrected visual observations are retained without replaying
+accepted money. Complete signed offline Android package and strict Windows Release build pass.
+Original Android native amount edit/reason/Cancel/Accept and one planned cold process preserve the
+exact adjustment and account metadata. Original Main/profiles/OS are restored without financial
+replay; test output is cleaned. Documentation and final commit accompany this batch; hosted success
+remains subject to the exact final CI result. Broader physical-phone/iOS, stability/accessibility and
+external release gates remain. [Evidence](../../quality/reconciliation-review.md).

@@ -2856,3 +2856,12 @@ Home and Plans keep the original real Add command in their own growing title row
 with a48px visual/target and complete translated name. Do not reserve a bottom action band or add a
 second Shell/Windows title. Preserve original Back for a pushed page, plan filters/warnings and the
 separate empty-state action. Qualify only the changed page; no financial Save is needed for layout.
+
+## D-396 - Original balance comparison and atomic correction
+
+Amount/date/account changes retire the original reconciliation review without discarding typed
+drafts. Confirm only the same account/file/date/observed amount/reason; changed history/access or
+pending drafts require a fresh comparison. Keep adjustment and current stored account reconciliation
+metadata in the same existing financial writer. Never overwrite a stale form account, regress a
+later reconciled date or replay a committed write after notification failure. Independent native
+qualification preserves accepted financial cases; repair only failed observation on the same fixture.

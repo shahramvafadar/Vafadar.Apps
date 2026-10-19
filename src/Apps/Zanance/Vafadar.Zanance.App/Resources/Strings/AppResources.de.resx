@@ -8264,4 +8264,7 @@ Original-XML SHA-256: {5}</value>
   <data name="Market_EcbOpenSource" xml:space="preserve">
     <value>Kostenloses EZB-Original im Browser öffnen</value>
   </data>
+  <data name="Reconcile_ReviewAgain" xml:space="preserve">
+    <value>Der Vergleich konnte nicht gespeichert werden. Vergleiche den aktuellen Kontostand erneut, bevor du eine Korrektur buchst.</value>
+  </data>
 </root>

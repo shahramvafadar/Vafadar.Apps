@@ -1954,3 +1954,11 @@ Original Plans Add now matches Home beside the title, with no bottom action band
 filters, empty action and pushed Back. Changed-page native layout/open/Cancel and final offline
 signed candidate evidence: [D-395](quality/plans-add-header.md). No commercial Windows delivery,
 general Android stability/accessibility, iOS or publication claim follows from these focused checks.
+
+## D-396 - Reconciliation correction qualification
+
+Original reviewed balance adjustment now has atomic account/ledger persistence and stale-source
+refusal. Focused original managed, Windows native and Android emulator evidence, strict builds and
+the complete offline signed candidate are bounded in [D-396](quality/reconciliation-review.md).
+This does not qualify a physical phone, all reconciliation histories, general stability/accessibility,
+iOS, commercial signing or publication. External account/provider gates remain unchanged.

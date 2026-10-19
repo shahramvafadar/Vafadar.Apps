@@ -8264,4 +8264,7 @@
   <data name="Market_EcbOpenSource" xml:space="preserve">
     <value>بازکردن منبع رایگان ECB در مرورگر</value>
   </data>
+  <data name="Reconcile_ReviewAgain" xml:space="preserve">
+    <value>ذخیرهٔ مقایسه انجام نشد. پیش از ثبت تعدیل، موجودی فعلی را دوباره مقایسه کنید.</value>
+  </data>
 </root>

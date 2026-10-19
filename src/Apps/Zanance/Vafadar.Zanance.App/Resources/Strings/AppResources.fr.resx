@@ -8241,4 +8241,7 @@ SHA-256 du XML original : {5}</value>
   <data name="Market_EcbOpenSource" xml:space="preserve">
     <value>Ouvrir l’original gratuit de la BCE dans le navigateur</value>
   </data>
+  <data name="Reconcile_ReviewAgain" xml:space="preserve">
+    <value>La comparaison n’a pas pu être enregistrée. Comparez à nouveau le solde actuel avant d’enregistrer un ajustement.</value>
+  </data>
 </root>

@@ -2386,3 +2386,13 @@ semantic fields on Undo, ignoring only audit timestamps; use identity sets for b
 Refuse missing legacy snapshots, extra batch rows, later attachments and the existing dependent
 import/refund cases. Never backfill a purported original review from current mutable rows. Existing
 backup/restore carries the journal without an EF model/schema change or new attachment storage.
+
+## D-396 - Transient original reconciliation authority
+
+ReconciliationReadReview privately retains an immutable canonical account/related-ledger packet and
+the actual file/access identity from one coherent SQLite snapshot. It is single-use, never persisted,
+exported or reconstructed from an edited form. The existing CommercialWriteTransaction revalidates
+that packet before the correction and atomically saves both ledger and current account metadata.
+Application draft retirement is checked before save/commit; rollback preserves all original fields.
+After commit, notification failure retains accepted semantics and cannot grant another posting.
+There is no EF model/migration/compiled-model or backup format change.

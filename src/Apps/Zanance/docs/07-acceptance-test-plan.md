@@ -4404,3 +4404,15 @@ the bottom. Eighteen contexts and36 original app-window images qualify the chang
 stored accounts/entries/plans/settings remain unchanged. Android native open/Cancel, final package
 and preserved Main/OS observations are bounded in [D-395](quality/plans-add-header.md). Native cases
 do not add managed test counts or establish broader platform/stability/accessibility acceptance.
+
+## D-396 - AT-11 original account reconciliation
+
+Twenty original application/session and real SQLite cases qualify stale-input/consent/source/file/
+access refusal, matching balances, positive/negative correction, required reason, monotonic metadata,
+overlapping operations, rollback, post-commit notification failure and arithmetic bounds. Thirty
+related original ledger regressions pass; no full-suite replay or implied new total from repeated cases.
+Six original en/fa/de light/dark Windows native consent cases and eighteen scoped visible error images
+pass. Original Android native edits retire old comparison, missing reason refuses, Cancel preserves
+the draft and one Accept records112.34EUR correction to212.34EUR. The original row/reason/date/account
+and reconciled date persist across one planned cold process without financial replay.
+See [D-396](quality/reconciliation-review.md) for restoration, candidate and remaining platform gates.

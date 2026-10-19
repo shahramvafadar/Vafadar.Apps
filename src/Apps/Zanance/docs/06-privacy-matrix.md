@@ -1016,3 +1016,7 @@ batch is undone or its profile/database is removed; subsequent row edits do not 
 The journal travels through existing protected database/consented portable backup boundaries, with
 no selected raw CSV cache or attachment bytes in the journal. Later attachments retain their owner;
 unverifiable legacy batches require review. No new permission, SDK, network or schema is introduced.
+
+D-396: reconciliation review is a transient in-memory copy of existing account/related ledger facts.
+It adds no persisted/exported field, SDK, network call or permission; native evidence uses fictitious
+data and app-only views. No raw database/key extraction or general device logs are collected.

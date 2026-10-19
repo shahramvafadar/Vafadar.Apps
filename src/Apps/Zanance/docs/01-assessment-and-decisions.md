@@ -7282,3 +7282,20 @@ original command/name and stored account/ledger/plan/settings preservation;36 ap
 inspected. Dedicated Release/AOT Android Add/Cancel and complete offline signed APK evidence are
 recorded in [the scoped qualification](quality/plans-add-header.md). No unrelated suite replay or
 new managed case count, broad A11Y/stability/iOS/store/release acceptance. D-386 priorities remain.
+
+## D-396 - Original reviewed balance and atomic reconciliation
+
+The original reconciliation result survived amount/date changes and was saved separately from the
+account's reconciled metadata. Replace that stale authority with an opaque single-use actual-file
+review of the complete original account/related ledger. Revalidate under the existing financial
+writer and atomically save only the original correction plus current stored account metadata.
+Preserve commercial/household guards, monotonic reconciliation dates and committed outcomes.
+The actual application session invalidates edited consent and refuses overlapping requests.
+
+Twenty new original application/SQLite behaviors and thirty related ledger regressions pass; strict
+Windows/Android builds and the complete signed offline package are warning-free. Six Windows native
+consent contexts, eighteen corrected visible-image observations and original Android amount editing,
+required reason, Cancel/Accept and cold persistence qualify this path. Financial successes are retained
+through diagnostic corrections. [Exact evidence and boundaries](quality/reconciliation-review.md).
+No schema, new persisted data, privacy permission or provider change; broader device/iOS/release and
+D-386's deferred stability/accessibility gates remain separate.

@@ -8293,4 +8293,7 @@ Original XML SHA-256: {5}</value>
   <data name="Market_EcbOpenSource" xml:space="preserve">
     <value>Open free ECB original in browser</value>
   </data>
+  <data name="Reconcile_ReviewAgain" xml:space="preserve">
+    <value>The comparison could not be saved. Compare the current balance again before recording an adjustment.</value>
+  </data>
 </root>

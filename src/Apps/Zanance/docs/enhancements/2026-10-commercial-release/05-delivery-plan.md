@@ -2804,3 +2804,12 @@ Deliver the requested Home-style Plans Add as one visual batch: preserve origina
 financial commands, inspect only changed filled/empty surfaces, native Add/Cancel, strict builds,
 complete offline signed APK, documentation and push. Do not reopen unrelated successful matrices or
 dedicated stability/accessibility under D-386. [Evidence](../../quality/plans-add-header.md).
+
+## D-396 - Complete original balance reconciliation correction
+
+Deliver original compare/edit/reason/Cancel/Accept and atomic current-account metadata as one batch.
+Preserve the exact financial fixture and all successful consent outcomes; an observer failure permits
+only changed observation, never financial replay. Focus managed/native checks on AT-11 and the reused
+ledger writer. Complete Android runtime qualification, docs and push before selecting another section.
+The Windows finite review and signed Android build are prerequisites, not full device/release acceptance.
+See [current evidence and pending work](../../quality/reconciliation-review.md).

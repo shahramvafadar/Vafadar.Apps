@@ -998,3 +998,7 @@ and Keep both imports. Original notes/tags survive later row edits until batch U
 removal and follow existing explicit portable-backup protection. No raw CSV cache, journal attachment
 bytes, new SDK, network, permission or schema; later attachments and unverifiable legacy rows remain
 for review instead of unsafe deletion.
+
+D-396 keeps original reconciliation review transient and profile/file-bound. Existing account/ledger
+data categories, storage encryption, backup format and permissions are unchanged; no new SDK or
+network processing is introduced. Qualification uses only fictitious app data and scoped app views.

@@ -1179,3 +1179,7 @@ D-392 corrects actual ordinary-import Undo protection and retained aggregate fie
 financial flow. Scoped managed/native/physical evidence and remaining release gates are recorded in
 quality/import-undo-and-retained-aggregates.md and the canonical commercial backlog; no new Phase1
 scope or full-suite/device acceptance is claimed.
+
+D-396 strengthens existing ACC-08/AT-11 reconciliation with original-file reviewed consent and atomic
+account/adjustment persistence. Focused local/native qualification is recorded in
+quality/reconciliation-review.md and the canonical backlog; no new Phase1 feature scope is introduced.

@@ -2507,3 +2507,7 @@ public activation and platform/store acceptance remain separate; see quality/ecb
 D-392 completes a bounded financial qualification/correction batch: every new ledger import has immutable
 Undo snapshots and existing aggregate ranges remain visible in Simple mode. See the canonical
 commercial backlog and quality/import-undo-and-retained-aggregates.md; broader acceptance stays open.
+
+D-396 addresses the ready original reconciliation financial gap with immutable review, edited-consent
+retirement and atomic persistence. See the canonical commercial backlog and
+quality/reconciliation-review.md; dedicated stability/accessibility stays deferred under D-386.

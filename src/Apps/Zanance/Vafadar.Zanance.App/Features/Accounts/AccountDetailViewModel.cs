@@ -49,7 +49,7 @@ public sealed partial class AccountDetailViewModel(
     [ObservableProperty] public partial string? ManualLoanActionText { get; private set; }
 
     private Account? _account;
-    private ReconciliationResult? _result;
+    private readonly AccountReconciliationSession _reconciliation = new(store);
 
     public ObservableCollection<AmountLine> Movement { get; } = [];
 
@@ -150,6 +150,7 @@ public sealed partial class AccountDetailViewModel(
         ArgumentNullException.ThrowIfNull(query);
         if (query.TryGetValue("id", out var value) && value is Guid id)
         {
+            if (_id != id) InvalidateReconciliation();
             _id = id;
         }
     }
@@ -310,101 +311,87 @@ public sealed partial class AccountDetailViewModel(
         finally { IsBusy = false; }
     }
 
+    /// <summary>Retires a previous comparison immediately when its original amount or date changes.</summary>
+    partial void OnObservedTextChanged(string value) => InvalidateReconciliation();
+    partial void OnReconcileDateChanged(DateOnly value) => InvalidateReconciliation();
+
+    private void InvalidateReconciliation()
+    {
+        _reconciliation.Invalidate(); CanAdjust = false; ResultText = null; HintText = null;
+    }
+
     [RelayCommand]
     private async Task CompareAsync()
     {
-        Error = null;
-        CanAdjust = false;
-        if (_account is not { } account)
-        {
-            return;
-        }
-
+        if (IsBusy || !Loading.IsReady || _account is not { } account) return;
+        Error = null; InvalidateReconciliation();
         var currency = Currencies.TryGet(account.CurrencyCode, out var known) ? known : Currencies.Euro;
         var text = ObservedText.Trim();
         var negative = text.StartsWith('-') || text.StartsWith('−');
         if (!MoneyText.TryParse(text.TrimStart('-', '−'), currency, localization.CurrentCulture, out var observed))
-        {
-            Error = translator["Amount_Invalid"];
-            return;
-        }
-
+        { Error = translator["Amount_Invalid"]; return; }
         observed = negative ? -observed : observed;
-        _result = Reconciliation.Analyze(account, await store.GetEntriesAsync(), observed, ReconcileDate);
-        var culture = localization.CurrentCulture;
-        ResultText = _result.Difference == 0
-            ? translator["Reconcile_Match"]
-            : translator.Format("Reconcile_Difference", MoneyText.Format(_result.Recorded, account.CurrencyCode, culture),
-                MoneyText.Format(_result.Difference, account.CurrencyCode, culture, showPlus: true));
-
-        // First suggest reviewing entries, only then an adjustment (ACC-08).
-        var hints = new List<string>();
-        if (_result.UnreviewedCount > 0)
+        IsBusy = true;
+        try
         {
-            hints.Add(translator.Format("Reconcile_Unreviewed", _result.UnreviewedCount));
+            var review = await _reconciliation.CompareAsync(_id, observed, ReconcileDate);
+            if (review is null) return;
+            var result = review.Result; var culture = localization.CurrentCulture;
+            ResultText = result.Difference == 0 ? translator["Reconcile_Match"]
+                : translator.Format("Reconcile_Difference", MoneyText.Format(result.Recorded, review.CurrencyCode, culture),
+                    MoneyText.Format(result.Difference, review.CurrencyCode, culture, showPlus: true));
+            var hints = new List<string>();
+            if (result.UnreviewedCount > 0) hints.Add(translator.Format("Reconcile_Unreviewed", result.UnreviewedCount));
+            if (result.PossibleDuplicates > 0) hints.Add(translator.Format("Reconcile_Duplicates", result.PossibleDuplicates));
+            if (result.Difference != 0) hints.Add(translator["Reconcile_Missing"]);
+            HintText = hints.Count > 0 ? string.Join(Environment.NewLine, hints) : null;
+            CanAdjust = result.Difference != 0;
+            if (result.Difference == 0)
+            {
+                IncompleteText = null;
+                var date = account.LastReconciledOn is { } previous && previous > review.Date ? previous : review.Date;
+                ReconciledText = translator.Format("Account_LastReconciled", dates.Format(date, DateFormatStyle.Short));
+            }
         }
-
-        if (_result.PossibleDuplicates > 0)
+        catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            hints.Add(translator.Format("Reconcile_Duplicates", _result.PossibleDuplicates));
+            InvalidateReconciliation();
+            Error = _reconciliation.Committed ? translator["Reconcile_Done"]
+                : CommercialFailureMessage.OrFallback(exception, translator, "Reconcile_ReviewAgain");
         }
-
-        if (_result.Difference != 0)
-        {
-            hints.Add(translator["Reconcile_Missing"]);
-        }
-
-        HintText = hints.Count > 0 ? string.Join(Environment.NewLine, hints) : null;
-        CanAdjust = _result.Difference != 0;
-
-        // A matching balance confirms the account, so an unknown opening balance no longer makes it incomplete; the day
-        // of the comparison is remembered for the data status (ZEX-S0608).
-        if (_result.Difference == 0)
-        {
-            account.OpeningBalanceKnown = true;
-            account.LastReconciledOn = Max(account.LastReconciledOn, ReconcileDate);
-            await store.SaveAccountAsync(account);
-            IncompleteText = null;
-            ReconciledText = translator.Format("Account_LastReconciled", dates.Format(account.LastReconciledOn.Value, DateFormatStyle.Short));
-        }
+        finally { IsBusy = false; }
     }
 
     [RelayCommand]
     private async Task AdjustAsync()
     {
-        if (_account is null || _result is null || string.IsNullOrWhiteSpace(Reason))
+        if (IsBusy || !Loading.IsReady) return;
+        Error = null;
+        if (_reconciliation.Review is null) { Error = translator["Reconcile_ReviewAgain"]; return; }
+        if (string.IsNullOrWhiteSpace(Reason)) { Error = translator["Reconcile_ReasonRequired"]; return; }
+        IsBusy = true;
+        try
         {
-            Error = translator["Reconcile_ReasonRequired"];
-            return;
-        }
-
-        if (!await Shell.Current.DisplayAlertAsync(translator["Reconcile_Adjust"], translator["Reconcile_AdjustMessage"], translator["Reconcile_Adjust"], translator["Common_Cancel"]))
-        {
-            return;
-        }
-
-        if (Reconciliation.CreateAdjustment(_account, _result, ReconcileDate, Reason) is { } adjustment)
-        {
-            var saved = await store.SaveEntryAsync(adjustment);
+            var saved = await _reconciliation.AdjustAsync(() => interaction.ConfirmAsync(translator["Reconcile_Adjust"],
+                translator["Reconcile_AdjustMessage"], translator["Reconcile_Adjust"], translator["Common_Cancel"]), () => Reason);
+            if (saved is null) { CanAdjust = _reconciliation.Review is not null; return; }
             if (!saved.Succeeded)
-            {
-                Error = string.Join(Environment.NewLine, saved.Errors.Select(e => translator[$"LedgerError_{e}"]));
-                return;
-            }
+            { Error = string.Join(Environment.NewLine, saved.Errors.Select(e => translator[$"LedgerError_{e}"])); return; }
+            await PublishReconciliationAsync();
         }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            if (_reconciliation.Committed) await PublishReconciliationAsync();
+            else { InvalidateReconciliation(); Error = CommercialFailureMessage.OrFallback(exception, translator, "Reconcile_ReviewAgain"); }
+        }
+        finally { IsBusy = false; }
+    }
 
-        // A reconciled balance is known from its date on, so the account is no longer incomplete (ACC-09); the day of
-        // the comparison is remembered (ZEX-S0608).
-        _account.OpeningBalanceKnown = true;
-        _account.LastReconciledOn = Max(_account.LastReconciledOn, ReconcileDate);
-        await store.SaveAccountAsync(_account);
-
-        ObservedText = string.Empty;
-        Reason = string.Empty;
-        ResultText = translator["Reconcile_Done"];
-        HintText = null;
-        CanAdjust = false;
-        await LoadAsync();
+    /// <summary>Publishes the accepted outcome even if a subscriber failed; never repeats the financial operation.</summary>
+    private async Task PublishReconciliationAsync()
+    {
+        ObservedText = string.Empty; Reason = string.Empty; CanAdjust = false; HintText = null;
+        ResultText = translator["Reconcile_Done"]; await LoadAsync();
     }
 
     [RelayCommand]
@@ -448,8 +435,6 @@ public sealed partial class AccountDetailViewModel(
             await Shell.Current.GoToAsync($"../{AppShell.HoldingDetailRoute}", new Dictionary<string, object> { ["id"] = type.Id });
         }
     }
-
-    private static DateOnly Max(DateOnly? current, DateOnly date) => current is { } value && value > date ? value : date;
 
     [RelayCommand]
     private Task EditAsync() => Shell.Current.GoToAsync(AppShell.AccountEditorRoute, new Dictionary<string, object> { ["id"] = _id });
