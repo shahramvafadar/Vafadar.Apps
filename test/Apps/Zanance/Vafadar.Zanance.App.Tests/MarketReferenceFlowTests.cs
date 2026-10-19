@@ -41,7 +41,7 @@ public sealed class MarketReferenceFlowTests
         public Task<bool> ConfirmAsync(string title, string originalTerms, string accept, string cancel)
         { Confirms++; Terms = originalTerms; DuringConfirmation?.Invoke(); return Task.FromResult(Confirm); }
     }
-    private static (MarketReferenceViewModel Model, Runtime Runtime) Create(FlowFixture f)
+    private static (MarketReferenceViewModel Model, Runtime Runtime) Create(FlowFixture f, MarketQuote? selectedQuote = null)
     {
         var instant = f.Time.GetUtcNow(); var date = DateOnly.FromDateTime(instant.Date);
         var symbol = new MarketSymbol("EURUSD", "Fictitious EUR/USD", "EUR", "USD", MarketUnit.Currency);
@@ -50,10 +50,33 @@ public sealed class MarketReferenceFlowTests
             "Europe/Berlin", 60, 3600, true, new(2020, 1, 1), true, [symbol]);
         var quote = new MarketQuote(1, new(catalog.Provider, catalog.Revision, symbol.Id, date), catalog, symbol,
             new("fictitious-quote", date, instant.AddHours(-1), 1.23456789m), instant, instant.AddMinutes(1), instant.AddHours(1));
-        var runtime = new Runtime(f.Directory.Combine("zanance.db"), quote);
+        var runtime = new Runtime(f.Directory.Combine("zanance.db"), selectedQuote ?? quote);
         var model = new MarketReferenceViewModel(f.Services.GetRequiredService<MarketReferenceStore>(), f.Services.GetRequiredService<HoldingStore>(),
             runtime, f.Translator, f.Localization, new DateFormatter(f.Localization), f.Time);
         return (model, runtime);
+    }
+    [Theory]
+    [InlineData("en")][InlineData("fa")][InlineData("de")][InlineData("es")][InlineData("fr")][InlineData("it")]
+    public async Task Daily_Ecb_review_and_expired_history_show_free_original_and_calculation_without_a_fictitious_fixing_time(string language)
+    {
+        using var f = new FlowFixture(); f.Time.Now = new(2026, 10, 19, 13, 0, 0, TimeSpan.Zero);
+        f.Localization.SetLanguage(f.Localization.SupportedLanguages.Single(l => l.CultureName == language));
+        var now = f.Time.Now; var symbol = EcbReference.Catalog.Symbols.Single(s => s.Id == "USD-CHF"); var digest = new string('a', 64);
+        var quote = new MarketQuote(2, new("ecb", EcbReference.Revision, symbol.Id, new(2026, 10, 19)),
+            EcbReference.Catalog with { Symbols = [symbol] }, symbol,
+            new(EcbReference.QuoteId(new(2026, 10, 16), symbol, digest), new(2026, 10, 16), null, 0.72m)
+            { Daily = new(1, digest, now, null, 1.25m, 0.9m, EcbReference.Division) }, now, now.AddMinutes(5), now.AddDays(7));
+        var (model, runtime) = Create(f, quote); await model.LoadAsync(); model.Selected = Assert.Single(model.Cached);
+        Assert.Contains(f.Translator["Market_EcbFreeOriginal"], model.SourceText);
+        Assert.Contains(f.Translator["Market_EcbDateOnly"], model.SourceText);
+        Assert.Contains(f.Translator["Market_EcbCalculated"], model.SourceText);
+        Assert.DoesNotContain("0001", model.SourceText); Assert.DoesNotContain("Market_Ecb", model.SourceText);
+        await model.ReviewAsync(); runtime.Confirm = false; await model.ApplyAsync();
+        Assert.Empty(await f.Store.GetRatesAsync(Ct)); Assert.Equal(model.ReviewText, runtime.Terms);
+        runtime.Confirm = true; await model.ApplyAsync(); Assert.Single(await f.Store.GetRatesAsync(Ct));
+        f.Time.Now = now.AddDays(8); await model.LoadAsync();
+        Assert.Contains(f.Translator["Market_EcbFreeOriginal"], Assert.Single(model.History).Details);
+        Assert.Equal(0, runtime.Remote.Fetches); Assert.Equal(0, runtime.Opens);
     }
     [Theory]
     [InlineData("en")][InlineData("fa")][InlineData("de")][InlineData("es")][InlineData("fr")][InlineData("it")]

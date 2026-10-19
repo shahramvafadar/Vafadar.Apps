@@ -11,6 +11,7 @@ public partial class ProductPlansPage : ContentPage
     public ProductPlansPage(ProductPlansViewModel viewModel, ILocalizationService localization)
     {
         InitializeComponent(); BindingContext = _viewModel = viewModel; _localization = localization;
+        EcbSourceLink.Command = new Command(() => OpenEcbSource(this, EventArgs.Empty));
     }
     /// <inheritdoc />
     protected override async void OnAppearing()
@@ -24,4 +25,7 @@ public partial class ProductPlansPage : ContentPage
         _localization.Changed -= OnDisplayChanged; _viewModel.DeactivateBilling(); base.OnDisappearing();
     }
     private void OnDisplayChanged(object? sender, EventArgs e) => _viewModel.RefreshDisplay();
+    // The free original remains available before payment, independently of any eligible store offer.
+    private async void OpenEcbSource(object? sender, EventArgs e) => await Presentation.Failures.GuardAsync(
+        async () => { await Browser.Default.OpenAsync(new Uri(Core.Rates.EcbReference.SourceUrl), BrowserLaunchMode.External); });
 }

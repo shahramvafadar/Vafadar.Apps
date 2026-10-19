@@ -83,7 +83,7 @@ priority/order descriptions below.
 | ZCR-TAX-03 | Level 2: versioned rule set and report for the first country/year | 7 | P2 | L | Proposed | TAX-01, expert |
 | ZCR-AI-01 | Local AI credit ledger, provider interface, consent, minimal data | 8 | P3 | L | In progress: D-298 local aggregate/native-consent/private-client/service-credit prerequisites qualified; live provider/pricing/credit sales remain gated; see15-ai-local-delivery.md | OD-13 |
 | ZCR-BANK-01 | German-first bank/file/provider evaluation, then USA and other targets | 8 | P3 | M | In progress: D-307 first discovery pass across fourteen targets and provider comparison delivered; exact consumer specimens and later live-provider acceptance remain | OD-14, IMP-01 |
-| ZCR-FX-01 | Rates/prices provider boundary, caching, provenance, manual fallback | 8 | P3 | M | In progress: D-299 app/data/service and protected personal/shared source prerequisites; current native/package evidence in16-market-reference-delivery.md; actual source/licence/cost remain gated | OD-14 |
+| ZCR-FX-01 | Rates/prices provider boundary, caching, provenance, manual fallback | 8 | P3 | M | In progress: D-299 app/data/service and protected personal/shared source prerequisites; D-389 owner-approved daily ECB integration for all30 target-currency pairs; daily source/native/package evidence in quality/ecb-reference-integration.md; other price sources, public deployment and platform/store acceptance remain gated | OD-14 |
 | ZCR-LANG-01 | Additional languages beyond the existing six | Deferred | P2 | L | Outside current delivery by owner decision; no current release dependency or ETA | later scope decision |
 | ZCR-REL-01 | Final QA, store metadata, staged rollout | 10 | P1 | M | Proposed | all P1 |
 
@@ -3376,3 +3376,18 @@ precision and paid-context free-original disclosure require complete compatible 
 activation. [Proposal and exact boundaries](25-ecb-reference-source-decision.md). Owner source/terms
 choice remains open; no provider/SDK/API, default availability, app/APK or new managed-count change.
 Bank/AI/metal providers, external hosting/store/iOS and D-386's later qualification tracks are separate.
+
+
+## D-389 - Owner-approved daily ECB integration
+
+The owner selected the complete D-388 proposal and its usage conditions on2026-10-19. Implement the
+fixed daily adapter, all30 target pairs, same-feed coordination, explicit date-only/derived provenance,
+version-one compatibility and six-language per-access/pre-payment disclosures. Manual financial input
+and original explicit consent remain independent. Forty-five new managed cases and one explicit actual
+source case pass selectively; source-only signed household transfer and portable/cold history preserve
+evidence. No source schema migration, new SDK/permission or automatic financial update.
+
+See ../../quality/ecb-reference-integration.md for original native/package proof and retained failures.
+OD-14 FX source choice is settled for ECB; metal/item feeds, other providers, real public hosting, store
+and iOS acceptance remain separate. Continue remaining approved development before D-386 stability/
+accessibility tracks. Do not repeat completed source discovery or successful unrelated suites.

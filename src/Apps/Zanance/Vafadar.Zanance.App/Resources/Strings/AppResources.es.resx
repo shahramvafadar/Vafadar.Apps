@@ -8211,4 +8211,26 @@ Identificador de cotización original: {2}</value>
   <data name="Import_Limit_FieldCharacters" xml:space="preserve">
     <value>{0:N0} caracteres por campo</value>
   </data>
+  <data name="Market_EcbFreeOriginal" xml:space="preserve">
+    <value>Los datos de referencia originales del BCE son gratuitos. Pagar por Zanance no te da acceso exclusivo a estos datos. Referencia diaria informativa, no un tipo de transacción bancaria; sin respaldo del BCE.</value>
+  </data>
+  <data name="Market_EcbDateOnly" xml:space="preserve">
+    <value>Solo precisión de fecha; no se publica la hora de fijación.</value>
+  </data>
+  <data name="Market_EcbDirect" xml:space="preserve">
+    <value>Publicación directa del BCE: moneda de destino por EUR.</value>
+  </data>
+  <data name="Market_EcbCalculated" xml:space="preserve">
+    <value>Tipo inverso o cruzado calculado, modificado a partir del original del BCE. Moneda de destino por EUR dividida entre moneda de origen por EUR; división decimal sin redondeo adicional.</value>
+  </data>
+  <data name="Market_EcbEvidence" xml:space="preserve">
+    <value>Valores originales: {0} / {1}
+Cálculo: {2}
+Descarga del documento (UTC): {3}
+Última modificación del documento (no la fijación): {4}
+SHA-256 del XML original: {5}</value>
+  </data>
+  <data name="Market_EcbOpenSource" xml:space="preserve">
+    <value>Abrir el original gratuito del BCE en el navegador</value>
+  </data>
 </root>

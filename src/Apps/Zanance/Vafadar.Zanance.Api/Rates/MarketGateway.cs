@@ -71,8 +71,10 @@ internal sealed class MarketGateway(IMarketProvider provider, TimeProvider time)
                 throw new MarketRefusal(409, "MarketOriginalSourceChanged");
             var observation = await provider.FetchAsync(request, deadline.Token);
             var now = time.GetUtcNow(); var symbol = catalog.Symbols.Single(s => s.Id == request.Symbol);
-            var quote = new MarketQuote(1, request, catalog with { Symbols = [symbol] }, symbol, observation, now,
-                now.AddSeconds(catalog.FreshSeconds), now.AddSeconds(catalog.RetainSeconds));
+            // A new pair from the same daily feed does not reset the original feed's freshness clock.
+            var retrieved = observation.Daily?.FetchedAt ?? now;
+            var quote = new MarketQuote(observation.Daily is null ? 1 : 2, request, catalog with { Symbols = [symbol] }, symbol, observation, retrieved,
+                retrieved.AddSeconds(catalog.FreshSeconds), retrieved.AddSeconds(catalog.RetainSeconds));
             MarketReference.Validate(quote, now);
             var active = Catalog();
             if (active is null || JsonSerializer.Serialize(active, MarketJson.Default.MarketCatalog) != policy)

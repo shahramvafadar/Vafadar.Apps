@@ -8242,4 +8242,26 @@
   <data name="Import_Limit_FieldCharacters" xml:space="preserve">
     <value>در هر فیلد، {0:N0} نویسه</value>
   </data>
+  <data name="Market_EcbFreeOriginal" xml:space="preserve">
+    <value>اصل داده‌های نرخ مرجع ECB رایگان در دسترس است. پرداخت برای Zanance به معنای خرید دسترسی انحصاری به این داده‌ها نیست. این نرخ روزانه فقط مرجع اطلاعاتی است، نه نرخ معاملهٔ بانکی؛ ECB این برنامه را تأیید نکرده است.</value>
+  </data>
+  <data name="Market_EcbDateOnly" xml:space="preserve">
+    <value>دقت منبع فقط روز است؛ زمان دقیق تعیین نرخ منتشر نشده است.</value>
+  </data>
+  <data name="Market_EcbDirect" xml:space="preserve">
+    <value>انتشار مستقیم ECB: ارز مقصد به ازای هر یورو.</value>
+  </data>
+  <data name="Market_EcbCalculated" xml:space="preserve">
+    <value>نرخ معکوس یا متقاطع محاسبه‌شده، برگرفته از اصل ECB است. مقدار ارز مقصد به ازای یورو بر مقدار ارز مبدأ به ازای یورو تقسیم شده؛ تقسیم اعشاری بدون گردکردن اضافی است.</value>
+  </data>
+  <data name="Market_EcbEvidence" xml:space="preserve">
+    <value>مقادیر اصلی دو ارز: «{0} / {1}»
+محاسبه: «{2}»
+دریافت فید به وقت UTC: «{3}»
+آخرین تغییر سند، نه زمان تعیین نرخ: «{4}»
+هش SHA-256 سند XML اصلی: «{5}»</value>
+  </data>
+  <data name="Market_EcbOpenSource" xml:space="preserve">
+    <value>بازکردن منبع رایگان ECB در مرورگر</value>
+  </data>
 </root>

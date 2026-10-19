@@ -8219,4 +8219,26 @@ Identifiant de la cotation originale : {2}</value>
   <data name="Import_Limit_FieldCharacters" xml:space="preserve">
     <value>{0:N0} caractères par champ</value>
   </data>
+  <data name="Market_EcbFreeOriginal" xml:space="preserve">
+    <value>Les données de référence originales de la BCE sont gratuites. Votre paiement pour Zanance ne vous donne pas un accès exclusif à ces données. Référence quotidienne informative, pas un taux de transaction bancaire ; sans approbation de la BCE.</value>
+  </data>
+  <data name="Market_EcbDateOnly" xml:space="preserve">
+    <value>Précision à la date uniquement ; aucune heure de fixation publiée.</value>
+  </data>
+  <data name="Market_EcbDirect" xml:space="preserve">
+    <value>Publication directe de la BCE : devise de destination par EUR.</value>
+  </data>
+  <data name="Market_EcbCalculated" xml:space="preserve">
+    <value>Taux inverse ou croisé calculé, modifié à partir de l’original de la BCE. Devise de destination par EUR divisée par devise de base par EUR ; division décimale sans arrondi supplémentaire.</value>
+  </data>
+  <data name="Market_EcbEvidence" xml:space="preserve">
+    <value>Valeurs originales : {0} / {1}
+Calcul : {2}
+Document récupéré (UTC) : {3}
+Dernière modification du document (pas la fixation) : {4}
+SHA-256 du XML original : {5}</value>
+  </data>
+  <data name="Market_EcbOpenSource" xml:space="preserve">
+    <value>Ouvrir l’original gratuit de la BCE dans le navigateur</value>
+  </data>
 </root>

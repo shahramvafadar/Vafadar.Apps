@@ -8271,4 +8271,26 @@ Original quote identifier: {2}</value>
   <data name="Import_Limit_FieldCharacters" xml:space="preserve">
     <value>{0:N0} characters per field</value>
   </data>
+  <data name="Market_EcbFreeOriginal" xml:space="preserve">
+    <value>ECB reference data is originally available free of charge. Paying for Zanance does not buy exclusive access to these data. Daily informational reference only, not a bank transaction price; no ECB endorsement.</value>
+  </data>
+  <data name="Market_EcbDateOnly" xml:space="preserve">
+    <value>Date precision only; no fixing time is published.</value>
+  </data>
+  <data name="Market_EcbDirect" xml:space="preserve">
+    <value>Direct ECB publication: quote currency per EUR.</value>
+  </data>
+  <data name="Market_EcbCalculated" xml:space="preserve">
+    <value>Calculated inverse/cross rate, modified from the ECB original. Quote-per-EUR divided by base-per-EUR; decimal division without additional rounding.</value>
+  </data>
+  <data name="Market_EcbEvidence" xml:space="preserve">
+    <value>Original legs: {0} / {1}
+Calculation: {2}
+Feed retrieved (UTC): {3}
+Document Last-Modified (not fixing time): {4}
+Original XML SHA-256: {5}</value>
+  </data>
+  <data name="Market_EcbOpenSource" xml:space="preserve">
+    <value>Open free ECB original in browser</value>
+  </data>
 </root>

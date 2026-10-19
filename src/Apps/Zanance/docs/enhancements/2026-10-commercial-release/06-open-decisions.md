@@ -15,7 +15,7 @@ open decisions. Settled choices are never asked again. Approval is distinct from
 | OD-09 | Approved E2EE from the first shared delivery | Household data requires end-to-end encryption from the start, including membership/key/recovery lifecycle. The old transport/storage-only first-release proposal is superseded | ZCR-SHR-01..04 |
 | OD-11 | Owner reports recent MacBook Air and required software installed | Verify exact hardware/macOS/Xcode/workloads in the Mac environment when reached. Build/test there and use Apple Developer for publication when ready. Account/signing/OAuth/physical-device readiness is not inferred | ZCR-GOV-02 |
 | OD-13 | Local framework approved; live provider/costs remain gated | Consent, minimal data, provider boundary and credit accounting now; select provider, credit package prices/units after actual cost review | ZCR-AI-01 |
-| OD-14 | File research and provider-neutral prerequisites approved | Research Germany's widely used banks first, then USA and other target markets; implement file import/review before a separately accepted live bank connection. Rates: provider/cache/manual fallback now, actual provider/licence/cost later | ZCR-BANK-01, ZCR-FX-01, ZCR-IMP-01 |
+| OD-14 | File research/prerequisites and daily ECB FX source approved | Research Germany's widely used banks first, then USA and other target markets; implement file import/review before a separately accepted live bank connection. Rates: D-389 ECB daily reference source and proposed conditions approved2026-10-19; other source/licence/cost choices remain separate | ZCR-BANK-01, ZCR-FX-01, ZCR-IMP-01 |
 | OD-15 | Technical bounds approved; commercial allocation later | Configurable technical limits now; commercial storage shares after actual hosting costs, never unlimited | ZCR-SHR-01 |
 
 ## Consolidated owner approval on 2026-10-15 (D-292 in progress)
@@ -147,7 +147,7 @@ account-dependent genuine acceptance remains deferred until that setup. Settled 
 question. Existing separate deferral of the Windows product phase remains in force.
 
 
-## D-388 - Concrete OD-14 FX source choice awaiting the owner
+## D-388/D-389 - Concrete OD-14 FX source selected2026-10-19
 
 [ECB source proposal](25-ecb-reference-source-decision.md) and its [model](26-ecb-reference-source-model.json)
 record zero upstream data fees/no upstream account, direct and explicitly derived pairs for the six
@@ -157,3 +157,9 @@ integration, preserving manual entry and current publication gates. Alternative:
 references; a commercial intraday/metal source needs a later separate offer and approval. Nothing is
 selected/activated by the research or by continued local development. Existing hosting/company/Mac/
 store decisions are settled and are not asked again.
+
+
+Owner answer: select ECB with the complete proposed conditions. This settles this FX source, zero
+upstream data fee and required attribution/free-original/calculation handling; it does not authorize
+a paid feed, public deployment, metal/item pricing, bank connection or commercial activation. D-389
+records the complete compatible implementation and local qualification. Do not ask this choice again.

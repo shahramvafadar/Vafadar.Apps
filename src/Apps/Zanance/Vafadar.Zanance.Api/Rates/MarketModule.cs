@@ -6,16 +6,23 @@ using Vafadar.Zanance.Core.Rates;
 
 namespace Vafadar.Zanance.Api.Rates;
 
-/// <summary>Explicit local source prerequisites only; no public source selection, licence or paid live-data activation.</summary>
+/// <summary>Explicit approved-source selection, independent from fictitious qualification, public hosting and paid entitlements.</summary>
 internal static class MarketModule
 {
     /// <summary>Registers the unavailable default and bounded original lookup/cache coordinator.</summary>
-    internal static void Add(IServiceCollection services)
-    { services.AddSingleton<IMarketProvider, UnconfiguredMarketProvider>(); services.AddSingleton<MarketGateway>(); }
+    internal static void Add(IServiceCollection services, string? source = null)
+    {
+        if (source is not (null or "" or "ecb")) throw new InvalidOperationException("Unapproved market source configuration.");
+        if (source == "ecb") services.AddSingleton<IMarketProvider>(provider =>
+            new EcbMarketProvider(EcbMarketProvider.CreateClient(), provider.GetRequiredService<TimeProvider>()));
+        else services.AddSingleton<IMarketProvider, UnconfiguredMarketProvider>();
+        services.AddSingleton<MarketGateway>();
+    }
     /// <summary>Maps authenticated public-symbol/date lookup only; no endpoint receives an account, quantity or arbitrary URL.</summary>
     internal static void Map(WebApplication app)
     {
-        if (!app.Services.GetRequiredService<ServiceStorage>().LocalMarketQualification) return;
+        var storage = app.Services.GetRequiredService<ServiceStorage>();
+        if (!storage.LocalMarketQualification && !storage.ApprovedEcbReference) return;
         var group = app.MapGroup("/market").RequireAuthorization();
         group.AddEndpointFilter(async (context, next) =>
         {

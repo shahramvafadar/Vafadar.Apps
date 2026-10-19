@@ -25,6 +25,8 @@ public sealed class BillingScreenFlowTests
         await vm.BuyBillingCommand.ExecuteAsync(row);
         var dialog = Assert.Single(f.Platform.ConfirmationDialogs);
         Assert.Contains(row.Terms, dialog.Message); Assert.Contains(f.Translator["Billing_ReviewTerms"], dialog.Message);
+        Assert.Contains(f.Translator["Market_EcbFreeOriginal"], row.Terms);
+        Assert.Contains(f.Translator["Market_EcbFreeOriginal"], dialog.Message);
         Assert.Equal(0, environment.Purchases); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
         vm.DeactivateBilling(); Assert.False(vm.CanBuyBilling); Assert.False(vm.CanManageBilling);
     }

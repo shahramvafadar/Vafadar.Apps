@@ -2365,3 +2365,14 @@ fails before SQL rather than silently bypassing a new rule. Original cancellatio
 joined transaction, protected factory publication, exclusive maintenance and creation/update gates
 remain authoritative. The synchronous getter and tracked writes are unchanged. There is no schema
 change or new export format. See the [native preservation proof](../../src/Apps/Zanance/docs/quality/settings-startup-reader.md).
+
+## D-389 daily reference compatibility
+
+MarketQuote version2 uses nullable ObservedAt only for explicit ECB date-precision evidence. Version1
+continues to require its original timestamp and omits null Daily, preserving canonical bytes/digests.
+The bounded immutable QuoteJson column and unchanged companion/financial envelopes preserve either
+version; no EF entity/schema/compiled-model change is needed. Old clients fail closed on unsupported
+version-two evidence. New readers retain historical source documents after cache expiry, including
+free-original attribution, original dated legs, decimal formula and raw source hash. Fetch remains
+separate from the original confirmed writer; portable restore and source-only household publications
+never manufacture financial authority or overwrite an original source identity.

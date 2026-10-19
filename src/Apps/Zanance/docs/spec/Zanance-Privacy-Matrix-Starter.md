@@ -987,3 +987,7 @@ checks and existing device-local snooze/native queue remain. There is no new pro
 portable field or network flow. The independent offline qualification provider exposes only synthetic
 state/counts, is absent from main and is removed with its fixture package. Startup ANR, physical-device,
 iOS and interrupted-action acceptance remain separate. See [scope](../quality/cold-protected-reminder-startup.md).
+
+D-389: explicit service-side fixed ECB daily XML fetch sends no financial/private identifiers upstream.
+Date-precision/derivation evidence remains in the existing private cache and original consented source
+history/export/sync boundaries; no implicit Home/history HTTP, new SDK or app permission.

@@ -12,6 +12,8 @@
                     <Label Text="{v:Translate Market_Intro}" />
                     <v:HelpButton Grid.Column="1" Topic="Market" VerticalOptions="Start" />
                 </Grid>
+                <Label Text="{v:Translate Market_EcbFreeOriginal}" />
+                <p:WrappingAction x:Name="EcbSourceLink" Text="{v:Translate Market_EcbOpenSource}" />
                 <Border Style="{StaticResource Card}" IsVisible="{Binding Loaded}">
                     <VerticalStackLayout Spacing="8">
                         <Label Text="{v:Translate Market_Cached}" Style="{StaticResource FieldLabel}" />

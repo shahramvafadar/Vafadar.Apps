@@ -186,3 +186,11 @@ from database or application key recovery. Do not prune the previous state as a 
 Focused protocol/operator evidence and primary sources:
 src/Apps/Zanance/docs/quality/outbound-tunnel-origin.md. CI's qualify-tunnel.sh uses an independent no-port
 TLS echo fixture, not a Cloudflare account or production financial data. It does not replay the mobile APK.
+
+## Optional approved daily ECB source (D-389)
+
+Add compose.ecb-reference.yml explicitly to select Market:Source=ecb and API-only outgoing edge
+connectivity. No new listening port is published; the base configuration remains unconfigured and
+network-isolated. This overlay is statically validated, not an assertion of a rebuilt/running
+container or a publicly accepted deployment. Existing fresh-storage, DNS/TLS/mail and company/store
+gates remain. See ../../src/Apps/Zanance/docs/quality/ecb-reference-integration.md.

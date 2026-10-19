@@ -1788,3 +1788,12 @@ truncate financial inputs or change a stale generic interpretation without expli
 Incomplete or misplaced CSV quoting is an error, not an opportunity to guess an amount or repair a
 source. Accurate translated feedback preserves the previous file/review. Valid escaped quotes,
 whitespace, multiline and Unicode text retain their original meaning. [Evidence](quality/csv-quotation-integrity.md).
+
+## D-389 daily source precision and free-original access
+
+Daily ECB references show the market date separately from feed retrieval and HTTP document modification.
+An unavailable fixing time is explicit; never render a fabricated intraday timestamp. Reverse/cross
+references are labelled calculated with original legs/formula. Cache/history/review keep the source,
+free-original disclosure and exact consent; opening these views cannot fetch or update finance.
+The plan page and native pre-payment terms disclose that the original ECB data is free. The source
+button uses the existing growing caption and a full external browser, with no framed source/logo.

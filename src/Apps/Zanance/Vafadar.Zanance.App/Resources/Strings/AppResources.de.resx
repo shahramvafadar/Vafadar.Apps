@@ -8242,4 +8242,26 @@ Ursprüngliche Kurskennung: {2}</value>
   <data name="Import_Limit_FieldCharacters" xml:space="preserve">
     <value>{0:N0} Zeichen pro Feld</value>
   </data>
+  <data name="Market_EcbFreeOriginal" xml:space="preserve">
+    <value>Die ursprünglichen EZB-Referenzdaten sind kostenlos verfügbar. Mit Zanance kaufen Sie keinen exklusiven Zugang zu diesen Daten. Täglicher Informationswert, kein Bank-Transaktionskurs; keine Empfehlung durch die EZB.</value>
+  </data>
+  <data name="Market_EcbDateOnly" xml:space="preserve">
+    <value>Nur Tagesgenauigkeit; kein Fixierungszeitpunkt veröffentlicht.</value>
+  </data>
+  <data name="Market_EcbDirect" xml:space="preserve">
+    <value>Direkte EZB-Veröffentlichung: Zielwährung je EUR.</value>
+  </data>
+  <data name="Market_EcbCalculated" xml:space="preserve">
+    <value>Berechneter inverser/Kreuzkurs, aus dem EZB-Original abgeleitet. Zielwährung je EUR geteilt durch Basiswährung je EUR; Dezimaldivision ohne zusätzliche Rundung.</value>
+  </data>
+  <data name="Market_EcbEvidence" xml:space="preserve">
+    <value>Originalwerte: {0} / {1}
+Berechnung: {2}
+Feed abgerufen (UTC): {3}
+Dokument zuletzt geändert (keine Kursfixierung): {4}
+Original-XML SHA-256: {5}</value>
+  </data>
+  <data name="Market_EcbOpenSource" xml:space="preserve">
+    <value>Kostenloses EZB-Original im Browser öffnen</value>
+  </data>
 </root>

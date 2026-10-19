@@ -1,6 +1,8 @@
 # D-388 - Decision-ready free reference FX source
 
-Status: proposal, not selected or activated. Checked2026-10-19. This is the next concrete OD-14
+Status: selected by the owner on2026-10-19 with every proposed condition; D-389 implements the
+complete integration. Public hosting, genuine purchases and other source choices remain separate.
+The following D-388 research records the evidence available when the choice was proposed. Checked2026-10-19. This is the next concrete OD-14
 source/licence/cost decision for FX-01, following the delivered provider-neutral D-299 framework.
 It does not reopen current-machine hosting, company/store setup, the fourteen target countries,
 the six UI languages or deferred Windows/web-checkout decisions. No source-specific adapter is
@@ -101,6 +103,6 @@ pairs; no selected target is missing. These are proposal checks, not new managed
 adapter, native acceptance, paid-plan activation or public availability. Do not rerun successful builds,
 financial suites, native matrices or D-387 package checks for this documentation-only decision batch.
 
-Owner action: select the proposed source/usage conditions or keep the current manual-only behavior.
+Owner answer received2026-10-19: ECB, complete integration under these proposed conditions.
 Implementation and exact activation configuration follow the selected choice; company account entry,
 credentials and public publication are still performed/approved separately as already recorded.

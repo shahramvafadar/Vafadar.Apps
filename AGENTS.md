@@ -1,5 +1,15 @@
 # AGENTS.md – working rules for this repository
 
+## Approved ECB reference source on 2026-10-19 (D-389)
+
+The owner selected full ECB daily reference integration for EUR/USD/GBP/CHF/CAD/AUD with all thirty
+ordered pairs. Label inverses/crosses as calculated and preserve original dated legs, precision,
+source digest and independent retrieval/document timestamps. Never invent a fixing time, fetch
+implicitly from Home/history, or change financial amounts without original explicit confirmation.
+Disclose the free ECB original before affected payment and every reference/history access, including
+exported source evidence. Keep source links in a full external browser. Source choice is independent
+of public hosting, store/company accounts, commercial activation, other feeds or release approval.
+
 ## Owner execution order on 2026-10-19 (D-386)
 
 Finish remaining approved feature development before dedicated Android ANR/crash investigation and

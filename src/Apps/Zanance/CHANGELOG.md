@@ -5,6 +5,13 @@ versions follow [Semantic Versioning](https://semver.org/). Nothing has been rel
 the first release candidate. Requirement ids refer to the [specification](docs/spec/Zanance-Product-Specification.md).
 
 ## [Unreleased]
+
+### Optional daily ECB reference rates (D-389)
+
+- Fetch reference rates for EUR, USD, GBP, CHF, CAD and AUD, with calculated reverse/cross rates clearly identified.
+- Keep the original market date, source and calculation through review, history and backups; fetching never changes money.
+- Explain the free original ECB data before payment and each reference access; manual input remains available.
+
 ### Reject malformed CSV amounts without guessing (D-387)
 
 - Refuse misplaced quotation marks instead of silently joining amount digits.

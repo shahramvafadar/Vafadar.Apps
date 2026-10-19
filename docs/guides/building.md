@@ -1605,3 +1605,18 @@ Use `Run-StoreDrafts.ps1 -CsvInputReview -CsvQuotationOnly` for the changed misp
 only; it is mutually exclusive with the empty-only continuation. Independent Android phase
 `csv-quotation` uses the same original page/command and source-bound receipts. Neither mode repeats
 the six unchanged resource refusals or invokes Import/Undo. [Evidence](../../src/Apps/Zanance/docs/quality/csv-quotation-integrity.md).
+
+## Approved ECB reference source (D-389)
+
+The service default remains UnconfiguredMarketProvider. Explicit Market:Source=ecb enables the
+owner-approved daily adapter and authenticated HTTPS market routes; Market:LocalQualification remains
+a separate fictitious-only switch. Unknown source values fail closed. Metadata, cache and history
+never fetch. The feed is fixed, standard-TLS, no cookies/redirects/retries; at most262144 actual
+uncompressed bytes,64 currency rows, depth4 and12 seconds for the original shared lookup.
+
+The optional eng/hosting/compose.ecb-reference.yml overlay selects this source and gives only the API
+outgoing edge connectivity, without a new listening port. Base deployment isolation is unchanged:
+`docker compose -f eng/hosting/compose.yml -f eng/hosting/compose.ecb-reference.yml config --quiet`
+validates configuration only. Public DNS, mail, tunnel sign-in and merchant activation remain separate.
+No production deployment was performed for D-389. The actual public source probe is an explicit test,
+excluded from ordinary CI; do not repeatedly call it or treat a test-server HTTPS scheme as real TLS.

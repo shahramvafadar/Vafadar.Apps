@@ -1,0 +1,11 @@
+# Explicit approved daily ECB source. The base deployment remains unconfigured and isolated.
+# Only the API receives outgoing connectivity; no additional listening port is published.
+services:
+  api:
+    environment:
+      Market__Source: ecb
+    networks:
+      database: {}
+      service: {}
+      edge:
+        gw_priority: 1

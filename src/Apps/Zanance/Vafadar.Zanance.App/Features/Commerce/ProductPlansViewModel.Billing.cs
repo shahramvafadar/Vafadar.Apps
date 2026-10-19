@@ -80,7 +80,7 @@ public sealed partial class ProductPlansViewModel
                 BillingProducts.Plan(replacement.FromProduct).ToString(), date);
         }
         else if (offer.ExistingSubscription) terms += Environment.NewLine + _translator["Billing_LifetimeKeepsSubscription"];
-        return terms;
+        return terms + Environment.NewLine + _translator["Market_EcbFreeOriginal"];
     }
     private string Phase(BillingPricePhase phase)
     {

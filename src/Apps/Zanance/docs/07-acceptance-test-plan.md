@@ -4321,3 +4321,13 @@ financial preview and preserve original App filename/review/data. All22 new case
 valid Unicode/quoted/empty/record-boundary compatibility. Only affected existing CSV/bank/large-source
 cases repeat. Eighteen Windows and six original Release/AOT Android contexts qualify the changed
 error and retained state; no Import/Undo. [Exact evidence and platform limits](quality/csv-quotation-integrity.md).
+
+## D-389 - Explicit daily reference evidence
+
+AT-299 adds bounded approved ECB decoding, all30 ordered pairs, shared feed/cancellation, unchanged
+last-good cache, explicit date precision, version-one compatibility, original daily consent/cold history,
+portable restore, signed encrypted household source transfer and six-language pre-payment notice checks.
+The HTTP route check uses synthetic authentication/upstream effects; it is not real account/TLS acceptance.
+The separate actual fixed-feed probe uses normal platform TLS and no account/financial payload.
+Source layout cases and main-package upgrade evidence are recorded in quality/ecb-reference-integration.md;
+these do not accept genuine purchases, public hosting, all phone behavior, iOS or release.

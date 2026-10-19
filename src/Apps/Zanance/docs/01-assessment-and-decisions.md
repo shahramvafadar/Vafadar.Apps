@@ -7183,3 +7183,18 @@ source/derivation metadata are part of the whole future integration, not optiona
 [Concrete proposal and costs](enhancements/2026-10-commercial-release/25-ecb-reference-source-decision.md).
 No source is selected, adapter/feature activated, account/payment created or runtime/APK changed.
 D-387 evidence and managed count remain current; successful builds/suites are not replayed for this research.
+
+## D-389 - Approved daily ECB references with explicit date precision
+
+The owner selected the complete D-388 proposal on2026-10-19. Register the daily ECB source only
+through explicit Market:Source=ecb; keep the unconfigured default and independent hosting gates.
+All30 ordered EUR/USD/GBP/CHF/CAD/AUD pairs share one bounded original feed; five are direct and25
+are explicitly calculated from same-date legs. Version-two quotes carry a null fixing timestamp,
+original XML digest, date, retrieval/document metadata, original legs and declared decimal formula.
+Version-one bytes/digests and frozen financial/source-companion envelopes remain compatible; old
+clients refuse unsupported new quotes. No database/model migration or silent financial update.
+
+Six-language free-original notices appear before affected payment and on reference/cache/history
+access, with full external-browser links. Serialized source evidence preserves the notice and
+calculation for export/sync. The original writer still rechecks exact consent, target, profile,
+staleness and unchanged financial data. [Qualification and limits](quality/ecb-reference-integration.md).

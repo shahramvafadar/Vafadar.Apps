@@ -480,3 +480,7 @@ storage/disposal preserves valid queued reminders. Focused managed cases, actual
 action and separate cold metadata persistence pass. The complete offline signed candidate upgrades the
 original emulator without reset and retains My account/Home0. Startup ANRs and broader phone/iOS/
 provider/Store/release acceptance remain open. See [evidence](docs/quality/cold-protected-reminder-startup.md).
+
+D-389 implements the owner-approved optional daily ECB reference source for the six target currencies,
+with explicit calculated/date-only provenance and free-original disclosure. See
+[qualification](docs/quality/ecb-reference-integration.md); public service/store/iOS acceptance remains separate.

@@ -1888,3 +1888,13 @@ See [exact scope](quality/csv-input-safety.md); successful checks do not close g
 - [ ] This does not qualify arbitrary bank specimens, the changed package on Samsung, iOS or release.
 
 [Original failure, qualification and package scope](quality/csv-quotation-integrity.md).
+
+## D-389 approved daily source boundary
+
+- [x] ECB choice and free-original/attribution/calculation conditions approved by the owner.
+- [x] Thirty pair adapter, explicit daily precision, retained provenance and original financial consent qualified locally.
+- [x] Six-language source/pre-payment disclosures and full external-browser link implemented.
+- [ ] Actual merchant/public deployment acceptance, working DNS/mail, genuine store purchases and iOS remain separate.
+- [ ] Final Android runtime/accessibility qualification follows ready feature development (D-386).
+
+See quality/ecb-reference-integration.md for exact source/native/package evidence and its limits.

@@ -53,6 +53,65 @@ public sealed class MarketReferenceStoreTests : IDisposable
     public void Dispose() { SqliteTestPools.Clear(directory); directory.Dispose(); }
 
     [Fact]
+    public async Task Calculated_Ecb_decimal_precision_is_not_shortened_by_sqlite_or_portable_restore()
+    {
+        clock.SetUtcNow(new(2026, 10, 19, 13, 0, 0, TimeSpan.Zero)); var now = clock.GetUtcNow();
+        var symbol = EcbReference.Catalog.Symbols.Single(s => s.Id == "USD-EUR"); var digest = new string('b', 64);
+        var expected = 1m / 1.1253m;
+        var quote = new MarketQuote(2, new("ecb", EcbReference.Revision, symbol.Id, new(2026, 10, 19)),
+            EcbReference.Catalog with { Symbols = [symbol] }, symbol,
+            new(EcbReference.QuoteId(new(2026, 10, 16), symbol, digest), new(2026, 10, 16), null, expected)
+            { Daily = new(1, digest, now, null, 1.1253m, 1m, EcbReference.Division) }, now, now.AddMinutes(5), now.AddDays(7));
+        await using var source = Install("ecb-full-decimal"); var store = source.GetRequiredService<MarketReferenceStore>();
+        var receipt = await store.ApplyAsync(await store.ReviewRateAsync(quote, Ct), false, () => { }, Ct);
+        Assert.Equal(expected, Assert.Single(await source.GetRequiredService<ZananceStore>().GetRatesAsync(Ct)).Rate);
+        var package = await source.GetRequiredService<IBackupService>().CreatePackageAsync(null, Ct);
+        await using var restored = Install("ecb-full-decimal-restored"); await restored.GetRequiredService<IBackupService>().RestorePackageAsync(package, null, Ct);
+        Assert.Equal(expected, Assert.Single(await restored.GetRequiredService<ZananceStore>().GetRatesAsync(Ct)).Rate);
+        var history = Assert.Single(await restored.GetRequiredService<MarketReferenceStore>().HistoryAsync(ct: Ct));
+        Assert.Equal(receipt.QuoteJson, history.Document.QuoteJson);
+        Assert.Equal(expected, JsonSerializer.Deserialize(history.Document.QuoteJson, MarketJson.Default.MarketQuote)!.Observation.Value);
+    }
+
+    [Fact]
+    public async Task Daily_Ecb_provenance_survives_original_writer_companion_packet_and_cold_history_without_rewriting_finance()
+    {
+        clock.SetUtcNow(new(2026, 10, 19, 13, 0, 0, TimeSpan.Zero));
+        var now = clock.GetUtcNow(); var symbol = EcbReference.Catalog.Symbols.Single(s => s.Id == "USD-CHF");
+        var digest = new string('a', 64);
+        var quote = new MarketQuote(2, new("ecb", EcbReference.Revision, symbol.Id, new(2026, 10, 19)),
+            EcbReference.Catalog with { Symbols = [symbol] }, symbol,
+            new(EcbReference.QuoteId(new(2026, 10, 16), symbol, digest), new(2026, 10, 16), null, 0.72m)
+            { Daily = new(1, digest, now, now.AddMinutes(-5), 1.25m, 0.9m, EcbReference.Division) }, now, now.AddMinutes(5), now.AddDays(7));
+        string original;
+        await using (var services = Install("ecb-cold"))
+        {
+            var store = services.GetRequiredService<MarketReferenceStore>();
+            var review = await store.ReviewRateAsync(quote, Ct);
+            Assert.Empty(await services.GetRequiredService<ZananceStore>().GetRatesAsync(Ct));
+            var receipt = await store.ApplyAsync(review, false, () => { }, Ct); original = receipt.QuoteJson;
+            var document = MarketReferenceDocument.From(receipt);
+            var wire = JsonSerializer.Serialize(new MarketSourceUpload(1, Guid.NewGuid(), [document]), MarketSourceJson.Default.MarketSourceUpload);
+            var transferred = JsonSerializer.Deserialize(wire, MarketSourceJson.Default.MarketSourceUpload)!;
+            Assert.Equal(document, Assert.Single(transferred.Documents)); MarketReferenceDocuments.Validate(transferred.Documents[0], now);
+            var row = Assert.Single(await services.GetRequiredService<ZananceStore>().GetRatesAsync(Ct));
+            Assert.Equal(0.72m, row.Rate); Assert.True(row.IsEstimate); Assert.Equal(quote.Request.OnOrBefore, row.Date);
+            var package = await services.GetRequiredService<IBackupService>().CreatePackageAsync(null, Ct);
+            await using var restored = Install("ecb-portable");
+            await restored.GetRequiredService<IBackupService>().RestorePackageAsync(package, null, Ct);
+            var portable = Assert.Single(await restored.GetRequiredService<MarketReferenceStore>().HistoryAsync(ct: Ct));
+            Assert.Equal(document, portable.Document); Assert.True(portable.MatchesCurrent);
+        }
+        clock.Advance(TimeSpan.FromDays(8));
+        await using var cold = Install("ecb-cold");
+        var history = Assert.Single(await cold.GetRequiredService<MarketReferenceStore>().HistoryAsync(ct: Ct));
+        Assert.Equal(original, history.Document.QuoteJson); MarketReferenceDocuments.Validate(history.Document, clock.GetUtcNow());
+        var decoded = JsonSerializer.Deserialize(original, MarketJson.Default.MarketQuote)!;
+        Assert.Equal(quote.Observation, decoded.Observation);
+        Assert.Empty(await cold.GetRequiredService<ZananceStore>().GetEntriesAsync(cancellationToken: Ct));
+    }
+
+    [Fact]
     public async Task Exact_rate_and_source_commit_once_and_original_completion_survives_cache_expiry()
     {
         await using var services = Install("rate"); var store = services.GetRequiredService<MarketReferenceStore>(); var quote = Quote();

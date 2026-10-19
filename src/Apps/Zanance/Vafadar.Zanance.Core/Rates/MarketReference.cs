@@ -33,7 +33,12 @@ public sealed record MarketCatalog(int Version, string Provider, string Revision
 public sealed record MarketRequest(string Provider, string Revision, string Symbol, DateOnly OnOrBefore);
 
 /// <summary>Original provider observation; retrieval/cache policy is added by the trusted gateway, not this response.</summary>
-public sealed record MarketObservation(string QuoteId, DateOnly Date, DateTimeOffset ObservedAt, decimal Value);
+public sealed record MarketObservation(string QuoteId, DateOnly Date, DateTimeOffset? ObservedAt, decimal Value)
+{
+    /// <summary>Version-two daily provenance. Null is omitted to preserve every original version-one digest.</summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public EcbDailyEvidence? Daily { get; init; }
+}
 
 /// <summary>Immutable source policy with only its selected catalog symbol; numerical use still needs independent native consent.</summary>
 public sealed record MarketQuote(int Version, MarketRequest Request, MarketCatalog Catalog, MarketSymbol Symbol,
@@ -91,14 +96,18 @@ public static class MarketReference
         ArgumentNullException.ThrowIfNull(quote);
         // Historical-fetch coverage restricts new HTTP, not an already obtained reference read after midnight.
         var symbol = ResolveSymbol(quote.Catalog, quote.Request);
-        if (quote.Version != 1 || quote.Catalog.Symbols.Count != 1 || quote.Symbol != symbol || quote.Observation is not { } observation || !Identifier(observation.QuoteId) ||
+        if (quote.Version is not (1 or 2) || quote.Catalog.Symbols.Count != 1 || quote.Symbol != symbol || quote.Observation is not { } observation || !Identifier(observation.QuoteId) ||
             quote.Request.OnOrBefore > DateOnly.FromDateTime(quote.RetrievedAt.UtcDateTime).AddDays(1) ||
-            observation.Date == DateOnly.MinValue || observation.Date > quote.Request.OnOrBefore || observation.ObservedAt.Offset != TimeSpan.Zero ||
+            observation.Date == DateOnly.MinValue || observation.Date > quote.Request.OnOrBefore ||
+            quote.Version == 1 && observation.ObservedAt is null || observation.ObservedAt is { Offset: var offset } && offset != TimeSpan.Zero ||
             observation.Value is <= 0 or > 1_000_000_000_000m || quote.RetrievedAt.Offset != TimeSpan.Zero ||
             observation.ObservedAt > quote.RetrievedAt.AddMinutes(5) || quote.RetrievedAt > now.AddMinutes(5) ||
             quote.FreshUntil != quote.RetrievedAt.AddSeconds(quote.Catalog.FreshSeconds) ||
             quote.RetainUntil != quote.RetrievedAt.AddSeconds(quote.Catalog.RetainSeconds) || requireRetained && now > quote.RetainUntil)
             throw new ArgumentException("Original market reference is invalid or no longer retained.");
+        if (quote.Version == 1 && observation.Daily is not null || quote.Version == 2 && observation.Daily is null)
+            throw new ArgumentException("Original market reference version differs from its precision evidence.");
+        if (quote.Version == 2) EcbReference.Validate(quote);
         if (JsonSerializer.SerializeToUtf8Bytes(quote, MarketJson.Default.MarketQuote).Length > MaximumQuoteBytes)
             throw new ArgumentException("Market reference exceeds its technical bound.");
     }

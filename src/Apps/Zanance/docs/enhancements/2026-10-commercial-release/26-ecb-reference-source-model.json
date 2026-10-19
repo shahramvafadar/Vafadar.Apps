@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "status": "proposal-not-approved",
+  "status": "owner-approved-2026-10-19",
   "reviewedOn": "2026-10-19",
   "candidate": "European Central Bank euro reference data",
   "dataKind": "daily informational reference FX, not tradable quotes or asset prices",
@@ -22,7 +22,7 @@
     "future store commissions and taxes are not estimated here"
   ],
   "requiresAccountOrApiKey": false,
-  "ownerDecisionRequired": true,
+  "ownerDecisionRequired": false,
   "publicActivationApproved": false,
   "sourceTerms": "https://www.ecb.europa.eu/services/using-our-site/disclaimer/html/index.en.html",
   "sourceUrl": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
@@ -31,5 +31,6 @@
   "observedFeedSha256": "4422161311c3c02cf2d1571db07bdf9884b3f42fdeb16a4926903236ae6ab42d",
   "sourceHasIntradayObservationTime": false,
   "httpLastModifiedIsFixingTime": false,
-  "applicationCurrentlyUnconfigured": true
+  "applicationCurrentlyUnconfigured": true,
+  "implementationDecision": "D-389"
 }

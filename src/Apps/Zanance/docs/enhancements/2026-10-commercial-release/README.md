@@ -34,3 +34,7 @@ backlog.
 [Source/terms/coverage and complete integration proposal](25-ecb-reference-source-decision.md) with
 [machine-readable cost/scope model](26-ecb-reference-source-model.json). This does not activate a
 provider or change current app/service behavior; owner OD-14 selection remains open.
+
+D-389 records the owner-selected complete daily ECB integration. The source choice and all proposed
+usage conditions are approved; the default service still needs explicit source configuration and
+public activation remains separate. [Qualification](../../quality/ecb-reference-integration.md).

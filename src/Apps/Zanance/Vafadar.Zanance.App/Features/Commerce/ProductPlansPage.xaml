@@ -8,6 +8,8 @@
         <Grid RowDefinitions="*,Auto" IsVisible="{Binding Loading.IsReady}">
             <ScrollView>
                 <VerticalStackLayout Padding="16" Spacing="12">
+                    <Label Text="{v:Translate Market_EcbFreeOriginal}" />
+                    <p:WrappingAction x:Name="EcbSourceLink" Text="{v:Translate Market_EcbOpenSource}" />
                     <Border Style="{StaticResource Card}">
                         <VerticalStackLayout Spacing="8">
                             <Label Text="{v:Translate ProductPlans_Current}" Style="{StaticResource SectionHeader}" Margin="0" />

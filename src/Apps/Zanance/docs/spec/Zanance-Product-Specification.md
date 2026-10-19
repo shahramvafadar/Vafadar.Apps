@@ -7091,3 +7091,18 @@ Source-date precision, explicit derived-value evidence and free-original disclos
 at access belong in its complete compatible integration. Source/terms approval, public/provider and
 platform acceptance remain open. No runtime/financial/schema/SDK/permission or APK/count change;
 D-387 qualified source/native evidence is retained without repeating successful unrelated work.
+
+### Section31 update - D-389 approved daily ECB integration
+
+The owner selected the D-388 source and conditions. All30 ordered target-currency pairs are implemented
+with five direct publications and25 declared calculations, bounded shared source fetching and explicit
+server activation. Version-two daily evidence has no fixing timestamp, keeps original legs/digest and
+separate retrieval/document times, and survives original review/write, cold history, portable restore
+and the signed encrypted household companion. Existing version-one data/digests remain supported.
+
+Forty-five new managed cases pass selectively, plus one explicitly invoked actual public-feed case;
+these are distinct cases, not a repeated full-suite total. Six affected existing pre-payment cases
+and twenty existing gateway/cache compatibility cases also pass. Native observations are separate
+from managed counts. [Full source/native qualification](../quality/ecb-reference-integration.md).
+Public hosting, genuine store/company acceptance, phone/iOS and final runtime/accessibility remain
+separate gates; this source choice does not approve another provider or release.

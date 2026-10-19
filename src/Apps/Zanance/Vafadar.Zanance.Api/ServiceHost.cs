@@ -31,6 +31,8 @@ public sealed class ServiceStorage
     public bool LocalAnalysisQualification { get; init; }
     /// <summary>Explicit local reference-data qualification, never a source licence or public live-data entitlement.</summary>
     public bool LocalMarketQualification { get; init; }
+    /// <summary>Explicit approved daily FX adapter, independently from fictitious qualification and public hosting gates.</summary>
+    public bool ApprovedEcbReference { get; init; }
     /// <summary>Private immutable object path; identifiers originate on the server only.</summary>
     public string ObjectPath(Guid id) => Path.Combine(Root, "objects", id.ToString("N"));
 }
@@ -88,7 +90,9 @@ public static class ServiceHost
             selfHosted?.Origin.DnsSafeHost == "localhost" && File.Exists(Path.Combine(root, "fictitious-hosting.marker")) &&
             !File.Exists(Path.Combine(root, "production-hosting.marker"))))
             throw new InvalidOperationException("Market qualification cannot activate public live data.");
+        var marketSource = builder.Configuration["Market:Source"];
         var storage = new ServiceStorage { Root = root, LocalMailbox = builder.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>("Service:LocalMailbox"),
+            ApprovedEcbReference = marketSource == "ecb",
             LocalHouseholdQualification = household,
             LocalBillingQualification = billing,
             LocalAnalysisQualification = analysis,
@@ -112,7 +116,7 @@ public static class ServiceHost
         builder.Services.AddSingleton(storage);
         Billing.BillingModule.Add(builder.Services);
         Analysis.AiModule.Add(builder.Services);
-        Rates.MarketModule.Add(builder.Services);
+        Rates.MarketModule.Add(builder.Services, marketSource);
         builder.Services.AddSingleton<Sharing.IHouseholdDeletionLedger, Sharing.HouseholdDeletionLedger>();
         builder.Services.AddSingleton<Sharing.HouseholdRetirement>();
         builder.Services.AddSingleton<Sync.LocalSyncCertificate>();

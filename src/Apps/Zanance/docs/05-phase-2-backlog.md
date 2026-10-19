@@ -2498,3 +2498,7 @@ Improve existing complete Home reads through an exact standard-empty-list path; 
 feature, financial posting, schema, permission or provider authority. Original native cohorts retain
 all data and presentation; the actual Samsung crash remains a wider runtime concern.
 [Results and limits](quality/home-empty-tag-materialization.md).
+
+D-389 delivers the owner-approved daily ECB integration under the canonical commercial backlog,
+including explicit daily provenance and pre-payment/free-original disclosure. Other providers,
+public activation and platform/store acceptance remain separate; see quality/ecb-reference-integration.md.

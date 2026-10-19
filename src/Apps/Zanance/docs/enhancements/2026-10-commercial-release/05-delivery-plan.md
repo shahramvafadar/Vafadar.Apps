@@ -2737,3 +2737,14 @@ usage/disclosure conditions and exact timestamp/derivation compatibility work. D
 registered helper, invented observation time or default source activation for the complete adapter/
 gateway/persistence/native batch. [Reviewable proposal](25-ecb-reference-source-decision.md). Retain
 unchanged successful D-387 source/native/package evidence; do not replay it for a source decision.
+
+
+## D-389 - Approved ECB source batch
+
+The owner selected the D-388 source and conditions. Complete the compatible source/gateway/cache/
+review/history/export/sync and six-language pre-payment/per-access disclosures as one batch;
+qualification is recorded in ../../quality/ecb-reference-integration.md. Keep the unconfigured service
+default and explicit approved-source deployment overlay. This source decision is independent of
+public hosting, genuine store/company accounts, metal/item feeds and iOS. Continue ready approved
+feature development without repeating successful unrelated work; dedicated runtime/accessibility
+completion remains after development under D-386.

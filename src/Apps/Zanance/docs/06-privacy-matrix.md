@@ -998,3 +998,11 @@ checks and existing device-local snooze/native queue remain. There is no new pro
 portable field or network flow. The independent offline qualification provider exposes only synthetic
 state/counts, is absent from main and is removed with its fixture package. Startup ANR, physical-device,
 iOS and interrupted-action acceptance remain separate. See [scope](quality/cold-protected-reminder-startup.md).
+
+## D-389 approved public FX source
+
+Only an explicit reference Fetch can make the service request the fixed public ECB daily XML. No
+user identity, account/holding name, amount, quantity, arbitrary URL, cookie or credential goes to ECB.
+Source metadata/cache/Home/history reads do not dispatch upstream requests. Original public-byte hash,
+date, legs and derivation join the existing device-private cache and consented portable/sync source
+history. No new SDK, financial schema, Android permission or automatic financial update is introduced.

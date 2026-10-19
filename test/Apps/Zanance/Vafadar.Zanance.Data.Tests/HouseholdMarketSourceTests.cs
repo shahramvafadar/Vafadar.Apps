@@ -39,7 +39,7 @@ public sealed class HouseholdMarketSourceTests
         public void Dispose() { Epoch.Dispose(); NextAuthor.Dispose(); Author.Dispose(); Root.Dispose(); }
     }
     private static HouseholdPublicKeys Public(SigningRecipientIdentity identity) => new(identity.Public.SigningKey, identity.Public.WrappingKey);
-    private static MarketReferenceDocument Document()
+    private static MarketReferenceDocument Document(bool daily = false)
     {
         var now = TimeProvider.System.GetUtcNow(); var date = DateOnly.FromDateTime(now.Date);
         var symbol = new MarketSymbol("EURUSD", "Fictitious source symbol", "EUR", "USD", MarketUnit.Currency);
@@ -48,6 +48,13 @@ public sealed class HouseholdMarketSourceTests
             "Europe/Berlin", 60, 3600, true, new(2020, 1, 1), true, [symbol]);
         var quote = new MarketQuote(1, new(catalog.Provider, catalog.Revision, symbol.Id, date), catalog, symbol,
             new("fictitious-source-observation", date, now.AddMinutes(-10), 1.23456789m), now, now.AddMinutes(1), now.AddHours(1));
+        if (daily)
+        {
+            symbol = EcbReference.Catalog.Symbols.Single(value => value.Id == "EUR-USD"); var digest = new string('a', 64);
+            quote = new(2, new("ecb", EcbReference.Revision, symbol.Id, date), EcbReference.Catalog with { Symbols = [symbol] }, symbol,
+                new(EcbReference.QuoteId(date, symbol, digest), date, null, 1.25m)
+                { Daily = new(1, digest, now, null, 1m, 1.25m, EcbReference.Direct) }, now, now.AddMinutes(5), now.AddDays(7));
+        }
         var target = new ExchangeRate { Date = date, FromCurrencyCode = "EUR", ToCurrencyCode = "USD", Rate = quote.Observation.Value, IsEstimate = true };
         return new(1, Guid.CreateVersion7(), MarketReferenceTarget.ExchangeRate, target.Id, MarketApplication.Fingerprint(target),
             MarketReference.Digest(quote, now), JsonSerializer.Serialize(quote, MarketJson.Default.MarketQuote),
@@ -64,6 +71,18 @@ public sealed class HouseholdMarketSourceTests
     }
     private static HouseholdPreparedPublication Prepare(Fixture f, HouseholdFinancialReplica replica, MarketReferenceDocument document) =>
         replica.Prepare(f.Membership, f.Epoch, f.Device, f.Author, Guid.NewGuid(), Guid.NewGuid(), [], [], new Dictionary<string, byte[]>(), f.Crypto, [document]);
+
+    [Fact]
+    public void Daily_Ecb_source_survives_original_signed_encrypted_household_companion_without_creating_financial_rows()
+    {
+        using var f = new Fixture(); using var producer = new HouseholdFinancialReplica(f.Room); using var receiver = new HouseholdFinancialReplica(f.Room);
+        var document = Document(daily: true); var prepared = Prepare(f, producer, document);
+        Assert.True(prepared.Plan.Succeeded); Assert.Single(prepared.Parts); Assert.DoesNotContain(document.QuoteJson, prepared.Parts[0].Ciphertext);
+        var published = Published(f, prepared); receiver.Apply(f.Membership, f.Epoch, published.Receipt, published.Events, f.Crypto);
+        var restored = Assert.Single(receiver.VerifiedReferences); Assert.Equal(document, restored);
+        Assert.NotNull(JsonSerializer.Deserialize(restored.QuoteJson, MarketJson.Default.MarketQuote)!.Observation.Daily);
+        Assert.Empty(receiver.Snapshot()); Assert.Equal(0, receiver.FinancialCursor);
+    }
 
     [Fact]
     public void Source_only_signed_publication_preserves_exact_document_without_creating_any_financial_row_or_version()

@@ -281,3 +281,13 @@ paid-context free-original obligations. It identifies missing date-precision/der
 that must be implemented compatibly before a selected source can be activated. The unavailable default,
 original financial writers and current D-387 app/APK remain unchanged; no new managed tests or repeated
 successful native/build checks. Owner OD-14 source/terms approval is still required.
+
+
+## D-389 - Selected ECB source supersedes the FX-only decision gate
+
+The owner selected D-388 ECB reference FX under all proposed conditions. The complete daily adapter
+implements30 ordered pairs, explicit daily precision (no fixing timestamp), original source legs/hash
+and separately labelled derivation, with free-original notices in source/history/export evidence and
+pre-payment terms. Version-one original packets and frozen companion/financial envelopes remain
+unchanged; new daily quotes are explicit version2. All other source/product/public acceptance gates
+remain. See ../../quality/ecb-reference-integration.md for exact focused/native/package qualification.

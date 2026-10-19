@@ -229,10 +229,15 @@ public sealed partial class MarketReferenceViewModel(MarketReferenceStore store,
     private MarketCachedChoice Choice(MarketQuote quote) => new(quote, quote.Symbol.Label + " · " + dates.Format(quote.Observation.Date, DateFormatStyle.Long));
     private string Describe(MarketQuote quote) => text.Format("Market_SourceDetails", quote.Catalog.Name, quote.Symbol.Label,
         MoneyText.ReferencePrice(quote.Observation.Value, quote.Symbol.Currency, local.CurrentCulture), text["Market_Unit_" + quote.Symbol.Unit],
-        dates.Format(quote.Observation.Date, DateFormatStyle.Long), quote.Observation.ObservedAt.ToString("u", local.CurrentCulture),
+        dates.Format(quote.Observation.Date, DateFormatStyle.Long), quote.Observation.Daily is null ? quote.Observation.ObservedAt!.Value.ToString("u", local.CurrentCulture) : text["Market_EcbDateOnly"],
         quote.RetrievedAt.ToString("u", local.CurrentCulture), quote.FreshUntil.ToString("u", local.CurrentCulture),
         quote.RetainUntil.ToString("u", local.CurrentCulture), quote.Catalog.SourceUrl, quote.Catalog.LicenceUrl, quote.Catalog.Attribution) +
-        "\n" + text.Format("Market_SourceIdentity", quote.Catalog.Provider, quote.Catalog.Revision, quote.Observation.QuoteId);
+        "\n" + text.Format("Market_SourceIdentity", quote.Catalog.Provider, quote.Catalog.Revision, quote.Observation.QuoteId) +
+        (quote.Observation.Daily is not { } daily ? "" : "\n" + text["Market_EcbFreeOriginal"] + "\n" +
+            text[quote.Symbol.Base == "EUR" ? "Market_EcbDirect" : "Market_EcbCalculated"] + "\n" +
+            text.Format("Market_EcbEvidence", daily.QuotePerEuro.ToString("G29", System.Globalization.CultureInfo.InvariantCulture),
+                daily.BasePerEuro.ToString("G29", System.Globalization.CultureInfo.InvariantCulture), daily.Calculation,
+                daily.FetchedAt.ToString("u", local.CurrentCulture), daily.DocumentModifiedAt?.ToString("u", local.CurrentCulture) ?? text["Market_EcbDateOnly"], daily.SourceSha256));
     /// <summary>Retires this original form without erasing cache/history, canceling accepted writes or creating replacement consent.</summary>
     public void Retire() { active = false; epoch++; remote?.Dispose(); remote = null; access = null; Loaded = false; IsBusy = false; Invalidate(); Refresh(); }
 }
