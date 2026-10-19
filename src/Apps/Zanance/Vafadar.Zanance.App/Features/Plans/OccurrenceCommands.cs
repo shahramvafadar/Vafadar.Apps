@@ -3,6 +3,7 @@ using Vafadar.Zanance.App.Interaction;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Plans;
 using Vafadar.Zanance.Data;
+using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.App.Features.Plans;
 
@@ -66,8 +67,14 @@ public sealed class OccurrenceCommands(PlanStore plans, Translator translator, I
         _pending = true;
         try
         {
-            bool committed;
+            bool committed; var notificationFailed = false;
             try { committed = await write(); }
+            catch (CommittedWriteNotificationException<SaveResult> accepted) when (accepted.Result.Succeeded)
+            { committed = true; notificationFailed = true; }
+            catch (CommittedWriteNotificationException<IReadOnlyList<LedgerEntry>>)
+            { committed = true; notificationFailed = true; }
+            catch (CommittedWriteNotificationException)
+            { committed = true; notificationFailed = true; }
             catch (Exception exception) when (exception is not OutOfMemoryException)
             {
                 await interaction.ShowFailureAsync(exception);
@@ -76,11 +83,15 @@ public sealed class OccurrenceCommands(PlanStore plans, Translator translator, I
             if (!committed) { return false; }
             // The caller invalidates the reviewed snapshot before refreshing. A failed refresh must not permit
             // another payment from the old form or misreport an already committed write as rolled back.
-            try { await completed(); }
+            var refreshed = false;
+            try { await completed(); refreshed = true; }
             catch (Exception exception) when (exception is not OutOfMemoryException)
             {
                 await interaction.AlertAsync(translator["Error_Title"], translator["Occurrence_SavedRefreshFailed"], translator["Common_Ok"]);
             }
+            // D-399: retirement runs before fallible feedback. Busy remains held through the original native alert.
+            if (notificationFailed && refreshed)
+                await interaction.AlertAsync(translator["Error_Title"], translator["Occurrence_SavedNotificationFailed"], translator["Common_Ok"]);
             return true;
         }
         finally { _pending = false; }

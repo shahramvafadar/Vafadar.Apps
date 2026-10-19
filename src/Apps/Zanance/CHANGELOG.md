@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep saved plan payments saved (D-399)
+
+- Preserve successful payments and occurrence changes when a refresh notification fails.
+- Retire the previous form before saved feedback so an old payment is not offered as a failed retry.
+
 ### Keep Home refreshes on current saved data (D-398)
 
 - Rebuild Home under its loading cover when saved sources change during preparation.

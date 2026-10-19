@@ -1844,3 +1844,10 @@ If saved sources change during preparation, rebuild the complete same-profile Ho
 existing loading cover remains. Publish shortcuts/layout only with the current complete result.
 Bound rereads to three attempts; repeated edits or genuine failures retain the existing translated
 failure/Retry surface. Never show a stale intermediate packet as ready or silently switch profiles.
+
+## D-399 - Truthful saved occurrence feedback
+
+A successful payment/link/skip/change/reopen remains saved when its notification fails. Retire the
+old occurrence before refresh, Back or feedback; a partial payment reloads the actual remaining
+amount before another deliberate action. Keep the native saved warning separate from rejected-write
+feedback and hold the command gate until it closes. New warning copy is complete in the six languages.

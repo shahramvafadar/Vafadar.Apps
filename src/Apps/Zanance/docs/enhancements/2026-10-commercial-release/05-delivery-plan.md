@@ -2829,3 +2829,11 @@ Keep the original cover and exact-file/access guards across bounded rereads; pre
 native successes and all accepted financial writes. Finish focused managed/native Windows and
 Release/AOT Android checks, signed offline candidate, Main/OS restoration, documentation and push.
 Do not substitute an unrelated runtime/ANR/A11Y investigation for ready feature correctness.
+
+## D-399 - Finish original occurrence command outcomes
+
+Reproduce post-commit subscriber failure through the actual application command and real SQLite.
+Retain accepted results through both store layers for all foreground occurrence commands; complete
+the original form retirement before any fallible refresh/navigation/feedback. Preserve pre-write
+consent and failures. Qualify changed paths through actual native adapters and focused contracts,
+then package, restore Main/OS, document and push without repeating unrelated successful checks.

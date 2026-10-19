@@ -8268,4 +8268,7 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Settlement_RecordedFollowUpFailed" xml:space="preserve">
     <value>Il conguaglio è stato registrato, ma non è stato possibile aggiornare la schermata. Torna indietro e controlla la registrazione salvata; non registrarla di nuovo.</value>
   </data>
+  <data name="Occurrence_SavedNotificationFailed" xml:space="preserve">
+    <value>La tua modifica è stata salvata. Alcune viste non sono state aggiornate; chiudile e riaprile prima di apportare un’altra modifica.</value>
+  </data>
 </root>

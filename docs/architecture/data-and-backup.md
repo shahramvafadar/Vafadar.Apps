@@ -2414,3 +2414,13 @@ source-change refusal. Plan/goal/resource-choice validators opt in internally on
 ordinary public validation and financial writers keep strict InvalidOperationException refusals.
 The application retries the whole projection under one loading cover, with a three-attempt limit.
 No database model, compiled model, migration, backup schema, entitlement rule or money algorithm changes.
+
+## D-399 - Retained foreground occurrence commit results
+
+Manual occurrence payments opt into the established typed SaveResult publication after commit.
+State-only plan commands publish committed void outcomes. Generated reopening opts into typed
+publication of the same original file-bound deletion journal; manual unlink preserves its accepted
+empty deletion result. Plan-store notifications also retain their exact result. Ordinary ledger
+delete and automatic-post paths retain their existing contracts; no broader exception catch authorizes
+a retry. The actual application command retires the original view before saved feedback and holds
+its gate through native effects. No entity/compiled model, migration or portable backup changes.

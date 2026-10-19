@@ -8248,4 +8248,7 @@ SHA-256 del XML original: {5}</value>
   <data name="Settlement_RecordedFollowUpFailed" xml:space="preserve">
     <value>La liquidación se ha registrado, pero no se pudo actualizar la pantalla. Vuelve y revisa el asiento guardado; no lo registres otra vez.</value>
   </data>
+  <data name="Occurrence_SavedNotificationFailed" xml:space="preserve">
+    <value>Tu cambio se ha guardado. Algunas vistas no se han podido actualizar; ciérralas y vuelve a abrirlas antes de hacer otro cambio.</value>
+  </data>
 </root>

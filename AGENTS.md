@@ -2883,3 +2883,13 @@ and again on its typed boundary; never catch arbitrary InvalidOperationException
 Keep the original cover and file across at most three attempts, then explicit Retry. Normal reviewed
 writes, choices and template handoffs stay strict. Preserve completed native contexts; qualify new
 reference-addition paths without replaying accepted money or unchanged successful matrices.
+
+## D-399 - Original occurrence command outcomes after commit
+
+Foreground occurrence commands preserve known acceptance across nonfatal ledger/plan notification
+failures. Retire the original form before fallible refresh/navigation/feedback and hold the gate
+through its native alert. Reopening retains the exact original file-bound deletion result; ordinary
+ledger deletion and automatic posting keep their existing contracts. Do not turn pre-commit errors
+or cancelled consent into acceptance. Native dialogs may have title-named windows: require the
+original focused activity plus exact owned message/button, preserving one input intent per answer.
+Observer/encoding repairs continue the same process and accepted fixtures without financial replay.

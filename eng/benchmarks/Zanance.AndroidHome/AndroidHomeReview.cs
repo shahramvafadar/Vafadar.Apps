@@ -151,6 +151,13 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Fresh independent Home refresh review required.");
                 await WriteReportAsync(root, phase, await ReviewHomeRefreshAsync(app, services, root, comparison!, ct, referencesOnly: phase == "home-refresh-references"), ct);
             }
+            else if (phase == "occurrence-commit")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0 || Directory.EnumerateFileSystemEntries(root).Any())
+                    throw new ReviewCheckException("Fresh owned occurrence run required; never replay an accepted case.");
+                await WriteReportAsync(root, phase, await ReviewOccurrenceCommitAsync(app, services, root, run, comparison!, ct), ct);
+            }
             else if (phase is "settlement-commit" or "settlement-commit-fixed" or "settlement-commit-observed")
             {
                 Directory.CreateDirectory(root);

@@ -52,6 +52,6 @@ public sealed partial class ZananceStore
         }
         // A partial save creates/reuses its state in UpdatePaidAmountsAsync. A full/final save publishes after that step.
         return await SaveEntriesUnderWriterAsync(db, write, [entry], [], null, new HashSet<Guid>(), cancellationToken,
-            entry.IsPartialPayment ? null : state);
+            entry.IsPartialPayment ? null : state, committedPublication: true);
     }
 }

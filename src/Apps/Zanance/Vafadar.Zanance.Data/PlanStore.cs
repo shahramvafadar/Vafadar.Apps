@@ -272,7 +272,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         ArgumentNullException.ThrowIfNull(occurrence);
         ArgumentNullException.ThrowIfNull(entry);
         var result = await store.SaveOccurrencePaymentAsync(occurrence, entry, partial: false, cancellationToken);
-        if (result.Succeeded) OnChanged();
+        if (result.Succeeded) return CommittedWriteNotification.Publish(OnChanged, result);
         return result;
     }
 
@@ -345,7 +345,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         ArgumentNullException.ThrowIfNull(occurrence);
         ArgumentNullException.ThrowIfNull(entry);
         var result = await store.SaveOccurrencePaymentAsync(occurrence, entry, partial: true, cancellationToken);
-        if (result.Succeeded) OnChanged();
+        if (result.Succeeded) return CommittedWriteNotification.Publish(OnChanged, result);
         return result;
     }
 
@@ -397,8 +397,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     {
         ArgumentNullException.ThrowIfNull(occurrence);
         var deleted = await store.ReopenOccurrenceAsync(occurrence, cancellationToken);
-        OnChanged();
-        return deleted;
+        return CommittedWriteNotification.Publish(OnChanged, deleted);
     }
 
     /// <summary>Skips an occurrence (REC-14); the series does not get an extra occurrence (AT-27).</summary>
@@ -441,7 +440,7 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
         await write.CommitAsync(cancellationToken);
-        OnChanged();
+        CommittedWriteNotification.Publish(OnChanged);
     }
 
     /// <summary>Publishes this original store after a combined account/plan transaction committed.</summary>

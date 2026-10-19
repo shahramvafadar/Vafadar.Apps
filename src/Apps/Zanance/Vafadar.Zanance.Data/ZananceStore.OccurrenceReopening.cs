@@ -26,7 +26,7 @@ public sealed partial class ZananceStore
         {
             // D-135: the established deletion pipeline owns groups, refund links, paid totals and the exact Undo journal.
             // It already reopens states atomically; never reacquire a second writer after its committed Changed event.
-            var deleted = await DeleteEntriesUnderWriterAsync(db, write, [id], cancellationToken);
+            var deleted = await DeleteEntriesUnderWriterAsync(db, write, [id], cancellationToken, committedPublication: true);
             if (deleted.Count == 0)
                 throw new InvalidOperationException("The settlement belongs to a holding; correct its holding event instead.");
             return deleted;
@@ -41,7 +41,6 @@ public sealed partial class ZananceStore
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
         await write.CommitAsync(cancellationToken);
-        OnChanged();
-        return [];
+        return CommittedWriteNotification.Publish(OnChanged, (IReadOnlyList<LedgerEntry>)Array.Empty<LedgerEntry>());
     }
 }

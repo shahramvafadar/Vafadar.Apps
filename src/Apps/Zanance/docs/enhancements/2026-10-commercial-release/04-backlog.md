@@ -3485,3 +3485,13 @@ pass. Preserve six native contexts per platform and qualify only one additional 
 case. Final strict builds, signed offline APK, original emulator Main/OS restoration and test cleanup
 complete locally; documentation and push accompany delivery. Hosted CI and broader/external gates
 remain separate under D-386. [Evidence](../../quality/home-refresh-supersession.md).
+
+## D-399 - Original occurrence-command commit lifetime
+
+AT-66/AT-138 preserves accepted foreground payments/corrections through ledger/plan notification
+failure and retires the original form before native follow-through.50 focused application cases
+(21 new,29 retained),70 related policy cases and eight actual native commands per platform pass.
+18 Windows native dialog images and six Android message views avoid financial replay; Android17
+exact answers and final Main0/OS restoration pass. Strict builds, full signed offline APK, cleanup,
+docs and push complete locally. Latest hosted CI and wider/external acceptance remain separate.
+General runtime/A11Y priority stays under D-386. [Evidence](../../quality/occurrence-commit-lifetime.md).

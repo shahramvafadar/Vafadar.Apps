@@ -7335,3 +7335,21 @@ retain one accepted publication, original financial values and zero ledger write
 Windows and complete offline Android builds pass, Main/OS are restored, test output is cleaned and
 the finished correction is committed/pushed. Exact-head hosted CI remains separate. General ANR,
 crash/A11Y under D-386, physical phone/iOS and external release acceptance are not claimed.
+
+## D-399 - Retain committed foreground occurrence outcomes
+
+Controlled application/SQLite faults reproduce an accepted payment/correction returned as rejected
+before the form's completion callback. Preserve accepted SaveResult and generated/manual reopening
+receipts through the existing typed notification boundary in both store layers. State-only commands
+also publish with committed semantics. OccurrenceCommands completes the original retirement before
+native feedback and retains its gate through the alert; genuine SQL/validation/consent refusals stay
+unchanged. Refresh failure keeps its existing saved message; notification-only failure has complete
+translations in the six existing languages. No money algorithm, model/migration, permission or SDK change.
+
+Fifty focused application cases pass, including21 new outcomes and29 retained command behaviors;
+70 related SQLite write-policy cases pass. Eight original native commands finish once on independent
+Windows and Release/AOT Android fixtures.18 Windows native dialog layers and six Android translated
+dialog views qualify new feedback without repeating accepted commands. Android17 exact native
+answers preserve initial observer/encoding refusals and the same PID. Strict builds, signed offline
+APK, original Main/OS restoration, test cleanup, docs and push finish this batch. Exact hosted CI,
+broader device/iOS, durable crash/replay and general runtime/A11Y acceptance remain separate.

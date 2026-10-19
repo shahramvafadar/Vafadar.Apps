@@ -11,7 +11,7 @@ namespace Vafadar.Zanance.App.Tests;
 
 /// <summary>AT-138: actual occurrence commands, isolated SQLite and explicit native interaction ports.</summary>
 [Trait("AT", "AT-138")]
-public sealed class OccurrenceCommandTests
+public sealed partial class OccurrenceCommandTests
 {
     private static readonly DateOnly Day = new(2026, 10, 9);
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
@@ -135,7 +135,8 @@ public sealed class OccurrenceCommandTests
         await plans.SaveScheduleAsync(plan, Ct);
         var occurrence = Occurrences.Between(plan, [], Day, Day, Day).Single();
         var candidate = new LedgerEntry { Kind = EntryKind.Expense, AccountId = account.Id, Amount = 950, Date = Day, Title = "Owned candidate" };
-        if (action == "link") Assert.True((await f.Store.SaveEntryAsync(candidate, Ct)).Succeeded);
+        if (action is "link" or "unsettle-linked") Assert.True((await f.Store.SaveEntryAsync(candidate, Ct)).Succeeded);
+        if (action == "unsettle-linked") await plans.LinkAsync(occurrence, candidate.Id, Ct);
         if (action == "unskip") await plans.SkipAsync(occurrence, Ct);
         if (action == "unsettle") Assert.True((await plans.SettleAsync(occurrence,
             Occurrences.CreateEntry(occurrence, 1000, Day, ReviewState.Confirmed), Ct)).Succeeded);
@@ -150,7 +151,7 @@ public sealed class OccurrenceCommandTests
         "link" => commands.LinkAsync(seed.Occurrence, seed.Candidate.Id, "Owned candidate", "EUR 9.50", completed),
         "skip" => commands.SkipAsync(seed.Occurrence, completed),
         "change" => commands.ChangeAsync(seed.Occurrence, Day.AddDays(3), 1234, "Unsaved owned note", completed),
-        "unskip" or "unsettle" => commands.UndoAsync(seed.Occurrence, completed),
+        "unskip" or "unsettle" or "unsettle-linked" => commands.UndoAsync(seed.Occurrence, completed),
         _ => throw new ArgumentOutOfRangeException(nameof(action))
     };
 

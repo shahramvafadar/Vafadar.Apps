@@ -1978,3 +1978,11 @@ complete offline development-signed APK, original emulator Main/OS restoration a
 complete locally. The D-397 failed receipt remains unchanged; a new same-file account-addition case
 qualifies its Home cause without replaying a settlement. Latest hosted CI and all wider device,
 stability/A11Y, iOS, provider/store/signing and publication gates remain separate.
+
+## D-399 - Foreground occurrence commit feedback
+
+Local focused50 application/70 policy cases, eight original native commands per platform,18 Windows
+dialog-image views and Android17 native answers pass. Strict final builds and complete offline
+development-signed package are verified; Main/OS are restored without reset or financial replay.
+No physical-phone input occurs. Exact-head hosted CI and remaining platform/provider/store,
+general stability/accessibility and release gates remain separate under D-386.

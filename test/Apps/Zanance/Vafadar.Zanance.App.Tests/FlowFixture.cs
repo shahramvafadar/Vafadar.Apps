@@ -84,8 +84,9 @@ internal sealed class FlowPlatform : IAppInteraction, IAppFlowHost
     internal readonly List<string?> PromptInitialValues = [];
     internal Func<Task<string?>>? PendingInput;
     internal Func<Exception, Task>? PendingFailure;
+    internal Func<Task>? PendingAlert;
     internal Func<Task>? PendingNavigation;
-    public Task AlertAsync(string title, string message, string cancel) { Alerts.Add((title, message)); return Task.CompletedTask; }
+    public Task AlertAsync(string title, string message, string cancel) { Alerts.Add((title, message)); return PendingAlert?.Invoke() ?? Task.CompletedTask; }
     public Task<bool> ConfirmAsync(string title, string message, string accept, string cancel)
     {
         ConfirmationDialogs.Add((title, message, accept, cancel));

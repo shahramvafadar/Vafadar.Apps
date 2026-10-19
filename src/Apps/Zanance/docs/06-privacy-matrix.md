@@ -1030,3 +1030,9 @@ data; no Main database/key extraction or general device-log collection is used.
 Only transient original-file identity and source supersession classification are added. No new
 collected data, network/permission, persistent preference, portable field or SDK is introduced.
 Native qualification uses independently owned fictitious files; Main/OS are preserved.
+
+## D-399 - Occurrence saved feedback
+
+Only transient accepted results and six-language native feedback change. No new financial field,
+permission, network, SDK, persistent preference or export/backup format is introduced. Qualification
+uses isolated fictitious stores; native message traces contain only those controlled public values.

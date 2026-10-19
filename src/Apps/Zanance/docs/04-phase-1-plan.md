@@ -1193,3 +1193,8 @@ it introduces no new Phase1 scope or claim of complete runtime/device/release ac
 The observed stale-source load failure is corrected with bounded covered same-file rereads and
 strict original-input/access checks. Focused managed/native evidence and final offline candidate
 are recorded in quality/home-refresh-supersession.md; wider acceptance remains separate.
+
+## D-399 - Original occurrence feedback boundary
+
+The foreground payment/correction form now retains actual committed outcomes through notification
+failure. Focused/native evidence is in quality/occurrence-commit-lifetime.md; wider acceptance is separate.

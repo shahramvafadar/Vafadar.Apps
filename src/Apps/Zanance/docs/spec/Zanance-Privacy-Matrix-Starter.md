@@ -1011,3 +1011,8 @@ Qualification is restricted to fictitious app data and scoped public outcome/nat
 
 Covered same-file rereads retain existing local sources and authority. No new collection, SDK,
 permission, network, backup/export field or retention behavior is introduced.
+
+## D-399 - Occurrence commit feedback
+
+No new collection, permission, network, SDK, retention or portable field. Existing local results stay
+available after a notification error; all qualification traces are isolated fictitious values.

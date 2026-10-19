@@ -7213,3 +7213,14 @@ Windows/Release-AOT Android each retain six original native contexts plus one ne
 case, without financial replay. Final strict builds, offline APK and original Main/OS restoration
 complete; no full-suite count increase is inferred from these runs. Dedicated runtime/A11Y work
 stays after ready development under D-386; phone/iOS and external acceptance remain open.
+
+### 31. D-399 - Original occurrence outcomes survive notification failure
+
+Foreground full/partial payments, links, skips/overrides and reopening retain the committed result
+when an original subscriber refuses notification. Complete the original form retirement before
+fallible native follow-through; maintain busy through saved feedback. Keep genuine SQL/validation/
+consent failures and automatic-posting/ordinary-deletion contracts unchanged. New saved copy has
+six translations.21 new focused behaviors plus29 existing command cases and70 related policy cases
+pass; no new complete-suite count is claimed. Eight native commands per platform, translated message
+views and signed offline candidate/Main restoration qualify the bounded path. Wider/device/iOS,
+durable crash/idempotency, runtime/A11Y and external acceptance remain open.

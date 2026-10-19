@@ -5,6 +5,8 @@ public partial class OccurrencePage : ContentPage
     private readonly OccurrenceViewModel _viewModel;
     private bool _observingValidation;
     private int _validationVersion;
+    /// <summary>Gets the original appearance load so native callers await its actual lifetime rather than starting another read.</summary>
+    internal Task PendingPublication { get; private set; } = Task.CompletedTask;
 
     public OccurrencePage(OccurrenceViewModel viewModel)
     {
@@ -18,7 +20,8 @@ public partial class OccurrencePage : ContentPage
         _observingValidation = true;
         _viewModel.ValidationFailed -= OnValidationFailed;
         _viewModel.ValidationFailed += OnValidationFailed;
-        await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
+        PendingPublication = _viewModel.LoadAsync();
+        await Presentation.Failures.GuardAsync(() => PendingPublication);
     }
 
     /// <summary>Stops scroll requests when this form leaves the visible navigation lifetime.</summary>

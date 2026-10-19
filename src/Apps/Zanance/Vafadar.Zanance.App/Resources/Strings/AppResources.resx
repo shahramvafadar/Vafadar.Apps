@@ -8308,4 +8308,7 @@ Original XML SHA-256: {5}</value>
   <data name="Settlement_RecordedFollowUpFailed" xml:space="preserve">
     <value>The settlement was recorded, but the screen could not be refreshed. Review the saved entry after going back; do not record it again.</value>
   </data>
+  <data name="Occurrence_SavedNotificationFailed" xml:space="preserve">
+    <value>Your change was saved. Some views could not be updated; close and reopen them before making another change.</value>
+  </data>
 </root>

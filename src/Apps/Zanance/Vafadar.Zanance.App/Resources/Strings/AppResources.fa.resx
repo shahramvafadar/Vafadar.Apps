@@ -8279,4 +8279,7 @@
   <data name="Settlement_RecordedFollowUpFailed" xml:space="preserve">
     <value>تسویه ثبت شد، اما تازه‌سازی صفحه انجام نشد. پس از بازگشت، رکورد ذخیره‌شده را بررسی کنید؛ آن را دوباره ثبت نکنید.</value>
   </data>
+  <data name="Occurrence_SavedNotificationFailed" xml:space="preserve">
+    <value>تغییر شما ذخیره شد. بعضی صفحه‌ها به‌روز نشدند؛ پیش از تغییر دیگری، آن‌ها را ببندید و دوباره باز کنید.</value>
+  </data>
 </root>

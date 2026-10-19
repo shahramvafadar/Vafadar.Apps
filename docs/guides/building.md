@@ -1671,3 +1671,14 @@ The independent AndroidHome phases home-refresh and home-refresh-references use 
 VM/page sources and isolated plain SQLite files. Preserve the exact run/report identities and
 completed cases when upgrading the caller for the additional path. They do not qualify Main
 encryption, phone/iOS, performance or general stability. Restore Main and OS and retain failures.
+
+## D-399 - Original occurrence commit qualification
+
+Run-StoreDrafts.ps1 -OccurrenceCommitReview uses a fresh independent Windows installation/desktop:
+eight original commands, then18 read-only native message views at360/412/wide in en/fa/de light/dark.
+Inspect the retained -popup images from CaptureWindowAsync, not the underlying root frames. Do not
+replay accepted money to repair an image observer. AndroidHome occurrence-commit uses a fresh owned
+run and actual original page/buttons/alerts in Release/AOT. Its narrow fictitious dialog-stage channel
+identifies17 original answers; preserve the exact PID/fixture and one invocation intent per answer.
+Native dialog focus may carry its title; match the original activity and exact owned UI content.
+Store receipts as UTF-8, keep initial observer refusals and restore Main/OS after terminal proof.

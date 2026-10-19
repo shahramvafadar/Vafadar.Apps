@@ -4441,3 +4441,18 @@ prove original covered/current publication and preserved values. Windows7 own-wi
 inspected; Android uses actual Release/AOT Home with an isolated plain SQLite fixture. Final Main
 upgrade preserves Home0/meaningful controls and original OS state. This is not broader AT-50/device,
 performance, generic stability, screen-reader, iOS or release acceptance.
+
+## D-399 - AT-66/AT-138 committed occurrence notification outcomes
+
+Fifty actual application/SQLite cases pass:21 new post-commit outcomes, generated/manual reopening,
+busy/native-alert failure priority, six-language notification/cancellation semantics and29 retained
+SQL rollback, consent, publication and inline validation behaviors.70 related occurrence write-policy
+cases pass, including actual-file/access retirement, complete relationships and deletion journals.
+Earlier ten-case subsets are not extra distinct cases or a full-suite run.
+
+Eight original native commands per platform finish once: partial/full, link, skip, override, undo skip,
+generated reopen and manual unlink. Original snapshots retire before the saved alert; partial400
+refreshes to remaining600, full1234 settles, manual950 retains its identity/value, and reopen suppresses
+automatic recreation.18 inspected Windows popup images and six Android message views are read-only
+copy checks after accepted actions. Android17 exact answers, Main0/meaningful controls and OS restoration
+pass. This is not all-history/phone/iOS, durable process-death idempotency, performance or release acceptance.

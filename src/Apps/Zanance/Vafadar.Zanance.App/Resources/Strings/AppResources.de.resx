@@ -8279,4 +8279,7 @@ Original-XML SHA-256: {5}</value>
   <data name="Settlement_RecordedFollowUpFailed" xml:space="preserve">
     <value>Die Abrechnung wurde gespeichert, aber die Ansicht konnte nicht aktualisiert werden. Prüfe nach dem Zurückgehen die gespeicherte Buchung; buche sie nicht erneut.</value>
   </data>
+  <data name="Occurrence_SavedNotificationFailed" xml:space="preserve">
+    <value>Ihre Änderung wurde gespeichert. Einige Ansichten konnten nicht aktualisiert werden. Schließen und öffnen Sie diese erneut, bevor Sie weitere Änderungen vornehmen.</value>
+  </data>
 </root>

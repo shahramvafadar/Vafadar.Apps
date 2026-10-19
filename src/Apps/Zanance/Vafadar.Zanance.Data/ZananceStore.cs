@@ -1259,7 +1259,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
 
     /// <summary>Deletes complete ledger groups and reopens their states within the caller's actual-file writer.</summary>
     private async Task<IReadOnlyList<LedgerEntry>> DeleteEntriesUnderWriterAsync(ZananceDbContext db,
-        CommercialWriteTransaction write, IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken)
+        CommercialWriteTransaction write, IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken, bool committedPublication = false)
     {
         var file = DatabaseFileIdentity.ConfiguredPath(db);
         write.DemandFeature(CommercialFeature.DeleteData);
@@ -1315,6 +1315,9 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         await UpdatePaidAmountsAsync(db, deleted, cancellationToken);
         await write.CommitAsync(cancellationToken);
 
+        // D-399: reopening must retain the exact committed deletion receipt if a subscriber refuses it.
+        if (committedPublication)
+            return CommittedWriteNotification.Publish(OnChanged, (IReadOnlyList<LedgerEntry>)new DeletedLedgerEntries(file, deleted, refundLinks, currencies));
         OnChanged();
         return new DeletedLedgerEntries(file, deleted, refundLinks, currencies);
     }

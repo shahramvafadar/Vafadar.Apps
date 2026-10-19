@@ -2522,3 +2522,10 @@ development; dedicated stability/accessibility remains after development under D
 Ready feature correctness continues: unchanged original Home packets superseded by saved sources
 are reread under the original cover/file, without bypassing reviewed actions or rights. The bounded
 gap is locally qualified; see quality/home-refresh-supersession.md. D-386's later runtime/A11Y order remains.
+
+## D-399 - F2-TX-02 / REC original command acceptance
+
+The observed committed-notification gap is locally qualified across foreground full/partial payment,
+link/skip/override/undo/reopen. Preserve accepted results and retire the original form before native
+follow-through; no money/schema change. See quality/occurrence-commit-lifetime.md. D-386 still defers
+dedicated general runtime/accessibility work until ready approved development is finished.

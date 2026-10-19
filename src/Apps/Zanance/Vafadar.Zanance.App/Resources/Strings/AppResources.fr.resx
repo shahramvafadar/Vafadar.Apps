@@ -8256,4 +8256,7 @@ SHA-256 du XML original : {5}</value>
   <data name="Settlement_RecordedFollowUpFailed" xml:space="preserve">
     <value>Le règlement a été enregistré, mais l’écran n’a pas pu être actualisé. Revenez vérifier l’écriture enregistrée ; ne l’enregistrez pas à nouveau.</value>
   </data>
+  <data name="Occurrence_SavedNotificationFailed" xml:space="preserve">
+    <value>Votre modification a été enregistrée. Certaines vues n’ont pas pu être actualisées ; fermez-les et rouvrez-les avant toute nouvelle modification.</value>
+  </data>
 </root>
