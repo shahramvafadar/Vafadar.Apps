@@ -397,3 +397,19 @@ and compares complete schema/typed rows in in-memory portable snapshots. It writ
 or replacement keys and touches no main installation or OS settings. Observe the exact live PID with
 Read-ReviewReport.ps1 -Phase settings-read; an observation deadline never permits a restart. This is
 correctness/protection evidence, not whole-Home timing, phone/iOS or release acceptance.
+
+## D-364 minimum-width editor continuations
+
+The editor-text phase accepts actual OS font2 with360dp or412dp width. review_editor_controls
+is all by default; entry-viewport,changed-actions,onboarding-footer select only affected original
+controls. Explicit forms additionally accept debt-details,onboarding-account,onboarding-step1,
+onboarding-step2. review_editor_fixture work-editor-text reuses the existing marked two-account
+fixture. Bind review_editor_baseline and review_editor_baseline_mvid to its original private receipt
+and exact stored-input hash before a scoped continuation. A missing360dp fixture is refused.
+
+Editable viewport evidence uses original native caret scrolling and actual bundled glyph bounds;
+it restores text/selection without a replacement input or scroll policy. Disclosure checks invoke
+only the original native command twice and compare the original draft. Footer checks all original
+step commands/names/targets and busy disablement without Back/Next/Finish or financial Save.
+Preserve baseline failures, exact emulator settings and original process/comparison/MVID receipts.
+These are native cases, not a managed-unit count or spoken-reader/whole-device acceptance.

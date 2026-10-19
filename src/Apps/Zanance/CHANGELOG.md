@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Complete editor and wizard actions (D-364)
+
+- Keep icon choices and monthly-pattern actions complete at minimum width with large text.
+- Let the first-account wizard show complete Back, Next and Start captions without shrinking text.
+- Avoid rebuilding the current page when the wizard reads the theme that is already active.
+
 ### First settings read (D-363)
 
 - Reduce settings preparation during startup while preserving fresh preferences and all storage/access checks.

@@ -18,6 +18,9 @@ param(
     [switch]$EditorTextReview,
     [switch]$EditorDebtDetailsOnly,
     [switch]$EditorGoalChoicesOnly,
+    [switch]$EditorNarrowActionsOnly,
+    [switch]$EditorOnboardingFooterOnly,
+    [ValidatePattern('^$|^(en|fa|de)-(Light|Dark)-(360|412|1280)(,(en|fa|de)-(Light|Dark)-(360|412|1280))*$')][string]$EditorOnboardingContexts = '',
     [switch]$ReimbursementsVisibilityOnly,
     [switch]$ReimbursementsEmptyOnly,
     [ValidateSet('en,fa,de','de')][string]$ReimbursementsLanguages = 'en,fa,de',
@@ -39,6 +42,12 @@ if ($LedgerRowsContexts) {
 }
 if ($EditorDebtDetailsOnly -and !$EditorTextReview) { throw 'Debt-details continuation requires the original editor review.' }
 if ($EditorGoalChoicesOnly -and (!$EditorTextReview -or $EditorDebtDetailsOnly)) { throw 'Goal-choice review requires only the original editor review.' }
+if ($EditorNarrowActionsOnly -and (!$EditorTextReview -or $EditorDebtDetailsOnly -or $EditorGoalChoicesOnly)) { throw 'Narrow-action review requires only the original editor review.' }
+if ($EditorOnboardingFooterOnly -and (!$EditorTextReview -or $EditorDebtDetailsOnly -or $EditorGoalChoicesOnly -or $EditorNarrowActionsOnly)) { throw 'Onboarding footer review requires only the original editor review.' }
+if ($EditorOnboardingContexts -and (!$EditorOnboardingFooterOnly -or
+    @($EditorOnboardingContexts.Split(',') | Select-Object -Unique).Count -ne $EditorOnboardingContexts.Split(',').Count)) {
+    throw 'Explicit footer contexts require a unique original footer review subset.'
+}
 $root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
 Set-Location -LiteralPath $root
 if ($UseExistingBuild -and !$RunId) { throw 'An existing build requires its exact original run id.' }
@@ -52,20 +61,27 @@ New-Item -ItemType Directory -Path $output -Force | Out-Null
 $project = 'src/Apps/Zanance/Vafadar.Zanance.App'
 $framework = 'net10.0-windows10.0.19041.0'
 $log = Join-Path $output 'build.log'
+$buildRoot = Join-Path $output 'build'
 if (!$UseExistingBuild) {
-    dotnet build $project -f $framework -p:ContinuousIntegrationBuild=true "-p:ApplicationId=$identity" -nologo *> $log
+    # Each live review owns its binaries and PRI files as well as its fictional data. A continuation
+    # must not overwrite a previous process's mapped resources or the ordinary development output.
+    dotnet build $project -f $framework -p:ContinuousIntegrationBuild=true "-p:ApplicationId=$identity" --artifacts-path $buildRoot -nologo *> $log
     if ($LASTEXITCODE -ne 0) {
         Get-Content -LiteralPath $log -Tail 20 | Write-Host
         throw "Independent store draft build failed; retain $output."
     }
 }
 if (Select-String -LiteralPath $log -Pattern ': warning ' -Quiet) { throw 'Resolve draft build warnings first.' }
-$directory = Join-Path $root ($project + '/bin/Debug/' + $framework + '/win-x64')
-$manifest = Join-Path $root ($project + '/obj/Debug/' + $framework + '/win-x64/resizetizer/m/Package.appxmanifest')
+$executables = @(Get-ChildItem -LiteralPath (Join-Path $buildRoot 'bin/Vafadar.Zanance.App') -Recurse -Filter Vafadar.Zanance.App.exe)
+$manifests = @(Get-ChildItem -LiteralPath (Join-Path $buildRoot 'obj/Vafadar.Zanance.App') -Recurse -Filter Package.appxmanifest |
+    Where-Object { $_.FullName -match '[\\/]resizetizer[\\/]m[\\/]' })
+if ($executables.Count -ne 1 -or $manifests.Count -ne 1) { throw 'One original isolated executable and compiled manifest are required.' }
+$directory = $executables[0].DirectoryName
+$manifest = $manifests[0].FullName
 if (!(Test-Path -LiteralPath $manifest)) { throw 'Independent compiled manifest is missing.' }
 [xml]$metadata = Get-Content -LiteralPath $manifest -Raw
 if ($metadata.Package.Identity.Name -ne $identity) { throw 'Compiled draft identity does not match the requested run.' }
-$variables = @('VAFADAR_EDITOR_GOAL_CHOICES_ONLY','VAFADAR_EDITOR_DEBT_DETAILS_ONLY','VAFADAR_SNAPSHOTS','VAFADAR_SNAPSHOT_ONLY','VAFADAR_STORE_DRAFT_RUN',
+$variables = @('VAFADAR_EDITOR_ONBOARDING_CONTEXTS','VAFADAR_EDITOR_ONBOARDING_FOOTER_ONLY','VAFADAR_EDITOR_NARROW_ACTIONS_ONLY','VAFADAR_EDITOR_GOAL_CHOICES_ONLY','VAFADAR_EDITOR_DEBT_DETAILS_ONLY','VAFADAR_SNAPSHOTS','VAFADAR_SNAPSHOT_ONLY','VAFADAR_STORE_DRAFT_RUN',
     'VAFADAR_WINDOW_SIZE','VAFADAR_SNAPSHOT_FONT_SCALE','VAFADAR_START_ROUTE','VAFADAR_STORE_DRAFT_REVIEW','VAFADAR_HOME_LEGEND_LANGUAGES','VAFADAR_PLAN_ROWS_EDGE_PROBE','VAFADAR_LEDGER_ROWS_LANGUAGES','VAFADAR_LEDGER_ROWS_CONTEXTS','VAFADAR_REIMBURSEMENTS_LANGUAGES','VAFADAR_REIMBURSEMENTS_VISIBILITY_ONLY','VAFADAR_REIMBURSEMENTS_EMPTY_ONLY')
 $previous = @{}
 foreach ($name in $variables) { $previous[$name] = [Environment]::GetEnvironmentVariable($name, 'Process') }
@@ -76,6 +92,9 @@ try {
     $env:VAFADAR_WINDOW_SIZE = '412x800'
     $env:VAFADAR_EDITOR_DEBT_DETAILS_ONLY = if ($EditorDebtDetailsOnly) { '1' } else { '' }
     $env:VAFADAR_EDITOR_GOAL_CHOICES_ONLY = if ($EditorGoalChoicesOnly) { '1' } else { '' }
+    $env:VAFADAR_EDITOR_NARROW_ACTIONS_ONLY = if ($EditorNarrowActionsOnly) { '1' } else { '' }
+    $env:VAFADAR_EDITOR_ONBOARDING_FOOTER_ONLY = if ($EditorOnboardingFooterOnly) { '1' } else { '' }
+    $env:VAFADAR_EDITOR_ONBOARDING_CONTEXTS = $EditorOnboardingContexts
     $env:VAFADAR_SNAPSHOT_FONT_SCALE = if ($EditorTextReview -or $ReportRowsReview -or $BudgetTitlesReview -or $HomeLegendsReview -or $PlanRowsReview -or $LedgerRowsReview -or $ReimbursementsReview) { '2' } else { '' }
     $env:VAFADAR_STORE_DRAFT_REVIEW = if ($ReportRowsReview) { 'report-rows' } elseif ($BudgetTitlesReview) { 'budget-titles' } elseif ($HomeLegendsReview) { 'home-legends' } elseif ($PlanRowsReview) { 'plan-rows' } elseif ($LedgerRowsReview) { 'ledger-rows' } elseif ($ReimbursementsReview) { 'reimbursements' } elseif ($HomeTemplatesReview) { 'home-templates' } elseif ($EditorTextReview) { 'editor-text' } else { '' }
     $env:VAFADAR_HOME_LEGEND_LANGUAGES = if ($HomeLegendsReview) { $HomeLegendsLanguages } else { '' }
@@ -101,7 +120,7 @@ if ($PlanRowsEdgeProbe) { '1' } else { '' }
     $receiptPath = Join-Path $output 'complete.json'
     if (!(Test-Path -LiteralPath $receiptPath)) { throw 'No completed original draft receipt.' }
     $receipt = Get-Content -LiteralPath $receiptPath -Raw | ConvertFrom-Json
-    $expectedCount = if ($EditorTextReview) { 18 } elseif ($HomeTemplatesReview) { 6 } elseif ($ReimbursementsReview) { $ReimbursementsLanguages.Split(',').Count * 6 } elseif ($LedgerRowsReview -and $LedgerRowsContexts) { $LedgerRowsContexts.Split(',').Count } elseif ($LedgerRowsReview) { $LedgerRowsLanguages.Split(',').Count * 6 } elseif (($ReimbursementsVisibilityOnly -or $ReimbursementsEmptyOnly) -and !$ReimbursementsReview) { throw 'Visible reimbursement checks require their original review mode.' }
+    $expectedCount = if ($EditorOnboardingContexts) { $EditorOnboardingContexts.Split(',').Count } elseif ($EditorTextReview) { 18 } elseif ($HomeTemplatesReview) { 6 } elseif ($ReimbursementsReview) { $ReimbursementsLanguages.Split(',').Count * 6 } elseif ($LedgerRowsReview -and $LedgerRowsContexts) { $LedgerRowsContexts.Split(',').Count } elseif ($LedgerRowsReview) { $LedgerRowsLanguages.Split(',').Count * 6 } elseif (($ReimbursementsVisibilityOnly -or $ReimbursementsEmptyOnly) -and !$ReimbursementsReview) { throw 'Visible reimbursement checks require their original review mode.' }
 if ($PlanRowsEdgeProbe) { 1 } elseif ($HomeLegendsReview) { $HomeLegendsLanguages.Split(',').Count * 6 } elseif ($ReportRowsReview -or $BudgetTitlesReview -or $PlanRowsReview -or $ReimbursementsReview) { 18 } else { 48 }
     if ($receipt.Package -ne $identity -or $receipt.ProcessId -ne $process.Id -or
         !$receipt.FinancialRowsUnchangedAfterSeeding -or $receipt.Captures.Count -ne $expectedCount) {

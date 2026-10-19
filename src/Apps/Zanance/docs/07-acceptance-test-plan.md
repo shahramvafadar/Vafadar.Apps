@@ -4069,3 +4069,20 @@ Reject an unchanged-model overlap without end-to-end benefit, preserve the same 
 remove all probes/candidates and restore the ordinary package/settings. These are diagnostic
 cases, not new unit tests or closure of general ANR/loaded-Home/physical/iOS/release acceptance.
 [Results and unresolved causal split](quality/android-managed-startup-phases.md).
+
+## AT-364 minimum-width original editors and footer
+
+At actual emulator OS200%/360dp, use original en/fa/de Light/Dark forms and preserved accounts,
+entries, plans, settings, goals and budgets. Continue only the failed disclosures, shared consumers
+and flagged editable viewport endpoints. Require full native names, original commands, at-least44px
+targets, exact draft restoration and no Save. Qualify every original wizard step and busy Next
+disablement without invoking Back/Next/Finish. Windows uses isolated non-input desktops and own
+rendered windows at 360/412/1280 with process-local font stress. Observation expiry preserves the
+original process and receipts; explicit context subsets do not repeat completed matching cases.
+These native observations add no managed unit count or complete device/reader/ANR acceptance.
+[Case identities, original defects and results](quality/narrow-editor-actions.md).
+
+Three constructor theme cases require no application/event for an unchanged saved System/Light/
+Dark choice, then one actual subsequent user change. These are managed regressions; native footer
+receipts alone do not accept a wrong-page image. Check the actual original rendered modal and
+zero constructor theme events for every final Windows footer case.

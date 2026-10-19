@@ -6875,3 +6875,27 @@ including exclusive maintenance, cancellation and refusal of retired generation 
 Remove all temporary phase code. No schema/SDK/KDF/licence/access fallback change or general
 startup/ANR/two-second/device/iOS/release acceptance follows.
 [Exact comparison, preservation and handoff](quality/settings-startup-reader.md).
+
+## D-364 - Preserve complete minimum-width editor and wizard actions
+
+Actual Android OS200%/360dp qualification of the original twelve editor states finds clipped
+German icon and monthly-pattern disclosures. Reuse WrappingAction with the original commands,
+full native names and scalable captions in account, debt-details, plan and onboarding consumers.
+Retain the centered decorative icon tile. Windows image review additionally finds a clipped final
+wizard action; reflow whole Back/Next/Start surfaces in a growing footer, preserving visibility,
+busy disablement and original commands. Never shrink text to pass the review.
+
+An editable goal name exceeds its viewport but is not a clipped static label: qualify both native
+caret/ink endpoints and restore original text/selection. Keep the original input scrolling policy.
+The 72-case baseline, 24 input endpoints, 24 changed-action cases and 18 Android footer cases use
+retained fictional data; Windows changed-action qualification has 18 contexts. Final Windows
+footer continuation and package evidence are recorded separately. Native observations add no unit count; three constructor regressions are new. No
+financial rule, schema, permission, language or dependency change follows.
+[Original failures, scoped continuations and remaining gates](quality/narrow-editor-actions.md).
+
+The actual wizard constructor also reapplied an unchanged saved theme before modal publication,
+queuing a competing Shell replacement. Skip only that redundant application; user changes still
+apply. Three new real-source regressions first show two failures and then all pass, alongside the
+existing open-draft language/theme case. Initial native footer assertions are insufficient where
+the corresponding step2 image shows Home: reject those nine contexts and qualify their actual
+rendered original modal under the corrected owner checks. Keep all earlier failures/receipts.

@@ -120,17 +120,18 @@
         <!-- The icon: a preview of what the account shows and a real button that opens the choice. -->
         <Label Text="{v:Translate Account_Icon}" Style="{StaticResource FieldLabel}" />
         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-            <Border Style="{StaticResource IconTile}" WidthRequest="48" HeightRequest="48" BackgroundColor="{DynamicResource PrimarySoft}" Stroke="{DynamicResource PrimaryLine}">
+            <Border Style="{StaticResource IconTile}" WidthRequest="48" HeightRequest="48" VerticalOptions="Center" BackgroundColor="{DynamicResource PrimarySoft}" Stroke="{DynamicResource PrimaryLine}">
                 <fi:SymbolIcon Symbol="{Binding PreviewIcon}" FontSize="24" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
             </Border>
-            <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Account_ChooseIcon}" Command="{Binding ToggleIconPickerCommand}"
-                    HorizontalOptions="Start" Padding="16,0">
-                <Button.Triggers>
-                    <DataTrigger TargetType="Button" Binding="{Binding ShowIconPicker}" Value="True">
+            <!-- D-364: the native button keeps a single-line height at OS200%/360dp even when its caption wraps. -->
+            <p:WrappingAction Grid.Column="1" Text="{v:Translate Account_ChooseIcon}" Command="{Binding ToggleIconPickerCommand}"
+                              HorizontalOptions="Start">
+                <p:WrappingAction.Triggers>
+                    <DataTrigger TargetType="p:WrappingAction" Binding="{Binding ShowIconPicker}" Value="True">
                         <Setter Property="Text" Value="{v:Translate Account_HideIcons}" />
                     </DataTrigger>
-                </Button.Triggers>
-            </Button>
+                </p:WrappingAction.Triggers>
+            </p:WrappingAction>
         </Grid>
         <p:IconPicker SelectedKey="{Binding IconKey}" IsVisible="{Binding ShowIconPicker}" Margin="0,8,0,0" />
 

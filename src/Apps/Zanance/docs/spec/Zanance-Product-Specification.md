@@ -6841,3 +6841,17 @@ refusal. Original/candidate/reverse-confirmation samples reduce managed Applicat
 publication by222-297ms; part of the first-query gain moves into later EF work. No whole-startup,
 two-second, general ANR, physical-device, reader, iOS or release acceptance is inferred.
 [Exact evidence and final handoff](../quality/settings-startup-reader.md).
+
+### Section31 update - D-364 original minimum-width actions
+
+Correct clipped account-icon and monthly-pattern disclosures and a clipped first-account footer
+with growing original command surfaces. Retain native scaling, full names, choice/state semantics
+and no-Save drafts. Actual Android OS200%/360dp baseline covers72 original cases; focused native
+continuations cover24 editable endpoints,24 action consumers and18 wizard-step cases. Windows
+action qualification covers18 contexts. Final footer qualification covers54 original steps in18
+Windows contexts, including actual rendered modal-owner preservation after the constructor fix.
+Three constructor theme regressions are added; native cases do not increase the managed count.
+Strict Windows/Android builds and the full signed offline package pass; upgrade preserves Main
+Home without reset. No financial/schema/privacy change. A11Y-03, general startup/ANR, spoken
+reader, physical-device/iOS/provider/store/release acceptance remain open.
+[Evidence and scope](../quality/narrow-editor-actions.md).

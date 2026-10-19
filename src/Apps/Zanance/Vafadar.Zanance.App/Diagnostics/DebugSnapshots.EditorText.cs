@@ -14,6 +14,16 @@ internal static partial class DebugSnapshots
     /// <summary>Checks the original account choices, decorative default icon and debt-options action without saving a draft.</summary>
     private static async Task ReviewEditorTextWindowsAsync(App app, IServiceProvider services, string folder)
     {
+        if (Environment.GetEnvironmentVariable("VAFADAR_EDITOR_ONBOARDING_FOOTER_ONLY") == "1")
+        {
+            await ReviewOnboardingFooterWindowsAsync(app, services, folder);
+            return;
+        }
+        if (Environment.GetEnvironmentVariable("VAFADAR_EDITOR_NARROW_ACTIONS_ONLY") == "1")
+        {
+            await ReviewNarrowEditorActionsWindowsAsync(app, services, folder);
+            return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_EDITOR_GOAL_CHOICES_ONLY") == "1")
         {
             await ReviewGoalChoicesWindowsAsync(app, services, folder);

@@ -131,8 +131,9 @@
                             </Grid>
                         </VerticalStackLayout>
 
-                        <Button Text="{v:Translate Plan_ChangePattern}" Command="{Binding ToggleRuleOptionsCommand}" Style="{StaticResource TextButton}"
-                                HorizontalOptions="Start" IsVisible="{Binding ShowEnd}" />
+                        <!-- D-364: retain the original disclosure command while the complete caption grows at native scale. -->
+                        <p:WrappingAction Text="{v:Translate Plan_ChangePattern}" Command="{Binding ToggleRuleOptionsCommand}" Appearance="Text"
+                                          HorizontalOptions="Start" IsVisible="{Binding ShowEnd}" />
                         <VerticalStackLayout IsVisible="{Binding ShowRuleOptions}">
                             <VerticalStackLayout IsVisible="{Binding ShowMonthOptions}">
                                 <Label Text="{v:Translate Plan_Calendar}" Style="{StaticResource FieldLabel}" />

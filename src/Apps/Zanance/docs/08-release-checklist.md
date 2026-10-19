@@ -1672,3 +1672,13 @@ includes later EF work;222-297ms measured improvement is not two-second or gener
 Temporary phase code is removed; ordinary package/runtime qualification is recorded with the
 [final evidence](quality/settings-startup-reader.md). Device/reader/Mac/iOS/provider/store/release
 gates remain open; no unrelated passed suite or native matrix is repeated.
+
+## D-364 complete editor actions at minimum width
+
+Original editor disclosures and wizard commands retain scalable complete captions, original native
+names and growing44px targets at real Android OS200%/360dp. Editable text endpoints are checked
+through original selection scrolling. Preserve no-Save draft/data evidence and exact emulator
+settings restoration; inspect final Windows footer receipts and complete signed offline package
+handoff separately. Native cases add no unit count; three constructor regressions are separate. No
+phone/reader/ANR/iOS/store/release closure follows.
+[Source-bound case evidence](quality/narrow-editor-actions.md).

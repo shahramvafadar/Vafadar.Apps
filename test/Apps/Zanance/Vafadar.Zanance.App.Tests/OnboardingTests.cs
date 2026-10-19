@@ -10,6 +10,26 @@ namespace Vafadar.Zanance.App.Tests;
 /// <summary>Real onboarding commands and SQLite writes with explicit window-transition ports.</summary>
 public sealed class OnboardingTests
 {
+    [Theory, Trait("AT", "AT-80")]
+    [InlineData(ThemeChoice.System)]
+    [InlineData(ThemeChoice.Light)]
+    [InlineData(ThemeChoice.Dark)]
+    public void Constructing_a_wizard_does_not_reapply_the_active_theme_before_modal_publication(ThemeChoice saved)
+    {
+        using var f = new FlowFixture(); f.Theme.Set(saved);
+        var applications = f.ThemeHost.Applied.Count; var changes = 0;
+        f.Theme.Changed += (_, _) => changes++;
+        var vm = Create(f);
+        Assert.Equal((int)saved, vm.ThemeIndex);
+        Assert.Equal(0, changes); Assert.Equal(applications, f.ThemeHost.Applied.Count);
+
+        // A real subsequent user choice still applies once; only construction must be side-effect free.
+        var selected = saved == ThemeChoice.Dark ? ThemeChoice.Light : ThemeChoice.Dark;
+        vm.ThemeIndex = (int)selected;
+        Assert.Equal(selected, f.Theme.Choice); Assert.Equal(1, changes);
+        Assert.Equal(applications + 1, f.ThemeHost.Applied.Count);
+    }
+
     [Fact]
     public async Task Optional_personal_sync_entry_preserves_the_unsaved_wizard_and_creates_no_account()
     {

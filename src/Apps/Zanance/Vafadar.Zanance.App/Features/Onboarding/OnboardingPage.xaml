@@ -189,23 +189,19 @@
             </ScrollView>
         </Grid>
 
-        <Grid x:Name="Footer" Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="12" Padding="0,12,0,24" HorizontalOptions="Center"
-              BackgroundColor="{DynamicResource PageBackground}" ZIndex="1">
-            <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Common_Back}" Command="{Binding BackCommand}"
-                    IsVisible="{Binding CanGoBack}" />
-            <Button Grid.Column="1" Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Next}" Command="{Binding NextCommand}"
-                    IsEnabled="{Binding IsNotBusy}">
-                <Button.Triggers>
-                    <DataTrigger TargetType="Button" Binding="{Binding IsLastStep}" Value="True">
+        <!-- D-364: reflow whole scaled commands rather than clipping a word inside a fixed half-width native button. -->
+        <FlexLayout x:Name="Footer" Grid.Row="2" Direction="Row" Wrap="Wrap" AlignItems="Stretch" Padding="0,6,0,18" HorizontalOptions="Center"
+                    BackgroundColor="{DynamicResource PageBackground}" ZIndex="1">
+            <p:WrappingAction Text="{v:Translate Common_Back}" Command="{Binding BackCommand}" Margin="6" FlexLayout.Shrink="0" FlexLayout.Grow="1"
+                              IsVisible="{Binding CanGoBack}" />
+            <p:WrappingAction Appearance="Primary" Text="{v:Translate Common_Next}" Command="{Binding NextCommand}" Margin="6" FlexLayout.Shrink="0" FlexLayout.Grow="1"
+                              IsEnabled="{Binding IsNotBusy}">
+                <p:WrappingAction.Triggers>
+                    <DataTrigger TargetType="p:WrappingAction" Binding="{Binding IsLastStep}" Value="True">
                         <Setter Property="Text" Value="{v:Translate Onb_Start}" />
                     </DataTrigger>
-                    <!-- On the first step the only button spans the whole width. -->
-                    <DataTrigger TargetType="Button" Binding="{Binding CanGoBack}" Value="False">
-                        <Setter Property="Grid.Column" Value="0" />
-                        <Setter Property="Grid.ColumnSpan" Value="2" />
-                    </DataTrigger>
-                </Button.Triggers>
-            </Button>
-        </Grid>
+                </p:WrappingAction.Triggers>
+            </p:WrappingAction>
+        </FlexLayout>
     </Grid>
 </ContentPage>

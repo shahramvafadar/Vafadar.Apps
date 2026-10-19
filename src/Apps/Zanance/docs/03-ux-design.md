@@ -1699,3 +1699,16 @@ Display-driven root replacement releases the retired root's native fragment owne
 preserving active forms, native Back commands and translated descriptions. Keep the queued initial
 add/removal in reordered transactions; never dispose active widgets or another root's fragments.
 [Scoped original-navigation evidence](quality/android-retired-navigation.md).
+
+## D-364 minimum-width editor and wizard actions
+
+Icon and rule disclosures use the existing scalable WrappingAction surface with the unchanged
+command and complete translated native name. Center decorative tiles beside growing text.
+The wizard reserves its footer outside the scroll body; whole Back/Next/Start surfaces wrap
+instead of splitting words in fixed half-width buttons. Retain first-step visibility and busy
+disablement. A single-line editable value may scroll; verify its actual caret and glyph endpoints
+before treating horizontal overflow as a static-caption failure.
+[Native evidence and limits](quality/narrow-editor-actions.md).
+
+Opening the wizard copies its active theme without publishing a new theme change. A genuine
+choice still previews immediately; constructor publication must not retire the pending modal owner.

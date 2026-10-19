@@ -1458,3 +1458,24 @@ independent ownership check, never production. Capture and exactly restore emula
 any separately authorized OS-scale continuation. Do not rerun completed matching native matrices
 or infer general finalizer/ANR, physical-device, reader or release acceptance.
 [Original failures and final evidence](../../src/Apps/Zanance/docs/quality/android-retired-navigation.md).
+
+## Minimum-width editor continuation (D-364)
+
+Run-StoreDrafts.ps1 -EditorTextReview -EditorNarrowActionsOnly reviews original changed-command
+consumers on a separate non-input desktop. -EditorOnboardingFooterOnly checks all three wizard
+steps without invoking Next/Finish. -EditorOnboardingContexts accepts a unique comma-separated
+subset such as de-Light-360,de-Dark-360; retain earlier context receipts and the original live
+process when observation expires. Footer progress.json identifies the last original operation;
+it is not a completion receipt. Restore ordinary build identity after independent qualification.
+
+The independent Android editor-text review accepts360 or412dp only with actual font_scale2.
+Explicit review_editor_controls values entry-viewport,changed-actions,onboarding-footer restrict
+continuation to affected native controls. Bind review_editor_baseline and its source MVID to
+the preserved original private input receipt; do not create a replacement fixture. Caret/glyph
+endpoint checks restore selection and never alter text, font or scroll policy. Restore the exact
+captured emulator settings after the terminal report. [Evidence](../../src/Apps/Zanance/docs/quality/narrow-editor-actions.md).
+
+Each store-draft run now uses the SDK artifacts output layout under its own build subdirectory,
+including distinct dependency outputs and intermediates. Resolve exactly one original executable
+and compiled manifest there. This preserves live prior review binaries/PRI resources and ordinary
+development output; never reuse a shared OutDir for parallel or retained independent processes.

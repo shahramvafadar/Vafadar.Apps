@@ -7,6 +7,7 @@ using Vafadar.Zanance.App.Features.Entries;
 using Vafadar.Zanance.App.Features.Budget;
 using Vafadar.Zanance.App.Features.Goals;
 using Vafadar.Zanance.App.Features.Plans;
+using Vafadar.Zanance.App.Features.Onboarding;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Settings;
@@ -21,16 +22,23 @@ internal static partial class AndroidHomeReview
     private static async Task<object> ReviewEditorTextAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct)
     {
         var configuration = Platform.CurrentActivity?.Resources?.Configuration;
-        if (configuration is null || Math.Abs(configuration.FontScale - 2f) > .001f || configuration.ScreenWidthDp != 412)
-            throw new ReviewCheckException("Editor review requires actual OS scale2.0 at412dp.");
+        if (configuration is null || Math.Abs(configuration.FontScale - 2f) > .001f || configuration.ScreenWidthDp is not (360 or 412))
+            throw new ReviewCheckException("Editor review requires actual OS scale2.0 at360dp or412dp.");
+        var widthDp = configuration.ScreenWidthDp;
+        var fontScale = configuration.FontScale;
         var selectedForms = (Platform.CurrentActivity?.Intent?.GetStringExtra("review_editor_forms") ?? "account,debt,entry,transfer,plan,monthly").Split(',');
         if (selectedForms.Length == 0 || selectedForms.Distinct().Count() != selectedForms.Length
-            || selectedForms.Any(value => value is not ("account" or "debt" or "entry" or "transfer" or "plan" or "monthly"
+            || selectedForms.Any(value => value is not ("account" or "debt" or "debt-details" or "onboarding-account" or "onboarding-step1" or "onboarding-step2" or "entry" or "transfer" or "plan" or "monthly"
                 or "goal" or "earmark" or "goal-share" or "goal-cut" or "budget" or "settlement")))
             throw new ReviewCheckException("Explicit known editor states required.");
         var workForms = selectedForms.Any(value => value is "goal" or "earmark" or "goal-share" or "goal-cut" or "budget" or "settlement");
-        var fixtureName = workForms ? "work-editor-text" : "editor-text";
+        var fixtureName = Platform.CurrentActivity?.Intent?.GetStringExtra("review_editor_fixture") ?? (workForms ? "work-editor-text" : "editor-text");
+        if (fixtureName is not ("work-editor-text" or "editor-text")) throw new ReviewCheckException("Known original editor fixture required.");
+        var controlScope = Platform.CurrentActivity?.Intent?.GetStringExtra("review_editor_controls") ?? "all";
+        if (controlScope is not ("all" or "entry-viewport" or "changed-actions" or "onboarding-footer")) throw new ReviewCheckException("Known original editor control scope required.");
         var path = Path.Combine(root, fixtureName + ".db"); var fresh = !File.Exists(path);
+        if (widthDp == 360 && (fresh || !File.Exists(Path.Combine(root, fixtureName + "-prepared.marker"))))
+            throw new ReviewCheckException("Narrow editor continuation requires the original prepared fixture; never reseed.");
         using var fixture = new ServiceCollection().AddZananceData(path).BuildServiceProvider();
         var store = fixture.GetRequiredService<ZananceStore>(); var plans = fixture.GetRequiredService<PlanStore>();
         if (fresh)
@@ -53,6 +61,19 @@ internal static partial class AndroidHomeReview
         if (selectedContexts.Distinct().Count() != selectedContexts.Length || selectedContexts.Any(value => value is not ("en-Light" or "fa-Light" or "de-Light" or "en-Dark" or "fa-Dark" or "de-Dark")))
             throw new ReviewCheckException("Known unique editor contexts required.");
         var before = await StoredAsync(); var inputHash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(before))); var observations = new List<object>();
+        var previousComparison = Platform.CurrentActivity?.Intent?.GetStringExtra("review_editor_baseline");
+        if (previousComparison is not null)
+        {
+            if (!System.Text.RegularExpressions.Regex.IsMatch(previousComparison, "^[0-9a-f]{32}$")
+                || !Guid.TryParse(Platform.CurrentActivity?.Intent?.GetStringExtra("review_editor_baseline_mvid"), out var previousMvid))
+                throw new ReviewCheckException("Explicit original editor baseline identity required.");
+            using var previous = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(root, "editor-text-" + previousComparison + "-Light-en-account.json"), ct));
+            if (previous.RootElement.GetProperty("InputHash").GetString() != inputHash
+                || previous.RootElement.GetProperty("SourceMvid").GetGuid() != previousMvid
+                || previous.RootElement.GetProperty("Summary").GetProperty("Comparison").GetString() != previousComparison
+                || previous.RootElement.GetProperty("Summary").GetProperty("WidthDp").GetInt32() != widthDp)
+                throw new ReviewCheckException("Original editor baseline input, source or width differs; never reseed.");
+        }
         var local = services.GetRequiredService<ILocalizationService>(); var theme = services.GetRequiredService<ThemeService>();
         await AwaitReimbursementFocusAsync(ct); app.OpenReviewShell();
         foreach (var choice in new[] { ThemeChoice.Light, ThemeChoice.Dark })
@@ -70,26 +91,39 @@ internal static partial class AndroidHomeReview
                 foreach (var form in selectedForms)
                 {
                     await AwaitReimbursementFocusAsync(ct);
-                    if (Math.Abs(Platform.CurrentActivity!.Resources!.Configuration!.FontScale - 2f) > .001f)
-                        throw new ReviewCheckException("Actual OS scale changed during editor review.");
+                    if (Math.Abs(Platform.CurrentActivity!.Resources!.Configuration!.FontScale - fontScale) > .001f
+                        || Platform.CurrentActivity.Resources.Configuration.ScreenWidthDp != widthDp)
+                        throw new ReviewCheckException("Actual OS scale or width changed during editor review.");
                     var receiptPath = Path.Combine(root, $"editor-text-{comparison}-{choice}-{language}-{form}.json");
                     if (File.Exists(receiptPath))
                     {
                         using var retained = JsonDocument.Parse(await File.ReadAllTextAsync(receiptPath, ct));
                         var packet = retained.RootElement;
                         if (packet.GetProperty("SourceMvid").GetGuid() != typeof(AndroidHomeReview).Module.ModuleVersionId
+                            || packet.GetProperty("Summary").GetProperty("WidthDp").GetInt32() != widthDp
+                            || Math.Abs(packet.GetProperty("Summary").GetProperty("OsFontScale").GetSingle() - fontScale) > .001f
+                            || packet.GetProperty("Summary").GetProperty("ControlScope").GetString() != controlScope
                             || packet.GetProperty("InputHash").GetString() != inputHash || before != await StoredAsync())
                             throw new ReviewCheckException("Retained editor case source or stored inputs changed; preserve the original receipt.");
                         observations.Add(packet.GetProperty("Summary").Clone());
                         continue;
                     }
                     ContentPage page;
-                    if (form is "account" or "debt")
+                    if (form is "account" or "debt" or "debt-details")
                     {
                         var vm = ActivatorUtilities.CreateInstance<AccountEditorViewModel>(services, store, plans);
-                        await vm.ApplyQueryAsync(form == "debt" ? new Dictionary<string, object> { ["debt"] = true } : new Dictionary<string, object>());
+                        await vm.ApplyQueryAsync(form is "debt" or "debt-details" ? new Dictionary<string, object> { ["debt"] = true } : new Dictionary<string, object>());
+                        if (form == "debt-details") vm.Form.ExpandedAccountDetails = true;
                         vm.Form.Name = "D356 fictitious draft"; vm.Form.OpeningText = "1234.56";
                         page = new AccountEditorPage(vm);
+                    }
+                    else if (form is "onboarding-account" or "onboarding-step1" or "onboarding-step2")
+                    {
+                        var vm = ActivatorUtilities.CreateInstance<OnboardingViewModel>(services, store);
+                        vm.Step = form == "onboarding-step1" ? 1 : form == "onboarding-step2" ? 2 : 3;
+                        vm.Account.Name = "D364 first account"; vm.Account.OpeningText = "1234.56";
+                        typeof(OnboardingViewModel).GetMethod("Refresh", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.Invoke(vm, null);
+                        page = new OnboardingPage(vm);
                     }
                     else if (form is "entry" or "transfer")
                     {
@@ -139,29 +173,41 @@ internal static partial class AndroidHomeReview
                     }
                     page.FlowDirection = local.CurrentLanguage.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
                     await Shell.Current.Navigation.PushModalAsync(page, false); await Task.Delay(150, ct);
-                    var failures = new List<object>(); var controls = new List<object>();
+                    var failures = new List<object>(); var controls = new List<object>(); var editableViewports = new List<EditableViewportEvidence>();
                     foreach (var control in ReimbursementViews(page).OfType<VisualElement>().Where(ReimbursementEffectivelyVisible).ToArray())
                     {
                         string? expected = control switch { Label label => label.Text, Picker picker when picker.SelectedIndex >= 0 => picker.Items[picker.SelectedIndex],
                             Entry entry => entry.Text, Button button => button.Text, _ => null };
                         if (string.IsNullOrWhiteSpace(expected) || expected == "?" || control.Handler?.PlatformView is not Android.Widget.TextView native) continue;
+                        if (controlScope == "entry-viewport" && (control is not Entry || native.Paint!.MeasureText(expected) <= native.Width - native.TotalPaddingLeft - native.TotalPaddingRight + 1)) continue;
+                        if (controlScope == "changed-actions" && form != "onboarding-account" && !IsChangedEditorCaption(control, page)) continue;
+                        if (controlScope == "onboarding-footer" && !IsOnboardingFooterCaption(control, page)) continue;
                         await AwaitEditorWindowFocusAsync(page, ct);
                         if (!ReferenceEquals(Shell.Current.Navigation.ModalStack.LastOrDefault(), page)) throw new ReviewCheckException("Original editor retired during review.");
                         native.RequestRectangleOnScreen(new Android.Graphics.Rect(0, 0, native.Width, native.Height), true);
                         await Task.Delay(75, ct); await WaitLayoutAsync(native, ct);
                         if (!native.HasWindowFocus) throw new ReviewCheckException("Original modal editor lost native focus after layout.");
                         var issue = SettingsTextIssue(native);
+                        var initialIssue = issue;
+                        EditableViewportEvidence? editableViewport = null;
+                        if (control is Entry && issue == "horizontal-text-clipping")
+                        {
+                            editableViewport = await ReviewEditableViewportAsync(native, expected, ct);
+                            editableViewports.Add(editableViewport);
+                            if (editableViewport.Complete) issue = null;
+                        }
                         var ancestors = new List<object>();
                         for (Element? ancestor = control; ancestor is VisualElement visual; ancestor = ancestor.Parent)
                             ancestors.Add(new { Type = visual.GetType().FullName, visual.Width, visual.Height, DesiredWidth = ((IView)visual).DesiredSize.Width });
-                        var item = new { Control = control.GetType().Name, Text = expected, Issue = issue, Width = native.Width, Height = native.Height,
+                        var item = new { Control = control.GetType().Name, Text = expected, InitialIssue = initialIssue, Issue = issue, EditableViewport = editableViewport, Width = native.Width, Height = native.Height,
                             NativeTextSize = native.TextSize, NativeLines = native.Layout?.LineCount, FullNativeText = native.Text,
                             NativeTextWidth = native.Paint?.MeasureText(expected), LogicalWidth = control.Width, DesiredWidth = ((IView)control).DesiredSize.Width,
                             ParentWidth = (control.Parent as VisualElement)?.Width, NativeLayoutHeight = native.Layout?.Height, Ancestors = ancestors };
                         controls.Add(item); if (issue is not null) failures.Add(item);
                     }
                     var nativeChoiceTargets = 0;
-                    foreach (var chips in ReimbursementViews(page).OfType<Vafadar.Maui.Controls.ChoiceChips>().Where(ReimbursementEffectivelyVisible))
+                    foreach (var chips in ReimbursementViews(page).OfType<Vafadar.Maui.Controls.ChoiceChips>()
+                        .Where(value => (controlScope == "all" || form == "onboarding-account") && ReimbursementEffectivelyVisible(value)))
                     {
                         if (chips.ItemsSource is not { } items) throw new ReviewCheckException("Original choice source unavailable.");
                         var buttons = ReimbursementViews(chips).OfType<Button>().ToArray();
@@ -182,7 +228,7 @@ internal static partial class AndroidHomeReview
                         }
                     }
                     var debtToggleChecked = false;
-                    if (form == "debt")
+                    if (form == "debt" && controlScope == "all")
                     {
                         var vm = (AccountEditorViewModel)page.BindingContext;
                         var draft = vm.Form.Snapshot();
@@ -204,8 +250,12 @@ internal static partial class AndroidHomeReview
                         await CheckToggleAsync(vm.Form.ToggleAccountDetailsCommand, "Debt_AccountDetails", () => vm.Form.ShowAccountDetails);
                         debtToggleChecked = true;
                     }
+                    object? changedAction = controlScope == "changed-actions" ? await ReviewChangedEditorActionAsync(page, services, ct) : null;
+                    object? footer = controlScope == "onboarding-footer" ? await ReviewOnboardingFooterAsync(page, ct) : null;
+                    if (controls.Count == 0) throw new ReviewCheckException("Explicit editor control scope selected no original controls.");
                     if (before != await StoredAsync()) throw new ReviewCheckException("Unsaved editor geometry changed stored financial inputs.");
-                    var summary = new { Comparison = comparison, Form = form, Language = language, Theme = choice.ToString(), CheckedControls = controls.Count,
+                    var summary = new { Comparison = comparison, Form = form, Language = language, Theme = choice.ToString(), OsFontScale = fontScale, WidthDp = widthDp, CheckedControls = controls.Count,
+                        ControlScope = controlScope, InputHash = inputHash, ChangedAction = changedAction, OnboardingFooter = footer, EditableViewports = editableViewports,
                         Failures = failures, NativeChoiceTargetsChecked = nativeChoiceTargets, NativeDebtToggleOpenedAndClosed = debtToggleChecked,
                         StoredInputsUnchanged = true, SaveInvoked = false, SourceMvid = typeof(AndroidHomeReview).Module.ModuleVersionId };
                     var result = new { Summary = summary, InputHash = inputHash, Controls = controls, SourceMvid = typeof(AndroidHomeReview).Module.ModuleVersionId };
@@ -218,7 +268,8 @@ internal static partial class AndroidHomeReview
                 }
             }
         }
-        return new { Comparison = comparison, OsFontScale = configuration.FontScale, WidthDp = configuration.ScreenWidthDp,
+        return new { Comparison = comparison, OsFontScale = fontScale, WidthDp = widthDp, ControlScope = controlScope, Fixture = fixtureName, InputHash = inputHash,
+            OriginalBaselineInputHashMatched = previousComparison is not null,
             SelectedForms = selectedForms, SelectedContexts = selectedContexts, Observations = observations, StoredInputsUnchanged = before == await StoredAsync(), MainPackageTouched = false, SaveInvoked = false };
     }
 

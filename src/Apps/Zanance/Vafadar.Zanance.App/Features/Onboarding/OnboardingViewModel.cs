@@ -96,7 +96,9 @@ public sealed partial class OnboardingViewModel : ViewModelBase
 
     partial void OnThemeIndexChanged(int value)
     {
-        if (!_refreshing && Enum.IsDefined((Presentation.ThemeChoice)value))
+        // D-364: construction copies the saved choice before modal publication. Reapplying it
+        // raises Changed and can retire the Shell which is still publishing this wizard.
+        if (!_refreshing && Enum.IsDefined((Presentation.ThemeChoice)value) && (Presentation.ThemeChoice)value != _theme.Choice)
         {
             _theme.Set((Presentation.ThemeChoice)value);
         }

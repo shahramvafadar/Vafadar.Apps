@@ -2507,3 +2507,12 @@ temporary marker and provide the ordinary signed package after strict builds. Co
 remaining native startup/ANR causes and ready Android work; this bounded improvement does not reopen
 settled owner choices or accept general performance/device/iOS/release gates.
 [Completed causal comparison and preserved fixtures](../../quality/settings-startup-reader.md).
+
+### D-364 minimum-width continuation
+
+Use the retained original editor fixture for real360dp/font2 qualification. Fix actual icon,
+pattern and wizard footer clipping together; continue only affected commands, shared consumers,
+native input endpoints and newly affected footer steps. Preserve already passed matching cases,
+original live processes and failures; distinguish native observations from managed test counts.
+General ANR, spoken reader, remaining controls and external platform/release gates stay open.
+[Current evidence](../../quality/narrow-editor-actions.md).
