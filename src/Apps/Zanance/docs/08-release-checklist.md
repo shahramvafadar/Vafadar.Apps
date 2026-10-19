@@ -1917,3 +1917,14 @@ Terminal memory is not peak/leak/low-memory evidence. Main remains D-389, Samsun
 Request records are not an audio transcript or a general runtime pass. Main/APK remain D-389,
 Samsung D-385; no unchanged successful suite/build replay.
 [Evidence](quality/android-reader-speech-requests.md).
+
+
+## D-392 - Import correction qualified, broader acceptance remains open
+
+- [x] Ordinary/Keep both Undo snapshots and conservative edited/legacy/attachment/extra-row guards.
+- [x] Existing Simple aggregate fields;39 related managed cases/ten new and scoped native matrices.
+- [x] Final strict builds, complete offline signed APK and changed-case Samsung refusal/cleanup.
+- [x] Main979/five known public packets/original three profiles/exact OS preserved; phone released.
+- [ ] Broader device/runtime/A11Y/iOS/provider/store and publication acceptance.
+
+No unchanged successful financial or full-suite replay. [Bounded evidence](quality/import-undo-and-retained-aggregates.md).

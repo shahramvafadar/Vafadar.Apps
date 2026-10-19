@@ -2820,3 +2820,14 @@ utterance IDs can restart on reconnection. Any temporary reader diagnostic prefe
 the authorized fictitious emulator, with exact native/secure setting restoration and no archived
 general logs, accounts, secrets or private-file extraction. Empty overlay observations are not silence.
 Do not repeat unchanged request captures or old waveform/ASR attempts to manufacture audible acceptance.
+
+
+## D-392 - Immutable import Undo and retained aggregate fields
+
+Every new ledger import, including ordinary and explicit Keep both batches, records complete immutable
+original rows through the existing journal in the same write transaction. Never reconstruct an old
+review from current rows: missing legacy snapshots, later edits/attachments, extra batch rows and
+dependent imports/refunds require review without deleting data. Retain original metadata through
+backup/restore. Existing aggregates expose their complete original range in Simple mode after all
+loaded values are published; an unsaved off/on change must not hide the switch. Qualify actual
+financial failures using the same fixture and immutable input, repeating only failed changed paths.

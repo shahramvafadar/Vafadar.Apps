@@ -23,6 +23,8 @@ param(
     [switch]$CsvInputEmptyOnly,
     [switch]$CsvQuotationOnly,
     [switch]$EditorTextReview,
+    [switch]$EditorRetainedAggregateOnly,
+    [ValidatePattern('^$|^(en|fa|de)-(Light|Dark)-(360|412|1280)-(Expense|Income)(,(en|fa|de)-(Light|Dark)-(360|412|1280)-(Expense|Income))*$')][string]$EditorAggregateCompleted = '',
     [switch]$EditorDebtDetailsOnly,
     [switch]$EditorGoalChoicesOnly,
     [switch]$EditorNarrowActionsOnly,
@@ -35,6 +37,8 @@ param(
     [ValidatePattern('^$|^(en|fa|de)-(Light|Dark)-(360|412|1280)(,(en|fa|de)-(Light|Dark)-(360|412|1280))*$')][string]$LedgerRowsContexts = '',
     [ValidateSet('en,fa,de', 'fa,de')][string]$HomeLegendsLanguages = 'en,fa,de')
 $ErrorActionPreference = 'Stop'
+if ($EditorAggregateCompleted -and (!$EditorRetainedAggregateOnly -or @($EditorAggregateCompleted.Split(',') | Select-Object -Unique).Count -ne $EditorAggregateCompleted.Split(',').Count)) { throw 'Completed aggregate cases require a unique original review subset.' }
+if ($EditorRetainedAggregateOnly -and !$EditorTextReview) { throw 'Retained aggregate review requires the original editor review.' }
 $reviewCount = @($EcbReferenceReview.IsPresent, $ReportRowsReview.IsPresent, $BudgetTitlesReview.IsPresent, $HomeLegendsReview.IsPresent, $PlanRowsReview.IsPresent, $LedgerRowsReview.IsPresent, $ReimbursementsReview.IsPresent, $HomeTemplatesReview.IsPresent, $HomeReviewCountReview.IsPresent, $HomeAddHeaderReview.IsPresent, $GettingStartedReview.IsPresent, $CsvInputReview.IsPresent, $EditorTextReview.IsPresent | Where-Object { $_ }).Count
 if ($CsvQuotationOnly -and (!$CsvInputReview -or $CsvInputEmptyOnly)) { throw 'Quotation continuation requires only the original CSV input review.' }
 if ($CsvInputEmptyOnly -and !$CsvInputReview) { throw 'Empty-input continuation requires the original CSV input review.' }
@@ -90,7 +94,7 @@ $manifest = $manifests[0].FullName
 if (!(Test-Path -LiteralPath $manifest)) { throw 'Independent compiled manifest is missing.' }
 [xml]$metadata = Get-Content -LiteralPath $manifest -Raw
 if ($metadata.Package.Identity.Name -ne $identity) { throw 'Compiled draft identity does not match the requested run.' }
-$variables = @('VAFADAR_EDITOR_ONBOARDING_CONTEXTS','VAFADAR_EDITOR_ONBOARDING_FOOTER_ONLY','VAFADAR_EDITOR_NARROW_ACTIONS_ONLY','VAFADAR_EDITOR_GOAL_CHOICES_ONLY','VAFADAR_EDITOR_DEBT_DETAILS_ONLY','VAFADAR_SNAPSHOTS','VAFADAR_SNAPSHOT_ONLY','VAFADAR_STORE_DRAFT_RUN',
+$variables = @('VAFADAR_RETAINED_AGGREGATE_COMPLETED','VAFADAR_EDITOR_RETAINED_AGGREGATE_ONLY','VAFADAR_EDITOR_ONBOARDING_CONTEXTS','VAFADAR_EDITOR_ONBOARDING_FOOTER_ONLY','VAFADAR_EDITOR_NARROW_ACTIONS_ONLY','VAFADAR_EDITOR_GOAL_CHOICES_ONLY','VAFADAR_EDITOR_DEBT_DETAILS_ONLY','VAFADAR_SNAPSHOTS','VAFADAR_SNAPSHOT_ONLY','VAFADAR_STORE_DRAFT_RUN',
     'VAFADAR_WINDOW_SIZE','VAFADAR_SNAPSHOT_FONT_SCALE','VAFADAR_START_ROUTE','VAFADAR_STORE_DRAFT_REVIEW','VAFADAR_HOME_LEGEND_LANGUAGES','VAFADAR_PLAN_ROWS_EDGE_PROBE','VAFADAR_LEDGER_ROWS_LANGUAGES','VAFADAR_LEDGER_ROWS_CONTEXTS','VAFADAR_REIMBURSEMENTS_LANGUAGES','VAFADAR_REIMBURSEMENTS_VISIBILITY_ONLY','VAFADAR_REIMBURSEMENTS_EMPTY_ONLY')
 $previous = @{}
 foreach ($name in $variables) { $previous[$name] = [Environment]::GetEnvironmentVariable($name, 'Process') }
@@ -100,6 +104,8 @@ try {
     $env:VAFADAR_STORE_DRAFT_RUN = $run
     $env:VAFADAR_WINDOW_SIZE = '412x800'
     $env:VAFADAR_EDITOR_DEBT_DETAILS_ONLY = if ($EditorDebtDetailsOnly) { '1' } else { '' }
+    $env:VAFADAR_RETAINED_AGGREGATE_COMPLETED = $EditorAggregateCompleted
+    $env:VAFADAR_EDITOR_RETAINED_AGGREGATE_ONLY = if ($EditorRetainedAggregateOnly) { '1' } else { '' }
     $env:VAFADAR_EDITOR_GOAL_CHOICES_ONLY = if ($EditorGoalChoicesOnly) { '1' } else { '' }
     $env:VAFADAR_EDITOR_NARROW_ACTIONS_ONLY = if ($EditorNarrowActionsOnly) { '1' } else { '' }
     $env:VAFADAR_EDITOR_ONBOARDING_FOOTER_ONLY = if ($EditorOnboardingFooterOnly) { '1' } else { '' }
@@ -129,7 +135,7 @@ if ($PlanRowsEdgeProbe) { '1' } else { '' }
     $receiptPath = Join-Path $output 'complete.json'
     if (!(Test-Path -LiteralPath $receiptPath)) { throw 'No completed original draft receipt.' }
     $receipt = Get-Content -LiteralPath $receiptPath -Raw | ConvertFrom-Json
-    $expectedCount = if ($EcbReferenceReview) { 54 } elseif ($CsvInputReview -or $HomeReviewCountReview -or $HomeAddHeaderReview -or $GettingStartedReview) { 18 } elseif ($EditorOnboardingContexts) { $EditorOnboardingContexts.Split(',').Count } elseif ($EditorTextReview) { 18 } elseif ($HomeTemplatesReview) { 6 } elseif ($ReimbursementsReview) { $ReimbursementsLanguages.Split(',').Count * 6 } elseif ($LedgerRowsReview -and $LedgerRowsContexts) { $LedgerRowsContexts.Split(',').Count } elseif ($LedgerRowsReview) { $LedgerRowsLanguages.Split(',').Count * 6 } elseif (($ReimbursementsVisibilityOnly -or $ReimbursementsEmptyOnly) -and !$ReimbursementsReview) { throw 'Visible reimbursement checks require their original review mode.' }
+    $expectedCount = if ($EditorRetainedAggregateOnly) { 36 - @($EditorAggregateCompleted.Split(',') | Where-Object { $_ }).Count } elseif ($EcbReferenceReview) { 54 } elseif ($CsvInputReview -or $HomeReviewCountReview -or $HomeAddHeaderReview -or $GettingStartedReview) { 18 } elseif ($EditorOnboardingContexts) { $EditorOnboardingContexts.Split(',').Count } elseif ($EditorTextReview) { 18 } elseif ($HomeTemplatesReview) { 6 } elseif ($ReimbursementsReview) { $ReimbursementsLanguages.Split(',').Count * 6 } elseif ($LedgerRowsReview -and $LedgerRowsContexts) { $LedgerRowsContexts.Split(',').Count } elseif ($LedgerRowsReview) { $LedgerRowsLanguages.Split(',').Count * 6 } elseif (($ReimbursementsVisibilityOnly -or $ReimbursementsEmptyOnly) -and !$ReimbursementsReview) { throw 'Visible reimbursement checks require their original review mode.' }
 if ($PlanRowsEdgeProbe) { 1 } elseif ($HomeLegendsReview) { $HomeLegendsLanguages.Split(',').Count * 6 } elseif ($ReportRowsReview -or $BudgetTitlesReview -or $PlanRowsReview -or $ReimbursementsReview) { 18 } else { 48 }
     if ($receipt.Package -ne $identity -or $receipt.ProcessId -ne $process.Id -or
         !$receipt.FinancialRowsUnchangedAfterSeeding -or $receipt.Captures.Count -ne $expectedCount) {

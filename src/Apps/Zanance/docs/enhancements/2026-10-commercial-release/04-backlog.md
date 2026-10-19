@@ -3408,3 +3408,16 @@ app choices/Home/OS/APK are restored on the same Main15560; independent helper r
 change, managed-count increase or unrelated successful verification replay. A11Y-01 remains In progress
 for actual audible output and wider paths/platforms; QA-06 and release gates remain open.
 [Qualification](../../quality/android-reader-speech-requests.md).
+
+
+## D-392 - Physical aggregate/Undo gap and actual corrective delivery
+
+QA-03 financial qualification now includes original explicit Link and replace/Keep both choices,
+disabled incomplete review, dependent seed refusal and cold detail Undo with restored metadata on
+Samsung. Actual ordinary edited Undo deleted a row; immutable journals now cover every new ledger import,
+with conservative legacy/attachment/extra-row refusal. Existing Simple aggregate ranges are visible.
+39 related managed cases (ten new),36 Windows/12 Release Android forms, strict builds/complete signed
+APK and final same-profile failed-case refusal pass. Only the failed one-row input repeats after the
+fix. Original Main979/five public packets/three profiles and exact OS/owned cleanup are restored.
+This bounded gap is closed; QA-03 broader device paths, QA-06, A11Y and external release gates remain
+In progress under D-386. [Evidence](../../quality/import-undo-and-retained-aggregates.md).

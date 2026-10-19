@@ -5,7 +5,7 @@ using Vafadar.Zanance.Core.Ledger;
 namespace Vafadar.Zanance.Data.Importing;
 
 /// <summary>
-/// A durable, profile-local Undo journal for one explicitly linked import (D-72). Financial snapshots travel with
+/// A durable, profile-local Undo journal for one ledger import, with optional explicit aggregate links (D-72/D-392). Snapshots travel with
 /// database backups; attachments stay in their existing table. There is no foreign key to a consumed aggregate.
 /// </summary>
 public sealed class ImportLinkBatch : Entity, IAuditableEntity

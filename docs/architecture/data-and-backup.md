@@ -2376,3 +2376,13 @@ version-two evidence. New readers retain historical source documents after cache
 free-original attribution, original dated legs, decimal formula and raw source hash. Fetch remains
 separate from the original confirmed writer; portable restore and source-only household publications
 never manufacture financial authority or overwrite an original source identity.
+
+
+### D-392 - Original review for every CSV import
+
+ImportLinks version1 already supports an empty aggregate-adjustment list. Write its original imported
+row snapshots for every new ledger batch in the same transaction as the ledger rows. Compare complete
+semantic fields on Undo, ignoring only audit timestamps; use identity sets for batch membership.
+Refuse missing legacy snapshots, extra batch rows, later attachments and the existing dependent
+import/refund cases. Never backfill a purported original review from current mutable rows. Existing
+backup/restore carries the journal without an EF model/schema change or new attachment storage.

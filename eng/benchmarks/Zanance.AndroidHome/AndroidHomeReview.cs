@@ -132,6 +132,8 @@ internal static partial class AndroidHomeReview
             }
             else if (phase == "ecb-reference-report")
                 await WriteReportAsync(root, phase, await ReadEcbReportAsync(root, comparison!, baseline!, ct), ct);
+            else if (phase == "retained-aggregate")
+                await WriteReportAsync(root, phase, await ReviewRetainedAggregateAsync(app, services, root, comparison!, ct), ct);
             else if (phase == "ecb-reference")
                 await WriteReportAsync(root, phase, await ReviewEcbAsync(app, services, root, comparison!, ct), ct);
             else if (phase is "csv-input" or "csv-input-empty" or "csv-quotation")

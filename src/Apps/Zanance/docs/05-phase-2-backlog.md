@@ -2502,3 +2502,8 @@ all data and presentation; the actual Samsung crash remains a wider runtime conc
 D-389 delivers the owner-approved daily ECB integration under the canonical commercial backlog,
 including explicit daily provenance and pre-payment/free-original disclosure. Other providers,
 public activation and platform/store acceptance remain separate; see quality/ecb-reference-integration.md.
+
+
+D-392 completes a bounded financial qualification/correction batch: every new ledger import has immutable
+Undo snapshots and existing aggregate ranges remain visible in Simple mode. See the canonical
+commercial backlog and quality/import-undo-and-retained-aggregates.md; broader acceptance stays open.

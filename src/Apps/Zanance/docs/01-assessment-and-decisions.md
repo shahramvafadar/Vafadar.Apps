@@ -7219,3 +7219,22 @@ without input replay. Restore native ERROR/overlay/toggles, all ten secure value
 exact Home/OS/APK and remove only hash-matched independent artifacts/helper. No production or managed
 count change; audible pronunciation and broad A11Y/runtime/device gates remain open.
 [Complete evidence and boundaries](quality/android-reader-speech-requests.md).
+
+
+## D-392 - Preserve later edits during import Undo and expose retained aggregate ranges
+
+Actual Samsung Undo deleted an ordinary imported row after a title edit: only aggregate-reducing
+imports had immutable original snapshots. Journal every new ledger import atomically through the existing
+version-one format; refuse changed rows, later attachments/extra batch rows and unverifiable legacy
+batches rather than backfilling mutable current data. Keep existing dependency/refund guards.
+Also publish retained aggregate capability after LoadFrom and expand existing aggregate details in
+Simple mode; an unsaved off/on toggle retains access to its original range. No schema change.
+
+39 distinct related managed cases pass across selective runs (ten added; seven original failures
+retained),36 original Windows forms with only27 continuation cases and12 Release/AOT Android forms
+qualify the editor. Final strict Windows/complete offline signed Android builds are warning-free.
+On the same Samsung fixture, final ordinary edited Undo and legacy refusal preserve all three rows
+and-187EUR; original restored aggregate fields1-7Oct remain. Only the failed one-row case is repeated.
+Main979/five known native rows/three original profiles/OS/APK and owned cleanup pass; phone released.
+No full-suite, general crash/ANR, all-device/iOS/provider/store or publication acceptance.
+[Complete failures, evidence and limits](quality/import-undo-and-retained-aggregates.md).

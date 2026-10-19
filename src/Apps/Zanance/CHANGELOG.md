@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Safer import Undo and complete existing aggregate fields (D-392)
+
+- Keep later edits and attachments when a transaction import cannot be safely undone; older imports without original review stay for manual review.
+- Protect ordinary and Keep both transaction imports with their original metadata, including after backup and reopening.
+- Show an existing aggregate and its original covered dates in Simple mode, with a reversible unsaved option.
+
 ### Optional daily ECB reference rates (D-389)
 
 - Fetch reference rates for EUR, USD, GBP, CHF, CAD and AUD, with calculated reverse/cross rates clearly identified.

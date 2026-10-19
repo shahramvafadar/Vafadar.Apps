@@ -4350,3 +4350,21 @@ owned independent helper/JAR/XML removed after hash matching. No production chan
 case or unchanged successful suite/build replay. Pronunciation/intelligibility, remaining workflows,
 physical/iOS and full A11Y-01 acceptance stay unchecked; native runtime gates remain open.
 [Original receipts and limits](quality/android-reader-speech-requests.md).
+
+
+## D-392 - AT-79/QA-03 actual overlap and unsafe-Undo correction
+
+Original Samsung explicit link/keep-both review, disabled incomplete choices, five-row190EUR result,
+dependent seed refusal and cold detail Undo restoring two aggregates180EUR pass. Actual ordinary
+title-edit Undo incorrectly deletes the row; seven of nine initial new SQLite cases reproduce the
+missing snapshot protection. Final39 related cases across selective runs include ten new cases,
+attachment ownership, legacy refusal, extra identity and backup/cold guards; no full suite repeats.
+
+36 retained Windows aggregate forms (nine preserved/27 continuation),12 original Release/AOT Android
+forms and Simple ordinary-row guards pass. Actual final Samsung shows the original aggregate range
+1-7Oct and refuses the changed one-row batch/legacy seed, preserving three packets187EUR. Strict
+Windows/complete signed offline Android builds, Main979/five known public packets/original three
+profiles/OS and owned cleanup pass. Profile transient empty-tree/footer-height/action-sheet observer
+failures are retained; financial actions are not replayed to repair observations.
+Broader QA-03, QA-06/A11Y, hostile/bank corpus, iOS/provider/store/release acceptance remain open.
+[Exact original/final package boundaries](quality/import-undo-and-retained-aggregates.md).

@@ -1006,3 +1006,13 @@ user identity, account/holding name, amount, quantity, arbitrary URL, cookie or 
 Source metadata/cache/Home/history reads do not dispatch upstream requests. Original public-byte hash,
 date, legs and derivation join the existing device-private cache and consented portable/sync source
 history. No new SDK, financial schema, Android permission or automatic financial update is introduced.
+
+
+## D-392 immutable original import metadata
+
+The existing profile-local Undo journal now covers ordinary and Keep both imports as well as linked
+aggregate reductions. It retains original imported financial fields, including notes/tags, until the
+batch is undone or its profile/database is removed; subsequent row edits do not rewrite that review.
+The journal travels through existing protected database/consented portable backup boundaries, with
+no selected raw CSV cache or attachment bytes in the journal. Later attachments retain their owner;
+unverifiable legacy batches require review. No new permission, SDK, network or schema is introduced.

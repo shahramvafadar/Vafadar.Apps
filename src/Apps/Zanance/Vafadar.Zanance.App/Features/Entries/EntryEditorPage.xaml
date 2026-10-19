@@ -276,7 +276,7 @@
                             </VerticalStackLayout>
                         </VerticalStackLayout>
 
-                        <!-- Aggregated entry (ZEX-P21, Advanced): sums up several purchases of a range; overlaps are asked for on save -->
+                        <!-- Aggregated entry (ZEX-P21, Advanced or retained existing value): sums up several purchases of a range; overlaps are asked for on save -->
                         <VerticalStackLayout IsVisible="{Binding CanAggregate}" Margin="0,12,0,0" Spacing="4">
                             <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                                 <Label Text="{v:Translate Entry_Aggregated}" VerticalOptions="Center" />

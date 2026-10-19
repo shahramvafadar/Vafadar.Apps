@@ -2767,3 +2767,15 @@ attempts as a substitute for actual audio intelligibility. No feature source/APK
 change, unchanged successful build/suite replay or physical-device claim. Continue independently
 ready work under D-386; full A11Y/runtime and provider/account/Mac gates remain open.
 [Scope and evidence](../../quality/android-reader-speech-requests.md).
+
+
+## D-392 - Finish actual financial qualification defects before another batch
+
+The physical aggregate/Undo sequence exposed two real defects, not a reason to replay unchanged
+qualification: ordinary edits lacked Undo snapshots, and retained aggregate controls were hidden in
+Simple mode. Complete both corrections,39 related managed cases/ten new,36 Windows/12 Release Android
+forms, strict signed builds and only the failed physical one-row continuation. Restore the same
+original Main/five public rows/three profiles/OS, remove only the new profile and matched inputs, and
+release the phone turn. Preserve failures and observer corrections; no full-suite or unchanged
+successful financial replay. Continue ready work under D-386; external/device/runtime gates stay open.
+[Qualification](../../quality/import-undo-and-retained-aggregates.md).

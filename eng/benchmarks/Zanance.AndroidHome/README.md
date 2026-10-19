@@ -513,3 +513,15 @@ Phase `csv-quotation` qualifies the original malformed-amount refusal and transl
 using a fresh comparison with the retained independent fixture. Exact source MVID/input hash,
 complete native caption, prior review/data and restoration remain mandatory. No replay of the
 unchanged byte/shape-limit cases. [Exact scope](../../../src/Apps/Zanance/docs/quality/csv-quotation-integrity.md).
+
+
+### D-392 retained aggregate editor
+
+The retained-aggregate phase loads actual persisted Expense/Income aggregates and an ordinary Simple
+negative control through the original VM/page. It exposes the original switch, captions and date
+controls in en/fa/de Light/Dark at412dp, with no editor Save or OS change. A separate three-row SQLite
+fixture may be continued after an observer correction only when the original known account/row shape
+still matches; it is never reseeded or replaced. Modal native controls own focus instead of the
+covered Activity. Preserve incomplete observations and continue only the unqualified cases.
+Windows uses Run-StoreDrafts.ps1 -EditorTextReview -EditorRetainedAggregateOnly at360/412/1280; the
+explicit unique EditorAggregateCompleted subset excludes only independently verified earlier cases.

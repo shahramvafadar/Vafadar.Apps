@@ -886,8 +886,11 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         AggregatedTo = entry.AggregatedTo ?? entry.Date;
         ReimbursementDue = entry.ReimbursementDueDate ?? ReimbursementDue;
         TagsText = EntryTags.Format(entry.Tags);
-        ShowDetails = !string.IsNullOrEmpty(entry.Payee) || !string.IsNullOrEmpty(entry.Note) || ForeignEnabled || entry.Icon is not null || ReimbursableEnabled || entry.Tags.Count > 0;
+        ShowDetails = !string.IsNullOrEmpty(entry.Payee) || !string.IsNullOrEmpty(entry.Note) || ForeignEnabled || entry.Icon is not null || ReimbursableEnabled || entry.Tags.Count > 0 || entry.IsAggregated;
         BuildCategories(entry.CategoryId);
+        // D-392: retained aggregate fields must remain editable in Simple mode. Publish only after
+        // their original range is loaded; keep the capability while an unsaved toggle is changed.
+        CanAggregate = (_canAggregate || entry.IsAggregated) && !IsTransfer;
     }
 
     private IReadOnlyList<AccountChoice> EnsureChoice(IReadOnlyList<AccountChoice> choices, Guid id) =>

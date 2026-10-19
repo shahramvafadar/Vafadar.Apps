@@ -1797,3 +1797,13 @@ references are labelled calculated with original legs/formula. Cache/history/rev
 free-original disclosure and exact consent; opening these views cannot fetch or update finance.
 The plan page and native pre-payment terms disclose that the original ECB data is free. The source
 button uses the existing growing caption and a full external browser, with no framed source/logo.
+
+
+## D-392 retained aggregate editing and conservative Undo
+
+Simple mode hides new advanced setup, not the complete existing value: an existing aggregate opens
+its original checked option and covered dates even without another detail field. Publish capability
+after loading the whole range and retain the switch during unsaved off/on changes. Ordinary Simple
+entries remain unchanged. Undo requires immutable original imported metadata even without aggregate
+linking; edited/attached/extra rows or missing legacy evidence stay for review instead of deletion.
+Original native confirmations and six-language conflict feedback remain.

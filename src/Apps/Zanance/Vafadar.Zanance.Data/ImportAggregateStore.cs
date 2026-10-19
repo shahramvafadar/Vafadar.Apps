@@ -131,13 +131,12 @@ public sealed partial class ZananceStore
         db.Entries.AddRange(toAdd);
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
-        if (adjustments.Count > 0)
-        {
-            // Only linked imports need extra snapshots. They contain metadata, never attachment bytes or credentials.
-            var state = new ImportLinkState(1, imported, adjustments);
-            db.ImportLinks.Add(new ImportLinkBatch(batchId) { StateJson = JsonSerializer.Serialize(state, ImportLinkJson.Default.ImportLinkState) });
-            await db.SaveChangesAsync(cancellationToken);
-        }
+        // D-392: ordinary and keep-both imports also need the original complete row snapshots.
+        // Otherwise a later editor change cannot be distinguished from an unchanged imported row.
+        // The existing journal format contains metadata, never attachment bytes or credentials.
+        var state = new ImportLinkState(1, imported, adjustments);
+        db.ImportLinks.Add(new ImportLinkBatch(batchId) { StateJson = JsonSerializer.Serialize(state, ImportLinkJson.Default.ImportLinkState) });
+        await db.SaveChangesAsync(cancellationToken);
 
         await write.CommitAsync(cancellationToken);
         return CommittedWriteNotification.Publish(OnChanged, new ImportResult(batchId, imported.Count, skipped, errors));
@@ -184,6 +183,16 @@ public sealed partial class ZananceStore
         var own = journals.FirstOrDefault(j => j.Batch.Id == batchId);
         var importedIds = stored.Values.Where(e => e.ImportBatchId == batchId).Select(e => e.Id)
             .Concat(own.State?.Imported.Select(e => e.Id) ?? []).ToHashSet();
+        // Older unlinked batches have no immutable review. Never manufacture a snapshot from
+        // their current, possibly edited rows. Attachments added later also retain their owner.
+        var originalIds = own.State?.Imported.Select(entry => entry.Id).ToHashSet();
+        if (importedIds.Count > 0 && (originalIds is null || stored.Values.Any(entry => entry.ImportBatchId == batchId
+                && !originalIds.Contains(entry.Id))
+                || await db.Attachments.AnyAsync(attachment => importedIds.Contains(attachment.EntryId), cancellationToken)))
+        {
+            return new ImportUndoResult(0, true);
+        }
+
         if (journals.Where(j => j.Batch.Id != batchId).Any(j => j.State.Adjustments.Any(a => a.Before?.ImportBatchId == batchId
                     || a.Detailed.Any(e => importedIds.Contains(e.Id))))
                 || stored.Values.Any(e => e.RefundOfId is { } id && importedIds.Contains(id) && !importedIds.Contains(e.Id)))

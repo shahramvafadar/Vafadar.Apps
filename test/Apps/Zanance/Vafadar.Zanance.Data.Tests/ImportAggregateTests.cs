@@ -12,7 +12,7 @@ using Vafadar.Zanance.Core.Ledger;
 
 namespace Vafadar.Zanance.Data.Tests;
 
-/// <summary>Real SQLite transactions, durable identity, partial overlaps and Undo for linked imports (D-72).</summary>
+/// <summary>Real SQLite transactions, durable identity, partial overlaps and Undo for linked and ordinary imports (D-72/D-392).</summary>
 public sealed class ImportAggregateTests : IDisposable
 {
     private static readonly DateOnly Day = new(2026, 9, 1);
@@ -301,6 +301,89 @@ public sealed class ImportAggregateTests : IDisposable
         Assert.Equal(ImportOverlapConflict.SharedDetail, result.Conflict);
         Assert.Null(await _store.GetEntryAsync(second.Id, Ct));
         Assert.Equal(41200, (await _store.GetEntriesAsync(cancellationToken: Ct)).Sum(e => e.Amount));
+    }
+
+    [Theory, InlineData(false, "title"), InlineData(false, "amount"), InlineData(true, "title"), InlineData(true, "amount"), Trait("AT", "AT-79")]
+    public async Task Unlinked_import_undo_preserves_later_edits_after_reopening(bool keepBoth, string field)
+    {
+        var aggregate = await AggregateAsync();
+        var entry = Detail(aggregate, 700, keepBoth ? Day : Day.AddMonths(1)); entry.Title = "Original imported title";
+        var imported = await ImportAsync([entry], link: false);
+        var edited = (await _store.GetEntryAsync(entry.Id, Ct))!;
+        if (field == "title") edited.Title = "Later reviewed title"; else edited.Amount = 900;
+        Assert.Empty((await _store.SaveEntryAsync(edited, Ct)).Errors);
+        await using var reopened = Install("original"); var store = reopened.GetRequiredService<ZananceStore>();
+        var result = await store.TryUndoImportAsync(imported.BatchId!.Value, Ct);
+        Assert.True(result.Conflict); Assert.Equal(0, result.Removed);
+        var retained = (await store.GetEntryAsync(entry.Id, Ct))!;
+        Assert.Equal(edited.Title, retained.Title); Assert.Equal(edited.Amount, retained.Amount);
+        Assert.Equal(41200, (await store.GetEntryAsync(aggregate.Id, Ct))!.Amount);
+        Assert.Single(await store.GetImportBatchesAsync(Ct));
+    }
+
+    [Theory, InlineData(false), InlineData(true), Trait("AT", "AT-79")]
+    public async Task Unlinked_import_undo_removes_only_unchanged_rows_after_reopening(bool keepBoth)
+    {
+        var aggregate = await AggregateAsync();
+        var entry = Detail(aggregate, 700, keepBoth ? Day : Day.AddMonths(1));
+        var imported = await ImportAsync([entry], link: false);
+        await using var reopened = Install("original"); var store = reopened.GetRequiredService<ZananceStore>();
+        var result = await store.TryUndoImportAsync(imported.BatchId!.Value, Ct);
+        Assert.False(result.Conflict); Assert.Equal(1, result.Removed);
+        Assert.Equal(aggregate.Id, Assert.Single(await store.GetEntriesAsync(cancellationToken: Ct)).Id);
+        Assert.Empty(await store.GetImportBatchesAsync(Ct));
+    }
+
+    [Fact, Trait("AT", "AT-79")]
+    public async Task Unlinked_import_undo_refuses_an_unverifiable_legacy_batch_without_creating_a_snapshot()
+    {
+        var aggregate = await AggregateAsync(); var entry = Detail(aggregate, 700, Day.AddMonths(1));
+        var imported = await ImportAsync([entry]);
+        await using var db = await _services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
+        await db.ImportLinks.Where(value => value.Id == imported.BatchId).ExecuteDeleteAsync(Ct);
+        Assert.True((await _store.TryUndoImportAsync(imported.BatchId!.Value, Ct)).Conflict);
+        Assert.NotNull(await _store.GetEntryAsync(entry.Id, Ct));
+        Assert.Empty(await db.ImportLinks.ToListAsync(Ct));
+    }
+
+    [Fact, Trait("AT", "AT-79")]
+    public async Task Unlinked_import_undo_preserves_a_later_attachment_and_its_owner()
+    {
+        var aggregate = await AggregateAsync(); var entry = Detail(aggregate, 700, Day.AddMonths(1));
+        var imported = await ImportAsync([entry]);
+        var attachment = new EntryAttachment { EntryId = entry.Id, FileName = "fictitious.txt", ContentType = "text/plain", Data = [1, 2, 3] };
+        await _store.AddAttachmentAsync(attachment, Ct);
+        Assert.True((await _store.TryUndoImportAsync(imported.BatchId!.Value, Ct)).Conflict);
+        Assert.NotNull(await _store.GetEntryAsync(entry.Id, Ct));
+        var retained = (await _store.GetAttachmentAsync(attachment.Id, Ct))!;
+        Assert.Equal(entry.Id, retained.EntryId); Assert.Equal(new byte[] { 1, 2, 3 }, retained.Data);
+    }
+
+    [Fact, Trait("AT", "AT-79")]
+    public async Task Unlinked_import_undo_snapshot_survives_backup_restore_and_rejects_a_later_edit()
+    {
+        var aggregate = await AggregateAsync(); var entry = Detail(aggregate, 700, Day.AddMonths(1));
+        var imported = await ImportAsync([entry]);
+        var package = await _services.GetRequiredService<IBackupService>().CreatePackageAsync(null, Ct);
+        await using var fresh = Install("ordinary-restored");
+        await fresh.GetRequiredService<IBackupService>().RestorePackageAsync(package, null, Ct);
+        var store = fresh.GetRequiredService<ZananceStore>(); var edited = (await store.GetEntryAsync(entry.Id, Ct))!;
+        edited.Note = "Later note on restored import"; await store.SaveEntryAsync(edited, Ct);
+        Assert.True((await store.TryUndoImportAsync(imported.BatchId!.Value, Ct)).Conflict);
+        Assert.Equal(edited.Note, (await store.GetEntryAsync(entry.Id, Ct))!.Note);
+    }
+
+    [Fact, Trait("AT", "AT-79")]
+    public async Task Unlinked_import_undo_never_deletes_a_later_row_reusing_the_batch_identity()
+    {
+        var aggregate = await AggregateAsync(); var original = Detail(aggregate, 700, Day.AddMonths(1));
+        var imported = await ImportAsync([original]);
+        var later = Detail(aggregate, 900, Day.AddMonths(1)); later.ImportBatchId = imported.BatchId; later.Source = EntrySource.Import;
+        Assert.Empty((await _store.SaveEntryAsync(later, Ct)).Errors);
+        var result = await _store.TryUndoImportAsync(imported.BatchId!.Value, Ct);
+        Assert.True(result.Conflict); Assert.Equal(0, result.Removed);
+        Assert.NotNull(await _store.GetEntryAsync(original.Id, Ct)); Assert.NotNull(await _store.GetEntryAsync(later.Id, Ct));
+        Assert.Single(await _store.GetImportBatchesAsync(Ct));
     }
 
     private async Task<ImportResult> ImportAsync(IReadOnlyList<LedgerEntry> entries, bool link = true) =>

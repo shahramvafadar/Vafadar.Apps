@@ -1173,3 +1173,9 @@ change. [Exact evidence](quality/csv-input-safety.md). Broader acceptance remain
 Complete the observed shared-parser ambiguity through original Core/App regressions, compatible
 writer/large-export/bank checks, original native error pages and a signed main package. No financial
 Save or unsupported bank-format claim. [Evidence](quality/csv-quotation-integrity.md).
+
+
+D-392 corrects actual ordinary-import Undo protection and retained aggregate fields within the existing
+financial flow. Scoped managed/native/physical evidence and remaining release gates are recorded in
+quality/import-undo-and-retained-aggregates.md and the canonical commercial backlog; no new Phase1
+scope or full-suite/device acceptance is claimed.

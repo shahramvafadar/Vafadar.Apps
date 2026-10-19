@@ -991,3 +991,10 @@ iOS and interrupted-action acceptance remain separate. See [scope](../quality/co
 D-389: explicit service-side fixed ECB daily XML fetch sends no financial/private identifiers upstream.
 Date-precision/derivation evidence remains in the existing private cache and original consented source
 history/export/sync boundaries; no implicit Home/history HTTP, new SDK or app permission.
+
+
+D-392: the existing private import Undo journal also retains complete original metadata for ordinary
+and Keep both imports. Original notes/tags survive later row edits until batch Undo or profile/data
+removal and follow existing explicit portable-backup protection. No raw CSV cache, journal attachment
+bytes, new SDK, network, permission or schema; later attachments and unverifiable legacy rows remain
+for review instead of unsafe deletion.

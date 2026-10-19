@@ -7125,3 +7125,21 @@ not new managed cases, a full database comparison or audible/pronunciation/all-r
 No production source/APK/schema/permission/SDK change; Main remains D-389 and Samsung D-385.
 Unchanged successful suites/builds/layout matrices are not replayed. A11Y-01, QA-06 and external
 platform/release gates remain open. [Evidence](../quality/android-reader-speech-requests.md).
+
+
+### Section31 update - D-392 actual import Undo and retained aggregate correction
+
+Every new ledger import now retains complete original row snapshots in the existing version-one journal,
+including ordinary/Keep both cases. Later edits/attachments/extra batch rows and unverifiable legacy
+batches require review without deletion or invented backfill. Existing aggregates expose original
+covered dates in Simple mode; no financial posting, schema/model, permission, SDK or runtime change.
+
+Ten managed cases are added.39 distinct related cases pass in selective runs; nine changed-source
+regressions repeat after identity lookup optimization, not as an increased total or full-suite run.
+36 Windows/12 Release/AOT Android aggregate forms and ordinary Simple VM guards qualify affected UI.
+Actual final Samsung verifies original range1-7Oct and the corrected one-row/legacy refusals while
+preserving three packets187EUR. Strict builds/complete offline signed APK, original Main979/five
+known public rows/three profiles/OS and owned cleanup pass. Only the failed physical one-row input
+repeats after the fix; original successes and negative evidence remain. No general crash/ANR, A11Y,
+full private database, iOS/provider/store or publication acceptance.
+[Evidence and limitations](../quality/import-undo-and-retained-aggregates.md).
