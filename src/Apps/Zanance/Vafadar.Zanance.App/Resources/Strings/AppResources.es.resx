@@ -8191,7 +8191,7 @@ Identificador de cotización original: {2}</value>
     <value>Este CSV supera un límite de seguridad: {0}. Selecciona una exportación más pequeña. El archivo y la revisión anteriores no han cambiado.</value>
   </data>
   <data name="Import_ReadMalformed" xml:space="preserve">
-    <value>El CSV tiene un campo con comillas sin cerrar. Selecciona un archivo completo. El archivo y la revisión anteriores no han cambiado.</value>
+    <value>El CSV contiene comillas incompletas o mal colocadas. Elige un archivo con el formato correcto. El archivo y la revisión anteriores no cambian.</value>
   </data>
   <data name="Import_Limit_Bytes" xml:space="preserve">
     <value>{0:N0} MiB por archivo</value>

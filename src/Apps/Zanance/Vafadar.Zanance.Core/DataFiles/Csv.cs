@@ -123,6 +123,9 @@ public static class Csv
                     else
                     {
                         quoted = false;
+                        // IO-08 / D-387: joining a quoted amount to trailing digits silently changes its value.
+                        if (i + 1 < text.Length && text[i + 1] != separator && text[i + 1] is not '\r' and not '\n')
+                            throw new CsvMalformedInputException();
                     }
                 }
                 else
@@ -130,8 +133,9 @@ public static class Csv
                     Append(c);
                 }
             }
-            else if (c == '"' && cell.Length == 0)
+            else if (c == '"')
             {
+                if (cell.Length != 0) throw new CsvMalformedInputException();
                 quoted = true;
             }
             else if (c == separator)

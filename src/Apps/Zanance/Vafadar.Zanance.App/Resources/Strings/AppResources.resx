@@ -8251,7 +8251,7 @@ Original quote identifier: {2}</value>
     <value>This CSV exceeds a safety limit: {0}. Select a smaller export. The previous file and review are unchanged.</value>
   </data>
   <data name="Import_ReadMalformed" xml:space="preserve">
-    <value>The CSV has an unfinished quoted field. Choose a complete file. The previous file and review are unchanged.</value>
+    <value>The CSV has incomplete or misplaced quotation marks. Choose a correctly formatted file. The previous file and review are unchanged.</value>
   </data>
   <data name="Import_Limit_Bytes" xml:space="preserve">
     <value>{0:N0} MiB per file</value>

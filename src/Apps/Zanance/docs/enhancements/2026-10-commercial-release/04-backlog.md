@@ -3358,3 +3358,11 @@ pass selectively; native error surfaces/build/package and actual-picker scope ar
 [qualification](../../quality/csv-input-safety.md). Original bank specimens and broader device/iOS/
 provider/release gates remain open. D-386's development-first order remains authoritative; this is
 not a new generic ANR/crash or accessibility experiment.
+
+
+## D-387 - Preserve CSV financial meaning at quote boundaries
+
+IMP-01/IO-06/IO-08 refuse malformed quoted/unquoted digit concatenation before review publication.
+Twenty-two new cases, affected valid exports/large inputs/bank syntax and original native error pages
+qualify the correction. No guessed bank preset or unrelated runtime/accessibility/full-suite work.
+[Evidence and remaining native/provider/platform gates](../../quality/csv-quotation-integrity.md).

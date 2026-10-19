@@ -1781,3 +1781,10 @@ must stay accepted and cannot become importable again. Keep picker interaction n
 and matching off-window and publish complete values only for current profile/mapping. Never silently
 truncate financial inputs or change a stale generic interpretation without explicit Refresh.
 [Original running-page scope](quality/csv-input-safety.md).
+
+
+## D-387 - Preserve CSV financial meaning at quote boundaries
+
+Incomplete or misplaced CSV quoting is an error, not an opportunity to guess an amount or repair a
+source. Accurate translated feedback preserves the previous file/review. Valid escaped quotes,
+whitespace, multiline and Unicode text retain their original meaning. [Evidence](quality/csv-quotation-integrity.md).

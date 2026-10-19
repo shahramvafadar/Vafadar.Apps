@@ -2784,3 +2784,12 @@ Keep stream opening/decoding/parsing and original matching work off the window t
 a complete prepared result for the still-current profile and interpretation, including final awaits.
 Never archive or log raw selected CSV. Preserve stricter bank limits and explicit consent policies.
 Qualify only changed behavior; D-386's later stability/accessibility execution order remains in force.
+
+
+## D-387 - Preserve CSV financial meaning at quote boundaries
+
+Never repair malformed CSV by stripping quotation marks or joining quoted and unquoted amount digits.
+A closing field quote must meet the delimiter, record end or EOF; quotes inside a nonquoted field
+are refused. Preserve escaped literal quotes, Unicode, multiline values, existing delimiter/record
+choices and unquoted whitespace. Refuse the whole replacement through the existing retained-review
+path with accurate six-language feedback. This is source integrity, not a new bank-format claim.

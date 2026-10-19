@@ -8211,7 +8211,7 @@ Identificativo della quotazione originale: {2}</value>
     <value>Questo CSV supera un limite di sicurezza: {0}. Seleziona un'esportazione più piccola. Il file e la revisione precedenti restano invariati.</value>
   </data>
   <data name="Import_ReadMalformed" xml:space="preserve">
-    <value>Il CSV contiene un campo con virgolette non chiuse. Seleziona un file completo. Il file e la revisione precedenti restano invariati.</value>
+    <value>Il CSV contiene virgolette incomplete o fuori posto. Scegli un file con il formato corretto. Il file e la revisione precedenti restano invariati.</value>
   </data>
   <data name="Import_Limit_Bytes" xml:space="preserve">
     <value>{0:N0} MiB per file</value>

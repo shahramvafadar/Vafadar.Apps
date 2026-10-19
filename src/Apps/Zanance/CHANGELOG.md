@@ -5,6 +5,11 @@ versions follow [Semantic Versioning](https://semver.org/). Nothing has been rel
 the first release candidate. Requirement ids refer to the [specification](docs/spec/Zanance-Product-Specification.md).
 
 ## [Unreleased]
+### Reject malformed CSV amounts without guessing (D-387)
+
+- Refuse misplaced quotation marks instead of silently joining amount digits.
+- Keep the previous review and show accurate translated feedback; correctly quoted text and exports remain compatible.
+
 ### Safer CSV selection without losing your review (D-385)
 
 - Keep your previous file, review and completed import result if a replacement is empty, incomplete, too large or cannot be read.

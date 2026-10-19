@@ -1879,3 +1879,12 @@ production/APK change or unrelated suite. [Evidence](quality/android-gc-nursery-
 - [ ] Arbitrary bank/provider/hostile corpus, full device/iOS and publication acceptance remain separate.
 
 See [exact scope](quality/csv-input-safety.md); successful checks do not close general stability or reader gates.
+
+
+## D-387 - Preserve CSV financial meaning at quote boundaries
+
+- [x] Misplaced quotation cannot silently join amount digits; original reviews survive refusals.
+- [x] Focused source and original native error-page qualification preserves valid export behavior.
+- [ ] This does not qualify arbitrary bank specimens, the changed package on Samsung, iOS or release.
+
+[Original failure, qualification and package scope](quality/csv-quotation-integrity.md).

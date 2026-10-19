@@ -4312,3 +4312,12 @@ cases pass selectively. Original Windows and independent Release/AOT Android pag
 errors and retained state; actual native-provider scope is recorded separately. No Import/Undo is
 invoked by the running-page qualification. [Exact receipts and limits](quality/csv-input-safety.md).
 Unchanged successful suites, financial rules and external acceptance are not replayed or inferred.
+
+
+## AT-387 - Malformed quotation cannot become a larger amount
+
+The old generic path joins `"12"34` into1234 and previews123400 minor units; assert refusal before
+financial preview and preserve original App filename/review/data. All22 new cases pass with complete
+valid Unicode/quoted/empty/record-boundary compatibility. Only affected existing CSV/bank/large-source
+cases repeat. Eighteen Windows and six original Release/AOT Android contexts qualify the changed
+error and retained state; no Import/Undo. [Exact evidence and platform limits](quality/csv-quotation-integrity.md).

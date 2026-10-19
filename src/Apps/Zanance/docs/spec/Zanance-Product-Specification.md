@@ -7071,3 +7071,13 @@ publication. Forty-six new managed cases pass in selective runs; this is not a f
 new whole-app performance claim. Native error pages and signed offline packages are qualified with
 explicit platform/source boundaries in [evidence](../quality/csv-input-safety.md). No schema, financial
 rules, SDK/permission or raw input archive change; general device/iOS/provider/release gates remain.
+
+
+### Section31 update - D-387 CSV financial quote integrity
+
+IO-06/IO-08 now reject incomplete/misplaced field quoting rather than joining amount digits or
+silently repairing a source. Twenty-two new executed cases pass, together with affected valid export,
+bank syntax/encoding and complete100000-row compatibility checks. Original error surfaces and retained
+review are qualified in18 Windows/six Android contexts. No new bank preset, financial/schema/budget/
+permission/SDK change or full-suite replay. [Exact evidence](../quality/csv-quotation-integrity.md).
+D-386's later dedicated runtime/accessibility completion and external release gates remain unchanged.

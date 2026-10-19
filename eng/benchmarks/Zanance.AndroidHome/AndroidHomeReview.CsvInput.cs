@@ -19,7 +19,7 @@ namespace Vafadar.Zanance.App;
 internal static partial class AndroidHomeReview
 {
     /// <summary>Qualifies original CSV error surfaces and retained reviews without importing a financial record.</summary>
-    private static async Task<object> ReviewCsvInputAsync(App app, IServiceProvider services, string root, string comparison, bool emptyOnly, CancellationToken ct)
+    private static async Task<object> ReviewCsvInputAsync(App app, IServiceProvider services, string root, string comparison, bool emptyOnly, bool quotationOnly, CancellationToken ct)
     {
         var theme = services.GetRequiredService<ThemeService>(); var originalTheme = theme.Choice;
         var local = services.GetRequiredService<ILocalizationService>(); var originalLanguage = local.CurrentLanguage;
@@ -46,13 +46,13 @@ internal static partial class AndroidHomeReview
             foreach (var language in new[] { "en", "fa", "de" })
             foreach (var choice in new[] { ThemeChoice.Light, ThemeChoice.Dark })
             {
-                var context = language + "-" + choice; var receipt = Path.Combine(root, (emptyOnly ? "csv-input-empty-" : "csv-input-") + comparison + "-" + context + ".json");
+                var context = language + "-" + choice; var receipt = Path.Combine(root, (emptyOnly ? "csv-input-empty-" : quotationOnly ? "csv-quotation-" : "csv-input-") + comparison + "-" + context + ".json");
                 if (File.Exists(receipt))
                 {
                     using var retained = JsonDocument.Parse(await File.ReadAllTextAsync(receipt, ct)); var prior = retained.RootElement;
                     if (prior.GetProperty("Comparison").GetString() != comparison || prior.GetProperty("SourceMvid").GetGuid() != sourceMvid
                         || prior.GetProperty("InputSHA256").GetString() != inputHash || !prior.GetProperty("OriginalReviewRetained").GetBoolean()
-                        || prior.GetProperty("Errors").GetArrayLength() != (emptyOnly ? 1 : 7)) throw new ReviewCheckException("Retained CSV input context does not match.");
+                        || prior.GetProperty("Errors").GetArrayLength() != (emptyOnly || quotationOnly ? 1 : 7)) throw new ReviewCheckException("Retained CSV input context does not match.");
                     observations.Add(prior.Clone()); continue;
                 }
                 await AwaitReimbursementFocusAsync(ct); theme.Set(choice);
@@ -75,13 +75,13 @@ internal static partial class AndroidHomeReview
                 await PickAsync();
                 if (!vm.CanRunImport || vm.ImportCount != 1) throw new ReviewCheckException("Original complete CSV review did not publish.");
                 var originalRows = JsonSerializer.Serialize(vm.LedgerPreviewRows); var originalText = vm.PreviewText; var errors = new List<object>();
-                foreach (var kind in emptyOnly ? new CsvReadLimit?[] { null } : Enum.GetValues<CsvReadLimit>().Select(value => (CsvReadLimit?)value).Append(null))
+                foreach (var kind in emptyOnly || quotationOnly ? new CsvReadLimit?[] { null } : Enum.GetValues<CsvReadLimit>().Select(value => (CsvReadLimit?)value).Append(null))
                 {
                     var budget = CsvReadLimits.Import;
                     var maximum = kind switch { CsvReadLimit.Bytes => budget.MaximumBytes, CsvReadLimit.Characters => budget.MaximumCharacters,
                         CsvReadLimit.Rows => budget.MaximumRows, CsvReadLimit.Columns => budget.MaximumColumns, CsvReadLimit.Cells => budget.MaximumCells, _ => budget.MaximumFieldCharacters };
                     effects.Refusal = kind is { } limit ? new CsvReadLimitException(limit, maximum) : null;
-                    effects.Selected = emptyOnly ? new("fictitious-empty.csv", "") : kind is null ? new("fictitious-unfinished.csv", "a,\"unfinished") : picked;
+                    effects.Selected = emptyOnly ? new("fictitious-empty.csv", "") : kind is null ? new("fictitious-malformed.csv", quotationOnly ? "a,\"12\"34" : "a,\"unfinished") : picked;
                     await PickAsync();
                     if (vm.FileName != picked.Name || vm.PreviewText != originalText || JsonSerializer.Serialize(vm.LedgerPreviewRows) != originalRows
                         || !vm.CanRunImport || vm.IsBusy || vm.ImportError is null) throw new ReviewCheckException("Rejected CSV changed the original native review.");
@@ -105,7 +105,7 @@ internal static partial class AndroidHomeReview
                         await Task.Delay(50, ct);
                     }
                     if (!complete) throw new ReviewCheckException("Original CSV refusal text is not completely visible.");
-                    errors.Add(new { Refusal = kind?.ToString() ?? (emptyOnly ? "Empty" : "Malformed"), OriginalText = label.Text, Geometry = geometry });
+                    errors.Add(new { Refusal = kind?.ToString() ?? (emptyOnly ? "Empty" : quotationOnly ? "MisplacedQuotation" : "Malformed"), OriginalText = label.Text, Geometry = geometry });
                 }
                 await Shell.Current.Navigation.PopModalAsync(false); await AwaitRootHomeAsync(ct);
                 if (before != await StoredAsync()) throw new ReviewCheckException("Input review changed stored fictitious records.");

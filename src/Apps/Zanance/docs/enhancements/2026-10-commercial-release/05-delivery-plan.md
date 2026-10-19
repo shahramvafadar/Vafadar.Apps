@@ -2719,3 +2719,11 @@ replacements, including empty/header-only inputs. Retain successful 126 Windows/
 qualify only the added empty branch in18/six contexts. Keep old negative results and exact synthetic
 inputs, deliver the final complete signed offline package without reset and document actual native
 picker scope separately. [Evidence](../../quality/csv-input-safety.md). Follow D-386 for remaining work.
+
+
+## D-387 - Preserve CSV financial meaning at quote boundaries
+
+Finish the observed financial parser defect as one batch: preserve old negative proofs, correct
+quote boundaries, qualify only changed error and compatible valid inputs, deliver the full signed
+main APK and restore original emulator state without reset. Keep Samsung's existing package/data
+unchanged in this batch. [Qualification](../../quality/csv-quotation-integrity.md). D-386 remains authoritative.

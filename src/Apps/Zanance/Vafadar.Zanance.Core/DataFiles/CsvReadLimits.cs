@@ -54,5 +54,5 @@ public sealed class CsvReadLimitException(CsvReadLimit limit, int maximum)
     public int Maximum { get; } = maximum;
 }
 
-/// <summary>Refuses a structurally incomplete CSV rather than treating its unfinished tail as financial fields.</summary>
-public sealed class CsvMalformedInputException() : FormatException("The CSV contains an unterminated quoted field.");
+/// <summary>Refuses incomplete or misplaced quoting rather than silently joining ambiguous financial fields.</summary>
+public sealed class CsvMalformedInputException() : FormatException("The CSV contains incomplete or misplaced field quotation marks.");

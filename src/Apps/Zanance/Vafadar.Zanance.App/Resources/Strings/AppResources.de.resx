@@ -8222,7 +8222,7 @@ Ursprüngliche Kurskennung: {2}</value>
     <value>Diese CSV überschreitet eine Sicherheitsgrenze: {0}. Bitte eine kleinere Exportdatei auswählen. Die bisherige Datei und Vorschau bleiben unverändert.</value>
   </data>
   <data name="Import_ReadMalformed" xml:space="preserve">
-    <value>Die CSV enthält ein Feld mit nicht geschlossenem Anführungszeichen. Bitte eine vollständige Datei auswählen. Die bisherige Datei und Vorschau bleiben unverändert.</value>
+    <value>Die CSV enthält unvollständige oder falsch gesetzte Anführungszeichen. Wähle eine korrekt formatierte Datei. Bisherige Datei und Vorschau bleiben unverändert.</value>
   </data>
   <data name="Import_Limit_Bytes" xml:space="preserve">
     <value>{0:N0} MiB pro Datei</value>

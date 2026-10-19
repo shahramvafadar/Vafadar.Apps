@@ -20,6 +20,7 @@ param(
     [switch]$GettingStartedReview,
     [switch]$CsvInputReview,
     [switch]$CsvInputEmptyOnly,
+    [switch]$CsvQuotationOnly,
     [switch]$EditorTextReview,
     [switch]$EditorDebtDetailsOnly,
     [switch]$EditorGoalChoicesOnly,
@@ -34,6 +35,7 @@ param(
     [ValidateSet('en,fa,de', 'fa,de')][string]$HomeLegendsLanguages = 'en,fa,de')
 $ErrorActionPreference = 'Stop'
 $reviewCount = @($ReportRowsReview.IsPresent, $BudgetTitlesReview.IsPresent, $HomeLegendsReview.IsPresent, $PlanRowsReview.IsPresent, $LedgerRowsReview.IsPresent, $ReimbursementsReview.IsPresent, $HomeTemplatesReview.IsPresent, $HomeReviewCountReview.IsPresent, $HomeAddHeaderReview.IsPresent, $GettingStartedReview.IsPresent, $CsvInputReview.IsPresent, $EditorTextReview.IsPresent | Where-Object { $_ }).Count
+if ($CsvQuotationOnly -and (!$CsvInputReview -or $CsvInputEmptyOnly)) { throw 'Quotation continuation requires only the original CSV input review.' }
 if ($CsvInputEmptyOnly -and !$CsvInputReview) { throw 'Empty-input continuation requires the original CSV input review.' }
 if ($reviewCount -gt 1) { throw 'Choose one original review matrix.' }
 if (($ReimbursementsVisibilityOnly -or $ReimbursementsEmptyOnly) -and !$ReimbursementsReview) { throw 'Visible reimbursement checks require their original review mode.' }
@@ -102,7 +104,7 @@ try {
     $env:VAFADAR_EDITOR_ONBOARDING_FOOTER_ONLY = if ($EditorOnboardingFooterOnly) { '1' } else { '' }
     $env:VAFADAR_EDITOR_ONBOARDING_CONTEXTS = $EditorOnboardingContexts
     $env:VAFADAR_SNAPSHOT_FONT_SCALE = if ($CsvInputReview -or $EditorTextReview -or $ReportRowsReview -or $BudgetTitlesReview -or $HomeLegendsReview -or $PlanRowsReview -or $LedgerRowsReview -or $ReimbursementsReview) { '2' } else { '' }
-    $env:VAFADAR_STORE_DRAFT_REVIEW = if ($CsvInputReview -and $CsvInputEmptyOnly) { 'csv-input-empty' } elseif ($CsvInputReview) { 'csv-input' } elseif ($ReportRowsReview) { 'report-rows' } elseif ($BudgetTitlesReview) { 'budget-titles' } elseif ($HomeLegendsReview) { 'home-legends' } elseif ($PlanRowsReview) { 'plan-rows' } elseif ($LedgerRowsReview) { 'ledger-rows' } elseif ($ReimbursementsReview) { 'reimbursements' } elseif ($HomeTemplatesReview) { 'home-templates' } elseif ($GettingStartedReview) { 'getting-started' } elseif ($HomeAddHeaderReview) { 'home-add-header' } elseif ($HomeReviewCountReview) { 'home-review-count' } elseif ($EditorTextReview) { 'editor-text' } else { '' }
+    $env:VAFADAR_STORE_DRAFT_REVIEW = if ($CsvInputReview -and $CsvQuotationOnly) { 'csv-quotation' } elseif ($CsvInputReview -and $CsvInputEmptyOnly) { 'csv-input-empty' } elseif ($CsvInputReview) { 'csv-input' } elseif ($ReportRowsReview) { 'report-rows' } elseif ($BudgetTitlesReview) { 'budget-titles' } elseif ($HomeLegendsReview) { 'home-legends' } elseif ($PlanRowsReview) { 'plan-rows' } elseif ($LedgerRowsReview) { 'ledger-rows' } elseif ($ReimbursementsReview) { 'reimbursements' } elseif ($HomeTemplatesReview) { 'home-templates' } elseif ($GettingStartedReview) { 'getting-started' } elseif ($HomeAddHeaderReview) { 'home-add-header' } elseif ($HomeReviewCountReview) { 'home-review-count' } elseif ($EditorTextReview) { 'editor-text' } else { '' }
     $env:VAFADAR_HOME_LEGEND_LANGUAGES = if ($HomeLegendsReview) { $HomeLegendsLanguages } else { '' }
     $env:VAFADAR_PLAN_ROWS_EDGE_PROBE = if (($ReimbursementsVisibilityOnly -or $ReimbursementsEmptyOnly) -and !$ReimbursementsReview) { throw 'Visible reimbursement checks require their original review mode.' }
 if ($PlanRowsEdgeProbe) { '1' } else { '' }

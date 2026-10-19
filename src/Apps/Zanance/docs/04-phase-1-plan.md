@@ -1166,3 +1166,10 @@ Deliver the original native picker/worker/parser/publication flow together: reje
 incomplete and empty replacements while preserving complete reviews/outcomes. Forty-six new managed
 cases and focused native error checks qualify this behavior; no financial/schema or unrelated suite
 change. [Exact evidence](quality/csv-input-safety.md). Broader acceptance remains in the canonical backlog.
+
+
+## D-387 - Preserve CSV financial meaning at quote boundaries
+
+Complete the observed shared-parser ambiguity through original Core/App regressions, compatible
+writer/large-export/bank checks, original native error pages and a signed main package. No financial
+Save or unsupported bank-format claim. [Evidence](quality/csv-quotation-integrity.md).

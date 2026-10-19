@@ -8199,7 +8199,7 @@ Identifiant de la cotation originale : {2}</value>
     <value>Ce CSV dépasse une limite de sécurité : {0}. Sélectionnez une exportation plus petite. Le fichier et la vérification précédents restent inchangés.</value>
   </data>
   <data name="Import_ReadMalformed" xml:space="preserve">
-    <value>Le CSV contient un champ dont les guillemets ne sont pas fermés. Sélectionnez un fichier complet. Le fichier et la vérification précédents restent inchangés.</value>
+    <value>Le CSV contient des guillemets incomplets ou mal placés. Choisissez un fichier au format correct. Le fichier et la vérification précédents restent inchangés.</value>
   </data>
   <data name="Import_Limit_Bytes" xml:space="preserve">
     <value>{0:N0} Mio par fichier</value>

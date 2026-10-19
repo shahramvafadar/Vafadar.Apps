@@ -1597,3 +1597,11 @@ Independent Android phases `csv-input` and `csv-input-empty` run the original pa
 selected-file effects supplied. Retained receipts bind comparison, input digest and source MVID;
 never reuse a receipt across source changes. No financial Import/Undo or raw-file archive is authorized.
 [Exact D-385 scope](../../src/Apps/Zanance/docs/quality/csv-input-safety.md).
+
+
+## D-387 - Preserve CSV financial meaning at quote boundaries
+
+Use `Run-StoreDrafts.ps1 -CsvInputReview -CsvQuotationOnly` for the changed misplaced-quote error
+only; it is mutually exclusive with the empty-only continuation. Independent Android phase
+`csv-quotation` uses the same original page/command and source-bound receipts. Neither mode repeats
+the six unchanged resource refusals or invokes Import/Undo. [Evidence](../../src/Apps/Zanance/docs/quality/csv-quotation-integrity.md).

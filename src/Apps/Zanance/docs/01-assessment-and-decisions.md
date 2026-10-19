@@ -7158,3 +7158,15 @@ old failure/oracle evidence is retained. Original native error surfaces and comp
 are qualified without replaying unrelated suites. No financial-write, schema, permission, SDK or raw
 CSV cache change. Full receipts and physical scope: [qualification](quality/csv-input-safety.md).
 D-386 schedules dedicated ANR/crash/accessibility completion later; this is a feature correctness batch.
+
+
+## D-387 - Preserve CSV financial meaning at quote boundaries
+
+The actual generic parser/preview turned the malformed `"12"34` into an importable123400-minor-unit
+amount; three original App selection regressions also replaced a complete review. Enforce escaped/
+nonescaped quote boundaries without guessing repairs, preserving valid writer output and all prior
+review/outcome guards. Nine Core/three App pre-fix failures are retained; all22 new cases,20 existing
+CSV/export cases, the complete100000-row round trip and six affected bank syntax/encoding cases pass.
+The changed error caption and original retained review are checked in18 Windows/six Release/AOT
+Android contexts. No writer/schema/budget/permission/SDK change or unrelated full-suite replay.
+[Complete qualification and binary/platform limits](quality/csv-quotation-integrity.md).

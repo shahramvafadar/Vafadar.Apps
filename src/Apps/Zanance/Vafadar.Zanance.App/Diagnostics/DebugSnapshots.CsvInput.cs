@@ -31,6 +31,7 @@ internal static partial class DebugSnapshots
         var picked = new PickedDataFile("fictitious-complete.csv", CsvExport.Write([entry], new Dictionary<Guid, Account> { [account.Id] = account }, _ => "", true));
         var translator = services.GetRequiredService<Translator>(); var local = services.GetRequiredService<ILocalizationService>();
         var emptyOnly = Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "csv-input-empty";
+        var quotationOnly = Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "csv-quotation";
         var captures = new List<object>(); var observations = new List<object>();
         async Task<string> StoredAsync() => JsonSerializer.Serialize(new { Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync() });
         await store.GetSettingsAsync(); var before = await StoredAsync();
@@ -57,14 +58,14 @@ internal static partial class DebugSnapshots
             await PickAsync();
             if (!vm.CanRunImport || vm.ImportCount != 1) throw new IOException("The original complete review was not published.");
             var originalRows = JsonSerializer.Serialize(vm.LedgerPreviewRows); var originalText = vm.PreviewText;
-            foreach (var kind in emptyOnly ? new CsvReadLimit?[] { null } : Enum.GetValues<CsvReadLimit>().Select(limit => (CsvReadLimit?)limit).Append(null))
+            foreach (var kind in emptyOnly || quotationOnly ? new CsvReadLimit?[] { null } : Enum.GetValues<CsvReadLimit>().Select(limit => (CsvReadLimit?)limit).Append(null))
             {
                 var budget = CsvReadLimits.Import;
                 var maximum = kind switch { CsvReadLimit.Bytes => budget.MaximumBytes, CsvReadLimit.Characters => budget.MaximumCharacters,
                     CsvReadLimit.Rows => budget.MaximumRows, CsvReadLimit.Columns => budget.MaximumColumns, CsvReadLimit.Cells => budget.MaximumCells,
                     _ => budget.MaximumFieldCharacters };
                 effects.Refusal = kind is { } limit ? new CsvReadLimitException(limit, maximum) : null;
-                effects.Selected = emptyOnly ? new("fictitious-empty.csv", "") : kind is null ? new("fictitious-unfinished.csv", "a,\"unfinished") : picked;
+                effects.Selected = emptyOnly ? new("fictitious-empty.csv", "") : kind is null ? new("fictitious-malformed.csv", quotationOnly ? "a,\"12\"34" : "a,\"unfinished") : picked;
                 await PickAsync();
                 if (vm.FileName != picked.Name || vm.PreviewText != originalText || JsonSerializer.Serialize(vm.LedgerPreviewRows) != originalRows
                     || !vm.CanRunImport || vm.IsBusy || vm.ImportError is null)
@@ -73,10 +74,10 @@ internal static partial class DebugSnapshots
                 CheckCaption(label, ProfileNativeReads);
                 if (label.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock native || native.IsTextTrimmed)
                     throw new IOException("Original CSV refusal text is clipped.");
-                observations.Add(new { Context = context, Refusal = kind?.ToString() ?? (emptyOnly ? "Empty" : "Malformed"), label.Text,
+                observations.Add(new { Context = context, Refusal = kind?.ToString() ?? (emptyOnly ? "Empty" : quotationOnly ? "MisplacedQuotation" : "Malformed"), label.Text,
                     native.ActualWidth, native.ActualHeight, native.IsTextTrimmed, OriginalReviewRetained = true });
             }
-            var name = context + (emptyOnly ? "-csv-input-empty.png" : "-csv-input.png");
+            var name = context + (emptyOnly ? "-csv-input-empty.png" : quotationOnly ? "-csv-quotation.png" : "-csv-input.png");
             var destination = Path.Combine(folder, language); Directory.CreateDirectory(destination);
             await CaptureWindowAsync(app.Windows[0], Path.Combine(destination, name));
             captures.Add(new { Language = language, File = name });

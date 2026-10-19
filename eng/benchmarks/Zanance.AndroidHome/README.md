@@ -505,3 +505,11 @@ native-provider acceptance. Complete original review/input equality, visible ful
 exact configuration/theme/language restoration are required. Receipts bind source MVID, comparison
 and complete synthetic input hash. No Import/Undo or Main data access. Stop only the terminal caller
 and restore ordinary Main/OS. [Qualification](../../../src/Apps/Zanance/docs/quality/csv-input-safety.md).
+
+
+## D-387 - Preserve CSV financial meaning at quote boundaries
+
+Phase `csv-quotation` qualifies the original malformed-amount refusal and translated error only,
+using a fresh comparison with the retained independent fixture. Exact source MVID/input hash,
+complete native caption, prior review/data and restoration remain mandatory. No replay of the
+unchanged byte/shape-limit cases. [Exact scope](../../../src/Apps/Zanance/docs/quality/csv-quotation-integrity.md).
