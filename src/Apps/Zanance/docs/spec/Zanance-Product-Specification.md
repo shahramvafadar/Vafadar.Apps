@@ -7115,3 +7115,13 @@ extension. Exact ordinary caller/Main/Home/OS restoration and owned cleanup pass
 source/APK/schema/permission/SDK or managed-count change: Main D-389, Samsung D-385 remain current.
 No full suite or unrelated successful build is replayed; QA-06/general stability, accessibility,
 device/iOS/provider/Store/release acceptance remain open. See [trial](../quality/android-new-bridge-trial.md).
+
+### Section31 update - D-391 actual reader request evidence
+
+Nine original en/fa/de New expense/Amount/Cancel speech-request text/locale/role packets and six
+actual reader open/cancel activations match native focus/return evidence. Exact original reader/
+secure/app/Home/OS/APK state is restored on the same process. This is bounded native qualification,
+not new managed cases, a full database comparison or audible/pronunciation/all-reader acceptance.
+No production source/APK/schema/permission/SDK change; Main remains D-389 and Samsung D-385.
+Unchanged successful suites/builds/layout matrices are not replayed. A11Y-01, QA-06 and external
+platform/release gates remain open. [Evidence](../quality/android-reader-speech-requests.md).

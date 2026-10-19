@@ -1907,3 +1907,13 @@ See quality/ecb-reference-integration.md for exact source/native/package evidenc
 
 Terminal memory is not peak/leak/low-memory evidence. Main remains D-389, Samsung D-385.
 [Full trial](quality/android-new-bridge-trial.md).
+
+## D-391 - Retain the reader acceptance distinction
+
+- [x] Nine original en/fa/de text/locale/role requests and six actual open/cancel gestures qualified.
+- [x] Exact reader, app/Home/OS/APK restoration; independent helper and matched remote files removed.
+- [ ] Audible intelligibility/pronunciation, wider TalkBack flows and physical/platform acceptance.
+
+Request records are not an audio transcript or a general runtime pass. Main/APK remain D-389,
+Samsung D-385; no unchanged successful suite/build replay.
+[Evidence](quality/android-reader-speech-requests.md).

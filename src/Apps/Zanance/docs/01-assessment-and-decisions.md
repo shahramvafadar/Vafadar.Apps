@@ -7208,3 +7208,14 @@ their historical corresponding samples; reference maximum2465.7064ms. Reject pro
 and further lifecycle replay. Ordinary caller, same Main15560, exact Home/OS/APK and owned cleanup
 are verified. Production code/APK and managed counts remain D-389; general stability stays open.
 [Full evidence and limits](quality/android-new-bridge-trial.md).
+
+## D-391 - Qualify actual original reader speech requests
+
+Close a specific gap beyond D-367 focus metadata: nine original en/fa/de New expense/Amount/Cancel
+speech-fragment text/locale/role packets match saved original native focus. Six real reader open/
+cancel activations preserve the same Main15560 and zero-EUR Home. Reject an unreadable overlay
+observer and recover missing filtered log evidence from the same bounded original PID/time window,
+without input replay. Restore native ERROR/overlay/toggles, all ten secure values, app choices,
+exact Home/OS/APK and remove only hash-matched independent artifacts/helper. No production or managed
+count change; audible pronunciation and broad A11Y/runtime/device gates remain open.
+[Complete evidence and boundaries](quality/android-reader-speech-requests.md).

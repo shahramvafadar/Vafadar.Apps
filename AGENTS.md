@@ -2811,3 +2811,12 @@ has longer dispatcher gaps than every historical corresponding sample. Do not pr
 to the phone or repeat it unchanged. Keep ordinary Main/runtime policy and original negative evidence;
 finite correctness is not general crash/ANR acceptance. Restore ordinary caller/Main/OS state and
 distinguish terminal aggregate memory from peak/leak/low-memory claims. No raw memory collection.
+
+## D-391 bounded original reader speech evidence
+
+Actual reader speech-fragment text/locale/role can qualify a request boundary, not audible pronunciation
+or all-reader acceptance. Keep gestures, actual native focus and original context/timestamps together;
+utterance IDs can restart on reconnection. Any temporary reader diagnostic preference is limited to
+the authorized fictitious emulator, with exact native/secure setting restoration and no archived
+general logs, accounts, secrets or private-file extraction. Empty overlay observations are not silence.
+Do not repeat unchanged request captures or old waveform/ASR attempts to manufacture audible acceptance.

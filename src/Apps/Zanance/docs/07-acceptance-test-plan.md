@@ -4340,3 +4340,13 @@ gaps worsen; no causal speed or random-crash fix is established. Do not extend t
 phone/lifecycle cohorts. Exact ordinary caller and same Main/Home/OS restoration plus owned cleanup
 pass. No new managed case or unrelated successful suite/build replay. QA-06 stays open.
 [Evidence and scope](quality/android-new-bridge-trial.md).
+
+## D-391 - Speech request text is distinct from audible acceptance
+
+Pass nine actual original en/fa/de action/Amount/Cancel text/locale/role packets, correlated with
+original native focus, and six actual reader open/cancel callbacks with zero-EUR Home returns.
+Same Main15560; exact reader ERROR/overlay/toggles, ten secure values, app choices/Home/OS/APK restored;
+owned independent helper/JAR/XML removed after hash matching. No production change, new managed
+case or unchanged successful suite/build replay. Pronunciation/intelligibility, remaining workflows,
+physical/iOS and full A11Y-01 acceptance stay unchecked; native runtime gates remain open.
+[Original receipts and limits](quality/android-reader-speech-requests.md).

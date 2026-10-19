@@ -2757,3 +2757,13 @@ unchanged Main/Home/OS and clean owned output. Do not repeat default or rejected
 new evidence. Continue ready approved work under D-386, including independent final qualification
 while concrete provider/account/Mac gates remain unavailable. No full-suite/Main build replay.
 [Evidence and open boundaries](../../quality/android-new-bridge-trial.md).
+
+## D-391 - Stronger reader request evidence without a false audible pass
+
+Verify original en/fa/de text, locale and native role at the real reader's speech-request boundary;
+preserve original actual gestures and focus, same Main/Home and exact reader/app/OS restoration.
+Nine request packets/six safe activations pass. Do not replay these paths or rejected overlay/ASR
+attempts as a substitute for actual audio intelligibility. No feature source/APK or managed-count
+change, unchanged successful build/suite replay or physical-device claim. Continue independently
+ready work under D-386; full A11Y/runtime and provider/account/Mac gates remain open.
+[Scope and evidence](../../quality/android-reader-speech-requests.md).
