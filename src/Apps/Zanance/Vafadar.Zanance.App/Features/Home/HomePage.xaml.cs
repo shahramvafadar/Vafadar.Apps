@@ -50,9 +50,21 @@ public partial class HomePage : ContentPage
         }
     }
 
+    /// <summary>Uses the original Shell back handling for a pushed Home without adding a second header.</summary>
+    private void OnHeaderBackClicked(object? sender, EventArgs e) => Shell.Current?.SendBackButtonPressed();
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        // D-375: replace the native title bar once, retaining Back when this same page is pushed.
+        HeaderBack.IsVisible = Navigation.NavigationStack.Count > 1;
+        var backIcon = new FluentIcons.Maui.SymbolImageSource
+        {
+            Symbol = FlowDirection == FlowDirection.RightToLeft ? FluentIcons.Common.Symbol.ArrowRight : FluentIcons.Common.Symbol.ArrowLeft,
+            Size = 22,
+        };
+        backIcon.SetDynamicResource(FontImageSource.ColorProperty, "Primary");
+        HeaderBack.Source = backIcon;
         // Register the actual lazy-created page, not a lookup through ShellContent.Content.
         AppShell? owner = null;
         for (Element? ancestor = Parent; ancestor is not null; ancestor = ancestor.Parent)

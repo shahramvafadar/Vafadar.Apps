@@ -6965,3 +6965,13 @@ signed offline APK and no-reset main/native Home0/979/OS restoration pass; phone
 No schema/permission/font/layout change or repetition of unrelated successful suites. Broader
 runtime, cold/low-memory, reader, iOS, provider and release gates remain open.
 [Detailed qualification](../quality/home-review-count.md).
+
+### Section31 update - D-375 Home title action
+
+The owner's Home space request is delivered: a 48 px Add beside the title replaces its bottom band.
+Eighteen Windows layouts and six OS 200%/360 dp Release/AOT Android contexts preserve complete fictitious
+account/entry/settings fields. No-reset main upgrades and original native Add/Cancel pass on emulator
+and Samsung with original Home 0/979, exact settings and about 88 dp more content height. The managed
+unit-test count is unchanged; unrelated successful suites and financial benchmarks are not rerun.
+Strict Windows/full signed offline Android pass. General runtime/performance, spoken-reader, iOS,
+provider/Store and release gates remain open. [Evidence](../quality/home-add-header.md).

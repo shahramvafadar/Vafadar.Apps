@@ -1741,3 +1741,11 @@ Preserve original action, scope, scalable captions and language/region/digit cho
 checks compare the actual display-digit mapping while the bound count stays Latin; do not change
 product formatting to satisfy an incorrect observer.
 [Original page qualification](quality/home-review-count.md).
+
+## D-375 - Home Add shares the title row
+
+Place Home's real 48 px plus at the physical right of its scalable growing title, including RTL. This
+single header replaces the native page title bar; do not add another title band. The content viewport
+fills the remaining height down to the tab bar, without bottom Add row, overlay or reserved padding.
+Keep the original command, translated description and loading/failure guards. Other page docks and
+financial typography remain unchanged. [Native qualification](quality/home-add-header.md).

@@ -13,6 +13,7 @@
     xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:progress="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
     x:DataType="local:HomeViewModel"
+    Shell.NavBarIsVisible="False"
     Title="{v:Translate App_Name}">
 
     <ContentPage.Resources>
@@ -27,11 +28,23 @@
         </Style>
     </ContentPage.Resources>
 
-    <!-- Home (D-27, D-37): the balance first, quick add right below it, what needs attention, then the sections the user
+    <!-- Home (D-27, D-37): the balance first, quick add beside the title, what needs attention, then the sections the user
          keeps (§21.5). One job per card; the first screen answers "where do I stand?" and "add an expense" without scrolling. -->
-    <!-- D-78: reserve the Add action below the viewport so it never covers readable content. -->
-    <Grid RowDefinitions="*,Auto">
-        <ScrollView x:Name="ContentViewport" IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding Loading.IsReady}">
+    <!-- D-375: the growing title owns Add; the full-height viewport needs no bottom action band. -->
+    <Grid RowDefinitions="Auto,*">
+        <Grid x:Name="HomeHeader" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8" Padding="16,8"
+              FlowDirection="LeftToRight">
+            <ImageButton x:Name="HeaderBack" IsVisible="False" WidthRequest="44" HeightRequest="44" Padding="11"
+                         BackgroundColor="{DynamicResource PrimarySoft}" CornerRadius="22" VerticalOptions="Center"
+                         SemanticProperties.Description="{v:Translate Common_Back}" Clicked="OnHeaderBackClicked" />
+            <Label Grid.Column="1" Text="{v:Translate App_Name}" Style="{StaticResource PageTitle}"
+                   LineBreakMode="WordWrap" VerticalOptions="Center" />
+            <Button x:Name="AddAction" Grid.Column="2" Style="{StaticResource FloatingAddButton}" Text="+"
+                    WidthRequest="48" HeightRequest="48" Margin="0" CornerRadius="16" VerticalOptions="Center"
+                    Command="{Binding AddEntryCommand}" IsEnabled="{Binding Loading.IsReady}" IsVisible="{Binding Loading.IsReady}"
+                    SemanticProperties.Description="{v:Translate Tx_Add}" />
+        </Grid>
+        <ScrollView x:Name="ContentViewport" Grid.Row="1" IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding Loading.IsReady}">
             <VerticalStackLayout x:Name="Sections" Padding="16,8,16,16" Spacing="12">
 
                 <!-- Welcome without accounts -->
@@ -571,18 +584,14 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <Button x:Name="AddAction" Grid.Row="1" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddEntryCommand}"
-                IsEnabled="{Binding Loading.IsReady}" IsVisible="{Binding Loading.IsReady}"
-                SemanticProperties.Description="{v:Translate Tx_Add}" />
-
         <!-- The first empty defaults are not a financial snapshot; show them only after a successful complete load. -->
-        <VerticalStackLayout Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+        <VerticalStackLayout Grid.Row="1" Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
             <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}"
                                WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
             <Label x:Name="LoadingCaption" Text="{v:Translate Home_Loading}" Style="{StaticResource Secondary}"
                    HorizontalTextAlignment="Center" SemanticProperties.Description="{v:Translate Home_Loading}" />
         </VerticalStackLayout>
-        <VerticalStackLayout Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+        <VerticalStackLayout Grid.Row="1" Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
             <Label x:Name="LoadFailureCaption" Text="{v:Translate Home_LoadFailed}" HorizontalTextAlignment="Center" />
             <p:WrappingAction x:Name="RetryLoadAction" Text="{v:Translate Home_RetryLoad}" Appearance="Secondary" Command="{Binding RetryLoadCommand}" />
         </VerticalStackLayout>

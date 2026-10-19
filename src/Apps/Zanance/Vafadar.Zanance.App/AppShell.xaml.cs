@@ -147,7 +147,8 @@ public partial class AppShell : Shell
         // Shell's Windows TitleView clips large captions; its Insights drop-down also hides destinations (D-83, D-85).
         Navigated += (_, _) =>
         {
-            if (CurrentPage is not { } page || GetTitleView(page) is not null)
+            // D-375: Home already owns its growing title/Add row; never wrap it in a second header.
+            if (CurrentPage is not { } page || page is Features.Home.HomePage || GetTitleView(page) is not null)
             {
                 return;
             }

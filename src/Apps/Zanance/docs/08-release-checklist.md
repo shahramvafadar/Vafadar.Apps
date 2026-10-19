@@ -1778,3 +1778,12 @@ an improvement. Strict main builds/full signed offline APK and no-reset original
 restoration pass, phone turn released. General runtime/performance/readers/iOS/provider/Store/release
 gates remain open.
 [Package, preserved failures and limits](quality/home-review-count.md).
+
+## D-375 Home title action qualification
+
+Strict Windows and complete signed offline Android builds pass without warnings/errors. Eighteen
+Windows layouts and six OS 200%/360 dp native contexts preserve the original independent fixture.
+Main no-reset upgrades and native Add/Cancel pass on emulator/Samsung with original Home 0/979 and
+about 88 dp more viewport height. Exact emulator settings restored; phone released. No money/schema/
+security/permission changes or unrelated suite replay. General runtime/performance, spoken-reader,
+iOS/provider/Store and release gates remain open. [Actual package](quality/home-add-header.md).

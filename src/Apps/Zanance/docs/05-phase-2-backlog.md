@@ -2477,3 +2477,10 @@ Reject immutable-model overlap after no end-to-end benefit; retain native engine
 Home/data and exact settings. Next isolate actual protected factory/context creation from the
 first EF settings query before another implementation. App/APK and managed counts stay D-360.
 [Scoped original evidence](quality/android-managed-startup-phases.md).
+
+## D-375 - Owner-requested Home title action
+
+Completed independently of new Phase2 capabilities: reclaim the bottom Add band through a real 48 px
+button beside the growing title. Native layouts, no-reset main upgrades and open/Cancel pass; other
+docks and money/security behavior are unchanged. Wider runtime, reader and external acceptance gates
+remain open. [Evidence](quality/home-add-header.md).

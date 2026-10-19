@@ -2679,3 +2679,13 @@ existing account scope. Never sum per-currency counts to obtain a transaction co
 remains one operation. Preserve the separate checked monetary summaries and original scope/date/
 duplicate semantics. Native caption checks apply the original display-digit mapper without changing
 bound values, fonts or digit preferences; retain failed observations and already completed cases.
+
+## D-375 Home title action (owner decision 2026-10-19)
+
+Home replaces its native page title bar and former full-width bottom Add band with one growing
+header. Keep the original command and loading/failure guard in a real 48px button physically right
+of the title, including RTL; the viewport reaches the bottom without an action overlay. This Home
+exception leaves other pages' persistent Add/bulk/Undo docks unchanged. Preserve scalable title,
+semantic colors, translated action names and original Shell Back handling. Native modal actions
+require their own shown/focused window rather than the covered Activity's focus. Preserve failed
+observers and original fictitious data; restore authorized emulator settings exactly.

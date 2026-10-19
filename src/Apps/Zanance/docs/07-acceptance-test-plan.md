@@ -4201,3 +4201,14 @@ Home path preserves original financial/native presentation and complete raw sche
 Strict builds/full signed offline APK, no-reset main Home/profile/OS restoration and phone release
 pass. No two-second, broader GC/ANR/device, spoken-reader, iOS or release claim.
 [Exact evidence](quality/home-review-count.md).
+
+## D-375 Home title action
+
+Original Home geometry passes 18 en/fa/de Light/Dark Windows cases at 360/412/1280 and six Release/AOT
+Android cases at actual OS 200%/360dp. Add remains 48 px, shares one growing title row, keeps its command/
+readiness/name and reserves no lower band. Full bottom scroll remains reachable. Native Android
+Add/Cancel preserves all independent fixture fields; one fictitious unsaved-draft confirmation is
+explicitly discarded without Save. Main emulator/Samsung repeat only the changed action/viewport path
+after no-reset upgrade, retaining Home 0/979 and exact settings. The Windows separate-desktop modal
+COM failure remains a separate limitation; actual modal acceptance comes from Android. These native
+observations are not new managed unit tests. [Evidence](quality/home-add-header.md).

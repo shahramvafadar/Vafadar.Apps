@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### More room on Home (D-375)
+
+- Move the plus button beside the title, slightly reduce it to 48 px and remove its full-width bottom band so more content fits.
+- Preserve the original Add action and accessible name; verify native open/Cancel and upgrades without clearing data.
+
 ### Correct Home review count (D-374)
 
 - Count a transfer between two currencies once in Home's review notices, while preserving each currency's financial amounts.

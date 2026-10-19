@@ -1539,3 +1539,14 @@ device width and native display-digit mapper. The review constant is scoped to t
 project; ordinary main Release does not include the diagnostic. Never restart after mere observation
 expiry, reseed an existing fixture, change OS digits or treat geometry checks as spoken-reader proof.
 [Exact runtime evidence](../../src/Apps/Zanance/docs/quality/home-review-count.md).
+
+## D-375 original Home header review
+
+`./eng/scripts/Run-StoreDrafts.ps1 -HomeAddHeaderReview` runs original en/fa/de Light/Dark Home layouts
+at 360/412/1280 on the guarded independent non-input desktop. It checks original Add/viewport geometry,
+full bottom scroll and complete fictitious field equality. The separate-desktop modal COM failure is
+retained; this mode does not claim Windows modal acceptance. The distinct AndroidHome caller supports
+`home-add-header` and retained-fixture `home-add-header-fixed`. Require original native controls' own
+shown/focused windows and await async Cancel. Keep original draft confirmation, data and public
+same-process reports; observation expiry alone never authorizes restarting the process or fixture.
+Only the explicitly authorized independent emulator changes OS text/display settings, restored exactly.

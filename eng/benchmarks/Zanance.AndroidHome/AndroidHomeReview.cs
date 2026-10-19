@@ -44,7 +44,7 @@ internal static partial class AndroidHomeReview
                 await Task.Run(() => PrepareAsync(root, ct, unreviewed: phase == "prepare-unreviewed", resumeUnreviewed), ct);
                 await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, UnreviewedCorpus = phase == "prepare-unreviewed", NativeOverflowRefusals = phase == "prepare-unreviewed" ? CheckUnreviewedOverflow() : 0, CoreModuleVersionId = typeof(LedgerCalculator).Module.ModuleVersionId, MainPackageTouched = false, Device = DeviceEvidence() }, ct);
             }
-            else if (phase is "home-review-count" or "home-review-count-fixed")
+            else if (phase is "home-review-count" or "home-review-count-fixed" or "home-add-header" or "home-add-header-fixed")
             {
                 Directory.CreateDirectory(root);
                 if (RedirectedAncestors(root).Length != 0) throw new ReviewCheckException("Nonredirected review root required.");
@@ -56,6 +56,17 @@ internal static partial class AndroidHomeReview
                 var result = await Diagnostics.HomeReviewCountReview.RunAsync(app, services, root, [logicalWidth],
                     language => SetLanguageAsync(app, local, language, ct), async (page, context) =>
                     {
+                        if (phase is "home-add-header" or "home-add-header-fixed")
+                            await Diagnostics.HomeAddHeaderReview.CheckAsync(page, button =>
+                            {
+                                // A native modal owns focus instead of the covered Activity window.
+                                // Require the actual original button's own shown/focused window on both surfaces.
+                                if (button.Handler?.PlatformView is not Android.Widget.Button native
+                                    || native.Context?.PackageName != Package || !native.IsShown || !native.HasWindowFocus
+                                    || !native.Enabled || !native.PerformClick())
+                                    throw new ReviewCheckException("Original native header action refused.");
+                                return Task.CompletedTask;
+                            }, ct);
                         var model = (HomeViewModel)page.BindingContext;
                         var viewport = page.FindByName<ScrollView>("ContentViewport");
                         foreach (var text in new[] { model.ConfirmedBalanceText, model.UnreviewedText })
@@ -87,7 +98,7 @@ internal static partial class AndroidHomeReview
                             if (!complete)
                                 throw new ReviewCheckException("Original review caption differs.");
                         }
-                    }, ct, retainedFixture: phase == "home-review-count-fixed");
+                    }, ct, retainedFixture: phase is "home-review-count-fixed" or "home-add-header-fixed");
                 await WriteReportAsync(root, phase, new { Comparison = comparison, Qualification = result, LogicalWidth = logicalWidth,
                     Device = DeviceEvidence(), MainPackageTouched = false }, ct);
             }
@@ -251,6 +262,8 @@ internal static partial class AndroidHomeReview
                 WindowPageType = app.Windows.FirstOrDefault()?.Page?.GetType().Name,
                 ShellPageType = (app.Windows.FirstOrDefault()?.Page as AppShell)?.CurrentPage?.GetType().Name,
                 BalanceEvidence = _balanceEvidence,
+                HeaderEvidence = Diagnostics.HomeAddHeaderReview.LastObservation,
+                HeaderProgress = File.Exists(Path.Combine(root, "review-count-progress.json")) ? await File.ReadAllTextAsync(Path.Combine(root, "review-count-progress.json")) : null,
                 CompletedCases = File.Exists(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json")) ? await File.ReadAllTextAsync(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json")) : null,
                 RootExists = Directory.Exists(root), MarkerExists = File.Exists(Path.Combine(root, "fictitious-performance.marker")),
                 RedirectedAncestors = RedirectedAncestors(root) };

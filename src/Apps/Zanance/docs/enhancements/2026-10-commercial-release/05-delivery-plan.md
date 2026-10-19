@@ -2610,3 +2610,12 @@ performance candidate. Do not claim a speedup from the mixed/descriptively slowe
 Unchanged successful suites remain untouched; continue remaining ready work with QA-06 and external
 gates intact.
 [Completed bounded delivery](../../quality/home-review-count.md).
+
+## D-375 - Complete Home title-action batch
+
+Deliver the owner's compact-header choice as one finished change: replace native page title and
+bottom Add band with one growing title row; retain original command/cover and verify actual scroll
+geometry. Eighteen Windows and six OS 200%/360 dp Android contexts plus main emulator/Samsung native
+open/Cancel and no-reset upgrades pass. Preserve failed observations and original fixture data;
+restore exact emulator settings and release the phone. Unchanged successful suites and financial
+benchmarks are not repeated. [Evidence](../../quality/home-add-header.md).

@@ -7021,3 +7021,15 @@ The tenfold median2714.35ms is not an accepted speedup or two-second result. Str
 offline APK and no-reset main upgrades pass; original Home0/979 and exact settings are restored and
 the phone is released. No schema, permission, financial formula or layout change; wider gates stay open.
 [Source, native evidence and limits](quality/home-review-count.md).
+
+## D-375 - Move Home Add beside the title
+
+The owner requested reclaiming Home's full-width bottom action band, allowing a floating button or
+compact action beside the title. Choose the title area: one growing header replaces the native page
+title bar, with the original Add action at its physical right, reduced locally from 56 px to 48 px.
+Preserve Loading.IsReady, semantics, financial sections and other pages' docks. Eighteen Windows and
+six OS 200%/360 dp Release/AOT Android contexts pass with complete fixture-field preservation. Main
+emulator/Samsung native open/Cancel and no-reset upgrades pass; physical viewport gains 87.82 dp.
+Retain Windows modal COM and diagnostic focus failures; do not call wider platform faults fixed.
+No managed unit count increase or unrelated suite/financial benchmark repetition.
+[Exact evidence and limits](quality/home-add-header.md).

@@ -3260,3 +3260,13 @@ the old baseline; no performance gain is accepted. Complete signed offline APK/n
 and native Home0/979/exact OS restoration pass, phone turn released. General QA-06/reader/iOS/
 provider/Store/release scope remains unfinished.
 [Evidence and remaining gates](../../quality/home-review-count.md).
+
+## D-375 Home space and title action
+
+Done locally/native: a 48 px title action removes Home's bottom band, preserving its original command,
+loading/failure guards and full bottom scroll reach. Eighteen Windows and six native OS 200%/360 dp
+contexts pass with complete fixture-field preservation. Main emulator/Samsung upgrades and native
+Add/Cancel pass without reset or Save; physical viewport gains 87.82 dp and Home 979 returns. Exact
+emulator settings restored and phone turn released. No new unit count or unrelated suite/benchmark
+replay; broader QA-06/reader/iOS/provider/Store/release remains open.
+[Evidence](../../quality/home-add-header.md).

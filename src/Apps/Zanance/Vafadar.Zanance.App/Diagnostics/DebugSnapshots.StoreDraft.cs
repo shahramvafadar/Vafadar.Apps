@@ -116,12 +116,17 @@ internal static partial class DebugSnapshots
         await SeedBudgetAsync(services, food);
         await store.UpdateSettingsAsync(settings => settings.OnboardingCompleted = true);
         app.ShowMainShell();
-        if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "home-review-count")
+        if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") is "home-review-count" or "home-add-header")
         {
             var countCaptures = new List<object>();
             var result = await HomeReviewCountReview.RunAsync(app, services, folder, [360, 412, 1280],
                 language => SetLanguageAsync(app, local, language), async (page, context) =>
                 {
+                    if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "home-add-header")
+                        await HomeAddHeaderReview.CheckAsync(page, button =>
+                        {
+                            InvokeChoiceReview(button); return Task.CompletedTask;
+                        }, CancellationToken.None, exerciseNavigation: false);
                     var model = (Features.Home.HomeViewModel)page.BindingContext;
                     var viewport = page.FindByName<ScrollView>("ContentViewport");
                     foreach (var text in new[] { model.ConfirmedBalanceText, model.UnreviewedText })

@@ -1137,3 +1137,10 @@ Require actual Activity focus and reject retained receipts lacking that proof. P
 groups and actual failures separately; the ineffective precise-Tarjan trial is removed. Main/APK
 remain D-344 and broader accessibility/runtime/platform gates stay open.
 [Evidence and limits](quality/android-os-accessibility-qualification.md).
+
+## D-375 - Home space reclaimed
+
+Done: replace Home's bottom Add band with one compact title action. Preserve original financial
+sections, bottom scroll reach, command and loading guard. Original Windows/Android layout and native
+open/Cancel pass, including Samsung with unchanged Home 979 and about 88 dp more content height. No
+financial writes or unrelated suite/benchmark repetition. [Evidence](quality/home-add-header.md).
