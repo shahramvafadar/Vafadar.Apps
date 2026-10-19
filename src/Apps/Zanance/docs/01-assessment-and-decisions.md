@@ -7133,3 +7133,15 @@ are longer in5/6 tenfold pairs; aggregate post-HomePSS is about818MiB, without a
 peak/low-memory claim. One clean finite cohort is not a native fix. Keep Main unchanged, restore the
 ordinary independent package and exact Main/OS state, and retain prior actual failures. No phone,
 new unit count or successful unrelated suite. [Evidence and limits](quality/android-gc-nursery-trial.md).
+
+## D-386 - Finish feature development before dedicated Android qualification
+
+On 2026-10-19 the owner moved dedicated ANR/crash work and Android accessibility completion after
+all remaining approved feature development. Continue necessary focused verification of changed
+features and retain any observed failure; avoid unrelated runtime experiments and repeated successful
+qualification matrices during development. This changes execution order, not release acceptance.
+The owner describes the connected Samsung as low-end and possibly unhealthy; that is a hypothesis,
+not a verified root cause, and does not invalidate existing phone or emulator failures. External
+provider/account gates remain separate from ready independent development. Updated AGENTS, canonical
+backlog and delivery plan record the same order. Documentation-only decision: no runtime change,
+build, test, device input or new acceptance claim.

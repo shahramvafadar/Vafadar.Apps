@@ -12,6 +12,13 @@ planned sections; unresolved choices still require owner decisions.
 
 ## Active execution order (owner continuation, 2026-10-15)
 
+**Owner scheduling override, 2026-10-19 (D-386):** finish remaining approved feature development first.
+Dedicated Android ANR/crash investigation and Android accessibility completion follow development,
+before final release acceptance. Continue focused checks needed to verify each changed feature and
+retain actual failures; do not launch unrelated stability experiments or accessibility matrices now.
+The connected low-end Samsung's condition is uncertain, not a proven explanation for observed faults.
+External account/provider gates remain separate; continue ready independent development when blocked.
+
 Deliver each complete batch through implementation, focused qualification, current documentation and one verified
 commit/push. Do not repeat successful unchanged checks. Existing D-292 files/fixtures are retained; no new helper
 slice is a delivery. Historical proposals and handoff notes below do not reopen settled decisions.
@@ -46,10 +53,10 @@ gated capability complete. No completion date or acceptance is inferred from a b
 | 9 | Deferred outside current delivery: additional languages | No current release dependency; polish the existing six languages |
 | 10 | Final QA, bug fixes, store metadata, staged rollout; no new features | Release checklist complete |
 
-Deviations: Tax research and service-cost estimates start in wave 0 because they can change the plan; the
-accessibility pass of the Phase 2 backlog is placed in wave 2 (release-critical), not after all features, because the
-owner asked for it before release and it does not depend on the commercial waves. Existing-language copy fixes continue
-in every wave.
+Deviations: Tax research and service-cost estimates start in wave 0 because they can change the plan.
+D-386 supersedes the historical wave-2 execution priority for Android accessibility and dedicated
+ANR/crash work: execute these after remaining approved feature development, retaining their release
+acceptance requirements. Existing-language copy fixes continue in every wave.
 
 ## Release gates
 

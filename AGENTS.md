@@ -1,5 +1,16 @@
 # AGENTS.md – working rules for this repository
 
+## Owner execution order on 2026-10-19 (D-386)
+
+Finish remaining approved feature development before dedicated Android ANR/crash investigation and
+Android accessibility completion. Do not let those final qualification tracks displace ready development
+or repeatedly rerun successful checks. Preserve failures observed during necessary development checks;
+this scheduling change does not mark stability or accessibility accepted or waive release gates.
+The owner reports that the connected low-end Samsung may itself be unhealthy. Treat device condition
+as an unverified possible contributor, not an established cause or grounds to discard emulator/phone
+evidence. Resume dedicated stability and accessibility work after feature development; unavailable
+external accounts/providers do not require idle waiting or reopening settled owner choices.
+
 ## Owner execution decisions on 2026-10-17
 
 The connected Samsung SM-A176B is authorized for Zanance Android qualification: install or upgrade the

@@ -11,6 +11,14 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 
 ## Overview
 
+**Execution priority override (owner, 2026-10-19, D-386):** remaining approved feature development
+precedes dedicated Android ANR/crash investigation (QA-06) and Android accessibility completion
+(A11Y-01/A11Y-03). These remain unfinished final qualification requirements, not accepted or removed
+from release scope. Preserve failures encountered in necessary feature checks. The connected low-end
+Samsung's possible hardware/health limitations remain unverified; do not attribute faults to it without
+evidence or repeat unchanged successful checks. Follow the updated delivery plan over historical
+priority/order descriptions below.
+
 | Id | Title | Wave | Prio | Size | State | Depends on |
 |---|---|---|---|---|---|---|
 | ZCR-GOV-01 | Audit, plan matrix, architecture, backlog and delivery plan | 0 | P1 | M | Done | – |
