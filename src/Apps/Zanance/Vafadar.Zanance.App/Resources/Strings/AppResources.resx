@@ -8311,4 +8311,13 @@ Original XML SHA-256: {5}</value>
   <data name="Occurrence_SavedNotificationFailed" xml:space="preserve">
     <value>Your change was saved. Some views could not be updated; close and reopen them before making another change.</value>
   </data>
+  <data name="Occurrence_Loading" xml:space="preserve">
+    <value>Loading this scheduled item…</value>
+  </data>
+  <data name="Occurrence_ReadFailed" xml:space="preserve">
+    <value>This item could not be refreshed. Your input is retained. Try again, or close and reopen it.</value>
+  </data>
+  <data name="Occurrence_RetryLoad" xml:space="preserve">
+    <value>Try again</value>
+  </data>
 </root>

@@ -49,7 +49,7 @@ priority/order descriptions below.
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Done (D-268 browser/account copy and six-language drafts; real OAuth/publication remain open) | D-69 continuous delivery |
 | ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; D-381 physical interpreted paging/stale-mapping review; other bank/relationship variants require original fixtures | original export specifications/samples |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
-| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; D-328 accountant ZIP receiving/content; D-329 original en/fa/de PDF contents and continued-table fix; D-330 own-format producer/consumer/refund/transfer/cold Undo; D-361 original en/fa/de display/Back and advanced goal choices/dirty discard, exact preference/Home restoration and one native root; D-365 original changed account/debt/monthly disclosures in 18 normal-scale Samsung cases with draft/data/preference preservation; broader phone acceptance remains) | – |
+| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; D-328 accountant ZIP receiving/content; D-329 original en/fa/de PDF contents and continued-table fix; D-330 own-format producer/consumer/refund/transfer/cold Undo; D-361 original en/fa/de display/Back and advanced goal choices/dirty discard, exact preference/Home restoration and one native root; D-365 original changed account/debt/monthly disclosures in 18 normal-scale Samsung cases with draft/data/preference preservation; D-401 occurrence override/skip/unskip, manual link/keep and generated delete-on-reopen with cold/Main restoration; broader phone acceptance remains) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical bulk D-393; remaining device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator D-74; bounded physical D-394; broader device/iOS gates open) | QA-03 |
@@ -3504,3 +3504,16 @@ four original Windows/Android native refusals each, six message views per platfo
 signed offline candidate, Main/OS preservation and documentation are locally complete. Hosted CI and
 external/device/iOS gates remain separate; no unrelated successful financial or suite replay.
 [Qualification](../../quality/occurrence-state-conflicts.md).
+
+## D-401 - Original occurrence refresh and physical correction lifecycle
+
+The Samsung stale suggestion defect is corrected by shared covered retained-tab reads that preserve
+raw drafts, refuse financial retargeting and offer translated Retry.13 existing snapshot/21 resource
+cases, six native contexts per Windows/Release AOT Android,42 inspected Windows frames and18 real
+Android tab inputs pass. The same physical fixture qualifies metadata-only return, original override/
+skip/unskip, cancel/accept manual link/keep and generated delete-on-reopen with one cold read.
+Strict builds/full signed offline APK, Main979/five known rows/three original profiles/OS restoration,
+retirement of only the new inactive profile and phone release are locally complete. No accepted
+money or unrelated successful suites/matrices were replayed. QA-01 overall, exact hosted CI, D-386
+runtime/A11Y, iOS/provider/store and release remain open.
+[Qualification](../../quality/physical-occurrence-corrections.md).

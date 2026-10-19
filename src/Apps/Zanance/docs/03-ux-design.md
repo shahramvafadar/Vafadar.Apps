@@ -1857,3 +1857,12 @@ feedback and hold the command gate until it closes. New warning copy is complete
 A retained form does not grant authority to replace a newer accepted settlement or skip. The original
 failure adapter reports the refusal while the same draft remains; Busy spans its native message.
 Return and reopen to review current state. No layout, caption or automatic draft reload changed.
+
+## D-401 - Refresh retained occurrence suggestions without replacing input
+
+Returning through an actual Shell tab refreshes the original occurrence's suggestions under its
+loading cover. Retain raw payment amount/date, occurrence amount/due date/note and expanded state;
+never briefly assign defaults to native date controls. Hide writable fields until the complete read
+is ready. A failed read keeps the draft covered with translated Retry; a changed account/destination/
+kind/currency requires closing and reviewing again. Do not interrupt pending financial consent or
+its busy gate. Only a known accepted command's canonical reload resets payment defaults.

@@ -10,9 +10,10 @@
     Title="{v:Translate Occurrence_Title}">
 
     <Grid>
+    <Grid IsVisible="{Binding Loading.IsReady}">
         <Label Text="{v:Translate Entry_NotFound}" Margin="32" HorizontalTextAlignment="Center" IsVisible="{Binding NotFound}" />
 
-        <ScrollView x:Name="ValidationViewport" IsVisible="{Binding NotFound, Converter={StaticResource InvertedBoolConverter}}">
+        <ScrollView x:Name="ValidationViewport" IsVisible="{Binding NotFound, Converter={StaticResource InvertedBoolConverter}}" IsEnabled="{Binding IsNotBusy}">
             <VerticalStackLayout Padding="16" Spacing="8">
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
@@ -114,5 +115,14 @@
                 </Border>
             </VerticalStackLayout>
         </ScrollView>
+    </Grid>
+        <VerticalStackLayout Padding="32" VerticalOptions="Center" Spacing="12" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" />
+            <Label Text="{v:Translate Occurrence_Loading}" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Padding="32" VerticalOptions="Center" Spacing="12" IsVisible="{Binding Loading.HasFailed}">
+            <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" LineBreakMode="WordWrap" />
+            <p:WrappingAction Text="{v:Translate Occurrence_RetryLoad}" Command="{Binding ReloadCommand}" IsEnabled="{Binding IsNotBusy}" />
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

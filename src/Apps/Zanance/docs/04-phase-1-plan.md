@@ -1205,3 +1205,10 @@ Original stale correction refusal is locally complete:55 related app/70 SQLite c
 native commands per Windows/Release AOT Android, six original translated message views per platform,
 strict builds, signed offline candidate and Main/OS preservation. No unrelated full-suite replay or
 whole-device/iOS/ANR/A11Y/provider/release acceptance. See quality/occurrence-state-conflicts.md.
+
+## D-401 - Original retained occurrence continuation
+
+The actual Samsung stale-candidate defect is corrected with covered draft-preserving retained-tab
+reads and translated Retry. Related managed/native checks, strict builds/full signed offline APK,
+remaining physical correction/link/reopen/cold paths and exact Main/profile/OS restoration are locally
+complete. No full-suite replay or broad device/runtime/release acceptance. See quality/physical-occurrence-corrections.md.

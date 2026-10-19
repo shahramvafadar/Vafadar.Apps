@@ -8282,4 +8282,13 @@
   <data name="Occurrence_SavedNotificationFailed" xml:space="preserve">
     <value>تغییر شما ذخیره شد. بعضی صفحه‌ها به‌روز نشدند؛ پیش از تغییر دیگری، آن‌ها را ببندید و دوباره باز کنید.</value>
   </data>
+  <data name="Occurrence_Loading" xml:space="preserve">
+    <value>در حال بارگذاری این موعد…</value>
+  </data>
+  <data name="Occurrence_ReadFailed" xml:space="preserve">
+    <value>این موعد به‌روز نشد. اطلاعاتی که وارد کرده‌اید حفظ شده است. دوباره تلاش کنید یا صفحه را ببندید و باز کنید.</value>
+  </data>
+  <data name="Occurrence_RetryLoad" xml:space="preserve">
+    <value>تلاش دوباره</value>
+  </data>
 </root>

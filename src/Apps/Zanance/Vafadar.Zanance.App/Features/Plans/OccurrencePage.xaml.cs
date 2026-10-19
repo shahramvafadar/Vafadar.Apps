@@ -20,9 +20,12 @@ public partial class OccurrencePage : ContentPage
         _observingValidation = true;
         _viewModel.ValidationFailed -= OnValidationFailed;
         _viewModel.ValidationFailed += OnValidationFailed;
-        PendingPublication = _viewModel.LoadAsync();
+        PendingPublication = RefreshForNavigationAsync();
         await Presentation.Failures.GuardAsync(() => PendingPublication);
     }
+
+    /// <summary>Shares the original covered read after appearance or retained Shell-tab activation.</summary>
+    internal Task RefreshForNavigationAsync() => PendingPublication = _viewModel.RefreshForNavigationAsync();
 
     /// <summary>Stops scroll requests when this form leaves the visible navigation lifetime.</summary>
     protected override void OnDisappearing()

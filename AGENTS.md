@@ -2902,3 +2902,13 @@ replace a newer skip. Preserve same-entry link idempotency and the separate expl
 Native refusal diagnostics retain accepted rows and drafts. Classify only the exact four deliberate
 failure records with complete original receipts; unexpected failures remain rejected. Do not replay
 accepted financial actions to repair a diagnostic observer.
+
+## D-401 - Retained occurrence reads preserve the original draft
+
+Actual retained Shell-tab activation refreshes the original occurrence's candidates under one shared
+read cover. Do not reseed raw amount/date/note inputs during that refresh, even temporarily. A
+changed financial target refuses publication until the form is reviewed again. Failed reads retain
+the covered draft with translated Retry; do not expose stale writable fields. A pending original
+financial command retains its busy gate and consent, while its accepted canonical reload can still
+reset defaults. Keep the physical stale-candidate evidence and accepted manual row; qualify a
+changed source caption without posting that money again, then finish only remaining lifecycle work.

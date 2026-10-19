@@ -7233,3 +7233,17 @@ platform, strict builds and complete signed offline APK pass. Accepted settlemen
 overwritten from an older form; same-link idempotency and explicit reopening remain. Original Main
 and OS match after no-reset upgrade. This is scoped local acceptance, not a complete suite replay,
 whole-device/iOS/runtime/accessibility, hosted CI or release acceptance.
+
+## D-401 - Section31 continuation: retained occurrence and physical correction
+
+Actual Shell-tab activation refreshes the original occurrence under a shared read/error cover,
+retaining raw typed drafts and refusing changed financial targets. Retry has six translations;
+pending original financial commands keep their ownership.13 existing snapshot and21 resource
+cases, six native Windows contexts/42 inspected images and six Release/AOT Android contexts/18
+views/18 actual tab inputs pass. No new full-suite total is claimed.
+
+The same physical fixture demonstrates the corrected metadata-only return and remaining override/
+skip/unskip/manual-link-keep/generated-reopen-delete paths, cancel/accept and one cold read. Main979,
+five known public rows, three original profiles and OS match after retiring only the new test profile.
+Strict builds/full signed offline APK are qualified. Broader device/runtime/A11Y, real authentication,
+private-state/durable power-loss, iOS/provider/store/hosted CI/release gates remain separate.

@@ -1042,3 +1042,10 @@ uses isolated fictitious stores; native message traces contain only those contro
 Only existing local transaction state is read before an existing correction writer. No new stored
 data, migration, export, key, permission, SDK or network behavior. Separate fictitious native cases
 preserve accepted money and original Main/OS; no phone or private external data is used.
+
+## D-401 - Retained occurrence refresh
+
+Only existing local occurrence/ledger values and transient drafts/read state are used. No new field,
+key, permission, SDK, network, export or backup format. Native qualification uses owned fictitious
+fixtures; Samsung uses only the new approved fictitious profile. No private database/key/internal-id
+extraction or system-setting change. The accepted manual row is retained rather than replayed.

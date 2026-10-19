@@ -6,6 +6,9 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Refresh existing-transaction suggestions when returning to a scheduled item, while keeping typed
+  payment and occurrence changes. Failed reads keep the form covered and offer Retry.
+
 - Keep a newer accepted plan payment or skip when an older occurrence form attempts a conflicting correction.
 
 ### Keep saved plan payments saved (D-399)

@@ -1022,3 +1022,9 @@ available after a notification error; all qualification traces are isolated fict
 Only existing local transaction state is read before an existing correction writer. No new stored
 data, migration, export, key, permission, SDK or network behavior. Separate fictitious native cases
 preserve accepted money and original Main/OS; no phone or private external data is used.
+
+## D-401 - Retained occurrence reads
+
+The existing original local page refreshes existing suggestions while preserving transient input.
+No new data collection/storage, permission, network, SDK or portable export behavior. Phone evidence
+is limited to original public UI in an owned fictitious profile; no private database/key extraction.

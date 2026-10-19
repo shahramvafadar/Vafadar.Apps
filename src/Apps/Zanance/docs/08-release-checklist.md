@@ -1993,3 +1993,11 @@ Original stale correction refusal is locally complete:55 related app/70 SQLite c
 native commands per Windows/Release AOT Android, six original translated message views per platform,
 strict builds, signed offline candidate and Main/OS preservation. No unrelated full-suite replay or
 whole-device/iOS/ANR/A11Y/provider/release acceptance. See quality/occurrence-state-conflicts.md.
+
+## D-401 - Retained occurrence and remaining physical correction batch
+
+Related managed/native checks, strict Windows/Android builds, complete signed offline candidate and
+same-fixture physical correction/link/reopen/cold continuation are locally complete. Main979/five
+known rows/three profiles and exact OS settings are restored, only the new test profile is retired
+and the phone turn is released. No full-suite replay, general stability/A11Y, whole-device/iOS,
+real authentication/provider/store or release acceptance. Hosted CI still needs its exact-head result.

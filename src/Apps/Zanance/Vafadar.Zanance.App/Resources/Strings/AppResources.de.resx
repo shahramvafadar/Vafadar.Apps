@@ -8282,4 +8282,13 @@ Original-XML SHA-256: {5}</value>
   <data name="Occurrence_SavedNotificationFailed" xml:space="preserve">
     <value>Ihre Änderung wurde gespeichert. Einige Ansichten konnten nicht aktualisiert werden. Schließen und öffnen Sie diese erneut, bevor Sie weitere Änderungen vornehmen.</value>
   </data>
+  <data name="Occurrence_Loading" xml:space="preserve">
+    <value>Dieser geplante Eintrag wird geladen…</value>
+  </data>
+  <data name="Occurrence_ReadFailed" xml:space="preserve">
+    <value>Dieser Eintrag konnte nicht aktualisiert werden. Ihre Eingaben bleiben erhalten. Versuchen Sie es erneut oder schließen und öffnen Sie die Seite wieder.</value>
+  </data>
+  <data name="Occurrence_RetryLoad" xml:space="preserve">
+    <value>Erneut versuchen</value>
+  </data>
 </root>

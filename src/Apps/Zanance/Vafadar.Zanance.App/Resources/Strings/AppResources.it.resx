@@ -8271,4 +8271,13 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Occurrence_SavedNotificationFailed" xml:space="preserve">
     <value>La tua modifica è stata salvata. Alcune viste non sono state aggiornate; chiudile e riaprile prima di apportare un’altra modifica.</value>
   </data>
+  <data name="Occurrence_Loading" xml:space="preserve">
+    <value>Caricamento di questa scadenza…</value>
+  </data>
+  <data name="Occurrence_ReadFailed" xml:space="preserve">
+    <value>La scadenza non è stata aggiornata. I dati che hai inserito sono conservati. Riprova oppure chiudi e riapri la schermata.</value>
+  </data>
+  <data name="Occurrence_RetryLoad" xml:space="preserve">
+    <value>Riprova</value>
+  </data>
 </root>

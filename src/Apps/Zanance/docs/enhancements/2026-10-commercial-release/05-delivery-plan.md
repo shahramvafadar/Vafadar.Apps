@@ -2845,3 +2845,17 @@ settlement/skip and unchanged ledger relationships, same-link idempotency and ex
 Qualify only affected command/policy/native paths; classify deliberate diagnostic refusals from the
 retained receipts rather than replaying financial actions. Main/OS restoration and push complete
 this batch. Continue ready backlog work before D-386's dedicated stability/accessibility completion.
+
+## D-401 - Complete the distinct physical occurrence paths
+
+Start with D-400 evidence and a coordinated exclusive Samsung turn. Complete occurrence
+override/skip/unskip, manual link/keep-on-reopen and generated delete-on-reopen through original UI,
+with one cold read and exact Main/profile/OS restoration. Only a real newly observed defect permits
+source changes and related checks; otherwise do not rebuild or repeat accepted financial cases.
+
+The real stale-candidate defect found in this batch is corrected and narrowly qualified on independent
+Windows/Release AOT Android and the same physical retained form, without reposting its manual money.
+Remaining correction/link/reopen/cold paths and exact Main/profile/OS restoration are complete;
+only the new inactive profile is retired and the phone released. Strict builds/full signed offline
+candidate and related checks pass. Continue ready backlog work; do not replay D-316 or completed
+D-401 paths. Broad QA-01, D-386 stability/accessibility and external gates remain separate.

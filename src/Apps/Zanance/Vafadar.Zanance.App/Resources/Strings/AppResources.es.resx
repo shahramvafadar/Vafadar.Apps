@@ -8251,4 +8251,13 @@ SHA-256 del XML original: {5}</value>
   <data name="Occurrence_SavedNotificationFailed" xml:space="preserve">
     <value>Tu cambio se ha guardado. Algunas vistas no se han podido actualizar; ciérralas y vuelve a abrirlas antes de hacer otro cambio.</value>
   </data>
+  <data name="Occurrence_Loading" xml:space="preserve">
+    <value>Cargando este pago programado…</value>
+  </data>
+  <data name="Occurrence_ReadFailed" xml:space="preserve">
+    <value>No se pudo actualizar este pago. Se conserva lo que has escrito. Inténtalo de nuevo o cierra y vuelve a abrir la pantalla.</value>
+  </data>
+  <data name="Occurrence_RetryLoad" xml:space="preserve">
+    <value>Reintentar</value>
+  </data>
 </root>

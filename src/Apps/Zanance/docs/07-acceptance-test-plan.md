@@ -4466,3 +4466,19 @@ Four original VM/page/native-button refusals on each Windows and Release/AOT And
 entries/state and the original draft, including the native consent boundary. Six en/fa/de light/dark
 412px unchanged native messages per platform and11 single Android answers pass. Main/OS restored;
 Samsung/iOS and broad runtime/accessibility acceptance are not inferred. See quality/occurrence-state-conflicts.md.
+
+## D-401 - AT-26/28/29/31 physical correction and retained suggestions
+
+Original Samsung override12/due21/note versus unchanged definition10/Once20, Skip/Unskip with zero
+ledger rows, manual12 and cancel/accept link, cancel/accept reopen keeping/unlinking manual money,
+and distinct generated7 cancel/accept reopening deleting only that generated row pass. One cold
+read preserves original saved values, manual12 and both unresolved states; unsaved draft changes
+do not persist. Main979/five known public rows/three profiles/OS match; only the new inactive test
+profile is retired. This does not replay D-316 partial/final work or establish all QA-01/device,
+automatic-posting timing, real authentication, power-loss, iOS or release acceptance.
+
+The observed retained-tab defect is reproduced before correction. Same-page metadata-only return
+then shows the new manual title with raw drafts retained. Six original native contexts per Windows/
+Release AOT Android cover coalesced reads, translated error/Retry and target refusal; one affected
+pending-writer/default check per platform is new qualification, not accepted-case replay. Thirteen
+existing snapshot tests/21 resource cases pass; no new full-suite count is inferred.

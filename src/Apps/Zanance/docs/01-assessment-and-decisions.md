@@ -7365,3 +7365,22 @@ original native correction refusals per Windows/Release AOT Android preserve acc
 six unchanged native message views per platform and11 Android answers are qualified without replay.
 Strict builds/full offline signed APK and Main/OS restoration pass. General stability/A11Y under
 D-386, physical-device/iOS/provider/release gates remain separate. See [scope and retained evidence](quality/occurrence-state-conflicts.md).
+
+## D-401 - Refresh the retained original occurrence without replacing its draft
+
+On Samsung, recording one manual expense in another Shell tab left the original retained occurrence
+without its link suggestion; closing/reopening showed the same accepted row. Refresh that original
+page on actual retained-tab activation under its shared read cover. Preserve raw amount/date/note
+inputs and expanded state, refuse changed financial targets, keep failed reads covered with six-language
+Retry and leave pending financial command/consent ownership unchanged. Accepted canonical command
+reloads still reset defaults. No schema, money algorithm, permission, SDK or network change.
+
+Thirteen existing snapshot tests and21 resource cases pass. Six original Windows native contexts/42
+inspected images and six Release/AOT Android contexts/18 native views/18 real tab inputs qualify
+reads, error/Retry, target refusal and pending writer/default publication. Strict builds and the full
+signed offline APK pass. The same Samsung fixture qualifies the corrected metadata-only return path
+and remaining override/skip/unskip, cancel/accept link, manual keep/unlink and generated delete-on-
+reopen paths, with one cold read. Main979/five known rows/three profiles/OS are restored; only the new
+inactive test profile is retired and the phone released. No financial replay or full-suite count
+increase. Exact hosted CI and wider runtime/A11Y/device/iOS/provider/release gates remain separate.
+See [scope, negative evidence and restoration](quality/physical-occurrence-corrections.md).

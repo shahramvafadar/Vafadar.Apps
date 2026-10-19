@@ -1694,3 +1694,15 @@ Three negative synthetic receipts prove unexpected-failure, changed-row and wron
 the positive shape is separately checked. These are tooling checks, not new app unit tests.
 The independent Android phase occurrence-state uses four original commands and11 exact owned
 native answers. Do not repeat accepted fixtures after a capture/parameter/observation failure.
+
+## Original retained occurrence publication (D-401)
+
+Run Run-StoreDrafts.ps1 -OccurrenceRefreshReview in a fresh independent Windows identity/desktop.
+Six en/fa/de light/dark contexts capture42 original app-window frames:412px loaded and360/412/1280px
+loading/error. The original real tab SelectionItem and native Retry/payment buttons operate only
+owned fixtures. The independent Android phase occurrence-refresh requires a fresh run/comparison,
+Release/AOT package and18 exact original translated-tab inputs, scoped to its PID/focused package.
+Read-ReviewReport.ps1 observes only that same process and its public derived result. Shared reads,
+covered failures, draft retention, target-change refusal and the pending writer/canonical accepted
+reload are qualified once per platform. Preserve terminal receipts and accepted cases; no replay
+after observation expiry. Main upgrades use only the complete signed offline package without reset.

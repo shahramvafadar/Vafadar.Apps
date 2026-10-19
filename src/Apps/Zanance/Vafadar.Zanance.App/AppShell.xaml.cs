@@ -142,7 +142,7 @@ public partial class AppShell : Shell
     public AppShell()
     {
         InitializeComponent();
-        Navigated += OnRetainedAccountTabActivated;
+        Navigated += OnRetainedDetailsTabActivated;
 #if WINDOWS
         // Growing child headers and visible Insights navigation keep their own Auto row above the retained body.
         // Shell's Windows TitleView clips large captions; its Insights drop-down also hides destinations (D-83, D-85).
@@ -210,15 +210,15 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(SettlementRoute, typeof(SettlementPage));
     }
 
-    /// <summary>Refreshes a retained account after edits in another tab without replacing reconciliation drafts.</summary>
-    private async void OnRetainedAccountTabActivated(object? sender, ShellNavigatedEventArgs args)
+    /// <summary>Refreshes retained financial details after another tab without replacing their original input drafts.</summary>
+    private async void OnRetainedDetailsTabActivated(object? sender, ShellNavigatedEventArgs args)
     {
-        // D-394: a retained Android detail can become visible without a new Page.OnAppearing callback.
+        // D-394/D-401: a retained Android detail can become visible without a new Page.OnAppearing callback.
         // Keep the original covered loader; it shares an already pending appearance read and never posts money.
         if (_navigationRetired || args.Source is not (ShellNavigationSource.ShellItemChanged
-                or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
-            || CurrentPage is not AccountDetailPage page) return;
-        await Presentation.Failures.GuardAsync(page.RefreshForNavigationAsync);
+                or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)) return;
+        if (CurrentPage is AccountDetailPage account) await Presentation.Failures.GuardAsync(account.RefreshForNavigationAsync);
+        else if (CurrentPage is OccurrencePage occurrence) await Presentation.Failures.GuardAsync(occurrence.RefreshForNavigationAsync);
     }
 
     /// <summary>Keeps the actual restore source/accepted follow-through attached through Back and tab navigation.</summary>
@@ -235,7 +235,7 @@ public partial class AppShell : Shell
     internal void RetireNavigationBindings()
     {
         _navigationRetired = true;
-        Navigated -= OnRetainedAccountTabActivated;
+        Navigated -= OnRetainedDetailsTabActivated;
 #if ANDROID
         if (Handler is AccessibleShellRenderer renderer) renderer.RetireNavigation();
 #endif
