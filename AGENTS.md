@@ -2725,3 +2725,13 @@ shape. Keep the D-377 reader, exact standard-empty conversion/interception guard
 order. Source allocation reasoning alone is not a whole-page benefit; retain the rejected source/
 package/receipts and original data instead of promoting it, selecting fast cases or extending an
 already rejected trial to the phone.
+
+
+## D-380 bounded physical disclosure reviews
+
+Before non-editor phone input, require the original IME dismissal to finish; never let a keyboard-covered
+coordinate become a financial action. Inspect expanded forms and retained tab stacks before continuing,
+and never replay Save after an observer timeout. Accountant receiver document qualification accepts only
+the exact known synthetic PDF under the existing native-grant/envelope/size gates, not arbitrary files.
+Use a fresh fictitious profile, retire only that profile through original confirmations, verify prior
+public profiles/Home/OS/APK and remove only owned hash-matched inputs/receiver before releasing the turn.

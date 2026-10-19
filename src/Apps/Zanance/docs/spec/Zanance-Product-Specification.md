@@ -7014,3 +7014,12 @@ original x64 Home comparison does not justify adoption: reference/tenfold median
 and2664.23->2955.07ms. Restore the exact D-377 reader and ordinary packages, preserving complete data,
 native Main and OS. No production/app/APK/test-count change, ARM/phone trial or broader gate closure.
 [Original observations](../quality/home-tag-list-candidate.md).
+
+
+### Section31 update - D-380 physical accountant disclosure
+
+Original Samsung exports now qualify the explicit notes/payees and one known stored-PDF opt-in and
+opt-out paths, including review invalidation, original financial-field equality and copy byte identity.
+Only the fresh fictitious profile is retired; prior profiles/Main979/OS and APK are preserved. No unit
+count increase or product change: application/APK remain D-377. Expert/legal/original-document and wider
+platform/release acceptance remain open; see quality/physical-accountant-document-disclosure.md.

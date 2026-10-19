@@ -7081,3 +7081,13 @@ same-data original x64 Home is descriptively slower: reference median951.53->108
 benefit from the removed source allocation or fish for a faster cohort. Withdraw the candidate,
 restore exact reader/default caller/Main6661/Home0/OS and recompile restored Windows. No ARM trial,
 phone input, Main APK rebuild or new managed count. [Evidence](quality/home-tag-list-candidate.md).
+
+
+## D-380 - Qualify physical accountant note and document disclosure
+
+Use a fresh fictitious Samsung profile and two original exports to close the bounded D-328 notes/document
+copy gap. The isolated receiver admits only the exact known PDF; the host checks actual original packet
+bytes, financial equality and explicit redaction. Changing flags invalidates the review. Strict fixture
+build passes without warnings; both phone packets pass. Retire only the new profile, remove owned input
+and receiver, preserve original three profiles/Main979/samePID/OS/APK and release the phone. No production
+change or new unit-test count. See [full evidence and limits](quality/physical-accountant-document-disclosure.md).

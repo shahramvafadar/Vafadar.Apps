@@ -2653,3 +2653,14 @@ considering promotion. The slower x64 result ends this trial; do not extend it t
 successful contexts to obtain a different answer. Preserve data/evidence, restore exact source and
 ordinary packages and leave Main D-377 unchanged. Continue other ready observed work.
 [Detailed result](../../quality/home-tag-list-candidate.md).
+
+
+## D-380 - Complete the physical accountant disclosure batch
+
+Original Samsung UI produces two accountant packets from one newly created fictitious profile: explicit
+notes/known-PDF inclusion, then review invalidation and redaction. Actual packet digests, financial-field
+equality and byte-exact PDF linkage pass; strict independent receiver build has no warnings/errors.
+Retire only that profile and preserve original three profiles/Main979/samePID/OS/Main APK. Receiver and
+hash-matched owned input are removed. No new unit count or production/APK change; D-377 remains current.
+See [bounded evidence](../../quality/physical-accountant-document-disclosure.md).
+Expert/legal, arbitrary documents, full-device stability, iOS and publication are not accepted here.

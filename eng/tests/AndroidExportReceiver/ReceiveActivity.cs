@@ -72,10 +72,25 @@ public sealed class ReceiveActivity : Activity
                 using var archive = new ZipArchive(new MemoryStream(packet), ZipArchiveMode.Read);
                 string[] allowed = ["accounts.csv", "categories.csv", "transactions.csv", "accountant-review.csv",
                     "recorded-totals.csv", "README.txt", "manifest.json"];
-                if (archive.Entries.Count != allowed.Length || archive.Entries.Select(entry => entry.FullName).Distinct().Count() != allowed.Length
-                    || archive.Entries.Any(entry => !allowed.Contains(entry.FullName) || entry.Length > Limit)
+                var names = archive.Entries.Select(entry => entry.FullName).ToArray();
+                var document = archive.Entries.SingleOrDefault(entry => Regex.IsMatch(entry.FullName,
+                    "^documents/[0-9a-f]{32}\\.pdf$", RegexOptions.CultureInvariant));
+                var expected = document is null ? allowed : [.. allowed, "documents.csv", document.FullName];
+                if (names.Length != expected.Length || names.Distinct(StringComparer.Ordinal).Count() != names.Length
+                    || !names.ToHashSet(StringComparer.Ordinal).SetEquals(expected)
+                    || archive.Entries.Any(entry => entry.Length > Limit)
                     || archive.Entries.Sum(entry => entry.Length) > Limit) throw new InvalidOperationException();
-                entries = archive.Entries.Select(entry => entry.FullName).ToArray();
+                if (document is not null)
+                {
+                    // D-380: accept only the exact previously qualified fictitious PDF, never arbitrary document grants.
+                    if (document.Length != 13881) throw new InvalidOperationException();
+                    using var stored = document.Open(); var content = new byte[13881];
+                    await stored.ReadExactlyAsync(content);
+                    if (stored.ReadByte() != -1 || Convert.ToHexStringLower(SHA256.HashData(content)) !=
+                        "6f6dcffa10e283897f71d7892733bb2632986810346153aa78f728b2d86a6919")
+                        throw new InvalidOperationException();
+                }
+                entries = names;
             }
             // Nothing is extracted, executed or forwarded. The host checks original content separately.
             await using (var output = new FileStream(destination, FileMode.CreateNew, FileAccess.Write, FileShare.None))

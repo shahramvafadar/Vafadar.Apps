@@ -71,7 +71,7 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 | ZCR-SHR-03 | Audit trail, revocation, ownership transfer, end of subscription | 5 | P1 | M | D-294 local delivery qualified: consent-bound transfer, audit, revocation, expiry/privacy retirement and latest-marker-aware full restoration; no identity-erasure claim | SHR-01, OD-05 approved |
 | ZCR-SHR-04 | E2EE from the first shared delivery, including membership/key/recovery lifecycle | 5 | P1 | L | D-294 local delivery qualified: pinned membership/epoch/recovery lifecycle, original native persistence, bounded historical reads and portable scrubbing; external audit/device/iOS separate | OD-09 approved |
 | ZCR-TAX-01 | Germany/current-year tax research, expert and official examples; country expansion without ETA | 0→7 | P1 | M | D-296 official-source boundary research; expert/rule acceptance open | OD-01 approved |
-| ZCR-TAX-02 | Level 1: Germany data/document export for an accountant (Plus) | 7 | P1 | M | Locally delivered D-296; D-328 physical default/no-document and selected-account ZIP contents qualified; wider device/iOS/expert acceptance separate | TAX-01 |
+| ZCR-TAX-02 | Level 1: Germany data/document export for an accountant (Plus) | 7 | P1 | M | Locally delivered D-296; D-328 default/selected-account and D-380 explicit notes/known-PDF opt-in/redaction qualified physically; wider device/iOS/expert acceptance separate | TAX-01 |
 | ZCR-TAX-03 | Level 2: versioned rule set and report for the first country/year | 7 | P2 | L | Proposed | TAX-01, expert |
 | ZCR-AI-01 | Local AI credit ledger, provider interface, consent, minimal data | 8 | P3 | L | In progress: D-298 local aggregate/native-consent/private-client/service-credit prerequisites qualified; live provider/pricing/credit sales remain gated; see15-ai-local-delivery.md | OD-13 |
 | ZCR-BANK-01 | German-first bank/file/provider evaluation, then USA and other targets | 8 | P3 | M | In progress: D-307 first discovery pass across fourteen targets and provider comparison delivered; exact consumer specimens and later live-provider acceptance remain | OD-14, IMP-01 |
@@ -3308,3 +3308,14 @@ this does not establish a product benefit. Restore exact source, default indepen
 OS and clean outputs. No ARM/phone experiment, new managed count or Main APK rebuild. Wider runtime,
 performance, reader/iOS/provider/release work remains open.
 [Evidence](../../quality/home-tag-list-candidate.md).
+
+
+## D-380 bounded physical accountant disclosure
+
+Original Samsung UI produces two accountant packets from one newly created fictitious profile: explicit
+notes/known-PDF inclusion, then review invalidation and redaction. Actual packet digests, financial-field
+equality and byte-exact PDF linkage pass; strict independent receiver build has no warnings/errors.
+Retire only that profile and preserve original three profiles/Main979/samePID/OS/Main APK. Receiver and
+hash-matched owned input are removed. No new unit count or production/APK change; D-377 remains current.
+See [bounded evidence](../../quality/physical-accountant-document-disclosure.md).
+Expert/legal, arbitrary documents, full-device stability, iOS and publication are not accepted here.

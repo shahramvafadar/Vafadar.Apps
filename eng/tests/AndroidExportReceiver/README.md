@@ -42,8 +42,9 @@ recipient should receive either packet.
 Repeat only the distinct cash-only disclosure: changing selection invalidates the review; review and
 confirm the one transfer/one additional linked identity. Match the second chooser filename to a fresh
 receiver receipt. The receiver refuses overwriting a packet token and caps compressed/expanded data at
-2 MiB. It accepts exactly seven known non-document members; it does not extract, execute or forward them.
-This is deliberately a default/no-document test receiver, not a general ZIP or document viewer.
+2 MiB. Its default branch accepts exactly seven known non-document members. D-380 adds only the exact known
+fictitious PDF branch described below. It does not extract, execute or forward members and is not a
+general ZIP or document viewer.
 
 ## Original-packet verification
 
@@ -113,3 +114,27 @@ The standard-library verifier checks every27-column value against five stable ID
 refund and transfer/fee relationships. Equal-date order may differ. This proves exported-field equality,
 not database/key equality, a complete backup, arbitrary bank format or malformed-file acceptance.
 See src/Apps/Zanance/docs/quality/physical-csv-roundtrip.md for the original native evidence.
+
+
+## Original notes and known document disclosure (D-380)
+
+Version0.4 additionally permits documents.csv and exactly one documents/<32-hex>.pdf member only when
+its13881 bytes have SHA256 6f6dcffa10e283897f71d7892733bb2632986810346153aa78f728b2d86a6919.
+All original URI/grant/envelope/size/overwrite restrictions remain. This accepts only the known synthetic
+English receipt, not arbitrary attachments. Build/package verification and exclusive phone coordination
+remain mandatory; do not inherit an unknown existing receiver installation.
+
+Use a newly created fictitious profile, one explicitly reviewed24.50 EUR expense and controlled fictitious
+payee/note. Export Germany2026 once with both disclosure flags enabled, then disable both, require a new
+review and share only to this receiver again. Copy only its own received files after receipt/hash matching.
+
+```powershell
+python eng/tests/AndroidExportReceiver/verify_document_disclosure.py <disclosed.zip> <redacted.zip> <original-fictitious.pdf>
+```
+
+The standard-library verifier checks original financial-field equality, explicit redaction, manifest
+coverage and byte-exact document/entry linkage. It does not calculate tax or prove original legal records.
+Retire only the new profile through original confirmations; restore the original public profile list/Home,
+verify unchanged Main/OS state, uninstall only the fresh receiver, delete only hash-matched owned input
+and release the phone. Require IME dismissal before non-editor actions; inspect retained navigation state
+instead of replaying Save or Back. See physical-accountant-document-disclosure.md in the quality docs.

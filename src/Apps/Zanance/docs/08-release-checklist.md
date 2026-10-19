@@ -1818,3 +1818,14 @@ No new application package: exact source and installed Main APK remain D-377. Re
 native data equality do not override the slower complete x64 Home result. The candidate is withdrawn,
 ordinary packages/Main/OS restored and phone input skipped. All open runtime/performance/platform/
 provider/Store gates remain. [Evidence](quality/home-tag-list-candidate.md).
+
+
+## D-380 - Physical disclosure is bounded evidence
+
+Original Samsung UI produces two accountant packets from one newly created fictitious profile: explicit
+notes/known-PDF inclusion, then review invalidation and redaction. Actual packet digests, financial-field
+equality and byte-exact PDF linkage pass; strict independent receiver build has no warnings/errors.
+Retire only that profile and preserve original three profiles/Main979/samePID/OS/Main APK. Receiver and
+hash-matched owned input are removed. No new unit count or production/APK change; D-377 remains current.
+See [bounded evidence](quality/physical-accountant-document-disclosure.md).
+Expert/legal, arbitrary documents, full-device stability, iOS and publication are not accepted here.

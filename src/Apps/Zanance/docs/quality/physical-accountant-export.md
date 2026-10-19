@@ -68,3 +68,11 @@ recipient defenses, hardware authentication, raw private main-store/key equality
 acceptance, DATEV/ELSTER, statutory calculation, filing or release. Existing source-flow/native document
 and localization evidence remains separate. No production algorithm, schema, permission, native dependency,
 APK or managed test count changes. Windows product delivery remains deferred.
+
+
+## D-380 continuation
+
+The previously open explicit notes/document-copy paths now have a separate fresh-profile Samsung receipt:
+[physical document disclosure](physical-accountant-document-disclosure.md). Both flags are exercised on
+and off with original byte identity and financial-field equality. D-328 historical five-row evidence and
+its other limits remain unchanged; this is not expert/legal or arbitrary-document acceptance.

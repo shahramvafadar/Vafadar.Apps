@@ -168,3 +168,11 @@ No production code/APK, schema, permission or managed test count changes; succes
 are not repeated. Physical documents/notes-enabled/all-layout, iOS, tax specialist/calculation/filing and
 release acceptance remain open.
 See [physical evidence](../../quality/physical-accountant-export.md). The earlier next-batch paragraph is historical; current remaining work is the canonical backlog.
+
+
+## D-380 physical notes/document continuation
+
+A fresh fictitious Samsung profile qualifies explicit notes/payees and one known stored-PDF copy, then
+redaction after a new review. Original financial fields match and PDF bytes match the synthetic input.
+See [physical evidence](../../quality/physical-accountant-document-disclosure.md). Main data is not edited;
+original three profiles/Home979/OS/APK remain. Legal, tax expert and original-document acceptance remain open.

@@ -4250,3 +4250,14 @@ original x64 Home contexts preserve full raw schema/typed rows and financial/nat
 Their slower timing cohort rejects promotion. Exact reader, ordinary caller/Main/OS restoration
 passes; no ARM/phone input or general performance/stability acceptance.
 [Evidence](quality/home-tag-list-candidate.md).
+
+
+## AT-380 - Original document-copy and note disclosure
+
+Original Samsung UI produces two accountant packets from one newly created fictitious profile: explicit
+notes/known-PDF inclusion, then review invalidation and redaction. Actual packet digests, financial-field
+equality and byte-exact PDF linkage pass; strict independent receiver build has no warnings/errors.
+Retire only that profile and preserve original three profiles/Main979/samePID/OS/Main APK. Receiver and
+hash-matched owned input are removed. No new unit count or production/APK change; D-377 remains current.
+See [bounded evidence](quality/physical-accountant-document-disclosure.md).
+Expert/legal, arbitrary documents, full-device stability, iOS and publication are not accepted here.
