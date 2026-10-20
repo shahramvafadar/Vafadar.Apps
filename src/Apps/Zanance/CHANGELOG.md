@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Original holding lifecycle checked on Android (D-417)
+
+- Verify the existing type form, range feedback, manual prices, immediate history Undo and archive on Samsung.
+- Preserve the original purchase/refund through one cold reopen and restore the original profiles afterward.
+- Application and complete signed APK remain D-416; broader device and platform acceptance stays open.
+
 ### Preserve original holding type edits and saved identity (D-416)
 
 - Refuse an old type edit after its original details or history change; keep typed input for review.

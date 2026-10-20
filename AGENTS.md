@@ -3056,3 +3056,13 @@ the original draft/identity, including a missing-row refusal; never reinterpret 
 Retire stale/departed authority without replacing raw input. Known Save consumes the form before
 notification/navigation and leaves a failed following step closed to resubmission. Read-only native
 captions use exact completed receipts/files and original raw values, never accepted seeds/commands.
+
+## D-417 - Original physical holding lifecycle evidence
+
+Physical qualification preserves one original form/file/financial sequence, with each accepted write
+invoked once. Continue failed host observations only on retained originals; never replay accepted
+money to repair a caption check. A value packet can include its source/date suffix. A category chip
+tap alone is not proof of its final selected state; report the observed cold category honestly.
+Short holding Undo is exercised immediately in its original view/process, before the one terminal
+cold. Restore original Main/public packets/profile set/OS and retire only the new inactive fixture
+before releasing the coordinated phone turn. Retain D-386 priorities and wider platform gates.

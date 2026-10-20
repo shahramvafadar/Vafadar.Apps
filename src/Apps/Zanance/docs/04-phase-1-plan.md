@@ -1245,3 +1245,13 @@ choices remain. Eight new cases, retained related checks and12 original native f
 Windows/Release AOT Android pass, with strict builds/full offline signed APK and no-reset Main/Home0/
 OS restoration. No full-suite or accepted-money replay. Broader QA/import, D-386 and external gates
 remain separate. See quality/original-csv-financial-review.md.
+
+## D-417 - Original physical holding lifecycle
+
+The existing D-416 signed offline candidate passes one original Samsung type creation/edit,
+quantity refusal/correction, manual price/delete, immediate purchase-group Undo and archive/cold
+lifecycle. Cash849.50, original refund link, type name/note and history persist; Main979/five public
+packets/exact three profiles/OS are restored and the phone turn released. Only the new inactive
+fixture is retired. No new app/APK/tests/builds or wider D-386/iOS/external/release acceptance is
+claimed. The observed refund category is Uncategorized, without a Fees-selection claim. See
+[original evidence, observer continuations and remaining gates](quality/physical-holding-type-price-history.md).

@@ -7639,3 +7639,22 @@ selective cohorts, without replaying accepted cases;23 resource checks also pass
 Android refusal/edit/create and retired captions preserve data. Strict builds, complete signed offline
 APK and no-reset Main/OS restoration pass; no schema/model, new permission/provider or release claim. See
 [original editor evidence and remaining gates](quality/holding-type-editor.md).
+
+## D-417 - Original physical holding type, price, history Undo and archive
+
+The existing complete signed offline D-416 candidate is qualified through one original Samsung
+lifecycle, without a new APK, application/schema/model change or replay of successful tests/builds.
+Only a new fictitious profile/cash account is used. The original type creation/opening route,
+quantity overflow refusal/same-form correction, purchase2 for50EUR plus fee2, linked refund1.50,
+existing name/note edit, manual60EUR/piece Save and old-price deletion with separate raw77 all pass.
+Delete the original purchase/group and immediately Undo once in the same view/process; original
+history/refund link and raw77 survive. Cancel Archive then confirm once. One terminal cold retains
+Cash849.50, three public packets, quantity2/basis25, edited type name/note and archived history,
+while the ordinary list excludes the type. No intermediate deleted cash or durable Undo is claimed.
+Original Main979/five public packets/exact three profiles/OS and installed hash are restored; only
+the new inactive profile is retired and the coordinated phone turn released. The cold refund reads
+Uncategorized; tapping a chip alone is not evidence of selected category. No Fees-selection claim is
+made. Original host observer failures continue only pending reads/commands, never accepted writes.
+No unit-test count increase, private database/key/id equality, physical receipt Undo, all-device,
+D-386 runtime/A11Y, Mac/iOS, external/store/expert or release acceptance is inferred. Exact-head hosted
+CI is checked once separately. See [original evidence and limits](quality/physical-holding-type-price-history.md).
