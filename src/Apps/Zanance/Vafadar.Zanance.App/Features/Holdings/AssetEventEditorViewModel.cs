@@ -8,6 +8,8 @@ using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
+using Vafadar.Zanance.Data.Commerce;
+using Vafadar.Zanance.App.Interaction;
 
 namespace Vafadar.Zanance.App.Features.Holdings;
 
@@ -44,6 +46,9 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
     private readonly Translator _translator;
     private readonly ILocalizationService _localization;
     private readonly TimeProvider _time;
+    private readonly IAppInteraction _interaction;
+    private readonly HoldingEventEditorSession _session;
+    private bool _loading = true;
     private AssetType? _type;
     private AssetEvent? _existing;
     private List<LedgerEntry> _groupEntries = [];
@@ -51,7 +56,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
     private AssetEventKind[] _kinds = AdvancedKinds;
     private IReadOnlyList<QuantityUnit> _units = [QuantityUnit.Gram];
 
-    public AssetEventEditorViewModel(HoldingStore holdings, ZananceStore store, HoldingText text, Translator translator, ILocalizationService localization, TimeProvider time)
+    public AssetEventEditorViewModel(HoldingStore holdings, ZananceStore store, HoldingText text, Translator translator, ILocalizationService localization, TimeProvider time, IAppInteraction interaction)
     {
         _holdings = holdings;
         _store = store;
@@ -59,6 +64,8 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
         _translator = translator;
         _localization = localization;
         _time = time;
+        _interaction = interaction;
+        _session = new(holdings);
         Title = translator["AssetEvent_NewTitle"];
         Date = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         DirectionNames = [translator["AssetEvent_Increase"], translator["AssetEvent_Decrease"]];
@@ -192,21 +199,34 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
 
     public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
 
-    private async Task ApplyQueryAsync(IDictionary<string, object> query)
+    /// <summary>Publishes a coherent original file/type/event and choices before enabling the editor.</summary>
+    public async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
+        // Native navigation may redeliver an empty query after the original parameters were consumed.
+        // Keep that original loaded review instead of starting a second load with an empty type.
+        if (!(query.TryGetValue("id", out var originalId) && originalId is Guid)
+            && !(query.TryGetValue("type", out var originalType) && originalType is Guid)) return;
         var culture = _localization.CurrentCulture;
-        var advanced = (await _store.GetSettingsAsync()).Shows(Feature.HoldingEvents);
-        var events = await _holdings.GetEventsAsync();
-        if (query.TryGetValue("id", out var idValue) && idValue is Guid id)
-        {
-            _existing = events.FirstOrDefault(e => e.Id == id);
-        }
-
-        var typeId = _existing?.AssetTypeId ?? (query.TryGetValue("type", out var typeValue) && typeValue is Guid t ? t : Guid.Empty);
+        _loading = true; PublishState();
+        var eventId = query.TryGetValue("id", out var idValue) && idValue is Guid id ? id : (Guid?)null;
+        var typeId = query.TryGetValue("type", out var typeValue) && typeValue is Guid t ? t : Guid.Empty;
         var requested = query.TryGetValue("kind", out var kindValue) && Enum.TryParse<AssetEventKind>(kindValue as string, out var k) ? k : (AssetEventKind?)null;
-        _type = (await _holdings.GetTypesAsync()).FirstOrDefault(x => x.Id == typeId);
         query.Clear();
+        // Preserve initial settings/default-location initialization, then capture all displayed sources together.
+        await Task.Run(async () =>
+        {
+            await _store.GetSettingsAsync();
+            if (!(await _holdings.GetLocationsAsync()).Any(l => !l.IsArchived))
+                await _holdings.EnsureDefaultLocationAsync(_translator["Holding_DefaultLocation"]);
+        });
+        var review = await Task.Run(() => _session.LoadAsync(typeId, eventId));
+        if (review is null) return;
+        var advanced = review.Inputs.Settings.Advanced;
+        var events = review.Inputs.Events;
+        _existing = eventId is { } editedId ? HoldingEventReadReview.CopyEvent(events.Single(e => e.Id == editedId)) : null;
+        _type = review.Inputs.Type;
+        _groupEntries = review.Inputs.Entries.Select(e => e.Copy()).ToList();
         if (_type is not { } type)
         {
             Error = _translator["Holding_NotFound"];
@@ -220,9 +240,9 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
         HasUnitChoice = _units.Count > 1;
         PriceModeNames = [_translator["AssetEvent_PriceTotal"], _text.PerUnit(type)];
 
-        await LoadLocationsAsync(null);
-        var accounts = await _store.GetAccountsAsync(includeArchived: false);
-        var defaultAccount = (await _store.GetSettingsAsync()).DefaultAccountId;
+        PublishLocations(review.Inputs.Locations, null);
+        var accounts = review.Inputs.Accounts.Where(a => !a.IsArchived);
+        var defaultAccount = review.Inputs.Settings.DefaultAccountId;
         Accounts = [.. accounts.Where(a => !a.Type.IsOutsideCash()).OrderBy(a => a.SortOrder).ThenBy(a => a.Name).Select(a => new HoldingAccount(a.Id, a.Name, a.CurrencyCode))];
         // The default account first when it pays in the price currency, then any account in that currency (ZEX-S0202).
         Account = Accounts.FirstOrDefault(a => a.Id == defaultAccount && string.Equals(a.CurrencyCode, type.PriceCurrencyCode, StringComparison.OrdinalIgnoreCase))
@@ -249,7 +269,6 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
             Note = existing.Note ?? string.Empty;
             BasisText = existing.BasisAmount is { } basis && HasBasis ? MoneyText.ForInput(basis, type.PriceCurrencyCode, culture) : string.Empty;
 
-            _groupEntries = existing.GroupId is { } group ? await _store.GetGroupAsync(group) : [];
             if (_groupEntries.FirstOrDefault(e => e.Kind is EntryKind.AssetPurchase or EntryKind.AssetSale) is { } money)
             {
                 Account = Accounts.FirstOrDefault(a => a.Id == money.AccountId) ?? Account;
@@ -266,17 +285,12 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
         }
 
         UpdateEffect();
-        _snapshot = Snapshot();
+        _snapshot = Snapshot(); _loading = false; PublishState();
     }
 
-    private async Task LoadLocationsAsync(Guid? select)
+    private void PublishLocations(IReadOnlyList<AssetLocation> sources, Guid? select)
     {
-        var locations = (await _holdings.GetLocationsAsync()).Where(l => !l.IsArchived).ToList();
-        if (locations.Count == 0)
-        {
-            locations.Add(await _holdings.EnsureDefaultLocationAsync(_translator["Holding_DefaultLocation"]));
-        }
-
+        var locations = sources.Where(l => !l.IsArchived).OrderBy(l => l.SortOrder).ThenBy(l => l.Name).ToList();
         Locations = [.. locations.Select(l => new LocationChoice(l.Id, l.Name))];
         Location = Locations.FirstOrDefault(l => l.Id == (select ?? Location?.Id)) ?? Locations[0];
         ToLocation ??= Locations.FirstOrDefault(l => l.Id != Location.Id);
@@ -362,7 +376,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
 
     private AssetEvent BuildEvent(AssetType type, long quantity)
     {
-        var assetEvent = _existing ?? new AssetEvent { AssetTypeId = type.Id };
+        var assetEvent = _existing is { } original ? HoldingEventReadReview.CopyEvent(original) : new AssetEvent { AssetTypeId = type.Id };
         assetEvent.Kind = Kind;
         assetEvent.Date = Date;
         assetEvent.Quantity = quantity;
@@ -405,33 +419,33 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
         EffectText = _translator.Format("AssetEvent_After", string.Join(" · ", parts));
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanEdit))]
     private async Task AddLocationAsync()
     {
-        var name = await Shell.Current.DisplayPromptAsync(_translator["AssetEvent_AddLocation"], _translator["AssetEvent_AddLocationMessage"],
+        if (!CanEdit || _session.Review is null) return;
+        var name = await _interaction.PromptAsync(_translator["AssetEvent_AddLocation"], _translator["AssetEvent_AddLocationMessage"],
             _translator["Common_Save"], _translator["Common_Cancel"], maxLength: 60);
-        if (string.IsNullOrWhiteSpace(name))
+        if (string.IsNullOrWhiteSpace(name) || !CanEdit || _session.Review is null) return;
+        IsBusy = true; PublishState();
+        try
         {
-            return;
+            var location = new AssetLocation { Name = name.Trim() };
+            await _holdings.SaveLocationAsync(location);
+            var review = await _session.AddLocationAsync(location.Id);
+            if (review is null) return;
+            PublishLocations(review.Inputs.Locations, IsTransfer ? Location?.Id : location.Id);
+            if (IsTransfer) ToLocation = Locations.FirstOrDefault(l => l.Id == location.Id);
         }
-
-        var location = new AssetLocation { Name = name.Trim() };
-        await _holdings.SaveLocationAsync(location);
-        if (IsTransfer)
-        {
-            await LoadLocationsAsync(Location?.Id);
-            ToLocation = Locations.FirstOrDefault(l => l.Id == location.Id);
-        }
-        else
-        {
-            await LoadLocationsAsync(location.Id);
-        }
+        catch (HoldingEventReviewChangedException) { RetireReview(); Error = _translator["AssetEvent_SourceChanged"]; }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { RetireReview(); Error = Presentation.CommercialFailureMessage.OrFallback(exception, _translator, "Common_SaveFailed", draftKept: true); }
+        finally { IsBusy = false; PublishState(); }
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
-        if (_type is not { } type || IsBusy)
+        if (_type is not { } type || !CanSave)
         {
             return;
         }
@@ -456,6 +470,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
             return;
         }
 
+        var originalDraft = Snapshot();
         var assetEvent = BuildEvent(type, quantity);
         var entries = new List<LedgerEntry>();
         long? priced = null;
@@ -474,7 +489,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
                 priced = MoneyText.TryParse(SecondAmountText, type.PriceCurrencyCode, culture, out var second) && second > 0 ? second : null;
             }
 
-            var money = _groupEntries.FirstOrDefault(e => e.Kind is EntryKind.AssetPurchase or EntryKind.AssetSale) ?? new LedgerEntry();
+            var money = _groupEntries.FirstOrDefault(e => e.Kind is EntryKind.AssetPurchase or EntryKind.AssetSale)?.Copy() ?? new LedgerEntry();
             money.Kind = Kind == AssetEventKind.Purchase ? EntryKind.AssetPurchase : EntryKind.AssetSale;
             money.AccountId = account.Id;
             money.Amount = amount;
@@ -486,12 +501,13 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
             // A fee is spending (Fees), never part of the price (ZEX-P09).
             if (ParsedFee() is var fee and > 0)
             {
-                var feeEntry = _groupEntries.FirstOrDefault(e => e.Kind == EntryKind.Expense) ?? new LedgerEntry();
+                var feeEntry = _groupEntries.FirstOrDefault(e => e.Kind == EntryKind.Expense)?.Copy() ?? new LedgerEntry();
                 feeEntry.Kind = EntryKind.Expense;
                 feeEntry.AccountId = account.Id;
                 feeEntry.Amount = fee;
                 feeEntry.Date = Date;
-                feeEntry.CategoryId = await _holdings.FeesCategoryAsync();
+                feeEntry.CategoryId = _session.Review!.Inputs.Categories.FirstOrDefault(c => c.SystemKey == Vafadar.Zanance.Core.Categories.DefaultCategories.Fees
+                    && c.Kind == Vafadar.Zanance.Core.Categories.CategoryKind.Expense)?.Id;
                 feeEntry.Title = _translator.Format("AssetEvent_FeeTitle", type.Name);
                 entries.Add(feeEntry);
             }
@@ -510,11 +526,12 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
         assetEvent.BasisAmount = Kind is AssetEventKind.Purchase or AssetEventKind.Opening or AssetEventKind.GiftReceived ? priced : null;
         assetEvent.ProceedsAmount = Kind == AssetEventKind.Sale ? priced : null;
 
-        IsBusy = true;
+        IsBusy = true; PublishState();
         try
         {
-            // D-122: the marked purchase price belongs to the same atomic Save as quantity/payment/fee.
-            var result = await _holdings.SaveEventAsync(assetEvent, entries, recordPurchasePrice: true);
+            // D-408: the exact raw draft and original source stay bound to the existing atomic quantity/payment/fee/price writer.
+            var result = await _session.SaveAsync(assetEvent, entries, () => Snapshot() == originalDraft);
+            if (result is null) return;
             if (result.Conflict is { } conflict)
             {
                 var place = Locations.FirstOrDefault(l => l.Id == conflict.LocationId)?.Name ?? "?";
@@ -528,22 +545,42 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
                 return;
             }
 
-            await Shell.Current.GoToAsync("..");
+            _snapshot = Snapshot(); PublishState();
         }
-        finally
-        {
-            IsBusy = false;
-        }
+        catch (CommittedWriteNotificationException<HoldingSaveResult>)
+        { _snapshot = Snapshot(); Error = _translator["AssetEvent_SavedNeedsReview"]; return; }
+        catch (HoldingEventReviewChangedException)
+        { RetireReview(); Error = _translator["AssetEvent_SourceChanged"]; return; }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { RetireReview(); Error = Presentation.CommercialFailureMessage.OrFallback(exception, _translator, "Common_SaveFailed", draftKept: true); return; }
+        finally { IsBusy = false; PublishState(); }
+        try { await _interaction.NavigateAsync(".."); }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { Error = _translator["Editor_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); }
     }
 
+    /// <summary>Gets whether raw holding inputs are still editable.</summary>
+    public bool CanEdit => !_loading && !IsBusy && !_session.Committed;
+    /// <summary>Gets whether the original coherent financial review still authorizes this form's Save.</summary>
+    public bool CanSave => CanEdit && _session.Review is not null;
+    /// <summary>Gets Cancel before acceptance and Close afterwards.</summary>
+    public string CloseText => _translator[_session.Committed ? "Common_Close" : "Common_Cancel"];
+    private void PublishState()
+    {
+        OnPropertyChanged(nameof(CanEdit)); OnPropertyChanged(nameof(CanSave)); OnPropertyChanged(nameof(CloseText));
+        SaveCommand.NotifyCanExecuteChanged(); AddLocationCommand.NotifyCanExecuteChanged();
+    }
+    /// <summary>Retires a departed source without changing its raw draft or accepted result.</summary>
+    public void RetireReview() { _session.Retire(); PublishState(); }
+
     [RelayCommand]
-    private Task CancelAsync() => Presentation.UnsavedChanges.LeaveAsync(this);
+    private Task CancelAsync() => _session.Committed ? _interaction.NavigateAsync("..") : Presentation.UnsavedChanges.LeaveAsync(this);
 
     // The input as it was loaded or saved; leaving with a change asks first (CR12).
     private string? _snapshot;
 
     /// <inheritdoc />
-    public bool IsDirty => _snapshot is not null && Snapshot() != _snapshot;
+    public bool IsDirty => !_session.Committed && _snapshot is not null && Snapshot() != _snapshot;
 
     private string Snapshot() => Presentation.UnsavedChanges.Fingerprint(
         KindIndex, Date, QuantityText, UnitIndex, Location?.Id, ToLocation?.Id, Account?.Id, PriceModeIndex,

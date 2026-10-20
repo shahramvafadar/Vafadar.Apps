@@ -15,7 +15,7 @@ namespace Vafadar.Zanance.Data.Tests.Commerce;
 
 /// <summary>AT-124: holding capabilities, retained corrections and atomic quantity/payment/fee/derived-price writes.</summary>
 [Trait("AT", "AT-124")]
-public sealed class HoldingWritePolicyTests : IDisposable
+public sealed partial class HoldingWritePolicyTests : IDisposable
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
     private static readonly DateOnly Day = new(2026, 10, 10);

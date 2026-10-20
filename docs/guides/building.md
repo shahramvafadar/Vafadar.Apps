@@ -1758,3 +1758,15 @@ unchanged original one-row fixture must exist, with no acceptance/join fixture. 
 refused presentation and continues pending acceptance; it never reseeds/repeats the recorded refusal.
 This diagnostic path is excluded from shipped Main. See original-split-financial-review.md in the app
 quality documentation for retained failures, signed package hashes and actual qualification limits.
+
+
+## D-408 - Original holding forms
+
+Run `eng/scripts/Run-StoreDrafts.ps1 -HoldingFinancialReview` with a fresh independent identity.
+Two original financial cases precede36 read-only observations. The bounded optional
+`-HoldingFinancialContinuation <original-run>` requires the exact original pre-command failure,
+unchanged one-account/type/location fixture and no financial rows or progressed receipts. It reuses
+the original financial file; the caller/base store remain independently owned. Never use it to
+repeat accepted finance. The AndroidHome `holding-financial-review` phase uses the original modal's
+own native focus and comparison-bound public report, with fresh owned fixtures and12 read-only
+feedback observations. The final Main APK remains a separate complete signed offline Release build.

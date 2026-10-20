@@ -8326,4 +8326,10 @@ Original XML SHA-256: {5}</value>
   <data name="Split_SavedNeedsReview" xml:space="preserve">
     <value>The split changes were saved, but a follow-up update could not be completed. Close and reopen the transaction to review the saved result.</value>
   </data>
+  <data name="AssetEvent_SourceChanged" xml:space="preserve">
+    <value>The original holding, history or account changed. Nothing was saved. Your input is kept; close and reopen this event to review the current data.</value>
+  </data>
+  <data name="AssetEvent_SavedNeedsReview" xml:space="preserve">
+    <value>The holding event was saved, but a following update could not finish. Close and reopen the event to review the saved result.</value>
+  </data>
 </root>

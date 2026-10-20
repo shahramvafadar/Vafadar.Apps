@@ -8274,4 +8274,10 @@ SHA-256 du XML original : {5}</value>
   <data name="Split_SavedNeedsReview" xml:space="preserve">
     <value>Les modifications de la répartition ont été enregistrées, mais une mise à jour suivante n’a pas pu être terminée. Fermez puis rouvrez la transaction pour vérifier le résultat enregistré.</value>
   </data>
+  <data name="AssetEvent_SourceChanged" xml:space="preserve">
+    <value>La position, l’historique ou le compte d’origine a changé. Rien n’a été enregistré. Votre saisie est conservée ; fermez puis rouvrez cet événement pour vérifier les données actuelles.</value>
+  </data>
+  <data name="AssetEvent_SavedNeedsReview" xml:space="preserve">
+    <value>L’événement de la position a été enregistré, mais une mise à jour suivante n’a pas pu aboutir. Fermez puis rouvrez l’événement pour vérifier le résultat enregistré.</value>
+  </data>
 </root>

@@ -14,7 +14,7 @@
         <!-- D-98: whole title/action groups wrap at native text scale without adding a second modal header. -->
         <Grid Padding="8,8" BackgroundColor="{DynamicResource CardBackground}">
             <FlexLayout x:Name="ModalHeaderLayout" Direction="Row" Wrap="Wrap" AlignItems="Center">
-                <p:WrappingAction Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" FlexLayout.Shrink="0" Margin="4,0" Appearance="Text" />
+                <p:WrappingAction Text="{Binding CloseText}" Command="{Binding CancelCommand}" FlexLayout.Shrink="0" Margin="4,0" Appearance="Text" />
                 <VerticalStackLayout VerticalOptions="Center" FlexLayout.Shrink="0" FlexLayout.Grow="1" MaximumWidthRequest="{Binding Width, Source={x:Reference ModalHeaderLayout}, x:DataType=FlexLayout}">
                     <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold" />
                     <Label Text="{Binding TypeName}" Style="{StaticResource Secondary}" />
@@ -25,7 +25,7 @@
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="16" Spacing="8">
                 <!-- What happened: the kind decides which fields follow -->
-                <Border Style="{StaticResource Card}">
+                <Border IsEnabled="{Binding CanEdit}" Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
                         <HorizontalStackLayout Spacing="6" IsVisible="{Binding CanChooseKind}">
                             <Label Text="{v:Translate AssetEvent_Kind}" Style="{StaticResource FieldLabel}" Margin="0" />
@@ -47,7 +47,7 @@
                 </Border>
 
                 <!-- Where it is kept; a move has a source and a destination -->
-                <Border Style="{StaticResource Card}">
+                <Border IsEnabled="{Binding CanEdit}" Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{Binding LocationLabel}" Style="{StaticResource FieldLabel}" Margin="0" />
                         <Picker ItemsSource="{Binding Locations}" SelectedItem="{Binding Location}" SemanticProperties.Description="{Binding LocationLabel}" />
@@ -60,7 +60,7 @@
                 </Border>
 
                 <!-- Purchase or sale: account, price (total or per gram/unit), fee, value in the price currency -->
-                <Border Style="{StaticResource Card}" IsVisible="{Binding HasMoney}">
+                <Border IsEnabled="{Binding CanEdit}" Style="{StaticResource Card}" IsVisible="{Binding HasMoney}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{v:Translate Entry_Account}" Style="{StaticResource FieldLabel}" Margin="0" />
                         <Picker ItemsSource="{Binding Accounts}" SelectedItem="{Binding Account}" SemanticProperties.Description="{v:Translate Entry_Account}" />
@@ -78,7 +78,7 @@
                 </Border>
 
                 <!-- Opening holding or gift: no money moves; the value at the time is optional -->
-                <Border Style="{StaticResource Card}" IsVisible="{Binding HasBasis}">
+                <Border IsEnabled="{Binding CanEdit}" Style="{StaticResource Card}" IsVisible="{Binding HasBasis}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{Binding BasisLabel}" Style="{StaticResource FieldLabel}" Margin="0" />
                         <Entry Text="{Binding BasisText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{Binding BasisLabel}" />
@@ -86,7 +86,7 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <Border Style="{StaticResource Card}">
+                <Border IsEnabled="{Binding CanEdit}" Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
                         <VerticalStackLayout IsVisible="{Binding HasReason}" Spacing="4">
                             <Label Text="{Binding ReasonLabel}" Style="{StaticResource FieldLabel}" Margin="0" />
@@ -103,6 +103,6 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <p:WrappingAction Grid.Row="2" Margin="16" Appearance="Primary" Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsNotBusy}" />
+        <p:WrappingAction Grid.Row="2" Margin="16" Appearance="Primary" Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding CanSave}" />
     </Grid>
 </ContentPage>

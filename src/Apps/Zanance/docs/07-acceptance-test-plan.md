@@ -4567,3 +4567,25 @@ to one100 Food row/Home800. Main979/five known public packets/three profiles/OS 
 the new inactive fixture is retired before releasing the phone. No full-suite/unchanged successful
 matrix rerun, model/schema/permission/provider change or release claim. Broader QA-01, D-386 runtime/
 A11Y, iOS/store/external and exact-head CI remain separate. See [original evidence and limits](quality/original-split-financial-review.md).
+
+
+## D-408 - Original holding event review and retained acceptance
+
+Two real SQLite regressions first reproduce a stale correction replacing newer source data and an
+ordinary exception after a purchase already committed. The original event/type/history/locations/
+accounts/group/refund/attachment/valuation packet is now rechecked in the existing atomic quantity/
+payment/fee/price writer. Copies preserve raw drafts and immutable reviewed facts. Foreign money or
+unreviewed event identity, changed sources/access and pending input refuse before writes. Known
+accepted notification/native-return failures retire the original form with Close-only navigation.
+One explicit new location can be adopted only while all original financial facts stay unchanged.
+An observed native empty-query redelivery now preserves the loaded review instead of losing it.
+Twenty new Data and3 actual app-session cases pass selectively, plus46 original related cases once.
+Two original financial cases per independent Windows/Release AOT Android preserve exact quantity,
+fee/group/derived price, Cash874/929 and income0/expense1.36 Windows observations cover en/fa/de,
+both themes and360/412/1280;12 Android observations cover the new native feedback and retained state.
+Original Windows pre-command data is continued without reseeding or accepted-money replay. Strict
+builds and complete signed offline Main pass; the independent emulator restores Home0/My account,
+exact OS values/size/density and final Main hash through one no-reset upgrade. No physical phone,
+private installed key/database, schema/model/permission/provider change or full-suite replay. Wider
+holding relationships/device/iOS, D-386 runtime/A11Y and external/release/CI gates remain separate.
+See [original receipts and limits](quality/original-holding-event-review.md).

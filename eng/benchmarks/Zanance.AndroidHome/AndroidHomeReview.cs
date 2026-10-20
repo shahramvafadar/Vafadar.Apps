@@ -151,6 +151,13 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Fresh independent Home refresh review required.");
                 await WriteReportAsync(root, phase, await ReviewHomeRefreshAsync(app, services, root, comparison!, ct, referencesOnly: phase == "home-refresh-references"), ct);
             }
+            else if (phase == "holding-financial-review")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0 || Directory.EnumerateFileSystemEntries(root).Any())
+                    throw new ReviewCheckException("Fresh owned holding financial fixture required; preserve accepted cases.");
+                await WriteReportAsync(root, phase, await ReviewHoldingFinancialAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "split-financial-review")
             {
                 Directory.CreateDirectory(root);

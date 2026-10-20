@@ -2043,3 +2043,11 @@ Selective19 new cases, two original native finance cases per Windows/Release AOT
 language/theme/width feedback, strict builds/full signed offline Main and scoped Samsung split/edit/
 cold/join pass. Original Main/profiles/OS are restored. This is a bounded AT-66/QA-01 continuation;
 D-386 runtime/A11Y, all-device/iOS/provider/store/release gates and exact-head hosted CI remain open.
+
+
+## D-408 - Original holding-event source/outcome boundary
+
+Selective23 new and46 affected existing cases, original independent purchase/sale/refusal/accepted
+notification boundaries,36 Windows and12 Release AOT Android observations, strict builds/full signed
+offline Main and no-reset emulator Home/OS restoration pass. Physical holding workflow, other
+relationship/currency variants, iOS/provider/store/release and exact-head hosted CI remain separate.

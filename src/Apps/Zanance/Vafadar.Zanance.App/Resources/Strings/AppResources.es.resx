@@ -8266,4 +8266,10 @@ SHA-256 del XML original: {5}</value>
   <data name="Split_SavedNeedsReview" xml:space="preserve">
     <value>Los cambios del desglose se han guardado, pero no se pudo completar una actualización posterior. Cierra y vuelve a abrir la transacción para revisar el resultado guardado.</value>
   </data>
+  <data name="AssetEvent_SourceChanged" xml:space="preserve">
+    <value>La posición, el historial o la cuenta original ha cambiado. No se ha guardado nada. Tus datos se conservan; cierra y vuelve a abrir este evento para revisar los datos actuales.</value>
+  </data>
+  <data name="AssetEvent_SavedNeedsReview" xml:space="preserve">
+    <value>El evento de la posición se ha guardado, pero no se ha podido completar una actualización posterior. Cierra y vuelve a abrir el evento para revisar el resultado guardado.</value>
+  </data>
 </root>

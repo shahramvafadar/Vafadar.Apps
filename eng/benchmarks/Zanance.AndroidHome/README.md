@@ -549,3 +549,13 @@ seed identity/metadata/rows, and no accepted/join fixture. It rehydrates only re
 continues the pending original acceptance. Invalid predicates refuse before any financial action;
 public `SplitPreInvokeEvidence` contains bounded booleans/counts only. Preserve old reports and
 correct misclassified stages explicitly rather than replacing evidence or rerunning successful money.
+
+
+## D-408 - Original holding-event review
+
+`holding-financial-review` requires a fresh owned run/comparison and invokes original native purchase/
+sale forms, stale-source refusal, explicit location addition with a supplied fictitious prompt result,
+exact fee/group/derived-price/account effects and known postcommit acceptance. Twelve retained-form
+observations cover en/fa/de light/dark without repeating money. Wait for the original owned modal's
+native focus. An early empty PID/public-report observation is not a failed launch: retain the same
+process and continue only its comparison-bound report read. Never reset/reseed/restart for observation.

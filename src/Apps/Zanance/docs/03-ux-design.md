@@ -1918,3 +1918,13 @@ permission. A known accepted split/join, including failed postcommit notificatio
 keeps fields and financial commands retired with Close-only navigation. Preserve the exact total,
 original metadata and attachment owner; do not turn a retained accepted form into another operation.
 Native matrices reuse the same refused/accepted forms read-only after original financial qualification.
+
+
+## D-408 - Original holding editor outcome
+
+Publish the coherent original event/type/history and displayed choices before enabling input. Preserve
+raw quantity/amount/fee/reason/note when a changed source requires reopening. An accepted event keeps
+all input cards and financial Save disabled with Close, including a failed postcommit notification
+or return. Explicit location addition retains financial drafts and cannot refresh away changed facts.
+Ignore empty native query redelivery after consuming the original parameters. Presentation matrices
+reuse original outcomes read-only and qualify translated feedback without replaying purchases/sales.

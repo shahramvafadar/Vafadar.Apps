@@ -2454,3 +2454,16 @@ reviews and the actual app session retain known acceptance across notification f
 write or reload can turn that original form into another operation. The native form retires departed
 reviews, preserves raw shares on refusal and uses Close-only after acceptance. No entity, compiled
 model, schema/migration, portable format, key, permission or SDK change.
+
+
+## D-408 - Original holding event financial review
+
+HoldingEventReadReview captures the actual file's selected type/history, location/account/category
+choices, original money group/refunds/attachment metadata, type valuations and editor mode/default.
+Its immutable packet is validated inside SaveEventCoreAsync's existing CommercialWriteTransaction
+before quantity/payment/fee/derived-price mutation. Reviewed event/entry copies keep raw originals
+unchanged. Same-writer foreign event/money and pending-input guards prevent retargeting; original
+capability classification/full-history conflict validation remain. Committed notification carries
+HoldingSaveResult. HoldingEventEditorSession retires accepted commands across native effects; one
+location addition can adopt only the new explicit row while other original facts remain identical.
+No entity/compiled model, schema/migration, key, portable format, dependency or permission change.

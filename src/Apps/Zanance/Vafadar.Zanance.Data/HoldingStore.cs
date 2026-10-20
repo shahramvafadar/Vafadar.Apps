@@ -28,7 +28,7 @@ public sealed record HoldingGroup(IReadOnlyList<AssetEvent> Events, IReadOnlyLis
 /// saved in one database transaction together with its money entry and fee (shared <c>GroupId</c>); every change is
 /// checked against the full history of the holding, so no quantity is ever negative on any date (ZEX-AS15, AT16).
 /// </summary>
-public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFactory, ICommercialWriteAccessSource commercialAccess)
+public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> contextFactory, ICommercialWriteAccessSource commercialAccess)
 {
     /// <summary>Raised after holdings were written.</summary>
     public event EventHandler? Changed;
@@ -170,8 +170,12 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
     /// Saves the event/group and, when requested by the purchase editor, its derived price in the same transaction.
     /// The price uses the actual stored type currency, never a caller-supplied manual-price entitlement bypass.
     /// </summary>
-    public async Task<HoldingSaveResult> SaveEventAsync(AssetEvent assetEvent, IReadOnlyList<LedgerEntry> entries,
-        bool recordPurchasePrice, CancellationToken cancellationToken = default)
+    public Task<HoldingSaveResult> SaveEventAsync(AssetEvent assetEvent, IReadOnlyList<LedgerEntry> entries,
+        bool recordPurchasePrice, CancellationToken cancellationToken = default) =>
+        SaveEventCoreAsync(assetEvent, entries, recordPurchasePrice, cancellationToken);
+
+    private async Task<HoldingSaveResult> SaveEventCoreAsync(AssetEvent assetEvent, IReadOnlyList<LedgerEntry> entries,
+        bool recordPurchasePrice, CancellationToken cancellationToken, HoldingEventReadReview? review = null, Func<bool>? isCurrent = null)
     {
         ArgumentNullException.ThrowIfNull(assetEvent);
         ArgumentNullException.ThrowIfNull(entries);
@@ -179,7 +183,23 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
         // D-122: acquire the existing operation's writer before full-history validation as well as permissions.
         // Independent sales/corrections must not both validate the same quantity then commit a negative history.
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        void ValidatePending()
+        {
+            review?.EnsureCurrent();
+            if (isCurrent?.Invoke() == false) throw new HoldingEventReviewChangedException("Original pending holding draft changed.");
+        }
+        ValidatePending();
+        if (review is not null)
+        {
+            review.ValidateWriter(db, await HoldingEventReadReview.ReadAsync(db, review.Inputs.Type.Id, review.EventId, cancellationToken));
+            var proposedIds = entries.Select(e => e.Id).ToList();
+            var originalIds = review.Inputs.Entries.Select(e => e.Id).ToList();
+            if (await db.Entries.AnyAsync(e => proposedIds.Contains(e.Id) && !originalIds.Contains(e.Id), cancellationToken))
+                throw new HoldingEventReviewChangedException("An unreviewed existing money entry cannot join this holding event.");
+        }
         var existing = await db.AssetEvents.AnyAsync(e => e.Id == assetEvent.Id, cancellationToken);
+        if (review is { EventId: null } && existing)
+            throw new HoldingEventReviewChangedException("An unreviewed existing holding event cannot become this new event.");
         if (write.Enforced)
         {
             var quantityCorrection = assetEvent.Kind == AssetEventKind.Correction && entries.Count == 0
@@ -258,12 +278,11 @@ public sealed class HoldingStore(IDbContextFactory<ZananceDbContext> contextFact
             valuation.PricePerUnitMilli = AssetValuationService.PricePerUnitMilliOf(cost, assetEvent.Quantity);
         }
 
-        write.EnsureCurrent();
+        ValidatePending(); write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
-        write.EnsureCurrent();
+        ValidatePending(); write.EnsureCurrent();
         await write.CommitAsync(cancellationToken);
-        Changed?.Invoke(this, EventArgs.Empty);
-        return HoldingSaveResult.Success;
+        return CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty), HoldingSaveResult.Success);
     }
 
     /// <summary>

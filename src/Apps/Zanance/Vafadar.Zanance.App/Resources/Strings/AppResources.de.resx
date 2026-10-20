@@ -8297,4 +8297,10 @@ Original-XML SHA-256: {5}</value>
   <data name="Split_SavedNeedsReview" xml:space="preserve">
     <value>Die Aufteilung wurde gespeichert, aber eine anschließende Aktualisierung konnte nicht abgeschlossen werden. Schließen und öffnen Sie die Buchung erneut, um das gespeicherte Ergebnis zu prüfen.</value>
   </data>
+  <data name="AssetEvent_SourceChanged" xml:space="preserve">
+    <value>Der ursprüngliche Bestand, Verlauf oder das Konto wurde geändert. Es wurde nichts gespeichert. Ihre Eingaben bleiben erhalten; schließen und öffnen Sie das Ereignis erneut, um die aktuellen Daten zu prüfen.</value>
+  </data>
+  <data name="AssetEvent_SavedNeedsReview" xml:space="preserve">
+    <value>Das Bestandsereignis wurde gespeichert, aber eine anschließende Aktualisierung konnte nicht abgeschlossen werden. Schließen und öffnen Sie das Ereignis erneut, um das gespeicherte Ergebnis zu prüfen.</value>
+  </data>
 </root>

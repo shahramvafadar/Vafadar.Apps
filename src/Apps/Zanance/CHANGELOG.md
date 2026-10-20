@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep holding changes on their reviewed data (D-408)
+
+- Stop a retained purchase, sale or correction from replacing newer holding or account information;
+  keep typed inputs and explain when the event must be reopened.
+- Keep a saved event closed to another Save if its notification or return fails.
+- Preserve the original form through empty navigation parameter delivery and explicit new locations.
+
+
 ### Keep split and combine on the reviewed transaction (D-407)
 
 - Refuse an old split/combine after the original transaction, account or related data changes; keep

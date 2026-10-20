@@ -2959,3 +2959,13 @@ or return. Preserve successful refusal/acceptance receipts and original fixtures
 continues only pending work without reseeding or replaying accepted money. Modal focus belongs to
 the original owned native modal, not an Activity behind it. Restore Main/profiles/OS and retire only
 the newly owned inactive profile before releasing a coordinated phone turn.
+
+
+## D-408 - Original holding editor review
+
+Keep original event/type/history/location/account/group/price facts coherent and revalidate them in
+the existing quantity/payment/fee/derived-price writer. Mutate copies, preserve original rights and
+reject foreign money/event identities. Adopt one explicit new location only if every other original
+fact stays unchanged. Empty native query redelivery must retain the already loaded review. Known
+commit retires the original form before fallible notification/return. Preserve accepted cases and
+continue only the exact uncompleted native step; no reseeding or replay to repair an observer.
