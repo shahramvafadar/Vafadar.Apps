@@ -14,7 +14,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-06 | Report only source account | FIN-03 | Unit | S1 | Verified (unit, domain level) |
 | AT-07 | Card purchase and card payment | ACC-04 | Unit + physical | S1 | Verified at recorded scopes: unit and D-404 original Samsung expense60/payment90/positive credit30, cold balances and two ledger details; no actual bank settlement or whole-device acceptance |
 | AT-08 | Transfer fee | FIN-02 | Unit | S1 | Verified (unit, domain level) |
-| AT-09 | Opening balance + older history | FIN-04, IO-12 | Unit + bounded native integration | S2 | Domain baseline retained; D-405 original own/mapped preview refuses a changed opening boundary, explicit Refresh uses current facts and native import/Undo passes on independent Windows/Release AOT Android; physical picker/full device acceptance remains separate |
+| AT-09 | Opening balance + older history | FIN-04, IO-12 | Unit + bounded native integration | S2 | Domain baseline retained; D-405 original own/mapped preview refuses a changed opening boundary, explicit Refresh uses current facts and native import/Undo passes on independent Windows/Release AOT Android; D-406 original Samsung picker/opening20-to18/cold durable Undo and final retained-tab Refresh qualified; broader device/format acceptance remains separate |
 | AT-10 | Archive account with history/plans | ACC-06 | Unit + physical | S2/S4 | Verified at recorded scopes: unit and D-404 Samsung dirty-draft cancel/accept, both active source/destination plans ended, default cleared, archived report/history retained and unarchive/cold without resuming plans; paused variants/platform acceptance separate |
 | AT-11 | Balance adjustment | ACC-08 | Unit | S1 | Verified (unit, domain level) |
 | AT-12 | Partial refund same month | REF-01/02 | Unit | S1 | Verified (unit, domain level) |
@@ -4532,3 +4532,19 @@ financial contexts per Windows/Release AOT Android, strict builds/full signed of
 no-reset upgrade/Home0/settings pass. Accepted cases are retained across observer repairs; no financial
 replay or full-suite rerun. No schema/model or permission change. Broader device/import/ANR/A11Y/iOS/
 provider/release and exact-head CI remain separate. See [scope and preserved negatives](quality/original-csv-financial-review.md).
+
+## D-406 - Original physical opening-boundary CSV and retained-tab review
+
+Samsung's original picker/preview/import stores one older12.34 expense and opening-day20 income in
+one new fictitious Cash900 profile. Home920 excludes the older row; explicitly moving only opening
+October20 to18 gives907.66. One planned cold preserves both original public details/dates/notes and
+the durable two-row batch. Original Undo restores Home900/empty ledger while opening18 remains.
+A real retained More-tab departure did not call OnDisappearing and left Import enabled. The original
+Shell now retires that review on uncancelled tab navigation after existing leave guards. Final full
+signed offline Release upgrades without reset and physically proves disabled Import, retained source
+and explicit Refresh without financial replay. Strict Windows and complete Android builds have no
+warnings/errors. Managed algorithms/tests are unchanged; retained D-405 successes are not rerun or
+counted as new cases. Main979/five public packets/three profiles/OS are restored; only the new inactive profile
+and exact hash-matched public file are removed, and the coordinated phone turn is released. No schema/model, resource, permission or provider change.
+Broader device/import/report, D-386 runtime/A11Y, iOS/store/release and exact-head CI remain separate.
+See [bounded evidence](quality/physical-opening-csv.md) for original receipts, preserved failures and completion status.

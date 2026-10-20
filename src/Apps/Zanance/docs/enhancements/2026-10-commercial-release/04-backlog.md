@@ -47,7 +47,7 @@ priority/order descriptions below.
 | ZCR-LOC-12 | Owner-requested receipt total detection and review (D-64) | Maintenance | P1 | M | Done (local; device/corpus gate remains QA-05) | owner request 2026-10-08 |
 | ZCR-LOC-11 | Owner-requested backup, onboarding and About corrections (D-62) | 2 | P2 | S | Done | owner approval 2026-10-08 |
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Done (D-268 browser/account copy and six-language drafts; real OAuth/publication remain open) | D-69 continuous delivery |
-| ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; D-381 physical interpreted paging/stale-mapping review; D-405 original own/mapped financial snapshot guard and explicit Refresh qualified locally/native; other bank/relationship variants require original fixtures | original export specifications/samples |
+| ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; D-381 physical interpreted paging/stale-mapping review; D-405 original own/mapped financial snapshot guard; D-406 physical opening-boundary/cold Undo and retained-tab Refresh fix qualified; other bank/relationship variants require original fixtures | original export specifications/samples |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
 | ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; D-328 accountant ZIP receiving/content; D-329 original en/fa/de PDF contents and continued-table fix; D-330 own-format producer/consumer/refund/transfer/cold Undo; D-361 original en/fa/de display/Back and advanced goal choices/dirty discard, exact preference/Home restoration and one native root; D-365 original changed account/debt/monthly disclosures in 18 normal-scale Samsung cases with draft/data/preference preservation; D-401 occurrence override/skip/unskip, manual link/keep and generated delete-on-reopen with cold/Main restoration; D-402 prior-period/cross-account refunds, excess refusal/same-draft remainder and cold public allocation with Main restoration; D-403 original unprotected portable fresh independent reinstall/first-run restore/cold/whole-export comparison with Main restoration; D-404 card purchase/payment/positive credit and dirty archive/unarchive with two ended plans/default/history/cold and Main restoration; broader phone acceptance remains) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
@@ -3559,3 +3559,19 @@ OS restoration. No full-suite or accepted-money replay. Broader QA/import, D-386
 remain separate. See ../../quality/original-csv-financial-review.md.
 
 Continue remaining ready work, retaining completed cases and existing successful unrelated baselines.
+
+## D-406 - Original physical opening-boundary CSV and retained-tab review
+
+Samsung's original picker/preview/import stores one older12.34 expense and opening-day20 income in
+one new fictitious Cash900 profile. Home920 excludes the older row; explicitly moving only opening
+October20 to18 gives907.66. One planned cold preserves both original public details/dates/notes and
+the durable two-row batch. Original Undo restores Home900/empty ledger while opening18 remains.
+A real retained More-tab departure did not call OnDisappearing and left Import enabled. The original
+Shell now retires that review on uncancelled tab navigation after existing leave guards. Final full
+signed offline Release upgrades without reset and physically proves disabled Import, retained source
+and explicit Refresh without financial replay. Strict Windows and complete Android builds have no
+warnings/errors. Managed algorithms/tests are unchanged; retained D-405 successes are not rerun or
+counted as new cases. Main979/five public packets/three profiles/OS are restored; only the new inactive profile
+and exact hash-matched public file are removed, and the coordinated phone turn is released. No schema/model, resource, permission or provider change.
+Broader device/import/report, D-386 runtime/A11Y, iOS/store/release and exact-head CI remain separate.
+See ../../quality/physical-opening-csv.md for original receipts, preserved failures and completion status.

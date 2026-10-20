@@ -1901,3 +1901,10 @@ Refresh available. Leaving the form retires its original token. A rejected finan
 show an unexpected-error dialog or guess a new opening baseline. Existing wrapping/error/action dock,
 translations and native scaling remain; only this original command/refusal/refresh path is qualified.
 See quality/original-csv-financial-review.md for en/fa/de/theme native scopes and observer limits.
+
+## D-406 - Retained Shell import departure
+
+A routed More page can leave the visible Android tab without Page.OnDisappearing. Retire the original
+CSV financial review on uncancelled Shell tab navigation after existing leave guards; keep raw source
+and choices. Import stays disabled until explicit Refresh. Never interpret a retained native page as
+a current financial review. Physical final Release qualification writes no money for this hook.

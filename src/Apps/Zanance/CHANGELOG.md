@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep retained CSV previews safe across Android tabs (D-406)
+
+- Require Refresh after leaving a CSV preview through a tab, while keeping its file and choices.
+- Verified older-history/opening-day balances and durable Undo through a cold Android read.
+
+
 ### Keep CSV imports on the reviewed financial data (D-405)
 
 - Stop an old CSV preview from importing after its account or history changes. Keep the file and choices

@@ -2940,3 +2940,10 @@ input/choices and require explicit Refresh. Ordinary read-only review uses fresh
 it does not become an authorization bypass or a new purchase gate. Preserve bank reviewed consent,
 holdings and accepted-result contracts. Retire departed forms, and never replay accepted import/Undo
 to repair a native observer. Independent continuation checkpoints retain original data and evidence.
+
+## D-406 - Retained original import tab departure
+
+Android routed More pages may leave their visible tab without OnDisappearing. Retire the original
+CSV financial review on uncancelled Shell tab navigation after existing leave guards, retaining raw
+source and choices for explicit Refresh. Never replay accepted import/Undo or opening-date edits to
+repair observers; use final-candidate read-only preview/departure and preserve the original cold data.

@@ -229,6 +229,12 @@ public partial class AppShell : Shell
         if (CurrentPage?.BindingContext is Features.Sharing.HouseholdViewModel household && !household.CanLeave && args.CanCancel) args.Cancel();
         if (CurrentPage?.BindingContext is Features.Sharing.HouseholdCostsViewModel costs && !costs.CanLeave && args.CanCancel) args.Cancel();
         base.OnNavigating(args);
+        // D-406: Android can retain a routed More page across tabs without OnDisappearing.
+        // Retire its original financial review only after navigation survives the existing leave guards.
+        if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
+                or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
+            && CurrentPage?.BindingContext is ImportExportViewModel import)
+            import.RetireBankReview();
     }
 
     /// <summary>Stops translated navigation titles on a retired shell from reaching its disconnected native menu.</summary>

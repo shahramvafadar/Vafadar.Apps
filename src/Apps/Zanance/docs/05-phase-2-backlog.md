@@ -2577,3 +2577,19 @@ choices remain. Eight new cases, retained related checks and12 original native f
 Windows/Release AOT Android pass, with strict builds/full offline signed APK and no-reset Main/Home0/
 OS restoration. No full-suite or accepted-money replay. Broader QA/import, D-386 and external gates
 remain separate. See quality/original-csv-financial-review.md.
+
+## D-406 - Original physical opening-boundary CSV and retained-tab review
+
+Samsung's original picker/preview/import stores one older12.34 expense and opening-day20 income in
+one new fictitious Cash900 profile. Home920 excludes the older row; explicitly moving only opening
+October20 to18 gives907.66. One planned cold preserves both original public details/dates/notes and
+the durable two-row batch. Original Undo restores Home900/empty ledger while opening18 remains.
+A real retained More-tab departure did not call OnDisappearing and left Import enabled. The original
+Shell now retires that review on uncancelled tab navigation after existing leave guards. Final full
+signed offline Release upgrades without reset and physically proves disabled Import, retained source
+and explicit Refresh without financial replay. Strict Windows and complete Android builds have no
+warnings/errors. Managed algorithms/tests are unchanged; retained D-405 successes are not rerun or
+counted as new cases. Main979/five public packets/three profiles/OS are restored; only the new inactive profile
+and exact hash-matched public file are removed, and the coordinated phone turn is released. No schema/model, resource, permission or provider change.
+Broader device/import/report, D-386 runtime/A11Y, iOS/store/release and exact-head CI remain separate.
+See [bounded evidence](quality/physical-opening-csv.md) for original receipts, preserved failures and completion status.
