@@ -2575,3 +2575,15 @@ facts; it never creates, edits or guesses a replacement. Session metadata owners
 handle so a new explicit query waits for its retired writer without polling or replay. Financial
 acceptance stays separate. No schema/model/portable format or privacy boundary changes.
 See [evidence](../../src/Apps/Zanance/docs/quality/holding-location-creation.md).
+
+## Original holding-event form publication (D-421)
+
+Bind the first actual context path before lookup, retaining it even on a missing event/type. Read and
+revalidate one complete event/settings/choice packet on the worker without initializing settings.
+Default scaffolding runs only after valid original lookup under the atomic reviewed-location core;
+Corrections permits only missing default scaffolding, while explicit extra places still require
+ManageHoldings. Retain a known default receipt through readback/publication failure and refuse its
+later removal; clear temporary readback ownership only after complete publication. Retry of an
+already published draft never creates default metadata. Routed sessions and accepted callbacks own
+their original generation. No model/schema/format/privacy boundary changes.
+[Evidence](../../src/Apps/Zanance/docs/quality/holding-event-publication.md).

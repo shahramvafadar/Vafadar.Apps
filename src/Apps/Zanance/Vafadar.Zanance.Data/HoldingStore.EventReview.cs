@@ -47,10 +47,12 @@ public sealed partial class HoldingStore
     }
 
     /// <summary>Reads the original holding editor source/choices in one coherent actual-file transaction.</summary>
-    public async Task<HoldingEventReadReview> ReadEventReviewAsync(Guid typeId, Guid? eventId = null, CancellationToken ct = default)
+    public async Task<HoldingEventReadReview> ReadEventReviewAsync(Guid typeId, Guid? eventId = null, CancellationToken ct = default, Func<string, bool>? acceptsFile = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(ct);
         var path = DatabaseFileIdentity.ConfiguredPath(db);
+        if (acceptsFile is not null && !acceptsFile(path))
+            throw new HoldingEventReviewChangedException("The original event form cannot follow another file.");
         var access = new CommercialFileAccess(commercialAccess, path); access.EnsureSnapshotCurrent();
         await db.Database.OpenConnectionAsync(ct);
         await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);

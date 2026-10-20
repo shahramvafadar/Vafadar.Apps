@@ -1908,3 +1908,15 @@ process across startup observations, preserve system settings and restore Main a
 report. No Main private store/key or unrelated archive is read. Build complete signed offline Main
 with the canonical APK script, then check package/signature/native bytes. See
 [original evidence](../../src/Apps/Zanance/docs/quality/holding-location-creation.md).
+
+## Original holding-event covers and Retry (D-421)
+
+Run-StoreDrafts.ps1 -HoldingEventPublicationReview qualifies the actual original form on a separate
+non-input desktop. It seeds one independent source, then performs only original read/failed-read/
+native Retry and explicit query controls. Preserve original files, PIDs and completed observations;
+never seed again to fix an observer. The independent AndroidHome holding-event-publication phase
+requires fresh review_run and review_pass. Native UIA/PerformClick invokes Retry; raw77 is an explicit
+model draft control followed by actual native Entry rebinding, not keyboard or financial acceptance.
+Compare every typed source row, base rows and exact original language/theme. Build complete signed
+offline Main with the canonical script and verify package/signature/native bytes; restore the same
+Main/Home/OS after the terminal caller. [Evidence](../../src/Apps/Zanance/docs/quality/holding-event-publication.md).

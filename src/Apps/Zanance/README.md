@@ -489,3 +489,8 @@ with explicit calculated/date-only provenance and free-original disclosure. See
 
 New locations keep their original profile/form identity and explicit saved-result recovery, without
 repeating a create or losing the financial draft. [Focused evidence and platform limits](docs/quality/holding-location-creation.md).
+
+## Complete original holding-event form (D-421)
+
+Loading and Retry keep the original profile/form; another routed holding owns a fresh draft. Historical
+choices and accepted-save ownership stay exact. [Focused evidence and platform limits](docs/quality/holding-event-publication.md).

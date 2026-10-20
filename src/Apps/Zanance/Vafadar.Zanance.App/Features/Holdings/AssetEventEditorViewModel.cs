@@ -41,13 +41,23 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
     ];
 
     private readonly HoldingStore _holdings;
-    private readonly ZananceStore _store;
     private readonly HoldingText _text;
     private readonly Translator _translator;
     private readonly ILocalizationService _localization;
     private readonly TimeProvider _time;
     private readonly IAppInteraction _interaction;
-    private readonly HoldingEventEditorSession _session;
+    private HoldingEventEditorSession _session;
+    private string? _originalEditorFile;
+    private long _loadEpoch;
+    private bool _hasQuery, _hasPublishedForm, _formDeparted;
+    private Guid _queryType;
+    private Guid? _queryEvent;
+    private AssetEventKind? _queryKind;
+
+    /// <summary>Gets the original complete form cover and explicit failed-load Retry state.</summary>
+    [ObservableProperty] public partial Presentation.SnapshotLoadState Loading { get; private set; } = new();
+    /// <summary>Gets translated load refusal independently of retained raw field feedback.</summary>
+    [ObservableProperty] public partial string? LoadError { get; private set; }
     private bool _loading = true;
     private long _locationEpoch;
     private long _locationForm;
@@ -82,13 +92,13 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
     public AssetEventEditorViewModel(HoldingStore holdings, ZananceStore store, HoldingText text, Translator translator, ILocalizationService localization, TimeProvider time, IAppInteraction interaction)
     {
         _holdings = holdings;
-        _store = store;
+        ArgumentNullException.ThrowIfNull(store);
         _text = text;
         _translator = translator;
         _localization = localization;
         _time = time;
         _interaction = interaction;
-        _session = new(holdings);
+        _session = new(holdings, AcceptOriginalFile);
         Title = translator["AssetEvent_NewTitle"];
         Date = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         DirectionNames = [translator["AssetEvent_Increase"], translator["AssetEvent_Decrease"]];
@@ -235,32 +245,104 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
 
     private QuantityUnit Unit => _units[Math.Clamp(UnitIndex, 0, _units.Count - 1)];
 
-    /// <summary>Publishes a coherent original file/type/event and choices before enabling the editor.</summary>
+    /// <summary>Binds the first actual opened file, including a failed or missing original lookup, across Retry.</summary>
+    private bool AcceptOriginalFile(string file)
+    {
+        var original = Interlocked.CompareExchange(ref _originalEditorFile, file, null);
+        return original is null || string.Equals(original, file, StringComparison.Ordinal);
+    }
+
+    /// <summary>Routes one original identity; a new event/type owns a fresh draft and financial session.</summary>
     public async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
-        // Native navigation may redeliver an empty query after the original parameters were consumed.
-        // Keep that original loaded review instead of starting a second load with an empty type.
         if (!(query.TryGetValue("id", out var originalId) && originalId is Guid)
             && !(query.TryGetValue("type", out var originalType) && originalType is Guid)) return;
-        _locationEpoch++; _locationForm++;
-        _pendingLocationId = null; _pendingLocationName = null; _createdLocation = null; _locationPending = false;
-        LocationFeedback = null; LocationError = null;
-        var culture = _localization.CurrentCulture;
-        _loading = true; PublishState();
         var eventId = query.TryGetValue("id", out var idValue) && idValue is Guid id ? id : (Guid?)null;
-        var typeId = query.TryGetValue("type", out var typeValue) && typeValue is Guid t ? t : Guid.Empty;
-        var requested = query.TryGetValue("kind", out var kindValue) && Enum.TryParse<AssetEventKind>(kindValue as string, out var k) ? k : (AssetEventKind?)null;
+        var typeId = query.TryGetValue("type", out var typeValue) && typeValue is Guid type ? type : Guid.Empty;
+        var requested = query.TryGetValue("kind", out var kindValue) && Enum.TryParse<AssetEventKind>(kindValue as string, out var kind) ? kind : (AssetEventKind?)null;
         query.Clear();
-        // Preserve initial settings/default-location initialization, then capture all displayed sources together.
-        await Task.Run(async () =>
+        var changed = !_hasQuery || eventId != _queryEvent || typeId != _queryType || eventId is null && requested != _queryKind;
+        if (!changed && _session.Committed) return;
+        var previous = _session;
+        _queryEvent = eventId; _queryType = typeId; _queryKind = requested; _hasQuery = true;
+        _locationEpoch++; _locationForm++; _loadEpoch++; _formDeparted = false; IsBusy = false;
+        _pendingLocationId = null; _pendingLocationName = null; _createdLocation = null; _locationPending = false;
+        LocationFeedback = null; LocationError = null; LoadError = null;
+        if (changed)
         {
-            await _store.GetSettingsAsync();
-            if (!(await _holdings.GetLocationsAsync()).Any(l => !l.IsArchived))
-                await _holdings.EnsureDefaultLocationAsync(_translator["Holding_DefaultLocation"]);
-        });
-        var review = await Task.Run(() => _session.LoadAsync(typeId, eventId));
-        if (review is null) return;
+            previous.Retire(); _session = new(_holdings, AcceptOriginalFile); _hasPublishedForm = false; _snapshot = null;
+        }
+        Loading = new(); _loading = true; PublishState(); var epoch = _loadEpoch;
+        await previous.WaitForPlaceAsync();
+        if (epoch != _loadEpoch) return;
+        await LoadOriginalFormAsync();
+    }
+
+    /// <summary>Reopens only the original failed query, preserving an already published raw draft.</summary>
+    [RelayCommand(CanExecute = nameof(CanReload))]
+    private Task ReloadAsync() => LoadOriginalFormAsync();
+    /// <summary>Gets whether this original failed form may perform an explicit read Retry.</summary>
+    public bool CanReload => _hasQuery && !_formDeparted && Loading.HasFailed && !IsBusy && !_session.Committed;
+
+    /// <summary>Reads and validates on the worker; publishes every field before uncovering the original form.</summary>
+    private async Task LoadOriginalFormAsync()
+    {
+        var epoch = _loadEpoch; var loading = Loading; var session = _session; var reset = !_hasPublishedForm;
+        var typeId = _queryType; var eventId = _queryEvent; var defaultName = _translator["Holding_DefaultLocation"];
+        bool Owner() => !_formDeparted && epoch == _loadEpoch && ReferenceEquals(loading, Loading) && ReferenceEquals(session, _session);
+        void Current() { if (!Owner()) throw new OperationCanceledException("Original holding form retired."); }
+        HoldingEventReadReview? read = null; _loading = true; LoadError = null; PublishState();
+        try
+        {
+            await loading.RunAsync(async () =>
+            {
+                read = await Task.Run(async () =>
+                {
+                    Current(); var result = await session.LoadAsync(typeId, eventId, reset ? defaultName : null, Owner);
+                    Current(); if (result is null) throw new OperationCanceledException("Original event read retired.");
+                    await _holdings.ValidateEventReadReviewAsync(result); Current(); return result;
+                });
+            }, () =>
+            {
+                Current(); var review = read ?? throw new InvalidOperationException("Original complete event source missing.");
+                void Guard(object? sender, System.ComponentModel.PropertyChangedEventArgs args) { Current(); review.EnsureCurrent(); }
+                PropertyChanged += Guard;
+                try { PublishOriginalForm(review, reset); Current(); review.EnsureCurrent(); }
+                finally { PropertyChanged -= Guard; }
+            });
+            Current(); _hasPublishedForm = true; session.CompletePublication(read!);
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            session.Retire();
+            if (Owner()) LoadError = _translator[exception is HoldingEventReviewChangedException ? "AssetEvent_SourceChanged" : "Error_Unexpected"];
+            System.Diagnostics.Debug.WriteLine(exception.GetType().FullName);
+        }
+        finally { if (Owner()) { _loading = false; PublishState(); } }
+    }
+
+    /// <summary>Publishes the captured packet under its cover; Retry retains the same original raw draft.</summary>
+    private void PublishOriginalForm(HoldingEventReadReview review, bool reset)
+    {
+        var culture = _localization.CurrentCulture; var eventId = _queryEvent;
+        var previousKind = Kind; var previousAccount = Account?.Id;
+        if (!reset)
+        {
+            var places = review.Inputs.Locations;
+            if (Location is { } from && !places.Any(l => l.Id == from.Id && (!l.IsArchived || l.Id == _existing?.LocationId))
+                || IsTransfer && ToLocation is { } to && !places.Any(l => l.Id == to.Id && (!l.IsArchived || l.Id == _existing?.ToLocationId))
+                || HasMoney && Account is { } account && !review.Inputs.Accounts.Any(a => a.Id == account.Id && (!a.IsArchived || _groupEntries.Any(e => e.AccountId == a.Id)) && !a.Type.IsOutsideCash()))
+                throw new HoldingEventReviewChangedException("An original draft choice is unavailable; never select a replacement silently.");
+        }
+        if (reset)
+        {
+            Title = _translator["AssetEvent_NewTitle"]; Date = DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
+            QuantityText = string.Empty; BasisText = string.Empty; AmountText = string.Empty; FeeText = string.Empty;
+            SecondAmountText = string.Empty; ReasonText = string.Empty; Note = string.Empty;
+            UnitIndex = 0; PriceModeIndex = 0; DirectionIndex = 0; Location = null; ToLocation = null; Account = null;
+            Error = null; AccountError = null; FeeError = null;
+        }
         var advanced = review.Inputs.Settings.Advanced;
         var events = review.Inputs.Events;
         _existing = eventId is { } editedId ? HoldingEventReadReview.CopyEvent(events.Single(e => e.Id == editedId)) : null;
@@ -269,7 +351,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
         if (_type is not { } type)
         {
             Error = _translator["Holding_NotFound"];
-            return;
+            throw new HoldingEventReviewChangedException("Original event type missing during publication.");
         }
 
         TypeName = type.Name;
@@ -279,23 +361,27 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
         HasUnitChoice = _units.Count > 1;
         PriceModeNames = [_translator["AssetEvent_PriceTotal"], _text.PerUnit(type)];
 
-        PublishLocations(review.Inputs.Locations, null);
-        var accounts = review.Inputs.Accounts.Where(a => !a.IsArchived);
+        PublishLocations(review.Inputs.Locations, reset ? null : Location?.Id);
+        // Historical payment ownership must never silently move to another active account.
+        var accounts = review.Inputs.Accounts.Where(a => !a.IsArchived || _groupEntries.Any(e => e.AccountId == a.Id));
         var defaultAccount = review.Inputs.Settings.DefaultAccountId;
         Accounts = [.. accounts.Where(a => !a.Type.IsOutsideCash()).OrderBy(a => a.SortOrder).ThenBy(a => a.Name).Select(a => new HoldingAccount(a.Id, a.Name, a.CurrencyCode))];
         // The default account first when it pays in the price currency, then any account in that currency (ZEX-S0202).
-        Account = Accounts.FirstOrDefault(a => a.Id == defaultAccount && string.Equals(a.CurrencyCode, type.PriceCurrencyCode, StringComparison.OrdinalIgnoreCase))
+        Account = (!reset ? Accounts.FirstOrDefault(a => a.Id == previousAccount) : null)
+            ?? Accounts.FirstOrDefault(a => a.Id == defaultAccount && string.Equals(a.CurrencyCode, type.PriceCurrencyCode, StringComparison.OrdinalIgnoreCase))
             ?? Accounts.FirstOrDefault(a => string.Equals(a.CurrencyCode, type.PriceCurrencyCode, StringComparison.OrdinalIgnoreCase))
             ?? Accounts.FirstOrDefault();
 
         // Simple records only corrections; an existing event keeps its kind (a purchase stays a purchase).
         _kinds = _existing is { } edited ? [edited.Kind] : advanced ? AdvancedKinds : [AssetEventKind.Correction];
+        if (!reset && !_kinds.Contains(previousKind))
+            throw new HoldingEventReviewChangedException("The original draft kind is unavailable; never reinterpret it on Retry.");
         KindNames = [.. _kinds.Select(_text.EventKind)];
         CanChooseKind = _kinds.Length > 1;
-        KindIndex = Math.Max(0, Array.IndexOf(_kinds, _existing?.Kind ?? requested ?? _kinds[0]));
+        KindIndex = Math.Max(0, Array.IndexOf(_kinds, !reset ? previousKind : _existing?.Kind ?? _queryKind ?? _kinds[0]));
         OnKindIndexChanged(KindIndex);
 
-        if (_existing is { } existing)
+        if (reset && _existing is { } existing)
         {
             Title = _translator["AssetEvent_EditTitle"];
             Date = existing.Date;
@@ -310,7 +396,8 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
 
             if (_groupEntries.FirstOrDefault(e => e.Kind is EntryKind.AssetPurchase or EntryKind.AssetSale) is { } money)
             {
-                Account = Accounts.FirstOrDefault(a => a.Id == money.AccountId) ?? Account;
+                Account = Accounts.FirstOrDefault(a => a.Id == money.AccountId)
+                    ?? throw new HoldingEventReviewChangedException("Original payment account cannot be replaced.");
                 AmountText = MoneyText.ForInput(money.Amount, Account?.CurrencyCode ?? type.PriceCurrencyCode, culture);
             }
 
@@ -323,16 +410,16 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
             SecondAmountText = HasSecondAmount && priced is { } second ? MoneyText.ForInput(second, type.PriceCurrencyCode, culture) : string.Empty;
         }
 
-        UpdateEffect();
-        _snapshot = Snapshot(); _loading = false; PublishState();
+        UpdateEffect(); if (reset || _snapshot is null) _snapshot = Snapshot();
     }
 
     private void PublishLocations(IReadOnlyList<AssetLocation> sources, Guid? select)
     {
-        var locations = sources.Where(l => !l.IsArchived).OrderBy(l => l.SortOrder).ThenBy(l => l.Name).ToList();
+        var locations = sources.Where(l => !l.IsArchived || l.Id == _existing?.LocationId || l.Id == _existing?.ToLocationId).OrderBy(l => l.SortOrder).ThenBy(l => l.Name).ToList();
         Locations = [.. locations.Select(l => new LocationChoice(l.Id, l.Name))];
         Location = Locations.FirstOrDefault(l => l.Id == (select ?? Location?.Id)) ?? Locations[0];
-        ToLocation ??= Locations.FirstOrDefault(l => l.Id != Location.Id);
+        var destination = ToLocation?.Id;
+        ToLocation = Locations.FirstOrDefault(l => l.Id == destination && l.Id != Location.Id) ?? Locations.FirstOrDefault(l => l.Id != Location.Id);
     }
 
     partial void OnKindIndexChanged(int value)
@@ -656,12 +743,15 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
         assetEvent.BasisAmount = Kind is AssetEventKind.Purchase or AssetEventKind.Opening or AssetEventKind.GiftReceived ? priced : null;
         assetEvent.ProceedsAmount = Kind == AssetEventKind.Sale ? priced : null;
 
+        var ownerSession = _session; var ownerForm = _locationForm; var ownerEpoch = _locationEpoch;
+        bool SameForm() => ReferenceEquals(ownerSession, _session) && ownerForm == _locationForm;
+        bool Owner() => SameForm() && ownerEpoch == _locationEpoch && !_formDeparted;
         IsBusy = true; PublishState();
         try
         {
             // D-408: the exact raw draft and original source stay bound to the existing atomic quantity/payment/fee/price writer.
-            var result = await _session.SaveAsync(assetEvent, entries, () => Snapshot() == originalDraft);
-            if (result is null) return;
+            var result = await ownerSession.SaveAsync(assetEvent, entries, () => Owner() && Snapshot() == originalDraft);
+            if (!Owner() || result is null) return;
             if (result.Conflict is { } conflict)
             {
                 var place = Locations.FirstOrDefault(l => l.Id == conflict.LocationId)?.Name ?? "?";
@@ -682,15 +772,16 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
             _snapshot = Snapshot(); PublishState();
         }
         catch (CommittedWriteNotificationException<HoldingSaveResult>)
-        { _snapshot = Snapshot(); Error = _translator["AssetEvent_SavedNeedsReview"]; return; }
+        { if (SameForm()) { _snapshot = Snapshot(); if (Owner()) Error = _translator["AssetEvent_SavedNeedsReview"]; } return; }
         catch (HoldingEventReviewChangedException)
-        { RetireReview(); Error = _translator["AssetEvent_SourceChanged"]; return; }
+        { if (Owner()) { RetireReview(); Error = _translator["AssetEvent_SourceChanged"]; } return; }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { RetireReview(); Error = Presentation.CommercialFailureMessage.OrFallback(exception, _translator, "Common_SaveFailed", draftKept: true); return; }
-        finally { IsBusy = false; PublishState(); }
+        { if (Owner()) { RetireReview(); Error = Presentation.CommercialFailureMessage.OrFallback(exception, _translator, "Common_SaveFailed", draftKept: true); } return; }
+        finally { if (SameForm()) { IsBusy = false; PublishState(); } }
+        if (!Owner()) return;
         try { await _interaction.NavigateAsync(".."); }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { Error = _translator["Editor_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); }
+        { if (Owner()) { Error = _translator["Editor_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); } }
     }
 
 #if (DEBUG && WINDOWS) || ZANANCE_INDEPENDENT_HOME_REVIEW
@@ -704,7 +795,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
 #endif
 
     /// <summary>Gets whether raw holding inputs are still editable.</summary>
-    public bool CanEdit => !_loading && !IsBusy && !_session.Committed;
+    public bool CanEdit => !_loading && Loading.IsReady && !IsBusy && !_session.Committed;
     /// <summary>Gets whether the original coherent financial review still authorizes this form's Save.</summary>
     public bool CanSave => CanEdit && _session.Review is not null && !HasSavedLocationPending;
     /// <summary>Gets Cancel before acceptance and Close afterwards.</summary>
@@ -714,10 +805,11 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
         OnPropertyChanged(nameof(CanEdit)); OnPropertyChanged(nameof(CanSave)); OnPropertyChanged(nameof(CloseText));
         OnPropertyChanged(nameof(SavedLocationId)); OnPropertyChanged(nameof(HasSavedLocationPending));
         OnPropertyChanged(nameof(CanAddLocation)); OnPropertyChanged(nameof(CanUseSavedLocation));
+        OnPropertyChanged(nameof(CanReload)); ReloadCommand.NotifyCanExecuteChanged();
         SaveCommand.NotifyCanExecuteChanged(); AddLocationCommand.NotifyCanExecuteChanged(); UseSavedLocationCommand.NotifyCanExecuteChanged();
     }
     /// <summary>Retires a departed source without changing its raw draft or accepted result.</summary>
-    public void RetireReview() { _locationEpoch++; _session.Retire(); PublishState(); }
+    public void RetireReview() { _formDeparted = true; _loadEpoch++; _locationEpoch++; _session.Retire(); PublishState(); }
 
     [RelayCommand]
     private async Task CancelAsync()

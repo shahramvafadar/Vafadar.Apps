@@ -2060,3 +2060,14 @@ place action; close Add and financial Save until adoption succeeds. Preserve raw
 amount/note and the original source on a transfer. Retired captions cannot recover authority.
 Keep wrapping scalable captions and semantic colors. Native verification and wider gates:
 [original place evidence](quality/holding-location-creation.md).
+
+## Complete original holding-event form (D-421)
+
+Cover every field and Save during the original read and complete publication. Failed loading keeps
+raw input covered with translated Retry/Cancel; Retry reads only the originally opened file. A new
+routed identity receives a fresh draft, while same-original Retry preserves dirty raw values and
+valid selection identities. Never substitute another account/place/kind for an unavailable original
+choice. Historical archived payment/place identity remains visible; a transfer destination rebinds
+by id. Required missing-default scaffolding is metadata under the original owner and Corrections
+policy, not new financial permission. Retire old query/accepted-save callbacks before a new owner.
+[Evidence and wider gates](quality/holding-event-publication.md).

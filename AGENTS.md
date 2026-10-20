@@ -3100,3 +3100,15 @@ refresh, never another create. Refuse renamed/foreign/stale/departed adoption. T
 source and adopts only the destination. A new explicit query waits for its retired metadata writer.
 Retained native captions copy original acceptance with all writer/recovery authority retired; no
 accepted metadata/financial seed or command is replayed for observer correction. D-386 still applies.
+
+## D-421 - Complete original holding-event form
+
+Cover original event reads and complete field publication, with original-file Retry/Cancel after
+failure. Do not initialize settings or create default metadata before validating the original event/
+type. Required missing-default scaffolding retains Corrections permission; explicit extra places
+still require ManageHoldings. Retain known default identity through readback/publication failure,
+refuse its later removal and never recreate it on Retry. Published raw-draft Retry is read-only;
+unavailable original kind/account/place is not a guessed replacement. Preserve historical archived
+payment/place identity and rebind transfer choices by id. A new routed identity owns fresh raw input
+and a separate session; an old accepted callback cannot close or rearm it. Preserve native original
+files/rows/PIDs, with no accepted seed/financial replay. D-386 and external gates remain separate.

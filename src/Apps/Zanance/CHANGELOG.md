@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep holding changes tied to the correct form (D-421)
+
+- Show loading and Retry before the complete holding form is ready.
+- Start a blank draft for another holding instead of carrying over the previous amounts or note.
+- Preserve the original historical account and location, including archived ones.
+- Keep a finished save from closing another newly opened form.
+
 ### Keep a newly saved holding location after a refresh failure (D-420)
 
 - Keep the form busy while naming a location and save it only in the originally opened profile.

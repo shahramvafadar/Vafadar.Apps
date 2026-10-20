@@ -4757,3 +4757,24 @@ pass. No schema/model, new data/permission/SDK/provider or general ANR/crash/A11
 acceptance is claimed. D-386 and remaining external gates stand.
 
 See [original failures, focused evidence and limits](quality/holding-location-creation.md).
+
+## D-421 - Complete original holding-event form publication and routed draft ownership
+
+Keep the event form covered until its original coherent read, actual-file revalidation and complete
+field publication succeed. Failed reads offer explicit original-file Retry and Cancel; they do not
+initialize display settings or leak an exception out of query delivery. Validate the original event/
+type before missing-default scaffolding. Required default creation retains Corrections policy and
+one known metadata receipt through readback failure, without recreating a deleted accepted default.
+A published raw draft gets read-only Retry; unavailable kind/account/place is never replaced silently.
+
+A new routed event/type owns a blank draft and separate financial session. Empty redelivery retains
+the existing form. Original pending/departed reads and accepted financial callbacks cannot publish,
+close or activate another view. Keep archived historical payment/place identities and rebind a
+retained transfer destination by identity. 22 distinct actual app/SQLite cases pass in selective
+cohorts, followed only by affected checks. Final strict builds, 56 actual Windows views and 20
+independent Release/AOT Android observations pass with original typed rows unchanged. Complete signed
+offline APK and no-reset Main/Home0/exact emulator restoration pass. No unchanged full suite or
+resource matrix replay; no schema/model, new permission/provider or general ANR/crash/A11Y/phone/iOS/
+release acceptance. D-386 and remaining external gates stand.
+
+See [original failures, native observations and limits](quality/holding-event-publication.md).

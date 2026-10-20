@@ -25,8 +25,18 @@ public sealed class HoldingLocationCreation
 public sealed partial class HoldingStore
 {
     /// <summary>Creates exactly one absent place in the original reviewed file and commits its rebased review atomically.</summary>
-    public async Task<HoldingLocationCreation> CreateReviewedLocationAsync(HoldingEventReadReview review, Guid id,
-        string name, Func<bool> isCurrent, CancellationToken ct = default)
+    public Task<HoldingLocationCreation> CreateReviewedLocationAsync(HoldingEventReadReview review, Guid id,
+        string name, Func<bool> isCurrent, CancellationToken ct = default) =>
+        CreateReviewedLocationCoreAsync(review, id, name, isCurrent, false, ct);
+
+    /// <summary>Creates only missing original default scaffolding under Corrections, granting no extra holding-management capability.</summary>
+    public Task<HoldingLocationCreation> CreateReviewedDefaultLocationAsync(HoldingEventReadReview review, Guid id,
+        string name, Func<bool> isCurrent, CancellationToken ct = default) =>
+        CreateReviewedLocationCoreAsync(review, id, name, isCurrent, true, ct);
+
+    /// <summary>Shares actual-file/owner validation while keeping explicit creation distinct from required default scaffolding.</summary>
+    private async Task<HoldingLocationCreation> CreateReviewedLocationCoreAsync(HoldingEventReadReview review, Guid id,
+        string name, Func<bool> isCurrent, bool missingDefault, CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(review); ArgumentNullException.ThrowIfNull(name); ArgumentNullException.ThrowIfNull(isCurrent);
         if (id == Guid.Empty || string.IsNullOrWhiteSpace(name) || name.Length > 60 || name != name.Trim())
@@ -36,9 +46,11 @@ public sealed partial class HoldingStore
         {
             await using var db = await contextFactory.CreateDbContextAsync(ct);
             await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, ct, requireTransaction: true);
-            write.DemandFeature(CommercialFeature.ManageHoldings);
+            write.DemandFeature(missingDefault ? CommercialFeature.Corrections : CommercialFeature.ManageHoldings);
             var current = await HoldingEventReadReview.ReadAsync(db, review.Inputs.Type.Id, review.EventId, ct);
             review.ValidateWriter(db, current);
+            if (missingDefault && current.Locations.Any(l => !l.IsArchived))
+                throw new HoldingEventReviewChangedException("Only missing original default scaffolding is permitted.");
             if (!isCurrent() || current.Locations.Any(l => l.Id == id))
                 throw new HoldingEventReviewChangedException("Original place prompt retired or its absent identity changed.");
             var location = new AssetLocation(id) { Name = name };

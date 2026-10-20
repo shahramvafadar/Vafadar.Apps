@@ -189,6 +189,13 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Fresh original independent overview or completed caption source required.");
                 await WriteReportAsync(root, phase, await ReviewHoldingOverviewAsync(app, services, root, comparison!, baseline, captions, ct), ct);
             }
+            else if (phase == "holding-event-publication")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0 || Directory.EnumerateFileSystemEntries(root).Any())
+                    throw new ReviewCheckException("Fresh independent event publication source required.");
+                await WriteReportAsync(root, phase, await ReviewHoldingEventPublicationAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "holding-location")
             {
                 Directory.CreateDirectory(root);
