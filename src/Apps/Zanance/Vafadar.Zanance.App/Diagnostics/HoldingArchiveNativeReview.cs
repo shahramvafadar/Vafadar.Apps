@@ -35,7 +35,7 @@ internal static class HoldingArchiveNativeReview
     internal sealed record Prepared(State[] States, object[] Cases, object[] Live, ServiceProvider Fixture, string Rows);
     private static string Digest(string rows) => Convert.ToHexString(SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(rows)));
     private static HoldingDetailViewModel Model(IServiceProvider services, ServiceProvider fixture, IAppInteraction port) => new(
-        fixture.GetRequiredService<HoldingStore>(), fixture.GetRequiredService<ZananceStore>(), services.GetRequiredService<HoldingText>(),
+        fixture.GetRequiredService<HoldingStore>(), services.GetRequiredService<HoldingText>(),
         services.GetRequiredService<Translator>(), services.GetRequiredService<ILocalizationService>(), fixture.GetRequiredService<TimeProvider>(), port);
     private static async Task<State[]> StatesAsync(IServiceProvider services, ServiceProvider fixture, Guid id)
     {

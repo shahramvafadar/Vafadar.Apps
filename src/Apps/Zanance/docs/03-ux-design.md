@@ -2040,3 +2040,13 @@ actions on departure and refuse a later opened file. Preserve the existing actio
 Use dedicated six-language Holdings loading/Retry captions, not transaction wording. Native semantic
 names are compared with their actual bound descriptions; never blindly rewrite user identifiers.
 See [original runtime evidence and limits](quality/holding-overview.md).
+
+## Original holding detail cover and type ownership (D-419)
+
+Keep the original quantity, locations, values, basis estimates, history and price rows covered until
+all are prepared and published. Show explicit Retry after failure and a separate missing-type state;
+neither state may expose old native financial actions. Same-type raw price/date/mode remain for
+explicit Refresh; theme recoloring alone does not reread finance. A different routed type owns new
+editors, without an old price draft, archive outcome or short Undo. Retained old native targets stay
+disabled. A known saved result never automatically reactivates a departed view to read back its
+value. See [original actual controls and remaining gates](quality/holding-detail-publication.md).

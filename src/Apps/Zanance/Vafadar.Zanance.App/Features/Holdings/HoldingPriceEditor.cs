@@ -21,6 +21,10 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
     internal HoldingPriceReview? DisplayedReview => _display;
     /// <summary>Reloads the original owning detail after acceptance or an explicit Refresh.</summary>
     public Func<Task>? ReloadView { get; set; }
+    /// <summary>Reads through the owning detail's coherent file/settings transaction when attached to that view.</summary>
+    internal Func<Guid, Task<HoldingPriceReview>>? ReadOriginal { get; set; }
+    /// <summary>Distinguishes the original explicit refresh from an ordinary appearance that must retire raw authority.</summary>
+    internal bool ReadingExplicitRefresh { get; private set; }
     /// <summary>Gets whether the accepted operation was a deletion.</summary>
     public bool LastWasDeletion { get; private set; }
     /// <summary>Gets the last known accepted price identity, even if publication failed.</summary>
@@ -42,7 +46,11 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
     /// <summary>Gets whether confirmation, writing or refresh owns the form.</summary>
     [ObservableProperty] public partial bool Busy { get; set; }
     /// <summary>Gets whether original facts still permit the price form to submit.</summary>
-    public bool CanSubmit => !Busy && _review is not null && !NeedsRefresh;
+    public bool CanSubmit => (ViewReady?.Invoke() ?? true) && !Busy && _review is not null && !NeedsRefresh;
+    /// <summary>Applies the owning detail cover without changing standalone editor authority or raw input.</summary>
+    internal Func<bool>? ViewReady { get; set; }
+    /// <summary>Refreshes native command enablement after the owning complete cover changes.</summary>
+    internal void NotifyViewReady() => PublishState();
     /// <summary>Gets whether an explicit read-only refresh is available.</summary>
     public bool CanRefresh => !Busy;
     partial void OnBusyChanged(bool value) => PublishState();
@@ -69,7 +77,7 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
         if (_display is null || (!Busy && !NeedsRefresh && string.IsNullOrWhiteSpace(Raw)))
         {
             var revision = _revision;
-            var loaded = await store.ReadPriceReviewAsync(id);
+            var loaded = ReadOriginal is { } read ? await read(id) : await store.ReadPriceReviewAsync(id);
             if (revision != _revision) throw new HoldingEventReviewChangedException("Original price load retired.");
             _review = _display = loaded; _initialized = true; PublishState();
         }
@@ -142,7 +150,7 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
     private async Task RefreshAsync()
     {
         if (Busy) return;
-        Busy = true; Retire(); _display = null;
+        Busy = true; Retire(); _display = null; ReadingExplicitRefresh = true;
         try
         {
             NeedsRefresh = false;
@@ -154,6 +162,6 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
             Retire(); Error = AcceptedId is not null ? translator["Holding_PriceSavedRefresh"]
                 : Presentation.CommercialFailureMessage.OrFallback(exception, translator, "Common_SaveFailed", draftKept: true);
         }
-        finally { Busy = false; }
+        finally { ReadingExplicitRefresh = false; Busy = false; }
     }
 }

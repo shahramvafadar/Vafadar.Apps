@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep holding details and actions together (D-419)
+
+- Load complete details from the same profile, with clear loading and Retry after a failure.
+- Preserve an unfinished price for explicit Refresh and keep old page actions closed after departure.
+- Give another opened holding its own draft and Undo state instead of inheriting the previous one.
+- Keep a saved price known when leaving the page; its following read cannot reopen the old page.
+
 ### Load a complete holding overview together (D-418)
 
 - Keep quantities, prices and totals from the same profile and coherent read.

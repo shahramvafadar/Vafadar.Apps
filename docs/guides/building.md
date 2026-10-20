@@ -1881,3 +1881,17 @@ with both that original continuation id and `-HoldingOverviewCompletedRun <compl
 checkpoint hashes. Android phases `holding-overview` / `holding-overview-captions` retain one original
 run and completed baseline; observe the exact live PID/pass using Read-ReviewReport.ps1. These are
 independent native controls plus navigation effect ports, not physical-device/OS-route acceptance.
+
+## Retained-source detail qualification (D-419)
+
+`eng/scripts/Run-StoreDrafts.ps1 -HoldingDetailReview -HoldingDetailSourceRun <completed-overview-run>`
+opens the exact retained original-overview.db without migrate/seed and captures57 Windows states.
+Only a later query correction uses `-HoldingDetailQueryOnly -HoldingDetailCompletedRun <completed-detail-run>`
+with the same source/review flags: two pending query captures, not the completed matrix again.
+Preserve original reports/PIDs and files. Android phase `holding-detail` requires the retained
+overview review_run and its completed original review_baseline, plus a new review_pass. Observe the
+same live PID/pass through Read-ReviewReport.ps1; no final report yet means observation is pending,
+not permission to restart. Actual native controls and navigation effect ports remain distinct.
+The final `holding-detail-retired-callback` continuation requires the completed `holding-detail`
+baseline and retained run; it checks only the new retired readback callback, without redoing its
+23 accepted UI observations or financial commands.

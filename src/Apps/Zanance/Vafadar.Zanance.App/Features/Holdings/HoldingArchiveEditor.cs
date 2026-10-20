@@ -30,7 +30,11 @@ public sealed partial class HoldingArchiveEditor(HoldingStore store, Translator 
     /// <summary>Gets whether an explicit current-data read is required.</summary>
     [ObservableProperty] public partial bool NeedsRefresh { get; set; }
     /// <summary>Gets whether a fresh original unarchived row can request confirmation.</summary>
-    public bool CanArchive => !Busy && !Committed && !NeedsRefresh && _displayed is { Inputs.Type.IsArchived: false };
+    public bool CanArchive => (ViewReady?.Invoke() ?? true) && !Busy && !Committed && !NeedsRefresh && _displayed is { Inputs.Type.IsArchived: false };
+    /// <summary>Requires complete original page publication before the native archive action.</summary>
+    internal Func<bool>? ViewReady { get; set; }
+    /// <summary>Refreshes native archive enablement after the owning page cover changes.</summary>
+    internal void NotifyViewReady() => Publish();
     /// <summary>Gets whether read-only refresh can begin.</summary>
     public bool CanRefresh => !Busy;
     partial void OnBusyChanged(bool value) => Publish();

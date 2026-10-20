@@ -170,6 +170,17 @@ internal static partial class AndroidHomeReview
                 }
                 await WriteReportAsync(root, phase, await ReviewHoldingFeeActionAsync(app, services, root, comparison!, retained, ct), ct);
             }
+            else if (phase == "holding-detail-retired-callback")
+            {
+                if (RedirectedAncestors(root).Length != 0 || baseline is null) throw new ReviewCheckException("Original completed detail source required.");
+                await WriteReportAsync(root, phase, await ReviewHoldingDetailRetiredCallbackAsync(app, services, root, comparison!, baseline, ct), ct);
+            }
+            else if (phase == "holding-detail")
+            {
+                if (RedirectedAncestors(root).Length != 0 || baseline is null)
+                    throw new ReviewCheckException("Retained original detail source required.");
+                await WriteReportAsync(root, phase, await ReviewHoldingDetailAsync(app, services, root, comparison!, baseline, ct), ct);
+            }
             else if (phase is "holding-overview" or "holding-overview-captions")
             {
                 Directory.CreateDirectory(root);

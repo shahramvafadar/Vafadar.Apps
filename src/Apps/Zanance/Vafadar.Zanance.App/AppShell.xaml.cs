@@ -240,9 +240,7 @@ public partial class AppShell : Shell
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
             && CurrentPage?.BindingContext is Features.Holdings.HoldingDetailViewModel holding)
         {
-            holding.PriceEditor.Leave();
-            holding.HistoryEditor.Retire();
-            holding.ArchiveEditor.Retire();
+            holding.Retire();
         }
     }
 

@@ -3077,3 +3077,15 @@ Native semantic checks compare the actual bound description, not blanket digit c
 identifiers. Continue a terminal observer failure only on exact original files/checkpoints and retain
 original Case PIDs; caption-only correction never replays accepted navigation, seeds or financial work.
 Keep D-386 priorities and wider physical/platform/release gates separate.
+
+## D-419 - Original complete detail and routed type ownership
+
+Read original detail facts and existing settings through one captured actual-file worker transaction;
+never initialize settings for display. Prepare all fields before covered publication and revalidate
+source/file/rights. Keep explicit Retry, missing state and same-type raw price Refresh distinct.
+Theme recoloring never rereads or retires raw financial input. New routed identity owns new editors;
+old draft/accepted outcome/short Undo and retained native targets cannot transfer to it. Gate each
+editor by its original identity/instance. Bind refresh/readback callbacks to their captured lifetime,
+including a known commit completed after departure; they cannot reactivate that view. Retire full detail work on ordinary or retained-tab
+departure. Preserve completed typed original fixtures and accepted native contexts; only changed
+query controls continue, without seed or financial replay. D-386 and wider external gates stand.

@@ -44,9 +44,13 @@ public sealed partial class HoldingHistoryEditor(HoldingStore store, HoldingText
     /// <summary>Gets whether an explicit current-data publication is required.</summary>
     [ObservableProperty] public partial bool NeedsRefresh { get; set; }
     /// <summary>Gets whether original displayed rows can open a fresh, coherent action review.</summary>
-    public bool CanOpen => !Busy && _displayed is not null && !NeedsRefresh;
+    public bool CanOpen => (ViewReady?.Invoke() ?? true) && !Busy && _displayed is not null && !NeedsRefresh;
     /// <summary>Gets whether the actual original deletion can still be restored, independently of readback failure.</summary>
-    public bool CanUndo => !Busy && _undo is not null && !_undoInvalid;
+    public bool CanUndo => (ViewReady?.Invoke() ?? true) && !Busy && _undo is not null && !_undoInvalid;
+    /// <summary>Requires the original owning detail to be completely visible before native history commands.</summary>
+    internal Func<bool>? ViewReady { get; set; }
+    /// <summary>Refreshes actual native actions after the original page cover changes.</summary>
+    internal void NotifyViewReady() => Publish();
     /// <summary>Gets whether the original short offer is retained, including a safely disabled obsolete receipt.</summary>
     public bool HasUndo => _undo is not null;
     /// <summary>Gets whether the footer has feedback or an original short Undo offer.</summary>

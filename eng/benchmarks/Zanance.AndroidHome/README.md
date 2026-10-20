@@ -678,3 +678,17 @@ Case PIDs remain original. Native PerformClick/name/target/focus checks are sepa
 navigation effect ports. Read-ReviewReport.ps1 must observe the exact live original PID/pass; it does
 not restart a timed-out process or establish main/phone/general ANR acceptance. See application
 quality/holding-overview.md for original failures, continuation and final Main restoration.
+
+## Original detail over completed retained inputs (D-419)
+
+Phase `holding-detail` requires the exact completed `holding-overview` source run and its original
+review_baseline, with a fresh comparison. It opens the retained original-overview.db, verifies known
+original facts and compares complete typed rows after native loading/refusal/Retry, raw Refresh,
+Record/Edit/retirement, missing and query-rebinding controls. It never migrates, seeds, saves prices
+or writes financial commands. Raw77 is a model draft control, not native typing acceptance. Observe
+the same live original PID/pass when the first public result is pending. A source/package/API build
+is not phone, OS scaling, general ANR/crash, arm64/16KiB or release acceptance. See application
+quality/holding-detail-publication.md for exact original evidence and final Main restoration.
+Phase `holding-detail-retired-callback` requires the original completed detail report and checks only
+one newly closed readback callback on the same source. It never replays the native matrix or a price
+Save; actual post-commit behavior remains a separately proved SQLite application-flow case.

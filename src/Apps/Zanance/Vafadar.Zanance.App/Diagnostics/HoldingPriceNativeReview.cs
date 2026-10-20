@@ -54,7 +54,7 @@ internal static class HoldingPriceNativeReview
             throw new IOException("Original accepted price data changed.");
         var before = await ImportFinancialNativeReview.StoredAsync(fixture, ct);
         var translator = services.GetRequiredService<Translator>();
-        var model = new HoldingDetailViewModel(holdings, store, services.GetRequiredService<HoldingText>(), translator,
+        var model = new HoldingDetailViewModel(holdings, services.GetRequiredService<HoldingText>(), translator,
             services.GetRequiredService<ILocalizationService>(), time, new Confirmation());
         model.ApplyQueryAttributes(new Dictionary<string, object> { ["id"] = type.Id }); await model.LoadAsync();
         model.PriceEditor.Raw = "60"; model.PriceEditor.ModeIndex = 1; model.PriceEditor.Retire();
@@ -105,7 +105,7 @@ internal static class HoldingPriceNativeReview
         }
         var local = services.GetRequiredService<ILocalizationService>(); var translator = services.GetRequiredService<Translator>();
         var port = new Confirmation();
-        var model = new HoldingDetailViewModel(holdings, store, services.GetRequiredService<HoldingText>(), translator, local, time, port);
+        var model = new HoldingDetailViewModel(holdings, services.GetRequiredService<HoldingText>(), translator, local, time, port);
         model.ApplyQueryAttributes(new Dictionary<string, object> { ["id"] = type.Id }); await model.LoadAsync();
         var editor = model.PriceEditor; editor.Raw = "60"; editor.ModeIndex = 1; editor.Date = day;
         var page = new HoldingDetailPage(model); await show(page);

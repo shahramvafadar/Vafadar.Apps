@@ -2164,3 +2164,18 @@ loading/Retry captions are rechecked after visual correction. Strict builds, com
 APK and no-reset emulator Main/Home0/OS restoration pass; Samsung is untouched. No schema/model or
 privacy boundary changes, speed/general ANR/crash/A11Y/device/iOS/store/release acceptance is claimed.
 See [original evidence, observer continuation and limits](quality/holding-overview.md).
+
+## D-419 - Complete original holding detail publication and routed identity
+
+Read one actual-file detail/settings packet on a worker without initializing settings, prepare all
+quantity/value/history/price fields and publish under an original loading/error/Retry cover. Retire
+departed/retained-tab work and recheck original native navigation/file targets. Preserve raw price
+input for explicit Refresh, existing accepted editor outcomes and theme-only color rebinding. A new
+routed type receives its own editors; old drafts/short Undo/native targets never move to it. Twenty
+distinct new actual app/SQLite cases pass in selective cohorts; no full suite or unchanged resource/
+financial replay. Retained original fixtures qualify57 Windows views plus only two new query views
+and23 Release/AOT Android observations, with no seed/UI financial command. Strict builds, complete
+signed offline APK and no-reset emulator Main/Home0/exact OS restoration pass; Samsung is untouched.
+A final known-commit/departure test and one retained-source AOT callback control close automatic
+readback to a departed view, without replaying completed native matrices. No schema/model/privacy boundary change or general runtime/A11Y/device/iOS/release acceptance.
+See [original failures, continuations and limits](quality/holding-detail-publication.md).

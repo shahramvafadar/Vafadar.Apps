@@ -2550,3 +2550,17 @@ supersession from foreign/mutated/retired input. Cached rights guard each covere
 Navigation checks actual factory identity without another keyed read. Page retirement cancels pending
 work and prevents retained rows from reaching a replacement profile. No model, migration or private
 storage format changes. See application quality/holding-overview.md for original WAL/runtime evidence.
+
+## Original complete holding detail (D-419)
+
+HoldingDetailSnapshot captures actual file/access, coherent original price review (or missing type)
+and optional existing settings in one worker/deferred SQLite transaction. Validate the original
+packet/settings through a coherent read before publication; navigation needs actual file/access
+validation without a second keyed read. No settings initialization or model/migration change.
+The detail model prepares detached text/rows before a guarded native reset under its cover. Existing
+price/history/archive writers and original accepted outcomes remain authoritative. Same-type raw
+drafts retain original facts for explicit Refresh; new routed type owns new editors. Instance/type
+gates also close retained old editor commands. Refresh/readback delegates retain the captured
+original lifetime and editor, including post-commit departure; they cannot activate a replacement
+view. Native color/query adapters stay in the actual MAUI
+partial while tests compile actual application logic. See application quality/holding-detail-publication.md.

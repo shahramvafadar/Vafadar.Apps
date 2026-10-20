@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
@@ -13,7 +12,7 @@ using Vafadar.Zanance.Data;
 namespace Vafadar.Zanance.App.Features.Holdings;
 
 /// <summary>One change of a holding in the history.</summary>
-public sealed record HoldingEventRow(Guid Id, string Title, string DateText, string QuantityText, string? Detail, Color QuantityColor)
+public sealed partial record HoldingEventRow(Guid Id, string Title, string DateText, string QuantityText, string? Detail, int QuantitySign)
 {
     public string Description => string.Join(", ", new[] { Title, DateText, QuantityText, Detail }.Where(s => !string.IsNullOrEmpty(s)));
 }
@@ -32,20 +31,26 @@ public sealed record ValuationRow(Guid Id, string PriceText, string DateText, st
 /// </summary>
 public sealed partial class HoldingDetailViewModel(
     HoldingStore holdings,
-    ZananceStore store,
     HoldingText text,
     Translator translator,
     ILocalizationService localization,
     TimeProvider time,
-    IAppInteraction interaction) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
+    IAppInteraction interaction) : ViewModelBase, Presentation.IThemeAware
 {
     private Guid _id;
+    private int _revision;
+    private CancellationTokenSource _lifetime = new();
+    private HoldingDetailSnapshot? _original, _displayed;
 
-    public ObservableCollection<string> PerLocation { get; } = [];
+    /// <summary>Gets the cover for one complete original detail publication and explicit Retry.</summary>
+    [ObservableProperty]
+    public partial SnapshotLoadState Loading { get; private set; } = new();
 
-    public ObservableCollection<HoldingEventRow> Events { get; } = [];
+    public SnapshotCollection<string> PerLocation { get; } = [];
 
-    public ObservableCollection<ValuationRow> Valuations { get; } = [];
+    public SnapshotCollection<HoldingEventRow> Events { get; } = [];
+
+    public SnapshotCollection<ValuationRow> Valuations { get; } = [];
 
     [ObservableProperty]
     public partial bool NotFound { get; set; }
@@ -88,13 +93,13 @@ public sealed partial class HoldingDetailViewModel(
     public partial bool HasStock { get; set; }
 
     /// <summary>Owns the original manual price form and its accepted outcome.</summary>
-    public HoldingPriceEditor PriceEditor { get; } = new(holdings, text, translator, localization, time, interaction);
+    public HoldingPriceEditor PriceEditor { get; private set; } = new(holdings, text, translator, localization, time, interaction);
 
     /// <summary>Owns the actual history row review and file-bound short Undo.</summary>
-    public HoldingHistoryEditor HistoryEditor { get; } = new(holdings, text, translator, interaction);
+    public HoldingHistoryEditor HistoryEditor { get; private set; } = new(holdings, text, translator, interaction);
 
     /// <summary>Owns original archive confirmation and its accepted result.</summary>
-    public HoldingArchiveEditor ArchiveEditor { get; } = new(holdings, translator, interaction);
+    public HoldingArchiveEditor ArchiveEditor { get; private set; } = new(holdings, translator, interaction);
 
     /// <summary>Gets the original archive action with its actual source/confirmation enablement.</summary>
     public IAsyncRelayCommand ArchiveCommand => ArchiveEditor.ArchiveCommand;
@@ -109,72 +114,171 @@ public sealed partial class HoldingDetailViewModel(
         ArgumentNullException.ThrowIfNull(query);
         if (query.TryGetValue("id", out var value) && value is Guid id)
         {
-            _id = id;
+            if (_id != id)
+            {
+                Retire(); _original = null;
+                if (_id != Guid.Empty)
+                {
+                    // D-419: a different routed identity owns different drafts/outcomes, never the old short Undo.
+                    PriceEditor = new(holdings, text, translator, localization, time, interaction);
+                    HistoryEditor = new(holdings, text, translator, interaction);
+                    ArchiveEditor = new(holdings, translator, interaction);
+                    OnPropertyChanged(nameof(PriceEditor)); OnPropertyChanged(nameof(HistoryEditor)); OnPropertyChanged(nameof(ArchiveEditor));
+                    OnPropertyChanged(nameof(ArchiveCommand)); OnPropertyChanged(nameof(OpenEventCommand));
+                }
+                _id = id;
+            }
         }
     }
 
-    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
-    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
+    /// <summary>Rebinds only native semantic colors; a theme change never rereads or retires a raw price draft.</summary>
+    Task Presentation.IThemeAware.RefreshThemeAsync()
+    {
+        if (Loading.IsReady) Events.ReplaceAll(Events.ToArray());
+        return Task.CompletedTask;
+    }
 
+    /// <summary>Retires pending reads and native targets, preserving the separate raw price and short Undo receipt.</summary>
+    public void Retire()
+    {
+        _revision++; _displayed = null;
+        var old = _lifetime; _lifetime = new(); Loading = new();
+        PriceEditor.Leave(); HistoryEditor.Retire(); ArchiveEditor.Retire(); old.Cancel(); old.Dispose();
+    }
+
+    /// <summary>Reads/prepares one original detail off UI, then publishes every visible field under its original cover.</summary>
     public async Task LoadAsync()
     {
-        if (!(await holdings.GetTypesAsync()).Any(t => t.Id == _id))
-        { NotFound = true; PriceEditor.Retire(); HistoryEditor.Retire(); ArchiveEditor.Retire(); return; }
-        PriceEditor.ReloadView = LoadAsync;
-        HistoryEditor.RefreshView = async () =>
+        var revision = _revision; var loading = Loading; var token = _lifetime.Token; var id = _id;
+        var priceOwner = PriceEditor; var historyOwner = HistoryEditor; var archiveOwner = ArchiveEditor;
+        priceOwner.ViewReady = () => Loading.IsReady && !NotFound && _id == id && ReferenceEquals(PriceEditor, priceOwner);
+        historyOwner.ViewReady = () => Loading.IsReady && !NotFound && _id == id && ReferenceEquals(HistoryEditor, historyOwner);
+        archiveOwner.ViewReady = () => Loading.IsReady && !NotFound && _id == id && ReferenceEquals(ArchiveEditor, archiveOwner);
+        void Availability(object? sender, System.ComponentModel.PropertyChangedEventArgs args)
         {
-            await PriceEditor.RefreshCommand.ExecuteAsync(null);
-            return PriceEditor.CanSubmit ? PriceEditor.DisplayedReview : null;
-        };
-        ArchiveEditor.RefreshView = async () =>
+            if (args.PropertyName != nameof(SnapshotLoadState.IsReady)) return;
+            PriceEditor.NotifyViewReady(); HistoryEditor.NotifyViewReady(); ArchiveEditor.NotifyViewReady();
+        }
+        loading.PropertyChanged += Availability;
+        Prepared? prepared = null;
+        void Current()
         {
-            await PriceEditor.RefreshCommand.ExecuteAsync(null);
-            return !PriceEditor.NeedsRefresh ? PriceEditor.DisplayedReview : null;
-        };
-        IsAdvanced = (await store.GetSettingsAsync()).Shows(Feature.HoldingDetails);
-        var inputs = await PriceEditor.LoadAsync(_id);
-        NotFound = false;
+            token.ThrowIfCancellationRequested();
+            if (_revision != revision || !ReferenceEquals(loading, Loading) || id != _id)
+                throw new OperationCanceledException("Original holding detail retired.", token);
+        }
+        try
+        {
+            await loading.RunAsync(async () =>
+            {
+                Current(); _displayed = null;
+                if (!PriceEditor.ReadingExplicitRefresh) PriceEditor.Leave();
+                HistoryEditor.Retire(); ArchiveEditor.Retire();
+                // A known commit can finish after departure; its following read cannot activate a retired view.
+                PriceEditor.ReloadView = async () => { Current(); await LoadAsync(); Current(); };
+                HistoryEditor.RefreshView = async () =>
+                {
+                    Current(); await priceOwner.RefreshCommand.ExecuteAsync(null); Current();
+                    return Loading.IsReady && !NotFound && priceOwner.CanSubmit ? priceOwner.DisplayedReview : null;
+                };
+                ArchiveEditor.RefreshView = async () =>
+                {
+                    Current(); await priceOwner.RefreshCommand.ExecuteAsync(null); Current();
+                    return Loading.IsReady && !NotFound && !priceOwner.NeedsRefresh ? priceOwner.DisplayedReview : null;
+                };
+                HoldingDetailSnapshot? read = null;
+                PriceEditor.ReadOriginal = async requested =>
+                {
+                    Current(); read = await holdings.ReadDetailSnapshotAsync(requested, token); Current();
+                    if (_original is { } original && original.DatabasePath != read.DatabasePath)
+                        throw new HoldingEventReviewChangedException("Original detail cannot follow another profile.");
+                    await holdings.ValidateDetailSnapshotAsync(read, token); Current();
+                    return read.Review ?? throw new MissingOriginalDetailException();
+                };
+                HoldingPriceInputs? inputs = null;
+                try { inputs = await PriceEditor.LoadAsync(id); }
+                catch (MissingOriginalDetailException) when (read is { Review: null }) { }
+                var source = read ?? _original ?? throw new InvalidOperationException("Original detail source is missing.");
+                if (source.TypeId != id || !ReferenceEquals(source.Review, PriceEditor.DisplayedReview))
+                {
+                    if (source.Review is not null) throw new InvalidOperationException("Original detail and price draft differ.");
+                }
+                // A retained raw price keeps its original displayed facts, but may never follow another opened file.
+                await holdings.ValidateDetailAccessAsync(source, token); Current(); source.EnsureCurrent();
+                var day = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
+                prepared = inputs is null ? Prepared.Missing(source) : await Task.Run(() => Prepare(source, inputs, day), token);
+                if (read is not null) await holdings.ValidateDetailSnapshotAsync(source, token);
+                Current(); source.EnsureCurrent();
+            }, () =>
+            {
+                var result = prepared ?? throw new InvalidOperationException("Complete original detail is missing.");
+                void Publish(Action action) { Current(); result.Source.EnsureCurrent(); action(); Current(); result.Source.EnsureCurrent(); }
+                Publish(() => Name = result.Name); Publish(() => Icon = result.Icon);
+                Publish(() => QuantityText = result.Quantity); Publish(() => DerivedText = result.Derived);
+                Publish(() => HasStock = result.HasStock); Publish(() => PurityText = result.Purity);
+                Publish(() => PerLocation.ReplaceAll(result.Places)); Publish(() => ValueUnknown = result.Unknown);
+                Publish(() => ValueText = result.Value); Publish(() => AverageCostText = result.Average);
+                Publish(() => UnrealisedText = result.Unrealised); Publish(() => RealisedText = result.Realised);
+                Publish(() => Events.ReplaceAll(result.Events)); Publish(() => Valuations.ReplaceAll(result.Prices));
+                Publish(() => IsAdvanced = result.Advanced); Publish(() => NotFound = result.Source.Review is null);
+                Publish(() => HistoryEditor.PublishDisplayed(result.Source.Review));
+                Publish(() => ArchiveEditor.PublishDisplayed(result.Source.Review));
+                _original = _displayed = result.Source;
+            });
+        }
+        catch (Exception ex) when (token.IsCancellationRequested && ex is not OutOfMemoryException)
+        { System.Diagnostics.Debug.WriteLine($"Retired original holding detail: {ex}"); }
+        catch
+        {
+            PriceEditor.Retire(); HistoryEditor.Retire(); ArchiveEditor.Retire(); throw;
+        }
+        finally { loading.PropertyChanged -= Availability; }
+    }
+
+    /// <summary>Prepares detached original financial text before any native property or collection is changed.</summary>
+    private Prepared Prepare(HoldingDetailSnapshot source, HoldingPriceInputs inputs, DateOnly today)
+    {
         var type = inputs.Type;
-        var today = Today;
+
         var events = inputs.Events;
         var valuations = inputs.Valuations;
         var locations = inputs.Locations.ToDictionary(l => l.Id, l => l.Name);
         var value = AssetValuationService.Values([type], events, valuations, today).FirstOrDefault();
         var quantity = value?.Quantity ?? 0;
 
-        Name = type.Name;
-        Icon = HoldingText.Icon(type);
-        QuantityText = text.Quantity(quantity, type);
-        DerivedText = text.DerivedWeight(quantity, type);
-        HasStock = quantity > 0;
+        var name = type.Name;
+        var icon = HoldingText.Icon(type);
+        var quantityText = text.Quantity(quantity, type);
+        var derivedText = text.DerivedWeight(quantity, type);
+        var hasStock = quantity > 0;
         var fine = Quantities.FineMassMg(quantity, type) is { } mg && type.Metal != Metal.None && quantity > 0
             ? text.FineMetal(new FineMetal(type.Metal, mg, 1, 0), withCount: false)
             : null;
-        PurityText = string.Join(" · ", new[] { text.Purity(type), fine }.Where(s => s is not null));
-        PurityText = PurityText.Length == 0 ? null : PurityText;
+        var purityText = string.Join(" · ", new[] { text.Purity(type), fine }.Where(s => s is not null));
+        purityText = purityText.Length == 0 ? null : purityText;
 
-        PerLocation.Clear();
+        var perLocation = new List<string>();
         foreach (var position in HoldingsLedger.Positions(events, today).Where(p => p.Quantity > 0))
         {
-            PerLocation.Add(translator.Format("AssetEvent_At", text.Quantity(position.Quantity, type), locations.GetValueOrDefault(position.LocationId, "?")));
+            perLocation.Add(translator.Format("AssetEvent_At", text.Quantity(position.Quantity, type), locations.GetValueOrDefault(position.LocationId, "?")));
         }
 
         // A value needs a price; without one it is "unknown", never zero (ZEX-AS06).
-        ValueUnknown = quantity > 0 && value?.Value is null;
-        ValueText = value?.Value is { } known
+        var valueUnknown = quantity > 0 && value?.Value is null;
+        var valueText = value?.Value is { } known
             ? translator.Format(value.FromPurchase ? "Holding_ValuePurchase" : "Holding_Value", text.Money(known, type.PriceCurrencyCode), text.Date(value.PriceDate!.Value))
             : null;
 
         // Average cost and results are estimates from the recorded prices (ZEX-AS09).
         var basis = HoldingsLedger.Basis(events, type.Id);
-        AverageCostText = basis.PerUnitMilli is { } perUnit && basis.Quantity > 0 ? translator.Format("Holding_AverageCost", text.Price(perUnit, type)) : null;
-        UnrealisedText = basis.Basis is { } cost && value?.Value is { } current && basis.Quantity > 0
+        var averageCostText = basis.PerUnitMilli is { } perUnit && basis.Quantity > 0 ? translator.Format("Holding_AverageCost", text.Price(perUnit, type)) : null;
+        var unrealisedText = basis.Basis is { } cost && value?.Value is { } current && basis.Quantity > 0
             ? translator.Format("Holding_Unrealised", text.Money(current - cost, type.PriceCurrencyCode, showPlus: true))
             : null;
         var realised = basis.Sales.Where(s => s.Result is not null).ToList();
-        RealisedText = realised.Count > 0 ? translator.Format("Holding_Realised", text.Money(realised.Sum(s => s.Result!.Value), type.PriceCurrencyCode, showPlus: true)) : null;
+        var realisedText = realised.Count > 0 ? translator.Format("Holding_Realised", text.Money(realised.Sum(s => s.Result!.Value), type.PriceCurrencyCode, showPlus: true)) : null;
 
-        Events.Clear();
+        var eventRows = new List<HoldingEventRow>();
         foreach (var assetEvent in events.OrderByDescending(e => e.Date).ThenByDescending(e => e.CreatedAt))
         {
             var place = locations.GetValueOrDefault(assetEvent.LocationId, "?");
@@ -188,28 +292,67 @@ public sealed partial class HoldingDetailViewModel(
             }
 
             var effect = assetEvent.TotalEffect;
-            Events.Add(new HoldingEventRow(assetEvent.Id, text.EventKind(assetEvent.Kind), text.Date(assetEvent.Date), text.SignedQuantity(assetEvent, type), detail,
-                effect > 0 ? Palette.IncomeText : effect < 0 ? Palette.ExpenseText : Palette.SecondaryText));
+            eventRows.Add(new HoldingEventRow(assetEvent.Id, text.EventKind(assetEvent.Kind), text.Date(assetEvent.Date), text.SignedQuantity(assetEvent, type), detail,
+                Math.Sign(effect)));
         }
 
-        Valuations.Clear();
+        var priceRows = new List<ValuationRow>();
         foreach (var valuation in valuations.OrderByDescending(v => v.Date))
         {
-            Valuations.Add(new ValuationRow(valuation.Id, text.Price(valuation.PricePerUnitMilli, type), text.Date(valuation.Date),
+            priceRows.Add(new ValuationRow(valuation.Id, text.Price(valuation.PricePerUnitMilli, type), text.Date(valuation.Date),
                 valuation.Source == ValuationSource.Purchase ? translator["Holding_FromPurchase"] : valuation.Note));
         }
-        HistoryEditor.PublishDisplayed(PriceEditor.DisplayedReview);
-        ArchiveEditor.PublishDisplayed(PriceEditor.DisplayedReview);
+        return new(source, name, icon, quantityText, derivedText, hasStock, purityText, perLocation.ToArray(),
+            valueUnknown, valueText, averageCostText, unrealisedText, realisedText, eventRows.ToArray(), priceRows.ToArray(),
+            (source.Settings ?? new ZananceSettings()).Shows(Feature.HoldingDetails));
+    }
+
+    private sealed record Prepared(HoldingDetailSnapshot Source, string? Name, Symbol Icon, string? Quantity,
+        string? Derived, bool HasStock, string? Purity, string[] Places, bool Unknown, string? Value,
+        string? Average, string? Unrealised, string? Realised, HoldingEventRow[] Events, ValuationRow[] Prices, bool Advanced)
+    {
+        internal static Prepared Missing(HoldingDetailSnapshot source) =>
+            new(source, null, Symbol.Diamond, null, null, false, null, [], false, null, null, null, null, [], [], false);
+    }
+
+    private sealed class MissingOriginalDetailException : Exception;
+
+    [RelayCommand]
+    private Task RecordAsync(string kind)
+    {
+        if (!Enum.TryParse<AssetEventKind>(kind, out var parsed) || !Enum.IsDefined(parsed)
+            || !IsAdvanced && parsed != AssetEventKind.Correction) return Task.CompletedTask;
+        return NavigateAsync(AppRoutes.AssetEventEditorRoute, new Dictionary<string, object> { ["type"] = _id, ["kind"] = kind });
     }
 
     [RelayCommand]
-    private Task RecordAsync(string kind) =>
-        Shell.Current.GoToAsync(AppShell.AssetEventEditorRoute, new Dictionary<string, object> { ["type"] = _id, ["kind"] = kind });
+    private Task EditTypeAsync() => IsAdvanced
+        ? NavigateAsync(AppRoutes.AssetTypeEditorRoute, new Dictionary<string, object> { ["id"] = _id }) : Task.CompletedTask;
 
     [RelayCommand]
-    private Task EditTypeAsync() => Shell.Current.GoToAsync(AppShell.AssetTypeEditorRoute, new Dictionary<string, object> { ["id"] = _id });
+    private Task DeletePriceAsync(ValuationRow row) => Loading.IsReady && Valuations.Any(item => ReferenceEquals(item, row))
+        ? PriceEditor.DeleteAsync(row.Id, row.Description) : Task.CompletedTask;
 
-    [RelayCommand]
-    private Task DeletePriceAsync(ValuationRow row) => PriceEditor.DeleteAsync(row.Id, row.Description);
-
+    /// <summary>Rechecks original native route ownership and actual opened file before using a retained type identity.</summary>
+    private async Task NavigateAsync(string route, IDictionary<string, object> parameters)
+    {
+        if (!Loading.IsReady || NotFound || _displayed is not { } source) return;
+        var revision = _revision; var token = _lifetime.Token; var loading = Loading;
+        bool Current() => !token.IsCancellationRequested && revision == _revision && ReferenceEquals(loading, Loading)
+            && loading.IsReady && ReferenceEquals(source, _displayed);
+        try
+        {
+            await holdings.ValidateDetailAccessAsync(source, token);
+            if (Current()) await interaction.NavigateAsync(route, parameters);
+        }
+        catch (OperationCanceledException) when (token.IsCancellationRequested) { }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            if (!Current()) return;
+            PriceEditor.Retire(); HistoryEditor.Retire(); ArchiveEditor.Retire();
+            try { await loading.RunAsync(() => Task.FromException(ex), () => { }); }
+            catch (Exception failure) when (ReferenceEquals(failure, ex)) { }
+            await interaction.ShowFailureAsync(ex);
+        }
+    }
 }
