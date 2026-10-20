@@ -1781,3 +1781,15 @@ authority; they do not repeat money or qualify an editable refused form. `holdin
 AndroidHome uses fresh owned run/comparison and the original modal's own native focus, then exposes
 two cases/four live/twelve read-only observations through the comparison-bound public report. Preserve
 same-PID observation delays. See the app quality/holding-fee-refund-limits.md for original outcomes.
+
+
+## D-410 - Original holding-fee input and retained caption continuation
+
+Run StoreDrafts with `-HoldingFeeInputReview` for two original native malformed/negative refused and
+corrected forms plus one caption matrix, not duplicate matrices for identical feedback. Its bounded
+`-HoldingFeeInputContinuation <run>` requires the exact original terminal failure, four original live
+captures, six completed English contexts and original accepted/refused financial files. It runs only
+twelve pending read-only captions with no financial commands. Keep original failures and inspect all
+successful own-window images across original/continued runs. Native expectations apply the same
+existing digit conversion as rendering. Android uses a comparison-bound original-file continuation;
+see its README and app quality/holding-fee-input.md. Never restart merely after observation timeout.

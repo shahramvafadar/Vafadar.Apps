@@ -1938,3 +1938,13 @@ review after refusal. Editing a field clears only that field's old error; Save r
 constraints. Accepted forms remain disabled/Close-only. The en/fa/de both-theme feedback grows without
 clipping at360/412/wide Windows and native412dp Android. Read-only caption qualification after original
 acceptance has retired authority; it is separate from the original live enabled retry.
+
+
+## D-410 - Invalid optional holding fee
+
+Keep invalid nonblank fee input visible with the existing Amount_Invalid feedback below that field.
+Never make a negative/malformed fee look like an accepted zero or silently remove the original fee.
+Preserve the same editable source review for explicit correction; blank/zero keeps its documented
+removal meaning. Show no guessed money prediction while fee input is invalid or its change exceeds
+the money range. Native examples follow existing digit/separator choices. Retained caption models
+after acceptance have retired authority; they are separate from original live enabled retry.

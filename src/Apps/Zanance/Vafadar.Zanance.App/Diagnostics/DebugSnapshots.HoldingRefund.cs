@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Automation.Peers;
 using Microsoft.UI.Xaml.Automation.Provider;
 using Vafadar.Localization;
+using Vafadar.Localization.Formatting;
 using Vafadar.Zanance.App.Features.Holdings;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Data;
@@ -14,10 +15,11 @@ namespace Vafadar.Zanance.App.Diagnostics;
 internal static partial class DebugSnapshots
 {
     /// <summary>Reuses two accepted original financial cases across read-only language/theme/width presentation contexts.</summary>
-    private static async Task ReviewHoldingRefundWindowsAsync(App app, IServiceProvider services, string folder)
+    private static async Task ReviewHoldingRefundWindowsAsync(App app, IServiceProvider services, string folder, bool feeInput = false)
     {
         var local = services.GetRequiredService<ILocalizationService>(); var theme = services.GetRequiredService<ThemeService>();
         var originalLanguage = local.CurrentLanguage; var originalTheme = theme.Choice;
+        var originalFeeRun = feeInput ? Environment.GetEnvironmentVariable("VAFADAR_HOLDING_FEE_CONTINUATION") : null;
         var store = services.GetRequiredService<ZananceStore>();
         async Task<string> BaseRows() => JsonSerializer.Serialize(new { Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync() });
         var before = await BaseRows(); var captures = new List<object>();
@@ -66,7 +68,7 @@ internal static partial class DebugSnapshots
                 var label = VisualDescendants(page).OfType<Label>().Single(item => item.Text == HoldingRefundNativeReview.Feedback(model, errorKey!) && Visible(item));
                 await (FindScrollView(page) ?? throw new IOException("Original refunded-fee viewport missing.")).ScrollToAsync(label, ScrollToPosition.MakeVisible, false);
                 while (label.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock { ActualWidth: > 0, ActualHeight: > 0, IsTextTrimmed: false } native
-                    || native.Text != services.GetRequiredService<Translator>()[errorKey])
+                    || native.Text != NativeDigits.Apply(services.GetRequiredService<Translator>()[errorKey]))
                 {
                     if (DateTime.UtcNow >= deadline) throw new IOException("Original live refunded-fee error incomplete.");
                     await Task.Delay(50);
@@ -83,8 +85,9 @@ internal static partial class DebugSnapshots
         {
             await SetTheme(ThemeChoice.Light); await SetLanguageAsync(app, local, "en");
             app.Windows[0].Width = 412; app.Windows[0].Height = 820;
-            prepared = await HoldingRefundNativeReview.PrepareAsync(services, Path.Combine(folder, "financial"), Show, Invoke, Close, Observe, CancellationToken.None);
-            foreach (var language in new[] { "en", "fa", "de" })
+            prepared = !string.IsNullOrEmpty(originalFeeRun) ? await ContinueOriginalFeeCaptionsAsync(services, folder, originalFeeRun)
+                : await HoldingRefundNativeReview.PrepareAsync(services, Path.Combine(folder, "financial"), Show, Invoke, Close, Observe, CancellationToken.None, feeInput);
+            foreach (var language in string.IsNullOrEmpty(originalFeeRun) ? new[] { "en", "fa", "de" } : new[] { "fa", "de" })
             foreach (var choice in new[] { ThemeChoice.Light, ThemeChoice.Dark })
             foreach (var width in new[] { 360, 412, 1280 })
             {
@@ -102,9 +105,18 @@ internal static partial class DebugSnapshots
                     await scroll.ScrollToAsync(label, ScrollToPosition.MakeVisible, false);
                     var deadline = DateTime.UtcNow.AddSeconds(15);
                     while (label.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock { ActualWidth: > 0, ActualHeight: > 0, IsTextTrimmed: false } native
-                        || native.Text != HoldingRefundNativeReview.Feedback(state.Model, state.ErrorKey))
+                        || native.Text != NativeDigits.Apply(HoldingRefundNativeReview.Feedback(state.Model, state.ErrorKey)))
                     {
-                        if (DateTime.UtcNow >= deadline) throw new IOException("Original refunded-fee feedback is incomplete; retain original financial receipts.");
+                        if (DateTime.UtcNow >= deadline)
+                        {
+                            var observed = label.Handler?.PlatformView as Microsoft.UI.Xaml.Controls.TextBlock;
+                            await File.WriteAllTextAsync(Path.Combine(directory, "pending-caption-evidence.json"), JsonSerializer.Serialize(new
+                            { Expected = HoldingRefundNativeReview.Feedback(state.Model, state.ErrorKey), NativeText = observed?.Text,
+                                Width = observed?.ActualWidth, Height = observed?.ActualHeight, Trimmed = observed?.IsTextTrimmed,
+                                LabelWidth = label.Width, LabelHeight = label.Height, RawFee = state.Model.FeeText, NoFinancialInvocation = true }));
+                            await CaptureWindowAsync(app.Windows[0], Path.Combine(directory, "pending-caption.png"));
+                            throw new IOException("Original refunded-fee feedback is incomplete; retain original financial receipts.");
+                        }
                         await Task.Delay(50);
                     }
                     if (state.Model.CanSave || state.Model.CloseText != services.GetRequiredService<Translator>()[state.Name == "accepted" ? "Common_Close" : "Common_Cancel"])

@@ -7371,3 +7371,29 @@ No phone input, Main private database/key read, schema/model/permission/provider
 claim. Malformed optional fee text remains a source-inspected next concern, not fixed or reproduced
 here. Broader financial/device, D-386 runtime/A11Y, iOS/external and exact-head CI gates remain separate.
 See [original evidence and limits](../quality/holding-fee-refund-limits.md).
+
+
+## D-410 - Original optional holding-fee input
+
+Three actual editor/SQLite regressions first prove malformed, negative and out-of-range nonblank
+fees committed instead of refusing. The original editor now distinguishes invalid input from an
+explicit blank/zero removal before building financial entries. It preserves raw fee/note, original
+review and enabled correction with existing field-local feedback. Preview omits guessed zero-fee
+or wrapped account changes. The actual non-UI editor is linked through its original native-effect
+ports; native query delivery remains in its unchanged MAUI adapter. Seventeen distinct new actual
+app-flow cases pass in retained selective cohorts, without replaying successful D-409 cases.
+
+Two original native malformed/negative cases per independent Windows and Release/AOT Android each
+refuse with complete rows unchanged, then correct that same original form once to fee1EUR. Both
+preserve refund0.75EUR with complete original metadata/link, Cash874.75, quantity/basis/derived price,
+income0/net expense0.25 and terminal accepted state. Four original live assertions precede accepted
+receipts. Windows retains4 live plus6 English captures, then continues only12 pending fa/de captions;
+Android continues only read-only presentation after its original observer failure, with6 final native
+caption observations. The expectation now respects native Persian digits rather than raw Latin
+resource examples; production text was complete. Original failures and accepted files are retained.
+
+Strict builds, complete signed offline Main and no-reset independent emulator Home/OS restoration
+pass. No phone input, private Main data/key read, full-suite rerun, schema/model/resource/permission/
+provider change or ANR/crash resolution claim. Wider holding/device/iOS, D-386 runtime/A11Y and
+external/release/exact-head CI gates remain separate.
+See [original evidence and limits](../quality/holding-fee-input.md).

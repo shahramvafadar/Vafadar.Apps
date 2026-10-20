@@ -63,3 +63,13 @@ Actual OccurrenceCommands source is linked through IAppInteraction with isolated
 ## Profile pool isolation (D-137 / AT-139)
 
 Actual ProfileService.Delete preserves the current profile native session and actual SQLite rows. Shared fixture cleanup is exact-directory/file scoped. One added application-flow case, App.Tests 348; normal full suite 2,210 pass. Runtime profile creation/switch/restore/deletion is separately checked in normal Release on the owned emulator.
+
+
+## D-410 - Actual optional holding-fee editor
+
+The actual AssetEventEditorViewModel source is linked through original IAppInteraction/localization
+and isolated complete SQLite; only its unchanged native query adapter stays in the MAUI partial.
+Seventeen new AT-410 cases pass in retained selective cohorts: invalid original fee corrections,
+explicit removal/positive fee semantics, six regional drafts, dirty Cancel choices, nonfinancial
+hidden fee and no-wrapped/guessed account prediction. No duplicated money algorithm or fake control.
+Original native rendering/commands and complete APK/restore evidence live in quality/holding-fee-input.md.

@@ -45,7 +45,7 @@ internal static class HoldingRefundNativeReview
     internal static async Task<Prepared> PrepareAsync(IServiceProvider services, string folder,
         Func<AssetEventEditorPage, Task> show, Func<AssetEventEditorPage, ICommand, Task> invoke,
         Func<AssetEventEditorPage, Task> close,
-        Func<AssetEventEditorPage, AssetEventEditorViewModel, string, string?, Task<object>> observe, CancellationToken ct)
+        Func<AssetEventEditorPage, AssetEventEditorViewModel, string, string?, Task<object>> observe, CancellationToken ct, bool feeInput = false)
     {
         var package = AppInfo.Current.PackageName;
         if (!package.StartsWith("pro.vafadar.zanance.storepreview.", StringComparison.Ordinal)
@@ -56,7 +56,8 @@ internal static class HoldingRefundNativeReview
         var day = DateOnly.FromDateTime(time.GetLocalNow().DateTime); var states = new List<State>(); var cases = new List<object>(); var live = new List<object>();
         foreach (var currency in new[] { false, true })
         {
-            var name = currency ? "currency" : "amount"; var errorKey = currency ? "LedgerError_RefundCurrencyMismatch" : "LedgerError_RefundExceedsPurchase";
+            var name = feeInput ? (currency ? "negative" : "malformed") : currency ? "currency" : "amount";
+            var errorKey = feeInput ? "Amount_Invalid" : currency ? "LedgerError_RefundCurrencyMismatch" : "LedgerError_RefundExceedsPurchase";
             var file = Path.Combine(folder, name + ".db");
             if (File.Exists(file)) throw new IOException("Original refunded-fee fixture exists; preserve accepted cases.");
             await using var fixture = new ServiceCollection().AddZananceData(file).AddSingleton(time).BuildServiceProvider();
@@ -83,7 +84,8 @@ internal static class HoldingRefundNativeReview
             void RejectedDraft(AssetEventEditorViewModel model)
             {
                 model.Note = "D409 original rejected draft";
-                if (currency) model.Account = model.Accounts.Single(a => a.Id == usd.Id);
+                if (feeInput) model.FeeText = currency ? "-" + MoneyText.ForInput(100, "EUR", local.CurrentCulture) : "not money";
+                else if (currency) model.Account = model.Accounts.Single(a => a.Id == usd.Id);
                 else model.FeeText = MoneyText.ForInput(50, "EUR", local.CurrentCulture);
             }
             string Draft(AssetEventEditorViewModel model) => JsonSerializer.Serialize(new
@@ -107,7 +109,8 @@ internal static class HoldingRefundNativeReview
             { CompleteOriginalRowsUnchanged = true, OriginalRawDraft = originalDraft, OriginalRawDraftKept = true,
                 OriginalCanCorrectSameForm = true, ErrorKey = errorKey, Package = package, ProcessId = Environment.ProcessId }), ct);
             // Correct the same original live form; its rejected command did not consume the original review.
-            if (currency) model.Account = model.Accounts.Single(a => a.Id == eur.Id);
+            if (feeInput) model.FeeText = MoneyText.ForInput(100, "EUR", local.CurrentCulture);
+            else if (currency) model.Account = model.Accounts.Single(a => a.Id == eur.Id);
             else model.FeeText = MoneyText.ForInput(75, "EUR", local.CurrentCulture);
             model.Note = "D409 explicit corrected " + name;
             await Invoke(page, model.SaveCommand);
@@ -115,7 +118,7 @@ internal static class HoldingRefundNativeReview
             var kept = rows.Single(e => e.Id == refund.Id); var savedFee = rows.Single(e => e.Id == fee.Id);
             var events = await holdings.GetEventsAsync(cancellationToken: ct); var valuations = await holdings.GetValuationsAsync(cancellationToken: ct);
             var balance = LedgerCalculator.Balance(eur, rows, day); var totals = LedgerCalculator.Totals([eur], rows, new(day, day)).Single();
-            var expectedFee = currency ? 100 : 75; var expectedBalance = currency ? 87475 : 87500;
+            var expectedFee = feeInput || currency ? 100 : 75; var expectedBalance = feeInput || currency ? 87475 : 87500;
             if (rows.Count != 3 || savedFee.Amount != expectedFee || savedFee.AccountId != eur.Id || kept.RefundOfId != fee.Id
                 || JsonSerializer.Serialize(kept) != JsonSerializer.Serialize(originalRefund) || balance != expectedBalance
                 || totals.NetIncome != 0 || totals.NetExpense != expectedFee - 75 || events.Count != 1 || events.Single().Quantity != 1000
@@ -136,7 +139,8 @@ internal static class HoldingRefundNativeReview
             if (Draft(presentation) != originalDraft || presentation.CanSave
                 || beforePresentation != await ImportFinancialNativeReview.StoredAsync(fixture, ct))
                 throw new IOException("Original rejected-draft caption rehydration changed money or raw input.");
-            states.Add(new(name, presentation, errorKey));
+            // D-410's two invalid inputs share one caption; retain only one read-only matrix after both original live cases.
+            if (!feeInput || !currency) states.Add(new(name, presentation, errorKey));
         }
         return new(states, cases, live);
     }

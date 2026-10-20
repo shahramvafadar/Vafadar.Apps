@@ -4604,3 +4604,18 @@ existing translated field errors and no financial replay. Final complete signed 
 one no-reset emulator Home0/OS restoration pass. AT-15's earlier physical D-402 evidence is retained;
 this extends local/native correction coverage, not physical holding or all-device/iOS acceptance.
 See quality/holding-fee-refund-limits.md for exact runs, package hashes and observer limits.
+
+
+## D-410 - Actual optional holding-fee input (REF-04 / AT-410)
+
+Seventeen new actual editor/SQLite cases cover malformed/negative/range refusal and same-form retry,
+blank/zero/positive meaning, six regional negative drafts/corrections including Persian digits,
+explicit dirty Cancel choices, nonfinancial hidden fees and no wrapped/guessed prediction. Three
+baseline failures are preserved; six regional fixture failures before Save were corrected and only
+those rerun, retaining the other successes. Native malformed/negative corrections preserve exact
+refund75/fee100 minor, Cash87475, income0/expense25 and holding quantity/basis/price in both independent
+Windows and Release/AOT Android. Four live assertions precede original accepted receipts. Windows22
+successful images and Android6 final caption observations qualify complete field feedback in en/fa/de
+and both themes with Windows360/412/wide. Caption continuations invoke no financial commands. Signed
+offline Main and one no-reset emulator Home/OS restoration pass. This is bounded local/native
+acceptance; physical holding variants, all-device/iOS, D-386 and external gates remain separate.

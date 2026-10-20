@@ -571,3 +571,17 @@ Each caption state rehydrates the original rejected raw draft from its refusal r
 authority after acceptance; it never replays a financial command. ErrorKey binds the exact original
 resource string. Wait for the owned modal's native focus and observe only the original run/PID and
 comparison. Main private data, system settings and physical devices are outside this independent run.
+
+
+## D-410 - Original fee-input continuation
+
+`holding-fee-input` invokes two original actual editor malformed/negative fee refusals and same-form
+corrections in fresh owned SQLite, retaining fee/refund/holding/account outcomes. The single error
+caption is observed once per en/fa/de light/dark context. Native expectations include NativeDigits.
+Only after an authoritative terminal original caption failure may `review_resume_fee_captions=true`
+reuse that exact `review_run` with a new comparison and `review_baseline` equal to the original failed
+comparison. It requires the exact saved failure and both original accepted/refused receipts, checks
+financial files before/after, retires the rehydrated original draft and invokes no financial command.
+Final Cases retain the original process identity; Live is empty and explicit continuation fields
+describe the new read-only run. The four original live assertions precede accepted receipt writes.
+Do not reinterpret old native-invocation flags as new finance or restart on a report timeout.

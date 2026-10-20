@@ -2060,3 +2060,12 @@ AOT Android, four live plus retained read-only field-feedback matrices, warning-
 complete signed offline APK and one no-reset emulator Home/OS restoration pass. Exact-head hosted CI
 is checked separately. Malformed optional fee text, physical holding variants, broader finance,
 D-386 runtime/A11Y and iOS/provider/store/release gates remain open; no full-suite acceptance claim.
+
+
+## D-410 - Optional holding fee qualified locally
+
+Selective17 new actual app-flow cases, two original native refused/corrected holding forms per
+Windows/Release AOT Android, retained complete field-feedback contexts, strict builds, complete
+signed offline APK and no-reset emulator restoration pass. Successful finances are not replayed for
+observer repair. Windows access violation and transient adb/mismatch evidence remain; no general
+runtime fix, physical holding, iOS/store/provider/release or exact-head hosted CI acceptance claim.

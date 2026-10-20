@@ -2980,3 +2980,13 @@ pass. Keep field-local account/fee errors, raw drafts and the original review av
 After original native acceptance, caption checks may rehydrate only retained rejected presentation
 with retired authority; never replay financial commands to repair an observer. This does not validate
 malformed optional fee text or accept wider physical/platform/runtime gates.
+
+
+## D-410 - Optional holding fee input is not a zero fallback
+
+Only blank or a successfully parsed zero requests removal of an optional holding fee. Nonblank
+unparseable, negative or out-of-range text refuses before financial mutation and retains the exact
+draft/original review for explicit correction. Hidden nonfinancial fee drafts create no money.
+Preview must not guess a zero fee or wrap account changes. Native feedback checks compare the
+existing native digit conversion with source text; keep original source/draft evidence. Continuation
+after a terminal observer failure uses exact original accepted files read-only and never replays money.

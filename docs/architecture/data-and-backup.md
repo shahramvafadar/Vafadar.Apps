@@ -2479,3 +2479,14 @@ group are excluded as existing explicit deletion/unlink behavior requires. Indiv
 validation and original reviewed-authority guards remain. No entity, migration/compiled model, key,
 portable format, permission or dependency changes. The editor maps amount/currency refusal to the
 original fee/account fields without consuming the review or replacing raw drafts.
+
+
+## D-410 - Optional holding fee validation before entry construction
+
+The actual holding editor parses an optional fee into nullable validity: blank/parsed zero is an
+explicit removal; nonblank parse failure, negative or range failure is invalid. Save refuses before
+entry construction, retaining the original review/raw draft and existing FeeError resource. Account
+prediction uses widened arithmetic and only valid inputs. The native query adapter remains separate
+from the actual editor linked into App.Tests; dialog/navigation and unchanged draft fingerprints use
+existing application ports. D-409 same-writer retained-refund limits still apply. No entity/model,
+migration, portable format, key, resource, permission or dependency changes.

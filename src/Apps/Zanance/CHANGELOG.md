@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep invalid holding fees from removing saved money (D-410)
+
+- Reject malformed, negative or too-large fees while keeping typed values for correction.
+- Preserve existing fees and linked refunds until a valid explicit change is saved.
+- Keep blank/zero removal, regional input and nonfinancial drafts separate; avoid misleading previews.
+
 ### Keep linked refunds valid when correcting their source (D-409)
 
 - Refuse a corrected holding fee smaller than its linked refunds or an incompatible account currency.

@@ -32,7 +32,7 @@ public sealed record LocationChoice(Guid Id, string Name)
 /// currency differs from the price currency, the value in the price currency is asked for separately (cost basis).
 /// Nothing is saved when the history would become negative on any date: "On 3 Oct only 20.000 g were held at Home safe."
 /// </summary>
-public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAttributable, Presentation.IUnsavedChanges
+public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentation.IUnsavedChanges
 {
     private static readonly AssetEventKind[] AdvancedKinds =
     [
@@ -204,8 +204,6 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
     private AssetEventKind Kind => _kinds[Math.Clamp(KindIndex, 0, _kinds.Length - 1)];
 
     private QuantityUnit Unit => _units[Math.Clamp(UnitIndex, 0, _units.Count - 1)];
-
-    public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
 
     /// <summary>Publishes a coherent original file/type/event and choices before enabling the editor.</summary>
     public async Task ApplyQueryAsync(IDictionary<string, object> query)
@@ -380,8 +378,9 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
         }
     }
 
-    private long ParsedFee() =>
-        Account is not null && MoneyText.TryParse(FeeText, Account.CurrencyCode, _localization.CurrentCulture, out var fee) && fee > 0 ? fee : 0;
+    // D-410: only a genuinely blank/zero fee requests removal; malformed or negative input is not zero.
+    private long? ParsedFee() => Account is null ? null : string.IsNullOrWhiteSpace(FeeText) ? 0
+        : MoneyText.TryParse(FeeText, Account.CurrencyCode, _localization.CurrentCulture, out var fee) && fee >= 0 ? fee : null;
 
     private AssetEvent BuildEvent(AssetType type, long quantity)
     {
@@ -419,10 +418,12 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
             parts.Add(At(to));
         }
 
-        if (HasMoney && Account is { } account && ParsedAmount(quantity) is { } amount)
+        if (HasMoney && Account is { } account && ParsedAmount(quantity) is { } amount && ParsedFee() is { } fee)
         {
-            var change = Kind == AssetEventKind.Purchase ? -(amount + ParsedFee()) : amount - ParsedFee();
-            parts.Add($"{account.Name} {_text.Money(change, account.CurrencyCode, showPlus: true)}");
+            // A preview must not wrap at the Int64 boundary or invent a zero fee while input is invalid.
+            var change = Kind == AssetEventKind.Purchase ? -((decimal)amount + fee) : (decimal)amount - fee;
+            if (change is >= long.MinValue and <= long.MaxValue)
+                parts.Add($"{account.Name} {_text.Money((long)change, account.CurrencyCode, showPlus: true)}");
         }
 
         EffectText = _translator.Format("AssetEvent_After", string.Join(" · ", parts));
@@ -491,6 +492,12 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
                 return;
             }
 
+            if (ParsedFee() is not { } fee)
+            {
+                FeeError = _translator["Amount_Invalid"];
+                return;
+            }
+
             priced = amount;
             if (HasSecondAmount)
             {
@@ -508,7 +515,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
             entries.Add(money);
 
             // A fee is spending (Fees), never part of the price (ZEX-P09).
-            if (ParsedFee() is var fee and > 0)
+            if (fee > 0)
             {
                 var feeEntry = _groupEntries.FirstOrDefault(e => e.Kind == EntryKind.Expense)?.Copy() ?? new LedgerEntry();
                 feeEntry.Kind = EntryKind.Expense;
@@ -587,7 +594,12 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
     public void RetireReview() { _session.Retire(); PublishState(); }
 
     [RelayCommand]
-    private Task CancelAsync() => _session.Committed ? _interaction.NavigateAsync("..") : Presentation.UnsavedChanges.LeaveAsync(this);
+    private async Task CancelAsync()
+    {
+        if (!_session.Committed && IsDirty && !await _interaction.ConfirmAsync(_translator["Common_DiscardTitle"],
+            _translator["Common_DiscardMessage"], _translator["Common_Discard"], _translator["Common_KeepEditing"])) return;
+        await _interaction.NavigateAsync("..");
+    }
 
     // The input as it was loaded or saved; leaving with a change asks first (CR12).
     private string? _snapshot;
@@ -595,7 +607,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
     /// <inheritdoc />
     public bool IsDirty => !_session.Committed && _snapshot is not null && Snapshot() != _snapshot;
 
-    private string Snapshot() => Presentation.UnsavedChanges.Fingerprint(
+    private string Snapshot() => Presentation.DraftFingerprint.Create(
         KindIndex, Date, QuantityText, UnitIndex, Location?.Id, ToLocation?.Id, Account?.Id, PriceModeIndex,
         AmountText, FeeText, SecondAmountText, BasisText, DirectionIndex, ReasonText, Note);
 }

@@ -1,6 +1,7 @@
 using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Localization;
+using Vafadar.Localization.Formatting;
 using Vafadar.Zanance.App.Diagnostics;
 using Vafadar.Zanance.App.Features.Holdings;
 using Vafadar.Zanance.App.Presentation;
@@ -10,10 +11,11 @@ namespace Vafadar.Zanance.App;
 internal static partial class AndroidHomeReview
 {
     /// <summary>Uses original Release/AOT refunded-fee correction commands once, then retained read-only native outcome forms.</summary>
-    private static async Task<object> ReviewHoldingRefundAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct)
+    private static async Task<object> ReviewHoldingRefundAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct, bool feeInput = false)
     {
         var local = services.GetRequiredService<ILocalizationService>(); var theme = services.GetRequiredService<ThemeService>();
         var originalLanguage = local.CurrentLanguage; var originalTheme = theme.Choice; var observations = new List<object>();
+        var resumeCaptions = feeInput && Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_resume_fee_captions", false) == true;
         await AwaitReimbursementFocusAsync(ct); app.OpenReviewShell(); await AwaitRootHomeAsync(ct);
         async Task SetTheme(ThemeChoice choice)
         {
@@ -83,7 +85,7 @@ internal static partial class AndroidHomeReview
                     await Task.Delay(50, ct);
                 }
                 var layout = native.Layout!;
-                if (native.Text != services.GetRequiredService<Translator>()[errorKey] || layout.LineCount == 0
+                if (native.Text != NativeDigits.Apply(services.GetRequiredService<Translator>()[errorKey]) || layout.LineCount == 0
                     || Enumerable.Range(0, layout.LineCount).Any(index => layout.GetEllipsisCount(index) != 0)
                     || layout.GetLineBottom(layout.LineCount - 1) > native.Height)
                     throw new ReviewCheckException("Original live refunded-fee feedback incomplete.");
@@ -96,7 +98,8 @@ internal static partial class AndroidHomeReview
         try
         {
             await SetTheme(ThemeChoice.Light); await SetLanguageAsync(app, local, "en", ct);
-            prepared = await HoldingRefundNativeReview.PrepareAsync(services, Path.Combine(root, "financial"), Show, Invoke, Close, Observe, ct);
+            prepared = resumeCaptions ? await ContinueFeeInputCaptionsAsync(services, root, comparison, ct)
+                : await HoldingRefundNativeReview.PrepareAsync(services, Path.Combine(root, "financial"), Show, Invoke, Close, Observe, ct, feeInput);
             foreach (var language in new[] { "en", "fa", "de" })
             foreach (var choice in new[] { ThemeChoice.Light, ThemeChoice.Dark })
             {
@@ -113,7 +116,7 @@ internal static partial class AndroidHomeReview
                     Android.Widget.TextView? native;
                     while ((native = label.Handler?.PlatformView as Android.Widget.TextView) is null
                         || !native.IsShown || !native.HasWindowFocus || native.Context?.PackageName != Package
-                        || native.Text != HoldingRefundNativeReview.Feedback(state.Model, state.ErrorKey) || native.Layout is not { LineCount: > 0 })
+                        || native.Text != NativeDigits.Apply(HoldingRefundNativeReview.Feedback(state.Model, state.ErrorKey)) || native.Layout is not { LineCount: > 0 })
                     {
                         if (DateTime.UtcNow >= deadline) throw new ReviewCheckException("Original modal feedback did not finish native publication.");
                         await Task.Delay(50, ct);
@@ -143,6 +146,8 @@ internal static partial class AndroidHomeReview
         }
         return new { Comparison = comparison, Cases = prepared!.Cases, Live = prepared.Live, Observations = observations, OriginalThemeAndLanguageRestored = true,
             NativeButtonsInvoked = true,
+            OriginalFinancialReceiptContinuation = resumeCaptions, FinancialCommandsInvokedByContinuation = resumeCaptions ? 0 : (int?)null,
+            OriginalFourLiveObservationsPrecedeAcceptedReceipts = resumeCaptions,
             ReadOnlyPresentationAfterTwoFinancialCases = true, MainPackageTouched = false, SystemSettingsChanged = false };
     }
 }

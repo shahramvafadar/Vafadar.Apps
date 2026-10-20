@@ -151,12 +151,13 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Fresh independent Home refresh review required.");
                 await WriteReportAsync(root, phase, await ReviewHomeRefreshAsync(app, services, root, comparison!, ct, referencesOnly: phase == "home-refresh-references"), ct);
             }
-            else if (phase == "holding-refund-review")
+            else if (phase is "holding-refund-review" or "holding-fee-input")
             {
+                var resumeFeeCaptions = phase == "holding-fee-input" && Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_resume_fee_captions", false) == true;
                 Directory.CreateDirectory(root);
-                if (RedirectedAncestors(root).Length != 0 || Directory.EnumerateFileSystemEntries(root).Any())
+                if (RedirectedAncestors(root).Length != 0 || !resumeFeeCaptions && Directory.EnumerateFileSystemEntries(root).Any())
                     throw new ReviewCheckException("Fresh owned refunded-fee fixture required; preserve accepted cases.");
-                await WriteReportAsync(root, phase, await ReviewHoldingRefundAsync(app, services, root, comparison!, ct), ct);
+                await WriteReportAsync(root, phase, await ReviewHoldingRefundAsync(app, services, root, comparison!, ct, feeInput: phase == "holding-fee-input"), ct);
             }
             else if (phase == "holding-financial-review")
             {
