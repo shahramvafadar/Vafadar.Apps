@@ -170,6 +170,14 @@ internal static partial class AndroidHomeReview
                 }
                 await WriteReportAsync(root, phase, await ReviewHoldingFeeActionAsync(app, services, root, comparison!, retained, ct), ct);
             }
+            else if (phase == "holding-quantity-input")
+            {
+                Directory.CreateDirectory(root);
+                var resumeQuantity = Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_resume_quantity", false) == true;
+                if (RedirectedAncestors(root).Length != 0 || !resumeQuantity && Directory.EnumerateFileSystemEntries(root).Any())
+                    throw new ReviewCheckException("Fresh original quantity review root required.");
+                await WriteReportAsync(root, phase, await ReviewHoldingRefundAsync(app, services, root, comparison!, ct, quantityInput: true), ct);
+            }
             else if (phase is "holding-refund-review" or "holding-fee-input")
             {
                 var resumeFeeCaptions = phase == "holding-fee-input" && Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_resume_fee_captions", false) == true;

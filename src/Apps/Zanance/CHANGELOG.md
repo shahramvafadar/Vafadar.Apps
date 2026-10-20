@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep oversized holding quantities editable (D-412)
+
+- Refuse quantities that exceed the stored range without interrupting the form or showing a wrapped result.
+- Keep typed values for correction and show the message beside Quantity in all six languages.
+
 ### Refund fees recorded with holdings (D-411)
 
 - Show Record refund for an eligible purchase/sale fee while keeping source changes in holding history.

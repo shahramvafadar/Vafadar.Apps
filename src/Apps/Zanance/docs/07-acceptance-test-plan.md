@@ -4632,3 +4632,16 @@ with retained original rows and no new financial Save. Windows native open/Cance
 Android modal/route failures remain unaccepted. No new unit-test count or successful/full-suite replay.
 Other holding kinds, all-device, D-386 runtime/A11Y, iOS/external/release gates remain. Exact artifacts,
 package hashes and limitations: quality/physical-holding-fee-lifecycle.md.
+
+## D-412 - AT-412 original quantity input and correction
+
+Sixteen distinct new cases cover parseable Decimal overflow, exact stored unit boundaries and ordinary
+invalid semantics, plus actual editor/SQLite raw refusal and same-form valid correction. Twenty-one
+existing resource checks cover the changed six-language feedback. Two original native cases per
+Windows/Release AOT Android refuse without row/draft/review loss, then accept one explicit2unit
+correction with original money/refund/price/source preserved, total3units/basis25EUR/Cash874.75.
+Four original live observations per host remain retained. Field placement is then qualified only
+read-only:18 final Windows contexts and6 final Android contexts, original Cases/PID, Live empty,
+zero continuation commands and unchanged original stores. Final complete signed APK/builds and
+no-reset emulator Home/OS/hash restoration pass. No full-suite replay or Samsung/iOS/general
+runtime/A11Y/release claim. Details: quality/holding-quantity-input.md.

@@ -43,8 +43,19 @@ public static class Quantities
     /// German "1.5" is 1.5 g and "1.500" is 1,500 g, in English "1,500" is 1,500 g. Refuses more than three decimals of a
     /// gram or unit, fractions of an indivisible count type, zero, negatives and badly grouped numbers.
     /// </summary>
-    public static bool TryParse(string? text, QuantityUnit unit, AssetType type, CultureInfo culture, out long quantity)
+    public static bool TryParse(string? text, QuantityUnit unit, AssetType type, CultureInfo culture, out long quantity) =>
+        TryParse(text, unit, type, culture, out quantity, out _);
+
+    /// <summary>Parses the same original quantity and distinguishes a base-unit range refusal from other invalid input.</summary>
+    /// <param name="text">The original raw input.</param>
+    /// <param name="unit">The selected input unit.</param>
+    /// <param name="type">The original asset type and divisibility.</param>
+    /// <param name="culture">The original numeric input culture.</param>
+    /// <param name="quantity">The converted base-unit quantity; callers use it only after successful parsing.</param>
+    /// <param name="outsideRange">Whether the parsed positive number exceeds the stored base-unit range.</param>
+    public static bool TryParse(string? text, QuantityUnit unit, AssetType type, CultureInfo culture, out long quantity, out bool outsideRange)
     {
+        outsideRange = false;
         ArgumentNullException.ThrowIfNull(type);
         ArgumentNullException.ThrowIfNull(culture);
         quantity = 0;
@@ -54,8 +65,15 @@ public static class Quantities
             return false;
         }
 
-        var exact = value * Factor(unit);
-        if (exact != decimal.Truncate(exact) || exact > long.MaxValue)
+        // D-412: a parseable Decimal can overflow even before the final Int64 check during unit conversion.
+        var factor = Factor(unit);
+        if (value > long.MaxValue / (decimal)factor)
+        {
+            outsideRange = true;
+            return false;
+        }
+        var exact = value * factor;
+        if (exact != decimal.Truncate(exact))
         {
             return false;
         }

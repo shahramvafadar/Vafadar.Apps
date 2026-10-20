@@ -8280,4 +8280,7 @@ SHA-256 du XML original : {5}</value>
   <data name="AssetEvent_SavedNeedsReview" xml:space="preserve">
     <value>L’événement de la position a été enregistré, mais une mise à jour suivante n’a pas pu aboutir. Fermez puis rouvrez l’événement pour vérifier le résultat enregistré.</value>
   </data>
+  <data name="AssetEvent_QuantityTooLarge" xml:space="preserve">
+    <value>La quantité obtenue est trop grande. Saisissez une quantité plus petite.</value>
+  </data>
 </root>

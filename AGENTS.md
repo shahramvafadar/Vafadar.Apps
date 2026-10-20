@@ -3001,3 +3001,14 @@ nodes when MAUI supplies a delegate; a direct View property mismatch is not miss
 failed independent modal/route observations separate from actual device acceptance and never replay
 accepted financial operations or seeds to repair a diagnostic observer. Restore Main/public packets/
 profiles/OS and retire only the new inactive fixture before releasing a coordinated phone turn.
+
+## D-412 - Original quantity range refusal
+
+Check parsed quantities against the stored base-unit range before multiplying. Keep exact representable
+boundaries and original invalid sign/precision/indivisibility meanings. An overflowing proposed holding
+has no guessed or wrapped preview. Range refusal preserves raw draft and original review for explicit
+same-form correction; the atomic writer still rechecks source/rights/history. Show this feedback beside
+the quantity input without a duplicate form error. After accepted native writes, a changed caption/
+placement is qualified only read-only against the exact original completed receipts/files with retired
+authority and zero new commands. Preserve original process identity on Cases; never relabel read-only
+continuation as new financial acceptance or general ANR/crash/A11Y acceptance.

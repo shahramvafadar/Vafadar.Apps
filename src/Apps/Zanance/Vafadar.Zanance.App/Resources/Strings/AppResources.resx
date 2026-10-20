@@ -8332,4 +8332,7 @@ Original XML SHA-256: {5}</value>
   <data name="AssetEvent_SavedNeedsReview" xml:space="preserve">
     <value>The holding event was saved, but a following update could not finish. Close and reopen the event to review the saved result.</value>
   </data>
+  <data name="AssetEvent_QuantityTooLarge" xml:space="preserve">
+    <value>The resulting quantity is too large. Enter a smaller quantity.</value>
+  </data>
 </root>

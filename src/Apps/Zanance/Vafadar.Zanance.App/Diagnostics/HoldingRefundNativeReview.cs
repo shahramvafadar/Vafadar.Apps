@@ -25,10 +25,10 @@ internal static class HoldingRefundNativeReview
     internal sealed record Prepared(IReadOnlyList<State> States, IReadOnlyList<object> Cases, IReadOnlyList<object> Live);
     /// <summary>Reads only the original production field feedback for retained caption observation.</summary>
     internal static string? Feedback(AssetEventEditorViewModel model, string errorKey) =>
-        errorKey == "LedgerError_RefundCurrencyMismatch" ? model.AccountError : model.FeeError;
+        errorKey == "AssetEvent_QuantityTooLarge" ? model.Error : errorKey == "LedgerError_RefundCurrencyMismatch" ? model.AccountError : model.FeeError;
     /// <summary>Rehydrates only a recorded rejected draft's field caption, never financial authority.</summary>
     internal static void SetFeedback(AssetEventEditorViewModel model, string errorKey, string value)
-    { if (errorKey == "LedgerError_RefundCurrencyMismatch") model.AccountError = value; else model.FeeError = value; }
+    { if (errorKey == "AssetEvent_QuantityTooLarge") model.Error = value; else if (errorKey == "LedgerError_RefundCurrencyMismatch") model.AccountError = value; else model.FeeError = value; }
     private sealed class Dialogs : IAppInteraction
     {
         public int Navigations { get; private set; }

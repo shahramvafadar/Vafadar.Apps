@@ -2490,3 +2490,14 @@ prediction uses widened arithmetic and only valid inputs. The native query adapt
 from the actual editor linked into App.Tests; dialog/navigation and unchanged draft fingerprints use
 existing application ports. D-409 same-writer retained-refund limits still apply. No entity/model,
 migration, portable format, key, resource, permission or dependency changes.
+
+## D-412 - Quantity input bounds preserve the existing writer
+
+Quantities keeps its original milligram/thousandth-unit Int64 storage and compatible TryParse entry
+point. An explicit range-reason overload bounds Decimal input before unit multiplication. Consumers
+use the converted out value only on success; original indivisible-fraction refusal semantics remain.
+The actual holding editor checks original proposed range for user feedback, keeps raw draft/review
+on refusal and still uses the unchanged coherent atomic writer for source/rights/history revalidation.
+No schema, compiled model, backup/import/sync format or global clamping change. Original native stores
+and accepted receipts remain read-only when changed field placement is qualified; no Main private
+key/database is extracted. See src/Apps/Zanance/docs/quality/holding-quantity-input.md.

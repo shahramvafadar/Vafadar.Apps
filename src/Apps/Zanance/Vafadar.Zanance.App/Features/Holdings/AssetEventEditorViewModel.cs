@@ -191,7 +191,14 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
     public partial string? EffectText { get; set; }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(QuantityError), nameof(FormError))]
     public partial string? Error { get; set; }
+
+    /// <summary>Gets the bounded quantity feedback beside its original input without duplicating the form error.</summary>
+    public string? QuantityError => Error == _translator["AssetEvent_QuantityTooLarge"] ? Error : null;
+
+    /// <summary>Gets other original validation feedback on its existing form surface.</summary>
+    public string? FormError => QuantityError is null ? Error : null;
 
     /// <summary>Gets source/refund currency feedback beside the original account choice.</summary>
     [ObservableProperty]
@@ -349,8 +356,11 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
     }
 
     // The quantity in base units, or null when the text is not a valid quantity of this type.
-    private long? ParsedQuantity() =>
-        _type is not null && Quantities.TryParse(QuantityText, Unit, _type, _localization.CurrentCulture, out var quantity) ? quantity : null;
+    private long? ParsedQuantity(out bool outsideRange)
+    {
+        outsideRange = false;
+        return _type is not null && Quantities.TryParse(QuantityText, Unit, _type, _localization.CurrentCulture, out var quantity, out outsideRange) ? quantity : null;
+    }
 
     // The money that moves in the account's currency: the total or price per gram/unit × quantity.
     private long? ParsedAmount(long quantity)
@@ -399,7 +409,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
     // Shows the holding at the chosen place and the money change before saving (design §7.4).
     private void UpdateEffect()
     {
-        if (_type is not { } type || Location is null || ParsedQuantity() is not { } quantity)
+        if (_type is not { } type || Location is null || ParsedQuantity(out _) is not { } quantity)
         {
             EffectText = null;
             return;
@@ -412,11 +422,15 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
         };
         var events = _otherEvents.Append(probe).ToList();
         string At(LocationChoice place) => _translator.Format("AssetEvent_At", _text.Quantity(Math.Max(0, events.Sum(e => e.EffectAt(place.Id))), type), place.Name);
-        var parts = new List<string> { At(Location) };
-        if (IsTransfer && ToLocation is { } to && to.Id != Location.Id)
+        List<string> parts;
+        try
         {
-            parts.Add(At(to));
+            // D-412: preserve checked quantity rules; an unrepresentable draft has no guessed or wrapped preview.
+            _ = HoldingsLedger.Quantity(events, type.Id, DateOnly.MaxValue);
+            parts = [At(Location)];
+            if (IsTransfer && ToLocation is { } to && to.Id != Location.Id) parts.Add(At(to));
         }
+        catch (OverflowException) { EffectText = null; return; }
 
         if (HasMoney && Account is { } account && ParsedAmount(quantity) is { } amount && ParsedFee() is { } fee)
         {
@@ -462,9 +476,9 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
 
         Error = null; AccountError = null; FeeError = null;
         var culture = _localization.CurrentCulture;
-        if (ParsedQuantity() is not { } quantity)
+        if (ParsedQuantity(out var outsideRange) is not { } quantity)
         {
-            Error = _translator[type.Dimension == AssetDimension.Count && !type.Divisible ? "AssetEvent_WholeUnits" : "AssetEvent_QuantityInvalid"];
+            Error = _translator[outsideRange ? "AssetEvent_QuantityTooLarge" : type.Dimension == AssetDimension.Count && !type.Divisible ? "AssetEvent_WholeUnits" : "AssetEvent_QuantityInvalid"];
             return;
         }
 
@@ -482,6 +496,15 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
 
         var originalDraft = Snapshot();
         var assetEvent = BuildEvent(type, quantity);
+        try
+        {
+            // This is feedback over the original review, not write authority: the atomic writer rechecks it.
+            // A refused range input must keep that original review available for explicit same-form correction.
+            var proposed = _otherEvents.Append(assetEvent).ToList();
+            _ = HoldingsLedger.Quantity(proposed, type.Id, DateOnly.MaxValue);
+            _ = HoldingsLedger.FindConflict(proposed);
+        }
+        catch (OverflowException) { Error = _translator["AssetEvent_QuantityTooLarge"]; return; }
         var entries = new List<LedgerEntry>();
         long? priced = null;
         if (HasMoney)

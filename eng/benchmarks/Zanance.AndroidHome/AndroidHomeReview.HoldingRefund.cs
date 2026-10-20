@@ -11,10 +11,11 @@ namespace Vafadar.Zanance.App;
 internal static partial class AndroidHomeReview
 {
     /// <summary>Uses original Release/AOT refunded-fee correction commands once, then retained read-only native outcome forms.</summary>
-    private static async Task<object> ReviewHoldingRefundAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct, bool feeInput = false)
+    private static async Task<object> ReviewHoldingRefundAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct, bool feeInput = false, bool quantityInput = false)
     {
         var local = services.GetRequiredService<ILocalizationService>(); var theme = services.GetRequiredService<ThemeService>();
         var originalLanguage = local.CurrentLanguage; var originalTheme = theme.Choice; var observations = new List<object>();
+        var resumeQuantity = quantityInput && Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_resume_quantity", false) == true;
         var resumeCaptions = feeInput && Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_resume_fee_captions", false) == true;
         await AwaitReimbursementFocusAsync(ct); app.OpenReviewShell(); await AwaitRootHomeAsync(ct);
         async Task SetTheme(ThemeChoice choice)
@@ -98,7 +99,9 @@ internal static partial class AndroidHomeReview
         try
         {
             await SetTheme(ThemeChoice.Light); await SetLanguageAsync(app, local, "en", ct);
-            prepared = resumeCaptions ? await ContinueFeeInputCaptionsAsync(services, root, comparison, ct)
+            prepared = resumeQuantity ? await ContinueOriginalQuantityCaptionsAsync(services, root, ct)
+                : quantityInput ? await HoldingQuantityNativeReview.PrepareAsync(services, Path.Combine(root, "financial"), Show, Invoke, Close, Observe, ct)
+                : resumeCaptions ? await ContinueFeeInputCaptionsAsync(services, root, comparison, ct)
                 : await HoldingRefundNativeReview.PrepareAsync(services, Path.Combine(root, "financial"), Show, Invoke, Close, Observe, ct, feeInput);
             foreach (var language in new[] { "en", "fa", "de" })
             foreach (var choice in new[] { ThemeChoice.Light, ThemeChoice.Dark })
@@ -110,6 +113,10 @@ internal static partial class AndroidHomeReview
                     HoldingRefundNativeReview.SetFeedback(state.Model, state.ErrorKey, services.GetRequiredService<Translator>()[state.ErrorKey]);
                     var page = new AssetEventEditorPage(state.Model); await Show(page);
                     var label = ReimbursementViews(page).OfType<Label>().Single(item => item.Text == HoldingRefundNativeReview.Feedback(state.Model, state.ErrorKey) && Visible(item));
+                    if (quantityInput && (!ReferenceEquals(label, page.FindByName<Label>("QuantityRangeFeedback"))
+                        || !ReferenceEquals(label.Parent, page.FindByName<Entry>("QuantityInput").Parent)
+                        || state.Model.QuantityError != state.Model.Error || state.Model.FormError is not null))
+                        throw new ReviewCheckException("Original quantity error is not beside its input.");
                     var scroll = ReimbursementViews(page).OfType<ScrollView>().Single(item => item.Orientation == ScrollOrientation.Vertical);
                     await scroll.ScrollToAsync(label, ScrollToPosition.MakeVisible, false); await Task.Delay(200, ct);
                     var deadline = DateTime.UtcNow.AddSeconds(20);
@@ -145,9 +152,9 @@ internal static partial class AndroidHomeReview
             await SetTheme(originalTheme); await SetLanguageAsync(app, local, originalLanguage.CultureName, ct);
         }
         return new { Comparison = comparison, Cases = prepared!.Cases, Live = prepared.Live, Observations = observations, OriginalThemeAndLanguageRestored = true,
-            NativeButtonsInvoked = true,
+            NativeButtonsInvoked = !resumeQuantity, OriginalQuantityReceiptContinuation = resumeQuantity, QuantityCommandsInvokedByContinuation = resumeQuantity ? 0 : (int?)null,
             OriginalFinancialReceiptContinuation = resumeCaptions, FinancialCommandsInvokedByContinuation = resumeCaptions ? 0 : (int?)null,
             OriginalFourLiveObservationsPrecedeAcceptedReceipts = resumeCaptions,
-            ReadOnlyPresentationAfterTwoFinancialCases = true, MainPackageTouched = false, SystemSettingsChanged = false };
+            ReadOnlyPresentationAfterTwoFinancialCases = !quantityInput, ReadOnlyPresentationAfterTwoQuantityCases = quantityInput, MainPackageTouched = false, SystemSettingsChanged = false };
     }
 }

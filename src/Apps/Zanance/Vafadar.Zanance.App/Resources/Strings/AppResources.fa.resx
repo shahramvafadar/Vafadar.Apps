@@ -8303,4 +8303,7 @@
   <data name="AssetEvent_SavedNeedsReview" xml:space="preserve">
     <value>رویداد دارایی ذخیره شد، اما به‌روزرسانی بعدی کامل نشد. رویداد را ببندید و دوباره باز کنید تا نتیجهٔ ذخیره‌شده را بررسی کنید.</value>
   </data>
+  <data name="AssetEvent_QuantityTooLarge" xml:space="preserve">
+    <value>مقدار نهایی بیش از حد بزرگ است. مقدار کوچک‌تری وارد کنید.</value>
+  </data>
 </root>

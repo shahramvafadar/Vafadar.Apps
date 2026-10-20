@@ -7565,3 +7565,25 @@ full-suite replay, schema/model/resource/permission/provider or Main private-dat
 overall, other holding variants, D-386 runtime/A11Y, iOS/external/release and hosted exact-head CI remain.
 
 See [original evidence and limits](quality/physical-holding-fee-lifecycle.md).
+
+## D-412 - Original holding quantity range input and field feedback
+
+Three original parser and two actual editor/SQLite regressions reproduce Decimal base-unit conversion
+and checked quantity-preview overflows. Check the original number against Int64/factor before
+multiplication, distinguish range refusal from ordinary invalid quantities, omit an unrepresentable
+preview and refuse the original proposed range before financial-entry construction. Keep raw drafts,
+original review and explicit same-form correction; preserve the existing checked domain/atomic writer.
+The new six-language feedback appears beside Quantity without a duplicate form message.
+
+Sixteen distinct new cases and21 existing resource checks pass in retained selective cohorts; no
+unchanged full suite or D-408..411 accepted money/matrix replay. Two original native refusal/correction
+cases per independent Windows and Release/AOT Android preserve Cash874.75, source money/refund/price
+and basis25 while each valid nonfinancial correction adds2units to the original1. Four original live
+observations per platform precede only read-only presentation. After field placement changes, final
+Windows18 and Android6 caption contexts reuse the exact original accepted receipts/files with zero
+new commands; original Cases retain their original PID and Live is empty. Strict builds, complete
+signed offline APK and no-reset emulator Home0/My account, OS and hash restoration pass. No Samsung
+input, Main private database/key, schema/model/storage scale or provider change. Broader finance/
+holding variants, D-386 general runtime/A11Y, physical/iOS/external/release and exact-head CI remain.
+
+See [original evidence and limits](quality/holding-quantity-input.md).

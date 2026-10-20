@@ -1807,3 +1807,20 @@ in eng/benchmarks/Zanance.AndroidHome/README.md; retain original seeded rows and
 Independent modal failures are not physical acceptance. Do not replay successful finance or unchanged
 full suites; validate the complete signed offline candidate and restore original emulator/phone
 Main, profiles, public rows and OS after the scoped original lifecycle.
+
+## D-412 - Original quantity refusal and field-caption continuation
+
+`Run-StoreDrafts.ps1 -HoldingQuantityInputReview` creates two fresh owned original SQLite scenarios,
+invokes each refused/corrected holding Save once, preserves original money/refund/price and captures
+four live plus18 read-only normal-scale field-caption contexts. The original D-412 preliminary run
+5b014fc0293b47579399fb9d7d5e94cf completed before field placement changed. Only the new field contexts
+continue with `-HoldingQuantityContinuation <original-completed-run>` in a fresh independent run;
+the exact original completed proof and accepted/refused files are required. Its18 captures retain
+original Cases/PID, Live empty and zero commands; never reseed or replay accepted quantities.
+
+The independent Android phase is holding-quantity-input. Its completed-result continuation uses
+review_resume_quantity=true, the same review_run, a fresh review_pass and original successful
+review_baseline. Read exact original stores/receipts before/after, retire the raw presentation and
+check named field/entry placement, complete native text/viewport and actual modal focus. A timeout
+observes the same original process. Verify complete signed offline packaging and exact Main/OS/hash
+restoration; physical-device and broad runtime gates remain separate.

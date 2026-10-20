@@ -2078,3 +2078,13 @@ signed offline APK and emulator restoration pass. Independent Android modal Canc
 its original observer/route failures remain retained. No unrelated successful tests or full suite are
 replayed and the managed unit count is unchanged. Broader QA-01, D-386 runtime/A11Y, iOS/provider/store,
 expert/tax, exact-head CI and publication gates remain separate. See quality/physical-holding-fee-lifecycle.md.
+
+## D-412 - Scoped original holding quantity input
+
+Selective16 new actual-source cases,21 resource checks, original two native refused/corrected forms
+per Windows/Release AOT Android and final field-adjacent read-only caption contexts pass. Raw drafts,
+review, original money/refund/basis/price and known accepted state remain preserved. Strict builds,
+complete signed offline candidate and no-reset emulator restoration pass. Accepted cases are not
+replayed for the changed placement; no Main private data/key or Samsung input. Broader finance,
+D-386 general runtime/A11Y, physical/iOS/provider/store/release and exact-head CI gates remain separate.
+See quality/holding-quantity-input.md.

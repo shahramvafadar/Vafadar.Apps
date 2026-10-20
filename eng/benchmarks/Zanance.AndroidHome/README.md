@@ -600,3 +600,16 @@ equal to its original failed comparison. The original failure and exactly four p
 states are required; no seed or writer is invoked. Preserve failed modal/route attempts and their
 original data. A report timeout never authorizes a restart or accepted-money replay. Final receipts
 are24 read-only contexts, FinancialSavesInvoked0 and exact original theme/language restoration.
+
+## D-412 - Original quantity input and changed field placement
+
+Fresh holding-quantity-input uses two actual editor/SQLite original range refusals and same-form
+nonfinancial corrections. Four original native live observations preserve original source money,
+fee/refund, basis and price; later captions have retired authority. Final field-adjacent continuation
+requires review_resume_quantity=true, the same original review_run, a fresh comparison and the
+original successful review_baseline. It verifies the original completed result/accepted/refused files,
+reads those unchanged stores, rehydrates the exact original raw draft and invokes no writer/seed.
+Cases retain the original process identity; Live is empty, NativeButtonsInvoked=false and
+QuantityCommandsInvokedByContinuation=0. Six actual native field-caption contexts check the named
+quantity label/input, absence of duplicate form feedback, complete text/geometry and own modal focus.
+Do not turn these read-only results into new financial/physical/general runtime acceptance.

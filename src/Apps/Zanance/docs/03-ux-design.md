@@ -1957,3 +1957,14 @@ its fee remains grouped in holding history. Show one refund action, preserve its
 name/native target and existing command, and never expose a principal refund. The original Samsung
 fee action now opens/saves its linked refund;26 Windows and24 final Android native contexts qualify
 the changed surface. See quality/physical-holding-fee-lifecycle.md for scope and retained failures.
+
+## D-412 - Quantity range feedback beside its field
+
+A too-large raw or resulting holding quantity uses the existing Error value routed through QuantityError
+immediately below QuantityInput. FormError suppresses that same range message on the general surface;
+other original form feedback retains its existing behavior. Keep raw input and enabled explicit
+correction after refusal, omit wrapped/guessed effects, and retire Save after known acceptance.
+Final18 Windows and6 Android field-caption contexts read original retired drafts after the original
+native same-form corrections; no accepted quantity or money is replayed. This is normal-scale input
+qualification, not general live locale-switch, OS200%, spoken-reader or D-386 stability acceptance.
+See quality/holding-quantity-input.md.

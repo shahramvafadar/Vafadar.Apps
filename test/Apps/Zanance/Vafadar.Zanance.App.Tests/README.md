@@ -73,3 +73,13 @@ Seventeen new AT-410 cases pass in retained selective cohorts: invalid original 
 explicit removal/positive fee semantics, six regional drafts, dirty Cancel choices, nonfinancial
 hidden fee and no-wrapped/guessed account prediction. No duplicated money algorithm or fake control.
 Original native rendering/commands and complete APK/restore evidence live in quality/holding-fee-input.md.
+
+## D-412 - Original holding quantity refusal
+
+Two new AT-412 actual AssetEventEditorViewModel/SQLite cases first reproduce raw Decimal conversion
+and original holding-total preview overflows. They retain the raw note/quantity and exact original
+rows/review after refusal, then accept one explicit same-form smaller opening without ledger money.
+Core adds14 distinct parser/range/boundary/ordinary-invalid cases;21 existing resource checks qualify
+the new six-language message. These retained selective cohorts are not a new full-suite run. Native
+field placement and original quantity-correction/source-money preservation are separately qualified
+in quality/holding-quantity-input.md; no fake MAUI controls or duplicate application algorithm.

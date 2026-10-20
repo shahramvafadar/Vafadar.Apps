@@ -8303,4 +8303,7 @@ Original-XML SHA-256: {5}</value>
   <data name="AssetEvent_SavedNeedsReview" xml:space="preserve">
     <value>Das Bestandsereignis wurde gespeichert, aber eine anschließende Aktualisierung konnte nicht abgeschlossen werden. Schließen und öffnen Sie das Ereignis erneut, um das gespeicherte Ergebnis zu prüfen.</value>
   </data>
+  <data name="AssetEvent_QuantityTooLarge" xml:space="preserve">
+    <value>Die resultierende Menge ist zu groß. Gib eine kleinere Menge ein.</value>
+  </data>
 </root>
