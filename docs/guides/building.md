@@ -1858,3 +1858,14 @@ accepted files. The independent Android `holding-archive` phase has the same ori
 observe its exact live PID and comparison through Read-ReviewReport.ps1. A caption continuation uses
 `review_archive_captions=true` with the original baseline. Never replay accepted archive/seeds for
 observer repair. The explicit confirmation port does not claim native OS-dialog acceptance.
+
+
+## Original type form qualification (D-416)
+
+`eng/scripts/Run-StoreDrafts.ps1 -HoldingTypeReview` uses one independent actual financial file for
+original stale-source refusal, accepted edit and accepted creation, then54 permanently retired native
+caption contexts. `-HoldingTypeContinuation <original-run>` requires its exact complete financial
+receipt/file/digest and invokes zero financial commands. The independent Android `holding-type`
+phase has the same original boundary; observe the exact original PID/pass. Its caption-only
+continuation uses `review_type_captions=true` with the original baseline. Preserve accepted Cases,
+PIDs, raw fields, failures and files; never replay original seeds/commands to repair an observer.

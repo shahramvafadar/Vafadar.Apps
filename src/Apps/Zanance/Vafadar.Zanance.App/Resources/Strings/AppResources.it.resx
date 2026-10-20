@@ -8337,4 +8337,10 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Holding_ArchiveSavedRefresh" xml:space="preserve">
     <value>Il bene è stato archiviato. La cronologia è conservata; aggiorna i dettagli se non sono stati aggiornati.</value>
   </data>
+  <data name="AssetType_SourceChanged" xml:space="preserve">
+    <value>Il tipo di bene originale o la sua cronologia è cambiato. Non è stato salvato nulla. I dati inseriti sono conservati; chiudi e riapri il modulo per verificare i dettagli attuali.</value>
+  </data>
+  <data name="AssetType_SavedNeedsReview" xml:space="preserve">
+    <value>Il tipo di bene è stato salvato, ma l’aggiornamento o il ritorno successivo non è stato completato. Chiudi il modulo e verifica il tipo salvato; non serve salvarlo di nuovo.</value>
+  </data>
 </root>

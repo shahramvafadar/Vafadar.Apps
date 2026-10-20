@@ -8377,4 +8377,10 @@ Original XML SHA-256: {5}</value>
   <data name="Holding_ArchiveSavedRefresh" xml:space="preserve">
     <value>The holding was archived. Its history is preserved; refresh the details if they could not be updated.</value>
   </data>
+  <data name="AssetType_SourceChanged" xml:space="preserve">
+    <value>The original holding type or its history changed. Nothing was saved. Your input is kept; close and reopen this form to review the current details.</value>
+  </data>
+  <data name="AssetType_SavedNeedsReview" xml:space="preserve">
+    <value>The holding type was saved, but a following update or return could not finish. Close this form and review the saved type; saving again is not needed.</value>
+  </data>
 </root>

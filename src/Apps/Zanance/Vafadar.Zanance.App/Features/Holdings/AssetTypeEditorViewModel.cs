@@ -5,6 +5,8 @@ using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.Core.Holdings;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Data;
+using Vafadar.Zanance.Data.Commerce;
+using Vafadar.Zanance.App.Interaction;
 
 namespace Vafadar.Zanance.App.Features.Holdings;
 
@@ -13,7 +15,7 @@ namespace Vafadar.Zanance.App.Features.Holdings;
 /// and divisibility of counted items, and the currency of its prices. Quantities add up only within one type, so 18 k
 /// and 24 k gold are two types. After a new type the user records what they already own (an opening holding).
 /// </summary>
-public sealed partial class AssetTypeEditorViewModel : ViewModelBase, IQueryAttributable, Presentation.IUnsavedChanges
+public sealed partial class AssetTypeEditorViewModel : ViewModelBase, Presentation.IUnsavedChanges
 {
     private static readonly Metal[] Metals = [Metal.Gold, Metal.Silver, Metal.Platinum, Metal.Palladium, Metal.Other, Metal.None];
 
@@ -22,9 +24,37 @@ public sealed partial class AssetTypeEditorViewModel : ViewModelBase, IQueryAttr
     private readonly Translator _translator;
     private readonly ILocalizationService _localization;
     private AssetType? _existing;
-
-    public AssetTypeEditorViewModel(HoldingStore holdings, ZananceStore store, Translator translator, ILocalizationService localization)
+    private readonly IAppInteraction _interaction;
+    private HoldingTypeReview? _review;
+    private Guid _id;
+    private long _revision;
+    private bool _initialized, _loadRequested;
+    /// <summary>Gets whether the original type is known to have been saved, even after a following effect fails.</summary>
+    public bool Committed { get; private set; }
+    /// <summary>Gets the stable original saved identity without creating another type.</summary>
+    public Guid? AcceptedId => Committed ? _id : null;
+    /// <summary>Gets whether the current original form may submit.</summary>
+    public bool CanSave => !IsBusy && !Committed && _review is not null;
+    /// <summary>Gets whether raw fields remain editable without changing original source authority.</summary>
+    public bool CanEdit => _initialized && !IsBusy && !Committed;
+    /// <summary>Gets the actual close/cancel caption for this original form.</summary>
+    public string CloseText => _translator[Committed ? "Common_Close" : "Common_Cancel"];
+#if DEBUG || ZANANCE_INDEPENDENT_HOME_REVIEW
+    /// <summary>Displays a completed original native caption with permanently retired write authority.</summary>
+    internal void ShowRetainedOutcome(string key, bool committed, bool isNew)
+    { Committed = committed; RetireReview(); Title = _translator[isNew ? "AssetType_NewTitle" : "AssetType_EditTitle"]; Error = _translator[key]; }
+#endif
+    private void PublishState()
     {
+        OnPropertyChanged(nameof(CanSave)); OnPropertyChanged(nameof(CanEdit)); OnPropertyChanged(nameof(CloseText));
+        OnPropertyChanged(nameof(AcceptedId)); SaveCommand.NotifyCanExecuteChanged();
+    }
+    /// <summary>Retires departed continuations without replacing raw input or a known saved identity.</summary>
+    public void RetireReview() { Interlocked.Increment(ref _revision); _review = null; PublishState(); }
+
+    public AssetTypeEditorViewModel(HoldingStore holdings, ZananceStore store, Translator translator, ILocalizationService localization, IAppInteraction interaction)
+    {
+        _interaction = interaction;
         _holdings = holdings;
         _store = store;
         _translator = translator;
@@ -100,33 +130,47 @@ public sealed partial class AssetTypeEditorViewModel : ViewModelBase, IQueryAttr
     [ObservableProperty]
     public partial string? Error { get; set; }
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
-
-    private async Task ApplyQueryAsync(IDictionary<string, object> query)
+    /// <summary>Loads one original type or a stable new identity; empty native redelivery retains the current form.</summary>
+    public async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
-        CurrencyCode = (await _store.GetSettingsAsync()).DefaultCurrencyCode;
-        if (query.TryGetValue("id", out var value) && value is Guid id && (await _holdings.GetTypesAsync()).FirstOrDefault(t => t.Id == id) is { } type)
+        if (_loadRequested || IsBusy) { query.Clear(); return; }
+        _loadRequested = true;
+        var editing = query.TryGetValue("id", out var value) && value is Guid;
+        _id = editing ? (Guid)value! : Guid.NewGuid(); query.Clear();
+        var revision = ++_revision; IsBusy = true; PublishState();
+        try
         {
-            _existing = type;
-            Title = _translator["AssetType_EditTitle"];
-            Name = type.Name;
-            KindIndex = (int)type.Kind;
-            DimensionIndex = (int)type.Dimension;
-            MetalIndex = Math.Max(0, Array.IndexOf(Metals, type.Metal));
-            var common = Purity.Common.ToList().FindIndex(p => p.Per10000 == type.PurityPer10000);
-            PurityIndex = common >= 0 ? common : Purity.Common.Count;
-            PurityText = common < 0 && type.PurityPer10000 is { } purity ? (purity / 10m).ToString("0.#", _localization.CurrentCulture) : string.Empty;
-            UnitWeightText = type.UnitWeightMg is { } weight ? (weight / 1000m).ToString("0.###", _localization.CurrentCulture) : string.Empty;
-            CountUnitName = type.CountUnitName ?? string.Empty;
-            Divisible = type.Divisible;
-            CurrencyCode = type.PriceCurrencyCode;
-            Note = type.Note ?? string.Empty;
-            DimensionLocked = (await _holdings.GetEventsAsync(type.Id)).Count > 0;
+            var currency = (await _store.GetSettingsAsync()).DefaultCurrencyCode;
+            var review = await _holdings.ReadTypeReviewAsync(_id, editing);
+            if (revision != _revision) return;
+            _review = review; CurrencyCode = currency;
+            if (review.Inputs.Type is { } type)
+            {
+                _existing = type;
+                Title = _translator["AssetType_EditTitle"];
+                Name = type.Name;
+                KindIndex = (int)type.Kind;
+                DimensionIndex = (int)type.Dimension;
+                MetalIndex = Math.Max(0, Array.IndexOf(Metals, type.Metal));
+                var common = Purity.Common.ToList().FindIndex(p => p.Per10000 == type.PurityPer10000);
+                PurityIndex = common >= 0 ? common : Purity.Common.Count;
+                PurityText = common < 0 && type.PurityPer10000 is { } purity ? (purity / 10m).ToString("0.#", _localization.CurrentCulture) : string.Empty;
+                UnitWeightText = type.UnitWeightMg is { } weight ? (weight / 1000m).ToString("0.###", _localization.CurrentCulture) : string.Empty;
+                CountUnitName = type.CountUnitName ?? string.Empty;
+                Divisible = type.Divisible;
+                CurrencyCode = type.PriceCurrencyCode;
+                Note = type.Note ?? string.Empty;
+                DimensionLocked = review.Inputs.Events.Count > 0;
+            }
+            _initialized = true; _snapshot = Snapshot(); Error = null;
         }
-
-        query.Clear();
-        _snapshot = Snapshot();
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            RetireReview(); Error = exception is HoldingEventReviewChangedException ? _translator["AssetType_SourceChanged"]
+                : Presentation.CommercialFailureMessage.OrFallback(exception, _translator, "Common_SaveFailed", draftKept: true);
+        }
+        finally { IsBusy = false; PublishState(); }
     }
 
     partial void OnKindIndexChanged(int value)
@@ -145,23 +189,23 @@ public sealed partial class AssetTypeEditorViewModel : ViewModelBase, IQueryAttr
 
     partial void OnPurityIndexChanged(int value) => IsOtherPurity = value >= Purity.Common.Count;
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
         // A second tap while saving would create the type twice.
-        if (IsBusy)
+        if (!CanSave)
         {
             return;
         }
 
-        IsBusy = true;
+        IsBusy = true; PublishState();
         try
         {
             await SaveCoreAsync();
         }
         finally
         {
-            IsBusy = false;
+            IsBusy = false; PublishState();
         }
     }
 
@@ -204,7 +248,10 @@ public sealed partial class AssetTypeEditorViewModel : ViewModelBase, IQueryAttr
             unitWeight = weight;
         }
 
-        var type = _existing ?? new AssetType { Name = Name.Trim(), PriceCurrencyCode = CurrencyCode };
+        var review = _review ?? throw new HoldingEventReviewChangedException("Original type editor review is unavailable.");
+        var revision = _revision; var originalDraft = Snapshot();
+        var type = _existing is { } original ? HoldingTypeReview.Copy(original)
+            : new AssetType(_id) { Name = Name.Trim(), PriceCurrencyCode = CurrencyCode };
         type.Name = Name.Trim();
         type.Kind = (AssetKind)KindIndex;
         type.Dimension = (AssetDimension)DimensionIndex;
@@ -215,39 +262,50 @@ public sealed partial class AssetTypeEditorViewModel : ViewModelBase, IQueryAttr
         type.Divisible = IsCount && Divisible;
         type.PriceCurrencyCode = CurrencyCode;
         type.Note = string.IsNullOrWhiteSpace(Note) ? null : Note.Trim();
-        if (!await _holdings.SaveTypeAsync(type))
+        try
         {
-            Error = _translator["AssetType_DimensionLocked"];
-            return;
-        }
-
-        // From now on the page edits the saved type, so nothing can add it a second time.
-        var isNew = _existing is null;
-        _existing = type;
-
-        // A new type: record what is already owned next – no money is taken from an account (AT39).
-        if (isNew)
-        {
-            await Shell.Current.GoToAsync($"../{AppShell.AssetEventEditorRoute}", new Dictionary<string, object>
+            if (!await _holdings.SaveReviewedTypeAsync(review, type,
+                () => revision == _revision && ReferenceEquals(_review, review) && originalDraft == Snapshot()))
             {
-                ["type"] = type.Id,
-                ["kind"] = nameof(AssetEventKind.Opening),
-            });
-            return;
+                Error = _translator["AssetType_DimensionLocked"]; return;
+            }
+            Committed = true;
         }
-
-        await Shell.Current.GoToAsync("..");
+        catch (CommittedWriteNotificationException) { Committed = true; Error = _translator["AssetType_SavedNeedsReview"]; }
+        catch (HoldingEventReviewChangedException) { RetireReview(); Error = _translator["AssetType_SourceChanged"]; }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { Error = Presentation.CommercialFailureMessage.OrFallback(exception, _translator, "Common_SaveFailed", draftKept: true); }
+        finally
+        {
+            if (Committed) { _snapshot = Snapshot(); RetireReview(); }
+            PublishState();
+        }
+        if (!Committed || Error is not null) return;
+        try
+        {
+            // A new saved identity moves once to opening quantity; a failed return never replays its creation.
+            if (!review.Editing)
+                await _interaction.NavigateAsync($"../{AppRoutes.AssetEventEditorRoute}", new Dictionary<string, object>
+                { ["type"] = _id, ["kind"] = nameof(AssetEventKind.Opening) });
+            else await _interaction.NavigateAsync("..");
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { Error = _translator["AssetType_SavedNeedsReview"]; }
     }
 
     [RelayCommand]
-    private Task CancelAsync() => Presentation.UnsavedChanges.LeaveAsync(this);
+    private async Task CancelAsync()
+    {
+        if (IsDirty && !await _interaction.ConfirmAsync(_translator["Common_DiscardTitle"], _translator["Common_DiscardMessage"],
+            _translator["Common_Discard"], _translator["Common_KeepEditing"])) return;
+        await _interaction.NavigateAsync("..");
+    }
 
     // The input as it was loaded or saved; leaving with a change asks first (CR12).
     private string? _snapshot;
 
     /// <inheritdoc />
-    public bool IsDirty => _snapshot is not null && Snapshot() != _snapshot;
+    public bool IsDirty => !Committed && _snapshot is not null && Snapshot() != _snapshot;
 
-    private string Snapshot() => Presentation.UnsavedChanges.Fingerprint(
+    private string Snapshot() => Presentation.DraftFingerprint.Create(
         Name, KindIndex, DimensionIndex, MetalIndex, PurityIndex, PurityText, UnitWeightText, CountUnitName, Divisible, CurrencyCode, Note);
 }

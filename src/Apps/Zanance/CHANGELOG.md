@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Preserve original holding type edits and saved identity (D-416)
+
+- Refuse an old type edit after its original details or history change; keep typed input for review.
+- Preserve a successfully created type after a following update fails, without creating it twice.
+- Keep failed dimension/field validation editable and close a saved form to another Save.
+
 ### Preserve current holding details when archiving (D-415)
 
 - Refuse an old archive confirmation after holding details change; refresh before confirming again.

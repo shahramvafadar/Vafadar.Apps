@@ -15,14 +15,14 @@
         <!-- D-98: whole title/action groups wrap at native text scale without adding a second modal header. -->
         <Grid Padding="8,8" BackgroundColor="{DynamicResource CardBackground}">
             <FlexLayout x:Name="ModalHeaderLayout" Direction="Row" Wrap="Wrap" AlignItems="Center">
-                <p:WrappingAction Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" FlexLayout.Shrink="0" Margin="4,0" Appearance="Text" />
+                <p:WrappingAction Text="{Binding CloseText}" Command="{Binding CancelCommand}" FlexLayout.Shrink="0" Margin="4,0" Appearance="Text" />
                 <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" FlexLayout.Shrink="0" FlexLayout.Grow="1" MaximumWidthRequest="{Binding Width, Source={x:Reference ModalHeaderLayout}, x:DataType=FlexLayout}" />
             </FlexLayout>
         </Grid>
 
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="16" Spacing="8">
-                <Border Style="{StaticResource Card}">
+                <Border IsEnabled="{Binding CanEdit}" Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{v:Translate AssetType_Name}" Style="{StaticResource FieldLabel}" Margin="0" />
                         <Entry Text="{Binding Name}" Placeholder="{v:Translate AssetType_NamePlaceholder}" MaxLength="100" SemanticProperties.Description="{v:Translate AssetType_Name}" />
@@ -41,7 +41,7 @@
                 </Border>
 
                 <!-- Metal and purity (ZEX-AS03): without purity no fine-metal amount is shown -->
-                <Border Style="{StaticResource Card}" IsVisible="{Binding HasMetal}">
+                <Border IsEnabled="{Binding CanEdit}" Style="{StaticResource Card}" IsVisible="{Binding HasMetal}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{v:Translate AssetType_Metal}" Style="{StaticResource FieldLabel}" Margin="0" />
                         <v:ChoiceChips ItemsSource="{Binding MetalNames}" SelectedIndex="{Binding MetalIndex}" />
@@ -56,7 +56,7 @@
                 </Border>
 
                 <!-- Counted items: unit name, weight of one unit (derived weight only), fractions -->
-                <Border Style="{StaticResource Card}" IsVisible="{Binding IsCount}">
+                <Border IsEnabled="{Binding CanEdit}" Style="{StaticResource Card}" IsVisible="{Binding IsCount}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{v:Translate AssetType_CountUnit}" Style="{StaticResource FieldLabel}" Margin="0" />
                         <Entry Text="{Binding CountUnitName}" Placeholder="{v:Translate AssetType_CountUnitPlaceholder}" MaxLength="40" SemanticProperties.Description="{v:Translate AssetType_CountUnit}" />
@@ -69,7 +69,7 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <Border Style="{StaticResource Card}">
+                <Border IsEnabled="{Binding CanEdit}" Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{v:Translate AssetType_PriceCurrency}" Style="{StaticResource FieldLabel}" Margin="0" />
                         <Border Style="{StaticResource FieldBox}">
@@ -81,10 +81,10 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+                <Label x:Name="AssetTypeFeedback" Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
             </VerticalStackLayout>
         </ScrollView>
 
-        <p:WrappingAction Grid.Row="2" Margin="16" Appearance="Primary" Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding IsNotBusy}" />
+        <p:WrappingAction Grid.Row="2" Margin="16" Appearance="Primary" Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding CanSave}" />
     </Grid>
 </ContentPage>

@@ -8348,4 +8348,10 @@ Original-XML SHA-256: {5}</value>
   <data name="Holding_ArchiveSavedRefresh" xml:space="preserve">
     <value>Der Bestand wurde archiviert. Sein Verlauf bleibt erhalten. Aktualisiere die Details, falls sie nicht erneuert wurden.</value>
   </data>
+  <data name="AssetType_SourceChanged" xml:space="preserve">
+    <value>Der ursprüngliche Bestandstyp oder sein Verlauf wurde geändert. Nichts wurde gespeichert. Deine Eingabe bleibt erhalten; schließe das Formular und öffne es erneut, um die aktuellen Details zu prüfen.</value>
+  </data>
+  <data name="AssetType_SavedNeedsReview" xml:space="preserve">
+    <value>Der Bestandstyp wurde gespeichert, aber die anschließende Aktualisierung oder Rückkehr wurde nicht abgeschlossen. Schließe das Formular und prüfe den gespeicherten Typ; erneutes Speichern ist nicht nötig.</value>
+  </data>
 </root>

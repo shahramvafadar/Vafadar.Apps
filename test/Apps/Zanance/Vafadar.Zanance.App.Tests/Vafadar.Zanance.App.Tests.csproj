@@ -2,6 +2,7 @@
   <ItemGroup>
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Holdings/HoldingHistoryEditor.cs" Link="Application/HoldingHistoryEditor.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Holdings/HoldingArchiveEditor.cs" Link="Application/HoldingArchiveEditor.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Holdings/AssetTypeEditorViewModel.cs" Link="Application/AssetTypeEditorViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Holdings/HoldingPriceEditor.cs" Link="Application/HoldingPriceEditor.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Holdings/AssetEventEditorViewModel.cs" Link="Application/AssetEventEditorViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Holdings/HoldingEventEditorSession.cs" Link="Application/HoldingEventEditorSession.cs" />

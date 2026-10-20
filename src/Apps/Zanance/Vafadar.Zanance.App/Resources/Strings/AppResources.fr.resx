@@ -8325,4 +8325,10 @@ SHA-256 du XML original : {5}</value>
   <data name="Holding_ArchiveSavedRefresh" xml:space="preserve">
     <value>L’actif a été archivé. Son historique est conservé ; actualisez les détails s’ils n’ont pas été mis à jour.</value>
   </data>
+  <data name="AssetType_SourceChanged" xml:space="preserve">
+    <value>Le type d’actif d’origine ou son historique a changé. Rien n’a été enregistré. Votre saisie est conservée ; fermez puis rouvrez ce formulaire pour vérifier les détails actuels.</value>
+  </data>
+  <data name="AssetType_SavedNeedsReview" xml:space="preserve">
+    <value>Le type d’actif a été enregistré, mais la mise à jour ou le retour suivant n’a pas abouti. Fermez ce formulaire et vérifiez le type enregistré ; il est inutile de l’enregistrer à nouveau.</value>
+  </data>
 </root>

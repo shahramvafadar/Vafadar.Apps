@@ -7478,3 +7478,18 @@ rearm a stale or accepted archive. Thirteen new actual app/SQLite cases pass in 
 cohorts, without repeating accepted flows;23 resource checks also pass. Original Windows/Android
 Cancel/refusal/archive and read-only captions preserve data. Strict builds, complete signed offline
 APK and no-reset Main/OS restoration pass. No schema/model, new permission/provider or release claim. Evidence and remaining platform gates: [original archive review](../quality/holding-archive.md).
+
+
+## D-416 - Original type editor creation, edit and accepted identity
+
+The actual type form now owns one coherent actual-file original type/history/price review, or one
+stable absent new identity. Recheck fresh rights, immutable source and exact pending raw draft in
+the existing writer; copy before mutation and preserve noneditable metadata and dimension rules.
+A missing original row never becomes a new form on empty query redelivery. Keep invalid/raw input
+for correction, retire stale/departed authority, and require close/reopen after changed source.
+Known creation/edit acceptance consumes the original form before notification or navigation; a failed
+next step cannot create a duplicate or repeat Save. Nineteen new actual app/SQLite cases pass in two
+selective cohorts, without replaying accepted cases;23 resource checks also pass. Original Windows/
+Android refusal/edit/create and retired captions preserve data. Strict builds, complete signed offline
+APK and no-reset Main/OS restoration pass; no schema/model, new permission/provider or release claim. See
+[original editor evidence and remaining gates](../quality/holding-type-editor.md).

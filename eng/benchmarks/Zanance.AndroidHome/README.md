@@ -653,3 +653,15 @@ themes. `review_archive_captions=true` plus the original review_baseline continu
 financial evidence, with zero financial commands/seeds. Original observations use real native
 PerformClick/enablement/focus; confirmation is an explicit effect port. Preserve original PIDs/Cases,
 failures and files. See application quality/holding-archive.md.
+
+
+## Original holding type form (D-416)
+
+Phase `holding-type` owns one fresh run/pass and original actual financial file. Native Save refuses
+an old raw rename/note after a concurrent note control. One reopened original edit retains its known
+acceptance through notification failure; one new coin type retains its stable identity and complete
+metadata through return failure. All non-type tables and Cash849.50 remain unchanged. The completed
+financial receipt/digest stores only original detached raw caption states. Read-only continuation
+requires `review_type_captions=true` and that original baseline, without replaying accepted commands,
+seeds or writer authority. Native Save/feedback/enablement/focus are checked separately from explicit
+navigation ports; main private data/keys and phone input are not used. See application quality/holding-type-editor.md.

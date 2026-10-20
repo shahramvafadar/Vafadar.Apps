@@ -109,3 +109,10 @@ and explicit confirmation/navigation ports. Thirteen new cases cover original so
 cancel/departure, immutable/file/consumed authority, SQL rollback, known notification/return outcomes
 and missing/failed explicit refresh. Do not repeat accepted financial cases to repair an observer.
 Native source/XAML/button/feedback checks remain separate; see quality/holding-archive.md.
+
+
+HoldingTypeFlowTests compiles the actual platform-independent AssetTypeEditorViewModel with real
+SQLite/localization and explicit native-effect ports. Nineteen new cases cover original coherent
+source, stable new identity, complete type metadata, raw validation/correction, dimension refusal,
+SQL retry/retirement, missing-row redelivery, known accepted outcomes and discard. Counts reflect
+retained selective cohorts, not a full-suite replay. Native source/XAML/Save/feedback remain separate.

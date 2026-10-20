@@ -3045,3 +3045,14 @@ tracked entity; never resubmit a retained whole-type object. Consume known accep
 notification/return and preserve the separate raw-price draft. Missing/failed Refresh cannot rearm
 stale or accepted authority. Native continuation uses exact completed receipts/files read-only and
 never replays an accepted archive or seed. Keep D-386 priorities and separate type-editor/device gates.
+
+
+## D-416 - Original type form identity and known acceptance
+
+Type creation owns one stable absent identity; edit owns the original actual-file type/history/price
+packet. Copy before mutation and recheck fresh rights, original source and pending raw input under
+the writer. Keep noneditable metadata and existing measurement rules. Empty query redelivery retains
+the original draft/identity, including a missing-row refusal; never reinterpret it as creation.
+Retire stale/departed authority without replacing raw input. Known Save consumes the form before
+notification/navigation and leaves a failed following step closed to resubmission. Read-only native
+captions use exact completed receipts/files and original raw values, never accepted seeds/commands.

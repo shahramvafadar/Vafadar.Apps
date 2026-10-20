@@ -2529,3 +2529,13 @@ The original displayed actual-file holding packet is revalidated under the exist
 Only the current tracked type's IsArchived flag changes; no retained whole-type update, migration,
 ledger/refund/receipt or price rewrite is involved. Known acceptance consumes the original review
 before notification/return; Refresh never resubmits it. See Zanance quality/holding-archive.md.
+
+
+## Original type editor source and identity (D-416)
+
+The application type editor reads only original type/events/prices in one coherent actual-file read.
+Creation reserves one absent identity; edit requires the original existing identity. The existing
+writer rechecks source, fresh rights and pending raw inputs, and saves a detached copy preserving
+icon/archive/order and dimension rules. Known acceptance consumes the original review before native
+publication/return. Empty query redelivery cannot turn a missing edit into creation. No schema/model,
+portable format or new network data is introduced. See Zanance quality/holding-type-editor.md.

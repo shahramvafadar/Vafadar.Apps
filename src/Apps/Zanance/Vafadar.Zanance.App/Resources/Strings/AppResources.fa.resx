@@ -8348,4 +8348,10 @@
   <data name="Holding_ArchiveSavedRefresh" xml:space="preserve">
     <value>دارایی بایگانی شد و تاریخچهٔ آن محفوظ است. اگر جزئیات به‌روز نشد، آن‌ها را تازه کنید.</value>
   </data>
+  <data name="AssetType_SourceChanged" xml:space="preserve">
+    <value>نوع دارایی یا تاریخچهٔ اصلی آن تغییر کرده است. چیزی ذخیره نشد و ورودی شما حفظ شده است؛ برای بررسی جزئیات فعلی، فرم را ببندید و دوباره باز کنید.</value>
+  </data>
+  <data name="AssetType_SavedNeedsReview" xml:space="preserve">
+    <value>نوع دارایی ذخیره شد، اما به‌روزرسانی یا بازگشت بعدی کامل نشد. فرم را ببندید و نوع ذخیره‌شده را بررسی کنید؛ نیازی به ذخیرهٔ دوباره نیست.</value>
+  </data>
 </root>
