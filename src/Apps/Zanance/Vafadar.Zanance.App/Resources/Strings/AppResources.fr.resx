@@ -8349,4 +8349,10 @@ SHA-256 du XML original : {5}</value>
   <data name="Attachment_SavedRefresh" xml:space="preserve">
     <value>La modification de la pièce jointe a été enregistrée, mais la liste n’a pas pu être actualisée. Rouvrez la transaction pour voir le résultat ; ne répétez pas la modification.</value>
   </data>
+  <data name="Entry_Loading" xml:space="preserve">
+    <value>Chargement de l’opération…</value>
+  </data>
+  <data name="Entry_RetryLoad" xml:space="preserve">
+    <value>Recharger l’opération</value>
+  </data>
 </root>

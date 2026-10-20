@@ -494,3 +494,9 @@ repeating a create or losing the financial draft. [Focused evidence and platform
 
 Loading and Retry keep the original profile/form; another routed holding owns a fresh draft. Historical
 choices and accepted-save ownership stay exact. [Focused evidence and platform limits](docs/quality/holding-event-publication.md).
+
+D-426 completes original transaction detail publication/action ownership with focused actual-source
+checks,18 Windows ready contexts and12 independent Release/AOT Android observations. The complete
+signed offline APK is upgraded without reset on the dedicated AVD. Original ANR/observer failures
+remain recorded; broader device/iOS/provider/release gates are open. See
+[qualification and limits](docs/quality/entry-detail-publication.md).

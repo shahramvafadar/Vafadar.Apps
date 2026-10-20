@@ -8403,4 +8403,10 @@ Original XML SHA-256: {5}</value>
   <data name="Attachment_SavedRefresh" xml:space="preserve">
     <value>The attachment change was saved, but the list could not be refreshed. Reopen the transaction to see it; do not repeat the change.</value>
   </data>
+  <data name="Entry_Loading" xml:space="preserve">
+    <value>Loading transaction…</value>
+  </data>
+  <data name="Entry_RetryLoad" xml:space="preserve">
+    <value>Load transaction again</value>
+  </data>
 </root>

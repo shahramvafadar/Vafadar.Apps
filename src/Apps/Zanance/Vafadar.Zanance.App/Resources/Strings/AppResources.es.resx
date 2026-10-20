@@ -8341,4 +8341,10 @@ SHA-256 del XML original: {5}</value>
   <data name="Attachment_SavedRefresh" xml:space="preserve">
     <value>El cambio del archivo adjunto se guardó, pero no se pudo actualizar la lista. Vuelve a abrir la transacción para verlo; no repitas el cambio.</value>
   </data>
+  <data name="Entry_Loading" xml:space="preserve">
+    <value>Cargando la transacción…</value>
+  </data>
+  <data name="Entry_RetryLoad" xml:space="preserve">
+    <value>Volver a cargar la transacción</value>
+  </data>
 </root>

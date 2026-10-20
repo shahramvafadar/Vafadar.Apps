@@ -211,4 +211,38 @@ public sealed class ReceiptWorkFlowTests
         await session.PickAsync(); Assert.NotNull(session.Error); Assert.Equal(0, native.Read); Assert.Empty(native.Drafts);
         native.DuringPick = null; await session.PickAsync(); Assert.Null(session.Error); Assert.Single(native.Drafts);
     }
+    [Theory][InlineData(false)][InlineData(true)]
+    [Trait("AT", "AT-426")]
+    public async Task Retired_detail_during_original_recognition_never_opens_an_editor_or_late_failure(bool readFails)
+    {
+        using var f = new FlowFixture(); var (entry, file) = await SeedAsync(f); var access = new Access();
+        using var provider = Provider(f, access); var native = new Native(); var current = true;
+        native.DuringRead = () => { current = false; return readFails ? Task.FromException(new IOException("Fictitious retired reader")) : Task.CompletedTask; };
+        var session = Session(f, provider, native); var before = await GoalChooserFlowTests.SnapshotAsync(f);
+        await session.ReadAttachmentAsync(entry.Id, file.Id, () => current);
+        Assert.Equal(1, native.Read); Assert.Equal(0, native.Picked); Assert.Empty(native.Drafts); Assert.Empty(native.Alerts);
+        Assert.Null(session.Error); Assert.False(session.IsBusy); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+    }
+
+    [Fact][Trait("AT", "AT-426")]
+    public async Task A_retired_detail_is_refused_before_original_receipt_capture_or_native_read()
+    {
+        using var f = new FlowFixture(); var (entry, file) = await SeedAsync(f); var access = new Access();
+        using var provider = Provider(f, access); var native = new Native(); var session = Session(f, provider, native);
+        var before = await GoalChooserFlowTests.SnapshotAsync(f);
+        await session.ReadAttachmentAsync(entry.Id, file.Id, () => false);
+        Assert.Equal(0, native.Read); Assert.Empty(native.Alerts); Assert.Empty(native.Drafts); Assert.Null(session.Error);
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+    }
+
+    [Fact][Trait("AT", "AT-426")]
+    public async Task A_retired_empty_receipt_alert_does_not_publish_a_second_failure_into_the_new_view()
+    {
+        using var f = new FlowFixture(); var (entry, file) = await SeedAsync(f); var access = new Access();
+        using var provider = Provider(f, access); var native = new Native { Document = new("") }; var current = true;
+        native.DuringAlert = () => { current = false; throw new IOException("Fictitious original alert retired."); };
+        var session = Session(f, provider, native); await session.ReadAttachmentAsync(entry.Id, file.Id, () => current);
+        Assert.Single(native.Alerts); Assert.Empty(native.Drafts); Assert.Null(session.Error); Assert.False(session.IsBusy);
+    }
+
 }

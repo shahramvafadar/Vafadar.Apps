@@ -105,7 +105,7 @@ internal static partial class DebugSnapshots
                 app.Windows[0].Width = width; app.Windows[0].Height = 820;
                 var context = name + "-" + choice + "-" + width;
                 var model = new EntryDetailViewModel(store, text, local, new DateFormatter(local), new UndoService(store, time),
-                    fixture.GetRequiredService<HoldingStore>(), interaction, services.GetRequiredService<Features.Receipts.ReceiptReadingSession>());
+                    interaction, services.GetRequiredService<Features.Receipts.ReceiptReadingSession>());
                 model.ApplyQueryAttributes(new Dictionary<string, object> { ["id"] = entry.Id });
                 var page = new EntryDetailPage(model); await Shell.Current.Navigation.PushAsync(page, false);
                 try

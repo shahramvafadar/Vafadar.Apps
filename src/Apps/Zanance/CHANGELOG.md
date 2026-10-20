@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Complete transaction details before showing actions (D-426)
+
+- Keep details covered until the transaction, refunds and documents are ready; offer Retry after a failed read.
+- Keep pending detail actions tied to the original transaction and profile.
+- Keep an unsaved template name with its original transaction instead of carrying it to another one.
+- Preserve successful review/rule changes and prevent their repetition after an update notification fails.
+
 ### Keep a receipt with the transaction you save (D-425)
 
 - Keep the receipt's destination tied to the original saved transaction and profile.

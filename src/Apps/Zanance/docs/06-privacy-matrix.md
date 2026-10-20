@@ -1100,3 +1100,12 @@ another profile/query. Document metadata and bytes stay in the existing protecte
 no analytics or new network capability is added. Only a fictitious input in a newly owned emulator
 folder is staged and hash-matched before removal. This is not OS-cache/URI-grant revocation, external
 viewer/OCR, physical-device or release acceptance.
+
+## D-426 - Original detail and transient viewer ownership
+
+No new stored data category, permission, SDK, portable format or network/provider is introduced.
+Original detail reads remain profile/file-bound and do not initialize settings. Display packets are
+transient detached copies. Each explicit attachment open owns a unique plaintext cache copy; a
+never-dispatched refused copy is removed by that invocation. A possibly accepted native open retains
+the existing startup cache cleanup policy. This is not URI-grant revocation or external viewer
+acceptance. Original source data and device-only protection boundaries remain unchanged.

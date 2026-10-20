@@ -12,9 +12,11 @@ public partial class EntryDetailPage : ContentPage
 
     protected override void OnDisappearing()
     {
-        _viewModel.RetireAttachments();
+        _viewModel.Retire();
         base.OnDisappearing();
     }
+
+    private async void OnReloadClicked(object? sender, EventArgs args) => await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
 
     protected override async void OnAppearing()
     {

@@ -3142,3 +3142,16 @@ changed saved source or departed owner cannot receive it. Retire pending callbac
 query while retaining raw input and known acceptance. Native qualification follows routed construction:
 create the real page before publishing its query. Continue failed observations on the original
 uncommitted fixture; never repeat an accepted seed or Save to repair an observer. D-386 still applies.
+
+## D-426 - Complete original transaction details
+
+Read original detail/reference/group/refund/holding/document/rule facts in one actual-file worker
+transaction; do not initialize settings for display. Cover full publication and expose explicit
+read-only Retry/missing states. A routed identity owns fresh command instances; old confirmations,
+template prompts, receipt/viewer work and departed callbacks cannot follow another publication.
+Retain an unsaved template name only for its original file and entry.
+Review changes only the original flag. Rules use original category/match; equivalent existing rules
+are not written again. Delete retains exact original file/group/refund/document Undo and its deadline.
+Consume known commits before notification; following recovery only rereads. A refused viewer removes
+only its newly created never-dispatched cache file. Preserve original source/PID receipts after report
+failure; no seed or accepted command replay. D-386 priorities and external acceptance gates stand.

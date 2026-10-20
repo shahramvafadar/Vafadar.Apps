@@ -115,14 +115,33 @@ internal static class AttachmentFiles
 
     /// <summary>Writes the attachment to the cache and opens it with the app the device chooses.</summary>
     /// <returns><see langword="false"/> when no app could open it.</returns>
-    public static async Task<bool> OpenAsync(EntryAttachment attachment)
+    public static async Task<bool> OpenAsync(EntryAttachment attachment, Func<Task<bool>>? mayOpen = null)
     {
         ArgumentNullException.ThrowIfNull(attachment);
         var folder = CacheFolder;
         Directory.CreateDirectory(folder);
-        var path = Path.Combine(folder, $"{attachment.Id:N}{Path.GetExtension(attachment.FileName)}");
-        await File.WriteAllBytesAsync(path, attachment.Data);
-        return await Launcher.Default.OpenAsync(new OpenFileRequest(attachment.FileName, new ReadOnlyFile(path, attachment.ContentType)));
+        // Imported profiles may retain the same attachment id. Each explicit open owns a new cache file,
+        // rather than overwriting a pending viewer's copy from another profile or revision.
+        var fileName = attachment.FileName; var contentType = attachment.ContentType;
+        var path = Path.Combine(folder, $"{attachment.Id:N}-{Guid.NewGuid():N}{Path.GetExtension(fileName)}");
+        var bytes = attachment.Data.ToArray(); var dispatched = false; var created = false;
+        try
+        {
+            await using (var output = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None, 81920, useAsync: true))
+            {
+                created = true;
+                await output.WriteAsync(bytes);
+            }
+            if (mayOpen is not null && !await mayOpen()) return false;
+            dispatched = true;
+            return await Launcher.Default.OpenAsync(new OpenFileRequest(fileName, new ReadOnlyFile(path, contentType)));
+        }
+        finally
+        {
+            // Only this newly created, never-dispatched file is removed. A possibly accepted native
+            // request keeps the existing startup cache policy; no URI-grant revocation is implied.
+            if (created && !dispatched && File.Exists(path)) File.Delete(path);
+        }
     }
 
     private static string Guess(string name) => Path.GetExtension(name).ToLowerInvariant() switch

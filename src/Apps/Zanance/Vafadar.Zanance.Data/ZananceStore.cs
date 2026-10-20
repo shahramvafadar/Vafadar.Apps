@@ -608,7 +608,11 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Saves a rule; a rule with the same text and kind is replaced, so a text always has one category.</summary>
-    public async Task SaveCategoryRuleAsync(CategoryRule rule, CancellationToken cancellationToken = default)
+    public Task SaveCategoryRuleAsync(CategoryRule rule, CancellationToken cancellationToken = default) =>
+        SaveCategoryRuleCoreAsync(rule, cancellationToken);
+
+    private async Task SaveCategoryRuleCoreAsync(CategoryRule rule, CancellationToken cancellationToken,
+        EntryDetailSnapshot? original = null, Func<bool>? isCurrent = null, Action? accepted = null)
     {
         ArgumentNullException.ThrowIfNull(rule);
         var match = rule.Match.Trim();
@@ -618,9 +622,11 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         }
 
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        if (original is not null) RequireEntryDetailOwner(original, db, isCurrent!);
         // D-125: matching and replacement share the actual writer even in unrestricted test builds. Separate
         // providers cannot both read an absent pattern and insert duplicates before the implicit Save transaction.
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        if (original is not null) await ValidateEntryDetailUnderContextAsync(original, db, cancellationToken);
         var existing = await db.CategoryRules.AsNoTracking().FirstOrDefaultAsync(r => r.Id == rule.Id, cancellationToken);
         var same = (await db.CategoryRules.Where(r => r.Kind == rule.Kind && r.Id != rule.Id).ToListAsync(cancellationToken))
             .Where(r => string.Equals(r.Match, match, StringComparison.CurrentCultureIgnoreCase)).ToList();
@@ -640,10 +646,14 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             db.CategoryRules.Add(rule);
         }
 
+        if (original is not null) RequireEntryDetailOwner(original, db, isCurrent!);
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        if (original is not null) RequireEntryDetailOwner(original, db, isCurrent!);
         await write.CommitAsync(cancellationToken);
-        OnChanged();
+        accepted?.Invoke();
+        if (original is not null) CommittedWriteNotification.Publish(OnChanged);
+        else OnChanged();
     }
 
     /// <summary>Deletes a rule; saved entries keep their categories.</summary>
@@ -665,10 +675,22 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Adds a template at the end, or updates an existing one.</summary>
-    public async Task SaveTemplateAsync(EntryTemplate template, CancellationToken cancellationToken = default, QuickResourceReview? review = null)
+    public async Task SaveTemplateAsync(EntryTemplate template, CancellationToken cancellationToken = default, QuickResourceReview? review = null,
+        Func<bool>? isCurrent = null)
     {
         ArgumentNullException.ThrowIfNull(template);
+        void Current()
+        {
+            if (isCurrent?.Invoke() == false) throw new InvalidOperationException("The original template action retired.");
+        }
+        Current();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        if (review is not null)
+        {
+            review.TemplateChoice.Access.EnsureSnapshotCurrent();
+            if (review.TemplateChoice.DatabasePath != DatabaseFileIdentity.ConfiguredPath(db))
+                throw new InvalidOperationException("The original template source file changed.");
+        }
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null);
         if (review is not null) await ValidateQuickResourceReviewAsync(review, db, cancellationToken);
         var originals = await db.Templates.AsNoTracking().ToListAsync(cancellationToken);
@@ -687,10 +709,11 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             db.Templates.Add(template);
         }
 
-        write.EnsureCurrent();
-        await db.SaveChangesAsync(cancellationToken);
+        Current(); write.EnsureCurrent();
+        await db.SaveChangesAsync(cancellationToken); Current();
         await write.CommitAsync(cancellationToken);
-        OnChanged();
+        if (review is not null) CommittedWriteNotification.Publish(OnChanged);
+        else OnChanged();
     }
 
     /// <summary>Deletes a template; entries created from it are not affected.</summary>
@@ -1259,7 +1282,8 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
 
     /// <summary>Deletes complete ledger groups and reopens their states within the caller's actual-file writer.</summary>
     private async Task<IReadOnlyList<LedgerEntry>> DeleteEntriesUnderWriterAsync(ZananceDbContext db,
-        CommercialWriteTransaction write, IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken, bool committedPublication = false)
+        CommercialWriteTransaction write, IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken, bool committedPublication = false,
+        Action? validateReview = null, Action? accepted = null)
     {
         var file = DatabaseFileIdentity.ConfiguredPath(db);
         write.DemandFeature(CommercialFeature.DeleteData);
@@ -1310,10 +1334,13 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         }
 
         // The deletion, the reopened occurrences and the paid amounts change together or not at all.
+        validateReview?.Invoke();
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
         await UpdatePaidAmountsAsync(db, deleted, cancellationToken);
+        validateReview?.Invoke();
         await write.CommitAsync(cancellationToken);
+        accepted?.Invoke();
 
         // D-399: reopening must retain the exact committed deletion receipt if a subscriber refuses it.
         if (committedPublication)

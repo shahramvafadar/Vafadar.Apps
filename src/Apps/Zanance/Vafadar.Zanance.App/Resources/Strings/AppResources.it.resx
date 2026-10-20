@@ -8361,4 +8361,10 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Attachment_SavedRefresh" xml:space="preserve">
     <value>La modifica all’allegato è stata salvata, ma non è stato possibile aggiornare l’elenco. Riapri la transazione per vedere il risultato; non ripetere la modifica.</value>
   </data>
+  <data name="Entry_Loading" xml:space="preserve">
+    <value>Caricamento del movimento…</value>
+  </data>
+  <data name="Entry_RetryLoad" xml:space="preserve">
+    <value>Ricarica il movimento</value>
+  </data>
 </root>

@@ -8372,4 +8372,10 @@ Original-XML SHA-256: {5}</value>
   <data name="Attachment_SavedRefresh" xml:space="preserve">
     <value>Die Änderung am Anhang wurde gespeichert, aber die Liste konnte nicht aktualisiert werden. Öffne die Buchung erneut, um das Ergebnis zu sehen. Wiederhole die Änderung nicht.</value>
   </data>
+  <data name="Entry_Loading" xml:space="preserve">
+    <value>Buchung wird geladen…</value>
+  </data>
+  <data name="Entry_RetryLoad" xml:space="preserve">
+    <value>Buchung erneut laden</value>
+  </data>
 </root>

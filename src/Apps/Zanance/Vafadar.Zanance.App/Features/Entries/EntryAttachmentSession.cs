@@ -20,6 +20,15 @@ public sealed class EntryAttachmentSession(ZananceStore store)
     /// <summary>Retires original work before a query or navigation can adopt another detail.</summary>
     public void Retire() { _revision++; _review = null; }
 
+    /// <summary>Adopts the attachment packet already prepared with its complete original detail read.</summary>
+    public void PublishReview(EntryAttachmentReview review, LedgerEntry displayed)
+    {
+        ArgumentNullException.ThrowIfNull(review); ArgumentNullException.ThrowIfNull(displayed);
+        review.EnsureCurrent();
+        if (!review.Matches(displayed)) throw new InvalidOperationException("The prepared attachment source differs from its displayed entry.");
+        Retire(); _review = review;
+    }
+
     /// <summary>Loads only metadata belonging to the exact displayed original entry.</summary>
     public async Task LoadAsync(LedgerEntry entry, QuickResourceReview? displayed = null)
     {

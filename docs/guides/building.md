@@ -1954,3 +1954,16 @@ exact account/file without migration or reseeding. Completed accepted sequences 
 The page is constructed before its query, matching Shell; Save is a fixed footer, not a child of
 the scrolling form. Retain target geometry, original source, failures and completion receipts.
 No unchanged multilingual/layout matrix is required for this non-layout handoff correction.
+
+### Original transaction detail review (D-426)
+
+`./eng/scripts/Run-StoreDrafts.ps1 -EntryDetailReview` builds a unique independent Windows Debug
+identity on its non-input desktop. It reads one isolated original fixture across the language/theme/
+width matrix, checks loading/failure/native Retry and retained command ownership, then invokes only
+two explicit metadata actions. It never performs a financial Save or opens a desktop document viewer.
+Preserve the original process and receipts on observation expiry. `-EntryDetailSourceRun <id>` is
+restricted to the exact terminal pre-action JSON observer failure and verifies its unchanged original
+file; it never seeds a replacement. A completed metadata/financial action is never replayed to repair
+an observer. The independent AndroidHome `entry-detail` phase compiles original sources/XAML in
+Release/AOT and retains its separate fixture. See the detailed D-426 quality record for scope and
+negative evidence; these commands are not general runtime, physical-device or release acceptance.

@@ -2610,3 +2610,11 @@ Changed/deleted source, another file, retired view or rights refuse only that la
 financial commit remains accepted. An aggregate removed by explicit replacement gets no guessed
 attachment destination. No model/schema or compiled-model regeneration; portable formats and
 short Undo remain unchanged. This is not a complete stale-edit/overlap/Undo or detail-load audit.
+## D-426 - Original detail and transient viewer ownership
+
+No new stored data category, permission, SDK, portable format or network/provider is introduced.
+Original detail reads remain profile/file-bound and do not initialize settings. Display packets are
+transient detached copies. Each explicit attachment open owns a unique plaintext cache copy; a
+never-dispatched refused copy is removed by that invocation. A possibly accepted native open retains
+the existing startup cache cleanup policy. This is not URI-grant revocation or external viewer
+acceptance. Original source data and device-only protection boundaries remain unchanged.

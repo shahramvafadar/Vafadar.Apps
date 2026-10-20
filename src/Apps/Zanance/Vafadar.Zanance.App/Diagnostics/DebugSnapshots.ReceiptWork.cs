@@ -127,7 +127,7 @@ internal static partial class DebugSnapshots
             await File.WriteAllTextAsync(Path.Combine(folder, language + "-receipt-work-original-action-geometry.json"), JsonSerializer.Serialize(actionGeometry));
             await CaptureAsync(app, folder, language + "-receipt-work-original-review"); await Shell.Current.Navigation.PopAsync();
             native.Draft = null; native.Document = new(null);
-            var detail = ActivatorUtilities.CreateInstance<EntryDetailViewModel>(services, store, fixture.GetRequiredService<HoldingStore>(), session);
+            var detail = ActivatorUtilities.CreateInstance<EntryDetailViewModel>(services, store, session);
             detail.ApplyQueryAttributes(new Dictionary<string, object> { ["id"] = entry.Id }); var detailPage = new EntryDetailPage(detail);
             await Shell.Current.Navigation.PushAsync(detailPage);
             for (var attempt = 0; attempt < 60 && !detail.HasAttachments; attempt++) await Task.Delay(50);

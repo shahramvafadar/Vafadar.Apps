@@ -24,12 +24,30 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
     { base.OnPropertyChanged(e); if (e.PropertyName == nameof(IsBusy)) RefreshAvailability(); }
     /// <summary>Gets the complete published original resources and separate work rights.</summary>
     public QuickResourceReview? Review => _review;
+    /// <summary>Gets known acceptance of this current native action, independently of its following feedback.</summary>
+    public bool Accepted { get; private set; }
     /// <summary>Gets whether a complete publication is available outside a pending native effect.</summary>
     public bool CanInteract => _review is not null && IsNotBusy;
     /// <summary>Gets the last unsaved template name, retained after a failed request.</summary>
     public string? TemplateNameDraft { get; private set; }
     /// <summary>Gets the exact unsaved filter name, retained for retry only in its original file.</summary>
     public string? FilterNameDraft { get; private set; }
+
+    /// <summary>Retires pending native callbacks without granting them authority over a later view.</summary>
+    public void Retire() { ++_generation; _review = null; Accepted = false; RefreshAvailability(); }
+
+    /// <summary>Adopts original resources already validated with a complete coherent detail packet.</summary>
+    public void PublishOriginal(QuickResourceReview review)
+    {
+        ArgumentNullException.ThrowIfNull(review); Retire();
+        if (_draftReview is { } previous)
+        {
+            var sameFile = review.BelongsToSameFile(previous);
+            if (!sameFile || review.SourceEntry?.Id != previous.SourceEntry?.Id) TemplateNameDraft = null;
+            if (!sameFile) FilterNameDraft = null;
+        }
+        _draftReview = _review = review; Feedback = null; RefreshAvailability();
+    }
 
     /// <summary>Retires the previous review before reading; opening creates no preferences or financial rows.</summary>
     public async Task LoadAsync(Guid? sourceId = null)
@@ -44,6 +62,7 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
 
     private async Task ValidateAsync(QuickResourceReview review)
     {
+        if (!ReferenceEquals(review, _review)) throw new InvalidOperationException("The quick-resource publication was retired.");
         await store.ValidateQuickResourceReviewAsync(review);
         if (!ReferenceEquals(review, _review)) throw new InvalidOperationException("The quick-resource publication was retired.");
     }
@@ -90,12 +109,14 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
             var name = await interaction.PromptAsync(translator["Templates_SaveTitle"], translator["Templates_NamePrompt"],
                 translator["Common_Save"], translator["Common_Cancel"], TemplateNameDraft ?? heading, 60);
             if (string.IsNullOrWhiteSpace(name)) return false;
+            if (!ReferenceEquals(review, _review)) return false;
             TemplateNameDraft = name;
+            await ValidateAsync(review);
             var keep = displayed.Amount > 0 && await interaction.ConfirmAsync(translator["Templates_SaveTitle"],
                 translator.Format("Templates_KeepAmount", amountText), translator["Templates_KeepAmountYes"], translator["Templates_KeepAmountNo"]);
             await ValidateAsync(review);
             var target = EntryTemplate.From(review.SourceEntry!, name, keep);
-            await store.SaveTemplateAsync(target, review: review);
+            await store.SaveTemplateAsync(target, review: review, isCurrent: () => ReferenceEquals(review, _review));
             return true;
         }, async () => await interaction.AlertAsync(translator["Templates_SaveTitle"],
             translator.Format("Templates_Saved", TemplateNameDraft!.Trim()), translator["Common_Ok"]));
@@ -175,18 +196,24 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
     private async Task RunAsync(Func<Task<bool>> operation, Func<Task>? afterCommit = null, string failureKey = "Error_Unexpected")
     {
         if (!CanInteract) return;
-        IsBusy = true; Feedback = null; var committed = false;
+        IsBusy = true; Feedback = null; Accepted = false; var committed = false; var generation = _generation;
         try
         {
             committed = await operation();
+            if (generation != _generation) return;
+            Accepted = committed;
             if (committed)
             {
                 _review = null; ++_generation; // Retire before any native feedback/reload can fail: never resubmit a committed write.
+                generation = _generation;
                 if (afterCommit is not null) await afterCommit();
             }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
+            if (generation != _generation) return;
+            committed |= exception is Data.Commerce.CommittedWriteNotificationException;
+            Accepted = committed;
             _review = null; ++_generation;
             Feedback = committed ? translator["Occurrence_SavedRefreshFailed"]
                 : Presentation.CommercialFailureMessage.OrFallback(exception, translator, failureKey, draftKept: true);

@@ -325,4 +325,66 @@ public sealed class QuickResourceFlowTests
         Assert.Equal(ledger, JsonSerializer.Serialize(await s.Store.GetEntriesAsync(cancellationToken: Ct)));
         Assert.Equal(3, f.Platform.OfferedActions[1].Distinct().Count());
     }
+    [Fact][Trait("AT", "AT-426")]
+    public async Task Retired_detail_template_prompt_cannot_write_or_report_into_a_new_publication()
+    {
+        var setup = await CreateAsync(false); using var f = setup.F;
+        var pending = new TaskCompletionSource<string?>(); var entered = new TaskCompletionSource();
+        f.Platform.PendingInput = () => { entered.SetResult(); return pending.Task; };
+        var work = setup.Actions.CreateTemplateAsync(setup.Entry, "Original heading", "EUR 123.45"); await entered.Task.WaitAsync(Ct);
+        setup.Actions.Retire(); setup.Actions.PublishOriginal(await setup.Store.GetQuickResourceReviewAsync(setup.Entry.Id, Ct));
+        var current = setup.Actions.Review; var before = await GoalChooserFlowTests.SnapshotAsync(f);
+        f.Platform.Confirmations.Enqueue(true); pending.SetResult("Retired native template name"); await work;
+        Assert.Same(current, setup.Actions.Review); Assert.Null(setup.Actions.Feedback); Assert.False(setup.Actions.Accepted);
+        Assert.Empty(f.Platform.Alerts); Assert.Empty(f.Platform.Failures); Assert.Empty(f.Platform.ConfirmationDialogs);
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+    }
+
+    [Fact][Trait("AT", "AT-426")]
+    public async Task Original_template_commit_with_failed_notification_stays_accepted_and_never_reopens_its_prompt()
+    {
+        var setup = await CreateAsync(false); using var f = setup.F; var writes = 0;
+        f.Platform.Inputs.Enqueue("One original accepted template"); f.Platform.Confirmations.Enqueue(true);
+        setup.Store.Changed += (_, _) => { writes++; throw new IOException("Fictitious postcommit template observer failure."); };
+        await setup.Actions.CreateTemplateAsync(setup.Entry, "Original heading", "EUR 123.45");
+        Assert.True(setup.Actions.Accepted); Assert.Null(setup.Actions.Review);
+        Assert.Contains(f.Translator["Occurrence_SavedRefreshFailed"], setup.Actions.Feedback!);
+        Assert.Empty(f.Platform.Failures); Assert.Single(f.Platform.Alerts); Assert.Equal(1, writes);
+        Assert.Equal(6, (await setup.Store.GetTemplatesAsync(Ct)).Count);
+        var prompts = f.Platform.PromptInitialValues.Count; var before = await GoalChooserFlowTests.SnapshotAsync(f);
+        await setup.Actions.CreateTemplateAsync(setup.Entry, "Original heading", "EUR 123.45");
+        Assert.Equal(prompts, f.Platform.PromptInitialValues.Count); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+    }
+
+    [Fact][Trait("AT", "AT-426")]
+    public async Task Template_owner_retirement_at_actual_save_rolls_back_without_creating_a_definition()
+    {
+        var setup = await CreateAsync(false); using var f = setup.F;
+        f.Platform.Inputs.Enqueue("Retired original template"); f.Platform.Confirmations.Enqueue(true);
+        var before = await GoalChooserFlowTests.SnapshotAsync(f); f.Time.BeforeRead = setup.Actions.Retire;
+        await setup.Actions.CreateTemplateAsync(setup.Entry, "Original heading", "EUR 123.45"); f.Time.BeforeRead = null;
+        Assert.False(setup.Actions.Accepted); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        Assert.Empty(f.Platform.Alerts); Assert.Empty(f.Platform.Failures);
+    }
+
+    [Theory][InlineData("same")][InlineData("other")][InlineData("file")][Trait("AT", "AT-426")]
+    public async Task Coherent_detail_publication_keeps_a_template_name_only_for_its_original_source_and_file(string destination)
+    {
+        var setup = await CreateAsync(false); using var f = setup.F; using var foreign = new FlowFixture();
+        f.Platform.Inputs.Enqueue("Original unsaved template name");
+        f.Platform.PendingConfirmation = async () =>
+        {
+            await using var db = await setup.Factory.CreateDbContextAsync(Ct);
+            await db.Entries.Where(e => e.Id == setup.Entry.Id).ExecuteUpdateAsync(s => s.SetProperty(e => e.Note, "Later original note"), Ct);
+            return true;
+        };
+        await setup.Actions.CreateTemplateAsync(setup.Entry, "Original heading", "EUR 123.45");
+        Assert.Equal("Original unsaved template name", setup.Actions.TemplateNameDraft);
+        var review = await (destination == "file" ? foreign.Store.GetQuickResourceReviewAsync(cancellationToken: Ct)
+            : setup.Store.GetQuickResourceReviewAsync(destination == "same" ? setup.Entry.Id : null, Ct));
+        var before = await GoalChooserFlowTests.SnapshotAsync(f); setup.Actions.PublishOriginal(review);
+        Assert.Equal(destination == "same" ? "Original unsaved template name" : null, setup.Actions.TemplateNameDraft);
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+    }
+
 }

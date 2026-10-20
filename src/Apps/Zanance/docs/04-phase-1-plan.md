@@ -1299,3 +1299,26 @@ native currency-search text and is discarded; USD selection/new event and its ro
 qualified. Next ready work diagnoses only this original input/list boundary. D-386 general runtime/
 A11Y, broader QA-01, Mac/iOS, external/expert/store and release gates remain separate.
 See [original sequence, failed observations and limits](quality/physical-holding-location-move.md).
+
+## D-426 - Complete original transaction detail publication and actions
+
+Prepare original entry/reference/group/refund/holding/document/rule facts through one captured
+actual-file worker transaction, without creating settings for display. Validate the complete packet
+before covered synchronous publication. Keep loading, failed read-only Retry and missing states
+separate. A routed identity owns its own session and command instances; old commands, confirmations,
+template prompts, OCR/viewer work and departed reads cannot adopt a different publication.
+
+Review updates only the original flag; explicit rule creation uses original category/match and
+refuses an already equivalent rule. Delete retains the original exact group/refund/document Undo
+contract and deadline. Consume known commits before notification; recovery after saved work only
+rereads. A refused viewer request removes only its newly created cache file, while a possibly accepted
+native request retains the existing startup cleanup policy.
+
+35 distinct new actual-source behaviors and selective affected/resource checks pass; no unchanged
+full suite is replayed. Original Windows evidence includes18 language/theme/width ready contexts,
+covered failure/native Retry, query/missing/retired-owner cases and two one-time native metadata
+commands through deliberate postcommit notification failures. Preserve the first pre-action report
+serialization refusal and continue only its exact original file without reseeding. Final Android,
+APK and delivery evidence is recorded in [the detailed qualification record](quality/entry-detail-publication.md). No schema/model, portable format,
+permission/provider or broader ANR/crash/A11Y/physical-device/Mac/iOS/store/release acceptance is
+inferred. Continue ready original financial workflow work under D-386 and the existing external gates.
