@@ -55,7 +55,12 @@ public sealed partial class ZananceStore
     /// <summary>Rechecks the original published packet before an explicit native action without modifying any row.</summary>
     public async Task ValidateQuickResourceReviewAsync(QuickResourceReview review, CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(review);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        review.TemplateChoice.Access.EnsureSnapshotCurrent(); review.FilterChoice.Access.EnsureSnapshotCurrent();
+        if (review.TemplateChoice.DatabasePath != DatabaseFileIdentity.ConfiguredPath(db)
+            || review.FilterChoice.DatabasePath != DatabaseFileIdentity.ConfiguredPath(db))
+            throw new InvalidOperationException("The original quick-resource file changed.");
         await db.Database.OpenConnectionAsync(cancellationToken);
         await ValidateQuickResourceReviewAsync(review, db, cancellationToken);
     }

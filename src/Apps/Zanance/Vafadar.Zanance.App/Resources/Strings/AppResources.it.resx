@@ -8367,4 +8367,19 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Entry_RetryLoad" xml:space="preserve">
     <value>Ricarica il movimento</value>
   </data>
+  <data name="Editor_Loading" xml:space="preserve">
+    <value>Caricamento del modulo del movimento…</value>
+  </data>
+  <data name="Editor_RetryRead" xml:space="preserve">
+    <value>Ricarica il modulo</value>
+  </data>
+  <data name="Editor_LoadFailed" xml:space="preserve">
+    <value>Impossibile caricare il modulo. I tuoi dati sono conservati. Riprova o chiudi il modulo.</value>
+  </data>
+  <data name="Editor_SourceUnavailable" xml:space="preserve">
+    <value>Il movimento o modello originale non è più disponibile. Non è stato creato alcun nuovo movimento. Riprova o chiudi il modulo.</value>
+  </data>
+  <data name="Editor_SourceChanged" xml:space="preserve">
+    <value>I dati originali sono cambiati. I tuoi dati non salvati sono conservati. Chiudi e riapri il modulo per controllare i dati attuali.</value>
+  </data>
 </root>

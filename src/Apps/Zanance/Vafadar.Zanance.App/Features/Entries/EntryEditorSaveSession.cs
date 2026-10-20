@@ -5,9 +5,12 @@ using Vafadar.Zanance.Data.Commerce;
 namespace Vafadar.Zanance.App.Features.Entries;
 
 /// <summary>Owns one editor's financial acceptance and optional document handoff, independently of later navigation.</summary>
-public sealed class EntryEditorSaveSession(ZananceStore store, QuickResourceReview original)
+public sealed class EntryEditorSaveSession(ZananceStore store, QuickResourceReview original, EntryEditorReadSnapshot? editorSource = null)
 {
     private bool _busy;
+    private TaskCompletionSource? _idle;
+    /// <summary>Waits for this exact pending writer/document boundary before a retained form can resume.</summary>
+    public Task WaitForIdleAsync() => _idle?.Task ?? Task.CompletedTask;
     /// <summary>Gets known financial acceptance; neither notification nor attachment failure can rearm Save.</summary>
     public bool Accepted { get; private set; }
     /// <summary>Gets whether the original document could not be attached after the financial commit.</summary>
@@ -20,7 +23,8 @@ public sealed class EntryEditorSaveSession(ZananceStore store, QuickResourceRevi
         Guid entryId, EntryAttachment? attachment, Func<bool> isCurrent)
     {
         if (_busy || Accepted) throw new InvalidOperationException("The original editor save is pending or already accepted.");
-        _busy = true; AttachmentFailed = NotificationFailed = false;
+        _busy = true; var idle = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously); _idle = idle;
+        AttachmentFailed = NotificationFailed = false;
         var document = attachment?.Copy(); EntryAttachmentReview? destination = null;
         try
         {
@@ -28,7 +32,7 @@ public sealed class EntryEditorSaveSession(ZananceStore store, QuickResourceRevi
             try
             {
                 result = await store.SaveEditorEntriesAsync(original, entries, deleteIds, entryId, isCurrent,
-                    review => { destination = review; Accepted = true; });
+                    review => { destination = review; Accepted = true; }, editorSource: editorSource);
             }
             catch (CommittedWriteNotificationException<SaveResult> exception) when (Accepted)
             { result = exception.Result; NotificationFailed = true; }
@@ -43,6 +47,9 @@ public sealed class EntryEditorSaveSession(ZananceStore store, QuickResourceRevi
             catch (Exception exception) when (exception is not OutOfMemoryException) { AttachmentFailed = true; }
             return result;
         }
-        finally { _busy = false; }
+        finally
+        {
+            _busy = false; if (ReferenceEquals(_idle, idle)) _idle = null; idle.TrySetResult();
+        }
     }
 }

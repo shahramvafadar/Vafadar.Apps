@@ -8378,4 +8378,19 @@ Original-XML SHA-256: {5}</value>
   <data name="Entry_RetryLoad" xml:space="preserve">
     <value>Buchung erneut laden</value>
   </data>
+  <data name="Editor_Loading" xml:space="preserve">
+    <value>Buchungsformular wird geladen…</value>
+  </data>
+  <data name="Editor_RetryRead" xml:space="preserve">
+    <value>Formular erneut laden</value>
+  </data>
+  <data name="Editor_LoadFailed" xml:space="preserve">
+    <value>Das Formular konnte nicht geladen werden. Ihre Eingaben bleiben erhalten. Versuchen Sie es erneut oder schließen Sie das Formular.</value>
+  </data>
+  <data name="Editor_SourceUnavailable" xml:space="preserve">
+    <value>Die ursprüngliche Buchung oder Vorlage ist nicht mehr verfügbar. Es wurde keine neue Buchung erstellt. Versuchen Sie es erneut oder schließen Sie das Formular.</value>
+  </data>
+  <data name="Editor_SourceChanged" xml:space="preserve">
+    <value>Die ursprünglichen Daten wurden geändert. Ihre ungespeicherten Eingaben bleiben erhalten. Schließen und öffnen Sie das Formular erneut, um die aktuellen Daten zu prüfen.</value>
+  </data>
 </root>

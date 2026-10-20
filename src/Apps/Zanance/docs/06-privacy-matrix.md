@@ -1109,3 +1109,11 @@ transient detached copies. Each explicit attachment open owns a unique plaintext
 never-dispatched refused copy is removed by that invocation. A possibly accepted native open retains
 the existing startup cache cleanup policy. This is not URI-grant revocation or external viewer
 acceptance. Original source data and device-only protection boundaries remain unchanged.
+
+## D-427 - Complete original transaction editor publication
+
+Original transaction-editor packets are transient application memory with existing entry/account/
+group/refund/tag/rule facts. Display reads do not create preferences. Source ownership checks and
+known acceptance add no portable field, permission, network endpoint, SDK, telemetry, account or
+retained production file. Separate fictitious native diagnostics retain only their own original
+fixtures/observations. Existing device encryption and backup/retention boundaries remain unchanged.

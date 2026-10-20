@@ -8347,4 +8347,19 @@ SHA-256 del XML original: {5}</value>
   <data name="Entry_RetryLoad" xml:space="preserve">
     <value>Volver a cargar la transacción</value>
   </data>
+  <data name="Editor_Loading" xml:space="preserve">
+    <value>Cargando el formulario de la transacción…</value>
+  </data>
+  <data name="Editor_RetryRead" xml:space="preserve">
+    <value>Volver a cargar el formulario</value>
+  </data>
+  <data name="Editor_LoadFailed" xml:space="preserve">
+    <value>No se pudo cargar el formulario. Tus datos se conservan. Inténtalo de nuevo o cierra el formulario.</value>
+  </data>
+  <data name="Editor_SourceUnavailable" xml:space="preserve">
+    <value>La transacción o plantilla original ya no está disponible. No se ha creado ninguna transacción nueva. Vuelve a intentarlo o cierra el formulario.</value>
+  </data>
+  <data name="Editor_SourceChanged" xml:space="preserve">
+    <value>Los datos originales han cambiado. Se conservan tus datos sin guardar. Cierra y vuelve a abrir el formulario para revisar los datos actuales.</value>
+  </data>
 </root>

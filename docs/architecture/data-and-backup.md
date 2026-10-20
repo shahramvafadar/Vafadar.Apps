@@ -2618,3 +2618,14 @@ transient detached copies. Each explicit attachment open owns a unique plaintext
 never-dispatched refused copy is removed by that invocation. A possibly accepted native open retains
 the existing startup cache cleanup policy. This is not URI-grant revocation or external viewer
 acceptance. Original source data and device-only protection boundaries remain unchanged.
+
+## D-427 - Complete original transaction editor publication
+
+ReadEntryEditorSnapshotAsync owns one captured actual-file worker read transaction for complete
+editor references/group/refund facts and detached suggestions. Its original packet, detail origin,
+view lifetime and cached rights are rechecked before publication/native handoff and under the
+accepted-save writer. Initial Retry cannot replace an already published raw financial draft.
+Original pending writer/document completion is awaited before retained refresh. An accepted packet
+cannot be reused by another session. Both duplicate fees receive new ids; original audit timestamps
+follow the existing writer. There is no entity/schema/compiled-model or portable-format change.
+Dynamic aggregate overlap/choice/writer/Undo is the separate D-428 boundary.

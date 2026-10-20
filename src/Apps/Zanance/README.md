@@ -500,3 +500,10 @@ checks,18 Windows ready contexts and12 independent Release/AOT Android observati
 signed offline APK is upgraded without reset on the dedicated AVD. Original ANR/observer failures
 remain recorded; broader device/iOS/provider/release gates are open. See
 [qualification and limits](docs/quality/entry-detail-publication.md).
+
+## D-427 - Complete original transaction editor publication
+
+Transaction forms now publish complete original source data behind a loading cover, preserve a
+retained raw draft and keep old callbacks/known Saves from adopting another form. Missing sources
+never become guessed new transactions; duplicate transfers retain both fees. Focused and native
+evidence, negative observations and remaining gates are in [the qualification record](docs/quality/entry-editor-publication.md).

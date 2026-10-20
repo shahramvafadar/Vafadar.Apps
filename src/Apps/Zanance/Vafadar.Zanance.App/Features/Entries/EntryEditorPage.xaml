@@ -13,18 +13,20 @@
     Title="{Binding Title}"
     Shell.PresentationMode="ModalAnimated">
 
-    <Grid RowDefinitions="Auto,*,Auto">
+    <Grid RowDefinitions="Auto,*">
         <!-- Header -->
         <!-- D-98: whole title/action groups wrap at native text scale without adding a second modal header. -->
         <Grid Padding="8,8" BackgroundColor="{DynamicResource CardBackground}">
             <FlexLayout x:Name="ModalHeaderLayout" Direction="Row" Wrap="Wrap" AlignItems="Center">
-                <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" FlexLayout.Shrink="0" Margin="4,0" Style="{StaticResource TextButton}" />
+                <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" IsEnabled="{Binding IsNotBusy}" FlexLayout.Shrink="0" Margin="4,0" Style="{StaticResource TextButton}" />
                 <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" FlexLayout.Shrink="0" FlexLayout.Grow="1" MaximumWidthRequest="{Binding Width, Source={x:Reference ModalHeaderLayout}, x:DataType=FlexLayout}" />
             </FlexLayout>
         </Grid>
 
+        <Grid Grid.Row="1">
+        <Grid x:Name="ReadyFormSurface" RowDefinitions="*,Auto" IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding IsFormEditable}">
         <!-- No account yet -->
-        <Border Grid.Row="1" Style="{StaticResource Card}" Margin="16" VerticalOptions="Start" IsVisible="{Binding HasNoAccounts}">
+        <Border Grid.Row="0" Style="{StaticResource Card}" Margin="16" VerticalOptions="Start" IsVisible="{Binding HasNoAccounts}">
             <VerticalStackLayout Spacing="12">
                 <fi:SymbolIcon Symbol="Wallet" FontSize="40" HorizontalOptions="Center" ForegroundColor="{DynamicResource Muted}" />
                 <Label Text="{v:Translate Entry_NoAccounts}" HorizontalTextAlignment="Center" />
@@ -32,7 +34,7 @@
             </VerticalStackLayout>
         </Border>
 
-        <ScrollView x:Name="ValidationViewport" Grid.Row="1" IsVisible="{Binding HasNoAccounts, Converter={StaticResource InvertedBoolConverter}}">
+        <ScrollView x:Name="ValidationViewport" Grid.Row="0" IsVisible="{Binding HasNoAccounts, Converter={StaticResource InvertedBoolConverter}}">
             <VerticalStackLayout Padding="16" Spacing="8">
 
                 <!-- Values read from a receipt, waiting for review (D-31) -->
@@ -332,7 +334,7 @@
         </ScrollView>
 
         <!-- What saving does, said before Save (ZEX-S0103, S0204); Save waits for an account -->
-        <VerticalStackLayout Grid.Row="2" Padding="16,8,16,16" Spacing="6"
+        <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="6"
                              IsVisible="{Binding HasNoAccounts, Converter={StaticResource InvertedBoolConverter}}">
             <!-- D-130: a rejected Save stays visible beside its action at every form scroll position. -->
             <Label Text="{Binding QuickActions.Feedback}" Style="{StaticResource ErrorText}" IsVisible="{Binding QuickActions.Feedback, Converter={StaticResource IsNotNullConverter}}" />
@@ -346,5 +348,16 @@
             <Label Text="{v:Translate Entry_ChooseAccount}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" FontSize="12"
                    IsVisible="{Binding NeedsAccount}" />
         </VerticalStackLayout>
+        </Grid>
+        <VerticalStackLayout x:Name="FormLoadingSurface" Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
+            <Label x:Name="FormLoadingCaption" Text="{v:Translate Editor_Loading}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+        <VerticalStackLayout x:Name="FormErrorSurface" Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+            <Label x:Name="FormErrorCaption" Text="{Binding LoadError}" HorizontalTextAlignment="Center" />
+            <Button x:Name="FormRetryButton" Text="{v:Translate Editor_RetryRead}" Style="{StaticResource SecondaryButton}"
+                    Command="{Binding ReloadFormCommand}" IsVisible="{Binding CanReloadForm}" />
+        </VerticalStackLayout>
+        </Grid>
     </Grid>
 </ContentPage>

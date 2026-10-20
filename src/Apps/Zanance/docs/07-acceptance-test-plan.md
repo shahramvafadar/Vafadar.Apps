@@ -4865,3 +4865,14 @@ serialization refusal and continue only its exact original file without reseedin
 APK and delivery evidence is recorded in [the detailed qualification record](quality/entry-detail-publication.md). No schema/model, portable format,
 permission/provider or broader ANR/crash/A11Y/physical-device/Mac/iOS/store/release acceptance is
 inferred. Continue ready original financial workflow work under D-386 and the existing external gates.
+
+## D-427 - Complete original transaction editor publication
+
+AT-427:33 distinct actual-source cases pass with selective affected verification, plus one related
+core tag case and23 resource cases. Original native evidence is96 Windows observations and36
+independent Release/AOT Android observations, including exactly two Save invocations per platform.
+Windows prepares its fictitious raw amount programmatically; only Android checks native amount
+setter-to-binding. Both use actual native Save. Preserve every accepted original fixture/action and
+the negative observer/runtime evidence. The final installed protected form opens and Cancels without
+input/Save; Main0 and OS return unchanged. See [detailed scopes and limits](quality/entry-editor-publication.md).
+This is not aggregate-overlap/Undo, full-suite, physical-phone, general runtime/A11Y, iOS or release acceptance.

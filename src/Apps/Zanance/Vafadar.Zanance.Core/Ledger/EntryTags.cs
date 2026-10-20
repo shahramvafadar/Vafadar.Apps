@@ -58,10 +58,17 @@ public static class EntryTags
     public static IReadOnlyList<string> InUse(IEnumerable<LedgerEntry> entries)
     {
         ArgumentNullException.ThrowIfNull(entries);
+        return InUseTags(entries.Select(e => e.Tags));
+    }
+
+    /// <summary>Returns the same ordered tag suggestions from detached tag-only database projections.</summary>
+    public static IReadOnlyList<string> InUseTags(IEnumerable<IEnumerable<string>> tagLists)
+    {
+        ArgumentNullException.ThrowIfNull(tagLists);
         return
         [
-            .. entries
-                .SelectMany(e => e.Tags)
+            .. tagLists
+                .SelectMany(tags => tags)
                 .GroupBy(t => t, StringComparer.CurrentCultureIgnoreCase)
                 .OrderByDescending(g => g.Count())
                 .ThenBy(g => g.Key, StringComparer.CurrentCultureIgnoreCase)

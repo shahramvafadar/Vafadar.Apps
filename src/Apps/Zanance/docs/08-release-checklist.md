@@ -2288,3 +2288,12 @@ serialization refusal and continue only its exact original file without reseedin
 APK and delivery evidence is recorded in [the detailed qualification record](quality/entry-detail-publication.md). No schema/model, portable format,
 permission/provider or broader ANR/crash/A11Y/physical-device/Mac/iOS/store/release acceptance is
 inferred. Continue ready original financial workflow work under D-386 and the existing external gates.
+
+## D-427 - Complete original transaction editor publication
+
+The original editor source/publication batch is locally qualified with33 focused new behaviors,
+strict Windows/Android builds, retained native sequences and a complete signed offline candidate.
+The final APK is upgraded without reset and returns to Main0 with unchanged OS settings. Preserve
+negative observations and distinguish independent SQLite/native Save evidence from whole-device
+or release acceptance. D-428 aggregate ownership, D-386 runtime/A11Y and existing provider/Mac/store
+gates remain open. [Original qualification](quality/entry-editor-publication.md).

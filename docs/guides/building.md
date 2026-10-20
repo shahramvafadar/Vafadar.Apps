@@ -1967,3 +1967,14 @@ file; it never seeds a replacement. A completed metadata/financial action is nev
 an observer. The independent AndroidHome `entry-detail` phase compiles original sources/XAML in
 Release/AOT and retains its separate fixture. See the detailed D-426 quality record for scope and
 negative evidence; these commands are not general runtime, physical-device or release acceptance.
+
+## D-427 - Complete original transaction editor publication
+
+Run-StoreDrafts.ps1 -EntryFormReview uses a separate non-input Windows desktop and one original
+fictitious source. -EntryFormSourceRun <id> continues only that retained failed sequence; completed
+stages and accepted actions are not replayed. The independent AndroidHome entry-form phase compiles
+actual sources/XAML in Release/AOT. Its continuation retains the same review_run, original manifest,
+financial acceptance and native-action receipts. Native post-dialog observation awaits the original
+focused field; caption geometry uses visible line extents rather than trailing whitespace. Keep
+all negative evidence and original Case PIDs. These are focused app/source checks, not general
+runtime, physical-device, spoken-accessibility or release acceptance. See the D-427 quality record.

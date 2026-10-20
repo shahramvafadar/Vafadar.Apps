@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Complete original transaction forms (D-427)
+
+- Keep forms covered until all original references, transaction and refund facts are ready; offer Retry after a failed read.
+- Keep unsaved inputs on read-only refresh and clear previous optional values when a different form is opened.
+- Refuse an unavailable or changed original transaction instead of silently creating or overwriting another one.
+- Preserve both fees when copying a transfer, using new identities for the copied entries.
+- Keep old confirmations and known successful Saves from closing or changing a newer form.
+
 ### Complete transaction details before showing actions (D-426)
 
 - Keep details covered until the transaction, refunds and documents are ready; offer Retry after a failed read.

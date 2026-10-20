@@ -2948,3 +2948,26 @@ serialization refusal and continue only its exact original file without reseedin
 APK and delivery evidence is recorded in [the detailed qualification record](quality/entry-detail-publication.md). No schema/model, portable format,
 permission/provider or broader ANR/crash/A11Y/physical-device/Mac/iOS/store/release acceptance is
 inferred. Continue ready original financial workflow work under D-386 and the existing external gates.
+
+## D-427 - Complete original transaction editor publication
+
+The editor prepares its original references, group, refunds, tags and rules through one actual-file
+worker read transaction. Complete fields stay covered until publication; initial failure offers
+Retry and an unavailable explicit source never becomes a new blank entry. A different query owns
+fresh raw input and commands. Read-only refresh preserves the original draft; source changes refuse
+an unsafe Save. Original detail/template/receipt handoffs and the writer validate exact file/rights
+and original financial facts, including later refunds of sibling group entries. Both duplicate fees
+keep their values with fresh identities. Pending writer waiting and known acceptance never rearm
+saved money. Derived currency flags and optional icon reset finish before the form is uncovered.
+
+33 distinct focused new source behaviors, the related core tag case and23 resource cases pass;
+there is no full-suite replay. Original Windows evidence totals96 observations across retained
+processes, including18 language/theme/width contexts and two one-time native Save invocations.
+The independent Android sequence totals36 original observations, with two native Saves. Final
+strict builds, complete signed offline APK, no-reset Main upgrade and protected original form
+open/Cancel pass. Native observer failures and general Windows exits remain documented. No schema,
+compiled model, portable format, permission or provider change. D-428 remains the next separate
+aggregate-overlap/choice/writer/Undo batch. D-386 general runtime/A11Y priorities and external gates
+stand.
+
+[Original evidence and acceptance limits](quality/entry-editor-publication.md).

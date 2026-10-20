@@ -2146,3 +2146,12 @@ serialization refusal and continue only its exact original file without reseedin
 APK and delivery evidence is recorded in [the detailed qualification record](quality/entry-detail-publication.md). No schema/model, portable format,
 permission/provider or broader ANR/crash/A11Y/physical-device/Mac/iOS/store/release acceptance is
 inferred. Continue ready original financial workflow work under D-386 and the existing external gates.
+
+## D-427 - Complete original transaction editor publication
+
+Keep the original entry form fully covered until reference and financial source publication completes.
+Show translated read-only Retry after initial failure; a missing explicit source cannot offer a guessed
+blank transaction. Keep Cancel reachable. A new query owns fresh input, icon and commands; a retained
+read-only refresh preserves raw values. Complete both currency/fee flags before uncovering. Keep
+historical account identities, and leave a new multi-account choice empty when there is no explicit
+or configured default. Native matrices and scope are in [the original evidence](quality/entry-editor-publication.md).

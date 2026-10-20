@@ -3155,3 +3155,18 @@ are not written again. Delete retains exact original file/group/refund/document 
 Consume known commits before notification; following recovery only rereads. A refused viewer removes
 only its newly created never-dispatched cache file. Preserve original source/PID receipts after report
 failure; no seed or accepted command replay. D-386 priorities and external acceptance gates stand.
+
+## D-427 - Original transaction editor publication and raw ownership
+
+Prepare the complete original editor packet in one actual-file worker transaction without creating
+settings. Cover every field and derived currency/fee flag before enabling commands. Explicit missing
+sources never become blank new entries. A fresh routed identity clears all optional raw fields,
+including the icon; retain historical account references and require an explicit/default new account
+rather than guessing. Bind detail/template/receipt handoffs, commands, focus and confirmations to
+their original owner. Read-only refresh retains raw input and waits for its exact pending writer.
+Validate the original group and sibling refunds under the writer; preserve both duplicate fee values
+with fresh identities. Consume known acceptance before notification and never rearm it.
+Preserve original native action checkpoints before fallible observers. Reconstruct only a failed
+caption from its exact source, with explicit prior-action evidence and limits; never replay an
+ambiguous or accepted confirmation/Save. Native visible text extents exclude trailing whitespace.
+D-428 aggregate ownership remains separate; retain D-386 and external gates.

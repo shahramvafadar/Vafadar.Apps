@@ -608,24 +608,27 @@ public sealed partial class EntryDetailViewModel(
 
     private Task NavigateAsync(Func<EntryDetailSnapshot, Task> target) => RunOriginalAsync(owner => owner.NavigateAsync(target));
 
+    private static Dictionary<string, object> EditorDestination(EntryDetailSnapshot source, string key) =>
+        new() { [key] = source.EntryId, ["editorOrigin"] = new EntryEditorOrigin(source) };
+
     private Task EditAsync() => NavigateAsync(source => source.Inputs.HoldingTypeId is { } holding
         ? Shell.Current.GoToAsync(AppShell.HoldingDetailRoute, new Dictionary<string, object> { ["id"] = holding })
-        : Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["id"] = source.EntryId }));
+        : Shell.Current.GoToAsync(AppShell.EntryEditorRoute, EditorDestination(source, "id")));
 
     private Task RecordReimbursementAsync() => NavigateAsync(source => source.Inputs.HoldingTypeId is null
         && source.Entry is { Kind: EntryKind.Expense } entry
         && EntryActions.OpenReimbursement(entry, source.Inputs.Paybacks.Where(value => value.RefundOfId == entry.Id).ToArray()) > 0
-            ? Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["refundOf"] = source.EntryId, ["reimburse"] = true })
+            ? Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object>(EditorDestination(source, "refundOf")) { ["reimburse"] = true })
             : Task.CompletedTask);
 
     private Task RefundAsync() => NavigateAsync(source => source.Inputs.HoldingTypeId is null
         && source.Entry is { Kind: EntryKind.Expense } entry
         && EntryActions.Refundable(entry, source.Inputs.Paybacks.Where(value => value.RefundOfId == entry.Id).ToArray()) > 0
-            ? Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["refundOf"] = source.EntryId })
+            ? Shell.Current.GoToAsync(AppShell.EntryEditorRoute, EditorDestination(source, "refundOf"))
             : Task.CompletedTask);
 
     private Task DuplicateAsync() => NavigateAsync(source => source.Inputs.HoldingTypeId is null
-        ? Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["duplicate"] = source.EntryId }) : Task.CompletedTask);
+        ? Shell.Current.GoToAsync(AppShell.EntryEditorRoute, EditorDestination(source, "duplicate")) : Task.CompletedTask);
 
     private Task SaveRuleAsync() => RunOriginalAsync(async owner =>
     {
@@ -640,7 +643,7 @@ public sealed partial class EntryDetailViewModel(
             ? Shell.Current.GoToAsync(AppShell.SplitRoute, new Dictionary<string, object> { ["id"] = source.EntryId }) : Task.CompletedTask);
 
     private Task PayBackAsync() => NavigateAsync(source => source.Inputs.HoldingTypeId is null && source.Entry?.Kind == EntryKind.Income
-        ? Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object> { ["kind"] = nameof(EntryKind.IncomeReversal), ["of"] = source.EntryId })
+        ? Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object>(EditorDestination(source, "of")) { ["kind"] = nameof(EntryKind.IncomeReversal) })
         : Task.CompletedTask);
 
     private Task SaveAsTemplateAsync() => RunOriginalAsync(async owner =>

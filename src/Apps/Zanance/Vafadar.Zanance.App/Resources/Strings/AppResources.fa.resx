@@ -8378,4 +8378,19 @@
   <data name="Entry_RetryLoad" xml:space="preserve">
     <value>بارگذاری دوبارهٔ تراکنش</value>
   </data>
+  <data name="Editor_Loading" xml:space="preserve">
+    <value>در حال بارگذاری فرم تراکنش…</value>
+  </data>
+  <data name="Editor_RetryRead" xml:space="preserve">
+    <value>بارگذاری دوبارهٔ فرم</value>
+  </data>
+  <data name="Editor_LoadFailed" xml:space="preserve">
+    <value>فرم بارگذاری نشد. ورودی‌های شما حفظ شده‌اند. دوباره تلاش کنید یا فرم را ببندید.</value>
+  </data>
+  <data name="Editor_SourceUnavailable" xml:space="preserve">
+    <value>تراکنش یا قالب اصلی دیگر در دسترس نیست. تراکنش تازه‌ای ساخته نشده است. دوباره تلاش کنید یا فرم را ببندید.</value>
+  </data>
+  <data name="Editor_SourceChanged" xml:space="preserve">
+    <value>داده‌های اصلی تغییر کرده‌اند. ورودی‌های ذخیره‌نشدهٔ شما حفظ شده‌اند. برای بررسی داده‌های فعلی، فرم را ببندید و دوباره باز کنید.</value>
+  </data>
 </root>

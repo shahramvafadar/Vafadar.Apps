@@ -8355,4 +8355,19 @@ SHA-256 du XML original : {5}</value>
   <data name="Entry_RetryLoad" xml:space="preserve">
     <value>Recharger l’opération</value>
   </data>
+  <data name="Editor_Loading" xml:space="preserve">
+    <value>Chargement du formulaire de l’opération…</value>
+  </data>
+  <data name="Editor_RetryRead" xml:space="preserve">
+    <value>Recharger le formulaire</value>
+  </data>
+  <data name="Editor_LoadFailed" xml:space="preserve">
+    <value>Le formulaire n’a pas pu être chargé. Vos saisies sont conservées. Réessayez ou fermez le formulaire.</value>
+  </data>
+  <data name="Editor_SourceUnavailable" xml:space="preserve">
+    <value>L’opération ou le modèle d’origine n’est plus disponible. Aucune nouvelle opération n’a été créée. Réessayez ou fermez le formulaire.</value>
+  </data>
+  <data name="Editor_SourceChanged" xml:space="preserve">
+    <value>Les données d’origine ont changé. Vos saisies non enregistrées sont conservées. Fermez puis rouvrez ce formulaire pour vérifier les données actuelles.</value>
+  </data>
 </root>

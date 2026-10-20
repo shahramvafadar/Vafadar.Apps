@@ -103,6 +103,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         _localization = localization;
         _time = time;
         _categories = new CategoryLookup([], translator);
+        ObserveLoading(Loading);
         KindNames = [.. ChipKinds.Select(k => translator[$"EntryKind_{k}"])];
         Title = translator["Entry_NewTitle"];
         AmountText = string.Empty;
@@ -318,7 +319,6 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             .Select(tag => new TagSuggestion(tag))];
     }
 
-    [RelayCommand]
     private void AddTag(string tag) => TagsText = EntryTags.Format(EntryTags.Normalize([.. EntryTags.Parse(TagsText), tag]));
 
     [ObservableProperty]
@@ -348,7 +348,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     public bool NeedsAccount => Account is null && !HasNoAccounts;
 
     /// <summary>Gets a value indicating whether Save can be used now.</summary>
-    public bool CanSave => !IsBusy && Account is not null && _saveSession is { Accepted: false };
+    public bool CanSave => IsFormEditable && Account is not null && _saveSession is { Accepted: false };
 
     /// <summary>Gets whether this new supported transaction can open a detached repeating-plan draft.</summary>
     public bool ShowRepeat => _isNew && Kind is EntryKind.Expense or EntryKind.Income or EntryKind.Transfer;
@@ -366,11 +366,14 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
     protected override void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs e)
     {
-        base.OnPropertyChanged(e);
+        var publication = _publicationGuard; publication?.Invoke();
+        base.OnPropertyChanged(e); publication?.Invoke();
         if (e.PropertyName is nameof(IsBusy) or nameof(Account) or nameof(HasNoAccounts))
         {
             base.OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(CanSave)));
             base.OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(NeedsAccount)));
+            base.OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(IsFormEditable)));
+            base.OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(CanReloadForm)));
         }
 
         if (e.PropertyName is nameof(Account) or nameof(ToAccount) or nameof(AmountText) or nameof(ToAmountText) or nameof(FeeText) or nameof(DestinationFeeText) or nameof(ShowDestinationFee) or nameof(KindIndex))
@@ -380,7 +383,6 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     }
 
     // Undoes the last account change: the previous account and the amount as typed before (ZEX-P04).
-    [RelayCommand]
     private void UndoAccountChange()
     {
         if (_previousAccount is null)
@@ -460,194 +462,12 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     public EntryKind Kind => _refundOf is not null ? EntryKind.Refund : CanChangeKind ? ChipKinds[Math.Clamp(KindIndex, 0, ChipKinds.Length - 1)] : _entry.Kind;
 
     /// <summary>Gets a value indicating whether the user changed something.</summary>
-    public bool IsDirty => Snapshot() != _snapshot;
+    public bool IsDirty => _hasPublishedForm && Snapshot() != _snapshot;
 
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
     /// <summary>Query: <c>id</c> (edit), <c>duplicate</c> (copy of an entry), <c>refundOf</c> (refund), <c>kind</c> (new).</summary>
     public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
-
-    private async Task ApplyQueryAsync(IDictionary<string, object> query)
-    {
-        ArgumentNullException.ThrowIfNull(query);
-        var queryRevision = ++_saveRevision;
-        _saveSession = null;
-        OnPropertyChanged(nameof(CanSave));
-        var receiptVisit = query.TryGetValue("receiptVisit", out var receiptHandoff)
-            ? receiptHandoff as Receipts.ReceiptDraft ?? throw new ArgumentException("Unsupported receipt handoff.", nameof(query)) : null;
-        if (receiptVisit is not null)
-        {
-            try { await receiptVisit.ValidateAsync(_receiptReader, Get(query, "id")); }
-            catch (Exception exception) when (exception is not OutOfMemoryException)
-            { SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Receipt_ReadFailed"); query.Clear(); return; }
-        }
-        _loading = true;
-        _isNew = false;
-        _pendingAttachment = null;
-        try
-        {
-            TemplateVisit? templateVisit = null;
-            if (query.TryGetValue("templateVisit", out var handoff))
-            {
-                templateVisit = handoff as TemplateVisit ?? throw new ArgumentException("Unsupported template handoff.", nameof(query));
-                if (Get(query, "template") != templateVisit.TemplateId) throw new ArgumentException("The template handoff identity does not match.", nameof(query));
-            }
-            await LoadReferenceDataAsync();
-            var settings = _quick.Review!.Settings ?? new ZananceSettings();
-            _canAggregate = settings.Shows(Feature.AggregatedEntries);
-            _showsFee = settings.Shows(Feature.TransferFee);
-            _startDay = settings.MonthStartDay;
-            CanAggregate = (_canAggregate || IsAggregated) && !IsTransfer;
-            _destinationFee = null;
-            DestinationFeeText = string.Empty;
-            var active = Accounts;
-
-            if (Get(query, "id") is { } id && await _store.GetEntryAsync(id) is { } existing)
-            {
-                _entry = existing;
-                var groupEntries = existing.Kind == EntryKind.Transfer && existing.GroupId is { } group ? await _store.GetGroupAsync(group) : [];
-                _fee = EntryActions.FindTransferFee(existing, groupEntries);
-                _destinationFee = EntryActions.FindDestinationFee(existing, groupEntries);
-                if (existing.Kind == EntryKind.Refund && existing.RefundOfId is { } purchaseId)
-                {
-                    _refundOf = await _store.GetEntryAsync(purchaseId);
-                }
-
-                Title = _translator["Entry_EditTitle"];
-                LoadFrom(existing);
-            }
-            else if (Get(query, "duplicate") is { } sourceId && await _store.GetEntryAsync(sourceId) is { } source)
-            {
-                _entry = EntryActions.Duplicate(source, Today);
-                if (source.GroupId is { } group && EntryActions.FindTransferFee(source, await _store.GetGroupAsync(group)) is { } sourceFee)
-                {
-                    FeeText = MoneyText.ForInput(sourceFee.Amount, CurrencyOf(source.AccountId), _localization.CurrentCulture);
-                }
-
-                LoadFrom(_entry);
-            }
-            else if (Get(query, "refundOf") is { } purchaseId && await _store.GetEntryAsync(purchaseId) is { } purchase)
-            {
-                _refundOf = purchase;
-                var refunds = await _store.GetRefundsAsync(purchase.Id);
-                var refundable = EntryActions.Refundable(purchase, refunds);
-                if (query.ContainsKey("reimburse") && EntryActions.OpenReimbursement(purchase, refunds) is > 0 and var open)
-                {
-                    // Being paid back settles the receivable; it is a refund of the expense, not income (F2-TX-03).
-                    _entry = EntryActions.CreateReimbursement(purchase, open, purchase.AccountId, Today);
-                    Title = _translator["Entry_ReimbursementTitle"];
-                }
-                else
-                {
-                    _entry = EntryActions.CreateRefund(purchase, refundable, purchase.AccountId, Today);
-                    Title = _translator["Entry_RefundTitle"];
-                }
-
-                LoadFrom(_entry);
-            }
-            else if (query.TryGetValue("kind", out var reversalKind) && reversalKind?.ToString() == nameof(EntryKind.IncomeReversal))
-            {
-                // Paying income back reduces income; it is not an expense (REF-05).
-                var defaultAccount = active.FirstOrDefault(a => a.Id == EntryAccountContract.Choose([.. _accounts.Values], null, null, settings.DefaultAccountId).AccountId);
-                _entry = new LedgerEntry { Kind = EntryKind.IncomeReversal, Date = Today, AccountId = defaultAccount?.Id ?? Guid.Empty };
-                if (Get(query, "of") is { } incomeId && await _store.GetEntryAsync(incomeId) is { } income)
-                {
-                    _entry.AccountId = income.AccountId;
-                    _entry.CategoryId = income.CategoryId;
-                    _entry.Title = income.Title;
-                }
-
-                LoadFrom(_entry);
-            }
-            else
-            {
-                var kind = query.TryGetValue("kind", out var value) && Enum.TryParse<EntryKind>(value?.ToString(), out var parsed) ? parsed : EntryKind.Expense;
-
-                // One rule for every path (ZEX-S0103): the context account (an account page or a prepared transfer),
-                // then a valid default account, otherwise none – never a silent fallback to the first account.
-                var choice = EntryAccountContract.Choose([.. _accounts.Values], null, Get(query, "account") ?? Get(query, "from"), settings.DefaultAccountId);
-                var defaultAccount = active.FirstOrDefault(a => a.Id == choice.AccountId);
-                _entry = new LedgerEntry { Kind = kind, Date = Today, AccountId = defaultAccount?.Id ?? Guid.Empty };
-                _isNew = true;
-                CanChangeKind = true;
-                KindIndex = Math.Max(0, Array.IndexOf(ChipKinds, kind));
-
-                // Advanced shows payee, note and foreign amount directly; Simple keeps them one tap away (§14).
-                ShowDetails = settings.Shows(Feature.EntryDetails);
-                Account = defaultAccount;
-                ToAccount = active.FirstOrDefault(a => a.Id != defaultAccount?.Id);
-
-                // A prepared transfer, e.g. repaying a loan or getting lent money back (F2-DEBT-01).
-                if (Get(query, "from") is { } fromId && active.FirstOrDefault(a => a.Id == fromId) is { } from)
-                {
-                    Account = from;
-                    _entry.AccountId = from.Id;
-                    if (ToAccount?.Id == from.Id)
-                    {
-                        ToAccount = active.FirstOrDefault(a => a.Id != from.Id);
-                    }
-                }
-
-                if (Get(query, "to") is { } toId && active.FirstOrDefault(a => a.Id == toId) is { } to)
-                {
-                    ToAccount = to;
-                    if (Account?.Id == to.Id)
-                    {
-                        Account = active.FirstOrDefault(a => a.Id != to.Id);
-                        _entry.AccountId = Account?.Id ?? Guid.Empty;
-                    }
-                }
-
-                // Quick templates fill a new entry only (TX-04).
-                Templates = kind is EntryKind.Income or EntryKind.Expense or EntryKind.Transfer ? _quick.Review!.Templates : [];
-                HasTemplates = Templates.Count > 0;
-
-                // Shown like on Home: the category icon in its colour (slate for a transfer).
-                TemplateChips = [.. Templates.Select(t => t.Kind == EntryKind.Transfer
-                    ? new TemplateChip(t, Symbol.ArrowSwap, Presentation.Palette.TransferText) { CanApply = _quick.Review!.Work.CanApplyTemplate(t.Id) }
-                    : new TemplateChip(t, Icons.Parse(t.Icon, _categories.Icon(t.CategoryId)), _categories.Color(t.CategoryId)) { CanApply = _quick.Review!.Work.CanApplyTemplate(t.Id) })];
-
-                // A template chosen on Home fills the form at once (Home quick add).
-                if (query.ContainsKey("template"))
-                {
-                    var templateId = Get(query, "template") ?? throw new ArgumentException("Unsupported template identity.", nameof(query));
-                    if (templateVisit is null)
-                    {
-                        var chosen = Templates.SingleOrDefault(t => t.Id == templateId)
-                            ?? throw new InvalidOperationException("The original template is no longer available.");
-                        await ApplyTemplateAsync(chosen);
-                    }
-                    else await _quick.ApplyTemplateVisitAsync(templateVisit, ApplyReviewedTemplate);
-                    _loading = true;
-                }
-            }
-        }
-        finally
-        {
-            _loading = false;
-        }
-
-        UpdateKindState();
-        await UpdateRefundInfoAsync();
-        _snapshot = Snapshot();
-        if (receiptVisit is not null)
-        {
-            // D-170: Shell/reference reads can outlive the original file or receipt. Never apply a late foreign suggestion.
-            try
-            {
-                await receiptVisit.ValidateAsync(_receiptReader, _isNew ? null : _entry.Id);
-                query["receipt"] = receiptVisit.Suggestion;
-                if (receiptVisit.File is { } file) query["receiptFile"] = new PendingAttachment(file.Name, file.ContentType, file.Data);
-            }
-            catch (Exception exception) when (exception is not OutOfMemoryException)
-            { SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Receipt_ReadFailed"); query.Clear(); return; }
-        }
-        if (queryRevision != _saveRevision) return;
-        ApplyReceipt(query);
-        _saveSession = new EntryEditorSaveSession(_store, _quick.Review!);
-        OnPropertyChanged(nameof(CanSave));
-        query.Clear();
-    }
 
     /// <summary>Gets the notice shown while values read from a receipt wait for review (D-31).</summary>
     [ObservableProperty]
@@ -683,12 +503,15 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         ReceiptSourceDirection = ReceiptSource?.Any(c => c is >= '؀' and <= 'ۿ') == true
             ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
         ReceiptChoices.Clear();
+        var publication = _publicationGuard;
         foreach (var candidate in receipt.Candidates)
         {
+            publication?.Invoke();
             // Isolate the number and printed unit together in RTL; this is the receipt unit, not a display-unit guess.
             var text = "\u2066\u200E" + candidate.Amount.ToString("0.############################", culture) + " "
                 + (candidate.UnitLabel ?? _translator["Receipt_UnspecifiedUnit"]) + "\u200E\u2069";
             ReceiptChoices.Add(new(candidate, _translator.Format("Receipt_UseAmount", Vafadar.Localization.Formatting.NativeDigits.Apply(text) ?? text)));
+            publication?.Invoke();
         }
 
         if (receipt.AmountStatus == ReceiptAmountStatus.Found && receipt.Candidates.Count == 1
@@ -737,7 +560,6 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     }
 
     // A manual choice is still only an unsaved form edit, and explicit currency conflicts need manual amount entry.
-    [RelayCommand]
     private void UseReceiptAmount(ReceiptChoice choice)
     {
         if (choice.Candidate.TryMinor(Account?.CurrencyCode, out var minor))
@@ -778,13 +600,24 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     public partial bool HasTemplates { get; set; }
 
     // Fills the form from a template; the date stays today and nothing is saved until the user taps Save (TX-04).
-    [RelayCommand]
     private async Task ApplyTemplateAsync(EntryTemplate template)
     {
         if (IsBusy) return;
+        var epoch = _formEpoch; var owner = _loadSession;
+        bool Current() => epoch == _formEpoch && !_formDeparted && ReferenceEquals(owner, _loadSession);
         IsBusy = true;
-        try { await _quick.ApplyTemplateAsync(template.Id, ApplyReviewedTemplate); }
-        finally { IsBusy = false; }
+        try
+        {
+            await _quick.ApplyTemplateAsync(template.Id, reviewed =>
+            {
+                if (!Current()) return;
+                void Guard() { if (!Current()) throw new OperationCanceledException("The original template form retired."); }
+                _publicationGuard = Guard;
+                try { ApplyReviewedTemplate(reviewed); Guard(); }
+                finally { _publicationGuard = null; }
+            });
+        }
+        finally { if (Current()) IsBusy = false; }
     }
 
     private void ApplyReviewedTemplate(EntryTemplate template)
@@ -824,18 +657,14 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private static Guid? Get(IDictionary<string, object> query, string key) =>
         query.TryGetValue(key, out var value) && (value is Guid guid || Guid.TryParse(value?.ToString(), out guid)) ? guid : null;
 
-    private async Task LoadReferenceDataAsync()
+    private void PublishReferenceData(EntryEditorReadSnapshot source)
     {
-        await _quick.LoadAsync();
-        var accounts = _quick.Review!.Accounts;
+        var accounts = source.Inputs.Resources.Accounts;
         _accounts = accounts.ToDictionary(a => a.Id);
-        _categories = new CategoryLookup(_quick.Review.Categories, _translator);
+        _categories = new CategoryLookup(source.Inputs.Resources.Categories, _translator);
         Accounts = [.. accounts.Where(a => !a.IsArchived).Select(a => new AccountChoice(a.Id, a.Name, a.CurrencyCode))];
-        ToAccounts = Accounts;
-        HasNoAccounts = Accounts.Count == 0;
-        _tagsInUse = EntryTags.InUse(await _store.GetEntriesAsync(Today.AddYears(-2), Today.AddYears(1)));
-        _rules = await _store.GetCategoryRulesAsync();
-        UpdateTagSuggestions();
+        ToAccounts = Accounts; HasNoAccounts = Accounts.Count == 0;
+        _tagsInUse = source.Inputs.Tags; _rules = source.Inputs.Rules; UpdateTagSuggestions();
     }
 
     private void LoadFrom(LedgerEntry entry)
@@ -1008,7 +837,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         ToCurrencyCode = ToAccount?.CurrencyCode ?? CurrencyCode;
         ShowToAmount = IsTransfer && Account is not null && ToAccount is not null && Account.CurrencyCode != ToAccount.CurrencyCode;
         // D-101: Simple must expose an existing fee so an unrelated edit never silently removes it.
-        ShowDestinationFee = IsTransfer && (_showsFee || _destinationFee is not null) && ToAccount is not null;
+        ShowDestinationFee = IsTransfer && (_showsFee || _destinationFee is not null || !string.IsNullOrWhiteSpace(DestinationFeeText)) && ToAccount is not null;
         ToAmountLabel = _translator.Format("Entry_ToAmount", ToCurrencyCode);
     }
 
@@ -1036,8 +865,10 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             .OrderBy(c => c.SystemKey == DefaultCategories.Uncategorized)
             .ThenBy(c => c.SortOrder);
 
+        var publication = _publicationGuard;
         foreach (var category in candidates)
         {
+            publication?.Invoke();
             var name = CategoryLookup.NameOf(category, _translator);
             var parent = _categories.Get(category.ParentId);
             var label = parent is null ? name : $"{CategoryLookup.NameOf(parent, _translator)} › {name}";
@@ -1045,10 +876,11 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             {
                 IsSelected = category.Id == selectedId,
             });
+            publication?.Invoke();
         }
     }
 
-    private async Task UpdateRefundInfoAsync()
+    private void UpdateRefundInfo(EntryEditorReadSnapshot source)
     {
         if (_refundOf is null)
         {
@@ -1056,13 +888,12 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             return;
         }
 
-        var refundable = EntryActions.Refundable(_refundOf, await _store.GetRefundsAsync(_refundOf.Id), exceptRefundId: _entry.Id);
+        var refundable = EntryActions.Refundable(_refundOf, source.Inputs.Paybacks, exceptRefundId: _entry.Id);
         var presenter = new EntryPresenter(_accounts, _categories, _translator, _localization.CurrentCulture);
         RefundInfo = _translator.Format("Entry_RefundOf", presenter.Title(_refundOf)) + Environment.NewLine
             + _translator.Format("Entry_Refundable", MoneyText.Format(refundable, CurrencyOf(_refundOf.AccountId), _localization.CurrentCulture));
     }
 
-    [RelayCommand]
     private void SelectCategory(CategoryChoice choice)
     {
         _categoryChosen = true;
@@ -1124,7 +955,6 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         }
     }
 
-    [RelayCommand]
     private void UndoSuggestion()
     {
         SelectById(_beforeSuggestion);
@@ -1132,7 +962,6 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         _categoryChosen = true;
     }
 
-    [RelayCommand]
     private void ToggleDetails() => ShowDetails = !ShowDetails;
 
     // Finds overlaps of the entries to save with aggregated entries and asks: link and replace, keep both or cancel.
@@ -1200,7 +1029,6 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     }
 
     /// <summary>Opens the plan editor with detached supported values; neither navigation nor validation saves money.</summary>
-    [RelayCommand]
     private async Task RepeatAsync()
     {
         if (!ShowRepeat || !CanSave || Account is null) { return; }
@@ -1232,14 +1060,22 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             CategoryId = Categories.FirstOrDefault(category => category.IsSelected)?.Id, Note = Note,
             ToAccountId = ToAccount?.Id, ToCurrencyCode = ToAccount?.CurrencyCode, ToAmount = validation.DestinationAmount,
         };
+        var epoch = _formEpoch; var owner = _loadSession; var raw = Snapshot();
+        bool Current() => epoch == _formEpoch && !_formDeparted && ReferenceEquals(owner, _loadSession);
         IsBusy = true;
         try
         {
+            if (owner is null) return; await owner.ValidateAsync();
+            if (!Current() || raw != Snapshot()) return;
             // The original editor stays on the navigation stack with its complete unsaved draft and attachments.
             await Presentation.Failures.GuardAsync(() => Shell.Current.GoToAsync(AppShell.PlanEditorRoute,
                 new Dictionary<string, object> { ["entryDraft"] = draft }));
         }
-        finally { IsBusy = false; }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            if (Current()) { owner?.Retire(); _quick.Retire(); Loading = new(); await FailFormReadAsync(Loading, error); }
+        }
+        finally { if (Current()) IsBusy = false; }
     }
 
     /// <summary>Prevents a receipt amount from being reinterpreted after a display-unit change in another form.</summary>
@@ -1254,7 +1090,6 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         return false;
     }
 
-    [RelayCommand]
     private async Task SaveAsync()
     {
         if (IsBusy || _saveSession is not { Accepted: false } session)
@@ -1262,6 +1097,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             return;
         }
         var revision = _saveRevision; var originalEntry = _entry; var rawDraft = Snapshot();
+        var loadOwner = _loadSession;
 
         SaveError = null;
         AmountError = AccountError = ToAccountError = ToAmountError = FeeError = DestinationFeeError
@@ -1279,13 +1115,24 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         IsBusy = true;
         try
         {
+            if (loadOwner is null) return;
+            await loadOwner.ValidateAsync();
+            if (!OwnsSave(session, revision, originalEntry) || rawDraft != Snapshot()) return;
             await _assetConfirmation.RunAsync(Kind, _accounts.GetValueOrDefault(Account.Id), async () =>
             {
                 if (OwnsSave(session, revision, originalEntry) && rawDraft == Snapshot())
                     await SaveConfirmedAsync(session, revision, originalEntry, rawDraft);
             });
         }
-        finally { IsBusy = false; }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            if (OwnsSave(session, revision, originalEntry))
+            {
+                _loadSession?.Retire(); _quick.Retire(); Loading = new();
+                await FailFormReadAsync(Loading, error);
+            }
+        }
+        finally { if (OwnsSave(session, revision, originalEntry)) { IsBusy = false; PublishFormAvailability(); } }
     }
 
     /// <summary>Validates and saves the editor draft only after any required valued-asset consent.</summary>
@@ -1435,7 +1282,14 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         catch (Exception ex) when (ex is not OutOfMemoryException && !saved)
         {
             // The input stays in the form (TX-06, AT-04).
-            if (OwnsSave(session, revision, originalEntry)) SaveError = _translator["Common_SaveFailed"];
+            if (OwnsSave(session, revision, originalEntry))
+            {
+                SaveError = CommercialFailureMessage.OrFallback(ex, _translator, "Common_SaveFailed", draftKept: true);
+                if (ex is EntryEditorSourceChangedException)
+                {
+                    _loadSession?.Retire(); _quick.Retire(); Loading = new(); await FailFormReadAsync(Loading, ex);
+                }
+            }
         }
 
         // Leaving the page is not part of saving: a navigation problem after a successful save must not say "not saved".
@@ -1456,19 +1310,38 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         revision == _saveRevision && ReferenceEquals(_saveSession, session) && ReferenceEquals(_entry, entry);
 
     /// <summary>Retires only pending native/save callbacks when the form leaves; raw input and known acceptance remain.</summary>
-    public void RetirePendingSave() => _saveRevision++;
+    public void RetirePendingSave()
+    {
+        _publicationGuard = null; _saveRevision++; _formEpoch++; _formDeparted = true;
+        _loadSession?.Retire(); _quick.Retire(); _formLoadTask = null; IsBusy = false; ResetFormCommands(); PublishFormAvailability();
+    }
 
-    [RelayCommand]
     private async Task CancelAsync()
     {
+        var epoch = _formEpoch; var source = _loadSession; var draft = Snapshot();
         if (!IsDirty || await ConfirmDiscardAsync())
         {
-            await Shell.Current.GoToAsync("..");
+            if (epoch == _formEpoch && !_formDeparted && ReferenceEquals(source, _loadSession) && draft == Snapshot())
+                await Shell.Current.GoToAsync("..");
         }
     }
 
-    [RelayCommand]
-    private Task AddAccountAsync() => Shell.Current.GoToAsync($"../{AppShell.AccountEditorRoute}");
+    private async Task AddAccountAsync()
+    {
+        var epoch = _formEpoch; var owner = _loadSession;
+        if (owner is null) return;
+        try
+        {
+            await owner.ValidateAsync();
+            if (epoch == _formEpoch && !_formDeparted && ReferenceEquals(owner, _loadSession))
+                await Shell.Current.GoToAsync($"../{AppShell.AccountEditorRoute}");
+        }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            if (epoch == _formEpoch && !_formDeparted && ReferenceEquals(owner, _loadSession))
+            { owner.Retire(); _quick.Retire(); Loading = new(); await FailFormReadAsync(Loading, error); }
+        }
+    }
 
     /// <summary>Asks whether unsaved changes may be discarded.</summary>
     public Task<bool> ConfirmDiscardAsync() => Shell.Current.DisplayAlertAsync(

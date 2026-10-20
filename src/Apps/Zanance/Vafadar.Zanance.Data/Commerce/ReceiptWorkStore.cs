@@ -31,6 +31,8 @@ public sealed class ReceiptReadReview
     public Guid? AttachmentId { get; }
     /// <summary>Gets the detached stored compact file; transient camera originals are never stored here.</summary>
     public EntryAttachment? Attachment { get; }
+    /// <summary>Checks an editor's actual-file identity before any destination row query.</summary>
+    public bool IsOriginalFile(string path) => string.Equals(DatabasePath, path, StringComparison.Ordinal);
     /// <summary>Rechecks original cached rights, including inactive-to-active changes.</summary>
     public void EnsureCurrent() { _access.EnsureSnapshotCurrent(); _access.DemandFeature(CommercialFeature.ReceiptReading); }
     /// <summary>Captures every original metadata field and full-content identity without logging file bytes.</summary>

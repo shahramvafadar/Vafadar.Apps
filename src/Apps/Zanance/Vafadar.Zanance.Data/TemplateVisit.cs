@@ -7,6 +7,12 @@ public sealed class TemplateVisit
     internal TemplateVisit(QuickResourceReview review, Guid templateId) { Review = review; TemplateId = templateId; }
     /// <summary>Gets the original identity; this value alone never grants new draft activity.</summary>
     public Guid TemplateId { get; }
+    /// <summary>Checks the original destination file and cached choice rights before editor row reads.</summary>
+    public bool IsOriginalFile(string path)
+    {
+        Review.TemplateChoice.Access.EnsureSnapshotCurrent(); Review.FilterChoice.Access.EnsureSnapshotCurrent();
+        return string.Equals(Review.TemplateChoice.DatabasePath, path, StringComparison.Ordinal);
+    }
     /// <summary>Gets the original source authority used only by actual-file destination validation.</summary>
     internal QuickResourceReview Review { get; }
 }

@@ -5,6 +5,7 @@ public partial class EntryEditorPage : ContentPage
     private readonly EntryEditorViewModel _viewModel;
     private bool _observingValidation;
     private int _validationVersion;
+    private long _focusedEpoch = long.MinValue;
 
     public EntryEditorPage(EntryEditorViewModel viewModel)
     {
@@ -19,17 +20,40 @@ public partial class EntryEditorPage : ContentPage
         _viewModel.ValidationFailed -= OnValidationFailed;
         _viewModel.ValidationFailed += OnValidationFailed;
 
-        // Quick entry (UX-04): the amount is the first thing to type.
-        if (string.IsNullOrEmpty(_viewModel.AmountText))
+        _viewModel.PropertyChanged -= OnFormChanged; _viewModel.PropertyChanged += OnFormChanged;
+        _ = Presentation.Failures.GuardAsync(_viewModel.ResumeFormAsync); ScheduleOriginalAmountFocus();
+    }
+
+    private void OnFormChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs args)
+    {
+        if (args.PropertyName is nameof(EntryEditorViewModel.CanSave) or nameof(EntryEditorViewModel.IsFormEditable)) ScheduleOriginalAmountFocus();
+    }
+    private bool OtherFieldOwnsFocus(Element root)
+    {
+        if (root is InputView { IsFocused: true } input && !ReferenceEquals(input, AmountEntry)) return true;
+        if (root is IVisualTreeElement tree)
+            foreach (var child in tree.GetVisualChildren().OfType<Element>())
+                if (OtherFieldOwnsFocus(child)) return true;
+        return false;
+    }
+    private void ScheduleOriginalAmountFocus()
+    {
+        if (!_observingValidation || !_viewModel.IsFormEditable || _viewModel.HasNoAccounts
+            || !string.IsNullOrEmpty(_viewModel.AmountText) || _focusedEpoch == _viewModel.FormEpoch) return;
+        var epoch = _viewModel.FormEpoch; _focusedEpoch = epoch;
+        // Focus only the completed original form, never a departed callback or a newer routed editor.
+        Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(350), () =>
         {
-            Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(350), () => AmountEntry.Focus());
-        }
+            if (_observingValidation && epoch == _viewModel.FormEpoch && _viewModel.IsFormEditable
+                && string.IsNullOrEmpty(_viewModel.AmountText) && Handler is not null
+                && !OtherFieldOwnsFocus(Content)) AmountEntry.Focus();
+        });
     }
 
     /// <summary>Stops scroll requests when this form leaves the visible navigation lifetime.</summary>
     protected override void OnDisappearing()
     {
-        _viewModel.ValidationFailed -= OnValidationFailed;
+        _viewModel.ValidationFailed -= OnValidationFailed; _viewModel.PropertyChanged -= OnFormChanged;
         _viewModel.RetirePendingSave();
         _observingValidation = false;
         _validationVersion++;
@@ -126,18 +150,14 @@ public partial class EntryEditorPage : ContentPage
 
     protected override bool OnBackButtonPressed()
     {
+        if (_viewModel.IsBusy) return true;
         if (!_viewModel.IsDirty)
         {
             return base.OnBackButtonPressed();
         }
 
-        Dispatcher.Dispatch(async () =>
-        {
-            if (await _viewModel.ConfirmDiscardAsync())
-            {
-                await Shell.Current.GoToAsync("..");
-            }
-        });
+        var originalCancel = _viewModel.CancelCommand;
+        Dispatcher.Dispatch(async () => await originalCancel.ExecuteAsync(null));
         return true;
     }
 }
