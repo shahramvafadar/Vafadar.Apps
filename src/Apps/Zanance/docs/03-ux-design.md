@@ -2030,3 +2030,13 @@ packets/exact three profiles/OS are restored and the phone turn released. Only t
 fixture is retired. No new app/APK/tests/builds or wider D-386/iOS/external/release acceptance is
 claimed. The observed refund category is Uncategorized, without a Fees-selection claim. See
 [original evidence, observer continuations and remaining gates](quality/physical-holding-type-price-history.md).
+
+## Coherent holding overview publication (D-418)
+
+Keep loading and explicit error/Retry separate from the ready/empty overview. Publish the complete
+original file's quantities, known per-currency values, missing values and fine-metal totals together
+under the cover; do not initialize settings to display an empty list. Retire pending/retained row
+actions on departure and refuse a later opened file. Preserve the existing action dock and row layout.
+Use dedicated six-language Holdings loading/Retry captions, not transaction wording. Native semantic
+names are compared with their actual bound descriptions; never blindly rewrite user identifiers.
+See [original runtime evidence and limits](quality/holding-overview.md).

@@ -8331,4 +8331,10 @@ SHA-256 du XML original : {5}</value>
   <data name="AssetType_SavedNeedsReview" xml:space="preserve">
     <value>Le type d’actif a été enregistré, mais la mise à jour ou le retour suivant n’a pas abouti. Fermez ce formulaire et vérifiez le type enregistré ; il est inutile de l’enregistrer à nouveau.</value>
   </data>
+  <data name="Holdings_Loading" xml:space="preserve">
+    <value>Chargement des biens…</value>
+  </data>
+  <data name="Holdings_RetryLoad" xml:space="preserve">
+    <value>Recharger les biens</value>
+  </data>
 </root>

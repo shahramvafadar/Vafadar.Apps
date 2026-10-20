@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Load a complete holding overview together (D-418)
+
+- Keep quantities, prices and totals from the same profile and coherent read.
+- Show a clear loading state and Retry after failure; prevent old row actions after leaving the page.
+- Keep an empty list read-only and use holding-specific loading text in all six languages.
+
 ### Original holding lifecycle checked on Android (D-417)
 
 - Verify the existing type form, range feedback, manual prices, immediate history Undo and archive on Samsung.

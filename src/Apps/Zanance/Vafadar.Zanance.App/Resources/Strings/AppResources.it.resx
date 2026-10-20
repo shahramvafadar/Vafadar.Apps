@@ -8343,4 +8343,10 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="AssetType_SavedNeedsReview" xml:space="preserve">
     <value>Il tipo di bene è stato salvato, ma l’aggiornamento o il ritorno successivo non è stato completato. Chiudi il modulo e verifica il tipo salvato; non serve salvarlo di nuovo.</value>
   </data>
+  <data name="Holdings_Loading" xml:space="preserve">
+    <value>Caricamento dei beni…</value>
+  </data>
+  <data name="Holdings_RetryLoad" xml:space="preserve">
+    <value>Ricarica i beni</value>
+  </data>
 </root>

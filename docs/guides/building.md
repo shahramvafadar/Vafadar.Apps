@@ -1869,3 +1869,15 @@ receipt/file/digest and invokes zero financial commands. The independent Android
 phase has the same original boundary; observe the exact original PID/pass. Its caption-only
 continuation uses `review_type_captions=true` with the original baseline. Preserve accepted Cases,
 PIDs, raw fields, failures and files; never replay original seeds/commands to repair an observer.
+
+## Original holding overview qualification (D-418)
+
+`eng/scripts/Run-StoreDrafts.ps1 -HoldingOverviewReview` owns one original independent overview and
+empty file,18 en/fa/de/theme/width contexts and56 captures. After a terminal observer failure,
+`-HoldingOverviewContinuation <original-run>` retains exact original files/Case PIDs and only finishes
+pending contexts. Once completed, changed loading/Retry copy alone uses `-HoldingOverviewCaptionsOnly`
+with both that original continuation id and `-HoldingOverviewCompletedRun <completed-run>`; this adds
+36 caption captures without reseeding or replaying ready/navigation checks. Keep original files and
+checkpoint hashes. Android phases `holding-overview` / `holding-overview-captions` retain one original
+run and completed baseline; observe the exact live PID/pass using Read-ReviewReport.ps1. These are
+independent native controls plus navigation effect ports, not physical-device/OS-route acceptance.

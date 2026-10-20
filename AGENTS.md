@@ -3066,3 +3066,14 @@ tap alone is not proof of its final selected state; report the observed cold cat
 Short holding Undo is exercised immediately in its original view/process, before the one terminal
 cold. Restore original Main/public packets/profile set/OS and retire only the new inactive fixture
 before releasing the coordinated phone turn. Retain D-386 priorities and wider platform gates.
+
+## D-418 - Original coherent holding overview
+
+Read existing overview settings/types/events/prices/places through one actual-file worker transaction,
+without initializing settings. Prepare the whole packet before covered publication; retry only bounded
+same-file supersession. Refuse changed file/input/rights, retire departed work and recheck exact current
+row/file before native navigation even under inactive test policy. Preserve the explicit local Retry.
+Native semantic checks compare the actual bound description, not blanket digit conversion of user
+identifiers. Continue a terminal observer failure only on exact original files/checkpoints and retain
+original Case PIDs; caption-only correction never replays accepted navigation, seeds or financial work.
+Keep D-386 priorities and wider physical/platform/release gates separate.

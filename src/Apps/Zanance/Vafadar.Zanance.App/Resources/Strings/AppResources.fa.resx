@@ -8354,4 +8354,10 @@
   <data name="AssetType_SavedNeedsReview" xml:space="preserve">
     <value>نوع دارایی ذخیره شد، اما به‌روزرسانی یا بازگشت بعدی کامل نشد. فرم را ببندید و نوع ذخیره‌شده را بررسی کنید؛ نیازی به ذخیرهٔ دوباره نیست.</value>
   </data>
+  <data name="Holdings_Loading" xml:space="preserve">
+    <value>در حال بارگذاری دارایی‌های مقداری…</value>
+  </data>
+  <data name="Holdings_RetryLoad" xml:space="preserve">
+    <value>بارگذاری دوبارهٔ دارایی‌های مقداری</value>
+  </data>
 </root>

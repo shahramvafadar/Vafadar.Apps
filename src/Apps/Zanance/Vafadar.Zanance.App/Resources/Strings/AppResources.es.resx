@@ -8323,4 +8323,10 @@ SHA-256 del XML original: {5}</value>
   <data name="AssetType_SavedNeedsReview" xml:space="preserve">
     <value>El tipo de activo se guardó, pero la actualización o el regreso posterior no se completaron. Cierra el formulario y revisa el tipo guardado; no es necesario guardarlo otra vez.</value>
   </data>
+  <data name="Holdings_Loading" xml:space="preserve">
+    <value>Cargando bienes…</value>
+  </data>
+  <data name="Holdings_RetryLoad" xml:space="preserve">
+    <value>Volver a cargar los bienes</value>
+  </data>
 </root>

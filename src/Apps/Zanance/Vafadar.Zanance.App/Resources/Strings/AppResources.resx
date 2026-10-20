@@ -8383,4 +8383,10 @@ Original XML SHA-256: {5}</value>
   <data name="AssetType_SavedNeedsReview" xml:space="preserve">
     <value>The holding type was saved, but a following update or return could not finish. Close this form and review the saved type; saving again is not needed.</value>
   </data>
+  <data name="Holdings_Loading" xml:space="preserve">
+    <value>Loading holdings…</value>
+  </data>
+  <data name="Holdings_RetryLoad" xml:space="preserve">
+    <value>Load holdings again</value>
+  </data>
 </root>

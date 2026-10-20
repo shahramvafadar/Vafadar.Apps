@@ -7658,3 +7658,17 @@ made. Original host observer failures continue only pending reads/commands, neve
 No unit-test count increase, private database/key/id equality, physical receipt Undo, all-device,
 D-386 runtime/A11Y, Mac/iOS, external/store/expert or release acceptance is inferred. Exact-head hosted
 CI is checked once separately. See [original evidence and limits](quality/physical-holding-type-price-history.md).
+
+## D-418 - One original coherent holding overview
+
+Replace separate initializing/profile-following overview reads with one actual-file worker transaction
+and a complete prepared row/value packet. Recheck original source/rights, bound same-file supersession,
+cover loading/failure with explicit Retry, and retire departed publication/native targets. Open/Add
+check the actual file even under inactive test policy; an empty read creates no settings. Nineteen
+distinct new actual app/SQLite cases and23 resource checks pass in selective cohorts, without a full
+suite or accepted financial replay. Original Windows and Release/AOT Android loading/error/Retry,
+ready/empty, retirement and native targets preserve all typed fixture rows. Only changed six-language
+loading/Retry captions are rechecked after visual correction. Strict builds, complete signed offline
+APK and no-reset emulator Main/Home0/OS restoration pass; Samsung is untouched. No schema/model or
+privacy boundary changes, speed/general ANR/crash/A11Y/device/iOS/store/release acceptance is claimed.
+See [original evidence, observer continuation and limits](quality/holding-overview.md).

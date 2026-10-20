@@ -665,3 +665,16 @@ financial receipt/digest stores only original detached raw caption states. Read-
 requires `review_type_captions=true` and that original baseline, without replaying accepted commands,
 seeds or writer authority. Native Save/feedback/enablement/focus are checked separately from explicit
 navigation ports; main private data/keys and phone input are not used. See application quality/holding-type-editor.md.
+
+## Original coherent holding overview (D-418)
+
+Phase `holding-overview` uses actual HoldingsPage/model and independent original SQLite inputs for
+loading, one injected original failure/native Retry, ready rows, Open/Add, departure and empty read.
+Six en/fa/de/theme contexts preserve all typed rows and contain zero ledger/UI financial commands.
+After the exact original terminal report, `holding-overview-captions` requires that same review_run,
+a fresh comparison and original completed review_baseline. It reopens exact original files read-only
+and checks only changed loading/error/Retry captions, without migrate/seed/ready/navigation replay.
+Case PIDs remain original. Native PerformClick/name/target/focus checks are separate from explicit
+navigation effect ports. Read-ReviewReport.ps1 must observe the exact live original PID/pass; it does
+not restart a timed-out process or establish main/phone/general ANR acceptance. See application
+quality/holding-overview.md for original failures, continuation and final Main restoration.

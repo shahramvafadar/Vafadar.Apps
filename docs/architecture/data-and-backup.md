@@ -2539,3 +2539,14 @@ writer rechecks source, fresh rights and pending raw inputs, and saves a detache
 icon/archive/order and dimension rules. Known acceptance consumes the original review before native
 publication/return. Empty query redelivery cannot turn a missing edit into creation. No schema/model,
 portable format or new network data is introduced. See Zanance quality/holding-type-editor.md.
+
+## Coherent holding overview reads (D-418)
+
+HoldingOverviewSnapshot retains the actual factory file/access and detached settings/types/events/
+valuations/locations packet with explicit AOT serialization metadata. The captured lease is read on a
+worker in one deferred SQLite transaction; SettingsRowReader does not create a missing row. Source
+validation uses another coherent original-file transaction and distinguishes bounded same-file
+supersession from foreign/mutated/retired input. Cached rights guard each covered native assignment.
+Navigation checks actual factory identity without another keyed read. Page retirement cancels pending
+work and prevents retained rows from reaching a replacement profile. No model, migration or private
+storage format changes. See application quality/holding-overview.md for original WAL/runtime evidence.

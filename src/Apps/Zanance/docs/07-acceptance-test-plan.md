@@ -4707,3 +4707,17 @@ packets/exact three profiles/OS are restored and the phone turn released. Only t
 fixture is retired. No new app/APK/tests/builds or wider D-386/iOS/external/release acceptance is
 claimed. The observed refund category is Uncategorized, without a Fees-selection claim. See
 [original evidence, observer continuations and remaining gates](quality/physical-holding-type-price-history.md).
+
+## D-418 - One original coherent holding overview
+
+Replace separate initializing/profile-following overview reads with one actual-file worker transaction
+and a complete prepared row/value packet. Recheck original source/rights, bound same-file supersession,
+cover loading/failure with explicit Retry, and retire departed publication/native targets. Open/Add
+check the actual file even under inactive test policy; an empty read creates no settings. Nineteen
+distinct new actual app/SQLite cases and23 resource checks pass in selective cohorts, without a full
+suite or accepted financial replay. Original Windows and Release/AOT Android loading/error/Retry,
+ready/empty, retirement and native targets preserve all typed fixture rows. Only changed six-language
+loading/Retry captions are rechecked after visual correction. Strict builds, complete signed offline
+APK and no-reset emulator Main/Home0/OS restoration pass; Samsung is untouched. No schema/model or
+privacy boundary changes, speed/general ANR/crash/A11Y/device/iOS/store/release acceptance is claimed.
+See [original evidence, observer continuation and limits](quality/holding-overview.md).
