@@ -1968,3 +1968,15 @@ Final18 Windows and6 Android field-caption contexts read original retired drafts
 native same-form corrections; no accepted quantity or money is replayed. This is normal-scale input
 qualification, not general live locale-switch, OS200%, spoken-reader or D-386 stability acceptance.
 See quality/holding-quantity-input.md.
+
+## D-413 - Original manual holding-price Save/delete and accepted result
+
+Bind manual prices and confirmed deletion to a coherent original type/history/price/location packet,
+revalidated in the existing actual-file writer with fresh rights and current draft/confirmation.
+Keep raw price/date/mode on changed facts, retire departed authority and offer explicit Refresh.
+Known accepted Save/delete survives notification/readback failure without another write; an old-row
+deletion preserves a separate new-price draft. An ordinary empty return may refresh history; raw or
+failed drafts require explicit review. Keep field-local feedback, scalable native actions and six
+translations. Fifteen new selective actual app/SQLite cases,74 affected policy checks and21 resource
+checks pass; original native receipts and read-only continuation keep successful financial operations
+from being replayed. Full runtime evidence and limits: [original manual price review](quality/holding-price-review.md).

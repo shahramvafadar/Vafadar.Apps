@@ -3012,3 +3012,14 @@ the quantity input without a duplicate form error. After accepted native writes,
 placement is qualified only read-only against the exact original completed receipts/files with retired
 authority and zero new commands. Preserve original process identity on Cases; never relabel read-only
 continuation as new financial acceptance or general ANR/crash/A11Y acceptance.
+
+## D-413 - Original manual price review and accepted outcome
+
+Manual holding-price Save and confirmed delete revalidate the original coherent type/history/price/
+location facts in the existing actual-file writer with fresh rights. Preserve raw price/date/mode on
+stale facts and require explicit Refresh. A known commit retires original authority before fallible
+notification/readback; refresh reads, never resubmits the accepted price. Deleting an old price keeps
+a separate draft. Empty ordinary departure may read fresh history on return; raw/failed drafts and
+retained Android tab departures retire authority. Preserve accepted native receipts/files. A failed
+pre-invocation observer may continue only its exact retained fixture and pending command, without
+replaying its seed; distinguish a later metadata control from the original quantity-change case.

@@ -2501,3 +2501,12 @@ on refusal and still uses the unchanged coherent atomic writer for source/rights
 No schema, compiled model, backup/import/sync format or global clamping change. Original native stores
 and accepted receipts remain read-only when changed field placement is qualified; no Main private
 key/database is extracted. See src/Apps/Zanance/docs/quality/holding-quantity-input.md.
+
+### Original manual holding prices (D-413)
+
+HoldingPriceReview is an in-memory original actual-file packet of type, events, valuations and locations.
+The existing SaveValuation/DeleteValuation transactions validate it and original draft/confirmation
+ownership before mutation/commit; fresh commercial and household rights still apply. Consumed packets
+are not reusable. Post-commit notification failure is typed; the actual price editor retires authority
+before readback and never resubmits an accepted price. No schema/model, quantity or money is added.
+See [evidence](../../src/Apps/Zanance/docs/quality/holding-price-review.md).

@@ -8335,4 +8335,13 @@ Original XML SHA-256: {5}</value>
   <data name="AssetEvent_QuantityTooLarge" xml:space="preserve">
     <value>The resulting quantity is too large. Enter a smaller quantity.</value>
   </data>
+  <data name="Holding_PriceSourceChanged" xml:space="preserve">
+    <value>The original holding or prices changed. Nothing was saved. Your input is kept; refresh the prices before trying again.</value>
+  </data>
+  <data name="Holding_PriceSavedRefresh" xml:space="preserve">
+    <value>The price change was saved. A following update could not finish. Refresh to review the saved result; do not submit it again.</value>
+  </data>
+  <data name="Holding_PriceRefresh" xml:space="preserve">
+    <value>Refresh prices</value>
+  </data>
 </root>

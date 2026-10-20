@@ -235,6 +235,11 @@ public partial class AppShell : Shell
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
             && CurrentPage?.BindingContext is ImportExportViewModel import)
             import.RetireBankReview();
+        // D-413: a retained holding detail must retire the same original price authority on tab departure.
+        if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
+                or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
+            && CurrentPage?.BindingContext is Features.Holdings.HoldingDetailViewModel holding)
+            holding.PriceEditor.Leave();
     }
 
     /// <summary>Stops translated navigation titles on a retired shell from reaching its disconnected native menu.</summary>

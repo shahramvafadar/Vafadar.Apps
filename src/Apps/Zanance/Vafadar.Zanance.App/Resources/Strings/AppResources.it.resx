@@ -8295,4 +8295,13 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="AssetEvent_QuantityTooLarge" xml:space="preserve">
     <value>La quantità risultante è troppo grande. Inserisci una quantità più piccola.</value>
   </data>
+  <data name="Holding_PriceSourceChanged" xml:space="preserve">
+    <value>Le disponibilità o i prezzi originali sono cambiati. Non è stato salvato nulla. I tuoi dati inseriti sono conservati; aggiorna i prezzi prima di riprovare.</value>
+  </data>
+  <data name="Holding_PriceSavedRefresh" xml:space="preserve">
+    <value>La modifica del prezzo è stata salvata. Un aggiornamento successivo non è stato completato. Aggiorna per controllare il risultato salvato; non inviarlo di nuovo.</value>
+  </data>
+  <data name="Holding_PriceRefresh" xml:space="preserve">
+    <value>Aggiorna prezzi</value>
+  </data>
 </root>

@@ -15,4 +15,9 @@ public partial class HoldingDetailPage : ContentPage
         base.OnAppearing();
         await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
     }
+    protected override void OnDisappearing()
+    {
+        _viewModel.PriceEditor.Leave();
+        base.OnDisappearing();
+    }
 }

@@ -613,3 +613,16 @@ Cases retain the original process identity; Live is empty, NativeButtonsInvoked=
 QuantityCommandsInvokedByContinuation=0. Six actual native field-caption contexts check the named
 quantity label/input, absence of duplicate form feedback, complete text/geometry and own modal focus.
 Do not turn these read-only results into new financial/physical/general runtime acceptance.
+
+## Original manual holding-price review (D-413)
+
+Phase `holding-price` uses fresh review_run/review_pass values and an independent actual application
+store. Original native Save/Refresh/price-row commands prove stale refusal, total-price acceptance and
+original-row deletion with a retained separate draft; confirmation goes through an explicit effect
+port, not an OS dialog acceptance. Six later en/fa/de light/dark contexts are read-only. A failed
+observer that selected both ChoiceChips and main viewports is retained. The exact pre-invocation
+`review_baseline` may opt into `--ez review_resume_price true` against that same run: it requires
+retained original rows and no accepted command receipt, never migrates/reseeds, and uses a new
+metadata-only control before the pending original command. Preserve original failure/process identity;
+this differs from the Windows quantity-change control. Android observations have no screenshot file.
+See [evidence](../../../src/Apps/Zanance/docs/quality/holding-price-review.md).

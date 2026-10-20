@@ -460,12 +460,19 @@ public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Inserts or updates a valuation; a price never changes a quantity.</summary>
-    public async Task SaveValuationAsync(AssetValuation valuation, CancellationToken cancellationToken = default)
+    public Task SaveValuationAsync(AssetValuation valuation, CancellationToken cancellationToken = default) =>
+        SaveValuationCoreAsync(valuation, cancellationToken);
+
+    private async Task SaveValuationCoreAsync(AssetValuation valuation, CancellationToken cancellationToken,
+        HoldingPriceReview? review = null, Func<bool>? isCurrent = null)
     {
         ArgumentNullException.ThrowIfNull(valuation);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        if (review is not null) await review.ValidateAsync(db, cancellationToken);
+        if (isCurrent?.Invoke() == false) throw new HoldingEventReviewChangedException("Original price draft retired.");
         var existing = await db.AssetValuations.AnyAsync(v => v.Id == valuation.Id, cancellationToken);
+        if (review is not null && existing) throw new HoldingEventReviewChangedException("Original new price identity exists.");
         write.DemandFeature(existing ? CommercialFeature.Corrections : CommercialFeature.ManageHoldings);
         if (existing)
         {
@@ -478,19 +485,28 @@ public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> con
 
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        write.EnsureCurrent();
+        if (isCurrent?.Invoke() == false) throw new HoldingEventReviewChangedException("Original price operation retired before commit.");
         await write.CommitAsync(cancellationToken);
-        Changed?.Invoke(this, EventArgs.Empty);
+        CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty));
     }
 
     /// <summary>Deletes a valuation.</summary>
-    public async Task DeleteValuationAsync(Guid id, CancellationToken cancellationToken = default)
+    public Task DeleteValuationAsync(Guid id, CancellationToken cancellationToken = default) =>
+        DeleteValuationCoreAsync(id, cancellationToken);
+
+    private async Task DeleteValuationCoreAsync(Guid id, CancellationToken cancellationToken,
+        HoldingPriceReview? review = null, Func<bool>? isCurrent = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        if (review is not null) await review.ValidateAsync(db, cancellationToken);
+        if (isCurrent?.Invoke() == false) throw new HoldingEventReviewChangedException("Original price confirmation retired.");
         write.DemandFeature(CommercialFeature.DeleteData);
         await db.AssetValuations.Where(v => v.Id == id).ExecuteDeleteAsync(cancellationToken);
+        if (isCurrent?.Invoke() == false) throw new HoldingEventReviewChangedException("Original price operation retired before commit.");
         await write.CommitAsync(cancellationToken);
-        Changed?.Invoke(this, EventArgs.Empty);
+        CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty));
     }
 
     /// <summary>Returns the category of fees, for the fee expense of a purchase or sale (ZEX-P09).</summary>

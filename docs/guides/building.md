@@ -1824,3 +1824,14 @@ review_baseline. Read exact original stores/receipts before/after, retire the ra
 check named field/entry placement, complete native text/viewport and actual modal focus. A timeout
 observes the same original process. Verify complete signed offline packaging and exact Main/OS/hash
 restoration; physical-device and broad runtime gates remain separate.
+
+### Original manual-price review (D-413)
+
+Run `./eng/scripts/Run-StoreDrafts.ps1 -HoldingPriceReview` for one fresh independent original price
+workflow and caption matrix. `-HoldingPriceContinuation <exact-completed-run>` validates the original
+completed receipts and actual file, retaining original Cases and using zero financial commands for
+read-only captions. It never reseeds or touches Main. Inspect every app-owned capture. The independent
+Android caller's `holding-price` phase similarly uses a fresh run/pass; its narrowly guarded
+`review_resume_price` requires the exact `review_baseline` pre-invocation viewport failure and retained
+fixture with no command receipts. It does not replay a financial command or seed. Keep original
+failure and continuation evidence separate; OS confirmation dialogs, phone and iOS remain gates.

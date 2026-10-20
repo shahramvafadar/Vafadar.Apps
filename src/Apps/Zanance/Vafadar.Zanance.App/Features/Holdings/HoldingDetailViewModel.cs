@@ -6,7 +6,7 @@ using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Holdings;
-using Vafadar.Zanance.Core.Money;
+using Vafadar.Zanance.App.Interaction;
 using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 
@@ -36,7 +36,8 @@ public sealed partial class HoldingDetailViewModel(
     HoldingText text,
     Translator translator,
     ILocalizationService localization,
-    TimeProvider time) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
+    TimeProvider time,
+    IAppInteraction interaction) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private Guid _id;
     private AssetType? _type;
@@ -91,24 +92,8 @@ public sealed partial class HoldingDetailViewModel(
     [ObservableProperty]
     public partial string? UndoText { get; set; }
 
-    // The price form: per gram or unit, or a total value of the current quantity.
-    [ObservableProperty]
-    public partial IReadOnlyList<string> PriceModeNames { get; set; } = [];
-
-    [ObservableProperty]
-    public partial int PriceModeIndex { get; set; }
-
-    [ObservableProperty]
-    public partial string PriceText { get; set; } = string.Empty;
-
-    [ObservableProperty]
-    public partial DateOnly PriceDate { get; set; }
-
-    [ObservableProperty]
-    public partial string? PriceLabel { get; set; }
-
-    [ObservableProperty]
-    public partial string? PriceError { get; set; }
+    /// <summary>Owns the original manual price form and its accepted outcome.</summary>
+    public HoldingPriceEditor PriceEditor { get; } = new(holdings, text, translator, localization, time, interaction);
 
     private DateOnly Today => DateOnly.FromDateTime(time.GetLocalNow().DateTime);
 
@@ -118,7 +103,6 @@ public sealed partial class HoldingDetailViewModel(
         if (query.TryGetValue("id", out var value) && value is Guid id)
         {
             _id = id;
-            PriceDate = Today;
         }
     }
 
@@ -127,18 +111,18 @@ public sealed partial class HoldingDetailViewModel(
 
     public async Task LoadAsync()
     {
-        _type = (await holdings.GetTypesAsync()).FirstOrDefault(t => t.Id == _id);
-        NotFound = _type is null;
-        if (_type is not { } type)
-        {
-            return;
-        }
-
+        if (!(await holdings.GetTypesAsync()).Any(t => t.Id == _id))
+        { NotFound = true; PriceEditor.Retire(); return; }
+        PriceEditor.ReloadView = LoadAsync;
+        var inputs = await PriceEditor.LoadAsync(_id);
+        _type = inputs.Type;
+        NotFound = false;
+        var type = inputs.Type;
         var today = Today;
         IsAdvanced = (await store.GetSettingsAsync()).Shows(Feature.HoldingDetails);
-        var events = await holdings.GetEventsAsync(type.Id);
-        var valuations = await holdings.GetValuationsAsync(type.Id);
-        var locations = (await holdings.GetLocationsAsync()).ToDictionary(l => l.Id, l => l.Name);
+        var events = inputs.Events;
+        var valuations = inputs.Valuations;
+        var locations = inputs.Locations.ToDictionary(l => l.Id, l => l.Name);
         var value = AssetValuationService.Values([type], events, valuations, today).FirstOrDefault();
         var quantity = value?.Quantity ?? 0;
 
@@ -198,9 +182,6 @@ public sealed partial class HoldingDetailViewModel(
             Valuations.Add(new ValuationRow(valuation.Id, text.Price(valuation.PricePerUnitMilli, type), text.Date(valuation.Date),
                 valuation.Source == ValuationSource.Purchase ? translator["Holding_FromPurchase"] : valuation.Note));
         }
-
-        PriceModeNames = [text.PerUnit(type), translator["Holding_PriceTotal"]];
-        PriceLabel = translator.Format("Holding_PriceIn", type.PriceCurrencyCode);
     }
 
     [RelayCommand]
@@ -256,56 +237,7 @@ public sealed partial class HoldingDetailViewModel(
     }
 
     [RelayCommand]
-    private async Task SavePriceAsync()
-    {
-        if (_type is not { } type)
-        {
-            return;
-        }
-
-        PriceError = null;
-        // The price is kept in thousandths; a price too large for that is invalid input, never a silent overflow (as CR04-02).
-        if (!MoneyText.TryParse(PriceText, type.PriceCurrencyCode, localization.CurrentCulture, out var amount) || amount <= 0 || amount > long.MaxValue / 1_000)
-        {
-            PriceError = translator["Amount_Invalid"];
-            return;
-        }
-
-        // A total is turned into a price per gram or unit of the quantity held on that day.
-        long perUnitMilli = amount * 1_000;
-        if (PriceModeIndex == 1)
-        {
-            var held = HoldingsLedger.Quantity(await holdings.GetEventsAsync(type.Id), type.Id, PriceDate);
-            if (held <= 0)
-            {
-                PriceError = translator["Holding_TotalNeedsQuantity"];
-                return;
-            }
-
-            perUnitMilli = AssetValuationService.PricePerUnitMilliOf(amount, held);
-        }
-
-        await holdings.SaveValuationAsync(new AssetValuation
-        {
-            AssetTypeId = type.Id,
-            CurrencyCode = type.PriceCurrencyCode,
-            Date = PriceDate,
-            PricePerUnitMilli = perUnitMilli,
-            Source = ValuationSource.Manual,
-        });
-        PriceText = string.Empty;
-        await LoadAsync();
-    }
-
-    [RelayCommand]
-    private async Task DeletePriceAsync(ValuationRow row)
-    {
-        if (await Shell.Current.DisplayAlertAsync(translator["Holding_DeletePrice"], row.Description, translator["Common_Delete"], translator["Common_Cancel"]))
-        {
-            await holdings.DeleteValuationAsync(row.Id);
-            await LoadAsync();
-        }
-    }
+    private Task DeletePriceAsync(ValuationRow row) => PriceEditor.DeleteAsync(row.Id, row.Description);
 
     // Archiving hides the type from lists and Home; its history stays.
     [RelayCommand]

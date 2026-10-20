@@ -83,3 +83,12 @@ Core adds14 distinct parser/range/boundary/ordinary-invalid cases;21 existing re
 the new six-language message. These retained selective cohorts are not a new full-suite run. Native
 field placement and original quantity-correction/source-money preservation are separately qualified
 in quality/holding-quantity-input.md; no fake MAUI controls or duplicate application algorithm.
+
+### Original manual holding prices (AT-413)
+
+HoldingPriceFlowTests compiles the actual HoldingPriceEditor and uses real isolated SQLite, original
+localization and the explicit confirmation port. Fifteen new cases cover stale quantity/currency/
+price facts, pending delete confirmation, draft/departure, cancellation, representability, consumed/
+foreign review and known Save/delete acceptance through notification/readback failure. Explicit
+refresh keeps raw input and never replays an accepted write. Native rendering/OS dialogs remain
+separate; no MAUI control or application algorithm is duplicated in the tests.

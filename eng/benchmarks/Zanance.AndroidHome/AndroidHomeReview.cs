@@ -170,6 +170,25 @@ internal static partial class AndroidHomeReview
                 }
                 await WriteReportAsync(root, phase, await ReviewHoldingFeeActionAsync(app, services, root, comparison!, retained, ct), ct);
             }
+            else if (phase == "holding-price")
+            {
+                Directory.CreateDirectory(root);
+                var resumePrice = Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_resume_price", false) == true;
+                if (RedirectedAncestors(root).Length != 0 || !resumePrice && Directory.EnumerateFileSystemEntries(root).Any())
+                    throw new ReviewCheckException("Fresh independent original price review required.");
+                if (resumePrice)
+                {
+                    var failedBeforeInvoke = false;
+                    foreach (var path in Directory.EnumerateFiles(root, "failure-*.json"))
+                    {
+                        using var failure = JsonDocument.Parse(await File.ReadAllTextAsync(path, ct));
+                        failedBeforeInvoke |= failure.RootElement.GetProperty("Comparison").GetString() == baseline
+                            && failure.RootElement.GetProperty("Stack").GetString()?.Contains("g__FindScrollView", StringComparison.Ordinal) == true;
+                    }
+                    if (!failedBeforeInvoke) throw new ReviewCheckException("Exact original pre-invocation price observer failure required.");
+                }
+                await WriteReportAsync(root, phase, await ReviewHoldingPriceAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "holding-quantity-input")
             {
                 Directory.CreateDirectory(root);
