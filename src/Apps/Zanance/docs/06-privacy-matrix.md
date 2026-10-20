@@ -1056,3 +1056,12 @@ Only original public widgets in a new owned fictitious profile are exercised. No
 key, storage format, permission, SDK, network or collection behavior. No private database/key/internal-id
 extraction, clipboard or system-setting change. The new profile is retired; original Main/profiles
 and known public packets are preserved. Application/APK remain D-401.
+
+## D-403 - Isolated portable qualification
+
+No product permission, SDK, network client, production storage or export format changes. Only an
+independent no-network receiver consumes the explicitly shared fictitious unprotected portable file
+from the independently identified complete original app; it refuses grants from permanent Main by
+code. No installed private store or key is read. Matched phone files and both fresh fixture packages
+are removed, Main/profiles/OS restored and the phone released. This does not accept public release,
+protected-password/new-device or provider privacy. See quality/physical-portable-fresh-install.md.

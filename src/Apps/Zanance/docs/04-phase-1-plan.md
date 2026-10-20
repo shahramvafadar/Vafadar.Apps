@@ -1219,3 +1219,11 @@ Original prior-period/cross-account refunds, excess refusal with retained input,
 current/all history and one cold public readback are qualified on Samsung. Main979/five known rows/
 three profiles/OS are restored and only the new test profile retired. Code/APK and managed counts
 stay D-401; no successful unrelated suite/build is repeated. See quality/physical-refund-lifecycle.md.
+
+## D-403 - Remaining physical fresh-install restore boundary
+
+Original unprotected portable export/actual independent uninstall/identical full Release reinstall/
+first-run restore/cold/re-export is locally qualified. One account, expense, skipped plan and portable
+Monday survive;51 exported tables/74 rows match apart from original onboarding's settings timestamp.
+Main/profile/OS restoration and scoped cleanup are complete. No production source/APK or managed-count
+change and no unrelated successful suite/build replay. See quality/physical-portable-fresh-install.md.

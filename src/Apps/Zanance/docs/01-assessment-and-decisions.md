@@ -7398,3 +7398,16 @@ retiring only the new inactive profile; the phone is released. Native input/view
 retain accepted money and the same cold process. No app/APK, unit-count or build change; unchanged
 successful checks are not repeated. Wider device/chart/iOS/provider/release gates remain separate.
 [Evidence and negative observations](quality/physical-refund-lifecycle.md).
+
+## D-403 - Original portable backup across a physical independent reinstall
+
+Complete original offline Release under a guarded independent package, not a Main reset or an empty
+profile substitute. Original Cash37/expense2/Once9-skipped/Advanced/Monday data is exported through an
+explicit local native read grant. The exact retained file restores through original first-run preview,
+cancel/accept consent and one accepted replacement after actual uninstall/identical-APK reinstall.
+One terminal cold read and original re-export preserve the entire51-table schema/74 typed rows except
+original Settings.UpdatedAt ticks; all other values and portable preferences match, with one account.
+Strict caller/receiver builds and signatures, fixed-identity/Release refusals and two verifier negative
+boundaries pass. Main979/PID10005/three profiles/APK/OS match; only owned fixtures/file are removed and
+the phone released. Production source/APK, managed count and existing successful checks remain D-401.
+[Original receipts, observer repairs and limits](quality/physical-portable-fresh-install.md).

@@ -7257,3 +7257,14 @@ complete-history net and overall balance are zero, with accounts minus75/plus75.
 rows/three profiles/OS match after retiring only the new profile and releasing the phone. Code/APK,
 managed counts and builds stay D-401; no unrelated successful matrix is repeated. Wider QA-01, chart,
 other currencies/iOS, runtime/A11Y/provider/release acceptance remains unproven.
+
+## D-403 - Section31 continuation: original portable restore after independent reinstall
+
+AT-57 gains original unprotected same-phone full Release uninstall/reinstall and first-run native
+restore evidence. Cash37/expense2, Once9 skipped state, Advanced and portable Monday return without
+an extra account. One cold read and original re-export preserve51-table schema/all74 typed rows except
+original Settings.UpdatedAt ticks. Strict isolated builds/signatures/identity guards and two verifier
+negative boundaries pass. Main979/PID10005/three profiles/APK/OS match after owned cleanup/phone release.
+Application/APK and managed baseline remain D-401 without unrelated reruns. Wider QA-01, protected-
+password phone/new-device/iOS, D-386 runtime/A11Y, provider/store/hosted CI/release remain separate.
+See ../quality/physical-portable-fresh-install.md.

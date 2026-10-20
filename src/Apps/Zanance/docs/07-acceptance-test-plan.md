@@ -63,7 +63,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-54 | Import failure / cancel | IO-11 | Integration + bounded physical Android | S12 | SQLite verified; D-317 native picker cancel and cold persisted ordinary Undo pass; other failure/aggregate/platform matrices remain distinct |
 | AT-55 | Multi-line / formula-like CSV text | IO-06 | Unit + bounded physical Android | S12 | Unit verified; D-317 imported multiline note/tag and literal formula-like title display pass; export/spreadsheet acceptance is separate |
 | AT-56 | Wrong password / damaged / other app | BAK-10 | Unit (library: verified) + integration | S6 | Verified (library + integration, SQLite) |
-| AT-57 | Restore on fresh install | BAK-12 | Integration + manual | S6 | Verified (integration: fresh install, balances/plans/states; D-62 adds protected/unprotected restore, preferences and no duplicate account. Windows UI Automation: cancel returns to step 3, encrypted restore opens Home with the original 3 accounts. Device uninstall/reinstall pending) |
+| AT-57 | Restore on fresh install | BAK-12 | Integration + manual | S6 | Verified at recorded scopes: integration and D-62 Windows protected/unprotected/preferences/no duplicate account; D-403 original unprotected same-phone independent full Release uninstall/reinstall, native first-run preview/cancel/accept, cold and51-table/74-row re-export equality with one original account, skipped plan and Monday. Permanent Main untouched; protected-password phone/new-device/iOS acceptance remains separate. |
 | AT-58 | 11th backup, failed upload | BAK-07 | Unit (library: verified) | S6 | Library verified |
 | AT-59 | Disconnect / switch Drive/OneDrive | BAK-13 | Manual | S15 | Ready to run: implemented (D-35, D-50), needs a build with OAuth clients on a device – connect, back up with protection on/off (D-62), list, restore both package types, delete a cloud backup, disconnect, connect another account; per provider on Android, iOS and Windows. Google's token protocol on iOS/Windows is unit-tested (`Vafadar.Authentication.Tests`) |
 | AT-60 | Upgrade with old data | BAK-12 | Integration (migrations) | every slice | Verified (integration: first schema with data upgraded to latest; restore migrates older backups); re-run each slice |
@@ -4493,3 +4493,17 @@ all four original public details. Main979/five known packets/three profiles/OS m
 profile is retired. Native observer/input repairs do not replay money or the cold process. No app,
 managed-count or build change; broad chart/device/iOS/runtime/release gates remain distinct. See
 quality/physical-refund-lifecycle.md.
+
+## D-403 - AT-57 independent physical reinstall and original portable restoration
+
+Complete signed offline original Release is compiled under a fixed independent id and installed only
+after both fixtures are absent. Original Cash37/expense2/Once9-skipped/Advanced/Monday data restores
+from its exact native-shared unprotected export after actual uninstall/identical-APK reinstall, before
+any first account is created. Original preview/cancel/positive consent, Home35, expense metadata,
+skipped history, one cold read and portable Monday pass. A second original export matches all51-table
+schema/74 typed rows except the existing Settings.UpdatedAt ticks; no duplicate account. Two targeted
+verifier negatives and fixed-identity/Debug refusal pass. Strict builds/signatures/offline completeness
+pass; production code/APK, managed counts and unchanged prior successes are retained. Main979/same
+PID10005/three profiles/APK/OS match after exact owned cleanup and phone release. This is bounded
+unprotected same-phone independent reinstall evidence, not another phone, protected-password/iOS,
+whole QA-01, power-loss/ANR/A11Y/provider/store/release acceptance. See quality/physical-portable-fresh-install.md.

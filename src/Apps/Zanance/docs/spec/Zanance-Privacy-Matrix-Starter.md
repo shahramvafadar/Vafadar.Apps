@@ -1034,3 +1034,10 @@ is limited to original public UI in an owned fictitious profile; no private data
 No application/privacy contract changes. Native public fictitious refund/account/date/note widgets
 are qualified without private file/key/id extraction, clipboard or system-setting changes. Only the
 new test profile is retired; original Main/profiles are preserved and the phone turn released.
+
+## D-403 qualification continuation
+
+No production matrix change. Fictitious original portable bytes move only through a narrowly scoped
+native grant into an independent offline receiver, then the exact owned picker file restores a fresh
+independent original Release installation. No Main/private-key extraction or network recipient; owned
+phone packets/packages are removed and Main/OS restored. See ../quality/physical-portable-fresh-install.md.

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Portable backup device verification (D-403)
+
+- Verified the existing first-run restore after a complete independent Android uninstall/reinstall,
+  retaining the account, recorded expense, skipped plan and portable week-start preference.
+- No shipped application or APK change; the installed Main data remains unchanged.
+
 - Refresh existing-transaction suggestions when returning to a scheduled item, while keeping typed
   payment and occurrence changes. Failed reads keep the form covered and offer Retry.
 

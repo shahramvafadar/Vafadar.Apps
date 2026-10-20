@@ -1,5 +1,18 @@
 # Isolated physical export receiver
 
+## Independent portable backup grant
+
+`PortableBackupActivity` is a separate bounded receiver for the original full application compiled as
+`pro.vafadar.zanance.portablerestorereview`. It accepts only ACTION_SEND/application/octet-stream with
+a read grant from that exact FileProvider, a product `.vbak` filename and a plain manifest/data ZIP
+bounded to 8 MiB compressed and expanded. It refuses the permanent Main authority and encrypted packets.
+It writes only its own private file plus `portable-status.json`; inspect/copy only those explicitly
+received fixture bytes after matching receipt length/hash. No password, source-private file, key,
+network, arbitrary ZIP extraction or forwarding is involved. Start once without a grant to prove
+refusal, then observe the same process/result. Preserve completed shares and never repeat creation
+just because the observer is delayed. See `../AndroidPortableRestore/README.md` for the full reinstall
+workflow and original-candidate restoration boundary.
+
 This independent .NET Android fixture verifies the original native sharing grant and received fictitious
 accountant ZIP or report PDF. It is not referenced by the application and must never become a production dependency.
 The intentionally debuggable receiver has no declared network permissions or backup, removes inherited

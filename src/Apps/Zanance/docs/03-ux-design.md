@@ -1874,3 +1874,12 @@ Refunds reduce spending rather than becoming income or transfers; prior-period p
 complete history. The original D-130 refusal stays beside Save with its draft intact; correcting
 only the amount can complete the exact remaining refund. No new design or caption is introduced.
 Bounded physical/cold public evidence is in quality/physical-refund-lifecycle.md.
+
+## D-403 - First-run portable restoration observed on the phone
+
+The original Welcome restore action precedes first-account creation. Its native file choice, complete
+package preview, cancelled/accepted replacement and restored Home retain the original account rather
+than forcing a duplicate. The independently reinstalled original Release preserves its skipped-plan
+history and portable Monday choice after one cold read. Password protection defaults locally again;
+portable display preferences do not carry that device-only choice. No layout/text/command changes or
+unchanged visual matrix reruns. See quality/physical-portable-fresh-install.md for the bounded evidence.

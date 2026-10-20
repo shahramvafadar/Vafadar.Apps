@@ -2008,3 +2008,12 @@ Samsung original cancel/refund/excess refusal/exact remainder and one cold relat
 readback pass. Main979/five known rows/three profiles/OS are restored, only the new test profile retired
 and phone released. D-401 code/APK/checks are retained without reruns. No full device/chart/iOS, general
 stability/accessibility, provider/store or release acceptance; hosted CI needs its exact-head result.
+
+## D-403 - Bounded original portable fresh-install qualification
+
+The independently identified complete original offline Release passes physical unprotected export,
+actual uninstall/identical reinstall, first-run restore/cold and whole original re-export comparison.
+Strict isolated builds, signature/privacy/identity checks and verifier negatives pass. Main979/three
+profiles/same PID/APK/OS match; only owned fixtures/file are removed and the phone released. No
+production APK/unit-count change or successful unrelated rerun. Broader device, protected-password/
+new-device/iOS, stability/A11Y/provider/store/release gates and exact-head hosted CI remain separate.

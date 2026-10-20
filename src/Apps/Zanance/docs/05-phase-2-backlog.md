@@ -2551,3 +2551,11 @@ The bounded QA-01 AT-13/14/15 continuation passes with the retained D-401 candid
 refunds into two original EUR accounts, explicit excess refusal, same-draft correction, cold links/
 periods/balances and exact Main/profile/OS restoration. No source/build/test-count change or financial
 replay; broader QA-01, runtime/A11Y, chart/iOS and external gates remain. See quality/physical-refund-lifecycle.md.
+
+## D-403 - Original first-run portable device continuation
+
+The bounded AT-57 same-phone independent Release reinstall path is complete with original native
+preview/cancel/accept and cold public/whole-export readback. Permanent Main stays installed, unchanged
+and restored; the two owned fixtures and matched external file are removed. Continue ready backlog
+work under D-386, retaining existing successful baselines. Protected-password/new-device/iOS, wider
+QA-01, runtime/A11Y and external gates remain separate. See quality/physical-portable-fresh-install.md.

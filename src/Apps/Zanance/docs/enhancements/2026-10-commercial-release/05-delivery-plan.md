@@ -2872,3 +2872,13 @@ This bounded original Samsung workflow is complete, including native input/viewp
 without replaying accepted money or its single cold process. Main/profile/OS restoration and phone
 release are recorded. D-401 source/APK/build/managed baselines remain unchanged. Continue remaining
 ready backlog work; wider QA/chart/platform and D-386 runtime/A11Y completion remain separate.
+
+## D-403 - Complete the independent physical first-run restore batch
+
+Use complete original Release under one guarded independent package, original fictitious source,
+explicit native portable grant, actual uninstall/identical-APK reinstall and original first-run restore.
+Complete the planned cold and whole re-export comparison, then exact Main/OS restoration and owned
+cleanup before releasing the phone. This batch is locally complete:51 tables/74 typed rows and all
+portable preferences match except the original settings timestamp. Existing Main code/APK/checks stay
+D-401. Continue remaining ready backlog work without repeating device-only copy/financial/suite/build
+successes; wider QA-01, protected-password/new-device/iOS and D-386/external gates stay separate.

@@ -2912,3 +2912,14 @@ the covered draft with translated Retry; do not expose stale writable fields. A 
 financial command retains its busy gate and consent, while its accepted canonical reload can still
 reset defaults. Keep the physical stale-candidate evidence and accepted manual row; qualify a
 changed source caption without posting that money again, then finish only remaining lifecycle work.
+
+## D-403 - Original portable restore across an independent fresh install
+
+Fresh-install qualification must actually uninstall/reinstall only a fixed, freshly owned independent
+complete signed Release package; an empty new profile is not equivalent. Preserve permanent Main,
+its profiles, OS values and credentials. Export only fictitious data through the original explicit
+native grant, retain its exact matched public file, then use original first-run preview/consent/restore.
+Compare the original re-export's whole schema/typed rows and portable settings, distinguishing original
+onboarding's Settings.UpdatedAt ticks from financial changes. Never extract installed private stores
+or keys, replay accepted writes for an observer, reuse a different project's package, or turn this
+same-phone unprotected test into protected-password/new-device/iOS/release acceptance.

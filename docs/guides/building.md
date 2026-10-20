@@ -1717,3 +1717,16 @@ list edges may clip an otherwise realized target: scroll only the actual owned v
 whole target is visible. Continue remaining reads on the same cold process; never replay completed
 financial actions or restart after observation expiry. Final public Main/profile/OS/package readback
 and explicit phone-turn release close the bounded workflow.
+
+## D-403 - Complete independent original portable restore application
+
+Use `eng/scripts/Build-AndroidApk.ps1 -Offline -Project eng/tests/AndroidPortableRestore/Vafadar.Zanance.AndroidPortableRestore.csproj -Output artifacts/android-portable-restore-d403`.
+This fixed-identity Release-only caller compiles original production sources/XAML/resources/AOT inputs
+in its own output without altering Main. It adds no diagnostic activity, private storage endpoint or
+financial/authentication shortcut. Both complete caller and independent receiver strictly build and
+verify signed/offline; permanent Main identity and Debug are refused before native effects. Do not
+reset permanent Main for qualification. `eng/tests/AndroidPortableRestore/README.md` documents the
+original grant/retained-file/uninstall/reinstall/first-run/cold/re-export sequence and fixed-fictitious
+whole schema/typed-row verifier. Only original Settings.UpdatedAt integer ticks may advance. Keep
+accepted money and late receiver receipts; repair only the failed observer. Exact native/package/
+restoration limits: src/Apps/Zanance/docs/quality/physical-portable-fresh-install.md.
