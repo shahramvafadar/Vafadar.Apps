@@ -2245,3 +2245,23 @@ set/OS are restored.54 Windows native caption/Cancel observations and18 changed-
 are retained; the final process exits with native0xC0000005 after its complete report, so general
 runtime readiness is not accepted. Physical-device, external viewer/OCR, D-386 runtime/A11Y, iOS,
 provider/store/expert and publication gates remain open. See quality/entry-attachment-ownership.md.
+
+## D-425 - Original editor Save and pending receipt
+
+The original editor financial writer records acceptance before notification and captures its exact
+saved attachment destination. Submitted financial rows/document bytes are detached; late profile,
+query, draft or view changes cannot adopt the pending write. Document failure stays separate from
+saved money and never rearms Save.12 distinct focused cases pass in cohorts10+2; no full-suite replay.
+One real Windows editor/native Save preserves expense1234/document bytes through two deliberate
+postcommit notification failures; original fixture/account seed is reused after failed observations.
+See [evidence](quality/entry-editor-save.md). Final Android evidence and wider gates are recorded
+there. No schema, compiled model, portable format, permission or provider change. Continue ready
+original entry/detail work under D-386; general ANR/crash/A11Y and external release gates remain open.
+
+Final installed Android qualification (D-425): upgrade the complete signed offline APK without reset,
+then one original Home/PDF receipt and Save in a separate fictitious profile. The stored24.50EUR/
+17October/Food/D425_Cash and13KB document survive one cold after the exact input is removed.
+Restore Main0/original public profile set/current-month history/OS and retire only the inactive
+fixture.12 focused cases, final strict Windows/Android builds and one actual Windows Save pass;
+prior negative observers remain recorded. No physical phone, merchant-corpus, general ANR/A11Y,
+iOS/provider/store or release acceptance; original edit/overlap/Undo/detail gates remain separate.

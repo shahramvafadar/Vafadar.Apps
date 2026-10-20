@@ -3131,3 +3131,14 @@ Consume known metadata commits before fallible notification/publication; never r
 remove after accepted work. Give file identity its own complete row and separate real action targets.
 Preserve completed native cases and original fixtures; a native exit after a complete report remains
 a recorded failure, not general stability acceptance. Keep D-386 priorities and external gates.
+
+## D-425 - Original editor acceptance and receipt destination
+
+Bind an editor financial Save to its original actual file, cached rights, raw-draft revision and view
+owner. Detach the submitted batch before awaits. Capture its exact saved entry/document destination
+inside the financial writer and consume acceptance immediately after commit, before fallible change
+notification. A later attachment failure never rearms or reclassifies saved money; another profile,
+changed saved source or departed owner cannot receive it. Retire pending callbacks on departure/new
+query while retaining raw input and known acceptance. Native qualification follows routed construction:
+create the real page before publishing its query. Continue failed observations on the original
+uncommitted fixture; never repeat an accepted seed or Save to repair an observer. D-386 still applies.

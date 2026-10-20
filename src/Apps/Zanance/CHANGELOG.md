@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep a receipt with the transaction you save (D-425)
+
+- Keep the receipt's destination tied to the original saved transaction and profile.
+- Preserve a successful transaction when an update notification or the receipt's later storage fails.
+- Prevent another Save after known success, including when returning from the form fails.
+
 ### Keep attachments with the transaction you opened (D-424)
 
 - Keep a pending file choice or removal tied to the original transaction and profile.

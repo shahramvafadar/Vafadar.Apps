@@ -2598,3 +2598,15 @@ with independent bytes. Existing entry deletion still retains orphan documents f
 startup purge/durable import protection and portable formats are unchanged. No migration or compiled
 model regeneration is required by these methods. Device evidence remains bounded to the recorded
 normal installed emulator sequence, not private-table/hash or physical-device acceptance.
+
+## Original editor receipt handoff (D-425)
+
+SaveEditorEntriesAsync uses the existing ledger validator and writer in the original actual file,
+validates its original references/rights and pending draft owner, and detaches submitted entries.
+Before commit it captures EntryAttachmentReview for the exact resulting entry and metadata; after
+commit it records acceptance before change notification. EntryEditorSaveSession retains that known
+outcome and submits at most one detached pending document through the reviewed attachment writer.
+Changed/deleted source, another file, retired view or rights refuse only that later document; the
+financial commit remains accepted. An aggregate removed by explicit replacement gets no guessed
+attachment destination. No model/schema or compiled-model regeneration; portable formats and
+short Undo remain unchanged. This is not a complete stale-edit/overlap/Undo or detail-load audit.

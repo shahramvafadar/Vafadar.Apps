@@ -7773,3 +7773,33 @@ original PDF pick/add, removal Cancel, original ledger Delete/Undo within8s, col
 and document-only removal with unchanged expense/balance. Restore Main0/original profile set/OS and
 retire only the fixture. These are not physical-device, OCR/viewer, general ANR/A11Y, iOS or release
 acceptance. Continue remaining ready original entry-editor/detail work under D-386.
+
+## D-425 - Keep an editor receipt with its known financial commit (2026-10-20)
+
+The old editor marked Save complete only after change notification, then added its pending receipt
+through the currently configured store. A subscriber failure could present committed money as a
+failed Save; a profile/query change could redirect the later document. The actual editor now owns a
+single Save session over its original quick-reference/file/rights review, with detached submitted
+entries and document bytes. The writer captures the saved source and attachment metadata before
+commit and records acceptance before notifying subscribers. The following reviewed document writer
+rechecks that source, file, rights and pending owner. Preserve the established partial-success
+contract: failed document storage leaves the financial commit accepted and shows the existing
+attachment-failure outcome. Retire late view callbacks without discarding raw drafts or reopening Save.
+
+Twelve distinct focused actual-source/SQLite cases pass in cohorts10+2; no full-suite replay. A real
+Windows editor/native Save runs once over the retained original fixture, saving one expense1234
+and its exact document bytes despite two deliberate postcommit observer failures. Save remains
+consumed and base-store accounts/entries unchanged. Initial observer failures (multiple scroll
+surfaces, the fixed footer and wrong pre-page query construction) remain recorded; they made no
+financial Save and their account seed was reused, never recreated. Final routed construction and
+native target checks pass. See quality/entry-editor-save.md for final Android/build evidence and
+limits. No schema/model, permission, provider, portable format or UI-layout change. D-386 priorities
+and broader original edit/overlap/Undo/detail publication gates remain separate.
+
+Final installed Android qualification (D-425): upgrade the complete signed offline APK without reset,
+then one original Home/PDF receipt and Save in a separate fictitious profile. The stored24.50EUR/
+17October/Food/D425_Cash and13KB document survive one cold after the exact input is removed.
+Restore Main0/original public profile set/current-month history/OS and retire only the inactive
+fixture.12 focused cases, final strict Windows/Android builds and one actual Windows Save pass;
+prior negative observers remain recorded. No physical phone, merchant-corpus, general ANR/A11Y,
+iOS/provider/store or release acceptance; original edit/overlap/Undo/detail gates remain separate.

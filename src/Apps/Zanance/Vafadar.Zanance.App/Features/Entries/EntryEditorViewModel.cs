@@ -82,6 +82,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private bool _isNew;
     private int _startDay = 1;
     private Presentation.PendingAttachment? _pendingAttachment;
+    private EntryEditorSaveSession? _saveSession;
+    private long _saveRevision;
     private ReceiptSuggestion? _receipt;
     private string? _receiptAppliedText;
     private string? _receiptAppliedCurrency;
@@ -346,7 +348,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     public bool NeedsAccount => Account is null && !HasNoAccounts;
 
     /// <summary>Gets a value indicating whether Save can be used now.</summary>
-    public bool CanSave => !IsBusy && Account is not null;
+    public bool CanSave => !IsBusy && Account is not null && _saveSession is { Accepted: false };
 
     /// <summary>Gets whether this new supported transaction can open a detached repeating-plan draft.</summary>
     public bool ShowRepeat => _isNew && Kind is EntryKind.Expense or EntryKind.Income or EntryKind.Transfer;
@@ -468,6 +470,9 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
+        var queryRevision = ++_saveRevision;
+        _saveSession = null;
+        OnPropertyChanged(nameof(CanSave));
         var receiptVisit = query.TryGetValue("receiptVisit", out var receiptHandoff)
             ? receiptHandoff as Receipts.ReceiptDraft ?? throw new ArgumentException("Unsupported receipt handoff.", nameof(query)) : null;
         if (receiptVisit is not null)
@@ -637,7 +642,10 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             catch (Exception exception) when (exception is not OutOfMemoryException)
             { SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Receipt_ReadFailed"); query.Clear(); return; }
         }
+        if (queryRevision != _saveRevision) return;
         ApplyReceipt(query);
+        _saveSession = new EntryEditorSaveSession(_store, _quick.Review!);
+        OnPropertyChanged(nameof(CanSave));
         query.Clear();
     }
 
@@ -720,7 +728,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         // A receipt read on Home becomes the entry's attachment when it is saved (D-37).
         if (_isNew && query.TryGetValue("receiptFile", out var file) && file is Presentation.PendingAttachment pending)
         {
-            _pendingAttachment = pending;
+            _pendingAttachment = pending with { Data = pending.Data.ToArray() };
             notes.Add(_translator["Receipt_WillAttach"]);
         }
 
@@ -1130,7 +1138,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     // Finds overlaps of the entries to save with aggregated entries and asks: link and replace, keep both or cancel.
     // Returns the aggregated entries as they were before a replacement (for Undo), an empty list without a change, or
     // null when the user cancels.
-    private async Task<List<LedgerEntry>?> ResolveOverlapsAsync(List<LedgerEntry> batch, List<Guid> deleteIds)
+    private async Task<List<LedgerEntry>?> ResolveOverlapsAsync(List<LedgerEntry> batch, List<Guid> deleteIds, LedgerEntry originalEntry)
     {
         var overlaps = AggregatedEntries.Find(batch, await _store.GetEntriesAsync(Date.AddYears(-1), Date.AddYears(1)));
         if (overlaps.Count == 0)
@@ -1161,17 +1169,17 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         foreach (var overlap in overlaps)
         {
             var reduced = AggregatedEntries.Replace(overlap);
-            if (overlap.Aggregate.Id == _entry.Id)
+            if (overlap.Aggregate.Id == originalEntry.Id)
             {
                 // The aggregate being saved keeps only the difference, or is not kept at all.
                 if (reduced is null)
                 {
-                    batch.Remove(_entry);
-                    deleteIds.Add(_entry.Id);
+                    batch.Remove(originalEntry);
+                    deleteIds.Add(originalEntry.Id);
                 }
                 else
                 {
-                    _entry.Amount = reduced.Amount;
+                    originalEntry.Amount = reduced.Amount;
                 }
 
                 continue;
@@ -1249,10 +1257,11 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     [RelayCommand]
     private async Task SaveAsync()
     {
-        if (IsBusy)
+        if (IsBusy || _saveSession is not { Accepted: false } session)
         {
             return;
         }
+        var revision = _saveRevision; var originalEntry = _entry; var rawDraft = Snapshot();
 
         SaveError = null;
         AmountError = AccountError = ToAccountError = ToAmountError = FeeError = DestinationFeeError
@@ -1270,13 +1279,17 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         IsBusy = true;
         try
         {
-            await _assetConfirmation.RunAsync(Kind, _accounts.GetValueOrDefault(Account.Id), SaveConfirmedAsync);
+            await _assetConfirmation.RunAsync(Kind, _accounts.GetValueOrDefault(Account.Id), async () =>
+            {
+                if (OwnsSave(session, revision, originalEntry) && rawDraft == Snapshot())
+                    await SaveConfirmedAsync(session, revision, originalEntry, rawDraft);
+            });
         }
         finally { IsBusy = false; }
     }
 
     /// <summary>Validates and saves the editor draft only after any required valued-asset consent.</summary>
-    private async Task SaveConfirmedAsync()
+    private async Task SaveConfirmedAsync(EntryEditorSaveSession session, long revision, LedgerEntry originalEntry, string rawDraft)
     {
         // D-100: publish all independent monetary problems before mutating the entry or synchronizing its fees.
         var validation = EntryDraftValidation.Validate(new EntryValidationInput
@@ -1319,34 +1332,34 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         try
         {
             var kind = Kind;
-            _entry.Kind = kind;
-            _entry.ReimbursableAmount = reimbursableAmount;
-            _entry.Tags = EntryTags.Parse(TagsText);
-            _entry.ReimbursedBy = reimbursableAmount is null || string.IsNullOrWhiteSpace(ReimbursedBy) ? null : ReimbursedBy.Trim();
-            _entry.ReimbursementDueDate = reimbursableAmount is not null && HasReimbursementDue ? ReimbursementDue : null;
+            originalEntry.Kind = kind;
+            originalEntry.ReimbursableAmount = reimbursableAmount;
+            originalEntry.Tags = EntryTags.Parse(TagsText);
+            originalEntry.ReimbursedBy = reimbursableAmount is null || string.IsNullOrWhiteSpace(ReimbursedBy) ? null : ReimbursedBy.Trim();
+            originalEntry.ReimbursementDueDate = reimbursableAmount is not null && HasReimbursementDue ? ReimbursementDue : null;
             // The flag is set in Advanced; an aggregated entry edited in Simple keeps it (nothing is lost by the mode).
-            _entry.IsAggregated = IsAggregated && kind is EntryKind.Income or EntryKind.Expense;
-            _entry.AggregatedFrom = _entry.IsAggregated ? (AggregatedFrom <= AggregatedTo ? AggregatedFrom : AggregatedTo) : null;
-            _entry.AggregatedTo = _entry.IsAggregated ? (AggregatedFrom <= AggregatedTo ? AggregatedTo : AggregatedFrom) : null;
-            _entry.Amount = amount;
-            _entry.AccountId = Account.Id;
-            _entry.Date = Date;
-            _entry.Title = string.IsNullOrWhiteSpace(EntryTitle) ? null : EntryTitle.Trim();
-            _entry.Payee = string.IsNullOrWhiteSpace(Payee) ? null : Payee.Trim();
-            _entry.Note = string.IsNullOrWhiteSpace(Note) ? null : Note.TrimEnd();
-            _entry.OriginalAmount = foreignAmount;
-            _entry.OriginalCurrencyCode = foreignAmount is null ? null : ForeignCurrency;
-            _entry.Review = ReviewState.Confirmed;
-            _entry.Icon = IconKey;
+            originalEntry.IsAggregated = IsAggregated && kind is EntryKind.Income or EntryKind.Expense;
+            originalEntry.AggregatedFrom = originalEntry.IsAggregated ? (AggregatedFrom <= AggregatedTo ? AggregatedFrom : AggregatedTo) : null;
+            originalEntry.AggregatedTo = originalEntry.IsAggregated ? (AggregatedFrom <= AggregatedTo ? AggregatedTo : AggregatedFrom) : null;
+            originalEntry.Amount = amount;
+            originalEntry.AccountId = Account.Id;
+            originalEntry.Date = Date;
+            originalEntry.Title = string.IsNullOrWhiteSpace(EntryTitle) ? null : EntryTitle.Trim();
+            originalEntry.Payee = string.IsNullOrWhiteSpace(Payee) ? null : Payee.Trim();
+            originalEntry.Note = string.IsNullOrWhiteSpace(Note) ? null : Note.TrimEnd();
+            originalEntry.OriginalAmount = foreignAmount;
+            originalEntry.OriginalCurrencyCode = foreignAmount is null ? null : ForeignCurrency;
+            originalEntry.Review = ReviewState.Confirmed;
+            originalEntry.Icon = IconKey;
 
             var deleteIds = new List<Guid>();
-            var batch = new List<LedgerEntry> { _entry };
+            var batch = new List<LedgerEntry> { originalEntry };
             if (kind == EntryKind.Transfer)
             {
-                _entry.CategoryId = null;
-                _entry.ToAccountId = ToAccount?.Id;
-                _entry.ToAmount = toAmount;
-                var synced = EntryActions.SyncTransferFee(_entry, _fee, fee, _categories.Fees());
+                originalEntry.CategoryId = null;
+                originalEntry.ToAccountId = ToAccount?.Id;
+                originalEntry.ToAmount = toAmount;
+                var synced = EntryActions.SyncTransferFee(originalEntry, _fee, fee, _categories.Fees());
                 if (synced is null && _fee is not null)
                 {
                     deleteIds.Add(_fee.Id);
@@ -1359,7 +1372,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                 _fee = synced;
 
                 // A destination fee is an expense there; existing fees remain editable in Simple (D-101 / ZEX-S0204).
-                var destination = EntryActions.SyncDestinationFee(_entry, _destinationFee, destinationFee, _categories.Fees());
+                var destination = EntryActions.SyncDestinationFee(originalEntry, _destinationFee, destinationFee, _categories.Fees());
                 if (destination is null && _destinationFee is not null)
                 {
                     deleteIds.Add(_destinationFee.Id);
@@ -1374,25 +1387,33 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             else
             {
                 var categoryKind = kind is EntryKind.Income or EntryKind.IncomeReversal ? CategoryKind.Income : CategoryKind.Expense;
-                _entry.CategoryId = Categories.FirstOrDefault(c => c.IsSelected)?.Id ?? _categories.Uncategorized(categoryKind);
+                originalEntry.CategoryId = Categories.FirstOrDefault(c => c.IsSelected)?.Id ?? _categories.Uncategorized(categoryKind);
                 if (_fee is not null || _destinationFee is not null)
                 {
                     // The entry is no longer a transfer: its fees go with it.
                     deleteIds.AddRange(new[] { _fee?.Id, _destinationFee?.Id }.OfType<Guid>());
                     _fee = null;
                     _destinationFee = null;
-                    _entry.GroupId = null;
+                    originalEntry.GroupId = null;
                 }
             }
 
             // An overlap with an aggregated entry is the user's choice, never silent: replace in it, or count both (AT33).
-            var replaced = await ResolveOverlapsAsync(batch, deleteIds);
+            var replaced = await ResolveOverlapsAsync(batch, deleteIds, originalEntry);
             if (replaced is null)
             {
                 return;
             }
 
-            var result = await _store.SaveEntriesAsync(batch, deleteIds);
+            if (!OwnsSave(session, revision, originalEntry) || rawDraft != Snapshot()) return;
+            var pending = _pendingAttachment;
+            var document = pending is null ? null : new EntryAttachment { EntryId = originalEntry.Id,
+                FileName = pending.FileName, ContentType = pending.ContentType, Data = pending.Data };
+            var result = await session.SaveAsync(batch, deleteIds, originalEntry.Id, document,
+                () => OwnsSave(session, revision, originalEntry) && rawDraft == Snapshot());
+            saved = session.Accepted;
+            attachmentFailed = session.AttachmentFailed;
+            if (!OwnsSave(session, revision, originalEntry)) return;
             if (!result.Succeeded)
             {
                 SaveError = string.Join(Environment.NewLine, result.Errors.Select(e => _translator[$"LedgerError_{e}"]));
@@ -1408,30 +1429,17 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             _snapshot = Snapshot();
 
             saved = true;
-
-            // The entry is saved; a failing attachment must not look like a failed save (which would invite saving twice).
-            if (_pendingAttachment is { } pending)
-            {
-                try
-                {
-                    await _store.AddAttachmentAsync(new EntryAttachment { EntryId = _entry.Id, FileName = pending.FileName, ContentType = pending.ContentType, Data = pending.Data });
-                }
-                catch (Exception ex) when (ex is not OutOfMemoryException)
-                {
-                    attachmentFailed = true;
-                }
-
-                _pendingAttachment = null;
-            }
+            _pendingAttachment = null;
+            OnPropertyChanged(nameof(CanSave));
         }
         catch (Exception ex) when (ex is not OutOfMemoryException && !saved)
         {
             // The input stays in the form (TX-06, AT-04).
-            SaveError = _translator["Common_SaveFailed"];
+            if (OwnsSave(session, revision, originalEntry)) SaveError = _translator["Common_SaveFailed"];
         }
 
         // Leaving the page is not part of saving: a navigation problem after a successful save must not say "not saved".
-        if (saved)
+        if (saved && OwnsSave(session, revision, originalEntry))
         {
             await Presentation.Failures.GuardAsync(async () =>
             {
@@ -1443,6 +1451,12 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             });
         }
     }
+
+    private bool OwnsSave(EntryEditorSaveSession session, long revision, LedgerEntry entry) =>
+        revision == _saveRevision && ReferenceEquals(_saveSession, session) && ReferenceEquals(_entry, entry);
+
+    /// <summary>Retires only pending native/save callbacks when the form leaves; raw input and known acceptance remain.</summary>
+    public void RetirePendingSave() => _saveRevision++;
 
     [RelayCommand]
     private async Task CancelAsync()

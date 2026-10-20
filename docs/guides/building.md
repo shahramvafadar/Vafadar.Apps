@@ -1944,3 +1944,13 @@ app-only window/popup capture remain mandatory. Normal Android uses the canonica
 signed package and a new fictitious profile, one original picker/deletion/Undo sequence and terminal
 cold. Preserve original deadlines, remove only hash-matched owned inputs and restore Main/OS/profile
 set. See application quality/entry-attachment-ownership.md for exact reports and limits.
+
+### Original editor Save review (D-425)
+
+Run eng/scripts/Run-StoreDrafts.ps1 -EntrySaveReview for one original native editor Save, with a
+fictitious receipt and deliberate postcommit notification failures, on its own non-input desktop.
+-EntrySaveSourceRun accepts only a failed original source with no ledger entries; it reuses that
+exact account/file without migration or reseeding. Completed accepted sequences cannot replay.
+The page is constructed before its query, matching Shell; Save is a fixed footer, not a child of
+the scrolling form. Retain target geometry, original source, failures and completion receipts.
+No unchanged multilingual/layout matrix is required for this non-layout handoff correction.

@@ -30,6 +30,7 @@ public partial class EntryEditorPage : ContentPage
     protected override void OnDisappearing()
     {
         _viewModel.ValidationFailed -= OnValidationFailed;
+        _viewModel.RetirePendingSave();
         _observingValidation = false;
         _validationVersion++;
         base.OnDisappearing();

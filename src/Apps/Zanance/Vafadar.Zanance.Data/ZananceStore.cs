@@ -1048,7 +1048,8 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     private async Task<SaveResult> SaveEntriesUnderWriterAsync(ZananceDbContext db, CommercialWriteTransaction write,
         IReadOnlyList<LedgerEntry> entries, IReadOnlyCollection<Guid> deleteIds, Guid? moveAttachmentsTo,
         IReadOnlySet<Guid> retainedCorrections, CancellationToken cancellationToken, OccurrenceState? settlement = null, LoanReadReview? loanReview = null,
-        bool committedPublication = false, Action? validateReview = null)
+        bool committedPublication = false, Action? validateReview = null,
+        Func<Task>? prepareCommit = null, Action? accepted = null)
     {
         var accounts = await db.Accounts.AsNoTracking().ToDictionaryAsync(a => a.Id, cancellationToken);
         var categories = await db.Categories.AsNoTracking().ToDictionaryAsync(c => c.Id, cancellationToken);
@@ -1131,8 +1132,11 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         // D-171: original loan inputs can be changed by a trigger even after the batch inserts.
         // Ignore only this writer's new entry ids; other mutations must roll back the complete payment.
         if (loanReview is not null) await loanReview.ValidateWriterAsync(db, entries.Select(item => item.Id).ToArray(), cancellationToken);
+        if (prepareCommit is not null) await prepareCommit();
         validateReview?.Invoke();
         await write.CommitAsync(cancellationToken);
+        // A caller's original outcome must be consumed before a fallible change subscriber runs.
+        accepted?.Invoke();
 
         if (loanReview is not null || committedPublication) return CommittedWriteNotification.Publish(OnChanged, SaveResult.Success);
         OnChanged();

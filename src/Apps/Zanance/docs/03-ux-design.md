@@ -2115,3 +2115,11 @@ original PDF pick/add, removal Cancel, original ledger Delete/Undo within8s, col
 and document-only removal with unchanged expense/balance. Restore Main0/original profile set/OS and
 retire only the fixture. These are not physical-device, OCR/viewer, general ANR/A11Y, iOS or release
 acceptance. Continue remaining ready original entry-editor/detail work under D-386.
+
+## Original editor Save outcome (D-425)
+
+Keep the original raw draft and view owner through native financial confirmation. Save becomes
+consumed as soon as its writer commits, including when change notification or later navigation
+fails. A receipt write has a separate outcome: its failure must never say that the money was not
+saved or invite another Save. A new query owns its own form; an old callback cannot close it or
+publish feedback into it. Existing receipt review, file-size limits and manual confirmation remain.
