@@ -2026,3 +2026,12 @@ unarchive/cold without resuming plans or choosing a default. Main979/five public
 OS/APK are restored and only the new inactive profile retired. App/APK and managed counts remain D-401;
 no unchanged successful suite/build replay. Broader QA-01, D-386 runtime/A11Y and external gates remain.
 See quality/physical-credit-card-archive.md.
+
+## D-405 - Stale ordinary CSV review refused before money
+
+Original own/mapped CSV now uses the existing coherent original-file financial packet in its atomic
+writer. Changed opening/history facts and departed-form tokens need explicit Refresh; raw source and
+choices remain. Eight new cases, retained related checks and12 original native financial contexts per
+Windows/Release AOT Android pass, with strict builds/full offline signed APK and no-reset Main/Home0/
+OS restoration. No full-suite or accepted-money replay. Broader QA/import, D-386 and external gates
+remain separate. See quality/original-csv-financial-review.md.

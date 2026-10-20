@@ -7423,3 +7423,16 @@ packets/three profiles/OS/APK are restored after retiring only the new inactive 
 the phone. No source/APK/managed-count/build change or successful unrelated rerun. Wider device,
 paused-plan/currency/iOS, D-386 runtime/A11Y, provider/store/release and exact-head CI remain separate.
 See [bounded receipts and limits](quality/physical-credit-card-archive.md).
+
+## D-405 - Original ordinary CSV financial review
+
+A changed opening date after own/mapped CSV preview could silently change an imported row's balance
+interpretation. Two original app/SQLite regressions fail on unchanged production. Ordinary previews
+now bind the existing coherent file/accounts/categories/history/journal packet to the same atomic
+writer. Expected stale refusal keeps raw input/choices, disables Import and requires explicit Refresh;
+departed forms retire their token. Fresh writer rights and bank/holdings/accepted-result contracts stay.
+Eight new cases, retained103 related successes plus the one corrected file-recheck observer,12 native
+financial contexts per Windows/Release AOT Android, strict builds/full signed offline APK and Main's
+no-reset upgrade/Home0/settings pass. Accepted cases are retained across observer repairs; no financial
+replay or full-suite rerun. No schema/model or permission change. Broader device/import/ANR/A11Y/iOS/
+provider/release and exact-head CI remain separate. See [scope and preserved negatives](quality/original-csv-financial-review.md).

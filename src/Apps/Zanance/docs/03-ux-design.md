@@ -1892,3 +1892,12 @@ that draft. Accepted archive uses stored identity, retains history/report spendi
 and explains default clearing. Original unarchive returns the active card without resuming ended plans
 or choosing a default; the same state survives one cold read. No new UI/source change or layout matrix
 is needed. See quality/physical-credit-card-archive.md for bounded public evidence and restoration.
+
+## D-405 - Retained source with explicit fresh financial review
+
+The existing changed-preview feedback now also explains changes to ordinary CSV account/history facts.
+Retain raw source, mapping and overlap choices on refusal; disable stale Import and keep explicit
+Refresh available. Leaving the form retires its original token. A rejected financial review does not
+show an unexpected-error dialog or guess a new opening baseline. Existing wrapping/error/action dock,
+translations and native scaling remain; only this original command/refusal/refresh path is qualified.
+See quality/original-csv-financial-review.md for en/fa/de/theme native scopes and observer limits.

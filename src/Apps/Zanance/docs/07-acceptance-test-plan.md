@@ -14,7 +14,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-06 | Report only source account | FIN-03 | Unit | S1 | Verified (unit, domain level) |
 | AT-07 | Card purchase and card payment | ACC-04 | Unit + physical | S1 | Verified at recorded scopes: unit and D-404 original Samsung expense60/payment90/positive credit30, cold balances and two ledger details; no actual bank settlement or whole-device acceptance |
 | AT-08 | Transfer fee | FIN-02 | Unit | S1 | Verified (unit, domain level) |
-| AT-09 | Opening balance + older history | FIN-04, IO-12 | Unit | S2 | Verified (unit, domain level) |
+| AT-09 | Opening balance + older history | FIN-04, IO-12 | Unit + bounded native integration | S2 | Domain baseline retained; D-405 original own/mapped preview refuses a changed opening boundary, explicit Refresh uses current facts and native import/Undo passes on independent Windows/Release AOT Android; physical picker/full device acceptance remains separate |
 | AT-10 | Archive account with history/plans | ACC-06 | Unit + physical | S2/S4 | Verified at recorded scopes: unit and D-404 Samsung dirty-draft cancel/accept, both active source/destination plans ended, default cleared, archived report/history retained and unarchive/cold without resuming plans; paused variants/platform acceptance separate |
 | AT-11 | Balance adjustment | ACC-08 | Unit | S1 | Verified (unit, domain level) |
 | AT-12 | Partial refund same month | REF-01/02 | Unit | S1 | Verified (unit, domain level) |
@@ -4519,3 +4519,16 @@ packets/three profiles/OS/APK are restored after retiring only the new inactive 
 the phone. No source/APK/managed-count/build change or successful unrelated rerun. Wider device,
 paused-plan/currency/iOS, D-386 runtime/A11Y, provider/store/release and exact-head CI remain separate.
 See [bounded receipts and limits](quality/physical-credit-card-archive.md).
+
+## D-405 - AT-09/IO-12 original ordinary CSV financial review
+
+A changed opening date after own/mapped CSV preview could silently change an imported row's balance
+interpretation. Two original app/SQLite regressions fail on unchanged production. Ordinary previews
+now bind the existing coherent file/accounts/categories/history/journal packet to the same atomic
+writer. Expected stale refusal keeps raw input/choices, disables Import and requires explicit Refresh;
+departed forms retire their token. Fresh writer rights and bank/holdings/accepted-result contracts stay.
+Eight new cases, retained103 related successes plus the one corrected file-recheck observer,12 native
+financial contexts per Windows/Release AOT Android, strict builds/full signed offline APK and Main's
+no-reset upgrade/Home0/settings pass. Accepted cases are retained across observer repairs; no financial
+replay or full-suite rerun. No schema/model or permission change. Broader device/import/ANR/A11Y/iOS/
+provider/release and exact-head CI remain separate. See [scope and preserved negatives](quality/original-csv-financial-review.md).

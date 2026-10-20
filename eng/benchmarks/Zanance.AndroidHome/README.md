@@ -525,3 +525,12 @@ still matches; it is never reseeded or replaced. Modal native controls own focus
 covered Activity. Preserve incomplete observations and continue only the unqualified cases.
 Windows uses Run-StoreDrafts.ps1 -EditorTextReview -EditorRetainedAggregateOnly at360/412/1280; the
 explicit unique EditorAggregateCompleted subset excludes only independently verified earlier cases.
+
+## Original financial CSV review (D-405)
+
+`import-financial-review` requires fresh run/comparison IDs and an empty owned root. It invokes original
+own/mapped native pages and actual SQLite refusal/Refresh/import/Undo in en/fa/de and both themes.
+The picker and Undo consent are supplied effects; no Main private data is read. Fixed dock actions
+are not scroll descendants. Public reports bind comparison and original package/PID/run. Preserve a
+live process on observation timeout and retain accepted fixtures on a terminal failure; never rerun
+an accepted financial case to repair an observer.

@@ -2431,3 +2431,13 @@ PlanStore.UpdateStateAsync loads current state before alsoInTransaction. Settled
 skip/unskip/override or a different link; skipped state rejects a new link. The same explicit link
 retains idempotency after its original relationship checks. The existing writer/access/rollback and
 committed-publication contracts are unchanged; no model/migration or backup-format change.
+
+## Original ordinary CSV financial review (D-405)
+
+Ordinary own/mapped preview now captures the existing coherent ImportReadReview under one SQLite
+read transaction. Its immutable proposed-entry packets and ordered original financial inputs are
+rechecked by ImportReviewedAsync inside the original financial writer, including the opening date
+and balance. Ordinary read-only preview does not pin purchase authority; the writer demands current
+access. Bank review retains its existing captured-access validation. An expected changed packet is
+a typed refusal with explicit Refresh, while an accepted import retires its payload before fallible
+publication. No schema/compiled-model, portable format, key, permission or SDK change is involved.

@@ -2931,3 +2931,12 @@ Archive qualification reviews both source/destination plan relationships and dir
 preserves stored financial identity/history and clears only the matching default. Unarchive must not
 resume ended plans or guess a default. Preserve accepted money and continue only pending observations;
 restore Main and retire only the newly owned inactive fixture before releasing a coordinated phone turn.
+
+## D-405 - Ordinary CSV original financial review
+
+Own/mapped CSV must carry its coherent original file/account/category/history/journal packet into the
+same existing atomic writer. Bind exact proposed entries; reject changed facts before money, keep raw
+input/choices and require explicit Refresh. Ordinary read-only review uses fresh writer authorization;
+it does not become an authorization bypass or a new purchase gate. Preserve bank reviewed consent,
+holdings and accepted-result contracts. Retire departed forms, and never replay accepted import/Undo
+to repair a native observer. Independent continuation checkpoints retain original data and evidence.

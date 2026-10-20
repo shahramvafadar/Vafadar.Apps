@@ -1730,3 +1730,13 @@ original grant/retained-file/uninstall/reinstall/first-run/cold/re-export sequen
 whole schema/typed-row verifier. Only original Settings.UpdatedAt integer ticks may advance. Keep
 accepted money and late receiver receipts; repair only the failed observer. Exact native/package/
 restoration limits: src/Apps/Zanance/docs/quality/physical-portable-fresh-install.md.
+
+## Original CSV financial snapshot qualification (D-405)
+
+`./eng/scripts/Run-StoreDrafts.ps1 -ImportFinancialReview` builds a fresh guarded Windows identity on
+an independent desktop. `-ImportFinancialContinuation <original-run-id>` retains completed owned
+fixtures/captures and finishes only a pending accepted batch/Undo without importing it again. A raw
+source/command review is not a bank-provider or physical native-consent acceptance. The independent
+AndroidHome caller's `import-financial-review` phase qualifies the same original sources under Release
+AOT; read only its comparison-bound report from the original live PID. Keep full final Main APK and
+privacy/signature verification separate from this caller; restore original Main and OS values.

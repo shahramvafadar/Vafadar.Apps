@@ -11,19 +11,23 @@ using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.Data.Importing;
 
-/// <summary>Coherent original financial inputs used by the bank preset's preview and writer guard.</summary>
+/// <summary>Coherent original financial inputs used by CSV previews and their transactional writer guard.</summary>
 public sealed record ImportReviewInputs(List<Account> Accounts, List<Category> Categories, List<LedgerEntry> Entries, List<ImportLinkBatch> Journals);
+
+/// <summary>The reviewed CSV financial packet changed; refresh before trying its original writer again.</summary>
+public sealed class ImportReviewChangedException(string message) : InvalidOperationException(message);
 
 /// <summary>Original file/rights and financial state, never interchangeable with a subsequently selected profile.</summary>
 public sealed class ImportReadReview
 {
     private readonly CommercialFileAccess _access;
     private readonly string _path, _packet;
+    private readonly bool _reviewAccess;
     private Dictionary<Guid, string>? _entries;
     /// <summary>Captures one actual opened file and coherent original read.</summary>
-    internal ImportReadReview(string path, CommercialFileAccess access, ImportReviewInputs inputs)
+    internal ImportReadReview(string path, CommercialFileAccess access, ImportReviewInputs inputs, bool reviewAccess = true)
     {
-        _path = path; _access = access; Inputs = inputs; _packet = JsonSerializer.Serialize(inputs, ImportReviewJson.Default.ImportReviewInputs);
+        _path = path; _access = access; _reviewAccess = reviewAccess; Inputs = inputs; _packet = JsonSerializer.Serialize(inputs, ImportReviewJson.Default.ImportReviewInputs);
         ConsumedIds = inputs.Journals.Select(j => JsonSerializer.Deserialize(j.StateJson, ImportLinkJson.Default.ImportLinkState)
             is { Version: 1 } state ? state : throw new InvalidOperationException("Unsupported import journal."))
             .SelectMany(s => s.Adjustments.Where(a => a.After is null).Select(a => a.AggregateId)).ToFrozenSet();
@@ -41,18 +45,18 @@ public sealed class ImportReadReview
     /// <summary>Rejects retired rights or a changed in-memory original packet without HTTP.</summary>
     public void EnsureCurrent()
     {
-        _access.EnsureSnapshotCurrent(); _access.DemandFeature(CommercialFeature.CsvImport);
-        if (_packet != JsonSerializer.Serialize(Inputs, ImportReviewJson.Default.ImportReviewInputs)) throw new InvalidOperationException("The original import review was changed.");
+        if (_reviewAccess) { _access.EnsureSnapshotCurrent(); _access.DemandFeature(CommercialFeature.CsvImport); }
+        if (_packet != JsonSerializer.Serialize(Inputs, ImportReviewJson.Default.ImportReviewInputs)) throw new ImportReviewChangedException("The original import review was changed.");
     }
     /// <summary>Rechecks exact history and accepted original entries inside the same financial writer transaction.</summary>
     internal void ValidateWriter(ZananceDbContext db, IReadOnlyList<LedgerEntry> entries, ImportReviewInputs current)
     {
         EnsureCurrent();
-        if (_entries is null || _path != DatabaseFileIdentity.ConfiguredPath(db)) throw new InvalidOperationException("The reviewed import belongs to another file.");
+        if (_entries is null || _path != DatabaseFileIdentity.ConfiguredPath(db)) throw new ImportReviewChangedException("The reviewed import belongs to another file.");
         foreach (var entry in entries)
             if (!_entries.TryGetValue(entry.Id, out var packet) || packet != JsonSerializer.Serialize(entry, ImportLinkJson.Default.LedgerEntry))
-                throw new InvalidOperationException("An accepted bank row differs from its original review.");
-        if (_packet != JsonSerializer.Serialize(current, ImportReviewJson.Default.ImportReviewInputs)) throw new InvalidOperationException("The import history changed; review it again.");
+                throw new ImportReviewChangedException("An accepted CSV row differs from its original review.");
+        if (_packet != JsonSerializer.Serialize(current, ImportReviewJson.Default.ImportReviewInputs)) throw new ImportReviewChangedException("The import history changed; review it again.");
         EnsureCurrent();
     }
     /// <summary>Reads original inputs under the caller's SQLite snapshot or writer.</summary>

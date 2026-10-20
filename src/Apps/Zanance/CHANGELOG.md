@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep CSV imports on the reviewed financial data (D-405)
+
+- Stop an old CSV preview from importing after its account or history changes. Keep the file and choices
+  and ask for a fresh preview before saving.
+- Retire the previous financial review when leaving the import form, without discarding its raw input.
+
 ### Card and account archive device verification (D-404)
 
 - Verified card purchase/payment, positive credit and archive/unarchive with preserved history, ended

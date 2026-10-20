@@ -197,7 +197,7 @@ public sealed class BankCsvFlowTests
         var entries = StarMoneyCsv.Preview(StarMoneyCsv.Read(Fixture()), Assert.Single(review.Inputs.Accounts), review.Inputs.Categories,
             review.Inputs.Entries, review.ConsumedIds).Select(r => r.Entry!).ToList();
         review.Bind(entries); entries[0].Amount++;
-        await Assert.ThrowsAsync<InvalidOperationException>(() => f.Store.ImportReviewedAsync(entries, [], review, Ct));
+        await Assert.ThrowsAsync<Vafadar.Zanance.Data.Importing.ImportReviewChangedException>(() => f.Store.ImportReviewedAsync(entries, [], review, Ct));
         Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
     }
 }

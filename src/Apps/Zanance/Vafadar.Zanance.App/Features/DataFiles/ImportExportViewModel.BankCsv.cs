@@ -39,6 +39,7 @@ public sealed partial class ImportExportViewModel
     public void RetireBankReview()
     {
         Interlocked.Increment(ref _bankEpoch); _bankRead = null; BankAcknowledged = false;
+        if (_ledgerRead is not null) { _ledgerRead = null; _previewStale = true; CanImport = false; }
         if (IsBankPreset) { _previewStale = true; CanImport = false; HasPreview = false; BankLines.Clear(); }
         RefreshActions();
     }

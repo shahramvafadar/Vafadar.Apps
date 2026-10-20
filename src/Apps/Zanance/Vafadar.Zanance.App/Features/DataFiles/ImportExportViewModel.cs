@@ -15,6 +15,7 @@ using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.Commerce;
+using Vafadar.Zanance.Data.Importing;
 using Vafadar.Zanance.Core.Holdings;
 
 namespace Vafadar.Zanance.App.Features.DataFiles;
@@ -50,6 +51,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     private IReadOnlyList<ImportRow> _preview = [];
     private bool _ownFormat;
     private bool _previewStale;
+    private ImportReadReview? _ledgerRead;
     private long _interpretationEpoch;
     private IReadOnlyList<LedgerEntry> _existingEntries = [];
     private IReadOnlyDictionary<Guid, Core.Accounts.Account> _previewAccounts = new Dictionary<Guid, Core.Accounts.Account>();
@@ -326,12 +328,12 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         }
         var selectedHoldings = selectedRows.Count > 1 && HoldingsCsv.IsHoldingsFormat(selectedRows[0]);
         var selectedOwn = selectedRows.Count > 1 && !selectedHoldings && CsvImport.IsOwnFormat(selectedRows[0]);
-        var ledger = selectedOwn ? await PrepareLedgerPreviewAsync(selectedRows, true, null) : null;
+        var ledger = selectedOwn ? await PrepareLedgerPreviewAsync(selectedRows, true, null, owner) : null;
         var holdings = selectedHoldings ? await PrepareHoldingsPreviewAsync(selectedRows) : null;
         var currentOwner = await _store.CaptureImportFileAsync();
         if (epoch != _bankEpoch) return;
         if (owner != currentOwner) throw new InvalidOperationException("The selected CSV profile changed.");
-        IsBankPreset = false; _bankRead = null; _bankOwner = null; BankAcknowledged = false; BankLines.Clear();
+        IsBankPreset = false; _bankRead = null; _ledgerRead = null; _bankOwner = null; BankAcknowledged = false; BankLines.Clear();
         // Only an actual new selection replaces the previous raw review or accepted result.
         ImportError = null; UndoError = null; ImportResult = null; HasPreview = false; CanImport = false; _previewAccepted = false;
         _preview = []; _holdingsContent = null; Overlaps.Clear(); ClearLedgerPreview();
@@ -387,21 +389,24 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     /// <summary>Complete prepared values; no UI-bound collection is changed by the file-analysis worker.</summary>
     private sealed record LedgerPreviewData(IReadOnlyList<ImportRow> Preview, List<LedgerEntry> Existing,
         List<Account> Accounts, List<Core.Categories.Category> Categories, int Valid, int Known, int Invalid,
-        int Duplicates, int BeforeOpening, IReadOnlyList<ImportRow> InvalidRows);
+        int Duplicates, int BeforeOpening, IReadOnlyList<ImportRow> InvalidRows, ImportReadReview Read);
 
     /// <summary>Retains the original matching/rule algorithms and read order, running potentially synchronous provider work off-window.</summary>
-    private Task<LedgerPreviewData> PrepareLedgerPreviewAsync(IReadOnlyList<IReadOnlyList<string>> rows, bool own, ImportMapping? mapping) => Task.Run(async () =>
+    private Task<LedgerPreviewData> PrepareLedgerPreviewAsync(IReadOnlyList<IReadOnlyList<string>> rows, bool own, ImportMapping? mapping, string owner) => Task.Run(async () =>
     {
-        var accounts = await _store.GetAccountsAsync();
-        var categories = await _store.GetCategoriesAsync();
-        var existing = await _store.GetEntriesAsync();
+        // D-405: the opening boundary, names, duplicate history and overlap choices must describe
+        // the same original file snapshot later checked by the atomic financial writer.
+        var read = await _store.ReadImportReviewAsync(owner, reviewAccess: false);
+        var (accounts, categories, existing, _) = read.Inputs;
         string Name(Core.Categories.Category category) => CategoryLookup.NameOf(category, _translator);
-        var preview = own ? CsvImport.PreviewOwn(rows, accounts, categories, Name, existing, await _store.GetConsumedImportIdsAsync())
+        var preview = own ? CsvImport.PreviewOwn(rows, accounts, categories, Name, existing, read.ConsumedIds)
             : CsvImport.PreviewGeneric(rows, mapping!, accounts, categories, Name, existing, await _store.GetCategoryRulesAsync());
+        read.Bind(preview.Where(row => row.Entry is not null).Select(row => row.Entry!).DistinctBy(entry => entry.Id));
+        read.EnsureCurrent();
         return new LedgerPreviewData(preview, existing, accounts, categories,
             preview.Count(row => row.Entry is not null && !row.AlreadyImported), preview.Count(row => row.AlreadyImported),
             preview.Count(row => row.Error is not null), preview.Count(row => row.PossibleDuplicate),
-            preview.Count(row => row.BeforeOpening && !row.AlreadyImported), preview.Where(row => row.Error is not null).Take(8).ToArray());
+            preview.Count(row => row.BeforeOpening && !row.AlreadyImported), preview.Where(row => row.Error is not null).Take(8).ToArray(), read);
     });
 
     private async Task ReadPreviewAsync()
@@ -418,7 +423,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
                 SeparatorIndex == 1 ? ',' : '.', (SignMode)SignIndex, TitleColumn?.Index, CategoryColumn?.Index, NoteColumn?.Index);
         }
         var epoch = _bankEpoch; var owner = await _store.CaptureImportFileAsync();
-        var prepared = await PrepareLedgerPreviewAsync(_rows, _ownFormat, mapping);
+        var prepared = await PrepareLedgerPreviewAsync(_rows, _ownFormat, mapping, owner);
         var currentOwner = await _store.CaptureImportFileAsync();
         if (epoch != _bankEpoch) return;
         if (owner != currentOwner) throw new InvalidOperationException("The reviewed CSV profile changed.");
@@ -431,7 +436,8 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     /// <summary>Publishes one fully prepared original review after successful input analysis.</summary>
     private void PublishLedgerPreview(LedgerPreviewData prepared)
     {
-        var (preview, existing, accounts, categories, valid, known, invalid, duplicates, beforeOpening, invalidRows) = prepared;
+        var (preview, existing, accounts, categories, valid, known, invalid, duplicates, beforeOpening, invalidRows, read) = prepared;
+        _ledgerRead = read;
         _previewStale = false; _preview = preview;
         _existingEntries = existing;
         _previewAccounts = accounts.ToDictionary(a => a.Id);
@@ -563,6 +569,8 @@ public sealed partial class ImportExportViewModel : ViewModelBase
             Exception? publication = null;
             var bank = IsBankPreset ? _bankRead ?? throw new InvalidOperationException("Review the bank source again.") : null;
             var bankEpoch = _bankEpoch;
+            var review = bank ?? _ledgerRead ?? throw new InvalidOperationException("Review the original CSV again.");
+            review.EnsureCurrent();
             if (bank is not null)
             {
                 bank.EnsureCurrent();
@@ -572,8 +580,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
                 if (bankEpoch != _bankEpoch || !BankAcknowledged || !ReferenceEquals(_bankRead, bank)) throw new InvalidOperationException("The original bank consent changed.");
                 bank.EnsureCurrent();
             }
-            try { result = bank is null ? await _store.ImportAsync(entries, Overlaps.Select(o => o.Decision).ToList())
-                : await _store.ImportReviewedAsync(entries, Overlaps.Select(o => o.Decision).ToList(), bank); }
+            try { result = await _store.ImportReviewedAsync(entries, Overlaps.Select(o => o.Decision).ToList(), review); }
             catch (CommittedWriteNotificationException<ImportResult> ex) { result = ex.Result; publication = ex; }
             if (result.Conflict is { } conflict)
             {
@@ -594,6 +601,12 @@ public sealed partial class ImportExportViewModel : ViewModelBase
             catch (Exception ex) when (ex is not OutOfMemoryException) { publication ??= ex; }
             if (publication is not null)
             { ImportError = _translator["Import_SavedFollowUpFailed"]; await _interaction.ShowFailureAsync(publication); }
+        }
+        catch (ImportReviewChangedException) when (!IsBankPreset && !_previewAccepted)
+        {
+            // A changed reviewed baseline is an expected refusal, not an unexpected native error dialog.
+            _previewStale = true; CanImport = false; _ledgerRead = null;
+            ImportError = _translator["Import_Overlap_ChangedPreview"];
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
@@ -653,7 +666,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     {
         ImportError = null;
         _previewAccepted = true; CanImport = false; HasPreview = false; ShowMapping = false;
-        _preview = []; _holdingsContent = null; ClearLedgerPreview();
+        _preview = []; _ledgerRead = null; _holdingsContent = null; ClearLedgerPreview();
         ImportResult = _translator.Format("Import_Done", imported, skipped);
         RefreshActions();
     }
