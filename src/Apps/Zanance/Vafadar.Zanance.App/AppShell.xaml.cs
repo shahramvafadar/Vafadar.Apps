@@ -239,7 +239,10 @@ public partial class AppShell : Shell
         if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
             && CurrentPage?.BindingContext is Features.Holdings.HoldingDetailViewModel holding)
+        {
             holding.PriceEditor.Leave();
+            holding.HistoryEditor.Retire();
+        }
     }
 
     /// <summary>Stops translated navigation titles on a retired shell from reaching its disconnected native menu.</summary>

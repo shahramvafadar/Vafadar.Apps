@@ -3023,3 +3023,15 @@ a separate draft. Empty ordinary departure may read fresh history on return; raw
 retained Android tab departures retire authority. Preserve accepted native receipts/files. A failed
 pre-invocation observer may continue only its exact retained fixture and pending command, without
 replaying its seed; distinguish a later metadata control from the original quantity-change case.
+
+## D-414 - Original holding history deletion and short Undo
+
+Review the original displayed history row/group and explicit delete confirmation coherently, then
+recheck source and pending ownership in the existing actual-file writer. Preserve a file-bound,
+immutable, single-use deletion receipt with explicit refund links and orphan attachment ownership/
+content. Reject changed/foreign/mutated/consumed Undo before money; recheck the restored packet and
+allow only restored audit update times to advance. Keep uncommitted retry and retire departed work.
+Known delete/Undo acceptance survives fallible notification/readback without resubmission. Retained
+caption continuation validates completed original receipts/rows, restores no Undo authority and
+replays no accepted command or seed. Keep the existing short-offer/startup orphan policy; no durable
+Undo across process death is implied.

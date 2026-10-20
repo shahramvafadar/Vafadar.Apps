@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Preserve holding history deletion and Undo (D-414)
+
+- Confirm deletion against the original displayed holding and refuse changes made while confirmation is open.
+- Restore the original fee refund links and receipt ownership; refuse unsafe or already used Undo.
+- Keep known saved outcomes and typed manual prices when refresh fails, with an explicit Refresh action.
+
 ### Keep oversized holding quantities editable (D-412)
 
 - Refuse quantities that exceed the stored range without interrupting the form or showing a wrapped result.

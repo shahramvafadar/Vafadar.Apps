@@ -111,7 +111,7 @@
                                     <Label Grid.Row="1" Text="{Binding QuantityText}" TextColor="{Binding QuantityColor}" FontAttributes="Bold" VerticalOptions="Center" />
                                     <Button Grid.RowSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
                                             Command="{Binding OpenEventCommand, Source={RelativeSource AncestorType={x:Type local:HoldingDetailViewModel}}, x:DataType=local:HoldingDetailViewModel}"
-                                            CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Description}" />
+                                            CommandParameter="{Binding Id}" SemanticProperties.Description="{Binding Description}" />
                                 </Grid>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
@@ -123,12 +123,18 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- Undo after a delete -->
-        <Border Grid.Row="1" Style="{StaticResource Card}" Margin="16,0,16,16" IsVisible="{Binding UndoText, Converter={StaticResource IsNotNullConverter}}">
-            <Grid RowDefinitions="Auto,Auto" RowSpacing="6">
-                <Label Text="{Binding UndoText}" VerticalOptions="Center" />
-                <p:WrappingAction Grid.Row="1" Text="{v:Translate Common_Undo}" Command="{Binding UndoCommand}" Appearance="Text" />
-            </Grid>
+        <!-- Original result feedback stays separate from the scrolling history and keeps its exact Undo. -->
+        <Border Grid.Row="1" Style="{StaticResource Card}" Margin="16,0,16,16"
+                BindingContext="{Binding HistoryEditor}" x:DataType="local:HoldingHistoryEditor" IsVisible="{Binding HasFeedback}">
+            <VerticalStackLayout Spacing="6">
+                <Label Text="{Binding UndoText}" IsVisible="{Binding HasUndo}" />
+                <Label x:Name="HoldingHistoryFeedback" Text="{Binding Error}" Style="{StaticResource ErrorText}"
+                       IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+                <p:WrappingAction x:Name="HoldingHistoryUndo" Text="{v:Translate Common_Undo}" Command="{Binding UndoCommand}"
+                                  IsVisible="{Binding HasUndo}" Appearance="Text" />
+                <p:WrappingAction Text="{v:Translate Holding_HistoryRefresh}" Command="{Binding RefreshCommand}"
+                                  IsVisible="{Binding NeedsRefresh}" Appearance="Secondary" />
+            </VerticalStackLayout>
         </Border>
     </Grid>
 </ContentPage>

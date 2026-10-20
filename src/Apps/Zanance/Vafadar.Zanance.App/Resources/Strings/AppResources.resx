@@ -8344,4 +8344,31 @@ Original XML SHA-256: {5}</value>
   <data name="Holding_PriceRefresh" xml:space="preserve">
     <value>Refresh prices</value>
   </data>
+  <data name="Holding_HistoryDeleteTitle" xml:space="preserve">
+    <value>Delete this holding event?</value>
+  </data>
+  <data name="Holding_HistoryDeleteMessage" xml:space="preserve">
+    <value>The event and its linked payments and fees will be deleted. Existing refunds stay recorded without their source link. Undo is available only while the original data and receipt ownership remain unchanged.</value>
+  </data>
+  <data name="Holding_HistoryKeptRefund" xml:space="preserve">
+    <value>Refund kept: {0}</value>
+  </data>
+  <data name="Holding_HistorySourceChanged" xml:space="preserve">
+    <value>The original holding history or money changed. Nothing was deleted. Refresh the holding before trying again.</value>
+  </data>
+  <data name="Holding_HistoryUndoChanged" xml:space="preserve">
+    <value>Undo is no longer safe because the original data or receipt ownership changed. Nothing was restored. Refresh to review the current holding.</value>
+  </data>
+  <data name="Holding_HistoryDeletedRefresh" xml:space="preserve">
+    <value>The event was deleted, but a following update could not finish. Undo is still available. Refresh to review the result; do not delete it again.</value>
+  </data>
+  <data name="Holding_HistoryRestoredRefresh" xml:space="preserve">
+    <value>Undo completed, but a following update could not finish. Refresh to review the restored result; do not restore it again.</value>
+  </data>
+  <data name="Holding_HistoryUndoFailed" xml:space="preserve">
+    <value>Undo could not finish. Nothing was restored. The original deletion is kept for an explicit retry.</value>
+  </data>
+  <data name="Holding_HistoryRefresh" xml:space="preserve">
+    <value>Refresh holding</value>
+  </data>
 </root>

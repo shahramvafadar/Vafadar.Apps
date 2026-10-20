@@ -8292,4 +8292,31 @@ SHA-256 du XML original : {5}</value>
   <data name="Holding_PriceRefresh" xml:space="preserve">
     <value>Actualiser les prix</value>
   </data>
+  <data name="Holding_HistoryDeleteTitle" xml:space="preserve">
+    <value>Supprimer ce mouvement d’avoirs ?</value>
+  </data>
+  <data name="Holding_HistoryDeleteMessage" xml:space="preserve">
+    <value>Le mouvement et les paiements et frais associés seront supprimés. Les remboursements existants resteront enregistrés sans lien avec leur origine. Vous pourrez annuler uniquement tant que les données initiales et le rattachement des justificatifs restent inchangés.</value>
+  </data>
+  <data name="Holding_HistoryKeptRefund" xml:space="preserve">
+    <value>Remboursement conservé : {0}</value>
+  </data>
+  <data name="Holding_HistorySourceChanged" xml:space="preserve">
+    <value>L’historique initial des avoirs ou les écritures ont changé. Rien n’a été supprimé. Actualisez les avoirs avant de réessayer.</value>
+  </data>
+  <data name="Holding_HistoryUndoChanged" xml:space="preserve">
+    <value>L’annulation n’est plus sûre, car les données initiales ou le rattachement des justificatifs ont changé. Rien n’a été restauré. Actualisez pour vérifier les avoirs actuels.</value>
+  </data>
+  <data name="Holding_HistoryDeletedRefresh" xml:space="preserve">
+    <value>Le mouvement a été supprimé, mais une mise à jour ultérieure n’a pas abouti. L’annulation reste disponible. Actualisez pour vérifier le résultat ; ne le supprimez pas à nouveau.</value>
+  </data>
+  <data name="Holding_HistoryRestoredRefresh" xml:space="preserve">
+    <value>L’annulation a été effectuée, mais une mise à jour ultérieure n’a pas abouti. Actualisez pour vérifier le résultat restauré ; ne le restaurez pas à nouveau.</value>
+  </data>
+  <data name="Holding_HistoryUndoFailed" xml:space="preserve">
+    <value>L’annulation n’a pas pu aboutir. Rien n’a été restauré. La suppression initiale est conservée pour une nouvelle tentative explicite.</value>
+  </data>
+  <data name="Holding_HistoryRefresh" xml:space="preserve">
+    <value>Actualiser les avoirs</value>
+  </data>
 </root>

@@ -1065,3 +1065,11 @@ from the independently identified complete original app; it refuses grants from 
 code. No installed private store or key is read. Matched phone files and both fresh fixture packages
 are removed, Main/profiles/OS restored and the phone released. This does not accept public release,
 protected-password/new-device or provider privacy. See quality/physical-portable-fresh-install.md.
+
+### D-414 - Process-local holding Undo ownership
+
+The existing short Undo keeps original group rows, explicit refund relationships, affected account/
+category facts and attachment ownership/content digests in memory, bound to the actual file. They
+are not exported, uploaded, stored in a new table or restored across process death. Existing startup
+orphan receipt cleanup remains. Independent qualification receipts contain only separately owned
+fictitious data and remain private; no Main private database/key or new permission/provider is read.

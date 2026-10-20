@@ -41,7 +41,6 @@ public sealed partial class HoldingDetailViewModel(
 {
     private Guid _id;
     private AssetType? _type;
-    private HoldingGroup? _deleted;
 
     public ObservableCollection<string> PerLocation { get; } = [];
 
@@ -89,11 +88,14 @@ public sealed partial class HoldingDetailViewModel(
     [ObservableProperty]
     public partial bool HasStock { get; set; }
 
-    [ObservableProperty]
-    public partial string? UndoText { get; set; }
-
     /// <summary>Owns the original manual price form and its accepted outcome.</summary>
     public HoldingPriceEditor PriceEditor { get; } = new(holdings, text, translator, localization, time, interaction);
+
+    /// <summary>Owns the actual history row review and file-bound short Undo.</summary>
+    public HoldingHistoryEditor HistoryEditor { get; } = new(holdings, text, translator, interaction);
+
+    /// <summary>Gets the original history command with its actual source/confirmation enablement.</summary>
+    public IAsyncRelayCommand<Guid> OpenEventCommand => HistoryEditor.OpenCommand;
 
     private DateOnly Today => DateOnly.FromDateTime(time.GetLocalNow().DateTime);
 
@@ -112,14 +114,19 @@ public sealed partial class HoldingDetailViewModel(
     public async Task LoadAsync()
     {
         if (!(await holdings.GetTypesAsync()).Any(t => t.Id == _id))
-        { NotFound = true; PriceEditor.Retire(); return; }
+        { NotFound = true; PriceEditor.Retire(); HistoryEditor.Retire(); return; }
         PriceEditor.ReloadView = LoadAsync;
+        HistoryEditor.RefreshView = async () =>
+        {
+            await PriceEditor.RefreshCommand.ExecuteAsync(null);
+            return PriceEditor.CanSubmit ? PriceEditor.DisplayedReview : null;
+        };
+        IsAdvanced = (await store.GetSettingsAsync()).Shows(Feature.HoldingDetails);
         var inputs = await PriceEditor.LoadAsync(_id);
         _type = inputs.Type;
         NotFound = false;
         var type = inputs.Type;
         var today = Today;
-        IsAdvanced = (await store.GetSettingsAsync()).Shows(Feature.HoldingDetails);
         var events = inputs.Events;
         var valuations = inputs.Valuations;
         var locations = inputs.Locations.ToDictionary(l => l.Id, l => l.Name);
@@ -182,6 +189,7 @@ public sealed partial class HoldingDetailViewModel(
             Valuations.Add(new ValuationRow(valuation.Id, text.Price(valuation.PricePerUnitMilli, type), text.Date(valuation.Date),
                 valuation.Source == ValuationSource.Purchase ? translator["Holding_FromPurchase"] : valuation.Note));
         }
+        HistoryEditor.PublishDisplayed(PriceEditor.DisplayedReview);
     }
 
     [RelayCommand]
@@ -190,51 +198,6 @@ public sealed partial class HoldingDetailViewModel(
 
     [RelayCommand]
     private Task EditTypeAsync() => Shell.Current.GoToAsync(AppShell.AssetTypeEditorRoute, new Dictionary<string, object> { ["id"] = _id });
-
-    [RelayCommand]
-    private async Task OpenEventAsync(HoldingEventRow row)
-    {
-        var edit = translator["Common_Edit"];
-        var delete = translator["Common_Delete"];
-        var choice = await Shell.Current.DisplayActionSheetAsync(row.Description, translator["Common_Cancel"], delete, edit);
-        if (choice == edit)
-        {
-            await Shell.Current.GoToAsync(AppShell.AssetEventEditorRoute, new Dictionary<string, object> { ["id"] = row.Id });
-        }
-        else if (choice == delete)
-        {
-            await DeleteEventAsync(row);
-        }
-    }
-
-    // A purchase or sale is deleted with its money entry and fee; a later sale that needs it blocks the delete (AT17).
-    private async Task DeleteEventAsync(HoldingEventRow row)
-    {
-        var (removed, conflict) = await holdings.DeleteEventAsync(row.Id);
-        if (conflict is not null && _type is { } type)
-        {
-            var place = (await holdings.GetLocationsAsync()).FirstOrDefault(l => l.Id == conflict.LocationId)?.Name ?? "?";
-            await Shell.Current.DisplayAlertAsync(translator["Holding_CannotDelete"],
-                translator.Format("Holding_Conflict", text.Date(conflict.Date), text.Quantity(conflict.Available, type), place), translator["Common_Ok"]);
-            return;
-        }
-
-        _deleted = removed;
-        UndoText = removed is null ? null : translator.Format("Holding_Deleted", row.Title);
-        await LoadAsync();
-    }
-
-    [RelayCommand]
-    private async Task UndoAsync()
-    {
-        if (_deleted is { } group)
-        {
-            _deleted = null;
-            UndoText = null;
-            await holdings.RestoreAsync(group);
-            await LoadAsync();
-        }
-    }
 
     [RelayCommand]
     private Task DeletePriceAsync(ValuationRow row) => PriceEditor.DeleteAsync(row.Id, row.Description);

@@ -8315,4 +8315,31 @@
   <data name="Holding_PriceRefresh" xml:space="preserve">
     <value>تازه‌سازی قیمت‌ها</value>
   </data>
+  <data name="Holding_HistoryDeleteTitle" xml:space="preserve">
+    <value>حذف این رویداد دارایی؟</value>
+  </data>
+  <data name="Holding_HistoryDeleteMessage" xml:space="preserve">
+    <value>رویداد و پرداخت‌ها و کارمزدهای وابسته به آن حذف می‌شوند. بازپرداخت‌های قبلی بدون پیوند به منبع حفظ می‌شوند. بازگردانی فقط تا زمانی ممکن است که داده‌های اولیه و مالکیت پیوست‌ها تغییر نکرده باشند.</value>
+  </data>
+  <data name="Holding_HistoryKeptRefund" xml:space="preserve">
+    <value>بازپرداخت حفظ‌شده: {0}</value>
+  </data>
+  <data name="Holding_HistorySourceChanged" xml:space="preserve">
+    <value>تاریخچهٔ اولیهٔ دارایی یا اطلاعات مالی تغییر کرده است. چیزی حذف نشد. پیش از تلاش دوباره، دارایی را تازه‌سازی کنید.</value>
+  </data>
+  <data name="Holding_HistoryUndoChanged" xml:space="preserve">
+    <value>به‌دلیل تغییر داده‌های اولیه یا مالکیت پیوست‌ها، بازگردانی دیگر امن نیست. چیزی بازگردانده نشد. برای بررسی وضعیت فعلی دارایی، تازه‌سازی کنید.</value>
+  </data>
+  <data name="Holding_HistoryDeletedRefresh" xml:space="preserve">
+    <value>رویداد حذف شد، اما به‌روزرسانی بعدی کامل نشد. بازگردانی همچنان در دسترس است. برای بررسی نتیجه تازه‌سازی کنید؛ آن را دوباره حذف نکنید.</value>
+  </data>
+  <data name="Holding_HistoryRestoredRefresh" xml:space="preserve">
+    <value>بازگردانی انجام شد، اما به‌روزرسانی بعدی کامل نشد. برای بررسی نتیجهٔ بازگردانده‌شده تازه‌سازی کنید؛ آن را دوباره بازنگردانید.</value>
+  </data>
+  <data name="Holding_HistoryUndoFailed" xml:space="preserve">
+    <value>بازگردانی کامل نشد. چیزی بازگردانده نشد. اطلاعات حذف اولیه برای تلاش دوبارهٔ صریح حفظ شده است.</value>
+  </data>
+  <data name="Holding_HistoryRefresh" xml:space="preserve">
+    <value>تازه‌سازی دارایی</value>
+  </data>
 </root>

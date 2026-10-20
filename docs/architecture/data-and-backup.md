@@ -2510,3 +2510,14 @@ ownership before mutation/commit; fresh commercial and household rights still ap
 are not reusable. Post-commit notification failure is typed; the actual price editor retires authority
 before readback and never resubmits an accepted price. No schema/model, quantity or money is added.
 See [evidence](../../src/Apps/Zanance/docs/quality/holding-price-review.md).
+
+### File-bound holding deletion and short Undo (D-414)
+
+HoldingDeletionReceipt stays process-local: original group payload, before/after type/history/price/
+location facts, affected currencies/categories, explicit retained refunds, absent identities and
+orphan attachment content digests. Existing delete/restore writers capture and recheck these facts
+inside their actual transaction with fresh rights; known commits carry typed notification outcomes.
+Restoration copies the original rows, preserves creation/financial metadata and relinks only original
+refunds. A final packet check permits only the restored rows' UpdatedAt to advance. No receipt table,
+backup field or key is added. Startup orphan cleanup and short Undo lifetime remain unchanged.
+See [evidence](../../src/Apps/Zanance/docs/quality/holding-history-undo.md).

@@ -170,6 +170,14 @@ internal static partial class AndroidHomeReview
                 }
                 await WriteReportAsync(root, phase, await ReviewHoldingFeeActionAsync(app, services, root, comparison!, retained, ct), ct);
             }
+            else if (phase == "holding-history")
+            {
+                Directory.CreateDirectory(root);
+                var captions = Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_history_captions", false) == true;
+                if (RedirectedAncestors(root).Length != 0 || !captions && Directory.EnumerateFileSystemEntries(root).Any())
+                    throw new ReviewCheckException("Fresh original history financial review or exact completed caption continuation required.");
+                await WriteReportAsync(root, phase, await ReviewHoldingHistoryAsync(app, services, root, comparison!, baseline, ct), ct);
+            }
             else if (phase == "holding-price")
             {
                 Directory.CreateDirectory(root);

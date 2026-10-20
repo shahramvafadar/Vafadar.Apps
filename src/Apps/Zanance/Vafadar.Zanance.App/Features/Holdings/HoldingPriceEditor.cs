@@ -17,6 +17,8 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
     private long _revision;
     private Guid _id;
     private bool _initialized;
+    /// <summary>Gets the exact displayed packet for reviewing an original history action in one coherent read.</summary>
+    internal HoldingPriceReview? DisplayedReview => _display;
     /// <summary>Reloads the original owning detail after acceptance or an explicit Refresh.</summary>
     public Func<Task>? ReloadView { get; set; }
     /// <summary>Gets whether the accepted operation was a deletion.</summary>

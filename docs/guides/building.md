@@ -1835,3 +1835,14 @@ Android caller's `holding-price` phase similarly uses a fresh run/pass; its narr
 `review_resume_price` requires the exact `review_baseline` pre-invocation viewport failure and retained
 fixture with no command receipts. It does not replay a financial command or seed. Keep original
 failure and continuation evidence separate; OS confirmation dialogs, phone and iOS remain gates.
+
+### Original holding history delete/Undo (D-414)
+
+`./eng/scripts/Run-StoreDrafts.ps1 -HoldingHistoryReview -TimeoutSeconds 1800` creates one independent
+original native financial workflow and later retired captions. Inspect78 app-owned captures. A
+`-HoldingHistoryContinuation <exact-completed-run>` qualifies only72 read-only caption scenes from
+its original complete-financial receipt and exact complete-row digest. It never recreates short Undo
+authority, reseeds data or repeats accepted writes. Original Cases/Live retain their original PID.
+The independent Android `holding-history` phase similarly takes a fresh run/pass. Its optional
+`--ez review_history_captions true` requires `review_baseline` equal to the exact original completed
+financial invocation. An observation timeout keeps the original process alive; do not restart it.

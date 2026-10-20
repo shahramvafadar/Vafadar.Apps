@@ -8284,4 +8284,31 @@ SHA-256 del XML original: {5}</value>
   <data name="Holding_PriceRefresh" xml:space="preserve">
     <value>Actualizar precios</value>
   </data>
+  <data name="Holding_HistoryDeleteTitle" xml:space="preserve">
+    <value>¿Eliminar este movimiento de tenencias?</value>
+  </data>
+  <data name="Holding_HistoryDeleteMessage" xml:space="preserve">
+    <value>Se eliminarán el movimiento y sus pagos y comisiones vinculados. Los reembolsos existentes se conservarán sin el vínculo al origen. Solo podrás deshacerlo mientras no cambien los datos originales ni la pertenencia de los comprobantes.</value>
+  </data>
+  <data name="Holding_HistoryKeptRefund" xml:space="preserve">
+    <value>Reembolso conservado: {0}</value>
+  </data>
+  <data name="Holding_HistorySourceChanged" xml:space="preserve">
+    <value>El historial original de las tenencias o los movimientos de dinero han cambiado. No se eliminó nada. Actualiza las tenencias antes de volver a intentarlo.</value>
+  </data>
+  <data name="Holding_HistoryUndoChanged" xml:space="preserve">
+    <value>Ya no es seguro deshacer porque cambiaron los datos originales o la pertenencia de los comprobantes. No se restauró nada. Actualiza para revisar las tenencias actuales.</value>
+  </data>
+  <data name="Holding_HistoryDeletedRefresh" xml:space="preserve">
+    <value>El movimiento se eliminó, pero una actualización posterior no pudo completarse. Aún puedes deshacerlo. Actualiza para revisar el resultado; no lo elimines de nuevo.</value>
+  </data>
+  <data name="Holding_HistoryRestoredRefresh" xml:space="preserve">
+    <value>Se deshizo el cambio, pero una actualización posterior no pudo completarse. Actualiza para revisar el resultado restaurado; no lo restaures de nuevo.</value>
+  </data>
+  <data name="Holding_HistoryUndoFailed" xml:space="preserve">
+    <value>No se pudo completar la acción de deshacer. No se restauró nada. Se conserva la eliminación original para que puedas volver a intentarlo.</value>
+  </data>
+  <data name="Holding_HistoryRefresh" xml:space="preserve">
+    <value>Actualizar tenencias</value>
+  </data>
 </root>

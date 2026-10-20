@@ -61,7 +61,9 @@ internal sealed class FlowFixture : IDisposable
 internal sealed class FixedTime : TimeProvider
 {
     internal DateTimeOffset Now { get; set; } = new(2026, 10, 9, 9, 0, 0, TimeSpan.Zero);
-    public override DateTimeOffset GetUtcNow() => Now;
+    /// <summary>Retires one test owner at an actual clock read without replacing application persistence.</summary>
+    internal Action? BeforeRead;
+    public override DateTimeOffset GetUtcNow() { BeforeRead?.Invoke(); return Now; }
     public override TimeZoneInfo LocalTimeZone => TimeZoneInfo.Utc;
 }
 

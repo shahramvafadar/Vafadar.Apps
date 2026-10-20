@@ -8315,4 +8315,31 @@ Original-XML SHA-256: {5}</value>
   <data name="Holding_PriceRefresh" xml:space="preserve">
     <value>Preise aktualisieren</value>
   </data>
+  <data name="Holding_HistoryDeleteTitle" xml:space="preserve">
+    <value>Diesen Bestandsvorgang löschen?</value>
+  </data>
+  <data name="Holding_HistoryDeleteMessage" xml:space="preserve">
+    <value>Der Vorgang und die verknüpften Zahlungen und Gebühren werden gelöscht. Vorhandene Erstattungen bleiben ohne Verknüpfung zum Ursprung gespeichert. Rückgängig ist nur möglich, solange die ursprünglichen Daten und die Zuordnung der Belege unverändert bleiben.</value>
+  </data>
+  <data name="Holding_HistoryKeptRefund" xml:space="preserve">
+    <value>Erstattung bleibt erhalten: {0}</value>
+  </data>
+  <data name="Holding_HistorySourceChanged" xml:space="preserve">
+    <value>Die ursprüngliche Bestandshistorie oder die Buchungen haben sich geändert. Es wurde nichts gelöscht. Aktualisieren Sie den Bestand vor einem neuen Versuch.</value>
+  </data>
+  <data name="Holding_HistoryUndoChanged" xml:space="preserve">
+    <value>Rückgängig ist nicht mehr sicher möglich, weil sich die ursprünglichen Daten oder die Zuordnung der Belege geändert haben. Es wurde nichts wiederhergestellt. Aktualisieren Sie zur Prüfung des aktuellen Bestands.</value>
+  </data>
+  <data name="Holding_HistoryDeletedRefresh" xml:space="preserve">
+    <value>Der Vorgang wurde gelöscht, aber eine anschließende Aktualisierung konnte nicht abgeschlossen werden. Rückgängig ist weiterhin verfügbar. Aktualisieren Sie zur Prüfung; löschen Sie ihn nicht erneut.</value>
+  </data>
+  <data name="Holding_HistoryRestoredRefresh" xml:space="preserve">
+    <value>Rückgängig wurde ausgeführt, aber eine anschließende Aktualisierung konnte nicht abgeschlossen werden. Aktualisieren Sie zur Prüfung des wiederhergestellten Ergebnisses; stellen Sie es nicht erneut her.</value>
+  </data>
+  <data name="Holding_HistoryUndoFailed" xml:space="preserve">
+    <value>Rückgängig konnte nicht abgeschlossen werden. Es wurde nichts wiederhergestellt. Die ursprüngliche Löschung bleibt für einen erneuten Versuch erhalten.</value>
+  </data>
+  <data name="Holding_HistoryRefresh" xml:space="preserve">
+    <value>Bestand aktualisieren</value>
+  </data>
 </root>

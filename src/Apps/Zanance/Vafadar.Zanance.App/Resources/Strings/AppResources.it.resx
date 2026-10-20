@@ -8304,4 +8304,31 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Holding_PriceRefresh" xml:space="preserve">
     <value>Aggiorna prezzi</value>
   </data>
+  <data name="Holding_HistoryDeleteTitle" xml:space="preserve">
+    <value>Eliminare questo movimento delle disponibilità?</value>
+  </data>
+  <data name="Holding_HistoryDeleteMessage" xml:space="preserve">
+    <value>Il movimento e i pagamenti e le commissioni collegati verranno eliminati. I rimborsi esistenti resteranno registrati senza il collegamento all’origine. Potrai annullare solo finché i dati originali e l’associazione dei giustificativi restano invariati.</value>
+  </data>
+  <data name="Holding_HistoryKeptRefund" xml:space="preserve">
+    <value>Rimborso conservato: {0}</value>
+  </data>
+  <data name="Holding_HistorySourceChanged" xml:space="preserve">
+    <value>La cronologia originale delle disponibilità o i movimenti di denaro sono cambiati. Non è stato eliminato nulla. Aggiorna le disponibilità prima di riprovare.</value>
+  </data>
+  <data name="Holding_HistoryUndoChanged" xml:space="preserve">
+    <value>Non è più sicuro annullare perché i dati originali o l’associazione dei giustificativi sono cambiati. Non è stato ripristinato nulla. Aggiorna per controllare le disponibilità attuali.</value>
+  </data>
+  <data name="Holding_HistoryDeletedRefresh" xml:space="preserve">
+    <value>Il movimento è stato eliminato, ma un aggiornamento successivo non è stato completato. Puoi ancora annullare. Aggiorna per controllare il risultato; non eliminarlo di nuovo.</value>
+  </data>
+  <data name="Holding_HistoryRestoredRefresh" xml:space="preserve">
+    <value>L’annullamento è stato completato, ma un aggiornamento successivo non è terminato. Aggiorna per controllare il risultato ripristinato; non ripristinarlo di nuovo.</value>
+  </data>
+  <data name="Holding_HistoryUndoFailed" xml:space="preserve">
+    <value>Non è stato possibile completare l’annullamento. Non è stato ripristinato nulla. L’eliminazione originale è conservata per un nuovo tentativo esplicito.</value>
+  </data>
+  <data name="Holding_HistoryRefresh" xml:space="preserve">
+    <value>Aggiorna disponibilità</value>
+  </data>
 </root>

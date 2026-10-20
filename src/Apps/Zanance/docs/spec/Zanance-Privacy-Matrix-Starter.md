@@ -1041,3 +1041,11 @@ No production matrix change. Fictitious original portable bytes move only throug
 native grant into an independent offline receiver, then the exact owned picker file restores a fresh
 independent original Release installation. No Main/private-key extraction or network recipient; owned
 phone packets/packages are removed and Main/OS restored. See ../quality/physical-portable-fresh-install.md.
+
+### D-414 - Process-local holding Undo ownership
+
+The existing short Undo keeps original group rows, explicit refund relationships, affected account/
+category facts and attachment ownership/content digests in memory, bound to the actual file. They
+are not exported, uploaded, stored in a new table or restored across process death. Existing startup
+orphan receipt cleanup remains. Independent qualification receipts contain only separately owned
+fictitious data and remain private; no Main private database/key or new permission/provider is read.

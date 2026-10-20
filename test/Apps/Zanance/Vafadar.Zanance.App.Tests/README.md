@@ -92,3 +92,13 @@ price facts, pending delete confirmation, draft/departure, cancellation, represe
 foreign review and known Save/delete acceptance through notification/readback failure. Explicit
 refresh keeps raw input and never replays an accepted write. Native rendering/OS dialogs remain
 separate; no MAUI control or application algorithm is duplicated in the tests.
+
+### Original holding history and Undo (AT-414)
+
+HoldingHistoryUndoFlowTests compiles actual HoldingHistoryEditor with real isolated SQLite, original
+texts and explicit confirmation/navigation/time ports. Twenty distinct new cases cover refund/
+receipt/file/quantity ownership, stale pending review, cancellation, notification/readback failure,
+SQL rollback/retry, consumed authority, advancing audit time and departed uncommitted Undo. The
+mutable time port can retire an owner during original persistence without changing OS time. No
+application algorithm, database or MAUI control is faked. Native rendering/OS dialogs/device gates
+remain separate.

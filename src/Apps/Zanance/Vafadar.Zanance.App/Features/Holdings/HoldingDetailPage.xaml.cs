@@ -18,6 +18,7 @@ public partial class HoldingDetailPage : ContentPage
     protected override void OnDisappearing()
     {
         _viewModel.PriceEditor.Leave();
+        _viewModel.HistoryEditor.Retire();
         base.OnDisappearing();
     }
 }

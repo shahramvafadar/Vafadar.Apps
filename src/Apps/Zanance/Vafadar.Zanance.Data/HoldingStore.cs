@@ -21,7 +21,14 @@ public sealed record HoldingSaveResult(HoldingConflict? Conflict, IReadOnlyList<
 }
 
 /// <summary>What a delete removed, so Undo can put every part back (ZEX-AS14, AT17).</summary>
-public sealed record HoldingGroup(IReadOnlyList<AssetEvent> Events, IReadOnlyList<LedgerEntry> Entries);
+public sealed record HoldingGroup(IReadOnlyList<AssetEvent> Events, IReadOnlyList<LedgerEntry> Entries)
+{
+    /// <summary>Gets process-local original file/dependent ownership; callers cannot manufacture Undo authority.</summary>
+    internal HoldingDeletionReceipt? Receipt { get; init; }
+}
+
+/// <summary>The original deletion's removed group, or the history conflict that prevented every mutation.</summary>
+public sealed record HoldingDeleteResult(HoldingGroup? Removed, HoldingConflict? Conflict);
 
 /// <summary>
 /// Reads and writes quantity holdings (design §7): asset types, locations, events and valuations. A purchase or sale is
@@ -300,24 +307,38 @@ public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> con
     /// </summary>
     public async Task<(HoldingGroup? Removed, HoldingConflict? Conflict)> DeleteEventAsync(Guid id, CancellationToken cancellationToken = default)
     {
+        var result = await DeleteEventCoreAsync(id, cancellationToken);
+        return (result.Removed, result.Conflict);
+    }
+
+    private async Task<HoldingDeleteResult> DeleteEventCoreAsync(Guid id, CancellationToken cancellationToken,
+        HoldingEventReadReview? review = null, Func<bool>? isCurrent = null)
+    {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         write.DemandFeature(CommercialFeature.DeleteData);
+        if (review is not null)
+            review.ValidateWriter(db, await HoldingEventReadReview.ReadAsync(db, review.Inputs.Type.Id, review.EventId, cancellationToken));
+        if (isCurrent?.Invoke() == false) throw new HoldingEventReviewChangedException("Original holding deletion retired.");
         var assetEvent = await db.AssetEvents.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
         if (assetEvent is null)
         {
-            return (null, null);
+            return new(null, null);
         }
 
         var remaining = await db.AssetEvents.AsNoTracking().Where(e => e.AssetTypeId == assetEvent.AssetTypeId && e.Id != id).ToListAsync(cancellationToken);
         if (HoldingsLedger.FindConflict(remaining) is { } conflict)
         {
-            return (null, conflict);
+            return new(null, conflict);
         }
 
+        if (assetEvent.GroupId is { } owned && await db.AssetEvents.AnyAsync(e => e.GroupId == owned && e.Id != id, cancellationToken))
+            throw new HoldingEventReviewChangedException("The original money group is shared by another holding event.");
         var entries = assetEvent.GroupId is { } group
             ? await db.Entries.AsNoTracking().Where(e => e.GroupId == group).ToListAsync(cancellationToken)
             : [];
+        var removed = new HoldingGroup([HoldingEventReadReview.CopyEvent(assetEvent)], entries.Select(e => e.Copy()).ToList());
+        var receipt = await HoldingDeletionReceipt.BeforeAsync(db, removed, cancellationToken);
         if (entries.Count > 0)
         {
             var entryIds = entries.Select(e => e.Id).ToList();
@@ -326,9 +347,10 @@ public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> con
 
         await db.AssetEvents.Where(e => e.Id == id).ExecuteDeleteAsync(cancellationToken);
         write.EnsureCurrent();
+        removed = removed with { Receipt = await receipt.AfterAsync(db, cancellationToken) };
+        if (isCurrent?.Invoke() == false) throw new HoldingEventReviewChangedException("Original holding deletion retired before commit.");
         await write.CommitAsync(cancellationToken);
-        Changed?.Invoke(this, EventArgs.Empty);
-        return (new HoldingGroup([assetEvent], entries), null);
+        return CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty), new HoldingDeleteResult(removed, null));
     }
 
     /// <summary>
@@ -444,19 +466,38 @@ public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Puts a deleted group back unchanged (Undo).</summary>
-    public async Task RestoreAsync(HoldingGroup group, CancellationToken cancellationToken = default)
+    public Task RestoreAsync(HoldingGroup group, CancellationToken cancellationToken = default) =>
+        RestoreHoldingCoreAsync(group, cancellationToken);
+
+    private async Task RestoreHoldingCoreAsync(HoldingGroup group, CancellationToken cancellationToken, Func<bool>? isCurrent = null)
     {
         ArgumentNullException.ThrowIfNull(group);
+        var receipt = group.Receipt ?? throw new HoldingEventReviewChangedException("Original file-bound holding deletion receipt required.");
+        var committed = false;
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         write.DemandFeature(CommercialFeature.Corrections);
-        db.AssetEvents.AddRange(group.Events);
-        db.Entries.AddRange(group.Entries);
-        write.EnsureCurrent();
-        await db.SaveChangesAsync(cancellationToken);
-        write.EnsureCurrent();
-        await write.CommitAsync(cancellationToken);
-        Changed?.Invoke(this, EventArgs.Empty);
+        receipt.Begin(db, group);
+        try
+        {
+            await receipt.ValidateAsync(db, cancellationToken);
+            if (isCurrent?.Invoke() == false) throw new HoldingEventReviewChangedException("Original holding Undo retired.");
+            var copies = receipt.Copy(group);
+            var typeId = copies.Events.Single().AssetTypeId;
+            var remaining = await db.AssetEvents.AsNoTracking().Where(e => e.AssetTypeId == typeId).ToListAsync(cancellationToken);
+            if (HoldingsLedger.FindConflict([.. remaining, .. copies.Events]) is not null)
+                throw new HoldingEventReviewChangedException("Restoring the original holding would invalidate quantity history.");
+            db.AssetEvents.AddRange(copies.Events); db.Entries.AddRange(copies.Entries);
+            write.EnsureCurrent();
+            await db.SaveChangesAsync(cancellationToken);
+            await receipt.RelinkAsync(db, cancellationToken);
+            await receipt.ValidateRestoredAsync(db, group, cancellationToken);
+            write.EnsureCurrent();
+            if (isCurrent?.Invoke() == false) throw new HoldingEventReviewChangedException("Original holding Undo retired before commit.");
+            await write.CommitAsync(cancellationToken); committed = true;
+            CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty));
+        }
+        finally { receipt.End(committed); }
     }
 
     /// <summary>Inserts or updates a valuation; a price never changes a quantity.</summary>

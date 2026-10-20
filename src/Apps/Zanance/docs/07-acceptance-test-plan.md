@@ -4657,3 +4657,15 @@ failed drafts require explicit review. Keep field-local feedback, scalable nativ
 translations. Fifteen new selective actual app/SQLite cases,74 affected policy checks and21 resource
 checks pass; original native receipts and read-only continuation keep successful financial operations
 from being replayed. Full runtime evidence and limits: [original manual price review](quality/holding-price-review.md).
+
+## D-414 - Original holding history deletion and file-bound short Undo
+
+Complete the original holding delete/Undo cycle: coherent displayed-row/group confirmation, fresh
+actual-file writer rights/source checks, exact committed deletion receipt and accepted restoration.
+Preserve explicit fee-refund links and orphan receipt ownership/content; reject changed/foreign/
+mutated/consumed Undo before money and recheck the restored original packet. Keep uncommitted retry,
+retire departed actions and distinguish known acceptance from failed notification/readback. Twenty
+new selective actual app/SQLite cases, four affected prior cases and21 resource checks pass. Original
+native commands and retained read-only captions are qualified separately, without replaying accepted
+work. Short Undo remains process-local; no schema/model, new permission/provider or release claim.
+See [original evidence and remaining gates](quality/holding-history-undo.md).

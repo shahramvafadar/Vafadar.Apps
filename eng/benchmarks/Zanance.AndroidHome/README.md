@@ -626,3 +626,17 @@ retained original rows and no accepted command receipt, never migrates/reseeds, 
 metadata-only control before the pending original command. Preserve original failure/process identity;
 this differs from the Windows quantity-change control. Android observations have no screenshot file.
 See [evidence](../../../src/Apps/Zanance/docs/quality/holding-price-review.md).
+
+## Original holding history delete and short Undo (D-414)
+
+Phase `holding-history` uses one fresh review_run/review_pass and actual original sources/XAML. A
+concurrent fee-note change during explicit confirmation refuses deletion, then explicit Refresh
+permits one original delete. An owned SQLite INSERT rejection refuses the first Undo; dropping only
+that trigger permits its explicit pending retry. Known delete/Undo readback failures keep accepted
+outcomes, original refund link/receipt/raw price and no resubmission. The fixture audit clock is
+injected and held constant; no OS clock/settings change is made. Explicit confirmation/menu ports
+do not claim native OS dialog acceptance. Six original live observations precede24 retired caption
+contexts (en/fa/de, light/dark, four outcomes). Completed financial receipts plus the complete-row
+digest allow only `--ez review_history_captions true` with the exact original `review_baseline`.
+That continuation restores no short Undo authority and never replays accepted seeds/commands.
+See [evidence](../../../src/Apps/Zanance/docs/quality/holding-history-undo.md).
