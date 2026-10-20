@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep linked refunds valid when correcting their source (D-409)
+
+- Refuse a corrected holding fee smaller than its linked refunds or an incompatible account currency.
+- Apply the same currency check when correcting an ordinary expense with linked refunds.
+- Show fee/account errors beside the fields and keep typed values for a valid correction.
+
 ### Keep holding changes on their reviewed data (D-408)
 
 - Stop a retained purchase, sale or correction from replacing newer holding or account information;

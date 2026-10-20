@@ -2467,3 +2467,15 @@ capability classification/full-history conflict validation remain. Committed not
 HoldingSaveResult. HoldingEventEditorSession retires accepted commands across native effects; one
 location addition can adopt only the new explicit row while other original facts remain identical.
 No entity/compiled model, schema/migration, key, portable format, dependency or permission change.
+
+
+## D-409 - Final refund/source validation
+
+LedgerValidator.ValidateRefundSource checks final linked refund totals with widened sums, source
+Expense kind and case-insensitive source/receiving account currencies. ZananceStore's existing final
+refund batch and HoldingStore's retained plus incoming refunds feed that shared rule under their
+existing CommercialWriteTransaction before tracked financial mutation. Rows removed from the event
+group are excluded as existing explicit deletion/unlink behavior requires. Individual ledger/account
+validation and original reviewed-authority guards remain. No entity, migration/compiled model, key,
+portable format, permission or dependency changes. The editor maps amount/currency refusal to the
+original fee/account fields without consuming the review or replacing raw drafts.

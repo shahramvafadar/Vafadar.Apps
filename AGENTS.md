@@ -2969,3 +2969,14 @@ reject foreign money/event identities. Adopt one explicit new location only if e
 fact stays unchanged. Empty native query redelivery must retain the already loaded review. Known
 commit retires the original form before fallible notification/return. Preserve accepted cases and
 continue only the exact uncompleted native step; no reseeding or replay to repair an observer.
+
+
+## D-409 - Refund boundaries after source corrections
+
+Validate the final retained refund amounts and receiving currencies against each corrected expense
+source inside the existing ordinary/holding atomic writer. Preserve valid explicit fee deletion/unlink
+and complete final-batch correction; do not convert, unlink or relabel money to make an invalid edit
+pass. Keep field-local account/fee errors, raw drafts and the original review available for correction.
+After original native acceptance, caption checks may rehydrate only retained rejected presentation
+with retired authority; never replay financial commands to repair an observer. This does not validate
+malformed optional fee text or accept wider physical/platform/runtime gates.

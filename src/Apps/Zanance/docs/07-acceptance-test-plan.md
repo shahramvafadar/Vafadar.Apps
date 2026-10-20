@@ -20,7 +20,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-12 | Partial refund same month | REF-01/02 | Unit | S1 | Verified (unit, domain level) |
 | AT-13 | Refund of last month's purchase | REF-03, REP-02 | Unit + bounded physical Android | S1/S8 | Unit/report baseline retained; D-402 Samsung prior-period purchase/current refunds, current/all history, cold links and account movements pass; native chart pixels and broader platform acceptance remain separate |
 | AT-14 | Refund to another account | REF-01 | Unit + bounded physical Android | S1 | Unit verified; D-402 Samsung refunds35/40 into a second EUR account, recorded balances minus75/plus75 and cold original links pass; other currency/platform acceptance remains |
-| AT-15 | Refund larger than purchase | REF-04 | Unit + bounded physical Android | S1 | Unit verified; D-402 Samsung41 with40 remaining is refused, the original draft is kept, corrected40 is accepted once and zero refundable/four public cold packets pass; no private/transient SQL or all-race claim |
+| AT-15 | Refund larger than purchase | REF-04 | Unit + bounded physical Android + native source corrections D-409 | S1 | Unit verified; D-402 Samsung41 with40 remaining is refused, the original draft is kept, corrected40 is accepted once and zero refundable/four public cold packets pass; no private/transient SQL or all-race claim |
 | AT-16 | One-time future plan | FIN-07, REC-02 | Unit + physical Android | S4 | Unit verified; D-316 original main future 20 EUR plan appears in Upcoming/forecast without a ledger posting; broader platform acceptance remains |
 | AT-17 | Every 2 weeks from 2027-01-01 | REC-04/05 | Unit | S4 | Verified (unit) |
 | AT-18 | Month with three bi-weekly occurrences | BUD-10 | Unit | S4 | Verified (unit) |
@@ -4589,3 +4589,18 @@ exact OS values/size/density and final Main hash through one no-reset upgrade. N
 private installed key/database, schema/model/permission/provider change or full-suite replay. Wider
 holding relationships/device/iOS, D-386 runtime/A11Y and external/release/CI gates remain separate.
 See [original receipts and limits](quality/original-holding-event-review.md).
+
+
+## D-409 - Original refunded-fee corrections (REF-04 / AT-15)
+
+Three preserved pre-fix SQLite failures now refuse before writes. Selective8 Data and5 Core cases
+cover amount/currency/both errors, partial/same-review correction, overflow-safe totals, final-batch
+currency correction and valid fee removal with preserved refund metadata;17 affected old cases pass
+once. Windows and Release/AOT Android each invoke two original native refused/corrected forms once.
+All typed rows stay unchanged on refusal; raw drafts survive; valid acceptance keeps refund75 minor,
+quantity1000/basis2500/derived price2500000, producing Cash87500/87475 minor and expense0/25 minor.
+Four original live observations and36 Windows/12 Android read-only captions pass, with complete
+existing translated field errors and no financial replay. Final complete signed offline Main and
+one no-reset emulator Home0/OS restoration pass. AT-15's earlier physical D-402 evidence is retained;
+this extends local/native correction coverage, not physical holding or all-device/iOS acceptance.
+See quality/holding-fee-refund-limits.md for exact runs, package hashes and observer limits.

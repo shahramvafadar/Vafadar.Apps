@@ -1770,3 +1770,14 @@ the original financial file; the caller/base store remain independently owned. N
 repeat accepted finance. The AndroidHome `holding-financial-review` phase uses the original modal's
 own native focus and comparison-bound public report, with fresh owned fixtures and12 read-only
 feedback observations. The final Main APK remains a separate complete signed offline Release build.
+
+
+## D-409 - Original holding refund corrections
+
+`eng/scripts/Run-StoreDrafts.ps1 -HoldingRefundReview` runs two original refused/corrected native forms
+in independent owned SQLite, captures four original live states and36 read-only rejected-draft caption
+states in en/fa/de light/dark360/412/1280. The latter rehydrate original refusal receipts with retired
+authority; they do not repeat money or qualify an editable refused form. `holding-refund-review` in
+AndroidHome uses fresh owned run/comparison and the original modal's own native focus, then exposes
+two cases/four live/twelve read-only observations through the comparison-bound public report. Preserve
+same-PID observation delays. See the app quality/holding-fee-refund-limits.md for original outcomes.

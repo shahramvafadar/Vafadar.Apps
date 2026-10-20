@@ -1928,3 +1928,13 @@ all input cards and financial Save disabled with Close, including a failed postc
 or return. Explicit location addition retains financial drafts and cannot refresh away changed facts.
 Ignore empty native query redelivery after consuming the original parameters. Presentation matrices
 reuse original outcomes read-only and qualify translated feedback without replaying purchases/sales.
+
+
+## D-409 - Refunded fee correction feedback
+
+Keep source/refund currency errors directly below the account choice and refunded-amount errors below
+the fee input, showing both when both are invalid. Retain typed fee/account/note and the same original
+review after refusal. Editing a field clears only that field's old error; Save rechecks all financial
+constraints. Accepted forms remain disabled/Close-only. The en/fa/de both-theme feedback grows without
+clipping at360/412/wide Windows and native412dp Android. Read-only caption qualification after original
+acceptance has retired authority; it is separate from the original live enabled retry.

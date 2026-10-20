@@ -2960,3 +2960,27 @@ exact OS values/size/density and final Main hash through one no-reset upgrade. N
 private installed key/database, schema/model/permission/provider change or full-suite replay. Wider
 holding relationships/device/iOS, D-386 runtime/A11Y and external/release/CI gates remain separate.
 See [original receipts and limits](../../quality/original-holding-event-review.md).
+
+
+## D-409 - Corrected source and retained refund boundaries
+
+Three original real SQLite failures reproduce a corrected holding fee smaller than its retained
+refund, a corrected holding source moved to an incompatible account currency and the same ordinary
+expense-source currency gap. One shared REF-04 source validator now checks final linked refunds in
+the existing atomic ordinary/holding writers before mutation. Explicit valid deletion/unlink and
+same-batch source/refund correction remain supported. The actual editor shows amount/account errors
+beside their fields, preserves raw input and accepts only an explicit valid correction of that same
+original form. Known acceptance remains terminal; no conversion or guessed relinking is introduced.
+
+Thirteen distinct new cases (8 Data, 5 Core) and17 affected existing cases pass in retained selective
+cohorts, not a full-suite rerun. Two original native correction cases per independent Windows and
+Release/AOT Android preserve exact refund identity/link/amount/currency/metadata, quantity/basis/price,
+Cash875/874.75, income0 and net expense0/0.25. Four live observations prove refused Save remains enabled
+and accepted Save is disabled. Afterwards36 Windows and12 Android read-only rejected-draft caption
+observations cover en/fa/de, both themes and Windows360/412/1280; they rehydrate original refusal
+presentation with retired authority and do not replay finance. Strict builds and the complete signed
+offline Main pass. One no-reset emulator upgrade restores Home0/My account and exact OS/size/density.
+No phone input, Main private database/key read, schema/model/permission/provider change or release
+claim. Malformed optional fee text remains a source-inspected next concern, not fixed or reproduced
+here. Broader financial/device, D-386 runtime/A11Y, iOS/external and exact-head CI gates remain separate.
+See [original evidence and limits](../../quality/holding-fee-refund-limits.md).

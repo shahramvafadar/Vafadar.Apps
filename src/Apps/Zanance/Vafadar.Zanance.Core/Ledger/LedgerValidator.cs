@@ -146,6 +146,25 @@ public static class LedgerValidator
         return errors;
     }
 
+    /// <summary>Validates retained refunds against a corrected source, using final batch relationships (REF-04).</summary>
+    /// <remarks>Individual entry/account validation remains separate; source correction must not relabel linked money.</remarks>
+    public static IReadOnlyList<LedgerError> ValidateRefundSource(LedgerEntry source, IEnumerable<LedgerEntry> refunds,
+        IReadOnlyDictionary<Guid, Account> accounts)
+    {
+        ArgumentNullException.ThrowIfNull(source); ArgumentNullException.ThrowIfNull(refunds); ArgumentNullException.ThrowIfNull(accounts);
+        var linked = refunds.Where(e => e.Kind == EntryKind.Refund && e.RefundOfId == source.Id).ToList();
+        if (linked.Count == 0) return [];
+        var errors = new List<LedgerError>();
+        if (source.Kind != EntryKind.Expense) errors.Add(LedgerError.RefundOriginalNotExpense);
+        // Widen before summing so positive Int64 amounts cannot wrap into an apparently valid source correction.
+        if (linked.Sum(e => (decimal)e.Amount) > source.Amount) errors.Add(LedgerError.RefundExceedsPurchase);
+        if (accounts.TryGetValue(source.AccountId, out var originalAccount)
+            && linked.Any(refund => accounts.TryGetValue(refund.AccountId, out var receivingAccount)
+                && !string.Equals(originalAccount.CurrencyCode, receivingAccount.CurrencyCode, StringComparison.OrdinalIgnoreCase)))
+            errors.Add(LedgerError.RefundCurrencyMismatch);
+        return errors;
+    }
+
     private static void ValidateTransfer(LedgerEntry entry, IReadOnlyDictionary<Guid, Account> accounts, Account source, bool isNew, List<LedgerError> errors)
     {
         if (entry.ToAccountId is not { } toId || !accounts.TryGetValue(toId, out var destination))

@@ -1083,12 +1083,8 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
                 return new SaveResult(errors);
             }
 
-            var linked = finalRefunds.Where(e => e.RefundOfId == entry.Id).ToList();
-            if (linked.Count > 0)
-            {
-                if (entry.Kind != EntryKind.Expense) return new SaveResult([LedgerError.RefundOriginalNotExpense]);
-                if (linked.Sum(e => (decimal)e.Amount) > entry.Amount) return new SaveResult([LedgerError.RefundExceedsPurchase]);
-            }
+            var sourceErrors = LedgerValidator.ValidateRefundSource(entry, finalRefunds, accounts);
+            if (sourceErrors.Count > 0) return new SaveResult(sourceErrors);
         }
 
         foreach (var entry in entries)

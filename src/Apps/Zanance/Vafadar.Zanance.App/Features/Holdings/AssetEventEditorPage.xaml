@@ -64,6 +64,7 @@
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{v:Translate Entry_Account}" Style="{StaticResource FieldLabel}" Margin="0" />
                         <Picker ItemsSource="{Binding Accounts}" SelectedItem="{Binding Account}" SemanticProperties.Description="{v:Translate Entry_Account}" />
+                        <Label Text="{Binding AccountError}" Style="{StaticResource ErrorText}" IsVisible="{Binding AccountError, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding AmountLabel}" Style="{StaticResource FieldLabel}" />
                         <v:ChoiceChips ItemsSource="{Binding PriceModeNames}" SelectedIndex="{Binding PriceModeIndex}" />
                         <Entry Text="{Binding AmountText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{Binding AmountLabel}" />
@@ -73,6 +74,7 @@
                         </VerticalStackLayout>
                         <Label Text="{v:Translate AssetEvent_Fee}" Style="{StaticResource FieldLabel}" />
                         <Entry Text="{Binding FeeText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{v:Translate AssetEvent_Fee}" />
+                        <Label Text="{Binding FeeError}" Style="{StaticResource ErrorText}" IsVisible="{Binding FeeError, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{v:Translate AssetEvent_FeeHint}" Style="{StaticResource Secondary}" FontSize="12" />
                     </VerticalStackLayout>
                 </Border>

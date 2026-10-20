@@ -193,6 +193,14 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
     [ObservableProperty]
     public partial string? Error { get; set; }
 
+    /// <summary>Gets source/refund currency feedback beside the original account choice.</summary>
+    [ObservableProperty]
+    public partial string? AccountError { get; set; }
+
+    /// <summary>Gets the retained-refund amount feedback beside the original fee input.</summary>
+    [ObservableProperty]
+    public partial string? FeeError { get; set; }
+
     private AssetEventKind Kind => _kinds[Math.Clamp(KindIndex, 0, _kinds.Length - 1)];
 
     private QuantityUnit Unit => _units[Math.Clamp(UnitIndex, 0, _units.Count - 1)];
@@ -315,6 +323,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
 
     partial void OnAccountChanged(HoldingAccount? value)
     {
+        AccountError = null;
         UpdateSecondAmount();
         UpdateEffect();
     }
@@ -325,7 +334,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
 
     partial void OnAmountTextChanged(string value) => UpdateEffect();
 
-    partial void OnFeeTextChanged(string value) => UpdateEffect();
+    partial void OnFeeTextChanged(string value) { FeeError = null; UpdateEffect(); }
 
     partial void OnPriceModeIndexChanged(int value) => UpdateEffect();
 
@@ -450,7 +459,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
             return;
         }
 
-        Error = null;
+        Error = null; AccountError = null; FeeError = null;
         var culture = _localization.CurrentCulture;
         if (ParsedQuantity() is not { } quantity)
         {
@@ -541,7 +550,11 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, IQueryAtt
 
             if (!result.Succeeded)
             {
-                Error = string.Join(Environment.NewLine, result.Errors.Select(e => _translator[$"LedgerError_{e}"]));
+                // D-409: retained-refund corrections point to the actual account/fee fields without losing raw input.
+                if (result.Errors.Contains(LedgerError.RefundCurrencyMismatch)) AccountError = _translator["LedgerError_RefundCurrencyMismatch"];
+                if (result.Errors.Contains(LedgerError.RefundExceedsPurchase)) FeeError = _translator["LedgerError_RefundExceedsPurchase"];
+                var otherErrors = result.Errors.Where(e => e is not (LedgerError.RefundCurrencyMismatch or LedgerError.RefundExceedsPurchase)).ToList();
+                Error = otherErrors.Count == 0 ? null : string.Join(Environment.NewLine, otherErrors.Select(e => _translator[$"LedgerError_{e}"]));
                 return;
             }
 

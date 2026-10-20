@@ -559,3 +559,15 @@ exact fee/group/derived-price/account effects and known postcommit acceptance. T
 observations cover en/fa/de light/dark without repeating money. Wait for the original owned modal's
 native focus. An early empty PID/public-report observation is not a failed launch: retain the same
 process and continue only its comparison-bound report read. Never reset/reseed/restart for observation.
+
+
+## D-409 - Original refunded-fee correction
+
+Phase `holding-refund-review` invokes two original actual editor correction cases in fresh owned
+SQLite: retained refund larger than corrected fee, and incompatible account currency. Native Save
+refuses with unchanged rows/raw drafts, then one explicit correction of that same form succeeds.
+The report contains two Cases/four original Live observations and twelve read-only Observations.
+Each caption state rehydrates the original rejected raw draft from its refusal receipt with retired
+authority after acceptance; it never replays a financial command. ErrorKey binds the exact original
+resource string. Wait for the owned modal's native focus and observe only the original run/PID and
+comparison. Main private data, system settings and physical devices are outside this independent run.

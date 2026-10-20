@@ -225,6 +225,13 @@ public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> con
         var categories = await db.Categories.AsNoTracking().ToDictionaryAsync(c => c.Id, cancellationToken);
         var ids = entries.Select(e => e.Id).ToList();
         var existingEntries = await db.Entries.AsNoTracking().Where(e => ids.Contains(e.Id)).Select(e => e.Id).ToListAsync(cancellationToken);
+        var removedIds = assetEvent.GroupId is { } originalGroup
+            ? await db.Entries.AsNoTracking().Where(e => e.GroupId == originalGroup && !ids.Contains(e.Id)).Select(e => e.Id).ToListAsync(cancellationToken)
+            : [];
+        // D-409: a holding fee correction follows the same final-refund source rules as an ordinary expense.
+        var storedRefunds = await db.Entries.AsNoTracking().Where(e => e.Kind == EntryKind.Refund && e.RefundOfId != null
+            && ids.Contains(e.RefundOfId.Value) && !ids.Contains(e.Id) && !removedIds.Contains(e.Id)).ToListAsync(cancellationToken);
+        var finalRefunds = storedRefunds.Concat(entries.Where(e => e.Kind == EntryKind.Refund)).ToList();
         foreach (var entry in entries)
         {
             entry.GroupId = assetEvent.GroupId;
@@ -233,6 +240,8 @@ public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> con
             {
                 return new HoldingSaveResult(null, errors);
             }
+            var sourceErrors = LedgerValidator.ValidateRefundSource(entry, finalRefunds, accounts);
+            if (sourceErrors.Count > 0) return new HoldingSaveResult(null, sourceErrors);
         }
 
         if (existing)

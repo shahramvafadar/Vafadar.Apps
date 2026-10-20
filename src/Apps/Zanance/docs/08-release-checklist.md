@@ -2051,3 +2051,12 @@ Selective23 new and46 affected existing cases, original independent purchase/sal
 notification boundaries,36 Windows and12 Release AOT Android observations, strict builds/full signed
 offline Main and no-reset emulator Home/OS restoration pass. Physical holding workflow, other
 relationship/currency variants, iOS/provider/store/release and exact-head hosted CI remain separate.
+
+
+## D-409 - Retained refund/source correction boundary
+
+Selective13 new and17 affected old cases, two original native correction cases per Windows/Release
+AOT Android, four live plus retained read-only field-feedback matrices, warning-free strict builds,
+complete signed offline APK and one no-reset emulator Home/OS restoration pass. Exact-head hosted CI
+is checked separately. Malformed optional fee text, physical holding variants, broader finance,
+D-386 runtime/A11Y and iOS/provider/store/release gates remain open; no full-suite acceptance claim.
