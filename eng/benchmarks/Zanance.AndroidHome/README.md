@@ -534,3 +534,18 @@ The picker and Undo consent are supplied effects; no Main private data is read. 
 are not scroll descendants. Public reports bind comparison and original package/PID/run. Preserve a
 live process on observation timeout and retain accepted fixtures on a terminal failure; never rerun
 an accepted financial case to repair an observer.
+
+
+## Original split/join review (D-407)
+
+Phase `split-financial-review` invokes the original native modal on independent owned fixtures,
+checks stale-source refusal and one fresh split/join acceptance, exact metadata/attachment ownership
+and terminal postcommit notification failure. Twelve retained-form observations cover en/fa/de and
+both themes; they do not repeat financial commands. Wait for the modal's own native focus.
+
+The optional `review_resume_split_after_refusal=true` continuation requires a different exact
+`review_baseline`, its matching stored failure and original successful refusal, unchanged original
+seed identity/metadata/rows, and no accepted/join fixture. It rehydrates only refused presentation and
+continues the pending original acceptance. Invalid predicates refuse before any financial action;
+public `SplitPreInvokeEvidence` contains bounded booleans/counts only. Preserve old reports and
+correct misclassified stages explicitly rather than replacing evidence or rerunning successful money.

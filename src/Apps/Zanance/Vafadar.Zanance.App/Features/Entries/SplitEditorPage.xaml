@@ -14,7 +14,7 @@
         <!-- D-98: whole title/action groups wrap at native text scale without adding a second modal header. -->
         <Grid Padding="8,8" BackgroundColor="{DynamicResource CardBackground}">
             <FlexLayout x:Name="ModalHeaderLayout" Direction="Row" Wrap="Wrap" AlignItems="Center">
-                <Button Text="{v:Translate Common_Cancel}" Command="{Binding CancelCommand}" FlexLayout.Shrink="0" Margin="4,0" Style="{StaticResource TextButton}" />
+                <Button Text="{Binding CloseText}" Command="{Binding CancelCommand}" FlexLayout.Shrink="0" Margin="4,0" Style="{StaticResource TextButton}" />
                 <Label Text="{v:Translate Split_Title}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" FlexLayout.Shrink="0" FlexLayout.Grow="1" MaximumWidthRequest="{Binding Width, Source={x:Reference ModalHeaderLayout}, x:DataType=FlexLayout}" />
             </FlexLayout>
         </Grid>
@@ -33,7 +33,7 @@
 
                 <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
 
-                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Parts}" Spacing="8">
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Parts}" Spacing="8" IsEnabled="{Binding CanEdit}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="local:SplitPart">
                             <Border Style="{StaticResource Card}">
@@ -51,7 +51,7 @@
                     </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
 
-                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Split_AddPart}" Command="{Binding AddCommand}" />
+                <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate Split_AddPart}" Command="{Binding AddCommand}" IsEnabled="{Binding CanEdit}" />
                 <Button Text="{v:Translate Split_Join}" Command="{Binding JoinCommand}" Style="{StaticResource TextButton}"
                         IsVisible="{Binding IsSplit}" />
             </VerticalStackLayout>

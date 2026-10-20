@@ -2947,3 +2947,15 @@ Android routed More pages may leave their visible tab without OnDisappearing. Re
 CSV financial review on uncancelled Shell tab navigation after existing leave guards, retaining raw
 source and choices for explicit Refresh. Never replay accepted import/Undo or opening-date edits to
 repair observers; use final-candidate read-only preview/departure and preserve the original cold data.
+
+
+## D-407 - Original split/join review and accepted outcome
+
+Read split/group, account, category/refund and attachment metadata coherently from the actual file.
+Validate the immutable source and exact pending shares under the existing financial writer before
+EntryActions mutates copies. Preserve rights, total and attachment ownership. A stale source keeps
+raw parts but retires authority; known commit retires the original form before fallible publication
+or return. Preserve successful refusal/acceptance receipts and original fixtures; observer repair
+continues only pending work without reseeding or replaying accepted money. Modal focus belongs to
+the original owned native modal, not an Activity behind it. Restore Main/profiles/OS and retire only
+the newly owned inactive profile before releasing a coordinated phone turn.

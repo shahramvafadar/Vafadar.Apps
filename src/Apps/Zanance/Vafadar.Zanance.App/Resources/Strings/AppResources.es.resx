@@ -8260,4 +8260,10 @@ SHA-256 del XML original: {5}</value>
   <data name="Occurrence_RetryLoad" xml:space="preserve">
     <value>Reintentar</value>
   </data>
+  <data name="Split_SourceChanged" xml:space="preserve">
+    <value>La transacción, el grupo o la cuenta original ha cambiado. No se ha guardado nada. Tus datos se conservan; cierra y vuelve a abrir este desglose para revisar los datos actuales.</value>
+  </data>
+  <data name="Split_SavedNeedsReview" xml:space="preserve">
+    <value>Los cambios del desglose se han guardado, pero no se pudo completar una actualización posterior. Cierra y vuelve a abrir la transacción para revisar el resultado guardado.</value>
+  </data>
 </root>

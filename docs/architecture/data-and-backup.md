@@ -2441,3 +2441,16 @@ and balance. Ordinary read-only preview does not pin purchase authority; the wri
 access. Bank review retains its existing captured-access validation. An expected changed packet is
 a typed refusal with explicit Refresh, while an accepted import retires its payload before fallible
 publication. No schema/compiled-model, portable format, key, permission or SDK change is involved.
+
+
+## Original split/join financial review (D-407)
+
+SplitReadReview captures the actual file, complete original group, subject account, category choices,
+dependent refunds and attachment ownership/metadata in one coherent SQLite snapshot. Its immutable
+serialized packet and exact editable shares are rechecked under the existing CommercialWriteTransaction
+before EntryActions mutates copies. Original Corrections/ledger rights and attachment relocation stay
+inside that writer. A stale source/file/access or pending draft refuses before mutation. Consumed
+reviews and the actual app session retain known acceptance across notification failures; no second
+write or reload can turn that original form into another operation. The native form retires departed
+reviews, preserves raw shares on refusal and uses Close-only after acceptance. No entity, compiled
+model, schema/migration, portable format, key, permission or SDK change.

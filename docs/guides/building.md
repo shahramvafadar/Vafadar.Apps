@@ -1740,3 +1740,21 @@ source/command review is not a bank-provider or physical native-consent acceptan
 AndroidHome caller's `import-financial-review` phase qualifies the same original sources under Release
 AOT; read only its comparison-bound report from the original live PID. Keep full final Main APK and
 privacy/signature verification separate from this caller; restore original Main and OS values.
+
+
+## Original split/join review qualification (D-407)
+
+`eng/scripts/Run-StoreDrafts.ps1 -SplitFinancialReview` uses a fresh separate store-preview identity,
+performs only two original financial cases and retains them for36 read-only captures across en/fa/de,
+both themes and360/412/1280 widths. It validates complete original source/dependency rows on refusal,
+known committed notification outcomes, exact totals and attachment ownership. The original base store
+and owner input desktop remain unchanged. Do not rerun accepted money to repair a capture/observer.
+
+The independent AndroidHome caller supports `split-financial-review` with a fresh owned32-hex run
+and comparison; use its comparison-bound public report. Its original modal owns native focus, so an
+Activity-focus wait behind that modal is invalid. `review_resume_split_after_refusal=true` is strictly
+a retained-original continuation: the exact baseline failure plus successful refusal receipt and
+unchanged original one-row fixture must exist, with no acceptance/join fixture. It restores only the
+refused presentation and continues pending acceptance; it never reseeds/repeats the recorded refusal.
+This diagnostic path is excluded from shipped Main. See original-split-financial-review.md in the app
+quality documentation for retained failures, signed package hashes and actual qualification limits.

@@ -74,7 +74,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-70 | Android screenshot choice and ownership wording | SEC-02, PRI, D-63 | Windows UI + Android build/device | Maintenance | Settings/help/About verified in six-language resources and en/fa/de UI; Android build verified; physical recents/screenshot acceptance pending |
 | AT-62 | Golden data §24 | §24 | Unit | S1 | Verified (unit: results, and their display in en/de/fa) |
 | AT-65 | Allocate money to two goals | F2-GOAL-02/05 | Unit | P2-1 | Verified (unit: funded money never exceeds the balance; lower priority loses funding first; completed goals release their earmark) |
-| AT-66 | Splits, partial payments, final settlement | F2-TX-01/02 | Unit | P2-3 | Verified (unit: split changes the balance once, each budget sees its share; data: partial payments keep the occurrence open with the outstanding rest, the forecast expects only the rest, the final payment settles, auto-post never pays twice, delete and undo adjust the paid amount) |
+| AT-66 | Splits, partial payments, final settlement | F2-TX-01/02 | Unit + bounded native/device D-407 | P2-3 | Verified (unit: split changes the balance once, each budget sees its share; data: partial payments keep the occurrence open with the outstanding rest, the forecast expects only the rest, the final payment settles, auto-post never pays twice, delete and undo adjust the paid amount) |
 | AT-63, 64, 67, 68 | Other phase-2 scenarios | F2-* | – | Phase 2 | Not included |
 
 ## D-67 acceptance additions
@@ -4548,3 +4548,22 @@ counted as new cases. Main979/five public packets/three profiles/OS are restored
 and exact hash-matched public file are removed, and the coordinated phone turn is released. No schema/model, resource, permission or provider change.
 Broader device/import/report, D-386 runtime/A11Y, iOS/store/release and exact-head CI remain separate.
 See [bounded evidence](quality/physical-opening-csv.md) for original receipts, preserved failures and completion status.
+
+
+## D-407 - Original split/join financial state and physical lifecycle
+
+Two real SQLite regressions first prove that retained split/join could overwrite a newer original
+note. The coherent actual-file/group/account/category/refund/attachment review is now rechecked in
+the existing atomic writer before EntryActions mutates copies. Changed sources/pending input refuse
+before money and retain raw shares; known committed notification failures leave the original form
+terminal/Close-only. Original writer rights, exact total and attachment ownership remain preserved.
+Sixteen new Data and3 actual app-session cases pass selectively, with retained two-case native
+Windows/Release AOT Android finance,36 Windows observations across en/fa/de light/dark360/412/1280
+and12 Android observations. Observer failures continue the original stored refusal and pending
+acceptance without reseeding or replaying successful money. Strict builds and complete signed offline
+Main APK pass. Samsung's original new Cash900 profile records one100 expense, splits60/40, reallocates
+70/30, preserves both public metadata packets and Home800 through one cold read, then combines once
+to one100 Food row/Home800. Main979/five known public packets/three profiles/OS are restored and only
+the new inactive fixture is retired before releasing the phone. No full-suite/unchanged successful
+matrix rerun, model/schema/permission/provider change or release claim. Broader QA-01, D-386 runtime/
+A11Y, iOS/store/external and exact-head CI remain separate. See [original evidence and limits](quality/original-split-financial-review.md).

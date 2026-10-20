@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep split and combine on the reviewed transaction (D-407)
+
+- Refuse an old split/combine after the original transaction, account or related data changes; keep
+  typed shares and explain that the transaction must be reopened.
+- Keep a successfully saved form closed to further writes even if its notification or return fails.
+- Verified split, changed shares and cold combine on an isolated Android phone profile.
+
+
 ### Keep retained CSV previews safe across Android tabs (D-406)
 
 - Require Refresh after leaving a CSV preview through a tab, while keeping its file and choices.

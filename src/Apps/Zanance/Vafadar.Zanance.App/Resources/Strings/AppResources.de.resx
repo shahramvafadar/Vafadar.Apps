@@ -8291,4 +8291,10 @@ Original-XML SHA-256: {5}</value>
   <data name="Occurrence_RetryLoad" xml:space="preserve">
     <value>Erneut versuchen</value>
   </data>
+  <data name="Split_SourceChanged" xml:space="preserve">
+    <value>Die ursprüngliche Buchung, Gruppe oder das Konto wurde geändert. Es wurde nichts gespeichert. Ihre Eingaben bleiben erhalten; schließen und öffnen Sie die Aufteilung erneut, um die aktuellen Daten zu prüfen.</value>
+  </data>
+  <data name="Split_SavedNeedsReview" xml:space="preserve">
+    <value>Die Aufteilung wurde gespeichert, aber eine anschließende Aktualisierung konnte nicht abgeschlossen werden. Schließen und öffnen Sie die Buchung erneut, um das gespeicherte Ergebnis zu prüfen.</value>
+  </data>
 </root>

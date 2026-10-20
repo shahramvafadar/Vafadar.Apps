@@ -151,6 +151,15 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Fresh independent Home refresh review required.");
                 await WriteReportAsync(root, phase, await ReviewHomeRefreshAsync(app, services, root, comparison!, ct, referencesOnly: phase == "home-refresh-references"), ct);
             }
+            else if (phase == "split-financial-review")
+            {
+                Directory.CreateDirectory(root);
+                var resumeSplit = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_resume_split_after_refusal", false) == true;
+                if (RedirectedAncestors(root).Length != 0 || (!resumeSplit && Directory.EnumerateFileSystemEntries(root).Any())
+                    || (resumeSplit && !Directory.EnumerateFileSystemEntries(root).Any()))
+                    throw new ReviewCheckException("Fresh owned split financial fixture required; preserve original accepted cases.");
+                await WriteReportAsync(root, phase, await ReviewSplitFinancialAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "import-financial-review")
             {
                 Directory.CreateDirectory(root);
@@ -328,6 +337,7 @@ internal static partial class AndroidHomeReview
                 WindowPageType = app.Windows.FirstOrDefault()?.Page?.GetType().Name,
                 ShellPageType = (app.Windows.FirstOrDefault()?.Page as AppShell)?.CurrentPage?.GetType().Name,
                 BalanceEvidence = _balanceEvidence,
+                SplitPreInvokeEvidence = phase == "split-financial-review" ? Diagnostics.SplitFinancialNativeReview.PreInvokeEvidence : null,
                 HeaderEvidence = Diagnostics.HomeAddHeaderReview.LastObservation,
                 HeaderProgress = File.Exists(Path.Combine(root, "review-count-progress.json")) ? await File.ReadAllTextAsync(Path.Combine(root, "review-count-progress.json")) : null,
                 CompletedCases = File.Exists(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json")) ? await File.ReadAllTextAsync(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json")) : null,

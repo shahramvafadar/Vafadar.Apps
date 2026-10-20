@@ -8291,4 +8291,10 @@
   <data name="Occurrence_RetryLoad" xml:space="preserve">
     <value>تلاش دوباره</value>
   </data>
+  <data name="Split_SourceChanged" xml:space="preserve">
+    <value>تراکنش، گروه یا حساب اصلی تغییر کرده است. چیزی ذخیره نشد و ورودی شما حفظ شده است؛ این صفحه را ببندید و دوباره باز کنید تا داده‌های فعلی را بررسی کنید.</value>
+  </data>
+  <data name="Split_SavedNeedsReview" xml:space="preserve">
+    <value>تغییرات تفکیک ذخیره شد، اما به‌روزرسانی بعدی کامل نشد. تراکنش را ببندید و دوباره باز کنید تا نتیجهٔ ذخیره‌شده را بررسی کنید.</value>
+  </data>
 </root>

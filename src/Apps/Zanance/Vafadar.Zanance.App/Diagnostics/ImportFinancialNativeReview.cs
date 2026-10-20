@@ -150,7 +150,7 @@ internal static class ImportFinancialNativeReview
     }
 
     /// <summary>Compares every typed row in the independently owned fixture without a hardcoded historical table count.</summary>
-    private static async Task<string> StoredAsync(IServiceProvider services, CancellationToken ct, bool omitImportedRows = false)
+    internal static async Task<string> StoredAsync(IServiceProvider services, CancellationToken ct, bool omitImportedRows = false)
     {
         await using var db = await services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(ct);
         await db.Database.OpenConnectionAsync(ct); using var command = db.Database.GetDbConnection().CreateCommand();

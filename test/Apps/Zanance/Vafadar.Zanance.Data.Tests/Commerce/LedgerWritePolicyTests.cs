@@ -15,7 +15,7 @@ namespace Vafadar.Zanance.Data.Tests.Commerce;
 
 /// <summary>AT-128: actual-file ledger Save rights, complete split groups and SQLite serialization.</summary>
 [Trait("AT", "AT-128")]
-public sealed class LedgerWritePolicyTests : IDisposable
+public sealed partial class LedgerWritePolicyTests : IDisposable
 {
     private readonly TemporaryDirectory _directory = new();
     private readonly List<ServiceProvider> _providers = [];

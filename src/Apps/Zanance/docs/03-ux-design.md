@@ -1908,3 +1908,13 @@ A routed More page can leave the visible Android tab without Page.OnDisappearing
 CSV financial review on uncancelled Shell tab navigation after existing leave guards; keep raw source
 and choices. Import stays disabled until explicit Refresh. Never interpret a retained native page as
 a current financial review. Physical final Release qualification writes no money for this hook.
+
+
+## D-407 - Reviewed split shares and retained acceptance
+
+The original split modal publishes only its coherent financial source and choices before editable
+shares. A changed source keeps raw amounts/categories with translated reopen feedback and no Save
+permission. A known accepted split/join, including failed postcommit notification/native return,
+keeps fields and financial commands retired with Close-only navigation. Preserve the exact total,
+original metadata and attachment owner; do not turn a retained accepted form into another operation.
+Native matrices reuse the same refused/accepted forms read-only after original financial qualification.

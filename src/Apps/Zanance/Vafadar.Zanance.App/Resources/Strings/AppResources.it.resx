@@ -8280,4 +8280,10 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Occurrence_RetryLoad" xml:space="preserve">
     <value>Riprova</value>
   </data>
+  <data name="Split_SourceChanged" xml:space="preserve">
+    <value>La transazione, il gruppo o il conto originale è cambiato. Non è stato salvato nulla. I tuoi dati sono conservati; chiudi e riapri questa suddivisione per verificare i dati attuali.</value>
+  </data>
+  <data name="Split_SavedNeedsReview" xml:space="preserve">
+    <value>Le modifiche della suddivisione sono state salvate, ma un aggiornamento successivo non è stato completato. Chiudi e riapri la transazione per verificare il risultato salvato.</value>
+  </data>
 </root>

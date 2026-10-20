@@ -2035,3 +2035,11 @@ choices remain. Eight new cases, retained related checks and12 original native f
 Windows/Release AOT Android pass, with strict builds/full offline signed APK and no-reset Main/Home0/
 OS restoration. No full-suite or accepted-money replay. Broader QA/import, D-386 and external gates
 remain separate. See quality/original-csv-financial-review.md.
+
+
+## D-407 - Split/join source boundary qualified
+
+Selective19 new cases, two original native finance cases per Windows/Release AOT Android, retained
+language/theme/width feedback, strict builds/full signed offline Main and scoped Samsung split/edit/
+cold/join pass. Original Main/profiles/OS are restored. This is a bounded AT-66/QA-01 continuation;
+D-386 runtime/A11Y, all-device/iOS/provider/store/release gates and exact-head hosted CI remain open.
