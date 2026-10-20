@@ -8342,4 +8342,10 @@ Original-XML SHA-256: {5}</value>
   <data name="Holding_HistoryRefresh" xml:space="preserve">
     <value>Bestand aktualisieren</value>
   </data>
+  <data name="Holding_ArchiveSourceChanged" xml:space="preserve">
+    <value>Dieser Bestand wurde während der Archivprüfung geändert. Aktualisiere die Details, bevor du erneut bestätigst.</value>
+  </data>
+  <data name="Holding_ArchiveSavedRefresh" xml:space="preserve">
+    <value>Der Bestand wurde archiviert. Sein Verlauf bleibt erhalten. Aktualisiere die Details, falls sie nicht erneuert wurden.</value>
+  </data>
 </root>

@@ -242,6 +242,7 @@ public partial class AppShell : Shell
         {
             holding.PriceEditor.Leave();
             holding.HistoryEditor.Retire();
+            holding.ArchiveEditor.Retire();
         }
     }
 

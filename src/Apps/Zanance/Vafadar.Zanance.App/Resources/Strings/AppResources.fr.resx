@@ -8319,4 +8319,10 @@ SHA-256 du XML original : {5}</value>
   <data name="Holding_HistoryRefresh" xml:space="preserve">
     <value>Actualiser les avoirs</value>
   </data>
+  <data name="Holding_ArchiveSourceChanged" xml:space="preserve">
+    <value>Cet actif a changé pendant la vérification de son archivage. Actualisez ses détails avant de confirmer à nouveau.</value>
+  </data>
+  <data name="Holding_ArchiveSavedRefresh" xml:space="preserve">
+    <value>L’actif a été archivé. Son historique est conservé ; actualisez les détails s’ils n’ont pas été mis à jour.</value>
+  </data>
 </root>

@@ -40,7 +40,6 @@ public sealed partial class HoldingDetailViewModel(
     IAppInteraction interaction) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private Guid _id;
-    private AssetType? _type;
 
     public ObservableCollection<string> PerLocation { get; } = [];
 
@@ -94,6 +93,12 @@ public sealed partial class HoldingDetailViewModel(
     /// <summary>Owns the actual history row review and file-bound short Undo.</summary>
     public HoldingHistoryEditor HistoryEditor { get; } = new(holdings, text, translator, interaction);
 
+    /// <summary>Owns original archive confirmation and its accepted result.</summary>
+    public HoldingArchiveEditor ArchiveEditor { get; } = new(holdings, translator, interaction);
+
+    /// <summary>Gets the original archive action with its actual source/confirmation enablement.</summary>
+    public IAsyncRelayCommand ArchiveCommand => ArchiveEditor.ArchiveCommand;
+
     /// <summary>Gets the original history command with its actual source/confirmation enablement.</summary>
     public IAsyncRelayCommand<Guid> OpenEventCommand => HistoryEditor.OpenCommand;
 
@@ -114,16 +119,20 @@ public sealed partial class HoldingDetailViewModel(
     public async Task LoadAsync()
     {
         if (!(await holdings.GetTypesAsync()).Any(t => t.Id == _id))
-        { NotFound = true; PriceEditor.Retire(); HistoryEditor.Retire(); return; }
+        { NotFound = true; PriceEditor.Retire(); HistoryEditor.Retire(); ArchiveEditor.Retire(); return; }
         PriceEditor.ReloadView = LoadAsync;
         HistoryEditor.RefreshView = async () =>
         {
             await PriceEditor.RefreshCommand.ExecuteAsync(null);
             return PriceEditor.CanSubmit ? PriceEditor.DisplayedReview : null;
         };
+        ArchiveEditor.RefreshView = async () =>
+        {
+            await PriceEditor.RefreshCommand.ExecuteAsync(null);
+            return !PriceEditor.NeedsRefresh ? PriceEditor.DisplayedReview : null;
+        };
         IsAdvanced = (await store.GetSettingsAsync()).Shows(Feature.HoldingDetails);
         var inputs = await PriceEditor.LoadAsync(_id);
-        _type = inputs.Type;
         NotFound = false;
         var type = inputs.Type;
         var today = Today;
@@ -190,6 +199,7 @@ public sealed partial class HoldingDetailViewModel(
                 valuation.Source == ValuationSource.Purchase ? translator["Holding_FromPurchase"] : valuation.Note));
         }
         HistoryEditor.PublishDisplayed(PriceEditor.DisplayedReview);
+        ArchiveEditor.PublishDisplayed(PriceEditor.DisplayedReview);
     }
 
     [RelayCommand]
@@ -202,15 +212,4 @@ public sealed partial class HoldingDetailViewModel(
     [RelayCommand]
     private Task DeletePriceAsync(ValuationRow row) => PriceEditor.DeleteAsync(row.Id, row.Description);
 
-    // Archiving hides the type from lists and Home; its history stays.
-    [RelayCommand]
-    private async Task ArchiveAsync()
-    {
-        if (_type is { } type && await Shell.Current.DisplayAlertAsync(translator["Holding_Archive"], translator["Holding_ArchiveMessage"], translator["Holding_Archive"], translator["Common_Cancel"]))
-        {
-            type.IsArchived = true;
-            await holdings.SaveTypeAsync(type);
-            await Shell.Current.GoToAsync("..");
-        }
-    }
 }

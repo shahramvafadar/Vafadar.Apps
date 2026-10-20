@@ -3035,3 +3035,13 @@ Known delete/Undo acceptance survives fallible notification/readback without res
 caption continuation validates completed original receipts/rows, restores no Undo authority and
 replays no accepted command or seed. Keep the existing short-offer/startup orphan policy; no durable
 Undo across process death is implied.
+
+
+## D-415 - Archive only the original reviewed holding
+
+Archive confirmation revalidates the original coherent displayed actual-file type/history/prices/
+locations packet and pending owner under the existing writer. Change only IsArchived on the current
+tracked entity; never resubmit a retained whole-type object. Consume known acceptance before fallible
+notification/return and preserve the separate raw-price draft. Missing/failed Refresh cannot rearm
+stale or accepted authority. Native continuation uses exact completed receipts/files read-only and
+never replays an accepted archive or seed. Keep D-386 priorities and separate type-editor/device gates.

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Preserve current holding details when archiving (D-415)
+
+- Refuse an old archive confirmation after holding details change; refresh before confirming again.
+- Archive without replacing newer names, prices or financial history.
+- Keep a completed archive closed to another submission when returning or refreshing fails.
+
 ### Preserve holding history deletion and Undo (D-414)
 
 - Confirm deletion against the original displayed holding and refuse changes made while confirmation is open.

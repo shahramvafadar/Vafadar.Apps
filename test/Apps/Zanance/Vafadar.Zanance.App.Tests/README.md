@@ -102,3 +102,10 @@ SQL rollback/retry, consumed authority, advancing audit time and departed uncomm
 mutable time port can retire an owner during original persistence without changing OS time. No
 application algorithm, database or MAUI control is faked. Native rendering/OS dialogs/device gates
 remain separate.
+
+
+HoldingArchiveFlowTests compiles the actual non-UI archive owner with original SQLite/localization
+and explicit confirmation/navigation ports. Thirteen new cases cover original source changes,
+cancel/departure, immutable/file/consumed authority, SQL rollback, known notification/return outcomes
+and missing/failed explicit refresh. Do not repeat accepted financial cases to repair an observer.
+Native source/XAML/button/feedback checks remain separate; see quality/holding-archive.md.

@@ -8342,4 +8342,10 @@
   <data name="Holding_HistoryRefresh" xml:space="preserve">
     <value>تازه‌سازی دارایی</value>
   </data>
+  <data name="Holding_ArchiveSourceChanged" xml:space="preserve">
+    <value>اطلاعات این دارایی هنگام بررسی بایگانی تغییر کرد. پیش از تأیید دوباره، جزئیات آن را تازه کنید.</value>
+  </data>
+  <data name="Holding_ArchiveSavedRefresh" xml:space="preserve">
+    <value>دارایی بایگانی شد و تاریخچهٔ آن محفوظ است. اگر جزئیات به‌روز نشد، آن‌ها را تازه کنید.</value>
+  </data>
 </root>

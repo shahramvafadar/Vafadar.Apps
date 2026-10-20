@@ -3078,3 +3078,16 @@ new selective actual app/SQLite cases, four affected prior cases and21 resource 
 native commands and retained read-only captions are qualified separately, without replaying accepted
 work. Short Undo remains process-local; no schema/model, new permission/provider or release claim.
 See [original evidence and remaining gates](../../quality/holding-history-undo.md).
+
+
+## D-415 - Original holding archive confirmation and accepted result
+
+The detail archive no longer saves a retained whole-type copy. Revalidate the original coherent
+actual-file type/history/prices/locations packet with fresh Corrections rights and current confirmation,
+then change only the tracked type's archive flag. Refuse stale/foreign/mutated/consumed or departed
+review, preserve financial history/refund/receipt ownership and raw price drafts, and retain known
+acceptance before fallible notification/return. Explicit Refresh reads only; absent/failed reads never
+rearm a stale or accepted archive. Thirteen new actual app/SQLite cases pass in selective retained
+cohorts, without repeating accepted flows;23 resource checks also pass. Original Windows/Android
+Cancel/refusal/archive and read-only captions preserve data. Strict builds, complete signed offline
+APK and no-reset Main/OS restoration pass. No schema/model, new permission/provider or release claim. Evidence and remaining platform gates: [original archive review](../../quality/holding-archive.md).

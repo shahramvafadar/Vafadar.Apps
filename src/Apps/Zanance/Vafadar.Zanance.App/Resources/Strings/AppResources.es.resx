@@ -8311,4 +8311,10 @@ SHA-256 del XML original: {5}</value>
   <data name="Holding_HistoryRefresh" xml:space="preserve">
     <value>Actualizar tenencias</value>
   </data>
+  <data name="Holding_ArchiveSourceChanged" xml:space="preserve">
+    <value>Este activo cambió durante la revisión del archivo. Actualiza sus detalles antes de volver a confirmar.</value>
+  </data>
+  <data name="Holding_ArchiveSavedRefresh" xml:space="preserve">
+    <value>El activo se ha archivado. Su historial se conserva; actualiza los detalles si no se han renovado.</value>
+  </data>
 </root>

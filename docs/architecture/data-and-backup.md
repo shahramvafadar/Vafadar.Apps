@@ -2521,3 +2521,11 @@ Restoration copies the original rows, preserves creation/financial metadata and 
 refunds. A final packet check permits only the restored rows' UpdatedAt to advance. No receipt table,
 backup field or key is added. Startup orphan cleanup and short Undo lifetime remain unchanged.
 See [evidence](../../src/Apps/Zanance/docs/quality/holding-history-undo.md).
+
+
+## Original holding archive (D-415)
+
+The original displayed actual-file holding packet is revalidated under the existing financial writer.
+Only the current tracked type's IsArchived flag changes; no retained whole-type update, migration,
+ledger/refund/receipt or price rewrite is involved. Known acceptance consumes the original review
+before notification/return; Refresh never resubmits it. See Zanance quality/holding-archive.md.

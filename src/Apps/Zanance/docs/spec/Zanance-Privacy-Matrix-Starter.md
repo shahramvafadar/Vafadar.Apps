@@ -1049,3 +1049,12 @@ category facts and attachment ownership/content digests in memory, bound to the 
 are not exported, uploaded, stored in a new table or restored across process death. Existing startup
 orphan receipt cleanup remains. Independent qualification receipts contain only separately owned
 fictitious data and remain private; no Main private database/key or new permission/provider is read.
+
+
+### D-415 original archive review
+
+Archive reuses only process-local original displayed holding facts and actual-file identity. The
+review is consumed on known acceptance and is not a new table, export, log, network field or durable
+credential. Independent qualification uses fictional financial files and derived private receipts;
+no Main private database/key or physical device setting is read or changed. Existing privacy and
+backup policy remains unchanged.

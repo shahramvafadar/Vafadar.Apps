@@ -8331,4 +8331,10 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Holding_HistoryRefresh" xml:space="preserve">
     <value>Aggiorna disponibilità</value>
   </data>
+  <data name="Holding_ArchiveSourceChanged" xml:space="preserve">
+    <value>Questo bene è cambiato durante la verifica dell’archiviazione. Aggiorna i dettagli prima di confermare di nuovo.</value>
+  </data>
+  <data name="Holding_ArchiveSavedRefresh" xml:space="preserve">
+    <value>Il bene è stato archiviato. La cronologia è conservata; aggiorna i dettagli se non sono stati aggiornati.</value>
+  </data>
 </root>

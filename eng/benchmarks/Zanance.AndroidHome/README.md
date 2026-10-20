@@ -640,3 +640,16 @@ contexts (en/fa/de, light/dark, four outcomes). Completed financial receipts plu
 digest allow only `--ez review_history_captions true` with the exact original `review_baseline`.
 That continuation restores no short Undo authority and never replays accepted seeds/commands.
 See [evidence](../../../src/Apps/Zanance/docs/quality/holding-history-undo.md).
+
+
+## Original holding archive (D-415)
+
+Phase `holding-archive` requires a fresh original run/pass and one owned actual financial file.
+Native Cancel leaves all rows unchanged; a name changed during confirmation refuses the old archive.
+Explicit Refresh permits one accepted archive, followed by a deliberate return failure and a final
+read-only Refresh. Financial history/refund/receipt/price facts and raw price77 remain. Its exact
+complete-financial receipt/digest allows only retired source/saved captions in en/fa/de and both
+themes. `review_archive_captions=true` plus the original review_baseline continues only completed
+financial evidence, with zero financial commands/seeds. Original observations use real native
+PerformClick/enablement/focus; confirmation is an explicit effect port. Preserve original PIDs/Cases,
+failures and files. See application quality/holding-archive.md.

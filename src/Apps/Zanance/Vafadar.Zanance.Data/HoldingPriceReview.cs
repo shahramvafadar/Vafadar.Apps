@@ -68,6 +68,31 @@ public sealed partial class HoldingStore
         access.EnsureSnapshotCurrent(); return result;
     }
 
+    /// <summary>Archives only the confirmed original type; never writes a retained whole-type copy.</summary>
+    public async Task ArchiveReviewedTypeAsync(HoldingPriceReview review, Func<bool> isCurrent, CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(review); ArgumentNullException.ThrowIfNull(isCurrent);
+        review.Begin(); var committed = false;
+        try
+        {
+            await using var db = await contextFactory.CreateDbContextAsync(ct);
+            await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, ct, requireTransaction: true);
+            write.DemandFeature(Vafadar.Zanance.Core.Commerce.CommercialFeature.Corrections);
+            await review.ValidateAsync(db, ct);
+            if (review.Inputs.Type.IsArchived || !isCurrent())
+                throw new HoldingEventReviewChangedException("Original archive confirmation retired or type already archived.");
+            var type = await db.AssetTypes.SingleAsync(t => t.Id == review.Inputs.Type.Id, ct);
+            // Update only archive state on the actual writer's current entity; history and identity stay intact.
+            type.IsArchived = true;
+            write.EnsureCurrent(); await db.SaveChangesAsync(ct); write.EnsureCurrent();
+            if (!isCurrent()) throw new HoldingEventReviewChangedException("Original archive retired before commit.");
+            await write.CommitAsync(ct); committed = true;
+            CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty));
+        }
+        catch (CommittedWriteNotificationException) { committed = true; throw; }
+        finally { review.End(committed); }
+    }
+
     /// <summary>Saves exactly one new manual price against its original displayed facts and current draft.</summary>
     public async Task SaveReviewedValuationAsync(HoldingPriceReview review, AssetValuation valuation,
         Func<bool> isCurrent, CancellationToken ct = default)

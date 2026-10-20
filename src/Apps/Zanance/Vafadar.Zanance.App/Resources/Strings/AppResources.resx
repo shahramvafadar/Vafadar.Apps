@@ -8371,4 +8371,10 @@ Original XML SHA-256: {5}</value>
   <data name="Holding_HistoryRefresh" xml:space="preserve">
     <value>Refresh holding</value>
   </data>
+  <data name="Holding_ArchiveSourceChanged" xml:space="preserve">
+    <value>This holding changed while archive was being reviewed. Refresh its details before confirming again.</value>
+  </data>
+  <data name="Holding_ArchiveSavedRefresh" xml:space="preserve">
+    <value>The holding was archived. Its history is preserved; refresh the details if they could not be updated.</value>
+  </data>
 </root>

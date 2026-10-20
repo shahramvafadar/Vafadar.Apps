@@ -19,6 +19,7 @@ public partial class HoldingDetailPage : ContentPage
     {
         _viewModel.PriceEditor.Leave();
         _viewModel.HistoryEditor.Retire();
+        _viewModel.ArchiveEditor.Retire();
         base.OnDisappearing();
     }
 }

@@ -1846,3 +1846,15 @@ authority, reseeds data or repeats accepted writes. Original Cases/Live retain t
 The independent Android `holding-history` phase similarly takes a fresh run/pass. Its optional
 `--ez review_history_captions true` requires `review_baseline` equal to the exact original completed
 financial invocation. An observation timeout keeps the original process alive; do not restart it.
+
+
+## Original holding archive qualification (D-415)
+
+Run `eng/scripts/Run-StoreDrafts.ps1 -HoldingArchiveReview` for one independently owned Windows
+financial file, original native Cancel/refusal/archive and36 read-only caption contexts. After an
+original financial receipt completes, `-HoldingArchiveContinuation <original-run>` requires its
+exact completed file/digest and invokes zero financial commands. Preserve original PID/Cases and
+accepted files. The independent Android `holding-archive` phase has the same original boundary;
+observe its exact live PID and comparison through Read-ReviewReport.ps1. A caption continuation uses
+`review_archive_captions=true` with the original baseline. Never replay accepted archive/seeds for
+observer repair. The explicit confirmation port does not claim native OS-dialog acceptance.
