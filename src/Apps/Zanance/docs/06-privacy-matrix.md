@@ -1091,3 +1091,12 @@ new table, export, credential or network field. New forms reserve only one ordin
 Known acceptance consumes the transient review before native effects. Independent qualification
 uses fictitious files and private derived receipts/raw captions; no Main private data/key or physical
 device settings are accessed. Existing privacy, portable and automatic-backup policies are unchanged.
+
+## D-424 - Original detail attachment boundary
+
+Existing local document picking/storage is unchanged in data types, permission, SDK and portable
+format. Original file/entry/view checks prevent a late picker or confirmation from substituting
+another profile/query. Document metadata and bytes stay in the existing protected profile store;
+no analytics or new network capability is added. Only a fictitious input in a newly owned emulator
+folder is staged and hash-matched before removal. This is not OS-cache/URI-grant revocation, external
+viewer/OCR, physical-device or release acceptance.

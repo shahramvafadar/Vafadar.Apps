@@ -94,27 +94,27 @@
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Attachments}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:AttachmentRow">
-                                    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto,Auto">
+                                    <Grid Style="{StaticResource ListRow}" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*">
                                         <Grid WidthRequest="48" HeightRequest="48" VerticalOptions="Center">
                                             <Image Source="{Binding Preview}" Aspect="AspectFill" IsVisible="{Binding HasPreview}" />
                                             <fi:SymbolIcon Symbol="Document" FontSize="28" ForegroundColor="{DynamicResource SecondaryText}" HorizontalOptions="Center" VerticalOptions="Center"
                                                            IsVisible="{Binding HasPreview, Converter={StaticResource InvertedBoolConverter}}" />
                                         </Grid>
                                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                                            <Label Text="{Binding Name}" LineBreakMode="MiddleTruncation" />
+                                            <Label Text="{Binding Name}" LineBreakMode="CharacterWrap" />
                                             <Label Text="{Binding Details}" Style="{StaticResource Secondary}" />
                                         </VerticalStackLayout>
-                                        <!-- Preview and name open the file; Read and Delete stay their own buttons -->
-                                        <Button Grid.ColumnSpan="2" Margin="-16,-10,0,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
-                                                Command="{Binding OpenAttachmentCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
-                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding Details}" />
-                                        <Button Grid.Column="2" Style="{StaticResource TextButton}" Text="{v:Translate Receipt_Read}" IsVisible="{Binding CanRead}"
+                                        <!-- The original file name keeps its own width; receipt actions cannot consume its column. -->
+                                        <Button Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource TextButton}" Text="{v:Translate Receipt_Read}" IsVisible="{Binding CanRead}"
                                                 Command="{Binding ReadReceiptCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
                                                 CommandParameter="{Binding .}" SemanticProperties.Hint="{Binding Name}" />
                                         <!-- The file name as hint: a screen reader hears which file Read or Delete acts on -->
-                                        <Button Grid.Column="3" Text="{v:Translate Common_Delete}" Style="{StaticResource TextButton}" TextColor="{DynamicResource ExpenseText}"
+                                        <Button Grid.Row="2" Grid.ColumnSpan="2" Text="{v:Translate Common_Delete}" Style="{StaticResource TextButton}" TextColor="{DynamicResource ExpenseText}"
                                                 Command="{Binding DeleteAttachmentCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
                                                 CommandParameter="{Binding .}" SemanticProperties.Hint="{Binding Name}" />
+                                        <Button Grid.ColumnSpan="2" Margin="-16,-10,-16,0" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                                Command="{Binding OpenAttachmentCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding Details}" />
                                     </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>

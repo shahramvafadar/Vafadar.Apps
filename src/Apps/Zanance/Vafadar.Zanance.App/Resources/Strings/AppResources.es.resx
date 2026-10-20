@@ -8335,4 +8335,10 @@ SHA-256 del XML original: {5}</value>
   <data name="AssetEvent_LocationUseSaved" xml:space="preserve">
     <value>Actualizar el lugar guardado</value>
   </data>
+  <data name="Attachment_SourceChanged" xml:space="preserve">
+    <value>La transacción o el archivo adjunto ya no corresponde al que abriste. Vuelve a abrir la transacción antes de intentarlo otra vez.</value>
+  </data>
+  <data name="Attachment_SavedRefresh" xml:space="preserve">
+    <value>El cambio del archivo adjunto se guardó, pero no se pudo actualizar la lista. Vuelve a abrir la transacción para verlo; no repitas el cambio.</value>
+  </data>
 </root>

@@ -2236,3 +2236,12 @@ native currency-search text and is discarded; USD selection/new event and its ro
 qualified. Next ready work diagnoses only this original input/list boundary. D-386 general runtime/
 A11Y, broader QA-01, Mac/iOS, external/expert/store and release gates remain separate.
 See [original sequence, failed observations and limits](quality/physical-holding-location-move.md).
+
+## D-424 - Detail attachment ownership evidence
+
+Original-file/query/view guards and complete attachment names have13 focused cases and bounded
+normal installed Android emulator add/Cancel/ledger Undo/cold/remove evidence. Original Main/profile
+set/OS are restored.54 Windows native caption/Cancel observations and18 changed-row continuations
+are retained; the final process exits with native0xC0000005 after its complete report, so general
+runtime readiness is not accepted. Physical-device, external viewer/OCR, D-386 runtime/A11Y, iOS,
+provider/store/expert and publication gates remain open. See quality/entry-attachment-ownership.md.

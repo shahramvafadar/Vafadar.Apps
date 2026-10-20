@@ -2587,3 +2587,14 @@ later removal; clear temporary readback ownership only after complete publicatio
 already published draft never creates default metadata. Routed sessions and accepted callbacks own
 their original generation. No model/schema/format/privacy boundary changes.
 [Evidence](../../src/Apps/Zanance/docs/quality/holding-event-publication.md).
+
+## Reviewed entry-detail documents (D-424)
+
+EntryAttachmentReview retains the displayed original entry/attachment metadata and actual configured
+file through native picking/confirmation. Reviewed readers refuse another file before selected-row
+queries. Reviewed writers own a transaction, recheck original source/rights/owner and selected content,
+and consume known commits before notification. EntryAttachment.Copy preserves the readonly identity
+with independent bytes. Existing entry deletion still retains orphan documents for its short Undo;
+startup purge/durable import protection and portable formats are unchanged. No migration or compiled
+model regeneration is required by these methods. Device evidence remains bounded to the recorded
+normal installed emulator sequence, not private-table/hash or physical-device acceptance.

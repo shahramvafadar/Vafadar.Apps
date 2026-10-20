@@ -1931,3 +1931,16 @@ populate raw ContentDescription. Inspect only this package's application panels;
 uiautomator dumps can omit a nonfocusable popup. Complete the original report before stopping the
 caller, compare stored accounts/entries and resume the same Main PID. A delayed observation never
 justifies replaying a pointer, seed, accepted command or install. This is not spoken-reader acceptance.
+
+## Original entry-detail attachment review (D-424)
+
+Run-StoreDrafts.ps1 -EntryAttachmentsReview uses one new isolated original source and54 native
+caption/Cancel observations. For only the changed file-name rows, use -EntryAttachmentsReview
+-EntryAttachmentsSourceRun <completed-run>: it requires the exact original54-case completion and
+reads that same database without migrating, seeding or replaying accepted commands. Its18 original
+row observations may finish before a later native process exit; retain both the report and exit,
+never silently convert a failed host result to success. The independent non-input desktop and
+app-only window/popup capture remain mandatory. Normal Android uses the canonical full offline
+signed package and a new fictitious profile, one original picker/deletion/Undo sequence and terminal
+cold. Preserve original deadlines, remove only hash-matched owned inputs and restore Main/OS/profile
+set. See application quality/entry-attachment-ownership.md for exact reports and limits.

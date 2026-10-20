@@ -8355,4 +8355,10 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="AssetEvent_LocationUseSaved" xml:space="preserve">
     <value>Aggiorna il luogo salvato</value>
   </data>
+  <data name="Attachment_SourceChanged" xml:space="preserve">
+    <value>La transazione o l’allegato non corrisponde più a quello che avevi aperto. Riapri la transazione prima di riprovare.</value>
+  </data>
+  <data name="Attachment_SavedRefresh" xml:space="preserve">
+    <value>La modifica all’allegato è stata salvata, ma non è stato possibile aggiornare l’elenco. Riapri la transazione per vedere il risultato; non ripetere la modifica.</value>
+  </data>
 </root>

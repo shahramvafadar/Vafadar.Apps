@@ -8397,4 +8397,10 @@ Original XML SHA-256: {5}</value>
     <value>Refresh saved place</value>
     <comment>Read-only recovery of choices for an already accepted original place; never create it again.</comment>
   </data>
+  <data name="Attachment_SourceChanged" xml:space="preserve">
+    <value>The entry or attachment is no longer the one you opened. Reopen the transaction before trying again.</value>
+  </data>
+  <data name="Attachment_SavedRefresh" xml:space="preserve">
+    <value>The attachment change was saved, but the list could not be refreshed. Reopen the transaction to see it; do not repeat the change.</value>
+  </data>
 </root>

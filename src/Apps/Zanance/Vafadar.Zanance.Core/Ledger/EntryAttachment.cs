@@ -38,4 +38,12 @@ public sealed class EntryAttachment : Entity, IAuditableEntity
 
     /// <summary>Gets a value indicating whether the attachment is an image that can be previewed.</summary>
     public bool IsImage => ContentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>Returns the same original identity and metadata with independent document bytes.</summary>
+    public EntryAttachment Copy()
+    {
+        var copy = (EntryAttachment)MemberwiseClone();
+        copy.Data = Data.ToArray();
+        return copy;
+    }
 }

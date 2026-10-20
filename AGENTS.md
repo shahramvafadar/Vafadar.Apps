@@ -3121,3 +3121,13 @@ actual accessibility-node name and verify visible target geometry before one nat
 Retain negative observations and unchanged stored rows; never ship a speculative viewport workaround
 or replay an accepted financial sequence to repair an observer. Keep physical currency input and
 spoken accessibility gates distinct from this independent no-Save selection check.
+
+## D-424 - Original detail attachment work
+
+Keep a native document pick/confirmation bound to its original displayed entry, exact file and view
+revision. Refuse another configured file before entry/attachment queries and recheck original facts,
+rights, bytes and pending owner under the writer. Hold no database context across native awaits.
+Consume known metadata commits before fallible notification/publication; never repeat a pick or
+remove after accepted work. Give file identity its own complete row and separate real action targets.
+Preserve completed native cases and original fixtures; a native exit after a complete report remains
+a recorded failure, not general stability acceptance. Keep D-386 priorities and external gates.

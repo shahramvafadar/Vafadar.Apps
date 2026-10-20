@@ -2099,3 +2099,19 @@ and no phone input or system setting changes occur. The final independent strict
 warnings/errors. No unchanged Main build/full suite or accepted financial sequence is repeated;
 no new unit-test count, physical USD-input, spoken accessibility or general runtime acceptance is
 claimed. Continue remaining ready feature/device work with D-386 and external gates separate.
+
+## D-424 - Original entry-detail attachment owner and complete file names
+
+Bind detail attachment reads, native picking and confirmed removal to the original displayed entry,
+actual file, metadata and view owner; recheck cached rights and original bytes under the writer.
+A changed/departed picker cannot target another query/profile. Consume known commits before
+notification/readback; show the saved/reopen outcome without resubmission. Give the complete file
+name its own row, separate from reading/removal actions.13 focused actual-source cases pass; no full
+suite replay or schema/model/permission/provider change. Retain54 original Windows caption/Cancel
+observations and18 changed-row continuations over the same original file. The latter completes its
+report and then exits with native0xC0000005: general runtime acceptance is not claimed. Final strict
+builds and complete signed offline APK pass. The normal installed Android emulator exercises one
+original PDF pick/add, removal Cancel, original ledger Delete/Undo within8s, cold without the input,
+and document-only removal with unchanged expense/balance. Restore Main0/original profile set/OS and
+retire only the fixture. These are not physical-device, OCR/viewer, general ANR/A11Y, iOS or release
+acceptance. Continue remaining ready original entry-editor/detail work under D-386.

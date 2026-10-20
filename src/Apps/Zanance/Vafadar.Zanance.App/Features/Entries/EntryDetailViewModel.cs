@@ -39,6 +39,8 @@ public sealed partial class EntryDetailViewModel(
 {
     private readonly Commerce.QuickResourceActions _quick = new(store, translator, interaction);
     private Guid _id;
+    private readonly EntryAttachmentSession _attachments = new(store);
+    private long _attachmentRevision;
     private Guid? _holdingTypeId;
     private LedgerEntry? _entry;
 
@@ -129,6 +131,7 @@ public sealed partial class EntryDetailViewModel(
         ArgumentNullException.ThrowIfNull(query);
         if (query.TryGetValue("id", out var value) && (value is Guid id || Guid.TryParse(value?.ToString(), out id)))
         {
+            if (_id != id) RetireAttachments();
             _id = id;
         }
     }
@@ -138,6 +141,7 @@ public sealed partial class EntryDetailViewModel(
 
     public async Task LoadAsync()
     {
+        RetireAttachments(); var attachmentRevision = _attachmentRevision;
         _entry = await store.GetEntryAsync(_id);
         NotFound = _entry is null;
         if (_entry is null)
@@ -287,6 +291,7 @@ public sealed partial class EntryDetailViewModel(
         }
 
         HasRefunds = Refunds.Count > 0;
+        if (attachmentRevision != _attachmentRevision || _id != entry.Id) return;
         await LoadAttachmentsAsync();
     }
 
@@ -297,104 +302,107 @@ public sealed partial class EntryDetailViewModel(
     {
         if (IsBusy) return;
         IsBusy = true;
-        try { await receipts.ReadAttachmentAsync(_id, row.Id); }
+        var originalId = _id; var revision = _attachmentRevision;
+        try
+        {
+            await _attachments.ReadAsync(row.Id);
+            if (revision == _attachmentRevision && _id == originalId)
+                await receipts.ReadAttachmentAsync(originalId, row.Id);
+        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        { if (revision == _attachmentRevision) await AttachmentFailureAsync(ex); }
         finally { IsBusy = false; }
     }
 
+    /// <summary>Retires pending native attachment work when this original detail leaves navigation.</summary>
+    public void RetireAttachments() { _attachmentRevision++; _attachments.Retire(); }
+
     private async Task LoadAttachmentsAsync()
     {
-        Attachments.Clear();
-        foreach (var info in await store.GetAttachmentsAsync(_id))
+        var entry = _entry ?? throw new InvalidOperationException("An original displayed entry is required.");
+        var revision = _attachmentRevision;
+        await _attachments.LoadAsync(entry, _quick.Review ?? throw new InvalidOperationException("Original displayed entry review required."));
+        var review = _attachments.Review!;
+        var rows = new List<AttachmentRow>();
+        foreach (var info in review.Inputs.Attachments.OrderBy(a => a.CreatedAt).ThenBy(a => a.Id))
         {
             ImageSource? preview = null;
-            if (info.IsImage && await store.GetAttachmentAsync(info.Id) is { } image)
+            if (info.ContentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase))
             {
-                var bytes = image.Data;
+                var bytes = (await _attachments.ReadAsync(info.Id)).Data;
                 preview = ImageSource.FromStream(() => new MemoryStream(bytes));
             }
-
-            // Size and date form one left-to-right run; isolates and marks keep the order in right-to-left layouts.
             var size = info.Size >= 1024 * 1024 ? $"{info.Size / 1024d / 1024d:0.0} MB" : $"{Math.Max(1, info.Size / 1024)} KB";
-            Attachments.Add(new AttachmentRow(info.Id, info.FileName, $"\u2066\u200E{size} · {dates.Format(DateOnly.FromDateTime(info.CreatedAt.LocalDateTime), DateFormatStyle.Short)}\u200E\u2069", preview)
-            {
-                CanRead = _entry?.Kind == EntryKind.Expense && DocumentReader.CanRead(info.ContentType),
-            });
+            rows.Add(new AttachmentRow(info.Id, info.FileName, $"\u2066\u200E{size} · {dates.Format(DateOnly.FromDateTime(info.CreatedAt.LocalDateTime), DateFormatStyle.Short)}\u200E\u2069", preview)
+            { CanRead = entry.Kind == EntryKind.Expense && DocumentReader.CanRead(info.ContentType) });
         }
-
+        if (revision != _attachmentRevision || !ReferenceEquals(_attachments.Review, review) || !ReferenceEquals(_entry, entry) || _id != entry.Id)
+            throw new InvalidOperationException("The original attachment publication retired.");
+        Attachments.Clear(); foreach (var row in rows) Attachments.Add(row);
         HasAttachments = Attachments.Count > 0;
     }
 
     [RelayCommand]
     private async Task AddAttachmentAsync()
     {
+        if (IsBusy) return;
+        IsBusy = true; var revision = _attachmentRevision;
         try
         {
-            if (await AttachmentFiles.PickAsync(translator["Attachment_Pick"]) is not { } picked)
+            await _attachments.AddAsync(async () =>
             {
-                return;
-            }
-
-            if (picked.Data.Length == 0)
-            {
-                // E.g. a cloud file that is not downloaded yet.
-                await Shell.Current.DisplayAlertAsync(translator["Attachment_Title"], translator["Attachment_Failed"], translator["Common_Ok"]);
-                return;
-            }
-
-            if (picked.Data.Length > EntryAttachment.MaxBytes)
-            {
-                await Shell.Current.DisplayAlertAsync(translator["Attachment_Title"], translator["Attachment_TooLarge"], translator["Common_Ok"]);
-                return;
-            }
-
-            await store.AddAttachmentAsync(new EntryAttachment { EntryId = _id, FileName = picked.Name, ContentType = picked.ContentType, Data = picked.Data });
-            await LoadAttachmentsAsync();
+                var picked = await AttachmentFiles.PickAsync(translator["Attachment_Pick"]);
+                if (picked is null) return null;
+                if (revision != _attachmentRevision) throw new InvalidOperationException("The original picker owner retired.");
+                if (picked.Data.Length == 0 || picked.Data.Length > EntryAttachment.MaxBytes)
+                {
+                    await interaction.AlertAsync(translator["Attachment_Title"],
+                        translator[picked.Data.Length == 0 ? "Attachment_Failed" : "Attachment_TooLarge"], translator["Common_Ok"]);
+                    return null;
+                }
+                return new EntryAttachment { FileName = picked.Name, ContentType = picked.ContentType, Data = picked.Data };
+            });
+            if (_attachments.Accepted && revision == _attachmentRevision) await LoadAttachmentsAsync();
         }
-        catch (InvalidDataException)
-        {
-            await Shell.Current.DisplayAlertAsync(translator["Attachment_Title"], translator["Attachment_PhotoFailed"], translator["Common_Ok"]);
-        }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or PermissionException or ArgumentException or InvalidOperationException)
-        {
-            // Also an entry deleted meanwhile, or a file the store rejects.
-            await Shell.Current.DisplayAlertAsync(translator["Attachment_Title"], translator["Attachment_Failed"], translator["Common_Ok"]);
-        }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        { if (revision == _attachmentRevision) await AttachmentFailureAsync(ex, _attachments.Accepted); }
+        finally { IsBusy = false; }
     }
 
     [RelayCommand]
     private async Task OpenAttachmentAsync(AttachmentRow row)
     {
-        if (await store.GetAttachmentAsync(row.Id) is not { } attachment)
-        {
-            return;
-        }
-
-        // A device without an app for the file type (e.g. no PDF viewer) says so instead of doing nothing or failing.
-        bool opened;
+        if (IsBusy) return;
+        IsBusy = true; var revision = _attachmentRevision;
         try
         {
-            opened = await AttachmentFiles.OpenAsync(attachment);
+            var attachment = await _attachments.ReadAsync(row.Id);
+            if (!await AttachmentFiles.OpenAsync(attachment))
+                await interaction.AlertAsync(translator["Attachment_Title"], translator["Attachment_OpenFailed"], translator["Common_Ok"]);
         }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or InvalidOperationException or NotSupportedException)
-        {
-            opened = false;
-        }
-
-        if (!opened)
-        {
-            await Shell.Current.DisplayAlertAsync(translator["Attachment_Title"], translator["Attachment_OpenFailed"], translator["Common_Ok"]);
-        }
+        catch (Exception ex) when (ex is not OutOfMemoryException) { if (revision == _attachmentRevision) await AttachmentFailureAsync(ex); }
+        finally { IsBusy = false; }
     }
 
     [RelayCommand]
     private async Task DeleteAttachmentAsync(AttachmentRow row)
     {
-        if (await Shell.Current.DisplayAlertAsync(translator["Attachment_Delete"], row.Name, translator["Common_Delete"], translator["Common_Cancel"]))
+        if (IsBusy) return;
+        IsBusy = true; var revision = _attachmentRevision;
+        try
         {
-            await store.DeleteAttachmentAsync(row.Id);
-            await LoadAttachmentsAsync();
+            await _attachments.DeleteAsync(row.Id, name => interaction.ConfirmAsync(translator["Attachment_Delete"], name,
+                translator["Common_Delete"], translator["Common_Cancel"]));
+            if (_attachments.Accepted && revision == _attachmentRevision) await LoadAttachmentsAsync();
         }
+        catch (Exception ex) when (ex is not OutOfMemoryException) { if (revision == _attachmentRevision) await AttachmentFailureAsync(ex, _attachments.Accepted); }
+        finally { IsBusy = false; }
     }
+
+    private Task AttachmentFailureAsync(Exception exception, bool accepted = false) => interaction.AlertAsync(translator["Attachment_Title"],
+        translator[accepted || exception is Data.Commerce.CommittedWriteNotificationException ? "Attachment_SavedRefresh"
+            : exception is InvalidDataException ? "Attachment_PhotoFailed"
+            : exception is InvalidOperationException ? "Attachment_SourceChanged" : "Attachment_Failed"], translator["Common_Ok"]);
 
     [RelayCommand]
     private Task EditAsync() => _holdingTypeId is { } holding

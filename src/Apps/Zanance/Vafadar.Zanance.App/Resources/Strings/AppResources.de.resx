@@ -8366,4 +8366,10 @@ Original-XML SHA-256: {5}</value>
   <data name="AssetEvent_LocationUseSaved" xml:space="preserve">
     <value>Gespeicherten Ort laden</value>
   </data>
+  <data name="Attachment_SourceChanged" xml:space="preserve">
+    <value>Der Eintrag oder Anhang entspricht nicht mehr dem geöffneten Stand. Öffne die Buchung erneut, bevor du es noch einmal versuchst.</value>
+  </data>
+  <data name="Attachment_SavedRefresh" xml:space="preserve">
+    <value>Die Änderung am Anhang wurde gespeichert, aber die Liste konnte nicht aktualisiert werden. Öffne die Buchung erneut, um das Ergebnis zu sehen. Wiederhole die Änderung nicht.</value>
+  </data>
 </root>

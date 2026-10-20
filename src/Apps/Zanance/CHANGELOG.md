@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep attachments with the transaction you opened (D-424)
+
+- Keep a pending file choice or removal tied to the original transaction and profile.
+- Show the complete attachment name above its reading and removal actions.
+- Explain when a change was saved but the list needs reopening, without repeating the change.
+
 ### Native currency selection checked (D-423)
 
 - Verify first-open selection in the original Android currency list without saving any account.

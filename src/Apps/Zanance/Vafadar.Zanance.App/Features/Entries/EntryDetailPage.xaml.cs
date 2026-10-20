@@ -10,6 +10,12 @@ public partial class EntryDetailPage : ContentPage
         BindingContext = _viewModel = viewModel;
     }
 
+    protected override void OnDisappearing()
+    {
+        _viewModel.RetireAttachments();
+        base.OnDisappearing();
+    }
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
