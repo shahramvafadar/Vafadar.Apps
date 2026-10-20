@@ -2923,3 +2923,11 @@ Compare the original re-export's whole schema/typed rows and portable settings, 
 onboarding's Settings.UpdatedAt ticks from financial changes. Never extract installed private stores
 or keys, replay accepted writes for an observer, reuse a different project's package, or turn this
 same-phone unprotected test into protected-password/new-device/iOS/release acceptance.
+
+## D-404 - Original card payment and archive qualification
+
+Positive credit after a card payment remains a transfer outcome, not new income or another expense.
+Archive qualification reviews both source/destination plan relationships and dirty draft discard, then
+preserves stored financial identity/history and clears only the matching default. Unarchive must not
+resume ended plans or guess a default. Preserve accepted money and continue only pending observations;
+restore Main and retire only the newly owned inactive fixture before releasing a coordinated phone turn.

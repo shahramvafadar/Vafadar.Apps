@@ -12,10 +12,10 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-04 | Leave form / save error keeps input | TX-06 | Unit + manual | S3 | Implemented (discard confirmation, input kept on error); device check pending |
 | AT-05 | Transfer between two accounts | FIN-02 | Unit | S1 | Verified (unit, domain level) |
 | AT-06 | Report only source account | FIN-03 | Unit | S1 | Verified (unit, domain level) |
-| AT-07 | Card purchase and card payment | ACC-04 | Unit | S1 | Verified (unit, domain level) |
+| AT-07 | Card purchase and card payment | ACC-04 | Unit + physical | S1 | Verified at recorded scopes: unit and D-404 original Samsung expense60/payment90/positive credit30, cold balances and two ledger details; no actual bank settlement or whole-device acceptance |
 | AT-08 | Transfer fee | FIN-02 | Unit | S1 | Verified (unit, domain level) |
 | AT-09 | Opening balance + older history | FIN-04, IO-12 | Unit | S2 | Verified (unit, domain level) |
-| AT-10 | Archive account with history/plans | ACC-06 | Unit | S2/S4 | Verified (unit): history stays in reports; active plans are ended with the archive (confirmation lists them) |
+| AT-10 | Archive account with history/plans | ACC-06 | Unit + physical | S2/S4 | Verified at recorded scopes: unit and D-404 Samsung dirty-draft cancel/accept, both active source/destination plans ended, default cleared, archived report/history retained and unarchive/cold without resuming plans; paused variants/platform acceptance separate |
 | AT-11 | Balance adjustment | ACC-08 | Unit | S1 | Verified (unit, domain level) |
 | AT-12 | Partial refund same month | REF-01/02 | Unit | S1 | Verified (unit, domain level) |
 | AT-13 | Refund of last month's purchase | REF-03, REP-02 | Unit + bounded physical Android | S1/S8 | Unit/report baseline retained; D-402 Samsung prior-period purchase/current refunds, current/all history, cold links and account movements pass; native chart pixels and broader platform acceptance remain separate |
@@ -4507,3 +4507,15 @@ pass; production code/APK, managed counts and unchanged prior successes are reta
 PID10005/three profiles/APK/OS match after exact owned cleanup and phone release. This is bounded
 unprotected same-phone independent reinstall evidence, not another phone, protected-password/iOS,
 whole QA-01, power-loss/ANR/A11Y/provider/store/release acceptance. See quality/physical-portable-fresh-install.md.
+
+## D-404 - AT-07/AT-10 original physical credit-card and account archive lifecycle
+
+The retained D-401 candidate qualifies one card purchase60 and Checking-to-Card payment90, with
+Checking410/Card positive30/Home440. Dirty-name archive cancellation preserves the draft; one accepted
+archive keeps stored identity/history, ends both future expense/source-destination transfer plans and
+clears the exact default. Original archived Reports retains income0/spending60. Unarchive and one cold
+read preserve both ledger details/notes/dates, both Ended plans and no default. Main979/five known public
+packets/three profiles/OS/APK are restored after retiring only the new inactive profile and releasing
+the phone. No source/APK/managed-count/build change or successful unrelated rerun. Wider device,
+paused-plan/currency/iOS, D-386 runtime/A11Y, provider/store/release and exact-head CI remain separate.
+See [bounded receipts and limits](quality/physical-credit-card-archive.md).

@@ -7411,3 +7411,15 @@ Strict caller/receiver builds and signatures, fixed-identity/Release refusals an
 boundaries pass. Main979/PID10005/three profiles/APK/OS match; only owned fixtures/file are removed and
 the phone released. Production source/APK, managed count and existing successful checks remain D-401.
 [Original receipts, observer repairs and limits](quality/physical-portable-fresh-install.md).
+
+## D-404 - Original physical credit-card and account archive lifecycle
+
+The retained D-401 candidate qualifies one card purchase60 and Checking-to-Card payment90, with
+Checking410/Card positive30/Home440. Dirty-name archive cancellation preserves the draft; one accepted
+archive keeps stored identity/history, ends both future expense/source-destination transfer plans and
+clears the exact default. Original archived Reports retains income0/spending60. Unarchive and one cold
+read preserve both ledger details/notes/dates, both Ended plans and no default. Main979/five known public
+packets/three profiles/OS/APK are restored after retiring only the new inactive profile and releasing
+the phone. No source/APK/managed-count/build change or successful unrelated rerun. Wider device,
+paused-plan/currency/iOS, D-386 runtime/A11Y, provider/store/release and exact-head CI remain separate.
+See [bounded receipts and limits](quality/physical-credit-card-archive.md).

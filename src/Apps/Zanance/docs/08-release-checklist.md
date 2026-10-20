@@ -2017,3 +2017,12 @@ Strict isolated builds, signature/privacy/identity checks and verifier negatives
 profiles/same PID/APK/OS match; only owned fixtures/file are removed and the phone released. No
 production APK/unit-count change or successful unrelated rerun. Broader device, protected-password/
 new-device/iOS, stability/A11Y/provider/store/release gates and exact-head hosted CI remain separate.
+
+## D-404 - Bounded original card payment and archive continuation
+
+AT-07/AT-10 gain original Samsung card expense/payment/positive credit, dirty archive cancel/accept,
+both dependent active plans ended, default-cleared notice, historical report preservation and original
+unarchive/cold without resuming plans or choosing a default. Main979/five public packets/three profiles/
+OS/APK are restored and only the new inactive profile retired. App/APK and managed counts remain D-401;
+no unchanged successful suite/build replay. Broader QA-01, D-386 runtime/A11Y and external gates remain.
+See quality/physical-credit-card-archive.md.

@@ -2882,3 +2882,13 @@ cleanup before releasing the phone. This batch is locally complete:51 tables/74 
 portable preferences match except the original settings timestamp. Existing Main code/APK/checks stay
 D-401. Continue remaining ready backlog work without repeating device-only copy/financial/suite/build
 successes; wider QA-01, protected-password/new-device/iOS and D-386/external gates stay separate.
+
+## D-404 - Bounded original card payment and archive continuation
+
+AT-07/AT-10 gain original Samsung card expense/payment/positive credit, dirty archive cancel/accept,
+both dependent active plans ended, default-cleared notice, historical report preservation and original
+unarchive/cold without resuming plans or choosing a default. Main979/five public packets/three profiles/
+OS/APK are restored and only the new inactive profile retired. App/APK and managed counts remain D-401;
+no unchanged successful suite/build replay. Broader QA-01, D-386 runtime/A11Y and external gates remain.
+See ../../quality/physical-credit-card-archive.md.
+Continue remaining ready work without repeating these accepted writes or successful unrelated checks.

@@ -7268,3 +7268,12 @@ negative boundaries pass. Main979/PID10005/three profiles/APK/OS match after own
 Application/APK and managed baseline remain D-401 without unrelated reruns. Wider QA-01, protected-
 password phone/new-device/iOS, D-386 runtime/A11Y, provider/store/hosted CI/release remain separate.
 See ../quality/physical-portable-fresh-install.md.
+
+## D-404 - Section31 continuation: original card payment and archive continuation
+
+AT-07/AT-10 gain original Samsung card expense/payment/positive credit, dirty archive cancel/accept,
+both dependent active plans ended, default-cleared notice, historical report preservation and original
+unarchive/cold without resuming plans or choosing a default. Main979/five public packets/three profiles/
+OS/APK are restored and only the new inactive profile retired. App/APK and managed counts remain D-401;
+no unchanged successful suite/build replay. Broader QA-01, D-386 runtime/A11Y and external gates remain.
+See ../quality/physical-credit-card-archive.md.

@@ -1883,3 +1883,12 @@ than forcing a duplicate. The independently reinstalled original Release preserv
 history and portable Monday choice after one cold read. Password protection defaults locally again;
 portable display preferences do not carry that device-only choice. No layout/text/command changes or
 unchanged visual matrix reruns. See quality/physical-portable-fresh-install.md for the bounded evidence.
+
+## D-404 - Original archive and positive card credit observed on Samsung
+
+A card payment remains a transfer even when it creates positive credit. Original archive consent names
+both source/destination-dependent plans, warns about dirty draft discard and lets Keep editing retain
+that draft. Accepted archive uses stored identity, retains history/report spending, ends both plans
+and explains default clearing. Original unarchive returns the active card without resuming ended plans
+or choosing a default; the same state survives one cold read. No new UI/source change or layout matrix
+is needed. See quality/physical-credit-card-archive.md for bounded public evidence and restoration.

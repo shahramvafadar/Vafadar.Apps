@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Card and account archive device verification (D-404)
+
+- Verified card purchase/payment, positive credit and archive/unarchive with preserved history, ended
+  related plans and cleared default through one cold Android read.
+- No shipped code or APK change; the original Main profile and settings are restored.
+
 ### Portable backup device verification (D-403)
 
 - Verified the existing first-run restore after a complete independent Android uninstall/reinstall,

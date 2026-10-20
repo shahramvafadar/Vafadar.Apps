@@ -1227,3 +1227,12 @@ first-run restore/cold/re-export is locally qualified. One account, expense, ski
 Monday survive;51 exported tables/74 rows match apart from original onboarding's settings timestamp.
 Main/profile/OS restoration and scoped cleanup are complete. No production source/APK or managed-count
 change and no unrelated successful suite/build replay. See quality/physical-portable-fresh-install.md.
+
+## D-404 - Bounded original card payment and archive continuation
+
+AT-07/AT-10 gain original Samsung card expense/payment/positive credit, dirty archive cancel/accept,
+both dependent active plans ended, default-cleared notice, historical report preservation and original
+unarchive/cold without resuming plans or choosing a default. Main979/five public packets/three profiles/
+OS/APK are restored and only the new inactive profile retired. App/APK and managed counts remain D-401;
+no unchanged successful suite/build replay. Broader QA-01, D-386 runtime/A11Y and external gates remain.
+See quality/physical-credit-card-archive.md.
