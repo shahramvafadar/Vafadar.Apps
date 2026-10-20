@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Native currency selection checked (D-423)
+
+- Verify first-open selection in the original Android currency list without saving any account.
+- Correct incomplete native observations; application code and signed APK remain unchanged.
+
 ### Holding moves checked on Android (D-422)
 
 - Verify original place creation, a one-unit move and unsaved-edit discard on Samsung, including one cold reopen.

@@ -44,6 +44,13 @@ internal static partial class AndroidHomeReview
                 await Task.Run(() => PrepareAsync(root, ct, unreviewed: phase == "prepare-unreviewed", resumeUnreviewed), ct);
                 await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, UnreviewedCorpus = phase == "prepare-unreviewed", NativeOverflowRefusals = phase == "prepare-unreviewed" ? CheckUnreviewedOverflow() : 0, CoreModuleVersionId = typeof(LedgerCalculator).Module.ModuleVersionId, MainPackageTouched = false, Device = DeviceEvidence() }, ct);
             }
+            else if (phase == "currency-input")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0 || Directory.EnumerateFileSystemEntries(root).Any())
+                    throw new ReviewCheckException("Fresh nonredirected currency observation required.");
+                await WriteReportAsync(root, phase, await ReviewCurrencyInputAsync(app, services, comparison!, ct), ct);
+            }
             else if (phase is "home-review-count" or "home-review-count-fixed" or "home-add-header" or "home-add-header-fixed" or "getting-started")
             {
                 Directory.CreateDirectory(root);

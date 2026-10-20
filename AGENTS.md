@@ -3112,3 +3112,12 @@ unavailable original kind/account/place is not a guessed replacement. Preserve h
 payment/place identity and rebind transfer choices by id. A new routed identity owns fresh raw input
 and a separate session; an old accepted callback cannot close or rearm it. Preserve native original
 files/rows/PIDs, with no accepted seed/financial replay. D-386 and external gates remain separate.
+
+## D-423 - Native popup observation boundaries
+
+An early active-window-only hierarchy or empty raw Android ContentDescription is not proof that a
+popup has no visible actions. Observe the original owned native panel after realization, read its
+actual accessibility-node name and verify visible target geometry before one native invocation.
+Retain negative observations and unchanged stored rows; never ship a speculative viewport workaround
+or replay an accepted financial sequence to repair an observer. Keep physical currency input and
+spoken accessibility gates distinct from this independent no-Save selection check.

@@ -692,3 +692,12 @@ quality/holding-detail-publication.md for exact original evidence and final Main
 Phase `holding-detail-retired-callback` requires the original completed detail report and checks only
 one newly closed readback callback on the same source. It never replays the native matrix or a price
 Save; actual post-commit behavior remains a separately proved SQLite application-flow case.
+
+## Original native currency selection (D-423)
+
+Phase `currency-input` requires fresh `review_run` and `review_pass`, opens the actual AccountFormView
+without Save and compares original stored accounts/entries on exit. After one original chevron
+pointer, it waits for realized owned native rows and invokes one visible GBP button by its native
+accessibility-node name. Finish only after the original selection observation; retain terminal
+reports and failed observer packets. No Main install/reset, seed or accepted financial replay.
+See application quality/native-currency-selection.md for the rejected viewport candidates and limits.

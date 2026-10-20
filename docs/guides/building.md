@@ -1920,3 +1920,14 @@ model draft control followed by actual native Entry rebinding, not keyboard or f
 Compare every typed source row, base rows and exact original language/theme. Build complete signed
 offline Main with the canonical script and verify package/signature/native bytes; restore the same
 Main/Home/OS after the terminal caller. [Evidence](../../src/Apps/Zanance/docs/quality/holding-event-publication.md).
+
+## Original native currency observation (D-423)
+
+The independent AndroidHome currency-input phase requires fresh review_run/review_pass and a fresh
+nonredirected report directory. It hosts the actual AccountFormView with no Save surface, observes
+one original chevron pointer, waits for visible original native rows and invokes one visible native
+GBP button. Read the action name from CreateAccessibilityNodeInfo: MAUI semantic delegates need not
+populate raw ContentDescription. Inspect only this package's application panels; active-window-only
+uiautomator dumps can omit a nonfocusable popup. Complete the original report before stopping the
+caller, compare stored accounts/entries and resume the same Main PID. A delayed observation never
+justifies replaying a pointer, seed, accepted command or install. This is not spoken-reader acceptance.

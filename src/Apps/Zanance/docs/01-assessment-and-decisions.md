@@ -7744,3 +7744,16 @@ native currency-search text and is discarded; USD selection/new event and its ro
 qualified. Next ready work diagnoses only this original input/list boundary. D-386 general runtime/
 A11Y, broader QA-01, Mac/iOS, external/expert/store and release gates remain separate.
 See [original sequence, failed observations and limits](quality/physical-holding-location-move.md).
+
+## D-423 - Original native currency selection, without a product workaround
+
+The independent Release/AOT Android caller opens the actual unchanged AccountFormView currency
+control once. After actual native realization, the original visible 44-unit GBP button selects GBP
+in both the model and control and closes the popup. Stored accounts and entries compare unchanged;
+there is no Save surface. The early active-window dump and raw ContentDescription were incomplete
+observers, not proof of a blank product list. Preserve failed observations; remove all speculative
+production viewport changes. Main code/APK remain D-421, Main resumes with its original PID/Home0,
+and no phone input or system setting changes occur. The final independent strict build has zero
+warnings/errors. No unchanged Main build/full suite or accepted financial sequence is repeated;
+no new unit-test count, physical USD-input, spoken accessibility or general runtime acceptance is
+claimed. Continue remaining ready feature/device work with D-386 and external gates separate.
