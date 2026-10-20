@@ -2069,3 +2069,12 @@ Windows/Release AOT Android, retained complete field-feedback contexts, strict b
 signed offline APK and no-reset emulator restoration pass. Successful finances are not replayed for
 observer repair. Windows access violation and transient adb/mismatch evidence remain; no general
 runtime fix, physical holding, iOS/store/provider/release or exact-head hosted CI acceptance claim.
+
+## D-411 - Scoped physical holding/refund action qualification
+
+Original Samsung purchase/refund/refused and valid fee correction/sale/cold, Main/profile/OS restoration,
+26 inspected Windows contexts,24 final read-only Android action contexts, strict builds, complete
+signed offline APK and emulator restoration pass. Independent Android modal Cancel is not accepted;
+its original observer/route failures remain retained. No unrelated successful tests or full suite are
+replayed and the managed unit count is unchanged. Broader QA-01, D-386 runtime/A11Y, iOS/provider/store,
+expert/tax, exact-head CI and publication gates remain separate. See quality/physical-holding-fee-lifecycle.md.

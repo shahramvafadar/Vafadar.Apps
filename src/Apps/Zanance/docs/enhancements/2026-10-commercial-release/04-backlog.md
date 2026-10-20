@@ -49,7 +49,7 @@ priority/order descriptions below.
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Done (D-268 browser/account copy and six-language drafts; real OAuth/publication remain open) | D-69 continuous delivery |
 | ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; D-381 physical interpreted paging/stale-mapping review; D-405 original own/mapped financial snapshot guard; D-406 physical opening-boundary/cold Undo and retained-tab Refresh fix qualified; other bank/relationship variants require original fixtures | original export specifications/samples |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
-| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; D-328 accountant ZIP receiving/content; D-329 original en/fa/de PDF contents and continued-table fix; D-330 own-format producer/consumer/refund/transfer/cold Undo; D-361 original en/fa/de display/Back and advanced goal choices/dirty discard, exact preference/Home restoration and one native root; D-365 original changed account/debt/monthly disclosures in 18 normal-scale Samsung cases with draft/data/preference preservation; D-401 occurrence override/skip/unskip, manual link/keep and generated delete-on-reopen with cold/Main restoration; D-402 prior-period/cross-account refunds, excess refusal/same-draft remainder and cold public allocation with Main restoration; D-403 original unprotected portable fresh independent reinstall/first-run restore/cold/whole-export comparison with Main restoration; D-404 card purchase/payment/positive credit and dirty archive/unarchive with two ended plans/default/history/cold and Main restoration; D-406 opening-boundary CSV/cold Undo; D-407 guarded split/reallocate/cold/join and original Main restoration; broader phone acceptance remains) | – |
+| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; D-328 accountant ZIP receiving/content; D-329 original en/fa/de PDF contents and continued-table fix; D-330 own-format producer/consumer/refund/transfer/cold Undo; D-361 original en/fa/de display/Back and advanced goal choices/dirty discard, exact preference/Home restoration and one native root; D-365 original changed account/debt/monthly disclosures in 18 normal-scale Samsung cases with draft/data/preference preservation; D-401 occurrence override/skip/unskip, manual link/keep and generated delete-on-reopen with cold/Main restoration; D-402 prior-period/cross-account refunds, excess refusal/same-draft remainder and cold public allocation with Main restoration; D-403 original unprotected portable fresh independent reinstall/first-run restore/cold/whole-export comparison with Main restoration; D-404 card purchase/payment/positive credit and dirty archive/unarchive with two ended plans/default/history/cold and Main restoration; D-406 opening-boundary CSV/cold Undo; D-407 guarded split/reallocate/cold/join and original Main restoration; D-411 original holding purchase/fee refund/refused and valid correction/sale/cold and fee-action fix with Main restoration; broader phone acceptance remains) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical bulk D-393; remaining device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator D-74; bounded physical D-394; broader device/iOS gates open) | QA-03 |
@@ -3666,3 +3666,25 @@ pass. No phone input, private Main data/key read, full-suite rerun, schema/model
 provider change or ANR/crash resolution claim. Wider holding/device/iOS, D-386 runtime/A11Y and
 external/release/exact-head CI gates remain separate.
 See [original evidence and limits](../../quality/holding-fee-input.md).
+
+## D-411 - Refund action for holding fees and original physical lifecycle
+
+An original Samsung purchase exposed an eligible fee refund hidden by the managed-source actions
+container. The existing CanRefund row now has its own card; purchase/sale principal edit/delete stay
+in holding history. Four original accepted financial commands (purchase, linked refund, same-form
+fee correction, sale) produce Cash900→848→849.50→850→879.50EUR. Out-of-range and below-refund fees
+refuse with raw drafts retained. One terminal cold preserves five known public packets, one unit,
+25EUR/unit original basis/price and displayed realized5EUR before fees, without a tax claim.
+
+Twenty-six inspected Windows captures/native observations and24 final read-only Release/AOT Android
+action contexts cover en/fa/de and both themes, plus Windows360/412/1280. Original Android semantic
+observer and independent modal/route failures are retained; independent Android modal Cancel is not
+accepted. Original seeded rows are reused read-only and accepted money is never replayed. Windows
+native refund open/Cancel and the actual Samsung refund Save qualify the original action separately.
+Strict builds, complete signed offline ARM64/x64 APK and no-reset emulator restoration pass. Samsung
+Main979/five known public packets/original three profiles and exact OS values are restored; only the
+new inactive fixture is retired and the coordinated phone turn released. No new unit-test count,
+full-suite replay, schema/model/resource/permission/provider or Main private-data/key change. QA-01
+overall, other holding variants, D-386 runtime/A11Y, iOS/external/release and hosted exact-head CI remain.
+
+See [original evidence and limits](../../quality/physical-holding-fee-lifecycle.md).

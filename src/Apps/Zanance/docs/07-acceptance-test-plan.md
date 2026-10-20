@@ -4619,3 +4619,16 @@ successful images and Android6 final caption observations qualify complete field
 and both themes with Windows360/412/wide. Caption continuations invoke no financial commands. Signed
 offline Main and one no-reset emulator Home/OS restoration pass. This is bounded local/native
 acceptance; physical holding variants, all-device/iOS, D-386 and external gates remain separate.
+
+## D-411 - QA-01 original holding purchase, fee refund, correction and sale
+
+Scoped Samsung acceptance: original counted purchase2/50EUR/fee2, linked fee refund1.50, raw amount
+range refusal, below-refund refusal and valid same-form fee1.50, then sale1/30EUR/fee0.50. Cash879.50,
+five known packets, quantity1/basis25/price25 and displayed realized5 remain after one planned cold.
+The original missing fee-refund UI is fixed without replaying the accepted purchase. Main979/five
+known packets/original three profiles and OS restore; only the new inactive fixture is retired.
+Independent qualification includes26 Windows captures and24 final Android read-only action contexts,
+with retained original rows and no new financial Save. Windows native open/Cancel succeeds; independent
+Android modal/route failures remain unaccepted. No new unit-test count or successful/full-suite replay.
+Other holding kinds, all-device, D-386 runtime/A11Y, iOS/external/release gates remain. Exact artifacts,
+package hashes and limitations: quality/physical-holding-fee-lifecycle.md.

@@ -2684,3 +2684,25 @@ pass. No phone input, private Main data/key read, full-suite rerun, schema/model
 provider change or ANR/crash resolution claim. Wider holding/device/iOS, D-386 runtime/A11Y and
 external/release/exact-head CI gates remain separate.
 See [original evidence and limits](quality/holding-fee-input.md).
+
+## D-411 - Refund action for holding fees and original physical lifecycle
+
+An original Samsung purchase exposed an eligible fee refund hidden by the managed-source actions
+container. The existing CanRefund row now has its own card; purchase/sale principal edit/delete stay
+in holding history. Four original accepted financial commands (purchase, linked refund, same-form
+fee correction, sale) produce Cash900→848→849.50→850→879.50EUR. Out-of-range and below-refund fees
+refuse with raw drafts retained. One terminal cold preserves five known public packets, one unit,
+25EUR/unit original basis/price and displayed realized5EUR before fees, without a tax claim.
+
+Twenty-six inspected Windows captures/native observations and24 final read-only Release/AOT Android
+action contexts cover en/fa/de and both themes, plus Windows360/412/1280. Original Android semantic
+observer and independent modal/route failures are retained; independent Android modal Cancel is not
+accepted. Original seeded rows are reused read-only and accepted money is never replayed. Windows
+native refund open/Cancel and the actual Samsung refund Save qualify the original action separately.
+Strict builds, complete signed offline ARM64/x64 APK and no-reset emulator restoration pass. Samsung
+Main979/five known public packets/original three profiles and exact OS values are restored; only the
+new inactive fixture is retired and the coordinated phone turn released. No new unit-test count,
+full-suite replay, schema/model/resource/permission/provider or Main private-data/key change. QA-01
+overall, other holding variants, D-386 runtime/A11Y, iOS/external/release and hosted exact-head CI remain.
+
+See [original evidence and limits](quality/physical-holding-fee-lifecycle.md).

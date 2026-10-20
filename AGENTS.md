@@ -2990,3 +2990,14 @@ draft/original review for explicit correction. Hidden nonfinancial fee drafts cr
 Preview must not guess a zero fee or wrap account changes. Native feedback checks compare the
 existing native digit conversion with source text; keep original source/draft evidence. Continuation
 after a terminal observer failure uses exact original accepted files read-only and never replays money.
+
+## D-411 - Refundable holding fees retain their own action
+
+An eligible fee expense keeps its existing Record refund action even while source edit/delete and
+other managed holding mutations stay under the original holding history. Do not expose principal as
+income/spending or guess refund links. Preserve the original purchase on a UI failure; continue only
+pending refund/correction/sale and one planned cold read. Native semantics use Android accessibility
+nodes when MAUI supplies a delegate; a direct View property mismatch is not missing user text. Keep
+failed independent modal/route observations separate from actual device acceptance and never replay
+accepted financial operations or seeds to repair a diagnostic observer. Restore Main/public packets/
+profiles/OS and retire only the new inactive fixture before releasing a coordinated phone turn.

@@ -151,6 +151,25 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Fresh independent Home refresh review required.");
                 await WriteReportAsync(root, phase, await ReviewHomeRefreshAsync(app, services, root, comparison!, ct, referencesOnly: phase == "home-refresh-references"), ct);
             }
+            else if (phase == "holding-fee-action")
+            {
+                Directory.CreateDirectory(root);
+                var retained = Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_resume_action", false) == true;
+                if (RedirectedAncestors(root).Length != 0 || !retained && Directory.EnumerateFileSystemEntries(root).Any())
+                    throw new ReviewCheckException("Fresh independent original detail action review required.");
+                if (retained)
+                {
+                    var originalFailure = false;
+                    foreach (var path in Directory.EnumerateFiles(root, "failure-*.json"))
+                    {
+                        using var failure = JsonDocument.Parse(await File.ReadAllTextAsync(path, ct));
+                        originalFailure |= failure.RootElement.GetProperty("Comparison").GetString() == baseline
+                            && failure.RootElement.GetProperty("ReviewCheck").GetString() == "Original refund native name/target incomplete.";
+                    }
+                    if (!originalFailure) throw new ReviewCheckException("Original terminal action observer failure required.");
+                }
+                await WriteReportAsync(root, phase, await ReviewHoldingFeeActionAsync(app, services, root, comparison!, retained, ct), ct);
+            }
             else if (phase is "holding-refund-review" or "holding-fee-input")
             {
                 var resumeFeeCaptions = phase == "holding-fee-input" && Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_resume_fee_captions", false) == true;

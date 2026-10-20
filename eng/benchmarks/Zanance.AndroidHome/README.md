@@ -585,3 +585,18 @@ financial files before/after, retires the rehydrated original draft and invokes 
 Final Cases retain the original process identity; Live is empty and explicit continuation fields
 describe the new read-only run. The four original live assertions precede accepted receipt writes.
 Do not reinterpret old native-invocation flags as new finance or restart on a report timeout.
+
+## D-411 - Original holding-fee action surfaces
+
+`holding-fee-action` seeds an independent root store only on its fresh first invocation. The final
+caller checks four actual detail states across en/fa/de and both themes without invoking financial
+commands or the modal. It reads Android accessibility nodes for semantic names (the MAUI delegate
+need not fill View.ContentDescription), actual visible targets, managed source restrictions and whole
+stored-row equality. The refund modal belongs to separate Windows/physical qualification.
+
+After the exact original terminal `Original refund native name/target incomplete.` failure only,
+`review_resume_action=true` reuses that original review_run with a new comparison and review_baseline
+equal to its original failed comparison. The original failure and exactly four prepared title/identity
+states are required; no seed or writer is invoked. Preserve failed modal/route attempts and their
+original data. A report timeout never authorizes a restart or accepted-money replay. Final receipts
+are24 read-only contexts, FinancialSavesInvoked0 and exact original theme/language restoration.

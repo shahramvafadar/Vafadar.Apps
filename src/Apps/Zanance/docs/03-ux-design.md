@@ -1948,3 +1948,12 @@ Preserve the same editable source review for explicit correction; blank/zero kee
 removal meaning. Show no guessed money prediction while fee input is invalid or its change exceeds
 the money range. Native examples follow existing digit/separator choices. Retained caption models
 after acceptance have retired authority; they are separate from original live enabled retry.
+
+## D-411 - Refund action independent of managed-source actions
+
+Use the existing CanRefund-controlled card for ordinary expenses and eligible holding fees. The
+managed-money explanation and Open the holding remain; editing/deleting purchase/sale principal and
+its fee remains grouped in holding history. Show one refund action, preserve its translated semantic
+name/native target and existing command, and never expose a principal refund. The original Samsung
+fee action now opens/saves its linked refund;26 Windows and24 final Android native contexts qualify
+the changed surface. See quality/physical-holding-fee-lifecycle.md for scope and retained failures.

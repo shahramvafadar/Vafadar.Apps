@@ -129,18 +129,21 @@
                 <!-- The money of a holding purchase or sale is changed together with the holding (ZEX-AS14) -->
                 <Label Text="{v:Translate Entry_HoldingMoney}" Style="{StaticResource Secondary}" Margin="4,8,4,0" IsVisible="{Binding IsHoldingMoney}" />
                 <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Entry_OpenHolding}" Command="{Binding EditCommand}" IsVisible="{Binding IsHoldingMoney}" />
-                <!-- Further actions as rows, like More: one card instead of a stack of equal buttons -->
+                <!-- D-411: a holding fee is still an expense with refundable money; only source edit/delete stays grouped. -->
+                <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding CanRefund}">
+                    <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" BackgroundColor="Transparent">
+                        <Border Style="{StaticResource IconTileSmall}" BackgroundColor="{DynamicResource SurfaceMuted}" Stroke="{DynamicResource DividerColor}">
+                            <fi:SymbolIcon Symbol="ArrowUndo" FontSize="17" ForegroundColor="{DynamicResource SecondaryText}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Grid.Column="1" Text="{v:Translate Entry_Refund}" Style="{StaticResource RowTitle}" LineBreakMode="WordWrap" VerticalOptions="Center" />
+                        <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
+                        <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0" Command="{Binding RefundCommand}"
+                                SemanticProperties.Description="{v:Translate Entry_Refund}" />
+                    </Grid>
+                </Border>
+                <!-- Further source-changing actions remain unavailable for all managed holding money. -->
                 <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding IsHoldingMoney, Converter={StaticResource InvertedBoolConverter}}">
                     <VerticalStackLayout>
-                        <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" BackgroundColor="Transparent" IsVisible="{Binding CanRefund}">
-                            <Border Style="{StaticResource IconTileSmall}" BackgroundColor="{DynamicResource SurfaceMuted}" Stroke="{DynamicResource DividerColor}">
-                                <fi:SymbolIcon Symbol="ArrowUndo" FontSize="17" ForegroundColor="{DynamicResource SecondaryText}" HorizontalOptions="Center" VerticalOptions="Center" />
-                            </Border>
-                            <Label Grid.Column="1" Text="{v:Translate Entry_Refund}" Style="{StaticResource RowTitle}" LineBreakMode="WordWrap" VerticalOptions="Center" />
-                            <fi:SymbolIcon Grid.Column="2" Symbol="ChevronRight" FontSize="16" ForegroundColor="{DynamicResource Muted}" VerticalOptions="Center" ScaleX="{DynamicResource ReadingScaleX}" />
-                            <Button Grid.ColumnSpan="3" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0" Command="{Binding RefundCommand}"
-                                    SemanticProperties.Description="{v:Translate Entry_Refund}" />
-                        </Grid>
                         <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" BackgroundColor="Transparent">
                             <Border Style="{StaticResource IconTileSmall}" BackgroundColor="{DynamicResource SurfaceMuted}" Stroke="{DynamicResource DividerColor}">
                                 <fi:SymbolIcon Symbol="Copy" FontSize="17" ForegroundColor="{DynamicResource SecondaryText}" HorizontalOptions="Center" VerticalOptions="Center" />

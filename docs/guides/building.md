@@ -1793,3 +1793,17 @@ twelve pending read-only captions with no financial commands. Keep original fail
 successful own-window images across original/continued runs. Native expectations apply the same
 existing digit conversion as rendering. Android uses a comparison-bound original-file continuation;
 see its README and app quality/holding-fee-input.md. Never restart merely after observation timeout.
+
+## D-411 - Independent holding-fee action review
+
+`Run-StoreDrafts.ps1 -HoldingFeeActionReview` uses an isolated non-input Windows desktop and fictitious
+root store. It captures26 original detail states (holding-fee18 across en/fa/de, light/dark and
+360/412/1280; ordinary-expense6 at412; principal1; income1), checks one original native refund draft
+open/Cancel without Save, and whole stored-row equality. It never inputs on the owner's desktop.
+
+The independent Release/AOT Android `holding-fee-action` final caller qualifies24 read-only action
+surfaces and actual accessibility-node names. Its precise failed-observer continuation is documented
+in eng/benchmarks/Zanance.AndroidHome/README.md; retain original seeded rows and failure records.
+Independent modal failures are not physical acceptance. Do not replay successful finance or unchanged
+full suites; validate the complete signed offline candidate and restore original emulator/phone
+Main, profiles, public rows and OS after the scoped original lifecycle.

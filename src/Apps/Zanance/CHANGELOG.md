@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Refund fees recorded with holdings (D-411)
+
+- Show Record refund for an eligible purchase/sale fee while keeping source changes in holding history.
+- Verify the original phone purchase, linked refund, fee correction and sale through a cold reopen.
+
 ### Keep invalid holding fees from removing saved money (D-410)
 
 - Reject malformed, negative or too-large fees while keeping typed values for correction.

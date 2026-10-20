@@ -116,6 +116,10 @@ internal static partial class DebugSnapshots
         await SeedBudgetAsync(services, food);
         await store.UpdateSettingsAsync(settings => settings.OnboardingCompleted = true);
         app.ShowMainShell();
+        if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "holding-fee-action")
+        {
+            await ReviewHoldingFeeActionWindowsAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "holding-fee-input")
         {
             await ReviewHoldingRefundWindowsAsync(app, services, folder, feeInput: true); return;
