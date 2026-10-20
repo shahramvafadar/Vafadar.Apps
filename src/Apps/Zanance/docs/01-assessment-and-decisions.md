@@ -7384,3 +7384,17 @@ reopen paths, with one cold read. Main979/five known rows/three profiles/OS are 
 inactive test profile is retired and the phone released. No financial replay or full-suite count
 increase. Exact hosted CI and wider runtime/A11Y/device/iOS/provider/release gates remain separate.
 See [scope, negative evidence and restoration](quality/physical-occurrence-corrections.md).
+
+## D-402 - Original physical prior-period and cross-account refunds
+
+Close only the remaining bounded AT-13/14/15 device path with the existing D-401 complete candidate.
+Two zero-opening EUR Cash accounts dated September1 precede the original September20 Food purchase100.
+A changed refund draft is cancelled without posting; original refunds25 to CashA and35 to CashB leave40.
+An attempted41 is refused with visible domain feedback and retained input. Correct only the same
+amount to40; the purchase becomes fully refunded with no further refund action. One cold read preserves
+all four public details/links, current-month refunds100 versus the prior-period purchase, complete-history
+net zero and account balances minus75/plus75. Main979/five known rows/three profiles/OS match after
+retiring only the new inactive profile; the phone is released. Native input/viewport observer corrections
+retain accepted money and the same cold process. No app/APK, unit-count or build change; unchanged
+successful checks are not repeated. Wider device/chart/iOS/provider/release gates remain separate.
+[Evidence and negative observations](quality/physical-refund-lifecycle.md).

@@ -1706,3 +1706,14 @@ Read-ReviewReport.ps1 observes only that same process and its public derived res
 covered failures, draft retention, target-change refusal and the pending writer/canonical accepted
 reload are qualified once per platform. Preserve terminal receipts and accepted cases; no replay
 after observation expiry. Main upgrades use only the complete signed offline package without reset.
+
+## Original physical refund continuation (D-402)
+
+Reuse a qualified complete signed candidate when source is unchanged. Journal each native action
+and retain accepted money; a failed native observation is not a failed financial write. Before typing
+a replacement, require the exact original focused field and verify its selected text is empty after
+Ctrl+A/Delete; do not use clipboard, guessed caret/deletion success or device setting changes. Native
+list edges may clip an otherwise realized target: scroll only the actual owned viewport until its
+whole target is visible. Continue remaining reads on the same cold process; never replay completed
+financial actions or restart after observation expiry. Final public Main/profile/OS/package readback
+and explicit phone-turn release close the bounded workflow.

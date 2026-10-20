@@ -18,9 +18,9 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-10 | Archive account with history/plans | ACC-06 | Unit | S2/S4 | Verified (unit): history stays in reports; active plans are ended with the archive (confirmation lists them) |
 | AT-11 | Balance adjustment | ACC-08 | Unit | S1 | Verified (unit, domain level) |
 | AT-12 | Partial refund same month | REF-01/02 | Unit | S1 | Verified (unit, domain level) |
-| AT-13 | Refund of last month's purchase | REF-03, REP-02 | Unit | S1/S8 | Verified (unit + report screen: gross chart never negative) |
-| AT-14 | Refund to another account | REF-01 | Unit | S1 | Verified (unit, domain level) |
-| AT-15 | Refund larger than purchase | REF-04 | Unit | S1 | Verified (unit, domain level) |
+| AT-13 | Refund of last month's purchase | REF-03, REP-02 | Unit + bounded physical Android | S1/S8 | Unit/report baseline retained; D-402 Samsung prior-period purchase/current refunds, current/all history, cold links and account movements pass; native chart pixels and broader platform acceptance remain separate |
+| AT-14 | Refund to another account | REF-01 | Unit + bounded physical Android | S1 | Unit verified; D-402 Samsung refunds35/40 into a second EUR account, recorded balances minus75/plus75 and cold original links pass; other currency/platform acceptance remains |
+| AT-15 | Refund larger than purchase | REF-04 | Unit + bounded physical Android | S1 | Unit verified; D-402 Samsung41 with40 remaining is refused, the original draft is kept, corrected40 is accepted once and zero refundable/four public cold packets pass; no private/transient SQL or all-race claim |
 | AT-16 | One-time future plan | FIN-07, REC-02 | Unit + physical Android | S4 | Unit verified; D-316 original main future 20 EUR plan appears in Upcoming/forecast without a ledger posting; broader platform acceptance remains |
 | AT-17 | Every 2 weeks from 2027-01-01 | REC-04/05 | Unit | S4 | Verified (unit) |
 | AT-18 | Month with three bi-weekly occurrences | BUD-10 | Unit | S4 | Verified (unit) |
@@ -4482,3 +4482,14 @@ then shows the new manual title with raw drafts retained. Six original native co
 Release AOT Android cover coalesced reads, translated error/Retry and target refusal; one affected
 pending-writer/default check per platform is new qualification, not accepted-case replay. Thirteen
 existing snapshot tests/21 resource cases pass; no new full-suite count is inferred.
+
+## D-402 - Original physical prior-period/cross-account refunds
+
+The original refund draft is cancelled before its first accepted Save. One old purchase100 and
+current refunds25 to CashA plus35/40 to CashB retain their original relationship/category/date/note.
+Attempted41 is refused with the same draft; only its amount is corrected to40. One cold read shows
+zero refundable, current refunds100, complete-history net zero, account balances minus75/plus75 and
+all four original public details. Main979/five known packets/three profiles/OS match and only the new
+profile is retired. Native observer/input repairs do not replay money or the cold process. No app,
+managed-count or build change; broad chart/device/iOS/runtime/release gates remain distinct. See
+quality/physical-refund-lifecycle.md.

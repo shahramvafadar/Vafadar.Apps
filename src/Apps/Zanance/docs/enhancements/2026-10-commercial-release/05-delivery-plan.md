@@ -2859,3 +2859,16 @@ Remaining correction/link/reopen/cold paths and exact Main/profile/OS restoratio
 only the new inactive profile is retired and the phone released. Strict builds/full signed offline
 candidate and related checks pass. Continue ready backlog work; do not replay D-316 or completed
 D-401 paths. Broad QA-01, D-386 stability/accessibility and external gates remain separate.
+
+## D-402 - Complete the remaining original refund boundary
+
+Use the retained D-401 complete candidate to qualify prior-period/cross-account refund allocation,
+excess refusal with the same draft, exact full remainder and original native relationships on the
+coordinated Samsung. Preserve each accepted write and complete the single planned cold/readback,
+Main/profile/OS restoration and phone release. Only a newly observed defect warrants source changes
+and their affected checks. Broad runtime/A11Y stays after ready development under D-386.
+
+This bounded original Samsung workflow is complete, including native input/viewport observer repairs
+without replaying accepted money or its single cold process. Main/profile/OS restoration and phone
+release are recorded. D-401 source/APK/build/managed baselines remain unchanged. Continue remaining
+ready backlog work; wider QA/chart/platform and D-386 runtime/A11Y completion remain separate.

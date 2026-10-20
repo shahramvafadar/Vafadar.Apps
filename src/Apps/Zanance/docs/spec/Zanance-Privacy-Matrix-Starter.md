@@ -1028,3 +1028,9 @@ preserve accepted money and original Main/OS; no phone or private external data 
 The existing original local page refreshes existing suggestions while preserving transient input.
 No new data collection/storage, permission, network, SDK or portable export behavior. Phone evidence
 is limited to original public UI in an owned fictitious profile; no private database/key extraction.
+
+## D-402 - Original device refund readback
+
+No application/privacy contract changes. Native public fictitious refund/account/date/note widgets
+are qualified without private file/key/id extraction, clipboard or system-setting changes. Only the
+new test profile is retired; original Main/profiles are preserved and the phone turn released.

@@ -7247,3 +7247,13 @@ skip/unskip/manual-link-keep/generated-reopen-delete paths, cancel/accept and on
 five known public rows, three original profiles and OS match after retiring only the new test profile.
 Strict builds/full signed offline APK are qualified. Broader device/runtime/A11Y, real authentication,
 private-state/durable power-loss, iOS/provider/store/hosted CI/release gates remain separate.
+
+## D-402 - Section31 continuation: physical prior-period/cross-account refunds
+
+Original Samsung AT-13/14/15 boundaries are qualified: September purchase100, current refunds25/35
+into distinct EUR accounts, refusal of41 with40 remaining, same-draft correction to40, refundable zero
+and one cold read of four original details/links. Current-month refunds100 exclude the old purchase;
+complete-history net and overall balance are zero, with accounts minus75/plus75. Main979/five known
+rows/three profiles/OS match after retiring only the new profile and releasing the phone. Code/APK,
+managed counts and builds stay D-401; no unrelated successful matrix is repeated. Wider QA-01, chart,
+other currencies/iOS, runtime/A11Y/provider/release acceptance remains unproven.

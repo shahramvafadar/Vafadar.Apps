@@ -1049,3 +1049,10 @@ Only existing local occurrence/ledger values and transient drafts/read state are
 key, permission, SDK, network, export or backup format. Native qualification uses owned fictitious
 fixtures; Samsung uses only the new approved fictitious profile. No private database/key/internal-id
 extraction or system-setting change. The accepted manual row is retained rather than replayed.
+
+## D-402 - Physical refund qualification only
+
+Only original public widgets in a new owned fictitious profile are exercised. No new financial field,
+key, storage format, permission, SDK, network or collection behavior. No private database/key/internal-id
+extraction, clipboard or system-setting change. The new profile is retired; original Main/profiles
+and known public packets are preserved. Application/APK remain D-401.

@@ -2001,3 +2001,10 @@ same-fixture physical correction/link/reopen/cold continuation are locally compl
 known rows/three profiles and exact OS settings are restored, only the new test profile is retired
 and the phone turn is released. No full-suite replay, general stability/A11Y, whole-device/iOS,
 real authentication/provider/store or release acceptance. Hosted CI still needs its exact-head result.
+
+## D-402 - Bounded prior-period/cross-account refund workflow
+
+Samsung original cancel/refund/excess refusal/exact remainder and one cold relationship/period/account
+readback pass. Main979/five known rows/three profiles/OS are restored, only the new test profile retired
+and phone released. D-401 code/APK/checks are retained without reruns. No full device/chart/iOS, general
+stability/accessibility, provider/store or release acceptance; hosted CI needs its exact-head result.

@@ -2544,3 +2544,10 @@ consent. Independent related native/managed checks and physical override, skip/u
 unlink and generated-delete reopening with one cold read are locally qualified. Main/profile/OS
 restoration and phone release are recorded; broader QA-01, D-386 runtime/A11Y and external gates stay
 open. See quality/physical-occurrence-corrections.md; no unchanged successful matrix was repeated.
+
+## D-402 - Original refund allocation and remainder on the phone
+
+The bounded QA-01 AT-13/14/15 continuation passes with the retained D-401 candidate: prior purchase,
+refunds into two original EUR accounts, explicit excess refusal, same-draft correction, cold links/
+periods/balances and exact Main/profile/OS restoration. No source/build/test-count change or financial
+replay; broader QA-01, runtime/A11Y, chart/iOS and external gates remain. See quality/physical-refund-lifecycle.md.

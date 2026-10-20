@@ -1866,3 +1866,11 @@ never briefly assign defaults to native date controls. Hide writable fields unti
 is ready. A failed read keeps the draft covered with translated Retry; a changed account/destination/
 kind/currency requires closing and reviewing again. Do not interrupt pending financial consent or
 its busy gate. Only a known accepted command's canonical reload resets payment defaults.
+
+## D-402 - Original refund workflow qualified on the phone
+
+Retain the existing purchase link, same-currency destination choice and visible remaining amount.
+Refunds reduce spending rather than becoming income or transfers; prior-period purchases stay in
+complete history. The original D-130 refusal stays beside Save with its draft intact; correcting
+only the amount can complete the exact remaining refund. No new design or caption is introduced.
+Bounded physical/cold public evidence is in quality/physical-refund-lifecycle.md.

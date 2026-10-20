@@ -1212,3 +1212,10 @@ The actual Samsung stale-candidate defect is corrected with covered draft-preser
 reads and translated Retry. Related managed/native checks, strict builds/full signed offline APK,
 remaining physical correction/link/reopen/cold paths and exact Main/profile/OS restoration are locally
 complete. No full-suite replay or broad device/runtime/release acceptance. See quality/physical-occurrence-corrections.md.
+
+## D-402 - Bounded physical refund continuation
+
+Original prior-period/cross-account refunds, excess refusal with retained input, exact final remainder,
+current/all history and one cold public readback are qualified on Samsung. Main979/five known rows/
+three profiles/OS are restored and only the new test profile retired. Code/APK and managed counts
+stay D-401; no successful unrelated suite/build is repeated. See quality/physical-refund-lifecycle.md.
