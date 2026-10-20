@@ -7574,3 +7574,18 @@ resource matrix replay; no schema/model, new permission/provider or general ANR/
 release acceptance. D-386 and remaining external gates stand.
 
 See [original failures, native observations and limits](../quality/holding-event-publication.md).
+
+## D-422 - Original physical holding-place move and dirty discard
+
+The existing D-421 signed offline APK passes one original Samsung opening3/basis30EUR and move1:
+Home2 plus D422_Storage1, total3 and average basis10 remain, with Cash900 and an empty current-month
+ledger. One new place is adopted by the original move draft without losing quantity/date/note or
+changing its source. Keep editing retains raw2; Discard keeps the saved move1. One terminal cold
+retains original history and quantities. Restore Main979/exact five public packets/three profiles/
+OS/hash, retire only the new inactive fixture and release the coordinated phone turn.
+Twenty-four retained-observation assertions are not new unit tests. No new app/APK/build or successful
+suite/accepted financial sequence replay. A separate unsaved USD-type draft exposes unexpected
+native currency-search text and is discarded; USD selection/new event and its root cause are not
+qualified. Next ready work diagnoses only this original input/list boundary. D-386 general runtime/
+A11Y, broader QA-01, Mac/iOS, external/expert/store and release gates remain separate.
+See [original sequence, failed observations and limits](../quality/physical-holding-location-move.md).

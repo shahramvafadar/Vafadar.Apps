@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Holding moves checked on Android (D-422)
+
+- Verify original place creation, a one-unit move and unsaved-edit discard on Samsung, including one cold reopen.
+- Preserve total quantity, cash and original Main data; application and signed APK remain D-421.
+- Keep unexpected native currency-search input open for diagnosis; no USD selection success is claimed.
+
 ### Keep holding changes tied to the correct form (D-421)
 
 - Show loading and Retry before the complete holding form is ready.
