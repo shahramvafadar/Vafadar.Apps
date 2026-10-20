@@ -132,6 +132,10 @@ internal static partial class DebugSnapshots
         {
             await ReviewHoldingOverviewWindowsAsync(app, services, folder); return;
         }
+        if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "holding-location")
+        {
+            await ReviewHoldingLocationWindowsAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "holding-type")
         {
             await ReviewHoldingTypeWindowsAsync(app, services, folder); return;

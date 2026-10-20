@@ -3089,3 +3089,14 @@ editor by its original identity/instance. Bind refresh/readback callbacks to the
 including a known commit completed after departure; they cannot reactivate that view. Retire full detail work on ordinary or retained-tab
 departure. Preserve completed typed original fixtures and accepted native contexts; only changed
 query controls continue, without seed or financial replay. D-386 and wider external gates stand.
+
+## D-420 - Original holding-place creation
+
+Own the original name prompt before Save can run. Create only one stable absent place identity in
+the original actual-file writer with unchanged source, fresh rights and pending owner checked before
+commit. Preserve raw inputs/name/id across uncommitted retry. Keep a known metadata result separate
+from financial acceptance; postcommit/readback/native publication failure offers read-only choice
+refresh, never another create. Refuse renamed/foreign/stale/departed adoption. Transfer retains its
+source and adopts only the destination. A new explicit query waits for its retired metadata writer.
+Retained native captions copy original acceptance with all writer/recovery authority retired; no
+accepted metadata/financial seed or command is replayed for observer correction. D-386 still applies.

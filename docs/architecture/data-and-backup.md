@@ -2564,3 +2564,14 @@ gates also close retained old editor commands. Refresh/readback delegates retain
 original lifetime and editor, including post-commit departure; they cannot activate a replacement
 view. Native color/query adapters stay in the actual MAUI
 partial while tests compile actual application logic. See application quality/holding-detail-publication.md.
+
+## Original holding-place metadata boundary (D-420)
+
+CreateReviewedLocationAsync binds the absent identity, original coherent holding packet, actual file,
+fresh ManageHoldings rights and pending owner in one writer transaction. Validate the rebased packet
+before commit, consume original authority only on acceptance and publish a typed known result.
+ReadCreatedLocationReviewAsync permits only that exact one added identity/name with unchanged prior
+facts; it never creates, edits or guesses a replacement. Session metadata ownership exposes a wait
+handle so a new explicit query waits for its retired writer without polling or replay. Financial
+acceptance stays separate. No schema/model/portable format or privacy boundary changes.
+See [evidence](../../src/Apps/Zanance/docs/quality/holding-location-creation.md).

@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep a newly saved holding location after a refresh failure (D-420)
+
+- Keep the form busy while naming a location and save it only in the originally opened profile.
+- Preserve quantity, date, amount and note if the original holding changes or saving is refused.
+- Show when the location was saved and refresh its choices without adding it again.
+
 ### Keep holding details and actions together (D-419)
 
 - Load complete details from the same profile, with clear loading and Retry after a failure.

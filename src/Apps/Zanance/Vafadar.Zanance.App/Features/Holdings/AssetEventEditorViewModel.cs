@@ -49,6 +49,29 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
     private readonly IAppInteraction _interaction;
     private readonly HoldingEventEditorSession _session;
     private bool _loading = true;
+    private long _locationEpoch;
+    private long _locationForm;
+    private Guid? _pendingLocationId;
+    private string? _pendingLocationName;
+    private HoldingLocationCreation? _createdLocation;
+    private long _createdLocationEpoch;
+    private bool _locationPending;
+
+    /// <summary>Gets the exact known accepted place, independently of its following choice publication.</summary>
+    public Guid? SavedLocationId => _createdLocation?.Id;
+    /// <summary>Gets only the pending absent identity for independent original retry qualification.</summary>
+    internal Guid? PendingLocationId => _pendingLocationId;
+    /// <summary>Gets whether a known place needs read-only choice adoption, never another create.</summary>
+    public bool HasSavedLocationPending => _locationPending && _createdLocation is not null;
+    /// <summary>Gets whether one original new-place prompt may own the form.</summary>
+    public bool CanAddLocation => CanEdit && _session.Review is not null && !HasSavedLocationPending;
+    /// <summary>Gets whether this exact original form can read its accepted place again.</summary>
+    public bool CanUseSavedLocation => !_loading && !IsBusy && !_session.Committed && HasSavedLocationPending
+        && _createdLocationEpoch == _locationEpoch;
+    /// <summary>Gets known metadata acceptance without reporting a committed place as a failed Save.</summary>
+    [ObservableProperty] public partial string? LocationFeedback { get; set; }
+    /// <summary>Gets place-local refusal while retaining the original prompted name and financial draft.</summary>
+    [ObservableProperty] public partial string? LocationError { get; set; }
     private AssetType? _type;
     private AssetEvent? _existing;
     private List<LedgerEntry> _groupEntries = [];
@@ -220,6 +243,9 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
         // Keep that original loaded review instead of starting a second load with an empty type.
         if (!(query.TryGetValue("id", out var originalId) && originalId is Guid)
             && !(query.TryGetValue("type", out var originalType) && originalType is Guid)) return;
+        _locationEpoch++; _locationForm++;
+        _pendingLocationId = null; _pendingLocationName = null; _createdLocation = null; _locationPending = false;
+        LocationFeedback = null; LocationError = null;
         var culture = _localization.CurrentCulture;
         _loading = true; PublishState();
         var eventId = query.TryGetValue("id", out var idValue) && idValue is Guid id ? id : (Guid?)null;
@@ -443,27 +469,92 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
         EffectText = _translator.Format("AssetEvent_After", string.Join(" · ", parts));
     }
 
-    [RelayCommand(CanExecute = nameof(CanEdit))]
+    [RelayCommand(CanExecute = nameof(CanAddLocation))]
     private async Task AddLocationAsync()
     {
-        if (!CanEdit || _session.Review is null) return;
-        var name = await _interaction.PromptAsync(_translator["AssetEvent_AddLocation"], _translator["AssetEvent_AddLocationMessage"],
-            _translator["Common_Save"], _translator["Common_Cancel"], maxLength: 60);
-        if (string.IsNullOrWhiteSpace(name) || !CanEdit || _session.Review is null) return;
-        IsBusy = true; PublishState();
+        if (!CanAddLocation || _session.Review is not { } original) return;
+        var epoch = _locationEpoch; var form = _locationForm; var draft = Snapshot(); var type = _type?.Id;
+        bool Owner() => epoch == _locationEpoch && form == _locationForm && !_session.Committed && _type?.Id == type;
+        bool Current() => Owner() && ReferenceEquals(original, _session.Review) && draft == Snapshot();
+        IsBusy = true; LocationError = null; LocationFeedback = null; PublishState();
         try
         {
-            var location = new AssetLocation { Name = name.Trim() };
-            await _holdings.SaveLocationAsync(location);
-            var review = await _session.AddLocationAsync(location.Id);
-            if (review is null) return;
-            PublishLocations(review.Inputs.Locations, IsTransfer ? Location?.Id : location.Id);
-            if (IsTransfer) ToLocation = Locations.FirstOrDefault(l => l.Id == location.Id);
+            var name = await _interaction.PromptAsync(_translator["AssetEvent_AddLocation"], _translator["AssetEvent_AddLocationMessage"],
+                _translator["Common_Save"], _translator["Common_Cancel"], initialValue: _pendingLocationName, maxLength: 60);
+            if (string.IsNullOrWhiteSpace(name) || !Owner()) return;
+            _pendingLocationName = name.Trim(); _pendingLocationId ??= Guid.CreateVersion7();
+            if (!Current()) throw new HoldingEventReviewChangedException("Original place prompt source or raw draft changed.");
+            HoldingLocationCreation? accepted;
+            try { accepted = await _session.CreateLocationAsync(original, _pendingLocationId.Value, _pendingLocationName, Current); }
+            catch (CommittedWriteNotificationException<HoldingLocationCreation> known)
+            {
+                if (form == _locationForm) KeepCreatedLocation(known.Result, epoch);
+                return;
+            }
+            if (accepted is null || form != _locationForm) return;
+            KeepCreatedLocation(accepted, epoch);
+            if (!Owner() || draft != Snapshot()) return;
+            await AdoptCreatedLocationAsync(accepted, epoch, draft);
         }
-        catch (HoldingEventReviewChangedException) { RetireReview(); Error = _translator["AssetEvent_SourceChanged"]; }
+        catch (HoldingEventReviewChangedException)
+        {
+            if (Owner()) { _session.Retire(); LocationError = _translator["AssetEvent_SourceChanged"]; }
+        }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { RetireReview(); Error = Presentation.CommercialFailureMessage.OrFallback(exception, _translator, "Common_SaveFailed", draftKept: true); }
+        {
+            if (Owner())
+            {
+                if (exception is InvalidOperationException) _session.Retire();
+                LocationError = Presentation.CommercialFailureMessage.OrFallback(exception, _translator, "Common_SaveFailed", draftKept: true);
+            }
+        }
         finally { IsBusy = false; PublishState(); }
+    }
+
+    /// <summary>Retains the known metadata result before any fallible read or native choice publication.</summary>
+    private void KeepCreatedLocation(HoldingLocationCreation accepted, long epoch)
+    {
+        _createdLocation = accepted; _createdLocationEpoch = epoch; _locationPending = true;
+        _session.Retire(); LocationError = null;
+        LocationFeedback = _translator.Format("AssetEvent_LocationSavedRefresh", accepted.Name); PublishState();
+    }
+
+    [RelayCommand(CanExecute = nameof(CanUseSavedLocation))]
+    private async Task UseSavedLocationAsync()
+    {
+        if (!CanUseSavedLocation || _createdLocation is not { } accepted) return;
+        var epoch = _locationEpoch; var draft = Snapshot(); IsBusy = true; LocationError = null; PublishState();
+        try { await AdoptCreatedLocationAsync(accepted, epoch, draft); }
+        finally { IsBusy = false; PublishState(); }
+    }
+
+    /// <summary>Reads only the exact accepted place and unchanged original source; financial raw inputs never reset.</summary>
+    private async Task AdoptCreatedLocationAsync(HoldingLocationCreation accepted, long epoch, string draft)
+    {
+        bool Owner() => epoch == _locationEpoch && !_session.Committed && ReferenceEquals(accepted, _createdLocation);
+        try
+        {
+            var review = await _session.RefreshCreatedLocationAsync(accepted, () => Owner() && draft == Snapshot());
+            if (review is null || !Owner()) return;
+            void Current() { if (!Owner()) throw new HoldingEventReviewChangedException("Original place publication retired."); review.EnsureCurrent(); }
+            Current(); var from = Location?.Id; var transfer = IsTransfer;
+            PublishLocations(review.Inputs.Locations, transfer ? from : accepted.Id); Current();
+            if (transfer) { ToLocation = Locations.Single(l => l.Id == accepted.Id); Current(); }
+            _locationPending = false; _pendingLocationId = null; _pendingLocationName = null;
+            LocationFeedback = null; LocationError = null;
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            if (Owner())
+            {
+                _session.Retire(); _locationPending = true;
+                // Metadata already committed. Keep its identity/name and offer a read, never another create.
+                LocationFeedback = _translator.Format("AssetEvent_LocationSavedRefresh", accepted.Name);
+                LocationError = exception is HoldingEventReviewChangedException ? _translator["AssetEvent_SourceChanged"] : null;
+                System.Diagnostics.Debug.WriteLine(exception.GetType().FullName);
+            }
+        }
+        finally { PublishState(); }
     }
 
     [RelayCommand(CanExecute = nameof(CanSave))]
@@ -602,19 +693,31 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
         { Error = _translator["Editor_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); }
     }
 
+#if (DEBUG && WINDOWS) || ZANANCE_INDEPENDENT_HOME_REVIEW
+    /// <summary>Displays an exact known metadata caption with retired authority; never reconstructs a write or recovery.</summary>
+    internal void ShowRetainedLocationOutcome(AssetEventEditorViewModel original)
+    {
+        _createdLocation = original._createdLocation ?? throw new InvalidOperationException("Original accepted place required.");
+        _createdLocationEpoch = _locationEpoch; _locationPending = true; RetireReview();
+        LocationFeedback = _translator.Format("AssetEvent_LocationSavedRefresh", _createdLocation.Name); PublishState();
+    }
+#endif
+
     /// <summary>Gets whether raw holding inputs are still editable.</summary>
     public bool CanEdit => !_loading && !IsBusy && !_session.Committed;
     /// <summary>Gets whether the original coherent financial review still authorizes this form's Save.</summary>
-    public bool CanSave => CanEdit && _session.Review is not null;
+    public bool CanSave => CanEdit && _session.Review is not null && !HasSavedLocationPending;
     /// <summary>Gets Cancel before acceptance and Close afterwards.</summary>
     public string CloseText => _translator[_session.Committed ? "Common_Close" : "Common_Cancel"];
     private void PublishState()
     {
         OnPropertyChanged(nameof(CanEdit)); OnPropertyChanged(nameof(CanSave)); OnPropertyChanged(nameof(CloseText));
-        SaveCommand.NotifyCanExecuteChanged(); AddLocationCommand.NotifyCanExecuteChanged();
+        OnPropertyChanged(nameof(SavedLocationId)); OnPropertyChanged(nameof(HasSavedLocationPending));
+        OnPropertyChanged(nameof(CanAddLocation)); OnPropertyChanged(nameof(CanUseSavedLocation));
+        SaveCommand.NotifyCanExecuteChanged(); AddLocationCommand.NotifyCanExecuteChanged(); UseSavedLocationCommand.NotifyCanExecuteChanged();
     }
     /// <summary>Retires a departed source without changing its raw draft or accepted result.</summary>
-    public void RetireReview() { _session.Retire(); PublishState(); }
+    public void RetireReview() { _locationEpoch++; _session.Retire(); PublishState(); }
 
     [RelayCommand]
     private async Task CancelAsync()

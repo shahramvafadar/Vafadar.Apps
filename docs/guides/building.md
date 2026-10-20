@@ -1895,3 +1895,16 @@ not permission to restart. Actual native controls and navigation effect ports re
 The final `holding-detail-retired-callback` continuation requires the completed `holding-detail`
 baseline and retained run; it checks only the new retired readback callback, without redoing its
 23 accepted UI observations or financial commands.
+
+## Original holding-place native qualification (D-420)
+
+Run-StoreDrafts.ps1 -HoldingLocationReview creates one independent fictitious metadata fixture on a
+non-input Windows desktop. Keep its original accepted receipt/rows and process; never replay its
+create to repair an observer. The independent AndroidHome holding-location phase requires a fresh
+run and explicit review_pass. It invokes the original Add/read-only refresh native buttons once;
+the name dialog is an explicit effect port, not OS keyboard/dialog acceptance. Caption models copy
+a known original outcome with retired authority. Observe only this package/PID, keep the live
+process across startup observations, preserve system settings and restore Main after the terminal
+report. No Main private store/key or unrelated archive is read. Build complete signed offline Main
+with the canonical APK script, then check package/signature/native bytes. See
+[original evidence](../../src/Apps/Zanance/docs/quality/holding-location-creation.md).

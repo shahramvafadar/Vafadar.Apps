@@ -484,3 +484,8 @@ provider/Store/release acceptance remain open. See [evidence](docs/quality/cold-
 D-389 implements the owner-approved optional daily ECB reference source for the six target currencies,
 with explicit calculated/date-only provenance and free-original disclosure. See
 [qualification](docs/quality/ecb-reference-integration.md); public service/store/iOS acceptance remains separate.
+
+## Original holding-place creation (D-420)
+
+New locations keep their original profile/form identity and explicit saved-result recovery, without
+repeating a create or losing the financial draft. [Focused evidence and platform limits](docs/quality/holding-location-creation.md).

@@ -8329,4 +8329,10 @@ SHA-256 del XML original: {5}</value>
   <data name="Holdings_RetryLoad" xml:space="preserve">
     <value>Volver a cargar los bienes</value>
   </data>
+  <data name="AssetEvent_LocationSavedRefresh" xml:space="preserve">
+    <value>Se ha guardado el lugar «{0}». Actualiza las opciones para usarlo; no lo añadas de nuevo.</value>
+  </data>
+  <data name="AssetEvent_LocationUseSaved" xml:space="preserve">
+    <value>Actualizar el lugar guardado</value>
+  </data>
 </root>

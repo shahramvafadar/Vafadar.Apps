@@ -8389,4 +8389,12 @@ Original XML SHA-256: {5}</value>
   <data name="Holdings_RetryLoad" xml:space="preserve">
     <value>Load holdings again</value>
   </data>
+  <data name="AssetEvent_LocationSavedRefresh" xml:space="preserve">
+    <value>Place “{0}” was saved. Refresh the choices to use it; do not add it again.</value>
+    <comment>Known original place creation; following choice publication failed. {0} is the unchanged accepted place name.</comment>
+  </data>
+  <data name="AssetEvent_LocationUseSaved" xml:space="preserve">
+    <value>Refresh saved place</value>
+    <comment>Read-only recovery of choices for an already accepted original place; never create it again.</comment>
+  </data>
 </root>

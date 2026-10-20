@@ -8360,4 +8360,10 @@
   <data name="Holdings_RetryLoad" xml:space="preserve">
     <value>بارگذاری دوبارهٔ دارایی‌های مقداری</value>
   </data>
+  <data name="AssetEvent_LocationSavedRefresh" xml:space="preserve">
+    <value>محل «{0}» ذخیره شد. برای استفاده از آن، گزینه‌ها را تازه کنید؛ آن را دوباره اضافه نکنید.</value>
+  </data>
+  <data name="AssetEvent_LocationUseSaved" xml:space="preserve">
+    <value>تازه‌سازی محل ذخیره‌شده</value>
+  </data>
 </root>

@@ -56,7 +56,13 @@
                             <Label Text="{v:Translate AssetEvent_To}" Style="{StaticResource FieldLabel}" />
                             <Picker ItemsSource="{Binding Locations}" SelectedItem="{Binding ToLocation}" SemanticProperties.Description="{v:Translate AssetEvent_To}" />
                         </VerticalStackLayout>
-                        <p:WrappingAction Appearance="Secondary" Text="{v:Translate AssetEvent_AddLocation}" Command="{Binding AddLocationCommand}" HorizontalOptions="Start" Margin="0,4,0,0" />
+                        <p:WrappingAction x:Name="AddHoldingLocationAction" Appearance="Secondary" Text="{v:Translate AssetEvent_AddLocation}" Command="{Binding AddLocationCommand}" HorizontalOptions="Start" Margin="0,4,0,0" />
+                        <Label x:Name="HoldingLocationFeedback" Text="{Binding LocationFeedback}" TextColor="{DynamicResource WarningText}"
+                               IsVisible="{Binding LocationFeedback, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label x:Name="HoldingLocationError" Text="{Binding LocationError}" Style="{StaticResource ErrorText}"
+                               IsVisible="{Binding LocationError, Converter={StaticResource IsNotNullConverter}}" />
+                        <p:WrappingAction x:Name="UseSavedHoldingLocationAction" Appearance="Secondary" Text="{v:Translate AssetEvent_LocationUseSaved}"
+                                          Command="{Binding UseSavedLocationCommand}" IsVisible="{Binding HasSavedLocationPending}" />
                     </VerticalStackLayout>
                 </Border>
 

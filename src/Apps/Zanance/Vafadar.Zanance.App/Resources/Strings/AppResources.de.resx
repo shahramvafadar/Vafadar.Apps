@@ -8360,4 +8360,10 @@ Original-XML SHA-256: {5}</value>
   <data name="Holdings_RetryLoad" xml:space="preserve">
     <value>Bestände erneut laden</value>
   </data>
+  <data name="AssetEvent_LocationSavedRefresh" xml:space="preserve">
+    <value>Der Ort „{0}“ wurde gespeichert. Aktualisieren Sie die Auswahl, um ihn zu verwenden; legen Sie ihn nicht erneut an.</value>
+  </data>
+  <data name="AssetEvent_LocationUseSaved" xml:space="preserve">
+    <value>Gespeicherten Ort laden</value>
+  </data>
 </root>

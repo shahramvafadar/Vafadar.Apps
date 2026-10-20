@@ -2050,3 +2050,13 @@ explicit Refresh; theme recoloring alone does not reread finance. A different ro
 editors, without an old price draft, archive outcome or short Undo. Retained old native targets stay
 disabled. A known saved result never automatically reactivates a departed view to read back its
 value. See [original actual controls and remaining gates](quality/holding-detail-publication.md).
+
+## Original new holding-place outcome (D-420)
+
+Own the original form while its name prompt is pending. A named storage place is metadata, not a
+financial event or geographical position. Preserve its trimmed name/identity on an uncommitted
+retry. A known saved place has explicit feedback beside its picker and a read-only Refresh saved
+place action; close Add and financial Save until adoption succeeds. Preserve raw date/quantity/
+amount/note and the original source on a transfer. Retired captions cannot recover authority.
+Keep wrapping scalable captions and semantic colors. Native verification and wider gates:
+[original place evidence](quality/holding-location-creation.md).

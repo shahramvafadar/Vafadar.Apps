@@ -4736,3 +4736,24 @@ signed offline APK and no-reset emulator Main/Home0/exact OS restoration pass; S
 A final known-commit/departure test and one retained-source AOT callback control close automatic
 readback to a departed view, without replaying completed native matrices. No schema/model/privacy boundary change or general runtime/A11Y/device/iOS/release acceptance.
 See [original failures, continuations and limits](quality/holding-detail-publication.md).
+
+## D-420 - Original holding-place creation and known metadata outcome
+
+Create a named place only under the original actual-file holding review and pending form owner,
+with fresh rights and a stable absent identity. Prompt ownership closes financial Save before the
+name dialog. Recheck source and owner in the same transaction, consume the old review on metadata
+acceptance, and retain that known identity before notification/readback. A failed following step
+shows saved-place feedback and an explicit read-only choice refresh; it never creates the place
+again or resets raw financial inputs. Transfer keeps its original source and selects the new destination.
+A departed/replaced form cannot adopt old metadata or recover financial authority.
+
+Eighteen distinct new actual app/SQLite cases and 23 resource checks pass in selective cohorts.
+The three original baselines fail before repair; later cohorts run only new boundaries/outcomes.
+Original Windows UIA and independent Release/AOT Android native controls each create one place and
+recover its choices read-only, with zero financial Save, then retain captions across the required
+language/theme/width contexts. All typed rows outside that one location addition remain unchanged.
+Strict builds, complete signed offline APK, no-reset Main/Home0 and exact emulator OS restoration
+pass. No schema/model, new data/permission/SDK/provider or general ANR/crash/A11Y/phone/iOS/release
+acceptance is claimed. D-386 and remaining external gates stand.
+
+See [original failures, focused evidence and limits](quality/holding-location-creation.md).
