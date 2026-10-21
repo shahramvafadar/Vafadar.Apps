@@ -18,6 +18,9 @@
     <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sync/PersonalSyncViewModel.Attachments.cs" Link="Application/PersonalSyncViewModel.Attachments.cs" />
     <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sync/PersonalSyncReviewPresenter.cs" Link="Application/PersonalSyncReviewPresenter.cs" />
     <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sync/PersonalSyncReviewPresenter.Portable.cs" Link="Application/PersonalSyncReviewPresenter.Portable.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/MoneyDraftInput.cs" Link="Application/MoneyDraftInput.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/DraftFingerprint.cs" Link="Application/DraftFingerprint.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/DisplayUnitNote.cs" Link="Application/DisplayUnitNote.cs" />
     <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/PlanText.cs" Link="Application/PlanText.cs" />
     <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/Calendars.cs" Link="Application/Calendars.cs" />
     <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/Icons.cs" Link="Application/Icons.cs" />

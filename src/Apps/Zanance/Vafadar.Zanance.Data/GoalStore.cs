@@ -248,7 +248,8 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     }
 
     /// <summary>Records an allocation (positive) or a release (negative).</summary>
-    public async Task AddAllocationAsync(GoalAllocation allocation, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null)
+    public async Task AddAllocationAsync(GoalAllocation allocation, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null,
+        Func<bool>? isCurrent = null)
     {
         ArgumentNullException.ThrowIfNull(allocation);
         if (allocation.Amount == 0)
@@ -257,8 +258,9 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         }
 
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null || isCurrent is not null);
         if (review is not null) await ValidateWorkSnapshotAsync(review, db, cancellationToken);
+        if (isCurrent is not null && !isCurrent()) throw new InvalidOperationException("The original allocation draft changed.");
         write.DemandFeature(allocation.Amount > 0 ? CommercialFeature.AdvancedGoals : CommercialFeature.Corrections);
         if (allocation.Amount > 0 && write.Enforced)
         {
@@ -270,8 +272,10 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         db.GoalAllocations.Add(allocation);
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        if (isCurrent is not null && !isCurrent()) throw new InvalidOperationException("The original allocation draft changed.");
         await write.CommitAsync(cancellationToken);
-        Changed?.Invoke(this, EventArgs.Empty);
+        if (isCurrent is not null) CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty), allocation.Id);
+        else Changed?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>Deletes one allocation (e.g. a mistake); balances are not affected.</summary>
@@ -294,11 +298,13 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     }
 
     /// <summary>Saves the contribution plan of a goal, replacing an earlier one; <see langword="null"/> removes it.</summary>
-    public async Task SaveContributionPlanAsync(Guid goalId, ContributionPlan? plan, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null, Commerce.ReportReadReview? reportReview = null)
+    public async Task SaveContributionPlanAsync(Guid goalId, ContributionPlan? plan, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null,
+        Commerce.ReportReadReview? reportReview = null, Func<bool>? isCurrent = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null || reportReview is not null);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null || reportReview is not null || isCurrent is not null);
         if (review is not null) await ValidateWorkSnapshotAsync(review, db, cancellationToken);
+        if (isCurrent is not null && !isCurrent()) throw new InvalidOperationException("The original contribution draft changed.");
         if (reportReview is not null) await reportReview.ValidateContributionWriterAsync(db, null, cancellationToken);
         var existing = await db.ContributionPlans.FirstOrDefaultAsync(p => p.GoalId == goalId, cancellationToken);
         var goal = write.Enforced ? await db.Goals.AsNoTracking().FirstOrDefaultAsync(g => g.Id == goalId, cancellationToken) : null;
@@ -309,8 +315,9 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
         if (reportReview is not null) await reportReview.ValidateContributionWriterAsync(db, goalId, cancellationToken);
+        if (isCurrent is not null && !isCurrent()) throw new InvalidOperationException("The original contribution draft changed.");
         await write.CommitAsync(cancellationToken);
-        if (reportReview is not null) CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty), goalId);
+        if (reportReview is not null || isCurrent is not null) CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty), goalId);
         else Changed?.Invoke(this, EventArgs.Empty);
     }
 

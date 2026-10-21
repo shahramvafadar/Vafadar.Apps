@@ -315,10 +315,10 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
                 }
 
                 var culture = _localization.CurrentCulture;
-                var text = await _interaction.PromptAsync(
-                    _translator["Forecast_AssumeAmount"], _translator.Format("Forecast_AssumeAmountMessage", MoneyText.UnitName(currency)), _translator["Common_Ok"], _translator["Common_Cancel"],
-                    initialValue: row.PlanAmount is { } current ? MoneyText.ForInput(current, currency, culture) : string.Empty, maxLength: 20, numeric: true);
-                if (text is null || !MoneyText.TryParse(text, currency, culture, out var assumed) || assumed <= 0)
+                var proposal = await ForecastAmountPrompt.ReadAsync(currency, culture, row.PlanAmount, (unit, initial) => _interaction.PromptAsync(
+                    _translator["Forecast_AssumeAmount"], _translator.Format("Forecast_AssumeAmountMessage", unit), _translator["Common_Ok"], _translator["Common_Cancel"],
+                    initialValue: initial, maxLength: 20, numeric: true));
+                if (proposal is not { } assumed)
                 {
                     return;
                 }

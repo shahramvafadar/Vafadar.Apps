@@ -8013,3 +8013,34 @@ original account/Home0.00EUR and unchanged OS settings. No full-suite baseline i
 publication gates remain unchanged.
 
 [Original holding evidence](quality/holding-money-context.md).
+
+## D-436 - Original secondary monetary contexts
+
+Goal contributions/assumed prices, essential estimates, forecast prompts, occurrence overrides/payments,
+settlement bills and shared cost/repayment/allocation inputs retain their original numeric culture,
+currency and display unit. A later currency/unit change requires complete clearing and reentry;
+partial editing cannot silently renew interpretation. Blank optional assumptions remain different
+from malformed nonblank input. Estimates and earmarks do not become ledger movements.
+
+Original file, stored facts, raw input revision and native owner are rechecked through asynchronous
+consent and the actual atomic writer, including a change and return to the original display value.
+Known acceptance retires the submitted input before notification/readback; a follow-up failure never
+rearms the financial Save. Display-unit preferences publish globally only after the selective durable
+Settings write has committed for the original owner. Long unit actions use the existing wrapping
+button. Unit-refusal feedback is republished beside both original shared main amounts and shares.
+
+Selective actual-source evidence is101 distinct new cases and149 affected prior cases, with17 original
+source defects reproduced. All367 applicable Windows observations and127 independent Release/AOT
+Android observations complete without accepted-action replay. The extra36 superseded household
+feedback frames remain historical evidence. Android household review uses an actual new signed owner
+admission and protected native source: old recovery/ownership/device revocations remain effective.
+Its two contacts and one private KWD1001 cost are explicit independent setup, not cash ledger entries
+or UI saves; the18 presentation states preserve all50 table sets and record zero accepted commands.
+
+Strict Windows/Android Debug, independent Release/AOT and complete signed offline APK builds are
+warning/error free. No schema/entity model, permission, external provider, commercial activation or
+shipping SDK is added. No unrelated full-suite baseline or unit-test count is inferred from native
+observations. D-386 dedicated stability/accessibility order and physical-device/iOS/hardware-key/
+power-loss/provider/store/publication gates remain unchanged.
+
+[Secondary monetary evidence](quality/secondary-money-context.md).

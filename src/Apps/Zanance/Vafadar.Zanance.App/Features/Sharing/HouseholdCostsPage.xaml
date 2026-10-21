@@ -92,7 +92,11 @@
                             <Label Text="{v:Translate HouseholdCost_Currency}" />
                             <Picker ItemsSource="{Binding Currencies}" SelectedItem="{Binding CurrencyCode}" SemanticProperties.Description="{v:Translate HouseholdCost_Currency}" />
                             <Label Text="{v:Translate HouseholdCost_Amount}" />
+                            <Label Text="{Binding AmountUnitName}" Style="{StaticResource Secondary}" />
                             <Entry Text="{Binding AmountText}" Keyboard="Numeric" SemanticProperties.Description="{v:Translate HouseholdCost_Amount}" />
+                            <Label Text="{Binding AmountUnitNote}" Style="{StaticResource Secondary}" IsVisible="{Binding AmountUnitNote, Converter={StaticResource IsNotNullConverter}}" />
+                            <Label Text="{Binding AmountFormatNote}" Style="{StaticResource Secondary}" IsVisible="{Binding AmountFormatNote, Converter={StaticResource IsNotNullConverter}}" />
+                            <Label Text="{Binding AmountContextError}" Style="{StaticResource ErrorText}" IsVisible="{Binding AmountContextError, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{Binding AmountError}" Style="{StaticResource ErrorText}" />
                             <Label Text="{v:Translate HouseholdCost_Payer}" />
                             <Picker ItemsSource="{Binding Contacts}" SelectedItem="{Binding Payer}" ItemDisplayBinding="{Binding Caption, x:DataType=local:HouseholdContactChoice}"
@@ -124,7 +128,10 @@
                                         <DataTemplate x:DataType="local:HouseholdShareInput">
                                             <VerticalStackLayout Spacing="6">
                                                 <Label Text="{Binding Contact.Name}" />
+                                                <Label Text="{Binding UnitName}" Style="{StaticResource Secondary}" />
                                                 <Entry Text="{Binding Text}" Keyboard="Numeric" SemanticProperties.Description="{Binding Contact.Name}" />
+                                                <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
+                                                <Label Text="{Binding FormatNote}" Style="{StaticResource Secondary}" IsVisible="{Binding FormatNote, Converter={StaticResource IsNotNullConverter}}" />
                                                 <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" />
                                             </VerticalStackLayout>
                                         </DataTemplate>

@@ -12,14 +12,15 @@ namespace Vafadar.Zanance.App.Features.Settings;
 /// <param name="LockAvailable">Whether the existing device-authentication choice can be shown.</param>
 /// <param name="NotificationsEnabled">Whether notifications are currently allowed, without asking permission.</param>
 internal sealed record SettingsSnapshot(ZananceSettings Settings, IReadOnlyList<Account> DefaultAccounts,
-    long? EssentialSuggestion, bool LockAvailable, bool NotificationsEnabled)
+    long? EssentialSuggestion, bool LockAvailable, bool NotificationsEnabled, EssentialEstimateReview EstimateReview)
 {
     /// <summary>Completes all asynchronous reads before any editable field is published (D-79).</summary>
     internal static async Task<SettingsSnapshot> ReadAsync(ZananceStore store, ILocalizationService localization,
         TimeProvider time, Func<Task<bool>> lockAvailable, bool notificationsSupported, Func<Task<bool>> notificationsEnabled,
         CancellationToken cancellationToken = default)
     {
-        var settings = await store.GetSettingsAsync(cancellationToken);
+        var estimate = await store.ReadEssentialEstimateAsync(cancellationToken);
+        var settings = estimate.Settings;
         var accounts = await store.GetAccountsAsync(cancellationToken: cancellationToken);
         var currency = settings.EssentialEstimateCurrency ?? settings.DefaultCurrencyCode;
         var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
@@ -33,6 +34,6 @@ internal sealed record SettingsSnapshot(ZananceSettings Settings, IReadOnlyList<
         var enabled = notificationsSupported && await notificationsEnabled();
         cancellationToken.ThrowIfCancellationRequested();
         return new(settings, [.. accounts.Where(a => !a.IsArchived && EntryAccountContract.IsValidDefault(a))],
-            suggestion, available, enabled);
+            suggestion, available, enabled, estimate);
     }
 }

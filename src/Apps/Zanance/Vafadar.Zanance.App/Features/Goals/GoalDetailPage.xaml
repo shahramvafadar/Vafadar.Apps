@@ -69,6 +69,8 @@
                             <Entry IsEnabled="{Binding CanEditAssumedPrice}" Text="{Binding AssumedPriceText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{Binding AssumedPriceLabel}" />
                             <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Text="{v:Translate Common_Save}" Command="{Binding SaveAssumedPriceCommand}" IsEnabled="{Binding CanSaveAssumedPrice}" />
                         </Grid>
+                        <Label Text="{Binding PriceUnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding PriceUnitNote, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding PriceFormatNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding PriceFormatNote, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding PriceError}" Style="{StaticResource ErrorText}" IsVisible="{Binding PriceError, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding CapacityQuantityText}" FontAttributes="Bold" IsVisible="{Binding CapacityQuantityText, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{v:Translate Goal_AssumedPriceNote}" Style="{StaticResource Secondary}" FontSize="12" />
@@ -87,6 +89,7 @@
                             <Label Text="{v:Translate Entry_Amount}" Style="{StaticResource FieldLabel}" />
                             <Entry Text="{Binding AmountText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{v:Translate Entry_Amount}" />
                             <Label Text="{Binding UnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding UnitNote, Converter={StaticResource IsNotNullConverter}}" />
+                            <Label Text="{Binding AmountFormatNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding AmountFormatNote, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{Binding AmountError}" Style="{StaticResource ErrorText}" IsVisible="{Binding AmountError, Converter={StaticResource IsNotNullConverter}}" />
                             <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Save}" Command="{Binding AllocateCommand}" IsEnabled="{Binding CanAllocate}" Margin="0,8,0,0" />
                             <Label Text="{v:Translate Goal_SetAsideHint}" Style="{StaticResource Secondary}" FontSize="12" />

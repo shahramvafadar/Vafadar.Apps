@@ -8417,4 +8417,16 @@
   <data name="Amount_DraftChanged" xml:space="preserve">
     <value>مبلغ‌ها هنگام ذخیره تغییر کردند. چیزی ذخیره نشد. آن‌ها را بازبینی و دوباره ذخیره کنید.</value>
   </data>
+  <data name="Settings_EssentialSavedFollowUpFailed" xml:space="preserve">
+    <value>برآورد ذخیره شد، اما مرحلهٔ بعدی کامل نشد. پیش از تغییر دیگری، این صفحه را دوباره باز کنید.</value>
+  </data>
+  <data name="HouseholdCost_SavedFollowUpFailed" xml:space="preserve">
+    <value>تغییر ذخیره شد، اما به‌روزرسانی صفحه کامل نشد. پیش از تغییر دیگری، صفحه را تازه‌سازی کنید.</value>
+  </data>
+  <data name="Unit_SaveFailed" xml:space="preserve">
+    <value>تغییر واحد ذخیره نشد. برای بازبینی واحدهای فعلی، این صفحه را دوباره باز کنید.</value>
+  </data>
+  <data name="Unit_SavedFollowUpFailed" xml:space="preserve">
+    <value>تغییر واحد ذخیره شد، اما نمایش کامل تازه نشد. تغییر را تکرار نکنید؛ این صفحه را دوباره باز کنید.</value>
+  </data>
 </root>

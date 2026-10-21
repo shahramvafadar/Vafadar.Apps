@@ -19,6 +19,19 @@
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
+  <!-- D-436: only the explicit retained fictional package may inspect its original protected household UI. -->
+  <PropertyGroup Condition="'$(ReviewHouseholdMoney)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.householdlifecycle</ApplicationId>
+    <DefineConstants>$(DefineConstants);HOUSEHOLD_MONEY_REVIEW</DefineConstants>
+  </PropertyGroup>
+  <!-- Only this new independent fixture opts into local TLS enrollment; shipping and old fixtures remain offline. -->
+  <PropertyGroup Condition="'$(ReviewFreshHouseholdMoney)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.householdmoneyreview</ApplicationId>
+    <DefineConstants>$(DefineConstants);HOUSEHOLD_MONEY_REVIEW;HOUSEHOLD_MONEY_FRESH</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(ReviewFreshHouseholdMoney)' == 'true'">
+    <AndroidManifestOverlay Include="$(OriginalAppRoot)Platforms/Android/PersonalSyncManifest.xml" />
+  </ItemGroup>
   <!-- D-320: measure the original release compilation inputs as well as its source/native library. -->
   <ItemGroup Condition="'$(Configuration)' == 'Release'">
     <AndroidAotProfile Include="$(OriginalAppRoot)Platforms/Android/Profiles/startup.aprof" />

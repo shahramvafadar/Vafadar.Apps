@@ -8394,4 +8394,16 @@ SHA-256 du XML original : {5}</value>
   <data name="Amount_DraftChanged" xml:space="preserve">
     <value>Les montants ont changé pendant l’enregistrement. Rien n’a été enregistré. Vérifiez-les et enregistrez à nouveau.</value>
   </data>
+  <data name="Settings_EssentialSavedFollowUpFailed" xml:space="preserve">
+    <value>L’estimation a été enregistrée, mais l’étape suivante a échoué. Rouvrez cette page avant toute autre modification.</value>
+  </data>
+  <data name="HouseholdCost_SavedFollowUpFailed" xml:space="preserve">
+    <value>La modification a été enregistrée, mais l’actualisation de cette page n’a pas abouti. Actualisez-la avant toute autre modification.</value>
+  </data>
+  <data name="Unit_SaveFailed" xml:space="preserve">
+    <value>La modification de l’unité n’a pas été enregistrée. Rouvrez cette page pour vérifier les unités actuelles.</value>
+  </data>
+  <data name="Unit_SavedFollowUpFailed" xml:space="preserve">
+    <value>La modification de l’unité a été enregistrée, mais l’affichage n’a pas pu être entièrement actualisé. Ne répétez pas la modification ; rouvrez cette page.</value>
+  </data>
 </root>

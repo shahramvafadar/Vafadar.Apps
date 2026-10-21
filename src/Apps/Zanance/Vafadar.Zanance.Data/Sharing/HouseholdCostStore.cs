@@ -104,7 +104,8 @@ public sealed class HouseholdCostStore(IDbContextFactory<ZananceDbContext> facto
     }
 
     /// <summary>Publishes the complete cost and exact allocations together; a stale review or invalid sum rolls everything back.</summary>
-    public Task SaveCostAsync(HouseholdCostReview review, HouseholdCost cost, IReadOnlyList<HouseholdCostAllocation> allocations, CancellationToken ct = default)
+    public Task SaveCostAsync(HouseholdCostReview review, HouseholdCost cost, IReadOnlyList<HouseholdCostAllocation> allocations,
+        CancellationToken ct = default, Func<bool>? isCurrent = null)
     {
         ArgumentNullException.ThrowIfNull(cost); ArgumentNullException.ThrowIfNull(allocations);
         var draft = new HouseholdCost(cost.Id) { Kind = cost.Kind, Date = cost.Date, Amount = cost.Amount, CurrencyCode = cost.CurrencyCode,
@@ -130,11 +131,11 @@ public sealed class HouseholdCostStore(IDbContextFactory<ZananceDbContext> facto
                 var old = oldShares.SingleOrDefault(item => item.ContactId == row.ContactId);
                 if (old is null) db.HouseholdAllocations.Add(row); else old.Amount = row.Amount;
             }
-        }, ct);
+        }, ct, isCurrent);
     }
 
     /// <summary>Records only a confirmed person-to-person repayment, optionally linked to one existing matching transfer side.</summary>
-    public Task SaveSettlementAsync(HouseholdCostReview review, HouseholdSettlement settlement, CancellationToken ct = default)
+    public Task SaveSettlementAsync(HouseholdCostReview review, HouseholdSettlement settlement, CancellationToken ct = default, Func<bool>? isCurrent = null)
     {
         ArgumentNullException.ThrowIfNull(settlement);
         var draft = new HouseholdSettlement(settlement.Id) { FromContactId = settlement.FromContactId, ToContactId = settlement.ToContactId,
@@ -150,7 +151,7 @@ public sealed class HouseholdCostStore(IDbContextFactory<ZananceDbContext> facto
                 original.Amount = draft.Amount; original.CurrencyCode = draft.CurrencyCode; original.EntryId = draft.EntryId;
                 original.UsesDestinationAmount = draft.UsesDestinationAmount; original.Note = draft.Note;
             }
-        }, ct);
+        }, ct, isCurrent);
     }
 
     /// <summary>Removes only the explicitly reviewed cost/shares; retained refunds prevent removing their original.</summary>
@@ -165,17 +166,20 @@ public sealed class HouseholdCostStore(IDbContextFactory<ZananceDbContext> facto
         var row = await db.HouseholdSettlements.SingleAsync(row => row.Id == id, ct); db.HouseholdSettlements.Remove(row);
     }, ct);
 
-    private async Task WriteAsync(HouseholdCostReview review, Func<ZananceDbContext, Task> edit, CancellationToken ct)
+    private async Task WriteAsync(HouseholdCostReview review, Func<ZananceDbContext, Task> edit, CancellationToken ct, Func<bool>? isCurrent = null)
     {
         ArgumentNullException.ThrowIfNull(review);
         await using var db = await factory.CreateDbContextAsync(ct);
         await Task.Run(async () =>
         {
+            void Current()
+            { if (isCurrent?.Invoke() == false) throw new InvalidOperationException("The original household financial draft retired."); }
             if (DatabaseFileIdentity.ConfiguredPath(db) != review.Path) throw new InvalidOperationException("The household profile changed after review.");
+            Current();
             await using var writer = await CommercialWriteTransaction.OpenAsync(db, commercial, ct, requireTransaction: true);
             writer.DemandHousehold(); var current = HouseholdCostState.Read(db);
             if (current.Fingerprint() != review.Token) throw new InvalidOperationException("The household costs changed after review.");
-            await edit(db); await db.SaveChangesAsync(ct);
+            Current(); await edit(db); await db.SaveChangesAsync(ct); Current();
             // Original context commit interceptor rechecks graph/link and exact member/clock authority after every compound write.
             await writer.CommitAsync(ct);
         }, ct);

@@ -12,16 +12,19 @@ internal sealed class EstimateDraftState
     private string? _profileId;
     private Guid _settingsId;
     private EstimateInput? _published;
+    /// <summary>Gets whether the last publication retained the original raw draft and its separate parser.</summary>
+    internal bool Retained { get; private set; }
 
     /// <summary>Refreshes clean inputs, retaining exact dirty inputs only in the same profile/settings context.</summary>
-    internal EstimateInput Publish(string profileId, Guid settingsId, EstimateInput incoming, EstimateInput current)
+    internal EstimateInput Publish(string profileId, Guid settingsId, EstimateInput incoming, EstimateInput current, bool retainMeaning = false)
     {
         // D-84: returning to Settings reloads device/account availability, but must not overwrite an unsaved estimate.
         // Include profile identity: restored databases can share the same settings-row identifier.
-        var retain = _profileId == profileId && _settingsId == settingsId && _published is not null && current != _published;
+        var retain = _profileId == profileId && _settingsId == settingsId && _published is not null && (current != _published || retainMeaning);
         _profileId = profileId;
         _settingsId = settingsId;
         _published = incoming;
+        Retained = retain;
         return retain ? current : incoming;
     }
 

@@ -26,7 +26,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
     private readonly Presentation.ThemeService _theme;
     private readonly ProfileService _profiles;
     private readonly Interaction.IAppInteraction _interaction;
-    private readonly EstimateDraftState _estimateDraft = new();
+    private readonly EssentialEstimateEditor _essentialEditor;
     private bool _refreshing;
     private SettingsSnapshot? _snapshot;
 
@@ -57,6 +57,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
         _dates = dates;
         _time = time;
         _store = store;
+        _essentialEditor = new(store, translator, localization);
         Regional = new(localization, translator, time);
 
         Languages = [.. localization.SupportedLanguages];
@@ -89,6 +90,26 @@ public sealed partial class SettingsViewModel : ViewModelBase
     /// <summary>Gets or sets the day-to-day essential spending estimate used by the headroom (04 §3); empty = not set.</summary>
     [ObservableProperty]
     public partial string EssentialText { get; set; } = string.Empty;
+
+    /// <summary>Explains the estimate's retained original display-unit factor.</summary>
+    public string? EssentialUnitNote => _essentialEditor.UnitNote;
+    /// <summary>Explains the estimate's retained original parse format.</summary>
+    public string? EssentialFormatNote => _essentialEditor.FormatNote;
+    /// <summary>Shows original-unit and numeric problems beside the estimate field.</summary>
+    public string? EssentialError => _essentialEditor.Error;
+    partial void OnEssentialTextChanged(string value)
+    {
+        if (!_refreshing) { _essentialEditor.ChangeText(value); EssentialSavedText = null; RefreshEssentialCaptions(); }
+    }
+    partial void OnEssentialPeriodIndexChanged(int value)
+    {
+        if (!_refreshing) { _essentialEditor.ChangePeriod(value); EssentialSavedText = null; }
+    }
+    private void RefreshEssentialCaptions()
+    {
+        EssentialCurrencyText = _translator.Format("Settings_EssentialCurrency", _essentialEditor.UnitName);
+        OnPropertyChanged(nameof(EssentialUnitNote)); OnPropertyChanged(nameof(EssentialFormatNote)); OnPropertyChanged(nameof(EssentialError));
+    }
 
     [ObservableProperty]
     public partial int EssentialPeriodIndex { get; set; }
@@ -264,17 +285,13 @@ public sealed partial class SettingsViewModel : ViewModelBase
             IsAdvanced = settings.Shows(Feature.MoneySettings);
             FreshnessIndex = Math.Max(0, Array.IndexOf(FreshnessDays, settings.RateFreshnessDays));
             var incomingCurrency = settings.EssentialEstimateCurrency ?? settings.DefaultCurrencyCode;
-            var incoming = new EstimateInput(settings.EssentialEstimate is { } estimate
-                ? MoneyText.ForInput(estimate, incomingCurrency, _localization.CurrentCulture) : string.Empty,
-                (int)settings.EssentialEstimatePeriod, incomingCurrency);
-            var presented = _estimateDraft.Publish(_profiles.Current.Id, settings.Id, incoming,
-                new(EssentialText, EssentialPeriodIndex, _essentialCurrency));
-            _essentialCurrency = presented.CurrencyCode;
-            EssentialText = presented.Text;
-            EssentialPeriodIndex = presented.PeriodIndex;
-            if (presented == incoming) { EssentialSavedText = null; }
+            _essentialEditor.Publish(_profiles.Current.Id, snapshot.EstimateReview);
+            _essentialCurrency = _essentialEditor.CurrencyCode;
+            EssentialText = _essentialEditor.Text;
+            EssentialPeriodIndex = _essentialEditor.PeriodIndex;
+            EssentialSavedText = null;
             // A suggestion calculated in a newly selected default currency cannot be relabeled as the retained draft's unit.
-            _essentialSuggestion = presented.CurrencyCode == incomingCurrency ? snapshot.EssentialSuggestion : null;
+            _essentialSuggestion = _essentialCurrency == incomingCurrency ? snapshot.EssentialSuggestion : null;
             DefaultAccounts = [new DefaultAccountOption(null, _translator["Settings_DefaultAccountNone"]),
                 .. snapshot.DefaultAccounts.Select(a => new DefaultAccountOption(a.Id, $"{a.Name} ({a.CurrencyCode})"))];
             DefaultAccount = DefaultAccounts.FirstOrDefault(o => o.Id == settings.DefaultAccountId) ?? DefaultAccounts[0];
@@ -346,38 +363,24 @@ public sealed partial class SettingsViewModel : ViewModelBase
     {
         if (_essentialSuggestion is { } suggested)
         {
-            EssentialText = MoneyText.ForInput(suggested, _essentialCurrency, _localization.CurrentCulture);
-            EssentialPeriodIndex = (int)Core.Settings.EstimatePeriod.Day;
+            _essentialEditor.UseSuggestion(suggested);
+            EssentialText = _essentialEditor.Text;
+            EssentialPeriodIndex = _essentialEditor.PeriodIndex;
+            RefreshEssentialCaptions();
         }
     }
 
     [RelayCommand]
     private async Task SaveEssentialAsync()
     {
+        if (!Loading.IsReady || _refreshing) return;
         var profileId = _profiles.Current.Id;
-        var settings = await _store.GetSettingsAsync();
-        var submitted = new EstimateInput(EssentialText, EssentialPeriodIndex, _essentialCurrency);
-        if (string.IsNullOrWhiteSpace(submitted.Text))
-        {
-            settings.EssentialEstimate = null;
-        }
-        else if (MoneyText.TryParse(submitted.Text, submitted.CurrencyCode, _localization.CurrentCulture, out var amount) && amount > 0)
-        {
-            settings.EssentialEstimate = amount;
-        }
-        else
-        {
-            EssentialSavedText = _translator["Amount_Invalid"];
-            return;
-        }
-
-        settings.EssentialEstimatePeriod = (Core.Settings.EstimatePeriod)Math.Clamp(submitted.PeriodIndex, 0, 2);
-        settings.EssentialEstimateCurrency = submitted.CurrencyCode;
-        await _store.SaveSettingsAsync(settings);
-        _estimateDraft.AcceptSave(profileId, settings.Id, submitted);
-        EssentialSavedText = _profiles.Current.Id == profileId
-            && new EstimateInput(EssentialText, EssentialPeriodIndex, _essentialCurrency) == submitted
-            ? _translator[settings.EssentialEstimate is null ? "Settings_EssentialCleared" : "Settings_EssentialSaved"] : null;
+        if (!_essentialEditor.IsForProfile(profileId)) return;
+        var original = _snapshot;
+        await _essentialEditor.SaveAsync(() => _profiles.Current.Id == profileId && _essentialEditor.IsForProfile(profileId)
+            && ReferenceEquals(_snapshot, original) && !_refreshing);
+        EssentialSavedText = _essentialEditor.Result;
+        RefreshEssentialCaptions();
     }
 
     partial void OnFreshnessIndexChanged(int value)
@@ -528,7 +531,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
                 DefaultAccounts = [new DefaultAccountOption(null, _translator["Settings_DefaultAccountNone"]), .. DefaultAccounts.Skip(1)];
                 DefaultAccount = DefaultAccounts.FirstOrDefault(a => a.Id == selected) ?? DefaultAccounts[0];
             }
-            EssentialCurrencyText = _translator.Format("Settings_EssentialCurrency", _essentialCurrency);
+            RefreshEssentialCaptions();
             EssentialSuggestionText = _essentialSuggestion is { } suggested and > 0
                 ? _translator.Format("Settings_EssentialSuggestion", MoneyText.Format(suggested, _essentialCurrency, _localization.CurrentCulture)) : null;
             Calendars =

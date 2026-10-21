@@ -54,9 +54,40 @@ public sealed partial class GoalDetailViewModel(
     private readonly SemaphoreSlim _loadGate = new(1, 1);
     private bool _publishingDrafts;
     private bool _amountNeedsReview, _priceNeedsReview;
-    private CultureInfo _amountCulture = localization.CurrentCulture, _priceCulture = localization.CurrentCulture;
-    private string? _amountCurrency, _priceCurrency;
+    private readonly MoneyDraftInput _amountInput = new(), _priceInput = new();
+    private long _moneyDraftVersion;
     private string _priceBaseline = string.Empty;
+
+    /// <summary>Explains the original contribution parser after a display-only format change.</summary>
+    public string? AmountFormatNote => OriginalFormatNote(_amountInput);
+    /// <summary>Explains the original assumed-price parser after a display-only format change.</summary>
+    public string? PriceFormatNote => OriginalFormatNote(_priceInput);
+    /// <summary>Explains the original assumed price's display-unit factor independently of physical units.</summary>
+    public string? PriceUnitNote => _goal is { } goal && presenter.TypeOf(goal) is { } type
+        ? DisplayUnitNote.ForInput(translator, _priceInput, type.PriceCurrencyCode) : null;
+
+    private string? OriginalFormatNote(MoneyDraftInput input) => input.OriginalExample(localization.CurrentCulture) is { } example
+        ? translator.Format("Plan_OriginalInputFormat", example) : null;
+
+    // Captions follow the draft, never the other way round; no amount is converted by a display refresh.
+    private void RefreshMoneyInputs()
+    {
+        if (_goal is not { } goal) return;
+        var amountWasStale = _amountNeedsReview; var priceWasStale = _priceNeedsReview;
+        _amountNeedsReview = _amountInput.NeedsReview(goal.CurrencyCode);
+        UnitNote = DisplayUnitNote.ForInput(translator, _amountInput, goal.CurrencyCode);
+        if (_amountNeedsReview) AmountError = translator.Format("Plan_InputUnitChanged", MoneyText.UnitName(goal.CurrencyCode));
+        else if (amountWasStale) AmountError = null;
+        if (presenter.TypeOf(goal) is { } type)
+        {
+            _priceNeedsReview = _priceInput.NeedsReview(type.PriceCurrencyCode);
+            AssumedPriceLabel = translator.Format("Goal_AssumedPrice", _priceInput.UnitName(type.PriceCurrencyCode),
+                translator[type.Dimension == Core.Holdings.AssetDimension.Mass ? "Holding_PerGram" : "Holding_Piece"]);
+            if (_priceNeedsReview) PriceError = translator.Format("Plan_InputUnitChanged", MoneyText.UnitName(type.PriceCurrencyCode));
+            else if (priceWasStale) PriceError = null;
+        }
+        OnPropertyChanged(nameof(AmountFormatNote)); OnPropertyChanged(nameof(PriceFormatNote)); OnPropertyChanged(nameof(PriceUnitNote));
+    }
 
     /// <summary>Gets feedback for a retained price draft whose stored currency changed.</summary>
     [ObservableProperty]
@@ -65,15 +96,15 @@ public sealed partial class GoalDetailViewModel(
     partial void OnAmountTextChanged(string value)
     {
         if (_publishingDrafts) return;
-        _amountCulture = localization.CurrentCulture; _amountCurrency = _goal?.CurrencyCode;
-        _amountNeedsReview = false; AmountError = null; RefreshActions();
+        _amountInput.ChangeText(value, _goal?.CurrencyCode ?? "EUR", localization.CurrentCulture);
+        _moneyDraftVersion++; AmountError = null; RefreshMoneyInputs(); RefreshActions();
     }
 
     partial void OnAssumedPriceTextChanged(string value)
     {
         if (_publishingDrafts) return;
-        _priceCulture = localization.CurrentCulture; _priceCurrency = _goal is { } goal ? presenter.TypeOf(goal)?.PriceCurrencyCode : null;
-        _priceNeedsReview = false; PriceError = null; RefreshActions();
+        _priceInput.ChangeText(value, _goal is { } goal ? presenter.TypeOf(goal)?.PriceCurrencyCode ?? "EUR" : "EUR", localization.CurrentCulture);
+        _moneyDraftVersion++; PriceError = null; RefreshMoneyInputs(); RefreshActions();
     }
 
     /// <summary>Gets post-commit reload feedback, distinct from a rejected write.</summary>
@@ -87,7 +118,7 @@ public sealed partial class GoalDetailViewModel(
     /// <summary>Gets positive earmark eligibility independently of the visible retained release panel.</summary>
     public bool CanContribute => _goal is { State: GoalState.Active, Type: GoalType.Earmark } goal && _work.CanContribute(goal.Id);
     /// <summary>Gets whether the current explicit direction/account can be saved; the writer rechecks current rights.</summary>
-    public bool CanAllocate => CanInteract && !_amountNeedsReview && SelectedAccount is { } account
+    public bool CanAllocate => CanInteract && !_amountNeedsReview && !_amountInput.NeedsReview(_goal!.CurrencyCode) && SelectedAccount is { } account
         && (DirectionIndex == 1 || DirectionIndex == 0 && CanContribute && account.CanFund);
     /// <summary>Gets pause/resume availability without resuming an unselected pause.</summary>
     public bool CanTogglePause => CanInteract && (_goal!.State == GoalState.Active
@@ -105,11 +136,13 @@ public sealed partial class GoalDetailViewModel(
     public partial bool CanEditAssumedPrice { get; set; }
 
     /// <summary>Gets whether an explicit assumed-price save is available in the loaded original form.</summary>
-    public bool CanSaveAssumedPrice => CanInteract && CanEditAssumedPrice && !_priceNeedsReview;
+    public bool CanSaveAssumedPrice => CanInteract && CanEditAssumedPrice && !_priceNeedsReview
+        && !_priceInput.NeedsReview(presenter.TypeOf(_goal!)?.PriceCurrencyCode ?? "EUR");
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
+        if (e.PropertyName is nameof(DirectionIndex) or nameof(SelectedAccount)) _moneyDraftVersion++;
         if (e.PropertyName is nameof(IsBusy) or nameof(DirectionIndex) or nameof(SelectedAccount) or nameof(CanEditAssumedPrice)) RefreshActions();
     }
 
@@ -246,8 +279,9 @@ public sealed partial class GoalDetailViewModel(
         await _loadGate.WaitAsync();
         _refreshing = true; RefreshActions();
         var previousScope = _review?.ReminderScope; var previousGoal = _goal?.Id;
-        var priceDirty = AssumedPriceText != _priceBaseline || _priceNeedsReview;
-        var priceDraft = (AssumedPriceText, _priceCulture, _priceCurrency);
+        var priceDirty = AssumedPriceText != _priceBaseline || _priceNeedsReview
+            || _goal is { } original && presenter.TypeOf(original) is { } originalType && _priceInput.NeedsReview(originalType.PriceCurrencyCode);
+        var priceDraft = _priceInput.Capture();
         try
         {
             _publishingDrafts = true;
@@ -273,22 +307,17 @@ public sealed partial class GoalDetailViewModel(
             }
             if (sameContext && priceDirty)
             {
-                (AssumedPriceText, _priceCulture, _priceCurrency) = priceDraft;
-                var current = _goal is { } goal ? presenter.TypeOf(goal)?.PriceCurrencyCode : null;
-                _priceNeedsReview = current != _priceCurrency && AssumedPriceText.Length > 0;
-                PriceError = _priceNeedsReview ? translator.Format("Goal_DraftCurrencyChanged", _priceCurrency, current) : null;
+                _priceInput.Restore(priceDraft); AssumedPriceText = priceDraft.Text;
             }
             else
             {
-                _priceCulture = localization.CurrentCulture;
-                _priceCurrency = _goal is { } goal ? presenter.TypeOf(goal)?.PriceCurrencyCode : null;
+                _priceInput.Initialize(AssumedPriceText, _goal is { } goal ? presenter.TypeOf(goal)?.PriceCurrencyCode ?? "EUR" : "EUR", localization.CurrentCulture);
             }
             if (_goal is { } loaded)
             {
-                _amountNeedsReview = _amountCurrency is not null && _amountCurrency != loaded.CurrencyCode && AmountText.Length > 0;
-                if (_amountNeedsReview) AmountError = translator.Format("Goal_DraftCurrencyChanged", _amountCurrency, loaded.CurrencyCode);
-                if (AmountText.Length == 0) { _amountCurrency = loaded.CurrencyCode; _amountCulture = localization.CurrentCulture; }
+                if (AmountText.Length == 0) _amountInput.Initialize(AmountText, loaded.CurrencyCode, localization.CurrentCulture);
             }
+            RefreshMoneyInputs();
         }
         catch
         {
@@ -452,7 +481,16 @@ public sealed partial class GoalDetailViewModel(
     private async Task SaveAssumedPriceAsync()
     {
         if (!CanSaveAssumedPrice || _goal is not { } goal || presenter.TypeOf(goal) is not { } type || _review is not { } review) return;
-        var text = AssumedPriceText; var culture = _priceCulture;
+        RefreshMoneyInputs();
+        if (_priceInput.NeedsReview(type.PriceCurrencyCode)) return;
+        var text = AssumedPriceText; var version = _moneyDraftVersion;
+        long? priceMilli = null;
+        if (!string.IsNullOrWhiteSpace(text))
+        {
+            if (!_priceInput.TryParse(out var price) || price <= 0 || price > long.MaxValue / 1_000)
+            { PriceError = translator["Amount_Invalid"]; return; }
+            priceMilli = price * 1_000;
+        }
         await RunWriteAsync(async () =>
         {
             var original = review.ContributionPlans.FirstOrDefault(p => p.GoalId == goal.Id);
@@ -465,12 +503,12 @@ public sealed partial class GoalDetailViewModel(
                     AssumedPricePerUnitMilli = original.AssumedPricePerUnitMilli,
                 };
             // Keep thousandths and the existing upper bound; no currency conversion or holding-price write.
-            plan.AssumedPricePerUnitMilli = MoneyText.TryParse(text, type.PriceCurrencyCode, culture, out var price)
-                && price > 0 && price <= long.MaxValue / 1_000 ? price * 1_000 : null;
-            await goals.SaveContributionPlanAsync(goal.Id, plan, review: review);
+            plan.AssumedPricePerUnitMilli = priceMilli;
+            await goals.SaveContributionPlanAsync(goal.Id, plan, review: review,
+                isCurrent: () => version == _moneyDraftVersion && ReferenceEquals(_review, review) && !_priceInput.NeedsReview(type.PriceCurrencyCode));
             _priceBaseline = text;
             return true;
-        });
+        }, accepted: () => _priceBaseline = text);
     }
 
     // For an emergency fund the question is how long the money would last; shown in Advanced (ZEX-S0612).
@@ -493,10 +531,12 @@ public sealed partial class GoalDetailViewModel(
     private async Task AllocateAsync()
     {
         if (!CanInteract || _goal is not { } goal || SelectedAccount is not { } account || _review is not { } review) return;
+        RefreshMoneyInputs();
+        if (_amountInput.NeedsReview(goal.CurrencyCode)) return;
         if (!CanAllocate) { AmountError = translator["ActiveItems_ReadOnly"]; return; }
-        if (!MoneyText.TryParse(AmountText, Currencies.Get(goal.CurrencyCode), _amountCulture, out var amount) || amount <= 0)
+        if (!_amountInput.TryParse(out var amount) || amount <= 0)
         { AmountError = translator["Amount_Invalid"]; return; }
-        var direction = DirectionIndex;
+        var direction = DirectionIndex; var version = _moneyDraftVersion;
         await RunWriteAsync(async () =>
         {
             // The reviewed writer rejects any intervening allocation change, including another release.
@@ -510,9 +550,14 @@ public sealed partial class GoalDetailViewModel(
             await goals.AddAllocationAsync(new GoalAllocation
             {
                 GoalId = goal.Id, AccountId = account.Id, Amount = direction == 1 ? -amount : amount, Date = Today,
-            }, review: review);
+            }, review: review, isCurrent: () => version == _moneyDraftVersion && ReferenceEquals(_review, review)
+                && !_amountInput.NeedsReview(goal.CurrencyCode));
             AmountText = string.Empty;
             return true;
+        }, accepted: () =>
+        {
+            // An observer can fail after acceptance but before the normal clear above; readback must not rearm it.
+            if (version == _moneyDraftVersion) AmountText = string.Empty;
         });
     }
 
@@ -597,7 +642,7 @@ public sealed partial class GoalDetailViewModel(
     }
 
     // One busy guard spans confirmation, the reviewed writer, feedback and post-commit publication/navigation.
-    private async Task RunWriteAsync(Func<Task<bool>> operation, Func<Task>? completed = null)
+    private async Task RunWriteAsync(Func<Task<bool>> operation, Func<Task>? completed = null, Action? accepted = null)
     {
         if (!CanInteract) return;
         IsBusy = true; SaveError = null; var committed = false;
@@ -605,6 +650,13 @@ public sealed partial class GoalDetailViewModel(
         {
             committed = await operation();
             if (committed) { if (completed is null) await LoadAsync(); else await completed(); }
+        }
+        catch (Vafadar.Zanance.Data.Commerce.CommittedWriteNotificationException<Guid>)
+        {
+            // These original money writers publish their accepted identity before observers can fail.
+            // Keep the form covered until readback; a notification error must not resubmit an earmark.
+            accepted?.Invoke();
+            _needsReload = true; SaveError = translator["Occurrence_SavedRefreshFailed"];
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {

@@ -81,6 +81,9 @@
                         <Label Text="{Binding EssentialCurrencyText}" Style="{StaticResource Secondary}" FontSize="12" />
                         <!-- The amount gets the whole width and the period chips their own line: side by side, the field shrank to a few letters on a phone -->
                         <Entry Text="{Binding EssentialText}" Keyboard="Numeric" Placeholder="{v:Translate Settings_EssentialPlaceholder}" SemanticProperties.Description="{v:Translate Settings_Essential}" />
+                        <Label Text="{Binding EssentialUnitNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding EssentialUnitNote, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding EssentialFormatNote}" Style="{StaticResource Secondary}" FontSize="12" IsVisible="{Binding EssentialFormatNote, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding EssentialError}" Style="{StaticResource ErrorText}" IsVisible="{Binding EssentialError, Converter={StaticResource IsNotNullConverter}}" />
                         <v:ChoiceChips IsCompact="True" ItemsSource="{Binding EssentialPeriodNames}" SelectedIndex="{Binding EssentialPeriodIndex}" Margin="0,6,0,0" />
                         <VerticalStackLayout Spacing="6" IsVisible="{Binding EssentialSuggestionText, Converter={StaticResource IsNotNullConverter}}">
                             <Label Text="{Binding EssentialSuggestionText}" Style="{StaticResource Secondary}" VerticalOptions="Center" />

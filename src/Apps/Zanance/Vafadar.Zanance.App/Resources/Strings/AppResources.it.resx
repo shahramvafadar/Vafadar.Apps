@@ -8406,4 +8406,16 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Amount_DraftChanged" xml:space="preserve">
     <value>Gli importi sono cambiati durante il salvataggio. Non è stato salvato nulla. Controllali e salva di nuovo.</value>
   </data>
+  <data name="Settings_EssentialSavedFollowUpFailed" xml:space="preserve">
+    <value>La stima è stata salvata, ma il passaggio successivo non è riuscito. Riapri questa pagina prima di apportare altre modifiche.</value>
+  </data>
+  <data name="HouseholdCost_SavedFollowUpFailed" xml:space="preserve">
+    <value>La modifica è stata salvata, ma l’aggiornamento della pagina non è stato completato. Aggiornala prima di apportare altre modifiche.</value>
+  </data>
+  <data name="Unit_SaveFailed" xml:space="preserve">
+    <value>La modifica dell’unità non è stata salvata. Riapri questa pagina per controllare le unità attuali.</value>
+  </data>
+  <data name="Unit_SavedFollowUpFailed" xml:space="preserve">
+    <value>La modifica dell’unità è stata salvata, ma non è stato possibile aggiornare tutta la schermata. Non ripetere la modifica; riapri questa pagina.</value>
+  </data>
 </root>

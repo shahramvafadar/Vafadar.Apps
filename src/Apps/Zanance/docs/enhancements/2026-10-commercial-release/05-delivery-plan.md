@@ -3449,3 +3449,27 @@ Complete the whole affected batch, including actual native paths and original so
 do not replay the completed D-435 matrix or unrelated successful backend/security checks. Physical
 holding-type and plain decimal-rate inputs remain separate following numeric boundaries. D-386's
 deferred stability/accessibility order and external provider/account/device/release gates stand.
+
+## D-436 - Complete secondary monetary source/native batch
+
+Goal contribution/assumed price, essential estimate, actual forecast prompt, occurrence payment/
+override, settlement bill, shared cost/repayment/shares and durable display-unit publication retain
+original raw meaning and actual writer ownership. Known acceptance cannot be replayed through a
+failed observer/readback.101 new distinct actual-source cases and149 affected prior cases pass;
+17 source defects are reproduced.367 applicable Windows and127 independent Release/AOT Android
+observations complete with accepted actions preserved, no unrelated suite/financial replay.
+The final18 household observations use real new native signed membership; all old revoked devices
+remain refused, their exact original APK is restored, and all50 protected source table sets remain
+unchanged. Independent fictional setup has no cash ledger entries. See quality/secondary-money-context.md.
+
+Final strict platform/independent builds and complete signed Offline APK are warning/error free.
+Main upgrades without reset; final native readback is recorded in the linked evidence. Commit/push
+and the one CI check follow the complete final review. No full-suite baseline or device/release
+acceptance is invented from these observations.
+
+Next separate ready development: physical holding-type quantity and plain decimal-rate input
+contexts, including pending native interaction and original stored writer boundaries. Do not replay
+D-436 monetary matrices or completed backend/security checks. Dedicated Android ANR/crash and
+accessibility completion remain after ready feature development under D-386; Windows commercial
+product delivery remains outside this work list. Owner/company/provider/Mac/Store/publication gates
+remain explicit external acceptance, not grounds to idle or reopen settled product choices.

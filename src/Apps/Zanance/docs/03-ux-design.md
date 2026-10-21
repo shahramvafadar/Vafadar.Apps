@@ -2227,3 +2227,17 @@ applicable factor and numeric-format example. Changed units/currencies expose fi
 partial edits cannot adopt them. Keep context refusal separate from refund and malformed-input
 errors. An optional price-currency amount is unknown only when blank. Quantity format examples are
 numeric rather than currency-labelled. Preserve native scaling, growing rows and existing actions.
+
+## Original secondary monetary editors (D-436)
+
+Each goal/estimate/occurrence/settlement/shared amount has its own immutable original parser and
+nearby format/unit explanation. Display-only updates preserve dirty raw text. A changed currency or
+unit requires complete clearing and reentry; partial editing never reinterprets it. Invalid nonblank
+optional prices are refused rather than treated as a request to remove an assumption. Shared main
+amount and share errors publish beside their respective fields even without a language event.
+
+A native forecast prompt captures its visible caption and parser together before awaiting input;
+its scenario remains an estimate. Known financial acceptance clears/retires only that submitted draft
+before notification/readback. Follow-up failure is truthful and cannot offer another financial Save.
+Display-unit publication waits for durable original Settings acceptance. Long unit choices use the
+existing wrapping real button with native text scaling and target size preserved.

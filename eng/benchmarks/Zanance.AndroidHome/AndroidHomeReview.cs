@@ -21,7 +21,13 @@ namespace Vafadar.Zanance.App;
 internal static partial class AndroidHomeReview
 {
     /// <summary>The independent install allowed to own these fictitious workloads.</summary>
+#if HOUSEHOLD_MONEY_FRESH
+    internal const string Package = "pro.vafadar.zanance.householdmoneyreview";
+#elif HOUSEHOLD_MONEY_REVIEW
+    internal const string Package = "pro.vafadar.zanance.householdlifecycle";
+#else
     internal const string Package = "pro.vafadar.zanance.androidhomereview";
+#endif
     /// <summary>Public derived-result channel scoped by the host to the exact review process.</summary>
     internal const string LogTag = "ZananceHomeReview";
     private static object? _balanceEvidence;
@@ -30,6 +36,10 @@ internal static partial class AndroidHomeReview
     internal static async Task RunAsync(App app, IServiceProvider services, string phase, string run, string? comparison, string? baseline)
     {
         if (AppInfo.Current.PackageName != Package) throw new ReviewCheckException("Independent compiled identity required.");
+#if HOUSEHOLD_MONEY_REVIEW
+        if (phase != "plan-form" || Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_secondary_household", false) != true)
+            throw new ReviewCheckException("Only original household monetary presentation belongs to this retained-package caller.");
+#endif
         // Android's /data/user/0 is an OS alias. Resolve it before applying the unchanged no-redirect fixture guard.
         var parent = Path.Combine(new Java.IO.File(FileSystem.AppDataDirectory).CanonicalPath, "android-home");
         Directory.CreateDirectory(parent);
@@ -493,6 +503,9 @@ internal static partial class AndroidHomeReview
                 WindowPageType = app.Windows.FirstOrDefault()?.Page?.GetType().Name,
                 ShellPageType = (app.Windows.FirstOrDefault()?.Page as AppShell)?.CurrentPage?.GetType().Name,
                 BalanceEvidence = _balanceEvidence,
+#if HOUSEHOLD_MONEY_REVIEW
+                SecondaryHouseholdEvidence,
+#endif
                 SplitPreInvokeEvidence = phase == "split-financial-review" ? Diagnostics.SplitFinancialNativeReview.PreInvokeEvidence : null,
                 HeaderEvidence = Diagnostics.HomeAddHeaderReview.LastObservation,
                 HeaderProgress = File.Exists(Path.Combine(root, "review-count-progress.json")) ? await File.ReadAllTextAsync(Path.Combine(root, "review-count-progress.json")) : null,

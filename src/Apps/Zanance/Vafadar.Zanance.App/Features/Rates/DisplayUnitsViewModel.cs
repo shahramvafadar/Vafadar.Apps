@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Presentation;
+using Vafadar.Zanance.App.Interaction;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Data;
 
@@ -17,10 +18,18 @@ public sealed record DisplayUnitRow(string CurrencyCode, string Text, string Exa
 /// currency, the name and the factor explicitly; nothing is derived from the language or the region. Stored amounts,
 /// exports and exchange rates stay in the currency itself.
 /// </summary>
-public sealed partial class DisplayUnitsViewModel(ZananceStore store, Translator translator, ILocalizationService localization) : ViewModelBase
+public sealed partial class DisplayUnitsViewModel(ZananceStore store, Translator translator, ILocalizationService localization, IAppInteraction interaction) : ViewModelBase
 {
     /// <summary>The factors offered: 10 to 1,000,000 major units per display unit.</summary>
     private static readonly int[] Exponents = [1, 2, 3, 4, 5, 6];
+
+    private DisplayUnitsReview? _review;
+    private bool _active;
+    private long _lifetime, _revision;
+    /// <summary>Edits require the original complete settings publication and no pending native consent/write.</summary>
+    public bool CanEdit => _active && _review is not null && !IsBusy;
+    /// <summary>Retires pending native consent and original writes when this exact page leaves.</summary>
+    public void Deactivate() { _active = false; _lifetime++; OnPropertyChanged(nameof(CanEdit)); }
 
     public ObservableCollection<DisplayUnitRow> Units { get; } = [];
 
@@ -46,22 +55,28 @@ public sealed partial class DisplayUnitsViewModel(ZananceStore store, Translator
     [ObservableProperty]
     public partial bool HasUnits { get; set; }
 
-    partial void OnCurrencyCodeChanged(string? value) => UpdatePreview();
+    partial void OnCurrencyCodeChanged(string? value) { _revision++; UpdatePreview(); }
 
-    partial void OnNameChanged(string value) => UpdatePreview();
+    partial void OnNameChanged(string value) { _revision++; UpdatePreview(); }
 
-    partial void OnFactorIndexChanged(int value) => UpdatePreview();
+    partial void OnFactorIndexChanged(int value) { _revision++; UpdatePreview(); }
 
+    /// <summary>Publishes only the settings read owned by this exact visible page.</summary>
     public async Task LoadAsync()
     {
-        CurrencyCode ??= (await store.GetSettingsAsync()).DefaultCurrencyCode;
-        Refresh();
+        if (IsBusy) return;
+        _active = true; var lifetime = ++_lifetime; _review = null; Error = null; OnPropertyChanged(nameof(CanEdit));
+        var original = await store.ReadDisplayUnitsAsync();
+        if (!_active || lifetime != _lifetime) return;
+        if (original.SerializedUnits is { } serialized) DisplayUnitPublication.Apply(serialized);
+        _review = original; CurrencyCode ??= original.DefaultCurrencyCode; Refresh(); OnPropertyChanged(nameof(CanEdit));
     }
 
     // The toman is offered as a one-tap choice, never applied by itself.
     [RelayCommand]
     private void UseToman()
     {
+        if (!CanEdit) return;
         CurrencyCode = "IRR";
         Name = translator["Unit_TomanName"];
         FactorIndex = 0;
@@ -70,28 +85,45 @@ public sealed partial class DisplayUnitsViewModel(ZananceStore store, Translator
     [RelayCommand]
     private async Task AddAsync()
     {
+        if (!CanEdit) return;
         Error = null;
         var name = Name.Trim();
         var unit = new DisplayUnit(CurrencyCode ?? string.Empty, name, Exponents[Math.Clamp(FactorIndex, 0, Exponents.Length - 1)]);
-        if (name.IndexOfAny(DisplayUnitPreferences.Reserved) >= 0 || !unit.IsValid)
+        if (name.IndexOfAny(DisplayUnitPublication.Reserved) >= 0 || !unit.IsValid)
         {
             Error = translator["Unit_Invalid"];
             return;
         }
 
-        await DisplayUnitPreferences.SaveAsync(store, [.. DisplayUnits.All.Where(u => u.CurrencyCode != unit.CurrencyCode), unit]);
-        Name = string.Empty;
-        Refresh();
+        await SaveUnitsAsync([.. DisplayUnits.All.Where(u => u.CurrencyCode != unit.CurrencyCode), unit], null);
     }
 
     [RelayCommand]
-    private async Task RemoveAsync(DisplayUnitRow row)
+    private Task RemoveAsync(DisplayUnitRow row) => !CanEdit || !Units.Contains(row) ? Task.CompletedTask
+        : SaveUnitsAsync([.. DisplayUnits.All.Where(unit => unit.CurrencyCode != row.CurrencyCode)], row);
+
+    private async Task SaveUnitsAsync(DisplayUnit[] submitted, DisplayUnitRow? remove)
     {
-        if (await Shell.Current.DisplayAlertAsync(translator["Unit_Remove"], row.Text, translator["Common_Delete"], translator["Common_Cancel"]))
+        if (!CanEdit || _review is not { } original) return;
+        var revision = _revision; var lifetime = _lifetime;
+        bool Current() => _active && lifetime == _lifetime && revision == _revision && ReferenceEquals(_review, original);
+        IsBusy = true; Error = null; OnPropertyChanged(nameof(CanEdit));
+        try
         {
-            await DisplayUnitPreferences.SaveAsync(store, DisplayUnits.All.Where(u => u.CurrencyCode != row.CurrencyCode));
-            Refresh();
+            if (remove is not null && !await interaction.ConfirmAsync(translator["Unit_Remove"], remove.Text,
+                translator["Common_Delete"], translator["Common_Cancel"])) return;
+            var saved = await DisplayUnitPublication.SaveAsync(store, submitted, original, Current);
+            if (_active && lifetime == _lifetime && ReferenceEquals(_review, original))
+            {
+                _review = saved.Published ? saved.Review : null;
+                if (revision == _revision && remove is null) Name = string.Empty;
+                if (saved.NotificationFailed || !saved.Published) Error = translator["Unit_SavedFollowUpFailed"];
+                Refresh();
+            }
         }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        { if (_active && lifetime == _lifetime) { _review = null; Error = translator["Unit_SaveFailed"]; } }
+        finally { IsBusy = false; OnPropertyChanged(nameof(CanEdit)); }
     }
 
     private void Refresh()

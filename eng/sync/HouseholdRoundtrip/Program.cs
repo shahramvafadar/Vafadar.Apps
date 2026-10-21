@@ -29,7 +29,7 @@ using Vafadar.Zanance.ProtectedSync;
 
 [assembly: System.Runtime.Versioning.SupportedOSPlatform("windows")]
 
-if (!OperatingSystem.IsWindows() || args.Length != 2 || args[1] is not ("prepare" or "resume" or "finish" or "cold" or "race" or "race-cold" or "local-apply-cut" or "local-apply-resume" or "abandon-cut" or "abandon-resume" or "bulk" or "bulk-resume" or "bulk-cold" or "stream-refusal" or "wide-row" or "wide-row-cold" or "small-attachments" or "small-attachments-cold" or "row-bound-refusal" or "archive" or "archive-resume" or "archive-cold" or "ordered-replay" or "headers-cut" or "headers-resume" or "outbox-upgrade-cut" or "outbox-upgrade-resume" or "stream-seal-cut" or "stream-seal-resume" or "stream-seal-publish" or "no-op-race" or "roles" or "roles-resume" or "roles-revoke" or "roles-grace" or "workspace" or "workspace-resume" or "workspace-foreground" or "workspace-switch" or "workspace-rebind" or "costs" or "costs-resume" or "costs-app" or "costs-cold" or "recovery-enroll-cut" or "recovery-enroll" or "owner-recovery-cut" or "owner-recovery" or "recovery-cold" or "recovery-revoke" or "recovery-append") && args[1] is not ("history-native-bound" or "history-compact-export" or "history-export" or "history-prepare-resume" or "history-prepare" or "history" or "history-cold" or "costs-conflict" or "app-source-server" or "app-source-server-resume" or "device-admin-cut" or "device-admin-resume" or "device-admin-cold" or "pending-member-preservation" or "app-management-server" or "app-management-root-server" or "device-access-cut" or "device-access-resume" or "device-access-cold" or "app-device-access-server" or "first-device-receive-cut" or "first-device-receive-resume" or "ownership-resume" or "ownership-cold" or "app-ownership-server" or "app-lifecycle-server" or "ownership-catchup" or "ownership-catchup-auto"))
+if (!OperatingSystem.IsWindows() || args.Length != 2 || args[1] is not ("prepare" or "resume" or "finish" or "cold" or "race" or "race-cold" or "local-apply-cut" or "local-apply-resume" or "abandon-cut" or "abandon-resume" or "bulk" or "bulk-resume" or "bulk-cold" or "stream-refusal" or "wide-row" or "wide-row-cold" or "small-attachments" or "small-attachments-cold" or "row-bound-refusal" or "archive" or "archive-resume" or "archive-cold" or "ordered-replay" or "headers-cut" or "headers-resume" or "outbox-upgrade-cut" or "outbox-upgrade-resume" or "stream-seal-cut" or "stream-seal-resume" or "stream-seal-publish" or "no-op-race" or "roles" or "roles-resume" or "roles-revoke" or "roles-grace" or "workspace" or "workspace-resume" or "workspace-foreground" or "workspace-switch" or "workspace-rebind" or "costs" or "costs-resume" or "costs-app" or "costs-cold" or "recovery-enroll-cut" or "recovery-enroll" or "owner-recovery-cut" or "owner-recovery" or "recovery-cold" or "recovery-revoke" or "recovery-append") && args[1] is not ("costs-money-rollback" or "costs-money" or "history-native-bound" or "history-compact-export" or "history-export" or "history-prepare-resume" or "history-prepare" or "history" or "history-cold" or "costs-conflict" or "app-source-server" or "app-source-server-resume" or "device-admin-cut" or "device-admin-resume" or "device-admin-cold" or "pending-member-preservation" or "app-management-server" or "app-management-root-server" or "device-access-cut" or "device-access-resume" or "device-access-cold" or "app-device-access-server" or "first-device-receive-cut" or "first-device-receive-resume" or "ownership-resume" or "ownership-cold" or "app-ownership-server" or "app-lifecycle-server" or "ownership-catchup" or "ownership-catchup-auto"))
     throw new ArgumentException("An independently owned root and explicit qualification phase are required.");
 var root = Path.GetFullPath(args[0]); var prepare = args[1] is "history-prepare" or "prepare" or "roles" or "workspace" or "costs" or "app-source-server";
 var allowed = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "artifacts", "household-network")) + Path.DirectorySeparatorChar;
@@ -80,6 +80,16 @@ try
     {
         stage = "same-original-bounded-financial-history";
         await HistoryQualification.RunAsync(root, args[1] == "history-cold", Proof, ct); return 0;
+    }
+    if (args[1] == "costs-money-rollback")
+    {
+        stage = "original-protected-household-changed-row-rollback";
+        await CostMoneyQualification.RunRollbackAsync(root, Proof, ct); return 0;
+    }
+    if (args[1] == "costs-money")
+    {
+        stage = "original-protected-household-monetary-ownership";
+        await CostMoneyQualification.RunAsync(root, Proof, ct); return 0;
     }
     var connection = new NpgsqlConnectionStringBuilder(Environment.GetEnvironmentVariable("ZANANCE_HOUSEHOLD_TEST_DB"));
     Require(connection.Host is "127.0.0.1" or "localhost" && connection.Database == "zanance_identity_household_native_d294");

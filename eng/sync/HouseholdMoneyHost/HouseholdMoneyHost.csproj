@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>$(VafadarTargetFramework)</TargetFramework><OutputType>Exe</OutputType></PropertyGroup>
+  <ItemGroup><FrameworkReference Include="Microsoft.AspNetCore.App" /><ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Api/Vafadar.Zanance.Api.csproj" /><ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/Vafadar.Zanance.Data.csproj" /></ItemGroup>
+</Project>

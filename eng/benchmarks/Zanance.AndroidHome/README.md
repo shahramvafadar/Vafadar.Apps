@@ -729,3 +729,40 @@ actions-complete rows and skips account/plan writers and already completed reado
 The flags are mutually exclusive. Native observation waits for its own actual window focus across
 a system dialog; it never dispatches a command into a different foreground owner. Retain original
 run/pass/PID reports and known accepted rows; a timeout never authorizes an accepted write replay.
+
+
+## D-436 original protected household monetary presentation
+
+`-p:ReviewHouseholdMoney=true` builds only the explicit retained fictional
+`pro.vafadar.zanance.householdlifecycle` identity. It permits only phase `plan-form` with
+`review_secondary_household=true`; the permanent app never references this caller. Preserve the
+original installed APK and compare its exact signer/version before a no-reset upgrade. Restore
+that exact original APK after the bounded review. This caller has no INTERNET permission.
+
+Use the original recovered fictitious profile and its current protected generation, contacts and
+signed membership. The separately revoked second-owner device stays revoked. Do not manufacture a
+membership, change a clock/grant, copy another project's session or seed saved costs/repayments.
+If no repayment exists, open only the actual new unsaved repayment draft against the real contacts.
+Native Save refuses stale units before consent; no accepted financial command belongs to this UI
+review. A covered app is refused without authentication or cover removal.
+
+ProfileService switches storage; the ordinary profile UI also republishes the actual root. Mirror
+both actions with the existing isolated review root and await the new Home publication before
+source comparison. Keep restored onboarding preferences unchanged; this does not qualify onboarding. Continue only the exact
+prepared protected rows/navigation metadata and existing observation files. Keep all failed reports;
+read the full original run/pass/PID public packet before classifying completion. Render en/fa/de
+Light/Dark native fields with original raw/parser/unit notes and preserve the complete target/base
+stores, profile catalogue, application display choices and OS baseline. This is bounded native
+presentation, not device enrollment, new membership, full sharing, stability, physical-device,
+hardware-key, iOS or release acceptance.
+
+The retained `householdlifecycle` profiles correctly refuse writable review after their actual
+D-294 recovery/ownership/device-removal revocations. Preserve these refusals and restore that
+package's exact original APK without resetting data. Do not remove a barrier to complete a matrix.
+`ReviewFreshHouseholdMoney=true` instead compiles only the new
+`pro.vafadar.zanance.householdmoneyreview` fixture, with explicit local TLS INTERNET permission.
+Use `HouseholdMoneyHost` for an actual fresh fictional identity and signed owner admission. Public
+`review_household_port` and `review_household_pin` intent values identify only that private host;
+no session or private key is passed in arguments. Its original protected cost then supplies the
+same read-only monetary UI states, with an actual new unsaved repayment editor and zero cash entries.
+See `eng/sync/HouseholdMoneyHost/README.md` for lifetime, ownership, continuation and scope limits.

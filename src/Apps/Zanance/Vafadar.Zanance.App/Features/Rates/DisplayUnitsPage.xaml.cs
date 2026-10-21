@@ -15,4 +15,7 @@ public partial class DisplayUnitsPage : ContentPage
         base.OnAppearing();
         await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
     }
+    /// <summary>Pending unit consent and writers cannot borrow a departed page's original owner.</summary>
+    protected override void OnDisappearing()
+    { _viewModel.Deactivate(); base.OnDisappearing(); }
 }

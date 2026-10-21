@@ -2111,3 +2111,21 @@ price; an automatic purchase valuation cannot count as the manual action. Final 
 actual rows before reporting counts. Continue missing views/actions only; never reseed or repeat an
 accepted financial command to repair a native observer. Debug diagnostics also need Android Debug
 compilation. The D-435 quality document records actual reports and limitations.
+
+### Secondary monetary runtime review (D-436)
+
+`Run-StoreDrafts.ps1 -PlanEditorReview` accepts the mutually exclusive secondary units/fields/
+Settings/household review switches. Retain source and observation run ids across incomplete
+observations; never seed or repeat an accepted action to repair a reporter. Original native
+forecast popup images are separate from their underlying app-window captures. The protected
+household caller must use actual current membership and compare every original table set.
+
+The independent Android Home caller exposes matching explicitly selected secondary groups.
+Parse the complete packet for the exact original process; a blank hierarchy after completion is
+not evidence that an action is still pending. `ReviewHouseholdMoney=true` confines an old-fixture
+permission inspection to its original package. Preserve actual revoked-member refusals. Only
+`ReviewFreshHouseholdMoney=true` compiles the new private TLS household fixture described in
+`eng/sync/HouseholdMoneyHost/README.md`; never manufacture CanWrite or undo an old revocation.
+Keep fixture APK/signature/data restoration distinct from the complete signed Offline Main APK.
+Build alternate artifacts on a volume with space; Windows App SDK resources also require a short
+absolute build root. Clean only the focused test artifacts after the selective run.

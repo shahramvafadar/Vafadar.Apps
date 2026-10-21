@@ -1,4 +1,3 @@
-using System.Globalization;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Data;
 
@@ -15,7 +14,7 @@ internal static class DisplayUnitPreferences
     private const string LegacyKey = "display_units";
 
     /// <summary>Characters that cannot be part of a unit name, because they separate the stored values.</summary>
-    public static readonly char[] Reserved = ['|', ';'];
+    public static char[] Reserved => DisplayUnitPublication.Reserved;
 
     /// <summary>Applies the units of the open profile; called after the database is ready and after a profile switch.</summary>
     public static void Load(ZananceStore store)
@@ -32,30 +31,12 @@ internal static class DisplayUnitPreferences
     }
 
     /// <summary>Applies a prepared profile value on the UI thread without performing database work.</summary>
-    internal static void Apply(string serialized) => DisplayUnits.Set(Parse(serialized));
+    internal static void Apply(string serialized) => DisplayUnitPublication.Apply(serialized);
 
     /// <summary>Removes every unit of the open profile, e.g. with "Delete all data".</summary>
     public static Task ClearAsync(ZananceStore store) => SaveAsync(store, []);
 
     /// <summary>Stores the units in the open profile and applies them.</summary>
-    public static async Task SaveAsync(ZananceStore store, IEnumerable<DisplayUnit> units)
-    {
-        ArgumentNullException.ThrowIfNull(store);
-        ArgumentNullException.ThrowIfNull(units);
-        DisplayUnits.Set(units);
-        var settings = await store.GetSettingsAsync();
-        settings.DisplayUnits = string.Join(';', DisplayUnits.All.Select(u => string.Create(CultureInfo.InvariantCulture, $"{u.CurrencyCode}|{u.Name}|{u.Exponent}")));
-        await store.SaveSettingsAsync(settings);
-    }
+    public static Task SaveAsync(ZananceStore store, IEnumerable<DisplayUnit> units) => DisplayUnitPublication.SaveAsync(store, units);
 
-    private static IEnumerable<DisplayUnit> Parse(string text)
-    {
-        foreach (var item in text.Split(';', StringSplitOptions.RemoveEmptyEntries))
-        {
-            if (item.Split('|') is [var code, var name, var exponent] && int.TryParse(exponent, NumberStyles.None, CultureInfo.InvariantCulture, out var value))
-            {
-                yield return new DisplayUnit(code, name, value);
-            }
-        }
-    }
 }

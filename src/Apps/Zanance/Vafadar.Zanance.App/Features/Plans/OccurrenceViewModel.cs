@@ -31,6 +31,28 @@ public sealed partial class OccurrenceViewModel(
     private string _currency = Currencies.Euro.Code;
     private bool _paymentValidationRequested;
     private bool _overrideValidationRequested;
+    private readonly OccurrenceMoneyInputs _money = new(localization);
+    private string? _file;
+    private long _draftRevision;
+    /// <summary>Gets the payment's original visible unit independently of later display preferences.</summary>
+    public string PaymentUnitName => _money.Payment.UnitName(_currency);
+    /// <summary>Explains the payment's original display-unit factor.</summary>
+    public string? PaymentUnitNote => DisplayUnitNote.ForInput(translator, _money.Payment, _currency);
+    /// <summary>Explains the payment's original numeric format.</summary>
+    public string? PaymentFormatNote => OriginalFormat(_money.Payment);
+    /// <summary>Explains the optional override's independent original display-unit factor.</summary>
+    public string? OverrideUnitNote => DisplayUnitNote.ForInput(translator, _money.Override, _currency);
+    /// <summary>Gets the override's original unit even when it has no custom factor.</summary>
+    public string OverrideUnitName => _money.Override.UnitName(_currency);
+    /// <summary>Explains the optional override's independent original numeric format.</summary>
+    public string? OverrideFormatNote => OriginalFormat(_money.Override);
+    private string? OriginalFormat(MoneyDraftInput input) => input.OriginalExample(localization.CurrentCulture) is { } example
+        ? translator.Format("Plan_OriginalInputFormat", example) : null;
+    private void RefreshMoneyCaptions()
+    {
+        OnPropertyChanged(nameof(PaymentUnitName)); OnPropertyChanged(nameof(PaymentUnitNote)); OnPropertyChanged(nameof(PaymentFormatNote));
+        OnPropertyChanged(nameof(OverrideUnitName)); OnPropertyChanged(nameof(OverrideUnitNote)); OnPropertyChanged(nameof(OverrideFormatNote));
+    }
     private (Guid Schedule, DateOnly Original)? _publishedQuery;
     private (EntryKind Kind, Guid Account, Guid? Destination, string Currency)? _publishedFinancialTarget;
 
@@ -117,21 +139,27 @@ public sealed partial class OccurrenceViewModel(
 
     partial void OnActualAmountTextChanged(string value)
     {
-        if (_paymentValidationRequested) { ValidateAmount(OccurrenceInput.Payment); }
+        _money.ChangePayment(value);
+        _draftRevision++;
+        if (_paymentValidationRequested || _money.Payment.NeedsReview(_currency)) { ValidateAmount(OccurrenceInput.Payment); }
+        RefreshMoneyCaptions();
     }
 
     partial void OnOverrideAmountTextChanged(string value)
     {
-        if (_overrideValidationRequested) { ValidateAmount(OccurrenceInput.Override); }
+        _money.ChangeOverride(value);
+        _draftRevision++;
+        if (_overrideValidationRequested || _money.Override.NeedsReview(_currency)) { ValidateAmount(OccurrenceInput.Override); }
+        RefreshMoneyCaptions();
     }
 
     // Keep each correction attached to its original input; changing an override must not replace payment feedback.
     private OccurrenceAmountResult ValidateAmount(OccurrenceInput field)
     {
         var payment = field == OccurrenceInput.Payment;
-        var result = OccurrenceAmountValidation.Validate(payment ? ActualAmountText : OverrideAmountText,
-            _currency, localization.CurrentCulture, payment);
-        var explanation = result.ErrorKey is { } key ? translator[key] : null;
+        var result = _money.Validate(payment);
+        var explanation = result.ErrorKey == "Plan_InputUnitChanged" ? translator.Format("Plan_InputUnitChanged", MoneyText.UnitName(_currency))
+            : result.ErrorKey is { } key ? translator[key] : null;
         if (payment) { PaymentAmountError = explanation; }
         else { OverrideAmountError = explanation; }
         return result;
@@ -145,17 +173,23 @@ public sealed partial class OccurrenceViewModel(
         return result.Amount;
     }
 
+    partial void OnActualDateChanged(DateOnly value) => _draftRevision++;
+    partial void OnDueDateChanged(DateOnly value) => _draftRevision++;
+    partial void OnOccurrenceNoteChanged(string value) => _draftRevision++;
+
     /// <summary>Query: <c>plan</c> (id) and <c>date</c> (original date).</summary>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
         if (query.TryGetValue("plan", out var plan) && plan is Guid id)
         {
+            if (_scheduleId != id) _draftRevision++;
             _scheduleId = id;
         }
 
         if (query.TryGetValue("date", out var date) && date is DateOnly original)
         {
+            if (_originalDate != original) _draftRevision++;
             _originalDate = original;
         }
     }
@@ -182,6 +216,7 @@ public sealed partial class OccurrenceViewModel(
 
     private Task ReadAndPublishAsync(bool preserveDraft) => Loading.RunAsync(async () =>
     {
+        _draftRevision++;
         var query = (Schedule: _scheduleId, Original: _originalDate);
         var keepInputs = preserveDraft && _publishedQuery is { } published && published == query;
         try
@@ -210,7 +245,8 @@ public sealed partial class OccurrenceViewModel(
     private async Task LoadCoreAsync(Guid scheduleId, DateOnly originalDate, bool keepInputs)
     {
         _occurrence = null;
-        var schedule = await plans.GetScheduleAsync(scheduleId);
+        var original = await plans.ReadOriginalScheduleAsync(scheduleId);
+        var schedule = original.Schedule; _file = original.DatabasePath;
         var states = await plans.GetStatesAsync(scheduleId);
 
         // The due date may have been moved away from the original date; search around it.
@@ -228,6 +264,7 @@ public sealed partial class OccurrenceViewModel(
         var categories = new CategoryLookup(await store.GetCategoriesAsync(), translator);
         var text = new PlanText(translator, dates, localization);
         _currency = accounts.TryGetValue(schedule.AccountId, out var account) ? account.CurrencyCode : Currencies.Euro.Code;
+        _money.SelectCurrency(_currency);
 
         Name = schedule.Name;
         CurrencyCode = _currency;
@@ -243,18 +280,20 @@ public sealed partial class OccurrenceViewModel(
         {
             ActualDate = occurrence.DueDate < Today ? occurrence.DueDate : Today;
             var expected = occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount;
-            ActualAmountText = expected is { } amount and > 0 ? MoneyText.ForInput(amount, _currency, culture) : string.Empty;
+            _money.Initialize(expected, occurrence.State?.Amount);
+            ActualAmountText = _money.Payment.Text;
             DueDate = occurrence.DueDate;
-            OverrideAmountText = occurrence.State?.Amount is { } overridden ? MoneyText.ForInput(overridden, _currency, culture) : string.Empty;
+            OverrideAmountText = _money.Override.Text;
             OccurrenceNote = occurrence.State?.Note ?? string.Empty;
         }
         // Preserving a draft must not temporarily reseed DateField or its partial native input segments.
         // Re-translate requested feedback independently of the retained raw amount/date/note values.
         else
         {
-            if (_paymentValidationRequested) { ValidateAmount(OccurrenceInput.Payment); }
-            if (_overrideValidationRequested) { ValidateAmount(OccurrenceInput.Override); }
+            if (_paymentValidationRequested || _money.Payment.NeedsReview(_currency)) { ValidateAmount(OccurrenceInput.Payment); }
+            if (_overrideValidationRequested || _money.Override.NeedsReview(_currency)) { ValidateAmount(OccurrenceInput.Override); }
         }
+        RefreshMoneyCaptions();
 
         Candidates.Clear();
         SettledText = null;
@@ -301,8 +340,12 @@ public sealed partial class OccurrenceViewModel(
         if (_occurrence is not { } occurrence || IsBusy || !Loading.IsReady) { return; }
         Error = null;
         if (ValidatePayment() is not { } amount) { return; }
-        await RunCommandAsync(() => commands.PayAsync(occurrence, amount, ActualDate, partial,
-            error => Error = error, () => CompleteCommandAsync(navigate: !partial)));
+        if (_file is not { } file) return;
+        var revision = _draftRevision; var date = ActualDate; var currency = _currency;
+        await RunCommandAsync(() => commands.PayAsync(occurrence, amount, date, partial,
+            error => Error = error, () => CompleteCommandAsync(navigate: !partial), file, currency,
+            () => revision == _draftRevision && ReferenceEquals(_occurrence, occurrence) && Loading.IsReady
+                && !_money.Payment.NeedsReview(currency)));
     }
 
     [RelayCommand]
@@ -332,8 +375,12 @@ public sealed partial class OccurrenceViewModel(
             ValidationFailed?.Invoke(OccurrenceInput.Override);
             return;
         }
-        await RunCommandAsync(() => commands.ChangeAsync(occurrence, DueDate, validation.Amount, OccurrenceNote,
-            () => CompleteCommandAsync(navigate: false, hideChange: true)));
+        if (_file is not { } file) return;
+        var revision = _draftRevision; var due = DueDate; var note = OccurrenceNote; var currency = _currency;
+        await RunCommandAsync(() => commands.ChangeAsync(occurrence, due, validation.Amount, note,
+            () => CompleteCommandAsync(navigate: false, hideChange: true), file, currency,
+            () => revision == _draftRevision && ReferenceEquals(_occurrence, occurrence) && Loading.IsReady
+                && !_money.Override.NeedsReview(currency)));
     }
 
     [RelayCommand]

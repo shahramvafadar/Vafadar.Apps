@@ -1,5 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Rates/DisplayUnitsViewModel.cs" Link="Application/DisplayUnitsViewModel.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/DisplayUnitPublication.cs" Link="Application/DisplayUnitPublication.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Accounts/AccountFormModel.Money.cs" Link="Application/AccountFormModel.Money.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/SplitEditorViewModel.cs" Link="Application/SplitEditorViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/MoneyDraftInput.cs" Link="Application/MoneyDraftInput.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/PlanDraftValidation.cs" Link="Application/PlanDraftValidation.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/SettlementDraftValidation.cs" Link="Application/SettlementDraftValidation.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/OccurrenceAmountValidation.cs" Link="Application/OccurrenceAmountValidation.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/OccurrenceMoneyInputs.cs" Link="Application/OccurrenceMoneyInputs.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/OccurrenceCommands.cs" Link="Application/OccurrenceCommands.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/EntryDraftValidation.cs" Link="Application/EntryDraftValidation.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/EntryPlanDraft.cs" Link="Application/EntryPlanDraft.cs" />
@@ -137,6 +140,8 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Settings/RegionalOptions.cs" Link="Application/RegionalOptions.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Settings/SettingsSnapshot.cs" Link="Application/SettingsSnapshot.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Settings/EstimateDraftState.cs" Link="Application/EstimateDraftState.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Settings/EssentialEstimateEditor.cs" Link="Application/EssentialEstimateEditor.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Forecast/ForecastAmountPrompt.cs" Link="Application/ForecastAmountPrompt.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Settings/SettingsChoiceLabels.cs" Link="Application/SettingsChoiceLabels.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/ThemeService.cs" Link="Application/ThemeService.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/IThemeHost.cs" Link="Application/IThemeHost.cs" />

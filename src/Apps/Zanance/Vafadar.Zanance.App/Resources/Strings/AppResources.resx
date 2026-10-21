@@ -8448,4 +8448,16 @@ Original XML SHA-256: {5}</value>
   <data name="Amount_DraftChanged" xml:space="preserve">
     <value>The amounts changed while saving. Nothing was saved. Review them and save again.</value>
   </data>
+  <data name="Settings_EssentialSavedFollowUpFailed" xml:space="preserve">
+    <value>The estimate was saved, but a follow-up step failed. Reopen this page before making another change.</value>
+  </data>
+  <data name="HouseholdCost_SavedFollowUpFailed" xml:space="preserve">
+    <value>The change was saved, but updating this page did not finish. Refresh before making another change.</value>
+  </data>
+  <data name="Unit_SaveFailed" xml:space="preserve">
+    <value>The unit change was not saved. Reopen this page to review the current units.</value>
+  </data>
+  <data name="Unit_SavedFollowUpFailed" xml:space="preserve">
+    <value>The unit change was saved, but the display could not be fully refreshed. Do not repeat the change; reopen this page.</value>
+  </data>
 </root>

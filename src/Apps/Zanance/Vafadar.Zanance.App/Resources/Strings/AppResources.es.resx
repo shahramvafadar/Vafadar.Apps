@@ -8386,4 +8386,16 @@ SHA-256 del XML original: {5}</value>
   <data name="Amount_DraftChanged" xml:space="preserve">
     <value>Los importes cambiaron mientras se guardaban. No se guardó nada. Revísalos y vuelve a guardar.</value>
   </data>
+  <data name="Settings_EssentialSavedFollowUpFailed" xml:space="preserve">
+    <value>La estimación se ha guardado, pero no se completó el paso siguiente. Vuelve a abrir esta página antes de hacer otro cambio.</value>
+  </data>
+  <data name="HouseholdCost_SavedFollowUpFailed" xml:space="preserve">
+    <value>El cambio se ha guardado, pero la página no se terminó de actualizar. Actualízala antes de hacer otro cambio.</value>
+  </data>
+  <data name="Unit_SaveFailed" xml:space="preserve">
+    <value>No se guardó el cambio de unidad. Vuelve a abrir esta página para revisar las unidades actuales.</value>
+  </data>
+  <data name="Unit_SavedFollowUpFailed" xml:space="preserve">
+    <value>El cambio de unidad se guardó, pero no se pudo actualizar toda la pantalla. No repitas el cambio; vuelve a abrir esta página.</value>
+  </data>
 </root>

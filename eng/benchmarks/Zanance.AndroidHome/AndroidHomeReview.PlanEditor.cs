@@ -13,6 +13,17 @@ internal static partial class AndroidHomeReview
     /// <summary>Checks actual original plan/account actions and complete native form publication in independent Release/AOT.</summary>
     private static async Task<object> ReviewPlanEditorAsync(App app, IServiceProvider services, string folder, string comparison, CancellationToken ct)
     {
+#if HOUSEHOLD_MONEY_REVIEW
+        if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_secondary_household", false) == true)
+            return await ReviewSecondaryHouseholdAsync(app, services, folder, comparison, ct);
+        throw new IOException("Only original household monetary presentation belongs to this explicit retained package.");
+#else
+        if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_secondary_settings", false) == true)
+            return await ReviewSecondarySettingsAsync(app, services, folder, comparison, ct);
+        if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_secondary_fields", false) == true)
+            return await ReviewSecondaryFieldsAsync(app, services, folder, comparison, ct);
+        if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_secondary_units", false) == true)
+            return await ReviewSecondaryUnitsAsync(app, services, folder, comparison, ct);
         if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_holding_money", false) == true)
             return await ReviewHoldingMoneyAsync(app, services, folder, comparison, ct);
         if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_account_money", false) == true)
@@ -190,5 +201,6 @@ internal static partial class AndroidHomeReview
         {
             await original.LeaveAsync(); await SetTheme(choice); await SetLanguageAsync(app, local, language.CultureName, ct);
         }
+#endif
     }
 }

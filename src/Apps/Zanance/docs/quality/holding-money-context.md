@@ -109,4 +109,12 @@ temporary Main XML observer is preserved and removed. Windows input desktop rema
 
 Test output is cleaned with the test solution's own alternate artifact root. No unrelated archive,
 device, project data, key or account is read or changed. These checks retain the limits above; CI of
-this delivery still requires its own exact pushed-commit result.
+this delivery is recorded below for its exact pushed commit.
+
+## Exact pushed-commit CI
+
+The single scheduled check for `aa540dfd7b29e37655cd81865743698995808c6d` reports both workflows
+completed successfully: [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39588050474)
+and [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39588050563).
+The D-435 check is consumed and its schedule deleted. No second request or successful job replay is
+required. These exact-commit results do not expand the runtime, platform or release acceptance above.

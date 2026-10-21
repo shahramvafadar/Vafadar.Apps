@@ -27,6 +27,11 @@ public sealed partial class SettlementViewModel(ZananceStore store, Translator t
     private Guid _id;
     private string? _file;
     private long _draftVersion;
+    private readonly MoneyDraftInput _actual = new();
+
+    /// <summary>Explains the original bill's numeric format after a display-only change.</summary>
+    public string? InputFormatNote => _actual.OriginalExample(localization.CurrentCulture) is { } example
+        ? translator.Format("Plan_OriginalInputFormat", example) : null;
 
     /// <summary>Gets the original coherent loading/failed/retry lifetime; no half-read form is interactive.</summary>
     public SnapshotLoadState Loading { get; } = new();
@@ -94,7 +99,8 @@ public sealed partial class SettlementViewModel(ZananceStore store, Translator t
             {
                 var draft = await Task.Run(() => store.ReadAdvanceSettlementDraftAsync(id));
                 _plan = draft.Plan; _entries = draft.Entries; _file = draft.DatabasePath; _currency = draft.Account.CurrencyCode;
-                UnitNote = DisplayUnitNote.For(translator, _currency); PlanName = _plan.Name;
+                if (string.IsNullOrWhiteSpace(ActualText)) _actual.Initialize(ActualText, _currency, localization.CurrentCulture);
+                PlanName = _plan.Name;
                 Update(); _snapshot ??= Snapshot();
             }, () => { });
         }
@@ -119,7 +125,11 @@ public sealed partial class SettlementViewModel(ZananceStore store, Translator t
 
     partial void OnToChanged(DateOnly value) { _draftVersion++; Update(); }
 
-    partial void OnActualTextChanged(string value) { _draftVersion++; Update(); }
+    partial void OnActualTextChanged(string value)
+    {
+        _actual.ChangeText(value, _currency, localization.CurrentCulture);
+        _draftVersion++; Update();
+    }
 
     private void Update()
     {
@@ -130,10 +140,13 @@ public sealed partial class SettlementViewModel(ZananceStore store, Translator t
         }
 
         var culture = localization.CurrentCulture;
-        var validation = SettlementDraftValidation.Validate(From, To, ActualText, _currency, culture);
+        UnitNote = DisplayUnitNote.ForInput(translator, _actual, _currency);
+        OnPropertyChanged(nameof(InputFormatNote));
+        var validation = SettlementDraftValidation.Validate(From, To, ActualText, _currency, culture, _actual.Context);
         Error = null;
         AmountError = validation.AmountErrorKey is { } amountKey && (_validationRequested || !string.IsNullOrWhiteSpace(ActualText))
             ? translator[amountKey] : null;
+        if (_actual.NeedsReview(_currency)) AmountError = translator.Format("Plan_InputUnitChanged", MoneyText.UnitName(_currency));
         PeriodError = validation.PeriodErrorKey is { } periodKey ? translator[periodKey] : null;
         // D-102: an inverted period must not look like a legitimate period with no payments.
         _result = validation.PeriodErrorKey is null ? AdvanceSettlement.Compute(_plan, _entries, From, To, validation.Actual ?? 0) : null;
@@ -180,7 +193,8 @@ public sealed partial class SettlementViewModel(ZananceStore store, Translator t
             try
             {
                 saved = await store.SaveAdvanceSettlementAsync(plan, from, to, result, title,
-                    expectedPath: _file, expectedCurrency: _currency, isCurrent: () => version == _draftVersion && !HasCommitted);
+                    expectedPath: _file, expectedCurrency: _currency,
+                    isCurrent: () => version == _draftVersion && !HasCommitted && !_actual.NeedsReview(_currency));
             }
             catch (CommittedWriteNotificationException<SaveResult> accepted)
             { saved = accepted.Result; notificationFailed = true; }

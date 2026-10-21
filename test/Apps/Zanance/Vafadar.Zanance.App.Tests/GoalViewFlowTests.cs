@@ -275,6 +275,10 @@ public sealed class GoalViewFlowTests
         Assert.False(price ? vm.CanSaveAssumedPrice : vm.CanAllocate); Assert.Contains("USD", (price ? vm.PriceError : vm.AmountError)!);
         var before = await RowsAsync(f); if (price) await vm.SaveAssumedPriceCommand.ExecuteAsync(null); else await vm.AllocateCommand.ExecuteAsync(null);
         Assert.Equal(before, await RowsAsync(f)); if (price) vm.AssumedPriceText = "2.34"; else vm.AmountText = "2.34";
+        Assert.False(price ? vm.CanSaveAssumedPrice : vm.CanAllocate);
+        // Currency changes require complete reentry; a partial edit cannot renew the old raw amount's meaning.
+        if (price) { vm.AssumedPriceText = ""; vm.AssumedPriceText = "2.34"; }
+        else { vm.AmountText = ""; vm.AmountText = "2.34"; }
         Assert.True(price ? vm.CanSaveAssumedPrice : vm.CanAllocate);
     }
 

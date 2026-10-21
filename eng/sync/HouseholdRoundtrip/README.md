@@ -302,3 +302,21 @@ Completed result files refuse replay. Retain negative evidence and keys. Current
 artifacts/household-network/d294-current-history; old d294-persisted remains preserved after contract refusal.
 
 history-compact-export separately qualifies the retained fixture through the production pre-allocation private-row omission. history-native-bound checks only the small native page-budget/detach/financial-byte mechanism. Each has its own completion guard; never replay accepted history, source, crypto or UI stages. The Android ReviewHouseholdSnapshot caller source-links only that native mechanism and uses an independent Release AOT/trimmed package.
+
+
+## Original monetary ownership continuation (D-436)
+
+`costs-money` uses only the retained d294-cost-v2 returning-owner protected client and its actual
+current Editor permission, without HTTP, new service identities or replacement keys. It applies the
+original current additive local metadata migration before reading. The first older-schema read
+failure is retained. It checks consent edit-and-return refusal and original writer ownership, then
+accepts exactly one cost-title metadata edit and deliberately fails the applied observer. Its durable
+start/accepted/completion receipts refuse uncertain or accepted financial replay. Explicit readback
+recovers the original application form; amounts and cash movements are not reposted.
+
+`costs-money-rollback` is a separate one-time continuation of that completed source. It submits a
+changed cost title and a changed repayment note and retires each original owner after SaveChanges,
+before commit. Complete original cost/share/repayment/link facts must remain identical. It never
+replays the previously accepted metadata edit. The initial no-change rollback checks are not counted
+as additional changed-row evidence. Preserve both completion receipts and all original keys/files.
+These are original protected source/runtime checks, not rendered native UI or whole-device acceptance.

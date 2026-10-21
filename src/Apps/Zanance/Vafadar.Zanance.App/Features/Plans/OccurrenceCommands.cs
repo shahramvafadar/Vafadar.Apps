@@ -14,10 +14,12 @@ public sealed class OccurrenceCommands(PlanStore plans, Translator translator, I
 
     /// <summary>Records the explicit actual payment; ledger validation remains beside the payment field.</summary>
     public Task<bool> PayAsync(Occurrence occurrence, long amount, DateOnly date, bool partial,
-        Action<string> validationError, Func<Task> completed) => RunAsync(async () =>
+        Action<string> validationError, Func<Task> completed, string? expectedPath = null, string? expectedCurrency = null,
+        Func<bool>? isCurrent = null) => RunAsync(async () =>
     {
         var entry = Occurrences.CreateEntry(occurrence, amount, date, ReviewState.Confirmed);
-        var result = partial ? await plans.PayPartAsync(occurrence, entry) : await plans.SettleAsync(occurrence, entry);
+        var result = partial ? await plans.PayPartAsync(occurrence, entry, expectedPath: expectedPath, expectedCurrency: expectedCurrency, isCurrent: isCurrent)
+            : await plans.SettleAsync(occurrence, entry, expectedPath: expectedPath, expectedCurrency: expectedCurrency, isCurrent: isCurrent);
         if (result.Succeeded) { return true; }
         validationError(string.Join(Environment.NewLine, result.Errors.Select(e => translator[$"LedgerError_{e}"])));
         return false;
@@ -40,9 +42,10 @@ public sealed class OccurrenceCommands(PlanStore plans, Translator translator, I
     }, completed);
 
     /// <summary>Saves explicit date/amount/note overrides without replacing a rejected draft.</summary>
-    public Task<bool> ChangeAsync(Occurrence occurrence, DateOnly due, long? amount, string? note, Func<Task> completed) => RunAsync(async () =>
+    public Task<bool> ChangeAsync(Occurrence occurrence, DateOnly due, long? amount, string? note, Func<Task> completed,
+        string? expectedPath = null, string? expectedCurrency = null, Func<bool>? isCurrent = null) => RunAsync(async () =>
     {
-        await plans.ChangeOccurrenceAsync(occurrence, due, amount, note);
+        await plans.ChangeOccurrenceAsync(occurrence, due, amount, note, expectedPath: expectedPath, expectedCurrency: expectedCurrency, isCurrent: isCurrent);
         return true;
     }, completed);
 

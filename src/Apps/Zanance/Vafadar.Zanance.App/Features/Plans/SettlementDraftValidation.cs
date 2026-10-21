@@ -17,10 +17,13 @@ public sealed record SettlementValidationResult(string? PeriodErrorKey, string? 
 public static class SettlementDraftValidation
 {
     /// <summary>Collects both field problems; zero is a valid bill that can refund every remaining advance.</summary>
-    public static SettlementValidationResult Validate(DateOnly from, DateOnly to, string text, string currency, CultureInfo culture)
+    public static SettlementValidationResult Validate(DateOnly from, DateOnly to, string text, string currency, CultureInfo culture,
+        MoneyInputContext? original = null)
     {
         ArgumentNullException.ThrowIfNull(culture);
-        var valid = MoneyText.TryParse(text, Currencies.Get(currency), culture, out var actual) && actual >= 0;
+        long actual = 0;
+        var valid = (original is null ? MoneyText.TryParse(text, Currencies.Get(currency), culture, out actual)
+            : original.MatchesCurrent(currency) && original.TryParse(text, out actual)) && actual >= 0;
         return new SettlementValidationResult(from > to ? "Settlement_PeriodInvalid" : null,
             valid ? null : "Settlement_AmountInvalid", valid ? actual : null);
     }

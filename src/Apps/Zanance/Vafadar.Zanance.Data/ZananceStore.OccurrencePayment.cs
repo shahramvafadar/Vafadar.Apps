@@ -10,10 +10,13 @@ public sealed partial class ZananceStore
 {
     /// <summary>Saves new occurrence money and its state through the established ledger pipeline in one actual writer.</summary>
     internal async Task<SaveResult> SaveOccurrencePaymentAsync(Occurrence reviewed, LedgerEntry entry, bool partial,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken, string? expectedPath = null, string? expectedCurrency = null, Func<bool>? isCurrent = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        void Current() => RequireOccurrenceInputOwner(db, reviewed.Schedule, expectedPath, expectedCurrency, isCurrent);
+        Current();
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        Current();
         write.DemandFeature(CommercialFeature.Corrections);
         var plan = await db.Schedules.AsNoTracking().FirstOrDefaultAsync(s => s.Id == reviewed.Schedule.Id, cancellationToken);
         if (plan is null || !plan.Owns(reviewed.OriginalDate)
@@ -52,6 +55,6 @@ public sealed partial class ZananceStore
         }
         // A partial save creates/reuses its state in UpdatePaidAmountsAsync. A full/final save publishes after that step.
         return await SaveEntriesUnderWriterAsync(db, write, [entry], [], null, new HashSet<Guid>(), cancellationToken,
-            entry.IsPartialPayment ? null : state, committedPublication: true);
+            entry.IsPartialPayment ? null : state, committedPublication: true, validateReview: Current);
     }
 }

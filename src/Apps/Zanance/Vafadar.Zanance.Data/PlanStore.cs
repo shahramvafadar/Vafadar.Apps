@@ -296,11 +296,12 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
     /// Settles an occurrence with a new entry (confirm with the actual amount and date). The entry is validated like any
     /// other; the unique index guarantees one settlement per occurrence (D-07).
     /// </summary>
-    public async Task<SaveResult> SettleAsync(Occurrence occurrence, LedgerEntry entry, CancellationToken cancellationToken = default)
+    public async Task<SaveResult> SettleAsync(Occurrence occurrence, LedgerEntry entry, CancellationToken cancellationToken = default,
+        string? expectedPath = null, string? expectedCurrency = null, Func<bool>? isCurrent = null)
     {
         ArgumentNullException.ThrowIfNull(occurrence);
         ArgumentNullException.ThrowIfNull(entry);
-        var result = await store.SaveOccurrencePaymentAsync(occurrence, entry, partial: false, cancellationToken);
+        var result = await store.SaveOccurrencePaymentAsync(occurrence, entry, partial: false, cancellationToken, expectedPath, expectedCurrency, isCurrent);
         if (result.Succeeded) return CommittedWriteNotification.Publish(OnChanged, result);
         return result;
     }
@@ -369,11 +370,12 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
     /// payment that reaches or exceeds the rest settles it instead, so the final payment is an ordinary settlement and an
     /// overpayment is visible as a larger actual amount.
     /// </summary>
-    public async Task<SaveResult> PayPartAsync(Occurrence occurrence, LedgerEntry entry, CancellationToken cancellationToken = default)
+    public async Task<SaveResult> PayPartAsync(Occurrence occurrence, LedgerEntry entry, CancellationToken cancellationToken = default,
+        string? expectedPath = null, string? expectedCurrency = null, Func<bool>? isCurrent = null)
     {
         ArgumentNullException.ThrowIfNull(occurrence);
         ArgumentNullException.ThrowIfNull(entry);
-        var result = await store.SaveOccurrencePaymentAsync(occurrence, entry, partial: true, cancellationToken);
+        var result = await store.SaveOccurrencePaymentAsync(occurrence, entry, partial: true, cancellationToken, expectedPath, expectedCurrency, isCurrent);
         if (result.Succeeded) return CommittedWriteNotification.Publish(OnChanged, result);
         return result;
     }
@@ -438,20 +440,24 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
         UpdateStateAsync(occurrence, state => state.Status = OccurrenceStatus.Open, cancellationToken);
 
     /// <summary>Changes the due date, amount or note of this occurrence only (AT-26).</summary>
-    public Task ChangeOccurrenceAsync(Occurrence occurrence, DateOnly? dueDate, long? amount, string? note, CancellationToken cancellationToken = default) =>
+    public Task ChangeOccurrenceAsync(Occurrence occurrence, DateOnly? dueDate, long? amount, string? note, CancellationToken cancellationToken = default,
+        string? expectedPath = null, string? expectedCurrency = null, Func<bool>? isCurrent = null) =>
         UpdateStateAsync(occurrence, state =>
         {
             state.DueDate = dueDate == occurrence.OriginalDate ? null : dueDate;
             state.Amount = amount;
             state.Note = string.IsNullOrWhiteSpace(note) ? null : note.Trim();
-        }, cancellationToken);
+        }, cancellationToken, validateOriginal: db => ZananceStore.RequireOccurrenceInputOwner(db, occurrence.Schedule,
+            expectedPath, expectedCurrency, isCurrent));
 
     // alsoInTransaction runs in the same transaction as the state change: both are saved or neither.
     private async Task UpdateStateAsync(Occurrence occurrence, Action<OccurrenceState> change, CancellationToken cancellationToken,
-        Func<ZananceDbContext, Task>? alsoInTransaction = null, Guid? linkedEntryId = null)
+        Func<ZananceDbContext, Task>? alsoInTransaction = null, Guid? linkedEntryId = null, Action<ZananceDbContext>? validateOriginal = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        validateOriginal?.Invoke(db);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        validateOriginal?.Invoke(db);
         write.DemandFeature(CommercialFeature.Corrections);
         var state = await db.OccurrenceStates.FirstOrDefaultAsync(
             s => s.ScheduleId == occurrence.Schedule.Id && s.OriginalDate == occurrence.OriginalDate, cancellationToken);
@@ -472,8 +478,10 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
         }
 
         change(state);
+        validateOriginal?.Invoke(db);
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        validateOriginal?.Invoke(db);
         await write.CommitAsync(cancellationToken);
         CommittedWriteNotification.Publish(OnChanged);
     }

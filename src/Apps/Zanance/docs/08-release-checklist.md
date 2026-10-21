@@ -2408,3 +2408,17 @@ original account/Home0.00EUR and unchanged OS settings. No full-suite baseline i
 publication gates remain unchanged.
 
 [Original holding evidence](quality/holding-money-context.md).
+
+## D-436 - Secondary monetary qualification boundary
+
+101 distinct new source cases and149 affected cases pass selectively;17 original defects are
+reproduced.367 applicable Windows and127 independent Release/AOT Android observations preserve
+original inputs, actual accepted results and protected financial rows. Observations are not unit
+tests and no unrelated full suite or successful financial operation is repeated. The household
+source uses real new private signed admission because all retained old Android devices correctly
+refuse writes after their deliberate revocations. The old native fixture APK/data are preserved.
+
+Strict platform/independent builds and the complete signed Offline APK pass. No permission, schema,
+external SDK/provider or commercial gate changes. D-386 stability/accessibility and actual phone,
+iOS, hardware-key/power-loss, owner accounts, public hosting, OAuth, Store and release acceptance
+remain open. See quality/secondary-money-context.md for complete source and running-app evidence.

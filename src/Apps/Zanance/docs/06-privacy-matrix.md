@@ -1137,3 +1137,13 @@ existing data fields. Transaction-to-plan source capabilities and raw/view owner
 not portable preferences or credentials. Historical splits retain monetary facts and only move exact
 future owners through the existing schema. No new permission, SDK, provider, analytics, network
 channel, export format or background retention is introduced. External acceptance remains open.
+
+### D-436 - Existing secondary monetary data only
+
+Original monetary contexts and selective Settings writes retain existing local data categories;
+no new financial schema, shipping permission, SDK, telemetry or external recipient is introduced.
+The complete Main APK stays offline without INTERNET. An explicitly separate native household
+qualification package uses only its private loopback TLS Integration host, fictional identity and
+protected independent household. It is not the shipping edition, a real account/provider, public
+hosting or permission to release. Private fixture sessions, keys and database configuration remain
+outside uploaded evidence and repository history.

@@ -12,11 +12,15 @@ public sealed record OccurrenceAmountResult(long? Amount, string? ErrorKey);
 public static class OccurrenceAmountValidation
 {
     /// <summary>Uses the existing regional parser; an empty override keeps the plan amount and never becomes zero.</summary>
-    public static OccurrenceAmountResult Validate(string text, string currency, CultureInfo culture, bool required)
+    public static OccurrenceAmountResult Validate(string text, string currency, CultureInfo culture, bool required,
+        MoneyInputContext? original = null)
     {
         ArgumentNullException.ThrowIfNull(culture);
         if (!required && string.IsNullOrWhiteSpace(text)) { return new(null, null); }
-        return MoneyText.TryParse(text, Currencies.Get(currency), culture, out var amount) && amount > 0
+        var amount = 0L;
+        var valid = original is null ? MoneyText.TryParse(text, Currencies.Get(currency), culture, out amount)
+            : original.MatchesCurrent(currency) && original.TryParse(text, out amount);
+        return valid && amount > 0
             ? new(amount, null) : new(null, required ? "Plan_AmountMustBePositive" : "Amount_Invalid");
     }
 }

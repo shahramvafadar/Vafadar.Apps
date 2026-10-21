@@ -11,6 +11,7 @@ using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Sharing;
 using Vafadar.Zanance.Data.Sharing;
+using Vafadar.Zanance.App.Presentation;
 
 namespace Vafadar.Zanance.App.Features.Sharing;
 
@@ -20,7 +21,7 @@ public sealed record HouseholdContactChoice(HouseholdContact Source, string Capt
 public sealed record HouseholdCostItem(HouseholdCost Source, string Caption, string Amount)
 {
     /// <summary>Retains date, original description and complete unit for an unambiguous refund-source choice.</summary>
-    public string ChoiceCaption => Caption + " · " + Amount;
+    public string ChoiceCaption => Caption + " Â· " + Amount;
 }
 /// <summary>One original repayment with its complete direction-safe value.</summary>
 public sealed record HouseholdSettlementItem(HouseholdSettlement Source, string Caption, string Amount);
@@ -29,15 +30,50 @@ public sealed record HouseholdMovementChoice(HouseholdCashMovement Source, strin
 /// <summary>Independent per-currency summary; the value is never added to the cash ledger again.</summary>
 public sealed record HouseholdCostSummary(string Caption, string Amount);
 /// <summary>One explicit minor-unit allocation draft, preserving its original input culture through display changes.</summary>
-public sealed partial class HouseholdShareInput(HouseholdContact contact, CultureInfo culture) : ObservableObject
+public sealed partial class HouseholdShareInput(HouseholdContact contact, CultureInfo culture, string currency = "EUR",
+    Func<CultureInfo>? currentCulture = null, Translator? translator = null) : ObservableObject
 {
+    private readonly MoneyDraftInput _money = new();
+    private string _currency = currency;
     /// <summary>Exact original financial contact.</summary>
     public HouseholdContact Contact { get; } = contact;
     internal CultureInfo InputCulture { get; } = culture;
+    /// <summary>Gets original raw/context edit ownership, including edits whose text later returns.</summary>
+    internal string Stamp => DraftFingerprint.Create(_money.Stamp, _money.Revision);
+    /// <summary>Gets the original allocation unit rather than another participant's or the ambient unit.</summary>
+    public string UnitName => _money.UnitName(_currency);
+    /// <summary>Explains the original allocation factor when translations are attached to the actual form.</summary>
+    public string? UnitNote => translator is null ? null : DisplayUnitNote.ForInput(translator, _money, _currency);
+    /// <summary>Explains the retained original allocation numeric format.</summary>
+    public string? FormatNote => translator is not null && _money.OriginalExample(currentCulture?.Invoke() ?? InputCulture) is { } example
+        ? translator.Format("Plan_OriginalInputFormat", example) : null;
     /// <summary>Uncommitted user amount; blank means no allocation.</summary>
     [ObservableProperty] public partial string Text { get; set; } = "";
     /// <summary>Field-local exact allocation error.</summary>
     [ObservableProperty] public partial string? Error { get; set; }
+    partial void OnTextChanged(string value)
+    {
+        _money.ChangeText(value, _currency, currentCulture?.Invoke() ?? InputCulture); Error = null; RefreshMoneyTexts();
+    }
+    /// <summary>Retains the existing explicit-currency-change contract: clear this original allocation before new input.</summary>
+    internal void ResetCurrency(string value)
+    {
+        _currency = value; _money.Initialize("", value, currentCulture?.Invoke() ?? InputCulture); Text = ""; Error = null; RefreshMoneyTexts();
+    }
+    /// <summary>Checks original unit ownership independently of an omitted optional allocation.</summary>
+    internal bool IsCurrent(string value) => !_money.NeedsReview(value);
+    /// <summary>Parses the actual allocation input used by the complete cost Save.</summary>
+    internal bool TryRead(string value, out long amount)
+    {
+        amount = 0;
+        return IsCurrent(value) && _money.TryParse(out amount) && amount >= 0;
+    }
+    /// <summary>Refreshes display-only captions without replacing the raw allocation.</summary>
+    internal void RefreshMoneyTexts()
+    {
+        OnPropertyChanged(nameof(UnitName)); OnPropertyChanged(nameof(UnitNote)); OnPropertyChanged(nameof(FormatNote));
+        if (_money.NeedsReview(_currency) && translator is not null) Error = translator.Format("Plan_InputUnitChanged", MoneyText.UnitName(_currency));
+    }
 }
 
 /// <summary>Complete explicit actual-cost editor over the original native store; drafts, cash movements and service access remain separate.</summary>
@@ -51,10 +87,60 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
     private CultureInfo inputCulture = CultureInfo.InvariantCulture;
     private string? errorKey;
     private bool ready;
+    private readonly MoneyDraftInput _amountInput = new();
+    private bool needsRefresh;
+    private long editorRevision;
+    private bool committedInAction;
+    /// <summary>Gets the cost/repayment's original visible amount unit.</summary>
+    public string AmountUnitName => _amountInput.UnitName(CurrencyCode);
+    /// <summary>Explains the original cost/repayment factor.</summary>
+    public string? AmountUnitNote => DisplayUnitNote.ForInput(translator, _amountInput, CurrencyCode);
+    /// <summary>Explains the original cost/repayment numeric format.</summary>
+    public string? AmountFormatNote => _amountInput.OriginalExample(localization.CurrentCulture) is { } example
+        ? translator.Format("Plan_OriginalInputFormat", example) : null;
+    /// <summary>Shows unit review next to the actual amount without claiming that a write failed.</summary>
+    public string? AmountContextError => _amountInput.NeedsReview(CurrencyCode)
+        ? translator.Format("Plan_InputUnitChanged", MoneyText.UnitName(CurrencyCode)) : null;
+    partial void OnAmountTextChanged(string value)
+    {
+        _amountInput.ChangeText(value, CurrencyCode, localization.CurrentCulture); AmountError = null; RefreshMoneyTexts();
+    }
+    /// <summary>Reads the actual submitted amount without taking service or ledger authority.</summary>
+    internal bool TryReadOriginalAmount(out long amount)
+    {
+        // A unit definition can change without translation. Publish the actual field refusal before returning to its native editor.
+        RefreshMoneyTexts();
+        amount = 0;
+        if (!_amountInput.NeedsReview(CurrencyCode) && _amountInput.TryParse(out amount) && amount > 0) return true;
+        amount = 0; AmountError = AmountContextError is null ? translator["Amount_Invalid"] : null; return false;
+    }
+    private void RefreshMoneyTexts()
+    {
+        foreach (var name in new[] { nameof(AmountUnitName), nameof(AmountUnitNote), nameof(AmountFormatNote), nameof(AmountContextError) }) OnPropertyChanged(name);
+        foreach (var row in Shares) row.RefreshMoneyTexts();
+    }
+    /// <summary>Tracks actual form edits, including values changed back while native consent or a writer waits.</summary>
+    protected override void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs args)
+    {
+        if (args.PropertyName is nameof(Title) or nameof(AmountText) or nameof(CurrencyCode) or nameof(Date) or nameof(IsRefund)
+            or nameof(UsesSharedCash) or nameof(EditingCost) or nameof(EditingSettlement) or nameof(Payer) or nameof(Recipient)
+            or nameof(RefundOriginal) or nameof(Movement) or nameof(UsesDestinationAmount) or nameof(Note))
+            Interlocked.Increment(ref editorRevision);
+        base.OnPropertyChanged(args);
+    }
+    private string EditorStamp() => DraftFingerprint.Create(Interlocked.Read(ref editorRevision), editingCost, editingSettlement,
+        Title, _amountInput.Stamp, _amountInput.Revision, CurrencyCode, Date, IsRefund, UsesSharedCash, EditingCost, EditingSettlement,
+        Payer?.Source.Id, Recipient?.Source.Id, RefundOriginal?.Source.Id, Movement?.Source.Id, UsesDestinationAmount, Note,
+        string.Join(";", Shares.Select(row => DraftFingerprint.Create(row.Contact.Id, row.Stamp))));
+    // Acceptance retires the original input before publishing service changes or reading another snapshot.
+    private void AcceptEditor()
+    { committedInAction = true; needsRefresh = true; ClearEditor(); Refresh(); }
+    private void Failed(string key)
+    { errorKey = committedInAction ? "HouseholdCost_SavedFollowUpFailed" : key; if (committedInAction) needsRefresh = true; }
     /// <summary>Covered publication only after the complete coherent actual native read.</summary>
     public bool IsReady => ready;
     /// <summary>Current read-only hint; Save still rechecks actual role/file/clock under the writer.</summary>
-    public bool CanWrite => ready && visible is not null && !IsBusy && review?.CanWrite == true;
+    public bool CanWrite => ready && !needsRefresh && visible is not null && !IsBusy && review?.CanWrite == true;
     /// <summary>Read and explicit cancel remain available without financial write authority.</summary>
     public bool CanInteract => ready && visible is not null && !IsBusy;
     /// <summary>Financial actions cannot be retired during their submitted save.</summary>
@@ -130,7 +216,7 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
     /// <summary>Retires drafts and stale completions without an implicit save.</summary>
     public void Deactivate()
     {
-        visible?.Cancel(); visible?.Dispose(); visible = null; review = null; ready = false;
+        visible?.Cancel(); visible?.Dispose(); visible = null; review = null; ready = false; needsRefresh = true;
         translator.PropertyChanged -= TranslationChanged; ClearEditor(); Costs.Clear(); Settlements.Clear(); Summaries.Clear(); Contacts.Clear(); Refresh();
     }
     [RelayCommand] private Task ReloadAsync() => RunAsync(async (access, ct) =>
@@ -154,7 +240,7 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
             translator["Common_Save"], translator["Common_Cancel"], maxLength: 100);
         if (string.IsNullOrWhiteSpace(name)) return; access.Validate();
         if ((EditingCost || EditingSettlement) && !await Confirm("HouseholdCost_Discard")) return;
-        access.Validate(); await store.SaveContactAsync(review, new() { Name = name.Trim() }, ct); await ReadAsync(access, ct); ClearEditor();
+        access.Validate(); await store.SaveContactAsync(review, new() { Name = name.Trim() }, ct); AcceptEditor(); await ReadAsync(access, ct);
     });
     [RelayCommand] private Task ManageContactAsync(HouseholdContactChoice item) => RunAsync(async (access, ct) =>
     {
@@ -172,7 +258,7 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
         else archived = !archived;
         if ((EditingCost || EditingSettlement) && !await Confirm("HouseholdCost_Discard")) return;
         access.Validate(); await store.SaveContactAsync(review, new(item.Source.Id) { Name = name, IdentityId = item.Source.IdentityId, IsArchived = archived }, ct);
-        await ReadAsync(access, ct); ClearEditor();
+        AcceptEditor(); await ReadAsync(access, ct);
     });
     [RelayCommand] private Task FindMovementsAsync() => RunAsync(async (access, ct) =>
     {
@@ -187,35 +273,41 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
         TitleError = AmountError = ReferenceError = SharesError = null;
         foreach (var row in Shares) row.Error = null;
         var valid = true; var amount = 0L;
-        if (!Core.Money.Currencies.TryGet(CurrencyCode, out var currency) || !MoneyText.TryParse(AmountText, currency, inputCulture, out amount) || amount <= 0)
-        { AmountError = translator["Amount_Invalid"]; valid = false; }
+        if (!TryReadOriginalAmount(out amount))
+        { valid = false; }
         if (EditingCost && string.IsNullOrWhiteSpace(Title)) { TitleError = translator["HouseholdCost_TitleRequired"]; valid = false; }
         if (Payer is null && (!UsesSharedCash || EditingSettlement) || EditingSettlement && (Recipient is null || Recipient.Source.Id == Payer?.Source.Id) ||
             EditingCost && IsRefund && RefundOriginal is null || UsesSharedCash && Movement is null)
         { ReferenceError = translator["HouseholdCost_ReferencesRequired"]; valid = false; }
         var costId = editingCost ?? Guid.CreateVersion7(); var allocations = new List<HouseholdCostAllocation>();
-        if (EditingCost && currency is not null)
+        if (EditingCost && Core.Money.Currencies.TryGet(CurrencyCode, out _))
         {
             foreach (var row in Shares.Where(row => !string.IsNullOrWhiteSpace(row.Text)))
             {
-                if (!MoneyText.TryParse(row.Text, currency, row.InputCulture, out var share) || share < 0)
-                { row.Error = translator["Amount_Invalid"]; valid = false; }
+                if (!row.TryRead(CurrencyCode, out var share))
+                { row.Error = row.IsCurrent(CurrencyCode) ? translator["Amount_Invalid"]
+                    : translator.Format("Plan_InputUnitChanged", MoneyText.UnitName(CurrencyCode)); valid = false; }
                 else allocations.Add(new() { CostId = costId, ContactId = row.Contact.Id, Amount = share });
             }
             if (allocations.Count == 0 || allocations.Sum(row => (decimal)row.Amount) != amount)
             { SharesError = translator["HouseholdCost_SumRequired"]; valid = false; }
         }
         if (!valid) return;
-        if (!await Confirm("HouseholdCost_SaveConfirm")) return; access.Validate();
-        if (EditingCost)
-            await store.SaveCostAsync(review, new(costId) { Title = Title.Trim(), Date = Date, Amount = amount, CurrencyCode = CurrencyCode,
+        var reviewed = review; var stamp = EditorStamp(); var currencyCode = CurrencyCode; var isCost = EditingCost;
+        var cost = isCost ? new HouseholdCost(costId) { Title = Title.Trim(), Date = Date, Amount = amount, CurrencyCode = currencyCode,
                 Kind = IsRefund ? HouseholdCostKind.Refund : HouseholdCostKind.Expense, PaymentKind = UsesSharedCash ? HouseholdPaymentKind.SharedAccount : HouseholdPaymentKind.Private,
                 PaidByContactId = UsesSharedCash ? null : Payer!.Source.Id, EntryId = UsesSharedCash ? Movement!.Source.Id : null,
-                RefundOfCostId = IsRefund ? RefundOriginal!.Source.Id : null, Note = Empty(Note) }, allocations, ct);
-        else
-            await store.SaveSettlementAsync(review, new(editingSettlement ?? Guid.CreateVersion7()) { FromContactId = Payer!.Source.Id, ToContactId = Recipient!.Source.Id,
-                Date = Date, Amount = amount, CurrencyCode = CurrencyCode, EntryId = UsesSharedCash ? Movement?.Source.Id : null,
-                UsesDestinationAmount = UsesSharedCash && UsesDestinationAmount, Note = Empty(Note) }, ct);
+                RefundOfCostId = IsRefund ? RefundOriginal!.Source.Id : null, Note = Empty(Note) } : null;
+        var settlement = !isCost ? new HouseholdSettlement(editingSettlement ?? Guid.CreateVersion7()) { FromContactId = Payer!.Source.Id, ToContactId = Recipient!.Source.Id,
+                Date = Date, Amount = amount, CurrencyCode = currencyCode, EntryId = UsesSharedCash ? Movement?.Source.Id : null,
+                UsesDestinationAmount = UsesSharedCash && UsesDestinationAmount, Note = Empty(Note) } : null;
+        bool Current() => visible is not null && !ct.IsCancellationRequested && ReferenceEquals(review, reviewed)
+            && stamp == EditorStamp() && !_amountInput.NeedsReview(currencyCode) && Shares.All(row => row.IsCurrent(currencyCode));
+        if (!await Confirm("HouseholdCost_SaveConfirm")) return; access.Validate();
+        if (!Current()) throw new InvalidOperationException("The original household financial draft changed during consent.");
+        if (isCost) await store.SaveCostAsync(reviewed, cost!, allocations, ct, Current);
+        else await store.SaveSettlementAsync(reviewed, settlement!, ct, Current);
+        AcceptEditor();
         access.Validate(); await environment.PublishAppliedAsync(ct); await ReadAsync(access, ct); ClearEditor();
     });
     [RelayCommand] private Task DeleteAsync() => RunAsync(async (access, ct) =>
@@ -224,6 +316,7 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
         access.Validate();
         if (editingCost is { } cost) await store.DeleteCostAsync(review, cost, ct);
         else await store.DeleteSettlementAsync(review, editingSettlement!.Value, ct);
+        AcceptEditor();
         access.Validate(); await environment.PublishAppliedAsync(ct); await ReadAsync(access, ct); ClearEditor();
     });
 
@@ -237,7 +330,8 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
         foreach (var contact in review!.Contacts.Where(contact => !contact.IsArchived || review.Allocations.Any(share => share.CostId == row?.Id && share.ContactId == contact.Id)))
         {
             var share = review.Allocations.SingleOrDefault(share => share.CostId == row?.Id && share.ContactId == contact.Id);
-            Shares.Add(new(contact, inputCulture) { Text = share is null ? "" : MoneyText.ForInput(share.Amount, CurrencyCode, inputCulture) });
+            Shares.Add(new(contact, inputCulture, CurrencyCode, () => localization.CurrentCulture, translator)
+                { Text = share is null ? "" : MoneyText.ForInput(share.Amount, CurrencyCode, inputCulture) });
         }
         SelectOriginalMovement(row?.EntryId); Refresh();
     }
@@ -251,7 +345,7 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
         SelectOriginalMovement(row?.EntryId); Refresh();
     }
     private async Task ReadAsync(PersonalSyncAccess access, CancellationToken ct)
-    { var next = await store.ReadAsync(ct); access.Validate(); ct.ThrowIfCancellationRequested(); review = next; ready = true; Publish(); }
+    { var next = await store.ReadAsync(ct); access.Validate(); ct.ThrowIfCancellationRequested(); review = next; ready = true; needsRefresh = false; Publish(); }
     private void SelectOriginalMovement(Guid? id)
     {
         if (id is null) return;
@@ -265,13 +359,14 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
             NativeDigits.Apply(MoneyText.Format(row.Amount, row.CurrencyCode, localization.CurrentCulture)));
         var destination = row.DestinationAmount ?? (row.DestinationCurrencyCode == row.CurrencyCode ? row.Amount : (long?)null);
         if (destination is { } amount && row.DestinationCurrencyCode is { } currency)
-            text += " · " + translator.Format("HouseholdCost_DestinationValue", NativeDigits.Apply(MoneyText.Format(amount, currency, localization.CurrentCulture)));
+            text += " Â· " + translator.Format("HouseholdCost_DestinationValue", NativeDigits.Apply(MoneyText.Format(amount, currency, localization.CurrentCulture)));
         return text;
     }
     partial void OnCurrencyCodeChanged(string value)
     {
         // A currency change is a new amount decision, never a relabel of retained numeric drafts.
-        AmountText = ""; foreach (var row in Shares) row.Text = ""; Movement = null; Movements.Clear();
+        _amountInput.Initialize("", value, localization.CurrentCulture); AmountText = "";
+        foreach (var row in Shares) row.ResetCurrency(value); Movement = null; Movements.Clear(); RefreshMoneyTexts();
     }
     partial void OnDateChanged(DateOnly value) { Movement = null; Movements.Clear(); }
     partial void OnIsRefundChanged(bool value) { Movement = null; Movements.Clear(); }
@@ -308,17 +403,17 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
     }
     private async Task RunAsync(Func<PersonalSyncAccess, CancellationToken, Task> action, bool allowCovered = false)
     {
-        if (visible is null || IsBusy || !ready && !allowCovered) return;
-        IsBusy = true; errorKey = null; Refresh();
+        if (visible is null || IsBusy || (!ready || needsRefresh) && !allowCovered) return;
+        IsBusy = true; errorKey = null; committedInAction = false; Refresh();
         try
         {
             var access = environment.Capture(); using var linked = CancellationTokenSource.CreateLinkedTokenSource(access.Cancellation, visible.Token);
             await action(access, linked.Token); access.Validate();
         }
-        catch (OperationCanceledException) { }
-        catch (HouseholdCostRejectedException) { errorKey = "HouseholdCost_InvalidGraph"; }
-        catch (HouseholdWriteRejectedException) { errorKey = "HouseholdCost_ReadOnly"; }
-        catch (Exception error) when (error is not OutOfMemoryException) { errorKey = "HouseholdCost_ActionFailed"; }
+        catch (OperationCanceledException) { if (committedInAction) Failed("HouseholdCost_ActionFailed"); }
+        catch (HouseholdCostRejectedException) { Failed("HouseholdCost_InvalidGraph"); }
+        catch (HouseholdWriteRejectedException) { Failed("HouseholdCost_ReadOnly"); }
+        catch (Exception error) when (error is not OutOfMemoryException) { Failed("HouseholdCost_ActionFailed"); }
         finally { IsBusy = false; Refresh(); }
     }
     private Task<bool> Confirm(string key) => interaction.ConfirmAsync(translator["HouseholdCost_Title"], translator[key], translator["Common_Save"], translator["Common_Cancel"]);
@@ -329,7 +424,7 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
         Payer = Recipient = null; RefundOriginal = null; Movement = null; Shares.Clear(); Movements.Clear();
         TitleError = AmountError = ReferenceError = SharesError = null;
     }
-    private void TranslationChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs args) { Publish(); Refresh(); }
+    private void TranslationChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs args) { Publish(); RefreshMoneyTexts(); Refresh(); }
     private void Refresh()
     { foreach (var property in new[] { nameof(IsReady), nameof(CanWrite), nameof(CanInteract), nameof(CanLeave), nameof(CanDelete), nameof(Error) }) OnPropertyChanged(property); }
 }

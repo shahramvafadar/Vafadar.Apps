@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Preserve original secondary amounts (D-436)
+
+- Keep goal contributions, assumed prices, plan payments and household amounts in their original format and units.
+- Require full clearing and reentry after a currency or unit change; show the reason beside the field.
+- Preserve estimates and forecast prompts through display changes without creating cash entries.
+- Keep a completed save final when its notification or refresh fails.
+- Publish a changed display unit only after its settings save succeeds, and keep long unit actions readable.
+
 ### Keep holding amounts in their original units (D-435)
 
 - Preserve the original format and unit of purchase/sale amounts, fees, basis and manual prices.

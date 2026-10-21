@@ -134,7 +134,11 @@ internal static partial class DebugSnapshots
         }
         if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "plan-form")
         {
-            if (Environment.GetEnvironmentVariable("VAFADAR_HOLDING_MONEY_REVIEW") == "1") await ReviewHoldingMoneyWindowsAsync(app, services, folder);
+            if (Environment.GetEnvironmentVariable("VAFADAR_SECONDARY_HOUSEHOLD_REVIEW") == "1") await ReviewSecondaryHouseholdWindowsAsync(app, services, folder);
+            else if (Environment.GetEnvironmentVariable("VAFADAR_SECONDARY_SETTINGS_REVIEW") == "1") await ReviewSecondarySettingsWindowsAsync(app, services, folder);
+            else if (Environment.GetEnvironmentVariable("VAFADAR_SECONDARY_FIELDS_REVIEW") == "1") await ReviewSecondaryFieldsWindowsAsync(app, services, folder);
+            else if (Environment.GetEnvironmentVariable("VAFADAR_SECONDARY_UNITS_REVIEW") == "1") await ReviewSecondaryUnitsWindowsAsync(app, services, folder);
+            else if (Environment.GetEnvironmentVariable("VAFADAR_HOLDING_MONEY_REVIEW") == "1") await ReviewHoldingMoneyWindowsAsync(app, services, folder);
             else if (Environment.GetEnvironmentVariable("VAFADAR_ACCOUNT_MONEY_REVIEW") == "1") await ReviewAccountMoneyWindowsAsync(app, services, folder);
             else if (Environment.GetEnvironmentVariable("VAFADAR_ENTRY_MONEY_REVIEW") == "1") await ReviewEntryMoneyWindowsAsync(app, services, folder);
             else if (Environment.GetEnvironmentVariable("VAFADAR_GOAL_BUDGET_MONEY_REVIEW") == "1") await ReviewGoalBudgetMoneyWindowsAsync(app, services, folder);

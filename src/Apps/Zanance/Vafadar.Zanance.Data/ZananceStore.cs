@@ -117,13 +117,14 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     private async Task<ZananceSettings> GetSettingsCoreAsync(Vafadar.Data.DatabaseAccessGate.ExclusiveLease? owner,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken, Action<ZananceDbContext, ZananceSettings>? captured = null)
     {
         await using var db = owner is null ? await contextFactory.CreateDbContextAsync(cancellationToken)
             : await ((Vafadar.Data.ILocalDbContextFactory<ZananceDbContext>)contextFactory).CreateDbContextAsync(owner, cancellationToken);
         var settings = await SettingsRowReader.ReadAsync(db, cancellationToken);
         if (settings is not null)
         {
+            captured?.Invoke(db, settings);
             return settings;
         }
 
@@ -134,6 +135,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             settings = await SettingsRowReader.ReadAsync(db, cancellationToken);
             if (settings is not null)
             {
+                captured?.Invoke(db, settings);
                 return settings;
             }
 
@@ -147,6 +149,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         }
 
         OnChanged();
+        captured?.Invoke(db, settings);
         return settings;
     }
 

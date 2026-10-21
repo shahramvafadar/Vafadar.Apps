@@ -4117,7 +4117,7 @@ publication gates remain unchanged.
 ### Next complete secondary monetary-input batch (D-436)
 
 Audit and reproduce the remaining secondary money-entry boundaries in goal contributions/assumptions,
-forecast assumptions, display-unit calibration, occurrence/settlement input and shared-cost editing.
+forecast assumptions, display-unit definition publication, occurrence/settlement input and shared-cost editing.
 Inspect actual submitted raw values and pending native prompts rather than inferring safety from an
 ambient culture variable. Retain original currency/unit/culture through awaits, explicit review and
 original atomic writers. Estimates never become ledger entries, and known acceptance never rearms.
@@ -4125,3 +4125,104 @@ Complete the whole affected batch, including actual native paths and original so
 do not replay the completed D-435 matrix or unrelated successful backend/security checks. Physical
 holding-type and plain decimal-rate inputs remain separate following numeric boundaries. D-386's
 deferred stability/accessibility order and external provider/account/device/release gates stand.
+
+### D-436 in progress - Original goal and settlement source boundaries
+
+Six original failures are reproduced. Original contribution/assumption and settlement parsers,
+explicit reentry, invalid nonblank assumption refusal and original goal-writer/accepted-result guards
+now pass22 distinct new and69 affected prior cases selectively. Strict Windows compilation passes;
+native review, remaining secondary inputs, Android/APK and final delivery are unfinished. Preserve
+the original failures and do not count source checks as platform acceptance. See the
+[in-progress evidence and remaining batch requirements](../../quality/secondary-money-context.md).
+
+The source continuation now includes the actual forecast prompt's fixed original unit/format and
+essential-estimate draft/selective original-file writer, with accepted outcome and profile/restore
+guards. Occurrence payment/override parser and field captions are integrated at this checkpoint; subsequent
+writer and native-process evidence follows below. This checkpoint totals62 new and135 affected prior source cases,
+with no new full-suite baseline. Source successes do not close running-app or release gates.
+
+The next source/runtime continuation passes87 distinct new and149 affected prior managed cases.
+Original occurrence file/currency/target and pending-owner checks are integrated. Original household
+amount/share inputs preserve their own meanings while explicit currency selection still clears them.
+Submitted shared-cost proposals are frozen through native consent and accepted forms retire before
+fallible follow-up. Four distinct boundaries pass over the retained actual protected household Editor,
+including genuinely changed-row rollback and accepted-result recovery without financial replay.
+Windows and the independent protected caller compile without warnings/errors. Visual native matrices,
+display-unit publication audit, final Android/APK, canonical closure and push remain unfinished;
+source/native-process evidence does not close rendered UI, device or release gates.
+
+The actual display-unit definition audit reproduces one further original SQLite-failure/global-publication
+defect. The original selective file/settings writer now publishes only known durable acceptance; its
+actual page retains consent/native lifetime and post-commit typing, and explicit readback applies the
+saved units without resave. Twelve new distinct cases pass, bringing D-436 source evidence to99 new
+and149 affected prior cases. No editable monetary calibration is invented. Final native interface
+qualification, Android/APK, canonical complete documentation and push remain open for this batch.
+
+Windows unit-definition qualification now preserves91 distinct observations across18 contexts, including
+18 caption-only views of the original accepted outcome. One native unit definition is saved; failed
+writes/readback and18 native Toman suggestions preserve original financial state. An actual clipped
+Toman caption is fixed using the existing growing action, then checked in every final context. All50
+source table sets retain original facts except the explicit unit property/UpdatedAt; no ledger/account
+rows exist. Earlier success and accepted action are retained through exact continuations. Windows and
+Android Debug compile without warnings/errors. The independent Android unit caller is prepared, not
+runtime-qualified. Goal/estimate/forecast/occurrence/settlement/shared-cost native presentation, final
+Android/APK and full documented delivery remain open; no new full-suite/device/release claim is made.
+
+Goal contribution/assumption, occurrence payment/override and final-bill native qualification now
+preserves149 distinct Windows observations over18 contexts. Five declared actions are accepted once;
+ledger amounts234/400/1000 and earmark1234 match actual storage, with all50 table sets preserved after
+its final checkpoint. A completed bill's Task-identity observer failure is resolved by exact unchanged
+source readback, never another Save; its missing original post-Save frame is not invented. One new
+field-local bill source case passes without a product change, giving100 new/149 prior selective cases.
+Current independent Windows compilation is warning-free. Settings/forecast/shared-cost native review,
+Release/AOT Android, final signed Offline APK and complete documented commit/push remain unfinished.
+
+
+D-436 native presentation checkpoint: all four Windows groups are complete (91 unit definition,
+149 goal/price/occurrence/bill,73 Settings/actual native forecast prompt and54 original protected
+household observations;367 distinct native observations, not managed cases). One estimate metadata
+Save and36 prompt outcomes are checked without accepted-action replay; all49 non-Settings tables
+remain unchanged. Original protected household membership and all50 table sets remain unchanged,
+with no accepted cost/repayment Save or HTTP. The native observer currency/count errors are retained
+and corrected without altering financial fixtures. Managed counts stay100 new/149 affected prior.
+Strict Android Debug and independent complete Offline Release/AOT builds pass without warnings;
+actual Android qualification is in progress after correcting startup observation order. Final native
+Android, complete Main APK/upgrade and whole-batch documented commit/push are still open. See
+quality/secondary-money-context.md. D-386 and all external acceptance gates remain unchanged.
+
+
+D-436 follow-up: image review finds one real missing main-amount unit-error publication in shared
+cost/repayment forms. One actual-source case first fails then passes;101 new/149 affected prior
+cases now pass,17 source defects reproduced overall. Only36 affected Windows states are repeated
+on the same protected source, all50 table sets unchanged;18 original format observations are kept.
+Final applicable Windows observations are367, with36 superseded frames retained as history.
+Independent Release/AOT Android units31, secondary fields53 and Settings/native prompts25 complete
+with original accepted actions once each;109 observations, not managed cases. The original complete
+unit report corrects the mistaken blank-window/wait diagnosis; a later source guard refuses replay.
+Main stays the same D-435 APK/PID10762 and Home0.00EUR; OS baseline is unchanged and Samsung untouched.
+Remaining: actual protected household Android presentation, final signed Offline Main APK/upgrade,
+canonical whole-batch docs and verified commit/push/one CI check. This batch is not yet delivered.
+
+## D-436 - Complete secondary monetary source/native batch
+
+Goal contribution/assumed price, essential estimate, actual forecast prompt, occurrence payment/
+override, settlement bill, shared cost/repayment/shares and durable display-unit publication retain
+original raw meaning and actual writer ownership. Known acceptance cannot be replayed through a
+failed observer/readback.101 new distinct actual-source cases and149 affected prior cases pass;
+17 source defects are reproduced.367 applicable Windows and127 independent Release/AOT Android
+observations complete with accepted actions preserved, no unrelated suite/financial replay.
+The final18 household observations use real new native signed membership; all old revoked devices
+remain refused, their exact original APK is restored, and all50 protected source table sets remain
+unchanged. Independent fictional setup has no cash ledger entries. See quality/secondary-money-context.md.
+
+Final strict platform/independent builds and complete signed Offline APK are warning/error free.
+Main upgrades without reset; final native readback is recorded in the linked evidence. Commit/push
+and the one CI check follow the complete final review. No full-suite baseline or device/release
+acceptance is invented from these observations.
+
+Next separate ready development: physical holding-type quantity and plain decimal-rate input
+contexts, including pending native interaction and original stored writer boundaries. Do not replay
+D-436 monetary matrices or completed backend/security checks. Dedicated Android ANR/crash and
+accessibility completion remain after ready feature development under D-386; Windows commercial
+product delivery remains outside this work list. Owner/company/provider/Mac/Store/publication gates
+remain explicit external acceptance, not grounds to idle or reopen settled product choices.
