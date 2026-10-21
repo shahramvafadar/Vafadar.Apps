@@ -98,9 +98,15 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Fresh original transaction detail fixture required.");
                 await WriteReportAsync(root, phase, await ReviewEntryDetailAsync(app, services, root, comparison!, ct), ct);
             }
+            else if (phase == "home-goals-worker")
+            {
+                if (!Directory.Exists(root) || RedirectedAncestors(root).Length != 0)
+                    throw new ReviewCheckException("Retained original Home goal source required.");
+                await WriteReportAsync(root, phase, await ReviewHomeGoalsWorkerAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "currency-focus")
             {
-                if (Package == "pro.vafadar.zanance.currencyfocusreview") Directory.CreateDirectory(root);
+                if (AppInfo.Current.PackageName == "pro.vafadar.zanance.currencyfocusreview") Directory.CreateDirectory(root);
                 if (!Directory.Exists(root) || RedirectedAncestors(root).Length != 0)
                     throw new ReviewCheckException("Retained original currency source required.");
                 await WriteReportAsync(root, phase, await ReviewCurrencyFocusAsync(app, services, root, comparison!, ct), ct);

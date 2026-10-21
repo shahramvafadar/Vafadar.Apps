@@ -1,3 +1,5 @@
+using System.Collections.Concurrent;
+using System.Diagnostics.Tracing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Localization.Formatting;
@@ -82,6 +84,86 @@ public sealed class GoalViewFlowTests
         Assert.Equal(expected.Pinned, actual.Pinned); Assert.Equal(expected.Attention, actual.Attention);
         await store.ValidateHomeSnapshotAsync(captured, Ct);
         Assert.Equal(before, await RowsAsync(f));
+    }
+
+    /// <summary>The covered asynchronous Home projection retains all original financial rows and localized output.</summary>
+    [Theory, InlineData("en"), InlineData("fa"), InlineData("de"), Trait("AT", "AT-283")]
+    public async Task Worker_home_projection_preserves_original_goal_packets_and_complete_source(string language)
+    {
+        using var f = new FlowFixture(); var seed = await SeedAsync(f); Enable(f, seed);
+        await ChooseAsync(seed, seed.Items[0].Id);
+        f.Localization.SetLanguage(f.Localization.SupportedLanguages.First(item => item.CultureName == language));
+        var day = DateOnly.FromDateTime(f.Time.Now.DateTime); var before = await RowsAsync(f);
+        var store = new ZananceStore(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>(), f.Time, seed.Access);
+        var captured = await store.GetHomeSnapshotAsync(day, 0, Ct);
+        var expected = GoalHomeProjection.Project(captured, seed.Presenter, f.Translator, day);
+        var actual = await GoalHomeProjection.ProjectAsync(captured, seed.Presenter, f.Translator, day, Ct);
+        Assert.Equal(expected.Pinned, actual.Pinned); Assert.Equal(expected.Attention, actual.Attention);
+        await store.ValidateHomeSnapshotAsync(captured, Ct);
+        Assert.Equal(before, await RowsAsync(f));
+    }
+
+    /// <summary>An already cancelled Home calculation cannot produce a new presentation or write original rows.</summary>
+    [Fact, Trait("AT", "AT-283")]
+    public async Task Cancelled_worker_home_projection_returns_no_presentation_and_keeps_original_source()
+    {
+        using var f = new FlowFixture(); var seed = await SeedAsync(f); Enable(f, seed);
+        var day = DateOnly.FromDateTime(f.Time.Now.DateTime); var before = await RowsAsync(f);
+        var captured = await f.Store.GetHomeSnapshotAsync(day, 0, Ct);
+        using var cancelled = new CancellationTokenSource(); cancelled.Cancel();
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
+            GoalHomeProjection.ProjectAsync(captured, seed.Presenter, f.Translator, day, cancelled.Token));
+        Assert.Equal(before, await RowsAsync(f));
+    }
+
+    /// <summary>The original goal evaluator actually starts on a worker, independently of its calling presentation thread.</summary>
+    [Fact, Trait("AT", "AT-283")]
+    public async Task Home_goal_financial_evaluation_runs_outside_its_original_calling_thread()
+    {
+        using var f = new FlowFixture(); var seed = await SeedAsync(f);
+        var day = DateOnly.FromDateTime(f.Time.Now.DateTime);
+        var captured = await f.Store.GetHomeSnapshotAsync(day, 0, Ct);
+        using var starts = new GoalTaskStarts();
+        var dispatched = new TaskCompletionSource<Task<IReadOnlyList<GoalProgress>>>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var callerId = 0;
+        var caller = new Thread(() =>
+        {
+            try
+            {
+                callerId = Environment.CurrentManagedThreadId;
+                dispatched.SetResult(seed.Presenter.EvaluateHomeAsync(captured, day, Ct));
+            }
+            catch (Exception error) { dispatched.SetException(error); }
+        }) { IsBackground = true };
+        caller.Start();
+        var calculation = await dispatched.Task.WaitAsync(Ct);
+        var actual = await calculation;
+        Assert.True(caller.Join(TimeSpan.FromSeconds(5)));
+        Assert.True(starts.Started.TryGetValue(calculation.Id, out var workerId));
+        Assert.NotEqual(callerId, workerId);
+        Assert.Equal(GoalProgressService.Evaluate(captured.Goals.Goals, captured.Goals.Allocations,
+            captured.QuickResources.Accounts, captured.Entries, captured.Goals.ContributionPlans,
+            day, captured.AssetEvents, captured.AssetTypes), actual);
+    }
+
+    /// <summary>Observes public task-start identities only; it captures no application values or stack/memory state.</summary>
+    private sealed class GoalTaskStarts : EventListener
+    {
+        internal ConcurrentDictionary<int, int> Started { get; } = new();
+        protected override void OnEventSourceCreated(EventSource eventSource)
+        {
+            if (eventSource.Name == "System.Threading.Tasks.TplEventSource")
+                EnableEvents(eventSource, EventLevel.Verbose, EventKeywords.All);
+        }
+        protected override void OnEventWritten(EventWrittenEventArgs eventData)
+        {
+            if (eventData.EventName != "TaskStarted" || eventData.PayloadNames is not { } names
+                || eventData.Payload is not { } values)
+                return;
+            var index = names.IndexOf("TaskID");
+            if (index >= 0 && values[index] is int id && Started is { } started)
+                started.TryAdd(id, Environment.CurrentManagedThreadId);
+        }
     }
 
     private static async Task OpenAsync(Seed s, int index)

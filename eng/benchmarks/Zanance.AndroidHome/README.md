@@ -777,3 +777,12 @@ Both use actual native name/currency input connections, owned popup USD selectio
 Do not rerun a complete scope. Normal system font1 and app English/Light are required; never alter
 phone OS settings or bypass authentication. A compiled signed probe is not phone acceptance. See
 src/Apps/Zanance/docs/quality/currency-input-focus-boundary.md for original evidence and limits.
+
+## Home goal worker qualification (D-446)
+
+home-goals-worker requires the retained original secondary-fields run and all five accepted receipts,
+plus a fresh review_pass. It reads the actual existing active goals, compares original synchronous
+output with complete Home publication and verifies original source/base equality. en/fa/de each
+have a unique immutable receipt. No accepted seed, contribution, bill or payment runs. A scope
+already completed under that pass refuses replay. These finite observations do not measure a
+speedup or establish general ANR/cold/low-memory acceptance. See the scoped quality evidence.

@@ -8171,3 +8171,15 @@ requested exclusive coordination reply. Historical D-422 phone cause remains unp
 app/APK and managed baseline remain D-440; no successful financial action or geometry is replayed.
 
 See [currency focus evidence](quality/currency-input-focus-boundary.md).
+
+## D-446 - Move original Home goal progress off the window thread
+
+The unchanged pure goal evaluator now runs on a worker; original metadata/formatting and covered,
+current-owner publication remain on the caller. Five new and three affected prior cases pass
+selectively, including actual task/thread identity and complete original goal output/source equality.
+Three native Home contexts on two retained active goals preserve source/base rows and window-thread
+publication; no accepted seed or payment is replayed. Strict Windows/Android/independent builds and
+complete signed Offline Main upgrade pass without warnings. Original Main Home139 nodes and OS
+remain; no general ANR/crash/two-second/low-memory or phone/iOS/release acceptance is inferred.
+
+See [Home goal worker evidence](quality/home-goal-worker.md).

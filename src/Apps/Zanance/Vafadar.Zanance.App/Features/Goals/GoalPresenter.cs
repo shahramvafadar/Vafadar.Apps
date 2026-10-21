@@ -91,6 +91,20 @@ public sealed class GoalPresenter(Translator translator, IDateFormatter dates, I
             today, snapshot.AssetEvents, _types);
     }
 
+    /// <summary>Evaluates the original complete Home finances on a worker while retaining row formatting on its caller.</summary>
+    public Task<IReadOnlyList<GoalProgress>> EvaluateHomeAsync(Data.HomeReadSnapshot snapshot, DateOnly today,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        cancellationToken.ThrowIfCancellationRequested();
+        // Home owns this presenter for its serialized covered refresh. Set its row metadata on the caller;
+        // the worker reads only the original immutable-in-use packet and never touches localized/UI state.
+        _types = snapshot.AssetTypes;
+        return Task.Run(() => GoalProgressService.Evaluate(snapshot.Goals.Goals, snapshot.Goals.Allocations,
+            snapshot.QuickResources.Accounts, snapshot.Entries, snapshot.Goals.ContributionPlans,
+            today, snapshot.AssetEvents, snapshot.AssetTypes), cancellationToken);
+    }
+
     /// <summary>Returns an amount of a goal: money, or the quantity of its holding in the holding's unit.</summary>
     public string Amount(Goal goal, long value)
     {

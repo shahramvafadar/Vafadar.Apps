@@ -2297,3 +2297,9 @@ the actual owned modal-root focus before typing; opening a list is not proof of 
 Observe the real filtered row and selected currency independently. Matching emulator reproduction
 does not establish the historical Samsung cause. No shipping interaction is changed in this batch.
 See [evidence](quality/currency-input-focus-boundary.md).
+
+## D-446 - Keep Home goal computation away from input/rendering
+
+Compute complete original goal progress on a worker, then format/publish on the original window
+context under the existing cover and owner check. The scheduling change does not change goal rows,
+colors, scaling, source meaning or any financial result. It is not general ANR acceptance.

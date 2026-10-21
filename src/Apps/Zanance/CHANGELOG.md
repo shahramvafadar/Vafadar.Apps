@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep Home responsive while evaluating goals (D-446)
+
+- Calculate original goal progress away from the window thread while preserving amounts, warnings and availability.
+- Keep formatting and covered publication on the original window, and retain the current-page guard.
+- Verify focused source/native cases and a complete signed offline upgrade; general stability and speed targets remain open.
+
 ### Verify currency-search input ownership (D-445)
 
 - Diagnose the difference between opening the currency list and focusing its search input on the emulator.

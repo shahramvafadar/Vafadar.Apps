@@ -4372,3 +4372,19 @@ See [currency focus evidence](../../quality/currency-input-focus-boundary.md).
 Next: direct physical USD focus/query only after the exclusive phone turn; preserve the completed
 emulator scenes and D-422 opening/move. Other supported stability/audible/platform/external gates
 remain separate; no duplicate financial acceptance or rejected runtime experiment.
+
+### D-446 - Move original Home goal progress off the window thread
+
+The unchanged pure goal evaluator now runs on a worker; original metadata/formatting and covered,
+current-owner publication remain on the caller. Five new and three affected prior cases pass
+selectively, including actual task/thread identity and complete original goal output/source equality.
+Three native Home contexts on two retained active goals preserve source/base rows and window-thread
+publication; no accepted seed or payment is replayed. Strict Windows/Android/independent builds and
+complete signed Offline Main upgrade pass without warnings. Original Main Home139 nodes and OS
+remain; no general ANR/crash/two-second/low-memory or phone/iOS/release acceptance is inferred.
+
+See [Home goal worker evidence](../../quality/home-goal-worker.md).
+
+Next: direct D-445 physical USD qualification after coordinated phone availability; supported
+remaining stability/performance/audible/platform and genuine external release gates stay open.
+Do not replay completed goal, monetary, header, rate or protected-household observations.

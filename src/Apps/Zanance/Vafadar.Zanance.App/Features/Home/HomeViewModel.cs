@@ -469,7 +469,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
 
         ReimbursementText = facts.OpenReimbursementCount == 0 ? null : _translator.Format("Home_Reimbursements", facts.OpenReimbursementCount);
         LoadDataAttention(settings, allAccounts, entries, today);
-        LoadGoals(snapshot, today);
+        await LoadGoalsAsync(snapshot, today);
         RequireCurrentPublication();
         LoadHoldings(snapshot, today);
         RequireCurrentPublication();
@@ -625,9 +625,11 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     private Task OpenHoldingsAsync() => Shell.Current.GoToAsync(AppShell.HoldingsRoute);
 
     // Pinned goals with progress and the estimate of the plan, only when valid (ZEX-GO06, GO07). Paused goals leave Home.
-    private void LoadGoals(HomeReadSnapshot snapshot, DateOnly today)
+    private async Task LoadGoalsAsync(HomeReadSnapshot snapshot, DateOnly today)
     {
-        var view = Goals.GoalHomeProjection.Project(snapshot, _goalPresenter, _translator, today);
+        // The original goal evaluator scans full ledger/holding history even for only two pinned rows.
+        // Keep that calculation off the window thread; a departed page still refuses publication below.
+        var view = await Goals.GoalHomeProjection.ProjectAsync(snapshot, _goalPresenter, _translator, today);
         RequireCurrentPublication();
         PinnedGoals.Clear();
         foreach (var row in view.Pinned) PinnedGoals.Add(row);

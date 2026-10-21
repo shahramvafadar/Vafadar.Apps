@@ -3382,3 +3382,12 @@ sources and accepted receipts. A separate empty-source probe creates no financia
 select only in an unsaved actual draft and use actual Cancel/Discard. Completed native scenes are
 not replayed. Emulator reproduction does not establish historical physical cause. Phone input waits
 for an explicit coordinated free turn; elapsed time is not a reply. D-386/external gates remain.
+
+## D-446 - Original Home goal evaluation and publication
+
+Keep pure complete-ledger goal progress on a worker. Retain captured presenter metadata on its
+serialized caller; format/publish on that caller's window context and require current ownership
+before publication. Preserve original snapshot/file/work validation and financial algorithms.
+Qualify against exact retained sources without new accepted seeds/payments; keep task/thread
+metadata distinct from native rendering and speed/ANR acceptance. Correct only failed observers
+against original receipts and do not repeat completed scopes. External/D-386 gates stand.

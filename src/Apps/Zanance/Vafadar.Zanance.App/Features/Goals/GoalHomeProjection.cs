@@ -31,6 +31,16 @@ public static class GoalHomeProjection
         return Project(snapshot.Goals, presenter, translator, presenter.Evaluate(snapshot, today));
     }
 
+    /// <summary>Computes original financial progress off the window thread, then formats the same rows on its caller.</summary>
+    public static async Task<GoalHomeView> ProjectAsync(HomeReadSnapshot snapshot, GoalPresenter presenter,
+        Translator translator, DateOnly today, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        var progress = await presenter.EvaluateHomeAsync(snapshot, today, cancellationToken);
+        cancellationToken.ThrowIfCancellationRequested();
+        return Project(snapshot.Goals, presenter, translator, progress);
+    }
+
     private static GoalHomeView Project(GoalWorkSnapshot snapshot, GoalPresenter presenter, Translator translator,
         IReadOnlyList<GoalProgress> progress)
     {
