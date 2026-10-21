@@ -190,7 +190,10 @@ public sealed class HoldingTypeFlowTests
         if (field == "purity") editor.PurityText = "invalid purity";
         if (field == "weight") editor.UnitWeightText = "invalid weight";
         var before = await GoalChooserFlowTests.SnapshotAsync(f); await editor.SaveCommand.ExecuteAsync(null);
-        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.NotNull(editor.Error); Assert.True(editor.CanSave);
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.True(editor.CanSave);
+        var visibleError = field switch { "name" => editor.NameError, "purity" => editor.PurityError, _ => editor.UnitWeightError };
+        var message = field switch { "name" => "AssetType_NameRequired", "purity" => "AssetType_PurityInvalid", _ => "AssetType_WeightInvalid" };
+        Assert.Equal(f.Translator[message], visibleError);
         if (field == "purity") Assert.Equal("invalid purity", editor.PurityText);
         if (field == "weight") Assert.Equal("invalid weight", editor.UnitWeightText);
         editor.Name = "Corrected original"; editor.PurityText = "18"; editor.UnitWeightText = "8.133";

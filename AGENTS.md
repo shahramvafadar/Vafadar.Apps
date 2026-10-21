@@ -3279,3 +3279,17 @@ second-currency money is not unknown value. Manual-price Refresh never relabels 
 Final native action counts require actual source rows, including Manual versus automatic Purchase
 valuation. Preserve completed scenes and accepted metadata/financial results; continue only missing
 work from exact checkpoints. D-386 priorities and external gates remain unchanged.
+
+
+## D-437 - Physical quantities and plain manual-rate ownership
+
+Keep free purity and per-item gram weight in independent immutable original numeric cultures through
+partial typing/display changes; only full clearing renews a field. Use value-specific guides, original
+examples and simultaneous field-local errors. Manual ratios retain original decimal grammar, pair,
+actual file and immutable reviewed rate facts through asynchronous reads/consent/atomic writes,
+including changed-and-returned raw input. A known typed acceptance consumes its raw draft before
+fallible notifications/readback; explicit Refresh is read-only. Display complete decimal precision,
+including delete consent, and put the estimate badge on its own growing row. Do not apply money
+display-unit multipliers or convert prior ledger amounts. Native continuations retain complete source
+checkpoints, original accepted actions and successful frames; source-proven caption-only reviews
+are explicitly read-only and never claim reconstructed native acceptance. D-386/external gates stand.

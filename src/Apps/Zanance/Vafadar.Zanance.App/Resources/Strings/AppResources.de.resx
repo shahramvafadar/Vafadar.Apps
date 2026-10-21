@@ -8429,4 +8429,22 @@ Original-XML SHA-256: {5}</value>
   <data name="Unit_SavedFollowUpFailed" xml:space="preserve">
     <value>Die Einheitenänderung wurde gespeichert, aber die Anzeige konnte nicht vollständig aktualisiert werden. Wiederhole die Änderung nicht; öffne diese Seite erneut.</value>
   </data>
+  <data name="Rates_OriginalPairChanged" xml:space="preserve">
+    <value>Diese Eingabe gilt für {0} → {1}. Lösche sie vollständig, bevor du einen Kurs für ein anderes Paar eingibst.</value>
+  </data>
+  <data name="Rates_SourceChanged" xml:space="preserve">
+    <value>Das ursprüngliche Profil oder die geprüften Kurse wurden geändert. Lade die Seite neu und gib diesen Kurs nach vollständigem Löschen erneut ein.</value>
+  </data>
+  <data name="Rates_SavedFollowUpFailed" xml:space="preserve">
+    <value>Die Kursänderung wurde gespeichert, aber die anschließende Anzeige konnte nicht abgeschlossen werden. Sende dieselbe Änderung nicht erneut.</value>
+  </data>
+  <data name="Rates_ChangeFailed" xml:space="preserve">
+    <value>Diese Kursänderung konnte nicht abgeschlossen werden. Deine Eingabe bleibt erhalten; prüfe vor einem erneuten Versuch die aktuelle Liste.</value>
+  </data>
+  <data name="Rates_Refresh" xml:space="preserve">
+    <value>Kurse aktualisieren</value>
+  </data>
+  <data name="Numeric_OriginalInputFormat" xml:space="preserve">
+    <value>Dieser Wert behält sein ursprüngliches Zahlenformat, zum Beispiel {0}. Lösche ihn vollständig, bevor du einen Wert im aktuellen Format eingibst.</value>
+  </data>
 </root>

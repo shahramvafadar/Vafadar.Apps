@@ -2638,3 +2638,12 @@ that have not migrated. Plan source/destination contexts survive display changes
 publication. Changed currency/unit requires complete reentry, with original labels retained.
 The original writer also checks context identity and monetary edit revision before acceptance.
 This changes no stored minor-unit amount, schema, compiled model, portable backup or recovery format.
+
+## Manual-rate original writer (D-437)
+
+ManualRatesReview privately detaches complete original rate facts and owns the configured file.
+Read settings/rates/currency hints consistently after normal startup. Selective Save/Delete freezes
+input before waiting, verifies original facts under the atomic commercial writer, then rechecks
+native revision and actual file after SaveChanges before commit. Same-date/pair replacement retains
+the original id. Typed ManualRateReceipt survives post-commit notifications so a read retry cannot
+repeat an accepted writer. No entity/schema/compiled-model or portable backup/recovery change.

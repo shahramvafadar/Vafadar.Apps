@@ -8406,4 +8406,22 @@ SHA-256 du XML original : {5}</value>
   <data name="Unit_SavedFollowUpFailed" xml:space="preserve">
     <value>La modification de l’unité a été enregistrée, mais l’affichage n’a pas pu être entièrement actualisé. Ne répétez pas la modification ; rouvrez cette page.</value>
   </data>
+  <data name="Rates_OriginalPairChanged" xml:space="preserve">
+    <value>Cette saisie correspond à {0} → {1}. Effacez-la entièrement avant de saisir un taux pour une autre paire.</value>
+  </data>
+  <data name="Rates_SourceChanged" xml:space="preserve">
+    <value>Le profil initial ou les taux vérifiés ont changé. Actualisez la page, puis effacez et saisissez à nouveau ce taux.</value>
+  </data>
+  <data name="Rates_SavedFollowUpFailed" xml:space="preserve">
+    <value>La modification du taux a été enregistrée, mais sa mise à jour à l’écran n’a pas pu se terminer. Ne renvoyez pas la même modification.</value>
+  </data>
+  <data name="Rates_ChangeFailed" xml:space="preserve">
+    <value>Cette modification du taux n’a pas pu se terminer. Votre saisie est conservée ; vérifiez la liste actuelle avant de réessayer.</value>
+  </data>
+  <data name="Rates_Refresh" xml:space="preserve">
+    <value>Actualiser les taux</value>
+  </data>
+  <data name="Numeric_OriginalInputFormat" xml:space="preserve">
+    <value>Cette valeur conserve son format numérique initial, par exemple {0}. Effacez-la entièrement avant de saisir une valeur dans le format actuel.</value>
+  </data>
 </root>

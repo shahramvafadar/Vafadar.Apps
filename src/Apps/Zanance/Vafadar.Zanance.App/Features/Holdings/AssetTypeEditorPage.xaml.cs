@@ -9,8 +9,13 @@ public partial class AssetTypeEditorPage : ContentPage
     }
 
     /// <inheritdoc />
+    protected override void OnAppearing()
+    { base.OnAppearing(); (BindingContext as AssetTypeEditorViewModel)?.SetNumericPresentationActive(true); }
+
+    /// <inheritdoc />
     protected override void OnDisappearing()
     {
+        (BindingContext as AssetTypeEditorViewModel)?.SetNumericPresentationActive(false);
         (BindingContext as AssetTypeEditorViewModel)?.RetireReview();
         base.OnDisappearing();
     }

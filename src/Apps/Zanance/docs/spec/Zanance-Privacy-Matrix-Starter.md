@@ -1123,3 +1123,9 @@ qualification package uses only its private loopback TLS Integration host, ficti
 protected independent household. It is not the shipping edition, a real account/provider, public
 hosting or permission to release. Private fixture sessions, keys and database configuration remain
 outside uploaded evidence and repository history.
+
+## D-437 existing numeric metadata boundary
+
+Original numeric context and immutable manual-rate review add no entity, backup field, permission,
+network SDK or provider request. They remain local existing physical/rate data; source-failure
+messages contain no private file path. A local read retry cannot repeat an accepted rate command.

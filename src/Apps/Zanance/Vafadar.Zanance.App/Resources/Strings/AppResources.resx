@@ -8460,4 +8460,22 @@ Original XML SHA-256: {5}</value>
   <data name="Unit_SavedFollowUpFailed" xml:space="preserve">
     <value>The unit change was saved, but the display could not be fully refreshed. Do not repeat the change; reopen this page.</value>
   </data>
+  <data name="Rates_OriginalPairChanged" xml:space="preserve">
+    <value>This input belongs to {0} → {1}. Clear it completely before entering a rate for another pair.</value>
+  </data>
+  <data name="Rates_SourceChanged" xml:space="preserve">
+    <value>The original profile or reviewed rates changed. Refresh the page, then clear and re-enter this rate.</value>
+  </data>
+  <data name="Rates_SavedFollowUpFailed" xml:space="preserve">
+    <value>The rate change was saved, but its follow-up could not finish. Do not submit the same change again.</value>
+  </data>
+  <data name="Rates_ChangeFailed" xml:space="preserve">
+    <value>This rate change could not finish. Your input is kept; review the current list before retrying.</value>
+  </data>
+  <data name="Rates_Refresh" xml:space="preserve">
+    <value>Refresh rates</value>
+  </data>
+  <data name="Numeric_OriginalInputFormat" xml:space="preserve">
+    <value>This value keeps its original number format, for example {0}. Clear it completely before entering a value in the current format.</value>
+  </data>
 </root>

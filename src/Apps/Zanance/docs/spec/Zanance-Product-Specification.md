@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-10-21, D-433)
+## 31. Implementation Status (v1.1, scoped updates through 2026-10-21, D-437)
 
 This section records what the repository actually contains. "Verified" is qualified by each scenario's evidence:
 automated tests, running Windows layouts, targeted Android emulator checks or specifically recorded physical
@@ -7846,3 +7846,32 @@ observations. D-386 dedicated stability/accessibility order and physical-device/
 power-loss/provider/store/publication gates remain unchanged.
 
 [Secondary monetary evidence](../quality/secondary-money-context.md).
+
+## D-437 - Original physical and manual-rate numeric meaning
+
+Free holding-type purity and per-item gram weight retain independent original numeric cultures
+through display changes and partial typing. Complete clearing renews only that field. Original
+format examples and all field-local validation messages remain visible; original stored type and
+raw/choice revisions are rechecked under the actual writer.
+
+Manual exchange rates retain the original decimal parser, pair, file and immutable stored-rate
+review through loading, Save and delete consent. A later source/pair requires explicit reentry.
+Plain ratios never use display-unit factors or change recorded money. Known typed acceptance
+consumes the submitted draft before fallible notification/readback; Refresh reads only. Small
+positive rates keep complete decimal precision in the list and deletion consent, with a separate
+estimate-badge row. Error categories translate without repeating the original command.
+
+Selective evidence is 42 distinct new actual-source cases and 19 affected prior cases; eight actual
+source failures were reproduced. Twelve affected resource checks pass. Final native/package
+continuation and retained failures are recorded in the linked evidence; native observations do not
+increase the unit-test count. No schema/model/portable format, permission, provider or shipping SDK
+changes. D-386 stability/accessibility ordering and external release gates remain unchanged.
+
+[Original physical/rate evidence](../quality/physical-numeric-context.md).
+
+Final scoped evidence is 203 applicable Windows and 71 independent Release/AOT Android observations,
+including read-only recovery of 22 original outcome frames after a report-name collision. Accepted
+operations are not replayed. Strict platform/independent and complete signed Offline APK builds pass;
+Main upgrades without reset and its actual rates page/return preserve My account/0.00 EUR. Native
+Windows 0xC0000005 after completed note captures and Android ANR/Wait remain real unresolved failures,
+not stability acceptance. Full source/checkpoint/package details are in the linked evidence.

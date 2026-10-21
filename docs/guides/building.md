@@ -2129,3 +2129,22 @@ permission inspection to its original package. Preserve actual revoked-member re
 Keep fixture APK/signature/data restoration distinct from the complete signed Offline Main APK.
 Build alternate artifacts on a volume with space; Windows App SDK resources also require a short
 absolute build root. Clean only the focused test artifacts after the selective run.
+
+### Physical/rate native continuation (D-437)
+
+Run-StoreDrafts.ps1 -PlanEditorReview -PhysicalRatesReview isolates the actual physical/rate pages.
+ReviewWorkspaceRoot is restricted to its marked private temporary workspace, beneath the host Temp
+root without redirected ancestors; source builds still run in the repository. Use a short alternate
+VAFADAR_REVIEW_BUILD_ROOT on a volume with free space. Keep source and observation ids unchanged.
+PhysicalRatesNotesOnly requires its exact prior baseline and repeats only affected note scenes.
+PhysicalRatesOutcomesOnly requires the original untouched source; accepted action checkpoints are
+saved before observers and cannot be reseeded/replayed. Restored feedback captions are read-only,
+source-proven observations rather than another original action frame. The independent Android
+caller selects matching review_physical_rates and review_physical_rate_outcomes options; review_pass
+is the required32-digit comparison id. Parse complete packets for the actual original process.
+
+PhysicalRatesGuideOnly checks only the later restored-guide correction against the completed source.
+Android outcome and guide reports use distinct immutable phase names. A legacy name collision is
+continued with review_physical_rate_receipt: require the original input report, terminal report IO
+stack,22 original frames from one process and matching complete source checkpoints. It never invokes
+an accepted command. Keep original process ids and distinguish recovered evidence from new frames.

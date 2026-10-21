@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep physical values and manual rates in their original format (D-437)
+
+- Preserve separate original number formats for purity, per-item gram weight and manual exchange rates.
+- Explain changes beside each field and require clearing before adopting another format or currency pair.
+- Keep a completed rate save final when its notification or refresh fails; offer a read-only refresh.
+- Show complete small-rate precision instead of rounding a positive rate to zero.
+- Keep the rate and its estimate badge on separate growing rows.
+
 ### Preserve original secondary amounts (D-436)
 
 - Keep goal contributions, assumed prices, plan payments and household amounts in their original format and units.

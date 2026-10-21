@@ -1381,3 +1381,10 @@ quantities retain their units. Original raw revision/native owner is checked und
 Known goal/budget/cut acceptance precedes notification and cannot rearm.25 new and75 affected prior
 source cases pass selectively, without a full-suite replay. [Native/build evidence and retained failures](quality/goal-budget-money-context.md).
 No schema/model/portable-format, permission/provider/SDK change. D-386 and external gates stand.
+
+## Original numeric maintenance (D-437)
+
+Phase1's manual-rate and physical-type editors retain original raw interpretation and writer
+ownership. This is selective maintenance of existing fields, not a new schema or phase claim.
+See quality/physical-numeric-context.md for focused cases, original native continuation and remaining
+qualification. D-386 and external platform/provider/Store gates remain unchanged.

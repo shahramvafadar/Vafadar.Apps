@@ -26,6 +26,7 @@
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{v:Translate AssetType_Name}" Style="{StaticResource FieldLabel}" Margin="0" />
                         <Entry Text="{Binding Name}" Placeholder="{v:Translate AssetType_NamePlaceholder}" MaxLength="100" SemanticProperties.Description="{v:Translate AssetType_Name}" />
+                        <Label Text="{Binding NameError}" Style="{StaticResource ErrorText}" IsVisible="{Binding NameError, Converter={StaticResource IsNotNullConverter}}" />
 
                         <Label Text="{v:Translate AssetType_Kind}" Style="{StaticResource FieldLabel}" />
                         <v:ChoiceChips ItemsSource="{Binding KindNames}" SelectedIndex="{Binding KindIndex}" />
@@ -52,6 +53,8 @@
                         <v:ChoiceChips ItemsSource="{Binding PurityNames}" SelectedIndex="{Binding PurityIndex}" />
                         <Entry Text="{Binding PurityText}" Keyboard="Numeric" Placeholder="{v:Translate AssetType_PurityPlaceholder}" IsVisible="{Binding IsOtherPurity}"
                                SemanticProperties.Description="{v:Translate AssetType_Purity}" />
+                        <Label Text="{Binding PurityFormatNote}" Style="{StaticResource Secondary}" IsVisible="{Binding PurityFormatNote, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding PurityError}" Style="{StaticResource ErrorText}" IsVisible="{Binding PurityError, Converter={StaticResource IsNotNullConverter}}" />
                     </VerticalStackLayout>
                 </Border>
 
@@ -61,7 +64,9 @@
                         <Label Text="{v:Translate AssetType_CountUnit}" Style="{StaticResource FieldLabel}" Margin="0" />
                         <Entry Text="{Binding CountUnitName}" Placeholder="{v:Translate AssetType_CountUnitPlaceholder}" MaxLength="40" SemanticProperties.Description="{v:Translate AssetType_CountUnit}" />
                         <Label Text="{v:Translate AssetType_UnitWeight}" Style="{StaticResource FieldLabel}" />
-                        <Entry Text="{Binding UnitWeightText}" Keyboard="Numeric" Placeholder="8.133" SemanticProperties.Description="{v:Translate AssetType_UnitWeight}" />
+                        <Entry Text="{Binding UnitWeightText}" Keyboard="Numeric" Placeholder="{Binding UnitWeightExample}" SemanticProperties.Description="{v:Translate AssetType_UnitWeight}" />
+                        <Label Text="{Binding UnitWeightFormatNote}" Style="{StaticResource Secondary}" IsVisible="{Binding UnitWeightFormatNote, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding UnitWeightError}" Style="{StaticResource ErrorText}" IsVisible="{Binding UnitWeightError, Converter={StaticResource IsNotNullConverter}}" />
                         <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
                             <Label Text="{v:Translate AssetType_Divisible}" VerticalOptions="Center" />
                             <Switch Grid.Column="1" IsToggled="{Binding Divisible}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate AssetType_Divisible}" />

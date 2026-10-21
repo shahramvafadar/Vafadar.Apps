@@ -175,8 +175,10 @@ public sealed partial class AssetTypeEditorViewModel : ViewModelBase, Presentati
 
     partial void OnKindIndexChanged(int value)
     {
+        if (_initialized) _revision++;
         var kind = (AssetKind)value;
         HasMetal = kind is AssetKind.PreciousMetal or AssetKind.CoinOrBar;
+        RefreshNumericPresentation();
 
         // Coins and items are counted; metals are weighed. Both stay changeable until something is recorded.
         if (!DimensionLocked && _existing is null)
@@ -185,9 +187,11 @@ public sealed partial class AssetTypeEditorViewModel : ViewModelBase, Presentati
         }
     }
 
-    partial void OnDimensionIndexChanged(int value) => IsCount = value == (int)AssetDimension.Count;
+    partial void OnDimensionIndexChanged(int value)
+    { if (_initialized) _revision++; IsCount = value == (int)AssetDimension.Count; RefreshNumericPresentation(); }
 
-    partial void OnPurityIndexChanged(int value) => IsOtherPurity = value >= Purity.Common.Count;
+    partial void OnPurityIndexChanged(int value)
+    { if (_initialized) _revision++; IsOtherPurity = value >= Purity.Common.Count; PurityError = null; RefreshNumericPresentation(); }
 
     [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
@@ -212,11 +216,12 @@ public sealed partial class AssetTypeEditorViewModel : ViewModelBase, Presentati
     private async Task SaveCoreAsync()
     {
         Error = null;
-        var culture = _localization.CurrentCulture;
+        NameError = null; PurityError = null; UnitWeightError = null;
+        var invalid = false;
         if (string.IsNullOrWhiteSpace(Name))
         {
-            Error = _translator["AssetType_NameRequired"];
-            return;
+            NameError = _translator["AssetType_NameRequired"];
+            invalid = true;
         }
 
         int? purity = null;
@@ -226,10 +231,10 @@ public sealed partial class AssetTypeEditorViewModel : ViewModelBase, Presentati
         }
         else if (HasMetal && !string.IsNullOrWhiteSpace(PurityText))
         {
-            if (!Purity.TryParse(PurityText, culture, out var parsed))
+            if (!Purity.TryParse(PurityText, _purityCulture ?? _localization.CurrentCulture, out var parsed))
             {
-                Error = _translator["AssetType_PurityInvalid"];
-                return;
+                PurityError = _translator["AssetType_PurityInvalid"];
+                invalid = true;
             }
 
             purity = parsed;
@@ -239,14 +244,16 @@ public sealed partial class AssetTypeEditorViewModel : ViewModelBase, Presentati
         if (IsCount && !string.IsNullOrWhiteSpace(UnitWeightText))
         {
             var probe = new AssetType { Name = Name, PriceCurrencyCode = CurrencyCode };
-            if (!Quantities.TryParse(UnitWeightText, QuantityUnit.Gram, probe, culture, out var weight))
+            if (!Quantities.TryParse(UnitWeightText, QuantityUnit.Gram, probe, _weightCulture ?? _localization.CurrentCulture, out var weight))
             {
-                Error = _translator["AssetType_WeightInvalid"];
-                return;
+                UnitWeightError = _translator["AssetType_WeightInvalid"];
+                invalid = true;
             }
 
             unitWeight = weight;
         }
+
+        if (invalid) return;
 
         var review = _review ?? throw new HoldingEventReviewChangedException("Original type editor review is unavailable.");
         var revision = _revision; var originalDraft = Snapshot();

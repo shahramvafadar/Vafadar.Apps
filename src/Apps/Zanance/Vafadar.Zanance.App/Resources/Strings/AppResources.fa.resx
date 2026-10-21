@@ -8429,4 +8429,22 @@
   <data name="Unit_SavedFollowUpFailed" xml:space="preserve">
     <value>تغییر واحد ذخیره شد، اما نمایش کامل تازه نشد. تغییر را تکرار نکنید؛ این صفحه را دوباره باز کنید.</value>
   </data>
+  <data name="Rates_OriginalPairChanged" xml:space="preserve">
+    <value>این ورودی برای جفت «{0} → {1}» است. برای واردکردن نرخ جفتی دیگر، ابتدا آن را کاملاً پاک کنید.</value>
+  </data>
+  <data name="Rates_SourceChanged" xml:space="preserve">
+    <value>پروفایل اصلی یا نرخ‌های بازبینی‌شده تغییر کرده‌اند. صفحه را تازه کنید، سپس این نرخ را کاملاً پاک و دوباره وارد کنید.</value>
+  </data>
+  <data name="Rates_SavedFollowUpFailed" xml:space="preserve">
+    <value>تغییر نرخ ذخیره شد، اما ادامهٔ نمایش آن کامل نشد. همان تغییر را دوباره ثبت نکنید.</value>
+  </data>
+  <data name="Rates_ChangeFailed" xml:space="preserve">
+    <value>این تغییر نرخ کامل نشد. ورودی شما حفظ شده است؛ پیش از تلاش دوباره، فهرست فعلی را بررسی کنید.</value>
+  </data>
+  <data name="Rates_Refresh" xml:space="preserve">
+    <value>تازه‌کردن نرخ‌ها</value>
+  </data>
+  <data name="Numeric_OriginalInputFormat" xml:space="preserve">
+    <value>این مقدار قالب عددی اولیهٔ خود را حفظ می‌کند؛ برای نمونه «{0}». برای ورود مقدار با قالب فعلی، ابتدا ورودی را کاملاً پاک کنید.</value>
+  </data>
 </root>

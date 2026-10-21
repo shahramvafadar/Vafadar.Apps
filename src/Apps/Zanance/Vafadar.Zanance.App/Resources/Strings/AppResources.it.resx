@@ -8418,4 +8418,22 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Unit_SavedFollowUpFailed" xml:space="preserve">
     <value>La modifica dell’unità è stata salvata, ma non è stato possibile aggiornare tutta la schermata. Non ripetere la modifica; riapri questa pagina.</value>
   </data>
+  <data name="Rates_OriginalPairChanged" xml:space="preserve">
+    <value>Questo valore riguarda {0} → {1}. Cancellalo completamente prima di inserire un tasso per un’altra coppia.</value>
+  </data>
+  <data name="Rates_SourceChanged" xml:space="preserve">
+    <value>Il profilo originale o i tassi verificati sono cambiati. Aggiorna la pagina, poi cancella e reinserisci questo tasso.</value>
+  </data>
+  <data name="Rates_SavedFollowUpFailed" xml:space="preserve">
+    <value>La modifica del tasso è stata salvata, ma l’aggiornamento successivo non è stato completato. Non inviare di nuovo la stessa modifica.</value>
+  </data>
+  <data name="Rates_ChangeFailed" xml:space="preserve">
+    <value>Questa modifica del tasso non è stata completata. Il valore inserito è conservato; controlla l’elenco attuale prima di riprovare.</value>
+  </data>
+  <data name="Rates_Refresh" xml:space="preserve">
+    <value>Aggiorna i tassi</value>
+  </data>
+  <data name="Numeric_OriginalInputFormat" xml:space="preserve">
+    <value>Questo valore mantiene il formato numerico originale, ad esempio {0}. Cancellalo completamente prima di inserire un valore nel formato attuale.</value>
+  </data>
 </root>

@@ -1147,3 +1147,10 @@ qualification package uses only its private loopback TLS Integration host, ficti
 protected independent household. It is not the shipping edition, a real account/provider, public
 hosting or permission to release. Private fixture sessions, keys and database configuration remain
 outside uploaded evidence and repository history.
+
+## D-437 existing numeric metadata boundary
+
+Physical type fields and manual rates use their existing local tables and backup formats. Original
+file/rate facts are detached privately in memory for atomic review; failure messages expose no path
+or financial values. Explicit Refresh performs only local reads. No network permission, SDK,
+provider access, telemetry, portable field or implicit ECB/Home/history request is added.

@@ -8398,4 +8398,22 @@ SHA-256 del XML original: {5}</value>
   <data name="Unit_SavedFollowUpFailed" xml:space="preserve">
     <value>El cambio de unidad se guardó, pero no se pudo actualizar toda la pantalla. No repitas el cambio; vuelve a abrir esta página.</value>
   </data>
+  <data name="Rates_OriginalPairChanged" xml:space="preserve">
+    <value>Esta entrada corresponde a {0} → {1}. Bórrala por completo antes de introducir un tipo para otro par.</value>
+  </data>
+  <data name="Rates_SourceChanged" xml:space="preserve">
+    <value>El perfil original o los tipos revisados han cambiado. Actualiza la página y luego borra y vuelve a introducir este tipo.</value>
+  </data>
+  <data name="Rates_SavedFollowUpFailed" xml:space="preserve">
+    <value>El cambio de tipo se ha guardado, pero no se ha podido completar la actualización posterior. No vuelvas a enviar el mismo cambio.</value>
+  </data>
+  <data name="Rates_ChangeFailed" xml:space="preserve">
+    <value>No se ha podido completar este cambio de tipo. Tu entrada se conserva; revisa la lista actual antes de volver a intentarlo.</value>
+  </data>
+  <data name="Rates_Refresh" xml:space="preserve">
+    <value>Actualizar tipos</value>
+  </data>
+  <data name="Numeric_OriginalInputFormat" xml:space="preserve">
+    <value>Este valor conserva su formato numérico original, por ejemplo {0}. Bórralo por completo antes de introducir un valor en el formato actual.</value>
+  </data>
 </root>

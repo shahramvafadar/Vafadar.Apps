@@ -20,7 +20,8 @@
             </Border>
 
             <!-- Add a rate -->
-            <Border Style="{StaticResource Card}">
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Rates_Title}" />
+            <Border Style="{StaticResource Card}" IsEnabled="{Binding CanEdit}">
                 <VerticalStackLayout Spacing="0">
                     <!-- Keep each side of the equation whole, including its scalable currency editor. -->
                     <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="8">
@@ -35,34 +36,40 @@
                                 SemanticProperties.Description="{v:Translate Rates_To}" />
                         </Border>
                     </Grid>
+                    <Label Text="{Binding PairError}" Style="{StaticResource ErrorText}" IsVisible="{Binding PairError, Converter={StaticResource IsNotNullConverter}}" />
                     <Label Text="{v:Translate Rates_Rate}" Style="{StaticResource FieldLabel}" />
-                    <Entry Text="{Binding RateText}" Keyboard="Numeric" Placeholder="0.92" SemanticProperties.Description="{v:Translate Rates_Rate}" />
+                    <Entry Text="{Binding RateText}" Keyboard="Numeric" Placeholder="{Binding RateExample}" SemanticProperties.Description="{v:Translate Rates_Rate}" />
+                    <Label Text="{Binding RateFormatNote}" Style="{StaticResource Secondary}" IsVisible="{Binding RateFormatNote, Converter={StaticResource IsNotNullConverter}}" />
+                    <Label Text="{Binding RateContextError}" Style="{StaticResource ErrorText}" IsVisible="{Binding RateContextError, Converter={StaticResource IsNotNullConverter}}" />
+                    <Label Text="{Binding RateError}" Style="{StaticResource ErrorText}" IsVisible="{Binding RateError, Converter={StaticResource IsNotNullConverter}}" />
                     <Label Text="{v:Translate Entry_Date}" Style="{StaticResource FieldLabel}" />
                     <v:DateField Date="{Binding Date}" AccessibilityLabel="{v:Translate Entry_Date}" />
                     <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,0">
                         <Label Text="{v:Translate Rates_Estimate}" VerticalOptions="Center" />
                         <Switch Grid.Column="1" IsToggled="{Binding IsEstimate}" OnColor="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Rates_Estimate}" />
                     </Grid>
-                    <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
                     <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Add}" Command="{Binding AddCommand}" Margin="0,12,0,0" />
                 </VerticalStackLayout>
             </Border>
 
+            <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+            <p:WrappingAction Text="{v:Translate Rates_Refresh}" Command="{Binding ReloadCommand}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+
             <!-- Stored rates -->
             <Label Text="{v:Translate Rates_Stored}" Style="{StaticResource SectionHeader}" IsVisible="{Binding HasRates}" />
-            <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasRates}">
+            <Border Style="{StaticResource Card}" Padding="0" IsVisible="{Binding HasRates}" IsEnabled="{Binding CanEdit}">
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding Rates}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="local:RateRow">
-                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="*,Auto">
+                            <Grid Style="{StaticResource ListRow}" RowDefinitions="Auto,Auto">
                                 <VerticalStackLayout VerticalOptions="Center">
                                     <Label Text="{Binding Text}" FontSize="15" FlowDirection="LeftToRight" HorizontalOptions="Start" />
                                     <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" />
                                 </VerticalStackLayout>
-                                <Label Grid.Column="1" Text="{v:Translate Rates_EstimateBadge}" FontSize="12" Padding="6,1" VerticalOptions="Center"
+                                <Label Grid.Row="1" HorizontalOptions="Start" Text="{v:Translate Rates_EstimateBadge}" FontSize="12" Padding="6,1" VerticalOptions="Center"
                                        TextColor="{DynamicResource WarningText}" BackgroundColor="{DynamicResource WarningBackground}" IsVisible="{Binding IsEstimate}" />
                                 <!-- The whole row is one real button that offers to delete the rate; the hint says so -->
-                                <Button Grid.ColumnSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
+                                <Button Grid.RowSpan="2" Margin="-16,-10" Style="{StaticResource OverlayButton}" CornerRadius="0"
                                         Command="{Binding DeleteCommand, Source={RelativeSource AncestorType={x:Type local:RatesViewModel}}, x:DataType=local:RatesViewModel}"
                                         CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Description}" SemanticProperties.Hint="{v:Translate Rates_Delete}" />
                             </Grid>

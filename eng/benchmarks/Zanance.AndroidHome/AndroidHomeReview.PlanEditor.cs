@@ -18,6 +18,8 @@ internal static partial class AndroidHomeReview
             return await ReviewSecondaryHouseholdAsync(app, services, folder, comparison, ct);
         throw new IOException("Only original household monetary presentation belongs to this explicit retained package.");
 #else
+        if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_physical_rates", false) == true)
+            return await ReviewPhysicalRatesAsync(app, services, folder, comparison, ct);
         if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_secondary_settings", false) == true)
             return await ReviewSecondarySettingsAsync(app, services, folder, comparison, ct);
         if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_secondary_fields", false) == true)

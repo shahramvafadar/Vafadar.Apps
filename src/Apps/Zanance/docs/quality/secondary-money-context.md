@@ -404,3 +404,15 @@ visible. Logical412x800/density160/font1.0/accessibility0 match baseline exactly
 DB/key, Samsung input, account/OS setting or financial Save is used for this upgrade readback.
 This is complete Offline APK upgrade/preservation; it does not claim a performance target,
 startup/ANR/crash fix, general physical-device qualification, iOS, TalkBack or publication.
+
+
+## Exact pushed CI result
+
+D-436 is pushed as e89c403580db42ae620e3baecbd1dd02caab9809. One GitHub Actions response confirms
+[CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39626760458),
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39626760212),
+[Local identity backend](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39626760196) and
+[Self-hosted service qualification](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39626760202)
+all completed successfully. Its own follow-up is deleted; there is no second request or change to
+other schedules/the development objective. Hosted success does not extend the recorded native,
+physical-device/iOS/hardware-key/provider/commercial/publication acceptance boundaries.

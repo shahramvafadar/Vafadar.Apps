@@ -4226,3 +4226,38 @@ D-436 monetary matrices or completed backend/security checks. Dedicated Android 
 accessibility completion remain after ready feature development under D-386; Windows commercial
 product delivery remains outside this work list. Owner/company/provider/Mac/Store/publication gates
 remain explicit external acceptance, not grounds to idle or reopen settled product choices.
+
+### D-437 - Physical quantity and plain manual-rate contexts delivered locally
+
+Complete one numeric-input batch: independent original culture for asset-type free purity and
+per-item gram weight, and manual exchange-rate raw input/pair/date/estimate. Preserve partial raw
+edits and display-only refresh, give field-local original-format feedback, and retain actual type
+writer revision guards. Manual rates use original file/review/writer ownership through asynchronous
+load, save and delete consent; accepted publication/readback never rearms a save. Currency-pair
+changes require an explicit new rate input, not silent reinterpretation. Manual rate calculations
+remain plain ratios, independent of display-unit factors; no prior ledger amount is converted.
+
+Actual-source defects were reproduced and the complete affected forms/writers were implemented.
+Only focused new/affected cases and original native continuations were run. Strict Windows/Android
+and complete signed Offline APK/upgrade are verified; final docs and commit/push close this batch. Do not replay D-436's
+101 new/149 prior cases or367/127 native observations. Its pushed commit is
+e89c403580db42ae620e3baecbd1dd02caab9809; its one CI response confirms all four workflows successful and the follow-up is deleted. No dedicated
+ANR/crash/accessibility track, provider/company/account/Mac/Store or publication choice is reopened.
+
+D-437 selective evidence: 42 new actual-source cases and 19 affected prior cases pass selectively, with
+eight original source failures reproduced. 203 applicable Windows observations are complete;
+the corrected108-note runner saved every observation before terminal0xC0000005, which remains a
+real unresolved failure. The separate58-outcome runner succeeds without replaying accepted writes.
+All 71 applicable independent Release/AOT Android observations complete on the original source:
+48 inputs, 22 original outcomes and 1 final restored-guide scene. The outcome report-name collision
+is repaired by source-verified read-only receipt recovery, not repeated actions. Main upgrades
+without reset; actual rates/read/return retain My account/0.00 EUR and OS settings. Final reviewed
+commit/push and its one CI follow-up follow this complete batch; see
+[physical numeric evidence](../../quality/physical-numeric-context.md).
+
+Ready approved local feature development is now complete through this numeric boundary. Continue
+with the dedicated Android ANR/crash qualification track (QA-06), followed by remaining Android
+accessibility acceptance (A11Y-01/A11Y-03), as ordered in D-386. Start with retained real failures;
+do not replay successful monetary/backend/native matrices. Original bank specimens, actual providers,
+company/store accounts, public tunnel/mail, Mac/iOS and publication remain explicit external gates.
+They do not reopen settled owner choices or authorize guessed specimens, accounts or paid sources.

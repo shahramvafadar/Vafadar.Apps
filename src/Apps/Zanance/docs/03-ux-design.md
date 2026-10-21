@@ -2241,3 +2241,11 @@ its scenario remains an estimate. Known financial acceptance clears/retires only
 before notification/readback. Follow-up failure is truthful and cannot offer another financial Save.
 Display-unit publication waits for durable original Settings acceptance. Long unit choices use the
 existing wrapping real button with native text scaling and target size preserved.
+
+## Physical and plain-rate original input (D-437)
+
+Do not call physical weight/purity or a plain rate a money amount. Each numeric input retains its
+own original format through partial typing; the guide and example explain complete clearing to
+adopt the current format. Show all invalid fields beside their controls. Manual-rate feedback keeps
+its translated category, and explicit Refresh reads without repeating a write. Display every stored
+decimal digit, including delete consent; the estimate badge grows on a separate row.

@@ -2422,3 +2422,18 @@ Strict platform/independent builds and the complete signed Offline APK pass. No 
 external SDK/provider or commercial gate changes. D-386 stability/accessibility and actual phone,
 iOS, hardware-key/power-loss, owner accounts, public hosting, OAuth, Store and release acceptance
 remain open. See quality/secondary-money-context.md for complete source and running-app evidence.
+
+## D-437 qualification boundary
+
+Physical purity/weight and manual-rate original input/writer corrections have 42 new selective source
+cases and 19 affected prior successes; eight source failures were reproduced. Running-app outcomes,
+complete package/upgrade and retained failures are recorded in quality/physical-numeric-context.md.
+Do not equate source cases, native caption observations or an APK with general stability, hardware
+key/power-loss, physical-device, accessibility, iOS, provider, Store or publication acceptance.
+
+Final scoped evidence is 203 applicable Windows and 71 independent Release/AOT Android observations,
+including read-only recovery of 22 original outcome frames after a report-name collision. Accepted
+operations are not replayed. Strict platform/independent and complete signed Offline APK builds pass;
+Main upgrades without reset and its actual rates page/return preserve My account/0.00 EUR. Native
+Windows 0xC0000005 after completed note captures and Android ANR/Wait remain real unresolved failures,
+not stability acceptance. Full source/checkpoint/package details are in the linked evidence.

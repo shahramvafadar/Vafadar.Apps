@@ -13,6 +13,10 @@ public partial class RatesPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        _viewModel.SetPresentationActive(true);
         await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
     }
+    /// <inheritdoc />
+    protected override void OnDisappearing()
+    { _viewModel.SetPresentationActive(false); base.OnDisappearing(); }
 }

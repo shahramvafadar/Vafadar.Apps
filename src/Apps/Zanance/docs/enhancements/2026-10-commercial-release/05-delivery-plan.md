@@ -3473,3 +3473,14 @@ D-436 monetary matrices or completed backend/security checks. Dedicated Android 
 accessibility completion remain after ready feature development under D-386; Windows commercial
 product delivery remains outside this work list. Owner/company/provider/Mac/Store/publication gates
 remain explicit external acceptance, not grounds to idle or reopen settled product choices.
+
+## D-437 - Complete physical and plain-rate numeric batch
+
+Original per-field purity/gram parsing and original manual-ratio/file/row/native ownership are
+completed in one batch. 42 new actual-source cases and 19 affected prior cases pass selectively. Preserve
+successful D-436 work, all accepted metadata actions and completed native scenes. Full continuation
+status, actual retained failures and package proof are in ../../quality/physical-numeric-context.md.
+All 203 Windows and 71 Android observations are complete, with accepted native actions retained.
+Final signed Offline Main upgrade/rates/read/return succeeds after an observed ANR/Wait; failures
+remain in the evidence. Finish final review, commit/push and check that commit once. Next is the
+dedicated Android stability track, then remaining accessibility; ready feature development is complete. D-386 and unresolved genuine external gates remain unchanged.
