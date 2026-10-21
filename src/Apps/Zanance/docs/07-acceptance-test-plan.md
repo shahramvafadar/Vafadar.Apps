@@ -4910,3 +4910,14 @@ initialization and two real SaveChanges retirement boundaries. Affected parser/v
 checks pass selectively. Original native transfer/debt observations and accepted Save checkpoints
 are retained without another financial command. See [qualified evidence and negative observations](quality/plan-money-context.md).
 No physical-device, OS accessibility, notification, iOS, provider, store or release acceptance is inferred.
+
+## D-431 - Original goal/budget monetary meaning
+
+Each target/contribution and total/category raw amount retains its independent original currency,
+display unit and parse culture. Unit changes require complete clearing/reentry; partial edits cannot
+renew meaning. Dirty context meaning survives reload, including identical digits in a new unit.
+Hidden limits expose actionable review; share-of-income ignores irrelevant fixed amounts and physical
+quantities retain their units. Original raw revision/native owner is checked under paired writers.
+Known goal/budget/cut acceptance precedes notification and cannot rearm.25 new and75 affected prior
+source cases pass selectively, without a full-suite replay. [Native/build evidence and retained failures](quality/goal-budget-money-context.md).
+No schema/model/portable-format, permission/provider/SDK change. D-386 and external gates stand.

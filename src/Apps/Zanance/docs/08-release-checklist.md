@@ -2322,3 +2322,14 @@ money. Known acceptance precedes observers and cannot rearm.27 focused new actua
 pass across retained cohorts; affected prior failures are corrected selectively, without a full-suite
 replay. [Source/native/build evidence and limits](quality/plan-editor-ownership.md). No schema/model,
 compiled-model, portable-format, permission/provider/SDK change. D-386 and external gates remain.
+
+## D-431 - Original goal/budget monetary meaning
+
+Each target/contribution and total/category raw amount retains its independent original currency,
+display unit and parse culture. Unit changes require complete clearing/reentry; partial edits cannot
+renew meaning. Dirty context meaning survives reload, including identical digits in a new unit.
+Hidden limits expose actionable review; share-of-income ignores irrelevant fixed amounts and physical
+quantities retain their units. Original raw revision/native owner is checked under paired writers.
+Known goal/budget/cut acceptance precedes notification and cannot rearm.25 new and75 affected prior
+source cases pass selectively, without a full-suite replay. [Native/build evidence and retained failures](quality/goal-budget-money-context.md).
+No schema/model/portable-format, permission/provider/SDK change. D-386 and external gates stand.

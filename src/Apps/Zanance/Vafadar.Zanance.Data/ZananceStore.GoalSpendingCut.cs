@@ -73,10 +73,11 @@ public sealed partial class ZananceStore
     }
 
     /// <summary>Applies only the explicitly confirmed category cut under the same reviewed actual-file writer.</summary>
-    public async Task ApplyGoalBudgetCutAsync(GoalBudgetCutReview review, long cut, CancellationToken cancellationToken = default)
+    public async Task ApplyGoalBudgetCutAsync(GoalBudgetCutReview review, long cut, CancellationToken cancellationToken = default, Func<bool>? inputCurrent = null, Action? accepted = null)
     {
         ArgumentNullException.ThrowIfNull(review);
         if (cut <= 0) throw new ArgumentOutOfRangeException(nameof(cut));
+        DemandOriginalInput();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         await GoalStore.ValidateWorkSnapshotAsync(review.Goals, db, cancellationToken);
@@ -95,7 +96,13 @@ public sealed partial class ZananceStore
         await CheckCommercialBudgetSaveAsync(db, write, budget, budget, cancellationToken);
         budget.CategoryLimits.Single(limit => limit.CategoryId == review.CategoryId).Limit = Math.Max(0, review.OriginalLimit - cut);
         budget.UpdatedAt = time.GetUtcNow();
-        write.EnsureCurrent(); await db.SaveChangesAsync(cancellationToken); await write.CommitAsync(cancellationToken);
+        write.EnsureCurrent(); await db.SaveChangesAsync(cancellationToken); DemandOriginalInput();
+        await write.CommitAsync(cancellationToken);
+        accepted?.Invoke();
+        void DemandOriginalInput()
+        {
+            if (inputCurrent?.Invoke() == false) throw new InvalidOperationException("The original monetary draft changed before acceptance.");
+        }
         OnChanged();
     }
 

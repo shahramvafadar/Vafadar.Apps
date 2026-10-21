@@ -34,8 +34,9 @@
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                             <Entry Text="{Binding TotalText}" Keyboard="Numeric" Placeholder="{v:Translate Budget_NoLimit}" FontSize="22" FontAttributes="Bold"
                                    SemanticProperties.Description="{v:Translate Budget_TotalLimit}" />
-                            <Label Grid.Column="1" Text="{Binding CurrencyCode, Converter={StaticResource CurrencyUnitConverter}}" VerticalOptions="Center" Style="{StaticResource Secondary}" />
+                            <Label Grid.Column="1" Text="{Binding TotalUnitName}" VerticalOptions="Center" Style="{StaticResource Secondary}" />
                         </Grid>
+                        <Label Text="{Binding TotalFormatNote}" Style="{StaticResource Secondary}" IsVisible="{Binding TotalFormatNote, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding TotalError}" Style="{StaticResource ErrorText}" IsVisible="{Binding TotalError, Converter={StaticResource IsNotNullConverter}}" />
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" Margin="0,4,0,0"
                               IsVisible="{Binding TotalSuggestionText, Converter={StaticResource IsNotNullConverter}}">
@@ -97,6 +98,8 @@
                                     <fi:SymbolIcon Symbol="{Binding Icon}" FontSize="20" ForegroundColor="{Binding Color}" VerticalOptions="Center" />
                                     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                         <Label Text="{Binding Name}" />
+                                        <Label Text="{Binding UnitName}" Style="{StaticResource Secondary}" IsVisible="{Binding UnitName, Converter={StaticResource IsNotNullConverter}}" />
+                                        <Label Text="{Binding FormatNote}" Style="{StaticResource Secondary}" IsVisible="{Binding FormatNote, Converter={StaticResource IsNotNullConverter}}" />
                                         <Label Text="{Binding SuggestionText}" Style="{StaticResource Secondary}" FontSize="12"
                                                IsVisible="{Binding SuggestionText, Converter={StaticResource IsNotNullConverter}}" />
                                     </VerticalStackLayout>
@@ -120,6 +123,8 @@
         </Grid>
         <VerticalStackLayout Grid.Row="2" Padding="16,8,16,16" Spacing="8">
             <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+            <Label Text="{Binding MoneyReviewText}" Style="{StaticResource Secondary}" IsVisible="{Binding MoneyReviewText, Converter={StaticResource IsNotNullConverter}}" />
+            <p:WrappingAction Text="{v:Translate Settings_RetryLoad}" Command="{Binding ReloadCommand}" IsVisible="{Binding MoneyReviewText, Converter={StaticResource IsNotNullConverter}}" />
             <p:WrappingAction Text="{v:Translate Settings_RetryLoad}" Command="{Binding ReloadCommand}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
             <p:WrappingAction Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" Appearance="Primary" IsVisible="{Binding IsReady}" />
         </VerticalStackLayout>

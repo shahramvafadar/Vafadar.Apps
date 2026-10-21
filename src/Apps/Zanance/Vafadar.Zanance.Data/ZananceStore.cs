@@ -385,9 +385,10 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Inserts or updates a budget including its category limits.</summary>
-    public async Task SaveBudgetAsync(Budget budget, CancellationToken cancellationToken = default, BudgetEditorReview? review = null)
+    public async Task SaveBudgetAsync(Budget budget, CancellationToken cancellationToken = default, BudgetEditorReview? review = null, Func<bool>? inputCurrent = null, Action? accepted = null)
     {
         ArgumentNullException.ThrowIfNull(budget);
+        DemandOriginalInput();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null);
         if (review is not null) await ValidateBudgetEditorReviewAsync(review, db, cancellationToken);
@@ -422,8 +423,14 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
 
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        DemandOriginalInput();
         await write.CommitAsync(cancellationToken);
+        accepted?.Invoke();
 
+        void DemandOriginalInput()
+        {
+            if (inputCurrent?.Invoke() == false) throw new InvalidOperationException("The original monetary draft changed before acceptance.");
+        }
         OnChanged();
     }
 

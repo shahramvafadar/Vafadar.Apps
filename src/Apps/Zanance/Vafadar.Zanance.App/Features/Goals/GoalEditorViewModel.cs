@@ -69,6 +69,9 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     private long _currentEarmarked;
     private bool _loading = true, _hasQuery, _needsReload, _committed, _pendingReview;
     private Draft? _baseline;
+    private MoneyInputContext? _targetMoney, _contributionMoney;
+    private long _draftRevision, _viewRevision;
+    private bool _departed;
     private CultureInfo _targetCulture, _contributionCulture, _percentCulture;
     private string _targetUnit = string.Empty, _contributionUnit = string.Empty;
     private bool _targetNeedsReview, _contributionNeedsReview;
@@ -304,7 +307,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     /// <summary>Gets whether this form may close or confirm discard.</summary>
     public bool CanLeave => !IsBusy && !_loading;
     /// <summary>Gets whether published retained corrections may be edited.</summary>
-    public bool CanInteract => IsReady && !IsBusy && !_loading && !_committed && _work.CanCorrect;
+    public bool CanInteract => !_departed && IsReady && !IsBusy && !_loading && !_committed && _work.CanCorrect;
     /// <summary>Gets whether a reloaded draft needs the explicit review action before financial configuration writes.</summary>
     public bool RequiresReview => _pendingReview;
     /// <summary>Gets the original method caption even when Simple mode hides the method chooser.</summary>
@@ -377,7 +380,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     {
         await _loadGate.WaitAsync();
         var draft = keepDraft ? CaptureDraft() : null; var baseline = _baseline; var prior = _review;
-        var contexts = (_targetCulture, _contributionCulture, _percentCulture, _targetUnit, _contributionUnit);
+        var contexts = (_targetCulture, _contributionCulture, _percentCulture, _targetUnit, _contributionUnit, _targetMoney, _contributionMoney);
         _loading = true; IsReady = false; SaveError = null; RefreshCapabilities();
         try
         {
@@ -425,6 +428,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
                     ?? Accounts.FirstOrDefault(item => accounts.First(original => original.Id == item.Id).Type == AccountType.Savings) ?? Accounts.FirstOrDefault();
             CurrencyCode = goal?.CurrencyCode ?? (TypeIndex == 0 ? Account?.CurrencyCode : null) ?? settings.DefaultCurrencyCode;
             UpdateType(); UpdateUnits(false);
+            _targetMoney = _contributionMoney = CaptureMoney();
             Name = goal?.Name ?? string.Empty; AmountText = goal is null ? string.Empty : FormatTarget(goal.TargetAmount);
             HasTargetDate = goal?.TargetDate is not null; TargetDate = goal?.TargetDate ?? Today.AddYears(1);
             ScheduleIndex = _savedRule is null ? 0 : Array.IndexOf(Schedules, (_savedRule.Frequency, _savedRule.Interval));
@@ -442,10 +446,13 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
             _targetUnit = _contributionUnit = UnitKey();
             if (draft is not null && baseline is not null)
             {
-                var merged = MergeDraft(draft, baseline, _baseline); RestoreDraft(merged);
+                var merged = MergeDraft(draft, baseline, _baseline);
+                if (draft.TargetContext != baseline.TargetContext) merged = merged with { Amount = draft.Amount };
+                if (draft.ContributionContext != baseline.ContributionContext) merged = merged with { Contribution = draft.Contribution };
+                RestoreDraft(merged);
                 var unitChanged = draft.Currency != baseline.Currency || draft.Unit != baseline.Unit || draft.Holding != baseline.Holding;
-                if (draft.Amount != baseline.Amount || unitChanged) { _targetCulture = contexts._targetCulture; _targetUnit = contexts._targetUnit; }
-                if (draft.Contribution != baseline.Contribution || unitChanged) { _contributionCulture = contexts._contributionCulture; _contributionUnit = contexts._contributionUnit; }
+                if (draft.Amount != baseline.Amount || draft.TargetContext != baseline.TargetContext || unitChanged) { _targetCulture = contexts._targetCulture; _targetUnit = contexts._targetUnit; _targetMoney = contexts._targetMoney; }
+                if (draft.Contribution != baseline.Contribution || draft.ContributionContext != baseline.ContributionContext || unitChanged) { _contributionCulture = contexts._contributionCulture; _contributionUnit = contexts._contributionUnit; _contributionMoney = contexts._contributionMoney; }
                 if (draft.Percent != baseline.Percent) _percentCulture = contexts._percentCulture;
                 _pendingReview = draft != baseline && prior is not null && !prior.HasSameOriginalInputs(review);
                 ReloadedSavedSummary = _pendingReview ? SavedSummary(goal, plan) : null;
@@ -481,7 +488,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
             RefreshReminderNote();
         }
         finally { _loading = publishing; }
-        if (!publishing) UpdatePreview();
+        if (!publishing) { UpdateInputUnits(); UpdatePreview(); }
         RefreshCapabilities();
     }
 
@@ -525,14 +532,24 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
         IsFixedMethod = value == (int)ContributionMethod.FixedAmount; IsShareMethod = value == (int)ContributionMethod.ShareOfIncome;
         IsCutMethod = value == (int)ContributionMethod.SpendingCut; ChangedDraft();
     }
-    partial void OnAmountTextChanged(string value)
+    partial void OnAmountTextChanged(string oldValue, string newValue)
     {
-        if (!_loading) { _targetCulture = _localization.CurrentCulture; _targetUnit = UnitKey(); _targetNeedsReview = false; AmountError = null; }
+        if (!_loading)
+        {
+            if (IsQuantityGoal || oldValue.Length == 0 || newValue.Length == 0 || _targetMoney?.MatchesCurrent(CurrencyCode) == true)
+            { _targetCulture = _localization.CurrentCulture; _targetUnit = UnitKey(); _targetMoney = CaptureMoney(); }
+            AmountError = null;
+        }
         ChangedDraft();
     }
-    partial void OnContributionTextChanged(string value)
+    partial void OnContributionTextChanged(string oldValue, string newValue)
     {
-        if (!_loading) { _contributionCulture = _localization.CurrentCulture; _contributionUnit = UnitKey(); _contributionNeedsReview = false; ContributionError = null; }
+        if (!_loading)
+        {
+            if (IsQuantityGoal || oldValue.Length == 0 || newValue.Length == 0 || _contributionMoney?.MatchesCurrent(CurrencyCode) == true)
+            { _contributionCulture = _localization.CurrentCulture; _contributionUnit = UnitKey(); _contributionMoney = CaptureMoney(); }
+            ContributionError = null;
+        }
         ChangedDraft();
     }
     partial void OnPercentTextChanged(string value) { if (!_loading) { _percentCulture = _localization.CurrentCulture; PercentError = null; } ChangedDraft(); }
@@ -579,7 +596,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
 
     private void ChangedDraft()
     {
-        if (_loading) return; UpdateInputUnits(); UpdatePreview(); RefreshCapabilities();
+        if (_loading) return; _draftRevision++; UpdateInputUnits(); UpdatePreview(); RefreshCapabilities();
     }
 
     private AssetType? SelectedType => HoldingType?.Id is { } id ? _types.FirstOrDefault(type => type.Id == id) : null;
@@ -604,25 +621,48 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
         { MethodIndex = (int)ContributionMethod.FixedAmount; if (SelectedType is { } type) CurrencyCode = type.PriceCurrencyCode; }
     }
 
+    private static string MoneyStamp(MoneyInputContext? input) => DraftFingerprint.Create(input?.Currency.Code, input?.Unit,
+        input?.Culture.NumberFormat.NumberDecimalSeparator, input?.Culture.NumberFormat.NumberGroupSeparator);
+    private MoneyInputContext? CaptureMoney() => Currencies.TryGet(CurrencyCode, out _) ? MoneyInputContext.Capture(CurrencyCode, _localization.CurrentCulture) : null;
+    private bool MonetaryInputsCurrent => IsQuantityGoal || (AmountText.Length == 0 || _targetMoney?.MatchesCurrent(CurrencyCode) == true)
+        && (IsShareMethod || ContributionText.Length == 0 || _contributionMoney?.MatchesCurrent(CurrencyCode) == true);
+    /// <summary>Gets the target's original unit until complete monetary reentry.</summary>
+    public string? TargetUnitName => IsQuantityGoal ? null : AmountText.Length == 0 ? MoneyText.UnitName(CurrencyCode) : _targetMoney?.UnitName;
+    /// <summary>Gets the contribution's independent original unit.</summary>
+    public string? ContributionUnitName => IsQuantityGoal || IsShareMethod ? null : ContributionText.Length == 0 ? MoneyText.UnitName(CurrencyCode) : _contributionMoney?.UnitName;
+    /// <summary>Explains the retained original target format after regional display changes.</summary>
+    public string? TargetFormatNote => !IsQuantityGoal && AmountText.Length > 0 && _targetMoney is { } input && !input.UsesFormatOf(_localization.CurrentCulture)
+        ? _translator.Format("Plan_OriginalInputFormat", input.Example) : null;
+    /// <summary>Explains the contribution's independent retained input format.</summary>
+    public string? ContributionFormatNote => !IsQuantityGoal && !IsShareMethod && ContributionText.Length > 0 && _contributionMoney is { } input && !input.UsesFormatOf(_localization.CurrentCulture)
+        ? _translator.Format("Plan_OriginalInputFormat", input.Example) : null;
+    /// <summary>Exposes an actionable review/reload reason even for disabled retained contribution controls.</summary>
+    public string? MoneyReviewText => _targetNeedsReview || _contributionNeedsReview ? _translator["Goal_DraftUnitChanged"] : null;
+    /// <summary>Retires pending monetary callbacks when the original native frame departs.</summary>
+    public void SetViewActive(bool active) { _departed = !active; _viewRevision++; RefreshCapabilities(); }
+
     private string UnitKey() => IsQuantityGoal
         ? $"quantity|{HoldingType?.Id}|{SelectedType?.Dimension}|{SelectedType?.Divisible}|{SelectedType?.CountUnitName}|{SelectedUnit}"
         : "money|" + CurrencyCode;
     private void UpdateInputUnits()
     {
         if (_loading || !IsReady) return;
-        var unit = UnitKey(); _targetNeedsReview = AmountText.Length > 0 && _targetUnit != unit;
-        _contributionNeedsReview = ContributionText.Length > 0 && _contributionUnit != unit;
+        var unit = UnitKey(); _targetNeedsReview = AmountText.Length > 0 && (_targetUnit != unit || !IsQuantityGoal && _targetMoney?.MatchesCurrent(CurrencyCode) != true);
+        _contributionNeedsReview = !IsShareMethod && ContributionText.Length > 0 && (_contributionUnit != unit || !IsQuantityGoal && _contributionMoney?.MatchesCurrent(CurrencyCode) != true);
+        if (!_targetNeedsReview && AmountError == _translator["Goal_DraftUnitChanged"]) AmountError = null;
+        if (!_contributionNeedsReview && ContributionError == _translator["Goal_DraftUnitChanged"]) ContributionError = null;
         if (_targetNeedsReview) AmountError = _translator["Goal_DraftUnitChanged"];
         if (_contributionNeedsReview) ContributionError = _translator["Goal_DraftUnitChanged"];
+        foreach (var name in new[] { nameof(TargetUnitName), nameof(ContributionUnitName), nameof(TargetFormatNote), nameof(ContributionFormatNote), nameof(MoneyReviewText) }) OnPropertyChanged(name);
     }
-    private bool TryAmount(string text, CultureInfo culture, out long value)
+    private bool TryAmount(string text, CultureInfo culture, out long value, bool contribution = false)
     {
         value = 0;
         return IsQuantityGoal ? SelectedType is { } type && Quantities.TryParse(text, SelectedUnit, type, culture, out value) && value > 0
-            : Currencies.TryGet(CurrencyCode, out var currency) && MoneyText.TryParse(text, currency, culture, out value) && value > 0;
+            : (contribution ? _contributionMoney : _targetMoney) is { } input && input.TryParse(text, out value) && value > 0;
     }
     private string FormatTarget(long value) => IsQuantityGoal ? Quantities.ForInput(value, SelectedUnit, _localization.CurrentCulture)
-        : MoneyText.ForInput(value, CurrencyCode, _localization.CurrentCulture);
+        : (_targetMoney ?? CaptureMoney())!.ForInput(value);
     private string Show(long value) => IsQuantityGoal && SelectedType is { } type ? _holdingText.Quantity(value, type)
         : MoneyText.Format(value, CurrencyCode, _localization.CurrentCulture);
 
@@ -672,8 +712,8 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
         if (methodChanged) { plan.Amount = null; plan.Percent = null; plan.CategoryIds = []; }
         plan.Method = method; plan.ReminderEnabled = ReminderEnabled; plan.Rule = BuildRule();
         if (method is ContributionMethod.FixedAmount or ContributionMethod.SpendingCut
-            && (original is null || methodChanged || ContributionText != _baseline?.Contribution))
-            plan.Amount = TryAmount(ContributionText, _contributionCulture, out var amount) ? amount : null;
+            && (original is null || methodChanged || ContributionText != _baseline?.Contribution || MoneyStamp(_contributionMoney) != _baseline?.ContributionContext))
+            plan.Amount = TryAmount(ContributionText, _contributionCulture, out var amount, contribution: true) ? amount : null;
         if (method == ContributionMethod.ShareOfIncome && (original is null || methodChanged || PercentText != _baseline?.Percent))
             plan.Percent = TryPercent(out var percent) ? percent : null;
         if (method == ContributionMethod.SpendingCut && (original is null || methodChanged || CutCategory?.Id != _baseline?.Category))
@@ -730,10 +770,14 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
+        UpdateInputUnits();
         if (!CanSave || _review is not { } review) return;
+        var draft = CaptureDraft(); var revision = _draftRevision; var owner = _viewRevision;
+        bool Current() => !_departed && owner == _viewRevision && revision == _draftRevision && draft == CaptureDraft()
+            && ReferenceEquals(review, _review) && MonetaryInputsCurrent;
         SaveError = null; NameError = string.IsNullOrWhiteSpace(Name) ? _translator["Goal_NameRequired"] : null;
         AmountError = TryAmount(AmountText, _targetCulture, out var amount) ? null : _translator[IsQuantityGoal ? "AssetEvent_QuantityInvalid" : "Amount_Invalid"];
-        ContributionError = ContributionText.Trim().Length > 0 && !IsShareMethod && !TryAmount(ContributionText, _contributionCulture, out _)
+        ContributionError = ContributionText.Trim().Length > 0 && !IsShareMethod && !TryAmount(ContributionText, _contributionCulture, out _, contribution: true)
             ? _translator[IsQuantityGoal ? "AssetEvent_QuantityInvalid" : "Amount_Invalid"] : null;
         PercentError = IsShareMethod && PercentText.Trim().Length > 0 && !TryPercent(out _) ? _translator["Goal_PercentInvalid"] : null;
         RuleError = Recurrence.Validate(BuildRule()) is null ? null : _translator["Plan_RuleInvalid"];
@@ -742,6 +786,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
         var goal = BuildGoal(amount);
         if (IsBalanceGoal && Account is { } account && GoalProgressService.HasOtherBalanceGoal(review.Goals, account.Id, goal.Id))
             SaveError = _translator["Goal_AccountHasGoal"];
+        if (!Current()) { SaveError = _translator["Goal_DraftUnitChanged"]; return; }
         if (NameError is not null || AmountError is not null || ContributionError is not null || PercentError is not null || RuleError is not null || SaveError is not null) return;
         IsBusy = true;
         try
@@ -754,9 +799,9 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
                     _translator["Common_Save"], _translator["Common_Cancel"])) return;
                 plan.AssumedPricePerUnitMilli = null;
             }
-            try { await _goals.SaveGoalWithContributionPlanAsync(goal, plan, review: review); }
+            try { await _goals.SaveGoalWithContributionPlanAsync(goal, plan, review: review, inputCurrent: Current, accepted: () => _committed = true); }
             catch (Exception exception) when (exception is not OutOfMemoryException)
-            { _needsReload = true; SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Goal_SaveFailed", draftKept: true); await _interaction.ShowFailureAsync(exception); return; }
+            { _needsReload = !_committed; SaveError = _committed ? _translator["Goal_SavedReturnFailed"] : CommercialFailureMessage.OrFallback(exception, _translator, "Goal_SaveFailed", draftKept: true); await _interaction.ShowFailureAsync(exception); return; }
             // A committed draft is retired before navigation; a failed return can never duplicate or resubmit it.
             _existing = goal; _baseline = CaptureDraft(); _committed = true; _pendingReview = false;
             try { await _interaction.NavigateAsync(".."); }
@@ -773,8 +818,12 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     [RelayCommand(CanExecute = nameof(CanApplyCut))]
     private async Task ApplyCutAsync()
     {
+        UpdateInputUnits(); UpdatePreview();
         if (!CanInteract || !CanApplyCut || _review is not { } review || CutCategory is not { } category
-            || !TryAmount(ContributionText, _contributionCulture, out var cut)) return;
+            || !TryAmount(ContributionText, _contributionCulture, out var cut, contribution: true)) return;
+        var draft = CaptureDraft(); var revision = _draftRevision; var owner = _viewRevision;
+        bool Current() => !_departed && owner == _viewRevision && revision == _draftRevision && draft == CaptureDraft()
+            && ReferenceEquals(review, _review) && MonetaryInputsCurrent;
         var submitted = CutFingerprint(cut, category.Id); var type = CurrentType; var currency = CurrencyCode;
         IsBusy = true;
         try
@@ -782,12 +831,13 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
             var budget = await _store.ReviewGoalBudgetCutAsync(review, _existing?.Id, type, category.Id, currency);
             if (budget is null || budget.OriginalLimit < 0)
             { await _interaction.AlertAsync(_translator["Contribution_SpendingCut"], _translator.Format("Goal_CutNoLimit", category.Name), _translator["Common_Ok"]); return; }
+            if (!Current()) throw new InvalidOperationException("The original monetary cut draft changed.");
             var name = new CategoryLookup([budget.Category], _translator).Name(budget.Category.Id);
             var newLimit = Math.Max(0, budget.OriginalLimit - cut);
             if (!await _interaction.ConfirmAsync(_translator["Goal_ApplyCut"], _translator.Format("Goal_ApplyCutMessage", name,
                 MoneyText.Format(budget.OriginalLimit, budget.CurrencyCode, _localization.CurrentCulture), MoneyText.Format(newLimit, budget.CurrencyCode, _localization.CurrentCulture)),
                 _translator["Goal_ApplyCut"], _translator["Common_Cancel"])) return;
-            await _store.ApplyGoalBudgetCutAsync(budget, cut); _appliedCut = submitted;
+            await _store.ApplyGoalBudgetCutAsync(budget, cut, inputCurrent: Current, accepted: () => _appliedCut = submitted);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         { _needsReload = true; SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Goal_SaveFailed", draftKept: true); await _interaction.ShowFailureAsync(exception); }
@@ -813,13 +863,13 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
 
     private sealed record Draft(int Type, Guid? Holding, Guid? Location, int Unit, Guid? Account, string Name, string Amount,
         string Currency, bool HasDate, DateOnly Date, int Schedule, DateOnly First, bool Reminder, int Method, string Contribution,
-        string Percent, Guid? Category, bool Home, bool Protect, int Priority, string? Icon, string Note);
+        string Percent, Guid? Category, bool Home, bool Protect, int Priority, string? Icon, string Note, string TargetContext, string ContributionContext);
     private Draft CaptureDraft() => new(TypeIndex, HoldingType?.Id, HoldingLocation?.Id, QuantityUnitIndex, Account?.Id, Name, AmountText,
         CurrencyCode, HasTargetDate, TargetDate, ScheduleIndex, FirstDate, ReminderEnabled, MethodIndex, ContributionText, PercentText,
-        CutCategory?.Id, ShowOnHome, Protect, PriorityIndex, IconKey, Note);
+        CutCategory?.Id, ShowOnHome, Protect, PriorityIndex, IconKey, Note, MoneyStamp(_targetMoney), MoneyStamp(_contributionMoney));
     private static bool PlanFieldsChanged(Draft draft, Draft baseline) => draft.Schedule != baseline.Schedule || draft.First != baseline.First
         || draft.Reminder != baseline.Reminder || draft.Method != baseline.Method || draft.Contribution != baseline.Contribution
-        || draft.Percent != baseline.Percent || draft.Category != baseline.Category;
+        || draft.Percent != baseline.Percent || draft.Category != baseline.Category || draft.ContributionContext != baseline.ContributionContext;
     private static Draft MergeDraft(Draft draft, Draft baseline, Draft current)
     {
         static T Keep<T>(T value, T original, T latest) => EqualityComparer<T>.Default.Equals(value, original) ? latest : value;
@@ -830,7 +880,8 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
             Keep(draft.First, baseline.First, current.First), Keep(draft.Reminder, baseline.Reminder, current.Reminder), Keep(draft.Method, baseline.Method, current.Method),
             Keep(draft.Contribution, baseline.Contribution, current.Contribution), Keep(draft.Percent, baseline.Percent, current.Percent), Keep(draft.Category, baseline.Category, current.Category),
             Keep(draft.Home, baseline.Home, current.Home), Keep(draft.Protect, baseline.Protect, current.Protect), Keep(draft.Priority, baseline.Priority, current.Priority),
-            Keep(draft.Icon, baseline.Icon, current.Icon), Keep(draft.Note, baseline.Note, current.Note));
+            Keep(draft.Icon, baseline.Icon, current.Icon), Keep(draft.Note, baseline.Note, current.Note),
+            Keep(draft.TargetContext, baseline.TargetContext, current.TargetContext), Keep(draft.ContributionContext, baseline.ContributionContext, current.ContributionContext));
     }
     private void RestoreDraft(Draft draft)
     {

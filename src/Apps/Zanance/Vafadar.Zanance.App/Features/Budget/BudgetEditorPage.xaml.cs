@@ -15,12 +15,14 @@ public partial class BudgetEditorPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        _viewModel.SetViewActive(true);
         _localization.Changed += OnDisplayChanged;
         await Presentation.Failures.GuardAsync(_viewModel.EnsureLoadedAsync);
     }
 
     protected override void OnDisappearing()
     {
+        _viewModel.SetViewActive(false);
         _localization.Changed -= OnDisplayChanged;
         base.OnDisappearing();
     }

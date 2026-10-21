@@ -3215,3 +3215,15 @@ Preserve known acceptance and original native checkpoints. Observe fully realize
 before introducing a fictitious draft, and continue only incomplete observations. Actual focused
 native views, not a stale Activity reference, establish independent rendering ownership. Retain
 D-386 priorities and all physical/provider/Mac/store/publication gates.
+
+## D-431 - Original goal and budget monetary inputs
+
+Capture target/contribution and total/category units independently. Display changes never reinterpret
+raw money. Currency/unit changes require complete clearing/reentry; partial edits cannot renew meaning.
+Retain dirty contexts through reload, including identical digits in a new unit. Expose stale hidden
+limit review; ignore irrelevant share amounts and preserve physical quantity rules. Check raw revisions
+and native ownership under Save/cut writers. Consume commits before notification and never rearm them.
+Native review awaits the exact deferred tab rebuild before opening another frame. Normalize only
+selected digit shapes when comparing native labels; retain punctuation and source text. Continue
+incomplete observations from exact checkpoints without accepted-action replay. D-386 and external
+gates remain unchanged.

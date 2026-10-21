@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep goal and budget amounts in their original units (D-431)
+
+- Display-unit changes no longer change the meaning of typed goal or budget amounts.
+- Keep each original unit and format example until the amount is cleared and entered again.
+- Review hidden category limits explicitly; keep physical quantity goals independent of money units.
+- Preserve pending Save/cut ownership and never resubmit accepted work after an error.
+
 ### Preserve the meaning of plan amounts (D-430)
 
 - Keep each typed amount's original number format when display preferences change.

@@ -2188,3 +2188,13 @@ Transfer destination amounts have their own label, culture and error. Feedback g
 text; unknown/hidden amounts do not show irrelevant examples. Never convert or rewrite typed money
 to make a changed display preference appear valid. Original Save remains disabled until required
 monetary reentry is complete. See [native evidence](quality/plan-money-context.md).
+
+## Original goal/budget monetary input (D-431)
+
+Keep the original unit and direction-safe format example beside each raw amount. Target/contribution,
+total and each category limit are independent. Unit changes require clearing before fresh input;
+appending a digit cannot adopt another meaning. Hidden stale budget limits expose review controls
+and explicit reload. Untouched saved values may renew format through that reload; dirty raw/context
+values remain. Quantity rules stay independent of currency. Feedback grows without clipping;
+accepted forms offer Close and cannot resubmit after notification failure. [Normal-scale evidence](quality/goal-budget-money-context.md)
+does not establish OS/TalkBack or general runtime acceptance; D-386 still applies.

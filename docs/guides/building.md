@@ -2033,3 +2033,15 @@ When the repository volume is nearly full, set process-local `VAFADAR_REVIEW_BUI
 task-owned directory on a volume with sufficient space, then restore its previous value in finally.
 Never reuse a nonempty alternate build directory for another live review. Keep source fixture/output
 ownership and negative observations; an expired wait never authorizes accepted-action replay.
+
+### Original goal/budget monetary review (D-431)
+
+Use `Run-StoreDrafts.ps1 -PlanEditorReview -GoalBudgetMoneyReview` for72 original monetary views across
+18 language/theme/width contexts, with one native Save per editor and no ledger posts. Reuse only a
+verified exact checkpoint with `-PlanEditorSourceRun` / `-PlanEditorObservationRun`, retaining completed
+views. The outer receipt checks goal/budget-specific counters and unchanged base data. Recover a failed
+receipt read-only instead of replaying UI or financial commands. Independent Android plan-form uses
+`review_goal_budget_money=true`; `review_plan_resume_actions=true` requires its exact original checkpoint.
+Wait for actual native ownership and deferred tab rebuilds. Normalize selected digit shapes only,
+retaining native text/punctuation and complete line layout. Normal-scale checks are not OS/TalkBack
+acceptance.

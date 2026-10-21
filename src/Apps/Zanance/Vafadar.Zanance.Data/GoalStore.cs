@@ -146,9 +146,10 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     }
 
     /// <summary>Saves the complete goal editor draft and its contribution plan atomically; null removes the plan.</summary>
-    public async Task SaveGoalWithContributionPlanAsync(Goal goal, ContributionPlan? plan, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null)
+    public async Task SaveGoalWithContributionPlanAsync(Goal goal, ContributionPlan? plan, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null, Func<bool>? inputCurrent = null, Action? accepted = null)
     {
         ArgumentNullException.ThrowIfNull(goal);
+        DemandOriginalInput();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         if (review is not null) await ValidateWorkSnapshotAsync(review, db, cancellationToken);
@@ -160,7 +161,13 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
         PrepareContributionPlan(db, goal.Id, plan, existing);
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        DemandOriginalInput();
         await write.CommitAsync(cancellationToken);
+        accepted?.Invoke();
+        void DemandOriginalInput()
+        {
+            if (inputCurrent?.Invoke() == false) throw new InvalidOperationException("The original monetary draft changed before acceptance.");
+        }
         Changed?.Invoke(this, EventArgs.Empty);
     }
 

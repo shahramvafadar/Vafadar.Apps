@@ -3988,11 +3988,23 @@ cases and selective related checks pass, with preserved accepted native Save and
 observation continuation. [Native/build evidence and limits](../../quality/plan-money-context.md).
 No schema/model/format, permission/provider/SDK change. D-386 and external gates remain.
 
-### Next complete original goal/budget monetary-unit batch (D-431)
+### D-431 - Original goal/budget monetary meaning
 
-Current source preserves parse cultures, but goal money UnitKey includes only currency and both goal/
-budget Save still read ambient display units. Reproduce those exact source behaviors, then bind goal
-target/contribution and budget total/category amounts to immutable original monetary units with explicit
-reentry and original writer checks. Preserve quantity dimensions, known acceptance and existing raw/
-readiness ownership; do not replay D-430 accepted native actions or successful unrelated suites.
-Dedicated runtime/accessibility remain after ready development; external gates are unchanged.
+Each target/contribution and total/category raw amount retains its independent original currency,
+display unit and parse culture. Unit changes require complete clearing/reentry; partial edits cannot
+renew meaning. Dirty context meaning survives reload, including identical digits in a new unit.
+Hidden limits expose actionable review; share-of-income ignores irrelevant fixed amounts and physical
+quantities retain their units. Original raw revision/native owner is checked under paired writers.
+Known goal/budget/cut acceptance precedes notification and cannot rearm.25 new and75 affected prior
+source cases pass selectively, without a full-suite replay. [Native/build evidence and retained failures](../../quality/goal-budget-money-context.md).
+No schema/model/portable-format, permission/provider/SDK change. D-386 and external gates stand.
+
+### Next complete original transaction monetary-context batch (D-432)
+
+Current EntryEditorViewModel and SplitEditorViewModel still parse primary/destination/fee/part raw
+amounts through current formatting culture/display units. Reproduce those actual-source boundaries,
+then retain independent contexts through account/display changes, receipt/template return and split
+editing. Preserve D-425 through D-428 original file, aggregate review, receipt and known financial/Undo
+acceptance. Recheck raw/context revisions under original writers. No accepted native Save or successful
+unrelated suite replay. Account/holding money contexts remain separate unqualified boundaries. D-386
+and all external acceptance gates remain unchanged.

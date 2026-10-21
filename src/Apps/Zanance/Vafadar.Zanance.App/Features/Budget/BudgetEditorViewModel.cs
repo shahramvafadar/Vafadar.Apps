@@ -36,6 +36,14 @@ public sealed partial class LimitInput(Guid categoryId, string name, Symbol icon
     public long? Suggested { get; set; }
     /// <summary>Gets the current translated average explanation.</summary>
     [ObservableProperty] public partial string? SuggestionText { get; set; }
+    /// <summary>Gets the original unit beside this independent raw category limit.</summary>
+    [ObservableProperty] public partial string? UnitName { get; set; }
+    /// <summary>Gets the retained input-format example after a regional change.</summary>
+    [ObservableProperty] public partial string? FormatNote { get; set; }
+    /// <summary>Retains this category's immutable original monetary interpretation.</summary>
+    internal MoneyInputContext? Input { get; set; }
+    /// <summary>Tracks only unit-review feedback so other validation errors remain intact.</summary>
+    internal bool UnitError { get; set; }
     internal CultureInfo InputCulture { get; set; } = CultureInfo.InvariantCulture;
 }
 
@@ -74,6 +82,9 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     private bool _hasQuery, _idSpecified, _loading = true, _publishing, _committed, _needsReload, _pendingReview;
     private Draft? _baseline;
     private CultureInfo _totalCulture;
+    private MoneyInputContext? _totalInput;
+    private long _draftRevision, _viewRevision;
+    private bool _departed, _totalUnitError;
     private IReadOnlyList<LedgerEntry> _entries = [];
     private IReadOnlyList<(DateOnly First, DateOnly Last)> _pastPeriods = [];
     private BudgetSuggestion _suggestion = BudgetSuggestion.None;
@@ -113,7 +124,7 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     /// <summary>Gets the existing Simple/Advanced method visibility.</summary>
     public bool ShowMethods => IsAdvanced && !IsWeekly;
     /// <summary>Gets the existing category-limit visibility; retained hidden limits remain in the draft.</summary>
-    public bool ShowCategoryLimits => IsAdvanced && !IsFlex;
+    public bool ShowCategoryLimits => IsAdvanced && !IsFlex || Limits.Any(row => NeedsReview(row.Text, row.Input));
     /// <summary>Gets whether optional fill suggestions are visible.</summary>
     public bool ShowFillSuggestions => ShowCategoryLimits && HasCategorySuggestions;
     /// <summary>Gets whether a load or failed publication must cover the entire form.</summary>
@@ -123,7 +134,7 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     /// <summary>Gets whether this form has an explicit changed-saved-value review waiting.</summary>
     public bool RequiresReview => _pendingReview;
     /// <summary>Gets whether original corrections may be edited.</summary>
-    public bool CanInteract => IsReady && !_loading && !IsBusy && !_committed && _work.CanCorrect;
+    public bool CanInteract => !_departed && IsReady && !_loading && !IsBusy && !_committed && _work.CanCorrect;
     /// <summary>Gets whether the draft can be closed without interrupting publication or a write.</summary>
     public bool CanLeave => !_loading && !IsBusy;
     /// <summary>Gets whether an explicit reload can be requested; it never resubmits a Save.</summary>
@@ -142,7 +153,7 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     /// <summary>Gets the complete close caption after a successful write, including failed return navigation.</summary>
     public string CloseText => _translator[_committed ? "Common_Close" : "Common_Cancel"];
     /// <summary>Gets whether a complete current review can save this configuration; the writer rechecks capacity.</summary>
-    public bool CanSave => CanInteract && !_needsReload && !_pendingReview && DraftAllowed();
+    public bool CanSave => CanInteract && !_needsReload && !_pendingReview && MonetaryInputsCurrent && DraftAllowed();
     /// <inheritdoc />
     public bool IsDirty => !_committed && _baseline is not null && Fingerprint(CaptureDraft()) != Fingerprint(_baseline);
 
@@ -211,8 +222,8 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
             _currency = target.CurrencyCode; _entries = entries; _pastPeriods = periods;
             _lookup = new CategoryLookup(review.Categories, _translator); IsAdvanced = settings.Shows(Feature.BudgetOptions);
             IsWeekly = _period != BudgetPeriod.Month; CurrencyCode = _currency;
-            _totalCulture = _localization.CurrentCulture;
-            TotalText = original?.TotalLimit is { } total ? MoneyText.ForInput(total, _currency, _totalCulture) : string.Empty;
+            _totalCulture = _localization.CurrentCulture; _totalInput = MoneyInputContext.Capture(_currency, _totalCulture);
+            TotalText = original?.TotalLimit is { } total ? _totalInput.ForInput(total) : string.Empty;
             AlertsEnabled = original?.AlertsEnabled ?? true; RolloverIndex = (int)(original?.Rollover ?? BudgetRollover.None);
             MethodIndex = (int)(original?.Method ?? BudgetMethod.Limits);
             ScopeAccounts.Clear();
@@ -231,11 +242,18 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
                 .Concat(draft?.Limits.Keys.AsEnumerable() ?? []).Distinct().ToArray();
             foreach (var categoryId in categoryIds)
             {
-                var row = new LimitInput(categoryId, CategoryName(categoryId), _lookup.Icon(categoryId)) { InputCulture = _localization.CurrentCulture };
+                var row = new LimitInput(categoryId, CategoryName(categoryId), _lookup.Icon(categoryId)) { InputCulture = _localization.CurrentCulture, Input = MoneyInputContext.Capture(_currency, _localization.CurrentCulture) };
                 row.Text = original?.CategoryLimits.SingleOrDefault(item => item.CategoryId == categoryId) is { } limit
-                    ? MoneyText.ForInput(limit.Limit, _currency, row.InputCulture) : string.Empty;
-                row.PropertyChanged += (_, args) => { if (args.PropertyName == nameof(row.Text) && !_publishing && Limits.Contains(row))
-                    { row.InputCulture = _localization.CurrentCulture; row.Error = null; DraftChanged(); } };
+                    ? row.Input!.ForInput(limit.Limit) : string.Empty;
+                var previousText = row.Text;
+                row.PropertyChanged += (_, args) => { if (args.PropertyName == nameof(row.Text) && Limits.Contains(row))
+                    {
+                        var priorText = previousText; previousText = row.Text;
+                        if (_publishing) return;
+                        if (priorText.Length == 0 || row.Text.Length == 0 || row.Input?.MatchesCurrent(_currency) == true)
+                        { row.InputCulture = _localization.CurrentCulture; row.Input = MoneyInputContext.Capture(_currency, row.InputCulture); }
+                        row.Error = null; DraftChanged();
+                    } };
                 Limits.Add(row);
             }
             _baseline = CaptureDraft();
@@ -309,7 +327,7 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
             foreach (var row in Limits) row.Name = CategoryName(row.CategoryId);
             foreach (var row in ScopeAccounts) row.Name = AccountName(row.Id);
             if (_pendingReview) ReloadedSavedSummary = SavedSummary(_budget);
-            CalculateSuggestions(); RefreshNativeColors();
+            RefreshMoneyInputs(); CalculateSuggestions(); RefreshNativeColors();
         }
         finally { _publishing = publishing; }
         RefreshCapabilities();
@@ -335,9 +353,18 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     private void DraftChanged()
     {
         if (_publishing) return;
-        CalculateSuggestions(); RefreshCapabilities();
+        _draftRevision++; RefreshMoneyInputs(); CalculateSuggestions(); RefreshCapabilities();
     }
-    partial void OnTotalTextChanged(string value) { if (!_publishing) { _totalCulture = _localization.CurrentCulture; TotalError = null; } DraftChanged(); }
+    partial void OnTotalTextChanged(string oldValue, string newValue)
+    {
+        if (!_publishing)
+        {
+            if (oldValue.Length == 0 || newValue.Length == 0 || _totalInput?.MatchesCurrent(_currency) == true)
+            { _totalCulture = _localization.CurrentCulture; _totalInput = MoneyInputContext.Capture(_currency, _totalCulture); }
+            TotalError = null;
+        }
+        DraftChanged();
+    }
     partial void OnAlertsEnabledChanged(bool value) => DraftChanged();
     partial void OnRolloverIndexChanged(int value) => DraftChanged();
     partial void OnMethodIndexChanged(int value) => DraftChanged();
@@ -357,36 +384,49 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     [RelayCommand(CanExecute = nameof(CanInteract))]
     private void AcceptReview() { if (!CanInteract) return; _pendingReview = false; ReloadedSavedSummary = null; RefreshCapabilities(); }
     [RelayCommand(CanExecute = nameof(CanInteract))]
-    private void UseTotalSuggestion() { if (CanInteract && _suggestion.Total is { } total) TotalText = MoneyText.ForInput(total.Suggested, _currency, _localization.CurrentCulture); }
+    private void UseTotalSuggestion() { if (CanInteract && _suggestion.Total is { } total)
+        {
+            // The explicit suggestion starts from authoritative minor units, never from the old raw text.
+            _totalCulture = _localization.CurrentCulture; _totalInput = MoneyInputContext.Capture(_currency, _totalCulture);
+            TotalText = _totalInput.ForInput(total.Suggested); DraftChanged();
+        } }
     [RelayCommand(CanExecute = nameof(CanInteract))]
     private void FillSuggestions()
     { if (CanInteract) foreach (var row in Limits.Where(row => row.Suggested is not null && string.IsNullOrWhiteSpace(row.Text)))
-        row.Text = MoneyText.ForInput(row.Suggested!.Value, _currency, _localization.CurrentCulture); }
+        {
+            row.InputCulture = _localization.CurrentCulture; row.Input = MoneyInputContext.Capture(_currency, row.InputCulture);
+            row.Text = row.Input.ForInput(row.Suggested!.Value); DraftChanged();
+        } }
     [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
-        if (!CanSave || _review is null) return;
+        RefreshMoneyInputs();
+        if (!CanSave || _review is not { } review) return;
+        var draft = Fingerprint(CaptureDraft()); var revision = _draftRevision; var owner = _viewRevision;
+        bool Current() => !_departed && owner == _viewRevision && revision == _draftRevision && draft == Fingerprint(CaptureDraft())
+            && ReferenceEquals(review, _review) && MonetaryInputsCurrent;
         IsBusy = true; Error = TotalError = null;
         try
         {
-            var currency = Currencies.Get(_currency); long? total = null; var valid = true;
+            long? total = null; var valid = true;
             if (!string.IsNullOrWhiteSpace(TotalText))
             {
-                if (!MoneyText.TryParse(TotalText, currency, _totalCulture, out var value) || value < 0) { TotalError = _translator["Amount_Invalid"]; valid = false; }
+                if (!_totalInput!.TryParse(TotalText, out var value) || value < 0) { TotalError = _translator["Amount_Invalid"]; valid = false; }
                 else total = value;
             }
             var limits = new List<BudgetCategoryLimit>();
             foreach (var row in Limits)
             {
                 row.Error = null; if (string.IsNullOrWhiteSpace(row.Text)) continue;
-                if (!MoneyText.TryParse(row.Text, currency, row.InputCulture, out var amount) || amount < 0) { row.Error = _translator["Amount_Invalid"]; valid = false; }
+                if (!row.Input!.TryParse(row.Text, out var amount) || amount < 0) { row.Error = _translator["Amount_Invalid"]; valid = false; }
                 else limits.Add(new() { CategoryId = row.CategoryId, Limit = amount });
             }
             if (!valid) return;
+            if (!Current()) { Error = _translator["Goal_DraftUnitChanged"]; return; }
             if (total is null && limits.Count == 0) { Error = _translator["Budget_NothingToSave"]; return; }
             if (ScopeAccounts.Count > 0 && ScopeAccounts.All(row => !row.IsIncluded)) { Error = _translator["Budget_NoAccountChosen"]; return; }
             var candidate = Configuration(); candidate.TotalLimit = total; candidate.CategoryLimits = limits;
-            await _store.SaveBudgetAsync(candidate, review: _review);
+            await _store.SaveBudgetAsync(candidate, review: review, inputCurrent: Current, accepted: () => _committed = true);
             // Retire the draft before returning. A failed native return cannot repeat a committed financial configuration.
             _budget = candidate; _committed = true; _baseline = CaptureDraft(); RefreshCapabilities();
             try { await _interaction.NavigateAsync(".."); }
@@ -394,7 +434,7 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
             { Error = _translator["Budget_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { _needsReload = true; Error = CommercialFailureMessage.OrFallback(exception, _translator, "Budget_SaveFailed", draftKept: true); await _interaction.ShowFailureAsync(exception); }
+        { _needsReload = !_committed; Error = _committed ? _translator["Budget_SavedReturnFailed"] : CommercialFailureMessage.OrFallback(exception, _translator, "Budget_SaveFailed", draftKept: true); await _interaction.ShowFailureAsync(exception); }
         finally { IsBusy = false; RefreshCapabilities(); }
     }
     [RelayCommand(CanExecute = nameof(CanLeave))]
@@ -409,23 +449,54 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
         catch (Exception exception) when (exception is not OutOfMemoryException) { await _interaction.ShowFailureAsync(exception); }
         finally { IsBusy = false; }
     }
-    private sealed record AmountDraft(string Text, CultureInfo Culture);
-    private sealed record Draft(string Total, CultureInfo Culture, bool Alerts, int Method, int Rollover,
+    private static string MoneyStamp(MoneyInputContext? input) => DraftFingerprint.Create(input?.Currency.Code, input?.Unit,
+        input?.Culture.NumberFormat.NumberDecimalSeparator, input?.Culture.NumberFormat.NumberGroupSeparator);
+    private bool NeedsReview(string text, MoneyInputContext? input) => text.Length > 0 && input?.MatchesCurrent(_currency) != true;
+    private bool MonetaryInputsCurrent => !NeedsReview(TotalText, _totalInput) && Limits.All(row => !NeedsReview(row.Text, row.Input));
+    /// <summary>Gets the original total unit until explicit complete reentry or authoritative suggestion.</summary>
+    public string TotalUnitName => TotalText.Length > 0 ? _totalInput?.UnitName ?? MoneyText.UnitName(_currency) : MoneyText.UnitName(_currency);
+    /// <summary>Explains the total's retained original number format.</summary>
+    public string? TotalFormatNote => TotalText.Length > 0 && _totalInput is { } input && !input.UsesFormatOf(_localization.CurrentCulture)
+        ? _translator.Format("Plan_OriginalInputFormat", input.Example) : null;
+    /// <summary>Exposes the reason for required reentry even for formerly hidden category limits.</summary>
+    public string? MoneyReviewText => !MonetaryInputsCurrent ? _translator["Goal_DraftUnitChanged"] : null;
+    /// <summary>Retires pending callbacks with the original native editor frame.</summary>
+    public void SetViewActive(bool active) { _departed = !active; _viewRevision++; RefreshCapabilities(); }
+    private void RefreshMoneyInputs()
+    {
+        var changed = !_committed && NeedsReview(TotalText, _totalInput);
+        if (changed) TotalError = _translator["Goal_DraftUnitChanged"];
+        else if (_totalUnitError) TotalError = null;
+        _totalUnitError = changed;
+        foreach (var row in Limits)
+        {
+            changed = !_committed && NeedsReview(row.Text, row.Input);
+            if (changed) row.Error = _translator["Goal_DraftUnitChanged"];
+            else if (row.UnitError) row.Error = null;
+            row.UnitError = changed; row.UnitName = row.Text.Length > 0 ? row.Input?.UnitName : MoneyText.UnitName(_currency);
+            row.FormatNote = row.Text.Length > 0 && row.Input is { } input && !input.UsesFormatOf(_localization.CurrentCulture)
+                ? _translator.Format("Plan_OriginalInputFormat", input.Example) : null;
+        }
+        foreach (var name in new[] { nameof(TotalUnitName), nameof(TotalFormatNote), nameof(MoneyReviewText), nameof(ShowCategoryLimits) }) OnPropertyChanged(name);
+    }
+
+    private sealed record AmountDraft(string Text, CultureInfo Culture, MoneyInputContext? Input);
+    private sealed record Draft(string Total, CultureInfo Culture, MoneyInputContext? Input, bool Alerts, int Method, int Rollover,
         Dictionary<Guid, AmountDraft> Limits, Dictionary<Guid, bool> Accounts);
-    private Draft CaptureDraft() => new(TotalText, _totalCulture, AlertsEnabled, MethodIndex, RolloverIndex,
-        Limits.ToDictionary(row => row.CategoryId, row => new AmountDraft(row.Text, row.InputCulture)), ScopeAccounts.ToDictionary(row => row.Id, row => row.IsIncluded));
-    private static string Fingerprint(Draft draft) => DraftFingerprint.Create(draft.Total, draft.Alerts, draft.Method, draft.Rollover,
-        string.Join(';', draft.Limits.OrderBy(row => row.Key).Select(row => row.Key.ToString("N") + ":" + row.Value.Text)),
+    private Draft CaptureDraft() => new(TotalText, _totalCulture, _totalInput, AlertsEnabled, MethodIndex, RolloverIndex,
+        Limits.ToDictionary(row => row.CategoryId, row => new AmountDraft(row.Text, row.InputCulture, row.Input)), ScopeAccounts.ToDictionary(row => row.Id, row => row.IsIncluded));
+    private static string Fingerprint(Draft draft) => DraftFingerprint.Create(draft.Total, MoneyStamp(draft.Input), draft.Alerts, draft.Method, draft.Rollover,
+        string.Join(';', draft.Limits.OrderBy(row => row.Key).Select(row => row.Key.ToString("N") + ":" + row.Value.Text + ":" + MoneyStamp(row.Value.Input))),
         string.Join(';', draft.Accounts.OrderBy(row => row.Key).Select(row => row.Key.ToString("N") + ":" + row.Value)));
     private void MergeDraft(Draft draft, Draft baseline)
     {
-        if (draft.Total != baseline.Total) { TotalText = draft.Total; _totalCulture = draft.Culture; }
+        if (draft.Total != baseline.Total || MoneyStamp(draft.Input) != MoneyStamp(baseline.Input)) { TotalText = draft.Total; _totalCulture = draft.Culture; _totalInput = draft.Input; }
         if (draft.Alerts != baseline.Alerts) AlertsEnabled = draft.Alerts;
         if (draft.Method != baseline.Method) MethodIndex = draft.Method;
         if (draft.Rollover != baseline.Rollover) RolloverIndex = draft.Rollover;
         foreach (var row in Limits)
-            if (draft.Limits.TryGetValue(row.CategoryId, out var edited) && (!baseline.Limits.TryGetValue(row.CategoryId, out var old) || edited.Text != old.Text))
-            { row.Text = edited.Text; row.InputCulture = edited.Culture; }
+            if (draft.Limits.TryGetValue(row.CategoryId, out var edited) && (!baseline.Limits.TryGetValue(row.CategoryId, out var old) || edited.Text != old.Text || MoneyStamp(edited.Input) != MoneyStamp(old.Input)))
+            { row.Text = edited.Text; row.InputCulture = edited.Culture; row.Input = edited.Input; }
         foreach (var row in ScopeAccounts)
             if (draft.Accounts.TryGetValue(row.Id, out var edited) && (!baseline.Accounts.TryGetValue(row.Id, out var old) || edited != old)) row.IsIncluded = edited;
     }
