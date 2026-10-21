@@ -8101,3 +8101,14 @@ provider change; successful older scopes are retained. QA-06 and remaining/audib
 external acceptance stay open.
 
 [Original monetary OS evidence](quality/original-money-os-qualification.md).
+
+## D-440 - Stop silent Android decimal-character loss
+
+Three actual InputConnection failures remove German decimal commas before the form can validate them.
+Preserve ordinary numeric raw text and numeric keyboard flags in the shared Android mapper; exclude
+passwords and retain length filters.20 focused native input observations and four adapter guards pass
+on the original protected source/base without accepted writes or replaying old financial/layout suites.
+No new managed cases or parser/schema/permission/provider changes are claimed. Strict platform and
+complete signed Offline APK checks pass; general ANR/crash and remaining acceptance stay open.
+
+[Original native input evidence](quality/android-numeric-input.md).

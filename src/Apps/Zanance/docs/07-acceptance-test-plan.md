@@ -5088,3 +5088,15 @@ reuse is explicit. Complete text/ellipsis/final-line height and raw-input equali
 OS/Main values restore. These are not new managed tests, full controls/voice/device/iOS acceptance
 or general stability; see quality/original-money-os-qualification.md. Retain D-438's successful scopes
 and exact-commit CI; do not replay accepted financial actions or older successful suites.
+
+## D-440 - Actual numeric InputConnection regression
+
+Three original de-DE comma-loss cases fail before the adapter repair; all four affected baseline
+inputs pass afterward, followed only by13 new edge/adapter observations and two password/length guards.
+A later guard-only scope adds three input transitions and two read-only focus checks, preserving
+the completed cases;20 inputs/four guards are applicable. Native read-only focus mismatch is corrected,
+without claiming a financial editing exploit. Original failures and same-source continuations remain.
+Complete original source/base rows stay unchanged, with no accepted Save or ledger entry. Native
+observations do not add managed tests or prove every keyboard/composition/accessibility path. Strict
+platform/APK checks pass; retain original ANR and remaining stability/spoken/device/iOS/release gates.
+See quality/android-numeric-input.md.

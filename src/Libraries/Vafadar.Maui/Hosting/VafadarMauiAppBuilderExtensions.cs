@@ -52,6 +52,17 @@ public static class VafadarMauiAppBuilderExtensions
         // Fluent UI System Icons (MIT), bundled offline (VIS-03).
         builder.UseFluentIcons();
 
+#if ANDROID
+        // D-440: keep numeric keyboard hints without Android silently filtering the user's raw decimal grammar.
+        System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(Entry).TypeHandle);
+        foreach (var key in new[] { nameof(Entry.Keyboard), nameof(Entry.IsPassword), nameof(Entry.IsReadOnly),
+            nameof(Entry.IsTextPredictionEnabled), nameof(Entry.IsSpellCheckEnabled), "VafadarNumericInput" })
+        {
+            Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping(key, (handler, entry) =>
+                Controls.AndroidNumericInput.PreserveRawText(handler.PlatformView, entry));
+        }
+#endif
+
 #if WINDOWS
         // WinUI detects a text's base direction from its first strong character, so a Persian sentence that starts
         // with an amount would be laid out left-to-right. Use the element's flow direction instead, as Android does.

@@ -3484,3 +3484,13 @@ All 203 Windows and 71 Android observations are complete, with accepted native a
 Final signed Offline Main upgrade/rates/read/return succeeds after an observed ANR/Wait; failures
 remain in the evidence. Finish final review, commit/push and check that commit once. Next is the
 dedicated Android stability track, then remaining accessibility; ready feature development is complete. D-386 and unresolved genuine external gates remain unchanged.
+
+## D-440 - Actual Android input boundary delivered
+
+Correct three original native decimal-comma losses before application validation. Preserve numeric
+keyboard hints and password/length behavior;20 native input observations and four adapter guards pass
+without accepted writes or old-success replay. Final strict Windows/Android builds and complete
+Offline signed APK pass; Main upgrades without reset, retains raw1,25 in its expense draft, discards
+without Save and restores My account/0.00 EUR with original OS values. Original ANR and transient null
+observations remain retained. See ../../quality/android-numeric-input.md. Continue only unresolved
+qualification and genuine observed defects; external gates and deferred Windows delivery stand.

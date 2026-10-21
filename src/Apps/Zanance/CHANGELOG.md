@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Preserve decimal input on Android (D-440)
+
+- Keep typed or pasted decimal commas instead of silently changing the amount before validation.
+- Retain incomplete or invalid drafts for field validation, numeric keyboard hints, password masking and length limits.
+- Keep read-only numeric fields out of keyboard focus after keyboard reconfiguration.
+- Verify the actual native input path without saving or changing existing financial data.
+
 ### Check larger text across original monetary forms (D-439)
 
 - Qualify account, holding, transaction, goal and budget input guides at actual200% system text,360/412dp, three languages and both themes.

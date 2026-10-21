@@ -3196,3 +3196,12 @@ Account/holding/entry/goal/budget original contexts complete288 actual OS200%360
 OS/Main17310/account/Home0.00 EUR restore. This is native geometry evidence, not new managed tests,
 shipping behavior or APK. Continue only remaining changed-layout/reader/platform qualification; retain
 QA-06 and external gates. See quality/original-money-os-qualification.md.
+
+### D-440 - Native numeric input correction
+
+The remaining native-input boundary exposes three real comma-loss defects. The shared Android adapter
+now preserves ordinary numeric raw drafts with numeric keyboard hints and original password/length
+behavior.20 native input observations and four adapter guards pass without accepted writes, source
+changes or successful old-suite replay. Strict builds and complete Offline signed APK pass. No managed
+case-count increase; QA-06, remaining accessibility/device/iOS and external gates remain open.
+See quality/android-numeric-input.md.

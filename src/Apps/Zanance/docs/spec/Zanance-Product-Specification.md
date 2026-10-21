@@ -7899,3 +7899,13 @@ restore. Strict independent build passes; source test counts and shipping code/A
 Remaining changed-layout/spoken/device/stability and external release acceptance stay open.
 
 [Original monetary OS evidence](../quality/original-money-os-qualification.md).
+
+### D-440 - Original numeric Android input
+
+Actual native input reproduces three cases where the numeric key listener strips a decimal comma
+before validation. The shared Android adapter now preserves raw numeric drafts and numeric IME flags,
+with password/length behavior retained.20 native input observations and four adapter checks pass;
+original complete source/base rows are unchanged and no accepted command is invoked. Managed test
+counts do not increase; parsers, schema, permissions and providers stay unchanged. Strict platform
+builds and complete signed Offline APK pass. Remaining stability/accessibility/device/iOS/external
+release acceptance stays open. See [native input evidence](../quality/android-numeric-input.md).

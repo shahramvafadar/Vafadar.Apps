@@ -2249,3 +2249,11 @@ own original format through partial typing; the guide and example explain comple
 adopt the current format. Show all invalid fields beside their controls. Manual-rate feedback keeps
 its translated category, and explicit Refresh reads without repeating a write. Display every stored
 decimal digit, including delete consent; the estimate badge grows on a separate row.
+
+## Raw Android numeric drafts (D-440)
+
+An input keyboard may suggest numeric keys but must not turn a comma decimal into a different integer
+before the form sees it. Preserve separators, signs, grouping, native digits and invalid partial drafts
+for original application validation. Retain numeric keyboard hints, secure masking and length limits;
+do not normalize a financial value silently. Actual InputConnection evidence is separate from layout
+or model-to-native publication evidence; see quality/android-numeric-input.md.

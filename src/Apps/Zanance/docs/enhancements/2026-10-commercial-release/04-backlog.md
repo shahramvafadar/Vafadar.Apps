@@ -4295,3 +4295,14 @@ outcome layouts not covered by these completed scopes. Preserve their original a
 revocations and existing actual reader-gesture evidence. Do not replay waveform/transcription or
 ordinary-tap attempts as audible acceptance. General ANR/crash, cold/low-memory/performance, remaining
 spoken/platform/device and external release gates remain open; Windows commercial delivery is deferred.
+
+### D-440 - Correct real native decimal-input filtering
+
+The new actual InputConnection boundary reveals three comma-loss failures, now corrected in ordinary
+Android numeric entries while retaining numeric keyboard hints, secure masking and maximum length.
+20 focused native input observations and four adapter guards pass with unchanged original source/base
+and zero accepted Saves. Prior successful source, financial, OS-layout and backend scopes are not
+replayed. Strict builds and complete signed Offline APK pass; managed case count does not change.
+Continue only uncovered secondary/header/rate-outcome OS layouts and supported stability work;
+remaining spoken/device/iOS/provider/company/store/publication gates remain explicit.
+See [actual native input evidence](../../quality/android-numeric-input.md).

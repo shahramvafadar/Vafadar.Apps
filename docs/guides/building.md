@@ -2148,3 +2148,15 @@ Android outcome and guide reports use distinct immutable phase names. A legacy n
 continued with review_physical_rate_receipt: require the original input report, terminal report IO
 stack,22 original frames from one process and matching complete source checkpoints. It never invokes
 an accepted command. Keep original process ids and distinguish recovered evidence from new frames.
+
+### Actual Android numeric input (D-440)
+
+The independent plan-form caller accepts review_numeric_ime=true only with an original completed
+physical/rate fixture and review_plan_resume_actions=true. Use a fresh review_pass; never seed another
+source or invoke Save. review_numeric_ime_followup=true runs only new incomplete/invalid/native-digit
+and real handler keyboard/password/length cases after retaining the completed baseline.
+review_numeric_ime_guards_only=true continues only the read-only/prediction/spelling boundary, preserving
+completed source/base and earlier frames. Compare actual
+InputConnection requested/native/model text and integer input flags; setting model raw text does not
+prove IME acceptance. Empty password probes never enter/read credentials. See Zanance's
+quality/android-numeric-input.md for declared evidence and remaining acceptance.

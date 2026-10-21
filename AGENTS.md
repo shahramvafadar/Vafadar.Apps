@@ -3321,3 +3321,14 @@ full-text/ellipsis checks. Counts distinguish retained source ledger rows from n
 terminal Failed:true payloads under their original phase, not an assumed failure tag. Complete
 scopes are never replayed. Restore exact OS/Main state; native observations are not managed tests,
 whole-control/spoken acceptance or a general runtime fix.
+
+## D-440 - Preserve original Android numeric input before validation
+
+Do not let a numeric key listener silently discard separators or invalid draft characters before
+application validation. Preserve raw text with numeric IME hints, excluding password/secure variations
+and retaining native maximum length. Restore MAUI read-only focus/cursor state after numeric mapper
+updates. Register after Controls initialization and keyboard/password/read-only/prediction/spelling
+mappings without retaining views. Actual InputConnection observations differ from model-to-native
+publication tests. Reuse completed original fixture/source checkpoints with zero accepted writes;
+keep baseline and followup-only cases distinct. An empty password control checks masking without
+entering or reading credentials. General stability, remaining accessibility and external gates stand.

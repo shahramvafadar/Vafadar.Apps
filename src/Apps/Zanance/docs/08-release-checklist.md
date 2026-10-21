@@ -2454,3 +2454,11 @@ with unchanged original source/base, zero accepted command replay and exact OS/M
 Strict independent build is warning-free; Main code/APK and managed baseline remain D-437. This
 advances only the declared geometry scopes; other changed layouts, audible reader, native stability,
 physical/iOS/provider/company/store/publication gates remain open. See quality/original-money-os-qualification.md.
+
+## D-440 numeric input boundary
+
+The shared Android numeric adapter corrects three actual decimal-comma losses before validation;
+17 focused native input observations and two secure/length guards pass on original unchanged sources.
+Strict Windows/Android and complete Offline signed APK checks pass. This is a specific raw-input fix,
+not general ANR/crash, every keyboard, audible accessibility, phone/iOS/provider/Store or publication
+acceptance. See quality/android-numeric-input.md; no prior financial/full suite is replayed.
