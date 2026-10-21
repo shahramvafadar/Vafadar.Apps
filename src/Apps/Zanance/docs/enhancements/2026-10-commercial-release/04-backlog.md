@@ -4261,3 +4261,21 @@ accessibility acceptance (A11Y-01/A11Y-03), as ordered in D-386. Start with reta
 do not replay successful monetary/backend/native matrices. Original bank specimens, actual providers,
 company/store accounts, public tunnel/mail, Mac/iOS and publication remain explicit external gates.
 They do not reopen settled owner choices or authorize guessed specimens, accounts or paid sources.
+
+### D-438 - Retained failure classification and original numeric OS qualification
+
+Complete the original-failure classification before another speculative runtime trial. Exact Windows
+public symbols identify fatal exception handling/WinRT finalization, not an Android shared cause.
+One new isolated API35 clock control leaves precise-call cost present; no runtime/GC/clock change is
+adopted and rejected trials are not replayed. Actual OS200% original physical/rate inputs now have96
+completed360/412dp native observations/360 readings, both themes and en/fa/de, unchanged original
+50-table checkpoint/base and zero accepted commands. Original startup ANR is retained; Wait preserves
+its process. Restore all recorded OS values and original Main17310/My account/0.00 EUR. Strict
+independent Release/AOT build is warning-free; Main/code/APK and source-test baseline remain D-437.
+See [scoped evidence](../../quality/retained-native-fault-classification.md).
+
+QA-06 remains open for a supported, demonstrated stability remedy and cold/low-memory/performance
+acceptance. A11Y-03 gains this numeric scope, not all-control acceptance; A11Y-01 audible clarity and
+remaining workflows stay open. Do not restart accepted monetary or prior native suites. Continue
+only unresolved qualification with new evidence; company/accounts, real OAuth/providers, public
+Tunnel/mail, bank specimens, Mac/iOS and publishing remain external gates.

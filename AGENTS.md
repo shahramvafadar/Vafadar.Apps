@@ -3293,3 +3293,19 @@ including delete consent, and put the estimate badge on its own growing row. Do 
 display-unit multipliers or convert prior ledger amounts. Native continuations retain complete source
 checkpoints, original accepted actions and successful frames; source-proven caption-only reviews
 are explicitly read-only and never claim reconstructed native acceptance. D-386/external gates stand.
+
+## D-438 - Retained fault identity and actual numeric OS scopes
+
+Classify original platform failures by exact process/module/public symbol identity. A fatal-error
+handler identifies termination, not the memory-corrupting component; do not conflate Windows WinRT
+finalization with Android's Mono bridge signature. Keep stable supported runtime matching and the
+rejected GC/bridge candidates unchanged. A single independent API35 clock control does not establish
+an application cure or justify changing precise clocks/hypervisor/kernel settings. Use only isolated
+owned AVD paths and stop only an exactly identified terminal control.
+
+New actual OS200% numeric review resumes the original final fixture checkpoint, keeps unique scope
+reports and performs no accepted metadata/financial writes. Preserve completed scenes and actual
+ANRs through continuation. A failed hierarchy dump may leave a stale remote file even with exit0:
+require a fresh owned filename and actual success marker before consuming it or taking input. Restore
+all recorded OS values and original Main/process. General stability, audible TalkBack, remaining
+accessibility, physical/iOS/provider/store/publication gates remain open.

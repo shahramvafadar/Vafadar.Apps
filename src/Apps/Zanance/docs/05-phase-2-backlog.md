@@ -3180,3 +3180,11 @@ operations are not replayed. Strict platform/independent and complete signed Off
 Main upgrades without reset and its actual rates page/return preserve My account/0.00 EUR. Native
 Windows 0xC0000005 after completed note captures and Android ANR/Wait remain real unresolved failures,
 not stability acceptance. Full source/checkpoint/package details are in the linked evidence.
+
+## D-438 qualification continuation
+
+Original platform failures are classified separately; no stable runtime/GC cure is established.
+The new physical/rate forms pass96 actual OS200% native observations at360/412dp, en/fa/de and both
+themes, with zero accepted commands and complete original source/base/OS/Main restoration. Shipping
+code/APK and the managed baseline remain D-437. QA-06 and remaining/spoken Android accessibility stay
+open; successful feature/backend matrices are not repeated. See quality/retained-native-fault-classification.md.

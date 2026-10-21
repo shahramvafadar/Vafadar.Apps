@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Qualify new numeric forms with larger system text (D-438)
+
+- Check physical purity/weight and manual-rate inputs at actual200% system text in360/412dp, three languages and both themes.
+- Preserve original data and prior accepted actions; restore the original emulator settings and Home.
+- Keep native stability and remaining spoken/accessibility acceptance open; application behavior and APK are unchanged.
+
 ### Keep physical values and manual rates in their original format (D-437)
 
 - Preserve separate original number formats for purity, per-item gram weight and manual exchange rates.

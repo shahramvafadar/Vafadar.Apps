@@ -7875,3 +7875,15 @@ operations are not replayed. Strict platform/independent and complete signed Off
 Main upgrades without reset and its actual rates page/return preserve My account/0.00 EUR. Native
 Windows 0xC0000005 after completed note captures and Android ANR/Wait remain real unresolved failures,
 not stability acceptance. Full source/checkpoint/package details are in the linked evidence.
+
+### D-438 - Scoped numeric OS qualification and retained native failures
+
+Actual independent Release/AOT OS200%/360/412dp physical/rate input review completes96 distinct native
+observations/360 readings in en/fa/de and both themes, preserving the original final50-table fixture,
+base rows, zero accepted commands and exact original OS/Main17310/My account/0.00 EUR. This does not
+increase the managed test count; shipping code/APK remain D-437. Exact public symbols distinguish
+Windows fatal handling/WinRT finalization from the separately retained Android Mono bridge failure.
+A fresh API35 clock control still has precise-clock cost and establishes no general runtime fix.
+QA-06, remaining/spoken accessibility and external release gates remain open.
+
+[Retained fault and numeric OS evidence](../quality/retained-native-fault-classification.md).

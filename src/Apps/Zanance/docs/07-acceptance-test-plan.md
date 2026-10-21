@@ -5065,3 +5065,15 @@ operations are not replayed. Strict platform/independent and complete signed Off
 Main upgrades without reset and its actual rates page/return preserve My account/0.00 EUR. Native
 Windows 0xC0000005 after completed note captures and Android ANR/Wait remain real unresolved failures,
 not stability acceptance. Full source/checkpoint/package details are in the linked evidence.
+
+## D-438 scoped numeric OS evidence; native stability unaccepted
+
+Actual independent Release/AOT OS200%/360/412dp review completes96 distinct physical/rate input
+observations and360 native readings in en/fa/de, Light/Dark. Actual label text/ellipsis/final-line
+height and raw input/original placeholders are checked; accepted commands are zero. Original final
+50-table fixture/base rows and all recorded OS/Main values are preserved. This adds native evidence,
+not managed tests or a full control/spoken-reader/phone/iOS acceptance. Actual startup ANR remains
+recorded despite later same-process success. Exact retained Windows symbols and a new bounded API35
+clock control establish no common corruptor, general fix or two-second goal.
+
+[Scope, original failures and restoration](quality/retained-native-fault-classification.md).

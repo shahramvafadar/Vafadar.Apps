@@ -2437,3 +2437,12 @@ operations are not replayed. Strict platform/independent and complete signed Off
 Main upgrades without reset and its actual rates page/return preserve My account/0.00 EUR. Native
 Windows 0xC0000005 after completed note captures and Android ANR/Wait remain real unresolved failures,
 not stability acceptance. Full source/checkpoint/package details are in the linked evidence.
+
+## D-438 qualification boundary
+
+New physical/rate fields pass96 original OS200%/360/412dp independent native observations with no
+accepted financial/metadata write and exact restoration. Strict independent build is warning-free;
+shipping code/APK remain D-437. Exact retained native-fault classification and an API35 clock control
+do not satisfy general ANR/crash, cold/low-memory/performance or audible/remaining accessibility.
+Keep these, physical/iOS/provider/company/store/publication gates open; no previous financial/full
+suite is replayed. See quality/retained-native-fault-classification.md.

@@ -35,8 +35,12 @@ internal static partial class AndroidHomeReview
         var language = local.CurrentLanguage; var choice = theme.Choice;
         var resume = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_resume_actions", false) == true;
         var guideOnly = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_physical_rate_guide", false) == true;
+        var osReview = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_physical_rate_os", false) == true;
+        var osWidth = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetIntExtra("review_os_width", 0) ?? 0;
+        if (osReview && (!resume || osWidth is not (360 or 412) || Math.Abs((Android.App.Application.Context.Resources?.Configuration?.FontScale ?? 0) - 2f) > 0.01f))
+            throw new IOException("Original resumed independent source and actual OS200% width required.");
         var outcomesOnly = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_physical_rate_outcomes", false) == true;
-        using var original = outcomesOnly || guideOnly ? await PlanEditorNativeReview.ContinuePhysicalRateOutcomesAsync(services, Path.Combine(folder, "original-physical-rates"), ct) : resume ? await PlanEditorNativeReview.ContinuePhysicalRatesAsync(services, Path.Combine(folder, "original-physical-rates"), ct)
+        using var original = outcomesOnly || guideOnly || osReview ? await PlanEditorNativeReview.ContinuePhysicalRateOutcomesAsync(services, Path.Combine(folder, "original-physical-rates"), ct) : resume ? await PlanEditorNativeReview.ContinuePhysicalRatesAsync(services, Path.Combine(folder, "original-physical-rates"), ct)
             : await PlanEditorNativeReview.CreateAsync(services, Path.Combine(folder, "original-physical-rates"), ct);
         if (!resume) await original.PreparePhysicalRatesAsync(ct);
         bool Completed(string stage) => File.Exists(Path.Combine(folder, stage + ".json"));
@@ -109,6 +113,8 @@ internal static partial class AndroidHomeReview
                     LogReport("physical-rates-failed-native", comparison, failure);
                     throw new IOException("Original monetary caption is incomplete.");
                 }
+                if (osReview && layout.GetLineBottom(layout.LineCount - 1) > text.Height - text.CompoundPaddingTop - text.CompoundPaddingBottom + 1)
+                    throw new IOException("Actual OS-scaled numeric caption height clips its native last line.");
                 // The actual label presenter applies the selected native digit shapes without changing punctuation or money.
                 readings.Add(new { label.Text, NativeText = text.Text, text.Width, text.Height, Lines = layout.LineCount });
             }
@@ -142,13 +148,13 @@ internal static partial class AndroidHomeReview
             {
                 await SetTheme(value); await SetLanguageAsync(app, local, name, ct);
                 if (outcomesOnly) await original.PhysicalRateFeedbackAsync(name + "-" + value, Observe, ct, Completed);
-                else await original.PhysicalRatesInputContextAsync(name + "-" + value, Invoke, Observe, ct, resume ? Completed : null);
+                else await original.PhysicalRatesInputContextAsync((osReview ? "os200-" + osWidth + "-" : "") + name + "-" + value, Invoke, Observe, ct, resume ? Completed : null);
             }
             if (outcomesOnly) await original.FinishPhysicalRateActionsAsync(Invoke, Observe, ct);
             }
             if (baseline != await ImportFinancialNativeReview.StoredAsync(services, ct)) throw new IOException("Original base installation rows changed.");
 
-            return new { Comparison = comparison, OriginalBaseStoreUnchanged = true, Scope = guideOnly ? "physical-rate-guide" : outcomesOnly ? "physical-rate-outcomes" : "physical-rate-inputs", OriginalNumericRowsUnchanged = !outcomesOnly,
+            return new { Comparison = comparison, OriginalBaseStoreUnchanged = true, Scope = osReview ? "physical-rate-os-" + osWidth : guideOnly ? "physical-rate-guide" : outcomesOnly ? "physical-rate-outcomes" : "physical-rate-inputs", OriginalNumericRowsUnchanged = !outcomesOnly,
                 NativeTypeSaves = outcomesOnly ? 1 : 0, NativeRateSaves = outcomesOnly ? 1 : 0, NativeConcurrentRateVersion = outcomesOnly ? 1 : 0, NativeRateDeletes = outcomesOnly ? 1 : 0, NativeLedgerEntries = 0,
                 NoAcceptedCommandReplayed = true, RecoveredOriginalOutcome = receipt, OriginalPreparedSourceReused = resume, Observations = original.Observations, Device = DeviceEvidence() };
         }

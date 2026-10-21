@@ -65,7 +65,9 @@ internal static partial class AndroidHomeReview
                     || Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_money_debt_receipt", false) == true;
                 var submissionReport = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_money_submission_only", false) == true;
                 var physical = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_physical_rates", false) == true;
-                var numericPhase = physical && Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_physical_rate_guide", false) == true ? "physical-rate-guide"
+                var numericOs = physical && Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_physical_rate_os", false) == true;
+                var numericPhase = numericOs ? "physical-rate-os-" + Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetIntExtra("review_os_width", 0)
+                    : physical && Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_physical_rate_guide", false) == true ? "physical-rate-guide"
                     : physical && Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_physical_rate_outcomes", false) == true ? "physical-rate-outcomes" : phase;
                 // Each continuation preserves the original immutable input report instead of colliding with CreateNew.
                 await WriteReportAsync(root, submissionReport ? "plan-money-submission" : debtReport ? "plan-money-debt" : numericPhase, await ReviewPlanEditorAsync(app, services, root, comparison!, ct), ct);

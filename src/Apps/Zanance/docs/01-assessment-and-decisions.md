@@ -8073,3 +8073,17 @@ operations are not replayed. Strict platform/independent and complete signed Off
 Main upgrades without reset and its actual rates page/return preserve My account/0.00 EUR. Native
 Windows 0xC0000005 after completed note captures and Android ANR/Wait remain real unresolved failures,
 not stability acceptance. Full source/checkpoint/package details are in the linked evidence.
+
+## D-438 - Distinguish retained native failures; qualify new numeric OS scopes
+
+Exact original Windows module/PDB symbols locate fatal corrupted-state handling after a WinRT
+finalizer boundary, not the original corruptor or Android's separately symbolized Mono bridge cause.
+One fresh isolated API35 control still has expensive precise clock calls; it does not justify a
+product clock/runtime/GC change. Retain actual Android startup ANR and same-process continuation.
+New independent Release/AOT OS200%/360/412 checks complete96 observations/360 native readings for
+physical purity/weight and manual-rate input in en/fa/de, Light/Dark. Actual complete source/base
+rows remain unchanged and accepted commands are zero. Exact OS and Main17310/My account/0.00 EUR
+restore. No shipping code/APK or managed-test count changes; prior successful cohorts are retained.
+General stability and spoken/remaining accessibility acceptance stay open.
+
+[Retained fault and numeric OS evidence](quality/retained-native-fault-classification.md).
