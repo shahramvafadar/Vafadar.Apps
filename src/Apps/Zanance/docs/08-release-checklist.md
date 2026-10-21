@@ -2446,3 +2446,11 @@ shipping code/APK remain D-437. Exact retained native-fault classification and a
 do not satisfy general ANR/crash, cold/low-memory/performance or audible/remaining accessibility.
 Keep these, physical/iOS/provider/company/store/publication gates open; no previous financial/full
 suite is replayed. See quality/retained-native-fault-classification.md.
+
+## D-439 scoped OS evidence
+
+Original monetary fields have288 completed native OS200%360/412dp observations and2340 readings,
+with unchanged original source/base, zero accepted command replay and exact OS/Main restoration.
+Strict independent build is warning-free; Main code/APK and managed baseline remain D-437. This
+advances only the declared geometry scopes; other changed layouts, audible reader, native stability,
+physical/iOS/provider/company/store/publication gates remain open. See quality/original-money-os-qualification.md.

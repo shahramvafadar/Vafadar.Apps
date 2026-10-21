@@ -17,16 +17,19 @@ internal static partial class AndroidHomeReview
             while ((Shell.Current?.CurrentPage ?? app.Windows[0].Page)?.Handler?.PlatformView is not Android.Views.View
                 { IsShown: true, IsAttachedToWindow: true, HasWindowFocus: true } view || view.Context?.PackageName != Package) await Task.Delay(100, ct);
         }
-        await Focused(); app.OpenReviewShell();
+        await AwaitOriginalMoneyWindowAsync(ct); app.OpenReviewShell();
         while (Shell.Current.CurrentPage is not HomePage { IsLoaded: true }) await Task.Delay(50, ct);
         await Focused(); await ((HomePage)Shell.Current.CurrentPage).PendingPublication.WaitAsync(ct);
         var baseline = await ImportFinancialNativeReview.StoredAsync(services, ct);
         var local = services.GetRequiredService<ILocalizationService>(); var theme = services.GetRequiredService<ThemeService>();
         var language = local.CurrentLanguage; var choice = theme.Choice;
         var resume = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_resume_actions", false) == true;
+        var osReview = MonetaryOsScope.Requested();
+        osReview?.RequireCompleted("goal-budget", Path.Combine(folder, "original-goal-budget"));
         using var original = resume ? await PlanEditorNativeReview.ContinueGoalBudgetMoneyAsync(services, Path.Combine(folder, "original-goal-budget"), ct)
             : await PlanEditorNativeReview.CreateAsync(services, Path.Combine(folder, "original-goal-budget"), ct);
         if (!resume) await original.PrepareGoalBudgetMoneyAsync(ct);
+        var osSource = osReview is null ? null : await original.AllMoneyRowsAsync(ct);
         bool Completed(string stage) => File.Exists(Path.Combine(folder, stage + ".json"));
         static bool Visible(Element item)
         {
@@ -50,6 +53,7 @@ internal static partial class AndroidHomeReview
         }
         async Task Invoke(Page page, System.Windows.Input.ICommand command)
         {
+            osReview?.RequireReadOnly(page, command);
             var button = PlanEditorNativeReview.Views(page).OfType<Button>().Single(item => ReferenceEquals(item.Command, command));
             await Scroll(button);
             await PlanEditorNativeReview.WaitAsync(() => button.Handler?.PlatformView is Android.Widget.Button { IsShown: true, HasWindowFocus: true, Enabled: true }, ct);
@@ -73,6 +77,7 @@ internal static partial class AndroidHomeReview
                     LogReport("goal-budget-money-failed-native", comparison, failure);
                     throw new IOException("Original monetary caption is incomplete.");
                 }
+                if (osReview is not null) MonetaryOsScope.RequireCompleteHeight(text, layout);
                 // The actual label presenter applies the selected native digit shapes without changing punctuation or money.
                 readings.Add(new { label.Text, NativeText = text.Text, text.Width, text.Height, Lines = layout.LineCount });
             }
@@ -98,11 +103,12 @@ internal static partial class AndroidHomeReview
             foreach (var name in new[] { "en", "fa", "de" }) foreach (var value in new[] { ThemeChoice.Light, ThemeChoice.Dark })
             {
                 await SetTheme(value); await SetLanguageAsync(app, local, name, ct);
-                await original.GoalBudgetMoneyContextAsync(name + "-" + value, Invoke, Observe, accept, ct, resume ? Completed : null); accept = false;
+                await original.GoalBudgetMoneyContextAsync((osReview?.Prefix ?? "") + name + "-" + value, Invoke, Observe, accept, ct, resume ? Completed : null); accept = false;
             }
+            if (osReview is not null && osSource != await original.AllMoneyRowsAsync(ct)) throw new IOException("Read-only OS monetary source changed.");
             if (baseline != await ImportFinancialNativeReview.StoredAsync(services, ct)) throw new IOException("Original base installation rows changed.");
-            return new { OriginalBaseStoreUnchanged = true, NativeGoalSaves = 1, NativeBudgetSaves = 1, NativeLedgerPosts = 0,
-                NoAcceptedCommandReplayed = true, OriginalAcceptedActionsReused = resume, Observations = original.Observations, Device = DeviceEvidence() };
+            return new { Comparison = comparison, OriginalBaseStoreUnchanged = true, NativeGoalSaves = osReview is null ? 1 : 0, NativeBudgetSaves = osReview is null ? 1 : 0, NativeLedgerPosts = 0,
+                NoAcceptedCommandReplayed = true, OriginalAcceptedActionsReused = resume, Scope = osReview?.Phase, OsAcceptedCommands = osReview is null ? (int?)null : 0, OsSourceUnchanged = osReview is not null, Observations = original.Observations, Device = DeviceEvidence() };
         }
         finally { await SetTheme(choice); await SetLanguageAsync(app, local, language.CultureName, ct); }
     }

@@ -8087,3 +8087,17 @@ restore. No shipping code/APK or managed-test count changes; prior successful co
 General stability and spoken/remaining accessibility acceptance stay open.
 
 [Retained fault and numeric OS evidence](quality/retained-native-fault-classification.md).
+
+## D-439 - Complete original monetary-text OS geometry scopes
+
+Actual independent Release/AOT OS200% qualification resumes four original completed sources rather
+than reseeding or repeating accepted commands. Account/debt/observed balance, holding/quantity/price,
+entry/fees/foreign/reimbursable/split and goal/budget guides/errors complete288 observations and2340
+native readings across360/412dp, en/fa/de and Light/Dark. Full text, ellipsis, final-line height and
+raw values match; complete original50-table checkpoints/base rows remain unchanged. A narrow native
+command gate permits reads and the known invalid-field refusal, not accepted writes. Exact original
+OS/Main17310/My account/0.00 EUR restore. No source test count, shipping code/APK, model, permission or
+provider change; successful older scopes are retained. QA-06 and remaining/audible accessibility and
+external acceptance stay open.
+
+[Original monetary OS evidence](quality/original-money-os-qualification.md).

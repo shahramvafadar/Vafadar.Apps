@@ -3309,3 +3309,15 @@ ANRs through continuation. A failed hierarchy dump may leave a stale remote file
 require a fresh owned filename and actual success marker before consuming it or taking input. Restore
 all recorded OS values and original Main/process. General stability, audible TalkBack, remaining
 accessibility, physical/iOS/provider/store/publication gates remain open.
+
+## D-439 - Original monetary OS scopes without writer replay
+
+Actual OS200% monetary review requires one unambiguous independent route, measured native width,
+unlocked focused Activity and the original completed source/accepted receipts before form work.
+Keep old source table checkpoints and unique per-width/per-group scene/report identities. Limit
+native actions to read-only comparison and the specifically invalid field refusal; no new accepted
+account/holding/valuation/entry/split/goal/budget write. Native final-line height must fit alongside
+full-text/ellipsis checks. Counts distinguish retained source ledger rows from new writes. Recognize
+terminal Failed:true payloads under their original phase, not an assumed failure tag. Complete
+scopes are never replayed. Restore exact OS/Main state; native observations are not managed tests,
+whole-control/spoken acceptance or a general runtime fix.

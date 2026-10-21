@@ -7887,3 +7887,15 @@ A fresh API35 clock control still has precise-clock cost and establishes no gene
 QA-06, remaining/spoken accessibility and external release gates remain open.
 
 [Retained fault and numeric OS evidence](../quality/retained-native-fault-classification.md).
+
+### D-439 - Original monetary field geometry at system scale
+
+Four original completed fixture groups now provide288 native observations/2340 readings at actual
+OS200%360/412dp, en/fa/de and Light/Dark. Account/debt/balance, holding/quantity/manual price,
+entry/fees/foreign/reimbursable/split and goal/budget guides/errors/raw fields retain full text,
+line height and original values. Full original50-table checkpoints/base rows remain unchanged;
+accepted commands are zero and older success is not replayed. Exact OS/Main17310/My account/0.00 EUR
+restore. Strict independent build passes; source test counts and shipping code/APK stay D-437.
+Remaining changed-layout/spoken/device/stability and external release acceptance stay open.
+
+[Original monetary OS evidence](../quality/original-money-os-qualification.md).

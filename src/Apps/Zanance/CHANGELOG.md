@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Check larger text across original monetary forms (D-439)
+
+- Qualify account, holding, transaction, goal and budget input guides at actual200% system text,360/412dp, three languages and both themes.
+- Preserve original saved data and completed actions, and restore original emulator settings/Home.
+- Application behavior and APK are unchanged; remaining accessibility and stability gates stay open.
+
 ### Qualify new numeric forms with larger system text (D-438)
 
 - Check physical purity/weight and manual-rate inputs at actual200% system text in360/412dp, three languages and both themes.

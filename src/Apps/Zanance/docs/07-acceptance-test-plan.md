@@ -5077,3 +5077,14 @@ recorded despite later same-process success. Exact retained Windows symbols and 
 clock control establish no common corruptor, general fix or two-second goal.
 
 [Scope, original failures and restoration](quality/retained-native-fault-classification.md).
+
+## D-439 - Original monetary geometry scopes
+
+Actual OS200%360/412dp independent Release/AOT review completes288 native observations/2340 readings
+for original account/debt/balance, holding/quantity/price, entry/fees/foreign/reimbursable/split and
+goal/budget notes/errors/raw fields, en/fa/de and both themes. All complete original50-table sources
+and base rows remain unchanged. Native command guards refuse new accepted writers; original receipt
+reuse is explicit. Complete text/ellipsis/final-line height and raw-input equality pass. All original
+OS/Main values restore. These are not new managed tests, full controls/voice/device/iOS acceptance
+or general stability; see quality/original-money-os-qualification.md. Retain D-438's successful scopes
+and exact-commit CI; do not replay accepted financial actions or older successful suites.

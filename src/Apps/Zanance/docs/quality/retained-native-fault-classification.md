@@ -100,3 +100,11 @@ Primary references: [exact exception handling source](https://github.com/dotnet/
 [official public symbol file](https://msdl.microsoft.com/download/symbols/coreclr.pdb/BFA5339556F349D7B500232511B5203D1/coreclr.pdb),
 [stable serviced releases](https://builds.dotnet.microsoft.com/dotnet/release-metadata/10.0/releases.json),
 [upstream bridge issue](https://github.com/dotnet/runtime/issues/123537).
+
+## Exact pushed-commit CI
+
+The single check for3af93373e87837fe201ca4ef75a5a8da7689798f reports both actual workflows
+completed successfully: [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39656387001)
+and [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39656387122).
+Its one-shot follow-up is deleted and its request consumed. These exact-revision results do not
+establish a native runtime fix, all-control/spoken acceptance or publication readiness.
