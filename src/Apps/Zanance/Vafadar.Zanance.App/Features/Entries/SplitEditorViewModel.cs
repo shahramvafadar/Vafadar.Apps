@@ -1,9 +1,10 @@
 using System.Collections.ObjectModel;
+using System.Globalization;
+using Vafadar.Zanance.App.Presentation;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
-using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Categories;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
@@ -20,7 +21,7 @@ public sealed record SplitCategory(Guid? Id, string Name)
 }
 
 /// <summary>One part of a split.</summary>
-public sealed partial class SplitPart(IReadOnlyList<SplitCategory> categories, Action changed) : ObservableObject
+public sealed partial class SplitPart(IReadOnlyList<SplitCategory> categories, Action changed, Func<string> currency, Func<CultureInfo> culture) : ObservableObject
 {
     public IReadOnlyList<SplitCategory> Categories { get; } = categories;
 
@@ -30,20 +31,30 @@ public sealed partial class SplitPart(IReadOnlyList<SplitCategory> categories, A
     [ObservableProperty]
     public partial string AmountText { get; set; } = string.Empty;
 
-    partial void OnAmountTextChanged(string value) => changed();
+    /// <summary>Gets the exact raw monetary interpretation for this original share.</summary>
+    public MoneyDraftInput Input { get; } = new();
+    /// <summary>Gets the original unit beside this share.</summary>
+    [ObservableProperty] public partial string? UnitName { get; set; }
+    /// <summary>Explains a retained original numeric format.</summary>
+    [ObservableProperty] public partial string? FormatNote { get; set; }
+    /// <summary>Gets complete field-local reentry feedback.</summary>
+    [ObservableProperty] public partial string? Error { get; set; }
+    partial void OnAmountTextChanged(string value) { Input.ChangeText(value, currency(), culture()); changed(); }
+    partial void OnCategoryChanged(SplitCategory? value) => changed();
 }
 
 /// <summary>
 /// Splits one purchase or income across categories, or changes and joins an existing split (F2-TX-01). The parts must
 /// add up exactly to the amount; the account balance changes by the same total.
 /// </summary>
-public sealed partial class SplitEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization, IAppInteraction interaction) : ViewModelBase, IQueryAttributable, Presentation.IUnsavedChanges, Presentation.IThemeAware
+public sealed partial class SplitEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization, IAppInteraction interaction) : ViewModelBase, Presentation.IUnsavedChanges, Presentation.IThemeAware
 {
     private readonly SplitEditorSession _session = new(store);
     private bool _loading = true;
     private List<LedgerEntry> _parts = [];
     private Currency _currency = Currencies.Euro;
     private long _total;
+    private long _partRevision;
     private IReadOnlyList<SplitCategory> _categories = [];
 
     public ObservableCollection<SplitPart> Parts { get; } = [];
@@ -59,9 +70,6 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
     public partial string? UnitNote { get; set; }
 
     [ObservableProperty]
-    public partial Color RemainingColor { get; set; } = Palette.SecondaryText;
-
-    [ObservableProperty]
     public partial bool CanSave { get; set; }
 
     [ObservableProperty]
@@ -69,8 +77,6 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
 
     [ObservableProperty]
     public partial string? Error { get; set; }
-
-    public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(() => ApplyQueryAsync(query));
 
     /// <summary>Loads only the original coherent source packet before publishing editable shares.</summary>
     public async Task ApplyQueryAsync(IDictionary<string, object> query)
@@ -123,11 +129,15 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
         _snapshot = Snapshot(); _loading = false; Update();
     }
 
-    private void AddPart(Guid? categoryId, long amount) => Parts.Add(new SplitPart(_categories, Update)
+    private void AddPart(Guid? categoryId, long amount)
     {
-        Category = _categories.FirstOrDefault(c => c.Id == categoryId) ?? _categories[0],
-        AmountText = amount > 0 ? MoneyText.ForInput(amount, _currency.Code, localization.CurrentCulture) : string.Empty,
-    });
+        var row = new SplitPart(_categories, PartChanged, () => _currency.Code, () => localization.CurrentCulture);
+        row.Category = _categories.FirstOrDefault(c => c.Id == categoryId) ?? _categories[0];
+        if (amount > 0) row.AmountText = row.Input.Format(amount, _currency.Code, localization.CurrentCulture);
+        else row.Input.Initialize(string.Empty, _currency.Code, localization.CurrentCulture);
+        Parts.Add(row); _partRevision++;
+    }
+    private void PartChanged() { _partRevision++; Update(); }
 
     [RelayCommand]
     private void Add()
@@ -141,7 +151,7 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
     {
         if (Parts.Count > 2)
         {
-            Parts.Remove(part);
+            Parts.Remove(part); _partRevision++;
             Update();
         }
     }
@@ -154,13 +164,25 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
         return Task.CompletedTask;
     }
 
+    /// <summary>Observes only the visible original form's display changes without renewing raw money.</summary>
+    public void SetMoneyDisplayActive(bool active)
+    {
+        localization.Changed -= OnMoneyDisplayChanged;
+        if (active) localization.Changed += OnMoneyDisplayChanged;
+    }
+    private void OnMoneyDisplayChanged(object? sender, EventArgs args) => Update();
+    partial void RefreshNativeColors(bool balanced);
+
     private void Update()
     {
         var assigned = 0L;
         var valid = true;
         foreach (var part in Parts)
         {
-            if (!MoneyText.TryParse(part.AmountText, _currency, localization.CurrentCulture, out var amount) || amount <= 0)
+            part.UnitName = part.Input.UnitName(_currency.Code);
+            part.FormatNote = part.Input.OriginalExample(localization.CurrentCulture) is { } example ? translator.Format("Plan_OriginalInputFormat", example) : null;
+            part.Error = part.Input.NeedsReview(_currency.Code) ? translator.Format("Plan_InputUnitChanged", MoneyText.UnitName(_currency.Code)) : null;
+            if (part.Error is not null || !part.Input.TryParse(out var amount) || amount <= 0)
             {
                 valid = false;
                 continue;
@@ -171,6 +193,7 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
 
         var rest = _total - assigned;
         var culture = localization.CurrentCulture;
+        TotalText = MoneyText.Format(_total, _currency.Code, culture); UnitNote = DisplayUnitNote.For(translator, _currency.Code);
         RemainingText = rest switch
         {
             > 0 => translator.Format("Split_Remaining", MoneyText.Format(rest, _currency.Code, culture)),
@@ -178,7 +201,7 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
             _ when !valid => translator["Split_EnterAll"],
             _ => translator["Split_Balanced"],
         };
-        RemainingColor = rest == 0 && valid ? Palette.IncomeText : Palette.WarningText;
+        RefreshNativeColors(rest == 0 && valid);
         CanSave = valid && rest == 0 && Parts.Count >= 2 && CanEdit && _session.Review is not null && !_session.Committed;
         OnPropertyChanged(nameof(CanEdit)); OnPropertyChanged(nameof(CanJoin)); OnPropertyChanged(nameof(CloseText));
         JoinCommand.NotifyCanExecuteChanged();
@@ -200,16 +223,24 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
     private async Task SavePartsAsync(bool join)
     {
         if (IsBusy || _session.Committed || _session.Review is null) return;
-        var originalDraft = Snapshot();
-        var shares = Parts.Select(p =>
+        var originalDraft = Snapshot(); var revision = _partRevision;
+        Update();
+        if ((!join && !CanSave) || revision != _partRevision || originalDraft != Snapshot()) return;
+        var shares = join ? [] : Parts.Select(p =>
         {
-            MoneyText.TryParse(p.AmountText, _currency, localization.CurrentCulture, out var amount);
-            return (p.Category?.Id, amount);
+            p.Input.TryParse(out var amount); return (p.Category?.Id, amount);
         }).ToArray();
+        var inputRetired = false;
+        bool InputCurrent()
+        {
+            var current = Snapshot() == originalDraft && revision == _partRevision && (join || Parts.All(p => !p.Input.NeedsReview(_currency.Code)));
+            if (!current) inputRetired = true;
+            return current;
+        }
         IsBusy = true; Error = null; Update();
         try
         {
-            var result = await _session.SaveAsync(shares, join, () => Snapshot() == originalDraft);
+            var result = await _session.SaveAsync(shares, join, InputCurrent);
             if (result is null) return;
             if (!result.Succeeded)
             { Error = string.Join(Environment.NewLine, result.Errors.Select(e => translator[$"LedgerError_{e}"])); return; }
@@ -218,7 +249,10 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
         catch (CommittedWriteNotificationException<SaveResult>)
         { _snapshot = Snapshot(); Error = translator["Split_SavedNeedsReview"]; return; }
         catch (SplitReviewChangedException)
-        { _session.Retire(); Error = translator["Split_SourceChanged"]; return; }
+        {
+            if (!inputRetired) _session.Retire();
+            Error = translator[inputRetired ? "Amount_DraftChanged" : "Split_SourceChanged"]; return;
+        }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             _session.Retire();
@@ -236,7 +270,11 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
     public void RetireReview() { _session.Retire(); Update(); }
 
     [RelayCommand]
-    private Task CancelAsync() => _session.Committed ? interaction.NavigateAsync("..") : Presentation.UnsavedChanges.LeaveAsync(this);
+    private async Task CancelAsync()
+    {
+        if (_session.Committed || !IsDirty || await interaction.ConfirmAsync(translator["Common_DiscardTitle"], translator["Common_DiscardMessage"],
+            translator["Common_Discard"], translator["Common_KeepEditing"])) await interaction.NavigateAsync("..");
+    }
 
     // The input as it was loaded or saved; leaving with a change asks first (CR12).
     private string? _snapshot;
@@ -244,6 +282,6 @@ public sealed partial class SplitEditorViewModel(ZananceStore store, Translator 
     /// <inheritdoc />
     public bool IsDirty => !_session.Committed && _snapshot is not null && Snapshot() != _snapshot;
 
-    private string Snapshot() => Presentation.UnsavedChanges.Fingerprint(
-        string.Join(',', Parts.Select(p => $"{p.Category?.Id}:{p.AmountText}")));
+    private string Snapshot() => Presentation.DraftFingerprint.Create(
+        string.Join(',', Parts.Select(p => $"{p.Category?.Id}:{p.AmountText}:{p.Input.Stamp}")));
 }

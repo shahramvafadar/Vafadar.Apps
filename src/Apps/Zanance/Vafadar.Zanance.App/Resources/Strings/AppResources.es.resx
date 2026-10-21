@@ -8383,4 +8383,7 @@ SHA-256 del XML original: {5}</value>
   <data name="Plan_InputUnitChanged" xml:space="preserve">
     <value>Ha cambiado la moneda o la unidad de visualización. Borra este importe y vuelve a introducirlo en {0}.</value>
   </data>
+  <data name="Amount_DraftChanged" xml:space="preserve">
+    <value>Los importes cambiaron mientras se guardaban. No se guardó nada. Revísalos y vuelve a guardar.</value>
+  </data>
 </root>

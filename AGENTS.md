@@ -3227,3 +3227,14 @@ Native review awaits the exact deferred tab rebuild before opening another frame
 selected digit shapes when comparing native labels; retain punctuation and source text. Continue
 incomplete observations from exact checkpoints without accepted-action replay. D-386 and external
 gates remain unchanged.
+
+## D-432 - Original transaction and split monetary inputs
+
+Retain primary/destination/fee/ISO-purchase/reimbursable contexts independently. Display changes never
+reinterpret raw money; changed currencies/units require complete clearing/reentry. Preserve original
+labels/examples, account Undo and nested/read-only return. Explicit receipt/template adoption uses
+authoritative minor units. Plan handoff ignores unsupported fee details. Split shares keep original
+meaning; Join uses the reviewed stored total. Validate raw/context revision under original writers.
+Known acceptance never rearms. Native continuation requires exact source checkpoints; an accepted
+receipt without its final observer checkpoint refuses another Save. Await the original parent's full
+return publication before reading readiness. D-386 priorities and external gates stand.

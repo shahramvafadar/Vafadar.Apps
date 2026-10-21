@@ -10,6 +10,7 @@ namespace Vafadar.Zanance.App.Tests;
 
 /// <summary>AT-430: original monetary interpretation across actual plan form display and account changes.</summary>
 [Trait("AT", "AT-430")]
+[Collection("Entry validation units")]
 public sealed class PlanMoneyContextTests
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;

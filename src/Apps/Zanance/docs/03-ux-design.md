@@ -2198,3 +2198,16 @@ and explicit reload. Untouched saved values may renew format through that reload
 values remain. Quantity rules stay independent of currency. Feedback grows without clipping;
 accepted forms offer Close and cannot resubmit after notification failure. [Normal-scale evidence](quality/goal-budget-money-context.md)
 does not establish OS/TalkBack or general runtime acceptance; D-386 still applies.
+
+## Original transaction monetary input (D-432)
+
+Each original transaction amount, destination amount, source/destination fee, ISO purchase amount and
+reimbursable amount retains its own currency, applicable display unit and parse culture. Unit/currency
+changes require complete clearing/reentry; partial edits never renew meaning. Original labels and
+format examples remain visible. Receipt/template adoption starts from authoritative minor units;
+account Undo and read-only/nested return retain original context. Repeating-plan handoff validates only
+its supported primary/destination amounts, without borrowing unused fee meaning. Split shares retain
+independent contexts; Join uses the original stored total. Raw/context revisions are rechecked under
+original writers; known acceptance remains final. 27 new focused source cases and 51 related prior cases
+pass across selective executions, with no full-suite or unrelated successful-check replay.
+Keep complete field-local reentry feedback, original unit labels and numeric examples at native scale. Foreign purchase amounts use their ISO currency independently of display units. No automatic conversion is implied.

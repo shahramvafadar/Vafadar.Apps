@@ -59,7 +59,7 @@ public sealed partial class EntryEditorViewModel
     { if (ReferenceEquals(value, Loading)) PublishFormAvailability(); };
     private void PublishFormAvailability()
     {
-        OnPropertyChanged(nameof(CanSave)); OnPropertyChanged(nameof(IsFormEditable));
+        OnPropertyChanged(nameof(CanSave)); OnPropertyChanged(nameof(CanRepeat)); OnPropertyChanged(nameof(IsFormEditable));
         OnPropertyChanged(nameof(CanReloadForm)); OnPropertyChanged(nameof(NeedsAccount));
         OnPropertyChanged(nameof(CloseText));
     }
@@ -272,7 +272,7 @@ public sealed partial class EntryEditorViewModel
     {
         _fee = _destinationFee = _refundOf = null; _entry = new(); _isNew = source.Request.EditId is null;
         _pendingAttachment = null; _receipt = null; _receiptAppliedText = _receiptAppliedCurrency = null; _receiptDisplayFactor = 1;
-        _previousAccount = null; _previousAmountText = null; _categoryChosen = false; _beforeSuggestion = null;
+        _previousAccount = null; _previousAmountText = null; _previousAmountMeaning = null; _categoryChosen = false; _beforeSuggestion = null;
         Title = _translator["Entry_NewTitle"]; AmountText = EntryTitle = Payee = Note = ToAmountText = FeeText = DestinationFeeText = string.Empty;
         ForeignAmountText = ReimbursableText = ReimbursedBy = TagsText = string.Empty;
         IconKey = null;
@@ -302,9 +302,9 @@ public sealed partial class EntryEditorViewModel
         {
             _entry = EntryActions.Duplicate(original, today); LoadFrom(_entry);
             if (EntryActions.FindTransferFee(original, source.Inputs.Related) is { } fee)
-                FeeText = MoneyText.ForInput(fee.Amount, CurrencyOf(original.AccountId), _localization.CurrentCulture);
+                FeeText = _feeMoney.Format(fee.Amount, CurrencyOf(original.AccountId), _localization.CurrentCulture);
             if (EntryActions.FindDestinationFee(original, source.Inputs.Related) is { } destination && ToAccount is not null)
-                DestinationFeeText = MoneyText.ForInput(destination.Amount, ToAccount.CurrencyCode, _localization.CurrentCulture);
+                DestinationFeeText = _destinationFeeMoney.Format(destination.Amount, ToAccount.CurrencyCode, _localization.CurrentCulture);
         }
         else if (source.Request.RefundOfId is not null && source.Source is { } purchase)
         {
@@ -340,7 +340,7 @@ public sealed partial class EntryEditorViewModel
             }
         }
         // Complete derived currency/fee state while the loading cover still owns the whole form.
-        _loading = false; UpdateKindState(); UpdateEffect();
+        SynchronizeMoneyInputs(); _loading = false; UpdateKindState(); RefreshMoneyInputs(); UpdateEffect();
         HasNoAccounts = Accounts.Count == 0; UpdateRefundInfo(source); _snapshot = Snapshot();
         if (query.TryGetValue("receiptVisit", out var visit) && visit is Receipts.ReceiptDraft receipt)
         {

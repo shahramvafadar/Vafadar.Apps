@@ -2333,3 +2333,7 @@ quantities retain their units. Original raw revision/native owner is checked und
 Known goal/budget/cut acceptance precedes notification and cannot rearm.25 new and75 affected prior
 source cases pass selectively, without a full-suite replay. [Native/build evidence and retained failures](quality/goal-budget-money-context.md).
 No schema/model/portable-format, permission/provider/SDK change. D-386 and external gates stand.
+
+## D-432 qualification boundary
+
+Focused source and native transaction/split monetary checks pass. Final strict builds, complete signed offline APK and no-reset ordinary emulator upgrade are recorded in [Original native/build evidence and retained failures](quality/entry-money-context.md). The preserved initial independent Android ANR is not fixed or waived. This does not establish physical-device, TalkBack, iOS, provider, store or publication acceptance.

@@ -8391,4 +8391,7 @@ SHA-256 du XML original : {5}</value>
   <data name="Plan_InputUnitChanged" xml:space="preserve">
     <value>La devise ou l’unité d’affichage a changé. Effacez ce montant et saisissez-le à nouveau en {0}.</value>
   </data>
+  <data name="Amount_DraftChanged" xml:space="preserve">
+    <value>Les montants ont changé pendant l’enregistrement. Rien n’a été enregistré. Vérifiez-les et enregistrez à nouveau.</value>
+  </data>
 </root>

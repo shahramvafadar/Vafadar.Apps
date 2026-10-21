@@ -16,6 +16,7 @@ public partial class EntryEditorPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        _viewModel.SetMoneyDisplayActive(true);
         _observingValidation = true;
         _viewModel.ValidationFailed -= OnValidationFailed;
         _viewModel.ValidationFailed += OnValidationFailed;
@@ -54,7 +55,7 @@ public partial class EntryEditorPage : ContentPage
     protected override void OnDisappearing()
     {
         _viewModel.ValidationFailed -= OnValidationFailed; _viewModel.PropertyChanged -= OnFormChanged;
-        _viewModel.RetirePendingSave();
+        _viewModel.SetMoneyDisplayActive(false); _viewModel.RetirePendingSave();
         _observingValidation = false;
         _validationVersion++;
         base.OnDisappearing();

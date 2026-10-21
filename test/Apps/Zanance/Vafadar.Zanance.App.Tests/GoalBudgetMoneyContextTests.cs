@@ -13,6 +13,7 @@ namespace Vafadar.Zanance.App.Tests;
 
 /// <summary>AT-431: original monetary meaning in actual goal and budget sources with isolated SQLite.</summary>
 [Trait("AT", "AT-431")]
+[Collection("Entry validation units")]
 public sealed class GoalBudgetMoneyContextTests
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;

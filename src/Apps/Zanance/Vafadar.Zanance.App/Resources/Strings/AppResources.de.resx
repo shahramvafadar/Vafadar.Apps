@@ -8414,4 +8414,7 @@ Original-XML SHA-256: {5}</value>
   <data name="Plan_InputUnitChanged" xml:space="preserve">
     <value>Die Währung oder Anzeigeeinheit hat sich geändert. Löschen Sie diesen Betrag und geben Sie ihn erneut in {0} ein.</value>
   </data>
+  <data name="Amount_DraftChanged" xml:space="preserve">
+    <value>Die Beträge wurden während des Speicherns geändert. Es wurde nichts gespeichert. Prüfen Sie sie und speichern Sie erneut.</value>
+  </data>
 </root>

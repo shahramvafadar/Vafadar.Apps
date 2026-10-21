@@ -8414,4 +8414,7 @@
   <data name="Plan_InputUnitChanged" xml:space="preserve">
     <value>ارز یا واحد نمایش تغییر کرده است. این مبلغ را پاک کنید و دوباره با واحد «{0}» وارد کنید.</value>
   </data>
+  <data name="Amount_DraftChanged" xml:space="preserve">
+    <value>مبلغ‌ها هنگام ذخیره تغییر کردند. چیزی ذخیره نشد. آن‌ها را بازبینی و دوباره ذخیره کنید.</value>
+  </data>
 </root>

@@ -9,8 +9,14 @@ public partial class SplitEditorPage : ContentPage
     }
 
     /// <inheritdoc />
+    protected override void OnAppearing()
+    {
+        base.OnAppearing(); (BindingContext as SplitEditorViewModel)?.SetMoneyDisplayActive(true);
+    }
+    /// <inheritdoc />
     protected override void OnDisappearing()
     {
+        (BindingContext as SplitEditorViewModel)?.SetMoneyDisplayActive(false);
         (BindingContext as SplitEditorViewModel)?.RetireReview();
         base.OnDisappearing();
     }

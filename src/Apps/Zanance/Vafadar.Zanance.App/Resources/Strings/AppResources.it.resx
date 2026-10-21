@@ -8403,4 +8403,7 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Plan_InputUnitChanged" xml:space="preserve">
     <value>La valuta o l’unità di visualizzazione è cambiata. Cancella questo importo e inseriscilo di nuovo in {0}.</value>
   </data>
+  <data name="Amount_DraftChanged" xml:space="preserve">
+    <value>Gli importi sono cambiati durante il salvataggio. Non è stato salvato nulla. Controllali e salva di nuovo.</value>
+  </data>
 </root>

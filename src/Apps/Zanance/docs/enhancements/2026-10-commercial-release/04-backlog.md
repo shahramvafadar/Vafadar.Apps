@@ -3999,12 +3999,25 @@ Known goal/budget/cut acceptance precedes notification and cannot rearm.25 new a
 source cases pass selectively, without a full-suite replay. [Native/build evidence and retained failures](../../quality/goal-budget-money-context.md).
 No schema/model/portable-format, permission/provider/SDK change. D-386 and external gates stand.
 
-### Next complete original transaction monetary-context batch (D-432)
+### D-432 - Original transaction and split monetary context
 
-Current EntryEditorViewModel and SplitEditorViewModel still parse primary/destination/fee/part raw
-amounts through current formatting culture/display units. Reproduce those actual-source boundaries,
-then retain independent contexts through account/display changes, receipt/template return and split
-editing. Preserve D-425 through D-428 original file, aggregate review, receipt and known financial/Undo
-acceptance. Recheck raw/context revisions under original writers. No accepted native Save or successful
-unrelated suite replay. Account/holding money contexts remain separate unqualified boundaries. D-386
-and all external acceptance gates remain unchanged.
+Each original transaction amount, destination amount, source/destination fee, ISO purchase amount and
+reimbursable amount retains its own currency, applicable display unit and parse culture. Unit/currency
+changes require complete clearing/reentry; partial edits never renew meaning. Original labels and
+format examples remain visible. Receipt/template adoption starts from authoritative minor units;
+account Undo and read-only/nested return retain original context. Repeating-plan handoff validates only
+its supported primary/destination amounts, without borrowing unused fee meaning. Split shares retain
+independent contexts; Join uses the original stored total. Raw/context revisions are rechecked under
+original writers; known acceptance remains final. 27 new focused source cases and 51 related prior cases
+pass across selective executions, with no full-suite or unrelated successful-check replay.
+[Native/build evidence and retained failures](../../quality/entry-money-context.md). No schema/model/format, permission/provider/SDK change.
+
+### Next complete original account monetary-context batch (D-433)
+
+AccountFormModel still parses opening/installment raw money through current culture/display units;
+AccountDetailViewModel balance observation does the same. Reproduce these actual-source boundaries,
+then retain original currency/unit/culture and explicit debt direction through display/currency changes,
+account save/reload and reconciliation confirmation. Preserve actual-file rights, unknown principal,
+original write/notification ownership and recorded ledger invariants. Holding monetary inputs remain a
+separate following boundary. Do not replay accepted native actions or successful unrelated suites.
+D-386 stability/accessibility order and all external acceptance gates stand.

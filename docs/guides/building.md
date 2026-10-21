@@ -2045,3 +2045,14 @@ receipt read-only instead of replaying UI or financial commands. Independent And
 Wait for actual native ownership and deferred tab rebuilds. Normalize selected digit shapes only,
 retaining native text/punctuation and complete line layout. Normal-scale checks are not OS/TalkBack
 acceptance.
+
+### Original transaction money review (D-432)
+
+Run `eng/scripts/Run-StoreDrafts.ps1 -PlanEditorReview -EntryMoneyReview` only against its independent
+fictitious installation, with an alternate-volume `VAFADAR_REVIEW_BUILD_ROOT` when needed. It qualifies
+112 native observations across 18 contexts. `-PlanEditorSourceRun` retains original rows and accepted
+financial receipts; live source continuation requires its complete financial-action checkpoint.
+`-PlanEditorObservationRun` retains already captured native views. Never reseed or repeat an accepted
+Save to repair a failed observer. The independent Release/AOT caller uses `review_entry_money` in its
+existing `plan-form` phase, with the original run and explicit continuation. Ordinary Main qualification
+still requires a complete signed `Build-AndroidApk.ps1 -Offline` candidate and no-reset upgrade.

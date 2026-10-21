@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep transaction amounts in their original units (D-432)
+
+- Preserve the original format and unit of each transfer amount, fee and expense detail.
+- Changing currency or display unit requires clearing and entering that amount again.
+- Retain original monetary meaning through receipt/template selection and plan return.
+- Review split shares independently and refuse a pending Save after its amounts change.
+
 ### Keep goal and budget amounts in their original units (D-431)
 
 - Display-unit changes no longer change the meaning of typed goal or budget amounts.

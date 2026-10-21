@@ -348,7 +348,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     public bool NeedsAccount => Account is null && !HasNoAccounts;
 
     /// <summary>Gets a value indicating whether Save can be used now.</summary>
-    public bool CanSave => IsFormEditable && Account is not null && _saveSession is { Accepted: false };
+    public bool CanSave => IsFormEditable && Account is not null && _saveSession is { Accepted: false } && MoneyContextsReady;
 
     /// <summary>Gets whether this new supported transaction can open a detached repeating-plan draft.</summary>
     public bool ShowRepeat => _isNew && Kind is EntryKind.Expense or EntryKind.Income or EntryKind.Transfer;
@@ -371,12 +371,14 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         if (e.PropertyName is nameof(IsBusy) or nameof(Account) or nameof(HasNoAccounts))
         {
             base.OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(CanSave)));
+            base.OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(CanRepeat)));
             base.OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(NeedsAccount)));
             base.OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(IsFormEditable)));
             base.OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(CanReloadForm)));
         }
 
-        if (e.PropertyName is nameof(Account) or nameof(ToAccount) or nameof(AmountText) or nameof(ToAmountText) or nameof(FeeText) or nameof(DestinationFeeText) or nameof(ShowDestinationFee) or nameof(KindIndex))
+        if (!_loading && e.PropertyName is nameof(ForeignCurrency) or nameof(ForeignEnabled) or nameof(ReimbursableEnabled) or nameof(ShowToAmount) or nameof(ShowDestinationFee) or nameof(KindIndex)) RefreshMoneyInputs();
+        if (e.PropertyName is nameof(ForeignCurrency) or nameof(ForeignEnabled) or nameof(ReimbursableEnabled) or nameof(ForeignAmountText) or nameof(ReimbursableText) or nameof(Account) or nameof(ToAccount) or nameof(AmountText) or nameof(ToAmountText) or nameof(FeeText) or nameof(DestinationFeeText) or nameof(ShowDestinationFee) or nameof(KindIndex))
         {
             UpdateEffect();
         }
@@ -396,6 +398,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         {
             Account = account;
             AmountText = amount ?? AmountText;
+            if (_previousAmountMeaning is { } meaning) _amountMoney.Restore(meaning);
         }
         finally
         {
@@ -412,8 +415,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     {
         EffectText = null;
         ImpliedRateText = null;
-        if (Account is null || !_accounts.TryGetValue(Account.Id, out var account)
-            || !MoneyText.TryParse(AmountText, account.CurrencyCode, _localization.CurrentCulture, out var amount) || amount <= 0)
+        if (!MoneyContextsReady || Account is null || !_accounts.TryGetValue(Account.Id, out var account)
+            || !_amountMoney.TryParse(out var amount) || amount <= 0)
         {
             return;
         }
@@ -421,7 +424,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         var culture = _localization.CurrentCulture;
         var outgoing = Kind is EntryKind.Expense or EntryKind.IncomeReversal or EntryKind.Transfer;
         if (Kind == EntryKind.Transfer && !string.IsNullOrWhiteSpace(FeeText)
-            && MoneyText.TryParse(FeeText, account.CurrencyCode, culture, out var fee) && fee > 0)
+            && _feeMoney.TryParse(out var fee) && fee > 0)
         {
             amount = checked(amount + fee);
         }
@@ -436,17 +439,17 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             var sameCurrency = string.Equals(target.CurrencyCode, account.CurrencyCode, StringComparison.OrdinalIgnoreCase);
             long received = 0;
             var known = sameCurrency
-                ? MoneyText.TryParse(AmountText, account.CurrencyCode, culture, out received)
-                : MoneyText.TryParse(ToAmountText, target.CurrencyCode, culture, out received) && received > 0;
+                ? _amountMoney.TryParse(out received)
+                : _destinationMoney.TryParse(out received) && received > 0;
             if (known)
             {
-                if (ShowDestinationFee && MoneyText.TryParse(DestinationFeeText, target.CurrencyCode, culture, out var destinationFee) && destinationFee > 0)
+                if (ShowDestinationFee && _destinationFeeMoney.TryParse(out var destinationFee) && destinationFee > 0)
                 {
                     received -= destinationFee;
                 }
 
                 parts.Add(_translator.Format("Entry_EffectTo", MoneyText.Format(received, target.CurrencyCode, culture, showPlus: true), target.Name));
-                if (!sameCurrency && MoneyText.TryParse(AmountText, account.CurrencyCode, culture, out var sent) && sent > 0)
+                if (!sameCurrency && _amountMoney.TryParse(out var sent) && sent > 0)
                 {
                     var rate = MoneyText.ToDecimal(received, Currencies.TryGet(target.CurrencyCode, out var to) ? to : Currencies.Euro)
                         / MoneyText.ToDecimal(sent, Currencies.TryGet(account.CurrencyCode, out var from) ? from : Currencies.Euro);
@@ -577,7 +580,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     {
         // TryMinor verified the account before this method was called.
         var currency = Account!.CurrencyCode;
-        AmountText = MoneyText.ForInput(minor, currency, _localization.CurrentCulture);
+        AmountText = _amountMoney.Format(minor, currency, _localization.CurrentCulture);
+        RefreshMoneyInputs();
         _receiptAppliedText = AmountText;
         _receiptAppliedCurrency = currency;
         _receiptDisplayFactor = DisplayUnits.TryGet(currency, out var unit) ? unit.Factor : 1;
@@ -648,7 +652,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         }
         finally
         {
-            _loading = false;
+            SynchronizeMoneyInputs(); _loading = false;
         }
 
         UpdateKindState();
@@ -690,16 +694,16 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         }
 
         var currency = CurrencyOf(entry.AccountId);
-        AmountText = entry.Amount > 0 ? MoneyText.ForInput(entry.Amount, currency, culture) : string.Empty;
-        ToAmountText = entry.ToAmount is { } toAmount && ToAccount is { } toAccount ? MoneyText.ForInput(toAmount, toAccount.CurrencyCode, culture) : string.Empty;
+        AmountText = entry.Amount > 0 ? _amountMoney.Format(entry.Amount, currency, culture) : string.Empty;
+        ToAmountText = entry.ToAmount is { } toAmount && ToAccount is { } toAccount ? _destinationMoney.Format(toAmount, toAccount.CurrencyCode, culture) : string.Empty;
         if (_fee is not null)
         {
-            FeeText = MoneyText.ForInput(_fee.Amount, currency, culture);
+            FeeText = _feeMoney.Format(_fee.Amount, currency, culture);
         }
 
         if (_destinationFee is not null && ToAccount is not null)
         {
-            DestinationFeeText = MoneyText.ForInput(_destinationFee.Amount, ToAccount.CurrencyCode, culture);
+            DestinationFeeText = _destinationFeeMoney.Format(_destinationFee.Amount, ToAccount.CurrencyCode, culture);
         }
 
         EntryTitle = entry.Title ?? string.Empty;
@@ -710,12 +714,12 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         if (entry.OriginalAmount is { } original && entry.OriginalCurrencyCode is { } originalCurrency)
         {
             ForeignCurrency = originalCurrency;
-            ForeignAmountText = MoneyText.ForInput(original, originalCurrency, culture, useUnit: false);
+            ForeignAmountText = _foreignMoney.Format(original, originalCurrency, culture);
         }
 
         IconKey = entry.Icon;
         ReimbursableEnabled = entry.ReimbursableAmount is > 0;
-        ReimbursableText = entry.ReimbursableAmount is { } reimbursable ? MoneyText.ForInput(reimbursable, currency, culture) : string.Empty;
+        ReimbursableText = entry.ReimbursableAmount is { } reimbursable ? _reimbursableMoney.Format(reimbursable, currency, culture) : string.Empty;
         ReimbursedBy = entry.ReimbursedBy ?? string.Empty;
         HasReimbursementDue = entry.ReimbursementDueDate is not null;
         IsAggregated = entry.IsAggregated;
@@ -752,7 +756,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         if (!_loading && oldValue is not null && newValue is not null && !string.Equals(oldValue.CurrencyCode, newValue.CurrencyCode, StringComparison.OrdinalIgnoreCase))
         {
             _previousAccount = oldValue;
-            _previousAmountText = AmountText;
+            _previousAmountText = AmountText; _previousAmountMeaning = _amountMoney.Capture();
             if (!string.IsNullOrWhiteSpace(AmountText) || !string.IsNullOrWhiteSpace(FeeText))
             {
                 CurrencyNotice = _translator.Format("Entry_CurrencyChanged", MoneyText.UnitName(newValue.CurrencyCode), MoneyText.UnitName(oldValue.CurrencyCode));
@@ -839,6 +843,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         // D-101: Simple must expose an existing fee so an unrelated edit never silently removes it.
         ShowDestinationFee = IsTransfer && (_showsFee || _destinationFee is not null || !string.IsNullOrWhiteSpace(DestinationFeeText)) && ToAccount is not null;
         ToAmountLabel = _translator.Format("Entry_ToAmount", ToCurrencyCode);
+        RefreshMoneyInputs();
     }
 
     // Only the chips are drawn again, with the chosen category; the form keeps everything typed.
@@ -848,6 +853,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         TemplateChips = [.. TemplateChips.Select(chip => chip.Template.Kind == EntryKind.Transfer
             ? chip with { IconColor = Presentation.Palette.TransferText }
             : chip with { IconColor = _categories.Color(chip.Template.CategoryId) })];
+        RefreshMoneyInputs(); UpdateEffect();
         return Task.CompletedTask;
     }
 
@@ -1009,15 +1015,16 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     /// <summary>Opens the plan editor with detached supported values; neither navigation nor validation saves money.</summary>
     private async Task RepeatAsync()
     {
-        if (!ShowRepeat || !CanSave || Account is null) { return; }
+        if (!ShowRepeat || !CanRepeat || Account is null) { return; }
+        var handoffRaw = Snapshot(); var handoffMoney = MoneyRevision;
         SaveError = null;
         if (!CheckReceiptDisplayUnit()) { return; }
-        var validation = EntryDraftValidation.Validate(new EntryValidationInput
+        var validation = EntryDraftValidation.Validate(WithMoneyContexts(new EntryValidationInput
         {
             Kind = Kind, AccountId = Account.Id, CurrencyCode = CurrencyCode, AmountText = AmountText,
             DestinationId = ToAccount?.Id, DestinationCurrencyCode = ToAccount?.CurrencyCode ?? CurrencyCode,
             DestinationAmountRequired = ShowToAmount, DestinationAmountText = ToAmountText,
-        }, _localization.CurrentCulture);
+        }), _localization.CurrentCulture);
         string? Text(string? key) => key is null ? null : _translator[key];
         AccountError = Text(validation.AccountErrorKey);
         AmountError = Text(validation.AmountErrorKey);
@@ -1029,6 +1036,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             return;
         }
 
+        if (handoffRaw != Snapshot() || handoffMoney != MoneyRevision || !RepeatMoneyReady) return;
         var draft = new EntryPlanDraft
         {
             Kind = Kind, AccountId = Account.Id, CurrencyCode = Account.CurrencyCode, Amount = validation.Amount.Value,
@@ -1044,7 +1052,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         try
         {
             if (owner is null) return; await owner.ValidateAsync();
-            if (!Current() || raw != Snapshot()) return;
+            if (!Current() || raw != Snapshot() || handoffMoney != MoneyRevision || !RepeatMoneyReady) return;
             // The original editor stays on the navigation stack with its complete unsaved draft and attachments.
             await Presentation.Failures.GuardAsync(() => Shell.Current.GoToAsync(AppShell.PlanEditorRoute,
                   new Dictionary<string, object> { ["entryDraft"] = draft,
@@ -1076,6 +1084,9 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         {
             return;
         }
+        RefreshMoneyInputs();
+        if (!MoneyContextsReady) { ValidationFailed?.Invoke(this, EventArgs.Empty); return; }
+        var moneyRevision = MoneyRevision;
         var revision = _saveRevision; var originalEntry = _entry; var rawDraft = Snapshot();
         var loadOwner = _loadSession;
 
@@ -1097,11 +1108,12 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         {
             if (loadOwner is null) return;
             await loadOwner.ValidateAsync();
-            if (!OwnsSave(session, revision, originalEntry) || rawDraft != Snapshot()) return;
+            if (!OwnsSave(session, revision, originalEntry) || rawDraft != Snapshot() || moneyRevision != MoneyRevision || !MoneyContextsReady)
+        { if (OwnsSave(session, revision, originalEntry)) SaveError = _translator["Amount_DraftChanged"]; return; }
             await _assetConfirmation.RunAsync(Kind, _accounts.GetValueOrDefault(Account.Id), async () =>
             {
-                if (OwnsSave(session, revision, originalEntry) && rawDraft == Snapshot())
-                    await SaveConfirmedAsync(session, revision, originalEntry, rawDraft);
+                if (OwnsSave(session, revision, originalEntry) && rawDraft == Snapshot() && moneyRevision == MoneyRevision && MoneyContextsReady)
+                    await SaveConfirmedAsync(session, revision, originalEntry, rawDraft, moneyRevision);
             });
         }
         catch (Exception error) when (error is not OutOfMemoryException)
@@ -1116,10 +1128,10 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     }
 
     /// <summary>Validates and saves the editor draft only after any required valued-asset consent.</summary>
-    private async Task SaveConfirmedAsync(EntryEditorSaveSession session, long revision, LedgerEntry originalEntry, string rawDraft)
+    private async Task SaveConfirmedAsync(EntryEditorSaveSession session, long revision, LedgerEntry originalEntry, string rawDraft, string moneyRevision)
     {
         // D-100: publish all independent monetary problems before mutating the entry or synchronizing its fees.
-        var validation = EntryDraftValidation.Validate(new EntryValidationInput
+        var validation = EntryDraftValidation.Validate(WithMoneyContexts(new EntryValidationInput
         {
             Kind = Kind, AccountId = Account?.Id, HasNoAccounts = HasNoAccounts, CurrencyCode = CurrencyCode,
             AmountText = AmountText, DestinationId = ToAccount?.Id,
@@ -1128,7 +1140,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             FeeText = FeeText, DestinationFeeApplicable = ShowDestinationFee, DestinationFeeText = DestinationFeeText,
             ForeignEnabled = ForeignEnabled, ForeignCurrency = ForeignCurrency, ForeignAmountText = ForeignAmountText,
             ReimbursableEnabled = ReimbursableEnabled, ReimbursableText = ReimbursableText,
-        }, _localization.CurrentCulture);
+        }), _localization.CurrentCulture);
         string? Text(string? key) => key is null ? null : _translator[key];
         AccountError = Text(validation.AccountErrorKey);
         AmountError = Text(validation.AmountErrorKey);
@@ -1147,6 +1159,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             ValidationFailed?.Invoke(this, EventArgs.Empty);
             return;
         }
+        if (!OwnsSave(session, revision, originalEntry) || rawDraft != Snapshot() || moneyRevision != MoneyRevision || !MoneyContextsReady)
+        { if (OwnsSave(session, revision, originalEntry)) SaveError = _translator["Amount_DraftChanged"]; return; }
         var amount = validation.Amount.Value;
         var fee = validation.Fee;
         var toAmount = validation.DestinationAmount;
@@ -1222,7 +1236,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                 }
             }
 
-            bool CurrentDraft() => OwnsSave(session, revision, originalEntry) && rawDraft == Snapshot();
+            bool CurrentDraft() => OwnsSave(session, revision, originalEntry) && rawDraft == Snapshot() && moneyRevision == MoneyRevision && MoneyContextsReady;
             var source = _loadSession?.Review ?? throw new InvalidOperationException("The original editor retired.");
             var review = await _store.ReadEditorAggregatesAsync(source, batch, deleteIds);
             if (!CurrentDraft()) return;
@@ -1340,5 +1354,5 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private string Snapshot() => Presentation.UnsavedChanges.Fingerprint(
         KindIndex, AmountText, EntryTitle, Date, Account?.Id, ToAccount?.Id, ToAmountText, FeeText, DestinationFeeText, Payee, Note,
         ForeignEnabled, ForeignCurrency, ForeignAmountText, IconKey, Categories.FirstOrDefault(c => c.IsSelected)?.Id, TagsText,
-        ReimbursableEnabled, ReimbursableText, ReimbursedBy, HasReimbursementDue, ReimbursementDue, IsAggregated, AggregatedFrom, AggregatedTo);
+        ReimbursableEnabled, ReimbursableText, ReimbursedBy, HasReimbursementDue, ReimbursementDue, IsAggregated, AggregatedFrom, AggregatedTo, MoneyMeaning);
 }

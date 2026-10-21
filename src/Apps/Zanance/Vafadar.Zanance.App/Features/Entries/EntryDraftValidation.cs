@@ -7,6 +7,18 @@ namespace Vafadar.Zanance.App.Features.Entries;
 /// <summary>Captures the editor's applicable monetary inputs without changing its draft or ledger entities.</summary>
 public sealed record EntryValidationInput
 {
+    /// <summary>Gets the original main monetary interpretation captured when its raw input was introduced.</summary>
+    public MoneyInputContext? AmountContext { get; init; }
+    /// <summary>Gets the independently captured original destination interpretation.</summary>
+    public MoneyInputContext? DestinationAmountContext { get; init; }
+    /// <summary>Gets the original source fee interpretation.</summary>
+    public MoneyInputContext? FeeContext { get; init; }
+    /// <summary>Gets the independent original destination fee interpretation.</summary>
+    public MoneyInputContext? DestinationFeeContext { get; init; }
+    /// <summary>Gets the original currency/culture for ISO-only purchase input; its display unit is never applied.</summary>
+    public MoneyInputContext? ForeignContext { get; init; }
+    /// <summary>Gets the reimbursable field's independent original monetary interpretation.</summary>
+    public MoneyInputContext? ReimbursableContext { get; init; }
     /// <summary>Gets the selected entry kind, including fixed refund and reversal kinds.</summary>
     public EntryKind Kind { get; init; }
     /// <summary>Gets the selected source account identity, if any.</summary>
@@ -90,6 +102,19 @@ public static class EntryDraftValidation
     {
         ArgumentNullException.ThrowIfNull(input);
         ArgumentNullException.ThrowIfNull(culture);
+        bool Parse(string text, Currency currency, MoneyInputContext? original, out long minor)
+        {
+            if (original is null) return MoneyText.TryParse(text, currency, culture, out minor);
+            minor = 0;
+            // A captured raw amount can retain its parser, but cannot silently adopt a different current unit.
+            return original.MatchesCurrent(currency.Code) && original.TryParse(text, out minor);
+        }
+        bool ParseOriginal(string text, Currency currency, MoneyInputContext? original, out long minor)
+        {
+            minor = 0;
+            if (original is not null && !string.Equals(original.Currency.Code, currency.Code, StringComparison.OrdinalIgnoreCase)) return false;
+            return MoneyAmount.TryParse(text, currency, original?.Culture ?? culture, out minor);
+        }
         long? amount = null, destinationAmount = null, foreignAmount = null, reimbursable = null;
         long fee = 0, destinationFee = 0;
         string? amountError = null, feeError = null, destinationError = null, destinationAmountError = null;
@@ -99,12 +124,12 @@ public static class EntryDraftValidation
         var currency = Currencies.TryGet(input.CurrencyCode, out var known) ? known : Currencies.Euro;
         if (input.AccountId is not null)
         {
-            var parsed = MoneyText.TryParse(input.AmountText, currency, culture, out var value);
+            var parsed = Parse(input.AmountText, currency, input.AmountContext, out var value);
             if (parsed && value > 0) { amount = value; }
             else { amountError = parsed || string.IsNullOrWhiteSpace(input.AmountText) ? "Entry_AmountMustBePositive" : "Amount_Invalid"; }
             if (transfer && !string.IsNullOrWhiteSpace(input.FeeText))
             {
-                if (!MoneyText.TryParse(input.FeeText, currency, culture, out fee) || fee < 0)
+                if (!Parse(input.FeeText, currency, input.FeeContext, out fee) || fee < 0)
                 { feeError = "Amount_Invalid"; fee = 0; }
             }
         }
@@ -117,13 +142,13 @@ public static class EntryDraftValidation
             {
                 if (input.DestinationAmountRequired)
                 {
-                    if (MoneyText.TryParse(input.DestinationAmountText, Currencies.Get(input.DestinationCurrencyCode), culture,
+                    if (Parse(input.DestinationAmountText, Currencies.Get(input.DestinationCurrencyCode), input.DestinationAmountContext,
                         out var value) && value > 0) { destinationAmount = value; }
                     else { destinationAmountError = "LedgerError_DestinationAmountRequired"; }
                 }
                 if (input.DestinationFeeApplicable && !string.IsNullOrWhiteSpace(input.DestinationFeeText))
                 {
-                    if (!MoneyText.TryParse(input.DestinationFeeText, input.DestinationCurrencyCode, culture, out destinationFee)
+                    if (!Parse(input.DestinationFeeText, Currencies.Get(input.DestinationCurrencyCode), input.DestinationFeeContext, out destinationFee)
                         || destinationFee < 0) { destinationFeeError = "Amount_Invalid"; destinationFee = 0; }
                 }
             }
@@ -136,7 +161,7 @@ public static class EntryDraftValidation
                 if (input.AccountId is not null && string.Equals(input.ForeignCurrency, input.CurrencyCode, StringComparison.OrdinalIgnoreCase))
                 { foreignCurrencyError = "LedgerError_InvalidOriginalCurrency"; }
                 // Original purchase amounts stay in ISO units, not the source/destination display unit (FX-01).
-                var parsed = MoneyAmount.TryParse(input.ForeignAmountText, original, culture, out var value);
+                var parsed = ParseOriginal(input.ForeignAmountText, original, input.ForeignContext, out var value);
                 if (parsed && value > 0) { foreignAmount = value; }
                 else { foreignAmountError = parsed || string.IsNullOrWhiteSpace(input.ForeignAmountText) ? "Entry_AmountMustBePositive" : "Amount_Invalid"; }
             }
@@ -144,7 +169,7 @@ public static class EntryDraftValidation
         if (input.ReimbursableEnabled && input.Kind == EntryKind.Expense && input.AccountId is not null)
         {
             if (string.IsNullOrWhiteSpace(input.ReimbursableText)) { reimbursable = amount; }
-            else if (!MoneyText.TryParse(input.ReimbursableText, currency, culture, out var value) || value <= 0
+            else if (!Parse(input.ReimbursableText, currency, input.ReimbursableContext, out var value) || value <= 0
                 || amount is { } total && value > total) { reimbursableError = "Entry_ReimbursableInvalid"; }
             else { reimbursable = value; }
         }

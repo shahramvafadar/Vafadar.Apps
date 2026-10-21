@@ -8445,4 +8445,7 @@ Original XML SHA-256: {5}</value>
   <data name="Plan_InputUnitChanged" xml:space="preserve">
     <value>The currency or display unit changed. Clear this amount and enter it again in {0}.</value>
   </data>
+  <data name="Amount_DraftChanged" xml:space="preserve">
+    <value>The amounts changed while saving. Nothing was saved. Review them and save again.</value>
+  </data>
 </root>

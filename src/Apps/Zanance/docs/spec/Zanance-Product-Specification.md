@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-10-21, D-431)
+## 31. Implementation Status (v1.1, scoped updates through 2026-10-21, D-432)
 
 This section records what the repository actually contains. "Verified" is qualified by each scenario's evidence:
 automated tests, running Windows layouts, targeted Android emulator checks or specifically recorded physical
@@ -7731,3 +7731,16 @@ quantities retain their units. Original raw revision/native owner is checked und
 Known goal/budget/cut acceptance precedes notification and cannot rearm.25 new and75 affected prior
 source cases pass selectively, without a full-suite replay. [Native/build evidence and retained failures](../quality/goal-budget-money-context.md).
 No schema/model/portable-format, permission/provider/SDK change. D-386 and external gates stand.
+
+## D-432 - Original transaction monetary meaning
+
+Each original transaction amount, destination amount, source/destination fee, ISO purchase amount and
+reimbursable amount retains its own currency, applicable display unit and parse culture. Unit/currency
+changes require complete clearing/reentry; partial edits never renew meaning. Original labels and
+format examples remain visible. Receipt/template adoption starts from authoritative minor units;
+account Undo and read-only/nested return retain original context. Repeating-plan handoff validates only
+its supported primary/destination amounts, without borrowing unused fee meaning. Split shares retain
+independent contexts; Join uses the original stored total. Raw/context revisions are rechecked under
+original writers; known acceptance remains final. 27 new focused source cases and 51 related prior cases
+pass across selective executions, with no full-suite or unrelated successful-check replay.
+112 original Windows and 40 independent Release/AOT Android observations, exact source preservation, final strict builds and signed offline no-reset upgrade are qualified in [evidence](../quality/entry-money-context.md). These are focused additions, not a new full-suite baseline. Account/holding input contexts and D-386/external gates remain separate.
