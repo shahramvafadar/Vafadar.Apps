@@ -7940,3 +7940,12 @@ disabled template without recreating a writer review or restoring the deleted ra
 base rows and exact OS/Main restore; Main/APK and managed count stay D-440. New active-rate,
 protected-household, spoken/stability/device and external release acceptance remain separate.
 See [evidence](../quality/rate-outcomes-os-qualification.md).
+
+### D-444 - Protected household system-scale captions
+
+36 native observations/312 readings qualify original protected cost/share/unsaved-repayment fields
+at OS200%,360/412dp,en/fa/de and both themes. Actual original signed test authority remains valid;
+foreground sync stops before startup wait and no enrollment/refresh or accepted write occurs.
+Complete source/base data, exact prior fixture APK and OS/Main restore. Main/APK and managed count
+stay D-440. General stability/performance/spoken/device/iOS/external release gates remain open.
+See [evidence](../quality/household-os-qualification.md).

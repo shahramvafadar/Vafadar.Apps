@@ -2488,3 +2488,10 @@ estimate layout scope with no accepted writes or rate restoration. Disabled nati
 complete source/base equality and exact OS/Main restore pass; shipping code/APK remain D-440.
 Protected-household geometry, general stability, audible reader/device/iOS and external publication
 gates remain open. See [evidence](quality/rate-outcomes-os-qualification.md).
+
+## D-444 protected household geometry
+
+36 original system-scale observations/312 readings pass with actual original signed authority,
+no enrollment or accepted write and unchanged complete source/base data. Exact old APK/OS/Main
+restore; shipping app/APK stay D-440. Do not extend this result into general ANR/crash, hardware-key,
+audible/device/iOS or external release acceptance. See [evidence](quality/household-os-qualification.md).

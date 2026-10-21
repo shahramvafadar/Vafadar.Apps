@@ -2282,3 +2282,10 @@ Actual OS200%,360/412dp,en/fa/de and both themes retain complete outcome, histor
 long date and estimate badge in36 observations/144 readings. The original actual template is used
 with disabled native writers; deleted data remains absent. This is geometry of source-proven
 historical presentation, not a new current-rate lifecycle. See [evidence](quality/rate-outcomes-os-qualification.md).
+
+## Protected household system-scale geometry (D-444)
+
+36 original protected cost/share/unsaved-repayment observations and312 native readings pass actual
+OS200%,360/412dp,en/fa/de and both themes. Full field-local captions and native raw values retain
+original meaning without accepted writes. Actual cached signed authority must remain valid; do not
+renew it to make a view pass. See [evidence](quality/household-os-qualification.md).

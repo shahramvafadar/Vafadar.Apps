@@ -2190,3 +2190,13 @@ its original native text into the actual disabled presentation collection; never
 SQLite or manufacture ManualRatesReview authority. Require full text/height, disabled native Delete,
 unchanged complete source/base rows and exact OS/Main restore. Historical geometry is not a new
 active-rate lifecycle. See [evidence](../../src/Apps/Zanance/docs/quality/rate-outcomes-os-qualification.md).
+
+### Protected household OS scopes (D-444)
+
+Build only the retained ReviewFreshHouseholdMoney variant in its own artifact root. plan-form needs
+review_secondary_household,review_plan_resume_actions,review_household_os and width360/412 on the
+original admitted run. Require all original receipts first; stop foreground sync before startup wait
+and never call fresh transport/admission. Current protected membership must genuinely allow writes.
+Permit only the known changed-unit refusal; persist unique width scenes and verify complete source/
+base/profile restoration. Restore exact prior public APK and OS/Main. Keep shipping Main Offline.
+See [evidence](../../src/Apps/Zanance/docs/quality/household-os-qualification.md).

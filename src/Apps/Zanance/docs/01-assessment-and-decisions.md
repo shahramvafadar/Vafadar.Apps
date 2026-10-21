@@ -8148,3 +8148,14 @@ Strict independent build/package and exact OS/Main3522 restoration pass. Main/AP
 stay D-440; active/current-rate and general release acceptance are not inferred from this projection.
 
 [Retained rate outcome evidence](quality/rate-outcomes-os-qualification.md).
+
+## D-444 - Qualify original protected household geometry without authority renewal
+
+Actual current signed test authority remains protected/writable with one cost,two contacts and no
+repayment.36 OS200% observations/312 readings pass360/412dp,en/fa/de and both themes. Guard original
+receipts, stop foreground sync before startup wait and skip all enrollment/identity paths. Only known
+changed-unit refusals run; complete source/base/catalogue remain unchanged. Strict variant build,
+exact old-APK restoration and exact OS/Main3522 restoration pass; Main/APK and managed count remain
+D-440. Earlier D-442/D-443 CI/CodeQL succeed; broader stability/device/release gates remain open.
+
+[Protected household OS evidence](quality/household-os-qualification.md).

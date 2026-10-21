@@ -18,7 +18,7 @@ internal static partial class AndroidHomeReview
     {
         var width = Platform.CurrentActivity?.Intent?.GetIntExtra("review_os_width", 0) ?? 0;
         var resources = Android.App.Application.Context.Resources;
-        if (Package != "pro.vafadar.zanance.androidhomereview" || width is not (360 or 412)
+        if (AppInfo.Current.PackageName != "pro.vafadar.zanance.androidhomereview" || width is not (360 or 412)
             || Math.Abs((resources?.Configuration?.FontScale ?? 0) - 2f) > 0.01f
             || resources?.DisplayMetrics is not { Density: > 0 } metrics || Math.Abs(metrics.WidthPixels / metrics.Density - width) > 1)
             throw new ReviewCheckException("Actual independent OS200% rate-outcome width required.");

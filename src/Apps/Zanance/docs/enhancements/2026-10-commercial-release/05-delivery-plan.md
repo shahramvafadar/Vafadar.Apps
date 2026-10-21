@@ -3522,3 +3522,11 @@ OS200%,both widths,three languages/two themes. Writers stay disabled and the rat
 no accepted action or old successful scope is replayed. Strict independent build/package and exact
 OS/Main restore pass. Continue protected-household geometry with original authority and remaining
 supported stability work. See ../../quality/rate-outcomes-os-qualification.md.
+
+## D-444 - Protected household OS batch delivered
+
+36 observations/312 readings complete the original protected monetary geometry with actual current
+signed authority, zero accepted financial writes and no identity/enrollment renewal. Strict variant
+build, exact original APK restoration and exact OS/Main restoration pass. Review the remaining
+canonical stability/performance/spoken/platform gates next; do not reopen completed geometry or
+settled external choices. See ../../quality/household-os-qualification.md.

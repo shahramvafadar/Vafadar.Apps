@@ -21,13 +21,33 @@ internal static partial class AndroidHomeReview
     {
         SecondaryHouseholdEvidence.Clear(); SecondaryHouseholdEvidence["Phase"] = "original-window";
         if (AppInfo.Current.PackageName is not ("pro.vafadar.zanance.householdlifecycle" or "pro.vafadar.zanance.householdmoneyreview")) throw new ReviewCheckException("Original retained household package required.");
-        await AwaitReimbursementFocusAsync(ct);
+        var osReview = Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_household_os", false) == true;
+        var width = Platform.CurrentActivity?.Intent?.GetIntExtra("review_os_width", 0) ?? 0;
+        if (osReview)
+        {
+            var resources = Android.App.Application.Context.Resources;
+            if (Package != "pro.vafadar.zanance.householdmoneyreview" || width is not (360 or 412)
+                || Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_resume_actions", false) != true
+                || Math.Abs((resources?.Configuration?.FontScale ?? 0) - 2f) > 0.01f
+                || resources?.DisplayMetrics is not { Density: > 0 } metrics || Math.Abs(metrics.WidthPixels / metrics.Density - width) > 1
+                || !File.Exists(Path.Combine(folder, "fresh-household-admitted.json"))
+                || !File.Exists(Path.Combine(folder, "secondary-household-prepared.json"))
+                || !File.Exists(Path.Combine(folder, "navigation-only", "prepared.json"))
+                || (from name in new[] { "en", "fa", "de" } from themeCaption in new[] { "Light", "Dark" }
+                    from scene in new[] { "shared-cost-original", "shared-cost-unit-feedback", "shared-repayment-unit-feedback" }
+                    select Path.Combine(folder, name + "-" + themeCaption + "-" + scene + ".json")).Any(file => !File.Exists(file)))
+                throw new ReviewCheckException("Complete original protected source and actual OS200% household width required.");
+            // D-444: visual qualification cannot renew transport identity or perform fresh household enrollment.
+            services.GetRequiredService<Vafadar.Zanance.App.Features.Sync.PersonalSyncForegroundWorker>().Dispose();
+            await AwaitOriginalMoneyWindowAsync(ct);
+        }
+        else await AwaitReimbursementFocusAsync(ct);
         var appLock = services.GetRequiredService<Vafadar.Zanance.App.Security.AppLockService>();
         if (appLock.IsLocked) throw new ReviewCheckException("Original native app access must already be unlocked; qualification never authenticates or removes a cover.");
         app.OpenReviewShell(); await AwaitRootHomeAsync(ct);
         if (Shell.Current.CurrentPage is HomePage initialHome) await initialHome.PendingPublication.WaitAsync(ct);
         #if HOUSEHOLD_MONEY_FRESH
-        await PrepareFreshHouseholdMoneyAsync(services, folder, ct);
+        if (!osReview) await PrepareFreshHouseholdMoneyAsync(services, folder, ct);
 #endif
         var profiles = services.GetRequiredService<ProfileService>(); var originalProfile = profiles.Current; var catalogue = profiles.All.ToArray();
         var baseline = await ImportFinancialNativeReview.StoredAsync(services, ct);
@@ -115,6 +135,10 @@ internal static partial class AndroidHomeReview
         }
         async Task Invoke(Page page, System.Windows.Input.ICommand command, bool? consent)
         {
+            if (osReview && (page.BindingContext is not Features.Sharing.HouseholdCostsViewModel model
+                || !ReferenceEquals(command, model.SaveCommand) || model.AmountText != "1,234" || !model.HasEditor || !model.CanWrite
+                || !Vafadar.Zanance.Core.Money.DisplayUnits.All.Any(unit => unit.CurrencyCode == model.CurrencyCode && unit.Exponent == 2)))
+                throw new ReviewCheckException("Only the original changed-unit household refusal belongs to OS geometry.");
             var button = PlanEditorNativeReview.Views(page).OfType<Button>().Single(item => Visible(item) && ReferenceEquals(item.Command, command));
             await Scroll(button);
             await PlanEditorNativeReview.WaitAsync(() => button.Handler?.PlatformView is Android.Widget.Button { IsShown: true, HasWindowFocus: true, Enabled: true }, ct);
@@ -155,6 +179,7 @@ internal static partial class AndroidHomeReview
                     LogReport("secondary-household-failed-native", comparison, failure);
                     throw new ReviewCheckException("Original monetary caption is incomplete.");
                 }
+                if (osReview) MonetaryOsScope.RequireCompleteHeight(text, layout);
                 // The actual label presenter applies the selected native digit shapes without changing punctuation or money.
                 readings.Add(new { label.Text, NativeText = text.Text, text.Width, text.Height, Lines = layout.LineCount });
             }
@@ -179,10 +204,10 @@ internal static partial class AndroidHomeReview
             {
                 await SetTheme(value); await SetLanguageAsync(app, local, name, ct);
                 SecondaryHouseholdEvidence["Phase"] = name + "-" + value;
-                await original.SecondaryHouseholdContextAsync(services, Validate, name + "-" + value, Invoke, Observe, ct, resume ? Completed : null, freshRepayment: authority.Settlements.Count == 0);
+                await original.SecondaryHouseholdContextAsync(services, Validate, (osReview ? "os200-" + width + "-" : "") + name + "-" + value, Invoke, Observe, ct, resume ? Completed : null, freshRepayment: authority.Settlements.Count == 0);
             }
             if (before != await ImportFinancialNativeReview.StoredAsync(services, ct)) throw new ReviewCheckException("Original protected household rows changed.");
-            return new { Comparison = comparison, OriginalProtectedRowsUnchanged = true, OriginalMembershipAuthority = true,
+            return new { Comparison = comparison, Scope = osReview ? "household-os-" + width : null, NoEnrollmentOrAuthorityRefresh = osReview, OriginalProtectedRowsUnchanged = true, OriginalMembershipAuthority = true,
                 AcceptedFinancialCommands = 0, NoAcceptedCommandReplayed = true, NativePresentationOnly = true, Observations = original.Observations, Device = DeviceEvidence() };
         }
         finally

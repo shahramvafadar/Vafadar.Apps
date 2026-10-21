@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Check protected household forms with larger text (D-444)
+
+- Verify original cost, individual shares and unsaved repayment fields at actual200% text in both widths, three languages and both themes.
+- Preserve the original signed test membership and all saved data without a new payment or enrollment.
+- Restore the original test package and emulator settings; application behavior/APK remain unchanged.
+
 ### Check retained rate results with larger text (D-443)
 
 - Verify full historical rate precision, dates, estimate badges and outcome messages at actual200% text in both widths, three languages and both themes.

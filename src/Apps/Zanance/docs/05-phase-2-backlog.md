@@ -3230,3 +3230,11 @@ observations/96 header states/192 native text readings; accepted writes remain z
 already deleted rate. Complete source/base rows and exact OS/Main restore. Shipping application/APK
 and managed count stay D-440. Continue protected-household geometry and remaining supported
 stability/spoken/device/external gates. See [evidence](quality/rate-outcomes-os-qualification.md).
+
+## D-444 - Protected household OS geometry complete
+
+36 observations/312 readings pass with actual protected signed test authority and unchanged complete
+source/base data. No enrollment, authority refresh, accepted financial write or new repayment occurs.
+Exact original fixture APK, OS and Main restore; shipping app/APK and managed count stay D-440.
+Audit remaining stability/performance/spoken/platform/external gates next without geometry replay.
+See [evidence](quality/household-os-qualification.md).

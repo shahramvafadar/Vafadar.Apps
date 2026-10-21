@@ -5129,3 +5129,12 @@ last-line height and disabled native Delete targets pass; no commands, accepted 
 The original rate remains deleted and complete source/base rows match. Exact OS/Main139-node state
 restores. This does not qualify a new active rate, consent, spoken or general stability workflow.
 See [evidence](quality/rate-outcomes-os-qualification.md).
+
+## D-444 - Protected household current-authority geometry
+
+36 observations/312 readings pass OS200%,360/412dp,en/fa/de,Light/Dark: original cost, unit refusal
+and unsaved repayment unit refusal. Both actual reads require protected storage and current CanWrite,
+original one cost/two contacts/zero repayments. No re-admission/authority refresh or accepted write.
+Full native text/height/raw values and complete source/base equality pass. Restore exact old fixture
+APK and OS/Main139 nodes. This does not complete spoken/device/general stability/release acceptance.
+See [evidence](quality/household-os-qualification.md).

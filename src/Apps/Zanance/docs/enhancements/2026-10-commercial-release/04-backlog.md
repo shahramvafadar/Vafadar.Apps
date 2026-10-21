@@ -4344,3 +4344,15 @@ Next ready geometry section: protected household with actual original signed aut
 revocations and original sources; no re-admission/revocation for visual qualification. General
 stability, audible reader, physical/iOS and genuine external release gates remain open.
 See [evidence](../../quality/rate-outcomes-os-qualification.md).
+
+### D-444 - Protected household system-scale geometry complete
+
+36 observations/312 readings qualify original protected cost/share/unsaved-repayment layouts at
+OS200%,360/412dp,en/fa/de,Light/Dark. Current signed test authority is actually protected/writable;
+original one cost/two contacts/zero repayments remain. No enrollment/refresh, new source or accepted
+financial write occurs. Exact old fixture APK and OS/Main restore; app/APK and managed count stay
+D-440. D-442 and D-443 exact CI/CodeQL both succeed; D-444 requires its own one check.
+Next: audit canonical remaining QA-06,cold/low-memory/performance and audible/remaining platform
+acceptance. Preserve completed D-438 through D-444 geometry and all rejected runtime/clock/bridge
+experiments; repeat only for new evidence or actual changes. Genuine external release gates stand.
+See [evidence](../../quality/household-os-qualification.md).

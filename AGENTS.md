@@ -3363,3 +3363,12 @@ row/date/estimate facts in actual disabled presentation controls; never seed a d
 ManualRatesReview authority. Historical caption geometry is not renewed current-rate or consent
 acceptance. Verify native writer targets disabled, complete source/base equality and exact OS/Main
 restoration. Do not replay accepted actions or completed input/header scopes.
+
+## D-444 - Protected household qualification keeps original authority
+
+OS-only review requires the exact retained admitted household package, complete original source/
+native receipts and actual native width/font2. Stop its foreground sync before startup wait; skip
+fresh transport Identity/enrollment and never renew/revoke membership for geometry. Require actual
+protected current authority and unchanged complete source/base/profile data. Only known changed-unit
+refusals are invocable; a missing repayment permits an unsaved draft, not a seed. Restore exact prior
+fixture APK and OS/Main. Finite geometry does not establish general stability or release acceptance.
