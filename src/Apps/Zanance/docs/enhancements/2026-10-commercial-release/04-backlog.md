@@ -3954,11 +3954,23 @@ stand.
 
 [Original evidence and acceptance limits](../../quality/entry-editor-publication.md).
 
-### Next complete original-editor workflow batch (D-428)
+### D-428 - Complete original nested account and aggregate workflow
 
-Finish explicit nested metadata return (including creating the first account) without guessing a
-replacement source or losing a retained receipt/raw draft. The current strict original packet refuses
-changed reference facts; a changed account catalogue requires a fresh form until this explicit
-handoff is qualified. Complete original dynamic aggregate overlap choice, writer revalidation and
-short Undo ownership in the same workflow batch. Reuse D-427 original source/read/publication
-evidence; repeat only changed or unresolved cases. General runtime/A11Y and external gates retain D-386.
+Explicit nested account/default return retains original raw/receipt input and adopts only its known
+reference packet. Each new aggregate coverage edge has an independent review, actual-file writer
+revalidation and durable consumption record. Original short Undo restores aggregates and keeps the
+detail; Home/Transactions use truthful transient notices.22 focused new behaviors,23 resource cases,
+retained Windows matrices/actions and23 original Android observations are recorded with failures,
+final package and scope in [workflow qualification](../../quality/entry-workflow-ownership.md).
+Accepted account/seed/financial commands were not replayed. D-427 source/publication evidence remains
+the baseline; no full-suite replay or wider runtime/platform/provider acceptance is inferred.
+
+### Next complete original-plan workflow batch (D-429)
+
+Complete original plan/debt/entry-draft form publication, explicit missing/read-only Retry, routed
+raw-owner lifetime and original-file Save/split/reminder ownership. The current editor reads its
+references separately, initializes settings for display and falls back from a missing requested plan
+to a new draft; its Save has no original-file/source capability. Correct these actual remaining gaps
+as one batch, preserving recurrence/history/financial invariants and prior focused validation/native
+evidence. Do not replay completed occurrence/settlement/holding/transaction workflows. D-386 keeps
+dedicated ANR/crash and Android accessibility after ready development; external gates remain separate.

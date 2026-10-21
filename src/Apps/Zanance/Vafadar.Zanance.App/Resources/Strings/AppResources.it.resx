@@ -8382,4 +8382,13 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Editor_SourceChanged" xml:space="preserve">
     <value>I dati originali sono cambiati. I tuoi dati non salvati sono conservati. Chiudi e riapri il modulo per controllare i dati attuali.</value>
   </data>
+  <data name="Aggregate_LinkUnavailable" xml:space="preserve">
+    <value>Questo collegamento riutilizzerebbe un dettaglio già collegato o modificherebbe una transazione o un documento correlato. Mantieni entrambi oppure annulla e controlla le registrazioni originali.</value>
+  </data>
+  <data name="Aggregate_Review" xml:space="preserve">
+    <value>Verifica sovrapposizione</value>
+  </data>
+  <data name="Aggregate_UndoNotice" xml:space="preserve">
+    <value>Annulla ripristina il totale aggregato; il dettaglio rimane.</value>
+  </data>
 </root>

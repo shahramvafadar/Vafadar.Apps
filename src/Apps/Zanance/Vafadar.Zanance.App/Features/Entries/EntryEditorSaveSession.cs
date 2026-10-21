@@ -17,10 +17,13 @@ public sealed class EntryEditorSaveSession(ZananceStore store, QuickResourceRevi
     public bool AttachmentFailed { get; private set; }
     /// <summary>Gets a postcommit notification failure without classifying the write as uncommitted.</summary>
     public bool NotificationFailed { get; private set; }
+    /// <summary>Gets the original accepted aggregate adjustment; later attachment work never renews its deadline.</summary>
+    public EntryAggregateUndo? AggregateUndo { get; private set; }
 
     /// <summary>Submits detached original inputs once and keeps a document failure separate from the saved money.</summary>
     public async Task<SaveResult> SaveAsync(IReadOnlyList<LedgerEntry> entries, IReadOnlyCollection<Guid> deleteIds,
-        Guid entryId, EntryAttachment? attachment, Func<bool> isCurrent)
+        Guid entryId, EntryAttachment? attachment, Func<bool> isCurrent,
+        EntryAggregateReview? aggregateReview = null, IReadOnlyList<ImportAggregateChoice>? aggregateChoices = null)
     {
         if (_busy || Accepted) throw new InvalidOperationException("The original editor save is pending or already accepted.");
         _busy = true; var idle = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously); _idle = idle;
@@ -32,7 +35,8 @@ public sealed class EntryEditorSaveSession(ZananceStore store, QuickResourceRevi
             try
             {
                 result = await store.SaveEditorEntriesAsync(original, entries, deleteIds, entryId, isCurrent,
-                    review => { destination = review; Accepted = true; }, editorSource: editorSource);
+                    review => { destination = review; Accepted = true; }, editorSource: editorSource,
+                    aggregateReview: aggregateReview, aggregateChoices: aggregateChoices, aggregateAccepted: undo => AggregateUndo = undo);
             }
             catch (CommittedWriteNotificationException<SaveResult> exception) when (Accepted)
             { result = exception.Result; NotificationFailed = true; }

@@ -8424,4 +8424,13 @@ Original XML SHA-256: {5}</value>
   <data name="Editor_SourceChanged" xml:space="preserve">
     <value>The original data changed. Your unsaved input is kept. Close and reopen this form to review the current data.</value>
   </data>
+  <data name="Aggregate_LinkUnavailable" xml:space="preserve">
+    <value>This link would reuse an already linked detail or affect a related transaction or document. Keep both, or cancel and review the original entries.</value>
+  </data>
+  <data name="Aggregate_Review" xml:space="preserve">
+    <value>Review overlap</value>
+  </data>
+  <data name="Aggregate_UndoNotice" xml:space="preserve">
+    <value>Undo restores the aggregate; the new detail remains.</value>
+  </data>
 </root>

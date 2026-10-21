@@ -2971,3 +2971,16 @@ aggregate-overlap/choice/writer/Undo batch. D-386 general runtime/A11Y prioritie
 stand.
 
 [Original evidence and acceptance limits](quality/entry-editor-publication.md).
+
+## D-428 - Original transaction account/aggregate workflow
+
+Explicit nested account creation/default publication retains the original raw/receipt draft; cancelled
+or retired children cannot write/adopt another file. Newly introduced aggregate coverage is reviewed
+individually and rechecked atomically, including document/refund/prior-consumption boundaries.
+The existing adjustment journal retains manual source identity; short original Undo restores only
+aggregates and keeps details. Acceptance precedes observers; saved forms remain Close-only.
+Full native review bodies and truthful transient Home/Transactions Undo notices replace clipped or
+misleading captions.22 focused new behaviors and23 final resource cases pass; no full-suite replay.
+See [original workflow qualification](quality/entry-workflow-ownership.md) for native actions, preserved
+failures, APK and scope. No schema/model/portable-format, permission/provider or external acceptance
+change. D-386 still defers general runtime and Android accessibility until after ready features.

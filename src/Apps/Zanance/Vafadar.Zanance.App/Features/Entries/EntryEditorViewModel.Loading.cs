@@ -26,6 +26,8 @@ public sealed partial class EntryEditorViewModel
     private object? _templateRouteIdentity;
     private object? _editorRouteIdentity;
     private bool _originalSourceChanged;
+    private EntryAccountHandoff? _accountVisit;
+    private bool _accountReturnPending;
 
     /// <summary>Gets the loading cover, explicit failed Retry and complete ready publication.</summary>
     [ObservableProperty]
@@ -39,6 +41,8 @@ public sealed partial class EntryEditorViewModel
     /// <summary>Gets whether explicit Retry can reread the original form without changing a published raw draft.</summary>
     public bool CanReloadForm => !_formDeparted && IsNotBusy && _originalQuery is not null
         && Loading.HasFailed && _loadSession is not null && !_originalSourceChanged && _saveSession?.Accepted != true;
+    /// <summary>Gets Close after known financial acceptance; leaving that form cannot cancel saved money.</summary>
+    public string CloseText => _translator[_saveSession?.Accepted == true ? "Common_Close" : "Common_Cancel"];
     /// <summary>Gets the original view epoch for bounded native focus/publication callbacks.</summary>
     internal long FormEpoch => _formEpoch;
     /// <summary>Gets whether raw input has been completely published at least once.</summary>
@@ -57,6 +61,7 @@ public sealed partial class EntryEditorViewModel
     {
         OnPropertyChanged(nameof(CanSave)); OnPropertyChanged(nameof(IsFormEditable));
         OnPropertyChanged(nameof(CanReloadForm)); OnPropertyChanged(nameof(NeedsAccount));
+        OnPropertyChanged(nameof(CloseText));
     }
     private bool AcceptOriginalEditorFile(string file)
     {
@@ -93,7 +98,7 @@ public sealed partial class EntryEditorViewModel
         _publicationGuard = null; _saveRevision++; var queryEpoch = ++_formEpoch; _formDeparted = false;
         bool CurrentQuery() => queryEpoch == _formEpoch && !_formDeparted;
         _loadSession?.Retire(); _loadSession = null; _quick.Retire(); if (!CurrentQuery()) return;
-        _saveSession = null; _hasPublishedForm = false;
+        _saveSession = null; _hasPublishedForm = false; _accountVisit = null; _accountReturnPending = false;
         _receiptRouteIdentity = receiptIdentity; _templateRouteIdentity = templateIdentity; _editorRouteIdentity = editorIdentity; _originalSourceChanged = false;
         _originalQuery = captured; _queryIdentity = identity; _formLoadTask = null;
         IsBusy = false; if (!CurrentQuery()) return;
@@ -145,6 +150,22 @@ public sealed partial class EntryEditorViewModel
         var epoch = _formEpoch; var save = _saveSession;
         if (save is not null) await save.WaitForIdleAsync();
         if (epoch != _formEpoch || _formDeparted || !ReferenceEquals(save, _saveSession)) return;
+        if (_accountVisit is { } visit)
+        {
+            await visit.WaitForIdleAsync();
+            if (epoch != _formEpoch || _formDeparted || !ReferenceEquals(visit, _accountVisit)) return;
+            try
+            {
+                if (visit.Accepted is { } next)
+                {
+                    _loadSession!.AcceptAccountReturn(visit); _accountReturnPending = true;
+                    _saveSession = new(_store, next.Inputs.Resources, next);
+                }
+                else _accountVisit = null;
+            }
+            catch (Exception error) when (error is not OutOfMemoryException)
+            { await FailFormReadAsync(Loading, error); return; }
+        }
         if (_saveSession?.Accepted == true)
         {
             SaveError = _translator["Occurrence_SavedRefreshFailed"];
@@ -207,7 +228,28 @@ public sealed partial class EntryEditorViewModel
                 _publicationGuard = guard;
                 try
                 {
-                    if (reset) PublishOriginalForm(ready, query); else ready.EnsureCurrent();
+                    if (reset) PublishOriginalForm(ready, query);
+                    else if (_accountReturnPending)
+                    {
+                        ready.EnsureCurrent();
+                        var from = Account?.Id; var to = ToAccount?.Id;
+                        _quick.PublishOriginal(ready.Inputs.Resources); guard(); PublishReferenceData(ready); guard();
+                        if (from is { } fromId) Accounts = EnsureChoice(Accounts, fromId);
+                        if (to is { } toId) ToAccounts = EnsureChoice(ToAccounts, toId);
+                        UpdateKindState(); guard();
+                        Account = Accounts.FirstOrDefault(a => a.Id == (from ?? _accountVisit?.AccountId)); guard();
+                        ToAccount = ToAccounts.FirstOrDefault(a => a.Id == to); guard();
+                        // Explicit first-account creation resolves receipt units through the existing selection path.
+                        // Keep the publication cover and preserve any amount already typed by the user.
+                        if (from is null && Account is not null)
+                        {
+                            _loading = false;
+                            try { OnAccountChanged(null, Account); guard(); }
+                            finally { _loading = true; }
+                        }
+                        _accountReturnPending = false; _accountVisit = null;
+                    }
+                    else ready.EnsureCurrent();
                     guard(); session.Publish(ready); _saveSession ??= new(_store, ready.Inputs.Resources, ready);
                     guard(); ResetFormCommands(); guard();
                 }

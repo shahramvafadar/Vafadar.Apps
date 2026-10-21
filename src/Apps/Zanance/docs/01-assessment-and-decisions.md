@@ -7849,3 +7849,20 @@ aggregate-overlap/choice/writer/Undo batch. D-386 general runtime/A11Y prioritie
 stand.
 
 [Original evidence and acceptance limits](quality/entry-editor-publication.md).
+
+## D-428 - Original transaction workflow through account creation and aggregate review
+
+The next complete D-427 batch retains the original raw/receipt form through an explicit nested
+account/default commit and cancelled child. Only that child's known packet can refresh references;
+departure/new query/file/rights changes refuse late ownership. Aggregate decisions cover new edges
+individually and revalidate under the original writer. Unchanged edges are not subtracted again.
+The existing adjustment journal prevents duplicate consumption while retaining manual source facts.
+Original eight-second Undo restores aggregates and keeps details, with file/deadline/dependency checks.
+Known commits precede notification; a failed Undo-offer observer leaves a clean saved form with Close.
+
+Full monetary explanations use a native dialog body after actual Windows title/footer clipping.
+Transient truthful adjustment notices are reachable on Home and Transactions without renewing time.
+22 new focused actual-source behaviors and23 final resource cases pass; no full-suite replay.
+Original Windows/Android actions, negative observations, final APK and exact acceptance limits are
+recorded in [the workflow evidence](quality/entry-workflow-ownership.md). No schema/model/portable
+format, permission or provider change. D-386 and external gates stand.

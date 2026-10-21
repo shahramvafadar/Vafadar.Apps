@@ -44,6 +44,12 @@ internal static partial class AndroidHomeReview
                 await Task.Run(() => PrepareAsync(root, ct, unreviewed: phase == "prepare-unreviewed", resumeUnreviewed), ct);
                 await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, UnreviewedCorpus = phase == "prepare-unreviewed", NativeOverflowRefusals = phase == "prepare-unreviewed" ? CheckUnreviewedOverflow() : 0, CoreModuleVersionId = typeof(LedgerCalculator).Module.ModuleVersionId, MainPackageTouched = false, Device = DeviceEvidence() }, ct);
             }
+            else if (phase == "entry-workflow")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0) throw new ReviewCheckException("Original nonredirected workflow fixture required.");
+                await WriteReportAsync(root, phase, await ReviewEntryWorkflowAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "entry-form")
             {
                 Directory.CreateDirectory(root);

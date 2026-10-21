@@ -93,6 +93,8 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     }
 
     public UndoService Undo { get; }
+    /// <summary>Gets the actual original operation, never a deletion caption for an aggregate adjustment.</summary>
+    public string UndoText => _translator[Undo.NoticeKind == UndoNoticeKind.AggregateAdjusted ? "Aggregate_UndoNotice" : "Tx_Deleted"];
 
     public IReadOnlyList<string> PeriodNames { get; }
 
@@ -222,6 +224,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     /// <summary>Shows the undo banner while the undo offer is valid.</summary>
     public void UpdateUndo()
     {
+        OnPropertyChanged(nameof(UndoText));
         ShowUndo = Undo.CanUndo;
         if (ShowUndo)
         {
@@ -320,6 +323,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     // Publishing runs while the page remains covered; property changes cannot start a partial filter refresh.
     private void PresentSnapshot()
     {
+        OnPropertyChanged(nameof(UndoText));
         var categories = _categories ?? throw new InvalidOperationException("The category snapshot must be read before presenting transactions.");
         var (from, to) = PeriodRange();
         var filter = new EntryFilter(from, to, (KindFilter)KindIndex, SelectedAccount?.Id, _categoryIds, UnreviewedOnly, SearchText, _inTotalsOnly, _currency, _scopeAccounts, _confirmedOnly);

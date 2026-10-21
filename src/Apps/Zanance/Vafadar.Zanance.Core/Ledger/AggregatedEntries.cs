@@ -94,6 +94,26 @@ public static class AggregatedEntries
     }
 
     /// <summary>
+    /// Returns only new coverage created by an editor proposal. An unchanged coverage edge retains its earlier
+    /// link/keep-both decision; editing a detail's amount or caption must not subtract that detail again.
+    /// </summary>
+    public static IReadOnlyList<AggregateOverlap> FindForEditor(IReadOnlyList<LedgerEntry> changed,
+        IReadOnlyCollection<Guid> deleted, IReadOnlyCollection<LedgerEntry> existing)
+    {
+        ArgumentNullException.ThrowIfNull(changed); ArgumentNullException.ThrowIfNull(deleted);
+        ArgumentNullException.ThrowIfNull(existing);
+        var before = existing.ToDictionary(e => e.Id);
+        var changedIds = changed.Select(e => e.Id).ToHashSet();
+        var removed = deleted.ToHashSet();
+        var after = existing.Where(e => !changedIds.Contains(e.Id) && !removed.Contains(e.Id)).Concat(changed).ToArray();
+        return [.. after.Where(e => e.IsAggregated).OrderBy(e => e.Id).Select(aggregate => new AggregateOverlap(aggregate,
+            [.. after.Where(detail => Covers(aggregate, detail)
+                && (!before.TryGetValue(aggregate.Id, out var oldAggregate)
+                    || !before.TryGetValue(detail.Id, out var oldDetail) || !Covers(oldAggregate, oldDetail))).OrderBy(e => e.Id)]))
+            .Where(overlap => overlap.Detailed.Count > 0)];
+    }
+
+    /// <summary>
     /// Returns the aggregate after "Link and replace": a copy with the remaining difference, or <see langword="null"/>
     /// when the detailed entries cover all of it (the aggregate is removed). The original is not changed, so Undo can put
     /// it back.

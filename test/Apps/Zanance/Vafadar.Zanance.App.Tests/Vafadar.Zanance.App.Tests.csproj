@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/EntryEditorLoadSession.cs" Link="Application/EntryEditorLoadSession.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/EntryAccountHandoff.cs" Link="Application/EntryAccountHandoff.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/EntryEditorOrigin.cs" Link="Application/EntryEditorOrigin.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Holdings/HoldingDetailViewModel.cs" Link="Application/HoldingDetailViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Holdings/HoldingsViewModel.cs" Link="Application/HoldingsViewModel.cs" />

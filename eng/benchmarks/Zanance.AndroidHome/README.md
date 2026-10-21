@@ -701,3 +701,14 @@ pointer, it waits for realized owned native rows and invokes one visible GBP but
 accessibility-node name. Finish only after the original selection observation; retain terminal
 reports and failed observer packets. No Main install/reset, seed or accepted financial replay.
 See application quality/native-currency-selection.md for the rejected viewport candidates and limits.
+
+## D-428 - Original transaction workflow
+
+The entry-workflow phase checks actual original entry/account/Home/Transactions pages: first-account
+return with raw typed amount and pending receipt retained, cancelled child, individual aggregate
+choices, known financial acceptance through a deliberate offer observer failure, actual short Home
+Undo and blocked-link Keep both/document ownership. en/fa/de light/dark checks use actual native
+dialog body/actions and presentation-only status notices. The compiled package remains independent;
+normal startup and every fixture have separate files. Preserve original run/pass/PID and accepted
+metadata/financial receipts. Never rerun accepted actions after a partial report. This is not general
+ANR/crash/accessibility, physical-device, iOS, provider or release acceptance.

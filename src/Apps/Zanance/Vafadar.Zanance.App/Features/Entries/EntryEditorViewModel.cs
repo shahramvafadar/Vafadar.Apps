@@ -966,66 +966,44 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
     // Finds overlaps of the entries to save with aggregated entries and asks: link and replace, keep both or cancel.
     // Returns the aggregated entries as they were before a replacement (for Undo), an empty list without a change, or
-    // null when the user cancels.
-    private async Task<List<LedgerEntry>?> ResolveOverlapsAsync(List<LedgerEntry> batch, List<Guid> deleteIds, LedgerEntry originalEntry)
+    // A choice belongs to this exact detached proposal and owner; cancellation changes no draft or ledger row.
+    private async Task<IReadOnlyList<ImportAggregateChoice>?> ResolveOverlapsAsync(EntryAggregateReview review, Func<bool> current)
     {
-        var overlaps = AggregatedEntries.Find(batch, await _store.GetEntriesAsync(Date.AddYears(-1), Date.AddYears(1)));
-        if (overlaps.Count == 0)
+        var choices = new List<ImportAggregateChoice>(); var linkedDetails = new HashSet<Guid>();
+        var replace = _translator["Aggregate_Replace"]; var keep = _translator["Aggregate_KeepBoth"];
+        foreach (var overlap in review.Overlaps)
         {
-            return [];
-        }
-
-        var culture = _localization.CurrentCulture;
-        var first = overlaps[0];
-        var currency = _accounts.TryGetValue(first.Aggregate.AccountId, out var account) ? account.CurrencyCode : Currencies.Euro.Code;
-        var replace = _translator["Aggregate_Replace"];
-        var keep = _translator["Aggregate_KeepBoth"];
-        var message = _translator.Format("Aggregate_Overlap", first.Aggregate.Title ?? _categories.Name(first.Aggregate.CategoryId),
-            MoneyText.Format(first.Aggregate.Amount, currency, culture), MoneyText.Format(first.DetailedTotal, currency, culture),
-            MoneyText.Format(first.Remainder, currency, culture));
-        var choice = await Shell.Current.DisplayActionSheetAsync(message, _translator["Common_Cancel"], null, replace, keep);
-        if (choice == keep)
-        {
-            return [];
-        }
-
-        if (choice != replace)
-        {
-            return null;
-        }
-
-        var originals = new List<LedgerEntry>();
-        foreach (var overlap in overlaps)
-        {
-            var reduced = AggregatedEntries.Replace(overlap);
-            if (overlap.Aggregate.Id == originalEntry.Id)
+            if (!current()) return null;
+            var currency = _accounts.TryGetValue(overlap.Aggregate.AccountId, out var account) ? account.CurrencyCode : Currencies.Euro.Code;
+            var message = _translator.Format("Aggregate_Overlap", overlap.Aggregate.Title ?? _categories.Name(overlap.Aggregate.CategoryId),
+                MoneyText.Format(overlap.Aggregate.Amount, currency, _localization.CurrentCulture),
+                MoneyText.Format(overlap.DetailedTotal, currency, _localization.CurrentCulture),
+                MoneyText.Format(overlap.Remainder, currency, _localization.CurrentCulture));
+            var canLink = review.CanLink(overlap.Aggregate.Id) && !overlap.Detailed.Any(e => linkedDetails.Contains(e.Id));
+            bool link;
+            if (!canLink)
             {
-                // The aggregate being saved keeps only the difference, or is not kept at all.
-                if (reduced is null)
-                {
-                    batch.Remove(originalEntry);
-                    deleteIds.Add(originalEntry.Id);
-                }
-                else
-                {
-                    originalEntry.Amount = reduced.Amount;
-                }
-
-                continue;
-            }
-
-            originals.Add(overlap.Aggregate);
-            if (reduced is null)
-            {
-                deleteIds.Add(overlap.Aggregate.Id);
+                message += "\n\n" + _translator["Aggregate_LinkUnavailable"] + "\n\n" + _translator["Import_AggregateKept"];
+                // The explanation belongs in the wrapping body; a native confirmation footer needs a compact caption.
+                var keepBoth = await Shell.Current.DisplayAlertAsync(_translator["Aggregate_Review"], message, _translator["Import_KeepBothShort"], _translator["Common_Cancel"]);
+                if (!current() || !keepBoth) return null;
+                link = false;
             }
             else
             {
-                batch.Add(reduced);
+                // Native action-sheet titles trim long financial text on Windows. Review the complete
+                // original amounts in a wrapping native message before offering the three distinct outcomes.
+                var reviewed = await Shell.Current.DisplayAlertAsync(_translator["Aggregate_Review"], message,
+                    _translator["Common_Next"], _translator["Common_Cancel"]);
+                if (!current() || !reviewed) return null;
+                var answer = await Shell.Current.DisplayActionSheetAsync(_translator["Aggregate_Review"], _translator["Common_Cancel"], null, replace, keep);
+                if (!current() || answer != replace && answer != keep) return null;
+                link = answer == replace;
             }
+            choices.Add(new(overlap, link));
+            if (link) linkedDetails.UnionWith(overlap.Detailed.Select(e => e.Id));
         }
-
-        return originals;
+        return choices;
     }
 
     /// <summary>Opens the plan editor with detached supported values; neither navigation nor validation saves money.</summary>
@@ -1178,35 +1156,36 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         var attachmentFailed = false;
         try
         {
+            var proposed = originalEntry.Copy();
             var kind = Kind;
-            originalEntry.Kind = kind;
-            originalEntry.ReimbursableAmount = reimbursableAmount;
-            originalEntry.Tags = EntryTags.Parse(TagsText);
-            originalEntry.ReimbursedBy = reimbursableAmount is null || string.IsNullOrWhiteSpace(ReimbursedBy) ? null : ReimbursedBy.Trim();
-            originalEntry.ReimbursementDueDate = reimbursableAmount is not null && HasReimbursementDue ? ReimbursementDue : null;
+            proposed.Kind = kind;
+            proposed.ReimbursableAmount = reimbursableAmount;
+            proposed.Tags = EntryTags.Parse(TagsText);
+            proposed.ReimbursedBy = reimbursableAmount is null || string.IsNullOrWhiteSpace(ReimbursedBy) ? null : ReimbursedBy.Trim();
+            proposed.ReimbursementDueDate = reimbursableAmount is not null && HasReimbursementDue ? ReimbursementDue : null;
             // The flag is set in Advanced; an aggregated entry edited in Simple keeps it (nothing is lost by the mode).
-            originalEntry.IsAggregated = IsAggregated && kind is EntryKind.Income or EntryKind.Expense;
-            originalEntry.AggregatedFrom = originalEntry.IsAggregated ? (AggregatedFrom <= AggregatedTo ? AggregatedFrom : AggregatedTo) : null;
-            originalEntry.AggregatedTo = originalEntry.IsAggregated ? (AggregatedFrom <= AggregatedTo ? AggregatedTo : AggregatedFrom) : null;
-            originalEntry.Amount = amount;
-            originalEntry.AccountId = Account.Id;
-            originalEntry.Date = Date;
-            originalEntry.Title = string.IsNullOrWhiteSpace(EntryTitle) ? null : EntryTitle.Trim();
-            originalEntry.Payee = string.IsNullOrWhiteSpace(Payee) ? null : Payee.Trim();
-            originalEntry.Note = string.IsNullOrWhiteSpace(Note) ? null : Note.TrimEnd();
-            originalEntry.OriginalAmount = foreignAmount;
-            originalEntry.OriginalCurrencyCode = foreignAmount is null ? null : ForeignCurrency;
-            originalEntry.Review = ReviewState.Confirmed;
-            originalEntry.Icon = IconKey;
+            proposed.IsAggregated = IsAggregated && kind is EntryKind.Income or EntryKind.Expense;
+            proposed.AggregatedFrom = proposed.IsAggregated ? (AggregatedFrom <= AggregatedTo ? AggregatedFrom : AggregatedTo) : null;
+            proposed.AggregatedTo = proposed.IsAggregated ? (AggregatedFrom <= AggregatedTo ? AggregatedTo : AggregatedFrom) : null;
+            proposed.Amount = amount;
+            proposed.AccountId = Account.Id;
+            proposed.Date = Date;
+            proposed.Title = string.IsNullOrWhiteSpace(EntryTitle) ? null : EntryTitle.Trim();
+            proposed.Payee = string.IsNullOrWhiteSpace(Payee) ? null : Payee.Trim();
+            proposed.Note = string.IsNullOrWhiteSpace(Note) ? null : Note.TrimEnd();
+            proposed.OriginalAmount = foreignAmount;
+            proposed.OriginalCurrencyCode = foreignAmount is null ? null : ForeignCurrency;
+            proposed.Review = ReviewState.Confirmed;
+            proposed.Icon = IconKey;
 
             var deleteIds = new List<Guid>();
-            var batch = new List<LedgerEntry> { originalEntry };
+            var batch = new List<LedgerEntry> { proposed };
             if (kind == EntryKind.Transfer)
             {
-                originalEntry.CategoryId = null;
-                originalEntry.ToAccountId = ToAccount?.Id;
-                originalEntry.ToAmount = toAmount;
-                var synced = EntryActions.SyncTransferFee(originalEntry, _fee, fee, _categories.Fees());
+                proposed.CategoryId = null;
+                proposed.ToAccountId = ToAccount?.Id;
+                proposed.ToAmount = toAmount;
+                var synced = EntryActions.SyncTransferFee(proposed, _fee?.Copy(), fee, _categories.Fees());
                 if (synced is null && _fee is not null)
                 {
                     deleteIds.Add(_fee.Id);
@@ -1216,10 +1195,9 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                     batch.Add(synced);
                 }
 
-                _fee = synced;
 
                 // A destination fee is an expense there; existing fees remain editable in Simple (D-101 / ZEX-S0204).
-                var destination = EntryActions.SyncDestinationFee(originalEntry, _destinationFee, destinationFee, _categories.Fees());
+                var destination = EntryActions.SyncDestinationFee(proposed, _destinationFee?.Copy(), destinationFee, _categories.Fees());
                 if (destination is null && _destinationFee is not null)
                 {
                     deleteIds.Add(_destinationFee.Id);
@@ -1229,35 +1207,29 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                     batch.Add(destination);
                 }
 
-                _destinationFee = destination;
             }
             else
             {
                 var categoryKind = kind is EntryKind.Income or EntryKind.IncomeReversal ? CategoryKind.Income : CategoryKind.Expense;
-                originalEntry.CategoryId = Categories.FirstOrDefault(c => c.IsSelected)?.Id ?? _categories.Uncategorized(categoryKind);
+                proposed.CategoryId = Categories.FirstOrDefault(c => c.IsSelected)?.Id ?? _categories.Uncategorized(categoryKind);
                 if (_fee is not null || _destinationFee is not null)
                 {
                     // The entry is no longer a transfer: its fees go with it.
                     deleteIds.AddRange(new[] { _fee?.Id, _destinationFee?.Id }.OfType<Guid>());
-                    _fee = null;
-                    _destinationFee = null;
-                    originalEntry.GroupId = null;
+                    proposed.GroupId = null;
                 }
             }
 
-            // An overlap with an aggregated entry is the user's choice, never silent: replace in it, or count both (AT33).
-            var replaced = await ResolveOverlapsAsync(batch, deleteIds, originalEntry);
-            if (replaced is null)
-            {
-                return;
-            }
-
-            if (!OwnsSave(session, revision, originalEntry) || rawDraft != Snapshot()) return;
+            bool CurrentDraft() => OwnsSave(session, revision, originalEntry) && rawDraft == Snapshot();
+            var source = _loadSession?.Review ?? throw new InvalidOperationException("The original editor retired.");
+            var review = await _store.ReadEditorAggregatesAsync(source, batch, deleteIds);
+            if (!CurrentDraft()) return;
+            var choices = await ResolveOverlapsAsync(review, CurrentDraft);
+            if (choices is null || !CurrentDraft()) return;
             var pending = _pendingAttachment;
             var document = pending is null ? null : new EntryAttachment { EntryId = originalEntry.Id,
                 FileName = pending.FileName, ContentType = pending.ContentType, Data = pending.Data };
-            var result = await session.SaveAsync(batch, deleteIds, originalEntry.Id, document,
-                () => OwnsSave(session, revision, originalEntry) && rawDraft == Snapshot());
+            var result = await session.SaveAsync(batch, deleteIds, originalEntry.Id, document, CurrentDraft, review, choices);
             saved = session.Accepted;
             attachmentFailed = session.AttachmentFailed;
             if (!OwnsSave(session, revision, originalEntry)) return;
@@ -1267,11 +1239,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                 return;
             }
 
-            if (replaced.Count > 0)
-            {
-                // Undo puts the aggregated entries back as they were; the detailed entry stays.
-                _undo.Offer(() => _store.SaveEntriesAsync(replaced, []));
-            }
+            if (session.AggregateUndo is { } undo)
+                _undo.Offer(() => _store.UndoEditorAggregateAsync(undo), undo.CreatedAt, UndoNoticeKind.AggregateAdjusted);
 
             _snapshot = Snapshot();
 
@@ -1279,8 +1248,21 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             _pendingAttachment = null;
             OnPropertyChanged(nameof(CanSave));
         }
-        catch (Exception ex) when (ex is not OutOfMemoryException && !saved)
+        catch (Exception ex) when (ex is not OutOfMemoryException)
         {
+            // A fallible Undo-offer or native publication subscriber is after the financial boundary.
+            // Keep the saved form read-only and clean rather than reporting an uncommitted draft.
+            saved |= session.Accepted;
+            if (saved)
+            {
+                if (OwnsSave(session, revision, originalEntry))
+                {
+                    _snapshot = Snapshot(); _pendingAttachment = null;
+                    SaveError = _translator["Occurrence_SavedRefreshFailed"];
+                    OnPropertyChanged(nameof(CanSave)); PublishFormAvailability();
+                }
+                return;
+            }
             // The input stays in the form (TX-06, AT-04).
             if (OwnsSave(session, revision, originalEntry))
             {
@@ -1333,8 +1315,13 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         try
         {
             await owner.ValidateAsync();
-            if (epoch == _formEpoch && !_formDeparted && ReferenceEquals(owner, _loadSession))
-                await Shell.Current.GoToAsync($"../{AppShell.AccountEditorRoute}");
+            if (epoch == _formEpoch && !_formDeparted && ReferenceEquals(owner, _loadSession) && owner.Review is { } source)
+            {
+                EntryAccountHandoff? visit = null;
+                visit = new(source, () => ReferenceEquals(_accountVisit, visit) && ReferenceEquals(owner, _loadSession));
+                _accountVisit = visit;
+                await Shell.Current.GoToAsync(AppShell.AccountEditorRoute, new Dictionary<string, object> { ["entryAccountHandoff"] = visit });
+            }
         }
         catch (Exception error) when (error is not OutOfMemoryException)
         {

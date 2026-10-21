@@ -173,14 +173,27 @@ public sealed partial class ZananceStore
     /// Removes the imported details and restores original aggregates atomically, across restart. Rejects later edits,
     /// dependent refunds/imports or missing account/category identities rather than overwriting or unlinking data.
     /// </summary>
-    public async Task<ImportUndoResult> TryUndoImportAsync(Guid batchId, CancellationToken cancellationToken = default)
+    public Task<ImportUndoResult> TryUndoImportAsync(Guid batchId, CancellationToken cancellationToken = default) =>
+        TryUndoImportCoreAsync(batchId, cancellationToken);
+
+    private async Task<ImportUndoResult> TryUndoImportCoreAsync(Guid batchId, CancellationToken cancellationToken,
+        EntryAggregateUndo? original = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        original?.Current(db, time.GetUtcNow());
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         write.DemandFeature(CommercialFeature.Corrections);
         var stored = await db.Entries.AsNoTracking().ToDictionaryAsync(e => e.Id, cancellationToken);
         var journals = await ReadImportLinksAsync(db, cancellationToken);
         var own = journals.FirstOrDefault(j => j.Batch.Id == batchId);
+        if (original is not null && own.State is null
+            || original is null && own.State is { Imported.Count: 0, Adjustments.Count: > 0 })
+            return new ImportUndoResult(0, true);
+        var adjustmentIds = own.State?.Adjustments.Select(a => a.AggregateId).ToHashSet() ?? [];
+        if (original is not null && (stored.Values.Any(e => e.RefundOfId is { } id && adjustmentIds.Contains(id))
+            || journals.Where(j => j.Batch.Id != batchId).Any(j => j.State.Adjustments.Any(a => adjustmentIds.Contains(a.AggregateId)
+                || a.Detailed.Any(e => adjustmentIds.Contains(e.Id))))))
+            return new ImportUndoResult(0, true);
         var importedIds = stored.Values.Where(e => e.ImportBatchId == batchId).Select(e => e.Id)
             .Concat(own.State?.Imported.Select(e => e.Id) ?? []).ToHashSet();
         // Older unlinked batches have no immutable review. Never manufacture a snapshot from
@@ -240,10 +253,13 @@ public sealed partial class ZananceStore
         }
 
         var count = importedIds.Count;
+        original?.Current(db, time.GetUtcNow());
         write.EnsureCurrent();
         await db.Entries.Where(e => e.ImportBatchId == batchId).ExecuteDeleteAsync(cancellationToken);
         await db.SaveChangesAsync(cancellationToken);
+        original?.Current(db, time.GetUtcNow());
         await write.CommitAsync(cancellationToken);
+        original?.End(true);
         return CommittedWriteNotification.Publish(OnChanged, new ImportUndoResult(count, false));
     }
 

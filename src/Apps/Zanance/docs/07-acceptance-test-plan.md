@@ -4876,3 +4876,16 @@ setter-to-binding. Both use actual native Save. Preserve every accepted original
 the negative observer/runtime evidence. The final installed protected form opens and Cancels without
 input/Save; Main0 and OS return unchanged. See [detailed scopes and limits](quality/entry-editor-publication.md).
 This is not aggregate-overlap/Undo, full-suite, physical-phone, general runtime/A11Y, iOS or release acceptance.
+
+## D-428 - Original transaction account/aggregate workflow
+
+Explicit nested account creation/default publication retains the original raw/receipt draft; cancelled
+or retired children cannot write/adopt another file. Newly introduced aggregate coverage is reviewed
+individually and rechecked atomically, including document/refund/prior-consumption boundaries.
+The existing adjustment journal retains manual source identity; short original Undo restores only
+aggregates and keeps details. Acceptance precedes observers; saved forms remain Close-only.
+Full native review bodies and truthful transient Home/Transactions Undo notices replace clipped or
+misleading captions.22 focused new behaviors and23 final resource cases pass; no full-suite replay.
+See [original workflow qualification](quality/entry-workflow-ownership.md) for native actions, preserved
+failures, APK and scope. No schema/model/portable-format, permission/provider or external acceptance
+change. D-386 still defers general runtime and Android accessibility until after ready features.

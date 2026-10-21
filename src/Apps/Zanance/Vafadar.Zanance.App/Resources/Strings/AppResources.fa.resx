@@ -8393,4 +8393,13 @@
   <data name="Editor_SourceChanged" xml:space="preserve">
     <value>داده‌های اصلی تغییر کرده‌اند. ورودی‌های ذخیره‌نشدهٔ شما حفظ شده‌اند. برای بررسی داده‌های فعلی، فرم را ببندید و دوباره باز کنید.</value>
   </data>
+  <data name="Aggregate_LinkUnavailable" xml:space="preserve">
+    <value>این پیوند باعث استفادهٔ دوباره از جزئیاتِ پیوندخورده یا تغییر تراکنش یا سند مرتبط می‌شود. هر دو را نگه دارید یا انصراف دهید و رکوردهای اصلی را بررسی کنید.</value>
+  </data>
+  <data name="Aggregate_Review" xml:space="preserve">
+    <value>بررسی هم‌پوشانی</value>
+  </data>
+  <data name="Aggregate_UndoNotice" xml:space="preserve">
+    <value>واگرد مبلغ تجمیعی را برمی‌گرداند؛ تراکنش جزئی باقی می‌ماند.</value>
+  </data>
 </root>

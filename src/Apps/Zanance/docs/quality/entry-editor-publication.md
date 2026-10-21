@@ -131,9 +131,9 @@ This is a local candidate signature, not store signing or publication.
 
 ## Remaining boundaries
 
-D-428 must independently finish explicit nested account/reference return and dynamic aggregate
-overlap/choice/writer/Undo ownership. The current strict source refuses changed account/reference
-facts on return; it does not silently adopt a newly created account into an old packet. This batch
+D-428 subsequently delivers explicit nested account/reference return and dynamic aggregate
+overlap/choice/writer/Undo ownership; see [its separate evidence](entry-workflow-ownership.md).
+The D-427 evidence remains the source/publication baseline and was not replayed. This batch
 does not accept physical-device behavior, every new/edit/refund/template scenario, general ANR/
 crash/low-memory stability, spoken accessibility, iOS, providers, store signing or release. D-386
 keeps general runtime and Android accessibility work after ready feature development.

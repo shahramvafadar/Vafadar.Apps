@@ -2155,3 +2155,15 @@ blank transaction. Keep Cancel reachable. A new query owns fresh input, icon and
 read-only refresh preserves raw values. Complete both currency/fee flags before uncovering. Keep
 historical account identities, and leave a new multi-account choice empty when there is no explicit
 or configured default. Native matrices and scope are in [the original evidence](quality/entry-editor-publication.md).
+
+## D-428 - Retained draft and explicit aggregate decisions
+
+Creating an account from a transaction is a nested visit: keep the complete raw money, note/tags,
+receipt evidence and pending document; only its accepted account packet refreshes choices. Cancel
+returns without writing. Keep saved forms read-only with Close after a postcommit observer failure.
+Present each new aggregate overlap separately. Full amounts, source and retained-detail meaning
+belong in a growing native dialog body, followed by short Link/Keep both actions. A blocked link
+explains the document/relationship boundary and offers explicit Keep both or Cancel.
+Home and Transactions display a wrapped truthful aggregate-adjustment Undo notice. Home reserves
+only a transient row; its compact header Add action is unchanged. Reappearing never renews the
+original eight-second window. [Native evidence and limits](quality/entry-workflow-ownership.md).

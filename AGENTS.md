@@ -3170,3 +3170,19 @@ Preserve original native action checkpoints before fallible observers. Reconstru
 caption from its exact source, with explicit prior-action evidence and limits; never replay an
 ambiguous or accepted confirmation/Save. Native visible text extents exclude trailing whitespace.
 D-428 aggregate ownership remains separate; retain D-386 and external gates.
+
+## D-428 - Original nested account and aggregate workflow
+
+An explicit nested account visit retains its original parent raw/receipt draft and actual-file
+rights. Adopt only its known committed reference packet; retire parent/child callbacks on departure
+and wait for their exact writer. Commit new account/default atomically. Known notification failure
+offers Close without another create. First-account receipt selection never overwrites typed money.
+Review each newly introduced aggregate coverage edge separately. Revalidate the complete detached
+proposal, choices, coverage and document/refund/prior-consumption facts under the original writer.
+Never subtract an unchanged edge or consume one detail twice. Keep manual source identities and use
+the existing profile-local adjustment journal. Short original-file Undo restores aggregates, retains
+details and refuses expiry, dependencies or changed rows; generic import Undo cannot bypass it.
+Consume financial/Undo acceptance before notification. Full monetary review belongs in a native
+dialog body with short actions. Home/Transactions show the actual adjustment meaning only for the
+original remaining deadline. Preserve original fixtures/accepted actions; no observer repair replay.
+Retain D-386 priorities and external gates.

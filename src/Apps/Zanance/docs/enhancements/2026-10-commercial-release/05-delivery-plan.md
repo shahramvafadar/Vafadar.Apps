@@ -3298,9 +3298,14 @@ stand.
 
 [Original evidence and acceptance limits](../../quality/entry-editor-publication.md).
 
-### D-428 delivery order
+### D-428 complete workflow delivery and D-429 order
 
-Complete original editor nested account/reference return, then dynamic aggregate choice/writer/Undo
-ownership, as one verified workflow batch. Preserve raw money and receipt intent while refusing a
-foreign file or changed original source; permit only explicitly reviewed additive reference changes.
-Retain D-427 completed cases and do not replay accepted native Saves, metadata creates or confirmations.
+D-428 delivers original nested account/default return, individual new-coverage aggregate decisions,
+writer/journal/short-Undo ownership and truthful transient notices. Keep the retained original
+fixtures/actions,22 focused new behaviors,23 resource checks and native evidence in the quality record;
+no successful unrelated checks or accepted actions are replayed.
+
+Next complete the original plan/debt/entry-draft form as D-429: coherent read-only covered publication,
+explicit missing/Retry, fresh routed raw ownership and original-file Save/split/reminder capabilities.
+Preserve recurrence/history/financial invariants and existing focused validation. General runtime/
+Android accessibility retain D-386, and provider/Mac/store/publication gates remain external.

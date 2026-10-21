@@ -14,6 +14,17 @@ public sealed class EntryEditorLoadSession(ZananceStore store, EntryEditorReadRe
     public EntryEditorReadSnapshot? Review { get; private set; }
     /// <summary>Gets whether the original raw draft has a complete published source.</summary>
     public bool HasPublished => _original is not null;
+    /// <summary>Adopts only the known metadata commit of this exact original parent's explicit account child.</summary>
+    public void AcceptAccountReturn(EntryAccountHandoff handoff)
+    {
+        handoff.EnsureCurrent();
+        var next = handoff.Accepted ?? throw new InvalidOperationException("The original account child has no accepted result.");
+        if (ReferenceEquals(_original, next)) return;
+        if (!ReferenceEquals(_original, handoff.Source) || _original.Accepted || _original.IsPending
+            || next.Request != request || next.DatabasePath != _path || !next.IsAvailable)
+            throw new InvalidOperationException("The original account result cannot replace another editor source.");
+        next.EnsureCurrent(); Retire(); _original = next;
+    }
     /// <summary>Retires pending reads/callbacks while retaining the original packet for explicit read-only refresh.</summary>
     public void Retire()
     {

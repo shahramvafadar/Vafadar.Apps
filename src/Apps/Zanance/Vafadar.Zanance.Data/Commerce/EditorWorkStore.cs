@@ -77,10 +77,12 @@ public sealed class EditorWorkReview
 public sealed class EditorWorkStore(IDbContextFactory<ZananceDbContext> factory, ICommercialWriteAccessSource source)
 {
     /// <summary>Captures actual-file readiness without settings creation, write locks, data mutation or paid activation.</summary>
-    public async Task<EditorWorkReview> ReadAsync(CancellationToken cancellationToken = default)
+    public async Task<EditorWorkReview> ReadAsync(CancellationToken cancellationToken = default, Func<string, bool>? acceptsFile = null)
     {
         await using var db = await factory.CreateDbContextAsync(cancellationToken);
-        var access = new CommercialFileAccess(source, DatabaseFileIdentity.ConfiguredPath(db));
+        var path = DatabaseFileIdentity.ConfiguredPath(db);
+        if (acceptsFile?.Invoke(path) == false) throw new InvalidOperationException("The original editor work file changed.");
+        var access = new CommercialFileAccess(source, path);
         if (!access.Enforced) { access.EnsureSnapshotCurrent(); return new(access, [], [], null, null); }
         access.DemandFeature(CommercialFeature.History);
         await db.Database.OpenConnectionAsync(cancellationToken);

@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep transaction drafts through account creation (D-428)
+
+- Creating an account from a transaction keeps its typed amount, notes and pending receipt.
+- Review each overlapping aggregate separately; unchanged coverage is not deducted twice.
+- Undo restores adjusted aggregates while keeping the new detail, with a clear short-lived notice
+  on Home and Transactions. Saved work cannot be submitted again after a refresh failure.
+- Full review explanations and short native actions remain readable on narrow screens.
+
 ### Complete original transaction forms (D-427)
 
 - Keep forms covered until all original references, transaction and refund facts are ready; offer Retry after a failed read.

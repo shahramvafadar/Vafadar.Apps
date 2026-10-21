@@ -8362,4 +8362,13 @@ SHA-256 del XML original: {5}</value>
   <data name="Editor_SourceChanged" xml:space="preserve">
     <value>Los datos originales han cambiado. Se conservan tus datos sin guardar. Cierra y vuelve a abrir el formulario para revisar los datos actuales.</value>
   </data>
+  <data name="Aggregate_LinkUnavailable" xml:space="preserve">
+    <value>Este vínculo reutilizaría un detalle ya vinculado o afectaría a una transacción o un documento relacionado. Conserva ambos o cancela y revisa los registros originales.</value>
+  </data>
+  <data name="Aggregate_Review" xml:space="preserve">
+    <value>Revisar coincidencia</value>
+  </data>
+  <data name="Aggregate_UndoNotice" xml:space="preserve">
+    <value>Deshacer restaura el importe agrupado; el detalle se conserva.</value>
+  </data>
 </root>

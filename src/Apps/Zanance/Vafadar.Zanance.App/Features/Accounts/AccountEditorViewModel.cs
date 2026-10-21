@@ -7,6 +7,7 @@ using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
+using Vafadar.Zanance.App.Features.Entries;
 
 namespace Vafadar.Zanance.App.Features.Accounts;
 
@@ -27,6 +28,17 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     private bool _workFailed;
     private bool _workRetired;
     private bool _loading = true;
+    private EntryAccountHandoff? _entryHandoff;
+    private bool _presented = true;
+    private long _presentationRevision;
+    /// <summary>Retires this nested child's pending callbacks on departure without discarding an uncommitted raw form.</summary>
+    internal void SetPresentationActive(bool active)
+    {
+        if (_presented != active) { _presented = active; _presentationRevision++; }
+        RefreshAccess();
+    }
+    private bool OwnsChild(long revision) => _entryHandoff is null
+        || _presented && revision == _presentationRevision && _entryHandoff.IsOwned;
 
     /// <summary>Creates the original form without starting database or native work.</summary>
     public AccountEditorViewModel(ZananceStore store, PlanStore plans, Translator translator, ILocalizationService localization, TimeProvider time, IAppInteraction interaction)
@@ -55,7 +67,7 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     public AccountFormModel Form { get; }
 
     /// <summary>Gets whether user input can change this loaded, not-yet-committed form.</summary>
-    public bool CanInteract => !_loading && !IsBusy && !_committed;
+    public bool CanInteract => !_loading && !IsBusy && !_committed && OwnsChild(_presentationRevision);
     /// <summary>Gets whether a financial Save can run; a committed account cannot be resubmitted.</summary>
     public bool CanSave => CanInteract && !_reviewingWork && !_workFailed && !_workRetired && _work is not null && WorkRestriction is null;
     /// <summary>Gets whether a pending writer must finish before leaving this form.</summary>
@@ -74,7 +86,9 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
         _reviewingWork = true; RefreshAccess();
         try
         {
-            var next = await _store.ReadEditorWorkAsync();
+            _entryHandoff?.EnsureCurrent();
+            var next = _entryHandoff is { } child ? await _store.ReadEditorAccountWorkAsync(child.Source) : await _store.ReadEditorWorkAsync();
+            _entryHandoff?.EnsureCurrent();
             next.EnsureCurrent(); _work = next; _workFailed = false; _workRetired = false;
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
@@ -127,7 +141,13 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     public async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
-        var settings = await _store.GetSettingsAsync();
+        if (query.TryGetValue("entryAccountHandoff", out var handoff))
+        {
+            if (handoff is not EntryAccountHandoff visit || query.ContainsKey("id"))
+                throw new ArgumentException("The original nested account route is invalid.");
+            visit.EnsureCurrent(); _entryHandoff = visit;
+        }
+        var settings = _entryHandoff?.Source.Inputs.Resources.Settings ?? (_entryHandoff is null ? await _store.GetSettingsAsync() : new ZananceSettings());
         Form.ShowAdvanced = settings.Shows(Feature.AccountOptions);
 
         if (query.TryGetValue("id", out var value) && value is Guid id
@@ -163,19 +183,31 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     private async Task SaveAsync()
     {
         if (!CanSave) return;
+        var presentation = _presentationRevision;
         IsBusy = true; SaveError = null;
         var target = _account.CopyForEditing();
         try
         {
             // Disable input before the account read, so another native Save cannot race validation.
-            if (!Form.TryApply(target, _localization.CurrentCulture, await _store.GetAccountsAsync())) return;
-            if (!await _store.SaveAccountAsync(target))
+            _entryHandoff?.EnsureCurrent();
+            var accounts = _entryHandoff?.Source.Inputs.Resources.Accounts ?? await _store.GetAccountsAsync();
+            if (!Form.TryApply(target, _localization.CurrentCulture, accounts)) return;
+            if (_entryHandoff is { } child)
+            {
+                await child.SaveAsync(_store, target, IsDefault, () => OwnsChild(presentation));
+                _account = target; _committed = true; _snapshot = Snapshot(); RefreshAccess();
+                if (child.NotificationFailed) { SaveError = _translator["Account_SavedNeedsReview"]; return; }
+            }
+            else if (!await _store.SaveAccountAsync(target))
             {
                 SaveError = Form.CurrencyLockText ?? _translator["Account_CurrencyLocked"];
                 return;
             }
-            _account = target; _committed = true; _snapshot = Snapshot(); RefreshAccess();
-            await UpdateDefaultAsync();
+            if (_entryHandoff is null)
+            {
+                _account = target; _committed = true; _snapshot = Snapshot(); RefreshAccess();
+                await UpdateDefaultAsync();
+            }
         }
         catch (CommittedWriteNotificationException)
         {
@@ -193,8 +225,9 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
 
         try
         {
+            if (!OwnsChild(presentation)) return;
             await _interaction.NavigateAsync("..");
-            if (!IsExisting && Form.IsDebtType)
+            if (_entryHandoff is null && !IsExisting && Form.IsDebtType)
                 await _interaction.NavigateAsync(AppRoutes.AccountDetailRoute, new Dictionary<string, object> { ["id"] = _account.Id });
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
@@ -253,8 +286,11 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanLeave))]
     private async Task CancelAsync()
     {
+        var presentation = _presentationRevision;
+        if (!OwnsChild(presentation)) return;
         if (_loading || _committed || !IsDirty || await ConfirmDiscardAsync())
         {
+            if (!OwnsChild(presentation)) return;
             try { await _interaction.NavigateAsync(".."); }
             catch (Exception exception) when (exception is not OutOfMemoryException) { await _interaction.ShowFailureAsync(exception); }
         }

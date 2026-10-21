@@ -8393,4 +8393,13 @@ Original-XML SHA-256: {5}</value>
   <data name="Editor_SourceChanged" xml:space="preserve">
     <value>Die ursprünglichen Daten wurden geändert. Ihre ungespeicherten Eingaben bleiben erhalten. Schließen und öffnen Sie das Formular erneut, um die aktuellen Daten zu prüfen.</value>
   </data>
+  <data name="Aggregate_LinkUnavailable" xml:space="preserve">
+    <value>Diese Verknüpfung würde bereits verknüpfte Details erneut verwenden oder eine zugehörige Buchung oder Datei betreffen. Behalten Sie beide Einträge oder brechen Sie ab und prüfen Sie die ursprünglichen Einträge.</value>
+  </data>
+  <data name="Aggregate_Review" xml:space="preserve">
+    <value>Überschneidung prüfen</value>
+  </data>
+  <data name="Aggregate_UndoNotice" xml:space="preserve">
+    <value>Rückgängig stellt die Sammelbuchung wieder her; die Einzelbuchung bleibt.</value>
+  </data>
 </root>

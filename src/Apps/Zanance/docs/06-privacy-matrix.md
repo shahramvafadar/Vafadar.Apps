@@ -1117,3 +1117,14 @@ group/refund/tag/rule facts. Display reads do not create preferences. Source own
 known acceptance add no portable field, permission, network endpoint, SDK, telemetry, account or
 retained production file. Separate fictitious native diagnostics retain only their own original
 fixtures/observations. Existing device encryption and backup/retention boundaries remain unchanged.
+
+## D-428 - Original manual aggregate adjustment records
+
+Manual aggregate linking reuses profile-local ImportLinks version1 Before/After/Detailed snapshots
+with an empty Imported list. Original manual Source/ImportBatchId remain intact. The existing whole
+database backup carries these records; no schema or portable-format version changes. Persistent
+detail-consumption history prevents repeated linking and is distinct from an eight-second in-memory
+original-file Undo receipt. Adjustment Undo restores aggregates and keeps the detail. New account/
+default creation remains explicit and atomic; no display read initializes settings. Retained receipt
+bytes stay pending until the existing confirmed attachment path. No SDK, permission, network channel,
+credential or public provider is added. General release/external gates remain open.

@@ -14,21 +14,16 @@ public partial class AccountEditorPage : ContentPage, IQueryAttributable
     public async void ApplyQueryAttributes(IDictionary<string, object> query) =>
         await Presentation.Failures.GuardAsync(() => _viewModel.ApplyQueryAsync(query));
 
+    /// <summary>Activates only this actual nested form's current native presentation.</summary>
+    protected override void OnAppearing() { base.OnAppearing(); _viewModel.SetPresentationActive(true); }
+    /// <summary>Retires pending original nested metadata/confirmation callbacks before another page receives input.</summary>
+    protected override void OnDisappearing() { _viewModel.SetPresentationActive(false); base.OnDisappearing(); }
+
     protected override bool OnBackButtonPressed()
     {
         if (!_viewModel.CanLeave) return true;
-        if (!_viewModel.IsDirty)
-        {
-            return base.OnBackButtonPressed();
-        }
-
-        Dispatcher.Dispatch(async () =>
-        {
-            if (await _viewModel.ConfirmDiscardAsync())
-            {
-                await Shell.Current.GoToAsync("..");
-            }
-        });
+        // Hardware Back shares the same original-child revision checks as the visible Close/Cancel action.
+        Dispatcher.Dispatch(async () => await Presentation.Failures.GuardAsync(() => _viewModel.CancelCommand.ExecuteAsync(null)));
         return true;
     }
 }

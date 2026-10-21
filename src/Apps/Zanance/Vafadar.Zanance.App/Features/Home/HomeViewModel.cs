@@ -61,8 +61,9 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     private readonly Vafadar.Backup.IBackupService _backup;
     private readonly SemaphoreSlim _loading = new(1, 1);
 
-    public HomeViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Receipts.ReceiptReadingSession receipts, Goals.GoalPresenter goalPresenter, Holdings.HoldingText holdingText, Vafadar.Backup.IBackupService backup, Interaction.IAppInteraction interaction)
+    public HomeViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Receipts.ReceiptReadingSession receipts, Goals.GoalPresenter goalPresenter, Holdings.HoldingText holdingText, Vafadar.Backup.IBackupService backup, Interaction.IAppInteraction interaction, Presentation.UndoService undo)
     {
+        Undo = undo; _undoAction = new(undo, interaction, LoadAsync);
         _backup = backup;
         TemplateNavigation = new(store, translator, interaction, LoadAsync);
         _holdingText = holdingText;
@@ -490,6 +491,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         HasQuickTemplates = QuickTemplates.Count > 0;
         CapturedHomeLayout = settings.HomeLayout;
         PresentingSnapshot?.Invoke();
+        UpdateUndo();
     }
 
     // Remaining overall budget of the month, only when a budget exists (a missing budget is not zero, BUD-01).

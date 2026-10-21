@@ -1978,3 +1978,17 @@ financial acceptance and native-action receipts. Native post-dialog observation 
 focused field; caption geometry uses visible line extents rather than trailing whitespace. Keep
 all negative evidence and original Case PIDs. These are focused app/source checks, not general
 runtime, physical-device, spoken-accessibility or release acceptance. See the D-427 quality record.
+
+### Original transaction workflow review (D-428)
+
+Run-StoreDrafts.ps1 -EntryWorkflowReview exercises actual nested account/aggregate pages in the
+independent non-input development host. Preserve its original32hex run. -EntryWorkflowSourceRun
+continues only that accepted original file after its source process exits. -EntryWorkflowAggregateOnly
+requires the original aggregates and no accepted financial Save. -EntryWorkflowCaptionsOnly reuses
+accepted Save/Undo rows for readonly dialog contexts; -EntryWorkflowBlockedOnly continues only the
+changed blocked dialog and presentation-only Home/Transactions notices. Never replay a known or
+ambiguous metadata/financial command to repair an observer. Popup files accompany the page render.
+The independent Android entry-workflow phase compiles production pages in Release/AOT and owns
+fresh fictitious files. Read the original process report; retain accepted action checkpoints before
+fallible observers. It never authorizes ordinary-installation financial writes or system changes.
+See the D-428 quality record for exact original runs and final package evidence.

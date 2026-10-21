@@ -31,7 +31,7 @@
     <!-- Home (D-27, D-37): the balance first, quick add beside the title, what needs attention, then the sections the user
          keeps (§21.5). One job per card; the first screen answers "where do I stand?" and "add an expense" without scrolling. -->
     <!-- D-375: the growing title owns Add; the full-height viewport needs no bottom action band. -->
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,*,Auto">
         <Grid x:Name="HomeHeader" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8" Padding="16,8"
               FlowDirection="LeftToRight">
             <ImageButton x:Name="HeaderBack" IsVisible="False" WidthRequest="44" HeightRequest="44" Padding="11"
@@ -583,6 +583,16 @@
 
             </VerticalStackLayout>
         </ScrollView>
+
+        <!-- An original aggregate Undo remains reachable on the normal Home return without a permanent action strip. -->
+        <Border x:Name="UndoNotice" Grid.Row="2" IsVisible="{Binding ShowUndo}" Margin="16,0,16,12" Padding="16,4,8,4"
+                BackgroundColor="{DynamicResource SnackbarBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8">
+            <Grid RowDefinitions="Auto,Auto" RowSpacing="4">
+                <Label x:Name="UndoCaption" Text="{Binding UndoText}" TextColor="{DynamicResource SnackbarText}" LineBreakMode="WordWrap" />
+                <Button Grid.Row="1" Text="{v:Translate Common_Undo}" Command="{Binding UndoEntryCommand}" IsEnabled="{Binding IsNotBusy}"
+                        HorizontalOptions="End" BackgroundColor="Transparent" TextColor="{DynamicResource SnackbarAction}" FontAttributes="Bold" />
+            </Grid>
+        </Border>
 
         <!-- The first empty defaults are not a financial snapshot; show them only after a successful complete load. -->
         <VerticalStackLayout Grid.Row="1" Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">

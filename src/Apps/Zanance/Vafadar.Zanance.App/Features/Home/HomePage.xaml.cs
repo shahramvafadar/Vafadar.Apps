@@ -9,6 +9,8 @@ public partial class HomePage : ContentPage
     private readonly HomeViewModel _viewModel;
     private readonly Dictionary<HomeSection, VerticalStackLayout> _sections;
     private HomeLayout _layout = HomeLayout.Default;
+    private bool _observingUndo;
+    private long _undoVersion;
     /// <summary>Gets the actual appearance publication so native review awaits this lifecycle rather than racing a second read.</summary>
     internal Task PendingPublication { get; private set; } = Task.CompletedTask;
 
@@ -56,6 +58,9 @@ public partial class HomePage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        _observingUndo = true;
+        _viewModel.Undo.Changed -= OnUndoChanged; _viewModel.Undo.Changed += OnUndoChanged;
+        UpdateOriginalUndo();
         // D-375: replace the native title bar once, retaining Back when this same page is pushed.
         HeaderBack.IsVisible = Navigation.NavigationStack.Count > 1;
         var backIcon = new FluentIcons.Maui.SymbolImageSource
@@ -73,6 +78,22 @@ public partial class HomePage : ContentPage
         // Language, calendar or data may have changed elsewhere.
         PendingPublication = _viewModel.LoadAsync();
         await Presentation.Failures.GuardAsync(() => PendingPublication);
+    }
+
+    /// <summary>Detaches only this page's transient offer observation; the original receipt/deadline remains shared.</summary>
+    protected override void OnDisappearing()
+    {
+        _observingUndo = false; _undoVersion++; _viewModel.Undo.Changed -= OnUndoChanged;
+        base.OnDisappearing();
+    }
+    private void OnUndoChanged(object? sender, EventArgs args) => Dispatcher.Dispatch(UpdateOriginalUndo);
+    private void UpdateOriginalUndo()
+    {
+        if (!_observingUndo) return;
+        var version = ++_undoVersion; _viewModel.UpdateUndo();
+        if (_viewModel.ShowUndo)
+            Dispatcher.DispatchDelayed(_viewModel.Undo.Remaining, () =>
+            { if (_observingUndo && version == _undoVersion) _viewModel.UpdateUndo(); });
     }
 
     // The user's order and visibility of the sections (§21.5); balance and attention always stay on top (DASH-03).

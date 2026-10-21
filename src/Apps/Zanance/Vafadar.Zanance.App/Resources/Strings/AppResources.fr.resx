@@ -8370,4 +8370,13 @@ SHA-256 du XML original : {5}</value>
   <data name="Editor_SourceChanged" xml:space="preserve">
     <value>Les données d’origine ont changé. Vos saisies non enregistrées sont conservées. Fermez puis rouvrez ce formulaire pour vérifier les données actuelles.</value>
   </data>
+  <data name="Aggregate_LinkUnavailable" xml:space="preserve">
+    <value>Ce lien réutiliserait un détail déjà lié ou affecterait une opération ou un document associé. Conservez les deux ou annulez et vérifiez les écritures d’origine.</value>
+  </data>
+  <data name="Aggregate_Review" xml:space="preserve">
+    <value>Vérifier le chevauchement</value>
+  </data>
+  <data name="Aggregate_UndoNotice" xml:space="preserve">
+    <value>Annuler rétablit l’écriture regroupée ; le détail est conservé.</value>
+  </data>
 </root>
