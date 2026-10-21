@@ -45,6 +45,15 @@ public sealed class HoldingPriceFlowTests
         Assert.Equal(f.Translator["Holding_PriceSourceChanged"], editor.Error);
         await editor.RefreshCommand.ExecuteAsync(null);
         Assert.True(editor.CanSubmit); Assert.Equal("60", editor.Raw); Assert.Null(editor.Error);
+        if (change == "currency")
+        {
+            // D-435: read-only Refresh adopts stored facts but cannot relabel the retained original EUR draft.
+            Assert.Equal("EUR", editor.InputUnitName); Assert.NotNull(editor.InputContextError);
+            await editor.SaveCommand.ExecuteAsync(null);
+            Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+            editor.Raw = string.Empty; editor.Raw = "60";
+            Assert.Equal("USD", editor.InputUnitName); Assert.Null(editor.InputContextError);
+        }
         await editor.SaveCommand.ExecuteAsync(null);
         var accepted = (await store.GetValuationsAsync(type.Id, Ct)).Single(v => v.Id == editor.AcceptedId);
         Assert.Equal(change == "quantity" ? 2000000 : 3000000, accepted.PricePerUnitMilli);

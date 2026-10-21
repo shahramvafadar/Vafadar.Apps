@@ -2099,3 +2099,15 @@ replay an accepted original matrix. Independent Android uses the same actual con
 an observation timeout is not permission to restart or reseed. Require strict report comparison,
 base-store equality and actual native readings. Debug diagnostic changes require Android Debug
 compilation as well as independent Release/AOT. See the D-434 quality document for preserved failures.
+
+### Original holding monetary runtime review (D-435)
+
+Use `Run-StoreDrafts.ps1 -PlanEditorReview -HoldingMoneyReview` for the actual Windows matrix.
+Continuation supplies the exact `-PlanEditorSourceRun` and `-PlanEditorObservationRun`; use fresh
+alternate build output while retaining original source/checkpoints and completed images. Independent
+Release/AOT Android uses phase `plan-form` with `review_holding_money`, an original run/pass/PID and
+the strict public report reader. Each platform accepts one purchase, one opening and one manual
+price; an automatic purchase valuation cannot count as the manual action. Final verification checks
+actual rows before reporting counts. Continue missing views/actions only; never reseed or repeat an
+accepted financial command to repair a native observer. Debug diagnostics also need Android Debug
+compilation. The D-435 quality document records actual reports and limitations.

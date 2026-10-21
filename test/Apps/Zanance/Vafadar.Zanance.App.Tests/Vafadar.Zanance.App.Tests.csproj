@@ -20,6 +20,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Holdings/AssetTypeEditorViewModel.cs" Link="Application/AssetTypeEditorViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Holdings/HoldingPriceEditor.cs" Link="Application/HoldingPriceEditor.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Holdings/AssetEventEditorViewModel.cs" Link="Application/AssetEventEditorViewModel.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Holdings/AssetEventEditorViewModel.Money.cs" Link="Application/AssetEventEditorViewModel.Money.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Holdings/HoldingEventEditorSession.cs" Link="Application/HoldingEventEditorSession.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/SplitEditorSession.cs" Link="Application/SplitEditorSession.cs" />
 

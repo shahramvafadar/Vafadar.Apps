@@ -3,6 +3,7 @@ namespace Vafadar.Zanance.App.Features.Holdings;
 public partial class HoldingDetailPage : ContentPage
 {
     private readonly HoldingDetailViewModel _viewModel;
+    private bool _moneyPresented;
 
     public HoldingDetailPage(HoldingDetailViewModel viewModel)
     {
@@ -13,7 +14,9 @@ public partial class HoldingDetailPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        _moneyPresented = true;
         await Presentation.Failures.GuardAsync(LoadCoveredAsync);
+        if (_moneyPresented) _viewModel.PriceEditor.SetMoneyPresentationActive(true);
     }
     private async void OnReloadClicked(object? sender, EventArgs e) =>
         await Presentation.Failures.GuardAsync(() => _viewModel.PriceEditor.RefreshCommand.ExecuteAsync(null));
@@ -30,6 +33,8 @@ public partial class HoldingDetailPage : ContentPage
     }
     protected override void OnDisappearing()
     {
+        _moneyPresented = false;
+        _viewModel.PriceEditor.SetMoneyPresentationActive(false);
         _viewModel.Retire();
         base.OnDisappearing();
     }

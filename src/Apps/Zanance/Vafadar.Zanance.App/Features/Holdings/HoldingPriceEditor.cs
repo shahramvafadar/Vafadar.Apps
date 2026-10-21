@@ -17,6 +17,37 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
     private long _revision;
     private Guid _id;
     private bool _initialized;
+    private readonly Presentation.MoneyDraftInput _money = new();
+    private long _modeRevision;
+    partial void OnModeIndexChanged(int value) => _modeRevision++;
+    /// <summary>Gets the manual price's original monetary unit until complete clearing and reentry.</summary>
+    public string InputUnitName => _money.UnitName(_display?.Inputs.Type.PriceCurrencyCode ?? "EUR");
+    /// <summary>Explains the manual price's original display-unit factor.</summary>
+    public string? InputUnitNote => Presentation.DisplayUnitNote.ForInput(translator, _money, _display?.Inputs.Type.PriceCurrencyCode ?? "EUR");
+    /// <summary>Explains the manual price's retained original numeric format.</summary>
+    public string? InputFormatNote => _money.OriginalExample(localization.CurrentCulture) is { } example
+        ? translator.Format("Plan_OriginalInputFormat", example) : null;
+    /// <summary>Gets field-local currency/unit review independently of history or write feedback.</summary>
+    public string? InputContextError => _display is { } display && _money.NeedsReview(display.Inputs.Type.PriceCurrencyCode)
+        ? translator.Format("Plan_InputUnitChanged", MoneyText.UnitName(display.Inputs.Type.PriceCurrencyCode)) : null;
+    partial void OnRawChanged(string value)
+    {
+        _money.ChangeText(value, _display?.Inputs.Type.PriceCurrencyCode ?? "EUR", localization.CurrentCulture);
+        RefreshMoneyTexts();
+    }
+    /// <summary>Publishes display-only monetary captions without renewing the original raw price.</summary>
+    public void RefreshMoneyTexts()
+    {
+        OnPropertyChanged(nameof(InputUnitName)); OnPropertyChanged(nameof(InputUnitNote)); OnPropertyChanged(nameof(InputFormatNote)); OnPropertyChanged(nameof(InputContextError));
+    }
+    private void OnMoneyDisplayChanged(object? sender, EventArgs args) => RefreshMoneyTexts();
+    /// <summary>Tracks display-only captions while the owning detail is actually presented.</summary>
+    public void SetMoneyPresentationActive(bool active)
+    {
+        localization.Changed -= OnMoneyDisplayChanged;
+        if (active) localization.Changed += OnMoneyDisplayChanged;
+        RefreshMoneyTexts();
+    }
     /// <summary>Gets the exact displayed packet for reviewing an original history action in one coherent read.</summary>
     internal HoldingPriceReview? DisplayedReview => _display;
     /// <summary>Reloads the original owning detail after acceptance or an explicit Refresh.</summary>
@@ -50,7 +81,7 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
     /// <summary>Applies the owning detail cover without changing standalone editor authority or raw input.</summary>
     internal Func<bool>? ViewReady { get; set; }
     /// <summary>Refreshes native command enablement after the owning complete cover changes.</summary>
-    internal void NotifyViewReady() => PublishState();
+    internal void NotifyViewReady() { RefreshMoneyTexts(); PublishState(); }
     /// <summary>Gets whether an explicit read-only refresh is available.</summary>
     public bool CanRefresh => !Busy;
     partial void OnBusyChanged(bool value) => PublishState();
@@ -83,16 +114,19 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
         }
         ModeNames = [text.PerUnit(_display.Inputs.Type), translator["Holding_PriceTotal"]];
         Label = translator.Format("Holding_PriceIn", _display.Inputs.Type.PriceCurrencyCode);
+        RefreshMoneyTexts();
         return _display.Inputs;
     }
-    private string Draft() => Presentation.DraftFingerprint.Create(Raw, Date, ModeIndex);
+    private string Draft() => Presentation.DraftFingerprint.Create(Raw, Date, ModeIndex, _money.Stamp, _money.Revision, _modeRevision);
     [RelayCommand(CanExecute = nameof(CanSubmit))]
     private async Task SaveAsync()
     {
         if (!CanSubmit || _review is not { } review) return;
         Error = null;
         var type = review.Inputs.Type;
-        if (!MoneyText.TryParse(Raw, type.PriceCurrencyCode, localization.CurrentCulture, out var amount)
+        RefreshMoneyTexts();
+        if (_money.NeedsReview(type.PriceCurrencyCode)) return;
+        if (!_money.TryParse(out var amount)
             || amount <= 0 || amount > long.MaxValue / 1_000 || ModeIndex is < 0 or > 1)
         { Error = translator["Amount_Invalid"]; return; }
         long price;
@@ -110,7 +144,7 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
             Date = Date, PricePerUnitMilli = price, Source = ValuationSource.Manual };
         var draft = Draft(); var revision = _revision;
         await WriteAsync(value.Id, false, () => store.SaveReviewedValuationAsync(review, value,
-            () => revision == _revision && ReferenceEquals(_review, review) && draft == Draft()));
+            () => revision == _revision && ReferenceEquals(_review, review) && draft == Draft() && !_money.NeedsReview(type.PriceCurrencyCode)));
     }
     /// <summary>Confirms the original row and refuses a changed confirmation or any changed original source.</summary>
     public async Task DeleteAsync(Guid id, string description)

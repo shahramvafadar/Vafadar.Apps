@@ -93,3 +93,13 @@ occurs. Independent ordinary-SQLite fixtures exercise actual application control
 all protected Main storage, hardware keys, physical-device, iOS, general ANR/crash, TalkBack, provider,
 store or publication acceptance. D-386 execution order and external gates remain unchanged. Holding
 monetary inputs remain the next separate complete development boundary.
+
+## Exact hosted result
+
+Commit `3696e1ee196d285caa7148ac2b67b3c3e711038b` passes
+[CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39580445276),
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39580445124),
+[Local identity backend](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39580444947) and
+[Self-hosted service qualification](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39580445007).
+The single scheduled follow-up is consumed once and deleted. These exact-commit results do not
+expand the runtime/device/provider/store acceptance scope above.

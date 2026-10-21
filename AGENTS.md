@@ -3267,3 +3267,15 @@ before match metadata or adjustment authority. Default selection after known acc
 touch only original existing settings under metadata ownership; switched files/departed owners refuse
 the follow-up without repeating Save. Native continuation preserves completed receipts and source
 checkpoints. D-386 priorities and external gates remain unchanged.
+
+## D-435 - Original holding money and quantity-dependent payments
+
+Retain independent payment, fee, price-currency, optional basis and manual-price contexts. Reentry
+after changed currency/unit is complete and field-specific; hidden fields cannot affect another
+event kind. Quantity retains its numeric culture because per-unit payment depends on it, with a
+numeric-only format example. Preserve explicit physical-unit/price-mode choices and guard their
+monotonic revisions, account/kind choices and raw edits under original writers. Nonblank invalid
+second-currency money is not unknown value. Manual-price Refresh never relabels retained input.
+Final native action counts require actual source rows, including Manual versus automatic Purchase
+valuation. Preserve completed scenes and accepted metadata/financial results; continue only missing
+work from exact checkpoints. D-386 priorities and external gates remain unchanged.

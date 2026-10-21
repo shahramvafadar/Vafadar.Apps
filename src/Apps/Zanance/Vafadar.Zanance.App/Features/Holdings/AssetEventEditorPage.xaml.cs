@@ -9,8 +9,16 @@ public partial class AssetEventEditorPage : ContentPage
     }
 
     /// <inheritdoc />
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        (BindingContext as AssetEventEditorViewModel)?.SetMoneyPresentationActive(true);
+    }
+
+    /// <inheritdoc />
     protected override void OnDisappearing()
     {
+        (BindingContext as AssetEventEditorViewModel)?.SetMoneyPresentationActive(false);
         (BindingContext as AssetEventEditorViewModel)?.RetireReview();
         base.OnDisappearing();
     }

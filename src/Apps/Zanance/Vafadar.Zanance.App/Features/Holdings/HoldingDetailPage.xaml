@@ -65,6 +65,10 @@
                         <v:ChoiceChips ItemsSource="{Binding ModeNames}" SelectedIndex="{Binding ModeIndex}" />
                         <Label Text="{Binding Label}" Style="{StaticResource FieldLabel}" />
                         <Entry x:Name="ManualPriceInput" Text="{Binding Raw}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{Binding Label}" />
+                        <Label Text="{Binding InputUnitName}" Style="{StaticResource Secondary}" />
+                        <Label Text="{Binding InputUnitNote}" Style="{StaticResource Secondary}" IsVisible="{Binding InputUnitNote, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding InputFormatNote}" Style="{StaticResource Secondary}" IsVisible="{Binding InputFormatNote, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding InputContextError}" Style="{StaticResource ErrorText}" IsVisible="{Binding InputContextError, Converter={StaticResource IsNotNullConverter}}" />
                         <Label x:Name="ManualPriceFeedback" Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{v:Translate Entry_Date}" Style="{StaticResource FieldLabel}" />
                         <v:DateField Date="{Binding Date}" AccessibilityLabel="{v:Translate Entry_Date}" />

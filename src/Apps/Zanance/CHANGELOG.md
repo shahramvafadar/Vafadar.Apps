@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep holding amounts in their original units (D-435)
+
+- Preserve the original format and unit of purchase/sale amounts, fees, basis and manual prices.
+- Require separate clearing and reentry after a currency or display-unit change.
+- Keep the quantity format stable when it determines a per-unit payment.
+- Reject invalid nonblank values in the price currency instead of recording an unknown value.
+- Retire pending monetary work after raw inputs or their choices change and return.
+
 ### Preserve original account amounts (D-434)
 
 - Keep opening balance, optional repayment and observed balance in their original format and units.

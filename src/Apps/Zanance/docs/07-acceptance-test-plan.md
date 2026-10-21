@@ -4983,3 +4983,25 @@ and physical-device/iOS/provider/store/release gates remain open. Holding moneta
 the next separate development batch.
 
 [Account monetary evidence](quality/account-money-context.md).
+
+
+## D-435 - Original holding monetary contexts
+
+Payment, fee, price-currency amount and opening/gift basis retain independent original currency,
+display unit and numeric culture. Currency/unit changes require complete clearing/reentry. Quantity
+keeps its original numeric culture because per-unit money depends on it; examples remain numeric.
+Hidden fields do not reinterpret another event kind. Native account/unit/mode/kind choice and raw
+edit revisions remain bound under original writers, including change-and-return. Manual-price
+Refresh retains original raw meaning and known acceptance; old confirmations cannot rearm it.
+Only a blank optional second amount requests unknown value; malformed nonblank input is refused.
+
+24 distinct new source cases and 46 prior affected cases pass selectively; eleven original failures
+are reproduced. Strict Windows, Android Debug and independent Release/AOT builds and the complete
+signed offline APK pass without warnings/errors. 147 distinct Windows and 51 independent Android
+observations complete across retained original scenes and final continuations, without accepted
+purchase/opening replay. All 50 stored table sets match the original final checkpoint; actual Manual
+and automatic Purchase valuations are verified separately. Main upgrades without reset with its
+original account/Home0.00EUR and unchanged OS settings. No full-suite baseline is invented. D-386 stability/accessibility order and physical-device/iOS/provider/store/
+publication gates remain unchanged.
+
+[Original holding evidence](quality/holding-money-context.md).

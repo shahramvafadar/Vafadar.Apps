@@ -40,6 +40,7 @@
 
                         <Label Text="{v:Translate AssetEvent_Quantity}" Style="{StaticResource FieldLabel}" />
                         <Entry x:Name="QuantityInput" Text="{Binding QuantityText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{v:Translate AssetEvent_Quantity}" />
+                        <Label Text="{Binding QuantityFormatNote}" Style="{StaticResource Secondary}" IsVisible="{Binding QuantityFormatNote, Converter={StaticResource IsNotNullConverter}}" />
                         <Label x:Name="QuantityRangeFeedback" Text="{Binding QuantityError}" Style="{StaticResource ErrorText}" IsVisible="{Binding QuantityError, Converter={StaticResource IsNotNullConverter}}" />
                         <v:ChoiceChips ItemsSource="{Binding UnitNames}" SelectedIndex="{Binding UnitIndex}" IsVisible="{Binding HasUnitChoice}" />
 
@@ -76,12 +77,25 @@
                         <Label Text="{Binding AmountLabel}" Style="{StaticResource FieldLabel}" />
                         <v:ChoiceChips ItemsSource="{Binding PriceModeNames}" SelectedIndex="{Binding PriceModeIndex}" />
                         <Entry Text="{Binding AmountText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{Binding AmountLabel}" />
+                        <Label Text="{Binding AmountUnitName}" Style="{StaticResource Secondary}" />
+                        <Label Text="{Binding AmountUnitNote}" Style="{StaticResource Secondary}" IsVisible="{Binding AmountUnitNote, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding AmountFormatNote}" Style="{StaticResource Secondary}" IsVisible="{Binding AmountFormatNote, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding AmountContextError}" Style="{StaticResource ErrorText}" IsVisible="{Binding AmountContextError, Converter={StaticResource IsNotNullConverter}}" />
                         <VerticalStackLayout IsVisible="{Binding HasSecondAmount}" Spacing="4">
                             <Label Text="{Binding SecondAmountLabel}" Style="{StaticResource FieldLabel}" />
                             <Entry Text="{Binding SecondAmountText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{Binding SecondAmountLabel}" />
+                            <Label Text="{Binding SecondUnitName}" Style="{StaticResource Secondary}" />
+                            <Label Text="{Binding SecondUnitNote}" Style="{StaticResource Secondary}" IsVisible="{Binding SecondUnitNote, Converter={StaticResource IsNotNullConverter}}" />
+                            <Label Text="{Binding SecondFormatNote}" Style="{StaticResource Secondary}" IsVisible="{Binding SecondFormatNote, Converter={StaticResource IsNotNullConverter}}" />
+                            <Label Text="{Binding SecondContextError}" Style="{StaticResource ErrorText}" IsVisible="{Binding SecondContextError, Converter={StaticResource IsNotNullConverter}}" />
+                            <Label Text="{Binding SecondAmountError}" Style="{StaticResource ErrorText}" IsVisible="{Binding SecondAmountError, Converter={StaticResource IsNotNullConverter}}" />
                         </VerticalStackLayout>
                         <Label Text="{v:Translate AssetEvent_Fee}" Style="{StaticResource FieldLabel}" />
                         <Entry Text="{Binding FeeText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{v:Translate AssetEvent_Fee}" />
+                        <Label Text="{Binding FeeUnitName}" Style="{StaticResource Secondary}" />
+                        <Label Text="{Binding FeeUnitNote}" Style="{StaticResource Secondary}" IsVisible="{Binding FeeUnitNote, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding FeeFormatNote}" Style="{StaticResource Secondary}" IsVisible="{Binding FeeFormatNote, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding FeeContextError}" Style="{StaticResource ErrorText}" IsVisible="{Binding FeeContextError, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{Binding FeeError}" Style="{StaticResource ErrorText}" IsVisible="{Binding FeeError, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{v:Translate AssetEvent_FeeHint}" Style="{StaticResource Secondary}" FontSize="12" />
                     </VerticalStackLayout>
@@ -92,6 +106,10 @@
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{Binding BasisLabel}" Style="{StaticResource FieldLabel}" Margin="0" />
                         <Entry Text="{Binding BasisText}" Keyboard="Numeric" Placeholder="0" SemanticProperties.Description="{Binding BasisLabel}" />
+                        <Label Text="{Binding BasisUnitName}" Style="{StaticResource Secondary}" />
+                        <Label Text="{Binding BasisUnitNote}" Style="{StaticResource Secondary}" IsVisible="{Binding BasisUnitNote, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding BasisFormatNote}" Style="{StaticResource Secondary}" IsVisible="{Binding BasisFormatNote, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{Binding BasisContextError}" Style="{StaticResource ErrorText}" IsVisible="{Binding BasisContextError, Converter={StaticResource IsNotNullConverter}}" />
                         <Label Text="{v:Translate AssetEvent_BasisHint}" Style="{StaticResource Secondary}" FontSize="12" />
                     </VerticalStackLayout>
                 </Border>

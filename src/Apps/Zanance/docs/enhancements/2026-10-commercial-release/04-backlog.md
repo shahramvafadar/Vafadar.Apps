@@ -4037,10 +4037,10 @@ gates remain unchanged.
 
 [Failure evidence and hosted gate](../../quality/ci-common-recovery.md).
 
-### Next complete original account monetary-context batch (D-434)
+### Original account monetary-context scope (D-434, completed below)
 
-AccountFormModel still parses opening/installment raw money through current culture/display units;
-AccountDetailViewModel balance observation does the same. Reproduce these actual-source boundaries,
+Before D-434, AccountFormModel parsed opening/installment raw money through current culture/display
+units; AccountDetailViewModel did the same for observed balance. The batch reproduced these boundaries,
 then retain original currency/unit/culture and explicit debt direction through display/currency changes,
 account save/reload and reconciliation confirmation. Preserve actual-file rights, unknown principal,
 original write/notification ownership and recorded ledger invariants. Holding monetary inputs remain a
@@ -4091,3 +4091,37 @@ and physical-device/iOS/provider/store/release gates remain open. Holding moneta
 the next separate development batch.
 
 [Account monetary evidence](../../quality/account-money-context.md).
+
+
+## D-435 - Original holding monetary contexts
+
+Payment, fee, price-currency amount and opening/gift basis retain independent original currency,
+display unit and numeric culture. Currency/unit changes require complete clearing/reentry. Quantity
+keeps its original numeric culture because per-unit money depends on it; examples remain numeric.
+Hidden fields do not reinterpret another event kind. Native account/unit/mode/kind choice and raw
+edit revisions remain bound under original writers, including change-and-return. Manual-price
+Refresh retains original raw meaning and known acceptance; old confirmations cannot rearm it.
+Only a blank optional second amount requests unknown value; malformed nonblank input is refused.
+
+24 distinct new source cases and 46 prior affected cases pass selectively; eleven original failures
+are reproduced. Strict Windows, Android Debug and independent Release/AOT builds and the complete
+signed offline APK pass without warnings/errors. 147 distinct Windows and 51 independent Android
+observations complete across retained original scenes and final continuations, without accepted
+purchase/opening replay. All 50 stored table sets match the original final checkpoint; actual Manual
+and automatic Purchase valuations are verified separately. Main upgrades without reset with its
+original account/Home0.00EUR and unchanged OS settings. No full-suite baseline is invented. D-386 stability/accessibility order and physical-device/iOS/provider/store/
+publication gates remain unchanged.
+
+[Original holding evidence](../../quality/holding-money-context.md).
+
+### Next complete secondary monetary-input batch (D-436)
+
+Audit and reproduce the remaining secondary money-entry boundaries in goal contributions/assumptions,
+forecast assumptions, display-unit calibration, occurrence/settlement input and shared-cost editing.
+Inspect actual submitted raw values and pending native prompts rather than inferring safety from an
+ambient culture variable. Retain original currency/unit/culture through awaits, explicit review and
+original atomic writers. Estimates never become ledger entries, and known acceptance never rearms.
+Complete the whole affected batch, including actual native paths and original source preservation;
+do not replay the completed D-435 matrix or unrelated successful backend/security checks. Physical
+holding-type and plain decimal-rate inputs remain separate following numeric boundaries. D-386's
+deferred stability/accessibility order and external provider/account/device/release gates stand.

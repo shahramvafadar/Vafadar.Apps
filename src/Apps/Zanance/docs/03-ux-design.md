@@ -2219,3 +2219,11 @@ format examples beside raw input. Display changes never relabel an existing amou
 currencies show field feedback and require full clearing/reentry; hidden unknown principal does not
 hide a stale repayment. Explicit account Refresh preserves the observed draft and requires currency
 review. A known Save with a failed default follow-up stays Close-only with the existing review message.
+
+## Original holding monetary input (D-435)
+
+Payment, fee, second-currency amount, optional basis and manual price each show their original unit,
+applicable factor and numeric-format example. Changed units/currencies expose field-local feedback;
+partial edits cannot adopt them. Keep context refusal separate from refund and malformed-input
+errors. An optional price-currency amount is unknown only when blank. Quantity format examples are
+numeric rather than currency-labelled. Preserve native scaling, growing rows and existing actions.

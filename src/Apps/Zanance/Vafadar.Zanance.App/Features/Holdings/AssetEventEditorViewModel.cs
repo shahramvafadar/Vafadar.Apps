@@ -410,7 +410,8 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
             SecondAmountText = HasSecondAmount && priced is { } second ? MoneyText.ForInput(second, type.PriceCurrencyCode, culture) : string.Empty;
         }
 
-        UpdateEffect(); if (reset || _snapshot is null) _snapshot = Snapshot();
+        if (reset) InitializeMoney();
+        RefreshMoneyTexts(); UpdateEffect(); if (reset || _snapshot is null) _snapshot = Snapshot();
     }
 
     private void PublishLocations(IReadOnlyList<AssetLocation> sources, Guid? select)
@@ -424,6 +425,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
 
     partial void OnKindIndexChanged(int value)
     {
+        if (!_loading) _moneyChoiceRevision++;
         var kind = Kind;
         HasMoney = kind is AssetEventKind.Purchase or AssetEventKind.Sale;
         IsTransfer = kind == AssetEventKind.LocationTransfer;
@@ -436,25 +438,28 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
         BasisLabel = _type is null ? null : _translator.Format("AssetEvent_BasisLabel", _type.PriceCurrencyCode);
         KindHint = _translator[$"AssetEvent_{kind}Hint"];
         UpdateSecondAmount();
+        RefreshMoneyTexts();
         UpdateEffect();
     }
 
     partial void OnAccountChanged(HoldingAccount? value)
     {
+        if (!_loading) _moneyChoiceRevision++;
         AccountError = null;
         UpdateSecondAmount();
+        RefreshMoneyTexts();
         UpdateEffect();
     }
 
-    partial void OnQuantityTextChanged(string value) => UpdateEffect();
+    partial void OnQuantityTextChanged(string value) { if (!_loading) _quantityRevision++; RefreshMoneyTexts(); UpdateEffect(); }
 
-    partial void OnUnitIndexChanged(int value) => UpdateEffect();
+    partial void OnUnitIndexChanged(int value) { if (!_loading) _moneyChoiceRevision++; UpdateEffect(); }
 
-    partial void OnAmountTextChanged(string value) => UpdateEffect();
+    partial void OnAmountTextChanged(string value) { ChangeMoney(_amountMoney, value, PaymentCurrency); UpdateEffect(); }
 
-    partial void OnFeeTextChanged(string value) { FeeError = null; UpdateEffect(); }
+    partial void OnFeeTextChanged(string value) { ChangeMoney(_feeMoney, value, PaymentCurrency); FeeError = null; UpdateEffect(); }
 
-    partial void OnPriceModeIndexChanged(int value) => UpdateEffect();
+    partial void OnPriceModeIndexChanged(int value) { if (!_loading) _moneyChoiceRevision++; UpdateEffect(); }
 
     partial void OnLocationChanged(LocationChoice? value) => UpdateEffect();
 
@@ -472,13 +477,13 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
     private long? ParsedQuantity(out bool outsideRange)
     {
         outsideRange = false;
-        return _type is not null && Quantities.TryParse(QuantityText, Unit, _type, _localization.CurrentCulture, out var quantity, out outsideRange) ? quantity : null;
+        return _type is not null && Quantities.TryParse(QuantityText, Unit, _type, _quantityCulture ?? _localization.CurrentCulture, out var quantity, out outsideRange) ? quantity : null;
     }
 
     // The money that moves in the account's currency: the total or price per gram/unit × quantity.
     private long? ParsedAmount(long quantity)
     {
-        if (Account is null || !MoneyText.TryParse(AmountText, Account.CurrencyCode, _localization.CurrentCulture, out var amount) || amount <= 0)
+        if (Account is null || !ParseMoney(_amountMoney, Account.CurrencyCode, out var amount) || amount <= 0)
         {
             return null;
         }
@@ -503,7 +508,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
 
     // D-410: only a genuinely blank/zero fee requests removal; malformed or negative input is not zero.
     private long? ParsedFee() => Account is null ? null : string.IsNullOrWhiteSpace(FeeText) ? 0
-        : MoneyText.TryParse(FeeText, Account.CurrencyCode, _localization.CurrentCulture, out var fee) && fee >= 0 ? fee : null;
+        : ParseMoney(_feeMoney, Account.CurrencyCode, out var fee) && fee >= 0 ? fee : null;
 
     private AssetEvent BuildEvent(AssetType type, long quantity)
     {
@@ -647,12 +652,13 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
     [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
+        RefreshMoneyTexts();
         if (_type is not { } type || !CanSave)
         {
             return;
         }
 
-        Error = null; AccountError = null; FeeError = null;
+        Error = null; AccountError = null; FeeError = null; SecondAmountError = null;
         var culture = _localization.CurrentCulture;
         if (ParsedQuantity(out var outsideRange) is not { } quantity)
         {
@@ -672,7 +678,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
             return;
         }
 
-        var originalDraft = Snapshot();
+        var originalDraft = Snapshot(); var originalMoney = MoneyRevision;
         var assetEvent = BuildEvent(type, quantity);
         try
         {
@@ -703,7 +709,9 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
             if (HasSecondAmount)
             {
                 // The value in the price currency is the cost basis or the proceeds; without it they stay unknown.
-                priced = MoneyText.TryParse(SecondAmountText, type.PriceCurrencyCode, culture, out var second) && second > 0 ? second : null;
+                if (string.IsNullOrWhiteSpace(SecondAmountText)) priced = null;
+                else if (ParseMoney(_secondMoney, type.PriceCurrencyCode, out var second) && second > 0) priced = second;
+                else { SecondAmountError = _translator["Amount_Invalid"]; return; }
             }
 
             var money = _groupEntries.FirstOrDefault(e => e.Kind is EntryKind.AssetPurchase or EntryKind.AssetSale)?.Copy() ?? new LedgerEntry();
@@ -731,7 +739,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
         }
         else if (HasBasis && !string.IsNullOrWhiteSpace(BasisText))
         {
-            if (!MoneyText.TryParse(BasisText, type.PriceCurrencyCode, culture, out var basis) || basis <= 0)
+            if (!ParseMoney(_basisMoney, type.PriceCurrencyCode, out var basis) || basis <= 0)
             {
                 Error = _translator["Amount_Invalid"];
                 return;
@@ -750,7 +758,8 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
         try
         {
             // D-408: the exact raw draft and original source stay bound to the existing atomic quantity/payment/fee/price writer.
-            var result = await ownerSession.SaveAsync(assetEvent, entries, () => Owner() && Snapshot() == originalDraft);
+            var result = await ownerSession.SaveAsync(assetEvent, entries, () => Owner() && Snapshot() == originalDraft
+                && MoneyRevision == originalMoney && MoneyContextsReady);
             if (!Owner() || result is null) return;
             if (result.Conflict is { } conflict)
             {
@@ -797,7 +806,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
     /// <summary>Gets whether raw holding inputs are still editable.</summary>
     public bool CanEdit => !_loading && Loading.IsReady && !IsBusy && !_session.Committed;
     /// <summary>Gets whether the original coherent financial review still authorizes this form's Save.</summary>
-    public bool CanSave => CanEdit && _session.Review is not null && !HasSavedLocationPending;
+    public bool CanSave => CanEdit && MoneyContextsReady && _session.Review is not null && !HasSavedLocationPending;
     /// <summary>Gets Cancel before acceptance and Close afterwards.</summary>
     public string CloseText => _translator[_session.Committed ? "Common_Close" : "Common_Cancel"];
     private void PublishState()
@@ -827,5 +836,5 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
 
     private string Snapshot() => Presentation.DraftFingerprint.Create(
         KindIndex, Date, QuantityText, UnitIndex, Location?.Id, ToLocation?.Id, Account?.Id, PriceModeIndex,
-        AmountText, FeeText, SecondAmountText, BasisText, DirectionIndex, ReasonText, Note);
+        AmountText, FeeText, SecondAmountText, BasisText, DirectionIndex, ReasonText, Note, MoneyMeaning);
 }
