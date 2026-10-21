@@ -125,7 +125,7 @@ public sealed partial class ZananceStore
         row.State != ScheduleState.Ended && (row.AccountId == id || row.ToAccountId == id));
 
     /// <summary>Shares the original account feature/capacity decision across ordinary Save and atomic archive.</summary>
-    private static async Task CheckAccountWorkAsync(ZananceDbContext db, CommercialWriteTransaction write, Account account,
+    internal static async Task CheckAccountWorkAsync(ZananceDbContext db, CommercialWriteTransaction write, Account account,
         Account? existing, CancellationToken cancellationToken)
     {
         write.DemandFeature(existing is null ? CommercialFeature.FinancialAccounts : CommercialFeature.Corrections);

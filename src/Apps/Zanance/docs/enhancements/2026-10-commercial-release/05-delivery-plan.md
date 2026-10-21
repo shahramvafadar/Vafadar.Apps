@@ -3298,14 +3298,18 @@ stand.
 
 [Original evidence and acceptance limits](../../quality/entry-editor-publication.md).
 
-### D-428 complete workflow delivery and D-429 order
+### D-428/D-429 complete original workflow delivery
 
-D-428 delivers original nested account/default return, individual new-coverage aggregate decisions,
-writer/journal/short-Undo ownership and truthful transient notices. Keep the retained original
-fixtures/actions,22 focused new behaviors,23 resource checks and native evidence in the quality record;
-no successful unrelated checks or accepted actions are replayed.
+D-428 retains original transaction/account/aggregate decisions and Undo. D-429 completes the actual
+plan/debt/transaction-draft form's coherent covered source publication, missing/Retry, original raw
+and command lifetimes, known nested account return and original-file Save/split/reminder authority.
+Keep27 new focused behaviors and retained source/native/build evidence in the D-429 quality record.
+Full history and recurrence semantics remain, and accepted account/financial actions are not replayed
+for observer repair. No schema/model/provider/permission or external acceptance change is inferred.
 
-Next complete the original plan/debt/entry-draft form as D-429: coherent read-only covered publication,
-explicit missing/Retry, fresh routed raw ownership and original-file Save/split/reminder capabilities.
-Preserve recurrence/history/financial invariants and existing focused validation. General runtime/
-Android accessibility retain D-386, and provider/Mac/store/publication gates remain external.
+Next deliver D-430 original plan monetary-draft context as one batch: reproduce culture/unit/currency
+changes with actual application sources, retain raw interpretation and require explicit monetary
+reentry when needed, then qualify original writer and native transfer/debt views. The current Save
+still consults CurrentCulture and ambient display units; D-429 does not claim those display-change
+semantics qualified. Do not replay unrelated successful workflows. D-386 keeps dedicated runtime/
+Android accessibility after ready development, and provider/Mac/store/publication gates remain.

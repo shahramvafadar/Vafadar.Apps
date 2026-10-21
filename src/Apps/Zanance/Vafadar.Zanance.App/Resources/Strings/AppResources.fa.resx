@@ -8402,4 +8402,10 @@
   <data name="Aggregate_UndoNotice" xml:space="preserve">
     <value>واگرد مبلغ تجمیعی را برمی‌گرداند؛ تراکنش جزئی باقی می‌ماند.</value>
   </data>
+  <data name="Plan_FormLoading" xml:space="preserve">
+    <value>در حال بارگذاری فرم برنامه…</value>
+  </data>
+  <data name="Plan_SourceUnavailable" xml:space="preserve">
+    <value>برنامه، بدهی یا تراکنش اصلی دیگر در دسترس نیست. برنامهٔ تازه‌ای ساخته نشده است. فرم را دوباره بارگذاری کنید یا ببندید.</value>
+  </data>
 </root>

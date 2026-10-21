@@ -28,7 +28,7 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     private bool _workFailed;
     private bool _workRetired;
     private bool _loading = true;
-    private EntryAccountHandoff? _entryHandoff;
+    private IOriginalAccountHandoff? _originalAccountHandoff;
     private bool _presented = true;
     private long _presentationRevision;
     /// <summary>Retires this nested child's pending callbacks on departure without discarding an uncommitted raw form.</summary>
@@ -37,8 +37,8 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
         if (_presented != active) { _presented = active; _presentationRevision++; }
         RefreshAccess();
     }
-    private bool OwnsChild(long revision) => _entryHandoff is null
-        || _presented && revision == _presentationRevision && _entryHandoff.IsOwned;
+    private bool OwnsChild(long revision) => _originalAccountHandoff is null
+        || _presented && revision == _presentationRevision && _originalAccountHandoff.IsOwned;
 
     /// <summary>Creates the original form without starting database or native work.</summary>
     public AccountEditorViewModel(ZananceStore store, PlanStore plans, Translator translator, ILocalizationService localization, TimeProvider time, IAppInteraction interaction)
@@ -86,9 +86,9 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
         _reviewingWork = true; RefreshAccess();
         try
         {
-            _entryHandoff?.EnsureCurrent();
-            var next = _entryHandoff is { } child ? await _store.ReadEditorAccountWorkAsync(child.Source) : await _store.ReadEditorWorkAsync();
-            _entryHandoff?.EnsureCurrent();
+            _originalAccountHandoff?.EnsureCurrent();
+            var next = _originalAccountHandoff is { } child ? await child.ReadWorkAsync(_store) : await _store.ReadEditorWorkAsync();
+            _originalAccountHandoff?.EnsureCurrent();
             next.EnsureCurrent(); _work = next; _workFailed = false; _workRetired = false;
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
@@ -141,13 +141,15 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     public async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
-        if (query.TryGetValue("entryAccountHandoff", out var handoff))
+        var originalVisit = query.TryGetValue("originalAccountHandoff", out var handoff);
+        if (originalVisit || query.TryGetValue("entryAccountHandoff", out handoff))
         {
-            if (handoff is not EntryAccountHandoff visit || query.ContainsKey("id"))
+            if (handoff is not IOriginalAccountHandoff visit || query.ContainsKey("id")
+                || originalVisit && query.ContainsKey("entryAccountHandoff"))
                 throw new ArgumentException("The original nested account route is invalid.");
-            visit.EnsureCurrent(); _entryHandoff = visit;
+            visit.EnsureCurrent(); _originalAccountHandoff = visit;
         }
-        var settings = _entryHandoff?.Source.Inputs.Resources.Settings ?? (_entryHandoff is null ? await _store.GetSettingsAsync() : new ZananceSettings());
+        var settings = _originalAccountHandoff?.Settings ?? (_originalAccountHandoff is null ? await _store.GetSettingsAsync() : new ZananceSettings());
         Form.ShowAdvanced = settings.Shows(Feature.AccountOptions);
 
         if (query.TryGetValue("id", out var value) && value is Guid id
@@ -162,7 +164,7 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
         }
         else
         {
-            Form.CurrencyCode = settings.DefaultCurrencyCode;
+            Form.CurrencyCode = _originalAccountHandoff?.SuggestedCurrencyCode ?? settings.DefaultCurrencyCode;
             if (query.TryGetValue("debt", out var debt) && debt is true)
             {
                 Form.TypeIndex = (int)AccountType.Loan;
@@ -189,10 +191,10 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
         try
         {
             // Disable input before the account read, so another native Save cannot race validation.
-            _entryHandoff?.EnsureCurrent();
-            var accounts = _entryHandoff?.Source.Inputs.Resources.Accounts ?? await _store.GetAccountsAsync();
+            _originalAccountHandoff?.EnsureCurrent();
+            var accounts = _originalAccountHandoff?.Accounts ?? await _store.GetAccountsAsync();
             if (!Form.TryApply(target, _localization.CurrentCulture, accounts)) return;
-            if (_entryHandoff is { } child)
+            if (_originalAccountHandoff is { } child)
             {
                 await child.SaveAsync(_store, target, IsDefault, () => OwnsChild(presentation));
                 _account = target; _committed = true; _snapshot = Snapshot(); RefreshAccess();
@@ -203,7 +205,7 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
                 SaveError = Form.CurrencyLockText ?? _translator["Account_CurrencyLocked"];
                 return;
             }
-            if (_entryHandoff is null)
+            if (_originalAccountHandoff is null)
             {
                 _account = target; _committed = true; _snapshot = Snapshot(); RefreshAccess();
                 await UpdateDefaultAsync();
@@ -227,7 +229,7 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
         {
             if (!OwnsChild(presentation)) return;
             await _interaction.NavigateAsync("..");
-            if (_entryHandoff is null && !IsExisting && Form.IsDebtType)
+            if (_originalAccountHandoff is null && !IsExisting && Form.IsDebtType)
                 await _interaction.NavigateAsync(AppRoutes.AccountDetailRoute, new Dictionary<string, object> { ["id"] = _account.Id });
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)

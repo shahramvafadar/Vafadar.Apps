@@ -3965,12 +3965,27 @@ final package and scope in [workflow qualification](../../quality/entry-workflow
 Accepted account/seed/financial commands were not replayed. D-427 source/publication evidence remains
 the baseline; no full-suite replay or wider runtime/platform/provider acceptance is inferred.
 
-### Next complete original-plan workflow batch (D-429)
+### D-429 - Complete original plan/debt form ownership
 
-Complete original plan/debt/entry-draft form publication, explicit missing/read-only Retry, routed
-raw-owner lifetime and original-file Save/split/reminder ownership. The current editor reads its
-references separately, initializes settings for display and falls back from a missing requested plan
-to a new draft; its Save has no original-file/source capability. Correct these actual remaining gaps
-as one batch, preserving recurrence/history/financial invariants and prior focused validation/native
-evidence. Do not replay completed occurrence/settlement/holding/transaction workflows. D-386 keeps
-dedicated ANR/crash and Android accessibility after ready development; external gates remain separate.
+Complete original-file worker publication covers accounts/categories/settings/plan/overrides/payments
+and cached readiness without initializing settings. Missing sources cannot become new plans. Fresh
+query commands/raw fields, original transaction handoffs, nested account return and reminder/discard
+lifetimes prevent late work from borrowing another owner. Explicit readiness refresh preserves raw
+input; its temporary failure leaves complete fields editable with Save disabled. Missing debt payment
+accounts retain direction, unknown principal and currency. Original new/edit/split writers revalidate
+full inputs and read back saved semantic rows atomically. Open overrides count as history; exact
+future owner moves preserve recurrence and recorded money. Acceptance precedes observers and cannot
+rearm.27 focused new source behaviors, affected selective continuations and resource/native/build
+qualification are recorded in [original plan evidence](../../quality/plan-editor-ownership.md).
+No successful unrelated suite or accepted native action is replayed. D-386 and external gates stand.
+
+### Next complete monetary-draft context batch (D-430)
+
+Qualify and bind the plan form's raw amount and destination amount to their original parse culture,
+currency and display-unit context across display/account changes, nested return and readonly refresh.
+The current plan form still validates with CurrentCulture and ambient display units at Save, unlike
+the original-context goal/budget forms. Establish exact actual-source regressions before changing it;
+never reinterpret a dirty amount or silently relabel it as another currency/unit. Complete validation,
+explicit reentry/review behavior, original writer submission and actual native transfer/debt views as
+one delivery. Preserve D-429 source/ownership/history evidence rather than replaying its accepted
+account/plan actions. Dedicated runtime/accessibility remain after ready feature development.

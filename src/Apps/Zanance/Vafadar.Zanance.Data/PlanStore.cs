@@ -10,7 +10,7 @@ namespace Vafadar.Zanance.Data;
 /// Data access for plans and their occurrences (docs/02-domain-design.md §5–§7). Explicit links and occurrence
 /// corrections and new occurrence payments commit atomically. RepairSettlementsAsync retains legacy recovery.
 /// </summary>
-public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory, ZananceStore store,
+public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory, ZananceStore store,
     ICommercialWriteAccessSource commercialAccess)
 {
     /// <summary>Raised after plans or occurrence states were written.</summary>
@@ -114,12 +114,25 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     }
 
     /// <summary>Inserts or updates plans in one transaction.</summary>
-    public async Task SaveSchedulesAsync(IEnumerable<Schedule> schedules, CancellationToken cancellationToken = default)
+    public Task SaveSchedulesAsync(IEnumerable<Schedule> schedules, CancellationToken cancellationToken = default) =>
+        SaveSchedulesCoreAsync(schedules, cancellationToken);
+
+    private async Task SaveSchedulesCoreAsync(IEnumerable<Schedule> schedules, CancellationToken cancellationToken,
+        PlanEditorReadSnapshot? original = null, Func<bool>? isCurrent = null, Action? accepted = null)
     {
         ArgumentNullException.ThrowIfNull(schedules);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        void Current() => EnsureOriginalEditorOwner(original, db, isCurrent);
+        Current();
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: original is not null);
         var batch = schedules.ToList();
+        if (original is not null)
+        {
+            await ValidateEditorUnderContextAsync(original, db, cancellationToken);
+            if (batch.Count != 1 || original.Request.PlanId is null
+                && await db.Schedules.AsNoTracking().AnyAsync(s => s.Id == batch[0].Id, cancellationToken))
+                throw new InvalidOperationException("A new original plan cannot replace an existing identity.");
+        }
         await CheckCommercialSaveAsync(db, write, batch, null, cancellationToken);
         foreach (var schedule in batch)
         {
@@ -133,10 +146,12 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
             }
         }
 
-        write.EnsureCurrent();
+        Current(); write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        await ValidateSavedEditorRowsAsync(original, db, batch, null, cancellationToken);
+        Current(); write.EnsureCurrent();
         await write.CommitAsync(cancellationToken);
-
+        accepted?.Invoke();
         CommittedWriteNotification.Publish(OnChanged);
     }
 
@@ -154,15 +169,27 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
     /// moved, overridden or partly paid – is not a date of the new rule: moving it would orphan the record, and the new
     /// plan would post that period again.
     /// </returns>
-    public async Task<bool> SaveSplitAsync(Schedule previous, Schedule next, CancellationToken cancellationToken = default)
+    public Task<bool> SaveSplitAsync(Schedule previous, Schedule next, CancellationToken cancellationToken = default) =>
+        SaveSplitCoreAsync(previous, next, cancellationToken);
+
+    private async Task<bool> SaveSplitCoreAsync(Schedule previous, Schedule next, CancellationToken cancellationToken,
+        PlanEditorReadSnapshot? original = null, Func<bool>? isCurrent = null, Action? accepted = null)
     {
         ArgumentNullException.ThrowIfNull(previous);
         ArgumentNullException.ThrowIfNull(next);
         var from = next.ActiveFrom ?? next.Rule.Start;
 
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        void Current() => EnsureOriginalEditorOwner(original, db, isCurrent);
+        Current();
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        if (original is not null)
+        {
+            await ValidateEditorUnderContextAsync(original, db, cancellationToken);
+            if (await db.Schedules.AsNoTracking().AnyAsync(s => s.Id == next.Id, cancellationToken))
+                throw new InvalidOperationException("The original plan continuation identity is already stored.");
+        }
         var recorded = (await db.OccurrenceStates.Where(s => s.ScheduleId == previous.Id && s.OriginalDate >= from).Select(s => s.OriginalDate).ToListAsync(cancellationToken))
             .Concat(await db.Entries.Where(e => e.ScheduleId == previous.Id && e.OccurrenceDate >= from).Select(e => e.OccurrenceDate!.Value).ToListAsync(cancellationToken))
             .Distinct().ToList();
@@ -178,15 +205,17 @@ public sealed class PlanStore(IDbContextFactory<ZananceDbContext> contextFactory
         await CheckCommercialSaveAsync(db, write, [previous, next], previous.Id, cancellationToken);
         db.Schedules.Update(previous);
         db.Schedules.Add(next);
-        write.EnsureCurrent();
+        Current(); write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
 
         await db.OccurrenceStates.Where(s => s.ScheduleId == previous.Id && s.OriginalDate >= from)
             .ExecuteUpdateAsync(s => s.SetProperty(x => x.ScheduleId, next.Id), cancellationToken);
         await db.Entries.Where(e => e.ScheduleId == previous.Id && e.OccurrenceDate >= from)
             .ExecuteUpdateAsync(e => e.SetProperty(x => x.ScheduleId, next.Id), cancellationToken);
-        write.EnsureCurrent();
+        await ValidateSavedEditorRowsAsync(original, db, [previous, next], next, cancellationToken);
+        Current(); write.EnsureCurrent();
         await transaction.CommitAsync(cancellationToken);
+        accepted?.Invoke();
         CommittedWriteNotification.Publish(OnChanged);
         return true;
     }

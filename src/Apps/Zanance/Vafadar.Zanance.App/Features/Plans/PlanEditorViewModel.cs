@@ -57,8 +57,10 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
     public PlanEditorViewModel(ZananceStore store, PlanStore plans, Translator translator, ILocalizationService localization, IDateFormatter dates, TimeProvider time, ReminderService reminders, IAppInteraction interaction)
     {
         _interaction = interaction;
+        ResetFormCommands();
         PropertyChanged += (_, e) =>
         {
+            _publicationGuard?.Invoke();
             if (e.PropertyName is nameof(IsBusy) or nameof(ContractProvider) or nameof(ContractReference) or nameof(HasContractEnd)
                 or nameof(ContractEnd) or nameof(ContractRenews) or nameof(HasCancellationDeadline) or nameof(CancellationDeadline)
                 or nameof(HasReviewDate) or nameof(ReviewDate) or nameof(AutoPost)) RefreshAccess();
@@ -109,33 +111,42 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
     }
 
     /// <summary>Gets whether the original loaded, not-yet-committed draft can accept user input.</summary>
-    public bool CanInteract => _ready && !IsBusy && !_committed;
+    public bool CanInteract => _ready && FormVisible && !IsBusy && !_committed && _saveSession?.Accepted != true && _entryOrigin?.IsOwned != false;
     /// <summary>Gets whether an explicit Save may run; committed split continuations cannot be resubmitted.</summary>
-    public bool CanSave => CanInteract && !_reviewingWork && !_workFailed && !_workRetired && _work is not null && WorkRestriction is null;
+    public bool CanSave => CanInteract && !HasNoAccounts && !_reviewingWork && !_workFailed && !_workRetired && _work is not null && WorkRestriction is null;
     /// <summary>Gets whether a pending writer must finish before the form leaves.</summary>
     public bool CanLeave => !IsBusy;
     /// <summary>Gets the actual Close/Cancel caption after a successful write.</summary>
     public string CloseText => _translator[_committed ? "Common_Close" : "Common_Cancel"];
     private Core.Commerce.WorkRestriction? WorkRestriction => _work?.PlanRestriction(BuildWriteCandidate(BuildRule()).Target, _hasHistory ? _existing?.Id : null);
     /// <summary>Gets a captured reason before Save; no financial field validation or write occurs here.</summary>
-    public string? WorkText => _workFailed ? _translator["Editor_WorkReadFailed"]
-        : _workRetired ? _translator["Editor_WorkRetired"]
+    public string? WorkText => _workFailed ? _translator["Editor_WorkReadFailed"] : _workRetired ? _translator["Editor_WorkRetired"]
         : WorkRestriction is { } restriction ? Presentation.CommercialFailureMessage.Describe(restriction, _translator) : null;
     /// <summary>Gets whether the original availability can be explicitly refreshed without changing any draft.</summary>
-    public bool CanReviewWork => _ready && !IsBusy && !_committed && !_reviewingWork;
+    public bool CanReviewWork => CanInteract && !_reviewingWork;
     private async Task ReadWorkAsync()
     {
-        _reviewingWork = true; RefreshAccess();
+        if (!CanReviewWork || _loadSession is not { HasPublished: true } owner) return;
+        var epoch = _formEpoch;
+        bool Current() => epoch == _formEpoch && !_formDeparted && ReferenceEquals(owner, _loadSession) && _entryOrigin?.IsOwned != false;
+        _reviewingWork = true; ResetFormCommands(); RefreshAccess();
         try
         {
-            var next = await _plans.ReadEditorWorkAsync();
-            next.EnsureCurrent(); _work = next; _workFailed = false; _workRetired = false;
+            if (_saveSession is { } previous) await previous.WaitForIdleAsync();
+            var next = await owner.ReadAsync(reviewAccess: true);
+            if (!Current()) return;
+            next.EnsureCurrent(); owner.Publish(next);
+            _saveSession = new(_plans, next); _work = next.Inputs.Work; _workFailed = _workRetired = false;
         }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        { _work = null; _workFailed = true; }
-        finally { _reviewingWork = false; RefreshAccess(); }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            if (!Current()) return;
+            if (error is PlanEditorSourceChangedException or EntryEditorSourceChangedException)
+            { _originalSourceChanged = true; Loading = new(); await FailOriginalReadAsync(Loading, error); }
+            else { _work = null; _workFailed = true; }
+        }
+        finally { if (Current()) { _reviewingWork = false; ResetFormCommands(); PublishFormAvailability(); } }
     }
-    [RelayCommand(CanExecute = nameof(CanReviewWork))]
     private Task ReviewWorkAsync() => ReadWorkAsync();
 
     private void RefreshAccess()
@@ -143,6 +154,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
         OnPropertyChanged(nameof(WorkText)); OnPropertyChanged(nameof(CanReviewWork)); ReviewWorkCommand.NotifyCanExecuteChanged();
         OnPropertyChanged(nameof(CanLeave)); OnPropertyChanged(nameof(CanInteract)); OnPropertyChanged(nameof(CanSave)); OnPropertyChanged(nameof(CloseText));
         SaveCommand.NotifyCanExecuteChanged(); CancelCommand.NotifyCanExecuteChanged(); AddAccountCommand.NotifyCanExecuteChanged();
+        ToggleRuleOptionsCommand.NotifyCanExecuteChanged(); ToggleContractCommand.NotifyCanExecuteChanged(); SelectCategoryCommand.NotifyCanExecuteChanged();
     }
 
     public IReadOnlyList<string> KindNames { get; }
@@ -185,7 +197,6 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
     /// <summary>Gets the named calendar beside the first due date, including for one-off plans.</summary>
     public string RuleCalendarName => _translator[Calendars.NameKey(Calendar)];
 
-    [RelayCommand]
     private void ToggleRuleOptions() => ShowRuleOptions = !ShowRuleOptions;
 
     public IReadOnlyList<string> UnitNames { get; }
@@ -413,7 +424,6 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
     [ObservableProperty]
     public partial DateOnly ReviewDate { get; set; }
 
-    [CommunityToolkit.Mvvm.Input.RelayCommand]
     private void ToggleContract() => ShowContract = !ShowContract;
 
     [ObservableProperty]
@@ -451,7 +461,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
 
     public bool ShowPastChoice => _existing is null && Start < Today;
 
-    public bool IsDirty => Snapshot() != _snapshot;
+    public bool IsDirty => _hasPublishedForm && Snapshot() != _snapshot;
 
     private EntryKind Kind => Kinds[Math.Clamp(KindIndex, 0, Kinds.Length - 1)];
 
@@ -477,130 +487,8 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
         _ => 1,
     };
 
-    /// <summary>Query: <c>id</c> of an existing plan.</summary>
-    /// <summary>Loads the actual draft through the native page adapter without a write or route transition.</summary>
-    public async Task ApplyQueryAsync(IDictionary<string, object> query)
-    {
-        ArgumentNullException.ThrowIfNull(query);
-        _ready = false; RefreshAccess();
-        _loading = true;
-        try
-        {
-            var accounts = await _store.GetAccountsAsync();
-            _accounts = accounts.ToDictionary(a => a.Id);
-            _categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
-            Accounts = [.. accounts.Where(a => !a.IsArchived).Select(a => new AccountChoice(a.Id, a.Name, a.CurrencyCode))];
-            HasNoAccounts = Accounts.Count == 0;
-            var settings = await _store.GetSettingsAsync();
-            IsAdvanced = settings.Shows(Feature.PlanRules);
-            ShowReminderOnDueDate = IsAdvanced;
-            ShowContractCard = IsAdvanced;
-
-            if (query.TryGetValue("id", out var value) && value is Guid id && await _plans.GetScheduleAsync(id) is { } schedule)
-            {
-                _existing = schedule;
-                _hasHistory = await _plans.HasHistoryAsync(id);
-                Title = _translator["Plan_EditTitle"];
-                Load(schedule);
-                var states = await _plans.GetStatesAsync(id);
-                ApplyFrom = Occurrences.NextOpen(schedule, states, Today, Today)?.OriginalDate ?? Today;
-            }
-            else if (query.TryGetValue("fromDebt", out var debtValue) && debtValue is Guid debtId
-                && _accounts.GetValueOrDefault(debtId) is { } debt && debt.Type.IsDebt())
-            {
-                // The date and reminder are reviewed here; opening this draft never saves a plan or a payment.
-                var money = accounts.FirstOrDefault(a => !a.IsArchived && a.Type.CanBeDefault() && a.CurrencyCode == debt.CurrencyCode
-                    && a.Id == settings.DefaultAccountId)
-                    ?? accounts.FirstOrDefault(a => !a.IsArchived && a.Type.CanBeDefault() && a.CurrencyCode == debt.CurrencyCode);
-                if (money is not null)
-                {
-                    Load(DebtSetup.Reminder(debt, money.Id, debt.DueDate ?? Today.AddMonths(1), Calendars.ToPeriod(_localization.CurrentCalendar)));
-                    CanChangeKind = false;
-                }
-                else
-                {
-                    HasNoAccounts = true;
-                    Account = null;
-                }
-            }
-            else if (query.TryGetValue("entryDraft", out var draftValue) && draftValue is EntryPlanDraft draft)
-            {
-                // D-111: a new unpaid transaction draft starts on its selected date, not one month after it.
-                var source = _accounts.GetValueOrDefault(draft.AccountId);
-                var destination = draft.ToAccountId is { } destinationId ? _accounts.GetValueOrDefault(destinationId) : null;
-                if (source is null || source.IsArchived || source.CurrencyCode != draft.CurrencyCode
-                    || (draft.Kind == EntryKind.Transfer && (destination is null || destination.IsArchived
-                        || destination.CurrencyCode != draft.ToCurrencyCode)))
-                {
-                    Account = null;
-                    ToAccount = null;
-                    AmountText = ToAmountText = string.Empty;
-                    Name = draft.Name;
-                    Start = draft.Date;
-                    SaveError = _translator["Plan_EntryDraftUnavailable"];
-                }
-                else
-                {
-                    Load(draft.CreateSchedule(Calendars.ToPeriod(_localization.CurrentCalendar)));
-                    ReminderDaysText = settings.ReminderDaysBefore.ToString(CultureInfo.InvariantCulture);
-                    ReminderTime = settings.ReminderTime.ToTimeSpan();
-                }
-            }
-            else if (query.TryGetValue("fromEntry", out var entryValue) && entryValue is Guid entryId && await _store.GetEntryAsync(entryId) is { } entry)
-            {
-                // A plan from an existing entry (TX-04): same values, first due date one month later.
-                CanChangeKind = true;
-                KindIndex = Math.Max(0, Array.IndexOf(Kinds, entry.Kind));
-                Name = entry.Title ?? _categories.Name(entry.CategoryId);
-                Accounts = EnsureChoice(Accounts, entry.AccountId);
-                Account = Accounts.FirstOrDefault(a => a.Id == entry.AccountId);
-                ToAccount = entry.ToAccountId is { } to ? Accounts.FirstOrDefault(a => a.Id == to) : Accounts.FirstOrDefault(a => a.Id != entry.AccountId);
-                AmountText = MoneyText.ForInput(entry.Amount, CurrencyOf(entry.AccountId), _localization.CurrentCulture);
-                PresetIndex = 3;
-                Start = entry.Date.AddMonths(1);
-                Note = entry.Note ?? string.Empty;
-                BuildCategories(entry.CategoryId);
-            }
-            else
-            {
-                CanChangeKind = true;
-                Account = Accounts.FirstOrDefault(a => a.Id == settings.DefaultAccountId) ?? Accounts.FirstOrDefault();
-                ToAccount = Accounts.FirstOrDefault(a => a.Id != Account?.Id);
-                ReminderDaysText = settings.ReminderDaysBefore.ToString(CultureInfo.InvariantCulture);
-                ReminderTime = settings.ReminderTime.ToTimeSpan();
-                BuildCategories(null);
-            }
-        }
-        finally
-        {
-            _loading = false; RefreshAccess();
-        }
-
-        // The explicit repayment-reminder action needs the same contextual permission check as the toggle.
-        if (query.ContainsKey("fromDebt") && ReminderEnabled)
-        {
-            if (!_reminders.Scheduler.IsSupported)
-            {
-                ReminderNote = _translator["Reminder_NotOnThisDevice"];
-            }
-            else if (!await _reminders.EnsurePermissionAsync())
-            {
-                ReminderNote = _translator["Reminder_PermissionDenied"];
-            }
-        }
-
-        ShowApplyFrom = _existing is not null && _hasHistory;
-
-        // Common and custom dates are available in either experience mode; complexity is local to the form (D-65).
-        PresetNames = _allPresets;
-        ShowRuleOptions = _existing is not null && (_existing.Rule.DayRule != MonthDayRule.SpecificDay
-            || _existing.Rule.SecondDay is not null || _existing.Rule.WeekendShift != WeekendShift.None
-            || _existing.Rule.MissingDay != MissingDayPolicy.LastValidDay);
-        Update();
-        await ReadWorkAsync();
-        _snapshot = Snapshot(); _ready = true; RefreshAccess();
-        query.Clear();
-    }
+    /// <summary>Loads one complete original plan/debt/entry route without a write or native transition.</summary>
+    public Task ApplyQueryAsync(IDictionary<string, object> query) => ApplyOriginalQueryAsync(query);
 
     private void Load(Schedule schedule)
     {
@@ -737,22 +625,37 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
         }
     }
 
-    // Permission is asked for only when the user turns a reminder on (REM-03); without it the plan still works.
+    // An explicit reminder toggle owns its native permission response; old queries/departed forms cannot receive it.
+    private long _reminderRevision;
     async partial void OnReminderEnabledChanged(bool value)
     {
+        var revision = ++_reminderRevision;
+        if (_loading || !_hasPublishedForm || _formDeparted) return;
         ReminderNote = null;
-        if (!value || _loading)
+        if (value) await GuardOriginalReminderAsync(revision);
+    }
+    private async Task GuardOriginalReminderAsync(long revision)
+    {
+        var epoch = _formEpoch; var owner = _loadSession;
+        try { await CheckOriginalReminderAsync(revision); }
+        catch (Exception error) when (error is not OutOfMemoryException)
         {
-            return;
+            if (epoch == _formEpoch && !_formDeparted && ReferenceEquals(owner, _loadSession) && revision == _reminderRevision)
+                await _interaction.ShowFailureAsync(error);
         }
-
-        if (!_reminders.Scheduler.IsSupported)
+    }
+    private async Task CheckOriginalReminderAsync(long revision)
+    {
+        var epoch = _formEpoch; var owner = _loadSession;
+        bool Current() => epoch == _formEpoch && !_formDeparted && ReferenceEquals(owner, _loadSession)
+            && revision == _reminderRevision && ReminderEnabled && _entryOrigin?.IsOwned != false;
+        if (owner is null || !Current()) return;
+        await owner.ValidateAsync(); if (!Current()) return;
+        if (!_reminders.Scheduler.IsSupported) ReminderNote = _translator["Reminder_NotOnThisDevice"];
+        else
         {
-            ReminderNote = _translator["Reminder_NotOnThisDevice"];
-        }
-        else if (!await _reminders.EnsurePermissionAsync())
-        {
-            ReminderNote = _translator["Reminder_PermissionDenied"];
+            var allowed = await _reminders.EnsurePermissionAsync();
+            if (Current() && !allowed) ReminderNote = _translator["Reminder_PermissionDenied"];
         }
     }
 
@@ -868,7 +771,6 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
         SelectedCategory = Categories.FirstOrDefault(c => c.Id == selectedId);
     }
 
-    [RelayCommand]
     private void SelectCategory(PlanCategoryChoice choice)
     {
         foreach (var category in Categories)
@@ -881,7 +783,14 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
     private (Schedule? Previous, Schedule Target) BuildWriteCandidate(RecurrenceRule rule)
     {
         var previous = _existing?.CopyForEditing();
-        var target = previous is not null && _hasHistory ? PlanActions.SplitFrom(previous, ApplyFrom) : previous ?? new Schedule { Name = Name.Trim() };
+        Schedule target;
+        if (previous is not null && _hasHistory)
+        {
+            var next = PlanActions.SplitFrom(previous, ApplyFrom);
+            // Retain one distinct continuation identity across uncommitted retries without changing entity identity rules.
+            _splitDraft ??= next.CopyForEditing(); target = _splitDraft.CopyForEditing(); target.ActiveFrom = next.ActiveFrom;
+        }
+        else target = previous ?? _draftIdentity.CopyForEditing();
         target.Name = Name.Trim();
         target.Kind = Kind;
         target.AccountId = Account?.Id ?? Guid.Empty;
@@ -921,7 +830,6 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
         return (previous, target);
     }
 
-    [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
         if (!CanSave) return;
@@ -954,66 +862,98 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
         var amount = validation.Amount;
         var toAmount = validation.DestinationAmount;
 
-        var saved = false;
-        IsBusy = true;
+        var session = _saveSession; var owner = _loadSession;
+        if (session is null || owner is null) return;
+        var epoch = _formEpoch; var raw = Snapshot();
+        bool Current() => epoch == _formEpoch && !_formDeparted && ReferenceEquals(owner, _loadSession)
+            && ReferenceEquals(session, _saveSession) && _entryOrigin?.IsOwned != false;
+        var (previous, target) = BuildWriteCandidate(rule); target.Amount = amount; target.ToAmount = toAmount;
+        var saved = false; IsBusy = true;
         try
         {
-            var (previous, target) = BuildWriteCandidate(rule);
-            target.Amount = amount; target.ToAmount = toAmount;
-
-            if (_existing is not null && _hasHistory)
-            {
-                if (!await _plans.SaveSplitAsync(previous!, target))
-                {
-                    // Recorded occurrences after the change date do not fit the new dates (e.g. another day of the month).
-                    SaveError = _translator["Plan_SplitConflict"];
-                    return;
-                }
-            }
-            else
-            {
-                await _plans.SaveScheduleAsync(target);
-            }
-
-            _snapshot = Snapshot(); _committed = true; RefreshAccess();
-            saved = true;
-        }
-        catch (CommittedWriteNotificationException)
-        {
-            _committed = true; _snapshot = Snapshot(); RefreshAccess();
-            SaveError = _translator["Plan_SavedNeedsReview"];
+            await owner.ValidateAsync();
+            if (!Current() || raw != Snapshot()) return;
+            if (!await session.SaveAsync(_hasHistory ? previous : null, target, () => Current() && raw == Snapshot()))
+            { if (Current()) SaveError = _translator["Plan_SplitConflict"]; return; }
+            if (!Current()) return;
+            saved = session.Accepted; _committed = saved; _snapshot = Snapshot(); RefreshAccess();
+            if (session.NotificationFailed) { SaveError = _translator["Plan_SavedNeedsReview"]; return; }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            if (exception is CommercialWriteRejectedException) { _workRetired = true; RefreshAccess(); }
-            SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Common_SaveFailed", draftKept: true);
+            if (!Current()) return;
+            if (session.Accepted)
+            { _committed = true; _snapshot = Snapshot(); SaveError = _translator["Plan_SavedNeedsReview"]; RefreshAccess(); return; }
+            if (exception is PlanEditorAccessChangedException)
+            {
+                // Explain current denial without silently granting a new writer to the old raw form.
+                try
+                {
+                    var review = await _plans.RefreshEditorSnapshotAsync(session.Source);
+                    if (!Current()) return;
+                    var reason = review.Inputs.Work.PlanRestriction(target, _hasHistory ? _existing?.Id : null);
+                    _workRetired = true;
+                    SaveError = reason is null ? _translator["Editor_WorkRetired"] : CommercialFailureMessage.Describe(reason, _translator);
+                }
+                catch (Exception error) when (error is not OutOfMemoryException)
+                {
+                    if (!Current()) return;
+                    if (error is PlanEditorSourceChangedException or EntryEditorSourceChangedException)
+                    { _originalSourceChanged = true; owner.Retire(); Loading = new(); await FailOriginalReadAsync(Loading, error); }
+                    else { _work = null; _workFailed = true; SaveError = _translator["Editor_WorkReadFailed"]; }
+                }
+                RefreshAccess();
+            }
+            else if (exception is PlanEditorSourceChangedException or EntryEditorSourceChangedException)
+            {
+                _originalSourceChanged = true; owner.Retire(); Loading = new(); await FailOriginalReadAsync(Loading, exception);
+            }
+            else
+            {
+                if (exception is CommercialWriteRejectedException) { _workRetired = true; RefreshAccess(); }
+                SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Common_SaveFailed", draftKept: true);
+            }
         }
-        finally
-        {
-            IsBusy = false;
-        }
-
-        // Leaving the page is not part of saving: a navigation problem must not say "not saved".
-        if (saved)
+        finally { if (Current()) { IsBusy = false; PublishFormAvailability(); } }
+        // A return belongs to the same accepted form. It cannot close a new routed query after an await.
+        if (saved && Current())
         {
             try { await _interaction.NavigateAsync(".."); }
             catch (Exception exception) when (exception is not OutOfMemoryException)
-            { SaveError = _translator["Editor_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); }
+            { if (Current()) { SaveError = _translator["Editor_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); } }
         }
     }
 
-    [RelayCommand(CanExecute = nameof(CanLeave))]
     private async Task CancelAsync()
     {
-        if (!_ready || _committed || !IsDirty || await ConfirmDiscardAsync())
+        var epoch = _formEpoch; var source = _loadSession; var raw = Snapshot();
+        if (_committed || !IsDirty || await ConfirmDiscardAsync())
         {
+            if (epoch != _formEpoch || _formDeparted || !ReferenceEquals(source, _loadSession) || raw != Snapshot()) return;
             try { await _interaction.NavigateAsync(".."); }
             catch (Exception exception) when (exception is not OutOfMemoryException) { await _interaction.ShowFailureAsync(exception); }
         }
     }
 
-    [RelayCommand(CanExecute = nameof(CanInteract))]
-    private Task AddAccountAsync() => _interaction.NavigateAsync($"../{AppRoutes.AccountEditorRoute}");
+    private async Task AddAccountAsync()
+    {
+        if (!CanInteract || !HasNoAccounts || _loadSession is not { } owner) return;
+        var epoch = _formEpoch;
+        try
+        {
+            await owner.ValidateAsync();
+            if (epoch != _formEpoch || _formDeparted || !ReferenceEquals(owner, _loadSession) || owner.Review is not { } source) return;
+            PlanAccountHandoff? visit = null;
+            visit = new(_plans, source, () => ReferenceEquals(owner, _loadSession) && ReferenceEquals(_accountVisit, visit));
+            _accountVisit = visit;
+            await _interaction.NavigateAsync(AppRoutes.AccountEditorRoute, new Dictionary<string, object> { ["originalAccountHandoff"] = visit });
+        }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            if (epoch == _formEpoch && !_formDeparted && ReferenceEquals(owner, _loadSession))
+            { owner.Retire(); Loading = new(); await FailOriginalReadAsync(Loading, error); }
+        }
+    }
 
     public Task<bool> ConfirmDiscardAsync() => _interaction.ConfirmAsync(
         _translator["Common_DiscardTitle"], _translator["Common_DiscardMessage"], _translator["Common_Discard"], _translator["Common_KeepEditing"]);

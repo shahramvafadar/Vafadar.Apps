@@ -1104,3 +1104,12 @@ original-file Undo receipt. Adjustment Undo restores aggregates and keeps the de
 default creation remains explicit and atomic; no display read initializes settings. Retained receipt
 bytes stay pending until the existing confirmed attachment path. No SDK, permission, network channel,
 credential or public provider is added. General release/external gates remain open.
+
+## D-429 - Original plan form and explicit nested account
+
+Read-only preparation uses existing profile-local accounts/categories/settings/plans/overrides and
+recorded payments; it never initializes settings. Only explicit account/default or plan Save writes
+existing data fields. Transaction-to-plan source capabilities and raw/view ownership are in-memory,
+not portable preferences or credentials. Historical splits retain monetary facts and only move exact
+future owners through the existing schema. No new permission, SDK, provider, analytics, network
+channel, export format or background retention is introduced. External acceptance remains open.

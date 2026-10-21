@@ -1,15 +1,23 @@
 using Vafadar.Zanance.Core.Accounts;
+using Vafadar.Zanance.Core.Settings;
+using Vafadar.Zanance.App.Features.Accounts;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.App.Features.Entries;
 
 /// <summary>One retained parent draft's explicit account child; accepted metadata never becomes a second account Save.</summary>
-public sealed class EntryAccountHandoff(EntryEditorReadSnapshot source, Func<bool> current)
+public sealed class EntryAccountHandoff(EntryEditorReadSnapshot source, Func<bool> current) : IOriginalAccountHandoff
 {
     private TaskCompletionSource? _idle;
     /// <summary>Gets the original immutable parent packet, independent of a subsequently selected profile.</summary>
     public EntryEditorReadSnapshot Source { get; } = source;
+    /// <inheritdoc />
+    public IReadOnlyList<Account> Accounts => Source.Inputs.Resources.Accounts;
+    /// <inheritdoc />
+    public ZananceSettings? Settings => Source.Inputs.Resources.Settings;
+    /// <inheritdoc />
+    public Task<EditorWorkReview> ReadWorkAsync(ZananceStore store) => store.ReadEditorAccountWorkAsync(Source);
     /// <summary>Gets the known committed replacement reference packet; raw parent inputs are never replaced.</summary>
     public EntryEditorReadSnapshot? Accepted { get; private set; }
     /// <summary>Gets the explicitly created account identity after its actual commit.</summary>

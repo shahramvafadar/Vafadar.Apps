@@ -27,7 +27,7 @@ The Windows Debug build also reads these environment variables (Debug builds onl
 |---|---|
 | `VAFADAR_START_ROUTE` | Opens a screen after the start, e.g. `//insights/budget` or `//plans;plan` (steps separated by `;`); the app stays open |
 | `VAFADAR_WINDOW_SIZE` | The window size for the start route or the snapshots, e.g. `1280x820` (default `412x892`, a phone) |
-| `VAFADAR_CAPTURE_WINDOW` | With `VAFADAR_START_ROUTE`: saves the whole window – title, navigation and page – as a PNG to this path, rendered by the app itself, so it also works while other windows cover the app; open dialogs are saved next to it (`<file>-popup1.png`, ...) |
+| `VAFADAR_CAPTURE_WINDOW` | With `VAFADAR_START_ROUTE`: saves the whole window â€“ title, navigation and page â€“ as a PNG to this path, rendered by the app itself, so it also works while other windows cover the app; open dialogs are saved next to it (`<file>-popup1.png`, ...) |
 | `VAFADAR_CAPTURE_DELAY` | Seconds before that capture (default 2), e.g. to open a dialog with UI Automation first |
 
 ### Installing on an Android phone without Visual Studio
@@ -39,15 +39,15 @@ ordinary Debug/Fast Deployment artifact. APK creation and signature verification
 physical-device acceptance; the owner installs and tests the supplied file.
 
 The APK in `bin/Debug/net10.0-android` is made for **Fast Deployment**: Visual Studio copies the app's assemblies to the
-device separately, so that APK alone stops at start (logcat: *No assemblies found … Fast Deployment*). For a phone or
+device separately, so that APK alone stops at start (logcat: *No assemblies found â€¦ Fast Deployment*). For a phone or
 for testers, build a complete APK with `eng/scripts/Build-AndroidApk.ps1` (Release by default, signed with the local
 debug key) and install `artifacts/android/pro.vafadar.zanance-Signed.apk`. Android blocks screenshots of the app on purpose
 (`FLAG_SECURE`, D-23); use the accessibility tree (`adb shell uiautomator dump`) to check screens on an emulator.
 
 **Visual Studio open at the same time:** it restores the solution in the background for all target frameworks, which can
 overwrite the restore of a command-line build for one framework. The build then stops with `NETSDK1005` (*assets file
-doesn't have a target for 'net10.0-android'*) or `APT2126` (*file not found*). Run the command again – it restores
-first – or close the solution in Visual Studio while building from the command line.
+doesn't have a target for 'net10.0-android'*) or `APT2126` (*file not found*). Run the command again â€“ it restores
+first â€“ or close the solution in Visual Studio while building from the command line.
 
 ## Target frameworks
 
@@ -60,7 +60,7 @@ first – or close the solution in Visual Studio while building from the command
   | macOS | `net10.0-android`, `net10.0-ios` |
   | Linux | `net10.0-android` |
 
-  Passing `-p:VafadarMauiTargetFrameworks=...` on the command line overrides this for all projects – useful for
+  Passing `-p:VafadarMauiTargetFrameworks=...` on the command line overrides this for all projects â€“ useful for
   faster local builds and used by CI.
 
 ## Warnings
@@ -82,8 +82,8 @@ during the build.
 
 Other workflows:
 
-* `codeql.yml` – security analysis of C# and workflow files (weekly and on changes).
-* `release-android.yml` – manual: builds a signed `.aab` for Google Play (see [release guide](release-and-publishing.md)).
+* `codeql.yml` â€“ security analysis of C# and workflow files (weekly and on changes).
+* `release-android.yml` â€“ manual: builds a signed `.aab` for Google Play (see [release guide](release-and-publishing.md)).
 * Dependabot (`.github/dependabot.yml`) opens weekly update pull requests for NuGet packages, the SDK and actions.
 
 ### First-run snapshot coverage (D-62)
@@ -725,7 +725,7 @@ for Shell reconstruction before changing languages. Keep native app-window captu
 owned rows/bytes. Android final signed Release checks the real share sheet without choosing recipients;
 this is emulator/local test-certificate evidence, not phone, provider or production acceptance.
 
-### D-222 — Cover the first window while preparing storage off its thread
+### D-222 â€” Cover the first window while preparing storage off its thread
 
 CreateWindow now constructs only a non-financial StartupPage. OnStart runs the actual migration and
 initial settings/display-unit persistence through a worker before creating financial content and
@@ -1992,3 +1992,25 @@ The independent Android entry-workflow phase compiles production pages in Releas
 fresh fictitious files. Read the original process report; retain accepted action checkpoints before
 fallible observers. It never authorizes ordinary-installation financial writes or system changes.
 See the D-428 quality record for exact original runs and final package evidence.
+
+## D-429 - Original plan form qualification
+
+Run-StoreDrafts.ps1 -PlanEditorReview uses a fresh independent installation on its non-input desktop.
+Its actual production pages invoke one account Save, one new plan Save and one historical split Save;
+fictional payment history is seeded once and exact typed rows are retained before fallible observers.
+-PlanEditorSourceRun <original32hex> continues only an exited original process with actions-complete
+and unchanged full typed rows. It never replays account/financial acceptance; completed contexts and
+initial loading/Retry observations stay retained. The independent Android plan-form phase compiles
+these same production pages in Release/AOT. Keep the exact run/pass/PID and public report receipts.
+Timeout is an observation bound, never permission to restart/reseed/repeat accepted work.
+
+-PlanEditorCaptionsOnly rereads only changed loading/Retry/missing captions against the exact original
+completed-action file. -PlanEditorArchivedOnly checks one original archived reference after an explicit
+fictitious metadata boundary. Neither replays native account/plan acceptance. Android explicit empty
+continuation compares the original prepared rows and refuses an accepted account; completed-action
+continuation compares its exact actions-complete rows, skips completed readonly contexts and never
+replays their accepted writes. Preserve failed intentions and public reports. Wait for the actual
+owned page focus across a system dialog; do not declare such a dialog a product raw-field mismatch.
+D-429 packaging may use process-local UseArtifactsOutput/ArtifactsPath with the existing APK script
+to place intermediates on a spacious task-owned drive. Restore those environment values afterwards.
+Keep the final complete signed candidate in its recorded project-owned artifact folder.

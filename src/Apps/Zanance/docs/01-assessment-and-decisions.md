@@ -7866,3 +7866,20 @@ Transient truthful adjustment notices are reachable on Home and Transactions wit
 Original Windows/Android actions, negative observations, final APK and exact acceptance limits are
 recorded in [the workflow evidence](quality/entry-workflow-ownership.md). No schema/model/portable
 format, permission or provider change. D-386 and external gates stand.
+
+## D-429 - Complete original plan/debt/transaction-draft ownership
+
+The complete editor reads original references, settings, schedule, overrides and recorded payments
+through one actual-file worker transaction. Display reads never create settings; explicit missing
+sources cannot become a new plan. Query-bound commands, raw snapshots, reminders and discard replies
+retire with their original owner. Explicit readiness renewal requires unchanged original inputs and
+retains the raw draft. A temporary readiness failure keeps the complete form visible/editable with
+Save disabled. A nested account visit uses the original writer and known reference packet; an
+unavailable debt payment account stays explicit until a matching money account is created.
+
+Original new/edit/split writers validate the full reviewed source and read back saved semantic fields
+under one transaction. Any stored occurrence, including an Open override, requires a historical split.
+The original recurrence anchor, saved payment amounts and occurrence facts remain intact. Acceptance
+precedes fallible notifications, so a saved form cannot rearm. No schema/model/compiled-model, portable
+format, permission, provider or SDK change. Focused source/native/build evidence and limitations:
+[original plan editor qualification](quality/plan-editor-ownership.md).

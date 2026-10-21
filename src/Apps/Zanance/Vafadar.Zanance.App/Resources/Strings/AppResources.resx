@@ -8433,4 +8433,10 @@ Original XML SHA-256: {5}</value>
   <data name="Aggregate_UndoNotice" xml:space="preserve">
     <value>Undo restores the aggregate; the new detail remains.</value>
   </data>
+  <data name="Plan_FormLoading" xml:space="preserve">
+    <value>Loading plan form…</value>
+  </data>
+  <data name="Plan_SourceUnavailable" xml:space="preserve">
+    <value>The original plan, debt or transaction is no longer available. No new plan was created. Load again or close the form.</value>
+  </data>
 </root>

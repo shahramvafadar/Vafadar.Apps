@@ -8402,4 +8402,10 @@ Original-XML SHA-256: {5}</value>
   <data name="Aggregate_UndoNotice" xml:space="preserve">
     <value>Rückgängig stellt die Sammelbuchung wieder her; die Einzelbuchung bleibt.</value>
   </data>
+  <data name="Plan_FormLoading" xml:space="preserve">
+    <value>Planungsformular wird geladen…</value>
+  </data>
+  <data name="Plan_SourceUnavailable" xml:space="preserve">
+    <value>Die ursprüngliche Planung, Schuld oder Buchung ist nicht mehr verfügbar. Es wurde keine neue Planung erstellt. Laden Sie das Formular erneut oder schließen Sie es.</value>
+  </data>
 </root>

@@ -44,6 +44,15 @@ internal static partial class AndroidHomeReview
                 await Task.Run(() => PrepareAsync(root, ct, unreviewed: phase == "prepare-unreviewed", resumeUnreviewed), ct);
                 await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, UnreviewedCorpus = phase == "prepare-unreviewed", NativeOverflowRefusals = phase == "prepare-unreviewed" ? CheckUnreviewedOverflow() : 0, CoreModuleVersionId = typeof(LedgerCalculator).Module.ModuleVersionId, MainPackageTouched = false, Device = DeviceEvidence() }, ct);
             }
+            else if (phase == "plan-form")
+            {
+                Directory.CreateDirectory(root);
+                var resumeEmpty = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_resume_empty", false) == true;
+                var resumeActions = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_resume_actions", false) == true;
+                if (resumeEmpty && resumeActions || RedirectedAncestors(root).Length != 0 || !resumeEmpty && !resumeActions && Directory.EnumerateFileSystemEntries(root).Any())
+                    throw new ReviewCheckException("Fresh original plan fixture required.");
+                await WriteReportAsync(root, phase, await ReviewPlanEditorAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "entry-workflow")
             {
                 Directory.CreateDirectory(root);
@@ -775,7 +784,7 @@ internal static partial class AndroidHomeReview
                                 || vm.HasRecent != (expectedRecent.Length > 0)
                                 || vm.RecentEntries.Where((row, index) => row.Title != recentPackets[index].Title
                                     || row.AmountText != recentPackets[index].AmountText || row.IsUnreviewed != recentPackets[index].IsUnreviewed
-                                    || !row.Subtitle.EndsWith(" · " + recentPackets[index].Subtitle, StringComparison.Ordinal)).Any())
+                                    || !row.Subtitle.EndsWith(" Â· " + recentPackets[index].Subtitle, StringComparison.Ordinal)).Any())
                                 throw new ReviewCheckException("Original recent entry identities or formatted packets differ.");
                             var presentation = CapturePresentation(vm);
                             var originalPath = Path.Combine(folder, "presentation-" + baseline + "-" + language + ".json");

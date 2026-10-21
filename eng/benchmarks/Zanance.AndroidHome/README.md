@@ -712,3 +712,20 @@ dialog body/actions and presentation-only status notices. The compiled package r
 normal startup and every fixture have separate files. Preserve original run/pass/PID and accepted
 metadata/financial receipts. Never rerun accepted actions after a partial report. This is not general
 ANR/crash/accessibility, physical-device, iOS, provider or release acceptance.
+
+## D-429 - Complete original plan form
+
+The independent plan-form phase owns one fresh original private file. Actual production pages create
+one account and one plan, then split the historical plan once through a deliberate postcommit
+notification refusal. Fictional history is seeded once; every original payment amount/field and
+exact future owner cut are compared. Six en/fa/de light/dark contexts exercise covered reads, native
+Retry, raw readiness failure/review and unavailable query ownership without another financial Save.
+Read only its original run/pass/PID public reports. No ordinary-installation write or OS change is
+authorized; preserve failures and never replay accepted actions to repair an observer.
+
+Explicit review_plan_resume_empty continues only exact prepared rows with no accepted account; any
+prior failed intention is preserved. review_plan_resume_actions instead requires exact original
+actions-complete rows and skips account/plan writers and already completed readonly observations.
+The flags are mutually exclusive. Native observation waits for its own actual window focus across
+a system dialog; it never dispatches a command into a different foreground owner. Retain original
+run/pass/PID reports and known accepted rows; a timeout never authorizes an accepted write replay.

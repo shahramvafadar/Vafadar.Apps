@@ -3186,3 +3186,19 @@ Consume financial/Undo acceptance before notification. Full monetary review belo
 dialog body with short actions. Home/Transactions show the actual adjustment meaning only for the
 original remaining deadline. Preserve original fixtures/accepted actions; no observer repair replay.
 Retain D-386 priorities and external gates.
+
+## D-429 - Complete original plan and debt drafts
+
+Publish the original account/category/settings/plan/state/payment facts from one actual-file worker
+read transaction without initializing settings. Missing explicit sources remain unavailable. A fresh
+query owns fresh raw fields and commands; ordinary refresh retains raw input. Readiness failure
+keeps complete fields editable while Save is disabled; explicit same-input review may renew cached
+rights, never silently replace the original source. Original transaction-to-plan handoffs retire
+with their parent. Nested account return adopts only its known accepted packet; debt payment needs
+an active money account in the original currency, without guessing conversion or principal.
+Revalidate original facts under the financial writer, including Open overrides as history. A split
+retains its original recurrence anchor and moves only exact future payment/state owners, never
+recorded money. Consume acceptance before notification; failed observers leave a clean Close-only
+saved form. Retire reminder/confirmation callbacks with the original frame. Preserve accepted native
+actions and source checkpoints; continue failed observations without another account/plan Save.
+D-386 runtime/accessibility order and external acceptance gates remain unchanged.

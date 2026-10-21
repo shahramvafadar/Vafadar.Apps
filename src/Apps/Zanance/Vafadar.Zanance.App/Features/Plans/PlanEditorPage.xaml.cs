@@ -19,6 +19,7 @@ public partial class PlanEditorPage : ContentPage, IQueryAttributable
         _observingValidation = true;
         _viewModel.ValidationFailed -= OnValidationFailed;
         _viewModel.ValidationFailed += OnValidationFailed;
+        _ = Presentation.Failures.GuardAsync(_viewModel.ResumeFormAsync);
     }
 
     /// <summary>Stops scroll requests when this form leaves the visible navigation lifetime.</summary>
@@ -27,6 +28,7 @@ public partial class PlanEditorPage : ContentPage, IQueryAttributable
         _viewModel.ValidationFailed -= OnValidationFailed;
         _observingValidation = false;
         _validationVersion++;
+        _viewModel.RetireForm();
         base.OnDisappearing();
     }
 
@@ -104,18 +106,8 @@ public partial class PlanEditorPage : ContentPage, IQueryAttributable
     protected override bool OnBackButtonPressed()
     {
         if (!_viewModel.CanLeave) return true;
-        if (!_viewModel.IsDirty)
-        {
-            return base.OnBackButtonPressed();
-        }
-
-        Dispatcher.Dispatch(async () =>
-        {
-            if (await _viewModel.ConfirmDiscardAsync())
-            {
-                await Shell.Current.GoToAsync("..");
-            }
-        });
+        // The physical Back action shares the original query/confirmation guard with visible Close/Cancel.
+        Dispatcher.Dispatch(async () => await Presentation.Failures.GuardAsync(() => _viewModel.CancelCommand.ExecuteAsync(null)));
         return true;
     }
 }

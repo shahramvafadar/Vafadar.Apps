@@ -6,6 +6,14 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep original plan and debt drafts safe (D-429)
+
+- Show complete plan fields only after loading; missing plans stay unavailable with clear feedback.
+- Keep unsaved fields through account creation and temporary readiness failures.
+- Preserve debt direction, currency and unknown principal when a payment account is missing.
+- Editing plans with overrides or payments keeps their history and recorded money intact.
+- Saved plans cannot be submitted again after a refresh failure.
+
 ### Keep transaction drafts through account creation (D-428)
 
 - Creating an account from a transaction keeps its typed amount, notes and pending receipt.

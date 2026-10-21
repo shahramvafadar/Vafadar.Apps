@@ -20,14 +20,14 @@
             </FlexLayout>
         </Grid>
 
-        <Border Grid.Row="1" Style="{StaticResource Card}" Margin="16" VerticalOptions="Start" IsVisible="{Binding HasNoAccounts}">
+        <Border Grid.Row="1" Style="{StaticResource Card}" Margin="16" VerticalOptions="Start" IsVisible="{Binding NeedsAccount}">
             <VerticalStackLayout Spacing="12">
-                <Label Text="{v:Translate Entry_NoAccounts}" HorizontalTextAlignment="Center" />
+                <Label Text="{Binding AccountEmptyText}" HorizontalTextAlignment="Center" />
                 <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Accounts_Add}" Command="{Binding AddAccountCommand}" />
             </VerticalStackLayout>
         </Border>
 
-        <ScrollView x:Name="ValidationViewport" Grid.Row="1" IsVisible="{Binding HasNoAccounts, Converter={StaticResource InvertedBoolConverter}}">
+        <ScrollView x:Name="ValidationViewport" Grid.Row="1" IsVisible="{Binding HasFormContent}">
             <VerticalStackLayout Padding="16" Spacing="8" IsEnabled="{Binding CanInteract}">
 
                 <!-- What -->
@@ -268,7 +268,7 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <VerticalStackLayout Grid.Row="2" Padding="16,8,16,16" Spacing="8" BackgroundColor="{DynamicResource PageBackground}">
+        <VerticalStackLayout Grid.Row="2" Padding="16,8,16,16" Spacing="8" BackgroundColor="{DynamicResource PageBackground}" IsVisible="{Binding FormVisible}">
             <Label Text="{Binding WorkText}" Style="{StaticResource Secondary}"
                    IsVisible="{Binding WorkText, Converter={StaticResource IsNotNullConverter}}" />
             <p:WrappingAction Text="{v:Translate Editor_ReviewWork}" Command="{Binding ReviewWorkCommand}"
@@ -278,6 +278,15 @@
         <Button Margin="0" Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Save}"
                 Command="{Binding SaveCommand}" IsEnabled="{Binding CanSave}"
                 IsVisible="{Binding HasNoAccounts, Converter={StaticResource InvertedBoolConverter}}" />
+        </VerticalStackLayout>
+        <!-- Keep every original field covered until the complete packet and all derived dates/currencies are published. -->
+        <VerticalStackLayout Grid.Row="1" Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" />
+            <Label Text="{v:Translate Plan_FormLoading}" HorizontalTextAlignment="Center" Style="{StaticResource Secondary}" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="1" Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+            <Label Text="{Binding LoadError}" HorizontalTextAlignment="Center" Style="{StaticResource Secondary}" />
+            <p:WrappingAction Text="{v:Translate Editor_RetryRead}" Command="{Binding ReloadFormCommand}" IsVisible="{Binding CanReloadForm}" />
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

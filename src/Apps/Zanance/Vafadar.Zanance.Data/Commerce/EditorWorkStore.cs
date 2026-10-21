@@ -88,6 +88,15 @@ public sealed class EditorWorkStore(IDbContextFactory<ZananceDbContext> factory,
         await db.Database.OpenConnectionAsync(cancellationToken);
         await using var reader = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
         await using var joined = await db.Database.UseTransactionAsync(reader, cancellationToken);
+        return await ReadContextAsync(db, access, cancellationToken);
+    }
+
+    /// <summary>Captures readiness within the original form's already-owned coherent read transaction.</summary>
+    internal static async Task<EditorWorkReview> ReadContextAsync(ZananceDbContext db, CommercialFileAccess access, CancellationToken cancellationToken)
+    {
+        access.EnsureSnapshotCurrent();
+        if (!access.Enforced) return new(access, [], [], null, null);
+        access.DemandFeature(CommercialFeature.History);
         var accounts = await db.Accounts.AsNoTracking().ToArrayAsync(cancellationToken);
         var plans = await db.Schedules.AsNoTracking().ToArrayAsync(cancellationToken);
         var accountChoice = await StoredResourceSelection.ReadAsync(db, access, QuotaKind.FinancialAccounts, cancellationToken);

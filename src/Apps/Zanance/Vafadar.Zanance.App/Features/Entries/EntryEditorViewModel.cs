@@ -1047,7 +1047,9 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
             if (!Current() || raw != Snapshot()) return;
             // The original editor stays on the navigation stack with its complete unsaved draft and attachments.
             await Presentation.Failures.GuardAsync(() => Shell.Current.GoToAsync(AppShell.PlanEditorRoute,
-                new Dictionary<string, object> { ["entryDraft"] = draft }));
+                  new Dictionary<string, object> { ["entryDraft"] = draft,
+                      ["entryOrigin"] = new EntryPlanOrigin(owner.Review ?? throw new InvalidOperationException("The original entry form retired."),
+                          () => ReferenceEquals(owner, _loadSession)) }));
         }
         catch (Exception error) when (error is not OutOfMemoryException)
         {

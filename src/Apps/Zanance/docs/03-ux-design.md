@@ -2167,3 +2167,14 @@ explains the document/relationship boundary and offers explicit Keep both or Can
 Home and Transactions display a wrapped truthful aggregate-adjustment Undo notice. Home reserves
 only a transient row; its compact header Add action is unchanged. Reappearing never renews the
 original eight-second window. [Native evidence and limits](quality/entry-workflow-ownership.md).
+
+## D-429 - Complete original plan form
+
+Keep the whole plan form covered until original fields and derived currency/date/readiness facts are
+ready. Show translated loading, explicit read-only Retry, missing-source feedback and a separate
+no-account action. A readiness-only error keeps the raw form visible and editable, with Save disabled
+and explicit Review. New queries reset optional fields and own fresh command instances. Cancel and
+native Back share the original discard lifetime. Nested account creation returns to the same draft;
+debt/lent direction, unknown principal, date and currency stay explicit. Known saved work shows Close
+and cannot be submitted again after notification failure. See the D-429 quality record for actual
+normal-scale platform observations; general runtime/accessibility completion stays deferred.

@@ -7697,3 +7697,15 @@ misleading captions.22 focused new behaviors and23 final resource cases pass; no
 See [original workflow qualification](../quality/entry-workflow-ownership.md) for native actions, preserved
 failures, APK and scope. No schema/model/portable-format, permission/provider or external acceptance
 change. D-386 still defers general runtime and Android accessibility until after ready features.
+
+## D-429 - Original plan/debt form publication and Save ownership
+
+Complete covered actual-file publication, explicit Retry/missing states, original raw/query/command
+lifetime, typed transaction-to-plan handoffs and known nested account return are implemented. Debt
+payment requires an active original-currency money account; unknown principal is not guessed.
+Temporary readiness errors retain editable raw fields with Save disabled. Original writers validate
+new/edit/split sources and full saved semantics atomically, preserving recurrence/history and recorded
+money. Known acceptance precedes observers and cannot rearm.27 focused new actual-source behaviors
+pass across retained cohorts; affected prior failures are corrected selectively, without a full-suite
+replay. [Source/native/build evidence and limits](../quality/plan-editor-ownership.md). No schema/model,
+compiled-model, portable-format, permission/provider/SDK change. D-386 and external gates remain.

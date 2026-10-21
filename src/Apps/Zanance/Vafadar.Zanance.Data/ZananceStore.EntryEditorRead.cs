@@ -48,7 +48,7 @@ public sealed partial class ZananceStore
         }, ct);
     }
 
-    private async Task ValidateEntryEditorUnderContextAsync(EntryEditorReadSnapshot original, ZananceDbContext db, CancellationToken ct)
+    internal async Task ValidateEntryEditorUnderContextAsync(EntryEditorReadSnapshot original, ZananceDbContext db, CancellationToken ct)
     {
         original.RequireFile(db);
         original.ValidateFinancial(await ReadEntryEditorInputsAsync(db, original.Request, false, ct));

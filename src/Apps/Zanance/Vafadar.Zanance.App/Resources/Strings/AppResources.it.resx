@@ -8391,4 +8391,10 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Aggregate_UndoNotice" xml:space="preserve">
     <value>Annulla ripristina il totale aggregato; il dettaglio rimane.</value>
   </data>
+  <data name="Plan_FormLoading" xml:space="preserve">
+    <value>Caricamento del modulo del piano…</value>
+  </data>
+  <data name="Plan_SourceUnavailable" xml:space="preserve">
+    <value>Il piano, il debito o la transazione originale non è più disponibile. Non è stato creato un nuovo piano. Ricarica il modulo oppure chiudilo.</value>
+  </data>
 </root>
