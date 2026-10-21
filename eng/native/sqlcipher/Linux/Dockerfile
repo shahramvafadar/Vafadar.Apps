@@ -1,6 +1,15 @@
+FROM ubuntu@sha256:f610ab94648195aa356059f5b41d6085c9d4d903c072430cdd1af7bdb646106b AS archive-trust
+ENV DEBIAN_FRONTEND=noninteractive
+# Bootstrap HTTPS trust from the immutable Noble release package in a separate stage.
+# Only its public certificate bundle crosses into the reviewed build image; no moving dependencies do.
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates=20240203 && rm -rf /var/lib/apt/lists/*
+
 FROM ubuntu@sha256:f610ab94648195aa356059f5b41d6085c9d4d903c072430cdd1af7bdb646106b
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y --no-install-recommends build-essential perl python3 tcl-dev unzip ca-certificates && rm -rf /var/lib/apt/lists/*
+COPY --from=archive-trust /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+# D-433: a pinned base image does not freeze a moving APT archive. Restore the original
+# reviewed package closure from Ubuntu's signed timestamped snapshot, retaining TLS verification.
+RUN printf 'Types: deb\nURIs: https://snapshot.ubuntu.com/ubuntu/20261012T000000Z/\nSuites: noble noble-updates noble-security\nComponents: main universe\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n' > /etc/apt/sources.list.d/ubuntu.sources && apt-get -o Acquire::Retries=3 -o APT::Update::Error-Mode=any update && apt-get install -y --no-install-recommends build-essential perl python3 tcl-dev unzip ca-certificates && rm -rf /var/lib/apt/lists/*
 RUN python3 - <<'PY'
 import urllib.request,hashlib,pathlib,zipfile
 p=pathlib.Path('/tmp/ndk.zip')

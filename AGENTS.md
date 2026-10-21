@@ -3248,3 +3248,11 @@ a different provenance refusal. Installer inventory changes never approve compil
 compiler hash/file-version/signature, MSVC/SDK and immutable package requirements. Local metadata
 checks do not establish actual hosted success. App/device checks are not replayed for test-only changes;
 CI recovery requires the latest commit's actual workflow evidence. D-386 and external gates stand.
+
+
+### D-433 original Linux host restoration
+
+A pinned base does not freeze a moving archive. Restore the original signed Ubuntu snapshot and final
+locked host packages. Bootstrap HTTPS trust in a separate exact-release stage; copy only its public
+bundle, never moving dependencies. Require complete signed indexes, retain TLS/signature checks and
+every NDK/compiler/source/package gate. Local restoration is not hosted native or product acceptance.

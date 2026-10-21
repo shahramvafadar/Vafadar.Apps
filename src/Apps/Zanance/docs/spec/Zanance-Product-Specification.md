@@ -7745,6 +7745,16 @@ original writers; known acceptance remains final. 27 new focused source cases an
 pass across selective executions, with no full-suite or unrelated successful-check replay.
 112 original Windows and 40 independent Release/AOT Android observations, exact source preservation, final strict builds and signed offline no-reset upgrade are qualified in [evidence](../quality/entry-money-context.md). These are focused additions, not a new full-suite baseline. Account/holding input contexts and D-386/external gates remain separate.
 
-## D-433 - Delivery verification recovery (hosted result pending)
+## D-433 - Delivery verification recovery (Android native follow-up pending)
 
-Two shared hosted test failures are reproduced and corrected without changing app behavior or production writer guards.19 focused managed cases include eight new cases;17 local native-toolchain cases retain exact compiler acceptance while adding official installer metadata. This is not a complete-suite baseline or proof of hosted recovery. Application/APK remain D-432. [Failure evidence and limits](../quality/ci-common-recovery.md).
+Two shared hosted test failures are reproduced and corrected without changing app behavior or production writer guards.19 focused managed cases include eight new cases;17 local native-toolchain cases retain exact compiler acceptance while adding official installer metadata. Hosted bd6e9484 CI, CodeQL and native Windows recovery pass; Android native host recovery remains pending. This is not a newly inferred full-suite baseline. Application/APK remain D-432. [Failure evidence and limits](../quality/ci-common-recovery.md).
+
+
+### D-433 hosted follow-up - Original Linux host snapshot
+
+Commit bd6e9484 passes the complete CI workflow, CodeQL and the native Windows reproducibility/package/
+persistence job. The Android native job refuses a changed ca-certificates package before compilation.
+The Linux recipe restores the original signed Ubuntu snapshot with an isolated exact-release
+certificate bootstrap, strict complete-index retrieval and unchanged final tool/NDK/compiler locks.
+A fresh local image passes the original host verifier. Hosted Android clean candidates and stock-suite
+recovery remain pending; no native binary or accepted package is replaced. [Evidence](../quality/ci-common-recovery.md).

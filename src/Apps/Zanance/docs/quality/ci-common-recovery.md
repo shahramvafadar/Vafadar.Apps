@@ -24,7 +24,7 @@ guard changes. Eight focused Core and 11 Data cases pass after the original fail
 The official installer metadata is added without changing either approved compiler hash/file-version
 pair, pinned MSVC/SDK, signature validation or immutable package contents.17 local toolchain cases
 pass on the existing 18.10.12201.205 installation and compiler 19.51.36257.0; other installer versions
-are metadata-only checks. Actual hosted compiler bytes and latest-commit recovery remain pending.
+are metadata-only checks. Hosted bd6e9484 CI and native Windows recovery pass; Android native host recovery remains pending.
 Application sources, runtime behavior and the complete D-432 APK remain unchanged. Successful app,
 Android, backend, native financial and device checks are not replayed locally. D-386 and external
 gates remain unchanged.
@@ -42,10 +42,37 @@ compiler/bootstrap, and no compiler acceptance is inferred from an installer ver
 
 ## Hosted acceptance
 
-Pending the new commit's actual workflow results. Do not call hosted CI fixed from local tests,
-metadata inventory or a previously successful job. Preserve exact hashes and package identity if the
-host supplies different bytes; qualify those separately rather than loosening the policy. Re-run only
-failed work when its code/configuration changes. Current app/APK and runtime acceptance stay D-432.
+Commit `bd6e9484567157e18928ae8f2eb8128bdaca21a8` passes [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39565236657)
+and [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39565236611).
+The [native workflow](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39565236511) passes exact Windows compiler qualification,
+two fresh reproducible candidates, immutable package checks and protected persistence. Android job
+`119105809799` stops before compilation: `host-proof.json` says `Host build package differs from review: ca-certificates`.
+Its [original artifact](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39565236511/artifacts/12329586559) is retained.
+The first one-shot review and its schedule are complete; no successful job is rerun manually.
+
+### Restore the original Linux host closure
+
+A digest-pinned base did not freeze subsequent APT installs. The moving archive now supplies
+`20260816ubuntu0.24.04.1`, while the unchanged host lock requires `20260601~24.04.1`.
+The final stage now restores the original signed Ubuntu archive snapshot `20261012T000000Z` using
+only its explicit HTTPS URI, Noble release/updates/security and main/universe. Any missing index is
+fatal, retrieval retries are bounded, and no moving-index fallback, unsigned package or disabled
+TLS/signature check is permitted.
+
+A separate stage installs immutable Noble release `ca-certificates=20240203` to bootstrap HTTPS trust.
+Only its public certificate bundle enters the final base; none of that stage's moving dependencies do.
+Snapshot installation replaces it with the exact reviewed final package. This uses the
+[official Ubuntu snapshot service](https://snapshot.ubuntu.com/), retaining every host-package,
+NDK archive/revision/compiler, source, ABI and immutable-package gate.
+
+A fresh local image builds and the unchanged `verify-host.py` passes all locked package versions,
+NDK `30.0.16248370` and compiler identity. Clang SHA256 remains
+`ad535f0b6fc303edba958b51636169ff0291c6e36463236c99ff8abcaa34247c`.
+Local image identity: `sha256:22ae1bc66640846a4f887ff887dbbe53e61069c096fbc7cca6e20a48df981357`.
+The no-certificate probe and an incomplete remote-index attempt are retained failures; TLS was never
+weakened. No native application binary or accepted package changes. Hosted Android clean builds and
+the stock cipher suite still require the follow-up commit's actual result. Application sources/APK
+in this CI-only step remain D-432.
 
 Account monetary inputs remain the next complete feature batch (D-434), followed separately by holding
 money contexts. Dedicated ANR/crash and Android accessibility work retain the owner's deferred order.

@@ -4937,4 +4937,14 @@ Windows:112 original observations across18 language/theme/width contexts; indepe
 
 ## D-433 - Original CI regression boundaries
 
-Reproduce both original managed failures, then qualify the eight Core and 11 Data cases and17 local native-toolchain policy cases. Seven source-gate cases and one original-receipt/membership case are new. Latest hosted Windows build and complete test recovery remain pending. App/APK and existing runtime evidence stay D-432; no accepted native action or successful unrelated suite is replayed. [Evidence](quality/ci-common-recovery.md).
+Reproduce both original managed failures, then qualify the eight Core and 11 Data cases and17 local native-toolchain policy cases. Seven source-gate cases and one original-receipt/membership case are new. Hosted bd6e9484 CI and native Windows recovery pass; Android native host recovery remains pending. App/APK and existing runtime evidence stay D-432; no accepted native action or successful unrelated suite is replayed. [Evidence](quality/ci-common-recovery.md).
+
+
+### D-433 hosted follow-up - Original Linux host snapshot
+
+Commit bd6e9484 passes the complete CI workflow, CodeQL and the native Windows reproducibility/package/
+persistence job. The Android native job refuses a changed ca-certificates package before compilation.
+The Linux recipe restores the original signed Ubuntu snapshot with an isolated exact-release
+certificate bootstrap, strict complete-index retrieval and unchanged final tool/NDK/compiler locks.
+A fresh local image passes the original host verifier. Hosted Android clean candidates and stock-suite
+recovery remain pending; no native binary or accepted package is replaced. [Evidence](quality/ci-common-recovery.md).

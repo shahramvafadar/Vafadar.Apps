@@ -2065,3 +2065,12 @@ still gate every native producer/check. Local installation-version fixtures are 
 hosted executable or different immutable package must receive its own actual qualification; never
 make a hash/version condition permissive merely to clear CI. Application/APK remain unchanged by
 this delivery-check repair. Hosted success must be read from the latest commit's actual workflow.
+
+
+### Original Linux native host packages (D-433 follow-up)
+
+The native Docker recipe restores Android's unchanged host lock from Ubuntu snapshot 20261012T000000Z.
+An isolated stage supplies only the immutable Noble release certificate bundle for HTTPS bootstrap;
+the final stage restores all reviewed packages from explicit signed snapshot sources. Missing indexes
+are fatal. Never accept a moving package revision or weaken TLS/signature checks to make CI pass.
+Keep verify-host.py authoritative and distinguish local host, fresh native and actual hosted results.

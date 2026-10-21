@@ -4012,7 +4012,7 @@ original writers; known acceptance remains final. 27 new focused source cases an
 pass across selective executions, with no full-suite or unrelated successful-check replay.
 [Native/build evidence and retained failures](../../quality/entry-money-context.md). No schema/model/format, permission/provider/SDK change.
 
-### D-433 - Shared CI recovery (hosted result pending)
+### D-433 - Shared CI recovery (Android native follow-up pending)
 
 The D-422 and D-431 hosted test logs identify the same two failures: the mode-policy scanner treats
 review-only source fixtures as shipping readers, and a shared-membership Undo fixture supplies a
@@ -4030,7 +4030,7 @@ guard changes. Eight focused Core and 11 Data cases pass after the original fail
 The official installer metadata is added without changing either approved compiler hash/file-version
 pair, pinned MSVC/SDK, signature validation or immutable package contents.17 local toolchain cases
 pass on the existing 18.10.12201.205 installation and compiler 19.51.36257.0; other installer versions
-are metadata-only checks. Actual hosted compiler bytes and latest-commit recovery remain pending.
+are metadata-only checks. Hosted bd6e9484 CI and native Windows recovery pass; Android native host recovery remains pending.
 Application sources, runtime behavior and the complete D-432 APK remain unchanged. Successful app,
 Android, backend, native financial and device checks are not replayed locally. D-386 and external
 gates remain unchanged.
@@ -4046,3 +4046,13 @@ account save/reload and reconciliation confirmation. Preserve actual-file rights
 original write/notification ownership and recorded ledger invariants. Holding monetary inputs remain a
 separate following boundary. Do not replay accepted native actions or successful unrelated suites.
 D-386 stability/accessibility order and all external acceptance gates stand.
+
+
+### D-433 hosted follow-up - Original Linux host snapshot
+
+Commit bd6e9484 passes the complete CI workflow, CodeQL and the native Windows reproducibility/package/
+persistence job. The Android native job refuses a changed ca-certificates package before compilation.
+The Linux recipe restores the original signed Ubuntu snapshot with an isolated exact-release
+certificate bootstrap, strict complete-index retrieval and unchanged final tool/NDK/compiler locks.
+A fresh local image passes the original host verifier. Hosted Android clean candidates and stock-suite
+recovery remain pending; no native binary or accepted package is replaced. [Evidence](../../quality/ci-common-recovery.md).

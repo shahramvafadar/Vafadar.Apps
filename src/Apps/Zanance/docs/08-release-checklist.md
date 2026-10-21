@@ -2341,3 +2341,13 @@ Focused source and native transaction/split monetary checks pass. Final strict b
 ## D-433 - Hosted CI recovery remains an explicit gate
 
 Local targeted policy tests and installer metadata checks pass; latest hosted recovery is pending. The compiler hash/signature/SDK and immutable-package guards remain mandatory. Application/APK and external/device/runtime acceptance stay D-432. [Evidence](quality/ci-common-recovery.md).
+
+
+### D-433 hosted follow-up - Original Linux host snapshot
+
+Commit bd6e9484 passes the complete CI workflow, CodeQL and the native Windows reproducibility/package/
+persistence job. The Android native job refuses a changed ca-certificates package before compilation.
+The Linux recipe restores the original signed Ubuntu snapshot with an isolated exact-release
+certificate bootstrap, strict complete-index retrieval and unchanged final tool/NDK/compiler locks.
+A fresh local image passes the original host verifier. Hosted Android clean candidates and stock-suite
+recovery remain pending; no native binary or accepted package is replaced. [Evidence](quality/ci-common-recovery.md).

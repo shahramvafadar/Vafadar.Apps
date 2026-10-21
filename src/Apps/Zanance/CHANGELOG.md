@@ -11,6 +11,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 - Check independent review fixtures separately from shipping mode selection.
 - Exercise shared-membership refusal with the original Undo receipt.
 - Retain exact compiler checks when hosted installer metadata changes.
+- Restore the original Linux build-package snapshot instead of inheriting moving archive updates.
 - Application behavior and the D-432 APK are unchanged.
 
 ### Keep transaction amounts in their original units (D-432)
