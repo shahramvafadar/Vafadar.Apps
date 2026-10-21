@@ -366,15 +366,17 @@ internal sealed partial class PlanEditorNativeReview : IDisposable
         internal bool GateRequested;
         /// <summary>Refuses only the next original read for an explicit native Retry check.</summary>
         internal bool RefuseOnce;
+        /// <summary>Supplies only a deliberate separately owned foreign-file context after a known native account commit.</summary>
+        internal IDbContextFactory<ZananceDbContext>? Override;
         /// <inheritdoc />
-        public ZananceDbContext CreateDbContext() => original.CreateDbContext();
+        public ZananceDbContext CreateDbContext() => (Override ?? original).CreateDbContext();
         /// <inheritdoc />
         public async Task<ZananceDbContext> CreateDbContextAsync(CancellationToken cancellationToken = default)
         {
             var gate = Gate; Gate = null;
             if (gate is not null) { GateRequested = true; await gate.Task.WaitAsync(cancellationToken); }
             if (RefuseOnce) { RefuseOnce = false; throw new IOException("Deliberate original plan read refusal."); }
-            return await original.CreateDbContextAsync(cancellationToken);
+            return await (Override ?? original).CreateDbContextAsync(cancellationToken);
         }
     }
 }

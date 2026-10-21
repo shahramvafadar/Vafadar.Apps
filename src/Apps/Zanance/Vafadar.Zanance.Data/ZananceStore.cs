@@ -210,11 +210,20 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     /// templates, earmarks, budgets or a loan installment (ACC-07, ZEX-S0105).
     /// </summary>
     /// <returns><see langword="false"/> when the currency change was refused.</returns>
-    public async Task<bool> SaveAccountAsync(Account account, CancellationToken cancellationToken = default)
+    public async Task<bool> SaveAccountAsync(Account account, CancellationToken cancellationToken = default,
+        Func<bool>? isCurrent = null, EditorWorkReview? originalWork = null)
     {
         ArgumentNullException.ThrowIfNull(account);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        void Current()
+        {
+            originalWork?.RequireFile(DatabaseFileIdentity.ConfiguredPath(db));
+            if (isCurrent?.Invoke() == false) throw new InvalidOperationException("The original account draft changed.");
+        }
+        Current();
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken,
+            requireTransaction: isCurrent is not null || originalWork is not null);
+        Current();
 
         var existing = await db.Accounts.AsNoTracking().FirstOrDefaultAsync(a => a.Id == account.Id, cancellationToken);
         await CheckAccountWorkAsync(db, write, account, existing, cancellationToken);
@@ -234,8 +243,9 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         }
 
         await write.PrepareAccountChangeAsync(db, account, existing, cancellationToken);
-        write.EnsureCurrent();
+        Current(); write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        Current();
         await write.CommitAsync(cancellationToken);
 
         CommittedWriteNotification.Publish(OnChanged);

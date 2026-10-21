@@ -13,6 +13,8 @@ internal static partial class AndroidHomeReview
     /// <summary>Checks actual original plan/account actions and complete native form publication in independent Release/AOT.</summary>
     private static async Task<object> ReviewPlanEditorAsync(App app, IServiceProvider services, string folder, string comparison, CancellationToken ct)
     {
+        if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_account_money", false) == true)
+            return await ReviewAccountMoneyAsync(app, services, folder, comparison, ct);
         if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_entry_money", false) == true)
             return await ReviewEntryMoneyAsync(app, services, folder, comparison, ct);
         if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_goal_budget_money", false) == true)

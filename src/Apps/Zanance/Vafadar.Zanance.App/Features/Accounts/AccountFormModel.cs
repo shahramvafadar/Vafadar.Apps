@@ -14,10 +14,12 @@ namespace Vafadar.Zanance.App.Features.Accounts;
 public sealed partial class AccountFormModel : ObservableObject
 {
     private readonly Translator _translator;
+    private readonly ILocalizationService? _localization;
 
-    public AccountFormModel(Translator translator, TimeProvider time)
+    public AccountFormModel(Translator translator, TimeProvider time, ILocalizationService? localization = null)
     {
         _translator = translator;
+        _localization = localization;
         OpeningDate = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         CurrencyCode = Currencies.Euro.Code;
         Name = string.Empty;
@@ -109,7 +111,7 @@ public sealed partial class AccountFormModel : ObservableObject
     [ObservableProperty]
     public partial string? UnitNote { get; set; }
 
-    partial void OnCurrencyCodeChanged(string value) => UnitNote = DisplayUnitNote.For(_translator, value);
+    partial void OnCurrencyCodeChanged(string value) => RefreshMoneyTexts();
 
     [ObservableProperty]
     public partial string? DebtHint { get; set; }
@@ -177,7 +179,7 @@ public sealed partial class AccountFormModel : ObservableObject
         }
     }
 
-    partial void OnOpeningUnknownChanged(bool value) => OnPropertyChanged(nameof(ShowNegative));
+    partial void OnOpeningUnknownChanged(bool value) { OnPropertyChanged(nameof(ShowNegative)); RefreshMoneyTexts(); }
 
     private bool _isNew = true;
 
@@ -187,6 +189,7 @@ public sealed partial class AccountFormModel : ObservableObject
         OnPropertyChanged(nameof(PreviewIcon));
         IsDebtType = Type.IsDebt();
         IsLent = Type == AccountType.Lent;
+        RefreshMoneyTexts();
         if (IsDebtType)
         {
             DebtDirectionIndex = IsLent ? 1 : 0;
@@ -245,6 +248,7 @@ public sealed partial class AccountFormModel : ObservableObject
     public void RefreshTexts()
     {
         TypeNames = [.. Enum.GetValues<AccountType>().Select(t => _translator[$"AccountType_{t}"])];
+        RefreshMoneyTexts();
         foreach (var property in new[] { nameof(DebtDirectionNames), nameof(OpeningLabel), nameof(CounterpartyLabel),
             nameof(OpeningDateLabel), nameof(UnknownLabel), nameof(OpeningHint), nameof(OpeningHelpTopic) })
         {
@@ -257,10 +261,12 @@ public sealed partial class AccountFormModel : ObservableObject
     {
         ArgumentNullException.ThrowIfNull(currencyLock);
         ArgumentNullException.ThrowIfNull(account);
+        _loadingMoney = true;
         Name = account.Name;
         TypeIndex = (int)account.Type;
         CurrencyCode = account.CurrencyCode;
-        OpeningText = account.OpeningBalance == 0 ? string.Empty : MoneyText.ForInput(account.OpeningBalance, account.CurrencyCode, culture);
+        OpeningText = account.OpeningBalance == 0 ? string.Empty : _openingMoney.Format(account.OpeningBalance, account.CurrencyCode, culture);
+        _openingMoney.Initialize(OpeningText, account.CurrencyCode, culture);
         OpeningIsNegative = account.OpeningBalance < 0;
         OpeningUnknown = !account.OpeningBalanceKnown;
         OpeningDate = account.OpeningDate;
@@ -274,7 +280,11 @@ public sealed partial class AccountFormModel : ObservableObject
         HasDueDate = account.DueDate is not null;
         DueDate = account.DueDate ?? DueDate;
         RateText = account.InterestRate is { } rate ? rate.ToString("0.##########", culture) : string.Empty;
-        InstallmentText = account.Installment is { } installment ? MoneyText.ForInput(installment, account.CurrencyCode, culture) : string.Empty;
+        InstallmentText = account.Installment is { } installment ? _installmentMoney.Format(installment, account.CurrencyCode, culture) : string.Empty;
+        _installmentMoney.Initialize(InstallmentText, account.CurrencyCode, culture);
+        _rateCulture = CultureInfo.ReadOnly((CultureInfo)culture.Clone());
+        _loadingMoney = false;
+        RefreshMoneyTexts();
         _isNew = false;
         OnTypeIndexChanged(TypeIndex);
         ShowDebtTerms = account.InterestRate is not null || account.Installment is not null;
@@ -293,11 +303,7 @@ public sealed partial class AccountFormModel : ObservableObject
             : null;
 
         long opening = 0;
-        AmountError = null;
-        if (!OpeningUnknown && !string.IsNullOrWhiteSpace(OpeningText) && !MoneyText.TryParse(OpeningText, Currencies.Get(CurrencyCode), culture, out opening))
-        {
-            AmountError = _translator["Amount_Invalid"];
-        }
+        AmountError = ValidateMoney(_openingMoney, !OpeningUnknown, out opening);
 
         decimal? rate = null;
         long installment = 0;
@@ -310,17 +316,14 @@ public sealed partial class AccountFormModel : ObservableObject
             }
 
             // A rate is a plain number with the culture's or a Latin decimal point, in any digit script.
-            var rateText = Digits.ToAscii(RateText.Trim()).Replace(culture.NumberFormat.NumberDecimalSeparator, ".", StringComparison.Ordinal).Replace('٫', '.').TrimEnd('%', '٪').Trim();
+            var rateText = Digits.ToAscii(RateText.Trim()).Replace((_rateCulture ?? culture).NumberFormat.NumberDecimalSeparator, ".", StringComparison.Ordinal).Replace('٫', '.').TrimEnd('%', '٪').Trim();
             if (rateText.Length > 0)
             {
                 rate = decimal.TryParse(rateText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsed) && parsed <= 100 ? parsed : null;
                 TermsError = rate is null ? _translator["Account_RateInvalid"] : null;
             }
 
-            if (!string.IsNullOrWhiteSpace(InstallmentText) && !MoneyText.TryParse(InstallmentText, Currencies.Get(CurrencyCode), culture, out installment))
-            {
-                TermsError = _translator["Amount_Invalid"];
-            }
+            TermsError ??= ValidateMoney(_installmentMoney, applicable: true, out installment);
         }
 
         if (NameError is not null || AmountError is not null || TermsError is not null)
@@ -361,7 +364,7 @@ public sealed partial class AccountFormModel : ObservableObject
     }
 
     /// <summary>Returns a value that changes whenever the user changes something (for "discard changes?").</summary>
-    public string Snapshot() => Presentation.DraftFingerprint.Create( Name, TypeIndex, CurrencyCode, OpeningText, OpeningIsNegative, OpeningUnknown, OpeningDate, IncludeInTotals, IconKey, Counterparty, RateText, InstallmentText, UsableForPayments, CountryCode, HasDueDate, DueDate);
+    public string Snapshot() => Presentation.DraftFingerprint.Create( Name, TypeIndex, CurrencyCode, OpeningText, OpeningIsNegative, OpeningUnknown, OpeningDate, IncludeInTotals, IconKey, Counterparty, RateText, InstallmentText, UsableForPayments, CountryCode, HasDueDate, DueDate, MoneyMeaning);
 
     // "3 entries, 1 plan and the loan installment" in the current language.
     private string LockReasons(AccountCurrencyLock currencyLock)

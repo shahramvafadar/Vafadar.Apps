@@ -2211,3 +2211,11 @@ independent contexts; Join uses the original stored total. Raw/context revisions
 original writers; known acceptance remains final. 27 new focused source cases and 51 related prior cases
 pass across selective executions, with no full-suite or unrelated successful-check replay.
 Keep complete field-local reentry feedback, original unit labels and numeric examples at native scale. Foreign purchase amounts use their ISO currency independently of display units. No automatic conversion is implied.
+
+## Original account money (D-434)
+
+Opening balance, optional repayment and observed balance keep independent original unit labels and
+format examples beside raw input. Display changes never relabel an existing amount. Changed units or
+currencies show field feedback and require full clearing/reentry; hidden unknown principal does not
+hide a stale repayment. Explicit account Refresh preserves the observed draft and requires currency
+review. A known Save with a failed default follow-up stays Close-only with the existing review message.

@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Preserve original account amounts (D-434)
+
+- Keep opening balance, optional repayment and observed balance in their original format and units.
+- Require clearing and reentry after a currency or display-unit change.
+- Refuse comparisons whose stored account currency changed during review.
+- Keep accepted account saves final and bind default-selection follow-up to the original account file.
+
 ### Keep delivery checks aligned with original ownership (D-433)
 
 - Check independent review fixtures separately from shipping mode selection.

@@ -24,7 +24,7 @@ guard changes. Eight focused Core and 11 Data cases pass after the original fail
 The official installer metadata is added without changing either approved compiler hash/file-version
 pair, pinned MSVC/SDK, signature validation or immutable package contents.17 local toolchain cases
 pass on the existing 18.10.12201.205 installation and compiler 19.51.36257.0; other installer versions
-are metadata-only checks. Hosted bd6e9484 CI and native Windows recovery pass; Android native host recovery remains pending.
+are metadata-only checks. Hosted bd6e9484 CI and native Windows pass; its Android package refusal is preserved below, followed by final hosted recovery.
 Application sources, runtime behavior and the complete D-432 APK remain unchanged. Successful app,
 Android, backend, native financial and device checks are not replayed locally. D-386 and external
 gates remain unchanged.
@@ -76,3 +76,17 @@ in this CI-only step remain D-432.
 
 Account monetary inputs remain the next complete feature batch (D-434), followed separately by holding
 money contexts. Dedicated ANR/crash and Android accessibility work retain the owner's deferred order.
+
+
+### D-433 final hosted recovery
+
+Commit `05dbecf089dabc5f433b12dbede82f4e97b10d2b` passes all three workflows:
+[CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39572906007),
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39572906028) and
+[Native cipher candidates](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39572906072).
+The actual Windows job passes exact compiler qualification, two clean candidates, immutable package,
+drift refusal and protected persistence/workloads. Android passes host restoration, two clean
+candidates, malformed-slice refusals and the official stock suite with reviewed static crypto.
+The single scheduled check is complete and deleted; no successful job is rerun manually. The earlier
+bd6e9484 Android package refusal remains historical failure evidence. This establishes hosted CI
+recovery for that exact commit, not app/device/provider/store/release acceptance.

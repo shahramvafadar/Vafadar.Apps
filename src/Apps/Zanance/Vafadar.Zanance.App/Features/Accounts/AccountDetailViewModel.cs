@@ -150,7 +150,7 @@ public sealed partial class AccountDetailViewModel(
         ArgumentNullException.ThrowIfNull(query);
         if (query.TryGetValue("id", out var value) && value is Guid id)
         {
-            if (_id != id) InvalidateReconciliation();
+            if (_id != id) { InvalidateReconciliation(); ObservedText = string.Empty; Reason = string.Empty; }
             _id = id;
         }
     }
@@ -191,6 +191,7 @@ public sealed partial class AccountDetailViewModel(
 
         Name = account.Name;
         UnitNote = DisplayUnitNote.For(translator, account.CurrencyCode);
+        RefreshObservedMoney();
         TypeName = translator[$"AccountType_{account.Type}"];
         Icon = Icons.Parse(account.Icon, Icons.For(account.Type));
         IsArchived = account.IsArchived;
@@ -312,7 +313,30 @@ public sealed partial class AccountDetailViewModel(
     }
 
     /// <summary>Retires a previous comparison immediately when its original amount or date changes.</summary>
-    partial void OnObservedTextChanged(string value) => InvalidateReconciliation();
+    partial void OnObservedTextChanged(string value)
+    {
+        _reconciliation.ObservedMoney.ChangeText(value, _account?.CurrencyCode ?? Currencies.Euro.Code, localization.CurrentCulture);
+        InvalidateReconciliation(); RefreshObservedMoney();
+    }
+    /// <summary>Gets the observed balance's original unit until explicit complete reentry.</summary>
+    public string ObservedUnitName => _reconciliation.ObservedMoney.UnitName(_account?.CurrencyCode ?? Currencies.Euro.Code);
+    /// <summary>Explains the retained original observed-balance parser after a display change.</summary>
+    public string? ObservedFormatNote => _reconciliation.ObservedMoney.OriginalExample(localization.CurrentCulture) is { } example
+        ? translator.Format("Plan_OriginalInputFormat", example) : null;
+    /// <summary>Retains raw observation while retiring pending native consent when this page leaves.</summary>
+    public void SetReconciliationActive(bool active)
+    {
+        localization.Changed -= OnObservedDisplayChanged;
+        if (active) localization.Changed += OnObservedDisplayChanged;
+        else InvalidateReconciliation();
+        RefreshObservedMoney();
+    }
+    private void OnObservedDisplayChanged(object? sender, EventArgs args) => RefreshObservedMoney();
+    private void RefreshObservedMoney()
+    {
+        UnitNote = DisplayUnitNote.ForInput(translator, _reconciliation.ObservedMoney, _account?.CurrencyCode ?? Currencies.Euro.Code);
+        OnPropertyChanged(nameof(ObservedUnitName)); OnPropertyChanged(nameof(ObservedFormatNote));
+    }
     partial void OnReconcileDateChanged(DateOnly value) => InvalidateReconciliation();
 
     private void InvalidateReconciliation()
@@ -325,16 +349,12 @@ public sealed partial class AccountDetailViewModel(
     {
         if (IsBusy || !Loading.IsReady || _account is not { } account) return;
         Error = null; InvalidateReconciliation();
-        var currency = Currencies.TryGet(account.CurrencyCode, out var known) ? known : Currencies.Euro;
-        var text = ObservedText.Trim();
-        var negative = text.StartsWith('-') || text.StartsWith('−');
-        if (!MoneyText.TryParse(text.TrimStart('-', '−'), currency, localization.CurrentCulture, out var observed))
-        { Error = translator["Amount_Invalid"]; return; }
-        observed = negative ? -observed : observed;
+        if (_reconciliation.ObservedMoney.NeedsReview(account.CurrencyCode))
+        { Error = translator.Format("Plan_InputUnitChanged", MoneyText.UnitName(account.CurrencyCode)); return; }
         IsBusy = true;
         try
         {
-            var review = await _reconciliation.CompareAsync(_id, observed, ReconcileDate);
+            var review = await _reconciliation.CompareObservedAsync(_id, account.CurrencyCode, ReconcileDate);
             if (review is null) return;
             var result = review.Result; var culture = localization.CurrentCulture;
             ResultText = result.Difference == 0 ? translator["Reconcile_Match"]
@@ -357,6 +377,7 @@ public sealed partial class AccountDetailViewModel(
         {
             InvalidateReconciliation();
             Error = _reconciliation.Committed ? translator["Reconcile_Done"]
+                : exception is FormatException ? translator["Amount_Invalid"]
                 : CommercialFailureMessage.OrFallback(exception, translator, "Reconcile_ReviewAgain");
         }
         finally { IsBusy = false; }
@@ -367,6 +388,10 @@ public sealed partial class AccountDetailViewModel(
     {
         if (IsBusy || !Loading.IsReady) return;
         Error = null;
+        if (_account is { } original && _reconciliation.ObservedMoney.NeedsReview(original.CurrencyCode))
+        {
+            InvalidateReconciliation(); Error = translator.Format("Plan_InputUnitChanged", MoneyText.UnitName(original.CurrencyCode)); return;
+        }
         if (_reconciliation.Review is null) { Error = translator["Reconcile_ReviewAgain"]; return; }
         if (string.IsNullOrWhiteSpace(Reason)) { Error = translator["Reconcile_ReasonRequired"]; return; }
         IsBusy = true;

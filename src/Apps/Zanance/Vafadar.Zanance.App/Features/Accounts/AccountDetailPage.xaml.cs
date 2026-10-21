@@ -13,7 +13,14 @@ public partial class AccountDetailPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        _viewModel.SetReconciliationActive(true);
         await Presentation.Failures.GuardAsync(RefreshForNavigationAsync);
+    }
+
+    /// <summary>Retires pending original balance consent before another native page receives input.</summary>
+    protected override void OnDisappearing()
+    {
+        _viewModel.SetReconciliationActive(false); base.OnDisappearing();
     }
 
     /// <summary>Shares the covered read when the original page or its retained Shell tab becomes visible.</summary>

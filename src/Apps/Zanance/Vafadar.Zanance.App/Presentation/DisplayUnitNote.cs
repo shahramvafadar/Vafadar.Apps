@@ -17,4 +17,13 @@ internal static class DisplayUnitNote
             ? translator.Format("Unit_AmountsIn", unit.Name, $"\u2066\u200E{unit.Factor:N0}\u00A0{unit.CurrencyCode}\u200E\u2069")
             : null;
     }
+    /// <summary>Explains the original nonempty input's unit; ambient preferences describe only an empty new value.</summary>
+    public static string? ForInput(Translator translator, MoneyDraftInput input, string currencyCode)
+    {
+        ArgumentNullException.ThrowIfNull(translator); ArgumentNullException.ThrowIfNull(input);
+        if (string.IsNullOrWhiteSpace(input.Text) || input.Context is not { } original) return For(translator, currencyCode);
+        return original.Unit is { } unit
+            ? translator.Format("Unit_AmountsIn", unit.Name, $"\u2066\u200E{unit.Factor:N0}\u00A0{unit.CurrencyCode}\u200E\u2069") : null;
+    }
+
 }

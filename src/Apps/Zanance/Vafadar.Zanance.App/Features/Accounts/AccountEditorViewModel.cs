@@ -35,10 +35,14 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     internal void SetPresentationActive(bool active)
     {
         if (_presented != active) { _presented = active; _presentationRevision++; }
+        _localization.Changed -= OnDisplayChanged;
+        if (active) _localization.Changed += OnDisplayChanged;
+        Form.RefreshTexts();
         RefreshAccess();
     }
-    private bool OwnsChild(long revision) => _originalAccountHandoff is null
-        || _presented && revision == _presentationRevision && _originalAccountHandoff.IsOwned;
+    private void OnDisplayChanged(object? sender, EventArgs args) => Form.RefreshTexts();
+    private bool OwnsChild(long revision) => _presented && revision == _presentationRevision
+        && (_originalAccountHandoff is null || _originalAccountHandoff.IsOwned);
 
     /// <summary>Creates the original form without starting database or native work.</summary>
     public AccountEditorViewModel(ZananceStore store, PlanStore plans, Translator translator, ILocalizationService localization, TimeProvider time, IAppInteraction interaction)
@@ -50,11 +54,12 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
         _time = time;
         _translator = translator;
         _localization = localization;
-        Form = new AccountFormModel(translator, time);
+        Form = new AccountFormModel(translator, time, localization);
         _account = new Account { Name = string.Empty, CurrencyCode = Form.CurrencyCode, OpeningDate = Form.OpeningDate };
         Title = translator["Account_NewTitle"];
         Form.PropertyChanged += (_, e) =>
         {
+            if (e.PropertyName == nameof(AccountFormModel.MoneyContextsReady)) RefreshAccess();
             if (e.PropertyName == nameof(AccountFormModel.TypeIndex))
             {
                 UpdateCanBeDefault();
@@ -69,7 +74,7 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     /// <summary>Gets whether user input can change this loaded, not-yet-committed form.</summary>
     public bool CanInteract => !_loading && !IsBusy && !_committed && OwnsChild(_presentationRevision);
     /// <summary>Gets whether a financial Save can run; a committed account cannot be resubmitted.</summary>
-    public bool CanSave => CanInteract && !_reviewingWork && !_workFailed && !_workRetired && _work is not null && WorkRestriction is null;
+    public bool CanSave => CanInteract && Form.MoneyContextsReady && !_reviewingWork && !_workFailed && !_workRetired && _work is not null && WorkRestriction is null;
     /// <summary>Gets whether a pending writer must finish before leaving this form.</summary>
     public bool CanLeave => !IsBusy;
     /// <summary>Gets the actual Close/Cancel caption after the commit boundary.</summary>
@@ -141,6 +146,7 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     public async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
+        _presentationRevision++;
         var originalVisit = query.TryGetValue("originalAccountHandoff", out var handoff);
         if (originalVisit || query.TryGetValue("entryAccountHandoff", out handoff))
         {
@@ -184,8 +190,12 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
+        Form.RefreshMoneyTexts();
         if (!CanSave) return;
         var presentation = _presentationRevision;
+        var raw = Snapshot(); var moneyRevision = Form.MoneyRevision; var originalWork = _work!;
+        bool CurrentDraft() => OwnsChild(presentation) && ReferenceEquals(_work, originalWork)
+            && Snapshot() == raw && Form.MoneyRevision == moneyRevision && Form.MoneyContextsReady;
         IsBusy = true; SaveError = null;
         var target = _account.CopyForEditing();
         try
@@ -194,13 +204,14 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
             _originalAccountHandoff?.EnsureCurrent();
             var accounts = _originalAccountHandoff?.Accounts ?? await _store.GetAccountsAsync();
             if (!Form.TryApply(target, _localization.CurrentCulture, accounts)) return;
+            if (!CurrentDraft()) throw new InvalidOperationException("The original account input changed before Save.");
             if (_originalAccountHandoff is { } child)
             {
-                await child.SaveAsync(_store, target, IsDefault, () => OwnsChild(presentation));
+                await child.SaveAsync(_store, target, IsDefault, CurrentDraft);
                 _account = target; _committed = true; _snapshot = Snapshot(); RefreshAccess();
                 if (child.NotificationFailed) { SaveError = _translator["Account_SavedNeedsReview"]; return; }
             }
-            else if (!await _store.SaveAccountAsync(target))
+            else if (!await _store.SaveAccountAsync(target, isCurrent: CurrentDraft, originalWork: originalWork))
             {
                 SaveError = Form.CurrencyLockText ?? _translator["Account_CurrencyLocked"];
                 return;
@@ -208,7 +219,7 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
             if (_originalAccountHandoff is null)
             {
                 _account = target; _committed = true; _snapshot = Snapshot(); RefreshAccess();
-                await UpdateDefaultAsync();
+                await _store.UpdateOriginalAccountDefaultAsync(_account.Id, IsDefault, originalWork, () => OwnsChild(presentation));
             }
         }
         catch (CommittedWriteNotificationException)
@@ -302,17 +313,4 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     public Task<bool> ConfirmDiscardAsync() => _interaction.ConfirmAsync(
         _translator["Common_DiscardTitle"], _translator["Common_DiscardMessage"], _translator["Common_Discard"], _translator["Common_KeepEditing"]);
 
-    private async Task UpdateDefaultAsync()
-    {
-        var settings = await _store.GetSettingsAsync();
-        var isDefaultNow = settings.DefaultAccountId == _account.Id;
-
-        // An account changed into a loan, money lent or an asset stops being the default (quick add would refuse it).
-        var wanted = IsDefault && EntryAccountContract.IsValidDefault(_account);
-        if (wanted != isDefaultNow)
-        {
-            settings.DefaultAccountId = wanted ? _account.Id : null;
-            await _store.SaveSettingsAsync(settings);
-        }
-    }
 }

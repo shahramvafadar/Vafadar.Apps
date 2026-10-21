@@ -3256,3 +3256,14 @@ A pinned base does not freeze a moving archive. Restore the original signed Ubun
 locked host packages. Bootstrap HTTPS trust in a separate exact-release stage; copy only its public
 bundle, never moving dependencies. Require complete signed indexes, retain TLS/signature checks and
 every NDK/compiler/source/package gate. Local restoration is not hosted native or product acceptance.
+
+## D-434 - Original account money and default follow-up
+
+Keep opening, installment and observed-balance input contexts independent. Preserve raw currency/unit/
+culture and original unit-factor notes; require complete clearing/reentry to adopt a changed unit.
+Unknown principal hides only its own input. Preserve historical debt signs and decimal-rate culture.
+Bind pending work to original file/presentation and monetary edit revision. Check stored currency
+before match metadata or adjustment authority. Default selection after known account acceptance may
+touch only original existing settings under metadata ownership; switched files/departed owners refuse
+the follow-up without repeating Save. Native continuation preserves completed receipts and source
+checkpoints. D-386 priorities and external gates remain unchanged.

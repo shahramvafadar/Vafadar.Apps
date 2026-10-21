@@ -40,7 +40,7 @@ public sealed partial class OnboardingViewModel : ViewModelBase
         _host = host;
         Regional = new(localization, translator, time);
         ThemeIndex = (int)theme.Choice;
-        Account = new AccountFormModel(translator, time);
+        Account = new AccountFormModel(translator, time, localization);
         Languages = [.. localization.SupportedLanguages];
         CurrencyCodes = [.. Currencies.All.Select(c => c.Code)];
         Step = 1;

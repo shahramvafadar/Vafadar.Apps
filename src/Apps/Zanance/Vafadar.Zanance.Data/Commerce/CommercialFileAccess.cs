@@ -19,6 +19,14 @@ internal sealed class CommercialFileAccess
             throw new InvalidOperationException("The commercial snapshot belongs to another database.");
     }
 
+    /// <summary>Rejects another opened file even when commercial enforcement is inactive.</summary>
+    internal void RequireFile(string path)
+    {
+        if (!string.Equals(_path, Path.GetFullPath(path), StringComparison.Ordinal))
+            throw new InvalidOperationException("The original account work file changed.");
+        EnsureSnapshotCurrent();
+    }
+
     /// <summary>Gets whether the current operation uses commercial checks.</summary>
     public bool Enforced => _snapshot.Enforced;
 

@@ -20,6 +20,8 @@ public sealed class EditorWorkReview
     { _access = access; _accounts = accounts; _plans = plans; _accountChoice = accountChoice; _planChoice = planChoice; }
     /// <summary>Rejects retired cached facts before the form is uncovered.</summary>
     public void EnsureCurrent() => _access.EnsureSnapshotCurrent();
+    /// <summary>Checks the actual opened account writer against this form's original file and cached rights.</summary>
+    internal void RequireFile(string path) => _access.RequireFile(path);
     /// <summary>Explains the original account create/unarchive/correction decision without applying a form.</summary>
     public WorkRestriction? AccountRestriction(Guid id, bool archived)
     {

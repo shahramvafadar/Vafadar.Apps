@@ -2074,3 +2074,28 @@ An isolated stage supplies only the immutable Noble release certificate bundle f
 the final stage restores all reviewed packages from explicit signed snapshot sources. Missing indexes
 are fatal. Never accept a moving package revision or weaken TLS/signature checks to make CI pass.
 Keep verify-host.py authoritative and distinguish local host, fresh native and actual hosted results.
+
+
+### D-433 final hosted recovery
+
+Commit `05dbecf089dabc5f433b12dbede82f4e97b10d2b` passes all three workflows:
+[CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39572906007),
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39572906028) and
+[Native cipher candidates](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39572906072).
+The actual Windows job passes exact compiler qualification, two clean candidates, immutable package,
+drift refusal and protected persistence/workloads. Android passes host restoration, two clean
+candidates, malformed-slice refusals and the official stock suite with reviewed static crypto.
+The single scheduled check is complete and deleted; no successful job is rerun manually. The earlier
+bd6e9484 Android package refusal remains historical failure evidence. This establishes hosted CI
+recovery for that exact commit, not app/device/provider/store/release acceptance.
+
+### Original account monetary runtime checks (D-434)
+
+Use `Run-StoreDrafts.ps1 -PlanEditorReview -AccountMoneyReview` for the actual Windows matrix.
+The separate `-AccountDefaultOnly` and `-AccountCurrencyOnly` modes own fresh declared scenes, never
+replay an accepted original matrix. Independent Android uses the same actual controls with
+`review_account_money` and the corresponding `review_account_default_only` or
+`review_account_currency_only` flags. Keep run/comparison/PID identities and original checkpoints;
+an observation timeout is not permission to restart or reseed. Require strict report comparison,
+base-store equality and actual native readings. Debug diagnostic changes require Android Debug
+compilation as well as independent Release/AOT. See the D-434 quality document for preserved failures.
