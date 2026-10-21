@@ -8112,3 +8112,14 @@ No new managed cases or parser/schema/permission/provider changes are claimed. S
 complete signed Offline APK checks pass; general ANR/crash and remaining acceptance stay open.
 
 [Original native input evidence](quality/android-numeric-input.md).
+
+## D-441 - Qualify retained secondary monetary layouts at system scale
+
+Three completed original D-436 sources provide204 observations/900 native readings across actual
+OS200%,360/412dp,en/fa/de and both themes. Targeted full text/line height/raw values and native
+forecast prompt targets pass. Guard accepted receipts and complete source/base equality; permit only
+known refusals and draft-only suggestions. A recovery-only marker is conditional on actual recovery.
+No accepted write or old successful scope is replayed. Strict independent build/package checks pass;
+exact OS/Main3522/Home restoration passes. Shipping code/APK and managed count remain D-440.
+
+[Secondary monetary OS evidence](quality/secondary-money-os-qualification.md).

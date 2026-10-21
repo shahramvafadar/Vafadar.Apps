@@ -2462,3 +2462,10 @@ The shared Android numeric adapter corrects three actual decimal-comma losses be
 Strict Windows/Android and complete Offline signed APK checks pass. This is a specific raw-input fix,
 not general ANR/crash, every keyboard, audible accessibility, phone/iOS/provider/Store or publication
 acceptance. See quality/android-numeric-input.md; no prior financial/full suite is replayed.
+
+## D-441 scoped secondary OS evidence
+
+Targeted secondary monetary/Settings/prompt/unit geometry passes204 observations/900 readings with
+unchanged complete source/base data and no accepted writes. Exact OS/Main restoration passes; no
+shipping code/APK or managed-count change. Household/header/outcome, spoken/device/iOS, QA-06 and
+external publication gates remain open. See [evidence](quality/secondary-money-os-qualification.md).

@@ -3332,3 +3332,12 @@ mappings without retaining views. Actual InputConnection observations differ fro
 publication tests. Reuse completed original fixture/source checkpoints with zero accepted writes;
 keep baseline and followup-only cases distinct. An empty password control checks masking without
 entering or reading credentials. General stability, remaining accessibility and external gates stand.
+
+## D-441 - Secondary monetary OS qualification without accepted writes
+
+Require complete original secondary accepted checkpoints before new OS geometry work. A bill native
+recovery marker is required only when its actual observer recovery exists. Keep known invalid-unit
+refusals, explicit unit-factory refusal and draft-only suggestions separate from accepted writes.
+Check native prompt full text/last-line height and44dp visible answer targets. Preserve historical
+saved-feedback captions as source-derived evidence, not new acceptance. Retain original source/base
+rows and old successes; restore exact OS/Main. Remaining geometry/spoken/stability gates stand.

@@ -3494,3 +3494,11 @@ Offline signed APK pass; Main upgrades without reset, retains raw1,25 in its exp
 without Save and restores My account/0.00 EUR with original OS values. Original ANR and transient null
 observations remain retained. See ../../quality/android-numeric-input.md. Continue only unresolved
 qualification and genuine observed defects; external gates and deferred Windows delivery stand.
+
+## D-441 - Secondary monetary OS batch delivered
+
+The three original completed sources provide204 observations/900 readings at actual OS200% across
+both widths, three languages and two themes without accepted write replay. Strict independent build,
+package and exact OS/Main restoration pass. See ../../quality/secondary-money-os-qualification.md.
+Continue uncovered household/header/rate-outcome geometry and supported remaining stability work;
+do not rerun completed scenes or promote this finite result into general accessibility acceptance.

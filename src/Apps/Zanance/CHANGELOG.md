@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Check secondary forms with larger system text (D-441)
+
+- Verify secondary monetary guides, Settings forecast prompts and unit definitions at actual200% text in two widths, three languages and both themes.
+- Preserve existing saved data and completed actions; restore emulator settings and the original Home.
+- Application behavior/APK remain unchanged; remaining accessibility and stability gates stay open.
+
 ### Preserve decimal input on Android (D-440)
 
 - Keep typed or pasted decimal commas instead of silently changing the amount before validation.

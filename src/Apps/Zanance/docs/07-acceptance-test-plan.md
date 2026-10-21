@@ -5100,3 +5100,11 @@ Complete original source/base rows stay unchanged, with no accepted Save or ledg
 observations do not add managed tests or prove every keyboard/composition/accessibility path. Strict
 platform/APK checks pass; retain original ANR and remaining stability/spoken/device/iOS/release gates.
 See quality/android-numeric-input.md.
+
+## D-441 - Targeted secondary monetary OS geometry
+
+Six original scopes complete204 observations/900 native readings: field96, Settings/prompt48,
+unit60 at actual OS200%,360/412dp,en/fa/de,Light/Dark. Full text/last-line height, raw inputs and
+native prompt44dp answer targets pass; complete source/base equality and zero accepted writes pass.
+Restore all recorded OS values and original Main3522/Home139 nodes except focus. Native observations
+are not managed tests or all-controls/audible/device/stability acceptance. See [evidence](quality/secondary-money-os-qualification.md).

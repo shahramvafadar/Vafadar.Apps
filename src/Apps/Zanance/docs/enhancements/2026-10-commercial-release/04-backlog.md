@@ -4306,3 +4306,14 @@ replayed. Strict builds and complete signed Offline APK pass; managed case count
 Continue only uncovered secondary/header/rate-outcome OS layouts and supported stability work;
 remaining spoken/device/iOS/provider/company/store/publication gates remain explicit.
 See [actual native input evidence](../../quality/android-numeric-input.md).
+
+### D-441 - Secondary monetary system-scale qualification complete
+
+204 observations/900 native readings qualify original secondary fields, Settings/native prompts and
+unit definitions at OS200%,360/412dp,en/fa/de and Light/Dark. Complete source/base equality, zero
+accepted writes and exact OS/Main3522 restoration pass. Shipping code/APK and managed count stay
+D-440; previous successful financial/platform/backend scopes are retained without replay.
+Next ready section: only uncovered household-authority, moved Home/Plans header and rate-outcome
+layouts. Preserve revocations and accepted metadata; do not resave or reseed for geometry. QA-06,
+audible reader clarity, physical-device/iOS and genuine external release gates remain open.
+See [evidence](../../quality/secondary-money-os-qualification.md).

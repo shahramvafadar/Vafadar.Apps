@@ -3205,3 +3205,10 @@ behavior.20 native input observations and four adapter guards pass without accep
 changes or successful old-suite replay. Strict builds and complete Offline signed APK pass. No managed
 case-count increase; QA-06, remaining accessibility/device/iOS and external gates remain open.
 See quality/android-numeric-input.md.
+
+## D-441 - Secondary monetary OS scopes complete
+
+204 new native observations/900 readings pass on the three original completed sources without a new
+accepted write, seed or successful-check replay. Exact OS/Main state restores. Application/APK and
+managed baseline stay D-440. Remaining household/header/rate-outcome geometry, general stability,
+spoken/device/iOS and external gates remain open. See [evidence](quality/secondary-money-os-qualification.md).

@@ -7909,3 +7909,12 @@ original complete source/base rows are unchanged and no accepted command is invo
 counts do not increase; parsers, schema, permissions and providers stay unchanged. Strict platform
 builds and complete signed Offline APK pass. Remaining stability/accessibility/device/iOS/external
 release acceptance stays open. See [native input evidence](../quality/android-numeric-input.md).
+
+### D-441 - Secondary monetary captions at actual system scale
+
+204 native observations/900 readings complete the targeted secondary fields, Settings/native
+forecast prompts and unit definitions at OS200%,360/412dp,en/fa/de and both themes. Complete original
+source/base rows and accepted receipts remain unchanged, with zero new accepted writes. Native
+prompt answers retain44dp targets. Exact OS/Main3522/Home state restores; shipping code/APK and
+managed baseline stay D-440. Remaining geometry/spoken/device/stability and external gates stand.
+See [evidence](../quality/secondary-money-os-qualification.md).

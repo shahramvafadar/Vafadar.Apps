@@ -2257,3 +2257,10 @@ before the form sees it. Preserve separators, signs, grouping, native digits and
 for original application validation. Retain numeric keyboard hints, secure masking and length limits;
 do not normalize a financial value silently. Actual InputConnection evidence is separate from layout
 or model-to-native publication evidence; see quality/android-numeric-input.md.
+
+## Secondary monetary system-scale evidence (D-441)
+
+Goal allocation/price, occurrence/bill, Settings estimate/native forecast prompts and unit-definition
+captions pass targeted actual OS200% geometry at360/412dp in three languages/both themes. Preserve
+native scaling, complete final-line height and raw input; native prompt answers retain44dp targets.
+This does not qualify every control or audible TalkBack. See [evidence](quality/secondary-money-os-qualification.md).

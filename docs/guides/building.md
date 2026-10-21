@@ -2160,3 +2160,12 @@ completed source/base and earlier frames. Compare actual
 InputConnection requested/native/model text and integer input flags; setting model raw text does not
 prove IME acceptance. Empty password probes never enter/read credentials. See Zanance's
 quality/android-numeric-input.md for declared evidence and remaining acceptance.
+
+### Secondary monetary system-scale scopes (D-441)
+
+Resume completed original secondary-fields/settings/units sources through review_money_os=true,
+review_os_width360/412 and one original route. Require accepted checkpoints, conditional bill
+recovery completion, actual font2/native width and focused independent ownership. Gate commands to
+known invalid-unit refusals, explicit factory refusal and draft-only suggestions. Keep stage/report
+identities separate from old success, verify complete source/base equality and restore exact OS/Main.
+See [native evidence](../../src/Apps/Zanance/docs/quality/secondary-money-os-qualification.md).

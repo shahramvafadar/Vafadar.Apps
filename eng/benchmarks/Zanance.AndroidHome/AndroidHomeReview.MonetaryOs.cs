@@ -24,6 +24,8 @@ internal static partial class AndroidHomeReview
         {
             ["account"] = "review_account_money", ["holding"] = "review_holding_money",
             ["entry"] = "review_entry_money", ["goal-budget"] = "review_goal_budget_money",
+            ["secondary-fields"] = "review_secondary_fields", ["secondary-settings"] = "review_secondary_settings",
+            ["secondary-units"] = "review_secondary_units",
         };
 
         /// <summary>Validates the actual independent OS configuration and an unambiguous existing monetary route.</summary>
@@ -38,7 +40,7 @@ internal static partial class AndroidHomeReview
                 || groups.Length != 1 || width is not (360 or 412)
                 || Math.Abs((resources?.Configuration?.FontScale ?? 0) - 2f) > 0.01f
                 || resources?.DisplayMetrics is not { Density: > 0 } metrics || Math.Abs(metrics.WidthPixels / metrics.Density - width) > 1
-                || new[] { "review_physical_rates", "review_secondary_settings", "review_secondary_fields", "review_secondary_units",
+                || new[] { "review_physical_rates",
                     "review_secondary_household", "review_account_currency_only", "review_account_default_only",
                     "review_plan_money_debt_receipt", "review_plan_money_submission_only" }.Any(flag => intent.GetBooleanExtra(flag, false)))
                 throw new IOException("One original resumed monetary route and actual OS200% width required.");
@@ -56,18 +58,40 @@ internal static partial class AndroidHomeReview
                 "entry" => ["entry-money-transfer-source.json", "entry-money-expense-source.json", "entry-money-split-source.json",
                     "entry-money-actions-complete.json", "entry-money-adoption-complete.json", "entry-money-repeat-complete.json"],
                 "goal-budget" => ["goal-native-accepted.json", "budget-native-accepted.json"],
+                "secondary-fields" => ["secondary-fields-goal-accepted.json", "secondary-fields-price-accepted.json",
+                    "secondary-fields-override-accepted.json", "secondary-fields-partial-accepted.json", "secondary-fields-bill-accepted.json"],
+                "secondary-settings" => ["secondary-settings-accepted.json", "secondary-settings-accepted.marker"],
+                "secondary-units" => ["secondary-units-accepted.json", "secondary-units-accepted.marker"],
                 _ => throw new IOException("Unknown original monetary scope."),
             };
-            if (files.Any(file => !File.Exists(Path.Combine(folder, file))))
-                throw new IOException("Complete original accepted receipts required; never seed or replay a writer.");
+            // A successful original bill needs no recovery marker; require it only if that recovery actually happened.
+            if (Name == "secondary-fields" && File.Exists(Path.Combine(folder, "secondary-fields-bill-observer-recovery.json"))
+                && !File.Exists(Path.Combine(folder, "secondary-fields-bill-native-readback.complete")))
+                throw new ReviewCheckException("Complete original bill recovery readback required.");
+            var missing = files.Where(file => !File.Exists(Path.Combine(folder, file))).ToArray();
+            if (missing.Length != 0)
+                throw new ReviewCheckException("Complete original accepted receipts required: " + string.Join(", ", missing));
         }
 
-        /// <summary>Allows only source reads and the known invalid purchase field refusal, never a new accepted write.</summary>
-        internal void RequireReadOnly(Page page, System.Windows.Input.ICommand command)
+        /// <summary>Allows source reads, known field/factory refusals and draft suggestions, never a new accepted write.</summary>
+        internal void RequireReadOnly(Page page, System.Windows.Input.ICommand command, bool refusedFactory = false)
         {
             if (Name == "account" && page.BindingContext is AccountDetailViewModel account && ReferenceEquals(command, account.CompareCommand)) return;
             if (Name == "holding" && page.BindingContext is AssetEventEditorViewModel { SecondAmountText: "not money" } holding
                 && ReferenceEquals(command, holding.SaveCommand)) return;
+            var changedUnit = Vafadar.Zanance.Core.Money.DisplayUnits.All.SingleOrDefault(row => row.CurrencyCode == "EUR")?.Exponent == 2;
+            if (Name == "secondary-fields" && changedUnit && page.BindingContext is Features.Plans.OccurrenceViewModel occurrence
+                && ((ReferenceEquals(command, occurrence.PayPartCommand) && occurrence.ActualAmountText == "1,234"
+                    && occurrence.PaymentUnitName == "EUR" && occurrence.PaymentFormatNote is not null)
+                    || (ReferenceEquals(command, occurrence.SaveChangeCommand) && occurrence.OverrideAmountText == "1,234"
+                    && occurrence.OverrideUnitName == "EUR" && occurrence.OverrideFormatNote is not null))) return;
+            if (Name == "secondary-fields" && changedUnit && page.BindingContext is Features.Plans.SettlementViewModel
+                { ActualText: "1,234", AmountError: not null, HasCommitted: false } bill && ReferenceEquals(command, bill.SaveCommand)) return;
+            if (Name == "secondary-settings" && changedUnit && page.BindingContext is Features.Settings.SettingsViewModel
+                { EssentialText: "1,234", EssentialError: not null } settings && ReferenceEquals(command, settings.SaveEssentialCommand)) return;
+            if (Name == "secondary-units" && page.BindingContext is Features.Rates.DisplayUnitsViewModel units
+                && ((refusedFactory && units.Name == "Original unit draft" && ReferenceEquals(command, units.AddCommand))
+                    || ReferenceEquals(command, units.UseTomanCommand))) return;
             throw new IOException("OS caption scope cannot invoke an accepted or unrelated command.");
         }
 
