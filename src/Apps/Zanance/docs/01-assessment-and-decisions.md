@@ -7921,3 +7921,28 @@ independent contexts; Join uses the original stored total. Raw/context revisions
 original writers; known acceptance remains final. 27 new focused source cases and 51 related prior cases
 pass across selective executions, with no full-suite or unrelated successful-check replay.
 [Original native/build evidence and retained failures](quality/entry-money-context.md). No schema/model/portable-format, permission/provider/SDK change. D-386 and external gates stand.
+
+## D-433 - Recover shared CI fixture and installer boundaries
+
+The D-422 and D-431 hosted test logs identify the same two failures: the mode-policy scanner treats
+review-only source fixtures as shipping readers, and a shared-membership Undo fixture supplies a
+fabricated group without the original deletion receipt required by D-414. D-431 Windows additionally
+refuses installer 18.11.12306.390 before compiling, matching official image 20261018.275.1 inventory.
+
+The scanner now names the 13 exact additional fixtures and validates their complete outer review-only
+build gates; it does not exempt the Diagnostics directory or ordinary Release readers. Seven new
+positive/negative gate cases prevent unsupported conditions, outer fallbacks and escaped source.
+The Undo policy fixture first obtains one real committed deletion receipt, then revokes membership.
+A new case proves refusal leaves both deleted rows and that original receipt intact, followed by
+successful original restoration when membership returns. No production commercial or provenance
+guard changes. Eight focused Core and 11 Data cases pass after the original failures are reproduced.
+
+The official installer metadata is added without changing either approved compiler hash/file-version
+pair, pinned MSVC/SDK, signature validation or immutable package contents.17 local toolchain cases
+pass on the existing 18.10.12201.205 installation and compiler 19.51.36257.0; other installer versions
+are metadata-only checks. Actual hosted compiler bytes and latest-commit recovery remain pending.
+Application sources, runtime behavior and the complete D-432 APK remain unchanged. Successful app,
+Android, backend, native financial and device checks are not replayed locally. D-386 and external
+gates remain unchanged.
+
+[Failure evidence and hosted acceptance](quality/ci-common-recovery.md).

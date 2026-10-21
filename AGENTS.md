@@ -3238,3 +3238,13 @@ meaning; Join uses the reviewed stored total. Validate raw/context revision unde
 Known acceptance never rearms. Native continuation requires exact source checkpoints; an accepted
 receipt without its final observer checkpoint refuses another Save. Await the original parent's full
 return publication before reading readiness. D-386 priorities and external gates stand.
+
+## D-433 - Preserve CI policy boundaries during fixture/toolchain recovery
+
+Keep mode-policy fixture exceptions explicit and verify each complete outer review-only build gate;
+never exempt an entire source directory or ordinary Release reader. Shared-membership Undo tests use
+an actual original committed deletion receipt before revoking membership; fabricated groups exercise
+a different provenance refusal. Installer inventory changes never approve compiler bytes. Retain exact
+compiler hash/file-version/signature, MSVC/SDK and immutable package requirements. Local metadata
+checks do not establish actual hosted success. App/device checks are not replayed for test-only changes;
+CI recovery requires the latest commit's actual workflow evidence. D-386 and external gates stand.

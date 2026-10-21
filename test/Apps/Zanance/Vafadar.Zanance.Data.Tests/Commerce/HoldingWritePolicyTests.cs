@@ -266,6 +266,24 @@ public sealed partial class HoldingWritePolicyTests : IDisposable
         Assert.Equal(before, await SnapshotAsync(f.Provider));
     }
 
+    /// <summary>A valid original Undo is not consumed by a shared-membership refusal.</summary>
+    [Fact]
+    public async Task Original_undo_receipt_survives_membership_refusal()
+    {
+        var f = await FixtureAsync(); f.Enable(ProductPlan.Pro, shared: true);
+        var original = await SnapshotAsync(f.Provider);
+        var removed = (await f.Holdings.DeleteEventAsync(f.Opening.Id, Ct)).Removed;
+        Assert.NotNull(removed); Assert.NotNull(removed.Receipt);
+        f.Enable(ProductPlan.Pro, shared: true, member: false);
+        var deleted = await SnapshotAsync(f.Provider);
+        var error = await Assert.ThrowsAsync<CommercialWriteRejectedException>(() => f.Holdings.RestoreAsync(removed, Ct));
+        Assert.Equal(FeaturePermission.RequiresMembership, error.Permission);
+        Assert.Equal(deleted, await SnapshotAsync(f.Provider));
+        f.Enable(ProductPlan.Pro, shared: true);
+        await f.Holdings.RestoreAsync(removed, Ct);
+        Assert.Equal(original, await SnapshotAsync(f.Provider));
+    }
+
     [Theory]
     [InlineData("type")]
     [InlineData("location")]
@@ -279,7 +297,16 @@ public sealed partial class HoldingWritePolicyTests : IDisposable
     [InlineData("import")]
     public async Task Personal_Pro_never_substitutes_for_shared_membership_at_write_boundaries(string operation)
     {
-        var f = await FixtureAsync(); f.Enable(ProductPlan.Pro, shared: true, member: false);
+        var f = await FixtureAsync(); HoldingGroup? undo = null;
+        if (operation == "undo")
+        {
+            // D-414 requires the original committed deletion receipt. Prove membership refusal with a
+            // valid receipt, rather than stopping earlier at the independent provenance boundary.
+            f.Enable(ProductPlan.Pro, shared: true);
+            undo = (await f.Holdings.DeleteEventAsync(f.Opening.Id, Ct)).Removed;
+            Assert.NotNull(undo); Assert.NotNull(undo.Receipt);
+        }
+        f.Enable(ProductPlan.Pro, shared: true, member: false);
         var before = await SnapshotAsync(f.Provider); var events = 0; f.Holdings.Changed += (_, _) => events++;
         var exception = await Assert.ThrowsAsync<CommercialWriteRejectedException>(async () =>
         {
@@ -288,7 +315,7 @@ public sealed partial class HoldingWritePolicyTests : IDisposable
                 case "default": await f.Holdings.EnsureDefaultLocationAsync("Place", Ct); break;
                 case "delete-event": await f.Holdings.DeleteEventAsync(f.Opening.Id, Ct); break;
                 case "delete-price": await f.Holdings.DeleteValuationAsync(f.Valuation.Id, Ct); break;
-                case "undo": await f.Holdings.RestoreAsync(new([f.Opening], []), Ct); break;
+                case "undo": await f.Holdings.RestoreAsync(undo!, Ct); break;
                 case "import": await f.Holdings.ImportAsync(new([], [], [], [], []), Ct); break;
                 default: await NewWorkAsync(f, operation); break;
             }

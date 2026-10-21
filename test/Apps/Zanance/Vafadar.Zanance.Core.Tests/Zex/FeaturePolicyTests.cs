@@ -59,33 +59,24 @@ public sealed class FeaturePolicyTests
         const string retainedFixture = "Diagnostics/RetainedAggregateReview.cs";
         var root = RepositoryPaths.Combine(App);
         var fixtureSource = File.ReadAllText(Path.Combine(root, retainedFixture));
-        var fixtureConditions = fixtureSource.Split('\n').Select(line => line.Trim())
-            .Where(line => line.StartsWith("#if", StringComparison.Ordinal)
-                || line.StartsWith("#elif", StringComparison.Ordinal)
-                || line.StartsWith("#else", StringComparison.Ordinal)
-                || line.StartsWith("#endif", StringComparison.Ordinal)).ToArray();
-        Assert.NotEmpty(fixtureConditions);
-        Assert.Equal("#if DEBUG || ZANANCE_INDEPENDENT_HOME_REVIEW", fixtureConditions[0]);
-        Assert.StartsWith(fixtureConditions[0], fixtureSource, StringComparison.Ordinal);
-        Assert.EndsWith("#endif", fixtureSource.TrimEnd(), StringComparison.Ordinal);
-        // Nested platform branches are valid; the outer independent-build gate must never have a Release fallback.
-        var depth = 0;
-        for (var index = 0; index < fixtureConditions.Length; index++)
-        {
-            var condition = fixtureConditions[index];
-            if (condition.StartsWith("#if", StringComparison.Ordinal)) { depth++; }
-            else if (condition.StartsWith("#endif", StringComparison.Ordinal))
-            {
-                Assert.True(depth > 0, "The independent fixture condition must remain balanced.");
-                depth--;
-                Assert.True(depth > 0 || index == fixtureConditions.Length - 1, "The fixture must stay inside its outer build condition.");
-            }
-            else { Assert.True(depth > 1, "The independent fixture must not compile an ordinary Release fallback."); }
-        }
-        Assert.Equal(0, depth);
+        Assert.StartsWith("#if DEBUG || ZANANCE_INDEPENDENT_HOME_REVIEW", fixtureSource, StringComparison.Ordinal);
+        AssertReviewBuildOnly(fixtureSource);
         Assert.Contains("AppInfo.Current.PackageName.StartsWith(\"pro.vafadar.zanance.storepreview.\", StringComparison.Ordinal)", fixtureSource, StringComparison.Ordinal);
         Assert.Contains("AppInfo.Current.PackageName == \"pro.vafadar.zanance.androidhomereview\"", fixtureSource, StringComparison.Ordinal);
-        string[] writers = ["Features/Settings/SettingsViewModel.cs", "Features/Onboarding/OnboardingViewModel.cs", "Diagnostics/DebugSnapshots.cs", retainedFixture];
+        // These exact source fixtures configure independent review data. Validate their complete outer
+        // build gate before excluding them; an ordinary Release reader anywhere still fails below.
+        string[] independentFixtures =
+        [
+            "Diagnostics/DebugSnapshots.EntryWorkflow.cs", "Diagnostics/HoldingArchiveNativeReview.cs",
+            "Diagnostics/HoldingDetailNativeReview.cs", "Diagnostics/HoldingEventNativeReview.cs",
+            "Diagnostics/HoldingEventPublicationNativeReview.cs", "Diagnostics/HoldingFeeActionNativeReview.cs",
+            "Diagnostics/HoldingHistoryNativeReview.cs", "Diagnostics/HoldingLocationNativeReview.cs",
+            "Diagnostics/HoldingOverviewNativeReview.cs", "Diagnostics/HoldingPriceNativeReview.cs",
+            "Diagnostics/HoldingQuantityNativeReview.cs", "Diagnostics/HoldingRefundNativeReview.cs",
+            "Diagnostics/PlanEditorNativeReview.cs",
+        ];
+        foreach (var fixture in independentFixtures) AssertReviewBuildOnly(File.ReadAllText(Path.Combine(root, fixture)));
+        string[] writers = ["Features/Settings/SettingsViewModel.cs", "Features/Onboarding/OnboardingViewModel.cs", "Diagnostics/DebugSnapshots.cs", retainedFixture, .. independentFixtures];
         var readers = Directory.EnumerateFiles(root, "*.*", SearchOption.AllDirectories)
             .Where(path => path.EndsWith(".cs", StringComparison.Ordinal) || path.EndsWith(".xaml", StringComparison.Ordinal))
             .Where(path => !path.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}", StringComparison.Ordinal)
@@ -104,6 +95,47 @@ public sealed class FeaturePolicyTests
             .ToList();
 
         Assert.Empty(readers);
+    }
+
+    /// <summary>Ordinary Release mode selection cannot hide behind a partial or unreviewed fixture gate.</summary>
+    [Theory]
+    [InlineData("#if DEBUG\nExperienceMode.Advanced;\n#endif")]
+    [InlineData("#if DEBUG || RELEASE\nExperienceMode.Advanced;\n#endif")]
+    [InlineData("#if DEBUG || ZANANCE_INDEPENDENT_HOME_REVIEW\n#else\nExperienceMode.Advanced;\n#endif")]
+    [InlineData("#if DEBUG || ZANANCE_INDEPENDENT_HOME_REVIEW\n#endif\nExperienceMode.Advanced;")]
+    public void Independent_fixture_cannot_escape_its_explicit_outer_gate(string source) =>
+        Assert.ThrowsAny<Xunit.Sdk.XunitException>(() => AssertReviewBuildOnly(source));
+
+    /// <summary>Known independent gates allow nested platform branches without an ordinary Release fallback.</summary>
+    [Theory]
+    [InlineData("#if DEBUG || ZANANCE_INDEPENDENT_HOME_REVIEW")]
+    [InlineData("#if (DEBUG && WINDOWS) || ZANANCE_INDEPENDENT_HOME_REVIEW")]
+    [InlineData("#if DEBUG && WINDOWS")]
+    public void Independent_fixture_retains_its_complete_review_only_gate(string gate) =>
+        AssertReviewBuildOnly(gate + "\n#if WINDOWS\nExperienceMode.Advanced;\n#else\nExperienceMode.Simple;\n#endif\n#endif");
+
+    private static void AssertReviewBuildOnly(string source)
+    {
+        var conditions = source.Split('\n').Select(line => line.Trim())
+            .Where(line => line.StartsWith("#if", StringComparison.Ordinal) || line.StartsWith("#elif", StringComparison.Ordinal)
+                || line.StartsWith("#else", StringComparison.Ordinal) || line.StartsWith("#endif", StringComparison.Ordinal)).ToArray();
+        Assert.NotEmpty(conditions);
+        Assert.Contains(conditions[0], new[] { "#if DEBUG || ZANANCE_INDEPENDENT_HOME_REVIEW", "#if (DEBUG && WINDOWS) || ZANANCE_INDEPENDENT_HOME_REVIEW", "#if DEBUG && WINDOWS" });
+        Assert.StartsWith(conditions[0], source, StringComparison.Ordinal);
+        Assert.EndsWith("#endif", source.TrimEnd(), StringComparison.Ordinal);
+        var depth = 0;
+        for (var index = 0; index < conditions.Length; index++)
+        {
+            var condition = conditions[index];
+            if (condition.StartsWith("#if", StringComparison.Ordinal)) depth++;
+            else if (condition.StartsWith("#endif", StringComparison.Ordinal))
+            {
+                Assert.True(depth > 0, "The original independent fixture must remain balanced."); depth--;
+                Assert.True(depth > 0 || index == conditions.Length - 1, "Every fixture statement must remain inside its outer review gate.");
+            }
+            else Assert.True(depth > 1, "An independent fixture cannot compile an ordinary Release fallback.");
+        }
+        Assert.Equal(0, depth);
     }
 
     [Fact]

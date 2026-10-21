@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep delivery checks aligned with original ownership (D-433)
+
+- Check independent review fixtures separately from shipping mode selection.
+- Exercise shared-membership refusal with the original Undo receipt.
+- Retain exact compiler checks when hosted installer metadata changes.
+- Application behavior and the D-432 APK are unchanged.
+
 ### Keep transaction amounts in their original units (D-432)
 
 - Preserve the original format and unit of each transfer amount, fee and expense detail.

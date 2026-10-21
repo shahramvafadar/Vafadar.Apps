@@ -4934,3 +4934,7 @@ independent contexts; Join uses the original stored total. Raw/context revisions
 original writers; known acceptance remains final.27 new focused source cases and51 related prior cases
 pass across selective executions, with no full-suite or unrelated successful-check replay.
 Windows:112 original observations across18 language/theme/width contexts; independent Release/AOT Android:40 observations across six language/theme contexts. Each platform invokes two original transaction Saves and one split Save, with exact monetary readback and unchanged base installation. Receipt/template and repeating-plan return do not post extra money. General Android ANR, physical-device coverage, iOS and release remain unaccepted. [Original native/build evidence and retained failures](quality/entry-money-context.md).
+
+## D-433 - Original CI regression boundaries
+
+Reproduce both original managed failures, then qualify the eight Core and 11 Data cases and17 local native-toolchain policy cases. Seven source-gate cases and one original-receipt/membership case are new. Latest hosted Windows build and complete test recovery remain pending. App/APK and existing runtime evidence stay D-432; no accepted native action or successful unrelated suite is replayed. [Evidence](quality/ci-common-recovery.md).

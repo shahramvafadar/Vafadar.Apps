@@ -2056,3 +2056,12 @@ financial receipts; live source continuation requires its complete financial-act
 Save to repair a failed observer. The independent Release/AOT caller uses `review_entry_money` in its
 existing `plan-form` phase, with the original run and explicit continuation. Ordinary Main qualification
 still requires a complete signed `Build-AndroidApk.ps1 -Offline` candidate and no-reset upgrade.
+
+### Hosted installer metadata versus compiler acceptance (D-433)
+
+The reviewed installer allowlist includes the official 18.11.12306.390 hosted inventory. This does not
+approve a new compiler: exact executable hash/file version, Microsoft signature and pinned MSVC/SDK
+still gate every native producer/check. Local installation-version fixtures are metadata-only. A new
+hosted executable or different immutable package must receive its own actual qualification; never
+make a hash/version condition permissive merely to clear CI. Application/APK remain unchanged by
+this delivery-check repair. Hosted success must be read from the latest commit's actual workflow.

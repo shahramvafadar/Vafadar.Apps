@@ -2337,3 +2337,7 @@ No schema/model/portable-format, permission/provider/SDK change. D-386 and exter
 ## D-432 qualification boundary
 
 Focused source and native transaction/split monetary checks pass. Final strict builds, complete signed offline APK and no-reset ordinary emulator upgrade are recorded in [Original native/build evidence and retained failures](quality/entry-money-context.md). The preserved initial independent Android ANR is not fixed or waived. This does not establish physical-device, TalkBack, iOS, provider, store or publication acceptance.
+
+## D-433 - Hosted CI recovery remains an explicit gate
+
+Local targeted policy tests and installer metadata checks pass; latest hosted recovery is pending. The compiler hash/signature/SDK and immutable-package guards remain mandatory. Application/APK and external/device/runtime acceptance stay D-432. [Evidence](quality/ci-common-recovery.md).

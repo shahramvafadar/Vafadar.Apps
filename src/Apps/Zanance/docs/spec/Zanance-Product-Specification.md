@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-10-21, D-432)
+## 31. Implementation Status (v1.1, scoped updates through 2026-10-21, D-433)
 
 This section records what the repository actually contains. "Verified" is qualified by each scenario's evidence:
 automated tests, running Windows layouts, targeted Android emulator checks or specifically recorded physical
@@ -7744,3 +7744,7 @@ independent contexts; Join uses the original stored total. Raw/context revisions
 original writers; known acceptance remains final. 27 new focused source cases and 51 related prior cases
 pass across selective executions, with no full-suite or unrelated successful-check replay.
 112 original Windows and 40 independent Release/AOT Android observations, exact source preservation, final strict builds and signed offline no-reset upgrade are qualified in [evidence](../quality/entry-money-context.md). These are focused additions, not a new full-suite baseline. Account/holding input contexts and D-386/external gates remain separate.
+
+## D-433 - Delivery verification recovery (hosted result pending)
+
+Two shared hosted test failures are reproduced and corrected without changing app behavior or production writer guards.19 focused managed cases include eight new cases;17 local native-toolchain cases retain exact compiler acceptance while adding official installer metadata. This is not a complete-suite baseline or proof of hosted recovery. Application/APK remain D-432. [Failure evidence and limits](../quality/ci-common-recovery.md).

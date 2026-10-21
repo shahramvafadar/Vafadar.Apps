@@ -219,3 +219,13 @@ The independent Android settings-read phase requires retained marked protected w
 comparison, checks ordinary/exclusive reads and retired key owners, and compares complete portable
 schema/typed rows in memory. It does not seed data, make keys, save money or qualify general startup.
 [Cases, actual native results and timing limits](../../src/Apps/Zanance/docs/quality/settings-startup-reader.md).
+
+## Original fixture boundaries and hosted recovery (D-433)
+
+The mode-policy source scanner lists independent mode-setting fixtures explicitly and verifies their
+entire outer review-only condition. Ordinary shipping readers remain forbidden. Negative gate cases
+cover an unsupported condition, an ordinary Release branch and source outside the reviewed gate.
+Original holding Undo policy checks first obtain a real deletion receipt; otherwise provenance refusal
+occurs before the intended membership boundary. A refused membership writer must not consume Undo.
+Use the failed method/cohort and its changed boundary checks, retaining unrelated successful results.
+[Hosted failure evidence and current acceptance](../../src/Apps/Zanance/docs/quality/ci-common-recovery.md).
