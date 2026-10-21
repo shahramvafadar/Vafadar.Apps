@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Verify currency-search input ownership (D-445)
+
+- Diagnose the difference between opening the currency list and focusing its search input on the emulator.
+- Verify native USD selection and discard without saving or changing existing data.
+- Prepare a separate signed phone probe; direct phone verification remains pending. Shipping behavior/APK are unchanged.
+
 ### Check protected household forms with larger text (D-444)
 
 - Verify original cost, individual shares and unsaved repayment fields at actual200% text in both widths, three languages and both themes.

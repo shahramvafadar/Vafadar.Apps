@@ -2495,3 +2495,15 @@ gates remain open. See [evidence](quality/rate-outcomes-os-qualification.md).
 no enrollment or accepted write and unchanged complete source/base data. Exact old APK/OS/Main
 restore; shipping app/APK stay D-440. Do not extend this result into general ANR/crash, hardware-key,
 audible/device/iOS or external release acceptance. See [evidence](quality/household-os-qualification.md).
+
+## D-445 - Diagnose original currency query input ownership
+
+Two original emulator scopes produce ten native observations: arrow-only list opening retains the
+name's modal-root focus; text sent there appends USD to the name. Explicit actual currency focus,
+filtered native USD selection and Cancel/Discard succeed with complete source/base equality and
+zero accepted writes. Activity.CurrentFocus alone is insufficient for modal ownership. A separate
+signed offline arm64 empty-source prerequisite builds without warnings; phone input waits for the
+requested exclusive coordination reply. Historical D-422 phone cause remains unproved. Shipping
+app/APK and managed baseline remain D-440; no successful financial action or geometry is replayed.
+
+See [currency focus evidence](quality/currency-input-focus-boundary.md).

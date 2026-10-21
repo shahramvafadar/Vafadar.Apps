@@ -766,3 +766,14 @@ Use `HouseholdMoneyHost` for an actual fresh fictional identity and signed owner
 no session or private key is passed in arguments. Its original protected cost then supplies the
 same read-only monetary UI states, with an actual new unsaved repayment editor and zero cash entries.
 See `eng/sync/HouseholdMoneyHost/README.md` for lifetime, ownership, continuation and scope limits.
+
+## Currency focus boundary (D-445)
+
+currency-focus requires review_run and a unique review_pass. The standard package resumes only the
+completed original physical/rate source; never seed or replay accepted holding events. The distinct
+ReviewCurrencyFocusPhone=true build uses pro.vafadar.zanance.currencyfocusreview and requires an
+empty protected source with no account/entry/type. Compile explicitly for the intended x64/arm64.
+Both use actual native name/currency input connections, owned popup USD selection and Cancel/Discard.
+Do not rerun a complete scope. Normal system font1 and app English/Light are required; never alter
+phone OS settings or bypass authentication. A compiled signed probe is not phone acceptance. See
+src/Apps/Zanance/docs/quality/currency-input-focus-boundary.md for original evidence and limits.

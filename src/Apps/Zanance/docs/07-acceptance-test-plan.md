@@ -5138,3 +5138,15 @@ original one cost/two contacts/zero repayments. No re-admission/authority refres
 Full native text/height/raw values and complete source/base equality pass. Restore exact old fixture
 APK and OS/Main139 nodes. This does not complete spoken/device/general stability/release acceptance.
 See [evidence](quality/household-os-qualification.md).
+
+## D-445 - Diagnose original currency query input ownership
+
+Two original emulator scopes produce ten native observations: arrow-only list opening retains the
+name's modal-root focus; text sent there appends USD to the name. Explicit actual currency focus,
+filtered native USD selection and Cancel/Discard succeed with complete source/base equality and
+zero accepted writes. Activity.CurrentFocus alone is insufficient for modal ownership. A separate
+signed offline arm64 empty-source prerequisite builds without warnings; phone input waits for the
+requested exclusive coordination reply. Historical D-422 phone cause remains unproved. Shipping
+app/APK and managed baseline remain D-440; no successful financial action or geometry is replayed.
+
+See [currency focus evidence](quality/currency-input-focus-boundary.md).

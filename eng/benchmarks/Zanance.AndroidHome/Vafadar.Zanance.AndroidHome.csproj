@@ -19,6 +19,11 @@
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
+  <!-- The separately identified physical focus probe owns no financial account, entry or type. -->
+  <PropertyGroup Condition="'$(ReviewCurrencyFocusPhone)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.currencyfocusreview</ApplicationId>
+    <DefineConstants>$(DefineConstants);CURRENCY_FOCUS_REVIEW</DefineConstants>
+  </PropertyGroup>
   <!-- D-436: only the explicit retained fictional package may inspect its original protected household UI. -->
   <PropertyGroup Condition="'$(ReviewHouseholdMoney)' == 'true'">
     <ApplicationId>pro.vafadar.zanance.householdlifecycle</ApplicationId>

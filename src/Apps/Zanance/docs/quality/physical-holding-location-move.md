@@ -59,3 +59,11 @@ normal-scale English physical move/place/dirty-discard/cold path. Other currenci
 attachment Undo, all-device coverage, D-386 general ANR/crash/accessibility, Mac/iOS, external
 providers, expert review, stores and release remain separate. Hosted exact-head CI is checked once
 separately; these local physical observations do not imply its result.
+
+## D-445 bounded emulator follow-up
+
+Two current owned emulator scopes reproduce name-retained focus after arrow invocation and qualify
+explicit actual currency input, native filtered USD selection and Cancel/Discard with complete
+source/base equality. They do not replay the D-422 financial events. The historical phone owner
+was not independently observed, so its cause remains unproved; direct physical USD qualification
+waits for an exclusive phone turn. See [focus evidence](currency-input-focus-boundary.md).

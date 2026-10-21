@@ -4356,3 +4356,19 @@ Next: audit canonical remaining QA-06,cold/low-memory/performance and audible/re
 acceptance. Preserve completed D-438 through D-444 geometry and all rejected runtime/clock/bridge
 experiments; repeat only for new evidence or actual changes. Genuine external release gates stand.
 See [evidence](../../quality/household-os-qualification.md).
+
+### D-445 - Diagnose original currency query input ownership
+
+Two original emulator scopes produce ten native observations: arrow-only list opening retains the
+name's modal-root focus; text sent there appends USD to the name. Explicit actual currency focus,
+filtered native USD selection and Cancel/Discard succeed with complete source/base equality and
+zero accepted writes. Activity.CurrentFocus alone is insufficient for modal ownership. A separate
+signed offline arm64 empty-source prerequisite builds without warnings; phone input waits for the
+requested exclusive coordination reply. Historical D-422 phone cause remains unproved. Shipping
+app/APK and managed baseline remain D-440; no successful financial action or geometry is replayed.
+
+See [currency focus evidence](../../quality/currency-input-focus-boundary.md).
+
+Next: direct physical USD focus/query only after the exclusive phone turn; preserve the completed
+emulator scenes and D-422 opening/move. Other supported stability/audible/platform/external gates
+remain separate; no duplicate financial acceptance or rejected runtime experiment.

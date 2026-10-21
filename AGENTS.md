@@ -3372,3 +3372,13 @@ fresh transport Identity/enrollment and never renew/revoke membership for geomet
 protected current authority and unchanged complete source/base/profile data. Only known changed-unit
 refusals are invocable; a missing repayment permits an unsaved draft, not a seed. Restore exact prior
 fixture APK and OS/Main. Finite geometry does not establish general stability or release acceptance.
+
+## D-445 - Actual currency input ownership
+
+A dropdown arrow toggles its list; do not infer keyboard focus transfer. Establish the actual owned
+modal-root FindFocus/HasWindowFocus before native text input; Activity.CurrentFocus may name another
+window. Observe nonfocusable popup rows only through owned native panels. Preserve original retained
+sources and accepted receipts. A separate empty-source probe creates no financial account/type/event;
+select only in an unsaved actual draft and use actual Cancel/Discard. Completed native scenes are
+not replayed. Emulator reproduction does not establish historical physical cause. Phone input waits
+for an explicit coordinated free turn; elapsed time is not a reply. D-386/external gates remain.

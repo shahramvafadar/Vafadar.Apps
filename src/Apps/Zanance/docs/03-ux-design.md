@@ -2289,3 +2289,11 @@ historical presentation, not a new current-rate lifecycle. See [evidence](qualit
 OS200%,360/412dp,en/fa/de and both themes. Full field-local captions and native raw values retain
 original meaning without accepted writes. Actual cached signed authority must remain valid; do not
 renew it to make a view pass. See [evidence](quality/household-os-qualification.md).
+
+## D-445 - Observe the actual currency search owner
+
+A dropdown arrow and editable search are distinct native targets. Diagnostic text input verifies
+the actual owned modal-root focus before typing; opening a list is not proof of search focus.
+Observe the real filtered row and selected currency independently. Matching emulator reproduction
+does not establish the historical Samsung cause. No shipping interaction is changed in this batch.
+See [evidence](quality/currency-input-focus-boundary.md).

@@ -21,7 +21,9 @@ namespace Vafadar.Zanance.App;
 internal static partial class AndroidHomeReview
 {
     /// <summary>The independent install allowed to own these fictitious workloads.</summary>
-#if HOUSEHOLD_MONEY_FRESH
+#if CURRENCY_FOCUS_REVIEW
+    internal const string Package = "pro.vafadar.zanance.currencyfocusreview";
+#elif HOUSEHOLD_MONEY_FRESH
     internal const string Package = "pro.vafadar.zanance.householdmoneyreview";
 #elif HOUSEHOLD_MONEY_REVIEW
     internal const string Package = "pro.vafadar.zanance.householdlifecycle";
@@ -95,6 +97,13 @@ internal static partial class AndroidHomeReview
                 if (RedirectedAncestors(root).Length != 0 || Directory.EnumerateFileSystemEntries(root).Any())
                     throw new ReviewCheckException("Fresh original transaction detail fixture required.");
                 await WriteReportAsync(root, phase, await ReviewEntryDetailAsync(app, services, root, comparison!, ct), ct);
+            }
+            else if (phase == "currency-focus")
+            {
+                if (Package == "pro.vafadar.zanance.currencyfocusreview") Directory.CreateDirectory(root);
+                if (!Directory.Exists(root) || RedirectedAncestors(root).Length != 0)
+                    throw new ReviewCheckException("Retained original currency source required.");
+                await WriteReportAsync(root, phase, await ReviewCurrencyFocusAsync(app, services, root, comparison!, ct), ct);
             }
             else if (phase == "currency-input")
             {
