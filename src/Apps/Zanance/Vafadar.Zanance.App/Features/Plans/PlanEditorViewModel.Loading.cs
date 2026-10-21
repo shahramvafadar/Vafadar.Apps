@@ -319,8 +319,9 @@ public sealed partial class PlanEditorViewModel
             Accounts = EnsureChoice(Accounts, entry.AccountId); Account = Accounts.FirstOrDefault(a => a.Id == entry.AccountId);
             if (entry.ToAccountId is { } to) Accounts = EnsureChoice(Accounts, to);
             ToAccount = Accounts.FirstOrDefault(a => a.Id == entry.ToAccountId);
-            AmountText = MoneyText.ForInput(entry.Amount, CurrencyOf(entry.AccountId), _localization.CurrentCulture);
-            ToAmountText = entry.ToAmount is { } value && ToAccount is not null ? MoneyText.ForInput(value, ToAccount.CurrencyCode, _localization.CurrentCulture) : string.Empty;
+            InitializeMoneyInputs();
+            AmountText = _amountInput!.ForInput(entry.Amount);
+            ToAmountText = entry.ToAmount is { } value && ToAccount is not null ? _destinationInput!.ForInput(value) : string.Empty;
             PresetIndex = 3; Start = entry.Date.AddMonths(1); Note = entry.Note ?? string.Empty; BuildCategories(entry.CategoryId);
         }
         else

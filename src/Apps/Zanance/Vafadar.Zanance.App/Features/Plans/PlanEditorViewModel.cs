@@ -113,7 +113,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
     /// <summary>Gets whether the original loaded, not-yet-committed draft can accept user input.</summary>
     public bool CanInteract => _ready && FormVisible && !IsBusy && !_committed && _saveSession?.Accepted != true && _entryOrigin?.IsOwned != false;
     /// <summary>Gets whether an explicit Save may run; committed split continuations cannot be resubmitted.</summary>
-    public bool CanSave => CanInteract && !HasNoAccounts && !_reviewingWork && !_workFailed && !_workRetired && _work is not null && WorkRestriction is null;
+    public bool CanSave => CanInteract && MoneyContextsReady && !HasNoAccounts && !_reviewingWork && !_workFailed && !_workRetired && _work is not null && WorkRestriction is null;
     /// <summary>Gets whether a pending writer must finish before the form leaves.</summary>
     public bool CanLeave => !IsBusy;
     /// <summary>Gets the actual Close/Cancel caption after a successful write.</summary>
@@ -492,7 +492,6 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
 
     private void Load(Schedule schedule)
     {
-        var culture = _localization.CurrentCulture;
         CanChangeKind = !_hasHistory;
         KindIndex = Math.Max(0, Array.IndexOf(Kinds, schedule.Kind));
         Name = schedule.Name;
@@ -505,8 +504,9 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
             ToAccount = Accounts.FirstOrDefault(a => a.Id == to);
         }
 
-        AmountText = schedule.Amount is { } amount ? MoneyText.ForInput(amount, CurrencyOf(schedule.AccountId), culture) : string.Empty;
-        ToAmountText = schedule.ToAmount is { } toAmount && ToAccount is not null ? MoneyText.ForInput(toAmount, ToAccount.CurrencyCode, culture) : string.Empty;
+        InitializeMoneyInputs();
+        AmountText = schedule.Amount is { } amount ? _amountInput!.ForInput(amount) : string.Empty;
+        ToAmountText = schedule.ToAmount is { } toAmount && ToAccount is not null ? _destinationInput!.ForInput(toAmount) : string.Empty;
 
         var rule = schedule.Rule;
         (PresetIndex, UnitIndex) = (rule.Frequency, rule.Interval) switch
@@ -718,6 +718,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
         {
             Preview.Add(date);
         }
+        RefreshMoneyInputs();
     }
 
     private RecurrenceRule BuildRule() => new()
@@ -744,6 +745,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
     Task Presentation.IThemeAware.RefreshThemeAsync()
     {
         BuildCategories(Categories.FirstOrDefault(c => c.IsSelected)?.Id);
+        RefreshMoneyInputs();
         return Task.CompletedTask;
     }
 
@@ -832,20 +834,31 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
 
     private async Task SaveAsync()
     {
-        if (!CanSave) return;
+        var session = _saveSession; var owner = _loadSession;
+        if (session is null || owner is null) return;
+        var epoch = _formEpoch; var raw = Snapshot();
+        var sourceInput = _amountInput; var destinationInput = _destinationInput; var moneyRevision = _moneyRevision;
+        bool Current() => epoch == _formEpoch && !_formDeparted && ReferenceEquals(owner, _loadSession)
+            && ReferenceEquals(session, _saveSession) && _entryOrigin?.IsOwned != false;
+        bool SubmissionCurrent() => Current() && raw == Snapshot() && moneyRevision == _moneyRevision && MoneyContextsReady
+            && ReferenceEquals(sourceInput, _amountInput) && ReferenceEquals(destinationInput, _destinationInput);
+        // Capture before feedback: native bindings/property observers may edit the draft while validation is published.
+        RefreshMoneyInputs();
+        if (!CanSave || !SubmissionCurrent()) return;
 
         SaveError = null;
+        if (!SubmissionCurrent()) return;
         var culture = _localization.CurrentCulture;
 
         // D-99: a missing name/amount must not postpone destination feedback until a second Save attempt.
         var rule = BuildRule();
         var validation = PlanDraftValidation.Validate(new PlanValidationInput
         {
-            Name = Name, AmountText = AmountText, AmountRequired = ShowAmount,
+            Name = Name, AmountText = AmountText, AmountRequired = ShowAmount, AmountContext = _amountInput,
             AccountId = Account?.Id, CurrencyCode = CurrencyCode,
             IsTransfer = IsTransfer, DestinationId = ToAccount?.Id,
             DestinationCurrencyCode = ToAccount?.CurrencyCode ?? CurrencyCode,
-            DestinationAmountText = ToAmountText, DestinationAmountRequired = ShowToAmount, Rule = rule,
+            DestinationAmountText = ToAmountText, DestinationAmountRequired = ShowToAmount, Rule = rule, DestinationAmountContext = _destinationInput,
         }, culture);
         string? Text(string? key) => key is null ? null : _translator[key];
         NameError = Text(validation.NameErrorKey);
@@ -854,6 +867,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
         ToAccountError = Text(validation.DestinationErrorKey);
         ToAmountError = Text(validation.DestinationAmountErrorKey);
         RuleError = Text(validation.RuleErrorKey);
+        if (!SubmissionCurrent()) { if (Current()) RefreshMoneyInputs(); return; }
         if (validation.HasErrors || Account is null)
         {
             ValidationFailed?.Invoke(this, EventArgs.Empty);
@@ -862,18 +876,13 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
         var amount = validation.Amount;
         var toAmount = validation.DestinationAmount;
 
-        var session = _saveSession; var owner = _loadSession;
-        if (session is null || owner is null) return;
-        var epoch = _formEpoch; var raw = Snapshot();
-        bool Current() => epoch == _formEpoch && !_formDeparted && ReferenceEquals(owner, _loadSession)
-            && ReferenceEquals(session, _saveSession) && _entryOrigin?.IsOwned != false;
         var (previous, target) = BuildWriteCandidate(rule); target.Amount = amount; target.ToAmount = toAmount;
         var saved = false; IsBusy = true;
         try
         {
             await owner.ValidateAsync();
-            if (!Current() || raw != Snapshot()) return;
-            if (!await session.SaveAsync(_hasHistory ? previous : null, target, () => Current() && raw == Snapshot()))
+            if (!SubmissionCurrent()) { if (Current()) RefreshMoneyInputs(); return; }
+            if (!await session.SaveAsync(_hasHistory ? previous : null, target, SubmissionCurrent))
             { if (Current()) SaveError = _translator["Plan_SplitConflict"]; return; }
             if (!Current()) return;
             saved = session.Accepted; _committed = saved; _snapshot = Snapshot(); RefreshAccess();
@@ -884,6 +893,7 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
             if (!Current()) return;
             if (session.Accepted)
             { _committed = true; _snapshot = Snapshot(); SaveError = _translator["Plan_SavedNeedsReview"]; RefreshAccess(); return; }
+            if (!SubmissionCurrent()) { RefreshMoneyInputs(); return; }
             if (exception is PlanEditorAccessChangedException)
             {
                 // Explain current denial without silently granting a new writer to the old raw form.

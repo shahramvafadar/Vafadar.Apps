@@ -8408,4 +8408,10 @@ Original-XML SHA-256: {5}</value>
   <data name="Plan_SourceUnavailable" xml:space="preserve">
     <value>Die ursprüngliche Planung, Schuld oder Buchung ist nicht mehr verfügbar. Es wurde keine neue Planung erstellt. Laden Sie das Formular erneut oder schließen Sie es.</value>
   </data>
+  <data name="Plan_OriginalInputFormat" xml:space="preserve">
+    <value>Dieser Betrag behält sein ursprüngliches Zahlenformat, zum Beispiel {0}. Löschen Sie ihn, bevor Sie einen neuen Betrag im aktuellen Format eingeben.</value>
+  </data>
+  <data name="Plan_InputUnitChanged" xml:space="preserve">
+    <value>Die Währung oder Anzeigeeinheit hat sich geändert. Löschen Sie diesen Betrag und geben Sie ihn erneut in {0} ein.</value>
+  </data>
 </root>

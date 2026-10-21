@@ -3307,9 +3307,13 @@ Keep27 new focused behaviors and retained source/native/build evidence in the D-
 Full history and recurrence semantics remain, and accepted account/financial actions are not replayed
 for observer repair. No schema/model/provider/permission or external acceptance change is inferred.
 
-Next deliver D-430 original plan monetary-draft context as one batch: reproduce culture/unit/currency
-changes with actual application sources, retain raw interpretation and require explicit monetary
-reentry when needed, then qualify original writer and native transfer/debt views. The current Save
-still consults CurrentCulture and ambient display units; D-429 does not claim those display-change
-semantics qualified. Do not replay unrelated successful workflows. D-386 keeps dedicated runtime/
-Android accessibility after ready development, and provider/Mac/store/publication gates remain.
+D-430 completes original plan monetary context: immutable culture/currency/explicit-unit capture,
+separate source/destination semantics, complete reentry and original writer revision guards.22 new
+focused cases, selective affected checks and original native/package evidence are recorded in
+[qualification](../../quality/plan-money-context.md), including failures and acceptance limits.
+
+Next deliver D-431 original goal/budget monetary units as one batch. Current source retains parsing
+cultures but money goals identify only currency, and goal/budget parsers still consult ambient units.
+Reproduce actual-source regressions before changes; preserve quantity rules, raw/readiness ownership,
+known acceptance and prior native checkpoints. No repeated accepted Save/seed or unrelated successful
+suite. D-386 keeps runtime/Android accessibility after ready development; external gates stand.

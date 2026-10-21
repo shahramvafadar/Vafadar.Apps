@@ -8439,4 +8439,10 @@ Original XML SHA-256: {5}</value>
   <data name="Plan_SourceUnavailable" xml:space="preserve">
     <value>The original plan, debt or transaction is no longer available. No new plan was created. Load again or close the form.</value>
   </data>
+  <data name="Plan_OriginalInputFormat" xml:space="preserve">
+    <value>This amount keeps its original number format, for example {0}. Clear it before entering a new amount in the current format.</value>
+  </data>
+  <data name="Plan_InputUnitChanged" xml:space="preserve">
+    <value>The currency or display unit changed. Clear this amount and enter it again in {0}.</value>
+  </data>
 </root>

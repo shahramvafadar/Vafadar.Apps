@@ -2,6 +2,7 @@ using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Localization;
 using Vafadar.Zanance.App.Diagnostics;
+using Vafadar.Zanance.App.Features.Home;
 using Vafadar.Zanance.App.Features.Plans;
 using Vafadar.Zanance.App.Presentation;
 
@@ -12,11 +13,31 @@ internal static partial class AndroidHomeReview
     /// <summary>Checks actual original plan/account actions and complete native form publication in independent Release/AOT.</summary>
     private static async Task<object> ReviewPlanEditorAsync(App app, IServiceProvider services, string folder, string comparison, CancellationToken ct)
     {
-        await AwaitReimbursementFocusAsync(ct); app.OpenReviewShell(); await AwaitRootHomeAsync(ct);
+        if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_money_debt_receipt", false) == true)
+            return await PlanEditorNativeReview.VerifyDebtMoneyReceiptAsync(services, folder, ct);
+        async Task AwaitOriginalPlanWindowAsync()
+        {
+            while (true)
+            {
+                var current = Shell.Current?.CurrentPage ?? app.Windows[0].Page;
+                if (current?.Handler?.PlatformView is Android.Views.View { IsShown: true, IsAttachedToWindow: true, HasWindowFocus: true } native
+                    && native.Context?.PackageName == Package) return;
+                await Task.Delay(100, ct);
+            }
+        }
+        // A retained Activity reference can lag its focused native page after a system ANR dialog.
+        // Require the actual owned view's focus; never treat an obscured page as rendered acceptance.
+        await AwaitOriginalPlanWindowAsync(); app.OpenReviewShell();
+        while (Shell.Current.CurrentPage is not HomePage { IsLoaded: true }) await Task.Delay(50, ct);
+        await AwaitOriginalPlanWindowAsync();
+        await ((HomePage)Shell.Current.CurrentPage).PendingPublication.WaitAsync(ct);
         var baseline = await ImportFinancialNativeReview.StoredAsync(services, ct);
+        var moneyOnly = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_money", false) == true;
+        var debtOnly = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_money_debt_only", false) == true;
+        var submissionOnly = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_money_submission_only", false) == true;
         var resumeEmpty = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_resume_empty", false) == true;
         var resumeActions = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_resume_actions", false) == true;
-        using var original = resumeActions ? await PlanEditorNativeReview.ContinueAsync(services, Path.Combine(folder, "original-plan-form"), ct) : resumeEmpty
+        using var original = resumeActions && moneyOnly ? await PlanEditorNativeReview.ContinueMoneyAsync(services, Path.Combine(folder, "original-plan-form"), ct) : resumeActions ? await PlanEditorNativeReview.ContinueAsync(services, Path.Combine(folder, "original-plan-form"), ct) : resumeEmpty
             ? await PlanEditorNativeReview.ContinueEmptyAsync(services, Path.Combine(folder, "original-plan-form"), ct)
             : await PlanEditorNativeReview.CreateAsync(services, Path.Combine(folder, "original-plan-form"), ct);
         var local = services.GetRequiredService<ILocalizationService>(); var theme = services.GetRequiredService<ThemeService>();
@@ -65,6 +86,13 @@ internal static partial class AndroidHomeReview
         }
         async Task Observe(Page page, string stage)
         {
+            var retainedObservation = Path.Combine(folder, stage + ".json");
+            if (moneyOnly && File.Exists(retainedObservation))
+            {
+                using var receipt = JsonDocument.Parse(await File.ReadAllTextAsync(retainedObservation, ct));
+                if (receipt.RootElement.GetProperty("NativeReadings").EnumerateArray().Any(row => row.TryGetProperty("Text", out var text) && text.GetString() == "1.234")) return;
+                if (!File.Exists(retainedObservation + ".incomplete-original")) File.Copy(retainedObservation, retainedObservation + ".incomplete-original");
+            }
             // A system ANR dialog is not a raw-field mismatch. Retain this exact page/process until its own window returns.
             while (page.Handler?.PlatformView is not Android.Views.View { IsShown: true, HasWindowFocus: true })
             {
@@ -103,6 +131,7 @@ internal static partial class AndroidHomeReview
                 }
                 foreach (var label in PlanEditorNativeReview.Views(page).OfType<Label>().Where(Visible)
                     .Where(l => !string.IsNullOrEmpty(l.Text) && (l.Text == model.LoadError || l.Text == model.SaveError || l.Text == model.WorkText
+                        || moneyOnly && (l.Text == model.AmountError || l.Text == model.ToAmountError || l.Text == model.AmountFormatNote || l.Text == model.DestinationAmountFormatNote || l.Text == model.AmountUnitName || l.Text == model.DestinationAmountUnitName)
                         || l.Text == original.Translator["Plan_FormLoading"] || l.Text == original.Translator["Editor_RetryRead"])))
                 {
                     if (label.Handler?.PlatformView is not Android.Widget.TextView { Layout: { } layout } text || text.LineCount == 0
@@ -119,22 +148,35 @@ internal static partial class AndroidHomeReview
         }
         try
         {
-            if (!resumeActions) await original.RunActionsAsync(Invoke, Observe, ct, skipNoAccountObservation: resumeEmpty && File.Exists(Path.Combine(folder, "native-no-account.json")));
-            foreach (var name in new[] { "en", "fa", "de" })
+            if (moneyOnly && !resumeActions) await original.PrepareMoneyAsync(ct);
+            else if (!resumeActions) await original.RunActionsAsync(Invoke, Observe, ct, skipNoAccountObservation: resumeEmpty && File.Exists(Path.Combine(folder, "native-no-account.json")));
+            if (!debtOnly && !submissionOnly) foreach (var name in new[] { "en", "fa", "de" })
             foreach (var value in new[] { ThemeChoice.Light, ThemeChoice.Dark })
             {
                 await SetTheme(value); await SetLanguageAsync(app, local, name, ct);
                 var context = name + "-" + value;
+                if (moneyOnly) { await original.MoneyContextAsync(context, Invoke, Observe, !File.Exists(Path.Combine(folder, "original-plan-form", "money-save-verified.json")), ct); continue; }
                 if (resumeActions && File.Exists(Path.Combine(folder, context + "-missing.json"))) continue;
                 await original.ContextAsync(context, Invoke, Observe, ct,
                     resumeReady: resumeActions && File.Exists(Path.Combine(folder, context + "-ready.json")),
                     resumeReviewed: resumeActions && File.Exists(Path.Combine(folder, context + "-work-reviewed.json")),
                     resumeWorkFailed: resumeActions && File.Exists(Path.Combine(folder, context + "-work-failed.json")));
             }
-            await original.ArchivedReferenceAsync(Observe, ct);
+            if (submissionOnly)
+            {
+                await SetTheme(ThemeChoice.Light); await SetLanguageAsync(app, local, "en", ct);
+                await original.SubmissionMoneyAsync(Invoke, Observe, ct);
+            }
+            if (debtOnly)
+            {
+                await SetTheme(ThemeChoice.Light); await SetLanguageAsync(app, local, "en", ct);
+                using var debt = await PlanEditorNativeReview.CreateAsync(services, Path.Combine(folder, "money-debt-fixture"), ct);
+                await debt.PrepareMoneyAsync(ct); await debt.DebtMoneyAsync(Observe, ct);
+            }
+            if (!moneyOnly) await original.ArchivedReferenceAsync(Observe, ct);
             if (baseline != await ImportFinancialNativeReview.StoredAsync(services, ct)) throw new ReviewCheckException("Original base store changed.");
             return new { OriginalBaseStoreUnchanged = true, NoAcceptedCommandReplayed = true, OriginalEmptyPreparedContinuation = resumeEmpty, OriginalAcceptedActionsReused = resumeActions,
-                NativeAccountSaves = 1, NativePlanSaves = 2, NativeLedgerPosts = 0, Observations = original.Observations, Device = DeviceEvidence() };
+                NativeAccountSaves = moneyOnly ? 0 : 1, NativePlanSaves = debtOnly || submissionOnly ? 0 : moneyOnly ? 1 : 2, NativeLedgerPosts = 0, Observations = original.Observations, Device = DeviceEvidence() };
         }
         finally
         {

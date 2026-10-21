@@ -2178,3 +2178,13 @@ native Back share the original discard lifetime. Nested account creation returns
 debt/lent direction, unknown principal, date and currency stay explicit. Known saved work shows Close
 and cannot be submitted again after notification failure. See the D-429 quality record for actual
 normal-scale platform observations; general runtime/accessibility completion stays deferred.
+
+## Original plan monetary input (D-430)
+
+Keep a raw amount beside its original currency/display-unit label. A formatting preference change
+keeps the original parser and shows a complete direction-safe example. Changing currency or unit
+requires clearing before fresh input; appending a digit does not acknowledge another meaning.
+Transfer destination amounts have their own label, culture and error. Feedback grows with native
+text; unknown/hidden amounts do not show irrelevant examples. Never convert or rewrite typed money
+to make a changed display preference appear valid. Original Save remains disabled until required
+monetary reentry is complete. See [native evidence](quality/plan-money-context.md).

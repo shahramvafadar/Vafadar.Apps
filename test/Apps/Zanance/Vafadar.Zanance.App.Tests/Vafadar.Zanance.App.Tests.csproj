@@ -4,6 +4,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/PlanAccountHandoff.cs" Link="Application/PlanAccountHandoff.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/PlanEditorLoadSession.cs" Link="Application/PlanEditorLoadSession.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/PlanEditorViewModel.Loading.cs" Link="Application/PlanEditorViewModel.Loading.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/PlanEditorViewModel.Money.cs" Link="Application/PlanEditorViewModel.Money.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Plans/PlanEditorSaveSession.cs" Link="Application/PlanEditorSaveSession.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/EntryPlanOrigin.cs" Link="Application/EntryPlanOrigin.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Entries/EntryEditorLoadSession.cs" Link="Application/EntryEditorLoadSession.cs" />

@@ -75,12 +75,19 @@ public static class MoneyText
     /// </summary>
     public static string ForInput(long minor, string currencyCode, CultureInfo culture, bool useUnit = true)
     {
+        DisplayUnits.TryGet(currencyCode, out var unit);
+        return ForInput(minor, currencyCode, culture, useUnit ? unit : null);
+    }
+
+    /// <summary>Formats input using an explicit captured display unit; null means the ISO major unit, regardless of ambient preferences.</summary>
+    public static string ForInput(long minor, string currencyCode, CultureInfo culture, DisplayUnit? unit)
+    {
         ArgumentNullException.ThrowIfNull(culture);
-        var currency = CurrencyOf(currencyCode);
-        if (useUnit && DisplayUnits.TryGet(currency.Code, out var unit))
+        var currency = CurrencyOf(currencyCode); ValidateInputUnit(currency, unit);
+        if (unit is not null)
         {
             // D-86: take the magnitude after decimal conversion; Int64.MinValue has no positive Int64 counterpart.
-            var value = decimal.Abs(ToDecimal(minor, currency));
+            var value = decimal.Abs(minor / (decimal)Pow10(currency.MinorDigits + unit.Exponent));
             return value.ToString("F" + DecimalsOf(value, currency.MinorDigits + unit.Exponent), culture);
         }
 
@@ -90,13 +97,21 @@ public static class MoneyText
     /// <summary>
     /// Parses a user-entered amount like <see cref="MoneyAmount.TryParse"/>; with a display unit the text is in that
     /// unit (FX-07). Up to two decimals are read first, so "1,250" stays a grouped thousand; only when that fails are
-    /// as many decimals accepted as one minor unit needs (what <see cref="ForInput"/> writes). The result is always in
+    /// as many decimals accepted as one minor unit needs (what <see cref="ForInput(long, string, CultureInfo, bool)"/> writes). The result is always in
     /// minor units of the currency.
     /// </summary>
     public static bool TryParse(string? text, Currency currency, CultureInfo culture, out long minor)
     {
         ArgumentNullException.ThrowIfNull(currency);
-        if (!DisplayUnits.TryGet(currency.Code, out var unit))
+        DisplayUnits.TryGet(currency.Code, out var unit);
+        return TryParse(text, currency, culture, unit, out minor);
+    }
+
+    /// <summary>Parses with the original explicit unit without rereading global preferences; null preserves ISO major units.</summary>
+    public static bool TryParse(string? text, Currency currency, CultureInfo culture, DisplayUnit? unit, out long minor)
+    {
+        ArgumentNullException.ThrowIfNull(currency); ArgumentNullException.ThrowIfNull(culture); ValidateInputUnit(currency, unit);
+        if (unit is null)
         {
             return MoneyAmount.TryParse(text, currency, culture, out minor);
         }
@@ -142,6 +157,25 @@ public static class MoneyText
     /// <summary>Returns the label of amounts of a currency: the user's display unit name or the ISO code.</summary>
     public static string UnitName(string? currencyCode) =>
         DisplayUnits.TryGet(currencyCode, out var unit) ? unit.Name : currencyCode ?? string.Empty;
+
+    /// <summary>Shows a valid bounded input example in the original culture/unit, with a complete direction-safe monetary label.</summary>
+    public static string InputExample(Currency currency, CultureInfo culture, DisplayUnit? unit)
+    {
+        ArgumentNullException.ThrowIfNull(currency); ArgumentNullException.ThrowIfNull(culture); ValidateInputUnit(currency, unit);
+        var digits = currency.MinorDigits + (unit?.Exponent ?? 0);
+        var value = currency.MinorDigits == 0 ? 1234m : 1234.5m;
+        value /= unit?.Factor ?? 1;
+        // The existing parser accepts three-digit groups; do not illustrate unsupported grouping shapes.
+        var format = (NumberFormatInfo)culture.NumberFormat.Clone(); format.NumberGroupSizes = [3];
+        var number = value.ToString("N" + digits, format);
+        return $"{LeftToRightIsolate}{LeftToRightMark}{number} {unit?.Name ?? currency.Code}{LeftToRightMark}{PopDirectionalIsolate}";
+    }
+
+    private static void ValidateInputUnit(Currency currency, DisplayUnit? unit)
+    {
+        if (unit is not null && (!unit.IsValid || !string.Equals(unit.CurrencyCode, currency.Code, StringComparison.OrdinalIgnoreCase)))
+            throw new ArgumentException("A valid display unit for the original currency is required.", nameof(unit));
+    }
 
     private static Currency CurrencyOf(string currencyCode) => Currencies.TryGet(currencyCode, out var known) ? known : new Currency(currencyCode, 2);
 

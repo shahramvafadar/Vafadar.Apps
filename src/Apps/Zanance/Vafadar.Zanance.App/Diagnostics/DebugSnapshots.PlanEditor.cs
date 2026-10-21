@@ -22,10 +22,24 @@ internal static partial class DebugSnapshots
         var observationRun = Environment.GetEnvironmentVariable("VAFADAR_PLAN_FORM_OBSERVATION_RUN");
         var captionsOnly = Environment.GetEnvironmentVariable("VAFADAR_PLAN_FORM_CAPTIONS_ONLY") == "1";
         var archivedOnly = Environment.GetEnvironmentVariable("VAFADAR_PLAN_FORM_ARCHIVED_ONLY") == "1";
+        var moneyOnly = Environment.GetEnvironmentVariable("VAFADAR_PLAN_MONEY_REVIEW") == "1";
+        var debtOnly = Environment.GetEnvironmentVariable("VAFADAR_PLAN_MONEY_DEBT_ONLY") == "1";
+        var submissionOnly = Environment.GetEnvironmentVariable("VAFADAR_PLAN_MONEY_SUBMISSION_ONLY") == "1";
         var retained = string.IsNullOrEmpty(observationRun) ? source : Path.Combine(Path.GetDirectoryName(folder)!, observationRun);
-        bool Completed(string stage) => File.Exists(Path.Combine(source, stage, "observation.json")) || File.Exists(Path.Combine(retained, stage, "observation.json"));
+        bool Completed(string stage)
+        {
+            foreach (var path in new[] { Path.Combine(source, stage, "observation.json"), Path.Combine(retained, stage, "observation.json") })
+            {
+                if (!File.Exists(path)) continue;
+                if (!moneyOnly) return true;
+                using var receipt = JsonDocument.Parse(File.ReadAllText(path));
+                if (receipt.RootElement.GetProperty("NativeReadings").EnumerateArray().Any(row => row.TryGetProperty("Text", out var text) && text.GetString() == "1.234")) return true;
+            }
+            return false;
+        }
         using var original = source == folder
             ? await PlanEditorNativeReview.CreateAsync(services, Path.Combine(source, "original-plan-form"), CancellationToken.None)
+            : moneyOnly ? await PlanEditorNativeReview.ContinueMoneyAsync(services, Path.Combine(source, "original-plan-form"), CancellationToken.None)
             : await PlanEditorNativeReview.ContinueAsync(services, Path.Combine(source, "original-plan-form"), CancellationToken.None);
         bool Visible(Element item)
         {
@@ -33,11 +47,24 @@ internal static partial class DebugSnapshots
                 if (parent is VisualElement visual && !visual.IsVisible) return false;
             return true;
         }
+        Task ScrollOriginalAsync(ScrollView viewport, VisualElement target)
+        {
+            if (viewport.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ScrollViewer native
+                || target.Handler?.PlatformView is not Microsoft.UI.Xaml.FrameworkElement field)
+                throw new IOException("Original native plan viewport required.");
+            var position = field.TransformToVisual(native).TransformPoint(new Windows.Foundation.Point());
+            var wanted = Math.Clamp(native.VerticalOffset + position.Y, 0, native.ScrollableHeight);
+            // WinUI emits no ViewChanged for a redundant/clamped scroll. Use its real Scroll pattern without awaiting that absent event.
+            if (native.ScrollableHeight > 0 && Math.Abs(wanted - native.VerticalOffset) > 1
+                && FrameworkElementAutomationPeer.CreatePeerForElement(native)?.GetPattern(PatternInterface.Scroll) is IScrollProvider scroll)
+                scroll.SetScrollPercent(-1, wanted * 100 / native.ScrollableHeight);
+            return Task.Delay(30);
+        }
         async Task Invoke(Page page, System.Windows.Input.ICommand command)
         {
             var button = PlanEditorNativeReview.Views(page).OfType<Button>().Single(b => ReferenceEquals(b.Command, command));
             for (Element? parent = button.Parent; parent is not null; parent = parent.Parent)
-                if (parent is ScrollView viewport) { await viewport.ScrollToAsync(button, ScrollToPosition.MakeVisible, false); break; }
+                if (parent is ScrollView viewport) { await ScrollOriginalAsync(viewport, button); break; }
             await Task.Delay(100);
             if (!Visible(button) || button.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button { IsEnabled: true, ActualWidth: >= 44, ActualHeight: >= 44 } native
                 || FrameworkElementAutomationPeer.CreatePeerForElement(native)?.GetPattern(PatternInterface.Invoke) is not IInvokeProvider invoke)
@@ -46,6 +73,7 @@ internal static partial class DebugSnapshots
         }
         async Task Observe(Page page, string stage)
         {
+            if (moneyOnly && Completed(stage)) return;
             await Task.Delay(150);
             var readings = new List<object>();
             if (page.BindingContext is PlanEditorViewModel model)
@@ -56,7 +84,7 @@ internal static partial class DebugSnapshots
                 var viewport = page.FindByName<ScrollView>("ValidationViewport");
                 foreach (var input in PlanEditorNativeReview.Views(page).OfType<InputView>().Where(Visible))
                 {
-                    await viewport.ScrollToAsync(input, ScrollToPosition.MakeVisible, false); await Task.Delay(25);
+                    await ScrollOriginalAsync(viewport, input); await Task.Delay(25);
                     if (input.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBox native || native.Text.Replace("\r\n", "\n").Replace('\r', '\n') != (input.Text ?? string.Empty).Replace("\r\n", "\n").Replace('\r', '\n'))
                     {
                         await File.WriteAllTextAsync(Path.Combine(folder, "input-failure.json"), JsonSerializer.Serialize(new
@@ -68,7 +96,7 @@ internal static partial class DebugSnapshots
                 }
                 foreach (var label in PlanEditorNativeReview.Views(page).OfType<Label>().Where(Visible).Where(l => l.Text == model.LoadError || l.Text == model.SaveError || l.Text == model.WorkText))
                     CheckCaption(label);
-                if (captionsOnly)
+                if (captionsOnly || moneyOnly)
                 {
                     if (model.Loading.IsLoading && !PlanEditorNativeReview.Views(page).OfType<Label>().Any(l => Visible(l) && l.Text == original.Translator["Plan_FormLoading"]))
                         throw new IOException("Original plan loading caption was not translated.");
@@ -82,7 +110,9 @@ internal static partial class DebugSnapshots
                             throw new IOException("Original plan Retry caption was not translated.");
                     }
                 }
-                await viewport.ScrollToAsync(0, 0, false);
+                if (viewport.Handler?.PlatformView is Microsoft.UI.Xaml.Controls.ScrollViewer { ScrollableHeight: > 0, VerticalOffset: > 0 } nativeViewport
+                    && FrameworkElementAutomationPeer.CreatePeerForElement(nativeViewport)?.GetPattern(PatternInterface.Scroll) is IScrollProvider originalScroll)
+                    originalScroll.SetScrollPercent(-1, 0);
             }
             var output = Path.Combine(folder, stage); Directory.CreateDirectory(output);
             await CaptureWindowAsync(app.Windows[0], Path.Combine(output, "plan.png"));
@@ -92,19 +122,35 @@ internal static partial class DebugSnapshots
         }
         try
         {
-            if (source == folder) await original.RunActionsAsync(Invoke, Observe, CancellationToken.None);
+            if (moneyOnly && source == folder) await original.PrepareMoneyAsync(CancellationToken.None);
+            else if (source == folder) await original.RunActionsAsync(Invoke, Observe, CancellationToken.None);
+            var moneySaved = File.Exists(Path.Combine(source, "original-plan-form", "money-save-verified.json"));
             if (archivedOnly) await original.ArchivedReferenceAsync(Observe, CancellationToken.None);
-            else foreach (var name in new[] { "en", "fa", "de" })
+            else if (!debtOnly && !submissionOnly) foreach (var name in new[] { "en", "fa", "de" })
             foreach (var value in new[] { ThemeChoice.Light, ThemeChoice.Dark })
             foreach (var width in new[] { 360, 412, 1280 })
             {
                 await SetStoreThemeAsync(app, theme, value); await SetLanguageAsync(app, local, name);
                 app.Windows[0].Width = width; app.Windows[0].Height = 820;
                 var context = name + "-" + value + "-" + width;
+                if (moneyOnly) { await original.MoneyContextAsync(context, Invoke, Observe, !moneySaved, CancellationToken.None); moneySaved = true; continue; }
                 if (captionsOnly) { await original.CaptionsAsync(context, Observe, CancellationToken.None); continue; }
                 if (Completed(context + "-missing")) continue;
                 await original.ContextAsync(context, Invoke, Observe, CancellationToken.None,
                     resumeReady: Completed(context + "-ready"), resumeReviewed: Completed(context + "-work-reviewed"));
+            }
+            if (submissionOnly)
+            {
+                await SetStoreThemeAsync(app, theme, ThemeChoice.Light); await SetLanguageAsync(app, local, "en");
+                app.Windows[0].Width = 412; app.Windows[0].Height = 820;
+                await original.SubmissionMoneyAsync(Invoke, Observe, CancellationToken.None);
+            }
+            if (debtOnly)
+            {
+                await SetStoreThemeAsync(app, theme, ThemeChoice.Light); await SetLanguageAsync(app, local, "en");
+                app.Windows[0].Width = 412; app.Windows[0].Height = 820;
+                using var debt = await PlanEditorNativeReview.CreateAsync(services, Path.Combine(folder, "money-debt-fixture"), CancellationToken.None);
+                await debt.PrepareMoneyAsync(CancellationToken.None); await debt.DebtMoneyAsync(Observe, CancellationToken.None);
             }
             if (baseline != await ImportFinancialNativeReview.StoredAsync(services, CancellationToken.None))
                 throw new IOException("Original base installation rows changed.");
@@ -112,13 +158,15 @@ internal static partial class DebugSnapshots
             {
                 Package = AppInfo.Current.PackageName, ProcessId = Environment.ProcessId, Captures = captures,
                 OnlySeparateFictitiousLedgerChanged = true, OriginalBaseStoreUnchanged = true,
-                NativeAccountSaves = 1, NativePlanSaves = 2, NativeLedgerPosts = 0, NoAcceptedCommandReplayed = true,
+                NativeAccountSaves = moneyOnly ? 0 : 1, NativePlanSaves = debtOnly || submissionOnly ? 0 : moneyOnly ? 1 : 2, NativeLedgerPosts = 0, NoAcceptedCommandReplayed = true,
                 Observations = original.Observations,
             }));
         }
         finally
         {
-            await original.LeaveAsync(); await SetStoreThemeAsync(app, theme, choice);
+            // Monetary cases already retired their fixture page. Its host Home uses separate services and is not part of this observation.
+            if (!moneyOnly) await original.LeaveAsync();
+            await SetStoreThemeAsync(app, theme, choice);
             await SetLanguageAsync(app, local, language.CultureName);
         }
     }

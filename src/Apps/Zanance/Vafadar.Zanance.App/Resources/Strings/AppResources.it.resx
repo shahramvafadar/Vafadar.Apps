@@ -8397,4 +8397,10 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Plan_SourceUnavailable" xml:space="preserve">
     <value>Il piano, il debito o la transazione originale non è più disponibile. Non è stato creato un nuovo piano. Ricarica il modulo oppure chiudilo.</value>
   </data>
+  <data name="Plan_OriginalInputFormat" xml:space="preserve">
+    <value>Questo importo mantiene il formato numerico originale, ad esempio {0}. Cancellalo prima di inserire un nuovo importo nel formato attuale.</value>
+  </data>
+  <data name="Plan_InputUnitChanged" xml:space="preserve">
+    <value>La valuta o l’unità di visualizzazione è cambiata. Cancella questo importo e inseriscilo di nuovo in {0}.</value>
+  </data>
 </root>

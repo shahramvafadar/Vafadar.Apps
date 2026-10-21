@@ -21,7 +21,7 @@ using Vafadar.Zanance.Data.Commerce;
 namespace Vafadar.Zanance.App.Diagnostics;
 
 /// <summary>One independent original file and actual production plan/account pages shared by native platform checks.</summary>
-internal sealed class PlanEditorNativeReview : IDisposable
+internal sealed partial class PlanEditorNativeReview : IDisposable
 {
     /// <summary>Owns only the independent original fixture services.</summary>
     internal readonly ServiceProvider Services;

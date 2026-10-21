@@ -2014,3 +2014,22 @@ owned page focus across a system dialog; do not declare such a dialog a product 
 D-429 packaging may use process-local UseArtifactsOutput/ArtifactsPath with the existing APK script
 to place intermediates on a spacious task-owned drive. Restore those environment values afterwards.
 Keep the final complete signed candidate in its recorded project-owned artifact folder.
+## Original plan monetary-context review (D-430)
+
+`Run-StoreDrafts.ps1 -PlanEditorReview -PlanMoneyReview` runs only the original monetary-context
+matrix in a fresh independent Windows installation and non-input desktop. Source/destination
+format, changed-unit refusal and explicit reentry are checked on the actual production page.
+One native plan Save is consumed before fallible observations; no ledger payment is posted.
+Retain the exact original source and complete observations when continuing. A live completed
+source may be read-only evidence only after its verified money-Save checkpoint; no writer is replayed.
+`-PlanMoneyDebtOnly` additionally requires that completed `-PlanEditorSourceRun` and observes a new
+separate existing-debt fixture without Save. It is not a notification or physical-device test.
+`-PlanMoneySubmissionOnly` uses the same completed source for two refused native submissions while
+validation changes raw money, comparing every source row and never posting the newer amount.
+Independent Android debt/submission reports use distinct immutable phase names. Report recovery
+only rereads original rows and native observations; it does not seed or invoke a financial action.
+
+When the repository volume is nearly full, set process-local `VAFADAR_REVIEW_BUILD_ROOT` to a fresh
+task-owned directory on a volume with sufficient space, then restore its previous value in finally.
+Never reuse a nonempty alternate build directory for another live review. Keep source fixture/output
+ownership and negative observations; an expired wait never authorizes accepted-action replay.

@@ -8408,4 +8408,10 @@
   <data name="Plan_SourceUnavailable" xml:space="preserve">
     <value>برنامه، بدهی یا تراکنش اصلی دیگر در دسترس نیست. برنامهٔ تازه‌ای ساخته نشده است. فرم را دوباره بارگذاری کنید یا ببندید.</value>
   </data>
+  <data name="Plan_OriginalInputFormat" xml:space="preserve">
+    <value>قالب عددی اولیهٔ این مبلغ حفظ شده است؛ برای نمونه «{0}». برای ورود مبلغ با قالب فعلی، ابتدا آن را پاک کنید.</value>
+  </data>
+  <data name="Plan_InputUnitChanged" xml:space="preserve">
+    <value>ارز یا واحد نمایش تغییر کرده است. این مبلغ را پاک کنید و دوباره با واحد «{0}» وارد کنید.</value>
+  </data>
 </root>

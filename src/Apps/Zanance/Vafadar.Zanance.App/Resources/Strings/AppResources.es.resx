@@ -8377,4 +8377,10 @@ SHA-256 del XML original: {5}</value>
   <data name="Plan_SourceUnavailable" xml:space="preserve">
     <value>El plan, la deuda o la transacción original ya no está disponible. No se ha creado ningún plan nuevo. Vuelve a cargar el formulario o ciérralo.</value>
   </data>
+  <data name="Plan_OriginalInputFormat" xml:space="preserve">
+    <value>Este importe conserva su formato numérico original, por ejemplo {0}. Bórralo antes de introducir un nuevo importe con el formato actual.</value>
+  </data>
+  <data name="Plan_InputUnitChanged" xml:space="preserve">
+    <value>Ha cambiado la moneda o la unidad de visualización. Borra este importe y vuelve a introducirlo en {0}.</value>
+  </data>
 </root>

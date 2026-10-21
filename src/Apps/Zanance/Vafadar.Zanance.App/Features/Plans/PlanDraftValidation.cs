@@ -13,6 +13,9 @@ public sealed record PlanValidationInput
     /// <summary>Gets the source amount text exactly as entered.</summary>
     public string AmountText { get; init; } = string.Empty;
 
+    /// <summary>Gets the original source parser when the actual form captured it; null retains the legacy validation entry point.</summary>
+    public MoneyInputContext? AmountContext { get; init; }
+
     /// <summary>Gets whether the current amount mode requires a positive source amount.</summary>
     public bool AmountRequired { get; init; }
 
@@ -33,6 +36,9 @@ public sealed record PlanValidationInput
 
     /// <summary>Gets the destination amount text exactly as entered.</summary>
     public string DestinationAmountText { get; init; } = string.Empty;
+
+    /// <summary>Gets the separately captured destination parser, independent of the source amount's edit culture.</summary>
+    public MoneyInputContext? DestinationAmountContext { get; init; }
 
     /// <summary>Gets whether the editor exposes a required cross-currency destination amount.</summary>
     public bool DestinationAmountRequired { get; init; }
@@ -85,7 +91,7 @@ public static class PlanDraftValidation
         string? amountError = null;
         if (input.AmountRequired && input.AccountId is not null)
         {
-            if (MoneyText.TryParse(input.AmountText, Currencies.Get(input.CurrencyCode), culture, out var parsed) && parsed > 0)
+            if (TryAmount(input.AmountText, input.CurrencyCode, culture, input.AmountContext, out var parsed) && parsed > 0)
             { amount = parsed; }
             else { amountError = "Plan_AmountMustBePositive"; }
         }
@@ -100,7 +106,7 @@ public static class PlanDraftValidation
             // A missing destination has no currency yet. Keep the amount hidden until the user selects one.
             if (input.DestinationAmountRequired && input.DestinationId is not null)
             {
-                if (MoneyText.TryParse(input.DestinationAmountText, Currencies.Get(input.DestinationCurrencyCode), culture,
+                if (TryAmount(input.DestinationAmountText, input.DestinationCurrencyCode, culture, input.DestinationAmountContext,
                     out var parsedTo) && parsedTo > 0)
                 { destinationAmount = parsedTo; }
                 else { destinationAmountError = "LedgerError_DestinationAmountRequired"; }
@@ -118,5 +124,12 @@ public static class PlanDraftValidation
             Amount = amount,
             DestinationAmount = destinationAmount,
         };
+    }
+
+    private static bool TryAmount(string text, string currencyCode, CultureInfo culture, MoneyInputContext? original, out long minor)
+    {
+        var currency = Currencies.Get(currencyCode); minor = 0;
+        return original is null ? MoneyText.TryParse(text, currency, culture, out minor)
+            : string.Equals(original.Currency.Code, currency.Code, StringComparison.OrdinalIgnoreCase) && original.TryParse(text, out minor);
     }
 }

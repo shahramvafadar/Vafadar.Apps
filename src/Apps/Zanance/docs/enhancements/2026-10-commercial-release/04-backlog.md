@@ -3979,13 +3979,20 @@ rearm.27 focused new source behaviors, affected selective continuations and reso
 qualification are recorded in [original plan evidence](../../quality/plan-editor-ownership.md).
 No successful unrelated suite or accepted native action is replayed. D-386 and external gates stand.
 
-### Next complete monetary-draft context batch (D-430)
+### D-430 - Original plan monetary context
 
-Qualify and bind the plan form's raw amount and destination amount to their original parse culture,
-currency and display-unit context across display/account changes, nested return and readonly refresh.
-The current plan form still validates with CurrentCulture and ambient display units at Save, unlike
-the original-context goal/budget forms. Establish exact actual-source regressions before changing it;
-never reinterpret a dirty amount or silently relabel it as another currency/unit. Complete validation,
-explicit reentry/review behavior, original writer submission and actual native transfer/debt views as
-one delivery. Preserve D-429 source/ownership/history evidence rather than replaying its accepted
-account/plan actions. Dedicated runtime/accessibility remain after ready feature development.
+Implemented immutable source/destination parse culture, currency and explicit display-unit capture.
+Display changes preserve raw text and original labels/examples; changed units/currencies require
+complete reentry. Original writer checks retain context identity and edit revision.22 new focused
+cases and selective related checks pass, with preserved accepted native Save and incomplete-only
+observation continuation. [Native/build evidence and limits](../../quality/plan-money-context.md).
+No schema/model/format, permission/provider/SDK change. D-386 and external gates remain.
+
+### Next complete original goal/budget monetary-unit batch (D-431)
+
+Current source preserves parse cultures, but goal money UnitKey includes only currency and both goal/
+budget Save still read ambient display units. Reproduce those exact source behaviors, then bind goal
+target/contribution and budget total/category amounts to immutable original monetary units with explicit
+reentry and original writer checks. Preserve quantity dimensions, known acceptance and existing raw/
+readiness ownership; do not replay D-430 accepted native actions or successful unrelated suites.
+Dedicated runtime/accessibility remain after ready development; external gates are unchanged.

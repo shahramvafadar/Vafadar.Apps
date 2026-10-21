@@ -7883,3 +7883,17 @@ The original recurrence anchor, saved payment amounts and occurrence facts remai
 precedes fallible notifications, so a saved form cannot rearm. No schema/model/compiled-model, portable
 format, permission, provider or SDK change. Focused source/native/build evidence and limitations:
 [original plan editor qualification](quality/plan-editor-ownership.md).
+
+## D-430 - Original plan monetary context
+
+Source and destination raw inputs retain immutable culture, known ISO currency and explicit display
+unit through display changes and read-only publication. The existing central monetary parser gains
+an explicit-unit overload; ambient callers keep their previous behavior. An example explains the
+original format. A changed currency/unit retains its old label and requires complete clearing and
+reentry. Hidden/unknown inputs do not post stale money. Writer guards retain both context identities
+and a monetary revision; an edit followed by identical text cannot revive an old submission.
+Known acceptance remains final.22 added focused cases, affected parser/validator/resource checks,
+retained actual native matrices, final package and negative evidence are documented in
+[monetary-context qualification](quality/plan-money-context.md). No schema/model/format, permission,
+provider or SDK change. D-431 addresses the separate ambient-unit gap in goal/budget monetary drafts.
+D-386 runtime/accessibility priority and external gates remain unchanged.

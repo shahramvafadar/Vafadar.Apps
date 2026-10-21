@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Preserve the meaning of plan amounts (D-430)
+
+- Keep each typed amount's original number format when display preferences change.
+- Changing currency or display unit requires clearing and entering that amount again.
+- Show the original currency/unit and a format example; handle transfer amounts independently.
+- Refuse an older pending Save after monetary input changes, even if its text is restored.
+
 ### Keep original plan and debt drafts safe (D-429)
 
 - Show complete plan fields only after loading; missing plans stay unavailable with clear feedback.

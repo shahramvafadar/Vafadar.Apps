@@ -2996,3 +2996,11 @@ money. Known acceptance precedes observers and cannot rearm.27 focused new actua
 pass across retained cohorts; affected prior failures are corrected selectively, without a full-suite
 replay. [Source/native/build evidence and limits](quality/plan-editor-ownership.md). No schema/model,
 compiled-model, portable-format, permission/provider/SDK change. D-386 and external gates remain.
+
+## D-430 - Original plan monetary contexts
+
+Implemented original source/destination culture/currency/display-unit capture, growing native feedback,
+clear-and-reenter semantics and original writer revision guards.22 new focused cases and selective
+related checks pass; [native/build evidence](quality/plan-money-context.md) retains incomplete observations,
+accepted writes and runtime limits. Next: D-431 original goal/budget monetary units, preserving existing
+quantity rules and accepted source/native evidence. D-386 and external gates remain separate.

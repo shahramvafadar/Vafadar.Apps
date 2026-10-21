@@ -3202,3 +3202,16 @@ recorded money. Consume acceptance before notification; failed observers leave a
 saved form. Retire reminder/confirmation callbacks with the original frame. Preserve accepted native
 actions and source checkpoints; continue failed observations without another account/plan Save.
 D-386 runtime/accessibility order and external acceptance gates remain unchanged.
+
+## D-430 - Original monetary meaning in plan drafts
+
+Capture each raw source/destination amount's immutable parse culture, ISO currency and explicit
+display unit. Display changes never reinterpret typed money. Keep its original label/example;
+currency/unit changes require clearing and actual reentry, never a partial edit or automatic
+conversion. Hidden/unknown inputs neither post stale amounts nor show irrelevant format feedback.
+Retain contexts through read-only refresh and nested return. Original writer guards include input
+identity and monetary edit revision; identical text after another edit cannot revive pending work.
+Preserve known acceptance and original native checkpoints. Observe fully realized account choices
+before introducing a fictitious draft, and continue only incomplete observations. Actual focused
+native views, not a stale Activity reference, establish independent rendering ownership. Retain
+D-386 priorities and all physical/provider/Mac/store/publication gates.

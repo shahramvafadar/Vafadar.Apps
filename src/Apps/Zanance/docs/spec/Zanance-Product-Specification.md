@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-10-20, D-421)
+## 31. Implementation Status (v1.1, scoped updates through 2026-10-21, D-430)
 
 This section records what the repository actually contains. "Verified" is qualified by each scenario's evidence:
 automated tests, running Windows layouts, targeted Android emulator checks or specifically recorded physical
@@ -7709,3 +7709,14 @@ money. Known acceptance precedes observers and cannot rearm.27 focused new actua
 pass across retained cohorts; affected prior failures are corrected selectively, without a full-suite
 replay. [Source/native/build evidence and limits](../quality/plan-editor-ownership.md). No schema/model,
 compiled-model, portable-format, permission/provider/SDK change. D-386 and external gates remain.
+
+## D-430 - Original monetary meaning in plans
+
+Each raw source/destination amount keeps immutable original parse culture, ISO currency and explicit
+display unit through display/account/readiness changes. Original labels/examples remain visible;
+currency/unit changes require clearing and actual reentry. Hidden/unknown amounts do not post stale
+money. Detached original writer guards include input context and edit revision.22 new focused cases
+pass, with selective affected parser/validator/resource checks rather than a full-suite rerun.
+[Native/build evidence and limits](../quality/plan-money-context.md). No schema/model/portable-format,
+permission/provider/SDK change; D-386 and external gates remain. Goal/budget ambient-unit behavior
+remains the next separate D-431 batch, not covered by the original-culture guarantee alone.

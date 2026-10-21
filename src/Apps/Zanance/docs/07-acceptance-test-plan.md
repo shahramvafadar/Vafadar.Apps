@@ -4901,3 +4901,12 @@ money. Known acceptance precedes observers and cannot rearm.27 focused new actua
 pass across retained cohorts; affected prior failures are corrected selectively, without a full-suite
 replay. [Source/native/build evidence and limits](quality/plan-editor-ownership.md). No schema/model,
 compiled-model, portable-format, permission/provider/SDK change. D-386 and external gates remain.
+
+## D-430 / AT-430 - Original plan monetary interpretation
+
+22 new cases cover immutable explicit-unit interpretation and actual SQLite plan flows, including
+independent transfer formats, explicit reentry, hidden/unknown input, original refresh, stored-value
+initialization and two real SaveChanges retirement boundaries. Affected parser/validator/resource
+checks pass selectively. Original native transfer/debt observations and accepted Save checkpoints
+are retained without another financial command. See [qualified evidence and negative observations](quality/plan-money-context.md).
+No physical-device, OS accessibility, notification, iOS, provider, store or release acceptance is inferred.

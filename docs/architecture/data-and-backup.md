@@ -2629,3 +2629,12 @@ Original pending writer/document completion is awaited before retained refresh. 
 cannot be reused by another session. Both duplicate fees receive new ids; original audit timestamps
 follow the existing writer. There is no entity/schema/compiled-model or portable-format change.
 Dynamic aggregate overlap/choice/writer/Undo is the separate D-428 boundary.
+## Original plan monetary input (D-430)
+
+`MoneyInputContext` captures a known currency, read-only culture and explicit immutable display unit
+for one raw input. The central `MoneyText` explicit-unit overloads never reread ambient preferences;
+null explicitly means ISO major units. Existing overloads preserve ambient behavior for callers
+that have not migrated. Plan source/destination contexts survive display changes and read-only
+publication. Changed currency/unit requires complete reentry, with original labels retained.
+The original writer also checks context identity and monetary edit revision before acceptance.
+This changes no stored minor-unit amount, schema, compiled model, portable backup or recovery format.

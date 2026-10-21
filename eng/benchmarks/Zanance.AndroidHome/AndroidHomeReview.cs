@@ -51,7 +51,10 @@ internal static partial class AndroidHomeReview
                 var resumeActions = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_resume_actions", false) == true;
                 if (resumeEmpty && resumeActions || RedirectedAncestors(root).Length != 0 || !resumeEmpty && !resumeActions && Directory.EnumerateFileSystemEntries(root).Any())
                     throw new ReviewCheckException("Fresh original plan fixture required.");
-                await WriteReportAsync(root, phase, await ReviewPlanEditorAsync(app, services, root, comparison!, ct), ct);
+                var debtReport = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_money_debt_only", false) == true
+                    || Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_money_debt_receipt", false) == true;
+                var submissionReport = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_plan_money_submission_only", false) == true;
+                await WriteReportAsync(root, submissionReport ? "plan-money-submission" : debtReport ? "plan-money-debt" : phase, await ReviewPlanEditorAsync(app, services, root, comparison!, ct), ct);
             }
             else if (phase == "entry-workflow")
             {

@@ -8385,4 +8385,10 @@ SHA-256 du XML original : {5}</value>
   <data name="Plan_SourceUnavailable" xml:space="preserve">
     <value>La planification, la dette ou l’opération d’origine n’est plus disponible. Aucune nouvelle planification n’a été créée. Rechargez le formulaire ou fermez-le.</value>
   </data>
+  <data name="Plan_OriginalInputFormat" xml:space="preserve">
+    <value>Ce montant conserve son format numérique initial, par exemple {0}. Effacez-le avant de saisir un nouveau montant dans le format actuel.</value>
+  </data>
+  <data name="Plan_InputUnitChanged" xml:space="preserve">
+    <value>La devise ou l’unité d’affichage a changé. Effacez ce montant et saisissez-le à nouveau en {0}.</value>
+  </data>
 </root>
