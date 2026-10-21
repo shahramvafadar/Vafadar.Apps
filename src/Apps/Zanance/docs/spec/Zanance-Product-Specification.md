@@ -7931,3 +7931,12 @@ See [evidence](../quality/header-os-qualification.md).
 A further36 read-only native-coordinate observations verify the action is physically right of the
 complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
 observations/96 header states/192 native text readings; accepted writes remain zero.
+
+### D-443 - Retained manual-rate outcome geometry
+
+36 native observations/144 readings qualify source-proven historical outcome/precision/date/estimate
+captions at OS200%,360/412dp,en/fa/de and both themes. Original accepted receipts feed the actual
+disabled template without recreating a writer review or restoring the deleted rate. Complete source/
+base rows and exact OS/Main restore; Main/APK and managed count stay D-440. New active-rate,
+protected-household, spoken/stability/device and external release acceptance remain separate.
+See [evidence](../quality/rate-outcomes-os-qualification.md).

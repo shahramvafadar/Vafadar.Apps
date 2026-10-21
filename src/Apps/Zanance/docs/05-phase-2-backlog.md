@@ -3223,3 +3223,10 @@ reader/device/iOS and external gates stand. See [evidence](quality/header-os-qua
 A further36 read-only native-coordinate observations verify the action is physically right of the
 complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
 observations/96 header states/192 native text readings; accepted writes remain zero.
+
+## D-443 - Retained rate outcome OS scopes complete
+
+36 original observations/144 readings pass without command invocation, seed or restoration of the
+already deleted rate. Complete source/base rows and exact OS/Main restore. Shipping application/APK
+and managed count stay D-440. Continue protected-household geometry and remaining supported
+stability/spoken/device/external gates. See [evidence](quality/rate-outcomes-os-qualification.md).

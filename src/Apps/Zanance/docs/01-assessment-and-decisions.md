@@ -8137,3 +8137,14 @@ independent build/package and exact OS/Main3522 restoration pass. Shipping code/
 A further36 read-only native-coordinate observations verify the action is physically right of the
 complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
 observations/96 header states/192 native text readings; accepted writes remain zero.
+
+## D-443 - Read retained rate outcomes at system scale without restoring deleted data
+
+36 observations/144 native readings qualify original rate feedback, exact historical precision/date
+and estimate badge at OS200%,360/412dp,en/fa/de and both themes. Read immutable original accepted
+rows/captions into the actual disabled presentation collection; never forge a writer review or
+restore the deleted rate in SQLite. Complete source/base equality and disabled native commands pass.
+Strict independent build/package and exact OS/Main3522 restoration pass. Main/APK and managed count
+stay D-440; active/current-rate and general release acceptance are not inferred from this projection.
+
+[Retained rate outcome evidence](quality/rate-outcomes-os-qualification.md).

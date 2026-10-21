@@ -4332,3 +4332,15 @@ See [evidence](../../quality/header-os-qualification.md).
 A further36 read-only native-coordinate observations verify the action is physically right of the
 complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
 observations/96 header states/192 native text readings; accepted writes remain zero.
+
+### D-443 - Retained rate outcome system-scale geometry complete
+
+36 observations/144 readings qualify historical rate outcomes, complete precision/date and estimate
+badge at OS200%,360/412dp,en/fa/de,Light/Dark. Actual disabled template uses original accepted row/
+native caption evidence; no seed, writer review reconstruction, accepted command or restoration of
+the deleted rate. Complete source/base equality and exact OS/Main3522 restore pass; shipping app/APK
+and managed count remain D-440. This is not a new current-rate acceptance frame.
+Next ready geometry section: protected household with actual original signed authority. Preserve
+revocations and original sources; no re-admission/revocation for visual qualification. General
+stability, audible reader, physical/iOS and genuine external release gates remain open.
+See [evidence](../../quality/rate-outcomes-os-qualification.md).

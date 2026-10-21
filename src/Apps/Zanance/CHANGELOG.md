@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Check retained rate results with larger text (D-443)
+
+- Verify full historical rate precision, dates, estimate badges and outcome messages at actual200% text in both widths, three languages and both themes.
+- Keep the deleted rate absent and rate writers disabled while preserving existing data and emulator settings.
+- Application behavior/APK remain unchanged; remaining qualification gates stay open.
+
 ### Check Home and Plans title actions with larger text (D-442)
 
 - Verify complete titles, right-side Add buttons and ordinary content space at actual200% text in both phone widths, three languages and both themes.

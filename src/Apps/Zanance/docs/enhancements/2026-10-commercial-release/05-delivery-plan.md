@@ -3514,3 +3514,11 @@ remaining supported stability work. See ../../quality/header-os-qualification.md
 A further36 read-only native-coordinate observations verify the action is physically right of the
 complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
 observations/96 header states/192 native text readings; accepted writes remain zero.
+
+## D-443 - Historical rate outcome OS batch delivered
+
+36 observations/144 native readings complete the actual source-proven historical rate template at
+OS200%,both widths,three languages/two themes. Writers stay disabled and the rate stays deleted;
+no accepted action or old successful scope is replayed. Strict independent build/package and exact
+OS/Main restore pass. Continue protected-household geometry with original authority and remaining
+supported stability work. See ../../quality/rate-outcomes-os-qualification.md.

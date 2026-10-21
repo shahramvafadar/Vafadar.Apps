@@ -3354,3 +3354,12 @@ Do not extend finite geometry evidence into active Undo, spoken or general stabi
 A further36 read-only native-coordinate observations verify the action is physically right of the
 complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
 observations/96 header states/192 native text readings; accepted writes remain zero.
+
+## D-443 - Retained rate geometry without resurrecting a deleted source
+
+Require complete original accepted action/delete and native-caption receipts before historical rate
+geometry. Preserve the original accepted deletion. Use original precise native text and immutable
+row/date/estimate facts in actual disabled presentation controls; never seed a database row or forge
+ManualRatesReview authority. Historical caption geometry is not renewed current-rate or consent
+acceptance. Verify native writer targets disabled, complete source/base equality and exact OS/Main
+restoration. Do not replay accepted actions or completed input/header scopes.

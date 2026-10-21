@@ -2275,3 +2275,10 @@ This does not qualify active Undo or spoken reader clarity. See [evidence](quali
 A further36 read-only native-coordinate observations verify the action is physically right of the
 complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
 observations/96 header states/192 native text readings; accepted writes remain zero.
+
+## Retained rate outcome geometry (D-443)
+
+Actual OS200%,360/412dp,en/fa/de and both themes retain complete outcome, historical precise ratio,
+long date and estimate badge in36 observations/144 readings. The original actual template is used
+with disabled native writers; deleted data remains absent. This is geometry of source-proven
+historical presentation, not a new current-rate lifecycle. See [evidence](quality/rate-outcomes-os-qualification.md).

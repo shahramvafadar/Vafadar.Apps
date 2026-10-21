@@ -2181,3 +2181,12 @@ base rows; filled Plans is read-only. Restore exact OS/Main. See [evidence](../.
 A further36 read-only native-coordinate observations verify the action is physically right of the
 complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
 observations/96 header states/192 native text readings; accepted writes remain zero.
+
+### Retained rate outcomes at system text scale (D-443)
+
+rate-outcomes-os requires the original completed action/delete receipts and all18 native caption
+frames, fresh review_pass and actual OS200% width360/412. Read the immutable later-version row and
+its original native text into the actual disabled presentation collection; never restore a rate in
+SQLite or manufacture ManualRatesReview authority. Require full text/height, disabled native Delete,
+unchanged complete source/base rows and exact OS/Main restore. Historical geometry is not a new
+active-rate lifecycle. See [evidence](../../src/Apps/Zanance/docs/quality/rate-outcomes-os-qualification.md).

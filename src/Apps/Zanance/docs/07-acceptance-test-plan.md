@@ -5120,3 +5120,12 @@ all-controls/spoken/device/stability acceptance. See [evidence](quality/header-o
 A further36 read-only native-coordinate observations verify the action is physically right of the
 complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
 observations/96 header states/192 native text readings; accepted writes remain zero.
+
+## D-443 - Historical rate outcome system-scale geometry
+
+36 observations/144 native readings pass actual OS200%,360/412dp,en/fa/de,Light/Dark for three
+source-proven feedback categories, precise historical ratio/date and estimate badge. Full text,
+last-line height and disabled native Delete targets pass; no commands, accepted writes or new rows.
+The original rate remains deleted and complete source/base rows match. Exact OS/Main139-node state
+restores. This does not qualify a new active rate, consent, spoken or general stability workflow.
+See [evidence](quality/rate-outcomes-os-qualification.md).

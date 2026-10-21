@@ -2480,3 +2480,11 @@ device/iOS and external release gates remain open. See [evidence](quality/header
 A further36 read-only native-coordinate observations verify the action is physically right of the
 complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
 observations/96 header states/192 native text readings; accepted writes remain zero.
+
+## D-443 retained rate outcome geometry
+
+36 source-proven historical observations/144 readings complete the targeted outcome/precision/date/
+estimate layout scope with no accepted writes or rate restoration. Disabled native commands,
+complete source/base equality and exact OS/Main restore pass; shipping code/APK remain D-440.
+Protected-household geometry, general stability, audible reader/device/iOS and external publication
+gates remain open. See [evidence](quality/rate-outcomes-os-qualification.md).

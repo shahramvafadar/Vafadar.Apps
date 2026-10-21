@@ -363,6 +363,13 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Fresh independent settlement review required.");
                 await WriteReportAsync(root, phase, await ReviewSettlementCommitAsync(app, services, root, comparison!, ct, resume: phase != "settlement-commit", acceptedFirst: phase == "settlement-commit-observed"), ct);
             }
+            else if (phase == "rate-outcomes-os")
+            {
+                if (!Directory.Exists(root) || RedirectedAncestors(root).Length != 0)
+                    throw new ReviewCheckException("Retained original rate outcome source required.");
+                var width = Platform.CurrentActivity?.Intent?.GetIntExtra("review_os_width", 0) ?? 0;
+                await WriteReportAsync(root, "rate-outcomes-os-" + width, await ReviewRateOutcomesOsAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "headers-os")
             {
                 if (!Directory.Exists(root) || RedirectedAncestors(root).Length != 0)
