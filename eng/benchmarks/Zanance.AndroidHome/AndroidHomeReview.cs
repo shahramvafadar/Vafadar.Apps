@@ -363,6 +363,14 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Fresh independent settlement review required.");
                 await WriteReportAsync(root, phase, await ReviewSettlementCommitAsync(app, services, root, comparison!, ct, resume: phase != "settlement-commit", acceptedFirst: phase == "settlement-commit-observed"), ct);
             }
+            else if (phase == "headers-os")
+            {
+                if (!Directory.Exists(root) || RedirectedAncestors(root).Length != 0)
+                    throw new ReviewCheckException("Retained original header source required.");
+                var width = Platform.CurrentActivity?.Intent?.GetIntExtra("review_os_width", 0) ?? 0;
+                var positionOnly = Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_header_native_position", false) == true;
+                await WriteReportAsync(root, (positionOnly ? "headers-os-native-" : "headers-os-") + width, await ReviewHeadersOsAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "plans-add-header")
             {
                 Directory.CreateDirectory(root);

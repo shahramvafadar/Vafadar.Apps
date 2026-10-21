@@ -2264,3 +2264,14 @@ Goal allocation/price, occurrence/bill, Settings estimate/native forecast prompt
 captions pass targeted actual OS200% geometry at360/412dp in three languages/both themes. Preserve
 native scaling, complete final-line height and raw input; native prompt answers retain44dp targets.
 This does not qualify every control or audible TalkBack. See [evidence](quality/secondary-money-os-qualification.md).
+
+## Current title actions at system scale (D-442)
+
+Home and Plans retain their right-side44-50dp Add, complete title and uninterrupted ordinary
+viewport at actual OS200%,360/412dp,en/fa/de and both themes. Empty and original filled Plans pass;
+Home's valid Undo reservation remains.36 observations include actual Add/Cancel without Save.
+This does not qualify active Undo or spoken reader clarity. See [evidence](quality/header-os-qualification.md).
+
+A further36 read-only native-coordinate observations verify the action is physically right of the
+complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
+observations/96 header states/192 native text readings; accepted writes remain zero.

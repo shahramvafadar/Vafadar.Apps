@@ -5108,3 +5108,15 @@ unit60 at actual OS200%,360/412dp,en/fa/de,Light/Dark. Full text/last-line heigh
 native prompt44dp answer targets pass; complete source/base equality and zero accepted writes pass.
 Restore all recorded OS values and original Main3522/Home139 nodes except focus. Native observations
 are not managed tests or all-controls/audible/device/stability acceptance. See [evidence](quality/secondary-money-os-qualification.md).
+
+## D-442 - Current Home/Plans header geometry
+
+Actual OS200%,360/412dp,en/fa/de,Light/Dark passes36 observations/60 header states/120 text readings.
+24 actual Add/Cancel sequences preserve complete source/base data; filled Plans uses original rows
+without a command. Full native title/glyph, visible target, non-overlap and ordinary viewport pass.
+Exact OS/Main3522/Home139-node restoration passes. These are not new managed cases, active Undo,
+all-controls/spoken/device/stability acceptance. See [evidence](quality/header-os-qualification.md).
+
+A further36 read-only native-coordinate observations verify the action is physically right of the
+complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
+observations/96 header states/192 native text readings; accepted writes remain zero.

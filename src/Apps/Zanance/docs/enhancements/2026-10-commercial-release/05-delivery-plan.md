@@ -3502,3 +3502,15 @@ both widths, three languages and two themes without accepted write replay. Stric
 package and exact OS/Main restoration pass. See ../../quality/secondary-money-os-qualification.md.
 Continue uncovered household/header/rate-outcome geometry and supported remaining stability work;
 do not rerun completed scenes or promote this finite result into general accessibility acceptance.
+
+## D-442 - Current header OS batch delivered
+
+36 original observations/60 header states/120 readings qualify Home and empty/filled Plans across
+actual OS200%,both widths,three languages/two themes.24 real Add/Cancel sequences and original
+source/base equality pass; no accepted Save or old scope is replayed. Strict independent build,
+package and exact OS/Main restoration pass. Continue uncovered rate-outcome/household geometry and
+remaining supported stability work. See ../../quality/header-os-qualification.md.
+
+A further36 read-only native-coordinate observations verify the action is physically right of the
+complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
+observations/96 header states/192 native text readings; accepted writes remain zero.

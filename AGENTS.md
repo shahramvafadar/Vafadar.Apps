@@ -3341,3 +3341,16 @@ refusals, explicit unit-factory refusal and draft-only suggestions separate from
 Check native prompt full text/last-line height and44dp visible answer targets. Preserve historical
 saved-feedback captions as source-derived evidence, not new acceptance. Retain original source/base
 rows and old successes; restore exact OS/Main. Remaining geometry/spoken/stability gates stand.
+
+## D-442 - Current header geometry on retained sources
+
+Do not change valid production layout to satisfy a historical helper's obsolete row count. Home
+reserves an Undo row; check actual title/action/viewport geometry. System-scale header qualification
+requires existing independent base and complete original source receipts, no seed or accepted Save.
+Keep actual Add/Cancel distinct from read-only filled-source geometry and persist completed scenes.
+Require full native text/target visibility, exact source/base equality and exact OS/Main restoration.
+Do not extend finite geometry evidence into active Undo, spoken or general stability acceptance.
+
+A further36 read-only native-coordinate observations verify the action is physically right of the
+complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
+observations/96 header states/192 native text readings; accepted writes remain zero.

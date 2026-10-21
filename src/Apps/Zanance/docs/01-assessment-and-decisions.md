@@ -8123,3 +8123,17 @@ No accepted write or old successful scope is replayed. Strict independent build/
 exact OS/Main3522/Home restoration passes. Shipping code/APK and managed count remain D-440.
 
 [Secondary monetary OS evidence](quality/secondary-money-os-qualification.md).
+
+## D-442 - Qualify current title actions without source mutation
+
+Home and empty/filled Plans complete36 observations,60 header states and120 native readings at
+actual OS200%,360/412dp,en/fa/de and both themes.24 real Add/Cancel sequences preserve complete
+base/source rows; filled Plans geometry uses its original accepted source without commands. Measure
+actual viewport space instead of the obsolete two-row Home assumption; retain the Undo row. Strict
+independent build/package and exact OS/Main3522 restoration pass. Shipping code/APK remain D-440.
+
+[Current header OS evidence](quality/header-os-qualification.md).
+
+A further36 read-only native-coordinate observations verify the action is physically right of the
+complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
+observations/96 header states/192 native text readings; accepted writes remain zero.

@@ -2469,3 +2469,14 @@ Targeted secondary monetary/Settings/prompt/unit geometry passes204 observations
 unchanged complete source/base data and no accepted writes. Exact OS/Main restoration passes; no
 shipping code/APK or managed-count change. Household/header/outcome, spoken/device/iOS, QA-06 and
 external publication gates remain open. See [evidence](quality/secondary-money-os-qualification.md).
+
+## D-442 current header geometry evidence
+
+Current Home and empty/filled Plans pass36 system-scaled observations and24 original Add/Cancel
+sequences without accepted writes. Original source/base, OS and Main restore exactly; shipping
+code/APK and managed baseline stay D-440. Rate-outcome/household geometry, audible reader, QA-06,
+device/iOS and external release gates remain open. See [evidence](quality/header-os-qualification.md).
+
+A further36 read-only native-coordinate observations verify the action is physically right of the
+complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
+observations/96 header states/192 native text readings; accepted writes remain zero.

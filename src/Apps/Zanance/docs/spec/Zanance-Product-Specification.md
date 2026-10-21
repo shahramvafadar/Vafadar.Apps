@@ -7918,3 +7918,16 @@ source/base rows and accepted receipts remain unchanged, with zero new accepted 
 prompt answers retain44dp targets. Exact OS/Main3522/Home state restores; shipping code/APK and
 managed baseline stay D-440. Remaining geometry/spoken/device/stability and external gates stand.
 See [evidence](../quality/secondary-money-os-qualification.md).
+
+### D-442 - Current Home and Plans title actions
+
+36 observations/60 header states/120 readings pass actual OS200%,360/412dp,en/fa/de and both themes.
+Home and empty Plans perform24 actual Add/Cancel sequences; filled Plans reads its original saved
+rows without a command. Full title/action and ordinary viewport geometry preserve the valid Undo
+reservation. Complete source/base rows and exact OS/Main state restore. Main/APK and managed count
+stay D-440; remaining rate/household/spoken/stability/device/external gates stand.
+See [evidence](../quality/header-os-qualification.md).
+
+A further36 read-only native-coordinate observations verify the action is physically right of the
+complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
+observations/96 header states/192 native text readings; accepted writes remain zero.

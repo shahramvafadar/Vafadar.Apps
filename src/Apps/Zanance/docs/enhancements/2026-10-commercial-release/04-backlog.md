@@ -4317,3 +4317,18 @@ Next ready section: only uncovered household-authority, moved Home/Plans header 
 layouts. Preserve revocations and accepted metadata; do not resave or reseed for geometry. QA-06,
 audible reader clarity, physical-device/iOS and genuine external release gates remain open.
 See [evidence](../../quality/secondary-money-os-qualification.md).
+
+### D-442 - Current header system-scale qualification complete
+
+Home and empty/filled Plans complete36 observations/60 header states/120 native readings and24
+real Add/Cancel sequences at OS200%,360/412dp,en/fa/de,Light/Dark. Full source/base data and exact
+OS/Main3522/Home restore; no accepted writer or successful older scope is replayed. The existing
+Undo reservation remains. Shipping code/APK and managed baseline stay D-440.
+Next ready geometry section: only uncovered rate outcomes and protected household authority.
+Preserve accepted metadata/revocations; no reseeding, resaving or reauthorizing for screenshots.
+General stability, audible reader, physical/iOS and genuine external release gates remain open.
+See [evidence](../../quality/header-os-qualification.md).
+
+A further36 read-only native-coordinate observations verify the action is physically right of the
+complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
+observations/96 header states/192 native text readings; accepted writes remain zero.

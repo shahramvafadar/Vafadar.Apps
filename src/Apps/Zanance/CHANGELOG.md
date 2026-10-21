@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Check Home and Plans title actions with larger text (D-442)
+
+- Verify complete titles, right-side Add buttons and ordinary content space at actual200% text in both phone widths, three languages and both themes.
+- Open and cancel the original forms without saving, and preserve existing data and emulator settings.
+- Confirm the native Android action coordinates separately without repeating those successful actions.
+- Application layout/APK remain unchanged; remaining accessibility and stability gates stay open.
+
 ### Check secondary forms with larger system text (D-441)
 
 - Verify secondary monetary guides, Settings forecast prompts and unit definitions at actual200% text in two widths, three languages and both themes.

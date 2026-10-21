@@ -2169,3 +2169,15 @@ recovery completion, actual font2/native width and focused independent ownership
 known invalid-unit refusals, explicit factory refusal and draft-only suggestions. Keep stage/report
 identities separate from old success, verify complete source/base equality and restore exact OS/Main.
 See [native evidence](../../src/Apps/Zanance/docs/quality/secondary-money-os-qualification.md).
+
+### Current title actions at system scale (D-442)
+
+headers-os requires the completed original secondary-field source, existing independent base account,
+fresh review_pass and actual OS200% width360/412. Never seed or invoke a writer for geometry.
+Check current title/Add/viewport bounds, not the obsolete historical Home row count. Native Add and
+Cancel require attached focused visible targets. Persist scene receipts and verify complete source/
+base rows; filled Plans is read-only. Restore exact OS/Main. See [evidence](../../src/Apps/Zanance/docs/quality/header-os-qualification.md).
+
+A further36 read-only native-coordinate observations verify the action is physically right of the
+complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
+observations/96 header states/192 native text readings; accepted writes remain zero.

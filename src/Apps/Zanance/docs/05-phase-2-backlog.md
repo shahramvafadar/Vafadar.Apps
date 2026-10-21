@@ -3212,3 +3212,14 @@ See quality/android-numeric-input.md.
 accepted write, seed or successful-check replay. Exact OS/Main state restores. Application/APK and
 managed baseline stay D-440. Remaining household/header/rate-outcome geometry, general stability,
 spoken/device/iOS and external gates remain open. See [evidence](quality/secondary-money-os-qualification.md).
+
+## D-442 - Home/Plans system-scale header scopes complete
+
+36 observations/60 header states/120 native readings and24 original Add/Cancel sequences pass,
+with unchanged complete source/base rows and exact OS/Main restoration. Shipping code/APK and
+managed count stay D-440. Remaining rate-outcome/household geometry, general stability, audible
+reader/device/iOS and external gates stand. See [evidence](quality/header-os-qualification.md).
+
+A further36 read-only native-coordinate observations verify the action is physically right of the
+complete title (minimum gap8px), without replaying any Add/Cancel. Total D-442 evidence is72
+observations/96 header states/192 native text readings; accepted writes remain zero.
