@@ -157,3 +157,28 @@ from the local correction. All unrelated schedules, goal and external/release ga
 
 Failure sources: [D-471 CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39839824109),
 [D-474 CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39846843688).
+
+## D-477 - Review the new hosted Windows installer metadata
+
+D-473 [CI39844124741](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39844124741)
+has one additional distinct failure: Windows job120053507577 refuses installation18.11.12315.225
+before any native production. Its actual image is windows-2025-vs2026/20261021.278.1. The original
+[official inventory](https://github.com/actions/runner-images/blob/win25-vs2026/20261021.278/images/windows/Windows2025-VS2026-Readme.md)
+lists that exact Enterprise installation and SDK10.0.26100.0. Add only this installation version
+to windows.compiler.acceptance.json and update its dated inventory link.
+
+Both approved compiler executable SHA256/file-version pairs, exact Microsoft Authenticode signer,
+MSVC14.51.36231, SDK10.0.26100.0, immutable baseline/servicing package identities and all refusal
+rules are unchanged. Metadata approval never approves a new compiler hash or native package.
+The hosted producer must still prove its real executable and package entry hashes; any new bytes
+remain a separate refusal. No runner/workflow bypass, installation or dependency update is made.
+
+Existing Test-WindowsToolchain.ps1 passes18 cases on the actual local18.10.12201.205 installation,
+compiler19.51.36257.0/SHA315a654ea116864516a1674858e587e535e3bc3045ff32ed2f2739a2c1ec5640.
+The new installer version is exercised as metadata against those real signed bytes; unknown
+installer, changed tools/SDK/hash/file version/signature policy, duplicate/malformed/empty policy,
+missing compiler and unknown package-variant refusals remain. This is local metadata regression
+evidence, not a claim to have installed the hosted version or proved its actual compiler bytes.
+No successful app build, business suite, phone action or shipping APK is repeated/changed.
+Hosted qualification on the exact follow-up SHA is pending at commit creation. D-476's two
+source corrections remain included; external/stability/accessibility/release gates stay open.

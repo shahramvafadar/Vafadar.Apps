@@ -4930,3 +4930,13 @@ APK/visible behavior changes. Keep successful Release/native/financial evidence 
 Hosted completion remains pending at commit creation; external/stability/accessibility gates stand.
 
 Evidence: [original hosted failures and focused recovery](../../quality/ci-common-recovery.md).
+
+### D-477 - Hosted Windows installer metadata
+
+Actual D-473 Windows logs expose a separate new hosted installer18.11.12315.225. Match the dated
+official image inventory and add only that exact metadata version; preserve executable hashes,
+Microsoft signature, pinned MSVC/SDK and immutable package checks. Eighteen focused qualification
+cases pass against the existing signed local compiler. The new hosted compiler/package must still
+pass on the exact pushed SHA; no app build/native scene replay or shipping APK change.
+
+Evidence: [actual installer refusal and retained qualification](../../quality/ci-common-recovery.md).

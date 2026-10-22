@@ -239,3 +239,11 @@ Debug billing builds must compile without those Windows/independent-only helpers
 placed test output, RepositoryPaths still requires a real repository ancestor; use owned ignored
 repository-local output for that one source-scanning method, retaining already-passed gate cases.
 See [actual failure and focused verification](../../src/Apps/Zanance/docs/quality/ci-common-recovery.md).
+
+## Hosted installer servicing (D-477)
+
+The dated20261021.278 hosted inventory adds exact installer18.11.12315.225. Installer metadata is
+separate from compiler qualification: keep exact executable SHA/file version/Microsoft signature,
+MSVC/SDK and immutable package checks. Test-WindowsToolchain.ps1 uses the existing actual compiler
+for metadata/refusal regressions; only hosted production can qualify its real installed bytes.
+See [failure source and bounded proof](../../src/Apps/Zanance/docs/quality/ci-common-recovery.md).
