@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-10-22, D-450)
+## 31. Implementation Status (v1.1, scoped updates through 2026-10-22, D-451)
 
 This section records what the repository actually contains. "Verified" is qualified by each scenario's evidence:
 automated tests, running Windows layouts, targeted Android emulator checks or specifically recorded physical
@@ -8045,3 +8045,16 @@ OS restoration pass. The transient null tree is continued read-only without repl
 MAUI source references are corrected to the actual unchanged10.0.110 pin. No new managed-test count,
 replayed D-449216-scene scope or general GC/ANR/speed/spoken/physical/iOS/release acceptance is claimed.
 See [native toolbar lifetime evidence](../quality/native-toolbar-observer-lifetime.md).
+
+### D-451 - Complete one original read-only navigation pulse sequence
+
+After D-450, one Release/AOT process completes18 original detail/Back visits with en/fa/de and both
+themes, one current native root/subscription per cycle, no financial commands and exact source/base
+equality. A500ms at-most-one UI probe records maximum callback age524ms and no ages over2000ms;
+read/publication/Back/Home intervals are812-1436ms, median942ms on the small original source, not
+whole Home/cold/tenfold or two-second acceptance. The exact PID's event buffer retains its start
+with zero recorded ANR/crash events. Strict independent Android/Windows builds and signed Offline
+caller pass. Main remains D-450: same PID15971, Home139 nodes, display and all original OS values.
+No old216-scene matrix, accepted financial action, full suite or unchanged shipping APK is repeated;
+no managed-test baseline is added. General stability/performance/spoken/physical/iOS/release gates
+remain open. See [original navigation evidence](../quality/original-navigation-pulse.md).
