@@ -8,8 +8,8 @@ namespace Vafadar.Zanance.App;
 
 internal static partial class AndroidHomeReview
 {
-    /// <summary>Checks only changed original period wording/date headers on an owned Release/AOT window.</summary>
-    private static async Task<object> ReviewBudgetPeriodCaptionsAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct)
+    /// <summary>Checks selected changed budget wording or retained-scope notes on an owned Release/AOT window.</summary>
+    private static async Task<object> ReviewBudgetPeriodCaptionsAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct, bool scopeOnly = false)
     {
         await AwaitOriginalMoneyWindowAsync(ct); app.OpenReviewShell(); await AwaitRootHomeAsync(ct);
         var local = services.GetRequiredService<ILocalizationService>(); var themes = services.GetRequiredService<ThemeService>();
@@ -57,7 +57,7 @@ internal static partial class AndroidHomeReview
                         if (layout.GetEllipsisCount(line) != 0 || layout.GetLineRight(line) > native.Width - native.TotalPaddingRight + 1 || layout.GetLineLeft(line) < -1)
                             throw new ReviewCheckException("Original period caption is truncated.");
                 }
-            }, ct);
+            }, ct, scopeOnly);
             var report = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(JsonSerializer.Serialize(result))!;
             report["Comparison"] = JsonSerializer.SerializeToElement(comparison); return report;
         }

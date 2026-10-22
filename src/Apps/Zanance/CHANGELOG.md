@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Explain retained budget accounts in Simple (D-465)
+
+- Show which accounts an existing budget still includes when Advanced controls are hidden.
+- Keep the selected accounts, original amount and unsaved changes intact when changing display mode.
+
 ### Clear budget periods (D-463)
 
 - Show the exact dates when creating or editing a budget.

@@ -8456,4 +8456,7 @@ Original-XML SHA-256: {5}</value>
   <data name="Goals_RetryLoad" xml:space="preserve">
     <value>Erneut versuchen</value>
   </data>
+  <data name="Budget_HiddenAccounts" xml:space="preserve">
+    <value>Beibehaltene Konten dieses Budgets: {0}. Zum Ändern wechseln Sie in den Einstellungen zu Erweitert.</value>
+  </data>
 </root>

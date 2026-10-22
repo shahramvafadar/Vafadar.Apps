@@ -8261,3 +8261,20 @@ old suite, accepted financial replay or emulator matrix is needed. General stabi
 device/workflow acceptance, scaling/TalkBack, iOS/providers/Store and release gates remain open.
 
 Evidence: [original physical method qualification](../quality/physical-budget-methods.md).
+
+### D-465 - Original budget account and currency boundaries
+
+The original Simple editor now explains its retained account restriction, including archived or
+missing references and dirty scope, without changing raw amounts or financial writes. Six new
+actual-source SQLite cases and six resource contracts pass; eighteen Windows contexts/images and
+six independent Release/AOT Android contexts qualify only the changed note. Old financial/period
+matrices and accepted commands are reused. Strict Windows/full signed Offline Android builds have
+zero warnings/errors. One retained Samsung profile verifies EUR30 across both accounts, secondary20,
+primary10, independent USD30/50 and secondary EUR0 after MonthStartDay15; Persian display and USD
+valuation preserve original budget currencies/calendars. Final cold PID19994 retains the corrected
+note, EUR0/100, USD30/50/20 and balances890/80EUR and670USD. Delete only the new profile with both
+confirmations; Main979/all141 public nodes/original three profiles/exact OS/final APK match.
+Twenty-three observation assertions are not unit tests. General stability, full device/workflow,
+spoken accessibility, iOS/provider/Store and release acceptance remain open.
+
+Evidence: [original account/currency/pay-cycle qualification](../quality/budget-account-scope.md).

@@ -8456,4 +8456,7 @@
   <data name="Goals_RetryLoad" xml:space="preserve">
     <value>تلاش دوباره</value>
   </data>
+  <data name="Budget_HiddenAccounts" xml:space="preserve">
+    <value>حساب‌های این بودجه حفظ می‌شوند: «{0}». برای تغییر آن‌ها، در تنظیمات به حالت پیشرفته بروید.</value>
+  </data>
 </root>

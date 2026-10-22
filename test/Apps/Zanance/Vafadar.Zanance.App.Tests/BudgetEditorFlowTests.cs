@@ -97,6 +97,67 @@ public sealed class BudgetEditorFlowTests
         Assert.False(s.Editor.IsDirty); Assert.Equal(before, await RowsAsync(f)); Assert.Empty(f.Platform.Failures);
     }
 
+    /// <summary>Simple editing explains the original account restriction without exposing a different financial scope.</summary>
+    [Theory]
+    [InlineData("en")] [InlineData("fa")] [InlineData("de")]
+    public async Task Simple_scope_note_preserves_reviewed_account_identity_and_raw_draft(string language)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f, advanced: false, paid: false);
+        f.Localization.SetLanguage(f.Localization.SupportedLanguages.First(item => item.CultureName == language));
+        var before = await RowsAsync(f); await OpenAsync(s);
+        Assert.True(s.Editor.IsReady); Assert.False(s.Editor.IsAdvanced); Assert.False(s.Editor.IsDirty);
+        Assert.Contains(s.Account.Name, s.Editor.HiddenLimitsText ?? string.Empty);
+        s.Editor.TotalText = "234.56"; var raw = s.Editor.TotalText;
+        f.Localization.SetLanguage(f.Localization.SupportedLanguages.First(item => item.CultureName == "de")); s.Editor.RefreshDisplay();
+        Assert.Contains(s.Account.Name, s.Editor.HiddenLimitsText ?? string.Empty);
+        Assert.Equal(raw, s.Editor.TotalText); Assert.True(s.Editor.IsDirty);
+        Assert.Equal(before, await RowsAsync(f)); Assert.Empty(f.Platform.Failures);
+    }
+
+    /// <summary>An unrestricted original budget never gains an account restriction merely by opening Simple.</summary>
+    [Fact]
+    public async Task Simple_unrestricted_budget_has_no_hidden_account_restriction()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f, advanced: false, paid: false);
+        await using (var db = await s.Factory.CreateDbContextAsync(Ct))
+        { (await db.Budgets.SingleAsync(Ct)).AccountIds = []; await db.SaveChangesAsync(Ct); }
+        var before = await RowsAsync(f); await OpenAsync(s);
+        Assert.True(s.Editor.IsReady); Assert.DoesNotContain(s.Account.Name, s.Editor.HiddenLimitsText ?? string.Empty);
+        Assert.False(s.Editor.IsDirty); Assert.Equal(before, await RowsAsync(f));
+    }
+
+    /// <summary>Unavailable original references keep their identity in Simple instead of silently broadening the budget.</summary>
+    [Fact]
+    public async Task Simple_scope_note_preserves_missing_original_reference()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f, advanced: false, paid: false); var missing = Guid.NewGuid();
+        await using (var db = await s.Factory.CreateDbContextAsync(Ct))
+        { (await db.Budgets.SingleAsync(Ct)).AccountIds = [missing]; await db.SaveChangesAsync(Ct); }
+        var before = await RowsAsync(f); await OpenAsync(s);
+        Assert.True(s.Editor.IsReady);
+        Assert.Contains(f.Translator.Format("Budget_MissingReference", missing.ToString("N")), s.Editor.HiddenLimitsText ?? string.Empty);
+        Assert.Equal(missing, Assert.Single(s.Editor.ScopeAccounts).Id); Assert.False(s.Editor.IsDirty);
+        Assert.Equal(before, await RowsAsync(f));
+    }
+
+    /// <summary>The hidden note follows an original retained dirty scope after changing mode, without saving that draft.</summary>
+    [Fact]
+    public async Task Simple_scope_note_describes_retained_dirty_scope_after_explicit_reload()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f, advanced: true, paid: false);
+        var other = new Account { Name = "Original second account", CurrencyCode = "EUR", OpeningDate = new(2026, 9, 1) };
+        await f.Store.SaveAccountAsync(other, Ct); await OpenAsync(s);
+        s.Editor.ScopeAccounts.Single(row => row.Id == s.Account.Id).IsIncluded = false;
+        s.Editor.ScopeAccounts.Single(row => row.Id == other.Id).IsIncluded = true;
+        s.Editor.TotalText = "234.56"; var raw = s.Editor.TotalText;
+        await s.Store.UpdateSettingsAsync(settings => settings.Mode = ExperienceMode.Simple, Ct);
+        var before = await RowsAsync(f); await s.Editor.ReloadCommand.ExecuteAsync(null);
+        Assert.True(s.Editor.IsReady); Assert.False(s.Editor.IsAdvanced); Assert.True(s.Editor.IsDirty);
+        Assert.Contains(other.Name, s.Editor.HiddenLimitsText ?? string.Empty);
+        Assert.DoesNotContain(s.Account.Name, s.Editor.HiddenLimitsText ?? string.Empty);
+        Assert.Equal(raw, s.Editor.TotalText); Assert.Equal(before, await RowsAsync(f));
+    }
+
     [Fact]
     public async Task Initial_read_never_creates_settings_and_explicit_failure_keeps_the_form_covered()
     {

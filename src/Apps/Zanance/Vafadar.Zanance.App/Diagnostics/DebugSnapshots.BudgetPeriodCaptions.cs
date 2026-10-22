@@ -8,8 +8,8 @@ namespace Vafadar.Zanance.App.Diagnostics;
 
 internal static partial class DebugSnapshots
 {
-    /// <summary>Qualifies only changed period wording and original date headers on the independent desktop.</summary>
-    private static async Task ReviewBudgetPeriodCaptionsWindowsAsync(App app, IServiceProvider services, string folder)
+    /// <summary>Qualifies selected changed budget wording or retained-scope notes on the independent desktop.</summary>
+    private static async Task ReviewBudgetPeriodCaptionsWindowsAsync(App app, IServiceProvider services, string folder, bool scopeOnly = false)
     {
         using var timeout = new CancellationTokenSource(TimeSpan.FromMinutes(10)); var ct = timeout.Token;
         var local = services.GetRequiredService<ILocalizationService>(); var themes = services.GetRequiredService<ThemeService>();
@@ -44,9 +44,9 @@ internal static partial class DebugSnapshots
                     CheckCaption(label);
                 }
                 await CaptureWindowAsync(window, Path.Combine(folder, key + ".png")); captures.Add(new { Language = ".", File = key + ".png" });
-            }, ct);
+            }, ct, scopeOnly);
             await File.WriteAllTextAsync(Path.Combine(folder, "complete.json"), JsonSerializer.Serialize(new
-            { Package = AppInfo.Current.PackageName, ProcessId = Environment.ProcessId, Scope = "budget-period-captions", Captures = captures,
+            { Package = AppInfo.Current.PackageName, ProcessId = Environment.ProcessId, Scope = scopeOnly ? "budget-scope-captions" : "budget-period-captions", Captures = captures,
                 OriginalBaseStoreUnchanged = true, FinancialSaves = 0, Evidence = result }), ct);
         }
         catch (Exception error) { await File.WriteAllTextAsync(Path.Combine(folder, "original-failure.txt"), error.ToString(), CancellationToken.None); throw; }

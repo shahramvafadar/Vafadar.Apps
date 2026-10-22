@@ -330,6 +330,10 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
             }
             MethodNames = [_translator["Budget_MethodLimits"], _translator["Budget_MethodEnvelopes"], _translator["Budget_MethodFlex"]];
             var notes = new List<string>();
+            // D-465: Simple hides account choices, so describe the retained draft scope rather than implying all accounts.
+            var accountScope = AccountScope();
+            if (!IsAdvanced && accountScope.Count > 0)
+                notes.Add(_translator.Format("Budget_HiddenAccounts", string.Join(", ", accountScope.Select(AccountName))));
             if (!IsAdvanced && _budget?.CategoryLimits.Count is > 0) notes.Add(_translator.Format("Budget_HiddenLimits", _budget.CategoryLimits.Count));
             if (!IsAdvanced && RolloverIndex != 0) notes.Add(_translator[$"Rollover_Active_{(BudgetRollover)RolloverIndex}"]);
             if (!IsAdvanced && MethodIndex != 0) notes.Add(_translator.Format("Budget_MethodActive", MethodNames.ElementAtOrDefault(MethodIndex) ?? string.Empty));

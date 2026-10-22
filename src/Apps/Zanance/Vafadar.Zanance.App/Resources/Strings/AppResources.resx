@@ -8490,4 +8490,7 @@ Original XML SHA-256: {5}</value>
     <value>Try again</value>
     <comment>Read-only retry of the original goal list (D-447).</comment>
   </data>
+  <data name="Budget_HiddenAccounts" xml:space="preserve">
+    <value>Accounts kept in this budget: {0}. Switch to Advanced in Settings to change them.</value>
+  </data>
 </root>

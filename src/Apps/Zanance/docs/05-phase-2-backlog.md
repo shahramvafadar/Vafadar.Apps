@@ -3347,3 +3347,10 @@ caller pass. Main remains D-450: same PID15971, Home139 nodes, display and all o
 No old216-scene matrix, accepted financial action, full suite or unchanged shipping APK is repeated;
 no managed-test baseline is added. General stability/performance/spoken/physical/iOS/release gates
 remain open. See [original navigation evidence](quality/original-navigation-pulse.md).
+
+### D-465 - Budget scope explanation and physical boundaries
+
+Original Simple account-note defect corrected with six actual-source cases and changed-note-only
+native checks. Physical account/currency/pay-cycle/display boundaries pass on one retained source;
+accepted financial commands are not replayed. Full QA-01 and external release gates remain open.
+See [bounded qualification](quality/budget-account-scope.md).

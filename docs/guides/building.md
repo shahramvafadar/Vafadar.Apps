@@ -2278,3 +2278,15 @@ accepts `budget-period-captions` with exact `review_run`/`review_pass`; observe 
 `Read-ReviewReport.ps1`, never restart merely because the observation timeout expired. Restore the
 original independent APK and public Main/OS state after the complete report. This is a caption
 review; MoveButton's existing40px target is not a new accessibility acceptance claim.
+
+### D-465 - Changed budget account-note review
+
+Use `eng/scripts/Run-StoreDrafts.ps1 -BudgetScopeCaptionReview` for18 original Simple-editor contexts
+and18 own-window images, with its own `budget-scope-captions.db`. This scope-only branch does not
+replay D-463 period scenes. `-BudgetPeriodSourceRun <original32hexrun>` can retain this exact source;
+do not substitute the other branch's database. Two complete original account names include an
+archived account; require clean draft, source/base equality and zero financial saves.
+The independent Android caller accepts `budget-scope-captions` with original `review_run` and
+`review_pass`; `Read-ReviewReport.ps1` validates the same live PID/Comparison. Preserve completed
+reports instead of restarting/reseeding, then restore the exact original APK, Main and OS.
+This changed-caption review does not establish full system scaling or spoken accessibility.

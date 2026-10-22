@@ -8433,4 +8433,7 @@ SHA-256 du XML original : {5}</value>
   <data name="Goals_RetryLoad" xml:space="preserve">
     <value>Réessayer</value>
   </data>
+  <data name="Budget_HiddenAccounts" xml:space="preserve">
+    <value>Comptes conservés dans ce budget : {0}. Pour les modifier, passez au mode Avancé dans les paramètres.</value>
+  </data>
 </root>

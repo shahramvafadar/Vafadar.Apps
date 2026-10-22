@@ -2387,3 +2387,13 @@ Keep the exact reviewed start/end dates visible in a growing editor header; fina
 and the selected date display stay authoritative. Weekly/two-week views show currency without a
 monthly-calendar annotation. Native text scaling and the original raw money/currency are preserved.
 Caption qualification does not close full accessibility, stability or short-period acceptance.
+
+### D-465 - Explain hidden budget account choices
+
+Simple budget editing keeps an existing account restriction and names its complete retained accounts
+in the growing hidden-choice note. Explain that changing them requires Advanced in Settings.
+Use current dirty draft choices, preserve archived/missing identities and leave unrestricted
+budgets without a restriction note. Never broaden a saved scope merely because its controls are
+hidden. Keep currency, exact displayed dates, raw amount and existing category/method notes intact.
+The changed note passes18 Windows and six independent Android language/theme contexts; the original
+physical Simple editor confirms it after upgrade/cold read. This is not full spoken acceptance.
