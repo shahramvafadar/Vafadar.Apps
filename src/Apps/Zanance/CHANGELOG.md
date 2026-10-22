@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Release Android title observers with their page root (D-450)
+
+- Remove native layout callbacks from the current Android view tree when their toolbar is retired.
+- Keep the full large Persian title and the native Back control.
+
 ### Keep large Persian savings-goal titles readable (D-449)
 
 - Let the Android title bar grow when the scaled text needs more height, while retaining native Back.

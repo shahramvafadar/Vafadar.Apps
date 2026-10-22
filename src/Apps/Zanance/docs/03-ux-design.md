@@ -2354,3 +2354,11 @@ line needs more height at OS text scale, including Persian script metrics; do no
 Retire geometry observers with that toolbar and avoid repeated/shrinking requests inside layout.
 The finite360/412dp goal-page evidence is recorded in [goal-page OS text](quality/goal-page-os-text.md);
 it does not establish general Android stability or spoken accessibility acceptance.
+
+### D-450: own the native title observer through attachment and retirement
+
+A toolbar observer obtained before attachment can become dead while a different live tree owns its
+callbacks. Register a separate explicit native listener; remove that same identity from the current
+live tree and detach its weak owner at retirement. Do not share the Shell tracker's Java disposal
+boundary with that callback. Preserve scaled title metrics and native Back. Finite lifetime/title
+checks do not establish general ANR/crash or spoken-accessibility acceptance.

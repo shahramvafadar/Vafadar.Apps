@@ -15,8 +15,8 @@ on retirement. Requests are monotonic within one toolbar lifetime and deduplicat
 with framework layout by shrinking inside a global-layout notification. A new toolbar starts from
 its own ordinary baseline. There is no financial, schema, parser, permission or runtime-policy change.
 
-The pinned MAUI10.0.90 ShellToolbarTracker owns the native toolbar lifetime and page changes:
-[upstream implementation](https://github.com/dotnet/maui/blob/10.0.90/src/Controls/src/Core/Compatibility/Handlers/Shell/Android/ShellToolbarTracker.cs).
+The pinned MAUI10.0.110 ShellToolbarTracker owns the native toolbar lifetime and page changes:
+[upstream implementation](https://github.com/dotnet/maui/blob/10.0.110/src/Controls/src/Core/Compatibility/Handlers/Shell/Android/ShellToolbarTracker.cs).
 
 ## Retained original native coverage
 

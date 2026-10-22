@@ -3425,3 +3425,13 @@ local Retry, without escaping native commands. Preserve original cohorts; qualif
 separately. Positive Main-source checks use a newly owned fictitious profile and single accepted
 metadata saves, then the complete two-question profile deletion and original public UI restoration.
 Do not equate a first confirmation, a transient null tree or a cancelled second question with deletion.
+
+## D-450 - Android native title observer lifetime
+
+Do not retain a pre-attachment ViewTreeObserver for later callback removal: it can die while its
+listeners belong to the current live tree. Own an explicit separate native listener identity;
+remove it from the toolbar's current live observer, detach its weak owner and release references
+on tracker retirement. Never share the Shell tracker's disposed Java peer with a layout callback.
+Preserve full scaled title geometry/native Back. Verify actual root ownership and source equality
+in the independent caller; retain real rejected native crashes and never infer a general ANR/GC
+fix from a finite successful lifecycle check. Reuse completed source/native/financial evidence.

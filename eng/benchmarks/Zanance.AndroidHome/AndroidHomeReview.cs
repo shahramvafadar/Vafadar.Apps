@@ -98,6 +98,8 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Fresh original transaction detail fixture required.");
                 await WriteReportAsync(root, phase, await ReviewEntryDetailAsync(app, services, root, comparison!, ct), ct);
             }
+            else if (phase == "toolbar-observer")
+                await WriteReportAsync(root, phase, await ReviewToolbarObserverAsync(app, services, comparison!, ct), ct);
             else if (phase == "goals-os-report")
                 await WriteReportAsync(root, phase, await ReadGoalsOsReportAsync(root, baseline!, ct), ct);
             else if (phase == "goals-os")

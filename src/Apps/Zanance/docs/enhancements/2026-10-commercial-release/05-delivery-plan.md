@@ -3542,3 +3542,18 @@ complete signed Offline Main upgrade pass without warnings. Original Main Home13
 remain; no general ANR/crash/two-second/low-memory or phone/iOS/release acceptance is inferred.
 
 See [Home goal worker evidence](../../quality/home-goal-worker.md).
+
+### D-450 - Retire native toolbar listeners on the current Android tree
+
+Three actual native roots reproduce a cached dead observer while the current observer is alive and
+different. An exact separate native listener now removes from the current live tree and detaches
+its weak owner before releasing the toolbar. Six focused root observations at actual OS200%/360
+and412dp retain one active listener and retire four previous owners; two original Persian title
+checks retain34px text,58px complete height and66px toolbar. Independent base rows and financial
+writes remain unchanged/zero. The direct-tracker candidate's real native activation crash and two
+caller compile repairs are preserved. Strict Windows/Android builds and complete signed Offline
+APK384 AOT entries, no-reset Main upgrade, Goals/Home139-node return in the same process and exact
+OS restoration pass. The transient null tree is continued read-only without replayed input/restart.
+MAUI source references are corrected to the actual unchanged10.0.110 pin. No new managed-test count,
+replayed D-449216-scene scope or general GC/ANR/speed/spoken/physical/iOS/release acceptance is claimed.
+See [native toolbar lifetime evidence](../../quality/native-toolbar-observer-lifetime.md).
