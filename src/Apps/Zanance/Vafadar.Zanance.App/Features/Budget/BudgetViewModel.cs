@@ -62,6 +62,8 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
     private BudgetPeriod _period;
     private DateOnly _periodStart;
     private bool _refreshing;
+    private long _pageRevision;
+    private bool _visible = true;
     private Core.Reminders.BudgetReminderLink? _requestedReminder;
     private string? _visitCurrency;
     private string? _budgetScope;
@@ -239,6 +241,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
     /// </summary>
     public void OnShown()
     {
+        _visible = true; _pageRevision++;
         if (!_backFromEditor)
         {
             _year = 0;
@@ -247,6 +250,12 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         }
 
         _backFromEditor = false;
+    }
+
+    /// <summary>Retires original commands, confirmations and publication when the native page disappears.</summary>
+    public void OnHidden()
+    {
+        _visible = false; _pageRevision++; Actions.Retire();
     }
 
     /// <summary>Switches the budget of the shown month between limits and envelopes (used by the snapshot walk-through).</summary>
@@ -291,14 +300,17 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
     public async Task ShowReminderAsync(Core.Reminders.BudgetReminderLink reminder)
     {
         ArgumentNullException.ThrowIfNull(reminder);
+        var pageRevision = _pageRevision;
         await _loading.WaitAsync();
         try
         {
+            if (!_visible || pageRevision != _pageRevision) return;
             Actions.BeginLoad();
             // Publish the pending target only inside the gate; an older appearing reload must not consume a newer request.
             _requestedReminder = reminder;
             await LoadCoreAsync();
         }
+        catch (Exception error) when (error is not OutOfMemoryException && (!_visible || pageRevision != _pageRevision)) { }
         catch { Actions.FailLoad(); throw; }
         finally { _loading.Release(); }
     }
@@ -309,19 +321,21 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
     /// filling the same lists would mix their lines, so loads run one after the other (as on Home, CR07-05).
     /// </remarks>
     // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
-    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
+    Task Presentation.IThemeAware.RefreshThemeAsync() => _visible ? LoadAsync() : Task.CompletedTask;
 
     public async Task LoadAsync()
     {
-        if (Actions.IsBusy) return;
+        if (!_visible || Actions.IsBusy) return;
         await ReloadAfterActionAsync(null);
     }
 
     private async Task ReloadAfterActionAsync(BudgetVisit? visit)
     {
+        var pageRevision = _pageRevision;
         await _loading.WaitAsync();
         try
         {
+            if (!_visible || pageRevision != _pageRevision) return;
             if (visit is not null)
             {
                 _year = visit.Year; _month = visit.Month; _calendar = visit.Calendar;
@@ -330,6 +344,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
             Actions.BeginLoad();
             await LoadCoreAsync();
         }
+        catch (Exception error) when (error is not OutOfMemoryException && (!_visible || pageRevision != _pageRevision)) { }
         catch { Actions.FailLoad(); throw; }
         finally
         {
@@ -339,8 +354,15 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
 
     private async Task LoadCoreAsync()
     {
+        var pageRevision = _pageRevision;
+        void RequireVisible()
+        {
+            if (!_visible || pageRevision != _pageRevision) throw new OperationCanceledException("The original budget page retired.");
+        }
+        RequireVisible();
         var destination = _requestedReminder;
         var original = destination is null ? null : await _store.ResolveBudgetReminderAsync(destination);
+        RequireVisible();
         if (destination is not null && original is null)
             throw new InvalidOperationException("The budget notification belongs to an unavailable profile or period.");
         if (original is not null)
@@ -351,6 +373,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
             _visitCurrency = original.CurrencyCode;
         }
         var reviewedBudgets = await _store.GetBudgetEditorReviewAsync();
+        RequireVisible();
         var settings = reviewedBudgets.Settings ?? new ZananceSettings();
         _startDay = settings.MonthStartDay;
         if (_year == 0)
@@ -399,6 +422,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         if (destination is not null)
         {
             var current = await _store.ResolveBudgetReminderAsync(destination);
+            RequireVisible();
             if (current != original) throw new InvalidOperationException("The original budget notification period changed; reload it.");
             _requestedReminder = null;
         }
@@ -452,8 +476,11 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
 
         var accounts = allAccounts;
         var entries = await _store.GetEntriesAsync(from, to);
+        RequireVisible();
         var schedules = await _plans.GetSchedulesAsync();
+        RequireVisible();
         var states = await _plans.GetStatesAsync();
+        RequireVisible();
         var categories = reviewedBudgets.Categories;
         var lookup = new CategoryLookup(categories, _translator);
         var culture = _localization.CurrentCulture;
@@ -475,6 +502,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
 
             // Rollover (§10.3): the limits of this month plus what the previous months passed on.
             var carry = await _store.GetBudgetCarryAsync(budget);
+            RequireVisible();
             if (IsFlex)
             {
                 LoadFlex(budget, carry.Total, accounts, entries, schedules, states, categories, from, to, culture);
@@ -498,6 +526,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         if (IsEnvelopes && _budget is { } envelopeBudget)
         {
             await LoadEnvelopesAsync(envelopeBudget, accounts, envelopes, from, to, culture);
+            RequireVisible();
         }
 
         HasTotal = TotalLines.Count > 0;
@@ -516,9 +545,11 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
             .Sum(v => v ?? 0);
         EquivalentText = equivalent > 0 && _period == BudgetPeriod.Month ? _translator.Format("Budget_Equivalent", MoneyText.Format(equivalent, _currency, culture)) : null;
         await _store.ValidateBudgetEditorReviewAsync(reviewedBudgets);
+        RequireVisible();
         _review = reviewedBudgets;
         Actions.Publish(reviewedBudgets, new(_year, _month, _calendar, _period, _periodStart, _currency), _budget?.Id);
     }
+
 
     // Flex (D-28): one limit for flexible spending; fixed bills expected from the plans, non-monthly bills with their
     // monthly share. Every amount is counted in one group only (BUD-12).

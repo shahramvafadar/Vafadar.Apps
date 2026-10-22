@@ -3444,3 +3444,13 @@ on tracker retirement. Never share the Shell tracker's disposed Java peer with a
 Preserve full scaled title geometry/native Back. Verify actual root ownership and source equality
 in the independent caller; retain real rejected native crashes and never infer a general ANR/GC
 fix from a finite successful lifecycle check. Reuse completed source/native/financial evidence.
+
+## D-461 - Original budget command and writer lifetime
+
+Bind budget view commands to the original published review revision. Native disappearance retires
+retained commands, pending consent, hidden Retry and late publication; returning from the original
+editor keeps its period. Pass current-ownership predicates through the actual copy/replace/delete
+transaction and check them before commit. Record accepted results before Changed notification;
+a post-commit failure never becomes an unsaved failure or a repeated write. Keep native observer
+continuations on their retained fictitious source and never replay accepted commands to repair a
+capture. Full financial-snapshot, stability, accessibility and external release gates stay separate.

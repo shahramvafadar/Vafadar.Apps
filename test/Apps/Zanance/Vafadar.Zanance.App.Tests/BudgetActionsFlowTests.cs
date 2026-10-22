@@ -42,7 +42,7 @@ public sealed class BudgetActionsFlowTests
             Actions.Publish(review, Visit, original?.Id);
         }
     }
-    private static async Task<Session> SeedAsync(FlowFixture f, BudgetPeriod period = BudgetPeriod.Month, bool paid = false, bool existingNext = false)
+    private static async Task<Session> SeedAsync(FlowFixture f, BudgetPeriod period = BudgetPeriod.Month, bool paid = false, bool existingNext = false, IDbContextFactory<ZananceDbContext>? factory = null)
     {
         var account = new Account { Name = "Original archived account", CurrencyCode = "EUR", OpeningDate = new(2026, 9, 1), IsArchived = true };
         await f.Store.SaveAccountAsync(account, Ct);
@@ -57,7 +57,7 @@ public sealed class BudgetActionsFlowTests
                 : BudgetPlanning.CopyTo(source, BudgetPeriods.Step(period, source.PeriodStart, 1));
             next.TotalLimit = 99999; await f.Store.SaveBudgetAsync(next, Ct);
         }
-        var access = new Access(); var store = new ZananceStore(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>(), f.Time, access);
+        var access = new Access(); var store = new ZananceStore(factory ?? f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>(), f.Time, access);
         var session = new Session(store, access, source, new(2026, 10, source.Calendar, period, source.PeriodStart, "EUR"));
         session.Actions = new(store, f.Translator, new DateFormatter(f.Localization), f.Platform, session.ReloadAsync);
         await session.ReloadAsync(null); return session;
@@ -240,6 +240,147 @@ public sealed class BudgetActionsFlowTests
         using var f = new FlowFixture(); var s = await SeedAsync(f, existingNext: true);
         f.Platform.PendingConfirmation = async () => { await s.ReloadAsync(s.Visit with { Month = 11 }); return true; };
         var before = await RowsAsync(f); await s.Actions.DeleteCommand.ExecuteAsync(null);
-        Assert.Equal(before, await RowsAsync(f)); Assert.Single(f.Platform.Failures); Assert.True(s.Actions.NeedsReload);
+        Assert.Equal(before, await RowsAsync(f)); Assert.Empty(f.Platform.Failures); Assert.True(s.Actions.CanInteract);
+    }
+
+    [Theory]
+    [InlineData("edit")] [InlineData("delete")] [InlineData("copy")]
+    public async Task Command_captured_for_original_period_cannot_act_on_a_later_published_budget(string operation)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f, existingNext: true);
+        var command = operation switch
+        {
+            "edit" => s.Actions.EditCommand,
+            "delete" => s.Actions.DeleteCommand,
+            _ => s.Actions.CopyToNextCommand,
+        };
+        await s.ReloadAsync(s.Visit with { Month = 11 });
+        var before = await RowsAsync(f); f.Platform.Confirmations.Enqueue(true);
+
+        await command.ExecuteAsync(null);
+
+        Assert.Equal(before, await RowsAsync(f));
+        Assert.Empty(f.Platform.ConfirmationDialogs); Assert.Empty(f.Platform.Routes);
+        Assert.True(s.Actions.CanInteract);
+    }
+
+    [Theory]
+    [InlineData(0)] [InlineData(1)] [InlineData(2)]
+    public async Task Original_budget_commit_remains_accepted_when_its_change_subscriber_throws(int operation)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f, existingNext: operation == 1);
+        var notifications = 0;
+        s.Store.Changed += (_, _) => { notifications++; throw new IOException("Original accepted budget notification failure."); };
+        f.Platform.Confirmations.Enqueue(true);
+
+        await (operation == 2 ? s.Actions.DeleteCommand : s.Actions.CopyToNextCommand).ExecuteAsync(null);
+
+        Assert.Equal(1, notifications);
+        Assert.Equal(f.Translator["Occurrence_SavedRefreshFailed"], s.Actions.Feedback);
+        Assert.Empty(f.Platform.Failures); Assert.True(s.Actions.NeedsReload);
+        var accepted = await RowsAsync(f);
+        await s.Actions.DeleteCommand.ExecuteAsync(null); await s.Actions.CopyToNextCommand.ExecuteAsync(null);
+        Assert.Equal(accepted, await RowsAsync(f)); Assert.Equal(1, notifications);
+        Assert.Equal(operation == 2 ? 0 : 2, (await s.Store.GetBudgetsAsync(Ct)).Count);
+    }
+
+    private sealed class BeforeSaveFactory(IDbContextFactory<ZananceDbContext> inner) : IDbContextFactory<ZananceDbContext>
+    {
+        internal Action? BeforeSave;
+        public ZananceDbContext CreateDbContext() => Attach(inner.CreateDbContext());
+        public async Task<ZananceDbContext> CreateDbContextAsync(CancellationToken cancellationToken = default) =>
+            Attach(await inner.CreateDbContextAsync(cancellationToken));
+        private ZananceDbContext Attach(ZananceDbContext db)
+        {
+            db.SavingChanges += (_, _) => { var callback = BeforeSave; BeforeSave = null; callback?.Invoke(); };
+            return db;
+        }
+    }
+
+    [Theory]
+    [InlineData(0)] [InlineData(1)] [InlineData(2)]
+    public async Task Original_budget_write_rolls_back_when_native_owner_retires_during_save_changes(int operation)
+    {
+        using var f = new FlowFixture();
+        var factory = new BeforeSaveFactory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+        var s = await SeedAsync(f, existingNext: operation == 1, factory: factory);
+        var before = await RowsAsync(f); var notifications = 0; s.Store.Changed += (_, _) => notifications++;
+        factory.BeforeSave = s.Actions.Retire; f.Platform.Confirmations.Enqueue(true);
+
+        await (operation == 2 ? s.Actions.DeleteCommand : s.Actions.CopyToNextCommand).ExecuteAsync(null);
+
+        Assert.Equal(before, await RowsAsync(f)); Assert.Equal(0, notifications);
+        Assert.False(s.Actions.CanInteract); Assert.Empty(f.Platform.Failures);
+        Assert.False(s.Actions.NeedsReload);
+    }
+
+    [Theory]
+    [InlineData(false)] [InlineData(true)]
+    public async Task Pending_original_budget_consent_is_retired_without_poisoning_another_page(bool deleting)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f, existingNext: true);
+        var entered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var response = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        f.Platform.PendingConfirmation = () => { entered.SetResult(); return response.Task; };
+        var before = await RowsAsync(f);
+        var operation = (deleting ? s.Actions.DeleteCommand : s.Actions.CopyToNextCommand).ExecuteAsync(null);
+        await entered.Task.WaitAsync(Ct); s.Actions.Retire(); response.SetResult(true); await operation;
+
+        Assert.Equal(before, await RowsAsync(f)); Assert.Empty(f.Platform.Failures);
+        Assert.False(s.Actions.CanInteract); Assert.False(s.Actions.NeedsReload);
+        await s.ReloadAsync(null); Assert.True(s.Actions.CanInteract);
+    }
+
+    [Fact]
+    public async Task Original_previous_copy_command_does_not_follow_a_later_missing_period()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f, existingNext: true);
+        // Reuse the same two original rows; the first displayed missing period has an explicit previous alternative.
+        await s.ReloadAsync(s.Visit with { Month = 12 }); var old = s.Actions.CopyPreviousCommand;
+        Assert.True(s.Actions.CanCopyPrevious);
+        await s.ReloadAsync(s.Visit with { Month = 9 }); var before = await RowsAsync(f);
+
+        await old.ExecuteAsync(null);
+
+        Assert.Equal(before, await RowsAsync(f)); Assert.Empty(f.Platform.ConfirmationDialogs);
+        Assert.False(old.CanExecute(null));
+    }
+
+    [Fact]
+    public async Task Retired_reload_command_cannot_reload_or_rearm_the_original_page()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); var old = s.Actions.ReloadCommand;
+        var reads = 0; s.DuringReload = () => { reads++; return Task.CompletedTask; }; s.Actions.Retire();
+
+        await old.ExecuteAsync(null);
+
+        Assert.Equal(0, reads); Assert.False(old.CanExecute(null)); Assert.False(s.Actions.CanInteract);
+        Assert.False(s.Actions.CanReload); Assert.False(s.Actions.ReloadCommand.CanExecute(null));
+    }
+
+    [Fact]
+    public async Task Original_editor_opening_callback_that_retires_page_cannot_navigate()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); var before = await RowsAsync(f);
+        s.Actions.EditorOpening += (_, _) => s.Actions.Retire();
+
+        await s.Actions.EditCommand.ExecuteAsync(null);
+
+        Assert.Empty(f.Platform.Routes); Assert.Empty(f.Platform.Failures);
+        Assert.False(s.Actions.CanInteract); Assert.Equal(before, await RowsAsync(f));
+    }
+
+    [Fact]
+    public async Task Original_reload_failure_after_page_retirement_cannot_rearm_retry_or_publish_failure()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); var before = await RowsAsync(f);
+        var entered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var response = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        s.DuringReload = async () => { entered.SetResult(); await response.Task; throw new IOException("Retired original read failed."); };
+        var operation = s.Actions.ReloadCommand.ExecuteAsync(null); await entered.Task.WaitAsync(Ct);
+        s.Actions.Retire(); response.SetResult(); await operation;
+
+        Assert.False(s.Actions.CanReload); Assert.False(s.Actions.NeedsReload); Assert.Empty(f.Platform.Failures);
+        Assert.Equal(before, await RowsAsync(f));
     }
 }

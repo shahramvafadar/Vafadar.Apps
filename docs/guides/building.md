@@ -2230,3 +2230,19 @@ same independent phase/source. Retain the earlier48 frames and original source r
 readiness must verify an actual nonempty UI-dump success marker before pulling; a null root is not
 a successful observation. Public production-app cleanup requires both profile-delete questions;
 record cancellation and inspect current UI before continuing, never repeat a known accepted Save.
+
+### Original budget action lifecycle review (D-461)
+
+`eng/scripts/Run-StoreDrafts.ps1 -BudgetActionsLifetimeReview` builds a fresh independently identified
+Windows Debug app on its non-input desktop. Its separate SQLite source exercises original native
+replacement/deletion/previous-copy, known accepted notification failures and read-only Retry. It
+then checks original en/fa/de Light/Dark targets and retirement after actual native disappearance.
+Use `VAFADAR_REVIEW_BUILD_ROOT` for fresh output on a drive with sufficient space. Preserve the
+original process on observation timeout; inspect its exact handle before any continuation.
+
+`-BudgetActionsSourceRun <original-run-id>` accepts only a terminated original source process and
+its exact fixed fictitious budget file. `-BudgetActionsObservationsOnly` requires that source and
+qualifies the already-applied three-period configuration without any accepted command replay.
+Its receipt explicitly reports zero new writes/retries; it cannot turn an earlier failed native
+run into a completed one. Review every own-window image and retain original/cleanup failures.
+The current native gate waits for the actual enabled44px child target, not only its parent layout.

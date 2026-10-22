@@ -2362,3 +2362,12 @@ callbacks. Register a separate explicit native listener; remove that same identi
 live tree and detach its weak owner at retirement. Do not share the Shell tracker's Java disposal
 boundary with that callback. Preserve scaled title metrics and native Back. Finite lifetime/title
 checks do not establish general ANR/crash or spoken-accessibility acceptance.
+
+### Original budget command lifetime (D-461)
+
+Budget Edit, previous/next copy, Delete and Retry belong to the original published period and native
+page lifetime. Replacing the displayed review or leaving the page retires retained command objects
+and pending consent. A hidden page cannot rearm itself through Retry or a late theme/read callback.
+Keep editor-return period semantics and current-month reset on a new tab visit. Known committed
+notification failures use the existing saved/refresh message; only a read-only Retry is offered.
+No new amount, method, calendar, permission or confirmation design is introduced.

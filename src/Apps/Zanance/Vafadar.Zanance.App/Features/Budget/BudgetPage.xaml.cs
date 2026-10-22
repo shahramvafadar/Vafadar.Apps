@@ -10,6 +10,12 @@ public partial class BudgetPage : ContentPage
         BindingContext = _viewModel = viewModel;
     }
 
+    protected override void OnDisappearing()
+    {
+        _viewModel.OnHidden();
+        base.OnDisappearing();
+    }
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();

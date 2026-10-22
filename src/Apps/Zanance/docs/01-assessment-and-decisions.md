@@ -8378,3 +8378,28 @@ invalid host-input and observation-verifier failures; do not replay accepted fin
 Program/APK remain D-450; no successful old test/build/emulator matrix is repeated. Broader
 period/method/rollover, physical workflow, stability/accessibility/iOS/provider/release gates remain.
 See [physical budget boundary evidence](quality/physical-budget-boundaries.md).
+
+### D-461 - Original budget action lifetime and committed outcomes
+
+Six original SQLite regressions reproduce retained Edit/Delete/Copy commands acting on a newly
+published period and misreported accepted writes after Changed throws. Commands now retain their
+original publication revision; native disappearance retires commands/consent and hidden Retry.
+Pending reads cannot revive a retired page. Copy/replace/delete recheck current ownership in the
+actual writer before commit; acceptance is recorded before notification, so explicit Retry reads
+without repeating the write.15 new cases and26 existing action cases are verified distinctly. Four cases repeat after the hidden
+Retry guard; two later callback/read regressions fail first, then only seven affected cases repeat and pass. Strict Windows and final Offline Android
+builds have no warnings/errors. Retain failed native Windows attempts, including the first terminal
+UI crash and later target-readiness failures. Three native metadata actions passed their financial
+checks before the later observer failure; never replay them. The same source supplies six final
+read-only en/fa/de Light/Dark Windows captures with original base/nonbudget rows unchanged.
+Complete signed Offline APK has384 AOT libraries; Samsung upgrades without reset and original
+copy-next/Edit dirty Discard/delete-cancel/delete/copy-previous/tab/period reads pass with cash900
+and empty All-history. Remove only the new profile; Main979/three profiles/all141 public nodes/OS
+and intermediate candidate hash match (26 assertions/78 captures). After the last callback/read
+guards, upgrade the final signed candidate without reset; existing D316 Edit/Cancel preserves
+its budget50/Home990 without any write. Return Main979/three profiles/all141 nodes/exact OS
+and final APK hash in the same PID12903 (9 assertions/34 additional captures). These are
+original observations, not unit cases; accepted financial/native writes are not replayed.
+No schema/provider/permission or financial formula changes. General stability/accessibility,
+complete budget financial snapshots, other platform/workflow and release gates remain open.
+See [budget action lifetime evidence](quality/budget-action-lifetime.md).

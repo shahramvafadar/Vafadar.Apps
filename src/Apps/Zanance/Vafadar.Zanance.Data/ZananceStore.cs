@@ -451,8 +451,9 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     /// Saves <paramref name="budget"/> in place of the budget <paramref name="replacedId"/> in one transaction (copy to the
     /// next period over an existing budget, BUD-07): if the new budget cannot be saved, the old one stays.
     /// </summary>
-    public async Task ReplaceBudgetAsync(Guid replacedId, Budget budget, CancellationToken cancellationToken = default, BudgetEditorReview? review = null)
+    public async Task ReplaceBudgetAsync(Guid replacedId, Budget budget, CancellationToken cancellationToken = default, BudgetEditorReview? review = null, Func<bool>? inputCurrent = null, Action? accepted = null)
     {
+        DemandOriginalInput();
         ArgumentNullException.ThrowIfNull(budget);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
@@ -471,9 +472,16 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
         write.EnsureCurrent();
+        DemandOriginalInput();
         await transaction.CommitAsync(cancellationToken);
+        accepted?.Invoke();
 
         OnChanged();
+
+        void DemandOriginalInput()
+        {
+            if (inputCurrent?.Invoke() == false) throw new InvalidOperationException("The original budget action was retired before acceptance.");
+        }
     }
 
     /// <summary>Checks actual current-period definitions and newly used methods before any budget/limit mutation.</summary>
@@ -495,8 +503,9 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Deletes a budget; entries are not affected.</summary>
-    public async Task DeleteBudgetAsync(Guid id, CancellationToken cancellationToken = default, BudgetEditorReview? review = null)
+    public async Task DeleteBudgetAsync(Guid id, CancellationToken cancellationToken = default, BudgetEditorReview? review = null, Func<bool>? inputCurrent = null, Action? accepted = null)
     {
+        DemandOriginalInput();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         if (review is not null) await ValidateBudgetEditorReviewAsync(review, db, cancellationToken);
@@ -508,8 +517,15 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         db.Budgets.Remove(budget);
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
+        DemandOriginalInput();
         await write.CommitAsync(cancellationToken);
+        accepted?.Invoke();
         OnChanged();
+
+        void DemandOriginalInput()
+        {
+            if (inputCurrent?.Invoke() == false) throw new InvalidOperationException("The original budget action was retired before acceptance.");
+        }
     }
 
     /// <summary>Returns all manual exchange rates, newest first.</summary>

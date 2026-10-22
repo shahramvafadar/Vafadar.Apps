@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep budget actions with their original period (D-461)
+
+- Prevent an old budget action or pending confirmation from changing another displayed period.
+- Preserve a completed copy or deletion when its notification fails; Retry only refreshes the result.
+
 ### Release Android title observers with their page root (D-450)
 
 - Remove native layout callbacks from the current Android view tree when their toolbar is retired.
