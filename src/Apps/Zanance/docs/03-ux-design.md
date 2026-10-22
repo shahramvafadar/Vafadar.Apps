@@ -2346,3 +2346,11 @@ with All-history empty. Only that new profile is removed via full two-question U
 profile-list/Home139 nodes and0.00EUR return unchanged; English/Dark/Simple and OS are read back.
 These are controlled new metadata saves, not repeated fixture payments or full protected-goal,
 cryptographic, stability, spoken, physical/iOS or release acceptance.
+
+### D-449: retain complete scaled native toolbar titles
+
+Android keeps its native title and Back control. Grow the owned toolbar when the actual title's last
+line needs more height at OS text scale, including Persian script metrics; do not shrink the font.
+Retire geometry observers with that toolbar and avoid repeated/shrinking requests inside layout.
+The finite360/412dp goal-page evidence is recorded in [goal-page OS text](quality/goal-page-os-text.md);
+it does not establish general Android stability or spoken accessibility acceptance.

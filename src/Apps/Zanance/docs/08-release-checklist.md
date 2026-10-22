@@ -2519,3 +2519,17 @@ complete signed Offline Main upgrade pass without warnings. Original Main Home13
 remain; no general ANR/crash/two-second/low-memory or phone/iOS/release acceptance is inferred.
 
 See [Home goal worker evidence](quality/home-goal-worker.md).
+
+### D-449 - Original goal-page OS text and native toolbar height
+
+The original Persian title needs58px but received48px at actual Android OS200% text. The owned
+native toolbar grows for its measured final line without reducing text size or replacing navigation.
+Observers retire with the toolbar and growth requests are deduplicated within that lifetime.
+Forty-eight immutable contexts contain216 native observations across360/412dp, en/fa/de and both
+themes; completed contexts and native Retry are retained rather than replayed. Original fixture/base
+rows remain unchanged with zero financial writes. Two unresponsive candidate sequences and a lost
+log-chunk report are preserved; compact read-only durable receipt verification completes the report
+without replay. Strict Windows/Android builds, complete signed Offline APK384 AOT entries, same-data
+Main upgrade, original Goals read and Home139-node return pass. Exact emulator OS settings return.
+No managed test baseline increase or general ANR/crash, speed, spoken/physical/iOS, provider/store
+or release acceptance is claimed. See [native goal-page evidence](quality/goal-page-os-text.md).

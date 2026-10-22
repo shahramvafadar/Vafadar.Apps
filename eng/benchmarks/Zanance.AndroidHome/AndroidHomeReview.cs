@@ -98,6 +98,14 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Fresh original transaction detail fixture required.");
                 await WriteReportAsync(root, phase, await ReviewEntryDetailAsync(app, services, root, comparison!, ct), ct);
             }
+            else if (phase == "goals-os-report")
+                await WriteReportAsync(root, phase, await ReadGoalsOsReportAsync(root, baseline!, ct), ct);
+            else if (phase == "goals-os")
+            {
+                if (!Directory.Exists(root) || RedirectedAncestors(root).Length != 0)
+                    throw new ReviewCheckException("Retained original goal OS source required.");
+                await WriteReportAsync(root, phase, await ReviewGoalsOsAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "goal-detail")
             {
                 if (!Directory.Exists(root) || RedirectedAncestors(root).Length != 0)

@@ -70,12 +70,18 @@ internal sealed class AccessibleShellRenderer : ShellRenderer
     {
         private NativeToolbar? _nativeToolbar;
         private bool _retired;
+        private Android.Views.ViewTreeObserver? _layoutObserver;
+        private int _ordinaryToolbarHeight;
+        private int _requestedToolbarHeight;
+        private int _titleVerticalChrome = -1;
 
         /// <summary>Observes translations only for this toolbar's lifetime.</summary>
         public AccessibleToolbarTracker(IShellContext context, NativeToolbar toolbar, DrawerLayout drawerLayout)
             : base(context, toolbar, drawerLayout)
         {
             _nativeToolbar = toolbar;
+            _layoutObserver = toolbar.ViewTreeObserver;
+            if (_layoutObserver is not null) _layoutObserver.GlobalLayout += OnToolbarLayoutChanged;
             Translator.Instance.PropertyChanged += OnTranslationsChanged;
         }
 
@@ -84,6 +90,35 @@ internal sealed class AccessibleShellRenderer : ShellRenderer
         {
             base.UpdateToolbarIconAccessibilityText(toolbar, shell);
             UpdateBackDescription();
+        }
+
+        /// <summary>Lets the native title retain its scaled font without clipping taller script metrics.</summary>
+        private void OnToolbarLayoutChanged(object? sender, EventArgs args)
+        {
+            if (_retired || _nativeToolbar is not { Height: > 0 } toolbar
+                || toolbar.Visibility != Android.Views.ViewStates.Visible || string.IsNullOrEmpty(toolbar.Title)) return;
+            Android.Widget.TextView? title = null;
+            for (var index = 0; index < toolbar.ChildCount; index++)
+                if (toolbar.GetChildAt(index) is Android.Widget.TextView candidate && candidate.Text == toolbar.Title)
+                { title = candidate; break; }
+            if (title?.Layout is not { LineCount: > 0 } layout || title.Height <= 0
+                || toolbar.LayoutParameters is not { } parameters) return;
+            if (_titleVerticalChrome < 0)
+            {
+                _ordinaryToolbarHeight = toolbar.Height;
+                _titleVerticalChrome = Math.Max(0, toolbar.Height - title.Height);
+            }
+            // D-449: AppCompat measures a scaled Persian title against the fixed action-bar
+            // height. Grow only the owned native toolbar; keep its arrow, title font and handlers.
+            var required = layout.GetLineBottom(layout.LineCount - 1)
+                + title.CompoundPaddingTop + title.CompoundPaddingBottom + _titleVerticalChrome;
+            var height = Math.Max(_ordinaryToolbarHeight, required);
+            // Never fight a framework remeasurement or shrink inside its global-layout pass.
+            // A fresh toolbar owns a fresh baseline; this toolbar only grows for taller text.
+            if (height <= toolbar.Height || height <= _requestedToolbarHeight) return;
+            _requestedToolbarHeight = height;
+            parameters.Height = height;
+            toolbar.LayoutParameters = parameters;
         }
 
         private void OnTranslationsChanged(object? sender, PropertyChangedEventArgs e) =>
@@ -104,6 +139,8 @@ internal sealed class AccessibleShellRenderer : ShellRenderer
             {
                 _retired = true;
                 Translator.Instance.PropertyChanged -= OnTranslationsChanged;
+                if (_layoutObserver is { IsAlive: true }) _layoutObserver.GlobalLayout -= OnToolbarLayoutChanged;
+                _layoutObserver = null;
                 _nativeToolbar = null;
             }
             base.Dispose(disposing);

@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep large Persian savings-goal titles readable (D-449)
+
+- Let the Android title bar grow when the scaled text needs more height, while retaining native Back.
+- Preserve the completed goal-page checks and original data through remaining text-size qualification.
+
 ### Keep original goal details safe through retry and navigation (D-448)
 
 - Load the complete original goal, funding and forecast together, with local loading/retry feedback.
