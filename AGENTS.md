@@ -3404,3 +3404,24 @@ negative-margin overlay can be clipped intentionally: require owned/focused/enab
 and at least44dp visible target, not its clipped decorative perimeter. Keep capture-path observer
 repairs separate from completed native scenes. Finite checks do not establish child-form ownership,
 general ANR/crash, spoken, physical-phone, iOS or release acceptance.
+
+## D-448 - Original goal-detail lifetime and complete source
+
+Use one captured actual file/transaction for detail goal/work/account/ledger/holding/preferences/
+category/plan/state inputs. Missing preferences remain detached defaults. Keep pure financial work
+on a worker, localized publication under a local cover, and original dirty parser/account/direction
+state through explicit Retry. Page/identity revisions retire pending reads and old command objects;
+history actions require indexed exact row identity. State/delete predicates run before mutation and
+commit in the same transaction; known committed observer failures never rearm accepted input. Keep
+retained native actions/frames distinct from observer-only reconstruction: a newly reconstructed
+current row is not the old pre-Retry row. Raw inputs stay Latin; presentation-digit conversion is
+caption-only. Preserve failures, completed contexts and accepted original fixture actions. These
+finite scopes do not waive remaining native confirmation, all protected-Main goal variants, stability,
+spoken, physical-phone, iOS or external release gates.
+
+Retained-stack IThemeAware callbacks must not revive a disappeared detail; actual reappearance owns
+its next load. Edit validation/navigation holds its own busy guard and routes current failures to
+local Retry, without escaping native commands. Preserve original cohorts; qualify new error paths
+separately. Positive Main-source checks use a newly owned fictitious profile and single accepted
+metadata saves, then the complete two-question profile deletion and original public UI restoration.
+Do not equate a first confirmation, a transient null tree or a cancelled second question with deletion.

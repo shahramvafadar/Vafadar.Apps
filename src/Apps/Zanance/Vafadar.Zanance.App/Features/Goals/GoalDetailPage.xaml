@@ -11,7 +11,8 @@
     x:DataType="local:GoalDetailViewModel"
     Title="{v:Translate Goal_Details}">
 
-    <Grid RowDefinitions="*,Auto">
+    <Grid>
+    <Grid x:Name="ReadySurface" RowDefinitions="*,Auto" IsVisible="{Binding CanView}">
         <Label Text="{v:Translate Goal_NotFound}" Margin="32" HorizontalTextAlignment="Center" IsVisible="{Binding NotFound}" />
         <ScrollView IsEnabled="{Binding CanInteract}" IsVisible="{Binding NotFound, Converter={StaticResource InvertedBoolConverter}}">
             <VerticalStackLayout Padding="16" Spacing="8">
@@ -136,6 +137,15 @@
         <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" IsVisible="{Binding NeedsReload}">
             <Label Text="{Binding SaveError}" Style="{StaticResource ErrorText}" />
             <p:WrappingAction Text="{v:Translate Settings_RetryLoad}" Command="{Binding ReloadCommand}" />
+        </VerticalStackLayout>
+    </Grid>
+        <VerticalStackLayout x:Name="LoadingSurface" Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding IsLoading}">
+            <ActivityIndicator IsRunning="{Binding IsLoading}" Color="{DynamicResource Primary}" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
+            <Label x:Name="LoadingCaption" Text="{v:Translate Goals_Loading}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+        <VerticalStackLayout x:Name="ErrorSurface" Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding HasReadFailed}">
+            <Label x:Name="ErrorCaption" Text="{v:Translate Goals_LoadFailed}" HorizontalTextAlignment="Center" />
+            <Button x:Name="RetryLoadButton" Text="{v:Translate Goals_RetryLoad}" Style="{StaticResource SecondaryButton}" Command="{Binding ReloadCommand}" />
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

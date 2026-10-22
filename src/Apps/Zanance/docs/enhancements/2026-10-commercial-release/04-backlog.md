@@ -4409,3 +4409,34 @@ See [original goal-list evidence](../../quality/goal-list-publication.md).
 Next: retained original goal-detail file/command ownership review, without replaying accepted
 financial writes; direct D-445 Samsung USD qualification waits for an explicitly coordinated free
 turn. Dedicated remaining stability/performance/spoken/platform and genuine external gates remain.
+
+### D-448 - Original goal-detail delivery locally qualified
+
+Original goal details now use one complete captured file/transaction and worker financial
+calculation under a local loading/error/retry cover. Page/identity revisions retire old commands
+and pending reads while retaining original dirty money inputs. State/delete writers check the
+original action inside their transaction before changes and commit, and preserve known accepted
+results across observer failure. Three original regressions reproduce identity, pending-delete and
+file-adoption defects;23 new focused cases and58 affected prior goal cases pass in selective runs,
+plus19 original monetary-context and23 resource cases. Native Windows146 and Android50 observations
+(31new/19retained Android) preserve retained fixture rows with no new fixture writes or replayed fixture
+actions. Strict builds, signed Offline Main upgrade/Home139-node/OS checks and test cleanup pass.
+Observer/compile failures are retained and repaired without replaying completed native actions.
+General stability/performance, spoken/device/iOS, all protected-Main goal variants, native
+destructive confirmations and genuine external gates are not accepted by this finite batch.
+
+See [original goal-detail evidence](../../quality/goal-detail-publication.md).
+
+Next: remaining supported final stability/performance and Android accessibility qualification after
+ready feature delivery, as ordered by D-386; direct D-445 physical currency input waits for an
+explicitly coordinated free turn. Preserve completed feature/scenario evidence. Mac/iOS, original
+bank/receipt fixtures and owner accounts/providers/publication remain their concrete external gates.
+
+Final source regressions also cover failed/busy/cancelled Edit validation and retained-stack theme
+refresh. Only2 extra native observations per platform qualify the new Edit refusal/retry path;
+completed cohorts remain. One new production-app test profile/account-opening/goal Save and one
+cold read qualify positive protected-Main account-balance details100/150/50EUR and Edit/Cancel,
+with All-history empty. Only that new profile is removed via full two-question UI cleanup. Main's
+profile-list/Home139 nodes and0.00EUR return unchanged; English/Dark/Simple and OS are read back.
+These are controlled new metadata saves, not repeated fixture payments or full protected-goal,
+cryptographic, stability, spoken, physical/iOS or release acceptance.

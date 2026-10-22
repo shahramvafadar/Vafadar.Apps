@@ -134,7 +134,8 @@ internal static partial class DebugSnapshots
         }
         if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "plan-form")
         {
-            if (Environment.GetEnvironmentVariable("VAFADAR_GOAL_LIST_REVIEW") == "1") await ReviewGoalListWindowsAsync(app, services, folder);
+            if (Environment.GetEnvironmentVariable("VAFADAR_GOAL_DETAIL_REVIEW") == "1") await ReviewGoalDetailWindowsAsync(app, services, folder);
+            else if (Environment.GetEnvironmentVariable("VAFADAR_GOAL_LIST_REVIEW") == "1") await ReviewGoalListWindowsAsync(app, services, folder);
             else if (Environment.GetEnvironmentVariable("VAFADAR_PHYSICAL_RATES_REVIEW") == "1") await ReviewPhysicalRatesWindowsAsync(app, services, folder);
             else if (Environment.GetEnvironmentVariable("VAFADAR_SECONDARY_HOUSEHOLD_REVIEW") == "1") await ReviewSecondaryHouseholdWindowsAsync(app, services, folder);
             else if (Environment.GetEnvironmentVariable("VAFADAR_SECONDARY_SETTINGS_REVIEW") == "1") await ReviewSecondarySettingsWindowsAsync(app, services, folder);

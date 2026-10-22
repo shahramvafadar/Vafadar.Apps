@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -45,11 +44,95 @@ public sealed partial class GoalDetailViewModel(
     TimeProvider time,
     IAppInteraction interaction) : ViewModelBase, Presentation.IThemeAware
 {
+    private IAsyncRelayCommand? _reloadCommand;
+    /// <summary>Gets the original Reload action owned by this detail lifetime.</summary>
+    public IAsyncRelayCommand ReloadCommand => _reloadCommand ??= DetailCommand(ReloadAsync, () => IsNotBusy && !_refreshing);
+    private IAsyncRelayCommand? _saveAssumedPriceCommand;
+    /// <summary>Gets the original SaveAssumedPrice action owned by this detail lifetime.</summary>
+    public IAsyncRelayCommand SaveAssumedPriceCommand => _saveAssumedPriceCommand ??= DetailCommand(SaveAssumedPriceAsync, () => CanSaveAssumedPrice);
+    private IAsyncRelayCommand? _allocateCommand;
+    /// <summary>Gets the original Allocate action owned by this detail lifetime.</summary>
+    public IAsyncRelayCommand AllocateCommand => _allocateCommand ??= DetailCommand(AllocateAsync, () => CanAllocate);
+    private IAsyncRelayCommand? _editCommand;
+    /// <summary>Gets the original Edit action owned by this detail lifetime.</summary>
+    public IAsyncRelayCommand EditCommand => _editCommand ??= DetailCommand(EditAsync, () => CanInteract);
+    private IAsyncRelayCommand? _toggleCompleteCommand;
+    /// <summary>Gets the original ToggleComplete action owned by this detail lifetime.</summary>
+    public IAsyncRelayCommand ToggleCompleteCommand => _toggleCompleteCommand ??= DetailCommand(ToggleCompleteAsync, () => CanToggleComplete);
+    private IAsyncRelayCommand? _togglePauseCommand;
+    /// <summary>Gets the original TogglePause action owned by this detail lifetime.</summary>
+    public IAsyncRelayCommand TogglePauseCommand => _togglePauseCommand ??= DetailCommand(TogglePauseAsync, () => CanTogglePause);
+    private IAsyncRelayCommand? _restoreCommand;
+    /// <summary>Gets the original Restore action owned by this detail lifetime.</summary>
+    public IAsyncRelayCommand RestoreCommand => _restoreCommand ??= DetailCommand(RestoreAsync, () => CanRestore);
+    private IAsyncRelayCommand? _archiveCommand;
+    /// <summary>Gets the original Archive action owned by this detail lifetime.</summary>
+    public IAsyncRelayCommand ArchiveCommand => _archiveCommand ??= DetailCommand(ArchiveAsync, () => CanInteract);
+    private IAsyncRelayCommand? _deleteCommand;
+    /// <summary>Gets the original Delete action owned by this detail lifetime.</summary>
+    public IAsyncRelayCommand DeleteCommand => _deleteCommand ??= DetailCommand(DeleteAsync, () => CanInteract);
+    private IAsyncRelayCommand<AllocationRow>? _deleteAllocationCommand;
+    /// <summary>Gets deletion of only the exact currently published original allocation row.</summary>
+    public IAsyncRelayCommand<AllocationRow> DeleteAllocationCommand => _deleteAllocationCommand ??= AllocationCommand();
+
+    private IAsyncRelayCommand DetailCommand(Func<Task> action, Func<bool> canExecute)
+    {
+        var identity = _identityVersion;
+        bool Current() => !_retired && identity == _identityVersion;
+        return new AsyncRelayCommand(() => Current() && canExecute() ? action() : Task.CompletedTask,
+            () => Current() && canExecute());
+    }
+    private IAsyncRelayCommand<AllocationRow> AllocationCommand()
+    {
+        var identity = _identityVersion;
+        bool Current(AllocationRow? row) => !_retired && identity == _identityVersion && CanInteract
+            && row is not null && OwnsHistory(row);
+        return new AsyncRelayCommand<AllocationRow>(row => Current(row) ? DeleteAllocationAsync(row!) : Task.CompletedTask, Current);
+    }
+    private void ResetCommands()
+    {
+        _reloadCommand = null; OnPropertyChanged(nameof(ReloadCommand));
+        _saveAssumedPriceCommand = null; OnPropertyChanged(nameof(SaveAssumedPriceCommand));
+        _allocateCommand = null; OnPropertyChanged(nameof(AllocateCommand));
+        _editCommand = null; OnPropertyChanged(nameof(EditCommand));
+        _toggleCompleteCommand = null; OnPropertyChanged(nameof(ToggleCompleteCommand));
+        _togglePauseCommand = null; OnPropertyChanged(nameof(TogglePauseCommand));
+        _restoreCommand = null; OnPropertyChanged(nameof(RestoreCommand));
+        _archiveCommand = null; OnPropertyChanged(nameof(ArchiveCommand));
+        _deleteCommand = null; OnPropertyChanged(nameof(DeleteCommand));
+        _deleteAllocationCommand = null; OnPropertyChanged(nameof(DeleteAllocationCommand));
+    }
+    /// <summary>Retires pending reads and original commands without discarding the retained original money drafts.</summary>
+    public void Retire()
+    {
+        _identityVersion++; _retired = true; _needsReload = true;
+        var prior = _readLifetime; _readLifetime = new(); prior.Cancel(); prior.Dispose();
+        IsLoading = true; ResetCommands(); OnPropertyChanged(nameof(CanView)); RefreshActions();
+    }
+
     private Guid _id;
+    private long _identityVersion;
+    private Func<bool>? _writeCurrent;
+    private bool _retired;
+    private CancellationTokenSource _readLifetime = new();
+
+    /// <summary>Gets whether this original detail is awaiting its complete financial packet.</summary>
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(CanView))]
+    public partial bool IsLoading { get; private set; } = true;
+    /// <summary>Gets whether the local read cover must offer an explicit retry.</summary>
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(CanView))]
+    public partial bool HasReadFailed { get; private set; }
+    /// <summary>Gets whether the complete original detail may be shown, independently of write busy state.</summary>
+    public bool CanView => !_retired && !IsLoading && !HasReadFailed;
+
+    private Dictionary<Guid, AllocationRow> _historyRows = [];
+    private bool OwnsHistory(AllocationRow row) => _historyRows.TryGetValue(row.Id, out var current) && ReferenceEquals(current, row);
     private Goal? _goal;
     private GoalWorkPolicy _work = GoalWorkPolicy.Inactive;
     private bool _refreshing;
     private GoalWorkSnapshot? _review;
+    private GoalWorkSnapshot? _originalSource;
+    private GoalListSnapshot? _financialReview;
     private bool _needsReload;
     private readonly SemaphoreSlim _loadGate = new(1, 1);
     private bool _publishingDrafts;
@@ -112,7 +195,7 @@ public sealed partial class GoalDetailViewModel(
     public partial string? SaveError { get; set; }
 
     /// <summary>Gets whether the loaded original form can accept an explicit action.</summary>
-    public bool CanInteract => _goal is not null && !_refreshing && !_needsReload && IsNotBusy;
+    public bool CanInteract => _goal is not null && _goal.Id == _id && CanView && !_refreshing && !_needsReload && IsNotBusy;
     /// <summary>Gets whether the original form requires a successful read before another write.</summary>
     public bool NeedsReload => _needsReload;
     /// <summary>Gets positive earmark eligibility independently of the visible retained release panel.</summary>
@@ -143,7 +226,7 @@ public sealed partial class GoalDetailViewModel(
     {
         base.OnPropertyChanged(e);
         if (e.PropertyName is nameof(DirectionIndex) or nameof(SelectedAccount)) _moneyDraftVersion++;
-        if (e.PropertyName is nameof(IsBusy) or nameof(DirectionIndex) or nameof(SelectedAccount) or nameof(CanEditAssumedPrice)) RefreshActions();
+        if (e.PropertyName is nameof(IsBusy) or nameof(IsLoading) or nameof(HasReadFailed) or nameof(DirectionIndex) or nameof(SelectedAccount) or nameof(CanEditAssumedPrice)) RefreshActions();
     }
 
     // Command enablement and native button bindings share the same loaded state; no control copies the policy.
@@ -159,9 +242,9 @@ public sealed partial class GoalDetailViewModel(
         ToggleCompleteCommand.NotifyCanExecuteChanged(); RestoreCommand.NotifyCanExecuteChanged();
     }
 
-    public ObservableCollection<AllocationRow> History { get; } = [];
+    public SnapshotCollection<AllocationRow> History { get; } = [];
 
-    public ObservableCollection<string> PerAccount { get; } = [];
+    public SnapshotCollection<string> PerAccount { get; } = [];
 
     [ObservableProperty]
     public partial GoalRow? Summary { get; set; }
@@ -233,7 +316,7 @@ public sealed partial class GoalDetailViewModel(
     public partial string? SoFarText { get; set; }
 
     /// <summary>Gets the months behind the pace (Advanced), with one-offs named.</summary>
-    public ObservableCollection<string> TrendPeriods { get; } = [];
+    public SnapshotCollection<string> TrendPeriods { get; } = [];
 
     [ObservableProperty]
     public partial bool HasTrendPeriods { get; set; }
@@ -267,17 +350,29 @@ public sealed partial class GoalDetailViewModel(
         ArgumentNullException.ThrowIfNull(query);
         if (query.TryGetValue("id", out var value) && value is Guid id)
         {
-            _id = id;
+            if (_id != id)
+            {
+                _identityVersion++; _needsReload = true;
+                var prior = _readLifetime; _readLifetime = new(); prior.Cancel(); prior.Dispose();
+                _id = id; IsLoading = true; ResetCommands(); RefreshActions();
+            }
         }
     }
 
     // Display and choice reloads retain explicit dirty inputs in their original currency/culture, never reinterpret money.
-    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
+    Task Presentation.IThemeAware.RefreshThemeAsync() => _retired ? Task.CompletedTask : LoadAsync();
 
     public async Task LoadAsync()
     {
-        await _loadGate.WaitAsync();
-        _refreshing = true; RefreshActions();
+        var identity = _identityVersion; var token = _readLifetime.Token; _retired = false;
+        try { await _loadGate.WaitAsync(token); }
+        catch (OperationCanceledException) when (token.IsCancellationRequested) { return; }
+        void RequireCurrent()
+        {
+            token.ThrowIfCancellationRequested();
+            if (identity != _identityVersion || _retired) throw new OperationCanceledException("Original goal detail retired.", token);
+        }
+        IsLoading = true; HasReadFailed = false; _refreshing = true; RefreshActions();
         var previousScope = _review?.ReminderScope; var previousGoal = _goal?.Id;
         var priceDirty = AssumedPriceText != _priceBaseline || _priceNeedsReview
             || _goal is { } original && presenter.TypeOf(original) is { } originalType && _priceInput.NeedsReview(originalType.PriceCurrencyCode);
@@ -285,7 +380,7 @@ public sealed partial class GoalDetailViewModel(
         try
         {
             _publishingDrafts = true;
-            await LoadCoreAsync();
+            RequireCurrent(); await LoadCoreAsync(token, RequireCurrent); RequireCurrent();
             _needsReload = false; SaveError = null;
             _priceBaseline = AssumedPriceText;
             var sameContext = previousScope == _review?.ReminderScope && previousGoal == _goal?.Id;
@@ -319,56 +414,82 @@ public sealed partial class GoalDetailViewModel(
             }
             RefreshMoneyInputs();
         }
+        catch (OperationCanceledException) when (token.IsCancellationRequested || identity != _identityVersion || _retired) { }
         catch
         {
+            HasReadFailed = true;
             // A partially published read must not enable old controls against a new file or changed financial units.
             _needsReload = true;
             SaveError = translator["Error_Unexpected"];
             throw;
         }
-        finally { _publishingDrafts = false; _refreshing = false; RefreshActions(); _loadGate.Release(); }
+        finally
+        {
+            _publishingDrafts = false; _refreshing = false;
+            if (identity == _identityVersion && !_retired) { IsLoading = false; RefreshActions(); }
+            _loadGate.Release();
+        }
     }
 
     /// <summary>Retries publication without resubmitting a previously committed action or discarding dirty inputs.</summary>
-    [RelayCommand(CanExecute = nameof(IsNotBusy))]
     private async Task ReloadAsync()
     {
         if (IsBusy || _refreshing) return;
         IsBusy = true;
         try { await LoadAsync(); }
-        catch (Exception exception) when (exception is not OutOfMemoryException) { await interaction.ShowFailureAsync(exception); }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            if (!HasReadFailed) await interaction.ShowFailureAsync(exception);
+            else System.Diagnostics.Debug.WriteLine("Original goal detail retry failed: " + exception.GetType().FullName);
+        }
         finally { IsBusy = false; }
     }
 
-    private async Task LoadCoreAsync()
+    private async Task LoadCoreAsync(CancellationToken token, Action requireCurrent)
     {
-        var snapshot = await goals.GetWorkSnapshotAsync();
-        _goal = snapshot.Goals.FirstOrDefault(goal => goal.Id == _id);
-        _review = snapshot;
-        NotFound = _goal is null;
-        if (_goal is not { } goal)
+        // Keep the established dependency surface; the captured goal reader owns all financial inputs.
+        ArgumentNullException.ThrowIfNull(store); ArgumentNullException.ThrowIfNull(plans); ArgumentNullException.ThrowIfNull(holdings);
+        var detail = await goals.ReadDetailSnapshotAsync(token); requireCurrent();
+        var source = detail.Finances; var snapshot = source.Goals;
+        _originalSource ??= snapshot;
+        if (!_originalSource.HasSameOriginalFile(snapshot))
+            throw new InvalidOperationException("The original goal detail cannot follow another selected profile.");
+        var goal = snapshot.Goals.FirstOrDefault(item => item.Id == _id);
+        if (goal is null)
         {
-            return;
+            _goal = null; _review = snapshot; NotFound = true; Summary = null;
+            History.ReplaceAll([]); _historyRows.Clear(); PerAccount.ReplaceAll([]); TrendPeriods.ReplaceAll([]); return;
         }
 
+        var today = Today; var calendar = Presentation.Calendars.ToPeriod(localization.CurrentCalendar);
+        var settings = detail.Settings; var accounts = source.Accounts; var entries = source.Entries;
+        var all = snapshot.Goals; var allocations = snapshot.Allocations;
+        var facts = await Task.Run(() =>
+        {
+            var balances = GoalPresenter.Balances(accounts, entries, today);
+            var progress = GoalProgressService.Evaluate(all, allocations, accounts, entries, snapshot.ContributionPlans,
+                today, source.AssetEvents, source.AssetTypes).FirstOrDefault(item => item.Goal.Id == goal.Id);
+            var trend = GoalTrendService.Compute(goal, progress?.Remaining ?? 0, accounts, entries,
+                allocations.Where(item => item.GoalId == goal.Id), source.AssetEvents, today, calendar, settings.MonthStartDay);
+            var coverage = settings.Shows(Feature.GoalDetails)
+                ? Core.Reports.KpiCatalog.Coverage(accounts, entries, detail.Categories, detail.Schedules,
+                    goal.CurrencyCode, today, calendar, settings.MonthStartDay).Months : null;
+            var type = source.AssetTypes.FirstOrDefault(item => item.Id == goal.AssetTypeId);
+            var plan = snapshot.ContributionPlans.FirstOrDefault(item => item.GoalId == goal.Id);
+            var capacity = goal.Type == GoalType.HoldingQuantity && settings.Shows(Feature.GoalDetails)
+                && type is not null && plan?.AssumedPricePerUnitMilli is not null
+                ? Core.Reports.CapacityCalculator.Compute(accounts, entries, detail.Schedules, detail.States,
+                    all, snapshot.ContributionPlans, type.PriceCurrencyCode, today, calendar, settings.MonthStartDay, goal.Id) : null;
+            var earmarks = GoalCalculator.Accounts(all, allocations, balances).ToDictionary(item => item.AccountId);
+            return (Balances: balances, Progress: progress, Trend: trend, Coverage: coverage, Capacity: capacity, Earmarks: earmarks);
+        }, token);
+        await goals.ValidateListSnapshotAsync(source, token); requireCurrent();
+        _goal = goal; _review = snapshot; _financialReview = source; _work = snapshot.Work; NotFound = false;
         UnitNote = DisplayUnitNote.For(translator, goal.CurrencyCode);
-
-        // The ledger is read once per load; coverage, trend, capacity and progress all work on the same data.
-        var settings = await store.GetSettingsAsync();
-        var accounts = await store.GetAccountsAsync();
-        var entries = await store.GetEntriesAsync();
-        await LoadCoverageAsync(goal, settings, accounts, entries);
-
-        var today = Today;
-        var balances = GoalPresenter.Balances(accounts, entries, today);
-        var all = snapshot.Goals;
-        var allocations = snapshot.Allocations;
-        var progress = (await presenter.EvaluateAsync(snapshot, accounts, entries, today)).FirstOrDefault(p => p.Goal.Id == goal.Id);
-        await goals.ValidateWorkSnapshotAsync(snapshot);
-        _work = snapshot.Work;
-        _review = snapshot;
-        Summary = presenter.Row(goal, progress, _work);
-        await LoadTrendAsync(goal, progress?.Remaining ?? 0, settings, accounts, entries);
+        Summary = presenter.DetailRow(source, goal, facts.Progress); requireCurrent();
+        CoverageText = facts.Coverage is { } months
+            ? translator.Format("Goal_Coverage", translator.Format("Report_Months", months.ToString("0.0", localization.CurrentCulture))) : null;
+        FormatTrend(goal, settings, facts.Trend, facts.Capacity); requireCurrent();
         IsActive = goal.State == GoalState.Active;
         IsArchived = goal.State == GoalState.Archived;
         IsEarmark = goal.Type == GoalType.Earmark;
@@ -381,30 +502,18 @@ public sealed partial class GoalDetailViewModel(
 
         var names = accounts.ToDictionary(a => a.Id, a => a.Name);
         var own = allocations.Where(a => a.GoalId == goal.Id).OrderByDescending(a => a.Date).ThenByDescending(a => a.CreatedAt).ToList();
-        PerAccount.Clear();
-        foreach (var group in own.GroupBy(a => a.AccountId))
-        {
-            var sum = group.Sum(a => a.Amount);
-            if (sum != 0)
-            {
-                PerAccount.Add(translator.Format("Goal_InAccount", presenter.Money(sum, goal.CurrencyCode), names.GetValueOrDefault(group.Key, "?")));
-            }
-        }
-
-        History.Clear();
-        foreach (var allocation in own)
-        {
-            var release = allocation.Amount < 0;
-            History.Add(new AllocationRow(
-                allocation.Id,
-                translator.Format(release ? "Goal_ReleasedFrom" : "Goal_SetAsideIn", names.GetValueOrDefault(allocation.AccountId, "?")),
-                dates.Format(allocation.Date, DateFormatStyle.Long),
-                MoneyText.Format(allocation.Amount, goal.CurrencyCode, localization.CurrentCulture, showPlus: true),
-                release));
-        }
+        var perAccount = own.GroupBy(item => item.AccountId).Select(group => new { group.Key, Amount = group.Sum(item => item.Amount) })
+            .Where(group => group.Amount != 0)
+            .Select(group => translator.Format("Goal_InAccount", presenter.Money(group.Amount, goal.CurrencyCode), names.GetValueOrDefault(group.Key, "?"))).ToArray();
+        var history = own.Select(allocation => new AllocationRow(allocation.Id,
+            translator.Format(allocation.Amount < 0 ? "Goal_ReleasedFrom" : "Goal_SetAsideIn", names.GetValueOrDefault(allocation.AccountId, "?")),
+            dates.Format(allocation.Date, DateFormatStyle.Long),
+            MoneyText.Format(allocation.Amount, goal.CurrencyCode, localization.CurrentCulture, showPlus: true), allocation.Amount < 0)).ToArray();
+        PerAccount.ReplaceAll(perAccount); requireCurrent(); History.ReplaceAll(history); requireCurrent();
+        _historyRows = history.ToDictionary(item => item.Id);
 
         // Only accounts in the goal's currency can hold its money; free money is shown to avoid double earmarking.
-        var earmarks = GoalCalculator.Accounts(all, allocations, balances).ToDictionary(e => e.AccountId);
+        var earmarks = facts.Earmarks;
         Accounts =
         [
             // Money is set aside only in money accounts – never in a loan, money lent or a valued asset (ZEX-S0307).
@@ -413,7 +522,7 @@ public sealed partial class GoalDetailViewModel(
                     || own.Where(item => item.AccountId == a.Id).Sum(item => item.Amount) > 0)
                 .Select(a =>
                 {
-                    var free = earmarks.TryGetValue(a.Id, out var e) ? e.Unallocated : Math.Max(0, balances.GetValueOrDefault(a.Id));
+                    var free = earmarks.TryGetValue(a.Id, out var e) ? e.Unallocated : Math.Max(0, facts.Balances.GetValueOrDefault(a.Id));
                     return new FundingAccount(a.Id, a.Name, free, translator.Format("Goal_Free", presenter.Money(free, goal.CurrencyCode)))
                     { CanFund = !a.IsArchived && !a.Type.IsOutsideCash() && string.Equals(a.CurrencyCode, goal.CurrencyCode, StringComparison.OrdinalIgnoreCase) };
                 }),
@@ -422,14 +531,12 @@ public sealed partial class GoalDetailViewModel(
             ?? Accounts.OrderByDescending(a => accounts.First(x => x.Id == a.Id).Type == AccountType.Savings).ThenByDescending(a => a.Unallocated).FirstOrDefault();
         HasFundingAccounts = Accounts.Count > 0;
         NoAccountsText = HasFundingAccounts ? null : translator.Format("Goal_NoAccounts", goal.CurrencyCode);
-        await goals.ValidateWorkSnapshotAsync(snapshot);
+        requireCurrent(); source.EnsureCurrent();
     }
 
     // The observed pace (design §9.2) – a separate line from the user's own plan, which always stays available.
-    private async Task LoadTrendAsync(Goal goal, long remaining, Core.Settings.ZananceSettings settings, List<Account> accounts, List<Core.Ledger.LedgerEntry> entries)
+    private void FormatTrend(Goal goal, Core.Settings.ZananceSettings settings, GoalTrend trend, Core.Reports.CapacityResult? capacity)
     {
-        var calendar = Presentation.Calendars.ToPeriod(localization.CurrentCalendar);
-        var trend = GoalTrendService.Compute(goal, remaining, accounts, entries, await goals.GetAllocationsAsync(goal.Id), await holdings.GetEventsAsync(), Today, calendar, settings.MonthStartDay);
         TrendText = trend.Status switch
         {
             TrendStatus.Ok => translator.Format("Goal_TrendEta", presenter.Amount(goal, trend.Pace!.Value), trend.CompletePeriods, dates.Format(trend.Eta!.Value, DateFormatStyle.MonthYear)),
@@ -438,15 +545,11 @@ public sealed partial class GoalDetailViewModel(
             _ => null,
         };
         SoFarText = trend.Status != TrendStatus.Reached && trend.SoFar != 0 ? translator.Format("Goal_TrendSoFar", presenter.Amount(goal, trend.SoFar)) : null;
-        TrendPeriods.Clear();
-        if (settings.Shows(Feature.GoalDetails))
+        TrendPeriods.ReplaceAll(settings.Shows(Feature.GoalDetails) ? trend.Periods.Select(period =>
         {
-            foreach (var period in trend.Periods)
-            {
-                var text = $"{dates.Format(period.From, DateFormatStyle.MonthYear)}: {presenter.Amount(goal, period.Contribution)}";
-                TrendPeriods.Add(period.IsOneOff ? text + " · " + translator["Goal_TrendOneOff"] : text);
-            }
-        }
+            var text = $"{dates.Format(period.From, DateFormatStyle.MonthYear)}: {presenter.Amount(goal, period.Contribution)}";
+            return period.IsOneOff ? text + " · " + translator["Goal_TrendOneOff"] : text;
+        }).ToArray() : []);
 
         HasTrendPeriods = TrendPeriods.Count > 0;
 
@@ -467,17 +570,14 @@ public sealed partial class GoalDetailViewModel(
         if (plan?.AssumedPricePerUnitMilli is { } price)
         {
             AssumedPriceText = MoneyText.ForInput((long)Math.Round(price / 1_000m, MidpointRounding.AwayFromZero), type.PriceCurrencyCode, localization.CurrentCulture);
-            var capacity = Core.Reports.CapacityCalculator.Compute(accounts, entries, await plans.GetSchedulesAsync(), await plans.GetStatesAsync(),
-                _review!.Goals, _review.ContributionPlans, type.PriceCurrencyCode, Today, calendar, settings.MonthStartDay, goal.Id);
-            CapacityQuantityText = capacity.Amount is { } none && none <= 0 ? translator["Goal_NoCapacity"]
-                : capacity.Amount is { } money
+            CapacityQuantityText = capacity?.Amount is { } none && none <= 0 ? translator["Goal_NoCapacity"]
+                : capacity?.Amount is { } money
                 ? translator.Format("Goal_CapacityQuantity", presenter.Amount(goal, Core.Reports.CapacityCalculator.QuantityFor(money, price)), MoneyText.Format(money, type.PriceCurrencyCode, localization.CurrentCulture))
                 : translator["Report_NotEnoughHistory"];
         }
     }
 
     // Stores the user's assumed price, never a holding valuation. A retained recorded price can still be corrected.
-    [RelayCommand(CanExecute = nameof(CanSaveAssumedPrice))]
     private async Task SaveAssumedPriceAsync()
     {
         if (!CanSaveAssumedPrice || _goal is not { } goal || presenter.TypeOf(goal) is not { } type || _review is not { } review) return;
@@ -505,29 +605,12 @@ public sealed partial class GoalDetailViewModel(
             // Keep thousandths and the existing upper bound; no currency conversion or holding-price write.
             plan.AssumedPricePerUnitMilli = priceMilli;
             await goals.SaveContributionPlanAsync(goal.Id, plan, review: review,
-                isCurrent: () => version == _moneyDraftVersion && ReferenceEquals(_review, review) && !_priceInput.NeedsReview(type.PriceCurrencyCode));
+                isCurrent: () => _writeCurrent?.Invoke() != false && version == _moneyDraftVersion && ReferenceEquals(_review, review) && !_priceInput.NeedsReview(type.PriceCurrencyCode));
             _priceBaseline = text;
             return true;
         }, accepted: () => _priceBaseline = text);
     }
 
-    // For an emergency fund the question is how long the money would last; shown in Advanced (ZEX-S0612).
-    private async Task LoadCoverageAsync(Goal goal, Core.Settings.ZananceSettings settings, List<Account> accounts, List<Core.Ledger.LedgerEntry> entries)
-    {
-        CoverageText = null;
-        if (!settings.Shows(Feature.GoalDetails))
-        {
-            return;
-        }
-
-        var calendar = Presentation.Calendars.ToPeriod(localization.CurrentCalendar);
-        var coverage = Core.Reports.KpiCatalog.Coverage(accounts, entries, await store.GetCategoriesAsync(), await plans.GetSchedulesAsync(), goal.CurrencyCode, Today, calendar, settings.MonthStartDay);
-        CoverageText = coverage.Months is { } months
-            ? translator.Format("Goal_Coverage", translator.Format("Report_Months", months.ToString("0.0", localization.CurrentCulture)))
-            : null;
-    }
-
-    [RelayCommand(CanExecute = nameof(CanAllocate))]
     private async Task AllocateAsync()
     {
         if (!CanInteract || _goal is not { } goal || SelectedAccount is not { } account || _review is not { } review) return;
@@ -550,7 +633,7 @@ public sealed partial class GoalDetailViewModel(
             await goals.AddAllocationAsync(new GoalAllocation
             {
                 GoalId = goal.Id, AccountId = account.Id, Amount = direction == 1 ? -amount : amount, Date = Today,
-            }, review: review, isCurrent: () => version == _moneyDraftVersion && ReferenceEquals(_review, review)
+            }, review: review, isCurrent: () => _writeCurrent?.Invoke() != false && version == _moneyDraftVersion && ReferenceEquals(_review, review)
                 && !_amountInput.NeedsReview(goal.CurrencyCode));
             AmountText = string.Empty;
             return true;
@@ -561,22 +644,37 @@ public sealed partial class GoalDetailViewModel(
         });
     }
 
-    [RelayCommand(CanExecute = nameof(CanInteract))]
     private async Task DeleteAllocationAsync(AllocationRow row)
     {
-        if (!CanInteract || _review is not { } review || !History.Contains(row)) return;
+        if (!CanInteract || _review is not { } review || !OwnsHistory(row)) return;
         await RunWriteAsync(async () =>
         {
             if (!await interaction.ConfirmAsync(translator["Goal_DeleteAllocation"], $"{row.Text} {row.AmountText}", translator["Common_Delete"], translator["Common_Cancel"])) return false;
-            await goals.DeleteAllocationAsync(row.Id, review: review); return true;
+            await goals.DeleteAllocationAsync(row.Id, review: review, isCurrent: _writeCurrent); return true;
         });
     }
 
-    [RelayCommand(CanExecute = nameof(CanInteract))]
-    private Task EditAsync() => interaction.NavigateAsync(AppRoutes.GoalEditorRoute, new Dictionary<string, object> { ["id"] = _id });
+    private async Task EditAsync()
+    {
+        if (!CanInteract || _review is not { } review || _financialReview is not { } source || _goal is not { } goal) return;
+        var identity = _identityVersion; var token = _readLifetime.Token; IsBusy = true;
+        try
+        {
+            await goals.ValidateListSnapshotAsync(source, token);
+            if (identity != _identityVersion || _retired || _refreshing || _needsReload || !CanView || !ReferenceEquals(_review, review)) return;
+            await interaction.NavigateAsync(AppRoutes.GoalEditorRoute, new Dictionary<string, object> { ["id"] = goal.Id });
+        }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            if (identity != _identityVersion || _retired) return;
+            // Native command failures keep this original draft covered; they must not escape as an async UI exception.
+            _needsReload = true; SaveError = translator["Error_Unexpected"]; HasReadFailed = true; RefreshActions();
+            System.Diagnostics.Debug.WriteLine("Original goal detail Edit refused: " + error.GetType().FullName);
+        }
+        finally { IsBusy = false; }
+    }
 
     // Completion is always explicit; reopening and resuming independently require current new-work affordances.
-    [RelayCommand(CanExecute = nameof(CanToggleComplete))]
     private async Task ToggleCompleteAsync()
     {
         if (!CanToggleComplete || _goal is not { } goal || _review is not { } review) return;
@@ -593,7 +691,6 @@ public sealed partial class GoalDetailViewModel(
         });
     }
 
-    [RelayCommand(CanExecute = nameof(CanTogglePause))]
     private async Task TogglePauseAsync()
     {
         if (!CanTogglePause || _goal is not { } goal || _review is not { } review) return;
@@ -606,7 +703,6 @@ public sealed partial class GoalDetailViewModel(
         });
     }
 
-    [RelayCommand(CanExecute = nameof(CanRestore))]
     private async Task RestoreAsync()
     {
         if (!CanRestore || _goal is not { } goal || _review is not { } review) return;
@@ -619,10 +715,9 @@ public sealed partial class GoalDetailViewModel(
     {
         var draft = goal.Clone();
         change(draft);
-        await goals.SaveGoalAsync(draft, review: review);
+        await goals.SaveGoalAsync(draft, review: review, isCurrent: _writeCurrent);
     }
 
-    [RelayCommand(CanExecute = nameof(CanInteract))]
     private async Task ArchiveAsync()
     {
         if (!CanInteract || _goal is not { State: GoalState.Active } goal || _review is not { } review) return;
@@ -630,14 +725,13 @@ public sealed partial class GoalDetailViewModel(
             () => interaction.NavigateAsync(".."));
     }
 
-    [RelayCommand(CanExecute = nameof(CanInteract))]
     private async Task DeleteAsync()
     {
         if (!CanInteract || _goal is not { } goal || _review is not { } review) return;
         await RunWriteAsync(async () =>
         {
             if (!await interaction.ConfirmAsync(translator["Goal_Delete"], translator["Goal_DeleteMessage"], translator["Common_Delete"], translator["Common_Cancel"])) return false;
-            await goals.DeleteGoalAsync(goal.Id, review: review); return true;
+            await goals.DeleteGoalAsync(goal.Id, review: review, isCurrent: _writeCurrent); return true;
         }, () => interaction.NavigateAsync(".."));
     }
 
@@ -645,21 +739,25 @@ public sealed partial class GoalDetailViewModel(
     private async Task RunWriteAsync(Func<Task<bool>> operation, Func<Task>? completed = null, Action? accepted = null)
     {
         if (!CanInteract) return;
-        IsBusy = true; SaveError = null; var committed = false;
+        var identity = _identityVersion; var original = _review;
+        bool Current() => !_retired && identity == _identityVersion && ReferenceEquals(original, _review) && _goal?.Id == _id;
+        IsBusy = true; SaveError = null; var committed = false; _writeCurrent = Current;
         try
         {
             committed = await operation();
-            if (committed) { if (completed is null) await LoadAsync(); else await completed(); }
+            if (committed && Current()) { if (completed is null) await LoadAsync(); else await completed(); }
         }
         catch (Vafadar.Zanance.Data.Commerce.CommittedWriteNotificationException<Guid>)
         {
             // These original money writers publish their accepted identity before observers can fail.
             // Keep the form covered until readback; a notification error must not resubmit an earmark.
+            if (!Current()) return;
             accepted?.Invoke();
             _needsReload = true; SaveError = translator["Occurrence_SavedRefreshFailed"];
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
+            if (!Current()) return;
             if (committed) { _needsReload = true; SaveError = translator["Occurrence_SavedRefreshFailed"]; }
             else
             {
@@ -667,6 +765,6 @@ public sealed partial class GoalDetailViewModel(
                 await interaction.ShowFailureAsync(exception);
             }
         }
-        finally { IsBusy = false; }
+        finally { _writeCurrent = null; IsBusy = false; }
     }
 }

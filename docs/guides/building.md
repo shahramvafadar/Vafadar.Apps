@@ -2211,3 +2211,22 @@ and requires all five accepted source receipts. Preserve native accepted-navigat
 observers; `review_goal_list_observed` may retain exact completed observations, not recreate money.
 A terminal receipt/capture-path failure is repaired by validating existing artifacts, not rerunning
 successful contexts. An observation timeout alone does not justify stopping or restarting a process.
+
+### Original goal-detail native qualification (D-448)
+
+Use `Run-StoreDrafts.ps1 -PlanEditorReview -SecondaryFieldsReview -GoalDetailReview
+-PlanEditorSourceRun <original-secondary-fields-run>` for the changed original detail batch only.
+It requires the exact complete original source and never repeats accepted fixture money. Its144
+own-window captures use Stage/detail.png. Android's independent goal-detail phase records48
+observations over12 contexts; an observation continuation retains completed sequential contexts.
+A declared retained-Retry observer repair reconstructs only read-only controls and observes the
+missing frame without redoing the original Retry. Keep source/base equality and raw Latin inputs
+separate from display-digit captions. An observation timeout retains the same process; inspect its
+later terminal complete receipt before validating captures, without restart or successful replay.
+
+For the later Edit-only refusal, add `-GoalDetailEditFailureOnly`; it captures2 new Windows frames
+without replaying the144 completed frames. Android uses review_goal_detail_edit_failure=1 on the
+same independent phase/source. Retain the earlier48 frames and original source receipts. Native
+readiness must verify an actual nonempty UI-dump success marker before pulling; a null root is not
+a successful observation. Public production-app cleanup requires both profile-delete questions;
+record cancellation and inspect current UI before continuing, never repeat a known accepted Save.

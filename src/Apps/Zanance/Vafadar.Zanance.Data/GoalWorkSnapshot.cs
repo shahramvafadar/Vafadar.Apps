@@ -26,6 +26,13 @@ public sealed record GoalWorkSnapshot(List<Goal> Goals, List<ContributionPlan> C
     /// <summary>Gets the immutable cached-rights guard captured by the actual read.</summary>
     internal Commerce.CommercialFileAccess? Access { get; init; }
 
+    /// <summary>Compares only the actual captured file without exposing its private path to a retained form.</summary>
+    public bool HasSameOriginalFile(GoalWorkSnapshot other)
+    {
+        ArgumentNullException.ThrowIfNull(other);
+        return string.Equals(DatabasePath, other.DatabasePath, StringComparison.Ordinal);
+    }
+
     /// <summary>Compares original actual-file inputs/revision when an editor explicitly reloads retained drafts.</summary>
     public bool HasSameOriginalInputs(GoalWorkSnapshot other)
     {

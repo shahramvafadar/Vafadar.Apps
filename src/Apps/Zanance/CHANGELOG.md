@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep original goal details safe through retry and navigation (D-448)
+
+- Load the complete original goal, funding and forecast together, with local loading/retry feedback.
+- Keep unsaved money inputs and refuse old commands, pending confirmations and another selected file.
+- Roll back retired actions before commit and prevent accepted state/deletion results from being submitted twice.
+
 ### Keep savings goals complete and safe to retry (D-447)
 
 - Show loading or local retry feedback until the complete original goal list and funding are ready.

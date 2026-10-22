@@ -257,6 +257,242 @@ public sealed class GoalViewFlowTests
         Assert.Equal(5, vm.Active.Count); Assert.Equal(before, await RowsAsync(f));
     }
 
+    /// <summary>Replacing the route identity must cover the old detail before any old action can run.</summary>
+    [Fact]
+    public async Task Goal_detail_identity_change_refuses_commands_for_the_previous_goal_before_reload()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); await OpenAsync(s, 1);
+        var before = await RowsAsync(f); var vm = s.Detail;
+        vm.ApplyQueryAttributes(new Dictionary<string, object> { ["id"] = s.Items[2].Id });
+        Assert.False(vm.CanInteract); Assert.False(vm.EditCommand.CanExecute(null));
+        await vm.EditCommand.ExecuteAsync(null); Assert.Empty(f.Platform.Routes); Assert.Equal(before, await RowsAsync(f));
+    }
+
+    /// <summary>A pending destructive answer belongs to the displayed original detail, not a replaced route.</summary>
+    [Fact]
+    public async Task Goal_detail_replaced_identity_refuses_the_pending_original_delete_confirmation()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); await OpenAsync(s, 1);
+        var before = await RowsAsync(f); var answer = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        f.Platform.PendingConfirmation = () => answer.Task;
+        var pending = s.Detail.DeleteCommand.ExecuteAsync(null);
+        Assert.Single(f.Platform.ConfirmationDialogs);
+        s.Detail.ApplyQueryAttributes(new Dictionary<string, object> { ["id"] = s.Items[2].Id });
+        answer.SetResult(true); await pending;
+        Assert.Equal(before, await RowsAsync(f)); Assert.Empty(f.Platform.Routes);
+    }
+
+    /// <summary>An original input refusal after SQL changes rolls back all goal/plan/allocation rows.</summary>
+    [Theory, InlineData("goal"), InlineData("allocation"), InlineData("state")]
+    public async Task Goal_detail_original_action_guard_rolls_back_the_writer_before_commit(string action)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); var before = await RowsAsync(f);
+        var checks = 0; bool Current() => ++checks == 1;
+        if (action == "goal")
+            await Assert.ThrowsAsync<InvalidOperationException>(() => s.Goals.DeleteGoalAsync(s.Items[1].Id, Ct, isCurrent: Current));
+        else if (action == "allocation")
+        {
+            var allocation = (await s.Goals.GetAllocationsAsync(s.Items[1].Id, Ct)).Single();
+            await Assert.ThrowsAsync<InvalidOperationException>(() => s.Goals.DeleteAllocationAsync(allocation.Id, Ct, isCurrent: Current));
+        }
+        else
+        {
+            var draft = s.Items[1].Clone(); draft.State = GoalState.Archived;
+            await Assert.ThrowsAsync<InvalidOperationException>(() => s.Goals.SaveGoalAsync(draft, Ct, isCurrent: Current));
+        }
+        Assert.Equal(2, checks); Assert.Equal(before, await RowsAsync(f));
+    }
+
+    /// <summary>A retained original detail cannot silently publish the same identity from another selected file.</summary>
+    [Fact]
+    public async Task Goal_detail_retains_its_original_file_across_a_display_reload()
+    {
+        using var f = new FlowFixture(); using var other = new FlowFixture(); var s = await SeedAsync(f); await SeedAsync(other);
+        var originalGoal = s.Items[1]; var foreign = originalGoal.Clone(); foreign.Name = "Different original file";
+        await other.Services.GetRequiredService<GoalStore>().SaveGoalAsync(foreign, Ct);
+        var factory = new GoalListFactory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+        var goals = new GoalStore(factory, new AccessSource()); var dates = new DateFormatter(f.Localization);
+        var vm = new GoalDetailViewModel(f.Store, goals, f.Services.GetRequiredService<PlanStore>(),
+            f.Services.GetRequiredService<HoldingStore>(), s.Presenter, f.Translator, dates, f.Localization, f.Time, f.Platform);
+        vm.ApplyQueryAttributes(new Dictionary<string, object> { ["id"] = originalGoal.Id }); await vm.LoadAsync();
+        var before = await RowsAsync(f); var otherBefore = await RowsAsync(other);
+        factory.Current = other.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>();
+        await Assert.ThrowsAsync<InvalidOperationException>(vm.LoadAsync); Assert.False(vm.CanInteract);
+        Assert.Equal(before, await RowsAsync(f)); Assert.Equal(otherBefore, await RowsAsync(other));
+    }
+
+    /// <summary>A retained native command cannot rearm after the same original detail appears again.</summary>
+    [Fact]
+    public async Task Goal_detail_old_command_stays_retired_after_the_original_page_returns()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); await OpenAsync(s, 1);
+        var old = s.Detail.EditCommand; var before = await RowsAsync(f);
+        s.Detail.Retire(); Assert.False(s.Detail.CanView); await s.Detail.LoadAsync();
+        Assert.True(s.Detail.CanView); Assert.False(old.CanExecute(null)); await old.ExecuteAsync(null);
+        Assert.Empty(f.Platform.Routes); await s.Detail.EditCommand.ExecuteAsync(null);
+        Assert.Single(f.Platform.Routes); Assert.Equal(s.Items[1].Id, f.Platform.Routes[0].Parameters!["id"]);
+        Assert.Equal(before, await RowsAsync(f));
+    }
+
+    /// <summary>Leaving the native detail while a destructive answer is pending refuses the writer and navigation.</summary>
+    [Fact]
+    public async Task Goal_detail_departure_refuses_its_pending_delete_confirmation()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); await OpenAsync(s, 1);
+        var before = await RowsAsync(f); var answer = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        f.Platform.PendingConfirmation = () => answer.Task;
+        var pending = s.Detail.DeleteCommand.ExecuteAsync(null); Assert.Single(f.Platform.ConfirmationDialogs);
+        s.Detail.Retire(); answer.SetResult(true); await pending;
+        Assert.False(s.Detail.CanInteract); Assert.Equal(before, await RowsAsync(f)); Assert.Empty(f.Platform.Routes);
+    }
+
+    /// <summary>The local failed-read cover preserves the original monetary draft until explicit successful Retry.</summary>
+    [Fact]
+    public async Task Goal_detail_failed_read_and_retry_preserve_original_direction_account_and_amount()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); await OpenAsync(s, 1);
+        s.Detail.DirectionIndex = 1; s.Detail.SelectedAccount = s.Detail.Accounts.Single(item => item.Id == s.Account.Id);
+        s.Detail.AmountText = "12.34"; var before = await RowsAsync(f); s.Access.Fail = true;
+        await Assert.ThrowsAsync<InvalidOperationException>(s.Detail.LoadAsync);
+        Assert.True(s.Detail.HasReadFailed); Assert.False(s.Detail.CanView); Assert.False(s.Detail.CanInteract);
+        s.Access.Fail = false; await s.Detail.ReloadCommand.ExecuteAsync(null);
+        Assert.True(s.Detail.CanView); Assert.False(s.Detail.HasReadFailed); Assert.True(s.Detail.CanInteract);
+        Assert.Equal("12.34", s.Detail.AmountText); Assert.Equal(1, s.Detail.DirectionIndex);
+        Assert.Equal(s.Account.Id, s.Detail.SelectedAccount!.Id); Assert.Equal(before, await RowsAsync(f));
+    }
+
+    /// <summary>Equal-valued history rows from an old publication are not current original deletion input.</summary>
+    [Fact]
+    public async Task Goal_detail_refuses_the_previous_equal_allocation_row_after_refresh()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); await OpenAsync(s, 1);
+        var row = Assert.Single(s.Detail.History); await s.Detail.LoadAsync();
+        Assert.Equal(row, Assert.Single(s.Detail.History)); Assert.NotSame(row, s.Detail.History[0]);
+        var before = await RowsAsync(f); await s.Detail.DeleteAllocationCommand.ExecuteAsync(row);
+        Assert.Empty(f.Platform.ConfirmationDialogs); Assert.Equal(before, await RowsAsync(f));
+    }
+
+    /// <summary>The original detail reader opens its actual SQLite connection on a worker, without initializing Settings.</summary>
+    [Fact]
+    public async Task Goal_detail_captured_reader_runs_off_its_caller_and_does_not_initialize_empty_preferences()
+    {
+        using var f = new FlowFixture();
+        var factory = new GoalListFactory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+        var goals = new GoalStore(factory, new AccessSource());
+        var read = await GoalListFromThreadAsync(() => goals.ReadDetailSnapshotAsync(Ct));
+        Assert.NotEqual(read.Caller, Assert.Single(factory.Opened)); Assert.Empty(read.Value.Finances.Goals.Goals);
+        Assert.Empty(read.Value.Finances.Accounts); Assert.Empty(read.Value.Schedules); Assert.Empty(read.Value.States);
+        await using var db = await factory.CreateDbContextAsync(Ct); Assert.False(await db.Settings.AnyAsync(Ct));
+    }
+
+    /// <summary>Complete captured original goal types preserve established progress and formatted financial packets.</summary>
+    [Theory, InlineData("en"), InlineData("fa"), InlineData("de")]
+    public async Task Goal_detail_complete_reader_preserves_original_financial_packets(string language)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); Enable(f, s); await ChooseAsync(s, s.Items[1].Id);
+        f.Localization.SetLanguage(f.Localization.SupportedLanguages.Single(item => item.CultureName == language));
+        var before = await RowsAsync(f); var packet = await s.Goals.ReadDetailSnapshotAsync(Ct);
+        var expected = await s.Presenter.EvaluateAsync(packet.Finances.Goals, packet.Finances.Accounts,
+            packet.Finances.Entries, DateOnly.FromDateTime(f.Time.Now.DateTime));
+        var rows = expected.ToDictionary(item => item.Goal.Id, item => s.Presenter.Row(item.Goal, item, packet.Finances.Goals.Work));
+        foreach (var index in new[] { 0, 1, 5 })
+        {
+            await OpenAsync(s, index); Assert.True(s.Detail.CanInteract); Assert.Equal(rows[s.Items[index].Id], s.Detail.Summary);
+        }
+        Assert.Equal(before, await RowsAsync(f));
+    }
+
+    /// <summary>Accepted state/deletion results remain known when their original observer fails after commit.</summary>
+    [Theory, InlineData("pause"), InlineData("complete"), InlineData("delete")]
+    public async Task Goal_detail_accepted_lifecycle_notification_failure_cannot_resubmit_the_original_action(string action)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); await OpenAsync(s, 1);
+        var calls = 0; s.Goals.Changed += (_, _) => { calls++; throw new InvalidOperationException("Original accepted lifecycle observer failure."); };
+        f.Platform.Confirmations.Enqueue(true);
+        var command = action == "pause" ? s.Detail.TogglePauseCommand : action == "complete" ? s.Detail.ToggleCompleteCommand : s.Detail.DeleteCommand;
+        await command.ExecuteAsync(null); Assert.True(s.Detail.NeedsReload); Assert.NotNull(s.Detail.SaveError); Assert.False(s.Detail.CanInteract);
+        var original = await s.Goals.GetGoalAsync(s.Items[1].Id, Ct);
+        if (action == "delete") Assert.Null(original);
+        else Assert.Equal(action == "pause" ? GoalState.Paused : GoalState.Completed, original!.State);
+        var accepted = await RowsAsync(f); await command.ExecuteAsync(null);
+        Assert.Equal(1, calls); Assert.Equal(accepted, await RowsAsync(f)); Assert.Empty(f.Platform.Routes);
+    }
+
+    /// <summary>A native departure during context capture prevents late original read publication.</summary>
+    [Fact]
+    public async Task Goal_detail_retirement_during_context_capture_keeps_the_new_lifetime_covered()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); var before = await RowsAsync(f);
+        var factory = new GoalListFactory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+        var goals = new GoalStore(factory, new AccessSource()); var dates = new DateFormatter(f.Localization);
+        var vm = new GoalDetailViewModel(f.Store, goals, f.Services.GetRequiredService<PlanStore>(),
+            f.Services.GetRequiredService<HoldingStore>(), s.Presenter, f.Translator, dates, f.Localization, f.Time, f.Platform);
+        vm.ApplyQueryAttributes(new Dictionary<string, object> { ["id"] = s.Items[1].Id });
+        var old = vm.EditCommand; factory.AfterCreate = vm.Retire;
+        await vm.LoadAsync(); Assert.True(vm.IsLoading); Assert.False(vm.CanView); Assert.False(vm.CanInteract); Assert.Null(vm.Summary);
+        await vm.LoadAsync(); Assert.True(vm.CanView); Assert.True(vm.CanInteract);
+        await old.ExecuteAsync(null); Assert.Empty(f.Platform.Routes); Assert.Equal(before, await RowsAsync(f));
+    }
+
+    /// <summary>Reentrant departure from native history publication cannot uncover an abandoned frame.</summary>
+    [Fact]
+    public async Task Goal_detail_retirement_during_collection_publication_never_rearms_old_actions()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); var before = await RowsAsync(f);
+        s.Detail.ApplyQueryAttributes(new Dictionary<string, object> { ["id"] = s.Items[1].Id });
+        var once = false;
+        s.Detail.History.CollectionChanged += (_, _) => { if (!once) { once = true; s.Detail.Retire(); } };
+        var old = s.Detail.EditCommand; await s.Detail.LoadAsync();
+        Assert.True(once); Assert.True(s.Detail.IsLoading); Assert.False(s.Detail.CanInteract); Assert.False(s.Detail.CanView);
+        await s.Detail.LoadAsync(); Assert.True(s.Detail.CanInteract); await old.ExecuteAsync(null);
+        Assert.Empty(f.Platform.Routes); Assert.Equal(before, await RowsAsync(f));
+    }
+
+    /// <summary>A failed original Edit revalidation stays in the local retry cover instead of escaping its native command.</summary>
+    [Fact]
+    public async Task Goal_detail_edit_validation_failure_keeps_the_original_draft_and_requires_retry()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); await OpenAsync(s, 1);
+        s.Detail.AmountText = "1.23"; var before = await RowsAsync(f); s.Access.Fail = true;
+        await s.Detail.EditCommand.ExecuteAsync(null);
+        Assert.True(s.Detail.HasReadFailed); Assert.False(s.Detail.CanView); Assert.False(s.Detail.CanInteract);
+        Assert.Empty(f.Platform.Routes); Assert.Equal("1.23", s.Detail.AmountText); Assert.Equal(before, await RowsAsync(f));
+        s.Access.Fail = false; await s.Detail.ReloadCommand.ExecuteAsync(null); Assert.True(s.Detail.CanInteract);
+        Assert.Equal("1.23", s.Detail.AmountText); await s.Detail.EditCommand.ExecuteAsync(null); Assert.Single(f.Platform.Routes);
+    }
+
+    /// <summary>One original busy guard spans worker Edit validation and cancellation on actual page retirement.</summary>
+    [Theory, InlineData(false), InlineData(true)]
+    public async Task Goal_detail_edit_validation_blocks_other_writes_and_honors_page_retirement(bool retire)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); var before = await RowsAsync(f);
+        var factory = new GoalListFactory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+        var goals = new GoalStore(factory, new AccessSource()); var dates = new DateFormatter(f.Localization);
+        var vm = new GoalDetailViewModel(f.Store, goals, f.Services.GetRequiredService<PlanStore>(),
+            f.Services.GetRequiredService<HoldingStore>(), s.Presenter, f.Translator, dates, f.Localization, f.Time, f.Platform);
+        vm.ApplyQueryAttributes(new Dictionary<string, object> { ["id"] = s.Items[1].Id }); await vm.LoadAsync(); vm.AmountText = "1.23";
+        var gate = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously); factory.Gate = gate.Task;
+        var pending = vm.EditCommand.ExecuteAsync(null); Assert.True(vm.IsBusy); Assert.False(vm.CanInteract);
+        await vm.AllocateCommand.ExecuteAsync(null); Assert.Equal(before, await RowsAsync(f));
+        if (retire) vm.Retire(); else gate.SetResult();
+        await pending.WaitAsync(Ct); Assert.False(vm.IsBusy);
+        if (retire) { Assert.Empty(f.Platform.Routes); Assert.False(vm.CanView); }
+        else { Assert.Single(f.Platform.Routes); Assert.Equal(s.Items[1].Id, f.Platform.Routes[0].Parameters!["id"]); }
+        Assert.Equal("1.23", vm.AmountText); Assert.Equal(before, await RowsAsync(f)); gate.TrySetResult();
+    }
+
+    /// <summary>Theme refresh of retained navigation-stack pages cannot reactivate a detail that has disappeared.</summary>
+    [Fact]
+    public async Task Goal_detail_theme_refresh_keeps_the_retired_page_and_commands_covered()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); await OpenAsync(s, 1);
+        var before = await RowsAsync(f); var old = s.Detail.EditCommand; s.Detail.Retire();
+        await ((Vafadar.Zanance.App.Presentation.IThemeAware)s.Detail).RefreshThemeAsync();
+        Assert.False(s.Detail.CanInteract); Assert.False(s.Detail.CanView); Assert.True(s.Detail.IsLoading);
+        Assert.False(old.CanExecute(null)); Assert.Equal(before, await RowsAsync(f));
+        await s.Detail.LoadAsync(); Assert.True(s.Detail.CanInteract); Assert.Equal(before, await RowsAsync(f));
+    }
+
     /// <summary>Actual list data retains one original file and refuses another factory before publication or navigation.</summary>
     [Fact]
     public async Task Goal_list_snapshot_refuses_another_actual_profile_file()
@@ -365,10 +601,14 @@ public sealed class GoalViewFlowTests
     {
         internal IDbContextFactory<ZananceDbContext> Current = original;
         internal Action? AfterCreate;
+        internal Task? Gate;
         internal ConcurrentQueue<int> Opened { get; } = new();
         public ZananceDbContext CreateDbContext() => Track(Current.CreateDbContext());
-        public async Task<ZananceDbContext> CreateDbContextAsync(CancellationToken cancellationToken = default) =>
-            Track(await Current.CreateDbContextAsync(cancellationToken));
+        public async Task<ZananceDbContext> CreateDbContextAsync(CancellationToken cancellationToken = default)
+        {
+            if (Gate is { } gate) await gate.WaitAsync(cancellationToken);
+            return Track(await Current.CreateDbContextAsync(cancellationToken));
+        }
         private ZananceDbContext Track(ZananceDbContext context)
         {
             context.Database.GetDbConnection().StateChange += (_, change) =>

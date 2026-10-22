@@ -112,6 +112,13 @@ public sealed class GoalPresenter(Translator translator, IDateFormatter dates, I
         return snapshot.Goals.Goals.Select(goal => Row(goal, progress.GetValueOrDefault(goal.Id), snapshot.Goals.Work)).ToArray();
     }
 
+    /// <summary>Formats the original detail from its captured metadata and already computed progress.</summary>
+    internal GoalRow DetailRow(Data.GoalListSnapshot snapshot, Goal goal, GoalProgress? progress)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot); _types = snapshot.AssetTypes;
+        return Row(goal, progress, snapshot.Goals.Work);
+    }
+
     /// <summary>Returns an amount of a goal: money, or the quantity of its holding in the holding's unit.</summary>
     public string Amount(Goal goal, long value)
     {
