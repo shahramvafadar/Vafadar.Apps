@@ -130,3 +130,11 @@ Local evidence: artifacts/startup-binding-d333; native observation result native
 original action/persistence status and process events; final main native hierarchy under
 artifacts/import-preview-d331/android/d333-final-home-ready.xml. Broader phone, iOS, OAuth/provider,
 Store, interrupted-action and release gates remain open. The full development goal remains active.
+
+## Physical continuation (D-474)
+
+The formerly missing Samsung ARM64 cold-action and separate metadata-read boundary now passes
+on a current-source independent package. Original native permission, exact owned notification,
+actual process death before one native action and zero-window protected snooze are qualified;
+Main remains unchanged. [Physical evidence and retained observer failures](physical-cold-reminder-action.md)
+do not establish scheduled-time/doze/reboot/interrupted-action/general stability or release acceptance.

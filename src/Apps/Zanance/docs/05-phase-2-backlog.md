@@ -3386,3 +3386,10 @@ and all original public profile/history/Home/OS restoration. No new managed test
 Original Samsung Save/attachment/cold/stored-reread/Cancel passes with one accepted expense and
 full public Main/profile/OS restoration. No new app code, managed cases or build replay.
 See [bounded physical evidence](quality/physical-receipt-save-reread.md); QA-05 remains open.
+
+### D-474 - Physical no-window reminder action
+
+Original Samsung cold native snooze and separate persisted metadata read pass in the existing
+independent current-source caller. Main and original data/settings/APKs are unchanged; no old
+suite replay. [Bounded evidence](quality/physical-cold-reminder-action.md) leaves general stability,
+notification scheduling/restrictions and external platform/release gates open.

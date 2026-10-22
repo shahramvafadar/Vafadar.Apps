@@ -21,3 +21,17 @@ before window creation or synthetic state reads. Provider initialization itself 
 resolve native context, services or storage. Native action qualification and its limits are recorded
 in `src/Apps/Zanance/docs/quality/cold-protected-reminder-startup.md`; unit proof alone does not establish
 native action/lifetime success.
+
+## Physical current-source continuation (D-474)
+
+Use an independently compiled ARM64 complete signed Offline package and prove its identity absent
+before fresh installation. Original permission is granted only through its actual labelled platform
+prompt. Bind notification input to its exact package/UID notification record, unique title/body and
+owned expandable row; One UI may hide app name while collapsed and normalize NBSP in expanded
+BigText. Never inspect or act on unrelated notification rows. Confirm original PID absence before
+native In1hour. Record broadcast/NotificationActionReceiver start before any provider query.
+Early false publication or starting service status is in-flight, not terminal; follow the same PID.
+A separate provider-only read after completed action/death must preserve snoozes without storage
+preparation. Remove only the newly installed fixture after completion and restore exact original
+Main/OS/APKs. See the physical quality report for package identities and limits; no general ANR,
+scheduled-time/OEM or interrupted-action claim follows from this finite boundary.

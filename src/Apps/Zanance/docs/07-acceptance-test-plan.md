@@ -5591,3 +5591,19 @@ merchant,real corpus,camera,image OCR,all variants,stability/accessibility/iOS/p
 acceptance remain explicitly outside this bounded result.
 
 Evidence: [physical original receipt lifecycle](quality/physical-receipt-save-reread.md).
+
+### D-474 - Original physical cold notification action
+
+Close the missing Samsung ARM64 D-333 boundary with a complete signed Offline independent current-
+source package and real permission/notification action. One fictitious account/Once plan is
+prepared in29556; actual death precedes one In1hour tap. Native broadcast receiver starts30999
+without Activity; completed status has protected storage,windows0,one saved/native pending snooze
+and equal intentionally populated financial fields/zero ledger. A separate provider31245 preserves
+one snooze without storage preparation. Preserve both early in-flight reads and observer refusals;
+no accepted action/seed or old successful suite repeats. Independent strict build is warning-free.
+Remove only the new fixture package; Main26415/Home979/all141 public tuples,OS and original APKs
+remain unchanged.19 observation assertions are not new managed tests. General stability,OS timed
+notification restrictions,interrupted-action/low-memory,full device/accessibility/iOS/provider/
+Store/release gates remain open. Main code/APK stay D-471.
+
+Evidence: [physical original cold action](quality/physical-cold-reminder-action.md).
