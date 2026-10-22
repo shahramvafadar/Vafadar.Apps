@@ -84,3 +84,11 @@ spoken output and iOS remain separate. This batch does not establish release acc
 | zanance-d324-fa.pdf | 16290 | 0ba5e3250fe244b713a9543e4f82acf4c289a814c36dac74ad521751fd747c74 |
 | zanance-d324-fr.pdf | 14009 | 1c2a75c1b65ab8733b786870ae275f610fcffad6831077dc0acbab0df8e08df0 |
 | zanance-d324-it.pdf | 13919 | e75a70b41cc58128cfd2cb3e2aafdb721c6f5310947265504d3830fcab95e7c0 |
+
+## Physical saved-attachment continuation (D-473)
+
+The missing Samsung Save/cold/stored-reread boundary now passes on unchanged D-471. It uses the
+retained original D-324 English PDF once in a fresh profile, with opening before the receipt date,
+then one Save and cold stored attachment read after input deletion. The reread is cancelled,
+never resaved. [Bounded original evidence](physical-receipt-save-reread.md) does not accept real
+merchant/corpus/camera/all variants or broader platform/release gates. Old successful cases stay retained.

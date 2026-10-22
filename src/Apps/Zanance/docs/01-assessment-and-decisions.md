@@ -8609,3 +8609,18 @@ replay. Retain observer/viewport/modal-ownership refusals and same-process conti
 stability, full financial/device/accessibility, iOS/provider/Store/release gates remain open.
 
 Evidence: [original physical reconciliation](quality/physical-account-reconciliation.md).
+
+### D-473 - Original physical receipt Save and stored reread
+
+Close the missing Samsung receipt Save/attachment/cold-reread boundary on unchanged D-471.
+One new profile/account opens100EUR on16 October; retained fictitious17 October PDF gives24.50.
+One original Save yields Food expense24.50,Home75.50 and one13KB PDF. Hash-delete only the original
+input before one COLD21187-to26415 restart. Stored Scan receipt reads the original saved attachment
+and opens Edit transaction with the same total; Cancel without Save preserves every public detail
+tuple,one expense and75.50. Delete only the new profile with both questions; restore Main979/all141
+public nodes,three original profiles,exact OS/APK.27 observation assertions are not new unit tests;
+78 hash-matched XMLs removed. No new app code, APK, build or successful-suite replay. Trial watermark/
+merchant,real corpus,camera,image OCR,all variants,stability/accessibility/iOS/provider/Store/release
+acceptance remain explicitly outside this bounded result.
+
+Evidence: [physical original receipt lifecycle](quality/physical-receipt-save-reread.md).

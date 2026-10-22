@@ -104,3 +104,11 @@ edit/overlap/Undo variant, real receipt merchants/camera/OCR corpus, physical ha
 ANR/crash/accessibility, Mac/iOS, real providers/store accounts or release. Hosted exact-head CI is
 checked separately once after push. Continue the next ready original entry/detail boundary without
 replaying these accepted sequences or unrelated successful tests.
+
+## Physical saved-attachment continuation (D-473)
+
+The missing Samsung Save/cold/stored-reread boundary now passes on unchanged D-471. It uses the
+retained original D-324 English PDF once in a fresh profile, with opening before the receipt date,
+then one Save and cold stored attachment read after input deletion. The reread is cancelled,
+never resaved. [Bounded original evidence](physical-receipt-save-reread.md) does not accept real
+merchant/corpus/camera/all variants or broader platform/release gates. Old successful cases stay retained.

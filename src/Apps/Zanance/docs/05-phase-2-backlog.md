@@ -3380,3 +3380,9 @@ See [scope, retained failures and release limits](quality/household-caption-sepa
 The original Samsung AT-11 adjustment/reason/cold-read path passes on unchanged D-471, with Main
 and all original public profile/history/Home/OS restoration. No new managed tests or rebuild.
 [Bounded evidence](quality/physical-account-reconciliation.md) leaves broader release gates open.
+
+### D-473 - Physical saved receipt boundary
+
+Original Samsung Save/attachment/cold/stored-reread/Cancel passes with one accepted expense and
+full public Main/profile/OS restoration. No new app code, managed cases or build replay.
+See [bounded physical evidence](quality/physical-receipt-save-reread.md); QA-05 remains open.
