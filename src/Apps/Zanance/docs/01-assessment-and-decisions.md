@@ -8313,3 +8313,18 @@ Strict affected API/test compilation has zero warnings/errors; exactly one chang
 no new managed cases and no unrelated local suite/build/device replay. Exact correction-hosted
 completion remains pending at commit creation. Preserve unfinished D-452 and all external/runtime
 release gates. See [failed-job audit and verification](quality/ci-common-recovery.md).
+
+### D-457 - Complete retained physical USD selection and native draft discard
+
+Three actual owned-window observations explain the failed observer: the USD native button is
+124px high while its popup exposes123px. Preserve the full-width/owned semantic native target and
+44dp minimum within that one-physical-pixel rounding allowance; production controls are unchanged.
+The final ARM64 Release/AOT caller passes without warnings/errors,192 AOT entries, offline manifest
+and v2/v3 signatures. Actual Samsung selection and Cancel/Discard succeed; four prior scenes are
+retained, one new selection observation is added, accepted financial writes stay zero and complete
+original source/base rows match. Remove only the new probe and two hash-matched remote captures;
+Main7361/Home141/979, original APK/OS and prior packages match. Both coordinated phone turns are
+released. Retain the typed wait, initial build-flag and host-verifier/decoder failures separately;
+no managed-test increase or successful old suite/financial/matrix replay. D-452 is complete for
+this controlled input scope; historical D-422 cause, general stability/spoken/platform/provider and
+release acceptance remain open. See [physical continuation evidence](quality/currency-input-focus-boundary.md).

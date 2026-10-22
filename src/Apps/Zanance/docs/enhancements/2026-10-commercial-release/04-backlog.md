@@ -49,7 +49,7 @@ priority/order descriptions below.
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Done (D-268 browser/account copy and six-language drafts; real OAuth/publication remain open) | D-69 continuous delivery |
 | ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; D-381 physical interpreted paging/stale-mapping review; D-405 original own/mapped financial snapshot guard; D-406 physical opening-boundary/cold Undo and retained-tab Refresh fix qualified; other bank/relationship variants require original fixtures | original export specifications/samples |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
-| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; D-328 accountant ZIP receiving/content; D-329 original en/fa/de PDF contents and continued-table fix; D-330 own-format producer/consumer/refund/transfer/cold Undo; D-361 original en/fa/de display/Back and advanced goal choices/dirty discard, exact preference/Home restoration and one native root; D-365 original changed account/debt/monthly disclosures in 18 normal-scale Samsung cases with draft/data/preference preservation; D-401 occurrence override/skip/unskip, manual link/keep and generated delete-on-reopen with cold/Main restoration; D-402 prior-period/cross-account refunds, excess refusal/same-draft remainder and cold public allocation with Main restoration; D-403 original unprotected portable fresh independent reinstall/first-run restore/cold/whole-export comparison with Main restoration; D-404 card purchase/payment/positive credit and dirty archive/unarchive with two ended plans/default/history/cold and Main restoration; D-406 opening-boundary CSV/cold Undo; D-407 guarded split/reallocate/cold/join and original Main restoration; D-411 original holding purchase/fee refund/refused and valid correction/sale/cold and fee-action fix with Main restoration; D-417 original type/price/history Undo/archive/cold; D-422 original place/move/dirty discard/cold with Main restoration; D-423 original independent native selection qualified without a product workaround; physical currency typing and broader phone acceptance remain) | – |
+| ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; D-328 accountant ZIP receiving/content; D-329 original en/fa/de PDF contents and continued-table fix; D-330 own-format producer/consumer/refund/transfer/cold Undo; D-361 original en/fa/de display/Back and advanced goal choices/dirty discard, exact preference/Home restoration and one native root; D-365 original changed account/debt/monthly disclosures in 18 normal-scale Samsung cases with draft/data/preference preservation; D-401 occurrence override/skip/unskip, manual link/keep and generated delete-on-reopen with cold/Main restoration; D-402 prior-period/cross-account refunds, excess refusal/same-draft remainder and cold public allocation with Main restoration; D-403 original unprotected portable fresh independent reinstall/first-run restore/cold/whole-export comparison with Main restoration; D-404 card purchase/payment/positive credit and dirty archive/unarchive with two ended plans/default/history/cold and Main restoration; D-406 opening-boundary CSV/cold Undo; D-407 guarded split/reallocate/cold/join and original Main restoration; D-411 original holding purchase/fee refund/refused and valid correction/sale/cold and fee-action fix with Main restoration; D-417 original type/price/history Undo/archive/cold; D-422 original place/move/dirty discard/cold with Main restoration; D-423 original independent native selection qualified without a product workaround; D-457 controlled physical currency typing/selection/discard complete; broader phone acceptance remains) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
 | ZCR-QA-03 | App test project: app lock, profiles, bulk operations, onboarding, widget, theme | 2 | P2 | M | Done (local/emulator, D-73; physical bulk D-393; remaining device/iOS acceptance open) | – |
 | ZCR-QA-04 | Asset-account income/expense confirmation test (ZEX-S0408) | 2 | P2 | S | Done (local/emulator D-74; bounded physical D-394; broader device/iOS gates open) | QA-03 |
@@ -4498,6 +4498,39 @@ work, without replaying this completed sequence. Explicit physical-turn coordina
 no phone input occurs before acknowledgement. Owner accounts/providers/Mac and release gates stay
 external. Spoken intelligibility/pronunciation is not inferred from earlier TTS request metadata.
 
+### D-452 - Physical currency input continuation (completed by D-457)
+
+An explicitly coordinated Samsung turn uses the exact complete signed ARM64 D-445 empty-source
+prerequisite, without updating Main or changing phone settings. Two actual scenes pass: EUR/name
+before the arrow and the opened popup retaining name focus. The following name-input expectation
+fails before its actual changed text is recorded; no historical root cause or product defect is
+inferred. Preserve those two scenes, failure and the newly installed/stopped probe data. Original
+Main7361/Home141/979/public APK hash/OS and all prior packages are restored unchanged; only the
+owned stopped probe remains for failure continuation. The phone turn is explicitly released.
+The caller will log native/model text, selection and composing spans before retiring a mismatch.
+Continuation requires its exact original failure, reconstructs only the retired draft precondition
+and does not recertify/recount the two passed observations. No accepted financial action is replayed.
+Phone input awaits a new coordinated turn; shipping code/APK and managed baseline remain unchanged.
+
+D-452 actual continuation identifies the controlled-input mismatch: Samsung marks the entire
+21-character name as composing; SetSelection21/21 leaves that span0..21, and CommitText USD
+replaces it with USD while the currency remainsEUR. FinishComposingText before explicit selection
+retains the exact original suffix expectation; corrected physical input produces the24-character
+name and independent focused USD query with the original name preserved. Four physical scenes
+are now retained (two original/two new), not four new managed tests. Native USD-row selection and
+Discard remain incomplete because the current strict owned-panel/visibility observer cannot find
+the row. Preserve its typed wait failure; inspect actual popup types/bounds/IME geometry before
+changing any product code or action guard. A continuation-path refusal before input is retained
+and corrected against the frozen source's actual root-local failure location. Main7361/Home141/
+979/OS return unchanged and the stopped owned probe/data remain; the phone turn is released again.
+
+D-457 completes the previously missing native USD selection and actual Cancel/Discard. The prior
+four scenes are retained; the one new selection observation and source/base equality pass without
+any accepted financial write. A one-physical-pixel popup-height rounding mismatch explains the
+observer refusal; production selection code remains unchanged. Main7361/Home141/979/APK/OS and
+the original two-package inventory match after removing only the newly owned probe. Both phone
+turns are released. Wider device/stability/accessibility/iOS/external acceptance remains open.
+
 ### D-453 - Original Main cold start and retained-process background return
 
 The unchanged complete signed D-450 Offline APK passes one genuinely cold Main launch on the
@@ -4542,3 +4575,18 @@ Strict affected API/test compilation has zero warnings/errors; exactly one chang
 no new managed cases and no unrelated local suite/build/device replay. Exact correction-hosted
 completion remains pending at commit creation. Preserve unfinished D-452 and all external/runtime
 release gates. See [failed-job audit and verification](../../quality/ci-common-recovery.md).
+
+### D-457 - Complete retained physical USD selection and native draft discard
+
+Three actual owned-window observations explain the failed observer: the USD native button is
+124px high while its popup exposes123px. Preserve the full-width/owned semantic native target and
+44dp minimum within that one-physical-pixel rounding allowance; production controls are unchanged.
+The final ARM64 Release/AOT caller passes without warnings/errors,192 AOT entries, offline manifest
+and v2/v3 signatures. Actual Samsung selection and Cancel/Discard succeed; four prior scenes are
+retained, one new selection observation is added, accepted financial writes stay zero and complete
+original source/base rows match. Remove only the new probe and two hash-matched remote captures;
+Main7361/Home141/979, original APK/OS and prior packages match. Both coordinated phone turns are
+released. Retain the typed wait, initial build-flag and host-verifier/decoder failures separately;
+no managed-test increase or successful old suite/financial/matrix replay. D-452 is complete for
+this controlled input scope; historical D-422 cause, general stability/spoken/platform/provider and
+release acceptance remain open. See [physical continuation evidence](../../quality/currency-input-focus-boundary.md).

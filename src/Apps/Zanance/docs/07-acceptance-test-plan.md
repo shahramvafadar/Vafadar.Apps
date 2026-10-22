@@ -5280,3 +5280,18 @@ refusals are preserved, not relabelled as a scroll hang or passing regression. T
 Offline builds pass; experimental source is removed and the exact D-451 independent APK restored.
 Main17431/139 nodes/D-450 APK/OS match; no financial command, managed-test increase or successful old
 scope is replayed. Stability/performance and external gates stay open. See [native scroll evidence](quality/native-scroll-layout-investigation.md).
+
+### D-457 - Complete retained physical USD selection and native draft discard
+
+Three actual owned-window observations explain the failed observer: the USD native button is
+124px high while its popup exposes123px. Preserve the full-width/owned semantic native target and
+44dp minimum within that one-physical-pixel rounding allowance; production controls are unchanged.
+The final ARM64 Release/AOT caller passes without warnings/errors,192 AOT entries, offline manifest
+and v2/v3 signatures. Actual Samsung selection and Cancel/Discard succeed; four prior scenes are
+retained, one new selection observation is added, accepted financial writes stay zero and complete
+original source/base rows match. Remove only the new probe and two hash-matched remote captures;
+Main7361/Home141/979, original APK/OS and prior packages match. Both coordinated phone turns are
+released. Retain the typed wait, initial build-flag and host-verifier/decoder failures separately;
+no managed-test increase or successful old suite/financial/matrix replay. D-452 is complete for
+this controlled input scope; historical D-422 cause, general stability/spoken/platform/provider and
+release acceptance remain open. See [physical continuation evidence](quality/currency-input-focus-boundary.md).

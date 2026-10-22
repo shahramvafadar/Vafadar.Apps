@@ -74,3 +74,83 @@ The single exact-head response for704ae8c6d4acf086360442291d3fcae8087b4b4d repor
 [CI success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39691973957) and
 [CodeQL success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39691974073).
 Its one-shot monitor is deleted; no second request or physical acceptance is inferred.
+
+## Retained physical continuation history (D-452, completed by D-457)
+
+Two explicitly coordinated Samsung turns use the separately identified empty-source package,
+without updating Main or changing phone settings. The original physical process27963 confirms
+the first two scenes above. Its name-input expectation then fails; those two observations remain
+accepted and are not recounted by continuation. The failed draft has retired, so reconstructing
+its unsaved precondition is necessary setup, not a new accepted account/type/event or replayed
+financial action. Continuation requires the exact original failure in the original owned run.
+
+Process31590 supplies the missing native input evidence: after the first controlled21-character
+name entry, the IME marks the entire range0..21 as composing. Selecting21..21 does not remove that
+range. CommitText USD consequently replaces it, producing the name USD while currency stays EUR.
+This identifies a controlled-input caller error, not a demonstrated production currency defect
+or the unobserved historical D-422 cause. The corrected caller finishes composition before its
+explicit selection/append; it retains the original complete suffix expectation and never changes
+the phone keyboard configuration or application parser to make the expectation pass.
+
+Process32281 confirms two further physical scenes: the exact24-character suffixed name with
+name focus/EUR unchanged, then an explicit focused USD currency query with the original name
+restored, selected/model EUR and popup open. The four total physical observations are not four
+managed tests. Preserve them independently of the remaining native row-selection/Discard work.
+
+The current full-rectangle ApplicationPanel observer cannot find the USD button and ends in its
+actual typed wait failure. This does not prove that the popup is closed or that its row is absent.
+The next continuation restores only the known query precondition, requires that exact prior wait
+failure, and records at most three read-only owned-window geometry snapshots with visible bounds,
+window type and IME insets. It retains the original action guard until the native evidence explains
+the mismatch. No USD selection or final source-equality receipt is claimed yet.
+
+The inspection APK passes strict ARM64 Release/AOT compilation with zero warnings/errors,192 AOT
+assemblies, valid v2/v3 signatures and no INTERNET permission. Its SHA256 is
+d4fd03d107e6b95f684e92031e500d1a2917afe172a1a826b9428980df837d65.
+Main7361/Home141 nodes/979/public APK hash and original OS values return unchanged after both
+turns; only the newly owned stopped probe remains installed to preserve its data and failures.
+Fresh cross-project acknowledgement is required before further phone input. Shipping code/APK
+remain D-450; successful matrices, business suites and financial actions are not repeated.
+
+## Complete original physical continuation (D-457)
+
+Fresh Darwin and retained Loyan exclusive-turn acknowledgements precede input. The original Main
+is awake/unlocked/foreground, PID7361, with the exact original141 public nodes,979 balance, APK
+hash and OS values. Update only the newly owned empty-source probe; never reset or upgrade Main.
+
+Process16451/comparison2b1abf86706e4335a35f23995dc6463c resumes only the failed USD-row precondition.
+Three complete sequential packets show the query actually focused with name preserved, no IME,
+and an owned ApplicationPanel containing the native semantic USD button. Its width890px is fully
+visible; native height124px is clipped by the123px popup. The full-rectangle guard therefore
+refuses the actual row and reaches the retained typed wait failure. The real template's negative
+margin overlay and44dp minimum are unchanged. This is an observer mismatch, not evidence that
+the USD row or its production command is missing.
+
+The independent caller permits only this observed one-physical-pixel vertical rounding loss,
+requiring the full width, attached/shown/enabled/clickable button, original owned panel and exact
+USD accessibility identity, and the44dp minimum within that same one-pixel rounding allowance.
+Other native action guards remain exact. The final strict ARM64 Release/AOT build succeeds with
+zero warnings/errors in1:12.05;192 AOT entries, permanent independent package, v2/v3 signatures and
+no INTERNET are checked. SHA256:649851fa7c6c8e5b5c10d3f9724a10b07817fd2e22418362e062c797cd7582b7.
+
+Process17073/comparison1592cfb1983f481296335f57d466aca9 completes actual native USD selection,
+retains the original unsaved name, closes the popup and then invokes actual Cancel/Discard.
+Original complete source/base rows match; accepted financial writes remain zero. Preserve the
+four earlier successful scenes without replay/recount, plus this one new selection observation.
+No new managed test, full suite, unrelated Windows/Main build or successful financial action runs.
+
+The first rebuilt caller omitted its explicit compile-time probe identity and was never installed;
+the corrected final build restores ReviewCurrencyFocusPhone. A truncated signature-verifier pipe
+caused a host exit-code refusal before install; capturing the complete verifier output succeeds.
+The sequential packet decoder initially expected one-based chunks; correct it to the actual
+zero-based framing and retain all three original packets without another device observation.
+
+Only after the terminal successful source-equality report, stop and uninstall the newly owned
+probe. Main remains the original PID7361; all141 public nodes,979, public APK hash, OS settings and
+two prior package identities match. Remove only the two exact hash-matched new remote XML paths;
+local signed bytes, reports and all failures remain retained. Explicitly release both phone turns.
+completed-physical-proof.json records these checks in the retained private qualification folder.
+
+This closes this controlled physical input/selection/discard scope. It does not identify the
+unobserved historical D-422 cause or establish general phone/GC/ANR/performance/spoken/iOS/release
+acceptance. Shipping app/APK stay D-450. Existing owner/external gates remain open.
