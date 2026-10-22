@@ -22,6 +22,14 @@ internal static partial class AndroidHomeReview
         SecondaryHouseholdEvidence.Clear(); SecondaryHouseholdEvidence["Phase"] = "original-window";
         if (AppInfo.Current.PackageName is not ("pro.vafadar.zanance.householdlifecycle" or "pro.vafadar.zanance.householdmoneyreview")) throw new ReviewCheckException("Original retained household package required.");
         var osReview = Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_household_os", false) == true;
+        var captionsOnly = Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_household_captions", false) == true;
+        if (captionsOnly)
+        {
+            if (osReview || !File.Exists(Path.Combine(folder, "secondary-household-prepared.json"))
+                || !File.Exists(Path.Combine(folder, "navigation-only", "prepared.json")))
+                throw new ReviewCheckException("Retained original household caption source required.");
+            services.GetRequiredService<Vafadar.Zanance.App.Features.Sync.PersonalSyncForegroundWorker>().Dispose();
+        }
         var width = Platform.CurrentActivity?.Intent?.GetIntExtra("review_os_width", 0) ?? 0;
         if (osReview)
         {
@@ -47,7 +55,7 @@ internal static partial class AndroidHomeReview
         app.OpenReviewShell(); await AwaitRootHomeAsync(ct);
         if (Shell.Current.CurrentPage is HomePage initialHome) await initialHome.PendingPublication.WaitAsync(ct);
         #if HOUSEHOLD_MONEY_FRESH
-        if (!osReview) await PrepareFreshHouseholdMoneyAsync(services, folder, ct);
+        if (!osReview && !captionsOnly) await PrepareFreshHouseholdMoneyAsync(services, folder, ct);
 #endif
         var profiles = services.GetRequiredService<ProfileService>(); var originalProfile = profiles.Current; var catalogue = profiles.All.ToArray();
         var baseline = await ImportFinancialNativeReview.StoredAsync(services, ct);
@@ -135,6 +143,9 @@ internal static partial class AndroidHomeReview
         }
         async Task Invoke(Page page, System.Windows.Input.ICommand command, bool? consent)
         {
+            if (captionsOnly && (page.BindingContext is not Features.Sharing.HouseholdCostsViewModel captionModel
+                || !ReferenceEquals(command, captionModel.CancelEditCommand) || !captionModel.HasEditor || !captionModel.CanWrite))
+                throw new ReviewCheckException("Only original draft Cancel belongs to household caption presentation.");
             if (osReview && (page.BindingContext is not Features.Sharing.HouseholdCostsViewModel model
                 || !ReferenceEquals(command, model.SaveCommand) || model.AmountText != "1,234" || !model.HasEditor || !model.CanWrite
                 || !Vafadar.Zanance.Core.Money.DisplayUnits.All.Any(unit => unit.CurrencyCode == model.CurrencyCode && unit.Exponent == 2)))
@@ -204,10 +215,14 @@ internal static partial class AndroidHomeReview
             {
                 await SetTheme(value); await SetLanguageAsync(app, local, name, ct);
                 SecondaryHouseholdEvidence["Phase"] = name + "-" + value;
-                await original.SecondaryHouseholdContextAsync(services, Validate, (osReview ? "os200-" + width + "-" : "") + name + "-" + value, Invoke, Observe, ct, resume ? Completed : null, freshRepayment: authority.Settlements.Count == 0);
+                if (captionsOnly)
+                    await original.HouseholdCaptionContextAsync(services, Validate, name + "-" + value, Invoke,
+                        (page, picker, stage, displayOnly) => ObserveHouseholdCaptionAndroidAsync(page, picker, stage, displayOnly,
+                            folder, comparison, Scroll, original.Observations, ct), ct);
+                else await original.SecondaryHouseholdContextAsync(services, Validate, (osReview ? "os200-" + width + "-" : "") + name + "-" + value, Invoke, Observe, ct, resume ? Completed : null, freshRepayment: authority.Settlements.Count == 0);
             }
             if (before != await ImportFinancialNativeReview.StoredAsync(services, ct)) throw new ReviewCheckException("Original protected household rows changed.");
-            return new { Comparison = comparison, Scope = osReview ? "household-os-" + width : null, NoEnrollmentOrAuthorityRefresh = osReview, OriginalProtectedRowsUnchanged = true, OriginalMembershipAuthority = true,
+            return new { Comparison = comparison, Scope = captionsOnly ? "household-captions" : osReview ? "household-os-" + width : null, NoEnrollmentOrAuthorityRefresh = osReview || captionsOnly, OriginalProtectedRowsUnchanged = true, OriginalMembershipAuthority = true,
                 AcceptedFinancialCommands = 0, NoAcceptedCommandReplayed = true, NativePresentationOnly = true, Observations = original.Observations, Device = DeviceEvidence() };
         }
         finally

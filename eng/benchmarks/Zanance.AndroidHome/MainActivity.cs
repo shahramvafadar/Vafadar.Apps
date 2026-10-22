@@ -35,7 +35,7 @@ public sealed class MainActivity : MauiAppCompatActivity
             Android.Util.Log.Info("ZananceHomeFailure", error.GetType().FullName + "|" + stack[..Math.Min(stack.Length, 6000)]);
         };
         if (phase == "plan-form" && PackageName == "pro.vafadar.zanance.householdmoneyreview"
-            && Intent?.GetBooleanExtra("review_household_os", false) == true
+            && (Intent?.GetBooleanExtra("review_household_os", false) == true || Intent?.GetBooleanExtra("review_household_captions", false) == true)
             && Intent.GetBooleanExtra("review_secondary_household", false))
         {
             // D-444: stop the retained fictional peer before startup can schedule foreground synchronization.

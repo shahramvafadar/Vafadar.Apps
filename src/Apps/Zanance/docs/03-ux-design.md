@@ -2412,3 +2412,11 @@ Back/Cancel ownership. Six physical draft contexts, eighteen independent root-ow
 and eighteen Windows report contexts qualify this maintenance only. No design/font/palette or
 financial-command change. Spoken/full accessibility remains open.
 See [bounded native qualification](quality/maui-servicing-qualification.md).
+
+### Original household caption separators (D-471)
+
+Use the plain middle dot between original refund identity/value and a movement's destination
+value. Preserve complete native-scaled captions, MoneyText direction marks, currencies and digits.
+Native popup proof is distinct from an app-content image; require the actual selected control
+inside its viewport. A transient destination preview proves rendering only, never cash linkage.
+See [bounded native evidence](quality/household-caption-separators.md).

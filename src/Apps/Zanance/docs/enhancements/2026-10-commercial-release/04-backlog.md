@@ -4840,3 +4840,19 @@ spoken/iOS/provider/Store/release acceptance. Next actual ready defect: two corr
 in original household-cost captions, kept outside this frozen-source measurement.
 
 Evidence: [serviced original loaded Home](../../quality/serviced-loaded-home.md).
+
+### D-471 - Original household caption separators
+
+Remove two corrupted separator prefixes from the existing refund-source and destination-value
+captions without changing money, parsing or authority.36 final inspected Windows images reuse
+36 successful original popup receipts;12 Release/AOT Android selected/popup checks preserve real
+protected source/base rows and membership, with no financial Save. Destination-only packets are
+explicitly transient formatter/control evidence, not stored cash-linkage acceptance. Preserve
+first incomplete Windows captures and Android's terminal observer failure; continue only missing
+visibility/readiness checks. Strict builds are warning-free. Complete signed Offline APK384 AOT
+upgrades without reset; emulator28047/Home139 and Samsung17769/Home141/979 retain exact public UI
+and OS. Restore the original independent APK/stopped state. No new managed cases or unrelated
+successful-suite replay. Mac unavailable per owner22 October; independent Android work continues.
+General stability, full financial/device/accessibility, iOS/provider/Store/release gates stay open.
+
+Evidence: [bounded original caption qualification](../../quality/household-caption-separators.md).

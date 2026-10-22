@@ -3367,3 +3367,10 @@ Advance existing MAUI modules to10.0.120 after focused native compatibility chec
 observed report-count driver defect without replaying its successful run. No new managed cases
 or feature/schema change. General stability and external gates remain open.
 See [bounded qualification](quality/maui-servicing-qualification.md).
+
+### D-471 - Household caption maintenance
+
+Correct two malformed separators with focused original native rendering and no financial writes.
+No managed-test count increase, schema change or reopening of accepted household commands.
+Mac is unavailable per owner22 October2026; continue independent Android qualification.
+See [scope, retained failures and release limits](quality/household-caption-separators.md).

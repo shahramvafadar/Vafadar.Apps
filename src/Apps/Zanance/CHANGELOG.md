@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Clear household cost captions (D-471)
+
+- Remove stray characters between the original refund cost and its amount, and before a transfer destination value.
+- Preserve the original amounts, currencies, dates and stored household data.
+
 ### Native interface maintenance (D-468)
 
 - Update the native UI framework to its stable servicing release while preserving local data and settings.

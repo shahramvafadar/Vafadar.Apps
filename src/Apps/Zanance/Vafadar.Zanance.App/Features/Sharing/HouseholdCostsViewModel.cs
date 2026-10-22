@@ -21,7 +21,7 @@ public sealed record HouseholdContactChoice(HouseholdContact Source, string Capt
 public sealed record HouseholdCostItem(HouseholdCost Source, string Caption, string Amount)
 {
     /// <summary>Retains date, original description and complete unit for an unambiguous refund-source choice.</summary>
-    public string ChoiceCaption => Caption + " Â· " + Amount;
+    public string ChoiceCaption => Caption + " · " + Amount;
 }
 /// <summary>One original repayment with its complete direction-safe value.</summary>
 public sealed record HouseholdSettlementItem(HouseholdSettlement Source, string Caption, string Amount);
@@ -359,7 +359,7 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
             NativeDigits.Apply(MoneyText.Format(row.Amount, row.CurrencyCode, localization.CurrentCulture)));
         var destination = row.DestinationAmount ?? (row.DestinationCurrencyCode == row.CurrencyCode ? row.Amount : (long?)null);
         if (destination is { } amount && row.DestinationCurrencyCode is { } currency)
-            text += " Â· " + translator.Format("HouseholdCost_DestinationValue", NativeDigits.Apply(MoneyText.Format(amount, currency, localization.CurrentCulture)));
+            text += " · " + translator.Format("HouseholdCost_DestinationValue", NativeDigits.Apply(MoneyText.Format(amount, currency, localization.CurrentCulture)));
         return text;
     }
     partial void OnCurrencyCodeChanged(string value)

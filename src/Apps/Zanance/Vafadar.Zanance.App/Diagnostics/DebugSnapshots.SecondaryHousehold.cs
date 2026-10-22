@@ -21,7 +21,10 @@ internal static partial class DebugSnapshots
         var language = local.CurrentLanguage; var choice = theme.Choice; var captures = new List<object>();
         var sourceRun = Environment.GetEnvironmentVariable("VAFADAR_PLAN_FORM_SOURCE_RUN");
         var source = string.IsNullOrEmpty(sourceRun) ? folder : Path.Combine(Path.GetDirectoryName(folder)!, sourceRun);
-        using var original = await PlanEditorNativeReview.CreateAsync(services, Path.Combine(folder, "household-navigation-only"), ct);
+        var captionsOnly = Environment.GetEnvironmentVariable("VAFADAR_HOUSEHOLD_CAPTIONS_ONLY") == "1";
+        using var original = captionsOnly
+            ? await PlanEditorNativeReview.ContinueEmptyAsync(services, Path.Combine(source, "household-navigation-only"), ct)
+            : await PlanEditorNativeReview.CreateAsync(services, Path.Combine(folder, "household-navigation-only"), ct);
         var protectedRoot = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "artifacts/household-network/d294-cost-v2/returning-owner"));
         void Validate()
         {
@@ -144,16 +147,20 @@ internal static partial class DebugSnapshots
             foreach (var name in new[] { "en", "fa", "de" }) foreach (var value in new[] { ThemeChoice.Light, ThemeChoice.Dark }) foreach (var width in new[] { 360, 412, 1280 })
             {
                 var prefix = name + "-" + value + "-" + width;
-                if (source != folder && new[] { "shared-cost-unit-feedback", "shared-repayment-unit-feedback" }.All(stage => Completed(prefix + "-" + stage))) continue;
+                if (!captionsOnly && source != folder && new[] { "shared-cost-unit-feedback", "shared-repayment-unit-feedback" }.All(stage => Completed(prefix + "-" + stage))) continue;
                 await SetStoreThemeAsync(app, theme, value); await SetLanguageAsync(app, local, name);
                 app.Windows[0].Width = width; app.Windows[0].Height = 820;
-                await original.SecondaryHouseholdContextAsync(data, Validate, name + "-" + value + "-" + width, Invoke, Observe, ct, source == folder ? null : Completed);
+                if (captionsOnly)
+                    await original.HouseholdCaptionContextAsync(data, Validate, prefix, Invoke,
+                        (page, picker, stage, displayOnly) => ObserveHouseholdCaptionWindowsAsync(app, page, picker, stage, displayOnly,
+                            folder, previousObservations, Scroll, original.Observations, captures), ct);
+                else await original.SecondaryHouseholdContextAsync(data, Validate, prefix, Invoke, Observe, ct, source == folder ? null : Completed);
             }
             if (protectedBefore != await ImportFinancialNativeReview.StoredAsync(data, ct)) throw new IOException("Original protected household rows changed during native presentation.");
             if (baseline != await ImportFinancialNativeReview.StoredAsync(services, ct)) throw new IOException("Original base installation changed.");
 
             await File.WriteAllTextAsync(Path.Combine(folder, "complete.json"), JsonSerializer.Serialize(new { Package = AppInfo.Current.PackageName,
-                ProcessId = Environment.ProcessId, Captures = captures, OriginalBaseStoreUnchanged = true, NativeSharedSaves = 0, OriginalProtectedRowsUnchanged = true, OriginalMembershipAuthority = true, NoAcceptedCommandReplayed = true, Observations = original.Observations }));
+                ProcessId = Environment.ProcessId, Captures = captures, HouseholdCaptionsOnly = captionsOnly, OriginalBaseStoreUnchanged = true, NativeSharedSaves = 0, OriginalProtectedRowsUnchanged = true, OriginalMembershipAuthority = true, NoAcceptedCommandReplayed = true, Observations = original.Observations }));
         }
         finally { await SetStoreThemeAsync(app, theme, choice); await SetLanguageAsync(app, local, language.CultureName); }
     }

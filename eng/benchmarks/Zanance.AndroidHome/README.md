@@ -798,3 +798,15 @@ a historical dated-presentation or old/new performance comparison. It skips the 
 profile. Preserve complete schema/typed-row checks, window focus and exact source/module/PID
 binding. D-470 completes24 native publications across x64/Samsung without new financial actions.
 See the application quality report for measured boundaries and original-package restoration.
+
+## Original household caption-only scope (D-471)
+
+In retained householdmoneyreview plan-form, review_household_captions=true plus the original
+secondary-household/resume flags skips fresh preparation and foreground authority refresh.
+Require existing prepared/navigation receipts and actual CanWrite membership. The native callback
+permits only original editor Cancel. Selected/popup text, full visible height, package and popup
+focus must all match; row attachment alone does not imply focus. Wait on the same strict predicate.
+For a missing linked transfer, DisplayPacketOnly=true identifies a transient original-formatter
+preview, never financial linkage or storage. Six language/theme contexts give12 observations and
+complete protected/base equality, without replaying accepted money. Restore the original APK and
+stopped state. See the D-471 application quality report for retained failures and exact packages.

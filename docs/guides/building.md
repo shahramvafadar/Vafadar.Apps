@@ -2314,3 +2314,18 @@ PlanRowsEdgeProbe/HomeLegends/ReportRows fallback; ReportRowsReview returned nul
 join the final elseif branch. Actual old/fixed AST and the retained receipt, package/run/PID,
 unchanged ledger rows and original images are validated without replaying completed native UI.
 Isolated outputs support strict MAUI10.0.120 builds without a global SDK/workload update.
+
+## Original household caption-only review (D-471)
+
+Run-StoreDrafts.ps1 -PlanEditorReview -SecondaryHouseholdReview -HouseholdCaptionsOnly
+requires -PlanEditorSourceRun with an existing original navigation fixture and valid protected
+household authority. It skips fresh monetary preparation and checks two original pickers across
+18 contexts/36 selected-control images. -PlanEditorObservationRun reuses exact original popup
+receipts when only missing viewport evidence needs continuation; images exclude native popups.
+Independent plan-form uses review_secondary_household=true, review_plan_resume_actions=true,
+review_household_captions=true, retained review_run and a fresh review_pass. The original worker
+is stopped before startup. Never create enrollment or substitute authority for a caption check.
+A source with no linked transfer uses an explicitly transient formatter/control-only destination
+packet; no cash-linkage acceptance or Save. Require native text/layout/package/popup focus before
+observation. Preserve failures, original source/base equality and original package/stopped state.
+See [qualification boundaries](../../src/Apps/Zanance/docs/quality/household-caption-separators.md).
