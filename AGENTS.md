@@ -3482,3 +3482,14 @@ run/widget identity through native returns. Establish actual cached Main death b
 cold widget action, and cancel original drafts without Save. Delete only the independent host's
 owned widgets, confirm owned0 and uninstall only its newly installed package. Public Home equality
 is bounded evidence, not private-database equality, spoken acceptance or general stability.
+
+## D-480 - Bounded native validation waits own their current listener
+
+Transaction, plan, occurrence and settlement validation use the shared AndroidValidationLayout
+wait. Own a separate explicit native listener, neutralize it and remove it from the view's current
+live observer in finally; attachment can kill the originally captured observer after merging its
+listeners. Preserve the one-second bound and surrounding current-form/version guards. Qualify
+actual observer retirement and late callback counts on real native views. Do not equate this finite
+lifetime correction with historical ANR/GC/crash acceptance or replay successful financial cohorts.
+Before native app-coordinate input, establish current IME window visibility; a retained renderer
+mIsInputViewShown flag alone is not proof that the keyboard window is still shown.

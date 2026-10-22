@@ -2356,3 +2356,16 @@ Cancel each draft without Save. Remove only the host owned by this independent p
 owned0 and uninstall that newly installed helper. Preserve actual launcher arrangement and OS.
 See [bounded physical evidence](../../src/Apps/Zanance/docs/quality/physical-widget-pending-intents.md).
 No unchanged Main build, old financial action or successful emulator cohort needs repetition.
+
+## Original Android validation-layout lifetime (D-480)
+
+eng/tests/AndroidValidationLayout compiles the actual Android-only waiter without a Main reference
+or fake MAUI controls. Its README specifies the strict native-only complete signed build, fixed
+independent Release identity and explicit review_run. Verify no declared permission, package,
+signature and native ABI before a newly owned install. Keep original event-wrapper reproduction
+separate from fixed listener/current-tree/timeout checks; do not repeat completed native cases to
+repair a build guard or report. Preserve real failed JNI registration and namespace/build evidence.
+Before a native app-coordinate action, require owned foreground, actual target geometry and current
+IME window visibility. Dismiss an overlapping keyboard before targeting Save; validation probes
+must retain an explicit invalid-amount guard and never post money. See
+[bounded evidence](../../src/Apps/Zanance/docs/quality/android-validation-layout-lifetime.md).

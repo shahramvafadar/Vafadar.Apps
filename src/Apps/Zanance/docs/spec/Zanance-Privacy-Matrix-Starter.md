@@ -1148,3 +1148,12 @@ financial route is duplicated and no financial Save occurs. Remove its own host,
 uninstall only the newly installed helper, and delete25 exact hash-matched remote XML captures.
 Original Main public UI,OS and APK match. Local receipts stay private; neither helper installation
 nor finite public-UI preservation establishes whole-database or product release acceptance.
+
+### D-480 - Native validation cleanup without new data
+
+No shipping data category, permission, SDK, network channel or export change. Validation listener
+identity and completion live only in memory. The separate native layout qualification package
+has no declared permissions, app secrets, Main reference or private Main reads; only fictitious
+views/counts/booleans are observed. Uninstall only that new fixture and hash-delete its owned XMLs.
+Actual Main invalid input is discarded without an accepted financial Save; original public UI
+and OS match. This does not establish whole-database or release acceptance.

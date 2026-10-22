@@ -5679,3 +5679,19 @@ and Android/Windows consumer builds passing. iOS is intentionally skipped, not a
 historical failures and pending-at-commit records; do not repeat the consumed CI check.
 
 Evidence: [physical widget scope](quality/physical-widget-pending-intents.md).
+
+### D-480 - Original four-form Android validation listener lifetime
+
+Actual native observer retirement reproduces three callbacks after the old event-wrapper cleanup.
+All four original transaction/plan/occurrence/settlement waits now use the same explicit native
+listener, current-live-tree removal and neutralized callback, preserving the existing one-second
+bound and form/version guards. Three fixed native checks pass: zero retired callbacks, attached
+completion and bounded unattached timeout. Strict Windows/Offline Main/helper builds and helper
+identity guards pass. Complete signed384-AOT APK upgrades without reset; original invalid Expense
+Save reveals its field/error, then Cancel/Discard preserves979EUR/all141 public Home tuples and OS.
+Zero accepted financial Saves; no new managed cases or successful unrelated-suite replay. Remove
+only the independent fixture and20 exact hash-matched XMLs. Preserve the real helper JNI failure
+and IME/input observer failures. This is not a general ANR/GC/crash fix, full form matrix, speed,
+spoken/device/iOS/provider/Store or release acceptance. Exact-head hosted CI follows the push.
+
+Evidence: [native lifetime and final package](quality/android-validation-layout-lifetime.md).

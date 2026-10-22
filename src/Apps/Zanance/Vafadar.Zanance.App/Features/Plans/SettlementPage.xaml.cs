@@ -64,23 +64,8 @@ public partial class SettlementPage : ContentPage
             return true;
         }
 #elif ANDROID
-        if (ValidationViewport.Handler?.PlatformView is Android.Views.View native
-            && native.ViewTreeObserver is { IsAlive: true } observer)
-        {
-            var arranged = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-            EventHandler completed = (_, _) => arranged.TrySetResult();
-            observer.GlobalLayout += completed;
-            try
-            {
-                native.RequestLayout();
-                await Task.WhenAny(arranged.Task, Task.Delay(TimeSpan.FromSeconds(1)));
-                return arranged.Task.IsCompletedSuccessfully;
-            }
-            finally
-            {
-                if (observer.IsAlive) { observer.GlobalLayout -= completed; }
-            }
-        }
+        if (ValidationViewport.Handler?.PlatformView is Android.Views.View native)
+            return await Presentation.AndroidValidationLayout.WaitAsync(native);
 #elif IOS
         if (ValidationViewport.Handler?.PlatformView is UIKit.UIView native)
         {

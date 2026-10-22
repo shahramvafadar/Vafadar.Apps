@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Validation request cleanup (D-480)
+
+- Release completed Android layout requests in transaction, plan, due-item and settlement forms.
+- Preserve the existing field errors, amount validation and unsaved drafts.
+
 ### Clear household cost captions (D-471)
 
 - Remove stray characters between the original refund cost and its amount, and before a transfer destination value.

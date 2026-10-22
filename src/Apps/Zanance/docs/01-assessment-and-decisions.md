@@ -8715,3 +8715,18 @@ This closes the observed hosted failures, not product/platform release gates.
 
 Evidence: [physical original widget](quality/physical-widget-pending-intents.md) and
 [final hosted consumer outcome](quality/ci-common-recovery.md).
+
+### D-480 - Release merged native validation listeners
+
+Reproduce the common four-form event-wrapper defect on real Samsung native views: the initial
+observer dies during attachment, old cleanup skips removal and three later layouts invoke the
+retired callback three times. Use one original shared Android waiter with an explicit listener,
+current-tree removal and neutralized completion; retain the original bound/form guards. Actual
+fixed callback count0, attached completion and unattached bounded timeout pass. Strict Windows,
+complete Offline Main and independent native helper builds pass; two identity/configuration guards
+refuse. Final signed384-AOT APK upgrades without reset. Actual invalid Expense Save reveals the
+original field/error; Cancel/Discard preserves Main979/all141 public tuples and OS. Retain failed
+independent JNI registration and input/IME observer evidence, without replaying accepted cases.
+No financial Save or managed-suite increment. General ANR/crash and other release gates remain.
+
+Evidence: [actual original listener lifetime](quality/android-validation-layout-lifetime.md).
