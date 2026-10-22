@@ -3942,3 +3942,20 @@ notification restrictions,interrupted-action/low-memory,full device/accessibilit
 Store/release gates remain open. Main code/APK stay D-471.
 
 Evidence: [physical original cold action](../../quality/physical-cold-reminder-action.md).
+
+### D-475 - Original physical timed alarm and notification route
+
+Add scheduled-only mode to the existing independent caller; original application code is unchanged.
+After native permission, actual Schedule time/day offset supplies a real future AlarmManager
+request, with no immediate Show copy. One original alarm/PendingIntent survives preparationPID1388
+death and read-only waiting. Native ScheduledAlarmReceiver starts3318 and posts original184973019
+155216ms after requested time under the existing inexact/tolerance policy. No clock change/rearm.
+Actual content tap opens the original upcoming12.34EUR/23October due page in the same process;
+Back posts nothing. Populated fixture fields and zero ledger match; Home1000 remains. Remove only
+the new package; Main26415/Home979/all141 public tuples,OS/APKs and charging-awake15 remain unchanged.
+Independent strict signed Offline ARM64 build passes;26 observation assertions are not new managed
+cases. Old successful Snooze/financial/Windows suites are not replayed. This awake/charging scope
+is not exact timing,Doze,reboot,full lock/device/stability/accessibility/iOS/provider/Store/release
+acceptance. Shipping Main/APK stay D-471.
+
+Evidence: [physical original scheduled reminder](../../quality/physical-scheduled-reminder.md).

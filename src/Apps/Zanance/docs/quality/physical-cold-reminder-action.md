@@ -91,3 +91,12 @@ Guard-refused transient trees are not counted as successful captures. Finite exa
 buffers contain starts/kills and no recorded ANR/crash. Main/App/APK remain D-471. This does not
 prove general Mono/GC/ANR/crash resolution, whole-Home/two-second speed, OEM scheduling/doze/reboot,
 all device/notification/lock/goal/period flows, spoken accessibility, iOS/provider/Store or release.
+
+## Timed-delivery continuation (D-475)
+
+The previously unaccepted awake/charging AlarmManager timed-delivery boundary now has its own
+fresh scheduled-only cohort, without repeating the accepted In1hour action. The original future
+request survives actual preparation-process death, starts ScheduledAlarmReceiver and posts the
+original notification; its content tap routes to the original unpaid due page without money.
+[Timed physical evidence](physical-scheduled-reminder.md) preserves actual delay and separate
+Doze/reboot/precise-timing/interruption/full-lock/stability/platform/release gates.

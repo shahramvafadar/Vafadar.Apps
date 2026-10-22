@@ -23,17 +23,17 @@ public sealed class MainActivity : MauiAppCompatActivity
         if (savedInstanceState is not null || PackageName != NativeReminderReview.Package ||
             run is null || !System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$")) return;
         Window?.AddFlags(WindowManagerFlags.KeepScreenOn);
-        _ = PrepareAsync(run);
+        _ = PrepareAsync(run, Intent?.GetBooleanExtra("review_scheduled_only", false) == true);
     }
 
     /// <summary>Waits for the real covered foreground startup before preparing notification metadata.</summary>
-    private async Task PrepareAsync(string run)
+    private async Task PrepareAsync(string run, bool scheduledOnly)
     {
         try
         {
             var app = (App)Microsoft.Maui.Controls.Application.Current!;
             await app.WaitForStartupAsync();
-            await NativeReminderReview.PrepareAsync(IPlatformApplication.Current!.Services, run);
+            await NativeReminderReview.PrepareAsync(IPlatformApplication.Current!.Services, run, scheduledOnly);
             Android.Util.Log.Info("ZananceReminderReview", "fixture-ready");
         }
         catch (Exception error) when (error is not OutOfMemoryException)

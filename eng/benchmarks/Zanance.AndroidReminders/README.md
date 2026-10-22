@@ -35,3 +35,28 @@ A separate provider-only read after completed action/death must preserve snoozes
 preparation. Remove only the newly installed fixture after completion and restore exact original
 Main/OS/APKs. See the physical quality report for package identities and limits; no general ANR,
 scheduled-time/OEM or interrupted-action claim follows from this finite boundary.
+
+## Original scheduled-only delivery mode (D-475)
+
+Set review_scheduled_only=true together with the explicit original review_run when starting a
+new independent fixture. Native permission completes before the real future deadline is chosen.
+The original Schedule uses its own ReminderTime and days-before offset: four-minute lookahead
+rounded to the minute, with the original financial due date still tomorrow. Its marker adds one
+roundtrip local timestamp. The original ReminderService/planner/scheduler publish the actual
+scheduled request; this mode returns without the old immediate Show copy. Preserve the native
+InexactAllowWhileIdle policy and its actual allowed batching window; never grant exact-alarm
+settings or change the device clock to make a result pass.
+
+The read-only status keeps its original eight columns and appends pendingPlans, scheduledAt and
+plannedId. These expose only the synthetic fixture's pending count, recorded deadline and id;
+no credentials, native payloads or private financial rows are returned. A five-line marker belongs
+to scheduled-only mode; the original four-line snooze fixture/default remains separate. Match all
+intentionally populated source fields, including the original reminder time/day offset.
+
+After preparation, verify the actual original AlarmManager handle/PendingIntent/deadline and no
+posted copy, then confirm preparation process death. Observe that same alarm without reopening,
+rearming, reseeding or shortening an existing deadline. Do not let a provider query create the
+scheduled-action process before the real receiver does. Record ScheduledAlarmReceiver start and
+native notification post time independently. An observation deadline is not a terminal failure;
+continue the live pending alarm or its actual started process. Charging/awake, timed delivery,
+notification tap, doze, reboot and interrupted-action scopes remain separate evidence boundaries.

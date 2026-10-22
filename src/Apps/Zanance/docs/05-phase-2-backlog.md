@@ -3393,3 +3393,10 @@ Original Samsung cold native snooze and separate persisted metadata read pass in
 independent current-source caller. Main and original data/settings/APKs are unchanged; no old
 suite replay. [Bounded evidence](quality/physical-cold-reminder-action.md) leaves general stability,
 notification scheduling/restrictions and external platform/release gates open.
+
+### D-475 - Physical scheduled alarm and original due route
+
+Original future AlarmManager delivery, cold ScheduledAlarmReceiver and actual notification tap
+pass on the charging/awake Samsung, with source/zero-ledger/Main preservation. Only the independent
+caller/status mode changes. [Bounded evidence](quality/physical-scheduled-reminder.md) leaves
+precise timing,Doze,reboot,lock/general stability and external acceptance open.
