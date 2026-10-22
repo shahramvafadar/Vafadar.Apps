@@ -8360,3 +8360,21 @@ stored originals without repeating accepted saves or cold launch. Code/APK remai
 no successful old suite/build/emulator scene is replayed. Protected variants, general stability,
 spoken accessibility, other physical workflows, iOS/provider/store/release gates remain open.
 See [physical goal-kind evidence](quality/physical-goal-variants.md).
+
+### D-460 - Original physical zero, exact and exceeded budgets
+
+On the owner-reserved Samsung, one new original profile opens with900EUR and no budget.
+Explicit overall/category zero limits show the no-spending hint. One Food expense10 exceeds
+both zero limits by10. Editing the same budget to overall10/Food5 gives100% overall and5
+category excess. One linked refund4 initially has Uncategorized after an observed mistaken
+category toggle: overall6/Food10 is correct for that source. Correct only that refund's category;
+overall/category net6, overall left4/60%, Food excess1 and cash894 then agree. One cold read
+retains the complete packet. All-empty limits are refused; same-draft category-only5 succeeds
+without an overall line. Cancel then accept original budget deletion; it preserves both10/4
+ledger rows and894 cash. Remove only the new profile through both confirmations; original
+three profiles/Main979/all141 public nodes/OS/APK hash match.35 behavioral assertions and135
+capture hashes validate original observations, not new managed tests. Retain native transition,
+invalid host-input and observation-verifier failures; do not replay accepted financial creates.
+Program/APK remain D-450; no successful old test/build/emulator matrix is repeated. Broader
+period/method/rollover, physical workflow, stability/accessibility/iOS/provider/release gates remain.
+See [physical budget boundary evidence](quality/physical-budget-boundaries.md).
