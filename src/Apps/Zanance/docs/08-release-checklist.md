@@ -2660,3 +2660,29 @@ ANR remains open. Complete scope, artifact and retained-failure evidence is reco
 [budget financial read evidence](quality/budget-financial-read.md). General ANR/crash,
 speed/low-memory, full accessibility, other original budget workflows, iOS/provider/Store/release
 acceptance remains separate and open.
+
+### D-463 - Original budget periods and physical rollover
+
+The actual Samsung weekly/two-week workflow exposed shared captions that still described months.
+Use period-neutral editor/limit/empty/copy/delete/planned/rollover wording in all six languages,
+show the exact original financial date range in the growing editor header, and omit monthly
+calendar annotations for short periods. Keep financial rules, raw draft money and all stored
+amounts unchanged; monthly methods and genuinely monthly navigation retain their own wording.
+Four new actual-source date-range cases (calendar month, shifted financial month, week, fortnight)
+and six affected live-caption cases pass; six resource contracts pass. No complete suite repeats.
+Eighteen independent Windows caption contexts produce54 own-window images at360/412/1280 widths;
+six Release/AOT Android contexts qualify original captions/date headers without financial saves.
+The first Windows observer incorrectly required44px from the existing40px MoveButton; retain its
+failure and first image, continue the original source, and qualify only the missing observations.
+Samsung uses one fictitious profile, opening900 and one Food expense10, with ten budget metadata
+writes: monthly positive carry90/30, Start fresh50/20, surplus-only50/20 and deficit carry45/15;
+weekly next30 with carry10 and fortnight next50 with carry20. Final signed Offline APK upgrades
+without reset; one cold source read retains Home890, one ledger expense and all three final
+period results. Edit/Cancel and delete-confirmation Cancel verify corrected native text without
+replaying accepted writes. Delete only the new profile with both native confirmations and retain
+Main979/all141 public Home nodes/the original three profiles/exact OS in final PID26903.
+Strict Windows/Android builds pass without warnings; complete APK has384 AOT libraries and local
+v2/v3 signature. These observations are not additional unit tests. General ANR/crash, speed,
+low-memory, full accessibility/TalkBack, iOS/provider/Store and release acceptance remain open.
+
+Evidence: [original budget period and rollover qualification](quality/budget-period-rollover.md).

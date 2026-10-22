@@ -930,7 +930,7 @@
     <value>Presupuesto</value>
   </data>
   <data name="Budget_EditTitle" xml:space="preserve">
-    <value>Presupuesto mensual</value>
+    <value>Presupuesto</value>
   </data>
   <data name="Budget_Currency" xml:space="preserve">
     <value>{0} · calendario: {1}</value>
@@ -942,13 +942,13 @@
     <value>Mes siguiente</value>
   </data>
   <data name="Budget_None" xml:space="preserve">
-    <value>No hay presupuesto para este mes. Es opcional y te ayuda a ver cuánto queda.</value>
+    <value>No hay presupuesto para este período. El presupuesto es opcional y te ayuda a ver cuánto queda.</value>
   </data>
   <data name="Budget_Create" xml:space="preserve">
     <value>Crear presupuesto</value>
   </data>
   <data name="Budget_CopyPrevious" xml:space="preserve">
-    <value>Copiar el presupuesto del mes pasado</value>
+    <value>Copiar el presupuesto del período anterior</value>
   </data>
   <data name="Budget_Total" xml:space="preserve">
     <value>Total</value>
@@ -978,7 +978,7 @@
     <value>Transacciones incluidas pendientes de revisión: {0}.</value>
   </data>
   <data name="Budget_Planned" xml:space="preserve">
-    <value>Gastos planificados este mes: {0} (vencimientos: {1})</value>
+    <value>Gastos previstos en este período: {0} (vencimientos: {1})</value>
   </data>
   <data name="Budget_PlannedUnknown" xml:space="preserve">
     <value>Importes desconocidos: {0}</value>
@@ -987,7 +987,7 @@
     <value>Los planes anuales y otros no mensuales equivalen a unos {0} al mes, solo como referencia.</value>
   </data>
   <data name="Budget_CopyNext" xml:space="preserve">
-    <value>Copiar al mes siguiente</value>
+    <value>Copiar al siguiente período</value>
   </data>
   <data name="Budget_Copy" xml:space="preserve">
     <value>Copiar</value>
@@ -1002,10 +1002,10 @@
     <value>Eliminar presupuesto</value>
   </data>
   <data name="Budget_DeleteMessage" xml:space="preserve">
-    <value>¿Eliminar el presupuesto de este mes? Las transacciones no cambian.</value>
+    <value>¿Eliminar el presupuesto de este período? Las transacciones no cambian.</value>
   </data>
   <data name="Budget_TotalLimit" xml:space="preserve">
-    <value>Límite total mensual</value>
+    <value>Límite total del período</value>
   </data>
   <data name="Budget_NoLimit" xml:space="preserve">
     <value>Sin límite total</value>
@@ -1820,7 +1820,7 @@
     <value>Arrastrar sobrantes y excesos</value>
   </data>
   <data name="Rollover_Hint" xml:space="preserve">
-    <value>Usa los presupuestos de los meses anteriores consecutivos. No mueve dinero; solo modifica los límites de este mes.</value>
+    <value>Usa los presupuestos consecutivos de los períodos anteriores; un período sin presupuesto detiene el arrastre. No se mueve dinero: solo cambian los límites de este período.</value>
   </data>
   <data name="Rollover_Carried" xml:space="preserve">
     <value>Incluye {0} del período anterior (límite base: {1})</value>

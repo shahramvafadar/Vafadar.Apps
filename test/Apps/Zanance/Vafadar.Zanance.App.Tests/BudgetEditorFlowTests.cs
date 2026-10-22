@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Vafadar.Localization.Formatting;
 using Vafadar.Zanance.App.Features.Budget;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
@@ -45,6 +46,33 @@ public sealed class BudgetEditorFlowTests
         return new(budget, account, category, missing, store, new(store, f.Translator, f.Localization, f.Platform), access, factory);
     }
     private static Task OpenAsync(Seed s) => s.Editor.ApplyQueryAsync(new Dictionary<string, object> { ["id"] = s.Budget.Id });
+
+    /// <summary>The exact original financial interval remains visible through language changes without reinterpreting dirty amounts.</summary>
+    [Theory]
+    [InlineData(BudgetPeriod.Month, 1, 1, 31, 10)]
+    [InlineData(BudgetPeriod.Month, 15, 15, 14, 11)]
+    [InlineData(BudgetPeriod.Week, 1, 4, 10, 10)]
+    [InlineData(BudgetPeriod.TwoWeeks, 1, 4, 17, 10)]
+    public async Task Original_period_identity_is_published_without_changing_money_or_rows(BudgetPeriod period,
+        int startDay, int firstDay, int lastDay, int lastMonth)
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f, paid: false);
+        await using (var db = await s.Factory.CreateDbContextAsync(Ct))
+        {
+            var budget = await db.Budgets.SingleAsync(Ct); budget.Period = period;
+            if (period != BudgetPeriod.Month) { budget.Year = budget.Month = 0; budget.PeriodStart = new(2026, 10, 4); }
+            (await db.Settings.SingleAsync(Ct)).MonthStartDay = startDay; await db.SaveChangesAsync(Ct);
+        }
+        var before = await RowsAsync(f); await OpenAsync(s);
+        var dates = new DateFormatter(f.Localization);
+        string Expected() => $"{dates.Format(new DateOnly(2026, 10, firstDay), DateFormatStyle.Short)} – {dates.Format(new DateOnly(2026, lastMonth, lastDay), DateFormatStyle.Short)}";
+        Assert.True(s.Editor.IsReady); Assert.Equal(Expected(), s.Editor.PeriodText); Assert.False(s.Editor.IsDirty);
+        s.Editor.TotalText = "234.56"; var raw = s.Editor.TotalText;
+        f.Localization.SetLanguage(f.Localization.SupportedLanguages.First(language => language.CultureName == "de"));
+        s.Editor.RefreshDisplay();
+        Assert.Equal(Expected(), s.Editor.PeriodText); Assert.Equal(raw, s.Editor.TotalText); Assert.True(s.Editor.IsDirty);
+        Assert.Equal(before, await RowsAsync(f));
+    }
     private static Task<string> RowsAsync(FlowFixture f) => GoalChooserFlowTests.SnapshotAsync(f);
     private static async Task<Budget> SavedAsync(Seed s) => (await s.Store.GetBudgetsAsync(Ct)).Single(b => b.Id == s.Budget.Id);
     private static void Enable(FlowFixture f, Seed s, ProductPlan plan) => s.Access.Current = new(f.Directory.Combine("zanance.db"),

@@ -13,11 +13,13 @@
 
     <Grid RowDefinitions="Auto,*,Auto">
         <!-- D-98: whole title/action groups wrap at native text scale without adding a second modal header. -->
-        <Grid Padding="8,8" BackgroundColor="{DynamicResource CardBackground}">
+        <Grid RowDefinitions="Auto,Auto" Padding="8,8" BackgroundColor="{DynamicResource CardBackground}">
             <FlexLayout x:Name="ModalHeaderLayout" Direction="Row" Wrap="Wrap" AlignItems="Center">
                 <Button Text="{Binding CloseText}" Command="{Binding CancelCommand}" FlexLayout.Shrink="0" Margin="4,0" Style="{StaticResource TextButton}" />
                 <Label Text="{v:Translate Budget_EditTitle}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" FlexLayout.Shrink="0" FlexLayout.Grow="1" MaximumWidthRequest="{Binding Width, Source={x:Reference ModalHeaderLayout}, x:DataType=FlexLayout}" />
             </FlexLayout>
+            <Label Grid.Row="1" Text="{Binding PeriodText}" Style="{StaticResource Secondary}" Margin="8,0"
+                   LineBreakMode="WordWrap" IsVisible="{Binding IsReady}" />
         </Grid>
 
         <ScrollView Grid.Row="1" IsVisible="{Binding IsReady}" IsEnabled="{Binding CanInteract}">

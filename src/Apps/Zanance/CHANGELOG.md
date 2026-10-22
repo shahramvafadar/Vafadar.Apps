@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Clear budget periods (D-463)
+
+- Show the exact dates when creating or editing a budget.
+- Describe weekly and two-week limits, copies and carry-over using their actual period.
+
 ### Keep the complete budget picture consistent (D-462)
 
 - Read spending, plans and money set aside for goals from one consistent point in the selected profile.

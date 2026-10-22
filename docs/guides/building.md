@@ -2265,3 +2265,16 @@ The first successful financial-read public frame omitted Comparison. For that or
 argument,18 complete unique original contexts, unchanged rows and zero saves. It preserves original
 JSON bytes without inventing a binding or rerunning the UI. Future frames include actual launch
 Comparison and use the ordinary guarded observer.
+
+### D-463 - Changed budget caption review
+
+Run `eng/scripts/Run-StoreDrafts.ps1 -BudgetPeriodCaptionReview` for one independent, ledger-empty
+original source and18 language/theme/width contexts (54 window images). The review only invokes
+read-only period navigation and opens the original weekly editor; it never copies/deletes/saves
+budgets. If the original process has terminated, `-BudgetPeriodSourceRun <original32hexrun>`
+continues its exact fixture and retains an already captured image instead of reseeding it. Keep
+the original failure and validate its cause before continuation. Android's independent Home caller
+accepts `budget-period-captions` with exact `review_run`/`review_pass`; observe that live PID through
+`Read-ReviewReport.ps1`, never restart merely because the observation timeout expired. Restore the
+original independent APK and public Main/OS state after the complete report. This is a caption
+review; MoveButton's existing40px target is not a new accessibility acceptance claim.

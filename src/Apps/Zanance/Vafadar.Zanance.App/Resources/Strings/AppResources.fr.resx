@@ -933,7 +933,7 @@
     <value>Budget</value>
   </data>
   <data name="Budget_EditTitle" xml:space="preserve">
-    <value>Budget mensuel</value>
+    <value>Budget</value>
   </data>
   <data name="Budget_Currency" xml:space="preserve">
     <value>{0} · mois du calendrier {1}</value>
@@ -945,13 +945,13 @@
     <value>Mois suivant</value>
   </data>
   <data name="Budget_None" xml:space="preserve">
-    <value>Aucun budget pour ce mois. Le budget est facultatif : il vous aide à voir combien il reste.</value>
+    <value>Aucun budget pour cette période. Un budget est facultatif : il vous aide à voir ce qu’il reste.</value>
   </data>
   <data name="Budget_Create" xml:space="preserve">
     <value>Créer un budget</value>
   </data>
   <data name="Budget_CopyPrevious" xml:space="preserve">
-    <value>Copier le budget du mois dernier</value>
+    <value>Copier le budget de la période précédente</value>
   </data>
   <data name="Budget_Total" xml:space="preserve">
     <value>Global</value>
@@ -981,7 +981,7 @@
     <value>Opérations à vérifier incluses : {0}.</value>
   </data>
   <data name="Budget_Planned" xml:space="preserve">
-    <value>Dépenses prévues ce mois-ci : {0} (échéances : {1})</value>
+    <value>Dépenses prévues pour cette période : {0} (échéances : {1})</value>
   </data>
   <data name="Budget_PlannedUnknown" xml:space="preserve">
     <value>Montants inconnus : {0}</value>
@@ -990,7 +990,7 @@
     <value>Les opérations annuelles et les autres opérations non mensuelles correspondent à environ {0} par mois, à titre de comparaison uniquement.</value>
   </data>
   <data name="Budget_CopyNext" xml:space="preserve">
-    <value>Copier vers le mois suivant</value>
+    <value>Copier vers la période suivante</value>
   </data>
   <data name="Budget_Copy" xml:space="preserve">
     <value>Copier</value>
@@ -1005,10 +1005,10 @@
     <value>Supprimer le budget</value>
   </data>
   <data name="Budget_DeleteMessage" xml:space="preserve">
-    <value>Supprimer le budget de ce mois ? Les opérations ne seront pas modifiées.</value>
+    <value>Supprimer le budget de cette période ? Les transactions ne sont pas modifiées.</value>
   </data>
   <data name="Budget_TotalLimit" xml:space="preserve">
-    <value>Plafond mensuel global</value>
+    <value>Limite globale de la période</value>
   </data>
   <data name="Budget_NoLimit" xml:space="preserve">
     <value>Aucun plafond global</value>
@@ -1825,7 +1825,7 @@
     <value>Reporter le solde inutilisé et les dépassements</value>
   </data>
   <data name="Rollover_Hint" xml:space="preserve">
-    <value>Utilise les budgets des mois précédents, sans interruption. Aucun argent n’est déplacé ; seuls les plafonds de ce mois changent.</value>
+    <value>Les budgets des périodes précédentes sont suivis sans interruption. Une période sans budget arrête le report. Aucun argent n’est déplacé : seuls les plafonds de cette période changent.</value>
   </data>
   <data name="Rollover_Carried" xml:space="preserve">
     <value>Inclut {0} reportés de la période précédente (plafond de base : {1})</value>

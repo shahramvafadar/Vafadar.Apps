@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
 using Vafadar.Localization;
+using Vafadar.Localization.Formatting;
 using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Interaction;
 using Vafadar.Zanance.App.Presentation;
@@ -104,6 +105,8 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     [ObservableProperty] public partial string TotalText { get; set; } = string.Empty;
     [ObservableProperty] public partial bool AlertsEnabled { get; set; } = true;
     [ObservableProperty] public partial string? CurrencyCode { get; set; }
+    /// <summary>Gets the exact reviewed financial date range, independently of monthly or short-period wording.</summary>
+    [ObservableProperty] public partial string PeriodText { get; set; } = string.Empty;
     [ObservableProperty] public partial string? Error { get; set; }
     [ObservableProperty] public partial string? TotalError { get; set; }
     [ObservableProperty] public partial bool IsAdvanced { get; set; }
@@ -318,6 +321,13 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
         try
         {
             RolloverNames = [_translator["Rollover_None"], _translator["Rollover_Surplus"], _translator["Rollover_Both"]];
+            if (_review is not null)
+            {
+                // D-463: the original period identity stays explicit even when all captions use generic period wording.
+                var (first, last) = BudgetPeriods.Range(Configuration(), _review.Settings?.MonthStartDay ?? 1);
+                var dates = new DateFormatter(_localization);
+                PeriodText = $"{dates.Format(first, DateFormatStyle.Short)} – {dates.Format(last, DateFormatStyle.Short)}";
+            }
             MethodNames = [_translator["Budget_MethodLimits"], _translator["Budget_MethodEnvelopes"], _translator["Budget_MethodFlex"]];
             var notes = new List<string>();
             if (!IsAdvanced && _budget?.CategoryLimits.Count is > 0) notes.Add(_translator.Format("Budget_HiddenLimits", _budget.CategoryLimits.Count));

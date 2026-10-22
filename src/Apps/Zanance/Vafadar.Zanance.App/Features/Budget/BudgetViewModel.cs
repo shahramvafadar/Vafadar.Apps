@@ -471,7 +471,8 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
                 BudgetPeriods.Step(_period, _periodStart, -1), _currency)) is not null;
         }
 
-        CurrencyText = _translator.Format("Budget_Currency", _currency, _translator[Presentation.Calendars.NameKey(_calendar)]);
+        CurrencyText = _period == BudgetPeriod.Month
+            ? _translator.Format("Budget_Currency", _currency, _translator[Presentation.Calendars.NameKey(_calendar)]) : _currency;
         HasBudget = _budget is not null;
         ScopeText = _budget is { AccountIds.Count: > 0 } ? _translator.Format("Budget_ScopeLimited", _budget.AccountIds.Count) : null;
 

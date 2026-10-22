@@ -485,6 +485,13 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Completed OS font-scale qualification must not be repeated.");
                 await WriteReportAsync(root, phase, await ReviewOsFontScaleAsync(app, services, root, comparison!, ct), ct);
             }
+            else if (phase == "budget-period-captions")
+            {
+                if (File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))
+                    throw new ReviewCheckException("Completed period caption qualification must not be repeated.");
+                Directory.CreateDirectory(root);
+                await WriteReportAsync(root, phase, await ReviewBudgetPeriodCaptionsAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "budget-financial-read")
             {
                 if (File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))

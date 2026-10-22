@@ -2379,3 +2379,11 @@ replaced total, category, cash, goal or plan rows while later sources are still 
 all financial rows together, retaining the original period and separate action ownership. Workers
 prepare amounts/status; native colors, localized rows and collection publication stay with the
 window. No financial calculation or saved display meaning changes merely to speed a refresh.
+
+### D-463 - Period-neutral budget language
+
+Shared budget actions, errors and editor labels refer to the period rather than assuming a month.
+Keep the exact reviewed start/end dates visible in a growing editor header; financial-month start
+and the selected date display stay authoritative. Weekly/two-week views show currency without a
+monthly-calendar annotation. Native text scaling and the original raw money/currency are preserved.
+Caption qualification does not close full accessibility, stability or short-period acceptance.
