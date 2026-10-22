@@ -8080,3 +8080,14 @@ reports COLD/Activity1334ms; the original139-node public Main, APK and OS values
 route, financial command, build or old successful sequence runs. The quiet owned process is stopped
 and two hash-matched remote captures removed. Natural low-memory, private full-data equality,
 whole-Home timing and broader stability/platform/release gates remain open. See [cached-process evidence](../quality/main-cold-lifecycle.md).
+
+### D-455 - Bound the native scroll-readiness candidate without an unsupported product change
+
+The pinned MAUI scroll wait supplies a concrete candidate, not an application-cause proof. The
+original16-request control clears its native flag after two of twelve samples; no scroll is armed
+and original source/base rows match. A separate hidden-root condition refuses readiness twice;
+three actual snapshots establish attached/focused but already-laid-out412x640 geometry. Those
+refusals are preserved, not relabelled as a scroll hang or passing regression. Three strict signed
+Offline builds pass; experimental source is removed and the exact D-451 independent APK restored.
+Main17431/139 nodes/D-450 APK/OS match; no financial command, managed-test increase or successful old
+scope is replayed. Stability/performance and external gates stay open. See [native scroll evidence](../quality/native-scroll-layout-investigation.md).
