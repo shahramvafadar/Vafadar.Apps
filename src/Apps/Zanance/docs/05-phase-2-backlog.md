@@ -3374,3 +3374,9 @@ Correct two malformed separators with focused original native rendering and no f
 No managed-test count increase, schema change or reopening of accepted household commands.
 Mac is unavailable per owner22 October2026; continue independent Android qualification.
 See [scope, retained failures and release limits](quality/household-caption-separators.md).
+
+### D-472 - Physical reconciliation boundary
+
+The original Samsung AT-11 adjustment/reason/cold-read path passes on unchanged D-471, with Main
+and all original public profile/history/Home/OS restoration. No new managed tests or rebuild.
+[Bounded evidence](quality/physical-account-reconciliation.md) leaves broader release gates open.

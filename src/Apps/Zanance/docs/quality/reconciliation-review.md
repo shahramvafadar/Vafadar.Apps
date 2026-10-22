@@ -99,3 +99,10 @@ Native script scope refusal is checked before build/desktop work. Documentation 
 identity/hooks are reviewed for the final commit; hosted success still requires the one prescribed
 delayed exact-commit CI result. These finite checks do not establish physical-phone/iOS, all histories,
 general ANR/crash/speed, accessibility, store signing or release acceptance. D-386 priorities remain.
+
+## Physical continuation (D-472)
+
+The formerly missing physical boundary now has a bounded original Samsung lifecycle on the D-471
+candidate: amount-change invalidation, reason refusal, native Cancel, one accepted adjustment and
+cold account/history metadata readback. No D-396 successful test/build/financial scenario is
+replayed. See [physical evidence and remaining limits](physical-account-reconciliation.md).

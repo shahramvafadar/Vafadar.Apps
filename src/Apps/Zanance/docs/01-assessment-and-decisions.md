@@ -8594,3 +8594,18 @@ successful-suite replay. Mac unavailable per owner22 October; independent Androi
 General stability, full financial/device/accessibility, iOS/provider/Store/release gates stay open.
 
 Evidence: [bounded original caption qualification](quality/household-caption-separators.md).
+
+### D-472 - Original physical account reconciliation
+
+Close the missing Samsung AT-11 boundary on unchanged signed Offline D-471. One new fictitious
+profile/account starts100EUR. Native112.34 comparison, change to212.34 invalidation, required
+reason and Cancel preserve the draft. One accepted adjustment+112.34 gives212.34 and reconciled
+10/22/2026; original row/reason/account/date and metadata persist after one real COLD17769-to21187
+restart. Activity1457ms is not full Home. No accepted command is replayed. Delete only the new
+profile with both original confirmations; restore Main979/all141 public Home tuples, five known
+public history rows, three profiles, period and exact OS/APK hashes.32 observation assertions are
+not new managed tests;106 hash-matched XMLs removed. App/APK remain D-471; no build or old suite
+replay. Retain observer/viewport/modal-ownership refusals and same-process continuations. General
+stability, full financial/device/accessibility, iOS/provider/Store/release gates remain open.
+
+Evidence: [original physical reconciliation](quality/physical-account-reconciliation.md).

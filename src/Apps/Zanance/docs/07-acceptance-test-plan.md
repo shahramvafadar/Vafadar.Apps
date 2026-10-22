@@ -16,7 +16,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-08 | Transfer fee | FIN-02 | Unit | S1 | Verified (unit, domain level) |
 | AT-09 | Opening balance + older history | FIN-04, IO-12 | Unit + bounded native integration | S2 | Domain baseline retained; D-405 original own/mapped preview refuses a changed opening boundary, explicit Refresh uses current facts and native import/Undo passes on independent Windows/Release AOT Android; D-406 original Samsung picker/opening20-to18/cold durable Undo and final retained-tab Refresh qualified; broader device/format acceptance remains separate |
 | AT-10 | Archive account with history/plans | ACC-06 | Unit + physical | S2/S4 | Verified at recorded scopes: unit and D-404 Samsung dirty-draft cancel/accept, both active source/destination plans ended, default cleared, archived report/history retained and unarchive/cold without resuming plans; paused variants/platform acceptance separate |
-| AT-11 | Balance adjustment | ACC-08 | Unit | S1 | Verified (unit, domain level) |
+| AT-11 | Balance adjustment | ACC-08 | Unit + native | S1 | D-396 local/native; D-472 bounded Samsung original adjustment/reason/cold lifecycle verified; full variants/platform gates remain |
 | AT-12 | Partial refund same month | REF-01/02 | Unit | S1 | Verified (unit, domain level) |
 | AT-13 | Refund of last month's purchase | REF-03, REP-02 | Unit + bounded physical Android | S1/S8 | Unit/report baseline retained; D-402 Samsung prior-period purchase/current refunds, current/all history, cold links and account movements pass; native chart pixels and broader platform acceptance remain separate |
 | AT-14 | Refund to another account | REF-01 | Unit + bounded physical Android | S1 | Unit verified; D-402 Samsung refunds35/40 into a second EUR account, recorded balances minus75/plus75 and cold original links pass; other currency/platform acceptance remains |
@@ -5561,3 +5561,18 @@ successful-suite replay. Mac unavailable per owner22 October; independent Androi
 General stability, full financial/device/accessibility, iOS/provider/Store/release gates stay open.
 
 Evidence: [bounded original caption qualification](quality/household-caption-separators.md).
+
+### D-472 - Original physical account reconciliation
+
+Close the missing Samsung AT-11 boundary on unchanged signed Offline D-471. One new fictitious
+profile/account starts100EUR. Native112.34 comparison, change to212.34 invalidation, required
+reason and Cancel preserve the draft. One accepted adjustment+112.34 gives212.34 and reconciled
+10/22/2026; original row/reason/account/date and metadata persist after one real COLD17769-to21187
+restart. Activity1457ms is not full Home. No accepted command is replayed. Delete only the new
+profile with both original confirmations; restore Main979/all141 public Home tuples, five known
+public history rows, three profiles, period and exact OS/APK hashes.32 observation assertions are
+not new managed tests;106 hash-matched XMLs removed. App/APK remain D-471; no build or old suite
+replay. Retain observer/viewport/modal-ownership refusals and same-process continuations. General
+stability, full financial/device/accessibility, iOS/provider/Store/release gates remain open.
+
+Evidence: [original physical reconciliation](quality/physical-account-reconciliation.md).
