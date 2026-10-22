@@ -1149,7 +1149,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         FeeError = Text(validation.FeeErrorKey);
         DestinationFeeError = Text(validation.DestinationFeeErrorKey);
         ForeignCurrencyError = Text(validation.ForeignCurrencyErrorKey);
-        ForeignAmountError = Text(validation.ForeignAmountErrorKey);
+        ForeignAmountError = validation.ForeignAmountInputExample is { } originalExample
+            ? _translator.Format("Amount_InvalidWithExample", originalExample) : Text(validation.ForeignAmountErrorKey);
         ReimbursableError = Text(validation.ReimbursableErrorKey);
         if (validation.HasErrors || Account is null || validation.Amount is null)
         {

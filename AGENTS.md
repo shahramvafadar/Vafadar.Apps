@@ -3464,3 +3464,11 @@ Publish the complete result synchronously behind local readiness after original 
 Do not replace historical envelope cash or rollover inputs with the displayed period or review
 filter, and never turn a read/Retry into preferences, financial writes or inferred default budgets.
 Preserve completed native observations and continue their exact fictitious source without reseeding.
+
+## D-467 - Original purchase validation examples
+
+Original foreign-purchase amount errors use that ISO currency and the retained original numeric
+culture, without account/display-unit conversion. Preserve raw drafts, positive-amount validation
+and financial values. A rejected native observation is not an accepted Save; require actual owned
+native targets and stop dependent host commands after an input guard fails. Reuse completed
+observations and their original image directories; recapture only missing visual evidence.

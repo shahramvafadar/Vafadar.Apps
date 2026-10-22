@@ -3354,3 +3354,9 @@ Original Simple account-note defect corrected with six actual-source cases and c
 native checks. Physical account/currency/pay-cycle/display boundaries pass on one retained source;
 accepted financial commands are not replayed. Full QA-01 and external release gates remain open.
 See [bounded qualification](quality/budget-account-scope.md).
+
+### D-467 - Original purchase feedback
+
+The actual physical foreign-purchase path now shows a valid ISO-specific error example. Seven
+new source cases and bounded native evidence pass; full device/platform/release gates stay open.
+See [bounded original purchase qualification](quality/physical-original-purchase-amounts.md).

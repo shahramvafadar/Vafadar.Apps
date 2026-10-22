@@ -2290,3 +2290,17 @@ The independent Android caller accepts `budget-scope-captions` with original `re
 `review_pass`; `Read-ReviewReport.ps1` validates the same live PID/Comparison. Preserve completed
 reports instead of restarting/reseeding, then restore the exact original APK, Main and OS.
 This changed-caption review does not establish full system scaling or spoken accessibility.
+
+## Original purchase error-only review (D-467)
+
+`Run-StoreDrafts.ps1 -OriginalAmountErrorReview` checks only the changed original purchase errors:
+USD/JPY/KWD, en/fa/de, Light/Dark and360/412/1280. Original native Save refuses not-money; complete
+source/base rows remain unchanged and FinancialSaves stays0. `-BudgetPeriodSourceRun <run>` reuses
+the exact stopped original fixture and completed receipts. `-OriginalAmountErrorRecapture <key>`
+requires that retained source and reobserves only the explicit missing visual context, such as
+412-en-Dark-JPY. Keep rejected images and reports. Receipt observation directories identify the
+actual host that owns each image; never infer a language subfolder or replay successful scenes
+to repair a report. Require the error's actual native rectangle inside its scroll viewport.
+Independent Android phase `original-amount-errors` checks only18 corresponding412dp contexts.
+Final physical continuation and reporting limitations are in
+[original purchase evidence](../../src/Apps/Zanance/docs/quality/physical-original-purchase-amounts.md).

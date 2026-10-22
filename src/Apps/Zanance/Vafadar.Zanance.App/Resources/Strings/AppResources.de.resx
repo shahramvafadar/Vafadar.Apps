@@ -8459,4 +8459,7 @@ Original-XML SHA-256: {5}</value>
   <data name="Budget_HiddenAccounts" xml:space="preserve">
     <value>Beibehaltene Konten dieses Budgets: {0}. Zum Ändern wechseln Sie in den Einstellungen zu Erweitert.</value>
   </data>
+  <data name="Amount_InvalidWithExample" xml:space="preserve">
+    <value>Geben Sie einen gültigen Betrag ein, zum Beispiel {0}.</value>
+  </data>
 </root>

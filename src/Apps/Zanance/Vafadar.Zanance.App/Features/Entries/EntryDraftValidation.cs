@@ -74,6 +74,8 @@ public sealed record EntryValidationResult
     public string? ForeignCurrencyErrorKey { get; init; }
     /// <summary>Gets the original amount problem key.</summary>
     public string? ForeignAmountErrorKey { get; init; }
+    /// <summary>Gets a valid ISO purchase example in the retained original numeric culture, without display-unit conversion.</summary>
+    public string? ForeignAmountInputExample { get; init; }
     /// <summary>Gets the reimbursable expense amount problem key.</summary>
     public string? ReimbursableErrorKey { get; init; }
     /// <summary>Gets the positive source amount, or null when it cannot be accepted.</summary>
@@ -119,6 +121,7 @@ public static class EntryDraftValidation
         long fee = 0, destinationFee = 0;
         string? amountError = null, feeError = null, destinationError = null, destinationAmountError = null;
         string? destinationFeeError = null, foreignCurrencyError = null, foreignAmountError = null, reimbursableError = null;
+        string? foreignAmountInputExample = null;
         var transfer = input.Kind == EntryKind.Transfer;
         // Keep the editor's existing source-currency fallback, but never guess an amount when no account is selected.
         var currency = Currencies.TryGet(input.CurrencyCode, out var known) ? known : Currencies.Euro;
@@ -164,6 +167,13 @@ public static class EntryDraftValidation
                 var parsed = ParseOriginal(input.ForeignAmountText, original, input.ForeignContext, out var value);
                 if (parsed && value > 0) { foreignAmount = value; }
                 else { foreignAmountError = parsed || string.IsNullOrWhiteSpace(input.ForeignAmountText) ? "Entry_AmountMustBePositive" : "Amount_Invalid"; }
+                // D-467: a two-decimal example is invalid for JPY and can misdescribe an original retained parser.
+                if (foreignAmountError == "Amount_Invalid" && (input.ForeignContext is null
+                    || string.Equals(input.ForeignContext.Currency.Code, original.Code, StringComparison.OrdinalIgnoreCase)))
+                {
+                    foreignAmountError = "Amount_InvalidWithExample";
+                    foreignAmountInputExample = MoneyText.InputExample(original, input.ForeignContext?.Culture ?? culture, unit: null);
+                }
             }
         }
         if (input.ReimbursableEnabled && input.Kind == EntryKind.Expense && input.AccountId is not null)
@@ -179,6 +189,7 @@ public static class EntryDraftValidation
             AmountErrorKey = amountError, DestinationErrorKey = destinationError, DestinationAmountErrorKey = destinationAmountError,
             FeeErrorKey = feeError, DestinationFeeErrorKey = destinationFeeError, ForeignCurrencyErrorKey = foreignCurrencyError,
             ForeignAmountErrorKey = foreignAmountError, ReimbursableErrorKey = reimbursableError,
+            ForeignAmountInputExample = foreignAmountInputExample,
             Amount = amount, DestinationAmount = destinationAmount, Fee = fee, DestinationFee = destinationFee,
             ForeignAmount = foreignAmount, ReimbursableAmount = reimbursable,
         };

@@ -137,6 +137,53 @@ public sealed class EntryDraftValidationTests
         Assert.True(result.HasErrors); Assert.NotNull(result.ForeignAmountErrorKey); Assert.Null(result.ForeignAmount);
     }
 
+    /// <summary>Original purchase feedback must describe a valid example in its own currency and retained parser.</summary>
+    [Theory, Trait("AT", "AT-47")]
+    [InlineData("JPY", "en-US", "1.5")]
+    [InlineData("KWD", "en-US", "1.2345")]
+    [InlineData("USD", "en-US", "1.234")]
+    [InlineData("JPY", "de-DE", "1,5")]
+    [InlineData("KWD", "de-DE", "1,2345")]
+    [InlineData("USD", "de-DE", "1,234")]
+    public void Invalid_original_amount_uses_its_own_currency_example(string currency, string culture, string text)
+    {
+        var originalCulture = CultureInfo.GetCultureInfo(culture);
+        var input = Valid() with { ForeignEnabled = true, ForeignCurrency = currency, ForeignAmountText = text,
+            ForeignContext = MoneyInputContext.Capture(currency, originalCulture) };
+        var original = input.ForeignContext;
+        var before = JsonSerializer.Serialize(input with { ForeignContext = null });
+        var result = EntryDraftValidation.Validate(input, CultureInfo.GetCultureInfo(culture == "en-US" ? "de-DE" : "en-US"));
+        Assert.Equal("Amount_InvalidWithExample", result.ForeignAmountErrorKey);
+        Assert.Null(result.ForeignAmount); Assert.Equal(1234L, result.Amount);
+        Assert.Equal(before, JsonSerializer.Serialize(input with { ForeignContext = null }));
+        Assert.Same(original, input.ForeignContext); Assert.Equal(culture, input.ForeignContext.Culture.Name);
+        var example = Assert.IsType<string>(result.ForeignAmountInputExample);
+        Assert.Contains(currency, example);
+        var number = string.Concat(example.Where(character => character is not '\u2066' and not '\u2069' and not '\u200e'))
+            .Replace(currency, string.Empty, StringComparison.Ordinal).Trim();
+        Assert.True(MoneyAmount.TryParse(number, Currencies.Get(currency), originalCulture, out var sample));
+        Assert.True(sample > 0);
+    }
+
+    /// <summary>An original ISO purchase example never borrows an unrelated display-unit name or multiplier.</summary>
+    [Fact, Trait("AT", "AT-47")]
+    public void Invalid_original_amount_example_ignores_custom_display_units()
+    {
+        var previous = DisplayUnits.All;
+        try
+        {
+            DisplayUnits.Set([new("KWD", "ten dinars", 1)]);
+            var input = Valid() with { ForeignEnabled = true, ForeignCurrency = "KWD", ForeignAmountText = "1.2345",
+                ForeignContext = MoneyInputContext.Capture("KWD", Culture) };
+            var result = EntryDraftValidation.Validate(input, Culture);
+            Assert.Null(result.ForeignAmount); Assert.Equal("Amount_InvalidWithExample", result.ForeignAmountErrorKey);
+            var example = Assert.IsType<string>(result.ForeignAmountInputExample);
+            Assert.Contains("KWD", example); Assert.DoesNotContain("ten dinars", example);
+            Assert.Contains("1,234.500", example);
+        }
+        finally { DisplayUnits.Set(previous); }
+    }
+
     [Fact, Trait("AT", "AT-105")]
     public void Expense_reports_main_original_currency_original_amount_and_reimbursement_problems_together()
     {

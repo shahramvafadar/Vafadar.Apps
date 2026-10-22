@@ -2397,3 +2397,10 @@ budgets without a restriction note. Never broaden a saved scope merely because i
 hidden. Keep currency, exact displayed dates, raw amount and existing category/method notes intact.
 The changed note passes18 Windows and six independent Android language/theme contexts; the original
 physical Simple editor confirms it after upgrade/cold read. This is not full spoken acceptance.
+
+### Original purchase error examples (D-467)
+
+A malformed original purchase uses an example in its own ISO currency and retained input culture,
+without account/display-unit conversion. JPY samples have no fraction; KWD samples have three
+minor digits. Preserve raw input and show the translated error beside the field. A valid account
+amount is not replaced or charged again when its original purchase metadata is refused.

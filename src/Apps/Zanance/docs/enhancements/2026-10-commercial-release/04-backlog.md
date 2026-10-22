@@ -4768,3 +4768,20 @@ missing-rate/other scenario variants, full device/stability/spoken/iOS/provider/
 remain open.
 
 Evidence: [original physical forecast qualification](../../quality/physical-forecast-snapshot.md).
+
+### D-467 - Original purchase currencies and valid amount examples
+
+Original Samsung purchases expose an invalid two-decimal error example for JPY. Format only the
+original-purchase error from its actual ISO currency and retained numeric culture, independently
+of display units. Seven new distinct actual-source cases and selected existing/resource contracts
+pass across retained runs.54 Windows error contexts use53 retained valid images plus one bounded
+visual recapture;18 independent Release/AOT Android contexts change no financial rows. Preserve
+review-timeout, fixture, image-index and native-input failures instead of replaying successful work.
+Strict final Windows/complete signed Offline Android builds have zero warnings/errors. Upgrade
+without reset; actual COLD PID15323 retains the three original EUR10/20/30 expenses with12.34USD,
+123JPY and1.234KWD metadata, Home940, and the corrected JPY rejection/Cancel. Delete only the new
+profile with both confirmations; Main979/all141 public nodes/original three profiles/exact OS and
+final APK match.23 observation assertions are not unit cases. No accepted financial Save repeats.
+Full financial/device/stability/spoken-accessibility/iOS/provider/Store/release gates remain open.
+
+Evidence: [original purchase currency qualification](../../quality/physical-original-purchase-amounts.md).

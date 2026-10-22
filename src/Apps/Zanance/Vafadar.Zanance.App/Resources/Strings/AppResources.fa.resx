@@ -8459,4 +8459,7 @@
   <data name="Budget_HiddenAccounts" xml:space="preserve">
     <value>حساب‌های این بودجه حفظ می‌شوند: «{0}». برای تغییر آن‌ها، در تنظیمات به حالت پیشرفته بروید.</value>
   </data>
+  <data name="Amount_InvalidWithExample" xml:space="preserve">
+    <value>مبلغ معتبری وارد کنید؛ برای نمونه «{0}».</value>
+  </data>
 </root>

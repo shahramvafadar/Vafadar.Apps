@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Currency-specific original purchase guidance (D-467)
+
+- Show a valid original-currency example when a purchase amount has invalid precision or text.
+- Preserve the account charge, original purchase details and rejected draft while correcting input.
+
 ### Explain retained budget accounts in Simple (D-465)
 
 - Show which accounts an existing budget still includes when Advanced controls are hidden.

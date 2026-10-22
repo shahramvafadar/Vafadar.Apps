@@ -8436,4 +8436,7 @@ SHA-256 du XML original : {5}</value>
   <data name="Budget_HiddenAccounts" xml:space="preserve">
     <value>Comptes conservés dans ce budget : {0}. Pour les modifier, passez au mode Avancé dans les paramètres.</value>
   </data>
+  <data name="Amount_InvalidWithExample" xml:space="preserve">
+    <value>Saisissez un montant valide, par exemple {0}.</value>
+  </data>
 </root>
