@@ -254,3 +254,24 @@ to main without rewriting history; this adoption adds the distinct exact invento
 Producer success is not ordinary consumer acceptance. Final main CI/CodeQL/native result is pending
 at adoption commit creation and must be read on its exact pushed SHA. Do not infer general app,
 Windows commercial, Android stability/accessibility, iOS, provider/Store or publication acceptance.
+
+### D-478 final exact-head consumer outcome (recorded with D-479)
+
+The consumed one-shot check for main109743f5b12f8d9c21c8e9a5c7b2a8f7a51e0984 reports all five
+workflows completed successfully: [CI39860230484](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39860230484),
+[CodeQL39860230560](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39860230560),
+[native39860230662](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39860230662),
+[identity39860230411](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39860230411) and
+[service39860230477](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39860230477).
+
+Actual CI has5097 total cases,5072 succeeded,25 skipped,zero failures; Windows Release and Android
+Release/Debug billing sandbox build successfully. iOS is deliberately skipped. Native Windows
+job120108738020 selects hosted20261021, produces two fresh matching b02ca254 DLLs and passes every
+immutable package entry, original source/schema, diagnostic drift, production-assembly cold
+persistence and protected reference/tenfold workload gate. Official stock Android native checks
+also pass. This is the actual ordinary consumer result, separate from producer39857667608.
+
+The exact-head monitor ci-windows-producer-selection-d478 was consumed and deleted. Recover the
+retained final verification rather than repeating its runs-list request or successful suites.
+The observed current CI causes are resolved; no claim of Android general stability/accessibility,
+Windows commercial, iOS, provider/Store or release acceptance follows.

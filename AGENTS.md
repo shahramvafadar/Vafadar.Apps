@@ -3472,3 +3472,13 @@ culture, without account/display-unit conversion. Preserve raw drafts, positive-
 and financial values. A rejected native observation is not an accepted Save; require actual owned
 native targets and stop dependent host commands after an input guard fails. Reuse completed
 observations and their original image directories; recapture only missing visual evidence.
+
+## D-479 - Original widget qualification without launcher mutation
+
+Use the separately identified native widget host only for the fixed original installed provider.
+Require ordinary per-widget platform consent; never shell-grant binding, choose Always allow,
+alter the owner's launcher arrangement or construct substitute financial intents. Retain one
+run/widget identity through native returns. Establish actual cached Main death before a planned
+cold widget action, and cancel original drafts without Save. Delete only the independent host's
+owned widgets, confirm owned0 and uninstall only its newly installed package. Public Home equality
+is bounded evidence, not private-database equality, spoken acceptance or general stability.

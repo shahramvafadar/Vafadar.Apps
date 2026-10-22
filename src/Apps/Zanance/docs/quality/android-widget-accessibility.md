@@ -72,3 +72,12 @@ Non-debuggable pro.vafadar.zanance, API 24/36, intact ZIP, full arm64-v8a/x86_64
 and app AOT, v2/v3 verified with existing local test certificate
 92cf83dfc05c274ad7fc99b820f9f1b272ff46eb5fb32b3039267074ed36167b.
 This is not production/Store signing, physical-device, OAuth, iOS, performance or release acceptance.
+
+## D-479 physical continuation without repeating this cohort
+
+[Original physical widget actions](physical-widget-pending-intents.md) adds Samsung default-scale
+native provider/RemoteViews actions and one actual cold origin through a consented independent
+host. All four original actions pass; three drafts are cancelled, Home979/public tuples and OS/APK
+match, and only the newly owned widget/helper are removed. This does not replace D-174's original
+emulator launcher/language/theme evidence or accept actual Samsung launcher placement, large-text,
+spoken TalkBack, all lock variants or general stability. No new managed cases or shipping changes.

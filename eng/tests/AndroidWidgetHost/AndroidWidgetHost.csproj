@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <ApplicationId>pro.vafadar.zanance.widgetreview</ApplicationId>
+    <ApplicationTitle>Zanance widget review</ApplicationTitle>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
+    <SupportedOSPlatformVersion>33</SupportedOSPlatformVersion>
+    <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
+    <AndroidManifest>AndroidManifest.xml</AndroidManifest>
+    <AndroidPackageFormats>apk</AndroidPackageFormats>
+    <AndroidDebuggable>false</AndroidDebuggable>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <PublishTrimmed>false</PublishTrimmed>
+    <RunAOTCompilation>false</RunAOTCompilation>
+  </PropertyGroup>
+  <!-- The independent native host receives no application licence, provider or authentication material. -->
+  <ItemGroup><AppSecret Remove="@(AppSecret)" /></ItemGroup>
+  <Target Name="RequireOwnedWidgetHost" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.widgetreview' Or '$(Configuration)' != 'Release'"
+           Text="Widget qualification requires its fixed independent Release identity." />
+  </Target>
+</Project>

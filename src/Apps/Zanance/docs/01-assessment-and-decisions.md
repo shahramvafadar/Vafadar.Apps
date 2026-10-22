@@ -8694,3 +8694,24 @@ Evidence: [original drift, producer and consumer qualification](quality/ci-commo
 D-478 producer follow-up: run39857667608 on9823a734 passes the original producer gates; all five
 actual candidate.9 archive entries match the distinct inventory. Normal exact-head main consumer
 CI remains pending at adoption commit creation; this is not platform/product/release acceptance.
+
+### D-479 - Original physical widget actions without launcher changes
+
+Use a fixed independent native AppWidgetHostView and actual per-widget platform consent to close
+the missing Samsung original PendingIntent/cold-origin boundary without modifying the owner's
+launcher. No Main reference, direct financial route, shell grant or private-store/key read. One
+run retains widget2/host47901; malformed input and Debug/Main-identity build guards refuse. Strict
+complete signed ARM64 host build passes without warnings. Four original Expense/Income/Transfer/
+Logo actions and three Cancels preserve all141 public Home tuples and979EUR; Expense starts16655
+after actual cached26415 death. Zero financial Saves; one owned widget removed and only the newly
+installed helper uninstalled. Exact OS/Main APK match;25 hash-matched remote XMLs removed. Retain
+package/foreground/consent observer corrections without accepted-action replay. No new managed
+cases, shipping source/APK change or unrelated build/suite repetition. Actual launcher placement,
+all lock/widget variants, general stability, spoken/large-text, other devices/iOS and release remain.
+
+D-478's final exact-head109743f5 now has all five workflows successful,5097 cases with5072 successes,
+25 skips and zero failures; original native consumer/schema/cold persistence/workload gates pass.
+This closes the observed hosted failures, not product/platform release gates.
+
+Evidence: [physical original widget](quality/physical-widget-pending-intents.md) and
+[final hosted consumer outcome](quality/ci-common-recovery.md).

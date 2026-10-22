@@ -1136,3 +1136,15 @@ Eight existing MAUI modules advance from10.0.110 to10.0.120. No new SDK, data ca
 network policy or permission. Final Offline APK retains five declared permissions and no INTERNET.
 Runtime/cipher engines remain identical. Local signing is not Store acceptance; existing privacy,
 provider and release gates remain open.
+
+### D-479 - Independent original widget host only
+
+Shipping Main has no new data category, permission, SDK, network channel or export. A newly owned
+independent Release native host declares only BIND_APPWIDGET and queries only the fixed Main
+provider; actual platform consent binds one widget, with Always allow unchecked. No private Main
+store/key, credentials or authentication are read. Only its own run/widget ID persists in its own
+private preferences. Original provider RemoteViews/PendingIntents remain framework-owned; no
+financial route is duplicated and no financial Save occurs. Remove its own host, confirm owned0,
+uninstall only the newly installed helper, and delete25 exact hash-matched remote XML captures.
+Original Main public UI,OS and APK match. Local receipts stay private; neither helper installation
+nor finite public-UI preservation establishes whole-database or product release acceptance.

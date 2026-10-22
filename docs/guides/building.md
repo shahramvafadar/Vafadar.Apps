@@ -2342,3 +2342,17 @@ Unknown hosts/compilers refuse, and fresh package output still must match every 
 Keep source/diagnostic/schema and actual binary-consumer gates; producer artifacts are review
 evidence, never a replacement native binary feed or release approval.
 See [bounded evidence](../../src/Apps/Zanance/docs/quality/ci-common-recovery.md).
+
+## Independent original Android widget host (D-479)
+
+`eng/tests/AndroidWidgetHost` is a native-only Release ARM64 helper, with no Main project reference
+or shipping package inclusion. Its README gives the strict complete-package build. Verify actual
+manifest, embedded native assembly store and signature; only BIND_APPWIDGET may be declared.
+Use a fresh explicit32-hex review_run and the actual native single-widget consent, never a shell
+grant or Always allow. Resume its admitted widget without allocating again. Native framework
+delivery must invoke the original provider's own RemoteViews PendingIntents, not a constructed
+Main intent. For cold origin confirm cached Main really exits before the first native action.
+Cancel each draft without Save. Remove only the host owned by this independent package, confirm
+owned0 and uninstall that newly installed helper. Preserve actual launcher arrangement and OS.
+See [bounded physical evidence](../../src/Apps/Zanance/docs/quality/physical-widget-pending-intents.md).
+No unchanged Main build, old financial action or successful emulator cohort needs repetition.

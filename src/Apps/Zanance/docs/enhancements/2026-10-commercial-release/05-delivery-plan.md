@@ -3996,3 +3996,21 @@ Evidence: [original drift, producer and consumer qualification](../../quality/ci
 D-478 producer follow-up: run39857667608 on9823a734 passes the original producer gates; all five
 actual candidate.9 archive entries match the distinct inventory. Normal exact-head main consumer
 CI remains pending at adoption commit creation; this is not platform/product/release acceptance.
+
+### D-479 - Bounded physical original-widget continuation
+
+QA-07 gains actual Samsung provider/RemoteViews/PendingIntent evidence through an independent
+native host and real single-widget consent, without changing the owner's launcher. Four original
+actions, three Cancel returns and actual cold Expense origin26415-to16655 pass; no financial Save.
+Original141 public Home tuples/979EUR,OS and shipping D-471 APK match. Remove owned widget2/host47901,
+confirm owned0, uninstall only the new helper and remove25 exact hash-matched XMLs. Strict signed
+ARM64 helper build and two identity/configuration refusals pass; no new managed tests, Main build
+or old financial/emulator cohort replay. Actual launcher placement, all widget/lock variants,
+general stability, OS200%/spoken, other devices/API24/16KiB, iOS and release remain open.
+
+D-478 final main109743f5: all five workflows completed successfully;5097 total,5072 succeeded,
+25 skipped,zero failed, with actual hosted Windows immutable-package/cold persistence/workloads
+and Android/Windows consumer builds passing. iOS is intentionally skipped, not accepted. Retain
+historical failures and pending-at-commit records; do not repeat the consumed CI check.
+
+Evidence: [physical widget scope](../../quality/physical-widget-pending-intents.md).
