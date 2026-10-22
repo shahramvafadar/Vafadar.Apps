@@ -5309,3 +5309,21 @@ APK hash match.34 assertions qualify stored observations, not new managed tests.
 null-tree/tab/encoding/host-precondition failures; do not replay accepted commands or old suites.
 General stability/performance/spoken/other goal/platform/provider/release gates stay open.
 See [original physical goal evidence](quality/physical-goal-lifecycle.md).
+
+### D-459 - Original physical earmark and holding-quantity goals
+
+Continue the two remaining goal kinds on the owner-reserved Samsung using unchanged signed
+Offline D-450. One new fictitious profile opens with cash900. Earmark150 starts at0, accepts
+set-aside25, refuses release26 while preserving that draft, and accepts corrected release10:
+progress15/150/135, unassigned885 and original+25/-10 history. One countable holding records
+already-owned3 with original basis30, without a cash movement. Quantity goal5 shows3/5/2;
+assumed price12 changes only the estimate, not quantity or holding value. Both pinned Home
+cards and cash900 agree. One cold launch preserves both original goals, allocation history and
+assumption; All/All-types ledger history is empty. Remove only the new profile through both
+native confirmations. Original three profiles/Main979/all141 public nodes/OS/APK hash match.
+33 behavioral observation assertions and113 capture hashes pass; these are not new unit tests.
+Retain navigation/publication/null-tree and host-verifier failures; repair observation against
+stored originals without repeating accepted saves or cold launch. Code/APK remain D-450;
+no successful old suite/build/emulator scene is replayed. Protected variants, general stability,
+spoken accessibility, other physical workflows, iOS/provider/store/release gates remain open.
+See [physical goal-kind evidence](quality/physical-goal-variants.md).
