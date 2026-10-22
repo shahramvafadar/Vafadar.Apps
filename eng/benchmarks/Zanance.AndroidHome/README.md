@@ -786,3 +786,15 @@ output with complete Home publication and verifies original source/base equality
 have a unique immutable receipt. No accepted seed, contribution, bill or payment runs. A scope
 already completed under that pass refuses replay. These finite observations do not measure a
 speedup or establish general ANR/cold/low-memory acceptance. See the scoped quality evidence.
+
+## D-470 - Exact original recent subtitle and serviced current baseline
+
+The recent-row oracle uses production Home's exact U+00B7 separator; an accidental U+00C2 prefix
+is rejected against the actual production-source packet before native measurement. Keep every
+original identity/order/title/amount/review/subtitle assertion. After native framework changes,
+home-stages may capture a fresh current presentation baseline on the same retained protected
+corpora, with comparison equal to baseline. This is current complete publication evidence, not
+a historical dated-presentation or old/new performance comparison. It skips the old raw-reader
+profile. Preserve complete schema/typed-row checks, window focus and exact source/module/PID
+binding. D-470 completes24 native publications across x64/Samsung without new financial actions.
+See the application quality report for measured boundaries and original-package restoration.

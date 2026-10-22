@@ -886,7 +886,7 @@ internal static partial class AndroidHomeReview
                                 || vm.HasRecent != (expectedRecent.Length > 0)
                                 || vm.RecentEntries.Where((row, index) => row.Title != recentPackets[index].Title
                                     || row.AmountText != recentPackets[index].AmountText || row.IsUnreviewed != recentPackets[index].IsUnreviewed
-                                    || !row.Subtitle.EndsWith(" Â· " + recentPackets[index].Subtitle, StringComparison.Ordinal)).Any())
+                                    || !row.Subtitle.EndsWith(" · " + recentPackets[index].Subtitle, StringComparison.Ordinal)).Any())
                                 throw new ReviewCheckException("Original recent entry identities or formatted packets differ.");
                             var presentation = CapturePresentation(vm);
                             var originalPath = Path.Combine(folder, "presentation-" + baseline + "-" + language + ".json");

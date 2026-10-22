@@ -3861,3 +3861,22 @@ low-memory, private full-data/key equality, general stability, whole-Home speed,
 provider/Store and release acceptance remain open.
 
 Evidence: [physical cached-process recovery](../../quality/physical-cached-main-recovery.md).
+
+### D-470 - Serviced original loaded Home and exact recent-row oracle
+
+Remove only the accidental U+00C2 before the original U+00B7 separator in the independent recent
+subtitle assertion; exact production-source extraction proves the old ordinal predicate rejects
+the valid original packet. Production source/APK remain D-468. Strict signed Offline x64/ARM64
+callers qualify the unchanged original protected10,000/100,000-row corpora after MAUI10.0.120.
+Twelve native publications per target complete in one process each, with full schema/typed-row
+equality, original balance/recent packets and no financial Save or old raw-reader/suite replay.
+Emulator medians1040.70/2680.07ms; Samsung1739.94/4933.12ms. Largest dispatcher gaps487.90/405.60ms
+and794.66/1094.35ms respectively. One reference phone sample is2011.86ms; two-second acceptance
+remains open. Fresh current presentation baselines are not historical framework speedup proof.
+Restore original independent APKs/stopped state; same emulator26264/Home139 and Samsung9423/
+Home141/979, shipping APK and OS match. Four hash-matched XMLs removed. Native event scopes have
+starts and no recorded ANR/crash; no new managed cases, general stability or cold/low-memory/
+spoken/iOS/provider/Store/release acceptance. Next actual ready defect: two corrupted separators
+in original household-cost captions, kept outside this frozen-source measurement.
+
+Evidence: [serviced original loaded Home](../../quality/serviced-loaded-home.md).
