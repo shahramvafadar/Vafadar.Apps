@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep savings goals complete and safe to retry (D-447)
+
+- Show loading or local retry feedback until the complete original goal list and funding are ready.
+- Calculate progress away from the window thread and refuse stale rows or actions after leaving the page.
+- Preserve original amounts and data through detail return, retry and a signed offline upgrade.
+
 ### Keep Home responsive while evaluating goals (D-446)
 
 - Calculate original goal progress away from the window thread while preserving amounts, warnings and availability.

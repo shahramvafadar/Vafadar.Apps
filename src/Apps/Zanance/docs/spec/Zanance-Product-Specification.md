@@ -7973,3 +7973,20 @@ complete signed Offline Main upgrade pass without warnings. Original Main Home13
 remain; no general ANR/crash/two-second/low-memory or phone/iOS/release acceptance is inferred.
 
 See [Home goal worker evidence](../quality/home-goal-worker.md).
+
+### D-447 - Publish the complete original goal list under a local cover
+
+The goal list now reads one captured original file/transaction, keeps its existing financial
+calculation on a worker and publishes active/history/funding rows under one translated loading/error
+cover. Exact row/command/page lifetime guards refuse stale input; explicit retry and detail return
+preserve the original source. No financial algorithm, schema, permission or runtime policy changes.
+Fourteen new actual-source cases, three affected prior cases and23 actual resource checks pass
+selectively. Eighteen Windows contexts produce84 native observations, six Android contexts produce
+36 observations (34new/2retained); original source/base rows remain identical with zero new writes.
+Complete signed Offline Main upgrade and actual empty-list Add/Cancel pass without reset; Home139
+nodes match the old upgrade except focus, and final return differs only in one drawing-order value.
+Strict builds and test-output cleanup pass without warnings. Failed native target/capture-path
+observers are preserved and corrected against original receipts without repeating completed scenes.
+No general ANR/crash, two-second, low-memory, spoken, physical-phone, iOS or release acceptance is inferred.
+
+See [original goal-list evidence](../quality/goal-list-publication.md).

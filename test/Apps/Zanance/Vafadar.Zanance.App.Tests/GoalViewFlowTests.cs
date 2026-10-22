@@ -166,6 +166,217 @@ public sealed class GoalViewFlowTests
         }
     }
 
+    /// <summary>A row from the previous original list publication cannot open a new detail route after refresh.</summary>
+    [Fact]
+    public async Task Goal_list_refuses_the_retained_row_after_its_source_was_republished()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); Enable(f, s);
+        var vm = new GoalsViewModel(f.Store, s.Goals, s.Presenter, f.Translator, f.Time, f.Platform);
+        await vm.LoadAsync(); var previous = vm.Active.Single(row => row.Id == s.Items[0].Id);
+        s.Items[0].Name = "Changed original list name"; await s.Goals.SaveGoalAsync(s.Items[0], Ct);
+        await vm.LoadAsync(); var current = vm.Active.Single(row => row.Id == previous.Id);
+        Assert.NotSame(previous, current); Assert.NotEqual(previous.Name, current.Name);
+        await vm.OpenCommand.ExecuteAsync(previous); Assert.Empty(f.Platform.Routes);
+        await vm.OpenCommand.ExecuteAsync(current); Assert.Equal(current.Id, Assert.Single(f.Platform.Routes).Parameters!["id"]);
+    }
+
+    /// <summary>Native collection callbacks cannot navigate while the original complete list is still being published.</summary>
+    [Fact]
+    public async Task Goal_list_keeps_navigation_disabled_during_partial_native_collection_publication()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); Enable(f, s);
+        var vm = new GoalsViewModel(f.Store, s.Goals, s.Presenter, f.Translator, f.Time, f.Platform);
+        await vm.LoadAsync(); var current = vm.Active[0]; var observed = new List<bool>();
+        vm.Active.CollectionChanged += (_, _) => observed.Add(vm.OpenCommand.CanExecute(current));
+        await vm.LoadAsync(); Assert.NotEmpty(observed); Assert.All(observed, allowed => Assert.False(allowed));
+        Assert.True(vm.OpenCommand.CanExecute(vm.Active[0]));
+    }
+
+    /// <summary>A failed source/rights read cannot leave the old Add/detail actions enabled over previous data.</summary>
+    [Fact]
+    public async Task Goal_list_refuses_old_actions_after_its_original_read_failed()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); Enable(f, s);
+        var vm = new GoalsViewModel(f.Store, s.Goals, s.Presenter, f.Translator, f.Time, f.Platform);
+        await vm.LoadAsync(); var previous = vm.Active[0]; s.Access.Fail = true;
+        await Assert.ThrowsAsync<InvalidOperationException>(vm.LoadAsync);
+        Assert.False(vm.AddCommand.CanExecute(null)); Assert.False(vm.OpenCommand.CanExecute(previous));
+        Assert.Empty(f.Platform.Routes);
+    }
+
+    /// <summary>Old native commands remain retired even when the same page later publishes another valid source.</summary>
+    [Fact]
+    public async Task Goal_list_old_commands_stay_retired_after_another_appearance()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); Enable(f, s);
+        var vm = new GoalsViewModel(f.Store, s.Goals, s.Presenter, f.Translator, f.Time, f.Platform);
+        await vm.LoadAsync(); var oldAdd = vm.AddCommand; var oldOpen = vm.OpenCommand; var row = vm.Active[0];
+        vm.Retire(); await vm.LoadAsync();
+        Assert.NotSame(oldAdd, vm.AddCommand); Assert.NotSame(oldOpen, vm.OpenCommand);
+        await oldAdd.ExecuteAsync(null); await oldOpen.ExecuteAsync(row); Assert.Empty(f.Platform.Routes);
+        await vm.AddCommand.ExecuteAsync(null); Assert.Equal(AppRoutes.GoalEditorRoute, Assert.Single(f.Platform.Routes).Route);
+    }
+
+    /// <summary>Departure from an actual native reset retires the unfinished packet instead of enabling partial rows.</summary>
+    [Fact]
+    public async Task Goal_list_departure_during_publication_keeps_the_new_lifetime_covered()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); Enable(f, s);
+        var vm = new GoalsViewModel(f.Store, s.Goals, s.Presenter, f.Translator, f.Time, f.Platform);
+        System.Collections.Specialized.NotifyCollectionChangedEventHandler leave = (_, _) => vm.Retire();
+        vm.Active.CollectionChanged += leave;
+        await vm.LoadAsync(); Assert.False(vm.Loading.IsReady); Assert.False(vm.AddCommand.CanExecute(null));
+        vm.Active.CollectionChanged -= leave; await vm.LoadAsync();
+        Assert.True(vm.Loading.IsReady); Assert.Equal(5, vm.Active.Count); Assert.Single(vm.Finished); Assert.Empty(f.Platform.Routes);
+    }
+
+    /// <summary>A rights failure triggered by a real native reset cannot uncover the partially published packet.</summary>
+    [Fact]
+    public async Task Goal_list_reentrant_rights_failure_stays_covered_until_explicit_retry()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); Enable(f, s);
+        var vm = new GoalsViewModel(f.Store, s.Goals, s.Presenter, f.Translator, f.Time, f.Platform);
+        var before = await RowsAsync(f);
+        System.Collections.Specialized.NotifyCollectionChangedEventHandler fail = (_, _) => s.Access.Fail = true;
+        vm.Active.CollectionChanged += fail;
+        await Assert.ThrowsAsync<InvalidOperationException>(vm.LoadAsync);
+        Assert.True(vm.Loading.HasFailed); Assert.False(vm.Loading.IsReady); Assert.False(vm.AddCommand.CanExecute(null));
+        vm.Active.CollectionChanged -= fail; s.Access.Fail = false; await vm.LoadAsync();
+        Assert.True(vm.Loading.IsReady); Assert.Equal(before, await RowsAsync(f));
+    }
+
+    /// <summary>Retry only reads the original source and restores complete actions without another definition/payment.</summary>
+    [Fact]
+    public async Task Goal_list_explicit_retry_reads_the_same_original_data_after_failure()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); Enable(f, s);
+        var vm = new GoalsViewModel(f.Store, s.Goals, s.Presenter, f.Translator, f.Time, f.Platform);
+        var before = await RowsAsync(f); s.Access.Fail = true;
+        await Assert.ThrowsAsync<InvalidOperationException>(vm.LoadAsync); s.Access.Fail = false;
+        await vm.LoadAsync(); Assert.True(vm.Loading.IsReady); Assert.False(vm.Loading.HasFailed);
+        Assert.Equal(5, vm.Active.Count); Assert.Equal(before, await RowsAsync(f));
+    }
+
+    /// <summary>Actual list data retains one original file and refuses another factory before publication or navigation.</summary>
+    [Fact]
+    public async Task Goal_list_snapshot_refuses_another_actual_profile_file()
+    {
+        using var f = new FlowFixture(); using var other = new FlowFixture(); var s = await SeedAsync(f); Enable(f, s);
+        var original = await s.Goals.ReadListSnapshotAsync(Ct); var before = await RowsAsync(f); var otherBefore = await RowsAsync(other);
+        await Assert.ThrowsAsync<InvalidOperationException>(() => other.Services.GetRequiredService<GoalStore>().ValidateListSnapshotAsync(original, Ct));
+        Assert.Equal(before, await RowsAsync(f)); Assert.Equal(otherBefore, await RowsAsync(other));
+    }
+
+    /// <summary>Detached account units cannot be rewritten in a captured original list packet and then blessed.</summary>
+    [Fact]
+    public async Task Goal_list_snapshot_refuses_mutated_original_account_references()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); Enable(f, s); var before = await RowsAsync(f);
+        var original = await s.Goals.ReadListSnapshotAsync(Ct); original.Accounts[0].CurrencyCode = "USD";
+        await Assert.ThrowsAsync<InvalidOperationException>(() => s.Goals.ValidateListSnapshotAsync(original, Ct));
+        Assert.Equal(before, await RowsAsync(f));
+    }
+
+    /// <summary>An empty goal list is an actual complete read and never initializes unrelated preferences.</summary>
+    [Fact]
+    public async Task Goal_list_empty_read_does_not_create_settings_or_financial_records()
+    {
+        using var f = new FlowFixture(); var goals = f.Services.GetRequiredService<GoalStore>();
+        var original = await goals.ReadListSnapshotAsync(Ct); await goals.ValidateListSnapshotAsync(original, Ct);
+        Assert.Empty(original.Accounts); Assert.Empty(original.Entries); Assert.Empty(original.Goals.Goals);
+        var dates = new DateFormatter(f.Localization);
+        var presenter = new GoalPresenter(f.Translator, dates, f.Localization, f.Services.GetRequiredService<HoldingStore>(),
+            new HoldingText(f.Translator, f.Localization, dates));
+        var vm = new GoalsViewModel(f.Store, goals, presenter, f.Translator, f.Time, f.Platform);
+        await vm.LoadAsync(); Assert.True(vm.Loading.IsReady); Assert.True(vm.IsEmpty); Assert.True(vm.AddCommand.CanExecute(null));
+        Assert.Empty(vm.Active); Assert.Empty(vm.Finished); Assert.Empty(vm.Earmarks);
+        await using var db = await f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
+        Assert.False(await db.Settings.AnyAsync(Ct));
+    }
+
+    /// <summary>Equal values do not revive a row object from an earlier native publication.</summary>
+    [Fact]
+    public async Task Goal_list_refuses_equal_old_rows_after_a_read_only_refresh()
+    {
+        using var f = new FlowFixture(); var s = await SeedAsync(f); Enable(f, s);
+        var vm = new GoalsViewModel(f.Store, s.Goals, s.Presenter, f.Translator, f.Time, f.Platform);
+        await vm.LoadAsync(); var previous = vm.Active[0]; await vm.LoadAsync(); var current = vm.Active[0];
+        Assert.Equal(previous, current); Assert.NotSame(previous, current);
+        await vm.OpenCommand.ExecuteAsync(previous); Assert.Empty(f.Platform.Routes);
+        await vm.OpenCommand.ExecuteAsync(current); Assert.Single(f.Platform.Routes);
+    }
+
+    /// <summary>Explicit retry in the same page cannot silently adopt another selected profile's list.</summary>
+    [Fact]
+    public async Task Goal_list_retains_its_actual_file_until_the_page_lifetime_is_retired()
+    {
+        using var f = new FlowFixture(); using var other = new FlowFixture(); var first = await SeedAsync(f); var second = await SeedAsync(other);
+        var factory = new GoalListFactory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+        var goals = new GoalStore(factory, new AccessSource());
+        var vm = new GoalsViewModel(f.Store, goals, first.Presenter, f.Translator, f.Time, f.Platform);
+        await vm.LoadAsync(); factory.Current = other.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>();
+        await Assert.ThrowsAsync<InvalidOperationException>(vm.LoadAsync); Assert.False(vm.Loading.IsReady);
+        vm.Retire(); await vm.LoadAsync(); Assert.True(vm.Loading.IsReady);
+        Assert.Contains(vm.Active, row => row.Id == second.Items[0].Id); Assert.DoesNotContain(vm.Active, row => row.Id == first.Items[0].Id);
+    }
+
+    /// <summary>A selected-file change after context creation cannot mix the first reader with later profile data.</summary>
+    [Fact]
+    public async Task Goal_list_switch_after_original_context_creation_refuses_publication_and_same_frame_retry()
+    {
+        using var f = new FlowFixture(); using var other = new FlowFixture(); var first = await SeedAsync(f); var second = await SeedAsync(other);
+        var factory = new GoalListFactory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+        factory.AfterCreate = () => factory.Current = other.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>();
+        var goals = new GoalStore(factory, new AccessSource());
+        var vm = new GoalsViewModel(f.Store, goals, first.Presenter, f.Translator, f.Time, f.Platform);
+        await Assert.ThrowsAsync<InvalidOperationException>(vm.LoadAsync);
+        Assert.Empty(vm.Active); Assert.False(vm.Loading.IsReady);
+        await Assert.ThrowsAsync<InvalidOperationException>(vm.LoadAsync);
+        vm.Retire(); await vm.LoadAsync(); Assert.Contains(vm.Active, row => row.Id == second.Items[0].Id);
+    }
+
+    /// <summary>The actual original reader and validator each open their real SQLite connection away from the calling thread.</summary>
+    [Fact]
+    public async Task Goal_list_reader_and_validation_open_their_keyed_connections_on_workers()
+    {
+        using var f = new FlowFixture(); await SeedAsync(f);
+        var factory = new GoalListFactory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+        var goals = new GoalStore(factory, new AccessSource());
+        var read = await GoalListFromThreadAsync(() => goals.ReadListSnapshotAsync(Ct));
+        var validated = await GoalListFromThreadAsync(async () => { await goals.ValidateListSnapshotAsync(read.Value, Ct); return true; });
+        var opens = factory.Opened.ToArray(); Assert.Equal(2, opens.Length);
+        Assert.NotEqual(read.Caller, opens[0]); Assert.NotEqual(validated.Caller, opens[1]);
+    }
+
+    private static async Task<(T Value, int Caller)> GoalListFromThreadAsync<T>(Func<Task<T>> action)
+    {
+        var started = new TaskCompletionSource<(Task<T> Work, int Caller)>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var caller = new Thread(() =>
+        {
+            try { started.SetResult((action(), Environment.CurrentManagedThreadId)); }
+            catch (Exception error) { started.SetException(error); }
+        }) { IsBackground = true };
+        caller.Start(); var work = await started.Task.WaitAsync(Ct); var value = await work.Work;
+        Assert.True(caller.Join(TimeSpan.FromSeconds(5))); return (value, work.Caller);
+    }
+
+    /// <summary>Delegates every query to actual SQLite; only selected-factory timing and public connection-open thread IDs are observed.</summary>
+    private sealed class GoalListFactory(IDbContextFactory<ZananceDbContext> original) : IDbContextFactory<ZananceDbContext>
+    {
+        internal IDbContextFactory<ZananceDbContext> Current = original;
+        internal Action? AfterCreate;
+        internal ConcurrentQueue<int> Opened { get; } = new();
+        public ZananceDbContext CreateDbContext() => Track(Current.CreateDbContext());
+        public async Task<ZananceDbContext> CreateDbContextAsync(CancellationToken cancellationToken = default) =>
+            Track(await Current.CreateDbContextAsync(cancellationToken));
+        private ZananceDbContext Track(ZananceDbContext context)
+        {
+            context.Database.GetDbConnection().StateChange += (_, change) =>
+            { if (change.CurrentState == System.Data.ConnectionState.Open) Opened.Enqueue(Environment.CurrentManagedThreadId); };
+            var next = AfterCreate; AfterCreate = null; next?.Invoke(); return context;
+        }
+    }
+
     private static async Task OpenAsync(Seed s, int index)
     {
         s.Detail.ApplyQueryAttributes(new Dictionary<string, object> { ["id"] = s.Items[index].Id }); await s.Detail.LoadAsync();

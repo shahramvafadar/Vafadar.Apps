@@ -8447,4 +8447,13 @@ Original-XML SHA-256: {5}</value>
   <data name="Numeric_OriginalInputFormat" xml:space="preserve">
     <value>Dieser Wert behält sein ursprüngliches Zahlenformat, zum Beispiel {0}. Lösche ihn vollständig, bevor du einen Wert im aktuellen Format eingibst.</value>
   </data>
+  <data name="Goals_Loading" xml:space="preserve">
+    <value>Ziele werden geladen…</value>
+  </data>
+  <data name="Goals_LoadFailed" xml:space="preserve">
+    <value>Die Ziele konnten nicht geladen werden. Bitte erneut versuchen.</value>
+  </data>
+  <data name="Goals_RetryLoad" xml:space="preserve">
+    <value>Erneut versuchen</value>
+  </data>
 </root>

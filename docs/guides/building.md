@@ -2200,3 +2200,14 @@ and never call fresh transport/admission. Current protected membership must genu
 Permit only the known changed-unit refusal; persist unique width scenes and verify complete source/
 base/profile restoration. Restore exact prior public APK and OS/Main. Keep shipping Main Offline.
 See [evidence](../../src/Apps/Zanance/docs/quality/household-os-qualification.md).
+
+### Original goal-list native qualification (D-447)
+
+Use `Run-StoreDrafts.ps1 -PlanEditorReview -SecondaryFieldsReview -GoalListReview
+-PlanEditorSourceRun <original-secondary-fields-run>` only with a complete retained original source.
+This dedicated scope never creates or repeats accepted financial fixture actions. Its84 own-window
+captures use the Stage/goals.png receipt mapping. Android uses the independent `goal-list` phase
+and requires all five accepted source receipts. Preserve native accepted-navigation markers before
+observers; `review_goal_list_observed` may retain exact completed observations, not recreate money.
+A terminal receipt/capture-path failure is repaired by validating existing artifacts, not rerunning
+successful contexts. An observation timeout alone does not justify stopping or restarting a process.

@@ -15,6 +15,42 @@ public sealed class GoalStore(IDbContextFactory<ZananceDbContext> contextFactory
     /// <summary>Raised after goals or allocations were written.</summary>
     public event EventHandler? Changed;
 
+    /// <summary>Captures the complete original list from one keyed worker connection and deferred transaction.</summary>
+    public async Task<GoalListSnapshot> ReadListSnapshotAsync(CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return await Task.Run(async () =>
+        {
+            await db.Database.OpenConnectionAsync(cancellationToken);
+            await using var transaction = ((Microsoft.Data.Sqlite.SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
+            await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
+            var work = await GetWorkSnapshotAsync(db, cancellationToken);
+            var accounts = await db.Accounts.AsNoTracking().OrderBy(a => a.IsArchived).ThenBy(a => a.SortOrder).ThenBy(a => a.Name).ToListAsync(cancellationToken);
+            var entries = await ZananceStore.ReadCompleteHomeLedgerAsync(db, cancellationToken);
+            var types = await db.AssetTypes.AsNoTracking().OrderBy(t => t.IsArchived).ThenBy(t => t.SortOrder).ThenBy(t => t.Name).ToListAsync(cancellationToken);
+            var events = (await db.AssetEvents.AsNoTracking().ToListAsync(cancellationToken)).OrderBy(e => e.Date).ThenBy(e => e.CreatedAt).ToList();
+            var result = new GoalListSnapshot(work, accounts, entries, types, events);
+            result.EnsureCurrent(); cancellationToken.ThrowIfCancellationRequested(); return result;
+        }, cancellationToken);
+    }
+
+    /// <summary>Validates the original list file, work packet and account/holding references before it becomes actionable.</summary>
+    public async Task ValidateListSnapshotAsync(GoalListSnapshot snapshot, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot); snapshot.EnsureCurrent();
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await Task.Run(async () =>
+        {
+            // SQLite async calls execute synchronously. Validation and key opening must also stay off the window thread.
+            await db.Database.OpenConnectionAsync(cancellationToken);
+            await using var transaction = ((Microsoft.Data.Sqlite.SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
+            await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
+            if (GoalWorkSnapshot.CaptureReferences(snapshot.Accounts, snapshot.AssetTypes) != snapshot.Goals.ReferenceStamp)
+                throw new InvalidOperationException("Original goal list references changed in memory.");
+            await ValidateWorkSnapshotAsync(snapshot.Goals, db, cancellationToken); snapshot.EnsureCurrent();
+        }, cancellationToken);
+    }
+
     /// <summary>Reads complete original goal inputs and current exact-file rights without writing or filtering history.</summary>
     public async Task<GoalWorkSnapshot> GetWorkSnapshotAsync(CancellationToken cancellationToken = default)
     {

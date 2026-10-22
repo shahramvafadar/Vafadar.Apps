@@ -83,7 +83,7 @@ public sealed partial class ZananceStore
     }
 
     /// <summary>Reads each ledger page in physical order, then retains the original newest-first financial packet.</summary>
-    private static async Task<List<LedgerEntry>> ReadCompleteHomeLedgerAsync(ZananceDbContext db, CancellationToken ct)
+    internal static async Task<List<LedgerEntry>> ReadCompleteHomeLedgerAsync(ZananceDbContext db, CancellationToken ct)
     {
         // The date index visits full encrypted rows out of page order. A reverse table scan avoids repeated
         // decryption, and supplies the same descending row identity used by the original reverse date scan

@@ -105,6 +105,13 @@ public sealed class GoalPresenter(Translator translator, IDateFormatter dates, I
             today, snapshot.AssetEvents, snapshot.AssetTypes), cancellationToken);
     }
 
+    /// <summary>Formats already calculated original list progress on the caller, without another store read.</summary>
+    internal GoalRow[] ListRows(Data.GoalListSnapshot snapshot, IReadOnlyDictionary<Guid, GoalProgress> progress)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot); _types = snapshot.AssetTypes;
+        return snapshot.Goals.Goals.Select(goal => Row(goal, progress.GetValueOrDefault(goal.Id), snapshot.Goals.Work)).ToArray();
+    }
+
     /// <summary>Returns an amount of a goal: money, or the quantity of its holding in the holding's unit.</summary>
     public string Amount(Goal goal, long value)
     {

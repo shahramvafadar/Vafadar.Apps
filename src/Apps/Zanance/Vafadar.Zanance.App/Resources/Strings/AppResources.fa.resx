@@ -8447,4 +8447,13 @@
   <data name="Numeric_OriginalInputFormat" xml:space="preserve">
     <value>این مقدار قالب عددی اولیهٔ خود را حفظ می‌کند؛ برای نمونه «{0}». برای ورود مقدار با قالب فعلی، ابتدا ورودی را کاملاً پاک کنید.</value>
   </data>
+  <data name="Goals_Loading" xml:space="preserve">
+    <value>در حال بارگذاری هدف‌ها…</value>
+  </data>
+  <data name="Goals_LoadFailed" xml:space="preserve">
+    <value>هدف‌ها بارگذاری نشدند. دوباره تلاش کنید.</value>
+  </data>
+  <data name="Goals_RetryLoad" xml:space="preserve">
+    <value>تلاش دوباره</value>
+  </data>
 </root>

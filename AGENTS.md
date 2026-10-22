@@ -3391,3 +3391,16 @@ before publication. Preserve original snapshot/file/work validation and financia
 Qualify against exact retained sources without new accepted seeds/payments; keep task/thread
 metadata distinct from native rendering and speed/ANR acceptance. Correct only failed observers
 against original receipts and do not repeat completed scopes. External/D-386 gates stand.
+
+## D-447 - Complete original goal-list ownership
+
+Capture the actual list file before scheduling keyed SQLite reads/validation on a worker; one
+transaction owns original goal/work/account/ledger/holding inputs. Keep existing financial formulas,
+localized publication and complete collection resets under one loading/error/retry cover. Index
+exact displayed row identities, retire old commands/pending publication on departure, and refuse
+another selected file until a fresh page lifetime. Empty reads never initialize Settings. Preserve
+original accepted fixture receipts; native detail visits and local Retry are read-only. A card's
+negative-margin overlay can be clipped intentionally: require owned/focused/enabled native state
+and at least44dp visible target, not its clipped decorative perimeter. Keep capture-path observer
+repairs separate from completed native scenes. Finite checks do not establish child-form ownership,
+general ANR/crash, spoken, physical-phone, iOS or release acceptance.

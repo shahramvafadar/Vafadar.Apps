@@ -69,3 +69,8 @@ proof parser rejects a trailing newline in a path pointer; trim that pointer and
 original XML/reports, without repeating any scene. D-444 exact-head CI39687713520 and
 CodeQL39687713456 both succeed in their sole response; its one-shot monitor is deleted. D-445
 requires its own later exact-head check.
+
+The single exact-head response for704ae8c6d4acf086360442291d3fcae8087b4b4d reports
+[CI success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39691973957) and
+[CodeQL success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39691974073).
+Its one-shot monitor is deleted; no second request or physical acceptance is inferred.

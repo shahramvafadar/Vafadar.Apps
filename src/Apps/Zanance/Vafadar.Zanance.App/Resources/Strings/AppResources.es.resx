@@ -8416,4 +8416,13 @@ SHA-256 del XML original: {5}</value>
   <data name="Numeric_OriginalInputFormat" xml:space="preserve">
     <value>Este valor conserva su formato numérico original, por ejemplo {0}. Bórralo por completo antes de introducir un valor en el formato actual.</value>
   </data>
+  <data name="Goals_Loading" xml:space="preserve">
+    <value>Cargando objetivos…</value>
+  </data>
+  <data name="Goals_LoadFailed" xml:space="preserve">
+    <value>No se pudieron cargar los objetivos. Inténtalo de nuevo.</value>
+  </data>
+  <data name="Goals_RetryLoad" xml:space="preserve">
+    <value>Inténtalo de nuevo</value>
+  </data>
 </root>
