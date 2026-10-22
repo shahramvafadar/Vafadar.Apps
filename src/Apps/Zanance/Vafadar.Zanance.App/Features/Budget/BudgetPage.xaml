@@ -41,7 +41,8 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="*,Auto">
-    <ScrollView>
+    <!-- D-462: publish the complete original financial packet together, never partial rows during a read or Retry. -->
+    <ScrollView IsVisible="{Binding Actions.CanInteract}">
         <VerticalStackLayout Padding="16" Spacing="8">
 
             <!-- Budgets in several currencies: pick which one is shown here and on Home (ZEX-P02) -->

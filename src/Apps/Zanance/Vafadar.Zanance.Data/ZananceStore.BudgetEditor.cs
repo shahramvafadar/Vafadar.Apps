@@ -8,10 +8,16 @@ public sealed partial class ZananceStore
     /// <summary>Reads complete original budget form inputs without creating preferences or financial rows.</summary>
     public async Task<BudgetEditorReview> GetBudgetEditorReviewAsync(CancellationToken cancellationToken = default)
     {
-        var choices = new BudgetChoiceStore(contextFactory, commercialAccess, time);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         // D-276: choices and form inputs keep the same captured file and keyed connection until validation ends.
         await db.Database.OpenConnectionAsync(cancellationToken);
+        return await GetBudgetEditorReviewAsync(db, cancellationToken);
+    }
+
+    // D-462: the page's complete financial reader joins this exact review to its original transaction.
+    private async Task<BudgetEditorReview> GetBudgetEditorReviewAsync(ZananceDbContext db, CancellationToken cancellationToken)
+    {
+        var choices = new BudgetChoiceStore(contextFactory, commercialAccess, time);
         var periods = await choices.ReadAsync(db, cancellationToken);
         var accounts = await db.Accounts.AsNoTracking().OrderBy(item => item.Id).ToListAsync(cancellationToken);
         var categories = await db.Categories.AsNoTracking().OrderBy(item => item.Id).ToListAsync(cancellationToken);
@@ -25,8 +31,11 @@ public sealed partial class ZananceStore
     public async Task ValidateBudgetEditorReviewAsync(BudgetEditorReview review, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await db.Database.OpenConnectionAsync(cancellationToken);
-        await ValidateBudgetEditorReviewAsync(review, db, cancellationToken);
+        await Task.Run(async () =>
+        {
+            await db.Database.OpenConnectionAsync(cancellationToken);
+            await ValidateBudgetEditorReviewAsync(review, db, cancellationToken);
+        }, cancellationToken);
     }
 
     // D-152: the editor and writer use this same context overload; a separate connection cannot protect a Save.

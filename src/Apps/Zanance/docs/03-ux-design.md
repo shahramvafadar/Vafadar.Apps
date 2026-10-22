@@ -2371,3 +2371,11 @@ and pending consent. A hidden page cannot rearm itself through Retry or a late t
 Keep editor-return period semantics and current-month reset on a new tab visit. Known committed
 notification failures use the existing saved/refresh message; only a read-only Retry is offered.
 No new amount, method, calendar, permission or confirmation design is introduced.
+
+### Complete budget financial publication (D-462)
+
+Budget loading, failure and explicit Retry cover the complete body. Do not reveal old/partially
+replaced total, category, cash, goal or plan rows while later sources are still being read. Publish
+all financial rows together, retaining the original period and separate action ownership. Workers
+prepare amounts/status; native colors, localized rows and collection publication stay with the
+window. No financial calculation or saved display meaning changes merely to speed a refresh.

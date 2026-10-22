@@ -8403,3 +8403,27 @@ original observations, not unit cases; accepted financial/native writes are not 
 No schema/provider/permission or financial formula changes. General stability/accessibility,
 complete budget financial snapshots, other platform/workflow and release gates remain open.
 See [budget action lifetime evidence](quality/budget-action-lifetime.md).
+
+### D-462 - Coherent original budget financial publication
+
+The original Budget page now captures its complete review, accounts/categories/preferences, ledger,
+plans/states and goal earmarks on one original-file lease and one deferred SQLite transaction.
+SQLite materialization and the unchanged financial calculators run on workers. Complete rollover
+history, envelope cash to today, refund netting, confirmed-only display, short-period limits and
+monthly flex/planned arithmetic retain their original meaning. The covered page publishes the
+complete calculated rows synchronously after original review validation; hidden/error/Retry state
+never exposes a partial financial packet. No entity/schema, permission, export or provider changes.
+Fourteen new actual-source SQLite/financial-worker cases and seven affected prior command cases
+pass selectively; no complete suite or accepted financial commands repeat. Eighteen independent
+Windows method/language/theme observations retain all fictional source and base rows; own-window
+images and exact separate desktop restoration are verified. Android retains10 completed contexts
+across a real ANR/timeout and runs only the8 missing contexts on its original source, yielding18
+complete contexts; the exact original public report is recovered without replay or invented fields.
+Final strict builds and a complete signed Offline APK with384 AOT libraries pass. Samsung upgrades
+without reset and reads its retained50/10/40/planned30 budget, then returns Main18990/979/141 nodes,
+three profiles/exact OS/final APK hash; no financial writes or profile creates/deletes occur.
+The final order correction repeats only its one failing source case and final-source read/builds.
+ANR remains open. Complete scope, artifact and retained-failure evidence is recorded in
+[budget financial read evidence](quality/budget-financial-read.md). General ANR/crash,
+speed/low-memory, full accessibility, other original budget workflows, iOS/provider/Store/release
+acceptance remains separate and open.

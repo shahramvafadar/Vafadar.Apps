@@ -2246,3 +2246,22 @@ qualifies the already-applied three-period configuration without any accepted co
 Its receipt explicitly reports zero new writes/retries; it cannot turn an earlier failed native
 run into a completed one. Review every own-window image and retain original/cleanup failures.
 The current native gate waits for the actual enabled44px child target, not only its parent layout.
+
+### Original budget financial publication review (D-462)
+
+`Run-StoreDrafts.ps1 -BudgetFinancialReadReview` builds a fresh independent Windows installation and
+checks three original budget methods in en/fa/de Light/Dark at the existing412px review width.
+The shared native review owns three separately migrated fictional SQLite sources. It never sends
+Save/copy/delete commands; every view compares stored rows before and after. Each completed context
+has its own receipt, and cleanup failure is rejected independently of financial observations.
+The independent Android Home caller accepts `budget-financial-read` with original `review_run` and
+`review_pass` identifiers. Its public report uses the same phase in `Read-ReviewReport.ps1`.
+Continue retained sources/receipts after a failed observation; do not reseed or replay completed
+contexts. A modal page owns its own focused native child, independently of the covered Activity
+decor. Keep package/focus/secure-window guards and restore exact original package/OS/Main state.
+
+The first successful financial-read public frame omitted Comparison. For that original frame only,
+`Read-ReviewReport.ps1 -OriginalBudgetReport` requires the exact phase/run/live PID, no Comparison
+argument,18 complete unique original contexts, unchanged rows and zero saves. It preserves original
+JSON bytes without inventing a binding or rerunning the UI. Future frames include actual launch
+Comparison and use the ordinary guarded observer.

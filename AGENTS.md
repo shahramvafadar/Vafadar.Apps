@@ -3454,3 +3454,13 @@ transaction and check them before commit. Record accepted results before Changed
 a post-commit failure never becomes an unsaved failure or a repeated write. Keep native observer
 continuations on their retained fictitious source and never replay accepted commands to repair a
 capture. Full financial-snapshot, stability, accessibility and external release gates stay separate.
+
+## D-462 - Coherent original budget financial reads
+
+Keep budget definitions/references, complete ledger history, plan states and goal earmarks on one
+captured file lease and one deferred SQLite read transaction. SQLite materialization and financial
+calculation belong off the window thread; freeze period/today/filter inputs before dispatch.
+Publish the complete result synchronously behind local readiness after original review validation.
+Do not replace historical envelope cash or rollover inputs with the displayed period or review
+filter, and never turn a read/Retry into preferences, financial writes or inferred default budgets.
+Preserve completed native observations and continue their exact fictitious source without reseeding.

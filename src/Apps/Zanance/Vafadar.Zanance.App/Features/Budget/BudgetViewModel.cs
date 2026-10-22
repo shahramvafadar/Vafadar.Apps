@@ -372,7 +372,8 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
             _period = original.Period; _periodStart = original.PeriodStart;
             _visitCurrency = original.CurrencyCode;
         }
-        var reviewedBudgets = await _store.GetBudgetEditorReviewAsync();
+        var financialRead = await _store.GetBudgetReadSnapshotAsync();
+        var reviewedBudgets = financialRead.Review;
         RequireVisible();
         var settings = reviewedBudgets.Settings ?? new ZananceSettings();
         _startDay = settings.MonthStartDay;
@@ -474,15 +475,13 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         HasBudget = _budget is not null;
         ScopeText = _budget is { AccountIds.Count: > 0 } ? _translator.Format("Budget_ScopeLimited", _budget.AccountIds.Count) : null;
 
-        var accounts = allAccounts;
-        var entries = await _store.GetEntriesAsync(from, to);
+        // Freeze financial inputs before dispatch; the worker never reads mutable page/filter state.
+        var projection = await BudgetFinancialProjection.PrepareAsync(financialRead, _budget, from, to,
+            _currency, Today, ConfirmedOnly);
         RequireVisible();
-        var schedules = await _plans.GetSchedulesAsync();
+        await _store.ValidateBudgetEditorReviewAsync(reviewedBudgets);
         RequireVisible();
-        var states = await _plans.GetStatesAsync();
-        RequireVisible();
-        var categories = reviewedBudgets.Categories;
-        var lookup = new CategoryLookup(categories, _translator);
+        var lookup = new CategoryLookup(reviewedBudgets.Categories, _translator);
         var culture = _localization.CurrentCulture;
 
         CategoryLines.Clear();
@@ -495,57 +494,30 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         IsFlex = _period == BudgetPeriod.Month && _budget?.Method == BudgetMethod.Flex;
         CategoriesHeader = _translator[IsEnvelopes ? "Budget_MethodEnvelopes" : "Budget_Categories"];
         UnassignedText = EnvelopeNote = null;
-        var envelopes = new List<BudgetStatus>();
         if (_budget is { } budget)
         {
-            var accountIds = budget.AccountIds.Count > 0 ? budget.AccountIds : null;
-
-            // Rollover (§10.3): the limits of this month plus what the previous months passed on.
-            var carry = await _store.GetBudgetCarryAsync(budget);
-            RequireVisible();
-            if (IsFlex)
-            {
-                LoadFlex(budget, carry.Total, accounts, entries, schedules, states, categories, from, to, culture);
-            }
-            else if (budget.TotalLimit is { } limit)
-            {
-                var spent = BudgetCalculator.NetExpense(accounts, entries, from, to, _currency, accountIds, confirmedOnly: ConfirmedOnly);
-                TotalLines.Add(Line(_translator["Budget_Total"], Symbol.Wallet, Good, new BudgetStatus(limit + carry.Total, spent), culture) with { CarryText = Carry(carry.Total, limit, culture) });
-            }
-
-            foreach (var categoryLimit in budget.CategoryLimits.Where(_ => !IsFlex).OrderBy(l => lookup.Get(l.CategoryId)?.SortOrder ?? int.MaxValue))
-            {
-                var spent = BudgetCalculator.NetExpense(accounts, entries, from, to, _currency, accountIds, [categoryLimit.CategoryId], categories, ConfirmedOnly);
-                var categoryCarry = carry.For(categoryLimit.CategoryId);
-                envelopes.Add(new BudgetStatus(categoryLimit.Limit + categoryCarry, spent));
-                CategoryLines.Add(Line(lookup.Name(categoryLimit.CategoryId), lookup.Icon(categoryLimit.CategoryId), lookup.Color(categoryLimit.CategoryId), new BudgetStatus(categoryLimit.Limit + categoryCarry, spent), culture)
-                    with { CarryText = Carry(categoryCarry, categoryLimit.Limit, culture) });
-            }
+            if (projection.Flex is { } flex)
+                LoadFlex(budget, projection.Carry.Total, flex, culture);
+            else if (projection.Total is { } total)
+                TotalLines.Add(Line(_translator["Budget_Total"], Symbol.Wallet, Good, total, culture)
+                    with { CarryText = Carry(projection.Carry.Total, budget.TotalLimit!.Value, culture) });
+            foreach (var line in projection.Categories.OrderBy(line => lookup.Get(line.CategoryId)?.SortOrder ?? int.MaxValue))
+                CategoryLines.Add(Line(lookup.Name(line.CategoryId), lookup.Icon(line.CategoryId), lookup.Color(line.CategoryId), line.Status, culture)
+                    with { CarryText = Carry(line.Carry, line.OwnLimit, culture) });
         }
-
-        if (IsEnvelopes && _budget is { } envelopeBudget)
-        {
-            await LoadEnvelopesAsync(envelopeBudget, accounts, envelopes, from, to, culture);
-            RequireVisible();
-        }
+        if (projection.EnvelopeOutsideCurrentPeriod) EnvelopeNote = _translator["Envelope_CurrentMonthOnly"];
+        else if (projection.Envelope is { } envelope) LoadEnvelopes(envelope, culture);
 
         HasTotal = TotalLines.Count > 0;
         HasCategoryLines = CategoryLines.Count > 0;
 
-        var unreviewed = entries.Count(e => e.Review == ReviewState.Unreviewed && e.Kind is EntryKind.Expense or EntryKind.Refund);
-        UnreviewedText = unreviewed > 0 && !ConfirmedOnly ? _translator.Format("Budget_IncludesUnreviewed", unreviewed) : null;
-
-        // Plans of the month: real occurrences (BUD-10) and monthly shares of non-monthly plans (BUD-09).
-        var planned = BudgetPlanning.PlannedInPeriod(schedules, states, accounts.ToDictionary(a => a.Id), from, to, _currency, Today);
+        UnreviewedText = projection.Unreviewed > 0 && !ConfirmedOnly
+            ? _translator.Format("Budget_IncludesUnreviewed", projection.Unreviewed) : null;
+        var planned = projection.Planned;
         PlannedText = planned.Count == 0 ? null : _translator.Format("Budget_Planned", MoneyText.Format(planned.Total, _currency, culture), planned.Count)
             + (planned.UnknownCount > 0 ? " · " + _translator.Format("Budget_PlannedUnknown", planned.UnknownCount) : string.Empty);
-        var equivalent = schedules
-            .Where(s => s.State == Core.Plans.ScheduleState.Active && s.Kind == EntryKind.Expense && accounts.Any(a => a.Id == s.AccountId && a.CurrencyCode == _currency))
-            .Select(BudgetPlanning.MonthlyEquivalent)
-            .Sum(v => v ?? 0);
-        EquivalentText = equivalent > 0 && _period == BudgetPeriod.Month ? _translator.Format("Budget_Equivalent", MoneyText.Format(equivalent, _currency, culture)) : null;
-        await _store.ValidateBudgetEditorReviewAsync(reviewedBudgets);
-        RequireVisible();
+        EquivalentText = projection.Equivalent > 0 && _period == BudgetPeriod.Month
+            ? _translator.Format("Budget_Equivalent", MoneyText.Format(projection.Equivalent, _currency, culture)) : null;
         _review = reviewedBudgets;
         Actions.Publish(reviewedBudgets, new(_year, _month, _calendar, _period, _periodStart, _currency), _budget?.Id);
     }
@@ -553,12 +525,8 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
 
     // Flex (D-28): one limit for flexible spending; fixed bills expected from the plans, non-monthly bills with their
     // monthly share. Every amount is counted in one group only (BUD-12).
-    private void LoadFlex(Core.Budgets.Budget budget, long carry, IReadOnlyList<Account> accounts, IReadOnlyList<LedgerEntry> entries,
-        List<Core.Plans.Schedule> schedules, List<Core.Plans.OccurrenceState> states, IReadOnlyList<Core.Categories.Category> categories, DateOnly from, DateOnly to, CultureInfo culture)
+    private void LoadFlex(Core.Budgets.Budget budget, long carry, FlexSummary flex, CultureInfo culture)
     {
-        var limit = (budget.TotalLimit ?? 0) + carry;
-        var flex = FlexCalculator.Summarize(limit, accounts, entries, schedules, states, categories,
-            from, to, _currency, Today, budget.AccountIds.Count > 0 ? budget.AccountIds : null, ConfirmedOnly);
         string Money(long value) => MoneyText.Format(value, _currency, culture);
 
         if (budget.TotalLimit is { } own)
@@ -579,24 +547,8 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
     private string Unknown(int count) => count > 0 ? " · " + _translator.Format("Budget_PlannedUnknown", count) : string.Empty;
 
     // The balance at hand is today's, so the summary is shown for the current month only.
-    private async Task LoadEnvelopesAsync(Core.Budgets.Budget budget, IReadOnlyList<Account> accounts, List<BudgetStatus> envelopes, DateOnly from, DateOnly to, CultureInfo culture)
+    private void LoadEnvelopes(EnvelopeSummary summary, CultureInfo culture)
     {
-        var today = Today;
-        if (today < from || today > to)
-        {
-            EnvelopeNote = _translator["Envelope_CurrentMonthOnly"];
-            return;
-        }
-
-        var cash = LedgerCalculator.InScope(accounts, budget.AccountIds.Count > 0 ? budget.AccountIds : null)
-            .Where(a => !a.IsArchived && !a.Type.IsOutsideCash() && string.Equals(a.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase))
-            .ToList();
-        var allEntries = await _store.GetEntriesAsync();
-        var balances = cash.ToDictionary(a => a.Id, a => LedgerCalculator.Balance(a, allEntries, today));
-        var earmarked = Core.Goals.GoalCalculator.Accounts(await _goals.GetGoalsAsync(), await _goals.GetAllocationsAsync(), balances)
-            .Sum(e => Math.Clamp(e.Earmarked, 0, Math.Max(0, e.Balance)));
-        var summary = EnvelopeCalculator.Summarize(balances.Values.Sum(), earmarked, envelopes);
-
         string Money(long value) => MoneyText.Format(value, _currency, culture);
         UnassignedText = Money(summary.Unassigned);
         UnassignedColor = summary.IsOverAssigned ? Over : Good;

@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Keep the complete budget picture consistent (D-462)
+
+- Read spending, plans and money set aside for goals from one consistent point in the selected profile.
+- Prepare budget calculations in the background and reveal the complete result together.
+
 ### Keep budget actions with their original period (D-461)
 
 - Prevent an old budget action or pending confirmation from changing another displayed period.
