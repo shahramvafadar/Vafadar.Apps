@@ -397,6 +397,12 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Fresh owned occurrence run required; never replay an accepted case.");
                 await WriteReportAsync(root, phase, await ReviewOccurrenceCommitAsync(app, services, root, run, comparison!, ct, stateConflict: phase == "occurrence-state"), ct);
             }
+            else if (phase == "validation-layout")
+            {
+                if (!Directory.Exists(root) || RedirectedAncestors(root).Length != 0)
+                    throw new ReviewCheckException("Original retained validation source required.");
+                await WriteReportAsync(root, phase, await ReviewValidationLayoutAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase is "settlement-commit" or "settlement-commit-fixed" or "settlement-commit-observed")
             {
                 Directory.CreateDirectory(root);

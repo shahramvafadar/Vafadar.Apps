@@ -8518,3 +8518,18 @@ and IME/input observer failures. This is not a general ANR/GC/crash fix, full fo
 spoken/device/iOS/provider/Store or release acceptance. Exact-head hosted CI follows the push.
 
 Evidence: [native lifetime and final package](../quality/android-validation-layout-lifetime.md).
+
+### D-481 - Remaining native validation callers
+
+Original plan/occurrence/settlement invalid actions pass on the retained independent x64 editor
+source, with unchanged named source/base groups and zero accepted financial Saves. Keep the first
+two receipts while correcting settlement's stale diagnostic constructor/public loader. Recover
+all3 complete receipts with NativeActionsThisPass0; no successful case, old matrix, financial seed,
+managed/resource/business suite or unchanged Main/Windows build is repeated. Strict complete
+signed Offline192-AOT caller build passes. Restore exact old independent APK and stopped state,
+Main28047/all139 public nodes/OS/APK; remove only2 hash-matched remote XMLs. Samsung is untouched.
+No new managed cases or shipping behavior. Actual shipping head0e8c6fa6 has successful CI/CodeQL;
+its one-shot monitor is consumed/deleted. General ANR/GC/crash, whole-Home speed, full language/
+OS-scale/spoken/device/iOS/provider/Store and release acceptance remain open.
+
+Evidence: [native callers and exact preservation](../quality/validation-layout-callers.md).

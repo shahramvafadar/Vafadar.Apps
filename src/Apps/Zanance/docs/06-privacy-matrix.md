@@ -1182,3 +1182,12 @@ has no declared permissions, app secrets, Main reference or private Main reads; 
 views/counts/booleans are observed. Uninstall only that new fixture and hash-delete its owned XMLs.
 Actual Main invalid input is discarded without an accepted financial Save; original public UI
 and OS match. This does not establish whole-database or release acceptance.
+
+### D-481 - Retained native validation evidence only
+
+Shipping data/permissions/SDKs/network/export policy do not change. The existing independent
+Offline caller reads its previously prepared fictitious source and retains only synthetic case
+receipts, source digest, error text and no-write/data-equality facts for continuation. No Main
+private store/key or authentication is accessed. Restore its original APK without reset and
+retain the source; remove only2 hash-matched owned remote XMLs. No external recipient or public
+service is introduced, and named-field equality is not whole-database/release acceptance.

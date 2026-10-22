@@ -85,3 +85,13 @@ all device/platform workflows, iOS/provider/Store and release gates stay open.
 Private receipts: probe-result.log, fixed-probe-first-failure.log, fixed-probe-result.log,
 native-layout-proof.json, committed-probe-build-final.log, refusal logs, shipping-package-proof.json,
 expense-errors-visible.xml, final-main-proof.json and capture-cleanup.json.
+
+## D-481 original remaining caller continuation
+
+[Remaining native callers](validation-layout-callers.md) completes plan, occurrence and settlement
+invalid actions in an independent x64 original-source app without repeating this native observer
+cohort or Samsung transaction case. Source/base named groups remain equal and financial Saves0.
+Final full receipt recovery reports all3 retained, NativeActionsThisPass0. Current constructor,
+loader, command-lifetime and footer observer corrections retain their original failures. Main,
+OS and prior independent APK are restored. Shipping-source CI/CodeQL on0e8c6fa6 both succeed;
+the consumed monitor is deleted. Broader stability/matrix/platform/release limits above stand.

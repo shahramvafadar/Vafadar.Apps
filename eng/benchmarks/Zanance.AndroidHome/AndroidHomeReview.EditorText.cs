@@ -154,11 +154,9 @@ internal static partial class AndroidHomeReview
                     }
                     else if (form == "settlement")
                     {
-                        var vm = ActivatorUtilities.CreateInstance<SettlementViewModel>(services, store, plans);
-                        var load = typeof(SettlementViewModel).GetMethod("ApplyQueryAsync", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
-                            ?? throw new ReviewCheckException("Original settlement loader unavailable.");
+                        var vm = ActivatorUtilities.CreateInstance<SettlementViewModel>(services, store);
                         var schedule = (await plans.GetSchedulesAsync(ct)).Single();
-                        await ((Task)load.Invoke(vm, [new Dictionary<string, object> { ["id"] = schedule.Id }])!).WaitAsync(ct);
+                        await vm.LoadAsync(schedule.Id).WaitAsync(ct);
                         vm.ActualText = "123.45";
                         page = new SettlementPage(vm);
                     }

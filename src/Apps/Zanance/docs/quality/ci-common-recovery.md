@@ -275,3 +275,14 @@ The exact-head monitor ci-windows-producer-selection-d478 was consumed and delet
 retained final verification rather than repeating its runs-list request or successful suites.
 The observed current CI causes are resolved; no claim of Android general stability/accessibility,
 Windows commercial, iOS, provider/Store or release acceptance follows.
+
+### D-480 shipping-source regression outcome (recorded with D-481)
+
+One exact-head GET for0e8c6fa6a8e452846d8fb633bfac30d575cc3458 returns completed success for
+[CI39869952903](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39869952903) and
+[CodeQL39869952857](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39869952857).
+The existing ci-validation-layout-d480 schedule is confirmed active before its consumed receipt
+and single request, then deleted. No polling, second request or successful-job/log replay occurs.
+The response contains these two workflows; it is not a new five-workflow native/backend outcome.
+D-478's separate producer/consumer evidence stays as recorded. D-481 changes only qualification
+sources/docs; its own pushed head retains a separate CI gate. No general release/stability claim.

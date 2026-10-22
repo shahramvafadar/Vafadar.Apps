@@ -8730,3 +8730,19 @@ independent JNI registration and input/IME observer evidence, without replaying 
 No financial Save or managed-suite increment. General ANR/crash and other release gates remain.
 
 Evidence: [actual original listener lifetime](quality/android-validation-layout-lifetime.md).
+
+### D-481 - Complete the remaining original validation callers without replay
+
+Continue D-480 only on the retained D-358 work-editor source in the independent x64 Release/AOT
+app. Plan and occurrence native invalid actions pass, then settlement's obsolete diagnostic
+constructor/loader refuses before its action. Update to the actual current constructor/public
+LoadAsync, including the same stale EditorText setup. Preserve source/command/footer refusals;
+use current commands and scroll only viewport descendants. Resume only settlement, retaining the
+two completed receipts. Three named source/base-data comparisons pass with zero accepted financial
+Saves. Final full receipt readback has all3 retained and NativeActionsThisPass0; no managed count
+increase, Main build, old geometry matrix or financial replay. Strict signed Offline192-AOT caller
+builds pass. Restore its original APK/stopped state, Main28047/all139 public nodes/OS/APK and remove
+only2 hash-matched XMLs. Samsung is untouched. CI/CodeQL for original shipping head0e8c6fa6 succeed;
+its one-shot monitor is deleted. General stability, full matrix/platform/release gates remain.
+
+Evidence: [original remaining callers](quality/validation-layout-callers.md).

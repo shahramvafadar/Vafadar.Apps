@@ -810,3 +810,25 @@ For a missing linked transfer, DisplayPacketOnly=true identifies a transient ori
 preview, never financial linkage or storage. Six language/theme contexts give12 observations and
 complete protected/base equality, without replaying accepted money. Restore the original APK and
 stopped state. See the D-471 application quality report for retained failures and exact packages.
+
+## Remaining validation-layout callers (D-481)
+
+Phase validation-layout requires an existing original work-editor-text.db and its prepared marker
+under the supplied review_run. Never invoke prepare, migration, reseeding or a replacement key for
+this continuation. Pass a fresh review_pass and observe validation-layout with the matching Run,
+Comparison and actual already-running ProcessId through Read-ReviewReport.ps1.
+
+Only original plan Save, occurrence partial-payment validation and advance-settlement validation
+are invoked, each guarded by raw # immediately before its actual native button. Use the plan's
+current post-appearance command; a retired pre-appearance reference is not an action target.
+Fixed footer buttons remain outside ValidationViewport; scroll only its real descendants. The
+current SettlementViewModel takes the source store and exposes public LoadAsync(planId).
+
+Each completed case records its actual native action, original error, invalid input, unchanged
+named source/base data groups and source hash. Existing receipts must match kind/hash/input and
+all native/no-financial-write/data-equality flags before being skipped. A reporting continuation
+exports complete original packets and NativeActionsThisPass0 when all three already passed;
+never replay successful actions to repair a report. Preserve refused old-source/command/viewport/
+constructor observations. Restore the exact prior independent APK without reset, retain its data
+and keep it stopped. No Main source/build or old managed/UI matrix needs repetition.
+See [bounded original evidence](../../../src/Apps/Zanance/docs/quality/validation-layout-callers.md).

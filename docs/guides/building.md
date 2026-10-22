@@ -2369,3 +2369,20 @@ Before a native app-coordinate action, require owned foreground, actual target g
 IME window visibility. Dismiss an overlapping keyboard before targeting Save; validation probes
 must retain an explicit invalid-amount guard and never post money. See
 [bounded evidence](../../src/Apps/Zanance/docs/quality/android-validation-layout-lifetime.md).
+
+## Retained original validation callers (D-481)
+
+Independent AndroidHome phase validation-layout requires the marked original work-editor source,
+review_run and a fresh review_pass. Observe the exact live PID with Read-ReviewReport.ps1 -Phase
+validation-layout -Comparison <pass>. An initially empty PID read is not terminal: follow the
+actual native activity/process evidence rather than restart on an observation failure.
+
+Require current post-appearance command identity, attached/shown/focused/enabled native ownership
+and explicit raw # before invoking any original action. Fixed footer Save is outside the scroll
+viewport; only true descendants may be ScrollTo targets. Settlement uses its current source-store
+constructor and public LoadAsync. A failed stale loader is a setup refusal, not a product fix.
+Completed receipts retain source hash and all native/invalid/no-write/data-equality facts. Skip
+completed cases and recover full packets without their actions; NativeActionsThisPass0 makes that
+reporting boundary explicit. Restore the exact initial independent APK without reset and leave it
+stopped, preserving original Main/OS and hash-cleaning only owned captures. See
+[actual continuation evidence](../../src/Apps/Zanance/docs/quality/validation-layout-callers.md).
