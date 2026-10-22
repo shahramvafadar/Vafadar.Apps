@@ -2561,3 +2561,17 @@ caller pass. Main remains D-450: same PID15971, Home139 nodes, display and all o
 No old216-scene matrix, accepted financial action, full suite or unchanged shipping APK is repeated;
 no managed-test baseline is added. General stability/performance/spoken/physical/iOS/release gates
 remain open. See [original navigation evidence](quality/original-navigation-pulse.md).
+
+### D-458 - Continuous owner-reserved phone and original physical goal lifecycle
+
+The owner reserves Samsung for this project until further notice; cross-project coordination is
+no longer required, while data/settings/foreground/authentication limits remain. Reuse the exact
+complete signed Offline D-450 APK and upgrade without reset. One new fictitious profile/account
+opening100 and goal150 produce the actual100/150/50 list/detail and positive pinned Home card.
+Dirty native Discard, pause/resume, confirmed completion/reactivation, archive, one cold read,
+declined/accepted native goal deletion and empty All-history pass. Only the new profile is removed
+through both native confirmations; original three profiles/Main979/141 post-upgrade nodes/OS and
+APK hash match.34 assertions qualify stored observations, not new managed tests. Retain native
+null-tree/tab/encoding/host-precondition failures; do not replay accepted commands or old suites.
+General stability/performance/spoken/other goal/platform/provider/release gates stay open.
+See [original physical goal evidence](quality/physical-goal-lifecycle.md).

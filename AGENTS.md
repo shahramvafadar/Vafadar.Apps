@@ -1,5 +1,14 @@
 # AGENTS.md – working rules for this repository
 
+## Continuous Samsung availability (owner, 2026-10-22, D-458)
+
+Until the owner explicitly changes this instruction, Samsung SM-A176B is reserved for this
+project and no cross-project turn coordination is required. This supersedes the earlier
+coordination-before-input requirement only. Preserve system settings, accounts, personal data
+and existing app data; use fictitious profiles, complete signed no-reset upgrades and actual
+owned-app foreground checks. The owner still performs real authentication. This availability
+does not authorize system-setting changes, account sign-in or publication.
+
 ## Approved ECB reference source on 2026-10-19 (D-389)
 
 The owner selected full ECB daily reference integration for EUR/USD/GBP/CHF/CAD/AUD with all thirty

@@ -4590,3 +4590,17 @@ released. Retain the typed wait, initial build-flag and host-verifier/decoder fa
 no managed-test increase or successful old suite/financial/matrix replay. D-452 is complete for
 this controlled input scope; historical D-422 cause, general stability/spoken/platform/provider and
 release acceptance remain open. See [physical continuation evidence](../../quality/currency-input-focus-boundary.md).
+
+### D-458 - Continuous owner-reserved phone and original physical goal lifecycle
+
+The owner reserves Samsung for this project until further notice; cross-project coordination is
+no longer required, while data/settings/foreground/authentication limits remain. Reuse the exact
+complete signed Offline D-450 APK and upgrade without reset. One new fictitious profile/account
+opening100 and goal150 produce the actual100/150/50 list/detail and positive pinned Home card.
+Dirty native Discard, pause/resume, confirmed completion/reactivation, archive, one cold read,
+declined/accepted native goal deletion and empty All-history pass. Only the new profile is removed
+through both native confirmations; original three profiles/Main979/141 post-upgrade nodes/OS and
+APK hash match.34 assertions qualify stored observations, not new managed tests. Retain native
+null-tree/tab/encoding/host-precondition failures; do not replay accepted commands or old suites.
+General stability/performance/spoken/other goal/platform/provider/release gates stay open.
+See [original physical goal evidence](../../quality/physical-goal-lifecycle.md).
