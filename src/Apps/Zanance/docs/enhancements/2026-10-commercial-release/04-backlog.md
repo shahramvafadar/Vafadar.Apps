@@ -4497,3 +4497,15 @@ Next: genuinely uncovered cold/low-memory conditions and remaining supported sta
 work, without replaying this completed sequence. Explicit physical-turn coordination is refreshed;
 no phone input occurs before acknowledgement. Owner accounts/providers/Mac and release gates stay
 external. Spoken intelligibility/pronunciation is not inferred from earlier TTS request metadata.
+
+### D-453 - Original Main cold start and retained-process background return
+
+The unchanged complete signed D-450 Offline APK passes one genuinely cold Main launch on the
+owned emulator: Android COLD/Activity2908ms, new PID17030 and exact original139-node public Home.
+The package-scoped background-kill request leaves that same PID alive (LAST/previous); its later
+HOT89ms return also preserves the complete public tree. This does not qualify process reclaim,
+natural low-memory, whole-Home latency or private database equality. The exact PID's event buffer
+retains its start and zero recorded ANR/crash events in this finite scope. APK/OS remain exact;
+no financial commands, managed tests, unchanged builds or successful old sequences are repeated.
+Only three exact hash-matched remote captures are removed. General stability/performance/spoken,
+physical continuation, Mac/iOS and external release gates remain open. See [cold lifecycle evidence](../../quality/main-cold-lifecycle.md).
