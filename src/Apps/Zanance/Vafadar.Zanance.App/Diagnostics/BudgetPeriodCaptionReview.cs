@@ -1,4 +1,4 @@
-#if DEBUG || ZANANCE_INDEPENDENT_HOME_REVIEW
+#if (DEBUG && WINDOWS) || ZANANCE_INDEPENDENT_HOME_REVIEW
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

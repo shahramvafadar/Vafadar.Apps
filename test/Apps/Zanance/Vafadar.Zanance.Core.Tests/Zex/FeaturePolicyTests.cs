@@ -67,6 +67,8 @@ public sealed class FeaturePolicyTests
         // build gate before excluding them; an ordinary Release reader anywhere still fails below.
         string[] independentFixtures =
         [
+            "Diagnostics/BudgetFinancialNativeReview.cs", "Diagnostics/BudgetPeriodCaptionReview.cs",
+            "Diagnostics/OriginalAmountErrorCaptionReview.cs",
             "Diagnostics/DebugSnapshots.EntryWorkflow.cs", "Diagnostics/HoldingArchiveNativeReview.cs",
             "Diagnostics/HoldingDetailNativeReview.cs", "Diagnostics/HoldingEventNativeReview.cs",
             "Diagnostics/HoldingEventPublicationNativeReview.cs", "Diagnostics/HoldingFeeActionNativeReview.cs",

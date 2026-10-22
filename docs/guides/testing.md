@@ -229,3 +229,13 @@ Original holding Undo policy checks first obtain a real deletion receipt; otherw
 occurs before the intended membership boundary. A refused membership writer must not consume Undo.
 Use the failed method/cohort and its changed boundary checks, retaining unrelated successful results.
 [Hosted failure evidence and current acceptance](../../src/Apps/Zanance/docs/quality/ci-common-recovery.md).
+
+## Exact native fixture boundaries (D-476)
+
+BudgetFinancialNativeReview, BudgetPeriodCaptionReview and OriginalAmountErrorCaptionReview use
+the same DEBUG/WINDOWS or independent-review gate as ImportFinancialNativeReview. Add mode-setting
+fixtures only by exact path with the existing complete outer-gate validation. Ordinary Android
+Debug billing builds must compile without those Windows/independent-only helpers. For externally
+placed test output, RepositoryPaths still requires a real repository ancestor; use owned ignored
+repository-local output for that one source-scanning method, retaining already-passed gate cases.
+See [actual failure and focused verification](../../src/Apps/Zanance/docs/quality/ci-common-recovery.md).

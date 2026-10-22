@@ -123,3 +123,37 @@ one-result XML validation. No successful unrelated tests, app builds or device c
 locally. Hosted completion for this correction is pending at commit creation and must be checked
 on its exact pushed SHA. D-452's unfinished phone continuation, all other schedules and external
 or general stability/accessibility/release gates remain unchanged.
+
+## D-476 - Restore exact native-review build boundaries
+
+Actual failed-job logs from D-471 CI39839824109 and D-474 CI39846843688 show the same two causes,
+still present at pre-change head9c05786c. Windows and ordinary Android Release builds succeed.
+The Android Debug billing-sandbox step reports thirteen CS0103 references to
+ImportFinancialNativeReview from BudgetFinancialNativeReview, BudgetPeriodCaptionReview and
+OriginalAmountErrorCaptionReview. Those three callers allow ordinary Android DEBUG, while their
+dependency and actual entry routes allow only DEBUG/WINDOWS or ZANANCE_INDEPENDENT_HOME_REVIEW.
+Align the callers with that existing dependency gate; do not broaden the dependency into Main.
+
+Libraries and tests separately fail No_page_reads_the_mode_itself on those exact three fixtures.
+Add only their paths to the existing explicit fixture list. The existing complete outer-gate
+validation remains mandatory before exclusion; ordinary shipping mode readers are still forbidden.
+No blanket Diagnostics exception, skipped assertion, workflow retry or configuration weakening.
+
+The exact affected strict Debug Android billing-sandbox build now succeeds with zero warnings
+and errors. The corrected source-policy method passes once. Seven existing negative/positive
+outer-gate cases pass in the earlier selected invocation; only its path-dependent source method
+initially fails because external output has no repository ancestor. Continue that one method from
+owned ignored repository-local output; do not rerun the seven successes. An initial unsupported
+--filter-class invocation executes no tests and is retained as a command failure. Final selected
+evidence is eight distinct existing cases, zero new tests; strict Core test compilation is clean.
+
+No visible behavior, Release app code, monetary data, schema, permission, SDK or shipping APK changes.
+Retain D-471's complete signed APK and original running-app evidence. Do not repeat successful
+Release/Windows builds, financial writes or native scenes for these preprocessor/test-only changes.
+The four overdue D-471 through D-474 exact-head checks are consumed once and their own schedules
+deleted: CI failure/cancelled/failure/failure respectively, CodeQL success in each. Latest D-475
+and this correction require their own exact pushed-head result; hosted success is not inferred
+from the local correction. All unrelated schedules, goal and external/release gates remain open.
+
+Failure sources: [D-471 CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39839824109),
+[D-474 CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39846843688).

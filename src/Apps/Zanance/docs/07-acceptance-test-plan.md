@@ -5624,3 +5624,14 @@ is not exact timing,Doze,reboot,full lock/device/stability/accessibility/iOS/pro
 acceptance. Shipping Main/APK stay D-471.
 
 Evidence: [physical original scheduled reminder](quality/physical-scheduled-reminder.md).
+
+### D-476 - Exact native-review build boundaries
+
+Repair the two current causes confirmed in actual D-471/D-474 hosted failures: three independent
+fixtures now share their dependency's Windows Debug/independent-build gate, and their exact paths
+join the source-policy list only after full outer-gate validation. The affected strict Android
+Debug billing build and eight distinct existing boundary cases pass; no new tests or shipping
+APK/visible behavior changes. Keep successful Release/native/financial evidence without replay.
+Hosted completion remains pending at commit creation; external/stability/accessibility gates stand.
+
+Evidence: [original hosted failures and focused recovery](quality/ci-common-recovery.md).
