@@ -2776,3 +2776,19 @@ fix is absent and Mono/.NET10.0.13 unchanged. General ANR/GC/crash, low-memory, 
 accessibility, two-second Home, iOS/provider/Store and release gates remain open.
 
 Evidence: [bounded native servicing qualification](quality/maui-servicing-qualification.md).
+
+### D-469 - Original physical cached-process Main recovery
+
+Use the unchanged signed Offline D-468 APK on owner-reserved Samsung. A phase-free existing owned
+Activity supplies the missing cached-process precondition without running a review route. Preserve
+the initial adjustment700/cached=false refusal; require actual cached=true/state16/adjustment900
+for exact Main21905 before one package-scoped kill. Confirm death before retained-task recovery
+as9423/COLD/Activity1392ms. Preserve the initial cover and later equal141-node Home979 in the same
+PID, five known original public history rows and three original profiles. Restore This month and
+Home, exact OS/both APK hashes; stop only the quiet owned process and remove17 hash-matched XMLs.
+No financial command, new profile, app change, build, managed case or successful old suite replay.
+Finite native events contain the intentional kill/new start and no recorded ANR/crash; natural
+low-memory, private full-data/key equality, general stability, whole-Home speed, spoken/platform/
+provider/Store and release acceptance remain open.
+
+Evidence: [physical cached-process recovery](quality/physical-cached-main-recovery.md).
