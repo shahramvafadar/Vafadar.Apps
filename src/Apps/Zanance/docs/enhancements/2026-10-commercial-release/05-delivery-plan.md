@@ -3582,3 +3582,13 @@ retains its start and zero recorded ANR/crash events in this finite scope. APK/O
 no financial commands, managed tests, unchanged builds or successful old sequences are repeated.
 Only three exact hash-matched remote captures are removed. General stability/performance/spoken,
 physical continuation, Mac/iOS and external release gates remain open. See [cold lifecycle evidence](../../quality/main-cold-lifecycle.md).
+
+### D-454 - Recover the original Main task after confirmed cached-process death
+
+A phase-free existing owned Activity supplies the missing cache precondition; preserve its first
+LAST result, then require actual CAC/cached=true/adjustment900 before package-scoped kill. PID17030
+is confirmed absent and its native intentional-kill event retained before recovery as17431. Android
+reports COLD/Activity1334ms; the original139-node public Main, APK and OS values match. No review
+route, financial command, build or old successful sequence runs. The quiet owned process is stopped
+and two hash-matched remote captures removed. Natural low-memory, private full-data equality,
+whole-Home timing and broader stability/platform/release gates remain open. See [cached-process evidence](../../quality/main-cold-lifecycle.md).
