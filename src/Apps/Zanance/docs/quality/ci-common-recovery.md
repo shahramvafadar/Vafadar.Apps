@@ -90,3 +90,36 @@ candidates, malformed-slice refusals and the official stock suite with reviewed 
 The single scheduled check is complete and deleted; no successful job is rerun manually. The earlier
 bd6e9484 Android package refusal remains historical failure evidence. This establishes hosted CI
 recovery for that exact commit, not app/device/provider/store/release acceptance.
+
+## D-456 - Audit delayed failures against the current head
+
+The delayed reports refer to older commits. Read only failed-job logs, preserve their original
+results and compare the actual cause with current source before changing or rerunning anything.
+The following runs share the already-corrected diagnostic mode-policy scan and, from D-415 onward,
+the original holding Undo-receipt fixture: 39291571125, 39406434176, 39409094148, 39425064907,
+39439259834, 39445968870, 39467791585, 39479168888 and 39521820617. The D-420 and D-428 Windows
+jobs additionally refuse installer 18.11.12306.390; D-433 already reviews that installer metadata
+while preserving exact executable/hash/SDK checks. These failures do not justify another local
+suite, Android build, native workload or phone sequence. Current pre-change head 9215c29e has
+successful [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39726959692), including
+Libraries and tests, Windows and Android; iOS remains intentionally skipped.
+
+One separate failure still has an unchanged source cause. Backend run
+[39291571470](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39291571470), job
+118193260297, fails Different_pairs_join_original_feed_after_first_caller_cancellation with
+MarketSourceResponseRefused. The fixture signals Source.Called before invoking Respond. Another
+thread can then cancel the first caller, join the second and construct a response before Respond
+captures the original request. Passing runs do not eliminate this race. The corrected existing
+test awaits a typed completion set by Respond with the actual request before cancellation and
+response construction. It retains the original one-request, caller-cancellation, cross-pair value
+and request-provenance assertions; no production adapter, transport refusal or cancellation rule
+changes, no delay/retry and no assertion weakening.
+
+Strict affected API/test compilation passes with zero warnings/errors. Exactly the one changed
+test passes (one executed, zero failed/skipped); the test inventory does not increase. The first
+local invocation uses an unsupported MTP filter on the actual in-process runner and executes no
+tests; its diagnostic is retained, followed by the runner's supported -method selection and exact
+one-result XML validation. No successful unrelated tests, app builds or device checks are replayed
+locally. Hosted completion for this correction is pending at commit creation and must be checked
+on its exact pushed SHA. D-452's unfinished phone continuation, all other schedules and external
+or general stability/accessibility/release gates remain unchanged.

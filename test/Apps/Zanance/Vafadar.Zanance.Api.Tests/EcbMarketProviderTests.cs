@@ -89,13 +89,15 @@ public sealed class EcbMarketProviderTests
     {
         using var source = new Source(); using var http = new HttpClient(source); var clock = new FakeTimeProvider(Now);
         var completion = new TaskCompletionSource<HttpResponseMessage>(TaskCreationOptions.RunContinuationsAsynchronously);
-        HttpRequestMessage? original = null;
-        source.Respond = (request, _) => { original = request; return completion.Task; };
+        var captured = new TaskCompletionSource<HttpRequestMessage>(TaskCreationOptions.RunContinuationsAsynchronously);
+        source.Respond = (request, _) => { captured.SetResult(request); return completion.Task; };
         var provider = new EcbMarketProvider(http, clock); using var cancel = new CancellationTokenSource();
-        var first = provider.FetchAsync(Request(), cancel.Token); await source.Called.Task.WaitAsync(Ct); cancel.Cancel();
+        var first = provider.FetchAsync(Request(), cancel.Token);
+        // Handler entry is earlier than Respond: await the actual captured request before cancellation/response construction.
+        var original = await captured.Task.WaitAsync(Ct); cancel.Cancel();
         await Assert.ThrowsAnyAsync<OperationCanceledException>(() => first);
         var second = provider.FetchAsync(Request("USD-CHF"), Ct); Assert.Equal(1, source.Calls);
-        completion.SetResult(Response(original!, Xml)); Assert.Equal(0.72m, (await second).Value); Assert.Equal(1, source.Calls);
+        completion.SetResult(Response(original, Xml)); Assert.Equal(0.72m, (await second).Value); Assert.Equal(1, source.Calls);
     }
 
     [Theory]

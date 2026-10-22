@@ -8301,3 +8301,15 @@ refusals are preserved, not relabelled as a scroll hang or passing regression. T
 Offline builds pass; experimental source is removed and the exact D-451 independent APK restored.
 Main17431/139 nodes/D-450 APK/OS match; no financial command, managed-test increase or successful old
 scope is replayed. Stability/performance and external gates stay open. See [native scroll evidence](quality/native-scroll-layout-investigation.md).
+
+### D-456 - Resolve the remaining original ECB test-capture race
+
+Failed-job logs from delayed older CI reports match D-433's already-corrected mode-policy,
+holding Undo fixture and Windows installer boundaries. The unchanged ECB cancellation test has
+one separate race: handler-entry readiness precedes capture of its actual request. Await that
+captured request explicitly before cancellation/response construction; retain every original
+transport, one-request and cross-pair assertion. Production app/service/APK remain unchanged.
+Strict affected API/test compilation has zero warnings/errors; exactly one changed test passes,
+no new managed cases and no unrelated local suite/build/device replay. Exact correction-hosted
+completion remains pending at commit creation. Preserve unfinished D-452 and all external/runtime
+release gates. See [failed-job audit and verification](quality/ci-common-recovery.md).
