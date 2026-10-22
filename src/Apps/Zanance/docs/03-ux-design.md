@@ -2404,3 +2404,11 @@ A malformed original purchase uses an example in its own ISO currency and retain
 without account/display-unit conversion. JPY samples have no fraction; KWD samples have three
 minor digits. Preserve raw input and show the translated error beside the field. A valid account
 amount is not replaced or charged again when its original purchase metadata is refused.
+
+### D-468 - Serviced native rendering compatibility
+
+MAUI10.0.120 preserves the existing Home/Plans header Add pattern, native scaling and original
+Back/Cancel ownership. Six physical draft contexts, eighteen independent root-ownership visits
+and eighteen Windows report contexts qualify this maintenance only. No design/font/palette or
+financial-command change. Spoken/full accessibility remains open.
+See [bounded native qualification](quality/maui-servicing-qualification.md).

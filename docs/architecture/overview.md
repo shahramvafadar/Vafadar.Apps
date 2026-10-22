@@ -200,7 +200,7 @@ Vafadar.Zanance.App/
 |---|---|---|
 | Runtime / SDK | .NET 10 (LTS) | SDK 10.0.401 (`global.json`, roll forward to latest feature band) |
 | Language | C# 14, nullable enabled, implicit usings | – |
-| Mobile / desktop UI | .NET MAUI (XAML) | 10.0.110 |
+| Mobile / desktop UI | .NET MAUI (XAML) | 10.0.120 |
 | MVVM | CommunityToolkit.Mvvm | 8.4.2 |
 | UI controls | Syncfusion Essential Studio for MAUI (and Blazor for web) | 35.1.37 |
 | Local database | SQLite via Microsoft.Data.Sqlite + EF Core | 10.0.12 |

@@ -8523,3 +8523,23 @@ final APK match.23 observation assertions are not unit cases. No accepted financ
 Full financial/device/stability/spoken-accessibility/iOS/provider/Store/release gates remain open.
 
 Evidence: [original purchase currency qualification](quality/physical-original-purchase-amounts.md).
+
+### D-468 - Serviced native UI framework and original lifecycle qualification
+
+Adopt stable MAUI Controls/Essentials 10.0.120; eight existing modules advance with no new SDK or
+permission. Official signatures/licences pass; Preferences/FileSystem sources, ten runtime/cipher
+engines and 25 branding assets remain unchanged. Strict Windows/full signed Offline Android
+builds have zero warnings/errors. Eighteen independent Release/AOT navigation cycles preserve
+complete original rows and one native root/subscription per cycle. Eighteen Windows contexts
+produce 36 inspected images with unchanged ledger entries. Correct the observed null expected
+count in the report driver and validate its same completed run without native replay.
+Samsung and emulator upgrade without reset. Six physical language/theme contexts cancel six
+expense drafts and six plan drafts, including six dirty-discard confirmations, with no financial
+saves. Delete only the new profile through both confirmations. Phone PID21905 retains Main979,
+141 public nodes, three original profiles and exact OS; emulator PID26264 retains Home0/139 nodes
+and exact OS. Twenty-seven observation assertions are not new managed tests. Finite event buffers
+record each start and no ANR/crash; general stability is not accepted. The ScrollToAsync retry-loop
+fix is absent and Mono/.NET10.0.13 unchanged. General ANR/GC/crash, low-memory, complete/spoken
+accessibility, two-second Home, iOS/provider/Store and release gates remain open.
+
+Evidence: [bounded native servicing qualification](quality/maui-servicing-qualification.md).

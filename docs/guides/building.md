@@ -2304,3 +2304,13 @@ to repair a report. Require the error's actual native rectangle inside its scrol
 Independent Android phase `original-amount-errors` checks only18 corresponding412dp contexts.
 Final physical continuation and reporting limitations are in
 [original purchase evidence](../../src/Apps/Zanance/docs/quality/physical-original-purchase-amounts.md).
+
+### D-468 - Validate completed report captures without replay
+
+Run-StoreDrafts.ps1 keeps its final mode-specific count in the same $expectedCount assignment.
+A duplicate reimbursement guard previously terminated that expression before the final
+PlanRowsEdgeProbe/HomeLegends/ReportRows fallback; ReportRowsReview returned null after completing
+18 contexts/36 images. The original guard already runs before build. Remove its duplicate and
+join the final elseif branch. Actual old/fixed AST and the retained receipt, package/run/PID,
+unchanged ledger rows and original images are validated without replaying completed native UI.
+Isolated outputs support strict MAUI10.0.120 builds without a global SDK/workload update.

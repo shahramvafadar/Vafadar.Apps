@@ -1129,3 +1129,10 @@ outside uploaded evidence and repository history.
 Original numeric context and immutable manual-rate review add no entity, backup field, permission,
 network SDK or provider request. They remain local existing physical/rate data; source-failure
 messages contain no private file path. A local read retry cannot repeat an accepted rate command.
+
+### D-468 - Existing native framework servicing
+
+Eight existing MAUI modules advance from10.0.110 to10.0.120. No new SDK, data category, export,
+network policy or permission. Final Offline APK retains five declared permissions and no INTERNET.
+Runtime/cipher engines remain identical. Local signing is not Store acceptance; existing privacy,
+provider and release gates remain open.

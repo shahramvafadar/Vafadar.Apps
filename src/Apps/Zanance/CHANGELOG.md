@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Native interface maintenance (D-468)
+
+- Update the native UI framework to its stable servicing release while preserving local data and settings.
+- Correct the Windows review driver count so completed report checks can be validated without repeating them.
+
 ### Currency-specific original purchase guidance (D-467)
 
 - Show a valid original-currency example when a purchase amount has invalid precision or text.

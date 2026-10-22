@@ -2647,3 +2647,11 @@ input before waiting, verifies original facts under the atomic commercial writer
 native revision and actual file after SaveChanges before commit. Same-date/pair replacement retains
 the original id. Typed ManualRateReceipt survives post-commit notifications so a read retry cannot
 repeat an accepted writer. No entity/schema/compiled-model or portable backup/recovery change.
+
+### D-468 - MAUI servicing storage compatibility
+
+Current framework pin:10.0.120. Exact official10.0.110/10.0.120 Preferences and FileSystem sources
+for Android, Windows and shared backends compare byte-for-byte equal. Reuse historical D-210
+storage evidence; do not repeat unrelated portable restore/cold-storage scenarios for unchanged
+backends. No-reset Samsung/emulator upgrades preserve original public Home/profile/settings
+observations; this does not prove private database/key equality or new-device/low-memory recovery.

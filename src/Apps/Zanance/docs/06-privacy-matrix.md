@@ -1154,3 +1154,10 @@ Physical type fields and manual rates use their existing local tables and backup
 file/rate facts are detached privately in memory for atomic review; failure messages expose no path
 or financial values. Explicit Refresh performs only local reads. No network permission, SDK,
 provider access, telemetry, portable field or implicit ECB/Home/history request is added.
+
+### D-468 - Existing native framework servicing
+
+Eight existing MAUI modules advance from10.0.110 to10.0.120. No new SDK, data category, export,
+network policy or permission. Final Offline APK retains five declared permissions and no INTERNET.
+Runtime/cipher engines remain identical. Local signing is not Store acceptance; existing privacy,
+provider and release gates remain open.

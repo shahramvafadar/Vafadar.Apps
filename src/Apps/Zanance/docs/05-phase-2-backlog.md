@@ -3360,3 +3360,10 @@ See [bounded qualification](quality/budget-account-scope.md).
 The actual physical foreign-purchase path now shows a valid ISO-specific error example. Seven
 new source cases and bounded native evidence pass; full device/platform/release gates stay open.
 See [bounded original purchase qualification](quality/physical-original-purchase-amounts.md).
+
+### D-468 - Native UI servicing
+
+Advance existing MAUI modules to10.0.120 after focused native compatibility checks. Correct the
+observed report-count driver defect without replaying its successful run. No new managed cases
+or feature/schema change. General stability and external gates remain open.
+See [bounded qualification](quality/maui-servicing-qualification.md).
