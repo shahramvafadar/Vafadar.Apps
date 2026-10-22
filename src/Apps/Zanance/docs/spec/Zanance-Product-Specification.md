@@ -8243,3 +8243,21 @@ v2/v3 signature. These observations are not additional unit tests. General ANR/c
 low-memory, full accessibility/TalkBack, iOS/provider/Store and release acceptance remain open.
 
 Evidence: [original budget period and rollover qualification](../quality/budget-period-rollover.md).
+
+### D-464 - Original physical envelope and Flex budgets
+
+Continue QA-01 on owner-reserved Samsung with the unchanged signed Offline D-463 APK. One new
+fictitious profile opens900, posts one Food expense10, earmarks25 for a goal and saves two unpaid
+plans: monthly Housing30 and yearly Insurance120, both reminder/autopost off. Original envelope
+budget200/Food100 shows cash890, goal25, unspent90 and unassigned775. Correct only Food to5:
+overspent5 assigns nothing extra, so unassigned865; spent cash is not deducted twice. Change the
+same budget to Flex50: variable10/50/40, fixed0 paid/30 expected, nonmonthly share10/0 paid, month
+plan90. Actual due expenses150/two items remain separate from the comparison-only monthly share10.
+One original cold start retains Home890/Flex40 left, goal25, both unpaid plans and exactly one
+ledger expense. Delete only the new profile through both native confirmations; Main979/all141
+public nodes/original three profiles/exact OS/unchanged APK match in final PID3591. Twenty-eight
+assertions validate retained observations, not new managed tests. No code/APK change, rebuild,
+old suite, accepted financial replay or emulator matrix is needed. General stability, complete
+device/workflow acceptance, scaling/TalkBack, iOS/providers/Store and release gates remain open.
+
+Evidence: [original physical method qualification](../quality/physical-budget-methods.md).
