@@ -48,8 +48,8 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-40 | Total and sub-category limits | BUD-02 | Unit + scoped physical | S1/S7 | Unit/screen verified; D-460 original Samsung independent total/category/refund and category-only scope; other hierarchy/platform variants remain |
 | AT-41 | Monthly equivalent of yearly cost | BUD-09 | Unit | S7 | Verified (unit) |
 | AT-42 | Forecast with settled occurrence | FOR-03 | Unit | S9 | Verified (unit) |
-| AT-43 | Unknown amount / missing rate | FOR-05 | Unit | S9 | Verified (unit) |
-| AT-44 | Month-end positive, mid-period negative | FOR-08 | Unit | S9 | Verified (unit) |
+| AT-43 | Unknown amount / missing rate | FOR-05 | Unit + scoped physical | S9 | Unit verified; D-466 original physical unknown amount and explicit temporary assumption/cold isolation; missing-rate and other platform variants remain separate |
+| AT-44 | Month-end positive, mid-period negative | FOR-08 | Unit + scoped physical | S9 | Unit verified; D-466 original Samsung end150/minimum-50, temporary end130/minimum-70 and saved scenario/cold/native deletion; wider platform/variant acceptance remains |
 | AT-45 | USD purchase on EUR account | FX-01 | Unit | S1/S11 | Verified (unit, domain level) |
 | AT-46 | Change report currency | FX-05 | Unit | S11 | Verified (unit: incomplete totals, no relabelling; budgets keep their currency) |
 | AT-47 | Currency without / with 3 decimals | FIN-05 | Unit | S1 | Verified (unit, incl. conversion between 0- and 3-digit currencies) |
@@ -5455,3 +5455,21 @@ Twenty-three observation assertions are not unit tests. General stability, full 
 spoken accessibility, iOS/provider/Store and release acceptance remain open.
 
 Evidence: [original account/currency/pay-cycle qualification](quality/budget-account-scope.md).
+
+### D-466 - Original physical incomplete forecast and saved scenario
+
+Reuse the unchanged signed Offline D-465 APK on owner-reserved Samsung. One new fictitious profile
+opens100EUR and saves three Once plans: expense150 on23 October, unknown expense on24 October,
+income200 on30 October, all reminder/autopost off. Original end150/minimum-50 on23 and one unknown
+become end130/minimum-70 on24 only after explicit temporary assumption20. Save one original named
+scenario; its accepted Save disables, original detail retains the assumption and correctly defers
+future actual comparison until tomorrow. Reset restores150/-50/unknown without changing the saved
+scenario. One actual cold launch retains current original forecast and independent saved-70 path.
+Cancel then accept native snapshot deletion; original three plans, cash100 and empty All-history
+persist. Delete only the new profile with both confirmations; Main979/all141 public nodes/original
+three profiles/exact OS/unchanged APK match in PID27525.33 assertions over retained observations
+are not unit tests. No code/APK/build/suite or accepted-action replay. Later-date comparison,
+missing-rate/other scenario variants, full device/stability/spoken/iOS/provider/Store/release gates
+remain open.
+
+Evidence: [original physical forecast qualification](quality/physical-forecast-snapshot.md).

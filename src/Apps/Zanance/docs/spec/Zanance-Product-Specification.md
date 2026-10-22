@@ -8278,3 +8278,21 @@ Twenty-three observation assertions are not unit tests. General stability, full 
 spoken accessibility, iOS/provider/Store and release acceptance remain open.
 
 Evidence: [original account/currency/pay-cycle qualification](../quality/budget-account-scope.md).
+
+### D-466 - Original physical incomplete forecast and saved scenario
+
+Reuse the unchanged signed Offline D-465 APK on owner-reserved Samsung. One new fictitious profile
+opens100EUR and saves three Once plans: expense150 on23 October, unknown expense on24 October,
+income200 on30 October, all reminder/autopost off. Original end150/minimum-50 on23 and one unknown
+become end130/minimum-70 on24 only after explicit temporary assumption20. Save one original named
+scenario; its accepted Save disables, original detail retains the assumption and correctly defers
+future actual comparison until tomorrow. Reset restores150/-50/unknown without changing the saved
+scenario. One actual cold launch retains current original forecast and independent saved-70 path.
+Cancel then accept native snapshot deletion; original three plans, cash100 and empty All-history
+persist. Delete only the new profile with both confirmations; Main979/all141 public nodes/original
+three profiles/exact OS/unchanged APK match in PID27525.33 assertions over retained observations
+are not unit tests. No code/APK/build/suite or accepted-action replay. Later-date comparison,
+missing-rate/other scenario variants, full device/stability/spoken/iOS/provider/Store/release gates
+remain open.
+
+Evidence: [original physical forecast qualification](../quality/physical-forecast-snapshot.md).
