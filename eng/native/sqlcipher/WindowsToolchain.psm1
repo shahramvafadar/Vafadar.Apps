@@ -53,14 +53,38 @@ function Get-ReviewedWindowsToolchain {
 
 function Get-ReviewedWindowsPackageContents {
     <# .SYNOPSIS Selects one immutable package variant, never a set of alternate entry hashes for one version. #>
-    param()
-    $variant = $env:VafadarWindowsCipherVariant
-    if ($variant -and $variant -notin @('baseline','servicing')) { throw 'Unsupported Windows cipher package variant.' }
-    $name = if ($variant -eq 'servicing') { 'windows.servicing.package.contents.json' } else { 'windows.package.contents.json' }
+    param([string]$Variant = $env:VafadarWindowsCipherVariant)
+    if ($Variant -and $Variant -notin @('baseline','servicing','hosted20261021')) { throw 'Unsupported Windows cipher package variant.' }
+    $name = switch ($Variant) {
+        'servicing' { 'windows.servicing.package.contents.json' }
+        'hosted20261021' { 'windows.hosted20261021.package.contents.json' }
+        default { 'windows.package.contents.json' }
+    }
     $contents = Get-Content -LiteralPath (Join-Path $PSScriptRoot $name) -Raw -Encoding UTF8 | ConvertFrom-Json
     if ($contents.schemaVersion -ne 1 -or $contents.packageId -ne 'Vafadar.Native.SqlCipher.Windows' -or
         $contents.compilerExecutableSha256 -notmatch '^[a-f0-9]{64}$') { throw 'Unsupported native package contents.' }
     $contents
 }
 
-Export-ModuleMember -Function Resolve-ReviewedWindowsToolchain,Get-ReviewedWindowsToolchain,Get-ReviewedWindowsPackageContents
+function Resolve-ReviewedWindowsProducer {
+    <# .SYNOPSIS Keeps rolling hosted installations on separately qualified immutable native producers. #>
+    param([Parameter(Mandatory)][string]$InstallationVersion, [Parameter(Mandatory)][string]$CompilerSha256)
+    $policy = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'windows.compiler.acceptance.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+    if ($InstallationVersion -notin $policy.installationVersions -or $CompilerSha256 -notin $policy.compilers.sha256) {
+        throw 'Unsupported Windows producer host.'
+    }
+    $current = Get-ReviewedWindowsPackageContents -Variant hosted20261021
+    # The same reviewed cl.exe can produce different native bytes on a serviced host. Never
+    # merge those outputs under one package identity or infer a compiler-internal cause.
+    if ($InstallationVersion -in $current.hostedInstallationVersions) {
+        if ($CompilerSha256 -cne $current.compilerExecutableSha256) { throw 'Unsupported Windows producer host.' }
+        return 'hosted20261021'
+    }
+    foreach ($variant in @('baseline','servicing')) {
+        $contents = Get-ReviewedWindowsPackageContents -Variant $variant
+        if ($CompilerSha256 -ceq $contents.compilerExecutableSha256) { return $variant }
+    }
+    throw 'Unsupported Windows producer host.'
+}
+
+Export-ModuleMember -Function Resolve-ReviewedWindowsToolchain,Get-ReviewedWindowsToolchain,Get-ReviewedWindowsPackageContents,Resolve-ReviewedWindowsProducer

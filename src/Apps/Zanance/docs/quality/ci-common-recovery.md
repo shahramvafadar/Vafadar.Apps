@@ -182,3 +182,75 @@ evidence, not a claim to have installed the hosted version or proved its actual 
 No successful app build, business suite, phone action or shipping APK is repeated/changed.
 Hosted qualification on the exact follow-up SHA is pending at commit creation. D-476's two
 source corrections remain included; external/stability/accessibility/release gates stay open.
+
+## D-478 - Separate immutable producers across hosted image servicing
+
+On8aeb8f02, CI39852707648 now passes Android Release/Debug billing and Libraries and tests:
+5097 total,25 skipped,zero failed. CodeQL39852707614 succeeds. The actual complete test result,
+not an assumed local fix, closes the two D-476 causes on this exact head. Native39852707414 also
+passes official Android slices/stock cipher. Its Windows job120082812755 qualifies the real
+18.11.12315.225 installation and original b0a1818e compiler, builds two fresh matching native
+outputs, and passes original schema/key/tamper/portable compatibility before immutable packing
+refuses a changed DLL under candidate.8. The ordinary Windows job refuses that same old identity.
+
+Both original fresh manifests are equal, native SHA256
+b02ca2545492b8584b2c15010ac24f6fc5a2b5e6e45a11c6c4ba825ccf277744,4108288bytes. Compiler SHA256
+b0a1818ebae6da7f18230a84e76ce839212584ac4c2ab55b97a0d5268085da57/file19.51.36260.0 is unchanged.
+Public artifact12458666625 is88047bytes, ZIP SHA256
+efabfe48fa8075b4f6404dcb993bfa9af4f421a2afabbfff3492e99db0c969af. Verify that digest before
+reading exact JSON members in memory. This establishes serviced-host output drift, not a proven
+compiler, linker or SDK internal cause. Do not suppress the package refusal or overwrite candidate.8.
+
+The existing producer-only branch flow proposes candidate.9 and exports only an unpublished
+component after the original compiler/two-fresh/source/diagnostic/schema gates. Creating the branch
+at the existing commit yields zero runs; its consumed one-shot check and schedule are closed.
+Permanent native producer documentation commit9823a734 supplies the actual changed native path.
+The prospective inventory is independently derived from the original matching manifests and
+actual Pack-Windows template, first proving that the retained candidate.8 nuspec hash matches.
+Adoption still requires equality with every actual candidate.9 archive entry, not that derivation.
+
+Keep candidate.7/baseline and candidate.8/servicing unchanged. Add one separate hosted20261021
+inventory/version9. Resolve the reviewed new installation and its exact compiler to that explicit
+producer; old reviewed hosts retain their original baseline/servicing choice. Unknown hosts,
+unknown hashes and the wrong already-reviewed compiler on the new host refuse selection. The
+selector first validates actual executable SHA/file version/Microsoft Authenticode/MSVC/SDK,
+then writes only the current job environment. Both hosted Windows lanes select before native use;
+the app lane partitions its immutable-package cache by selected variant and all package inventories.
+Pack-Windows includes all three existing identities when refusing explicit producer-version reuse.
+No one version accepts alternative DLL/manifest entries and future drift still fails closed.
+
+The affected qualification script passes26 cases on the actual existing signed local compiler:
+the prior18 plus distinct new immutable identity, current identity-reuse refusal,three exact
+producer selections and three wrong/unknown host/compiler refusals. Three real MSBuild evaluations
+select versions7/8/9. The actual signed local host selects baseline into an owned environment file;
+a relative environment target refuses. These are script/property checks, not new managed tests
+or proof of a newly installed local host. Main Android code/APK remain D-471; no successful
+financial, phone, Release application or unrelated suite is replayed locally. Source, crypto
+profile, SDK pins, permissions, data/schema and Windows commercial deferral are unchanged.
+
+Original failures: [native39852707414](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39852707414)
+and [CI39852707648](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39852707648).
+Producer archive adoption and ordinary exact-head consumer completion are separate gates below.
+External/device/stability/accessibility/iOS and publication acceptance remain open.
+
+### D-478 original producer accepted for consumer qualification
+
+Producer-only [run39857667608](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39857667608)
+on9823a734 succeeds: actual compiler, two fresh matching outputs, original schema/key/tamper/portable
+compatibility, unpublished candidate.9 export and diagnostic drift refusals all pass. Android and
+ordinary binary-consumer/performance jobs are explicitly skipped in this existing producer mode.
+Artifact12460073284 is1807918bytes, SHA256
+634d81028eba5401ab90ca6f590f2316fb28cbf806a7d9680d7861e5e725768d; validate that digest before reading.
+The actual1721561byte nupkg has SHA256
+bc5b553c0392c7afc806bf17564255a45a9ee175e11cac7f43fbad48818f1f72. Its exact five unique entries match
+the independently derived inventory byte-for-byte, including nuspec1e9395b1,manifestf63f9327 and
+nativeb02ca254. Both original new manifests also equal the retained first failed run's manifests.
+Actual new host/approved compiler and x64 guarded PE protections match. No review binary is installed
+or copied to the consumer feed; normal consumers still rebuild from original reviewed sources.
+
+The prospective inventory is now backed by the original successful archive, without rerunning the
+unchanged local selection/property/26-case evidence. The producer documentation commit is brought
+to main without rewriting history; this adoption adds the distinct exact inventory and host choice.
+Producer success is not ordinary consumer acceptance. Final main CI/CodeQL/native result is pending
+at adoption commit creation and must be read on its exact pushed SHA. Do not infer general app,
+Windows commercial, Android stability/accessibility, iOS, provider/Store or publication acceptance.

@@ -54,7 +54,9 @@ jobs:
         run: ./eng/native/sqlcipher/Test-ProducerVersion.ps1
       - name: Qualify exact installed Windows compiler
         shell: pwsh
-        run: ./eng/native/sqlcipher/Test-WindowsToolchain.ps1
+        run: |
+          ./eng/native/sqlcipher/Select-HostedWindowsProducer.ps1 -EnvironmentFile $env:GITHUB_ENV
+          ./eng/native/sqlcipher/Test-WindowsToolchain.ps1
       # No candidate cache: this lane proves two fresh outputs, not a reused local artifact.
       - name: Build two fresh reviewed Windows candidates
         shell: pwsh

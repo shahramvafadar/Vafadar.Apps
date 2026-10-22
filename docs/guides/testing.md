@@ -247,3 +247,14 @@ separate from compiler qualification: keep exact executable SHA/file version/Mic
 MSVC/SDK and immutable package checks. Test-WindowsToolchain.ps1 uses the existing actual compiler
 for metadata/refusal regressions; only hosted production can qualify its real installed bytes.
 See [failure source and bounded proof](../../src/Apps/Zanance/docs/quality/ci-common-recovery.md).
+
+## Rolling hosted native producers (D-478)
+
+Select-HostedWindowsProducer.ps1 qualifies the actual signed compiler before selecting baseline,
+servicing or hosted20261021 and writing a current-job environment file. Exact older/newer images
+keep distinct immutable versions7/8/9, with separate cache keys. The affected qualification script
+checks all26 metadata/identity/refusal cases; these do not execute the synthetic hosts' compilers.
+Adding a new native inventory requires the original unpublished producer archive, every entry hash
+and then the ordinary consumer/persistence/workload run. A matching compiler hash alone is not a
+matching native output. Preserve failures and do not replay unrelated successful local suites.
+See [actual hosted drift and archive qualification](../../src/Apps/Zanance/docs/quality/ci-common-recovery.md).

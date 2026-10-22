@@ -11,6 +11,7 @@
     <!-- Servicing builds have a distinct immutable native package; one version never has alternate bytes. -->
     <VafadarWindowsCipherPackageVersion>4.19.0-candidate.7</VafadarWindowsCipherPackageVersion>
     <VafadarWindowsCipherPackageVersion Condition="'$(VafadarWindowsCipherVariant)' == 'servicing'">4.19.0-candidate.8</VafadarWindowsCipherPackageVersion>
+    <VafadarWindowsCipherPackageVersion Condition="'$(VafadarWindowsCipherVariant)' == 'hosted20261021'">4.19.0-candidate.9</VafadarWindowsCipherPackageVersion>
   </PropertyGroup>
 
   <ItemGroup Label="Household standard cryptography">

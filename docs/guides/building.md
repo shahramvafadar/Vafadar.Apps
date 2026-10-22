@@ -2329,3 +2329,16 @@ A source with no linked transfer uses an explicitly transient formatter/control-
 packet; no cash-linkage acceptance or Save. Require native text/layout/package/popup focus before
 observation. Preserve failures, original source/base equality and original package/stopped state.
 See [qualification boundaries](../../src/Apps/Zanance/docs/quality/household-caption-separators.md).
+
+## Explicit hosted Windows native producers (D-478)
+
+Local default remains baseline/candidate.7. The older reviewed serviced host uses
+VafadarWindowsCipherVariant=servicing/candidate.8; installation18.11.12315.225 with its exact
+reviewed compiler uses hosted20261021/candidate.9. Hosted lanes call
+eng/native/sqlcipher/Select-HostedWindowsProducer.ps1 before cache/native use. Its optional
+-EnvironmentFile requires an existing absolute file and persists only the qualified variant;
+GITHUB_ENV is scoped to the current hosted job. No global SDK/compiler setup is changed.
+Unknown hosts/compilers refuse, and fresh package output still must match every immutable entry.
+Keep source/diagnostic/schema and actual binary-consumer gates; producer artifacts are review
+evidence, never a replacement native binary feed or release approval.
+See [bounded evidence](../../src/Apps/Zanance/docs/quality/ci-common-recovery.md).

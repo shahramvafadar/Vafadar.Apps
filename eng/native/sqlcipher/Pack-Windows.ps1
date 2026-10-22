@@ -55,7 +55,7 @@ $packageManifest | Add-Member -NotePropertyName reviewedCompilerExecutables -Not
 $packageManifestBytes = [Text.Encoding]::UTF8.GetBytes((($packageManifest | ConvertTo-Json -Depth 8).Replace("`r`n","`n")) + "`n")
 # Producer qualification exports only to this owned artifact directory, never the consumer feed.
 # It keeps all source, diagnostic, native, compatibility and compiler gates before proposing new immutable bytes.
-$knownContents = @('windows.package.contents.json','windows.servicing.package.contents.json') | ForEach-Object {
+$knownContents = @('windows.package.contents.json','windows.servicing.package.contents.json','windows.hosted20261021.package.contents.json') | ForEach-Object {
     Get-Content -LiteralPath (Join-Path $PSScriptRoot $_) -Raw -Encoding UTF8 | ConvertFrom-Json
 }
 $version = Resolve-NativeProducerVersion -InputLock $inputLock -Contents $contents -KnownContents $knownContents -CandidateVersion $CandidateVersion

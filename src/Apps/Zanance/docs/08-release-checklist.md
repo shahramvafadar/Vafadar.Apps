@@ -2911,3 +2911,19 @@ cases pass against the existing signed local compiler. The new hosted compiler/p
 pass on the exact pushed SHA; no app build/native scene replay or shipping APK change.
 
 Evidence: [actual installer refusal and retained qualification](quality/ci-common-recovery.md).
+
+### D-478 - Immutable native producers for serviced hosted Windows
+
+D-476's actual hosted Android build and complete5097-case run now pass with25 skips/zero failures.
+The remaining Windows failure is a different deterministic native output under the old candidate.8
+identity, despite the same approved compiler. Preserve that refusal and old package identities;
+qualify a separate candidate.9, compare every original archive entry, and select the explicit
+hosted producer before cache/build use. Twenty-six local script cases,three actual central-version
+evaluations and the real local-host/environment boundary checks pass; no new managed cases or
+Android shipping APK change. Ordinary consumer and final exact-head CI remain distinct gates.
+
+Evidence: [original drift, producer and consumer qualification](quality/ci-common-recovery.md).
+
+D-478 producer follow-up: run39857667608 on9823a734 passes the original producer gates; all five
+actual candidate.9 archive entries match the distinct inventory. Normal exact-head main consumer
+CI remains pending at adoption commit creation; this is not platform/product/release acceptance.

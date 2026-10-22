@@ -138,3 +138,18 @@ The same head's backend workflow run39002185011 had no jobs: GitHub rejected lin
 map. Scope the exact private path to both qualification/report-collection step env maps, where runner exists.
 No service algorithms/scenarios/private-upload policy change and no local successful backend tests are repeated.
 See18-native-storage-profile-delivery.md for actual artifact, diagnostics, APK/native evidence and remaining gates.
+
+### D-478 rolling hosted producer identities
+
+The same reviewed19.51.36260.0 compiler produces a reproducible b02ca254 native output on
+installation18.11.12315.225; candidate.8 remains45d430bc. Preserve both old immutable inventories
+and use a separate candidate.9 after original producer/archive qualification. Both hosted Windows
+lanes resolve the actual signed host before native execution, package restore and property-based
+consumer version selection. Main/PR consumers still run original schema, diagnostic drift,
+production-assembly cold persistence and reference/tenfold gates. Producer-only mode skips those
+ordinary consumer/Android workloads, so its success alone cannot accept Main or release.
+See [original evidence and pending/final outcomes](ci-common-recovery.md).
+
+D-478 producer-only run39857667608 succeeds on9823a734. Original artifact12460073284 and every
+actual candidate.9 package entry match the distinct hosted20261021 inventory; original baseline
+and servicing pins remain unchanged. Normal main consumer qualification is the separate next gate.
