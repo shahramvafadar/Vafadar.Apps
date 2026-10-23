@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Native title observation (D-485)
+
+- Keep Android title layout observation active when its native toolbar moves between windows.
+- Stop detached toolbars receiving layout callbacks from the old window.
+
 ### Detached validation requests (D-482)
 
 - Prevent the reproduced Android callback failure when a validation field leaves its native window.

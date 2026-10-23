@@ -8576,3 +8576,17 @@ This is bounded physical English/Light form evidence, not the full currency/unit
 security/stability/accessibility/iOS/provider/Store/release gate. The broad delivery goal stays open.
 
 Evidence: [physical original forms](../quality/physical-plan-and-debt-forms.md).
+
+### D-485 - Follow the original Android toolbar between native roots
+
+The actual native caller reproduces outgoing-root callbacks and missing callbacks after a toolbar
+moves to a second window. Its separate weak-owner production observer now removes the exact old
+registration at detachment and registers on the new root; the initial floating-tree merge is not
+duplicated. Two focused native cases pass, for registration before/after attachment, with both
+roots alive and zero detached/retired callbacks. Keep prior financial/title/scale/managed suites;
+these are not new managed tests or general ANR/GC/performance/accessibility acceptance.
+Strict Windows and complete signed Offline384-AOT APK builds pass; no-reset Samsung upgrade and
+original Accounts title/Back preserve all141 public Home tuples/979EUR and OS. Remove only the
+new helper and two emulator/twelve phone hash-matched XMLs; emulator Main28047 stays unchanged.
+
+Evidence: [original toolbar transition qualification](../quality/toolbar-observer-transitions.md).

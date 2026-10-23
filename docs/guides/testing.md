@@ -269,3 +269,12 @@ phase completion. Require original exact-PID receipts, no lost-key recreation an
 absence before uninstall/restoration. No keys/envelopes/private expectations are logged/pulled.
 Read the fixture README for original foreground/public-UI/APK/OS and hash-matched cleanup guards;
 these native cases do not increase the managed-suite count or accept full security/platform scope.
+
+### Android toolbar native-root transitions (D-485)
+
+eng/tests/AndroidToolbarLayout links the production weak-owner observer into an independent
+permission-free Release caller. Use review_run=d485 or d485-before for registration after or
+before initial attachment. Require actual callbacks in the second native window, zero callbacks
+while detached/retired and both roots alive. Debug/Main-identity builds refuse. Preserve successful
+cases and original Main data; remove only the newly owned helper and hash-matched XML captures.
+See its README and the app's quality/toolbar-observer-transitions.md for exact scope and evidence.

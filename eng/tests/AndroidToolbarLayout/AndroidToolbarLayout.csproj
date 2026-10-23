@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <ApplicationId>pro.vafadar.zanance.toolbarreview</ApplicationId>
+    <ApplicationTitle>Zanance toolbar review</ApplicationTitle>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
+    <SupportedOSPlatformVersion>33</SupportedOSPlatformVersion>
+    <RuntimeIdentifier>android-x64</RuntimeIdentifier>
+    <AndroidManifest>AndroidManifest.xml</AndroidManifest>
+    <AndroidPackageFormats>apk</AndroidPackageFormats>
+    <AndroidDebuggable>false</AndroidDebuggable>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <PublishTrimmed>false</PublishTrimmed>
+    <RunAOTCompilation>false</RunAOTCompilation>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppSecret Remove="@(AppSecret)" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Presentation/AndroidToolbarLayoutObserver.cs" Link="AndroidToolbarLayoutObserver.cs" />
+  </ItemGroup>
+  <Target Name="RequireOwnedToolbarReview" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.toolbarreview' Or '$(Configuration)' != 'Release'" Text="Toolbar qualification requires its independent Release identity." />
+  </Target>
+</Project>

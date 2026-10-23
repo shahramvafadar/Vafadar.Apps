@@ -3503,3 +3503,11 @@ Detachment completes the original bounded wait with false. Keep weak attachment 
 native dispatch snapshots; release their owner instead of prematurely disposing their Java peer.
 Collection measurements must release their own already-dead observer wrapper after retirement;
 never mutate dead trees or inspect raw heaps. Retain completed cases and original source identity.
+
+## D-485 - Native toolbar observation follows attachment
+
+Long-lived toolbar observers remove the exact outgoing root registration on detachment and add
+it on reattachment. Initial floating-tree merge transfers the existing listener; do not register
+it twice. Keep callbacks weakly owned, neutralize retirement and leave Java peers valid for
+native dispatch snapshots. Qualify original before/after-attachment transitions on real windows;
+do not replay unchanged financial, language or system-scale cohorts for listener-only changes.

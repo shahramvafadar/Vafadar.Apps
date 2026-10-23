@@ -2427,3 +2427,9 @@ A field leaving its native Android window cannot complete its pending layout wai
 Release callbacks from every observed live registration tree; preserve field-adjacent feedback,
 raw drafts, current-form guards and existing layout timeout. No geometry, caption or financial
 behavior changes; native lifecycle checks do not establish a new broad layout/accessibility pass.
+
+## D-485 - Retained native toolbar ownership
+
+Keep the original title font, growing height, Back arrow and language semantics. Native layout
+observation follows the toolbar's actual window attachment, leaving detached roots silent and
+resuming after reattachment. Retirement removes the exact registration and neutralizes callbacks.

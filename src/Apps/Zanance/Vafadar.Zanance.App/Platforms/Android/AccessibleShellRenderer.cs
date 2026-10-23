@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Vafadar.Zanance.App.Presentation;
 using NativeToolbar = AndroidX.AppCompat.Widget.Toolbar;
 using AndroidX.DrawerLayout.Widget;
 using AndroidX.Fragment.App;
@@ -70,8 +71,7 @@ internal sealed class AccessibleShellRenderer : ShellRenderer
     {
         private NativeToolbar? _nativeToolbar;
         private bool _retired;
-        private bool _layoutListenerRegistered;
-        private ToolbarLayoutListener? _layoutListener;
+        private AndroidToolbarLayoutObserver<AccessibleToolbarTracker>? _layoutListener;
         private int _ordinaryToolbarHeight;
         private int _requestedToolbarHeight;
         private int _titleVerticalChrome = -1;
@@ -83,9 +83,8 @@ internal sealed class AccessibleShellRenderer : ShellRenderer
             _nativeToolbar = toolbar;
             if (toolbar.ViewTreeObserver is { IsAlive: true } observer)
             {
-                _layoutListener = new ToolbarLayoutListener(this);
-                observer.AddOnGlobalLayoutListener(_layoutListener);
-                _layoutListenerRegistered = true;
+                _layoutListener = new AndroidToolbarLayoutObserver<AccessibleToolbarTracker>(this, static tracker => tracker.UpdateTitleGeometry());
+                _layoutListener.Register(toolbar);
             }
             Translator.Instance.PropertyChanged += OnTranslationsChanged;
         }
@@ -137,22 +136,6 @@ internal sealed class AccessibleShellRenderer : ShellRenderer
             { toolbar.NavigationContentDescription = Translator.Instance["Common_Back"]; }
         }
 
-        /// <summary>Keeps native callback lifetime separate from the Shell tracker native peer.</summary>
-        private sealed class ToolbarLayoutListener(AccessibleToolbarTracker owner) : Java.Lang.Object, Android.Views.ViewTreeObserver.IOnGlobalLayoutListener
-        {
-            private WeakReference<AccessibleToolbarTracker>? _owner = new(owner);
-
-            /// <inheritdoc />
-            public void OnGlobalLayout()
-            {
-                if (_owner?.TryGetTarget(out var tracker) == true && !tracker._retired)
-                    tracker.UpdateTitleGeometry();
-            }
-
-            /// <summary>Retires any callback already included in Android's current dispatch snapshot.</summary>
-            internal void Detach() => _owner = null;
-        }
-
         /// <inheritdoc />
         protected override void Dispose(bool disposing)
         {
@@ -160,14 +143,10 @@ internal sealed class AccessibleShellRenderer : ShellRenderer
             {
                 _retired = true;
                 Translator.Instance.PropertyChanged -= OnTranslationsChanged;
-                // D-450: attachment merges the original ViewTreeObserver into another observer.
-                // Remove the exact native listener from the current live tree, not a dead event wrapper.
-                if (_layoutListenerRegistered && _layoutListener is { } listener
-                    && _nativeToolbar?.ViewTreeObserver is { IsAlive: true } observer)
-                    observer.RemoveOnGlobalLayoutListener(listener);
-                _layoutListener?.Detach();
+                // D-485: the observer follows attachment; retirement removes its exact current registration.
+                if (_layoutListener is { } listener && _nativeToolbar is { } toolbar)
+                    listener.Retire(toolbar);
                 _layoutListener = null;
-                _layoutListenerRegistered = false;
                 _nativeToolbar = null;
             }
             base.Dispose(disposing);
