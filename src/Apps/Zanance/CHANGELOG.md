@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Goal reminder calendar and source checks (D-491)
+
+- Verify saved goal dates stay fixed when the display calendar changes.
+- Verify archived accounts or holding types leave the native reminder queue and return after restoration.
+- Keep missed dates silent; application behavior and shipping APK remain unchanged.
+
 ### Safer imported transfer and holding-group Undo (D-490)
 
 - Keep later fee and holding-group changes when an old import Undo would break their relationships.

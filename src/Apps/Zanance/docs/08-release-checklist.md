@@ -3117,3 +3117,20 @@ stability/accessibility/iOS/provider/Store/release gates remain open. No unchang
 financial cohort or full suite is repeated.
 
 Evidence: [original grouped Undo](quality/import-group-undo-dependencies.md).
+
+### D-491 - Physical original goal calendars and unavailable sources
+
+Twelve original protected/native queue observations qualify saved Gregorian/Persian/Hijri monthly
+rules independently of display calendar, two-goal grouped routes, account/type archive/restore,
+missed Once and final disabled state. First24October09:00 and second24November Gregorian /
+23November Persian/Hijri stay local09:00 across DST offsets. Full original publication packets
+remain equal; opening100/targets150EUR and5units stay, with zero ledger/allocations/holding events.
+Preserve two actual coalesced-wait observer cancellations and two accepted states; final caller
+follows the replaced handle after yielding and continues only ten missing stages in4354.
+Strict complete signed Offline ARM64/192-AOT caller passes. Remove only the new fixture with
+pending0 and2 Main/3 scoped owned XMLs; original Main31885/Home979/all141 public tuples/APK/OS
+remain. Main code/APK stay D-490, no new managed count or successful unrelated suite/build replay.
+Real timed/lock/profile/Doze/reboot, security/stability/accessibility/iOS/provider/Store and release
+gates remain open. This is native queue/API evidence, not financial-form or whole-device acceptance.
+
+Evidence: [physical calendar/source queues](quality/physical-goal-calendar-sources.md).

@@ -14,6 +14,13 @@ public sealed class StatusProvider : ContentProvider
     public override ICursor? Query(Android.Net.Uri uri, string[]? projection, string? selection,
         string[]? selectionArgs, string? sortOrder)
     {
+        if (Context?.PackageName == NativeReminderReview.Package && uri.Path == "/goal-variants-status")
+        {
+            // D-491: observation never prepares a source or executes a metadata transition.
+            var result = new MatrixCursor(["receipt"]);
+            result.NewRow()?.Add(new Java.Lang.String(NativeGoalVariantReminderReview.ReadReceipt()));
+            return result;
+        }
         if (Context?.PackageName == NativeReminderReview.Package && uri.Path == "/period-status")
         {
             // D-489: a receipt query is read-only and never prepares the original protected source.

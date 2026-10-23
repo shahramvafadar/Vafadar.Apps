@@ -34,7 +34,7 @@ priority/order descriptions below.
 | ZCR-SEC-10 | Owner-approved PIN, screenshot choice and ownership clarification (D-63) | Maintenance | P1 | M | Done | Owner request 2026-10-08 |
 | ZCR-SEC-09 | Network/SDK review of online builds; privacy texts | 1/3 | P2 | S | Done (current baseline; repeat for future SDKs) | – |
 | ZCR-LOC-01 | Release bug list from the owner's phone tests | 2 | P1 | M | Proposed | owner reports |
-| ZCR-LOC-02 | Goal contribution reminders (ZEX-S0306) | 2 | P2 | M | Done (local/emulator; D-488 original physical native queue/privacy lifecycle qualified; actual timed delivery/lock/Doze/reboot and broader platform gates remain) | – |
+| ZCR-LOC-02 | Goal contribution reminders (ZEX-S0306) | 2 | P2 | M | Done (local/emulator; D-488 physical lifecycle and D-491 saved-calendar/grouped-target/unavailable-source/missed-date queues qualified; actual timed delivery/lock/profile/Doze/reboot and broader platform gates remain) | – |
 | ZCR-LOC-03 | Optional period review reminder (ZEX-S0610) | 2 | P2 | S | Done (local/emulator; D-489 physical original three-calendar native queues/progress/privacy qualified; actual timed delivery/lock/profile/Doze/reboot and broader platform gates remain) | – |
 | ZCR-LOC-04 | Aggregated entries: import overlap handling (ZEX-S0611) | 2 | P2 | M | Done (local/emulator, D-72; phone/iOS acceptance open) | – |
 | ZCR-LOC-05 | "Not a tax calculation" help on sale results (ZEX-S0404) | 2 | P3 | S | Done (D-268 original sale help, six-language copy and store drafts locally verified; publication/device gates remain) | D-69 continuous delivery |
@@ -5117,3 +5117,20 @@ stability/accessibility/iOS/provider/Store/release gates remain open. No unchang
 financial cohort or full suite is repeated.
 
 Evidence: [original grouped Undo](../../quality/import-group-undo-dependencies.md).
+
+### D-491 - Physical original goal calendars and unavailable sources
+
+Twelve original protected/native queue observations qualify saved Gregorian/Persian/Hijri monthly
+rules independently of display calendar, two-goal grouped routes, account/type archive/restore,
+missed Once and final disabled state. First24October09:00 and second24November Gregorian /
+23November Persian/Hijri stay local09:00 across DST offsets. Full original publication packets
+remain equal; opening100/targets150EUR and5units stay, with zero ledger/allocations/holding events.
+Preserve two actual coalesced-wait observer cancellations and two accepted states; final caller
+follows the replaced handle after yielding and continues only ten missing stages in4354.
+Strict complete signed Offline ARM64/192-AOT caller passes. Remove only the new fixture with
+pending0 and2 Main/3 scoped owned XMLs; original Main31885/Home979/all141 public tuples/APK/OS
+remain. Main code/APK stay D-490, no new managed count or successful unrelated suite/build replay.
+Real timed/lock/profile/Doze/reboot, security/stability/accessibility/iOS/provider/Store and release
+gates remain open. This is native queue/API evidence, not financial-form or whole-device acceptance.
+
+Evidence: [physical calendar/source queues](../../quality/physical-goal-calendar-sources.md).

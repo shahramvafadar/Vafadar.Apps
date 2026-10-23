@@ -88,3 +88,18 @@ the packet oracle, with additional explicit boundary/finished/missed checks. Ret
 PID and per-stage receipts after observation deadlines. Clean only the fresh fixture and its owned
 XMLs; preserve Main/OS and explicit cross-project phone turns. No immediate Show or actual timed/
 lock/Doze/reboot acceptance. See src/Apps/Zanance/docs/quality/physical-period-reminder-queue.md.
+
+## Physical saved goal calendars and unavailable sources (D-491)
+
+Use review_goal_variants=true with one explicit32-hex review_run on a fresh independent package;
+never combine selectors. /goal-variants-status reads persisted synthetic progress only. Twelve
+states cover saved calendars versus display, two-goal native grouping, archive/restore of account
+and holding type, missed dates and final disable. All original publication packets stay equal;
+no ledger, allocation or holding event is posted. Preserve source/stage markers; complete stages
+are never replayed. A cancelled coalesced timer can resume inline before RefreshSoon publishes its
+replacement: yield, then require exact handle replacement, with a bounded replacement loop.
+A same-handle cancellation or actual failure still fails; do not use this as a production workaround.
+Preserve both original failures and accepted01/02 through install-r/source continuation. Terminal
+success and pending0 precede fresh-fixture uninstall and exact Main/OS/public restoration. No old
+goal/period lifecycle, Windows/Main build or managed suite is repeated. Queues are not timed/lock/
+Doze/profile/platform acceptance. See quality/physical-goal-calendar-sources.md for actual receipts.
