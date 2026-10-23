@@ -1,4 +1,6 @@
 using System.Text.Json;
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Ledger;
@@ -134,7 +136,11 @@ public sealed partial class ZananceStore
         // D-392: ordinary and keep-both imports also need the original complete row snapshots.
         // Otherwise a later editor change cannot be distinguished from an unchanged imported row.
         // The existing journal format contains metadata, never attachment bytes or credentials.
-        var state = new ImportLinkState(1, imported, adjustments);
+        // D-490: a later fee or holding change can alter a group without editing its imported row.
+        // Capture the original external group under this writer; never infer it during Undo.
+        var grouped = imported.Any(entry => entry.GroupId is not null);
+        var groupDigest = grouped ? (await ReadImportGroupDependenciesAsync(db, imported, cancellationToken)).Digest : null;
+        var state = new ImportLinkState(grouped ? 2 : 1, imported, adjustments, groupDigest);
         db.ImportLinks.Add(new ImportLinkBatch(batchId) { StateJson = JsonSerializer.Serialize(state, ImportLinkJson.Default.ImportLinkState) });
         await db.SaveChangesAsync(cancellationToken);
 
@@ -215,6 +221,12 @@ public sealed partial class ZananceStore
 
         if (own.State is { } state)
         {
+            if (state.Imported.Any(entry => entry.GroupId is not null))
+            {
+                var dependencies = await ReadImportGroupDependenciesAsync(db, state.Imported, cancellationToken);
+                if (state.Version == 2 ? dependencies.Digest != state.GroupDependencyDigest : dependencies.HasDependencies)
+                    return new ImportUndoResult(0, true);
+            }
             foreach (var change in state.Adjustments)
             {
                 var id = change.AggregateId;
@@ -305,8 +317,44 @@ public sealed partial class ZananceStore
         {
             var state = JsonSerializer.Deserialize(batch.StateJson, ImportLinkJson.Default.ImportLinkState)
                 ?? throw new InvalidOperationException("Import Undo journal is unreadable.");
-            if (state.Version != 1) { throw new InvalidOperationException("Import Undo journal version is unsupported."); }
+            if (state.Version is not (1 or 2)) { throw new InvalidOperationException("Import Undo journal version is unsupported."); }
+            if (state.Version == 2 && (state.GroupDependencyDigest is not { Length: 64 }
+                    || state.GroupDependencyDigest.Any(character => character is not (>= '0' and <= '9' or >= 'a' and <= 'f'))))
+                throw new InvalidOperationException("Import Undo group snapshot is unreadable.");
             return (batch, state);
         }).ToList();
+    }
+
+    /// <summary>Captures external money/holding members of the original imported groups, excluding audit-only changes.</summary>
+    private static async Task<(string Digest, bool HasDependencies)> ReadImportGroupDependenciesAsync(
+        ZananceDbContext db, IReadOnlyList<LedgerEntry> imported, CancellationToken ct)
+    {
+        var groups = imported.Where(entry => entry.GroupId is not null).Select(entry => entry.GroupId!.Value).Distinct().ToArray();
+        var ids = imported.Select(entry => entry.Id).ToHashSet();
+        var records = new List<string>();
+        if (groups.Length > 0)
+        {
+            var peers = await db.Entries.AsNoTracking().Where(entry => entry.GroupId != null && groups.Contains(entry.GroupId.Value)).ToListAsync(ct);
+            records.AddRange(peers.Where(entry => !ids.Contains(entry.Id)).OrderBy(entry => entry.Id)
+                .Select(entry => "entry|" + ComparableEntry(entry)));
+            var holdings = await db.AssetEvents.AsNoTracking().Where(item => item.GroupId != null && groups.Contains(item.GroupId.Value)).ToListAsync(ct);
+            foreach (var item in holdings.OrderBy(item => item.Id))
+            {
+                var packet = JsonSerializer.SerializeToElement(item, ImportLinkJson.Default.AssetEvent);
+                using var bytes = new MemoryStream();
+                using (var writer = new Utf8JsonWriter(bytes))
+                {
+                    writer.WriteStartObject();
+                    foreach (var property in packet.EnumerateObject().OrderBy(property => property.Name, StringComparer.Ordinal))
+                    {
+                        if (property.Name is nameof(item.CreatedAt) or nameof(item.UpdatedAt)) continue;
+                        property.WriteTo(writer);
+                    }
+                    writer.WriteEndObject();
+                }
+                records.Add("holding|" + Encoding.UTF8.GetString(bytes.ToArray()));
+            }
+        }
+        return (Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(string.Join('\n', records)))), records.Count > 0);
     }
 }

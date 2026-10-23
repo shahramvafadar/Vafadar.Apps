@@ -505,6 +505,20 @@ internal static partial class AndroidHomeReview
                 Directory.CreateDirectory(root);
                 await WriteReportAsync(root, phase, await ReviewBudgetPeriodCaptionsAsync(app, services, root, comparison!, ct, scopeOnly: phase == "budget-scope-captions"), ct);
             }
+            else if (phase == "import-group-undo")
+            {
+                var previousResult = Path.Combine(root, phase + "-" + comparison + "-result.json");
+                if (File.Exists(previousResult))
+                {
+                    var previous = System.Text.Json.JsonSerializer.Deserialize<System.Text.Json.JsonElement>(await File.ReadAllTextAsync(previousResult, ct));
+                    var resume = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_group_resume", false) == true;
+                    if (!resume || !previous.TryGetProperty("Failed", out var failed) || !failed.GetBoolean())
+                        throw new ReviewCheckException("Completed original grouped import review must not repeat.");
+                    File.Copy(previousResult, previousResult + ".failure-" + Guid.NewGuid().ToString("N"));
+                }
+                Directory.CreateDirectory(root);
+                await WriteReportAsync(root, phase, await ReviewImportGroupUndoAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "snapshot-difference")
             {
                 if (File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))

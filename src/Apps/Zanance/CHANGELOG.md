@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Safer imported transfer and holding-group Undo (D-490)
+
+- Keep later fee and holding-group changes when an old import Undo would break their relationships.
+- Allow Undo of an imported fee when its original transfer or holding group is unchanged.
+- Require review for old journals that cannot prove their original external group.
+
 ### Saved forecast comparison (D-487)
 
 - Keep transfers, asset trades and account corrections out of unplanned income and spending.

@@ -4180,3 +4180,23 @@ code/APK remain D-487. Real09:00 delivery, lock/tap/profile-switch/restore/Doze/
 security/stability/accessibility/iOS/provider/Store and release gates remain open.
 
 Evidence: [physical period queue qualification](../../quality/physical-period-reminder-queue.md).
+
+### D-490 - Preserve original imported-group dependencies on Undo
+
+Reproduce unsafe Undo after a later fee is added to an imported transfer. Capture external ledger
+and holding group context under the original import writer in internal ImportLinks version2;
+refuse later changes before mutation, retaining valid Undo for unchanged pre-existing groups.
+Ungrouped journals remain version1; legacy closed groups are supported and unverifiable external
+groups require review without invented backfill. No EF model/schema/public CSV/permission change.
+Ten new and five selected prior managed cases pass; strict Windows/complete signed Offline384-AOT
+APK builds have zero warnings/errors. Six original native Undo cases pass on isolated fictional
+Samsung sources with full typed-row/base equality. Preserve the first fixed-dock ScrollToAsync
+observer failure and its accepted first outcome; resume only five unexecuted commands and read
+that first result without replay. Consent is fictional, not native dialog/picker acceptance.
+Restore the old independent APK/stopped state, then no-reset Main upgrade retains979/all141 public
+Home tuples/OS in PID31885; remove three owned hash-matched XMLs. Prior ecde9366 CI/CodeQL succeed
+once and its monitor is consumed/deleted. New-head CI and broader relationship/device/security/
+stability/accessibility/iOS/provider/Store/release gates remain open. No unchanged successful
+financial cohort or full suite is repeated.
+
+Evidence: [original grouped Undo](../../quality/import-group-undo-dependencies.md).

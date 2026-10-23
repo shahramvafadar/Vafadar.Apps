@@ -3511,3 +3511,12 @@ it on reattachment. Initial floating-tree merge transfers the existing listener;
 it twice. Keep callbacks weakly owned, neutralize retirement and leave Java peers valid for
 native dispatch snapshots. Qualify original before/after-attachment transitions on real windows;
 do not replay unchanged financial, language or system-scale cohorts for listener-only changes.
+
+## D-490 - Original grouped import Undo witnesses
+
+Capture external ledger/holding group context under the accepted import writer; compare before
+any Undo mutation. Internal journal version2 is independent of public CSV version2. Never invent
+legacy external-group history from current data or refuse all valid unchanged groups. Preserve
+source/outcome/complete native receipts; a retained accepted outcome permits only read-only
+feedback, never another Import/Undo. Keep plain secondary fixtures distinct from encrypted Main
+acceptance and restore pre-existing caller APK/data/stopped state without uninstalling it.

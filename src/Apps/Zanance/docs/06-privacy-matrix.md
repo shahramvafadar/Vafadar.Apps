@@ -1191,3 +1191,11 @@ receipts, source digest, error text and no-write/data-equality facts for continu
 private store/key or authentication is accessed. Restore its original APK without reset and
 retain the source; remove only2 hash-matched owned remote XMLs. No external recipient or public
 service is introduced, and named-field equality is not whole-database/release acceptance.
+
+### D-490 - Internal import-group equality witness
+
+Existing profile-local ImportLinks journals add a non-secret SHA256 digest of original external
+ledger/holding group context for safe Undo. It stays in the database and existing database backups;
+no extra peer snapshot, attachment bytes, credentials, public CSV field, permission, SDK, network
+transfer or new collection purpose is added. It is an equality witness, not anonymization or an
+authentication/encryption boundary. Existing profile deletion/backup retention rules apply.

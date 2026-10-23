@@ -2655,3 +2655,18 @@ for Android, Windows and shared backends compare byte-for-byte equal. Reuse hist
 storage evidence; do not repeat unrelated portable restore/cold-storage scenarios for unchanged
 backends. No-reset Samsung/emulator upgrades preserve original public Home/profile/settings
 observations; this does not prove private database/key equality or new-device/low-memory recovery.
+
+## D-490 - Internal imported-group dependency journal
+
+Grouped imports persist ImportLinks JSON version2 with GroupDependencyDigest, a SHA256 equality
+witness of original external ledger peers/AssetEvents under the same atomic writer. Exclude the
+batch's own imported ids and audit-only timestamps. Before any Undo mutation, recompute against
+those original groups and refuse a mismatch; never backfill history from current mutable data.
+Version1 ungrouped imports keep their existing path without extra group reads. Legacy closed
+groups with no external context remain allowed; unverifiable external groups require review.
+This is internal journal evolution, independent of public own-CSV version2. No entity/schema or
+compiled-model change is needed; ordinary database backups carry this existing journal metadata.
+Source-generated AssetEvent serialization keeps the witness functional in trimmed Android/iOS;
+actual ARM64 native behavior is qualified, iOS remains unverified.
+
+See [evidence](../../src/Apps/Zanance/docs/quality/import-group-undo-dependencies.md).

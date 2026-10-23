@@ -2461,3 +2461,10 @@ new-head CI, real elapsed-day/remaining physical variants, security/stability/ac
 provider/Store and release gates remain open. No unrelated successful cohort is replayed.
 
 Evidence: [original saved comparison qualification](quality/snapshot-difference-kinds.md).
+
+### D-490 - Original import Undo feedback
+
+Keep existing translated Undo conflict/success and history actions. Later group changes require
+review; unchanged original groups retain ordinary Undo. No new control/layout/strings or full
+language/scale cohort is introduced. Native financial feedback is checked on the actual original
+page; fixed feedback docks remain outside the scroll viewport.

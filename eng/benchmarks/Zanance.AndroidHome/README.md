@@ -854,3 +854,19 @@ replay financial setup or accepted contexts. Clock injection affects only indepe
 setup; real elapsed-day/physical financial acceptance remains separate. Actual412dp x64 and384dp
 Samsung results and final package are documented in docs/quality/snapshot-difference-kinds.md
 under src/Apps/Zanance. Ordinary shipping builds contain no fixture or entry route.
+
+## Original grouped import Undo (D-490)
+
+Use phase import-group-undo with an explicit original review_run/review_pass. Six independent
+fictional SQLite cases invoke the actual ImportExportPage history Undo, validate existing native
+feedback, compare complete original typed tables and preserve the protected independent base.
+Never Main/private keys or native system confirmation: consent uses a declared fictional port.
+Source/outcome/complete receipts prevent accepted setup/import/Undo replay. A partially seeded
+source without its marker is refused, not recreated. Successful reports refuse reruns.
+
+Only after an actual failed report, review_group_resume=true permits the same run/comparison;
+retain the old failed report and continue only incomplete cases. An outcome already accepted is
+read-only display evidence (NativeActionsThisPass=0), never a renewed command. Fixed result docks
+are viewport siblings and are not valid ScrollToAsync targets. Preserve the first actual observer
+failure and source. Restore the exact pre-existing APK/stopped state without uninstall/data reset.
+See the [six-case evidence](../../../src/Apps/Zanance/docs/quality/import-group-undo-dependencies.md).

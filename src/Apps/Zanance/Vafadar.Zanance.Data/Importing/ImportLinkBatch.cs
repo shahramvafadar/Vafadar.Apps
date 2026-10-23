@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Vafadar.Core.Domain;
+using Vafadar.Zanance.Core.Holdings;
 using Vafadar.Zanance.Core.Ledger;
 
 namespace Vafadar.Zanance.Data.Importing;
@@ -30,9 +31,11 @@ public sealed class ImportLinkBatch : Entity, IAuditableEntity
 internal sealed record ImportAggregateState(Guid AggregateId, LedgerEntry? Before, LedgerEntry? After, List<LedgerEntry> Detailed);
 
 /// <summary>The imported rows and aggregate changes needed to reject unsafe or out-of-order Undo.</summary>
-internal sealed record ImportLinkState(int Version, List<LedgerEntry> Imported, List<ImportAggregateState> Adjustments);
+internal sealed record ImportLinkState(int Version, List<LedgerEntry> Imported, List<ImportAggregateState> Adjustments,
+    string? GroupDependencyDigest = null);
 
 /// <summary>Explicit metadata keeps the journal functional in trimmed Android and iOS builds.</summary>
 [JsonSerializable(typeof(ImportLinkState))]
 [JsonSerializable(typeof(LedgerEntry))]
+[JsonSerializable(typeof(AssetEvent))]
 internal sealed partial class ImportLinkJson : JsonSerializerContext;
