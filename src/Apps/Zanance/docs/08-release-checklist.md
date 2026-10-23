@@ -3171,3 +3171,24 @@ D-490; no new managed count or successful unrelated build/suite replay. Actual09
 remaining profile-race/security/stability/accessibility/iOS/provider/Store/release gates stay open.
 
 Evidence: [original restored-file scope](quality/physical-goal-profile-notification-scope.md).
+
+### D-495 - Retain pending destinations after a renewed app lock
+
+Two new original-source cases reproduce a queued destination running beneath a renewed cover,
+with an available or missing window. One drain owner now rechecks access before each unstarted
+action and keeps later input in arrival order. Three new cases and41 existing lock/router cases
+pass; the full unrelated suite is not repeated. Two actual Release/AOT Android native-cover cases
+with three real button clicks preserve order1/2/3 and complete source/base equality. Authentication
+responses are explicit fictional ports, not real credential acceptance. Retire only the new run;
+restore the old independent APK/process absence and emulator Main28047/all139 public tuples/OS.
+Strict Windows and complete signed Offline384-AOT APK builds pass without warnings/errors. Samsung
+upgrades without reset31885-to25043, retaining Home979/all141 public tuples and exact OS; four owned
+XMLs across both devices are hash-matched/removed. No financial Save, PIN/key/account/SDK/schema or
+permission change. Preserve the initial caller namespace compile refusal and actual timed-fixture
+Activity resumption during Main replacement: its interrupted initial D-494 lineage is not accepted
+as uninterrupted cold evidence. Same source/run remains equal; current native requests and future
+actual delivery are tracked separately. D-493 CI/CodeQL succeed once; its monitor is consumed/deleted.
+D-494 timed delivery, real credentials, general security/stability/accessibility/iOS/provider/Store
+and release gates remain open. New-head CI follows this completed correction.
+
+Evidence: [original relocked destinations](quality/relocked-pending-destinations.md).

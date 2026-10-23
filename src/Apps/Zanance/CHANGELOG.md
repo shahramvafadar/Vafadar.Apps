@@ -6,6 +6,12 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Pending destinations respect a renewed lock (D-495)
+
+- Keep later notification destinations waiting if the application locks again during navigation.
+- Preserve arrival order when more input arrives while an earlier destination is still opening.
+- Retain unfinished destinations for the next unlock without repeating an already started action.
+
 ### Grouped goal notification and restored profiles (D-493)
 
 - Verify a grouped notification opens both original goals after process death.

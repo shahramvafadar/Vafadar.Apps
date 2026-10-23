@@ -21,6 +21,7 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     private ILockCover? _page;
     private bool _coverRequested;
     private bool _started;
+    private bool _drainingPending;
 
     /// <summary>Raised when covered access changes; optional foreground work cannot outlive successful-unlock authority.</summary>
     public event EventHandler? AccessChanged;
@@ -161,17 +162,17 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     public Task RunWhenUnlockedAsync(Func<Task> action)
     {
         ArgumentNullException.ThrowIfNull(action);
-        if (!IsLocked)
-        {
-            return action();
-        }
-
         lock (_pending)
         {
-            _pending.Add(action);
+            // Preserve arrival order while an earlier unlocked destination is still awaiting native work.
+            if (IsLocked || _drainingPending)
+            {
+                _pending.Add(action);
+                return Task.CompletedTask;
+            }
         }
 
-        return Task.CompletedTask;
+        return action();
     }
 
     /// <summary>Turns the lock on or off after the device owner confirmed it; returns the new state.</summary>
@@ -209,25 +210,37 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     // Links and rebuilds that waited for the unlock, in the order they came.
     private async Task RunPendingAsync()
     {
-        List<Func<Task>> actions;
         lock (_pending)
         {
-            actions = [.. _pending];
-            _pending.Clear();
+            if (_drainingPending) return;
+            _drainingPending = true;
         }
 
-        foreach (var action in actions)
+        try
         {
-            try
+            while (true)
             {
-                await action();
+                Func<Task> action;
+                lock (_pending)
+                {
+                    // Native navigation can background/re-cover the app. Retain every unstarted destination
+                    // ahead of later input until the next successful unlock, even if the window is missing.
+                    if (IsLocked || _pending.Count == 0) return;
+                    action = _pending[0];
+                    _pending.RemoveAt(0);
+                }
+
+                try { await action(); }
+                catch (Exception ex) when (ex is not OutOfMemoryException)
+                {
+                    // One refused destination must not discard the rest; access is rechecked before each one.
+                    System.Diagnostics.Debug.WriteLine($"Action after unlocking failed: {ex}");
+                }
             }
-            catch (Exception ex) when (ex is not OutOfMemoryException)
-            {
-                // One link that cannot be opened (e.g. navigation refused while a dialog is open) must neither keep the
-                // others from running nor end the app: these actions run from the lock page's unlock handler.
-                System.Diagnostics.Debug.WriteLine($"Action after unlocking failed: {ex}");
-            }
+        }
+        finally
+        {
+            lock (_pending) { _drainingPending = false; }
         }
     }
 

@@ -870,3 +870,13 @@ read-only display evidence (NativeActionsThisPass=0), never a renewed command. F
 are viewport siblings and are not valid ScrollToAsync targets. Preserve the first actual observer
 failure and source. Restore the exact pre-existing APK/stopped state without uninstall/data reset.
 See the [six-case evidence](../../../src/Apps/Zanance/docs/quality/import-group-undo-dependencies.md).
+
+## Original renewed-cover destinations (D-495)
+
+Use phase relocked-destinations with a fresh run/comparison. Two cases use actual original
+LockPage/MauiAppLockHost and native button PerformClick, with a declared authentication response
+port and no native PIN storage. Verify a renewed cover stops remaining destinations, then preserves
+order1/2/3, and later input cannot overtake an awaited destination. Complete source/base equality
+and zero financial writes are required. Retain accepted per-case receipts; a fresh-root guard
+refuses replay. Restore the original retained caller APK/data/process absence and Main/OS. This
+is not real device-authentication, PIN, whole-notification or general security acceptance.

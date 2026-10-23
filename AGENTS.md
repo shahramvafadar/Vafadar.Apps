@@ -3520,3 +3520,12 @@ legacy external-group history from current data or refuse all valid unchanged gr
 source/outcome/complete native receipts; a retained accepted outcome permits only read-only
 feedback, never another Import/Undo. Keep plain secondary fixtures distinct from encrypted Main
 acceptance and restore pre-existing caller APK/data/stopped state without uninstalling it.
+
+## D-495 - Pending destinations retain current unlock authority
+
+Drain pending access-gated destinations one at a time under one owner. Recheck the current cover
+before dequeuing each action; native navigation may have backgrounded/re-covered the app. Retain
+unstarted old actions ahead of later input, and never replay a started action after relocking or
+an observation failure. A fictional native authentication-response port is not owner credential
+acceptance. A separate package replacement can resume an older task: preserve that native event
+and interrupted alarm lineage rather than asserting an uninterrupted cold-delivery cohort.

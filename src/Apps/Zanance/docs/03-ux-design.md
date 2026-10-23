@@ -2468,3 +2468,11 @@ Keep existing translated Undo conflict/success and history actions. Later group 
 review; unchanged original groups retain ordinary Undo. No new control/layout/strings or full
 language/scale cohort is introduced. Native financial feedback is checked on the actual original
 page; fixed feedback docks remain outside the scroll viewport.
+
+### D-495 - Preserve access and destination order across a renewed cover
+
+A native background return can renew the app cover while a prior unlocked destination is awaiting
+navigation. Retain unstarted destinations behind the cover, ahead of newly arriving input; open
+them once after the next successful unlock. Already started work is not replayed. Original native
+LockPage buttons are checked through a declared authentication-response port; this does not accept
+real device credentials, PIN recovery, all notification races or general accessibility.
