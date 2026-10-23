@@ -832,3 +832,14 @@ never replay successful actions to repair a report. Preserve refused old-source/
 constructor observations. Restore the exact prior independent APK without reset, retain its data
 and keep it stopped. No Main source/build or old managed/UI matrix needs repetition.
 See [bounded original evidence](../../../src/Apps/Zanance/docs/quality/validation-layout-callers.md).
+
+## Original missing destination forecast (D-486)
+
+Use phase forecast-missing-rate with a fresh review_run/review_pass. It creates one independent
+legacy EUR100/USD50 source with one EUR10 transfer and no destination amount; the current original
+form is not bypassed to create Main data. Six original en/fa/de Light/Dark ForecastPages must show
+EUR90/USD50/incomplete1 with unchanged complete typed rows and zero financial Saves. The phase
+retains completed per-context receipts. Read the exact process/run/comparison report; an observation
+timeout must not restart the case. Restore the prior independent APK/stopped state and original
+Main public UI/APK/OS; no workload preparation, OS change or old successful financial replay belongs
+here. This is x64 native analytical evidence, not a full physical malformed-data or release gate.

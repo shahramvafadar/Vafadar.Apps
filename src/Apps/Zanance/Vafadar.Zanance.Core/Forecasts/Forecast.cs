@@ -21,7 +21,7 @@ public enum ForecastSource
 /// <param name="Date">When the item is assumed to happen.</param>
 /// <param name="Name">Plan name or entry title.</param>
 /// <param name="CurrencyCode">Currency of <paramref name="Effect"/>.</param>
-/// <param name="Effect">Signed effect on the balance in scope; <see langword="null"/> when the amount is unknown.</param>
+/// <param name="Effect">Signed effect on the balance in scope; <see langword="null"/> when the amount or destination conversion is unknown.</param>
 /// <param name="Source">Why the item is included.</param>
 /// <param name="IsEstimate">Whether the amount is an estimate.</param>
 /// <param name="ScheduleId">The plan, for plan items.</param>
@@ -123,7 +123,7 @@ public sealed record CurrencyForecast(
     IReadOnlyList<ForecastPoint> Path,
     IReadOnlyList<ForecastItem> Items)
 {
-    /// <summary>Gets the number of items whose amount is unknown; the result is then incomplete (FOR-05).</summary>
+    /// <summary>Gets the number of items whose monetary effect is unknown; the result is then incomplete (FOR-05).</summary>
     public int UnknownCount => Items.Count(i => i.Effect is null && !i.IsExcluded);
 
     /// <summary>Gets a value indicating whether the result is incomplete.</summary>
@@ -162,6 +162,7 @@ public static class ForecastCalculator
         ArgumentNullException.ThrowIfNull(entries);
         ArgumentNullException.ThrowIfNull(schedules);
         var accountList = accounts.ToList();
+        var accountCurrencies = accountList.ToDictionary(account => account.Id, account => account.CurrencyCode);
         // Without an explicit list: the accounts in totals that can pay bills (ZEX-P17). Money moved to an account outside
         // the scope (a card payment, a savings account kept aside) is a payment of the scope.
         var scope = LedgerCalculator.InScope(accountList, accountIds).Where(a => accountIds is not null || (!a.IsArchived && a.UsableForPayments)).ToDictionary(a => a.Id);
@@ -179,7 +180,7 @@ public static class ForecastCalculator
         foreach (var entry in entries.Where(e => e.Date > baseDate && e.Date <= horizon
                      && !(scope.TryGetValue(e.AccountId, out var entryAccount) && LedgerCalculator.IsBeforeOpening(e, entryAccount))))
         {
-            foreach (var (currency, effect) in Effects(entry.Kind, entry.AccountId, entry.ToAccountId, entry.Amount, entry.ToAmount, scope, entry.Direction, known: true))
+            foreach (var (currency, effect) in Effects(entry.Kind, entry.AccountId, entry.ToAccountId, entry.Amount, entry.ToAmount, scope, entry.Direction, known: true, accountCurrencies.GetValueOrDefault(entry.AccountId)))
             {
                 items.Add(new ForecastItem(entry.Date, entry.Title ?? string.Empty, currency, effect, ForecastSource.FutureEntry, false, entry.ScheduleId, entry.OccurrenceDate));
             }
@@ -213,7 +214,7 @@ public static class ForecastCalculator
                 var toAmount = schedule.ToAmount is { } to && schedule.Amount is > 0 && amount is { } used
                     ? (long)Math.Round((decimal)to * used / schedule.Amount.Value, MidpointRounding.AwayFromZero)
                     : schedule.ToAmount;
-                var effects = Effects(schedule.Kind, schedule.AccountId, schedule.ToAccountId, amount ?? 0, toAmount, scope, null, known: amount is not null);
+                var effects = Effects(schedule.Kind, schedule.AccountId, schedule.ToAccountId, amount ?? 0, toAmount, scope, null, known: amount is not null, accountCurrencies.GetValueOrDefault(schedule.AccountId));
                 foreach (var (currency, effect) in effects)
                 {
                     items.Add(new ForecastItem(
@@ -265,7 +266,7 @@ public static class ForecastCalculator
     private static bool Same(string a, string b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase);
 
     // Effect on the scope per currency. A transfer inside the scope moves nothing in total, unless the currencies differ.
-    private static List<(string Currency, long Effect)> Effects(
+    private static List<(string Currency, long? Effect)> Effects(
         EntryKind kind,
         Guid accountId,
         Guid? toAccountId,
@@ -273,9 +274,10 @@ public static class ForecastCalculator
         long? toAmount,
         IReadOnlyDictionary<Guid, Account> scope,
         AdjustmentDirection? direction,
-        bool known)
+        bool known,
+        string? sourceCurrency)
     {
-        var effects = new List<(string, long)>();
+        var effects = new List<(string, long?)>();
         scope.TryGetValue(accountId, out var source);
         switch (kind)
         {
@@ -302,7 +304,11 @@ public static class ForecastCalculator
 
                 if (destination is not null)
                 {
-                    effects.Add((destination.CurrencyCode, toAmount ?? amount));
+                    // FOR-05 / D-486: only a same-currency transfer can reuse the source minor units.
+                    // A legacy missing destination amount is not an implicit one-to-one exchange rate.
+                    // Read the original source currency even when that account is outside this scope.
+                    effects.Add((destination.CurrencyCode, toAmount
+                        ?? (Same(sourceCurrency ?? string.Empty, destination.CurrencyCode) ? amount : (long?)null)));
                 }
 
                 break;
@@ -310,7 +316,10 @@ public static class ForecastCalculator
 
         // Opposite effects in the same currency (a transfer inside the scope) cancel out. An unknown amount keeps one
         // item per affected currency, so each of them is marked incomplete (FOR-06).
-        var perCurrency = effects.GroupBy(e => e.Item1, StringComparer.OrdinalIgnoreCase).Select(g => (g.Key, g.Sum(e => e.Item2))).ToList();
-        return [.. perCurrency.Where(e => e.Item2 != 0 || effects.Count == 1 || (!known && perCurrency.Count > 1))];
+        var perCurrency = effects.GroupBy(e => e.Item1, StringComparer.OrdinalIgnoreCase)
+            .Select(group => (group.Key, Effect: group.Any(item => item.Item2 is null)
+                ? (long?)null : group.Sum(item => item.Item2!.Value))).ToList();
+        return [.. perCurrency.Where(item => item.Effect is null || item.Effect != 0
+            || effects.Count == 1 || (!known && perCurrency.Count > 1))];
     }
 }

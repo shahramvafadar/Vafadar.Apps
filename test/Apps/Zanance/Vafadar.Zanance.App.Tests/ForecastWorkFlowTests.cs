@@ -219,4 +219,35 @@ public sealed class ForecastWorkFlowTests
         var actual = Assert.Single(comparison.Days); Assert.Equal(12345, actual.Saved); Assert.Equal(12345, actual.Actual);
         Assert.Equal(0, comparison.Difference); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
     }
+    [Theory, Trait("AT", "AT-43")]
+    [InlineData(false)][InlineData(true)]
+    public async Task Legacy_missing_destination_stays_incomplete_through_original_read_and_atomic_snapshot_save(bool assumeSource)
+    {
+        using var f = new FlowFixture(); await SeedAsync(f, true); var access = new Access(); using var p = Provider(f, access);
+        var accounts = await f.Store.GetAccountsAsync(cancellationToken:Ct);
+        var eur = accounts.Single(account => account.CurrencyCode == "EUR");
+        var usd = accounts.Single(account => account.CurrencyCode == "USD");
+        var plan = new Core.Plans.Schedule { Name="Legacy destination unavailable", AccountId=eur.Id, ToAccountId=usd.Id,
+            Kind=Core.Ledger.EntryKind.Transfer, Amount=1234, ToAmount=null,
+            Rule=new() { Frequency=Core.Plans.Frequency.Once, Start=Day.AddDays(1) } };
+        // Represent an original legacy row; the current form correctly refuses creating an incomplete transfer.
+        await using (var db = await p.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct))
+        { db.Schedules.Add(plan); await db.SaveChangesAsync(Ct); }
+        var before = await GoalChooserFlowTests.SnapshotAsync(f); var vm = Workspace(f, p);
+        if (assumeSource) vm.Scenario.SetAmount(plan.Id, plan.Rule.Start, 2468);
+        await vm.LoadAsync(2, PeriodCalendar.Gregorian, Day);
+        Assert.True(vm.Loading.IsReady); Assert.Null(vm.Error); Assert.True(vm.CanSave);
+        Assert.Equal(assumeSource ? 9877 : 11111, vm.Forecasts.Single(item => item.CurrencyCode == "EUR").EndBalance);
+        var destination = vm.Forecasts.Single(item => item.CurrencyCode == "USD");
+        Assert.Equal(9876, destination.EndBalance); Assert.Null(Assert.Single(destination.Items).Effect); Assert.True(destination.IsIncomplete);
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        await vm.SaveAsync("Original missing-rate batch", null, "0.1.0"); Assert.Null(vm.Error); Assert.False(vm.CanSave);
+        var snapshots = await f.Store.GetForecastSnapshotsAsync(Ct); Assert.Equal(2, snapshots.Count);
+        var saved = snapshots.Single(item => item.CurrencyCode == "USD");
+        Assert.Equal(1, saved.UnknownCount); Assert.Equal(new[] { usd.Id }, saved.Scope());
+        Assert.All(saved.Points(), point => Assert.Equal(9876, point.Balance));
+        Assert.Equal(0, snapshots.Single(item => item.CurrencyCode == "EUR").UnknownCount);
+        var stored = Assert.Single(await p.GetRequiredService<PlanStore>().GetSchedulesAsync(Ct));
+        Assert.Equal(1234, stored.Amount); Assert.Null(stored.ToAmount); Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken:Ct));
+    }
 }

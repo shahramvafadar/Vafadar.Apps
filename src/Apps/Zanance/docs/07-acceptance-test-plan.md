@@ -48,7 +48,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-40 | Total and sub-category limits | BUD-02 | Unit + scoped physical | S1/S7 | Unit/screen verified; D-460 original Samsung independent total/category/refund and category-only scope; other hierarchy/platform variants remain |
 | AT-41 | Monthly equivalent of yearly cost | BUD-09 | Unit | S7 | Verified (unit) |
 | AT-42 | Forecast with settled occurrence | FOR-03 | Unit | S9 | Verified (unit) |
-| AT-43 | Unknown amount / missing rate | FOR-05 | Unit + scoped physical | S9 | Unit verified; D-466 original physical unknown amount and explicit temporary assumption/cold isolation; missing-rate and other platform variants remain separate |
+| AT-43 | Unknown amount / missing rate | FOR-05 | Unit + scoped physical | S9 | Unit verified; D-466 original physical unknown amount and explicit temporary assumption/cold isolation; D-486 fixes the reproduced legacy missing-destination conversion and qualifies original x64 native warnings/saved SQLite snapshots; physical missing-rate and other platform variants remain separate |
 | AT-44 | Month-end positive, mid-period negative | FOR-08 | Unit + scoped physical | S9 | Unit verified; D-466 original Samsung end150/minimum-50, temporary end130/minimum-70 and saved scenario/cold/native deletion; wider platform/variant acceptance remains |
 | AT-45 | USD purchase on EUR account | FX-01 | Unit | S1/S11 | Verified (unit, domain level) |
 | AT-46 | Change report currency | FX-05 | Unit | S11 | Verified (unit: incomplete totals, no relabelling; budgets keep their currency) |
@@ -5767,3 +5767,19 @@ original Accounts title/Back preserve all141 public Home tuples/979EUR and OS. R
 new helper and two emulator/twelve phone hash-matched XMLs; emulator Main28047 stays unchanged.
 
 Evidence: [original toolbar transition qualification](quality/toolbar-observer-transitions.md).
+
+### D-486 - Incomplete original foreign-transfer forecasts
+
+Reproduce four false one-to-one destination results with eight new Core cases. Missing original
+cross-currency destination amounts now keep null monetary effects; known source/same-currency/
+explicit destination effects remain known. Two new actual SQLite/workspace cases retain that
+warning through atomic currency snapshot Save.49 selected cases pass, including ten new cases.
+Six original Release/AOT en/fa/de Light/Dark pages expose EUR90/USD50/incomplete1 on one retained
+legacy source with all typed rows unchanged. Strict builds and the complete signed Offline384-AOT
+APK pass; Samsung no-reset upgrade and read-only original forecast preserve Home979/all141 public
+tuples/OS. Restore the exact old independent APK/stopped state and Main28047/all139 tuples.
+No source financial rewrite, schema, resource, permission or unrelated successful cohort replay.
+Priorb3fa1a0d CI/CodeQL succeed and its one-shot schedule is consumed/deleted. New-head CI and full
+physical/platform/security/stability/accessibility/release acceptance remain separate.
+
+Evidence: [original missing-destination conversion](quality/forecast-missing-destination.md).

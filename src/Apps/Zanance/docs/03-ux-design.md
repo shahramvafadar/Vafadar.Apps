@@ -2433,3 +2433,10 @@ behavior changes; native lifecycle checks do not establish a new broad layout/ac
 Keep the original title font, growing height, Back arrow and language semantics. Native layout
 observation follows the toolbar's actual window attachment, leaving detached roots silent and
 resuming after reattachment. Retirement removes the exact registration and neutralizes callbacks.
+
+## D-486 - Forecasts preserve unknown conversion effects
+
+A known source amount never supplies a missing foreign-currency destination amount. Keep the
+original incomplete warning and unknown row beside that destination's path while preserving the
+known source path. Source-only what-if amounts cannot invent a rate. Snapshot history retains
+incompleteness; no analytical read rewrites the original plan or ledger.

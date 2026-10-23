@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Incomplete currency transfers in forecasts (D-486)
+
+- Keep a forecast incomplete when an old foreign-currency transfer has no destination amount.
+- Preserve the known source amount and never assume a one-to-one exchange rate.
+
 ### Native title observation (D-485)
 
 - Keep Android title layout observation active when its native toolbar moves between windows.

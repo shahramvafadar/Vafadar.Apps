@@ -4102,3 +4102,19 @@ original Accounts title/Back preserve all141 public Home tuples/979EUR and OS. R
 new helper and two emulator/twelve phone hash-matched XMLs; emulator Main28047 stays unchanged.
 
 Evidence: [original toolbar transition qualification](../../quality/toolbar-observer-transitions.md).
+
+### D-486 - Incomplete original foreign-transfer forecasts
+
+Reproduce four false one-to-one destination results with eight new Core cases. Missing original
+cross-currency destination amounts now keep null monetary effects; known source/same-currency/
+explicit destination effects remain known. Two new actual SQLite/workspace cases retain that
+warning through atomic currency snapshot Save.49 selected cases pass, including ten new cases.
+Six original Release/AOT en/fa/de Light/Dark pages expose EUR90/USD50/incomplete1 on one retained
+legacy source with all typed rows unchanged. Strict builds and the complete signed Offline384-AOT
+APK pass; Samsung no-reset upgrade and read-only original forecast preserve Home979/all141 public
+tuples/OS. Restore the exact old independent APK/stopped state and Main28047/all139 tuples.
+No source financial rewrite, schema, resource, permission or unrelated successful cohort replay.
+Priorb3fa1a0d CI/CodeQL succeed and its one-shot schedule is consumed/deleted. New-head CI and full
+physical/platform/security/stability/accessibility/release acceptance remain separate.
+
+Evidence: [original missing-destination conversion](../../quality/forecast-missing-destination.md).
