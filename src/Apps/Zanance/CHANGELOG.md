@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Android receipt-reading help (D-504)
+
+- Explain which image text can be read, including the Persian image limitation and selectable-text PDFs.
+- Keep reading help optional in the receipt source chooser; ordinary camera/file selection stays direct.
+
 ### Local service management (D-502)
 
 - Retire completed Docker fixtures and keep the necessary local service in one manageable group.

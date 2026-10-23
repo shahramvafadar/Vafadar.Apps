@@ -8434,4 +8434,10 @@ SHA-256 del XML original: {5}</value>
   <data name="Snapshot_OtherMovements" xml:space="preserve">
     <value>Otros movimientos de las cuentas</value>
   </data>
+  <data name="Receipt_ImageHelp" xml:space="preserve">
+    <value>¿Qué textos se pueden leer?</value>
+  </data>
+  <data name="Receipt_ImageHelpText" xml:space="preserve">
+    <value>En Android, las fotos y las páginas PDF escaneadas se leen con un reconocimiento de escritura latina. No se admite el texto persa en imágenes. Los PDF con texto persa seleccionable sí se pueden leer. Comprueba siempre el importe y la moneda antes de guardar.</value>
+  </data>
 </root>

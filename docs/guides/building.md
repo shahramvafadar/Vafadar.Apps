@@ -2471,3 +2471,14 @@ original PID/run/comparison once complete. Reports retain public recognized text
 owner documents/credentials are excluded. Restore old caller/data/stopped state and Main/OS;
 remove only owned hash-matched remote output. No financial commands or successful image replay.
 See [scope and source](../../src/Apps/Zanance/docs/quality/public-receipt-corpus.md).
+
+### D-504 receipt-source qualification
+
+`ReviewReceiptSource=true` belongs only to the independent AndroidHome project/new disposable
+receipt-source identity. Its documented receipt-source-help and portrait-only return paths never
+belong in shipping behaviour. Use actual measured dialog widths and explicit same-run progress;
+keep terminal source/UI evidence instead of replaying successful checks. D-504 uses separate
+`--artifacts-path`/`ArtifactsPath` build roots on the spacious review drive; focused test outputs
+are cleaned after the fifteen new cases. Existing Windows UI is unchanged; its strict build
+passes and unrelated snapshots are not repeated. See the benchmark README and
+`src/Apps/Zanance/docs/quality/android-receipt-source-help.md`.

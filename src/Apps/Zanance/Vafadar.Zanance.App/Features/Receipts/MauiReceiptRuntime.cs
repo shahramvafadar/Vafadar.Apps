@@ -17,17 +17,18 @@ public sealed class MauiReceiptRuntime(Translator translator, AppLockService app
         try
         {
             PreparedAttachment? picked;
-            if (PermissionPrompts.CanTakePhoto)
+            var choice = await ReceiptSourceChooser.ChooseAsync(translator, interaction, PermissionPrompts.CanTakePhoto,
+#if ANDROID
+                showLatinImageHelp: true);
+#else
+                showLatinImageHelp: false);
+#endif
+            if (choice == ReceiptSourceChoice.Cancelled) return null;
+            if (choice == ReceiptSourceChoice.Photo)
             {
-                var camera = translator["Receipt_TakePhoto"];
-                var choice = await interaction.ChooseAsync(translator["Receipt_SourceTitle"], translator["Common_Cancel"], camera, translator["Receipt_ChooseFile"]);
-                if (choice == camera)
-                {
-                    picked = await PermissionPrompts.TakePhotoAsync(translator) is { } photo
-                        ? await AttachmentFiles.FromCameraAsync(translator["Camera_PhotoName"], photo) : null;
-                    return Convert(picked);
-                }
-                if (choice != translator["Receipt_ChooseFile"]) return null;
+                picked = await PermissionPrompts.TakePhotoAsync(translator) is { } photo
+                    ? await AttachmentFiles.FromCameraAsync(translator["Camera_PhotoName"], photo) : null;
+                return Convert(picked);
             }
             return Convert(await AttachmentFiles.PickAsync(translator["Attachment_Pick"], forRecognition: true));
         }

@@ -3588,3 +3588,16 @@ after reading, never guide OCR with them. A safe Persian-script refusal under th
 model is not six-language image recognition. Retain evaluation notices in old synthetic source
 pages; no merchant-accuracy claim. Retire only the new observer inputs and restore original caller/
 Main/OS while keeping pending timed sources untouched.
+
+## D-504 - Receipt source capability and native restoration
+
+Offer Android's Latin-image limitation as optional source-choice help in every existing language;
+keep camera/file selection free of an extra confirmation. Help/Cancel never open a source or post
+money. Distinguish Persian image OCR from selectable-text PDFs; do not imply a new model/capability.
+Native dialog widths are actual measured widths, not requested values: the current384dp portrait
+phone caps a412dp request. Preserve those completed observations and add only missing exact-width
+cases in the disposable caller's own wider window. After a transient app orientation change, verify
+original portrait Home tuples as well as unchanged system settings. A disposable portrait-only
+activity may restore that window state; never write system rotation/display settings or replay UI.
+Keep D-494/D-496 sources untouched. After D-494 consumption/cleanup, adopt only the latest verified
+complete signed candidate once without reset; D-504 supersedes D-500 as that ready candidate.

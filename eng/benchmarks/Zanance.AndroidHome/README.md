@@ -917,3 +917,28 @@ Five Latin single-page totals, first-three/last-page selection, cross-page curre
 no-total refusal and Persian-script limitation are distinct outcomes. Preserve old caller APK/data/
 stopped state, Main public UI/OS and pending timed sources. These are observations, not unit tests,
 camera capture, merchant quality, Persian OCR or full receipt/release acceptance.
+
+## Original Android receipt-source help (D-504)
+
+Build only the new disposable identity with `ReviewReceiptSource=true`, ARM64 and strict Release.
+The identity is `pro.vafadar.zanance.receiptsourcereview`, never Main or the retained Home-review UID.
+A fresh `receipt-source-help` run/pass invokes the original ReceiptSourceChooser and actual
+MauiAppInteraction dialogs. Native list/button activation opens help, acknowledges it and cancels
+source selection. It opens no camera/file/financial writer. Observe with `Read-ReviewReport.ps1`
+and its explicit `-ReceiptSourceReview -PhysicalDevice -DeviceTransportId` switches.
+
+The en/fa/de Light/Dark matrix measures actual dialog windows at360/384/412/680dp. No OS display,
+font or rotation setting is changed; landscape belongs only to this new activity. The unchanged
+portrait phone caps a requested412dp dialog to384dp. Retain that successful narrower observation;
+continue only six missing exact412dp dialogs in the own landscape window. Native text layout,
+visibility, full source strings and differing theme colours are checked before actual invocation.
+An explicit `review_source_help_resume=true` with the same run/fresh pass and original failed
+`review_baseline` retains completed per-context receipts; source inputs must remain unchanged.
+Failure reports use their original `failure-*.json` protocol. Never replay completed cases to repair
+an observer. Record retained/current cases separately; these are observations, not managed tests.
+
+After terminal evidence, restore actual portrait Main as well as unchanged settings. Android may
+retain the last app-requested orientation after Unspecified. The fixed disposable identity accepts
+`review_return_portrait=true` solely to return its own window to portrait, without a qualification
+phase or source action; then resume original Main, verify its complete public tuples and uninstall
+only this new caller. Preserve old Home-review APK/data/stopped state and pending timed subjects.

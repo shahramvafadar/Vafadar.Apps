@@ -8499,4 +8499,10 @@ Original XML SHA-256: {5}</value>
   <data name="Snapshot_OtherMovements" xml:space="preserve">
     <value>Other account movements</value>
   </data>
+  <data name="Receipt_ImageHelp" xml:space="preserve">
+    <value>What can be read?</value>
+  </data>
+  <data name="Receipt_ImageHelpText" xml:space="preserve">
+    <value>On Android, photos and scanned PDF pages are read with a Latin-script recognizer. Persian text in images is not supported. PDFs with selectable Persian text can be read. Always check the amount and currency before saving.</value>
+  </data>
 </root>

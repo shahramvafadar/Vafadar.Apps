@@ -8465,4 +8465,10 @@
   <data name="Snapshot_OtherMovements" xml:space="preserve">
     <value>سایر جابه‌جایی‌های حساب</value>
   </data>
+  <data name="Receipt_ImageHelp" xml:space="preserve">
+    <value>چه متن‌هایی خوانده می‌شوند؟</value>
+  </data>
+  <data name="Receipt_ImageHelpText" xml:space="preserve">
+    <value>در Android، متن عکس‌ها و صفحه‌های اسکن‌شدهٔ PDF با یک خوانندهٔ خط لاتین خوانده می‌شود. متن فارسی در تصویر پشتیبانی نمی‌شود. فایل PDF با متن فارسیِ قابل انتخاب خوانده می‌شود. پیش از ذخیره، مبلغ و ارز را همیشه بررسی کنید.</value>
+  </data>
 </root>

@@ -19,6 +19,11 @@
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
+  <!-- New native source-help qualification owns no retained caller/financial data. -->
+  <PropertyGroup Condition="'$(ReviewReceiptSource)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.receiptsourcereview</ApplicationId>
+    <DefineConstants>$(DefineConstants);RECEIPT_SOURCE_REVIEW</DefineConstants>
+  </PropertyGroup>
   <!-- Scanned receipt inputs belong only to the independent caller, never to the shipping app. -->
   <ItemGroup Condition="'$(ScannedReceiptRoot)' != ''">
     <MauiAsset Include="$(ScannedReceiptRoot)/scan-*.pdf" LogicalName="scanned-receipts/%(Filename)%(Extension)" />

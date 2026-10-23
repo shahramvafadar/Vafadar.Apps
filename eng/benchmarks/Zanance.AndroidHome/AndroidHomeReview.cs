@@ -21,7 +21,9 @@ namespace Vafadar.Zanance.App;
 internal static partial class AndroidHomeReview
 {
     /// <summary>The independent install allowed to own these fictitious workloads.</summary>
-#if CURRENCY_FOCUS_REVIEW
+#if RECEIPT_SOURCE_REVIEW
+    internal const string Package = "pro.vafadar.zanance.receiptsourcereview";
+#elif CURRENCY_FOCUS_REVIEW
     internal const string Package = "pro.vafadar.zanance.currencyfocusreview";
 #elif HOUSEHOLD_MONEY_FRESH
     internal const string Package = "pro.vafadar.zanance.householdmoneyreview";
@@ -55,6 +57,15 @@ internal static partial class AndroidHomeReview
                 var resumeUnreviewed = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_resume_unreviewed", false) == true;
                 await Task.Run(() => PrepareAsync(root, ct, unreviewed: phase == "prepare-unreviewed", resumeUnreviewed), ct);
                 await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, UnreviewedCorpus = phase == "prepare-unreviewed", NativeOverflowRefusals = phase == "prepare-unreviewed" ? CheckUnreviewedOverflow() : 0, CoreModuleVersionId = typeof(LedgerCalculator).Module.ModuleVersionId, MainPackageTouched = false, Device = DeviceEvidence() }, ct);
+            }
+            else if (phase == "receipt-source-help")
+            {
+                Directory.CreateDirectory(root);
+                var resume = Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_source_help_resume", false) == true;
+                if (Package != "pro.vafadar.zanance.receiptsourcereview" || RedirectedAncestors(root).Length != 0
+                    || !resume && Directory.EnumerateFileSystemEntries(root).Any())
+                    throw new ReviewCheckException("Fresh distinct source-help fixture or explicit retained continuation required.");
+                await WriteReportAsync(root, phase, await ReviewReceiptSourceHelpAsync(app, services, root, comparison!, baseline, resume, ct), ct);
             }
             else if (phase == "scanned-receipts")
             {
@@ -650,6 +661,9 @@ internal static partial class AndroidHomeReview
                 ReviewCheck = error is ReviewCheckException check ? check.Message : null,
                 WindowPageType = app.Windows.FirstOrDefault()?.Page?.GetType().Name,
                 ShellPageType = (app.Windows.FirstOrDefault()?.Page as AppShell)?.CurrentPage?.GetType().Name,
+                SourceHelpStage = phase == "receipt-source-help" ? _receiptSourceStage : null,
+                SourceHelpCompletedCases = phase == "receipt-source-help" && Directory.Exists(root)
+                    ? Directory.GetFiles(root, "??-*-*.json").Select(Path.GetFileName).ToArray() : null,
                 BalanceEvidence = _balanceEvidence,
 #if HOUSEHOLD_MONEY_REVIEW
                 SecondaryHouseholdEvidence,

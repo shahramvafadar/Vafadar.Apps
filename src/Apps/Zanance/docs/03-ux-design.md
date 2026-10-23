@@ -2511,3 +2511,23 @@ Public image qualification preserves Review for damaged total/count evidence and
 no final total is readable. Never replace a reviewed draft from subtotal/payment arithmetic or
 silently repair OCR digits to fit a known annotation. Finite Latin corpus results are distinct
 from six-language, merchant/currency and native saved-form acceptance; presentation is unchanged.
+
+### D-504 - Optional Android receipt-reading capability help
+
+The original camera/file chooser now offers optional six-language reading help. Explain the approved
+Latin image/scanned-PDF capability, unsupported Persian image text, selectable Persian PDF text and
+explicit amount/currency review. Ordinary photo/file selection adds no confirmation; help returns to
+the chooser and Cancel opens no source. Fifteen new original-source/resource cases pass; strict
+Windows and complete signed Offline384-AOT shipping builds pass without warnings/errors. Original
+native chooser/interaction in a new isolated UID qualifies24 contexts: en/fa/de, Light/Dark and actual
+360/384/412/680dp dialogs,72 native help/OK/Cancel clicks. Retain the first successful case after a
+focus refusal, then all18 completed cases while adding only six missing exact412dp dialogs; correct
+an observer resume-file mistake without replaying source reads or financial commands. All text is
+fully visible/unellipsized, with actual differing native theme colours. Restore original Main25043/
+Home979/all141 public tuples/APK/OS and old caller/stopped state; uninstall the new caller and remove
+seven owned XMLs. A retained landscape layout is returned through only the disposable caller's
+portrait window; no system setting or source-help cohort is replayed. Four D-494 handles/PID24914
+and D-496 remain intact. Main remains D-495 until D-494 terminal cleanup; the latest complete ready
+APK is D-504 and includes D-497/D-499/D-500. Persian OCR, OS scaling/spoken, general stability,
+iOS/provider/Store/publication and future-day acceptance remain open. No new SDK/model/schema/
+permission/commercial restriction. [Evidence](quality/android-receipt-source-help.md).

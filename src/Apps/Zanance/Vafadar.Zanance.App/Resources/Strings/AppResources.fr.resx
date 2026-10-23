@@ -8442,4 +8442,10 @@ SHA-256 du XML original : {5}</value>
   <data name="Snapshot_OtherMovements" xml:space="preserve">
     <value>Autres mouvements des comptes</value>
   </data>
+  <data name="Receipt_ImageHelp" xml:space="preserve">
+    <value>Quels textes peuvent être lus ?</value>
+  </data>
+  <data name="Receipt_ImageHelpText" xml:space="preserve">
+    <value>Sous Android, les photos et les pages PDF numérisées sont lues par un outil de reconnaissance de l’écriture latine. Le texte persan dans les images n’est pas pris en charge. Les PDF contenant du texte persan sélectionnable peuvent être lus. Vérifiez toujours le montant et la devise avant d’enregistrer.</value>
+  </data>
 </root>
