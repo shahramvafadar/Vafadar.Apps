@@ -258,3 +258,14 @@ Adding a new native inventory requires the original unpublished producer archive
 and then the ordinary consumer/persistence/workload run. A matching compiler hash alone is not a
 matching native output. Preserve failures and do not replay unrelated successful local suites.
 See [actual hosted drift and archive qualification](../../src/Apps/Zanance/docs/quality/ci-common-recovery.md).
+
+## Original physical Android key review (D-483)
+
+eng/tests/AndroidKeyProtection links original protection sources under its independent API31-minimum
+ARM64 Release UID. Full publish produces a complete v3-signed permission-free package. Use one
+run identity through create/cold/retire; prove only that helper's process death before each later
+phase, and never repeat a consumed claim. Top-instance intent delivery alone is not OnCreate or
+phase completion. Require original exact-PID receipts, no lost-key recreation and final alias
+absence before uninstall/restoration. No keys/envelopes/private expectations are logged/pulled.
+Read the fixture README for original foreground/public-UI/APK/OS and hash-matched cleanup guards;
+these native cases do not increase the managed-suite count or accept full security/platform scope.

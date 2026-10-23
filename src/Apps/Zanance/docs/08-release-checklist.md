@@ -2991,3 +2991,16 @@ The reproduced fault is fixed; general ANR/crash/GC, speed, natural low-memory, 
 iOS/provider/Store and release acceptance remain open. Exact pushed-head CI remains a separate gate.
 
 See the detailed [D-482 evidence](quality/detached-validation-listeners.md).
+
+### D-483 - Physical key-protection cohort
+
+The permission-free independent ARM64 Release fixture links the actual Android key protector and
+binding. One retained run passes creation, real cold reopen,12 wrong-binding/tamper/purpose/length
+refusals and original retirement with2 denied authorities/2 aliases absent and no lost-key creation.
+Both keys report OS security level1 (Trusted Environment); no Main alias inspection or hardware
+attestation is claimed. Strict native build/v3 package pass. Helper and2 hash-matched XMLs are
+removed; Main27601/all141 public Home tuples/979/APK/OS stay equal. No financial command, managed
+suite count or successful unrelated Main/Windows build is repeated. Shipping source/APK stay D-482.
+Authentication, full SEC/platform/OEM/power-loss/API24/16KiB/iOS and release gates remain open.
+
+Evidence: [bounded physical key evidence](quality/physical-key-protection.md).

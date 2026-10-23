@@ -991,3 +991,17 @@ Temporary review hooks are absent; exact keys/financial hashes were retained. No
 producer/upstream or unrelated successful app checks were repeated. Windows/iOS encrypted adoption,
 physical power-loss/full crash matrix, phone/arm64/API24/16KiB/OEM/spoken/provider/Store and fresh hosted
 acceptance remain separate. Component package proof does not substitute for those gates.
+
+### D-483 - Bounded physical original-adapter evidence
+
+The actual AndroidDatabaseKeyProtector and DatabaseKeyBinding are linked into a separate newly
+owned permission-free ARM64 Release package. Samsung reports KeyInfo level1 for its new generation
+and recovered aliases; actual cold unwrap,12 tamper/binding/length/purpose refusals and original
+retirement authority/absence/lost-key refusal pass. No Main keys/database, owner credentials or
+system settings are read/changed. Main remains27601/141 public Home nodes/979/APK/OS; helper removed.
+
+This is OS-reported Trusted Environment metadata and scoped original-adapter behavior, not remote
+attestation or proof about all existing Main keys, StrongBox, compromised OS, authentication-bound
+biometrics, power-loss/OEM transfer or iOS. No production source/schema/permission/SDK change.
+See [physical evidence](../../src/Apps/Zanance/docs/quality/physical-key-protection.md) and
+[fixture execution/retirement rules](../../eng/tests/AndroidKeyProtection/README.md).

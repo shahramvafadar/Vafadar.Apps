@@ -8763,3 +8763,19 @@ No new managed-suite count or unrelated successful replay. Preceding head1c8d17d
 this pushed head requires its own check. General stability/performance/platform/release stays open.
 
 Evidence: [detached validation listener ownership](quality/detached-validation-listeners.md).
+
+### D-483 - Physical original native key protection
+
+Qualify the actual protector/binding sources in one separate permission-free ARM64 Release UID,
+never reading Main keys or databases. One original fictitious generation/recovered fixture passes
+creation PID20062, actual cold PID20266, twelve binding/purpose/tamper/length refusals and retirement
+PID20384: two denied-authority removals preserve keys, two original authorized removals prove absence,
+and lost-key unwrap cannot create replacements. Both aliases report native security level1 (Trusted
+Environment); this is OS metadata, not remote attestation, Main-key inspection or StrongBox proof.
+Strict full native publish and actual v3 signature pass; preserve pre-install v2-observer refusal
+and top-instance retirement delivery with no OnCreate. Continue only the unexecuted retirement,
+without replaying accepted creation/cold. Remove the new helper and2 hash-matched XMLs, preserving
+Main27601/all141 Home tuples/979/APK/OS. No managed count, Main build, financial command, schema,
+SDK, permission or source algorithm change. Authentication/OEM/power-loss/iOS/release remain open.
+
+Evidence: [physical original key protection](quality/physical-key-protection.md).

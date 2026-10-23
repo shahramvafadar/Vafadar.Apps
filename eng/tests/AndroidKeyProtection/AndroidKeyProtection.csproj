@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <ApplicationId>pro.vafadar.zanance.keyreview</ApplicationId>
+    <ApplicationTitle>Zanance key review</ApplicationTitle>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
+    <SupportedOSPlatformVersion>31</SupportedOSPlatformVersion>
+    <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
+    <AndroidManifest>AndroidManifest.xml</AndroidManifest>
+    <AndroidPackageFormats>apk</AndroidPackageFormats>
+    <AndroidDebuggable>false</AndroidDebuggable>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <PublishTrimmed>false</PublishTrimmed>
+    <RunAOTCompilation>false</RunAOTCompilation>
+  </PropertyGroup>
+  <!-- Exercise original platform protection under this separate app UID, never Main's keys. -->
+  <ItemGroup>
+    <AppSecret Remove="@(AppSecret)" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidDatabaseKeyProtector.cs" Link="AndroidDatabaseKeyProtector.cs" />
+    <Compile Include="$(RepoRoot)src/Libraries/Vafadar.Data/DatabaseKeyBinding.cs" Link="DatabaseKeyBinding.cs" />
+  </ItemGroup>
+  <Target Name="RequireOwnedKeyReview" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.keyreview' Or '$(Configuration)' != 'Release'"
+           Text="Native key qualification requires its fixed independent Release identity." />
+  </Target>
+</Project>
