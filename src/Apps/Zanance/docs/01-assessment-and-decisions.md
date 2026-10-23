@@ -9095,3 +9095,13 @@ Prior4de95cfb CI40004246720/CodeQL40004246807/service40004246802/identity4000424
 once; monitor consumed/deleted. Continue remaining quality gates without repeating these images.
 
 Evidence: [finite public corpus and limitations](quality/public-receipt-corpus.md).
+
+### D-502 - Retire completed Docker fixtures and retain one desktop group
+
+Owner decision 2026-10-23: clean unnecessary owned resources continuously and group necessary
+containers for whole-stack management. Preserve the existing local privacy-restore identity and
+its five Compose containers; retire 58 completed fixture containers, 9 unneeded images and 16 empty
+networks. Preserve all private volumes/snapshots and available image dependencies; no global shared
+engine cleanup. Add bounded ownership-checked status/start/stop commands without rebuilding or
+replaying provision/migration. Actual stop/start and original readiness are documented in
+`quality/docker-lifecycle.md`. No app/APK, unit-test count, public hosting or release gate changes.

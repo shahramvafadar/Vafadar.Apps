@@ -3567,3 +3567,14 @@ repair a report. Compare numeric results afterward. Found, Review and NotFound a
 outcomes, not a blanket quality pass or new managed-test count. Do not infer six-language,
 merchant/currency, camera or saved-form acceptance from a Latin-script public sample. Preserve
 old caller data/APK/stopped state, Main public UI/OS and pending timed sources.
+
+## Owner Docker lifecycle and grouping (2026-10-23, D-502)
+
+Keep this project's necessary containers in one Docker Desktop Compose group. Remove completed,
+unneeded project-owned containers, images and networks after retaining required evidence; do not
+accumulate finished qualification stacks. Use disposable `--rm` callers where continuation is not
+needed. Never perform global pruning on the shared engine. Preserve required private volumes,
+recovery snapshots and their exact image dependencies, and all unrelated projects. The retained
+local group is `zanance-selfhost-privacy-restore-d294`; use `eng/hosting/desktop.py` for whole-stack
+status/start/stop without rebuilding, reprovisioning, replaying migrations or changing identities.
+Temporary independent fixtures must be retired when their remaining work is complete.

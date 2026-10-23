@@ -194,3 +194,42 @@ connectivity. No new listening port is published; the base configuration remains
 network-isolated. This overlay is statically validated, not an assertion of a rebuilt/running
 container or a publicly accepted deployment. Existing fresh-storage, DNS/TLS/mail and company/store
 gates remain. See ../../src/Apps/Zanance/docs/quality/ecb-reference-integration.md.
+
+## D-502 Docker Desktop lifecycle consolidation
+
+The owner requested cleanup of unnecessary resources and one manageable group on 2026-10-23.
+The retained group is `zanance-selfhost-privacy-restore-d294`, containing database, api, proxy and
+the two successfully completed provision/migrate one-shots. Its historical project name is retained
+because the original qualification identities/volume ownership and restore authorities depend on it.
+No production/public service was activated. Docker Desktop can start/stop the group as one unit.
+
+For an ordered resume of the original long-running workers only:
+
+```powershell
+python eng/hosting/desktop.py status
+python eng/hosting/desktop.py stop
+python eng/hosting/desktop.py start
+```
+
+These commands validate exact project/service/hosting labels, never build or recreate containers,
+stop clients before the database, and wait for database/API health before dependent startup.
+They intentionally do not replay the completed provision/migrate commands. Existing `operate.py`
+remains the separately guarded snapshot/renewal/restore operator; do not run a default `compose up`
+against an old project to recreate retired fixtures or replace the retained image/configuration.
+
+58 completed containers, 9 unnecessary image IDs and 16 unused networks were removed. All 192
+engine volumes were preserved, including nine complete private snapshots. Their 16 distinct
+helper/runtime dependencies were protected from deletion; nine are locally available and seven
+were already absent. None of the removed image IDs intersects this dependency set. Snapshot manifests were
+read only inside isolated no-network helpers;
+private archive/key payloads were not exported. Archived fixture containers no longer exist:
+restoring an old snapshot still requires reconstructing its exact original stopped source ownership
+from retained configuration/volumes before the existing privacy-source guard can pass. This cleanup
+is not another restore acceptance and does not waive that guard.
+
+Future qualification callers should use `--rm` when no continuation is required. Keep failures and
+unfinished fixtures only while needed; after a terminal result retain bounded evidence and remove
+the disposable runtime resources. Review ownership, mounts, retained recovery dependencies and
+other users of an image before deletion. Never prune the shared engine's global cache/images/volumes.
+The 323GB shared build cache was not attributed exclusively to this repository and remains untouched.
+See `src/Apps/Zanance/docs/quality/docker-lifecycle.md` for the actual stop/start verification.

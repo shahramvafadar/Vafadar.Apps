@@ -5262,3 +5262,10 @@ merchant/currency coverage. Strict signed192-AOT independent caller and exact im
 assets pass. Restore old caller/data/stopped state, Main25043/Home979/141/OS; remove two owned
 XMLs. D-494/D-496 preserved; no shipping source/SDK/permission or release change.
 [Evidence](../../quality/public-receipt-corpus.md).
+
+### D-502 - Docker resource lifecycle and one desktop group
+
+Completed local operations: 58 retired containers, 9 unnecessary images and 16 empty networks;
+one retained five-container Compose group, ownership-checked ordered stop/start and actual health.
+Private volumes/snapshots and available required image IDs preserved; shared/unrelated resources unchanged.
+No app/APK or test-count change; external/release gates remain. See `../../quality/docker-lifecycle.md`.

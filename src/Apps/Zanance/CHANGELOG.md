@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Local service management (D-502)
+
+- Retire completed Docker fixtures and keep the necessary local service in one manageable group.
+
 ### Public receipt-photo qualification (D-501)
 
 - Checked ten fixed public receipt photographs on Android without saving financial data.

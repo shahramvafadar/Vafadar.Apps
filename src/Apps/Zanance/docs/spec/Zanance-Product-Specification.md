@@ -8875,3 +8875,10 @@ Prior4de95cfb CI40004246720/CodeQL40004246807/service40004246802/identity4000424
 once; monitor consumed/deleted. Continue remaining quality gates without repeating these images.
 
 Evidence: [finite public corpus and limitations](../quality/public-receipt-corpus.md).
+
+### D-502 local deployment lifecycle qualification
+
+The owner-requested Docker cleanup retains one local Compose group and ordered whole-stack
+operations. Completed fixtures were retired with all private recovery volumes and available image dependencies
+preserved; original runtime health was checked after stop/start. Product source/APK and unit-test
+count are unchanged. See `../quality/docker-lifecycle.md`; public/provider/iOS/release gates remain.

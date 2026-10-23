@@ -3256,3 +3256,11 @@ reader/parser: five correct Found, three Review, two NotFound including the no-t
 No financial save, new managed count, shipping source/SDK/permission or broader quality acceptance.
 QA-05 remains partial for six-language/camera/scanned/Persian/merchant/currency/device coverage.
 Original caller/Main/OS restored; D-494/D-496 preserved. [Evidence](quality/public-receipt-corpus.md).
+
+### D-502 local Docker operations
+
+- [x] Retire completed owned fixture containers/images/networks; preserve recovery dependencies.
+- [x] Keep necessary containers in one Compose group; verify actual stop/start and readiness.
+- [ ] Public deployment/mail/provider and disaster-recovery acceptance remain separate gates.
+
+See `quality/docker-lifecycle.md` and `eng/hosting/desktop.py`. This is local qualification only.
