@@ -3239,3 +3239,12 @@ Forty new/20 existing related cases and bounded original Windows/Samsung native 
 with accepted actions retained through observation-only continuation. Strict Windows/signed
 Offline384-AOT shipping builds pass. Main adoption waits for D-494; no schema/permission change
 or broader stability/iOS/provider/release acceptance. See [scope and evidence](quality/csv-literal-identity.md).
+
+### D-500 - Shared original Home balance index
+
+One worker-local index serves account rows and both balance totals without changing the financial
+formula or source/authority validation. Twelve new and29 related managed cases, retained Windows
+and same-day Samsung native sources pass with complete data preservation and zero financial writes.
+Isolated allocation falls about two thirds; whole-Home two-second/stability targets remain open.
+Main adoption waits for D-494; remaining future-day/external gates are preserved.
+See [bounded evidence](quality/home-shared-balance-index.md).

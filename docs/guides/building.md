@@ -2444,3 +2444,14 @@ review_run and a fresh comparison. It validates the original completed receipt; 
 review retains its fresh-root guard. Read the exact current PID/run/comparison report once complete.
 Restore retained caller APK/data/stopped state, original Main/OS/public UI and remove only owned
 hash-matched remote output. See [evidence](../../src/Apps/Zanance/docs/quality/csv-literal-identity.md).
+
+## Current-day Home comparison (D-500)
+
+Retain the original independent home-stages source run, protected generations/keys and raw rollback
+oracles. A different-day complete presentation packet can refuse on date-sensitive captions; never
+weaken equality or overwrite the old packet. Establish a fresh comparison=baseline identity with
+the already verified original code on the same source, then compare the changed code against that
+current-day baseline. Preserve failed/partial identities and continue only missing read-only scenes.
+Never seed or repeat financial commands. Windows home-workload remains independent storageacceptance
+with a marked retained source root and isolated non-input desktop. Record complete source equality,
+restoration and exact owned output cleanup; small timing cohorts do not establish stable speedup.

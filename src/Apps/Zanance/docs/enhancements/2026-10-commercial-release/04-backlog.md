@@ -5240,3 +5240,14 @@ Strict Windows/signed Offline384-AOT APK builds pass. Exact old caller/Main/OS r
 resumed identities and D-496 source preserved. Main no-reset adoption remains pending D-494,
 with D-497 adoption; minimum-API/16KiB runtime, remaining security/stability/accessibility/iOS/
 provider/Store/release gates stay open. [Evidence](../../quality/csv-literal-identity.md).
+
+### D-500 - Shared original Home balance index
+
+One operation-local index now serves account rows and both totals; original financial formulas,
+validation and complete reads stay. Twelve new/29 related cases and retained Windows/Samsung
+native sources pass with no financial writes. Preserve the historical cross-date guard refusal;
+current-day original-code comparison gives full presentation/raw-source equality. Isolated
+allocation falls about two thirds, while whole-Home two-second/general stability remain open.
+Strict Windows/signed384-AOT Offline APK pass. Restore caller/Main25043/Home979/141/OS and remove
+two owned XMLs; D-494/D-496 stay intact. Conditional no-reset adoption and external gates remain.
+[Evidence](../../quality/home-shared-balance-index.md).

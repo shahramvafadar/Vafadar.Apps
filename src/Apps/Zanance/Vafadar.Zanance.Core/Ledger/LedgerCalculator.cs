@@ -83,10 +83,23 @@ public static class LedgerCalculator
         IReadOnlyCollection<LedgerEntry> entries,
         DateOnly at,
         IReadOnlyCollection<Guid>? accountIds = null,
+        bool confirmedOnly = false) =>
+        TotalBalancesFromIndex(accounts, new AccountEntryIndex(entries), at, accountIds, confirmedOnly);
+
+    /// <summary>
+    /// Sums balances using an already captured, unchanged ledger index. Home shares its operation-local index
+    /// between account rows and both total views, avoiding two additional complete ledger indexes (D-500).
+    /// The caller must not reuse the index after changing its source entries.
+    /// </summary>
+    public static IReadOnlyDictionary<string, long> TotalBalancesFromIndex(
+        IEnumerable<Account> accounts,
+        AccountEntryIndex indexed,
+        DateOnly at,
+        IReadOnlyCollection<Guid>? accountIds = null,
         bool confirmedOnly = false)
     {
+        ArgumentNullException.ThrowIfNull(indexed);
         var totals = new SortedDictionary<string, long>(StringComparer.Ordinal);
-        var indexed = new AccountEntryIndex(entries);
         foreach (var account in InScope(accounts, accountIds).Where(a => accountIds is not null || !a.IsArchived))
         {
             totals[account.CurrencyCode] = checked(totals.GetValueOrDefault(account.CurrencyCode) + Balance(account, indexed.For(account.Id), at, confirmedOnly));

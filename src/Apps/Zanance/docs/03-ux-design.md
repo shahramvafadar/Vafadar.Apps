@@ -2498,3 +2498,9 @@ and actions stay unchanged. Generic human text has no implicit spreadsheet-unpro
 Legacy names that can identify two existing accounts require correction instead of a guessed
 selection. Preview/native verification preserves already accepted imports; no duplicate Save to
 repair an observation. No new layout, strings or translations are introduced.
+
+### D-500 - Shared balance computation keeps original presentation
+
+Home reuses its unchanged captured worker-local account index for rows and both total views.
+Original localized captions, scope/order, values, cover and native layout stay unchanged. Finite
+same-source native equality is separate from whole-Home speed, stability and accessibility gates.

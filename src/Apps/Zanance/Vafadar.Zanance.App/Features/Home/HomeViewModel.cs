@@ -351,9 +351,9 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             var unreviewedCount = LedgerCalculator.UnreviewedEntryCount(allAccounts, entries);
             return new
             {
-                Balances = LedgerCalculator.TotalBalances(allAccounts, entries, today),
+                Balances = LedgerCalculator.TotalBalancesFromIndex(allAccounts, index, today),
                 UnreviewedCount = unreviewedCount,
-                Confirmed = unreviewedCount > 0 ? LedgerCalculator.TotalBalances(allAccounts, entries, today, confirmedOnly: true) : null,
+                Confirmed = unreviewedCount > 0 ? LedgerCalculator.TotalBalancesFromIndex(allAccounts, index, today, confirmedOnly: true) : null,
                 Totals = LedgerCalculator.Totals(allAccounts, entries, new LedgerFilter(from, to)),
                 AccountBalances = accounts.ToDictionary(account => account.Id, account => LedgerCalculator.Balance(account, index.For(account.Id), today)),
                 OpenReimbursementCount = EntryActions.OpenReimbursements(entries).Count,

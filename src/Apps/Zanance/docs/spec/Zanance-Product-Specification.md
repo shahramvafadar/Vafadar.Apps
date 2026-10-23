@@ -8832,3 +8832,26 @@ authentication, spoken accessibility, real bank/corpus, providers/Store/release 
 Prior265d1460 CI39988941106/CodeQL39988940793 succeed once; monitor consumed/deleted.
 
 Evidence: [bounded original CSV qualification](../quality/csv-literal-identity.md).
+
+### D-500 - Shared original Home balance index
+
+Reuse one operation-local AccountEntryIndex for account rows and ordinary/confirmed total
+balances. Existing callers delegate to the same original total implementation; balance effects,
+scope/order/date/review/currency and checked-overflow semantics remain unchanged. No cross-read
+cache, database/schema/permission/SDK or financial-writer change. Isolated actual-Core composition
+allocation falls66.26%/66.66% on10k/100k entries, not process memory or whole-Home speed acceptance.
+Twelve new and29 affected prior managed cases pass selectively; output is cleaned. Retained
+Windows sources pass six native contexts/twelve publications with six reviewed app-only images.
+Samsung uses same original protected sources: preserve the cross-date historical-presentation
+refusal, then compare current-day original D-499 to D-500 in six contexts/twelve publications each.
+Complete financial/native presentation and full source schema/typed rows match, without seed or
+financial replay. Candidate reference median1712.36ms/max2059.99 and tenfold4953.51/max5590.87
+leave the two-second/general stability objectives open; do not infer stable speedup from medians.
+Strict Windows/signed Offline384-AOT APK and192-AOT caller builds pass; static408-library16KiB
+checks are not runtime acceptance. Restore exact retained caller/stopped state and Main25043/
+Home979/141 public tuples/APK/OS; remove two owned hash-matched XMLs. Preserve D-494 resumed24914/
+four requests and D-496 inactive source. No-reset Main integration awaits timed-cohort completion.
+D-499 single CI response remains in_progress; three other workflows succeed, monitor consumed/
+deleted and no request repeated. Security/spoken/iOS/provider/release gates stay open.
+
+Evidence: [original shared-index qualification](../quality/home-shared-balance-index.md).

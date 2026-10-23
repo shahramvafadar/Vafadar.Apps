@@ -3547,3 +3547,13 @@ text has no declared protection contract and stays literal. Public CSV3 is indep
 journal2 and portable backup versions. Native continuation requires the original accepted receipt;
 never replay successful Import/seed to repair observations. Preserve old caller APK/data/stopped
 state and pending timed cohorts; no-reset Main adoption is a separate named integration action.
+
+## D-500 - Operation-local balance-index reuse
+
+Reuse an AccountEntryIndex only for its original unchanged captured ledger. Home's account rows
+and ordinary/confirmed totals share that worker-local index; keep the established balance formula,
+explicit/default scope, account order and checked overflow. Never cache it across source reads or
+mutations. A historical presentation oracle from another day is not a same-day comparison: retain
+the original refusal and old evidence, then establish current-day original-code packets on the
+same untouched fictitious source. No seed/financial replay to repair observations. Allocation
+measurements, native publication timing and whole-Home/stability acceptance remain distinct.

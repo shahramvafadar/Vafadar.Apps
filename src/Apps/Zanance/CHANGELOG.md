@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Less temporary balance-calculation memory (D-500)
+
+- Reuse Home's account index for displayed balances and confirmed totals while preserving amounts.
+
 ### Preserve original CSV text (D-499)
 
 - Keep original apostrophes, spaces and multiline text in new own-format CSV exports/imports.
