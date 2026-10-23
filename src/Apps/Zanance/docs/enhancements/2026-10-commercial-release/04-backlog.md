@@ -5230,3 +5230,13 @@ Doze/reboot, general security/ANR/crash, accessibility, iOS, provider/store or r
 Prior3821870a CI39981472630/CodeQL39981472583 succeed once; that monitor is consumed/deleted.
 
 Evidence: [physical native-cover scope](../../quality/physical-relocked-destinations.md).
+
+### D-499 - Reversible original CSV text
+
+Own ledger/holdings contract3 and generic literal titles/notes fix account/text corruption;
+legacy ambiguous account aliases refuse. Forty new/20 existing related cases, original native
+Windows/Samsung imports and read-only named-marker continuation pass without accepted replay.
+Strict Windows/signed Offline384-AOT APK builds pass. Exact old caller/Main/OS restored; D-494
+resumed identities and D-496 source preserved. Main no-reset adoption remains pending D-494,
+with D-497 adoption; minimum-API/16KiB runtime, remaining security/stability/accessibility/iOS/
+provider/Store/release gates stay open. [Evidence](../../quality/csv-literal-identity.md).

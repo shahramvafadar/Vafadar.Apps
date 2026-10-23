@@ -24,7 +24,7 @@ public sealed record HoldingsCsvContent(
 public static class HoldingsCsv
 {
     /// <summary>The format version written in every row of every CSV file of this app version.</summary>
-    public const string FormatVersion = "2";
+    public const string FormatVersion = "3";
 
     /// <summary>The columns of the holdings file.</summary>
     public static readonly IReadOnlyList<string> Columns =
@@ -52,20 +52,20 @@ public static class HoldingsCsv
         var byId = typeList.ToDictionary(t => t.Id);
         var rows = new List<IReadOnlyList<string>> { Columns };
         string[] Row() => [.. Enumerable.Repeat(string.Empty, Columns.Count - 1), FormatVersion];
-        string? Note(string? note) => includeNotes ? Csv.Text(note) : string.Empty;
+        string? Note(string? note) => includeNotes ? Csv.LiteralText(note) : string.Empty;
 
         foreach (var type in typeList.OrderBy(t => t.SortOrder).ThenBy(t => t.Name, StringComparer.Ordinal))
         {
             var row = Row();
             row[0] = "type";
             row[1] = Id(type.Id);
-            row[3] = Csv.Text(type.Name);
+            row[3] = Csv.LiteralText(type.Name);
             row[4] = type.Kind.ToString();
             row[5] = type.Dimension.ToString();
             row[6] = type.Metal.ToString();
             row[7] = type.PurityPer10000?.ToString(CultureInfo.InvariantCulture) ?? string.Empty;
             row[8] = type.UnitWeightMg is { } weight ? Quantity(weight) : string.Empty;
-            row[9] = Csv.Text(type.CountUnitName);
+            row[9] = Csv.LiteralText(type.CountUnitName);
             row[10] = type.Divisible ? "true" : "false";
             row[11] = type.PriceCurrencyCode;
             row[21] = Note(type.Note) ?? string.Empty;
@@ -78,7 +78,7 @@ public static class HoldingsCsv
             var row = Row();
             row[0] = "location";
             row[1] = Id(location.Id);
-            row[3] = Csv.Text(location.Name);
+            row[3] = Csv.LiteralText(location.Name);
             row[24] = location.IsArchived ? "true" : "false";
             rows.Add(row);
         }
@@ -100,7 +100,7 @@ public static class HoldingsCsv
             row[17] = assetEvent.ProceedsAmount is { } proceeds ? Amount(proceeds, currency) : string.Empty;
             row[18] = assetEvent.Kind == AssetEventKind.Correction ? (assetEvent.IsIncrease ? "true" : "false") : string.Empty;
             row[19] = assetEvent.GroupId is { } group ? Id(group) : string.Empty;
-            row[20] = Csv.Text(assetEvent.Reason);
+            row[20] = Csv.LiteralText(assetEvent.Reason);
             row[21] = Note(assetEvent.Note) ?? string.Empty;
             rows.Add(row);
         }
@@ -137,6 +137,7 @@ public static class HoldingsCsv
         var valuations = new List<AssetValuation>();
         var errors = new List<HoldingsCsvError>();
         var header = rows.Count > 0 ? rows[0].Select(h => h.Trim().ToLowerInvariant()).ToList() : [];
+        var versionIndex = Csv.TextVersionColumn(header);
         var typeCurrency = knownTypes.ToDictionary(t => t.Id, t => t.PriceCurrencyCode);
         var locationIds = knownLocations.Select(l => l.Id).ToHashSet();
 
@@ -145,10 +146,14 @@ public static class HoldingsCsv
         for (var i = 1; i < rows.Count; i++)
         {
             var cells = rows[i];
+            var literalText = Csv.UsesLiteralText(versionIndex >= 0 && versionIndex < cells.Count ? cells[versionIndex] : string.Empty);
             string Cell(string name)
             {
                 var index = header.IndexOf(name);
-                return index >= 0 && index < cells.Count ? Csv.Unprotect(cells[index].Trim()) : string.Empty;
+                if (index < 0 || index >= cells.Count) return string.Empty;
+                // Version three preserves original human text; typed fields retain their existing parsing.
+                return literalText && name is "name" or "count_unit" or "reason" or "note"
+                    ? Csv.UnprotectLiteralText(cells[index]) : Csv.Unprotect(cells[index].Trim());
             }
 
             var line = i + 1;
@@ -167,7 +172,7 @@ public static class HoldingsCsv
 
                     break;
                 case "location":
-                    if (Guid.TryParse(Cell("id"), out var locationId) && Empty(Cell("name")) is { } name)
+                    if (Guid.TryParse(Cell("id"), out var locationId) && Empty(Cell("name")) is { } name && !string.IsNullOrWhiteSpace(name))
                     {
                         locations.Add(new AssetLocation(locationId) { Name = name, IsArchived = Bool(Cell("archived")) });
                         locationIds.Add(locationId);
@@ -210,7 +215,7 @@ public static class HoldingsCsv
 
     private static AssetType? ReadType(Func<string, string> cell)
     {
-        if (!Guid.TryParse(cell("id"), out var id) || Empty(cell("name")) is not { } name || Empty(cell("currency")) is not { } currency
+        if (!Guid.TryParse(cell("id"), out var id) || Empty(cell("name")) is not { } name || string.IsNullOrWhiteSpace(name) || Empty(cell("currency")) is not { } currency
             || !TryEnum<AssetKind>(cell("kind"), out var kind) || !TryEnum<AssetDimension>(cell("dimension"), out var dimension))
         {
             return null;
@@ -416,5 +421,5 @@ public static class HoldingsCsv
 
     private static bool Bool(string text) => string.Equals(text, "true", StringComparison.OrdinalIgnoreCase);
 
-    private static string? Empty(string value) => string.IsNullOrWhiteSpace(value) ? null : value;
+    private static string? Empty(string value) => string.IsNullOrEmpty(value) ? null : value;
 }

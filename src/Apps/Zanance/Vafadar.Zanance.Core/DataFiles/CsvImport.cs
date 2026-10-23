@@ -73,11 +73,23 @@ public static class CsvImport
         var categoryByName = CategoryIndex(categories, categoryName);
         var byName = accounts.GroupBy(a => a.Name, StringComparer.OrdinalIgnoreCase).ToDictionary(g => g.Key, g => g.First(), StringComparer.OrdinalIgnoreCase);
         var result = new List<ImportRow>();
+        var versionColumn = rows.Count > 0 ? Csv.TextVersionColumn(rows[0]) : -1;
 
         for (var i = 1; i < rows.Count; i++)
         {
             var cells = rows[i];
             string Cell(int index) => index < cells.Count ? Csv.Unprotect(cells[index].Trim()) : string.Empty;
+            var literalText = Csv.UsesLiteralText(versionColumn >= 0 && versionColumn < cells.Count
+                ? cells[versionColumn] : string.Empty);
+            string TextCell(int index) => literalText && index < cells.Count ? Csv.UnprotectLiteralText(cells[index]) : Cell(index);
+            bool TryAccount(int index, out Account account)
+            {
+                if (!byName.TryGetValue(TextCell(index), out account!)) return false;
+                // Older exports cannot distinguish a real apostrophe from protection. Refuse an ambiguous
+                // financial identity rather than silently choosing the other existing account.
+                return literalText || index >= cells.Count || !byName.TryGetValue(cells[index].Trim(), out var original)
+                    || original.Id == account.Id;
+            }
             var line = i + 1;
 
             if (!Guid.TryParse(Cell(0), out var id))
@@ -98,7 +110,7 @@ public static class CsvImport
                 continue;
             }
 
-            if (!byName.TryGetValue(Cell(5), out var account))
+            if (!TryAccount(5, out var account))
             {
                 result.Add(Invalid(line, "Account"));
                 continue;
@@ -123,9 +135,9 @@ public static class CsvImport
                 Date = date,
                 AccountId = account.Id,
                 Amount = amount,
-                Title = Empty(Cell(10)),
-                Payee = Empty(Cell(11)),
-                Note = Empty(Cell(12)),
+                Title = Empty(TextCell(10)),
+                Payee = Empty(TextCell(11)),
+                Note = Empty(TextCell(12)),
                 Review = Enum.TryParse<ReviewState>(Cell(15), true, out var review) && Enum.IsDefined(review) && !int.TryParse(Cell(15), out _) ? review : ReviewState.Confirmed,
                 RefundOfId = Guid.TryParse(Cell(16), out var refundOf) ? refundOf : null,
                 GroupId = Guid.TryParse(Cell(17), out var group) ? group : null,
@@ -136,10 +148,10 @@ public static class CsvImport
             if (kind == EntryKind.Expense && TryAmount(Cell(18), account.CurrencyCode, '.', out var reimbursable) && reimbursable > 0 && reimbursable <= amount)
             {
                 entry.ReimbursableAmount = reimbursable;
-                entry.ReimbursedBy = Empty(Cell(19));
+                entry.ReimbursedBy = Empty(TextCell(19));
             }
 
-            entry.Tags = EntryTags.Parse(Cell(20));
+            entry.Tags = EntryTags.Parse(TextCell(20));
             // An adjustment needs its direction; files without the column cannot say which way it went.
             if (kind == EntryKind.Adjustment)
             {
@@ -167,7 +179,7 @@ public static class CsvImport
 
             if (kind == EntryKind.Transfer)
             {
-                if (!byName.TryGetValue(Cell(6), out var destination))
+                if (!TryAccount(6, out var destination))
                 {
                     result.Add(Invalid(line, "Account"));
                     continue;
@@ -186,7 +198,7 @@ public static class CsvImport
                     entry.ToAmount = toAmount;
                 }
             }
-            else if (Empty(Cell(9)) is { } name)
+            else if (Empty(TextCell(9)) is { } name)
             {
                 var categoryKind = kind is EntryKind.Income or EntryKind.IncomeReversal ? CategoryKind.Income : CategoryKind.Expense;
                 entry.CategoryId = categoryByName.GetValueOrDefault((categoryKind, name.ToUpperInvariant()))?.Id;
@@ -226,6 +238,8 @@ public static class CsvImport
         {
             var cells = rows[i];
             string Cell(int? index) => index is { } n && n < cells.Count ? Csv.Unprotect(cells[n].Trim()) : string.Empty;
+            // A generic producer did not declare our spreadsheet-protection contract. Its human text is literal.
+            string TextCell(int? index) => index is { } n && n < cells.Count ? cells[n] : string.Empty;
             var line = i + 1;
             if (account is null)
             {
@@ -258,14 +272,14 @@ public static class CsvImport
                 Date = date,
                 AccountId = account.Id,
                 Amount = Math.Abs(signed),
-                Title = Empty(Cell(mapping.TitleColumn)),
-                Note = Empty(Cell(mapping.NoteColumn)),
+                Title = Empty(TextCell(mapping.TitleColumn)),
+                Note = Empty(TextCell(mapping.NoteColumn)),
                 Review = ReviewState.Unreviewed,
                 Source = EntrySource.Import,
             };
 
             var categoryKind = kind == EntryKind.Income ? CategoryKind.Income : CategoryKind.Expense;
-            var category = Empty(Cell(mapping.CategoryColumn)) is { } name
+            var category = Empty(TextCell(mapping.CategoryColumn).Trim()) is { } name
                 ? categoryByName.GetValueOrDefault((categoryKind, name.ToUpperInvariant()))
                 : null;
 
@@ -423,5 +437,5 @@ public static class CsvImport
         return index;
     }
 
-    private static string? Empty(string value) => string.IsNullOrWhiteSpace(value) ? null : value;
+    private static string? Empty(string value) => string.IsNullOrEmpty(value) ? null : value;
 }

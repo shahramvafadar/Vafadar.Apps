@@ -21,6 +21,7 @@ internal static partial class DebugSnapshots
         var captures = new List<object>(); var store = services.GetRequiredService<ZananceStore>();
         async Task<string> BaseRows() => JsonSerializer.Serialize(new { Accounts = await store.GetAccountsAsync(), Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync() });
         var before = await BaseRows();
+        var literal = Environment.GetEnvironmentVariable("VAFADAR_IMPORT_LITERAL_TEXT") == "1";
         IReadOnlyDictionary<bool, JsonElement> Retained(string context, string directory)
         {
             var priorRun = Environment.GetEnvironmentVariable("VAFADAR_IMPORT_FINANCIAL_CONTINUATION");
@@ -78,10 +79,11 @@ internal static partial class DebugSnapshots
             foreach (var language in new[] { "en", "fa", "de" })
             foreach (var choice in new[] { ThemeChoice.Light, ThemeChoice.Dark })
             {
+                if (literal && (language != "fa" || choice != ThemeChoice.Dark)) continue;
                 await SetTheme(choice); await SetLanguageAsync(app, local, language);
                 app.Windows[0].Width = 412; app.Windows[0].Height = 820;
                 var context = language + "-" + choice; var directory = Path.Combine(folder, context);
-                var completed = Retained(context, directory);
+                var completed = literal ? new Dictionary<bool, JsonElement>() : Retained(context, directory);
                 results.Add(await ImportFinancialNativeReview.RunAsync(services, directory, context,
                     async page => { await Shell.Current.Navigation.PushAsync(page, false); await Task.Delay(250); },
                     async (page, command) =>
@@ -98,6 +100,7 @@ internal static partial class DebugSnapshots
                     {
                         await Task.Delay(200);
                         var label = VisualDescendants(page).OfType<Label>().Single(item => item.Text == caption && Visible(item));
+                        if (literal) await ScrollToViewIfNeededAsync(FindScrollView(page)!, label);
                         var expected = label.FlowDirection == FlowDirection.LeftToRight ? caption : Vafadar.Localization.Formatting.NativeDigits.Apply(caption);
                         var deadline = DateTime.UtcNow.AddSeconds(20);
                         while (label.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock { ActualWidth: > 0, ActualHeight: > 0, IsTextTrimmed: false } native
@@ -117,7 +120,7 @@ internal static partial class DebugSnapshots
                     {
                         if (!ReferenceEquals(Shell.Current.CurrentPage, page)) throw new IOException("Original review page changed.");
                         await Shell.Current.Navigation.PopAsync(false);
-                    }, CancellationToken.None, completed));
+                    }, CancellationToken.None, completed, literalText: literal));
             }
         }
         catch (Exception error)
@@ -134,7 +137,7 @@ internal static partial class DebugSnapshots
         if (before != await BaseRows()) throw new IOException("Original independent base store changed.");
         await File.WriteAllTextAsync(Path.Combine(folder, "complete.json"), JsonSerializer.Serialize(new
         { Cases = results, Captures = captures, Package = AppInfo.Current.PackageName, ProcessId = Environment.ProcessId,
-            OnlySeparateFictitiousLedgerChanged = true, OriginalBaseStoreUnchanged = true,
+            OnlySeparateFictitiousLedgerChanged = true, OriginalBaseStoreUnchanged = true, LiteralText = literal,
             OriginalThemeAndLanguageRestored = true, ActualNativeInvoke = true, NoOwnerDesktopInput = true }));
     }
 }

@@ -6,6 +6,13 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Preserve original CSV text (D-499)
+
+- Keep original apostrophes, spaces and multiline text in new own-format CSV exports/imports.
+- Refuse ambiguous legacy account names instead of importing into a different account.
+- Keep literal titles and notes unchanged when mapping an ordinary CSV file.
+- New own CSV files use format3 and require a compatible importer.
+
 ### Android renewed-lock qualification (D-498)
 
 - Verified queued destination order through original lock covers on Samsung without changing financial data.

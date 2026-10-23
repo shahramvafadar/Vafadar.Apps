@@ -2490,3 +2490,11 @@ comparison remain separate from finite independent native adapter checks.
 Original native lock covers preserve pending destination order on the qualified Samsung as well
 as the emulator. A declared fictional authentication response tests native cover behavior only;
 never label it real device authentication, a PIN ceremony or complete notification acceptance.
+
+### D-499 - Literal CSV preview identity
+
+Own contract3 preview retains source apostrophes, whitespace and text; existing financial labels
+and actions stay unchanged. Generic human text has no implicit spreadsheet-unprotection contract.
+Legacy names that can identify two existing accounts require correction instead of a guessed
+selection. Preview/native verification preserves already accepted imports; no duplicate Save to
+repair an observation. No new layout, strings or translations are introduced.

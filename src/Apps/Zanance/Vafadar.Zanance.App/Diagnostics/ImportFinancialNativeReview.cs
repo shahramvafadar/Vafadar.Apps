@@ -17,7 +17,7 @@ using Vafadar.Zanance.Data;
 namespace Vafadar.Zanance.App.Diagnostics;
 
 /// <summary>Original ordinary CSV financial review, refusal, explicit refresh and atomic import/Undo in owned files.</summary>
-internal static class ImportFinancialNativeReview
+internal static partial class ImportFinancialNativeReview
 {
     /// <summary>Supplies only one fictitious selected CSV; no export or private source extraction is possible.</summary>
     private sealed class Files(PickedDataFile selected) : IDataFileInteraction
@@ -42,8 +42,9 @@ internal static class ImportFinancialNativeReview
     internal static async Task<object> RunAsync(IServiceProvider services, string folder, string context,
         Func<ImportExportPage, Task> show, Func<ImportExportPage, ICommand, Task> invoke,
         Func<string, ImportExportPage, string, Task> inspect, Func<ImportExportPage, Task> close, CancellationToken ct,
-        IReadOnlyDictionary<bool, JsonElement>? completed = null)
+        IReadOnlyDictionary<bool, JsonElement>? completed = null, bool literalText = false)
     {
+        if (literalText) return await RunLiteralAsync(services, folder, context, show, invoke, inspect, close, ct);
         var package = AppInfo.Current.PackageName;
         if (!package.StartsWith("pro.vafadar.zanance.storepreview.", StringComparison.Ordinal)
             && package != "pro.vafadar.zanance.androidhomereview") throw new IOException("Independent import review identity required.");

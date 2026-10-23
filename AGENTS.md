@@ -3537,3 +3537,13 @@ current Shell-tab activation through each original covered loader; share pending
 navigation work. Preserve saved paths and what-if drafts. After a changed-source test write,
 use actual native tab input and await the same page's publication; a direct model reload cannot
 prove the adapter. Preserve partial fixture actions and do not replay money to repair a report.
+
+## D-499 - Reversible CSV contracts and original identity
+
+Own ledger/holdings CSV text uses reversible contract3. Preserve literal apostrophes/whitespace,
+neutralize formula prefixes and read a unique named version marker. Refuse unknown/duplicate
+contracts and legacy names resolving raw/decoded to different existing accounts. Generic human
+text has no declared protection contract and stays literal. Public CSV3 is independent of Undo
+journal2 and portable backup versions. Native continuation requires the original accepted receipt;
+never replay successful Import/seed to repair observations. Preserve old caller APK/data/stopped
+state and pending timed cohorts; no-reset Main adoption is a separate named integration action.

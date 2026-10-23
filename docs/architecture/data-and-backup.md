@@ -2670,3 +2670,15 @@ Source-generated AssetEvent serialization keeps the witness functional in trimme
 actual ARM64 native behavior is qualified, iOS remains unverified.
 
 See [evidence](../../src/Apps/Zanance/docs/quality/import-group-undo-dependencies.md).
+
+## Public literal CSV contract3 (D-499)
+
+The preceding D-490 public version2 reference describes that historical delivery. Current own
+ledger/holdings exports use version3 reversible text; the internal Undo journal remains version2.
+Literal apostrophes, edge whitespace and multiline text survive; formula prefixes are protected.
+The unique named format_version column can move among optional columns; unknown/duplicate
+markers fail before preview publication. Legacy missing/1/2 contracts retain decoding, except
+ambiguous raw/decoded account identity refuses. Generic mapped titles/notes are literal source
+text. No entity/schema, compiled model, portable backup or financial relationship change.
+New contract3 requires a compatible reader; older reader compatibility is not established.
+See [bounded evidence](../../src/Apps/Zanance/docs/quality/csv-literal-identity.md).

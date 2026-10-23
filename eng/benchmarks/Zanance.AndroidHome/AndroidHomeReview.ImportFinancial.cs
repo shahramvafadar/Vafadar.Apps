@@ -13,6 +13,7 @@ internal static partial class AndroidHomeReview
     private static async Task<object> ReviewImportFinancialAsync(App app, IServiceProvider services, string root, string comparison, CancellationToken ct)
     {
         var local = services.GetRequiredService<ILocalizationService>(); var theme = services.GetRequiredService<ThemeService>();
+        var literal = Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_csv_literal", false) == true;
         var originalLanguage = local.CurrentLanguage; var originalTheme = theme.Choice; var results = new List<object>();
         await AwaitReimbursementFocusAsync(ct); app.OpenReviewShell(); await AwaitRootHomeAsync(ct);
         async Task SetTheme(ThemeChoice choice)
@@ -35,6 +36,7 @@ internal static partial class AndroidHomeReview
             foreach (var language in new[] { "en", "fa", "de" })
             foreach (var choice in new[] { ThemeChoice.Light, ThemeChoice.Dark })
             {
+                if (literal && (language != "en" || choice != ThemeChoice.Light)) continue;
                 await SetTheme(choice); await SetLanguageAsync(app, local, language, ct);
                 var context = language + "-" + choice;
                 results.Add(await ImportFinancialNativeReview.RunAsync(services, Path.Combine(root, context), context,
@@ -58,6 +60,13 @@ internal static partial class AndroidHomeReview
                     {
                         await AwaitReimbursementFocusAsync(ct); await Task.Delay(200, ct);
                         var label = ReimbursementViews(page).OfType<Label>().Single(item => item.Text == caption && Visible(item));
+                        if (literal)
+                        {
+                            var scroll = ReimbursementViews(page).OfType<ScrollView>().Single(item => item.Orientation == ScrollOrientation.Vertical);
+                            for (Element? parent = label.Parent; parent is not null; parent = parent.Parent)
+                                if (ReferenceEquals(parent, scroll)) { await scroll.ScrollToAsync(label, ScrollToPosition.MakeVisible, false); break; }
+                            await Task.Delay(150, ct);
+                        }
                         var expected = label.FlowDirection == FlowDirection.LeftToRight ? caption : Vafadar.Localization.Formatting.NativeDigits.Apply(caption);
                         if (label.Handler?.PlatformView is not Android.Widget.TextView { IsShown: true, HasWindowFocus: true } native
                             || native.Text != expected) throw new ReviewCheckException("Original financial review caption differs.");
@@ -66,7 +75,7 @@ internal static partial class AndroidHomeReview
                     {
                         if (!ReferenceEquals(Shell.Current.CurrentPage, page)) throw new ReviewCheckException("Original import page changed.");
                         await Shell.Current.Navigation.PopAsync(false); await AwaitRootHomeAsync(ct);
-                    }, ct));
+                    }, ct, literalText: literal));
             }
         }
         finally
@@ -75,6 +84,6 @@ internal static partial class AndroidHomeReview
             await SetTheme(originalTheme); await SetLanguageAsync(app, local, originalLanguage.CultureName, ct);
         }
         return new { Comparison = comparison, Cases = results, OriginalThemeAndLanguageRestored = true, NativeButtonsInvoked = true,
-            FictitiousPickerAndUndoConsent = true, MainPackageTouched = false, SystemSettingsChanged = false };
+            FictitiousPickerAndUndoConsent = true, LiteralText = literal, MainPackageTouched = false, SystemSettingsChanged = false };
     }
 }

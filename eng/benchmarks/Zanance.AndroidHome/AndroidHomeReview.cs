@@ -380,11 +380,21 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Fresh owned split financial fixture required; preserve original accepted cases.");
                 await WriteReportAsync(root, phase, await ReviewSplitFinancialAsync(app, services, root, comparison!, ct), ct);
             }
-            else if (phase == "import-financial-review")
+            else if (phase is "import-financial-review" or "csv-literal-final")
             {
                 Directory.CreateDirectory(root);
-                if (RedirectedAncestors(root).Length != 0 || Directory.EnumerateFileSystemEntries(root).Any())
+                if (RedirectedAncestors(root).Length != 0 || phase == "import-financial-review" && Directory.EnumerateFileSystemEntries(root).Any())
                     throw new ReviewCheckException("Fresh owned import financial fixture required; preserve accepted cases.");
+                if (phase == "csv-literal-final")
+                {
+                    if (!Guid.TryParseExact(baseline, "N", out _)) throw new ReviewCheckException("Original literal source comparison required.");
+                    using var original = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(root, "import-financial-review-" + baseline + "-result.json"), ct));
+                    if (!original.RootElement.GetProperty("LiteralText").GetBoolean()
+                        || original.RootElement.GetProperty("Comparison").GetString() != baseline
+                        || original.RootElement.GetProperty("Cases").GetArrayLength() != 1
+                        || !original.RootElement.GetProperty("Cases")[0].GetProperty("Completed").GetBoolean())
+                        throw new ReviewCheckException("Original accepted literal source is incomplete.");
+                }
                 await WriteReportAsync(root, phase, await ReviewImportFinancialAsync(app, services, root, comparison!, ct), ct);
             }
             else if (phase == "occurrence-refresh")

@@ -9021,3 +9021,34 @@ Doze/reboot, general security/ANR/crash, accessibility, iOS, provider/store or r
 Prior3821870a CI39981472630/CodeQL39981472583 succeed once; that monitor is consumed/deleted.
 
 Evidence: [physical native-cover scope](quality/physical-relocked-destinations.md).
+
+### D-499 - Reversible original CSV text
+
+Own ledger/holdings CSV contract3 preserves original apostrophes, whitespace and multiline human
+text while neutralizing spreadsheet formula prefixes. Match the unique named version marker;
+refuse duplicate/unknown contracts. Legacy decoding remains, with explicit refusal when literal
+and decoded account names resolve to different existing accounts. Generic mapped titles/notes
+remain literal; category padding trims without removing apostrophes. No financial algorithm,
+schema, backup/journal version, permission, SDK or network change. New format3 requires a
+compatible importer; do not guess lost legacy text or claim old-client compatibility.
+
+Forty distinct new cases (34 Core/six original App-source real SQLite) and20 existing related
+cases pass in selected runs; only affected cases repeat after fixes. Preserve11 reproduced
+failures and intermediate compiler/analyser refusals. Windows/fa-Dark and Samsung/en-Light each
+accept own-ledger and holdings once, then reuse the accepted source read-only for the shifted
+named marker and accept only the previously unexecuted generic case. Ten Windows captures are
+reviewed; actual native commands and complete source/base equality pass. Picker/consent ports
+are explicit fictitious ports. Preserve the early physical fresh-root refusal and repair only
+continuation authority against its original accepted receipt; no accepted financial replay.
+
+Final strict Windows and complete signed Offline384-AOT APK builds have zero warnings/errors;
+408 libraries pass static16KiB alignment, not runtime acceptance. The owner closes Play Protect
+for the same waiting restore request; no bypass/system input is performed. Restore retained
+independent APK/stopped state, Main25043/Home979/141 public tuples/APK/OS; remove four owned
+hash-matched remote XMLs. Continue only the transient focus-refused restoration observation.
+Main stays D-495 for D-494/D-496; subsequent no-reset adoption remains explicit work. D-494's
+24914/four resumed alarm identities remain unchanged. iOS, minimum-API/16KiB runtime, stability,
+authentication, spoken accessibility, real bank/corpus, providers/Store/release gates remain open.
+Prior265d1460 CI39988941106/CodeQL39988940793 succeed once; monitor consumed/deleted.
+
+Evidence: [bounded original CSV qualification](quality/csv-literal-identity.md).

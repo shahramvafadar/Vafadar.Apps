@@ -1014,3 +1014,10 @@ States: *Planned*, *In progress*, *Implemented – verified* (acceptance tested)
 | Forecast snapshots | S0803, S0804 |
 | Product transparency | S0905 |
 | Findings ZEX-F01–F20 | see [01 §8](01-current-state-and-gaps.md#8-findings-in-existing-code-not-fixed-in-this-stage) |
+
+### D-499 - Reversible original CSV text
+
+Historical version2 delivery is retained above. Current public ledger/holdings contract3 and generic
+literal mappings are qualified by40 distinct new managed cases and bounded native Windows/Samsung
+imports without accepted-action replay. Internal Undo journal2 stays unchanged. Main adoption is
+pending the independent timed cohort; remaining work stays in the canonical commercial backlog.

@@ -2431,3 +2431,16 @@ off give22 observations. A completed review removes that boundary, not future fi
 Verify original settings unchanged by publication and full source account equality; this changes
 no OS settings or financial rows. Preserve explicit temporary phone ownership between projects.
 Scope, final package and cleanup: [physical period queue](../../src/Apps/Zanance/docs/quality/physical-period-reminder-queue.md).
+
+## Literal CSV native continuation (D-499)
+
+Run-StoreDrafts.ps1 -ImportFinancialReview -ImportLiteralTextOnly qualifies the own ledger/holdings
+pair with five captures. -ImportLiteralTextSourceRun <accepted-run> reuses that exact accepted
+source read-only for a shifted named marker and performs only the previously unexecuted generic
+case, with five further captures. Never replay accepted imports to repair observations.
+The independent AndroidHome csv-literal-final phase requires review_csv_literal=true,
+review_csv_literal_final=true and review_baseline=<original-accepted-comparison>, with the same
+review_run and a fresh comparison. It validates the original completed receipt; ordinary fresh
+review retains its fresh-root guard. Read the exact current PID/run/comparison report once complete.
+Restore retained caller APK/data/stopped state, original Main/OS/public UI and remove only owned
+hash-matched remote output. See [evidence](../../src/Apps/Zanance/docs/quality/csv-literal-identity.md).

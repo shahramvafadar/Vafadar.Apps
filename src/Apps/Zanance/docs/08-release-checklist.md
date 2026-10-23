@@ -3230,3 +3230,12 @@ Doze/reboot, general security/ANR/crash, accessibility, iOS, provider/store or r
 Prior3821870a CI39981472630/CodeQL39981472583 succeed once; that monitor is consumed/deleted.
 
 Evidence: [physical native-cover scope](quality/physical-relocked-destinations.md).
+
+### D-499 - Reversible original CSV text
+
+Own CSV contract3 preserves apostrophes/whitespace and named version identity; legacy ambiguous
+account aliases refuse rather than selecting another account. Generic human text remains literal.
+Forty new/20 existing related cases and bounded original Windows/Samsung native imports pass,
+with accepted actions retained through observation-only continuation. Strict Windows/signed
+Offline384-AOT shipping builds pass. Main adoption waits for D-494; no schema/permission change
+or broader stability/iOS/provider/release acceptance. See [scope and evidence](quality/csv-literal-identity.md).

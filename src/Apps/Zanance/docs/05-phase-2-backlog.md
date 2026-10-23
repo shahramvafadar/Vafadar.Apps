@@ -3576,3 +3576,12 @@ Store and release gates stay open. Prior f6ad8543 CI/CodeQL succeed once; its mo
 deleted. Exact new-head CI follows push.
 
 Evidence: [original retained-tab qualification](quality/forecast-retained-tab-return.md).
+
+### D-499 - Reversible original CSV text
+
+Own CSV contract3 preserves apostrophes/whitespace and named version identity; legacy ambiguous
+account aliases refuse rather than selecting another account. Generic human text remains literal.
+Forty new/20 existing related cases and bounded original Windows/Samsung native imports pass,
+with accepted actions retained through observation-only continuation. Strict Windows/signed
+Offline384-AOT shipping builds pass. Main adoption waits for D-494; no schema/permission change
+or broader stability/iOS/provider/release acceptance. See [scope and evidence](quality/csv-literal-identity.md).

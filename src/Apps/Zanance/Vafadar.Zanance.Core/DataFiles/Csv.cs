@@ -19,6 +19,47 @@ public static class Csv
         return value[0] is '=' or '+' or '-' or '@' or '\t' or '\r' ? "'" + value : value;
     }
 
+    /// <summary>Encodes format-three text reversibly, including an original leading apostrophe.</summary>
+    public static string LiteralText(string? value)
+    {
+        if (string.IsNullOrEmpty(value)) return string.Empty;
+        // Doubling an original apostrophe distinguishes it from the spreadsheet protection marker.
+        return value[0] == '\'' || NeedsLiteralProtection(value.AsSpan()) ? "'" + value : value;
+    }
+
+    /// <summary>Decodes only format-three text; older files retain their original protection contract.</summary>
+    public static string UnprotectLiteralText(string value) =>
+        value.Length > 1 && value[0] == '\'' && (value[1] == '\'' || NeedsLiteralProtection(value.AsSpan(1)))
+            ? value[1..] : value;
+
+    /// <summary>Refuses unknown own-file text contracts instead of guessing the account or metadata meaning.</summary>
+    public static bool UsesLiteralText(string version) => version.Trim() switch
+    {
+        "3" => true,
+        "" or "1" or "2" => false,
+        _ => throw new FormatException("Unsupported CSV text format version."),
+    };
+
+    /// <summary>Finds the unique version marker even when a later producer appends optional columns.</summary>
+    internal static int TextVersionColumn(IReadOnlyList<string> header)
+    {
+        var found = -1;
+        for (var index = 0; index < header.Count; index++)
+        {
+            if (!string.Equals(header[index].Trim(), "format_version", StringComparison.OrdinalIgnoreCase)) continue;
+            if (found >= 0) throw new FormatException("Ambiguous CSV text format version columns.");
+            found = index;
+        }
+        return found;
+    }
+
+    private static bool NeedsLiteralProtection(ReadOnlySpan<char> value)
+    {
+        if (!value.IsEmpty && value[0] is '\t' or '\r' or '\n') return true;
+        var visible = value.TrimStart();
+        return !visible.IsEmpty && visible[0] is '=' or '+' or '-' or '@';
+    }
+
     /// <summary>Writes rows with <paramref name="separator"/>, quoting cells when needed, CRLF line ends.</summary>
     public static string Write(IEnumerable<IReadOnlyList<string>> rows, char separator = ',')
     {
