@@ -169,3 +169,13 @@ physical lifecycle, iOS, provider, public-hosting, real purchase/store signing o
 is inferred. D-386 keeps general ANR/crash and Android accessibility after ready feature development.
 The source-only debt variants do not substitute native device acceptance. Original negative reports,
 private fixture identities and accepted action receipts remain retained.
+
+## Subsequent bounded physical original-form evidence (D-484)
+
+The unchanged final source is exercised through actual Main Samsung forms in one new fictitious
+profile: original plan creation, native zero rejection/correction, dirty Keep editing/Discard,
+debt reference/estimate, cancelled original repayment draft and one cold persistence read. Main
+and all three original profiles/public UI/APK/OS are restored after only the new profile is deleted.
+See [physical evidence and explicit limits](physical-plan-and-debt-forms.md). Original independent
+matrices/accepted commands are retained. This does not extend the physical result to cross-currency/
+unit changes, stale-writer races, all debt/settlement/reader variants or release acceptance.

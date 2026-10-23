@@ -4073,3 +4073,18 @@ suite count or successful unrelated Main/Windows build is repeated. Shipping sou
 Authentication, full SEC/platform/OEM/power-loss/API24/16KiB/iOS and release gates remain open.
 
 Evidence: [bounded physical key evidence](../../quality/physical-key-protection.md).
+
+### D-484 - Physical original plan/debt form continuation
+
+One fresh Samsung profile qualifies original plan12.34, native zero rejection/correction22.34,
+Keep editing/Discard99.99 and separate debt50/estimate5.25. The original repayment draft is cancelled
+without Save; notification permission/flags remain unchanged. One actual cold27601-to27860 preserves
+cash100 (new debt excluded by default), one22.34 plan, debt-50 and empty All-history. Restore Main,
+delete only the new inactive profile with both confirmations, compare all original three-profile/
+141 Home tuples/979/APK/OS and hash-remove144 XMLs.144 is an artifact count, not tests. Preserve
+observer refusals; never replay accepted metadata or ledger actions to repair observation. Shipping
+source/APK stay D-482; successful suites/builds are not repeated. Latest6c52cd67 CI/CodeQL succeed.
+This is bounded physical English/Light form evidence, not the full currency/unit/race/notification/
+security/stability/accessibility/iOS/provider/Store/release gate. The broad delivery goal stays open.
+
+Evidence: [physical original forms](../../quality/physical-plan-and-debt-forms.md).

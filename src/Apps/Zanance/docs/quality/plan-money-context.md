@@ -119,3 +119,13 @@ D-386 keeps general crash/ANR and Android accessibility after ready feature deve
 Goal and budget editors retain parsing cultures but still consult ambient display units; their
 complete original monetary-unit batch is D-431. Quantity semantics and D-429 source/history
 ownership remain separate, established boundaries, not grounds for replaying accepted native work.
+
+## Subsequent bounded physical original-form evidence (D-484)
+
+The unchanged final source is exercised through actual Main Samsung forms in one new fictitious
+profile: original plan creation, native zero rejection/correction, dirty Keep editing/Discard,
+debt reference/estimate, cancelled original repayment draft and one cold persistence read. Main
+and all three original profiles/public UI/APK/OS are restored after only the new profile is deleted.
+See [physical evidence and explicit limits](physical-plan-and-debt-forms.md). Original independent
+matrices/accepted commands are retained. This does not extend the physical result to cross-currency/
+unit changes, stale-writer races, all debt/settlement/reader variants or release acceptance.

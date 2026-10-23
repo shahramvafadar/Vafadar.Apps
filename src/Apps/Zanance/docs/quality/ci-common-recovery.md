@@ -307,3 +307,16 @@ Windows job120155686756 including native toolchain review all succeed. iOS is de
 Reuse the consumed D-481 exact-head response and read its original jobs; do not repeat that run-list
 GET, rerun successful tests or introduce a speculative fix. Uncommitted D-482 Android lifetime work
 is separate and is not covered by this previous committed-head CI result.
+
+### D-483 latest shipping-source outcome, recorded with D-484
+
+After the original scheduled delay, one exact-head GET for93d459c7fef1c921c8e97221c5bd9db0381755ba
+returns [CI39914788458](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39914788458)
+cancelled and [CodeQL39914788459](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39914788459)
+success. The one response for latest6c52cd6767da22a6494f760cec05bc3f2a100695 returns
+[CI39916020130](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39916020130) and
+[CodeQL39916019778](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39916019778) completed
+success. That head includes the original D-482 production fix. No cause for cancellation is inferred
+from status alone; no failed-current-head fix or successful-job rerun is needed. Both original
+ci-detached-validation-d482 and ci-physical-key-protection-d483 schedules are consumed once and
+deleted, leaving goal/other schedules unchanged. Documentation follow-up has its own delayed gate.

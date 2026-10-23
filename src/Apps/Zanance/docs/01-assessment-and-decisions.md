@@ -8779,3 +8779,20 @@ Main27601/all141 Home tuples/979/APK/OS. No managed count, Main build, financial
 SDK, permission or source algorithm change. Authentication/OEM/power-loss/iOS/release remain open.
 
 Evidence: [physical original key protection](quality/physical-key-protection.md).
+
+### D-484 - Physical retained plan and debt forms
+
+Qualify original Samsung forms after D-429/D-430/D-482 on the unchanged signed Main APK. One new
+fictitious profile has Cash100, one Once12.34 plan corrected to22.34 after native zero rejection,
+Keep editing/Discard of99.99, and one debt50 with separate5.25 estimate. The original repayment
+reminder draft remains unknown amount and is cancelled without Save; dismiss its contextual native
+notification prompt without granting permission. One actual cold Main27601-to27860 preserves cash100,
+one22.34 plan, debt-50/estimate5.25 and empty All-history. Debt defaults outside cash totals; retain
+and correct the observer's wrong50 expectation without replay. Retain native scroll/retained-stack/
+second-consent observer refusals. Switch back to original Main, delete only the new inactive profile
+with both original confirmations, preserve all three-profile tuples/Main979/all141 Home tuples/APK/
+OS/notification flags, and hash-remove144 XMLs. No code/build/managed count or accepted ledger replay.
+Latest6c52cd67 CI/CodeQL succeed; the preceding D-482 CI is cancelled. Both one-shot schedules are
+consumed/deleted. Full currency/race/platform/security/stability/accessibility/release gates remain.
+
+Evidence: [physical original form and cold preservation](quality/physical-plan-and-debt-forms.md).
