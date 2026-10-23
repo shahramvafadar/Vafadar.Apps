@@ -103,3 +103,23 @@ Preserve both original failures and accepted01/02 through install-r/source conti
 success and pending0 precede fresh-fixture uninstall and exact Main/OS/public restoration. No old
 goal/period lifecycle, Windows/Main build or managed suite is repeated. Queues are not timed/lock/
 Doze/profile/platform acceptance. See quality/physical-goal-calendar-sources.md for actual receipts.
+
+## Original physical goal/current-review content routes (D-492)
+
+Use explicit review_route_phase=goal/review and one original32-hex review_run. Do not combine it
+with another selector. Fresh protected fixture source is seeded once, complete original packets
+remain equal, posting/posted markers prevent repeat Show, and partial setup is retained/refused.
+The explicit review OnNewIntent phase requires the actual ready original goal page/id. Notification
+SDK intents have no helper selector and never reseed/rearm this cohort. Read /route-status only
+for the actual already started source process; it does not prepare storage, navigate or publish.
+Source reads require IsProtected. Immediate independent copies retain original scheduled payloads
+and qualify native content taps, not actual09:00 dispatch or PIN/device authentication.
+
+Background the exact source and prove cached=true/adj900 before package-scoped am kill; preserve
+posted notification and confirm death. Never force-stop before a cold tap or query the provider
+to create its process. Match the native owned record/row, perform one real content tap and record
+native process start before provider/native destination observation. Keep accepted source and
+tap receipts. Cleanup requires both original destinations/source equality and exact fresh identity;
+stop/uninstall only then. Distinguish actual pending/blocked alarms from Addition/Delivery history,
+which must remain untouched. Restore exact Main/OS/public UI. See [the actual route evidence](../../../src/Apps/Zanance/docs/quality/physical-goal-period-notification-routes.md)
+for the two cold routes and remaining timed/credential gates.

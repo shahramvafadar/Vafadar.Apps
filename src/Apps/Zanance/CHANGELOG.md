@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Goal and period-review notification routes (D-492)
+
+- Verify real notification taps reopen the original goal and current period review after process death.
+- Preserve balances, contributions and unfinished review steps. Shipping application behavior is unchanged.
+
 ### Goal reminder calendar and source checks (D-491)
 
 - Verify saved goal dates stay fixed when the display calendar changes.

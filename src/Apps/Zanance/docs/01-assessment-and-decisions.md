@@ -8925,3 +8925,21 @@ Real timed/lock/profile/Doze/reboot, security/stability/accessibility/iOS/provid
 gates remain open. This is native queue/API evidence, not financial-form or whole-device acceptance.
 
 Evidence: [physical calendar/source queues](quality/physical-goal-calendar-sources.md).
+
+### D-492 - Physical original goal and current-review notification taps
+
+Two actual native notification content taps start8272/9387 after confirmed cached deaths of7065/
+8272, without provider-created cold processes. Original protected startup/router open the exact
+goal100/150/50 and current September review0of5; complete fictional source remains equal and no
+financial/contribution/review-step command occurs. Explicit immediate copies retain original
+future request ids/payloads; they are not actual09:00 dispatch or credential-configured acceptance.
+One strict complete signed Offline ARM64/192-AOT caller passes; Main/App/APK remain D-490.
+Preserve early cache/shade/host guards and the cleanup observer's historical-alarm misclassification;
+continue accepted state without repeating seed/Show/tap/uninstall. Active pending/blocked alarms
+and posted notifications are absent; historical records remain untouched. Remove only the fresh
+fixture and2 Main/10 scoped owned XMLs. Original Main31885/Home979/all141 public tuples/APK/OS
+stay equal. Prior f21a5d61 CI/CodeQL succeed once and its monitor is consumed/deleted. No new
+managed count or unchanged successful suite/build replay. Timed/lock/profile/grouped/Doze/reboot,
+security/stability/accessibility/iOS/provider/Store and release gates remain open.
+
+Evidence: [original content routes](quality/physical-goal-period-notification-routes.md).

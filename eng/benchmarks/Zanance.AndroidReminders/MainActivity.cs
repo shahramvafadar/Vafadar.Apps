@@ -1,4 +1,5 @@
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
@@ -26,19 +27,31 @@ public sealed class MainActivity : MauiAppCompatActivity
         _ = PrepareAsync(run, Intent?.GetBooleanExtra("review_scheduled_only", false) == true,
             Intent?.GetBooleanExtra("review_goal_lifecycle", false) == true,
             Intent?.GetBooleanExtra("review_period_lifecycle", false) == true,
-            Intent?.GetBooleanExtra("review_goal_variants", false) == true);
+            Intent?.GetBooleanExtra("review_goal_variants", false) == true, Intent?.GetStringExtra("review_route_phase"));
+    }
+
+    /// <inheritdoc />
+    protected override void OnNewIntent(Intent? intent)
+    {
+        base.OnNewIntent(intent);
+        var run = intent?.GetStringExtra("review_run");
+        if (PackageName != NativeReminderReview.Package || intent?.GetStringExtra("review_route_phase") != "review"
+            || run is null || !System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$")) return;
+        _ = PrepareAsync(run, false, false, false, false, "review");
     }
 
     /// <summary>Waits for the real covered foreground startup before preparing notification metadata.</summary>
-    private async Task PrepareAsync(string run, bool scheduledOnly, bool goalLifecycle, bool periodLifecycle, bool goalVariants)
+    private async Task PrepareAsync(string run, bool scheduledOnly, bool goalLifecycle, bool periodLifecycle, bool goalVariants, string? routePhase)
     {
         try
         {
             var app = (App)Microsoft.Maui.Controls.Application.Current!;
             await app.WaitForStartupAsync();
-            if ((scheduledOnly ? 1 : 0) + (goalLifecycle ? 1 : 0) + (periodLifecycle ? 1 : 0) + (goalVariants ? 1 : 0) > 1)
+            if ((scheduledOnly ? 1 : 0) + (goalLifecycle ? 1 : 0) + (periodLifecycle ? 1 : 0) + (goalVariants ? 1 : 0) + (routePhase is null ? 0 : 1) > 1)
                 throw new IOException("Choose one independent reminder review.");
-            if (goalVariants)
+            if (routePhase is not null)
+                await NativeGoalPeriodRouteReview.PublishAsync(IPlatformApplication.Current!.Services, run, routePhase);
+            else if (goalVariants)
                 await NativeGoalVariantReminderReview.PrepareAsync(IPlatformApplication.Current!.Services, run);
             else if (periodLifecycle)
                 await NativePeriodReminderReview.PrepareAsync(IPlatformApplication.Current!.Services, run);
