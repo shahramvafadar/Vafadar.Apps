@@ -3493,3 +3493,13 @@ actual observer retirement and late callback counts on real native views. Do not
 lifetime correction with historical ANR/GC/crash acceptance or replay successful financial cohorts.
 Before native app-coordinate input, establish current IME window visibility; a retained renderer
 mIsInputViewShown flag alone is not proof that the keyboard window is still shown.
+
+## D-482 - Validation callbacks survive native observer replacement
+
+A detached native view can expose a new live floating observer while its original registration
+root stays alive. Track each distinct tree through a separate weak attachment peer; neutralize
+callbacks and remove the global listener from every tracked live observer before disposing it.
+Detachment completes the original bounded wait with false. Keep weak attachment peers valid for
+native dispatch snapshots; release their owner instead of prematurely disposing their Java peer.
+Collection measurements must release their own already-dead observer wrapper after retirement;
+never mutate dead trees or inspect raw heaps. Retain completed cases and original source identity.

@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Detached validation requests (D-482)
+
+- Prevent the reproduced Android callback failure when a validation field leaves its native window.
+- Keep the original amount errors and unsaved drafts; detached requests cannot complete as ready.
+
 ### Validation request cleanup (D-480)
 
 - Release completed Android layout requests in transaction, plan, due-item and settlement forms.

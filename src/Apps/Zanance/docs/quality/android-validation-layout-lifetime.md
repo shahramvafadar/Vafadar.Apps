@@ -95,3 +95,10 @@ Final full receipt recovery reports all3 retained, NativeActionsThisPass0. Curre
 loader, command-lifetime and footer observer corrections retain their original failures. Main,
 OS and prior independent APK are restored. Shipping-source CI/CodeQL on0e8c6fa6 both succeed;
 the consumed monitor is deleted. Broader stability/matrix/platform/release limits above stand.
+
+## Subsequent detached-root correction
+
+D-482 reproduces a separate real native crash: detachment can leave the registration root alive
+while the control returns a new live floating observer. Current-tree removal alone is insufficient.
+See [the corrected ownership and retained evidence](detached-validation-listeners.md); D-480's
+original normal checks are retained and only affected normal regressions accompany the new cases.

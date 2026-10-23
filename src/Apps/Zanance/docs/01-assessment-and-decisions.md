@@ -8746,3 +8746,20 @@ only2 hash-matched XMLs. Samsung is untouched. CI/CodeQL for original shipping h
 its one-shot monitor is deleted. General stability, full matrix/platform/release gates remain.
 
 Evidence: [original remaining callers](quality/validation-layout-callers.md).
+
+### D-482 - Retire validation callbacks across native detachment
+
+An original real-native baseline crashes when a detached control returns a new live observer while
+its registered root remains alive. Track distinct registration/attachment trees, remove the exact
+global listener from every live tree before disposal, and use a separate weak attachment peer.
+Detachment resolves false; keep the existing one-second bound and all original caller guards.
+Five new native cases pass with one retained success and only four continuation cases; three
+normal affected regressions also pass. Preserve actual baseline/registration/measurement failures.
+Strict Windows and complete Offline384-AOT signed Main build without warnings. Samsung upgrades
+once without reset; original blank-amount Save rejects and Cancel restores all141 public Home
+nodes/balance979 and OS in PID27601, zero financial writes. Emulator Main28047/139nodes/APK/OS
+remain unchanged, both newly owned helpers removed,2 emulator and8 phone hash-matched XMLs deleted.
+No new managed-suite count or unrelated successful replay. Preceding head1c8d17d1 CI/CodeQL succeeds;
+this pushed head requires its own check. General stability/performance/platform/release stays open.
+
+Evidence: [detached validation listener ownership](quality/detached-validation-listeners.md).

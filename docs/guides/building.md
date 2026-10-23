@@ -2386,3 +2386,13 @@ completed cases and recover full packets without their actions; NativeActionsThi
 reporting boundary explicit. Restore the exact initial independent APK without reset and leave it
 stopped, preserving original Main/OS and hash-cleaning only owned captures. See
 [actual continuation evidence](../../src/Apps/Zanance/docs/quality/validation-layout-callers.md).
+
+## Detached native validation targets (D-482)
+
+The independent eng/tests/AndroidValidationLayout fixture includes d482-detach (five cases) and
+d482-remaining (four cases, preserving an accepted post-attachment result). Use a fresh owned
+artifacts path and full Release dotnet publish for its package. The same original source is linked;
+never replay a completed cohort for a missing report. The fixture README defines native collection
+controls and restoration. An observed incremental n_onCreate failure is not a scenario result;
+retain it and clean only that owned helper output before a full publish recovery. Main integration
+uses the complete signed Offline APK and one invalid input/Cancel, with no financial write.

@@ -6,15 +6,16 @@ using NativeValidationLayout = Vafadar.Zanance.App.Presentation.AndroidValidatio
 
 /// <summary>Qualifies original native layout cleanup with fictitious views only.</summary>
 [Activity(Name="pro.vafadar.zanance.layoutreview.LayoutActivity", Exported=true, Theme="@android:style/Theme.Material.Light.NoActionBar")]
-public sealed class LayoutActivity : Activity
+public sealed partial class LayoutActivity : Activity
 {
     /// <inheritdoc />
     protected override void OnCreate(Bundle? state)
     {
         base.OnCreate(state);
-        if(PackageName!="pro.vafadar.zanance.layoutreview" || Intent?.GetStringExtra("review_run")!="d480-fixed-observer") { Finish(); return; }
+        var run = Intent?.GetStringExtra("review_run");
+        if(PackageName!="pro.vafadar.zanance.layoutreview" || run is not ("d480-fixed-observer" or "d482-detach" or "d482-remaining")) { Finish(); return; }
         Window?.SetFlags(WindowManagerFlags.Secure,WindowManagerFlags.Secure);
-        _ = RunAsync();
+        _ = run == "d480-fixed-observer" ? RunAsync() : RunDetachAsync(run == "d482-detach");
     }
     /// <summary>Uses the original listener and waiter through observer replacement and a real native timeout.</summary>
     private async Task RunAsync()
@@ -26,7 +27,7 @@ public sealed class LayoutActivity : Activity
         var first=new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         int callbacks=0,afterCleanup=0; bool cleanup=false;
         using var listener=new NativeValidationLayout.LayoutListener(()=>{callbacks++;if(cleanup)afterCleanup++;first.TrySetResult();});
-        original.AddOnGlobalLayoutListener(listener);
+        if (!listener.Register(scroll)) throw new IOException("Original native observer unavailable.");
         SetContentView(root); scroll.RequestLayout();
         await Task.WhenAny(first.Task,Task.Delay(2000));
         var retired=!original.IsAlive;

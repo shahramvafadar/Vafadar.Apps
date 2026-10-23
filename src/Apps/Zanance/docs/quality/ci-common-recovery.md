@@ -286,3 +286,24 @@ and single request, then deleted. No polling, second request or successful-job/l
 The response contains these two workflows; it is not a new five-workflow native/backend outcome.
 D-478's separate producer/consumer evidence stays as recorded. D-481 changes only qualification
 sources/docs; its own pushed head retains a separate CI gate. No general release/stability claim.
+
+### D-462 through D-470 late reports and current-head confirmation
+
+The late failure reports are historical heads. Read each failed job log once: runs39776658137,
+39785550542,39788815909,39798541072,39801791660,39816357655,39829283341 and39832681818 all contain
+Android Debug billing CS0103 ImportFinancialNativeReview errors and the corresponding
+No_page_reads_the_mode_itself fixture-policy failure. The affected set grows from
+BudgetFinancialNativeReview to BudgetPeriodCaptionReview and OriginalAmountErrorCaptionReview.
+Run39798541072 additionally refuses installer18.11.12315.225. Cancelled run39827785759 also has
+that Android compile error; its cancelled test log contains the fixture-policy failure before
+"The operation was canceled." The internal cancellation cause is not established from that log.
+
+Current committed1c8d17d1074f2ed09f79be01fdddaafcd014fffd contains the D-476 source/policy correction,
+D-477 reviewed installer and D-478 immutable producer selection. Exact latest
+[CI39874200053](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39874200053) succeeds:
+Libraries/tests job120155686334, Android job120155686703 including selected Debug billing and
+Windows job120155686756 including native toolchain review all succeed. iOS is deliberately skipped.
+[CodeQL39874200026](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/39874200026) succeeds.
+Reuse the consumed D-481 exact-head response and read its original jobs; do not repeat that run-list
+GET, rerun successful tests or introduce a speculative fix. Uncommitted D-482 Android lifetime work
+is separate and is not covered by this previous committed-head CI result.

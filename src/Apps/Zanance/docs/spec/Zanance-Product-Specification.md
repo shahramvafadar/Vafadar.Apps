@@ -8533,3 +8533,18 @@ its one-shot monitor is consumed/deleted. General ANR/GC/crash, whole-Home speed
 OS-scale/spoken/device/iOS/provider/Store and release acceptance remain open.
 
 Evidence: [native callers and exact preservation](../quality/validation-layout-callers.md).
+
+### D-482 - Detached original validation listeners
+
+The actual native baseline reproduces a callback into a disposed peer after detachment changes
+observers while the original root remains alive. Track distinct live trees, retire exact callbacks
+before disposal and return false on target detachment, preserving the one-second bound/caller guards.
+Five new native cases (one retained plus four remaining) and three affected normal regressions pass;
+no managed test-count increment or replay of accepted financial/caller cohorts. Strict Windows and
+complete signed Offline384-AOT Main pass without warnings. Samsung no-reset upgrade and blank-amount
+rejection/Cancel preserve Main27601/141 public Home nodes/balance979/OS; emulator Main28047/139nodes,
+APK/OS and source equality remain. Both owned native helpers and2 emulator/8 phone XMLs are removed.
+The reproduced fault is fixed; general ANR/crash/GC, speed, natural low-memory, full accessibility,
+iOS/provider/Store and release acceptance remain open. Exact pushed-head CI remains a separate gate.
+
+See the detailed [D-482 evidence](../quality/detached-validation-listeners.md).

@@ -2420,3 +2420,10 @@ value. Preserve complete native-scaled captions, MoneyText direction marks, curr
 Native popup proof is distinct from an app-content image; require the actual selected control
 inside its viewport. A transient destination preview proves rendering only, never cash linkage.
 See [bounded native evidence](quality/household-caption-separators.md).
+
+### D-482 - Retired native validation targets
+
+A field leaving its native Android window cannot complete its pending layout wait as ready.
+Release callbacks from every observed live registration tree; preserve field-adjacent feedback,
+raw drafts, current-form guards and existing layout timeout. No geometry, caption or financial
+behavior changes; native lifecycle checks do not establish a new broad layout/accessibility pass.
