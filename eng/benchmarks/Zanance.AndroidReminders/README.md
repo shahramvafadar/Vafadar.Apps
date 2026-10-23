@@ -74,3 +74,17 @@ Preserve per-stage receipts and original PID after observation timeout; do not r
 accepted states. Remove the newly installed fixture and its future alarm at completion, then
 verify Main/APK/OS. See src/Apps/Zanance/docs/quality/physical-goal-reminder-queue.md for exact
 ARM64 scope; pending queues do not establish real timed delivery, tap-through-lock or Doze.
+
+## Physical original period-review queue mode (D-489)
+
+Use review_period_lifecycle=true with the explicit original32-hex review_run on an absent-before-
+install independent package. Do not combine it with scheduled-only/goal selectors. Original
+native permission remains contextual and UID-bound. /period-status reads synthetic stage receipts
+only; it never runs a transition. Twenty-two states cover empty/off sources and three financial
+calendars with future/partial/finished/details/disabled/missed cases, then restore original app
+calendar/start-day/off. Compare the complete original settings packet before/after publication;
+keep account100 unchanged and ledger/goals/allocations/plans empty. The existing pure planner is
+the packet oracle, with additional explicit boundary/finished/missed checks. Retain original live
+PID and per-stage receipts after observation deadlines. Clean only the fresh fixture and its owned
+XMLs; preserve Main/OS and explicit cross-project phone turns. No immediate Show or actual timed/
+lock/Doze/reboot acceptance. See src/Apps/Zanance/docs/quality/physical-period-reminder-queue.md.

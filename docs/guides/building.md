@@ -2419,3 +2419,15 @@ PID/receipts through observation deadlines; do not rerun successful states. No c
 Main private-store read, actual owner authentication or password entry is authorized. Complete
 original state/cleanup evidence and remaining timed-delivery gates:
 [physical goal queue](../../src/Apps/Zanance/docs/quality/physical-goal-reminder-queue.md).
+
+## Original physical period-review queues (D-489)
+
+The fixed independent AndroidReminders Release/AOT caller accepts review_period_lifecycle=true
+and one32-lowercase-hex review_run. Its native notification permission still requires a verified
+owned UI action. Read content://pro.vafadar.zanance.androidreminderreview.status/period-status only
+for synthetic persisted progress; do not recreate an Activity to repair an observation timeout.
+Three initial source states, six states in each Gregorian/Persian/Hijri calendar and final restored/
+off give22 observations. A completed review removes that boundary, not future financial months.
+Verify original settings unchanged by publication and full source account equality; this changes
+no OS settings or financial rows. Preserve explicit temporary phone ownership between projects.
+Scope, final package and cleanup: [physical period queue](../../src/Apps/Zanance/docs/quality/physical-period-reminder-queue.md).

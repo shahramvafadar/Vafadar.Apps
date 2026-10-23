@@ -24,19 +24,23 @@ public sealed class MainActivity : MauiAppCompatActivity
             run is null || !System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$")) return;
         Window?.AddFlags(WindowManagerFlags.KeepScreenOn);
         _ = PrepareAsync(run, Intent?.GetBooleanExtra("review_scheduled_only", false) == true,
-            Intent?.GetBooleanExtra("review_goal_lifecycle", false) == true);
+            Intent?.GetBooleanExtra("review_goal_lifecycle", false) == true,
+            Intent?.GetBooleanExtra("review_period_lifecycle", false) == true);
     }
 
     /// <summary>Waits for the real covered foreground startup before preparing notification metadata.</summary>
-    private async Task PrepareAsync(string run, bool scheduledOnly, bool goalLifecycle)
+    private async Task PrepareAsync(string run, bool scheduledOnly, bool goalLifecycle, bool periodLifecycle)
     {
         try
         {
             var app = (App)Microsoft.Maui.Controls.Application.Current!;
             await app.WaitForStartupAsync();
-            if (goalLifecycle)
+            if ((scheduledOnly ? 1 : 0) + (goalLifecycle ? 1 : 0) + (periodLifecycle ? 1 : 0) > 1)
+                throw new IOException("Choose one independent reminder review.");
+            if (periodLifecycle)
+                await NativePeriodReminderReview.PrepareAsync(IPlatformApplication.Current!.Services, run);
+            else if (goalLifecycle)
             {
-                if (scheduledOnly) throw new IOException("Choose one independent reminder review.");
                 await NativeGoalReminderReview.PrepareAsync(IPlatformApplication.Current!.Services, run);
             }
             else await NativeReminderReview.PrepareAsync(IPlatformApplication.Current!.Services, run, scheduledOnly);

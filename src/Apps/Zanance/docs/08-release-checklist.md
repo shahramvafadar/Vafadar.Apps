@@ -3076,3 +3076,24 @@ notification tap through lock, remaining calendar/device/security/stability/acce
 provider/Store and release gates remain open.
 
 Evidence: [physical goal queue qualification](quality/physical-goal-reminder-queue.md).
+
+### D-489 - Physical original period-review reminder queues
+
+Qualify22 original protected ReminderService/native queue states on Samsung in one retained20233:
+empty/off and empty/enabled sources, source/off, six states in each Gregorian/Persian/Hijri
+calendar, and final restored/off. Financial month starts24/2/13 schedule24October2026 local09:00;
+the next two native requests follow their actual calendar, retaining09:00 across the stored DST
+offset change. Partial review keeps three pending; finishing only the due period removes that
+one and retains two future requests. Details, disable and missed-time cases pass. Compare every
+settings field before/after publication; no review step is completed by a reminder. Original
+account100EUR stays equal, with zero entries/goals/allocations/plans. These22 observations are
+not new managed cases, actual timed delivery or financial-form acceptance. Strict signed Offline
+ARM64 caller192 AOT/unchanged five runtime engines passes. Preserve initial caller compile error,
+two live observation deadlines and premature cleanup refusal; continue only the same live PID.
+The temporary owner-authorized cross-project phone handoff is respected; after a short exclusive
+turn, remove only the fresh fixture and five hash-matched XMLs, retain Main13827/Home979/all141
+public tuples/APK/OS, and explicitly release the phone for the other active project. Main shipping
+code/APK remain D-487. Real09:00 delivery, lock/tap/profile-switch/restore/Doze/reboot, broader
+security/stability/accessibility/iOS/provider/Store and release gates remain open.
+
+Evidence: [physical period queue qualification](quality/physical-period-reminder-queue.md).
