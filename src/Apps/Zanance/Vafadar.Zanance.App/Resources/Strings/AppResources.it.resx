@@ -5023,16 +5023,16 @@ Quantità posseduta: segue un peso o un numero di unità, non il prezzo. Un aume
     <value>Registrati dopo il salvataggio, ma con data precedente</value>
   </data>
   <data name="Snapshot_UnplannedSpending" xml:space="preserve">
-    <value>Spese non pianificate</value>
+    <value>Spese non previste al netto dei rimborsi</value>
   </data>
   <data name="Snapshot_UnplannedIncome" xml:space="preserve">
-    <value>Entrate non pianificate</value>
+    <value>Entrate non previste al netto delle restituzioni</value>
   </data>
   <data name="Snapshot_PlansChanged" xml:space="preserve">
-    <value>Differenze nei movimenti registrati dai piani</value>
+    <value>Altre differenze</value>
   </data>
   <data name="Snapshot_PartsNote" xml:space="preserve">
-    <value>La somma delle componenti corrisponde alla differenza dell’ultimo giorno confrontato.</value>
+    <value>La somma delle parti corrisponde alla differenza dell’ultimo giorno confrontato. I rimborsi riducono le spese e le restituzioni di entrate riducono le entrate. Trasferimenti, acquisti e vendite di beni e correzioni del saldo non sono né entrate né spese. Le differenze residue possono derivare da modifiche alle operazioni previste o ai dati precedenti.</value>
   </data>
   <data name="Snapshot_Delete" xml:space="preserve">
     <value>Elimina previsione</value>
@@ -8450,5 +8450,8 @@ SHA-256 dell’XML originale: {5}</value>
   </data>
   <data name="Amount_InvalidWithExample" xml:space="preserve">
     <value>Inserisci un importo valido, per esempio {0}.</value>
+  </data>
+  <data name="Snapshot_OtherMovements" xml:space="preserve">
+    <value>Altri movimenti dei conti</value>
   </data>
 </root>

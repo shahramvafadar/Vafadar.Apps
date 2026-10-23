@@ -5037,16 +5037,16 @@
     <value>تراکنش‌های افزوده‌شده پس از ذخیرهٔ پیش‌بینی، با تاریخِ قبل از آن</value>
   </data>
   <data name="Snapshot_UnplannedSpending" xml:space="preserve">
-    <value>هزینهٔ برنامه‌ریزی‌نشده</value>
+    <value>هزینه‌های برنامه‌ریزی‌نشده پس از کسر بازپرداخت‌ها</value>
   </data>
   <data name="Snapshot_UnplannedIncome" xml:space="preserve">
-    <value>درآمد برنامه‌ریزی‌نشده</value>
+    <value>درآمدهای برنامه‌ریزی‌نشده پس از کسر برگشت درآمد</value>
   </data>
   <data name="Snapshot_PlansChanged" xml:space="preserve">
-    <value>اختلاف تراکنش‌های ثبت‌شده با برنامه‌های مالی</value>
+    <value>سایر اختلاف‌ها</value>
   </data>
   <data name="Snapshot_PartsNote" xml:space="preserve">
-    <value>مجموع این بخش‌ها با اختلافِ آخرین روزِ مقایسه‌شده برابر است.</value>
+    <value>جمع این بخش‌ها با اختلاف آخرین روز مقایسه‌شده برابر است. بازپرداخت‌ها هزینه و برگشت درآمد، درآمد را کاهش می‌دهند. انتقال، خریدوفروش دارایی و اصلاح موجودی هیچ‌کدام درآمد یا هزینه نیستند. اختلاف باقی‌مانده می‌تواند ناشی از تغییر تراکنش‌های برنامه‌ریزی‌شده یا داده‌های قبلی باشد.</value>
   </data>
   <data name="Snapshot_Delete" xml:space="preserve">
     <value>حذف این پیش‌بینی</value>
@@ -8461,5 +8461,8 @@
   </data>
   <data name="Amount_InvalidWithExample" xml:space="preserve">
     <value>مبلغ معتبری وارد کنید؛ برای نمونه «{0}».</value>
+  </data>
+  <data name="Snapshot_OtherMovements" xml:space="preserve">
+    <value>سایر جابه‌جایی‌های حساب</value>
   </data>
 </root>

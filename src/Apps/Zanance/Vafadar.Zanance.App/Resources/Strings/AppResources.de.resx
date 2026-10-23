@@ -5037,16 +5037,16 @@ Bestandsmenge: Gewicht oder Stückzahl zählt, nicht der Preis. Ein Preisanstieg
     <value>Später erfasst (vor dem Speichern datiert)</value>
   </data>
   <data name="Snapshot_UnplannedSpending" xml:space="preserve">
-    <value>Ungeplante Ausgaben</value>
+    <value>Ungeplante Ausgaben abzüglich Erstattungen</value>
   </data>
   <data name="Snapshot_UnplannedIncome" xml:space="preserve">
-    <value>Ungeplante Einnahmen</value>
+    <value>Ungeplante Einnahmen abzüglich Rückzahlungen</value>
   </data>
   <data name="Snapshot_PlansChanged" xml:space="preserve">
-    <value>Abweichungen bei erfassten geplanten Buchungen</value>
+    <value>Sonstige Abweichungen</value>
   </data>
   <data name="Snapshot_PartsNote" xml:space="preserve">
-    <value>Die Teile ergeben zusammen die Differenz des letzten verglichenen Tages.</value>
+    <value>Die Teilbeträge ergeben die Abweichung am letzten verglichenen Tag. Erstattungen mindern Ausgaben, Rückzahlungen mindern Einnahmen. Überträge, Käufe und Verkäufe von Vermögenswerten sowie Saldenkorrekturen sind weder Einnahmen noch Ausgaben. Verbleibende Abweichungen können aus geänderten geplanten Buchungen oder bisherigen Daten stammen.</value>
   </data>
   <data name="Snapshot_Delete" xml:space="preserve">
     <value>Diese Prognose löschen</value>
@@ -8461,5 +8461,8 @@ Original-XML SHA-256: {5}</value>
   </data>
   <data name="Amount_InvalidWithExample" xml:space="preserve">
     <value>Geben Sie einen gültigen Betrag ein, zum Beispiel {0}.</value>
+  </data>
+  <data name="Snapshot_OtherMovements" xml:space="preserve">
+    <value>Sonstige Kontobewegungen</value>
   </data>
 </root>

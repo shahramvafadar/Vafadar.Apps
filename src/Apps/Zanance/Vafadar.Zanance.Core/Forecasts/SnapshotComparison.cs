@@ -14,15 +14,15 @@ public sealed record SnapshotDay(DateOnly Date, long Saved, long Actual)
 /// A saved forecast compared with reality (ZEX-S0804, 04 §4.2): the saved path, the actual balances of the same accounts
 /// from today's ledger, and the difference on the last day split into parts that add up to it – recorded later
 /// (entries dated up to the base date but entered after saving), unplanned spending and income (entries without a plan
-/// entered after saving), and plans that changed (the rest).
+/// entered after saving), other account movements, and remaining changes to plans or existing data.
 /// </summary>
-public sealed record SnapshotComparison(IReadOnlyList<SnapshotDay> Days, long RecordedLater, long UnplannedSpending, long UnplannedIncome)
+public sealed record SnapshotComparison(IReadOnlyList<SnapshotDay> Days, long RecordedLater, long UnplannedSpending, long UnplannedIncome, long OtherMovements = 0)
 {
     /// <summary>Gets the difference on the last compared day.</summary>
     public long Difference => Days.Count == 0 ? 0 : Days[^1].Difference;
 
-    /// <summary>Gets the part of the difference that comes from plans paid with other amounts, on other days or not at all.</summary>
-    public long PlansChanged => Difference - RecordedLater - UnplannedSpending - UnplannedIncome;
+    /// <summary>Gets the residual difference from changed planned transactions or earlier data, after the known movement categories.</summary>
+    public long PlansChanged => Difference - RecordedLater - UnplannedSpending - UnplannedIncome - OtherMovements;
 }
 
 /// <summary>Compares a forecast snapshot with what happened (ZEX-S0804).</summary>
@@ -76,7 +76,12 @@ public static class SnapshotComparer
         }
         var later = entries.Where(e => e.CreatedAt > snapshot.CreatedAt).ToList();
         var recordedLater = later.Where(e => e.Date <= snapshot.BaseDate).Sum(Effect);
-        var unplanned = later.Where(e => e.Date > snapshot.BaseDate && e.Date <= end && e.ScheduleId is null).Select(Effect).ToList();
-        return new SnapshotComparison(days, recordedLater, unplanned.Where(v => v < 0).Sum(), unplanned.Where(v => v > 0).Sum());
+        var unplanned = later.Where(e => e.Date > snapshot.BaseDate && e.Date <= end && e.ScheduleId is null).ToList();
+        // D-487: classify original ledger kinds, not cash signs. Refunds reduce spending and
+        // reversals reduce income; transfers, capital trades and corrections are neither.
+        var spending = unplanned.Where(e => e.Kind is EntryKind.Expense or EntryKind.Refund).Sum(Effect);
+        var income = unplanned.Where(e => e.Kind is EntryKind.Income or EntryKind.IncomeReversal).Sum(Effect);
+        var other = unplanned.Where(e => e.Kind is not (EntryKind.Expense or EntryKind.Refund or EntryKind.Income or EntryKind.IncomeReversal)).Sum(Effect);
+        return new SnapshotComparison(days, recordedLater, spending, income, other);
     }
 }

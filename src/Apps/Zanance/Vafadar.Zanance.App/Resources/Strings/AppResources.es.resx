@@ -5004,16 +5004,16 @@ Cantidad de bienes: sigue un peso o número de unidades, no su precio. Una subid
     <value>Registrado después, con fecha anterior al guardado</value>
   </data>
   <data name="Snapshot_UnplannedSpending" xml:space="preserve">
-    <value>Gastos no planificados</value>
+    <value>Gastos no previstos, descontando reembolsos</value>
   </data>
   <data name="Snapshot_UnplannedIncome" xml:space="preserve">
-    <value>Ingresos no planificados</value>
+    <value>Ingresos no previstos, descontando devoluciones de ingresos</value>
   </data>
   <data name="Snapshot_PlansChanged" xml:space="preserve">
-    <value>Diferencias en transacciones de los planes</value>
+    <value>Otras diferencias</value>
   </data>
   <data name="Snapshot_PartsNote" xml:space="preserve">
-    <value>La suma de estas partes coincide con la diferencia del último día comparado.</value>
+    <value>La suma de las partes coincide con la diferencia del último día comparado. Los reembolsos reducen los gastos y las devoluciones de ingresos reducen los ingresos. Las transferencias, compraventas de activos y correcciones de saldo no son ni ingresos ni gastos. Las diferencias restantes pueden deberse a cambios en movimientos previstos o datos anteriores.</value>
   </data>
   <data name="Snapshot_Delete" xml:space="preserve">
     <value>Eliminar esta previsión</value>
@@ -8430,5 +8430,8 @@ SHA-256 del XML original: {5}</value>
   </data>
   <data name="Amount_InvalidWithExample" xml:space="preserve">
     <value>Introduce un importe válido, por ejemplo, {0}.</value>
+  </data>
+  <data name="Snapshot_OtherMovements" xml:space="preserve">
+    <value>Otros movimientos de las cuentas</value>
   </data>
 </root>

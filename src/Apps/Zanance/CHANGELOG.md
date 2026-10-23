@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Saved forecast comparison (D-487)
+
+- Keep transfers, asset trades and account corrections out of unplanned income and spending.
+- Show refunds as reduced spending and income reversals as reduced income, with clear explanations.
+
 ### Incomplete currency transfers in forecasts (D-486)
 
 - Keep a forecast incomplete when an old foreign-currency transfer has no destination amount.

@@ -5010,16 +5010,16 @@ Quantité détenue : suit un poids ou un nombre d’unités, pas leur prix. Une
     <value>Saisi plus tard, avec une date antérieure à l’enregistrement de la prévision</value>
   </data>
   <data name="Snapshot_UnplannedSpending" xml:space="preserve">
-    <value>Dépenses non prévues</value>
+    <value>Dépenses imprévues, après remboursements</value>
   </data>
   <data name="Snapshot_UnplannedIncome" xml:space="preserve">
-    <value>Revenus non prévus</value>
+    <value>Revenus imprévus, après déduction des revenus reversés</value>
   </data>
   <data name="Snapshot_PlansChanged" xml:space="preserve">
-    <value>Écarts dans les opérations enregistrées issues des planifications</value>
+    <value>Autres écarts</value>
   </data>
   <data name="Snapshot_PartsNote" xml:space="preserve">
-    <value>La somme des composantes correspond à l’écart du dernier jour comparé.</value>
+    <value>La somme des parties correspond à l’écart du dernier jour comparé. Les remboursements réduisent les dépenses et les revenus reversés réduisent les revenus. Les virements, achats et ventes d’actifs et corrections de solde ne sont ni des revenus ni des dépenses. Les écarts restants peuvent provenir de modifications des opérations prévues ou des données antérieures.</value>
   </data>
   <data name="Snapshot_Delete" xml:space="preserve">
     <value>Supprimer cette prévision</value>
@@ -8438,5 +8438,8 @@ SHA-256 du XML original : {5}</value>
   </data>
   <data name="Amount_InvalidWithExample" xml:space="preserve">
     <value>Saisissez un montant valide, par exemple {0}.</value>
+  </data>
+  <data name="Snapshot_OtherMovements" xml:space="preserve">
+    <value>Autres mouvements des comptes</value>
   </data>
 </root>

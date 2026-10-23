@@ -128,6 +128,10 @@ internal static partial class DebugSnapshots
         {
             await ReviewBudgetPeriodCaptionsWindowsAsync(app, services, folder); return;
         }
+        if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "snapshot-difference")
+        {
+            await ReviewSnapshotDifferenceWindowsAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "budget-financial-read")
         {
             await ReviewBudgetFinancialReadWindowsAsync(app, services, folder); return;

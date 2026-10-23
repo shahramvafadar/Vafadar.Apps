@@ -1388,3 +1388,24 @@ Phase1's manual-rate and physical-type editors retain original raw interpretatio
 ownership. This is selective maintenance of existing fields, not a new schema or phase claim.
 See quality/physical-numeric-context.md for focused cases, original native continuation and remaining
 qualification. D-386 and external platform/provider/Store gates remain unchanged.
+
+### D-487 - Original saved forecast difference categories
+
+Correct the reproduced cash-sign classification across all eight original ledger kinds. Refunds
+reduce unplanned spending, income reversals reduce unplanned income, and transfers/capital trades/
+corrections use a separate neutral account-movement row. The residual caption now says other
+differences because earlier data edits as well as changed plans can contribute. Original scope,
+saved paths, actual daily balances, recorded-later boundaries and source rows remain unchanged.
+Fourteen new distinct Core cases and two affected regressions pass;23 resource cases pass,39
+selected successes overall. Eighteen Windows contexts yield36 inspected images; six x64/412dp
+and six physical ARM64/384dp Release/AOT contexts qualify156 original captions and reversal color
+with full typed fixture/base equality. Historical timestamps are seeded once per independent
+platform; this is not real elapsed-day comparison or financial form/Save acceptance.
+Strict Windows and complete signed Offline384-AOT APK builds pass. Samsung no-reset upgrade
+8764-to13827 retains Home979/all141 public tuples/OS; emulator28047/all139 tuples stays unchanged.
+Restore both exact independent APKs/stopped states; remove five hash-matched owned XMLs. Prior
+e310eadb has four successful workflows and its single-use schedule is consumed/deleted. Final
+new-head CI, real elapsed-day/remaining physical variants, security/stability/accessibility/iOS/
+provider/Store and release gates remain open. No unrelated successful cohort is replayed.
+
+Evidence: [original saved comparison qualification](quality/snapshot-difference-kinds.md).

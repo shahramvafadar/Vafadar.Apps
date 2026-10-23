@@ -843,3 +843,14 @@ retains completed per-context receipts. Read the exact process/run/comparison re
 timeout must not restart the case. Restore the prior independent APK/stopped state and original
 Main public UI/APK/OS; no workload preparation, OS change or old successful financial replay belongs
 here. This is x64 native analytical evidence, not a full physical malformed-data or release gate.
+
+## Original saved comparison classification (D-487)
+
+Phase snapshot-difference uses the original SnapshotPage/VM/store on one independent deliberately
+historical source. Six en/fa/de Light/Dark contexts check13 real native caption/amount packets,
+reversal colors and complete typed source/base equality. Read-ReviewReport.ps1 accepts this phase
+and requires its original live process/run/comparison. Retain successful context receipts; never
+replay financial setup or accepted contexts. Clock injection affects only independent historical
+setup; real elapsed-day/physical financial acceptance remains separate. Actual412dp x64 and384dp
+Samsung results and final package are documented in docs/quality/snapshot-difference-kinds.md
+under src/Apps/Zanance. Ordinary shipping builds contain no fixture or entry route.

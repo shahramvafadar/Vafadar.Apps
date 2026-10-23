@@ -5055,16 +5055,16 @@ Holding quantity: follow a weight or number of items, not their price. A rise in
     <value>Recorded later (dated before saving)</value>
   </data>
   <data name="Snapshot_UnplannedSpending" xml:space="preserve">
-    <value>Unplanned spending</value>
+    <value>Unplanned spending, net of refunds</value>
   </data>
   <data name="Snapshot_UnplannedIncome" xml:space="preserve">
-    <value>Unplanned income</value>
+    <value>Unplanned income, net of reversals</value>
   </data>
   <data name="Snapshot_PlansChanged" xml:space="preserve">
-    <value>Differences in recorded plan transactions</value>
+    <value>Other differences</value>
   </data>
   <data name="Snapshot_PartsNote" xml:space="preserve">
-    <value>The parts add up to the difference of the last compared day.</value>
+    <value>The parts add up to the difference on the last compared day. Refunds reduce spending and income reversals reduce income. Transfers, asset trades and balance corrections are neither. Remaining differences may reflect changed planned transactions or existing data.</value>
   </data>
   <data name="Snapshot_Delete" xml:space="preserve">
     <value>Delete this forecast</value>
@@ -8495,5 +8495,8 @@ Original XML SHA-256: {5}</value>
   </data>
   <data name="Amount_InvalidWithExample" xml:space="preserve">
     <value>Enter a valid amount, for example, {0}.</value>
+  </data>
+  <data name="Snapshot_OtherMovements" xml:space="preserve">
+    <value>Other account movements</value>
   </data>
 </root>

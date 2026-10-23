@@ -2396,3 +2396,14 @@ never replay a completed cohort for a missing report. The fixture README defines
 controls and restoration. An observed incremental n_onCreate failure is not a scenario result;
 retain it and clean only that owned helper output before a full publish recovery. Main integration
 uses the complete signed Offline APK and one invalid input/Cancel, with no financial write.
+
+## Original saved forecast classification review (D-487)
+
+Run-StoreDrafts.ps1 -SnapshotDifferenceReview selects one independent Windows Debug original
+SnapshotPage review on a non-input desktop:18 contexts,36 images, complete source/base equality.
+AndroidHome's snapshot-difference phase renders six original Release/AOT comparisons and returns
+retained context receipts through Read-ReviewReport.ps1 -Phase snapshot-difference. Native width
+comes from the actual owned window/density. Both use an independent fixture-only audit clock to
+seed historical source facts, then compare through the real app clock; never change OS time.
+FinancialSaves0 applies to presentation; setup seeds its own source once. Preserve receipts and
+continue only incomplete observations. See [scope and package](../../src/Apps/Zanance/docs/quality/snapshot-difference-kinds.md).

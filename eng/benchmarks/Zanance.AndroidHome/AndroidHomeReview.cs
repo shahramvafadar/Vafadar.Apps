@@ -505,6 +505,13 @@ internal static partial class AndroidHomeReview
                 Directory.CreateDirectory(root);
                 await WriteReportAsync(root, phase, await ReviewBudgetPeriodCaptionsAsync(app, services, root, comparison!, ct, scopeOnly: phase == "budget-scope-captions"), ct);
             }
+            else if (phase == "snapshot-difference")
+            {
+                if (File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))
+                    throw new ReviewCheckException("Completed original comparison must not be repeated.");
+                Directory.CreateDirectory(root);
+                await WriteReportAsync(root, phase, await ReviewSnapshotDifferenceAsync(app, services, root, ct), ct);
+            }
             else if (phase == "forecast-missing-rate")
             {
                 if (File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))

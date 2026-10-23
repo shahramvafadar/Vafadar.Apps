@@ -21,8 +21,8 @@ public sealed record ComparisonRow(string DateText, string SavedText, string Act
 
 /// <summary>
 /// A saved forecast next to what happened (ZEX-S0804, ZEX-UI18): the saved path, the actual balance of the same accounts
-/// from today's ledger, and the difference split into recorded later, unplanned spending and income, and plans that
-/// changed – the parts always add up. The snapshot itself never changes.
+/// from today's ledger, and the difference split into recorded later, net unplanned spending/income, other account
+/// movements and residual changes to plans or earlier data. The parts add up; the snapshot itself never changes.
 /// </summary>
 public sealed partial class SnapshotViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, ForecastWorkStore work, IForecastInteraction? interaction = null)
     : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
@@ -136,7 +136,9 @@ public sealed partial class SnapshotViewModel(ZananceStore store, Translator tra
         Parts.Clear();
         Parts.Add(new AmountLine(translator["Snapshot_RecordedLater"], Money(comparison.RecordedLater, true), false, comparison.RecordedLater < 0));
         Parts.Add(new AmountLine(translator["Snapshot_UnplannedSpending"], Money(comparison.UnplannedSpending, true), false, comparison.UnplannedSpending < 0));
-        Parts.Add(new AmountLine(translator["Snapshot_UnplannedIncome"], Money(comparison.UnplannedIncome, true), false));
+        Parts.Add(new AmountLine(translator["Snapshot_UnplannedIncome"], Money(comparison.UnplannedIncome, true), false, comparison.UnplannedIncome < 0));
+        if (comparison.OtherMovements != 0)
+            Parts.Add(new AmountLine(translator["Snapshot_OtherMovements"], Money(comparison.OtherMovements, true), false));
         Parts.Add(new AmountLine(translator["Snapshot_PlansChanged"], Money(comparison.PlansChanged, true), false, comparison.PlansChanged < 0));
         Parts.Add(new AmountLine(translator["Snapshot_Difference"], Money(comparison.Difference, true), true, comparison.Difference < 0));
     }
