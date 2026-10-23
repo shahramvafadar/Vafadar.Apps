@@ -9105,3 +9105,17 @@ networks. Preserve all private volumes/snapshots and available image dependencie
 engine cleanup. Add bounded ownership-checked status/start/stop commands without rebuilding or
 replaying provision/migration. Actual stop/start and original readiness are documented in
 `quality/docker-lifecycle.md`. No app/APK, unit-test count, public hosting or release gate changes.
+
+### D-503 - Original image-only PDF reading on Samsung
+
+Nine fixed synthetic image-only PDFs/15 raster pages exercise the unchanged native PdfRenderer,
+DocumentReader and ReceiptParser once: five Latin-language24.50EUR totals and a six-page last42.75EUR
+pass; cross-page EUR/USD remains Review; no-total and Persian scan remain NotFound. The latter is
+an unaccepted script capability, not a six-language OCR pass. Original first3/last selection skips
+an intentionally conflicting middle-page total. No financial Save, new managed test, shipping source,
+SDK/model/permission or product APK change. One strict signed Offline192-AOT independent build and
+exact asset hashes pass; restore original caller/data/stopped state and Main25043/Home979/all141
+public tuples/APK/OS. Remove two owned XMLs. Four original D-494 handles and24914 remain; no provider
+read/rearm/window/subject replacement. QA-05 broader corpus/camera/Persian/iOS gates stay open.
+D-501 CI40007631698 and CodeQL40007631709 succeed once; its consumed monitor is deleted.
+[Evidence](quality/scanned-receipt-pdfs.md).

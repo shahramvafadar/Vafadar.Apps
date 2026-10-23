@@ -3578,3 +3578,13 @@ recovery snapshots and their exact image dependencies, and all unrelated project
 local group is `zanance-selfhost-privacy-restore-d294`; use `eng/hosting/desktop.py` for whole-stack
 status/start/stop without rebuilding, reprovisioning, replaying migrations or changing identities.
 Temporary independent fixtures must be retired when their remaining work is complete.
+
+## D-503 - Original scanned PDF evidence
+
+Keep image-only PDFs distinct from digital text layers and photos. Verify the original extractor
+finds no text layer before native rendering/recognition. Preserve original first-three/last-page
+selection, page separators and cross-page currency conflicts. Compare fixed synthetic expectations
+after reading, never guide OCR with them. A safe Persian-script refusal under the approved Latin
+model is not six-language image recognition. Retain evaluation notices in old synthetic source
+pages; no merchant-accuracy claim. Retire only the new observer inputs and restore original caller/
+Main/OS while keeping pending timed sources untouched.

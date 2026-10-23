@@ -904,3 +904,16 @@ Use a fresh run/comparison, retain exact PID after observation expiry and preser
 receipts; never rerun completed images to improve an apparent score. Restore the retained caller
 APK/data/stopped state and Main/OS. Finite outcomes and remaining gates:
 [public corpus evidence](../../../src/Apps/Zanance/docs/quality/public-receipt-corpus.md).
+
+## Original scanned receipt PDFs (D-503)
+
+Opt in only the independent build with `ScannedReceiptRoot` pointing to the declared local
+`scan-*.pdf` files and manifest; shipping product assets never reference them. A fresh
+`scanned-receipts` phase/run/pass reads exactly nine fixed image-only PDFs through the original
+PdfRenderer/DocumentReader/ReceiptParser. Check actual zero text layer and exact PDF/page hashes
+before OCR. Keep original recognized text/layout/status and per-document receipts; do not replay
+completed reads to repair reporting. Ground truth is compared afterward, never supplied to OCR.
+Five Latin single-page totals, first-three/last-page selection, cross-page currency conflict,
+no-total refusal and Persian-script limitation are distinct outcomes. Preserve old caller APK/data/
+stopped state, Main public UI/OS and pending timed sources. These are observations, not unit tests,
+camera capture, merchant quality, Persian OCR or full receipt/release acceptance.
