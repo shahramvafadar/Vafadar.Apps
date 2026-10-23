@@ -891,3 +891,16 @@ with the what-if exclusion and immutable saved snapshot preserved. Do not call L
 those source writes to force acceptance. Keep accepted per-case receipts. Return/delete only the
 owned inactive profile, compare the complete original base and restore old caller APK/process
 absence/Main/OS. No phone/timed/elapsed-day/credential or general runtime acceptance is inferred.
+
+### D-501 - Fixed public receipt-corpus observation
+
+Optional process-local ReceiptCorpusRoot includes only the reviewed public first-ten CORD v2
+test images, exact-digest manifest and CC-BY-4.0 licence/attribution. Nothing is added to shipping
+assets or the repository. The explicit receipt-corpus phase reads original DocumentReader and
+ReceiptParser once per fixed image and stores original public OCR/candidate observations in its
+owned source. Ground-truth totals are reporting-only and never passed to either algorithm.
+No financial/account/key/attachment/backup service or new permission is used by the phase.
+Use a fresh run/comparison, retain exact PID after observation expiry and preserve incomplete
+receipts; never rerun completed images to improve an apparent score. Restore the retained caller
+APK/data/stopped state and Main/OS. Finite outcomes and remaining gates:
+[public corpus evidence](../../../src/Apps/Zanance/docs/quality/public-receipt-corpus.md).

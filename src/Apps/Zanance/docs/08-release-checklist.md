@@ -3248,3 +3248,11 @@ and same-day Samsung native sources pass with complete data preservation and zer
 Isolated allocation falls about two thirds; whole-Home two-second/stability targets remain open.
 Main adoption waits for D-494; remaining future-day/external gates are preserved.
 See [bounded evidence](quality/home-shared-balance-index.md).
+
+### D-501 - Fixed public receipt-corpus observation
+
+Ten fixed CC-BY-4.0 public CORD v2 images are read once on Samsung through original offline
+reader/parser: five correct Found, three Review, two NotFound including the no-total negative.
+No financial save, new managed count, shipping source/SDK/permission or broader quality acceptance.
+QA-05 remains partial for six-language/camera/scanned/Persian/merchant/currency/device coverage.
+Original caller/Main/OS restored; D-494/D-496 preserved. [Evidence](quality/public-receipt-corpus.md).

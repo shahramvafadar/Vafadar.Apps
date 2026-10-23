@@ -2455,3 +2455,19 @@ current-day baseline. Preserve failed/partial identities and continue only missi
 Never seed or repeat financial commands. Windows home-workload remains independent storageacceptance
 with a marked retained source root and isolated non-input desktop. Record complete source equality,
 restoration and exact owned output cleanup; small timing cohorts do not establish stable speedup.
+
+## Fixed public receipt corpus (D-501)
+
+The independent AndroidHome receipt-corpus phase requires a fresh32-hex review_run/comparison and
+a local opt-in ReceiptCorpusRoot; ordinary builds contain no corpus assets. That root contains
+ten original test-000.jpg through test-009.jpg, manifest.json, LICENSE-CC-BY and attribution.txt.
+Manifest Source is naver-clova-ix/cord-v2, License CC-BY-4.0, Selection first-ten-test-rows, Cases
+exactly0..9 with File/Sha256/AnnotatedTotal. Collect those first ten official test rows, retain
+original response/image digests and licence, and never use expected amounts in recognition.
+Set ReceiptCorpusRoot only in the current build process and build the independent project with
+Build-AndroidApk.ps1 -Offline; do not add images to the product or repository. Validate packaged
+image hashes/licence and the complete Offline signature/identity before install. Read the exact
+original PID/run/comparison once complete. Reports retain public recognized text privately;
+owner documents/credentials are excluded. Restore old caller/data/stopped state and Main/OS;
+remove only owned hash-matched remote output. No financial commands or successful image replay.
+See [scope and source](../../src/Apps/Zanance/docs/quality/public-receipt-corpus.md).

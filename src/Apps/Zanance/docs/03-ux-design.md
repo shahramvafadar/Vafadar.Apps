@@ -2504,3 +2504,10 @@ repair an observation. No new layout, strings or translations are introduced.
 Home reuses its unchanged captured worker-local account index for rows and both total views.
 Original localized captions, scope/order, values, cover and native layout stay unchanged. Finite
 same-source native equality is separate from whole-Home speed, stability and accessibility gates.
+
+### D-501 - Preserve uncertain real receipt evidence
+
+Public image qualification preserves Review for damaged total/count evidence and NotFound when
+no final total is readable. Never replace a reviewed draft from subtotal/payment arithmetic or
+silently repair OCR digits to fit a known annotation. Finite Latin corpus results are distinct
+from six-language, merchant/currency and native saved-form acceptance; presentation is unchanged.

@@ -19,6 +19,13 @@
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
+  <!-- Public receipt evidence is opt-in, local-only and never part of the product package. -->
+  <ItemGroup Condition="'$(ReceiptCorpusRoot)' != ''">
+    <MauiAsset Include="$(ReceiptCorpusRoot)/test-*.jpg" LogicalName="receipt-corpus/%(Filename)%(Extension)" />
+    <MauiAsset Include="$(ReceiptCorpusRoot)/manifest.json" LogicalName="receipt-corpus/manifest.json" />
+    <MauiAsset Include="$(ReceiptCorpusRoot)/LICENSE-CC-BY" LogicalName="receipt-corpus/LICENSE-CC-BY" />
+    <MauiAsset Include="$(ReceiptCorpusRoot)/attribution.txt" LogicalName="receipt-corpus/attribution.txt" />
+  </ItemGroup>
   <!-- The separately identified physical focus probe owns no financial account, entry or type. -->
   <PropertyGroup Condition="'$(ReviewCurrencyFocusPhone)' == 'true'">
     <ApplicationId>pro.vafadar.zanance.currencyfocusreview</ApplicationId>

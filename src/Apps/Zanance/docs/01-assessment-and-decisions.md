@@ -9075,3 +9075,23 @@ D-499 single CI response remains in_progress; three other workflows succeed, mon
 deleted and no request repeated. Security/spoken/iOS/provider/release gates stay open.
 
 Evidence: [original shared-index qualification](quality/home-shared-balance-index.md).
+
+### D-501 - Fixed public receipt-corpus observation
+
+Use the first ten official CORD v2 test images under CC-BY-4.0, without outcome selection.
+Original public images/annotations stay outside the repository/product; licence/attribution
+accompany only the independent caller. Ten actual Samsung original-reader/parser observations
+produce five correct Found amounts, three Review and two NotFound, including one true no-total
+negative. Perfect annotated-text parsing gives eight Found/one Review/one NotFound. Preserve
+blurred/damaged/count-label ambiguities; no fabricated digit correction or product algorithm
+change. Five of nine annotated totals found is insufficient to close QA-05. Latin-script public
+Indonesian receipts do not qualify six languages, Persian image OCR, native camera acquisition,
+scanned PDF, merchant/currency accuracy or saved financial forms. No new managed test count.
+Strict signed Offline192-AOT independent build passes; no new SDK/permission/shipping source or
+financial write. Restore exact old caller/data/stopped state and Main25043/Home979/141 public
+nodes/APK/OS; remove two owned hash-matched XMLs. D-494 resumed24914/four requests and D-496
+remain intact. No Main private database/key equality, stability/spoken/iOS/provider/release claim.
+Prior4de95cfb CI40004246720/CodeQL40004246807/service40004246802/identity40004246884 succeed
+once; monitor consumed/deleted. Continue remaining quality gates without repeating these images.
+
+Evidence: [finite public corpus and limitations](quality/public-receipt-corpus.md).

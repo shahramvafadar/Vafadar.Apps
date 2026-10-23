@@ -3557,3 +3557,13 @@ mutations. A historical presentation oracle from another day is not a same-day c
 the original refusal and old evidence, then establish current-day original-code packets on the
 same untouched fictitious source. No seed/financial replay to repair observations. Allocation
 measurements, native publication timing and whole-Home/stability acceptance remain distinct.
+
+## D-501 - Public receipt corpus provenance and limits
+
+A public receipt cohort uses a fixed declared selection, original image digests and reviewed
+licence/attribution outside the shipping product. Keep recognition inputs independent of ground
+truth, retain original OCR/layout/semantic outcomes and never re-recognize successful images to
+repair a report. Compare numeric results afterward. Found, Review and NotFound are separate
+outcomes, not a blanket quality pass or new managed-test count. Do not infer six-language,
+merchant/currency, camera or saved-form acceptance from a Latin-script public sample. Preserve
+old caller data/APK/stopped state, Main public UI/OS and pending timed sources.

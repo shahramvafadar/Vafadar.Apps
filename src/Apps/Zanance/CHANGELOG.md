@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Public receipt-photo qualification (D-501)
+
+- Checked ten fixed public receipt photographs on Android without saving financial data.
+- Retained uncertain/missing totals for review; broader receipt quality remains under qualification.
+
 ### Less temporary balance-calculation memory (D-500)
 
 - Reuse Home's account index for displayed balances and confirmed totals while preserving amounts.
