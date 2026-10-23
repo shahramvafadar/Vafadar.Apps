@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Android renewed-lock qualification (D-498)
+
+- Verified queued destination order through original lock covers on Samsung without changing financial data.
+- Real device authentication and broader security acceptance remain separate.
+
 ### Current forecasts after returning to their tab (D-497)
 
 - Refresh the current forecast and saved comparison when returning from another tab.

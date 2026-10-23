@@ -4294,3 +4294,22 @@ Store and release gates stay open. Prior f6ad8543 CI/CodeQL succeed once; its mo
 deleted. Exact new-head CI follows push.
 
 Evidence: [original retained-tab qualification](../../quality/forecast-retained-tab-return.md).
+
+### D-498 - Physical original renewed-cover destinations
+
+Two previously emulator-qualified D-495 cases now pass on Samsung SM-A176B/API36/ARM64 with
+actual original LockPage/MauiAppLockHost controls and three native unlock clicks. A renewed
+cover retains later destinations; both cases finish in order1/2/3. Authentication responses are
+explicit fictional ports: no real device credentials, PIN storage or financial writes. Complete
+fixture/base packets remain equal. One strict signed Offline192-AOT independent build succeeds;
+no unchanged Windows/shipping build, managed suite or financial cohort is repeated. Restore the
+exact old independent APK/stopped state and Main25043/Home979/all141 public tuples/APK/OS.
+Preserve the tuple-versus-list restoration-observer refusal: both original XML arrays already
+match, and only local evidence comparison continues. Two owned remote XMLs are hash-matched/
+removed; local originals remain. D-494 keeps24914 and its four selected resumed alarm identities;
+no provider read, rearm, subject replacement or Main upgrade. D-496 remains inactive/intact.
+This is physical native-cover adapter qualification, not real authentication, notification-tap,
+Doze/reboot, general security/ANR/crash, accessibility, iOS, provider/store or release acceptance.
+Prior3821870a CI39981472630/CodeQL39981472583 succeed once; that monitor is consumed/deleted.
+
+Evidence: [physical native-cover scope](../../quality/physical-relocked-destinations.md).

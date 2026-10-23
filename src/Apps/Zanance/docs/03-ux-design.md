@@ -2484,3 +2484,9 @@ Share simultaneous appearance/navigation work; preserve the what-if draft and im
 path. Native acceptance requires an actual tab event and the same page rendering changed facts,
 not a test manually calling LoadAsync after a source write. Phone adoption and future-day
 comparison remain separate from finite independent native adapter checks.
+
+### Physical renewed-cover observations (D-498)
+
+Original native lock covers preserve pending destination order on the qualified Samsung as well
+as the emulator. A declared fictional authentication response tests native cover behavior only;
+never label it real device authentication, a PIN ceremony or complete notification acceptance.
