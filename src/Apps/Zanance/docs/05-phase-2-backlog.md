@@ -3421,3 +3421,23 @@ new-head CI, real elapsed-day/remaining physical variants, security/stability/ac
 provider/Store and release gates remain open. No unrelated successful cohort is replayed.
 
 Evidence: [original saved comparison qualification](quality/snapshot-difference-kinds.md).
+
+### D-488 - Physical original goal-reminder queue lifecycle
+
+Qualify eleven original ReminderService/native scheduler states on one fresh independent Samsung
+installation: default off, enable, pause/resume, complete/archive, derived reached/unreached,
+detail consent, disable and generic restoration. Pending counts are0/1/0/1/0/0/0/1/1/0/1; every
+queued request keeps the original scoped goal/date/stable id and24October2026 local09:00. Account
+opening100EUR and contribution25/Once date remain unchanged, with zero entries/allocations/plans.
+The reached case explicitly changes only the fictitious target150-to100 and restores150; no
+money moves. Actual native AlarmManager/PendingIntent uses ScheduledAlarmReceiver with the
+existing inexact one-hour window, not an immediate display. Eleven observations are not new
+managed tests or financial-form/timed-delivery/lock acceptance. Strict complete signed Offline
+ARM64 caller192 AOT passes; Main identity is refused. Retain the original live15501 after the
+first observation timeout; no successful state/seed repeats. Remove only this new fixture and
+its pending alarm/notification; Main13827/Home979/all141 public tuples/APK/OS match. Five owned
+XMLs are hash-checked/removed. Main shipping code/APK remain D-487. Real09:00 delivery, doze/reboot,
+notification tap through lock, remaining calendar/device/security/stability/accessibility/iOS/
+provider/Store and release gates remain open.
+
+Evidence: [physical goal queue qualification](quality/physical-goal-reminder-queue.md).

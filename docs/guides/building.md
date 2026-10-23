@@ -2407,3 +2407,15 @@ comes from the actual owned window/density. Both use an independent fixture-only
 seed historical source facts, then compare through the real app clock; never change OS time.
 FinancialSaves0 applies to presentation; setup seeds its own source once. Preserve receipts and
 continue only incomplete observations. See [scope and package](../../src/Apps/Zanance/docs/quality/snapshot-difference-kinds.md).
+
+## Original physical goal reminder queues (D-488)
+
+The independent AndroidReminders Release/AOT caller accepts review_goal_lifecycle=true and one
+32-lowercase-hex review_run; the actual platform notification prompt still requires an explicitly
+owned UI action. Keep the fixed independent application id and an absent-before-install package.
+Read content://pro.vafadar.zanance.androidreminderreview.status/goal-status only for already-produced
+synthetic stage/count receipts. It never prepares storage or runs a step. Retain original live
+PID/receipts through observation deadlines; do not rerun successful states. No clock change,
+Main private-store read, actual owner authentication or password entry is authorized. Complete
+original state/cleanup evidence and remaining timed-delivery gates:
+[physical goal queue](../../src/Apps/Zanance/docs/quality/physical-goal-reminder-queue.md).

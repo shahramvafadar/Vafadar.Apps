@@ -60,3 +60,17 @@ scheduled-action process before the real receiver does. Record ScheduledAlarmRec
 native notification post time independently. An observation deadline is not a terminal failure;
 continue the live pending alarm or its actual started process. Charging/awake, timed delivery,
 notification tap, doze, reboot and interrupted-action scopes remain separate evidence boundaries.
+
+## Original physical goal queue mode (D-488)
+
+Set review_goal_lifecycle=true with the exact32-hex review_run on a fresh independent install;
+never combine it with review_scheduled_only. The original protected ReminderService qualifies
+eleven metadata states (default/enable/pause/resume/complete/archive/reached/unreached/details/
+disable/generic restoration), with original account/amount/rule-date preservation and zero
+ledger/allocation writes. Only the independent target changes to test derived reached progress.
+Actual future goal requests keep09:00 and scoped original identities; no immediate Show occurs.
+The read-only /goal-status URI returns only persisted synthetic progress and never runs a stage.
+Preserve per-stage receipts and original PID after observation timeout; do not repeat setup or
+accepted states. Remove the newly installed fixture and its future alarm at completion, then
+verify Main/APK/OS. See src/Apps/Zanance/docs/quality/physical-goal-reminder-queue.md for exact
+ARM64 scope; pending queues do not establish real timed delivery, tap-through-lock or Doze.

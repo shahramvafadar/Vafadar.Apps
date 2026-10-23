@@ -14,6 +14,14 @@ public sealed class StatusProvider : ContentProvider
     public override ICursor? Query(Android.Net.Uri uri, string[]? projection, string? selection,
         string[]? selectionArgs, string? sortOrder)
     {
+        if (Context?.PackageName == NativeReminderReview.Package && uri.Path == "/goal-status")
+        {
+            // D-488: read only the synthetic receipt; never initialize storage or rerun a native step.
+            var result = new MatrixCursor(["receipt"]);
+            var receipt = NativeGoalReminderReview.ReadReceipt();
+            result.NewRow()?.Add(new Java.Lang.String(receipt));
+            return result;
+        }
         var cursor = new MatrixCursor(["run", "pid", "windows", "protected", "snoozes", "pendingSnoozes", "financialMatch", "errorType", "pendingPlans", "scheduledAt", "plannedId"]);
         string[] values;
         try
