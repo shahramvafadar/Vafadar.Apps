@@ -34,7 +34,7 @@ priority/order descriptions below.
 | ZCR-SEC-10 | Owner-approved PIN, screenshot choice and ownership clarification (D-63) | Maintenance | P1 | M | Done | Owner request 2026-10-08 |
 | ZCR-SEC-09 | Network/SDK review of online builds; privacy texts | 1/3 | P2 | S | Done (current baseline; repeat for future SDKs) | – |
 | ZCR-LOC-01 | Release bug list from the owner's phone tests | 2 | P1 | M | Proposed | owner reports |
-| ZCR-LOC-02 | Goal contribution reminders (ZEX-S0306) | 2 | P2 | M | Done (local/emulator; D-488 physical lifecycle, D-491 calendar/source queues and D-492 ordinary unlocked cold goal content tap qualified; actual timed delivery/lock/profile/Doze/reboot and broader platform gates remain) | – |
+| ZCR-LOC-02 | Goal contribution reminders (ZEX-S0306) | 2 | P2 | M | Done (local/emulator; D-488 lifecycle, D-491 calendar/source queues, D-492 ordinary cold tap and D-493 grouped tap/restored-profile old-file refusal qualified; actual timed delivery/lock/profile/Doze/reboot and broader platform gates remain) | – |
 | ZCR-LOC-03 | Optional period review reminder (ZEX-S0610) | 2 | P2 | S | Done (local/emulator; D-489 physical three-calendar queues/progress/privacy and D-492 ordinary unlocked cold current-review content tap qualified; actual timed delivery/lock/profile/Doze/reboot and broader platform gates remain) | – |
 | ZCR-LOC-04 | Aggregated entries: import overlap handling (ZEX-S0611) | 2 | P2 | M | Done (local/emulator, D-72; phone/iOS acceptance open) | – |
 | ZCR-LOC-05 | "Not a tax calculation" help on sale results (ZEX-S0404) | 2 | P3 | S | Done (D-268 original sale help, six-language copy and store drafts locally verified; publication/device gates remain) | D-69 continuous delivery |
@@ -5152,3 +5152,22 @@ managed count or unchanged successful suite/build replay. Timed/lock/profile/gro
 security/stability/accessibility/iOS/provider/Store and release gates remain open.
 
 Evidence: [original content routes](../../quality/physical-goal-period-notification-routes.md).
+
+### D-493 - Physical grouped goal tap and restored-profile scope
+
+Two native content taps follow confirmed cached deaths12676-to14154-to15038. Original SDK events
+retain the same two goal ids/dates and scopeA. The first opens both original GoalsPage rows.
+A single original portable export/profile creation/switch/protected restore clones all financial
+identities intoB with another file scope; the second actual old-A tap stays onB Home100 despite
+both goals existing. Nine original financial arrays compare exactly. Original profile return/
+inactive-B retirement restores scopeA/one-profile catalogue. Service restore/cleanup is distinct
+from native dialogs/password/credential acceptance. An independent early tap subscription adds no
+Application-time database/key work; production routing/security sources remain unchanged.
+Final strict signed Offline ARM64/192-AOT caller passes after a preserved initial report-type
+compile error. Remove only the fresh fixture and2 Main/8 scoped owned XMLs; pending/posted native
+work is absent, historical records untouched, permanent Main31885/Home979/all141 public tuples/
+APK/OS equal. Prior7abae129 CI/CodeQL succeed once and monitor is consumed/deleted. Main/APK stay
+D-490; no new managed count or successful unrelated build/suite replay. Actual09:00/credentials/
+remaining profile-race/security/stability/accessibility/iOS/provider/Store/release gates stay open.
+
+Evidence: [original restored-file scope](../../quality/physical-goal-profile-notification-scope.md).

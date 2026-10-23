@@ -123,3 +123,24 @@ tap receipts. Cleanup requires both original destinations/source equality and ex
 stop/uninstall only then. Distinguish actual pending/blocked alarms from Addition/Delivery history,
 which must remain untouched. Restore exact Main/OS/public UI. See [the actual route evidence](../../../src/Apps/Zanance/docs/quality/physical-goal-period-notification-routes.md)
 for the two cold routes and remaining timed/credential gates.
+
+## Grouped goal and restored-profile scope (D-493)
+
+Use exclusive review_profile_phase=grouped/restore/finish with one original32-hex review_run.
+The independent MainApplication delegates unchanged original initialization and subscribes only
+to real scheduler.Tapped before Activity delivery. No Application-time database/key/preparation
+work. Its synthetic callback receipts establish actual scope/targets; no direct App.OpenLink or
+substitute native financial intent. Normal SDK intents have no helper selector and never reseed.
+
+One protected original account/two-goal source publishes a retained grouped request. The first
+actual cold content tap must reach its exact two GoalsPage rows. Only then may original service
+export/create/switch/protected restore clone those ids into one owned second profile. Its file
+scope must differ despite equal financial arrays. Publish only the retained A payload and prove
+another cached death/native tap: actual SDK scopeA, selectedB/source-scopeB, ready startup/Home
+and equal cloned rows qualify the old-file refusal. These immediate copies are not09:00 delivery.
+Read /profile-scope-status only for actual started processes; it never prepares/switches/restores/
+publishes/navigates. Source reads require original protected readiness. Preserve source/posting/
+restore/profile receipts; completed native actions/restore are never replayed. Cleanup returns toA,
+verifies its source/scope, retires only inactive ownedB, then removes only the fresh fixture and
+its actual native work. Historical alarm records stay. No native dialog/password/credential or
+whole-device acceptance follows. See [scope evidence](../../../src/Apps/Zanance/docs/quality/physical-goal-profile-notification-scope.md).

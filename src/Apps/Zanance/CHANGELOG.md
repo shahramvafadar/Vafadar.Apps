@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Grouped goal notification and restored profiles (D-493)
+
+- Verify a grouped notification opens both original goals after process death.
+- Verify an old notification cannot reuse restored goal ids in a different profile. Shipping behavior remains unchanged.
+
 ### Goal and period-review notification routes (D-492)
 
 - Verify real notification taps reopen the original goal and current period review after process death.

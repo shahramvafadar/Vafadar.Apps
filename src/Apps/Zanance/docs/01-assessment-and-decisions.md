@@ -8943,3 +8943,22 @@ managed count or unchanged successful suite/build replay. Timed/lock/profile/gro
 security/stability/accessibility/iOS/provider/Store and release gates remain open.
 
 Evidence: [original content routes](quality/physical-goal-period-notification-routes.md).
+
+### D-493 - Physical grouped goal tap and restored-profile scope
+
+Two native content taps follow confirmed cached deaths12676-to14154-to15038. Original SDK events
+retain the same two goal ids/dates and scopeA. The first opens both original GoalsPage rows.
+A single original portable export/profile creation/switch/protected restore clones all financial
+identities intoB with another file scope; the second actual old-A tap stays onB Home100 despite
+both goals existing. Nine original financial arrays compare exactly. Original profile return/
+inactive-B retirement restores scopeA/one-profile catalogue. Service restore/cleanup is distinct
+from native dialogs/password/credential acceptance. An independent early tap subscription adds no
+Application-time database/key work; production routing/security sources remain unchanged.
+Final strict signed Offline ARM64/192-AOT caller passes after a preserved initial report-type
+compile error. Remove only the fresh fixture and2 Main/8 scoped owned XMLs; pending/posted native
+work is absent, historical records untouched, permanent Main31885/Home979/all141 public tuples/
+APK/OS equal. Prior7abae129 CI/CodeQL succeed once and monitor is consumed/deleted. Main/APK stay
+D-490; no new managed count or successful unrelated build/suite replay. Actual09:00/credentials/
+remaining profile-race/security/stability/accessibility/iOS/provider/Store/release gates stay open.
+
+Evidence: [original restored-file scope](quality/physical-goal-profile-notification-scope.md).

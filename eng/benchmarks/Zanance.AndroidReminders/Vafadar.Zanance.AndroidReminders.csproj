@@ -25,7 +25,7 @@
   <!-- Compile original production sources and XAML; the application never references this independent caller. -->
   <ItemGroup>
     <Compile Include="$(OriginalAppRoot)**/*.cs"
-             Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)Platforms/Windows/**;$(OriginalAppRoot)Platforms/iOS/**;$(OriginalAppRoot)Platforms/Android/MainActivity.cs"
+             Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)Platforms/Windows/**;$(OriginalAppRoot)Platforms/iOS/**;$(OriginalAppRoot)Platforms/Android/MainActivity.cs;$(OriginalAppRoot)Platforms/Android/MainApplication.cs"
              Link="%(RecursiveDir)%(Filename)%(Extension)" />
     <Compile Include="*.cs" />
     <MauiXaml Include="$(OriginalAppRoot)**/*.xaml"

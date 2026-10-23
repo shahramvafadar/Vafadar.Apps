@@ -14,6 +14,15 @@ public sealed class StatusProvider : ContentProvider
     public override ICursor? Query(Android.Net.Uri uri, string[]? projection, string? selection,
         string[]? selectionArgs, string? sortOrder)
     {
+        if (Context?.PackageName == NativeReminderReview.Package && uri.Path == "/profile-scope-status")
+        {
+            // D-493: report actual SDK tap/source/page evidence only; never create a source, switch or navigate.
+            var result = new MatrixCursor(["receipt"]);
+            var services = IPlatformApplication.Current?.Services;
+            var receipt = services is null ? "{}" : Task.Run(() => NativeGoalProfileScopeReview.ReadStatusAsync(services)).GetAwaiter().GetResult();
+            result.NewRow()?.Add(new Java.Lang.String(receipt));
+            return result;
+        }
         if (Context?.PackageName == NativeReminderReview.Package && uri.Path == "/route-status")
         {
             // D-492: observing an already started original route never prepares storage or posts a notification.
