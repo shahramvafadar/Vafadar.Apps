@@ -3557,3 +3557,22 @@ D-494 timed delivery, real credentials, general security/stability/accessibility
 and release gates remain open. New-head CI follows this completed correction.
 
 Evidence: [original relocked destinations](quality/relocked-pending-destinations.md).
+
+### D-497 - Refresh retained original forecast and saved comparison tabs
+
+Physical D-496 preserves stale0EUR after its single accepted later expense, versus correct-10
+on original Back/reopen. AppShell now includes both retained ForecastPage and SnapshotPage in
+covered tab activation; appearance/navigation share PendingPublication. Four actual native tab
+clicks qualify the same saved page publishing-10 and same forecast publishing97 while retaining
+its what-if plan exclusion. The immutable original snapshot and complete original base match;
+only the new independent protected profile is retired. Fictitious service writes are not native
+financial-form or D-496 acceptance. No new managed cases or unrelated successful-suite replay.
+Preserve the initial caller compile errors and live launch-observation guard; both cases finish
+in11339. Restore exact old caller APK/process absence and emulator Main28047/all139 public tuples/
+OS; two owned XMLs are hash-matched/removed. Strict Windows/Offline384-AOT shipping builds pass.
+Samsung remains D-495 to preserve the pending timed cohort; no-reset phone adoption remains a
+named integration action. D-494/D-496, phone/platform/security/stability/accessibility/provider/
+Store and release gates stay open. Prior f6ad8543 CI/CodeQL succeed once; its monitor is consumed/
+deleted. Exact new-head CI follows push.
+
+Evidence: [original retained-tab qualification](quality/forecast-retained-tab-return.md).

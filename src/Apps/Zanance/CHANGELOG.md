@@ -6,6 +6,11 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+### Current forecasts after returning to their tab (D-497)
+
+- Refresh the current forecast and saved comparison when returning from another tab.
+- Keep saved forecast history unchanged and preserve current what-if assumptions.
+
 ### Pending destinations respect a renewed lock (D-495)
 
 - Keep later notification destinations waiting if the application locks again during navigation.

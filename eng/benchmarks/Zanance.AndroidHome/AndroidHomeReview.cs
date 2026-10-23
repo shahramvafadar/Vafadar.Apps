@@ -102,6 +102,8 @@ internal static partial class AndroidHomeReview
                 await WriteReportAsync(root, phase, await ReviewNavigationPulseAsync(app, services, root, comparison!, ct), ct);
             else if (phase == "relocked-destinations")
                 await WriteReportAsync(root, phase, await ReviewRelockedDestinationsAsync(app, services, root, comparison!, ct), ct);
+            else if (phase == "forecast-return")
+                await WriteReportAsync(root, phase, await ReviewForecastReturnAsync(app, services, root, comparison!, ct), ct);
             else if (phase == "toolbar-observer")
                 await WriteReportAsync(root, phase, await ReviewToolbarObserverAsync(app, services, comparison!, ct), ct);
             else if (phase == "goals-os-report")

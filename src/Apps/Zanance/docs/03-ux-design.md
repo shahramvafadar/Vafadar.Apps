@@ -2476,3 +2476,11 @@ navigation. Retain unstarted destinations behind the cover, ahead of newly arriv
 them once after the next successful unlock. Already started work is not replayed. Original native
 LockPage buttons are checked through a declared authentication-response port; this does not accept
 real device credentials, PIN recovery, all notification races or general accessibility.
+
+### D-497 - Retained Insights pages use current financial facts
+
+Returning to a retained Forecast or saved comparison tab refreshes its covered original read.
+Share simultaneous appearance/navigation work; preserve the what-if draft and immutable saved
+path. Native acceptance requires an actual tab event and the same page rendering changed facts,
+not a test manually calling LoadAsync after a source write. Phone adoption and future-day
+comparison remain separate from finite independent native adapter checks.

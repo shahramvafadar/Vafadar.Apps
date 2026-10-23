@@ -219,6 +219,9 @@ public partial class AppShell : Shell
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)) return;
         if (CurrentPage is AccountDetailPage account) await Presentation.Failures.GuardAsync(account.RefreshForNavigationAsync);
         else if (CurrentPage is OccurrencePage occurrence) await Presentation.Failures.GuardAsync(occurrence.RefreshForNavigationAsync);
+        // D-497: Insights can retain both the forecast and its saved comparison while another tab changes the ledger.
+        else if (CurrentPage is Features.Forecast.ForecastPage forecast) await Presentation.Failures.GuardAsync(forecast.RefreshForNavigationAsync);
+        else if (CurrentPage is Features.Forecast.SnapshotPage snapshot) await Presentation.Failures.GuardAsync(snapshot.RefreshForNavigationAsync);
     }
 
     /// <summary>Keeps the actual restore source/accepted follow-through attached through Back and tab navigation.</summary>

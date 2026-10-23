@@ -880,3 +880,14 @@ order1/2/3, and later input cannot overtake an awaited destination. Complete sou
 and zero financial writes are required. Retain accepted per-case receipts; a fresh-root guard
 refuses replay. Restore the original retained caller APK/data/process absence and Main/OS. This
 is not real device-authentication, PIN, whole-notification or general security acceptance.
+
+## Original retained forecast returns (D-497)
+
+Use forecast-return with a fresh run/comparison. The original profile service owns one protected
+fictitious source; an existing partial owned profile refuses reseeding. Original store/workspace
+writes prepare the source and two changed facts, not native financial-form acceptance. Four
+native bottom-tab clicks must retain the exact SnapshotPage/ForecastPage and publish-10/97EUR,
+with the what-if exclusion and immutable saved snapshot preserved. Do not call LoadAsync after
+those source writes to force acceptance. Keep accepted per-case receipts. Return/delete only the
+owned inactive profile, compare the complete original base and restore old caller APK/process
+absence/Main/OS. No phone/timed/elapsed-day/credential or general runtime acceptance is inferred.

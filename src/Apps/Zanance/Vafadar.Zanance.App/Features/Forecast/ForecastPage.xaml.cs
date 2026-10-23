@@ -5,6 +5,9 @@ public partial class ForecastPage : ContentPage
     private readonly ForecastViewModel _viewModel;
     private readonly Vafadar.Localization.Formatting.IDateFormatter _dates;
 
+    /// <summary>Gets the actual appearance/navigation read so simultaneous native callbacks share its lifetime.</summary>
+    internal Task PendingPublication { get; private set; } = Task.CompletedTask;
+
     public ForecastPage(ForecastViewModel viewModel, Vafadar.Localization.Formatting.IDateFormatter dates)
     {
         InitializeComponent();
@@ -15,8 +18,12 @@ public partial class ForecastPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
+        await Presentation.Failures.GuardAsync(RefreshForNavigationAsync);
     }
+
+    /// <summary>Refreshes current financial facts on retained-tab activation while keeping the original what-if draft.</summary>
+    internal Task RefreshForNavigationAsync() => !PendingPublication.IsCompleted
+        ? PendingPublication : PendingPublication = _viewModel.LoadAsync();
 
     // Chart axes draw their own text, so Persian digits (D-27) are applied to each label.
     private void OnAxisLabelCreated(object? sender, Syncfusion.Maui.Charts.ChartAxisLabelEventArgs e) =>

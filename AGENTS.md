@@ -3529,3 +3529,11 @@ unstarted old actions ahead of later input, and never replay a started action af
 an observation failure. A fictional native authentication-response port is not owner credential
 acceptance. A separate package replacement can resume an older task: preserve that native event
 and interrupted alarm lineage rather than asserting an uninterrupted cold-delivery cohort.
+
+## D-497 - Retained forecast tab publication
+
+Android can reveal a retained ForecastPage or SnapshotPage without OnAppearing. Route actual
+current Shell-tab activation through each original covered loader; share pending appearance/
+navigation work. Preserve saved paths and what-if drafts. After a changed-source test write,
+use actual native tab input and await the same page's publication; a direct model reload cannot
+prove the adapter. Preserve partial fixture actions and do not replay money to repair a report.
