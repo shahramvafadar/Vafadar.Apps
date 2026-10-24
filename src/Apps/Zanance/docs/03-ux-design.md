@@ -2582,3 +2582,17 @@ Weekend help must describe supported holiday adjustment conditionally, in agreem
 original opt-in control and preview. Keep the separate country/date/source limitation visible;
 never imply all public, local, bank or workplace holidays are supported. This text-only correction
 does not change the saved recurrence rule, holiday choice, money or reminder defaults.
+
+## D-516 - Explicit software-export selection and source-history consent
+
+Keep StarMoney and SUPA4 as separate named actions; legacy encoding applies to StarMoney and SUPA
+uses prescribed UTF-8. Show the original target/currency/source suffix, full limitations, explicit
+ordinary posted-cashflow and same-software-history acknowledgement before enabling import. Keep
+all source rows reachable by existing paging and preserve original review/overlap/Undo behavior.
+Use optional round Help with a complete example in all six languages; shared Help supplies the
+Example prefix exactly once. Never infer transfer/refund relationships or describe a format preset
+as a live bank connection. Windows36 contexts and12 final Help-only contexts preserve full native
+text, own-window rendering and unchanged complete source rows. Six original Android source/Help/consent
+contexts at actual384dp pass with unchanged fixture/base typed rows; actual checked/command state
+is required after one switch click, independent of its listener-handled return. The installed Main
+chooser/Help and native OK/Back are also verified without file selection or financial writes.

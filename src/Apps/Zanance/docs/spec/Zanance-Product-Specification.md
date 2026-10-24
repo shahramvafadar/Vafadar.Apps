@@ -9057,3 +9057,17 @@ No recurrence algorithm, financial writer, schema, SDK, permission or commercial
 Broader financial/security/stability/performance/accessibility/iOS/provider/Store/publication gates
 remain open. New-head hosted CI is pending at commit creation. The independent unfinished D-516
 SUPA work is not part of this delivery. Evidence: [original recurrence and caption qualification](../quality/physical-custom-second-day-holidays.md).
+
+### D-516 - Explicit SUPA software-export import (Section31 continuation)
+
+The original SUPA4 CSV posted-cashflow preset uses existing review/atomic writer/Undo with explicit
+source-history/ordinary-cashflow consent and no guessed financial relationships.67 new distinct
+selected actual-source cases and29 affected StarMoney cases pass;23 resource cases pass. No full
+suite rerun or inferred new cumulative suite count is claimed. Windows36 original contexts plus
+12 changed Help-only contexts preserve complete typed rows and zero financial writes. Six retained-source
+Android native contexts pass full text/Help and actual consent/command state after two preserved
+observer failures, without Import/Undo or ledger writes. Signed no-reset adoption preserves
+Main31882/Home979/141 public tuples, three original profiles and recorded OS; original Main
+chooser/Help is checked without file selection and timeout300000 is restored. Only the new caller
+and28 hash-matched remote XMLs are retired. Other bank revisions/customer files and platform/
+provider/security/stability/accessibility/Store/release acceptance stay separate.

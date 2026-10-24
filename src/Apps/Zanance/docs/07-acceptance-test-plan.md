@@ -6241,3 +6241,16 @@ No recurrence algorithm, financial writer, schema, SDK, permission or commercial
 Broader financial/security/stability/performance/accessibility/iOS/provider/Store/publication gates
 remain open. New-head hosted CI is pending at commit creation. The independent unfinished D-516
 SUPA work is not part of this delivery. Evidence: [original recurrence and caption qualification](quality/physical-custom-second-day-holidays.md).
+
+## D-516 - Original SUPA preset evidence
+
+67 new selected actual-source cases qualify complete bounded original protocol,6-language
+consent/Cancel/import/reimport/reopened Undo, privacy and stale-file/authority handling.29 directly
+affected StarMoney cases and23 resource checks pass.36 native Windows contexts plus12 final
+Help-only contexts use unchanged complete source rows and zero financial writes. Keep the2 RED
+privacy results and initial resource output-location failure. Six original Android source/Help/consent
+contexts pass in retained UID10395/PID30097 after two preserved terminal observer failures. Native
+financial writes remain0. Complete signed adoption verifies Main31882/Home979/141 public tuples,
+three original profiles, original Main chooser/Help, OS and timeout restoration;28 owned remote
+XMLs/new caller are retired. Bank customer specimens, native external picker, API24/16KiB runtime,
+all-platform security/stability/accessibility/provider/Store/release remain unqualified.

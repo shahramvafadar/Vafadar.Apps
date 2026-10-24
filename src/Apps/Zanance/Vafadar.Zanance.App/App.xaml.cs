@@ -205,6 +205,9 @@ public partial class App : Application
     protected override Window CreateWindow(IActivationState? activationState)
     {
 #if DEBUG
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "supa-csv-native"
+            && AppInfo.Current.PackageName != "pro.vafadar.zanance.supacsvreview")
+            throw new InvalidOperationException("Independent SUPA review identity required before startup.");
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "plan-holiday-hint"
             && AppInfo.Current.PackageName != "pro.vafadar.zanance.holidayhintsreview")
             throw new InvalidOperationException("Independent holiday caption identity required before startup.");

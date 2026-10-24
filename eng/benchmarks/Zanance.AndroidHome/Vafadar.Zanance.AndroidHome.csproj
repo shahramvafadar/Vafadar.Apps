@@ -19,6 +19,11 @@
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
+  <!-- Original SUPA presentation owns no accepted financial source or existing caller. -->
+  <PropertyGroup Condition="'$(ReviewSupaCsv)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.supacsvreview</ApplicationId>
+    <DefineConstants>$(DefineConstants);SUPA_CSV_REVIEW</DefineConstants>
+  </PropertyGroup>
   <!-- A budget-only publication cohort must not reuse the accepted ledger writer's identity. -->
   <PropertyGroup Condition="'$(ReviewHomeBudget)' == 'true'">
     <ApplicationId>pro.vafadar.zanance.homebudgetreview</ApplicationId>

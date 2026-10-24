@@ -2503,3 +2503,24 @@ equality before reporting this scoped Windows result. Android still needs its ow
 candidate and actual native caption/control/Cancel evidence. D-517 permits a recorded temporary
 screen-off timeout extension during authorized phone tests, with exact original restoration/readback
 at completion/interruption/handoff; other OS/security settings remain protected.
+
+## D-516 independent original SUPA review
+
+Windows requires the exact pro.vafadar.zanance.supacsvreview compiled identity and Debug-only
+supa-csv-native route. Use a fresh isolated folder for the36 original contexts. An interrupted
+fixture requires explicit VAFADAR_SUPA_NATIVE_RESUME=1 and complete retained-source validation.
+After only the new Help example changes, VAFADAR_SUPA_FINAL_HELP=1 with that retained fixture
+checks12 narrow Help-only contexts; it must not replay picker/consent/Cancel or overwrite original
+receipts. Use original owned native UI patterns and application-window captures only. Android
+Home review ReviewSupaCsv=true has a separate SUPA-only identity and supa-csv phase; runtime
+window inspection is API29+, independent of pending minimum-API qualification. External picker
+and bank customer-file acceptance remain separate. No tool or fixture is referenced by shipping.
+
+D-516 completion preserves both terminal Android observer failures and their immutable source
+APKs before same-UID/no-reset continuation. Select captions within BankPresetReview, not any
+identical common warning. Check actual CompoundButton checked/command state after one click;
+its listener-handled return is not evidence of no action. Six contexts finish in the retained
+source without financial writes; only that completed new caller is uninstalled. Static package
+proof, actual native source evidence and original Main no-reset adoption have separate receipts.
+Standard clean succeeds for all dedicated host/platform/native outputs; signed source/failure
+packages and local receipts remain. Never replay a financial writer to repair an observer.

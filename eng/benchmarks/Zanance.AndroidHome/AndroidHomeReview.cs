@@ -21,7 +21,9 @@ namespace Vafadar.Zanance.App;
 internal static partial class AndroidHomeReview
 {
     /// <summary>The independent install allowed to own these fictitious workloads.</summary>
-#if RECEIPT_SOURCE_REVIEW
+#if SUPA_CSV_REVIEW
+    internal const string Package = "pro.vafadar.zanance.supacsvreview";
+#elif RECEIPT_SOURCE_REVIEW
     internal const string Package = "pro.vafadar.zanance.receiptsourcereview";
 #elif HOME_BUDGET_REVIEW
     internal const string Package = "pro.vafadar.zanance.homebudgetreview";
@@ -63,6 +65,13 @@ internal static partial class AndroidHomeReview
                 var resumeUnreviewed = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_resume_unreviewed", false) == true;
                 await Task.Run(() => PrepareAsync(root, ct, unreviewed: phase == "prepare-unreviewed", resumeUnreviewed), ct);
                 await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, UnreviewedCorpus = phase == "prepare-unreviewed", NativeOverflowRefusals = phase == "prepare-unreviewed" ? CheckUnreviewedOverflow() : 0, CoreModuleVersionId = typeof(LedgerCalculator).Module.ModuleVersionId, MainPackageTouched = false, Device = DeviceEvidence() }, ct);
+            }
+            else if (phase == "supa-csv")
+            {
+                Directory.CreateDirectory(root);
+                if (Package != "pro.vafadar.zanance.supacsvreview" || RedirectedAncestors(root).Length != 0)
+                    throw new ReviewCheckException("Independent SUPA source required.");
+                await WriteReportAsync(root, phase, await ReviewSupaCsvAsync(app, services, root, comparison!, ct), ct);
             }
             else if (phase == "receipt-source-help")
             {

@@ -7759,7 +7759,7 @@ Identité : {2}</value>
     <value>Choisir le CSV de mouvements StarMoney Giro</value>
   </data>
   <data name="BankCsv_Encoding" xml:space="preserve">
-    <value>Encodage du prochain fichier (selon l’export d’origine)</value>
+    <value>Encodage du prochain fichier StarMoney (choisissez celui de l’export d’origine)</value>
   </data>
   <data name="BankCsv_Acknowledge" xml:space="preserve">
     <value>J’ai vérifié toutes les lignes : uniquement des revenus et dépenses ordinaires comptabilisés dans le compte et la devise choisis. Aucun virement, remboursement, annulation, paiement en attente ou total ventilé.</value>
@@ -8447,5 +8447,29 @@ SHA-256 du XML original : {5}</value>
   </data>
   <data name="Receipt_ImageHelpText" xml:space="preserve">
     <value>Sous Android, les photos et les pages PDF numérisées sont lues par un outil de reconnaissance de l’écriture latine. Le texte persan dans les images n’est pas pris en charge. Les PDF contenant du texte persan sélectionnable peuvent être lus. Vérifiez toujours le montant et la devise avant d’enregistrer.</value>
+  </data>
+  <data name="SupaCsv_Pick" xml:space="preserve">
+    <value>Choisir le CSV SUPA4 des revenus et dépenses comptabilisés (UTF-8)</value>
+  </data>
+  <data name="SupaCsv_Warning" xml:space="preserve">
+    <value>Utilisez un CSV SUPA4 de revenus et dépenses ordinaires comptabilisés d’un seul compte. Les lignes en attente, informatives, retournées et groupées sont refusées. Les virements et remboursements exigent des liens explicites dans Zanance. Sans identité d’origine de la ligne et du compte source, une date et un montant identiques signalent seulement un doublon possible ; ne présumez pas qu’une réimportation sera détectée.</value>
+  </data>
+  <data name="SupaCsv_Source" xml:space="preserve">
+    <value>Destination vérifiée : «{0}» · {1}. L’identifiant source se termine par «{2}». Vérifiez le compte et la devise d’origine avant de confirmer.</value>
+  </data>
+  <data name="SupaCsv_SourceMissing" xml:space="preserve">
+    <value>Destination vérifiée : «{0}» · {1}. Le fichier ne fournit aucun identifiant du compte source. Confirmez que toutes les lignes appartiennent à ce seul compte ; les identifiants de ligne ne suffisent pas à prouver une réimportation.</value>
+  </data>
+  <data name="Help_SupaCsv_Title" xml:space="preserve">
+    <value>Importer des revenus et dépenses SUPA CSV</value>
+  </data>
+  <data name="Help_SupaCsv_Text" xml:space="preserve">
+    <value>Choisissez l’export de mouvements Subsembly SUPA4 CSV, proposé notamment par Banking4, en UTF-8. Il diffère de l’export configurable des colonnes visibles. Vérifiez chaque page source, le compte cible et la devise. Seuls les revenus et dépenses ordinaires comptabilisés sont admis ; séparez virements, remboursements, retours, lignes en attente et relations entre totaux et détails. Aucun montant n’est converti, aucune catégorie n’est devinée et aucun frais n’est comptabilisé une seconde fois. Date de valeur, libellé et notes restent dans la vérification. Sans identités d’origine, examinez les doublons avec soin. Votre confirmation explicite reste nécessaire ; décisions de chevauchement et annulation durable sont conservées. Aucune connexion bancaire n’est effectuée. Comparez les identifiants d’origine uniquement au sein du même historique logiciel. Si cet historique change, utilisez une correspondance explicitement vérifiée plutôt que de présumer une réimportation. Les identifiants structurés du compte propriétaire ne sont pas copiés dans les notes ; les textes d’origine et références de contrepartie peuvent néanmoins contenir des données personnelles.</value>
+  </data>
+  <data name="Help_SupaCsv_Example" xml:space="preserve">
+    <value>Vérifiez un revenu comptabilisé de 100 EUR et une dépense de 12,34 EUR du même compte source. Traitez séparément tout virement ou remboursement avec un lien explicite. La détection d’une réimportation exige les identités d’origine de la ligne et du compte source.</value>
+  </data>
+  <data name="SupaCsv_Acknowledge" xml:space="preserve">
+    <value>J’ai vérifié chaque ligne, l’historique logiciel et le compte d’origine : uniquement des revenus et dépenses ordinaires comptabilisés, sans virements, remboursements, retours, attente ni regroupements. Les identifiants d’un autre historique ne prouvent pas une réimportation.</value>
   </data>
 </root>

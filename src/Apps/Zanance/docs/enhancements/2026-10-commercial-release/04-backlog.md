@@ -47,7 +47,7 @@ priority/order descriptions below.
 | ZCR-LOC-12 | Owner-requested receipt total detection and review (D-64) | Maintenance | P1 | M | Done (local; device/corpus gate remains QA-05) | owner request 2026-10-08 |
 | ZCR-LOC-11 | Owner-requested backup, onboarding and About corrections (D-62) | 2 | P2 | S | Done | owner approval 2026-10-08 |
 | ZCR-LOC-10 | Copy follow-ups D-53/D-54 and listing texts naming three languages | 2 | P3 | S | Done (D-268 browser/account copy and six-language drafts; real OAuth/publication remain open) | D-69 continuous delivery |
-| ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; D-381 physical interpreted paging/stale-mapping review; D-405 original own/mapped financial snapshot guard; D-406 physical opening-boundary/cold Undo and retained-tab Refresh fix qualified; D-490 original external ledger/holding group Undo dependencies corrected with15 selected managed cases and six native original-page outcomes; other bank/relationship variants require original fixtures | original export specifications/samples |
+| ZCR-IMP-01 | CSV presets for other apps and bank exports, preview, duplicates, undo | 2 | P2 | M | In progress: D-297 documented StarMoney ordinary-cashflow preset; D-516 original SUPA4 software-export preset with explicit history/format consent,67 new selected cases and native/physical adoption; D-381 physical interpreted paging/stale-mapping review; D-405 original own/mapped financial snapshot guard; D-406 physical opening-boundary/cold Undo and retained-tab Refresh fix qualified; D-490 original external ledger/holding group Undo dependencies corrected with15 selected managed cases and six native original-page outcomes; other bank/relationship variants require original fixtures | original export specifications/samples |
 | ZCR-IMP-02 | OFX/QIF/CAMT only on demand with real samples | 8 | P3 | M | Proposed | IMP-01 |
 | ZCR-QA-01 | Device acceptance runs (AT-01…61, Q-02) on the owner's phone | 2 | P1 | M | In progress (D-484 physical original plan zero/correction/dirty draft, debt reference/estimate and cold preservation qualified; D-312 recovery/profile; D-314/315 protected workload and main upgrade; D-316 planned-work lifecycle; D-317 native CSV fixed-ID/duplicate/cold Undo; D-318 first-plan native publication fixed; D-319 debt/lent and six-row cold-upgrade lifecycle; D-323 report/saved-filter/cold/PDF chooser; D-326 transfer summary correction; D-327 automatic-copy lifecycle/readiness; D-328 accountant ZIP receiving/content; D-329 original en/fa/de PDF contents and continued-table fix; D-330 own-format producer/consumer/refund/transfer/cold Undo; D-361 original en/fa/de display/Back and advanced goal choices/dirty discard, exact preference/Home restoration and one native root; D-365 original changed account/debt/monthly disclosures in 18 normal-scale Samsung cases with draft/data/preference preservation; D-401 occurrence override/skip/unskip, manual link/keep and generated delete-on-reopen with cold/Main restoration; D-402 prior-period/cross-account refunds, excess refusal/same-draft remainder and cold public allocation with Main restoration; D-403 original unprotected portable fresh independent reinstall/first-run restore/cold/whole-export comparison with Main restoration; D-404 card purchase/payment/positive credit and dirty archive/unarchive with two ended plans/default/history/cold and Main restoration; D-406 opening-boundary CSV/cold Undo; D-407 guarded split/reallocate/cold/join and original Main restoration; D-411 original holding purchase/fee refund/refused and valid correction/sale/cold and fee-action fix with Main restoration; D-417 original type/price/history Undo/archive/cold; D-422 original place/move/dirty discard/cold with Main restoration; D-423 original independent native selection qualified without a product workaround; D-457 controlled physical currency typing/selection/discard complete; D-458 original balance-goal lifecycle; D-459 original earmark/quantity goals; D-460 original no/zero/exact/exceeded/category-only budgets, refund/cold/native deletion with Main restoration; D-461 protected budget action lifetime; D-463 original rollover/weekly/fortnight source and corrected period wording; D-464 original envelopes/goal earmark/overspending and Flex fixed/nonmonthly/flexible split with cold/public restoration; D-465 original account/currency/pay-cycle scopes and corrected Simple retained-account note; D-466 original incomplete forecast/amount assumption/snapshot/cold/native deletion with Main restoration; D-486 legacy missing-destination forecast correction and six native original pages with ordinary physical forecast preservation; D-472 original reconciliation/input invalidation/reason/Cancel/one adjustment/cold with Main restoration; broader phone acceptance remains) | – |
 | ZCR-QA-02 | Cloud backup with real OAuth clients (AT-59), restore on another device | 2 | P1 | M | Blocked (client ids) | – |
@@ -5494,3 +5494,29 @@ No recurrence algorithm, financial writer, schema, SDK, permission or commercial
 Broader financial/security/stability/performance/accessibility/iOS/provider/Store/publication gates
 remain open. New-head hosted CI is pending at commit creation. The independent unfinished D-516
 SUPA work is not part of this delivery. Evidence: [original recurrence and caption qualification](../../quality/physical-custom-second-day-holidays.md).
+
+### D-516 - Original SUPA CSV cashflow preset
+
+SUPA4 original posted cashflow is an explicit second software-export preset beside StarMoney,
+not a direct-bank schema or automatic relationship inference. Preserve source dates/currencies,
+complete paged review, explicit ordinary cashflow and same-software-history consent, source/target
+identity, transactional stale-file/source/authority refusal and durable original Undo. Reject
+pending/informational/batch/return data; do not silently discard equal expenses without original
+row plus account identity. Unknown contracts use explicit mapping. No new SDK, schema, permission,
+network operation or commercial activation is added. Source narrative may contain personal data;
+structured owner-account identifiers do not enter notes, and the review shows at most a suffix.
+
+Sixty-seven new actual-source cases and29 affected StarMoney cases pass in selected groups;23
+resource checks pass. Windows36 original review/Help/native Cancel contexts and12 final changed
+Help-only contexts pass, with complete source rows unchanged and zero financial writes. Broader
+bank/customer-file/provider/security/stability/accessibility/iOS/Store/release gates remain open.
+Six original ARM64 Release/AOT Android contexts at actual384dp qualify full source/warning/consent
+text, Help/OK, picker and actual checked/command state on the same retained UID10395 source; every
+fixture/base typed row stays equal and zero financial writes occur. Preserve both terminal observer
+failures, repair only owned label selection and CompoundButton click-result interpretation, and
+continue incomplete observations without reseeding. The signed dual-ABI Offline384AOT candidate
+adopts Main without reset; Main31882/Home979/all141 public tuples, three prior profiles/current Main,
+recorded OS and exact timeout300000 are verified. Original Main SUPA chooser/Help is checked without
+file selection or financial commands. Only the new caller and28 hash-matched remote XMLs are retired;
+local evidence and actual failed APKs remain. The physical turn is explicitly handed back. D-516 is
+locally complete; new-head hosted CI remains separate. See [original SUPA evidence](../../quality/supa-csv-import.md).

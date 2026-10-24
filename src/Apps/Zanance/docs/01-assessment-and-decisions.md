@@ -9599,3 +9599,29 @@ zero-warning build, including the failed source check and negative gate cases. C
 SUPA review is independently registered in unfinished D-516 and is excluded from this commit.
 No successful platform/native/financial cohort is repeated for this source-contract correction.
 Hosted confirmation belongs to the next pushed head's one-shot CI check.
+
+## D-516 - Independently implemented original SUPA4 CSV contract
+
+SUPA4 original posted cashflow is an explicit second software-export preset beside StarMoney,
+not a direct-bank schema or automatic relationship inference. Preserve source dates/currencies,
+complete paged review, explicit ordinary cashflow and same-software-history consent, source/target
+identity, transactional stale-file/source/authority refusal and durable original Undo. Reject
+pending/informational/batch/return data; do not silently discard equal expenses without original
+row plus account identity. Unknown contracts use explicit mapping. No new SDK, schema, permission,
+network operation or commercial activation is added. Source narrative may contain personal data;
+structured owner-account identifiers do not enter notes, and the review shows at most a suffix.
+
+Sixty-seven new actual-source cases and29 affected StarMoney cases pass in selected groups;23
+resource checks pass. Windows36 original review/Help/native Cancel contexts and12 final changed
+Help-only contexts pass, with complete source rows unchanged and zero financial writes. Broader
+bank/customer-file/provider/security/stability/accessibility/iOS/Store/release gates remain open.
+Six original ARM64 Release/AOT Android contexts at actual384dp qualify full source/warning/consent
+text, Help/OK, picker and actual checked/command state on the same retained UID10395 source; every
+fixture/base typed row stays equal and zero financial writes occur. Preserve both terminal observer
+failures, repair only owned label selection and CompoundButton click-result interpretation, and
+continue incomplete observations without reseeding. The signed dual-ABI Offline384AOT candidate
+adopts Main without reset; Main31882/Home979/all141 public tuples, three prior profiles/current Main,
+recorded OS and exact timeout300000 are verified. Original Main SUPA chooser/Help is checked without
+file selection or financial commands. Only the new caller and28 hash-matched remote XMLs are retired;
+local evidence and actual failed APKs remain. The physical turn is explicitly handed back. D-516 is
+locally complete; new-head hosted CI remains separate. See [original SUPA evidence](quality/supa-csv-import.md).

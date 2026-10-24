@@ -7771,7 +7771,7 @@ Identità: {2}</value>
     <value>Scegli CSV dei movimenti StarMoney Giro</value>
   </data>
   <data name="BankCsv_Encoding" xml:space="preserve">
-    <value>Codifica del prossimo file (scegli quella originale)</value>
+    <value>Codifica del prossimo file StarMoney (scegli quella dell’esportazione originale)</value>
   </data>
   <data name="BankCsv_Acknowledge" xml:space="preserve">
     <value>Ho verificato tutte le righe: solo entrate e uscite ordinarie contabilizzate nel conto e nella valuta scelti. Nessun trasferimento, rimborso, storno, pagamento in sospeso o totale ripartito.</value>
@@ -8459,5 +8459,29 @@ SHA-256 dell’XML originale: {5}</value>
   </data>
   <data name="Receipt_ImageHelpText" xml:space="preserve">
     <value>Su Android, le foto e le pagine PDF scansionate vengono lette con un riconoscimento della scrittura latina. Il testo persiano nelle immagini non è supportato. È possibile leggere i PDF con testo persiano selezionabile. Controlla sempre l’importo e la valuta prima di salvare.</value>
+  </data>
+  <data name="SupaCsv_Pick" xml:space="preserve">
+    <value>Scegli il CSV SUPA4 di entrate e spese contabilizzate (UTF-8)</value>
+  </data>
+  <data name="SupaCsv_Warning" xml:space="preserve">
+    <value>Usa un CSV SUPA4 di entrate e spese ordinarie contabilizzate di un solo conto. I record in sospeso, informativi, restituiti e raggruppati vengono rifiutati. Trasferimenti e rimborsi richiedono collegamenti espliciti in Zanance. Senza l’identità originale della riga e del conto di origine, data e importo uguali segnalano solo un possibile duplicato; non presumere che una nuova importazione venga riconosciuta.</value>
+  </data>
+  <data name="SupaCsv_Source" xml:space="preserve">
+    <value>Destinazione verificata: «{0}» · {1}. L’identificativo di origine termina con «{2}». Controlla il conto e la valuta originali prima di confermare.</value>
+  </data>
+  <data name="SupaCsv_SourceMissing" xml:space="preserve">
+    <value>Destinazione verificata: «{0}» · {1}. Il file non indica il conto di origine. Conferma che tutte le righe appartengano a questo unico conto; gli identificativi delle righe da soli non dimostrano una nuova importazione degli stessi dati.</value>
+  </data>
+  <data name="Help_SupaCsv_Title" xml:space="preserve">
+    <value>Importare entrate e spese da SUPA CSV</value>
+  </data>
+  <data name="Help_SupaCsv_Text" xml:space="preserve">
+    <value>Scegli l’esportazione dei movimenti Subsembly SUPA4 CSV, disponibile ad esempio in Banking4, in UTF-8. È diversa dall’esportazione configurabile delle colonne visibili. Controlla ogni pagina, il conto di destinazione e la valuta. Sono ammesse solo entrate e spese ordinarie contabilizzate; separa trasferimenti, rimborsi, restituzioni, movimenti in sospeso e rapporti tra totali e dettagli. Gli importi non vengono convertiti, le categorie non vengono indovinate e le commissioni non vengono registrate di nuovo. Data valuta, causale e note restano nella verifica. Senza identità originali, controlla attentamente i duplicati. Serve comunque la tua conferma esplicita; decisioni sulle sovrapposizioni e annullamento duraturo restano disponibili. Non viene effettuato alcun accesso o collegamento bancario. Confronta gli identificativi originali solo nello stesso storico del programma. Se lo storico cambia, usa una mappatura verificata esplicitamente invece di presumere una nuova importazione dagli identificativi. Gli identificativi strutturati del tuo conto non vengono copiati nelle note, ma il testo originale e i riferimenti della controparte possono contenere dati personali.</value>
+  </data>
+  <data name="Help_SupaCsv_Example" xml:space="preserve">
+    <value>Verifica un’entrata contabilizzata di 100 EUR e una spesa di 12,34 EUR dello stesso conto di origine. Gestisci separatamente trasferimenti e rimborsi con collegamenti espliciti. Per riconoscere una nuova importazione servono le identità originali della riga e del conto di origine.</value>
+  </data>
+  <data name="SupaCsv_Acknowledge" xml:space="preserve">
+    <value>Ho controllato ogni riga, lo storico originale del programma e il conto: solo entrate e spese ordinarie contabilizzate, senza trasferimenti, rimborsi, restituzioni, movimenti in sospeso o raggruppati. Gli identificativi di un altro storico non dimostrano una nuova importazione degli stessi dati.</value>
   </data>
 </root>

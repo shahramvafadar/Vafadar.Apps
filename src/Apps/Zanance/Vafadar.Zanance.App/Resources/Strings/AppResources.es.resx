@@ -7751,7 +7751,7 @@ Identidad: {2}</value>
     <value>Elegir CSV de movimientos de StarMoney Giro</value>
   </data>
   <data name="BankCsv_Encoding" xml:space="preserve">
-    <value>Codificación del próximo archivo (elige la del original)</value>
+    <value>Codificación del próximo archivo StarMoney (elige la del archivo original)</value>
   </data>
   <data name="BankCsv_Acknowledge" xml:space="preserve">
     <value>He revisado todas las filas: solo ingresos y gastos ordinarios contabilizados en la cuenta y moneda elegidas. Sin transferencias, reembolsos, anulaciones, pagos pendientes ni totales divididos.</value>
@@ -8439,5 +8439,29 @@ SHA-256 del XML original: {5}</value>
   </data>
   <data name="Receipt_ImageHelpText" xml:space="preserve">
     <value>En Android, las fotos y las páginas PDF escaneadas se leen con un reconocimiento de escritura latina. No se admite el texto persa en imágenes. Los PDF con texto persa seleccionable sí se pueden leer. Comprueba siempre el importe y la moneda antes de guardar.</value>
+  </data>
+  <data name="SupaCsv_Pick" xml:space="preserve">
+    <value>Elige el CSV SUPA4 de ingresos y gastos contabilizados (UTF-8)</value>
+  </data>
+  <data name="SupaCsv_Warning" xml:space="preserve">
+    <value>Usa un CSV SUPA4 de ingresos y gastos ordinarios contabilizados de una sola cuenta. Se rechazan registros pendientes, informativos, devueltos y agrupados. Las transferencias y devoluciones necesitan vínculos explícitos en Zanance. Sin la identidad original de la fila y de la cuenta de origen, la misma fecha e importe solo avisan de un posible duplicado; no des por hecho que se detecta una reimportación.</value>
+  </data>
+  <data name="SupaCsv_Source" xml:space="preserve">
+    <value>Destino revisado: «{0}» · {1}. El identificador de origen termina en «{2}». Comprueba la cuenta y la moneda originales antes de aceptar.</value>
+  </data>
+  <data name="SupaCsv_SourceMissing" xml:space="preserve">
+    <value>Destino revisado: «{0}» · {1}. El archivo no indica la cuenta de origen. Confirma que todas las filas pertenecen a esta única cuenta; los identificadores de fila por sí solos no prueban una reimportación.</value>
+  </data>
+  <data name="Help_SupaCsv_Title" xml:space="preserve">
+    <value>Importar ingresos y gastos desde SUPA CSV</value>
+  </data>
+  <data name="Help_SupaCsv_Text" xml:space="preserve">
+    <value>Elige la exportación de movimientos Subsembly SUPA4 CSV, disponible por ejemplo en Banking4, con UTF-8. Es distinta de la exportación configurable de columnas visibles. Revisa todas las páginas, la cuenta de destino y la moneda. Solo se admiten ingresos y gastos ordinarios contabilizados; separa transferencias, devoluciones, retornos, pendientes y relaciones entre totales y detalles. No se convierten importes, no se adivinan categorías ni se vuelven a registrar comisiones. Se conservan la fecha valor, el concepto y las notas en la revisión. Si faltan identidades originales, revisa cuidadosamente los duplicados. La importación exige tu confirmación explícita; se mantienen las decisiones de solapamiento y la función duradera de deshacer. No se inicia sesión ni se conecta con el banco. Compara los identificadores originales solo dentro del mismo historial del programa. Si cambias de historial, usa una asignación revisada explícitamente en lugar de suponer que los identificadores prueban una reimportación. Los identificadores estructurados de tu cuenta no se copian a las notas, pero el texto original y las referencias de la contraparte pueden contener datos personales.</value>
+  </data>
+  <data name="Help_SupaCsv_Example" xml:space="preserve">
+    <value>Revisa un ingreso contabilizado de 100 EUR y un gasto de 12,34 EUR de la misma cuenta de origen. Separa las transferencias o devoluciones y vincúlalas explícitamente. Detectar una reimportación requiere la identidad original de la fila y de la cuenta de origen.</value>
+  </data>
+  <data name="SupaCsv_Acknowledge" xml:space="preserve">
+    <value>He revisado cada fila y el historial original del programa y la cuenta: solo ingresos y gastos ordinarios contabilizados, sin transferencias, devoluciones, retornos, pendientes ni agrupaciones. No considero los identificadores de otro historial como prueba de reimportación.</value>
   </data>
 </root>

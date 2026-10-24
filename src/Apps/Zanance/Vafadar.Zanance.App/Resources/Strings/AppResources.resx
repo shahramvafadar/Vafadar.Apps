@@ -7811,7 +7811,7 @@ Identity: {2}</value>
     <value>Choose StarMoney Giro cashflow CSV</value>
   </data>
   <data name="BankCsv_Encoding" xml:space="preserve">
-    <value>Text encoding for the next file (choose the original export setting)</value>
+    <value>Text encoding for the next StarMoney file (choose its original export setting)</value>
   </data>
   <data name="BankCsv_Acknowledge" xml:space="preserve">
     <value>I checked every source row: posted ordinary income/expenses only, in the selected account and currency. No transfers, refunds, reversals, pending payments or split totals.</value>
@@ -8504,5 +8504,29 @@ Original XML SHA-256: {5}</value>
   </data>
   <data name="Receipt_ImageHelpText" xml:space="preserve">
     <value>On Android, photos and scanned PDF pages are read with a Latin-script recognizer. Persian text in images is not supported. PDFs with selectable Persian text can be read. Always check the amount and currency before saving.</value>
+  </data>
+  <data name="SupaCsv_Pick" xml:space="preserve">
+    <value>Choose SUPA4 posted cashflow CSV (UTF-8)</value>
+  </data>
+  <data name="SupaCsv_Warning" xml:space="preserve">
+    <value>Use a SUPA4 CSV of ordinary posted income/expenses from one account. Pending, informational, returned and batch records are refused. Transfers and refunds need explicit relationships in Zanance. Without an original row and source-account identity, matching date and amount are only a possible-duplicate warning; never assume reimport is automatically detected.</value>
+  </data>
+  <data name="SupaCsv_Source" xml:space="preserve">
+    <value>Reviewed target: «{0}» · {1}. Source identifier ends «{2}». Check the original account and currency before accepting.</value>
+  </data>
+  <data name="SupaCsv_SourceMissing" xml:space="preserve">
+    <value>Reviewed target: «{0}» · {1}. The file supplies no source-account identifier. Confirm that every row belongs to this one account; row IDs alone do not prove repeat identity.</value>
+  </data>
+  <data name="Help_SupaCsv_Title" xml:space="preserve">
+    <value>SUPA CSV cashflow import</value>
+  </data>
+  <data name="Help_SupaCsv_Text" xml:space="preserve">
+    <value>Choose the Subsembly SUPA4 CSV booking export, as offered by Banking4, using UTF-8. It is different from a configurable visible-column export. Review every source page, target account and currency. Only ordinary posted income and expenses are accepted; separate transfers, refunds, returns, pending records and batch/detail relationships. Amounts are not converted, categories are not guessed and charges are not posted again. Original value dates, remittance and notes remain in the review. Missing original identities require careful duplicate review. Import still needs your explicit confirmation; existing overlap decisions and durable Undo remain. No bank login or connection is performed. Compare original IDs only within the same software history. If the history changed, use explicitly reviewed mapping rather than assuming the IDs prove reimport. Structured owner-account identifiers are not copied into notes, but original narrative and counterparty references can contain personal information.</value>
+  </data>
+  <data name="Help_SupaCsv_Example" xml:space="preserve">
+    <value>Review one posted EUR100 income and EUR12.34 expense from the same source account. Exclude a transfer or refund and handle its relationship explicitly. Reimport detection needs both the original row and source-account identity.</value>
+  </data>
+  <data name="SupaCsv_Acknowledge" xml:space="preserve">
+    <value>I checked every row and the original software history/account: posted ordinary income/expenses only, with no transfers, refunds, reversals, pending or batch records. I am not treating IDs from another software history as repeat proof.</value>
   </data>
 </root>

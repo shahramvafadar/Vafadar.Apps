@@ -105,7 +105,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
     {
         OnPropertyChanged(nameof(CanRunImport)); OnPropertyChanged(nameof(CanReviewPreview)); OnPropertyChanged(nameof(HasImportDock));
         ImportCommand.NotifyCanExecuteChanged(); PreviewCommand.NotifyCanExecuteChanged(); RefreshPreviewCommand.NotifyCanExecuteChanged();
-        PickStarMoneyCommand.NotifyCanExecuteChanged(); NotifyLedgerPreview();
+        PickStarMoneyCommand.NotifyCanExecuteChanged(); PickSupaCommand.NotifyCanExecuteChanged(); NotifyLedgerPreview();
         PickCommand.NotifyCanExecuteChanged(); ExportCommand.NotifyCanExecuteChanged(); ExportHoldingsCommand.NotifyCanExecuteChanged(); UndoCommand.NotifyCanExecuteChanged();
     }
 

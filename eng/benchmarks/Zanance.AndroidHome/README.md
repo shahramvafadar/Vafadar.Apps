@@ -983,3 +983,34 @@ case is accepted with these exact predicates and895x51 visible budget bounds; th
 retired and Main/OS restored. Do not replay it to improve reports or expand its scope. The passing
 new source-flow test and strict signed Offline package remain separate evidence. See
 [budget publication](../../../src/Apps/Zanance/docs/quality/home-budget-publication.md).
+
+## Original SUPA software-export review (D-516)
+
+ReviewSupaCsv=true with RuntimeIdentifier=android-arm64 selects only the new
+pro.vafadar.zanance.supacsvreview identity. Its Activity accepts only supa-csv with fresh32-hex
+review_run/review_pass values, never old financial/reminder preparation. The original page and
+viewmodel use a new owned fictitious SQLite source and explicit selected-file port. Six
+language/theme contexts inspect complete original SUPA Help/OK, source/warning/consent text,
+native picker and native consent; no Import/Undo or ledger writer is invoked. Completed receipts
+are retained and only missing contexts may continue against exact unchanged original setup.
+The caller's API29 window-inspection precondition does not qualify minimum API24.
+
+Six original normal-scale Samsung contexts pass at actual384dp in the same retained UID10395
+source after two actual terminal observer failures. Scope duplicate warning reads to the original
+BankPresetReview owner. Android CompoundButton.PerformClick can return false after toggling;
+invoke once and verify native Checked, original acknowledgement and command eligibility, never
+retry that click. Retain each completed context and full source/base typed-row equality. Terminal
+failed packets, original APKs and source lineage are preserved before stopping/upgrading only that
+caller; setup/accepted financial work is not repeated. No native Import/Undo is invoked.
+
+Retire only the completed independent package after preserving reports/source equality. The full
+signed shipping candidate is separately adopted without reset, verifying Main31882/Home979/all141
+public tuples, three original profiles, original Main SUPA chooser/Help, recorded OS and exact
+300000ms timeout restoration. Hash-match/remove only28 new owned remote XMLs. Host build/static
+proof is not external picker/customer-file, minimum-API/16KiB runtime or broad platform acceptance.
+See [original SUPA qualification](../../../src/Apps/Zanance/docs/quality/supa-csv-import.md).
+
+The pre-execution caption observer also requires exact native text after the existing digit
+transformation and the final layout line reaching its complete UTF-16 text length. Geometry
+alone cannot qualify the correct translation. This observation-only correction precedes every
+SUPA Android case; it never replays an accepted native or financial command.

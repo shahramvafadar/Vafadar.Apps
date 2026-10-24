@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Add an explicit SUPA4 software-export CSV review with source-history consent, complete paging, duplicate warnings and existing safe Undo; transfers and refunds require their original explicit relationships (D-516).
+
 - Correct plan weekend help in English, Spanish, French and Italian to explain that supported holidays are considered when their option is enabled (D-515).
 
 - Verified skipping missing monthly dates and ending on the original calendar date on Android, without posting transactions (D-512).

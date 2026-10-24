@@ -3436,3 +3436,16 @@ No recurrence algorithm, financial writer, schema, SDK, permission or commercial
 Broader financial/security/stability/performance/accessibility/iOS/provider/Store/publication gates
 remain open. New-head hosted CI is pending at commit creation. The independent unfinished D-516
 SUPA work is not part of this delivery. Evidence: [original recurrence and caption qualification](quality/physical-custom-second-day-holidays.md).
+
+## D-516 - SUPA preset local qualification
+
+Original supplier contract and bounded explicit software-export review have67 new selected
+passing cases,29 affected existing StarMoney cases and23 resource checks. Windows original
+review/consent/Help/Cancel36 contexts and12 changed Help-only contexts pass without financial
+writes or typed-row changes. Six original Android contexts pass full source/Help/consent at actual384dp
+with complete fixture/base typed rows unchanged; two terminal observer failures remain evidence.
+The complete signed no-reset candidate, original Main chooser/Help, Main31882/Home979/141 public
+tuples, three original profiles, OS and timeout300000 are verified; only the new independent
+caller/28 exact hash-matched remote XMLs are retired. New-head hosted CI remains separate.
+Build/static package proof never closes actual bank customer-file, external picker, API24/16KiB
+runtime, security/stability/accessibility/iOS/provider/Store/publication gates.

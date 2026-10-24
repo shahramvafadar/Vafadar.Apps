@@ -1182,3 +1182,14 @@ financial-table triggers. This is not a person/account identifier, credential, a
 identifier or network flow. Logical financial exports/sync add no new entity/preference; existing
 whole-database backup naturally includes this internal bookkeeping under the same protection.
 No new permission, SDK, public service, telemetry or source-data retention policy is introduced.
+
+### D-516 local SUPA source evidence
+
+Explicit selection reads an original UTF-8 software-export file through existing bounded import
+ports. Dates, amounts, currency, narrative, original software row references and counterparty
+references remain local review/financial metadata under the existing profile encryption/backup
+policy. Stable imported identity uses original source-account and row identity only within the
+chosen target and same original software history. Structured AcctId/Ownr fields are excluded from
+stored notes; a source suffix is shown for review. Literal narrative can itself include personal
+information and is not advertised as fully redacted. No new SDK, permission, analytics, network
+flow or credential is added. No source/customer file is uploaded or bundled with the product.

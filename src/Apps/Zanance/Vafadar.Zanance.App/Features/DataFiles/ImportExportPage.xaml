@@ -56,6 +56,10 @@
                         <Picker ItemsSource="{Binding BankEncodings}" SelectedIndex="{Binding BankEncodingIndex}"
                                 MinimumHeightRequest="44" SemanticProperties.Description="{v:Translate BankCsv_Encoding}" />
                         <p:WrappingAction Text="{v:Translate BankCsv_Pick}" Command="{Binding PickStarMoneyCommand}" IsEnabled="{Binding IsNotBusy}" />
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <p:WrappingAction Text="{v:Translate SupaCsv_Pick}" Command="{Binding PickSupaCommand}" IsEnabled="{Binding IsNotBusy}" />
+                            <v:HelpButton Grid.Column="1" Topic="SupaCsv" />
+                        </Grid>
                         </VerticalStackLayout>
                         <Label Text="{Binding FileName}" FontAttributes="Bold" IsVisible="{Binding FileName, Converter={StaticResource IsNotNullConverter}}" />
 
@@ -64,11 +68,11 @@
                             <Picker ItemsSource="{Binding Accounts}" SelectedItem="{Binding Account}" MinimumHeightRequest="44"
                                     SemanticProperties.Description="{v:Translate Import_Account}" />
                             <Label Text="{Binding BankSourceText}" />
-                            <Label Text="{v:Translate BankCsv_Warning}" Style="{StaticResource Secondary}" />
+                            <Label Text="{Binding BankPresetWarning}" Style="{StaticResource Secondary}" />
                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                                <Label Text="{v:Translate BankCsv_Acknowledge}" VerticalOptions="Center" />
+                                <Label Text="{Binding BankPresetAcknowledgement}" VerticalOptions="Center" />
                                 <Switch Grid.Column="1" IsToggled="{Binding BankAcknowledged}" OnColor="{DynamicResource Primary}"
-                                        SemanticProperties.Description="{v:Translate BankCsv_Acknowledge}" />
+                                        SemanticProperties.Description="{Binding BankPresetAcknowledgement}" />
                             </Grid>
                             <p:WrappingAction Text="{v:Translate Import_PreviewButton}" Command="{Binding PreviewCommand}" />
                             <VerticalStackLayout Spacing="8" IsVisible="{Binding HasPreview}">

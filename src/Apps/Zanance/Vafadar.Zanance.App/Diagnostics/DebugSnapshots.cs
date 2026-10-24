@@ -269,6 +269,10 @@ internal static partial class DebugSnapshots
     private static async Task RunCoreAsync(App app, IServiceProvider services, string folder)
     {
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "supa-csv-native")
+        {
+            await ReviewSupaCsvAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "plan-holiday-hint")
         {
             await ReviewPlanHolidayHintAsync(app, services, folder); return;

@@ -7782,7 +7782,7 @@ Identität: {2}</value>
     <value>StarMoney-Giro-CSV für Geldbewegungen wählen</value>
   </data>
   <data name="BankCsv_Encoding" xml:space="preserve">
-    <value>Textkodierung der nächsten Datei (Originalexport beachten)</value>
+    <value>Textkodierung der nächsten StarMoney-Datei (ursprüngliche Exporteinstellung wählen)</value>
   </data>
   <data name="BankCsv_Acknowledge" xml:space="preserve">
     <value>Ich habe alle Quellzeilen geprüft: nur gebuchte normale Einnahmen/Ausgaben im gewählten Konto und in dessen Währung. Keine Umbuchungen, Erstattungen, Stornos, Vormerkungen oder Splittsummen.</value>
@@ -8470,5 +8470,29 @@ Original-XML SHA-256: {5}</value>
   </data>
   <data name="Receipt_ImageHelpText" xml:space="preserve">
     <value>Unter Android werden Fotos und gescannte PDF-Seiten mit einer Texterkennung für lateinische Schrift gelesen. Persischer Text in Bildern wird nicht unterstützt. PDF-Dateien mit auswählbarem persischem Text können gelesen werden. Prüfe vor dem Speichern immer Betrag und Währung.</value>
+  </data>
+  <data name="SupaCsv_Pick" xml:space="preserve">
+    <value>SUPA4-CSV für gebuchte Einnahmen/Ausgaben wählen (UTF-8)</value>
+  </data>
+  <data name="SupaCsv_Warning" xml:space="preserve">
+    <value>Verwenden Sie eine SUPA4-CSV mit gewöhnlichen gebuchten Einnahmen/Ausgaben eines Kontos. Vorgemerkte, informative, zurückgegebene und Sammelposten werden abgelehnt. Überträge und Erstattungen benötigen ausdrückliche Verknüpfungen in Zanance. Ohne ursprüngliche Posten- und Quellkonto-ID sind gleiche Daten und Beträge nur ein Duplikatverdacht; verlassen Sie sich nicht auf automatische Wiederimporterkennung.</value>
+  </data>
+  <data name="SupaCsv_Source" xml:space="preserve">
+    <value>Geprüftes Ziel: «{0}» · {1}. Quellkennung endet auf «{2}». Prüfen Sie ursprüngliches Konto und Währung vor der Bestätigung.</value>
+  </data>
+  <data name="SupaCsv_SourceMissing" xml:space="preserve">
+    <value>Geprüftes Ziel: «{0}» · {1}. Die Datei enthält keine Quellkonto-Kennung. Bestätigen Sie, dass alle Posten zu diesem einen Konto gehören; Posten-IDs allein beweisen keinen Wiederimport.</value>
+  </data>
+  <data name="Help_SupaCsv_Title" xml:space="preserve">
+    <value>Einnahmen/Ausgaben aus SUPA-CSV</value>
+  </data>
+  <data name="Help_SupaCsv_Text" xml:space="preserve">
+    <value>Wählen Sie den Buchungsexport Subsembly SUPA4 CSV, etwa aus Banking4, in UTF-8. Er unterscheidet sich vom frei konfigurierbaren Export sichtbarer Spalten. Prüfen Sie jede Quellseite, Zielkonto und Währung. Nur gewöhnliche gebuchte Einnahmen/Ausgaben werden übernommen; Überträge, Erstattungen, Rückgaben, Vormerkungen sowie Sammel-/Teilposten bleiben getrennt. Beträge werden nicht umgerechnet, Kategorien nicht erraten und Entgelte nicht erneut gebucht. Wertstellung, Verwendungszweck und Notizen bleiben in der Prüfung erhalten. Fehlende Originalkennungen erfordern sorgfältige Duplikatprüfung. Der Import verlangt Ihre ausdrückliche Bestätigung; Überschneidungsentscheidungen und dauerhaftes Rückgängigmachen bleiben bestehen. Es erfolgt keine Bankanmeldung oder Verbindung. Vergleichen Sie Original-IDs nur innerhalb desselben Softwarebestands. Nach einem Bestandswechsel verwenden Sie eine ausdrücklich geprüfte Zuordnung statt vermuteter Wiederimport-IDs. Strukturierte Kennungen des eigenen Kontos werden nicht in Notizen kopiert; ursprüngliche Texte und Gegenpartei-Referenzen können dennoch personenbezogene Angaben enthalten.</value>
+  </data>
+  <data name="Help_SupaCsv_Example" xml:space="preserve">
+    <value>Prüfen Sie 100 EUR gebuchte Einnahme und 12,34 EUR Ausgabe desselben Quellkontos. Behandeln Sie einen Übertrag oder eine Erstattung getrennt mit ausdrücklicher Verknüpfung. Wiederimporterkennung braucht ursprüngliche Posten- und Quellkonto-Kennung.</value>
+  </data>
+  <data name="SupaCsv_Acknowledge" xml:space="preserve">
+    <value>Ich habe alle Posten sowie ursprünglichen Softwarebestand und Konto geprüft: nur gewöhnliche gebuchte Einnahmen/Ausgaben, keine Überträge, Erstattungen, Rückgaben, Vormerkungen oder Sammelposten. IDs eines anderen Softwarebestands gelten nicht als Wiederimportbeleg.</value>
   </data>
 </root>
