@@ -2130,7 +2130,7 @@
     <value>Giorno lavorativo successivo</value>
   </data>
   <data name="Weekend_Hint" xml:space="preserve">
-    <value>Fine settimana: {0}, in base al paese o alla regione scelti nelle Impostazioni. Le festività non sono considerate da questa regola.</value>
+    <value>Fine settimana: {0}, in base al paese o alla regione scelti nelle Impostazioni. Le festività supportate vengono considerate solo se attivi l’opzione dedicata.</value>
   </data>
   <data name="Weekend_BeforeShort" xml:space="preserve">
     <value>prima del fine settimana</value>

@@ -4494,3 +4494,37 @@ operation identities/checkpoints and all existing foreground, scope, authenticat
 and external-decision boundaries. Phone unavailability does not complete the overall delivery.
 The rule is recorded in AGENTS.md. This is an execution-order decision, not a product/runtime
 acceptance claim; it needs no repeated application builds, business suite or device actions.
+
+
+### D-515 - Preserved original recurrence source and targeted copy repair
+
+Four original fixed1EUR definitions qualify custom every3 days/count4, monthly day1 plus day15/count4,
+and Germany nationwide holiday-forward/backward/count2. All12 native preview rows match independent
+dates/weekdays. Each original Save occurs once, Reminder/automatic recording remain off and All dates/
+All types history is empty. Ordinary Main/profile reopening retains all four exact stored-row strings
+and Home0. Preserve early-frame, USB/WiFi, disclosure-state and host quoting/foreground refusals;
+continue the same source rather than replaying preparation, accepted definitions or money.
+
+The actual enabled-holiday preview contradicts old en/es/fr/it Weekend_Hint text. Correct only those
+four values to match the existing optional-holiday policy; fa/de resource files are unchanged in this
+batch. Four new actual-source SQLite cases fail against old text and pass after the repair. Thirty-six
+original Windows caption contexts cover six languages, both themes and actual360/412/1280 widths,
+with unchanged complete fixture rows, zero financial Saves and process4732 exit0. Twelve original
+Samsung caption/Cancel contexts cover the same six languages and both themes on the preserved
+holiday plan, matching full source strings, positive visible bounds and the checked holiday control.
+No existing successful financial cohort or unrelated suite is repeated.
+
+Strict Windows and canonical complete Offline Android builds have zero warnings/errors. The signed
+two-ABI candidate has384 AOT/408 ELF, v2/v3, ZIP CRC/privacy and static ZIP/ELF16KiB proofs; these do
+not establish16KiB runtime acceptance. No-reset adoption changes the APK SHA256 legitimately to
+1f09c70fd8d27a7877c91b1a958ebf530caf6136fcdaac0a961c693d72ea4788 and Main PID to31197. Original
+Home979/all141 public tuples, the three prior profiles, English/Light/Simple and recorded OS remain.
+Delete only the inactive fresh profile with both original confirmations. D-517's owner-authorized
+300000-to1800000ms temporary timeout is restored exactly to300000ms and verified. Remove465 unique
+owned remote XMLs in two hash-matched batches; keep466 local copies. Standard build/test cleanup
+succeeds and only two unused new shipping copies are removed; signed APK/evidence remain.
+
+No recurrence algorithm, financial writer, schema, SDK, permission or commercial activation changes.
+Broader financial/security/stability/performance/accessibility/iOS/provider/Store/publication gates
+remain open. New-head hosted CI is pending at commit creation. The independent unfinished D-516
+SUPA work is not part of this delivery. Evidence: [original recurrence and caption qualification](../../quality/physical-custom-second-day-holidays.md).

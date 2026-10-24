@@ -2131,7 +2131,7 @@
     <value>Jour ouvré suivant</value>
   </data>
   <data name="Weekend_Hint" xml:space="preserve">
-    <value>Jours de week-end : {0} (selon votre région, définie dans les paramètres). Les jours fériés ne sont pas pris en compte.</value>
+    <value>Jours de week-end : {0} (selon votre région, définie dans les paramètres). Les jours fériés pris en charge sont pris en compte uniquement si vous activez l’option correspondante.</value>
   </data>
   <data name="Weekend_BeforeShort" xml:space="preserve">
     <value>avant le week-end</value>

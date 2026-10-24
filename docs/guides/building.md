@@ -2482,3 +2482,24 @@ keep terminal source/UI evidence instead of replaying successful checks. D-504 u
 are cleaned after the fifteen new cases. Existing Windows UI is unchanged; its strict build
 passes and unrelated snapshots are not repeated. See the benchmark README and
 `src/Apps/Zanance/docs/quality/android-receipt-source-help.md`.
+
+
+## D-515 original holiday-caption review
+
+Build Windows Debug with ContinuousIntegrationBuild=true and both ApplicationId and ApplicationIdGuid
+set to pro.vafadar.zanance.holidayhintsreview, using an independent artifacts path. Verify the compiled
+package metadata before launching only that executable hidden. Set VAFADAR_SNAPSHOTS to a fresh owned
+folder, VAFADAR_SNAPSHOT_ONLY=plan-holiday-hint and VAFADAR_WINDOW_SIZE=360x892. The guarded route
+reads the original PlanEditorPage/PlanEditorViewModel, measures actual360/412/1280 page widths and
+native caption layout, then renders its own window root for six languages and both themes. It never
+sends desktop input, takes a full-screen capture or saves a plan/ledger row. Its independent SQLite
+setup and complete typed-row packet are retained beside per-context receipts.
+
+Use VAFADAR_HOLIDAY_HINT_RESUME=1 only for the same incomplete fixture. Matching completed contexts
+retain their original PNG/source receipts and are not replayed; a changed source/row packet refuses
+continuation. An observation timeout does not authorize another launch or seed while the original
+process is alive. Check final process exit, source-template equality, all36 receipts and stored-row
+equality before reporting this scoped Windows result. Android still needs its own complete signed
+candidate and actual native caption/control/Cancel evidence. D-517 permits a recorded temporary
+screen-off timeout extension during authorized phone tests, with exact original restoration/readback
+at completion/interruption/handoff; other OS/security settings remain protected.

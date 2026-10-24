@@ -2174,7 +2174,7 @@
     <value>Next working day</value>
   </data>
   <data name="Weekend_Hint" xml:space="preserve">
-    <value>Weekend here: {0} (from your region; set it in Settings). Public holidays are not considered.</value>
+    <value>Weekend here: {0} (from your region; set it in Settings). Supported public holidays are considered only when the holiday option is enabled.</value>
   </data>
   <data name="Weekend_BeforeShort" xml:space="preserve">
     <value>before weekends</value>

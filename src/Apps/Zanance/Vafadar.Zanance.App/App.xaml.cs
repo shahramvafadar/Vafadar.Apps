@@ -205,6 +205,9 @@ public partial class App : Application
     protected override Window CreateWindow(IActivationState? activationState)
     {
 #if DEBUG
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "plan-holiday-hint"
+            && AppInfo.Current.PackageName != "pro.vafadar.zanance.holidayhintsreview")
+            throw new InvalidOperationException("Independent holiday caption identity required before startup.");
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "import-preview" or "import-page-arrival"
             && AppInfo.Current.PackageName != "pro.vafadar.zanance.importpreview")
             throw new InvalidOperationException("Independent import preview identity required before startup.");

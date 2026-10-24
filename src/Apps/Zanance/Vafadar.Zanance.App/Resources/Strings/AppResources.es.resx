@@ -2126,7 +2126,7 @@
     <value>Día hábil siguiente</value>
   </data>
   <data name="Weekend_Hint" xml:space="preserve">
-    <value>Fin de semana según la región: {0}. Puedes cambiar la región en Ajustes. Esta regla no incluye los días festivos.</value>
+    <value>Fin de semana según la región: {0}. Puedes cambiar la región en Ajustes. Los festivos incluidos solo se tienen en cuenta si activas la opción de festivos.</value>
   </data>
   <data name="Weekend_BeforeShort" xml:space="preserve">
     <value>antes del fin de semana</value>

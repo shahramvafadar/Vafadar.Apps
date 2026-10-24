@@ -2574,3 +2574,11 @@ confirmations; original Main12153/Home979/all141 public tuples/three profiles/OS
 Remove154 hash-matched owned XMLs; no new managed-test count, build, existing successful cohort or
 financial posting is repeated. Evidence: [monthly calendar anchors](quality/physical-monthly-calendar-anchors.md).
 Skip/date-end/custom/holiday/timed/runtime/accessibility/iOS/provider/Store/release gates stay separate.
+
+
+## D-515 - Optional supported holidays
+
+Weekend help must describe supported holiday adjustment conditionally, in agreement with its
+original opt-in control and preview. Keep the separate country/date/source limitation visible;
+never imply all public, local, bank or workplace holidays are supported. This text-only correction
+does not change the saved recurrence rule, holiday choice, money or reminder defaults.

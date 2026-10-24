@@ -10,6 +10,14 @@ the remaining device work with the existing foreground, ownership and data-prese
 Do not fill the interval with repeated successful/unrelated tests or financial writes. Temporary
 phone unavailability does not finish the overall delivery or authorize a new external action.
 
+## Temporary screen-awake allowance during tests (owner, 2026-10-24, D-517)
+
+The owner requested preventing screen sleep during testing. Record the original screen-off
+timeout before temporarily extending only that setting for an authorized test turn. Restore
+the exact original value at completion, interruption or handoff, and verify restoration.
+This narrow exception does not authorize changing other system settings, clock, authentication,
+accounts or security controls. Keep the existing owned-app foreground checks and data guards.
+
 ## Continuous Samsung availability (owner, 2026-10-22, D-458)
 
 Until the owner explicitly changes this instruction, Samsung SM-A176B is reserved for this

@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Correct plan weekend help in English, Spanish, French and Italian to explain that supported holidays are considered when their option is enabled (D-515).
+
 - Verified skipping missing monthly dates and ending on the original calendar date on Android, without posting transactions (D-512).
 
 - Checked monthly plan dates on a physical phone in Gregorian, Persian and lunar Hijri calendars, including shorter months and a three-occurrence ending, without posting transactions (D-510).
