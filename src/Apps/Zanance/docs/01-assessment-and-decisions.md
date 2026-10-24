@@ -9507,3 +9507,13 @@ no system input or settings change is used to recover them. No new managed count
 cohort is repeated. D-511 exact-head CI/CodeQL succeed and its one-shot monitor is consumed/deleted;
 this new documentation head awaits its own check. Evidence: [physical Skip/calendar ending](quality/physical-skip-calendar-ending.md).
 Custom/second-day/holiday/future delivery/runtime/accessibility/iOS/provider/Store/release gates remain.
+
+## D-514 - Continue ready host work while the phone is unavailable
+
+The owner explicitly requires continuing other ready approved tasks whenever phone access is
+unavailable, then resuming the preserved unfinished device work when access returns. Do not wait
+idly or substitute repeated successful/unrelated checks or financial commands. Keep accepted
+operation identities/checkpoints and all existing foreground, scope, authentication, system/data
+and external-decision boundaries. Phone unavailability does not complete the overall delivery.
+The rule is recorded in AGENTS.md. This is an execution-order decision, not a product/runtime
+acceptance claim; it needs no repeated application builds, business suite or device actions.

@@ -1,5 +1,15 @@
 # AGENTS.md – working rules for this repository
 
+## Continue independent work during phone unavailability (owner, 2026-10-24, D-514)
+
+Whenever the phone is unavailable, continue ready approved work that does not require it rather
+than waiting: implementation, failure-log diagnosis, focused checks after relevant changes,
+necessary package preparation, documentation and owned-output cleanup. Preserve the unfinished
+device cohort and its accepted-operation checkpoints. After phone access returns, resume only
+the remaining device work with the existing foreground, ownership and data-preservation guards.
+Do not fill the interval with repeated successful/unrelated tests or financial writes. Temporary
+phone unavailability does not finish the overall delivery or authorize a new external action.
+
 ## Continuous Samsung availability (owner, 2026-10-22, D-458)
 
 Until the owner explicitly changes this instruction, Samsung SM-A176B is reserved for this
