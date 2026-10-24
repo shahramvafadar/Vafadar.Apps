@@ -9703,3 +9703,15 @@ No app/MAUI/Main/phone/dependency/schema/permission change or unrelated passing 
 D-521 CI/CodeQL pass, Android producer succeeds, Windows protected measurement fails. Hosted logs
 still require owner sign-in; the local reproduced defect is not asserted as the hosted cause.
 Exact-head hosted success remains pending. See [local defect and hosted boundary](quality/protected-workload-revision-preservation.md).
+
+
+### D-524 - Native metadata durability on minimum-API/16KiB systems
+
+Original identity staging, journal/history publication and hot-journal rollback/committed selection
+pass on x86_64 API24/4096 and API35/16384 using unchanged signed441faf38. Twenty observations comprise
+ten controlled synchronized native deaths and ten terminal receipts; zero new managed cases or
+financial preparation/commands. Same-source cold lineage, complete original facts and installed
+code match; remove only new helpers and stop owned AVDs, preserving ADB/Main/phone/SDK boundaries.
+This closes only named controlled metadata subgates, not natural power loss/hardware/OEM/ARM64,
+authentication, full platform/UI/stability/accessibility/iOS/provider/Store/release acceptance.
+See [actual metadata receipts and limits](quality/android-metadata-runtime-compatibility.md).

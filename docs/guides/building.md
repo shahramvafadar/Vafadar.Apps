@@ -2580,3 +2580,14 @@ is removed after use; production key/factory/snapshot guards stay unchanged. Rev
 is memory-only and limited to the validated Home singleton; every other typed value remains exact.
 Do not infer hosted failure cause from local reproduction when original hosted logs are gated.
 [Focused evidence](../../src/Apps/Zanance/docs/quality/protected-workload-revision-preservation.md).
+
+
+### D-524 - Original metadata-only native fault cohorts
+
+Reuse signed441faf38 for identity staging, journal/history staging and uncommitted/committed journal
+faults on the two isolated x86_64 runtimes. Claim fresh public nonces, retain each original run,
+observe the original synchronized barrier before killing only the independent package and prove
+death. Remove only an already-consumed observer marker before its next reuse. Audit phase order,
+original facts and installed code before retiring new UIDs/owned AVDs. Twenty observations are ten
+barriers plus ten terminal receipts, not twenty terminal results or new managed cases.
+[Evidence and boundaries](../../src/Apps/Zanance/docs/quality/android-metadata-runtime-compatibility.md).
