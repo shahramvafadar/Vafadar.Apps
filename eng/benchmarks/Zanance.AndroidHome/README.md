@@ -965,3 +965,21 @@ same run/fresh pass may audit that retained accepted source and retire its owned
 requires failure/accepted receipts, unique current owned identity and exact original ledger facts;
 it has no seed/financial writer. Retire the new package after that source cleanup. Keep original
 failed APK/report and separate initial/continuation PIDs; no all-device or financial-form claim.
+
+## Budget-only Home source publication (D-513)
+
+`ReviewHomeBudget=true` with `RuntimeIdentifier=android-arm64` selects only the fresh
+`pro.vafadar.zanance.homebudgetreview` identity. Its Activity refuses every qualification phase
+except `home-budget-refresh`. Use a fresh32-hex run/pass once; an existing source root or partial
+profile refuses preparation. One initial10EUR budget and one accepted change to20EUR under the
+original Home cover create no ledger entry. Preserve the public `home-budget-publication` packet
+before its terminal guard, then `home-budget-visible` and the final `home-budget-refresh` packet.
+Do not replay D-509's accepted expense or a partial budget source to repair reports.
+
+Observe actual original parent/child native layout before a stock scroll request. Completion
+requires exactly one accepted budget change/publication, current visible20EUR, empty ledger,
+retirement of only the new profile and complete original independent-base equality. One Samsung
+case is accepted with these exact predicates and895x51 visible budget bounds; the new package is
+retired and Main/OS restored. Do not replay it to improve reports or expand its scope. The passing
+new source-flow test and strict signed Offline package remain separate evidence. See
+[budget publication](../../../src/Apps/Zanance/docs/quality/home-budget-publication.md).

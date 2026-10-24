@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Zanance.App.Features.Home;
+using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Categories;
@@ -161,5 +162,43 @@ public sealed class HomeLedgerRefreshFlowTests
         }, () => ct.ThrowIfCancellationRequested());
         Assert.Equal(2, reads); Assert.Equal(1, writes);
         Assert.Single(await fixture.Store.GetEntriesAsync(cancellationToken: ct));
+    }
+
+    [Fact]
+    [Trait("AT", "AT-513")]
+    public async Task Covered_budget_refresh_publishes_the_new_limit_once_without_posting_money()
+    {
+        var ct = TestContext.Current.CancellationToken;
+        using var fixture = new FlowFixture();
+        var day = new DateOnly(2026, 10, 9);
+        var account = new Account { Name = "Original zero cash", CurrencyCode = "EUR", OpeningDate = day, OpeningBalance = 0 };
+        await fixture.Store.SaveAccountAsync(account, ct);
+        var originalAccount = System.Text.Json.JsonSerializer.Serialize(Assert.Single(await fixture.Store.GetAccountsAsync(cancellationToken: ct)));
+        var budget = new Budget { CurrencyCode = "EUR", Year = day.Year, Month = day.Month, TotalLimit = 1000 };
+        await fixture.Store.SaveBudgetAsync(budget, ct);
+        var cover = new SnapshotLoadState(); var reads = 0; var writes = 0; var publications = 0;
+        Budget? published = null;
+        await cover.RunAsync(() => HomeRefreshSession.RunAsync(async refresh =>
+        {
+            Assert.True(cover.IsLoading); Assert.False(cover.IsReady); Assert.False(cover.HasFailed);
+            var packet = await fixture.Store.GetHomeSnapshotAsync(day, 0, ct); reads++;
+            refresh.RequireOriginalFile(packet.DatabasePath);
+            Assert.Empty(packet.Entries); Assert.Equal(budget.Id, packet.MonthBudget!.Id);
+            if (reads == 1)
+            {
+                Assert.Equal(1000, packet.MonthBudget.TotalLimit);
+                // A saved budget is metadata, not spending; its revision still retires the captured Home source.
+                budget.TotalLimit = 2000; await fixture.Store.SaveBudgetAsync(budget, ct); writes++;
+            }
+            await fixture.Store.ValidateHomeSnapshotAsync(packet, ct);
+            published = packet.MonthBudget;
+        }, () => ct.ThrowIfCancellationRequested()), () => publications++);
+        Assert.True(cover.IsReady); Assert.False(cover.IsLoading); Assert.False(cover.HasFailed);
+        Assert.Equal(2, reads); Assert.Equal(1, writes); Assert.Equal(1, publications);
+        Assert.NotNull(published); Assert.Equal(2000, published.TotalLimit); Assert.Empty(published.CategoryLimits);
+        var stored = Assert.Single(await fixture.Store.GetBudgetsAsync(ct));
+        Assert.Equal(budget.Id, stored.Id); Assert.Equal(2000, stored.TotalLimit);
+        Assert.Empty(await fixture.Store.GetEntriesAsync(cancellationToken: ct));
+        Assert.Equal(originalAccount, System.Text.Json.JsonSerializer.Serialize(Assert.Single(await fixture.Store.GetAccountsAsync(cancellationToken: ct))));
     }
 }

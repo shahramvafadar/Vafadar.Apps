@@ -2617,3 +2617,9 @@ D-294 local household delivery is complete at the recorded Windows/emulator/loca
 - Add date-storage compatibility/refusal coverage against independent EF reads.
 - Refuse native Home measurements covered by another window; preserve actual startup failures.
 - Withdraw the unproven date decoder; the production application and APK are unchanged.
+
+### D-513 - Home budget refresh qualification
+
+- Verify the current budget appears once after a saved limit changes during Home loading, without posting money.
+- Add one focused original-source regression; retain the distinct historical expense-count failure.
+- The shipping app and APK are unchanged. General stability, accessibility and release gates remain open.

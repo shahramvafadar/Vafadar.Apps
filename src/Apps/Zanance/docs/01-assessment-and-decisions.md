@@ -9508,6 +9508,27 @@ cohort is repeated. D-511 exact-head CI/CodeQL succeed and its one-shot monitor 
 this new documentation head awaits its own check. Evidence: [physical Skip/calendar ending](quality/physical-skip-calendar-ending.md).
 Custom/second-day/holiday/future delivery/runtime/accessibility/iOS/provider/Store/release gates remain.
 
+## D-513 - Original budget-source publication on Samsung
+
+One new source-flow SQLite case passes: the captured10EUR budget changes once to20EUR under
+cover, the first packet is retired and the second read publishes once without a ledger entry.
+Only this new case runs; strict App.Tests and independent ARM64 Offline builds have zero
+warnings/errors. The signed192-AOT caller owns a fresh package and refuses historical phases.
+Fifteen synthetic host observer checks are separate from the one new application test.
+After explicit phone handoff, actual original Home/store process26285 confirms covered-at-write,
+one accepted budget change, one completed publication, ready/nonfailed state and the original
+visible20EUR caption at895x51, empty ledger and complete original independent-base equality.
+Delete only its new profile and package. Original Main12153/Home979/all141 public tuples/three
+profile descriptions/current selection/APK/OS match;13 new owned XMLs are hash-matched and removed.
+The initially retained blank expense closes through original Cancel without a dirty prompt or
+financial Save/Discard. Preserve initial baseline/host label refusals and pre-device compile/
+package-observer failures. No accepted writer, successful suite or financial cohort is replayed.
+D-509's old failed expense publication count stays unaccepted; this is a distinct budget cohort,
+not financial-form or general stability/performance/accessibility/security/platform acceptance.
+Production code and shipping APK remain D-509. Prior D-511/D-512/D-514 CI/CodeQL succeed and their
+one-shot monitors are consumed/deleted; this batch awaits its own exact-head CI at commit creation.
+Evidence: [budget publication](quality/home-budget-publication.md). Continue genuinely uncovered work.
+
 ## D-514 - Continue ready host work while the phone is unavailable
 
 The owner explicitly requires continuing other ready approved tasks whenever phone access is
