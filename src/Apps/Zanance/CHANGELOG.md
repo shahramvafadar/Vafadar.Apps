@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Verified skipping missing monthly dates and ending on the original calendar date on Android, without posting transactions (D-512).
+
 - Checked monthly plan dates on a physical phone in Gregorian, Persian and lunar Hijri calendars, including shorter months and a three-occurrence ending, without posting transactions (D-510).
 
 - Refresh Home before revealing it when ledger, budget, exchange-rate or holding data changed during loading, so an old captured balance is not accepted as current (D-509).

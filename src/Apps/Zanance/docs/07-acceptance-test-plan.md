@@ -6171,3 +6171,18 @@ new real-SQLite oracle guards. All1337 distinct selected cases now have successf
 this is not a whole-suite rerun. Production code/migration/APK and phone data remain D-509.
 A new exact-head hosted result remains pending at commit creation. Security/stability/performance/
 accessibility/iOS/provider/Store/release acceptance stays separate. Evidence: [CI snapshot oracles](quality/home-revision-ci-oracles.md).
+
+### D-512 - Physical Skip and original-calendar ending
+
+Two new original fixed1EUR monthly definitions on Samsung qualify missing-day Skip and date-based
+ending: Gregorian31October/31December/31January with inclusive31January2027, and Persian31Shahrivar
+only through30Aban1406. Independent platform calendar lengths agree with all four visible preview
+rows. Each definition is saved once; Reminder/automatic recording are off and All dates/All types
+history is empty. Ordinary Main/profile reopening retains both original stored-row descriptions
+and Home0 without financial replay. Delete only the inactive fresh profile with both confirmations;
+original Main12153/Home979/all141 public tuples/three profiles/OS/D-509 APK match. Remove158 fresh
+hash-matched owned XMLs and release Samsung. Preserve early-frame/host Back/nonowned-tree refusals;
+no system input or settings change is used to recover them. No new managed count/build/successful
+cohort is repeated. D-511 exact-head CI/CodeQL succeed and its one-shot monitor is consumed/deleted;
+this new documentation head awaits its own check. Evidence: [physical Skip/calendar ending](quality/physical-skip-calendar-ending.md).
+Custom/second-day/holiday/future delivery/runtime/accessibility/iOS/provider/Store/release gates remain.

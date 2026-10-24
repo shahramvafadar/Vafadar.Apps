@@ -65,3 +65,12 @@ The original D-508 one-shot check reports successful CI/CodeQL; the D-509 and D-
 report their actual failures and are consumed/deleted. A new exact-head hosted result is required
 after the finished correction is pushed. This work does not accept broader stability, performance,
 security, accessibility, iOS, provider, Store or release gates.
+
+## Subsequent exact-head hosted result
+
+Commit d79bb52cfc656a4ac3105d9a31c76e5933409518 has successful
+[CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40098566798) and
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40098566805).
+The single authorized check consumes/deletes its own schedule. Keep the historical pending-at-commit
+and original failed-run evidence above; do not replay the consumed request or expand this success
+into physical/platform/release acceptance. The following D-512 documentation head is checked separately.
