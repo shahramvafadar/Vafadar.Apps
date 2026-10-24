@@ -6326,9 +6326,9 @@ refusals. Revalidate the same retained reference from its original encrypted rol
 without replaying financial commands; execute only the previously unprepared tenfold shape.
 Its four saves read back and remove exactly their own rows, and repeat admission refuses.
 No app/MAUI/Main/phone/dependency/schema/permission change or unrelated passing suite repeats.
-D-521 CI/CodeQL pass, Android producer succeeds, Windows protected measurement fails. Hosted logs
-still require owner sign-in; the local reproduced defect is not asserted as the hosted cause.
-Exact-head hosted success remains pending. See [local defect and hosted boundary](quality/protected-workload-revision-preservation.md).
+D-521 CI/CodeQL pass, Android producer succeeds, Windows protected measurement fails. The owner-opened authenticated browser now shows the same snapshot-content exception at original
+Program.cs line195 after a zero-warning build. Corrected D-523 Native cipher candidates succeeds;
+latest D-525 CI and CodeQL also succeed. Preserve original failures without rerunning accepted work. See [local defect and hosted boundary](quality/protected-workload-revision-preservation.md).
 
 
 ### D-524 - Native metadata durability on minimum-API/16KiB systems

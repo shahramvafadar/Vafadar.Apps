@@ -44,5 +44,6 @@ These qualify the named controlled metadata-durability subgates only. They do no
 power loss/low-memory, arbitrary profiles, hardware/biometric changes, OEM/cloud transfer, ARM64,
 real authentication, Main private data, all UI/backup/OCR, ANR/crash/performance/accessibility,
 iOS, providers, Store or release. D-523's corrected Windows workload has eight focused passing
-cases and local retained/first-tenfold continuation; hosted attribution and exact-head success
-remain separate pending facts. The main goal remains active.
+cases and local retained/first-tenfold continuation; the subsequent owner-opened log confirms the same terminal comparison exception, corrected D-523
+Native cipher candidates succeeds and latest D-525 CI/CodeQL succeed. Product acceptance stays
+separate and the main goal remains active.

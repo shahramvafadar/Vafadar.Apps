@@ -73,3 +73,22 @@ and release remain separate. The main goal remains active.
 ## Subsequent hosted observation
 
 The one18-minute exact-head check of fb134949 reports [Native cipher candidates](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40137760234) and [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40137760224) success; [general CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40137760222) is cancelled. Its consumed monitor is deleted. This confirms the corrected current native qualifier, not the unobserved historical exception text. Later documentation-only heads preserve the same native source; their own general CI is separate.
+
+
+## Original hosted log and latest complete CI closure
+
+On25October the owner opens the original failed job in an authenticated browser. The visible
+[Windows log](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40135440298/job/120995863846)
+shows a zero-warning/error build, then the Snapshot record content differs InvalidDataException
+at SqliteSnapshotVerifier.CompareRows line89, VerifyAsync line53 and original Program.cs
+line195. This is exactly the terminal after-write comparison reproduced locally; it is not a
+compiler/native-producer failure. D-523 changes only that independent comparison boundary and
+its continuation/tests; the original production verifier remains unchanged.
+
+The corrected Native cipher candidates run succeeds as recorded above. The single exact-head
+check of latest bec2c2d3 reports [CI success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40139143221)
+and [CodeQL success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40139143159).
+Its monitor is consumed/deleted. No old job, successful native producer, accepted source or
+financial command is rerun to obtain the historical log. No credential is read or entered.
+This closes the reported current qualifier defect and its engineering CI check; it does not
+close the main product backlog, stability/performance/accessibility or release gates.
