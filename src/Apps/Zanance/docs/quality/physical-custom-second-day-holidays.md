@@ -147,3 +147,14 @@ or successful business suite is repeated. The D-515/D-517 batch is locally compl
 hosted CI follows the finished commit separately. Independent unfinished D-516 source is excluded.
 No broader ANR/crash, punctual reminders, cold/process death, spoken accessibility, other device,
 iOS, provider/Store, full private database/key or publication acceptance is inferred.
+
+## D-518 hosted architecture follow-up
+
+[CI40121879246](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40121879246)
+fails exactly the source architecture fixture list; Windows/Android builds and App tests pass.
+[CodeQL40121879326](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40121879326)
+passes. The one-shot monitor is consumed and deleted. Add only the exact Debug Windows holiday
+fixture to the existing gate-validated allowlist; do not weaken the rule for production pages.
+The focused FeaturePolicy class passes43 cases with zero-warning build. Native captions, accepted
+plan definitions, financial data and shipping packages are unchanged and are not rerun.
+The original failed hosted result remains evidence; new hosted success is not yet claimed.

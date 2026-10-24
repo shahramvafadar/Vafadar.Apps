@@ -69,6 +69,7 @@ public sealed class FeaturePolicyTests
         [
             "Diagnostics/BudgetFinancialNativeReview.cs", "Diagnostics/BudgetPeriodCaptionReview.cs",
             "Diagnostics/OriginalAmountErrorCaptionReview.cs",
+            "Diagnostics/DebugSnapshots.PlanHolidayHint.cs",
             "Diagnostics/DebugSnapshots.EntryWorkflow.cs", "Diagnostics/HoldingArchiveNativeReview.cs",
             "Diagnostics/HoldingDetailNativeReview.cs", "Diagnostics/HoldingEventNativeReview.cs",
             "Diagnostics/HoldingEventPublicationNativeReview.cs", "Diagnostics/HoldingFeeActionNativeReview.cs",

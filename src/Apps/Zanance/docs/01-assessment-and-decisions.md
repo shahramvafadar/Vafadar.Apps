@@ -9583,3 +9583,19 @@ remain. D-515 records original300000ms, temporary1800000ms and successful exact 
 this does not qualify unchanged power/Doze conditions during the temporary interval. AGENTS.md
 contains the narrow exception. No application code, business suite or prior financial work needs
 repeating for this execution rule.
+
+## D-518 - Exact review fixture recognition after hosted architecture failure
+
+D-515 head b6e9e100430b64e933210666045b31e27199572b fails hosted CI40121879246 in exactly
+FeaturePolicyTests.No_page_reads_the_mode_itself: the new DebugSnapshots.PlanHolidayHint.cs
+sets an independent fixture's mode but was omitted from the explicit fixture list. Both hosted
+platform builds and the App tests pass; CodeQL40121879326 passes. Preserve that failure.
+
+Register only the exact holiday fixture in the existing list. The unchanged validator checks its
+whole outer DEBUG && WINDOWS gate and rejects ordinary Release fallback or escaped statements;
+production pages remain subject to the same mode-read rule. No product behavior, permission,
+financial data or build policy changes. Forty-three focused FeaturePolicy cases pass in a strict
+zero-warning build, including the failed source check and negative gate cases. Current local
+SUPA review is independently registered in unfinished D-516 and is excluded from this commit.
+No successful platform/native/financial cohort is repeated for this source-contract correction.
+Hosted confirmation belongs to the next pushed head's one-shot CI check.
