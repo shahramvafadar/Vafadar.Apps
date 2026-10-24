@@ -6121,3 +6121,13 @@ ZIP entries have mapping alignment. Official zipalign plus ELF checks resolve th
 issue on the same unchanged APK. Native receiver/notification receipts come from the first actual
 accepted publication. General stability/accessibility/security/iOS/provider/Store/release gates
 remain separate. [Evidence](quality/physical-timed-goal-period-reminders.md).
+
+### D-508 - Physical retained forecast-tab acceptance
+
+The two original D-497 retained-tab cases now pass on Samsung in a new independent Release/AOT
+ARM64 package: four real tab clicks, same snapshot page showing-10EUR, same forecast page showing
+97EUR with its what-if draft preserved. Immutable snapshot/base remain equal; only the new owned
+profile/package is retired. Main D-507/Home979/all141 public tuples/OS match without reinstall.
+No accepted financial cohort or unchanged successful suite/build is repeated; no new managed-test
+count or broad security/stability/accessibility/platform/release acceptance is claimed. Evidence:
+[physical retained-tab completion](quality/forecast-retained-tab-return.md).

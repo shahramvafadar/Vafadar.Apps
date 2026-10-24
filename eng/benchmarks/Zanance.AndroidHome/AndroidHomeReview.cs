@@ -23,6 +23,8 @@ internal static partial class AndroidHomeReview
     /// <summary>The independent install allowed to own these fictitious workloads.</summary>
 #if RECEIPT_SOURCE_REVIEW
     internal const string Package = "pro.vafadar.zanance.receiptsourcereview";
+#elif FORECAST_RETURN_PHONE_REVIEW
+    internal const string Package = "pro.vafadar.zanance.forecastreturnreview";
 #elif CURRENCY_FOCUS_REVIEW
     internal const string Package = "pro.vafadar.zanance.currencyfocusreview";
 #elif HOUSEHOLD_MONEY_FRESH

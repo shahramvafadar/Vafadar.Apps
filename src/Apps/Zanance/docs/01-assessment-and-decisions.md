@@ -9245,3 +9245,47 @@ ZIP entries have mapping alignment. Official zipalign plus ELF checks resolve th
 issue on the same unchanged APK. Native receiver/notification receipts come from the first actual
 accepted publication. General stability/accessibility/security/iOS/provider/Store/release gates
 remain separate. [Evidence](quality/physical-timed-goal-period-reminders.md).
+
+## D-508 - Physical retained forecast-tab acceptance (2026-10-24)
+
+Close only D-497's missing physical adapter boundary, using a fresh independent ARM64 package
+`pro.vafadar.zanance.forecastreturnreview` and the unchanged original forecast-return cohort.
+Do not replace the retained Home caller or replay the deleted D-496 financial profile. The new
+package links current production sources and creates only its own fictitious protected source:
+opening100EUR, one Once20 plan, one immutable snapshot and two distinct service writes, expense10
+then income7. These are isolated fixture writes, not Main or financial-form acceptance.
+
+On Samsung SM-A176B/API36/ARM64/4096-byte pages, four actual native bottom-tab PerformClick
+activations retain the same two page objects. Snapshot detail changes from0 to-10EUR without
+Back/reopen/direct post-change LoadAsync. Forecast retains the original plan-exclusion draft and
+publishes97EUR after the single later income. Original snapshot JSON and complete base packet
+remain identical; the owned profile is deleted before the result is emitted. Native navigation
+records actual ShellSectionChanged events to the original SnapshotPage/ForecastPage. Both cases
+complete once in PID6294/run f8f3f094e6244432baf884dd8a0bdd74; no accepted action is replayed.
+
+One complete strict Offline ARM64 caller build passes without warnings/errors:192 AOT modules,
+v2/v3 signatures, no INTERNET/debuggable declaration,56,656,390 bytes, SHA256
+`25a6c09f1c8d78941ef2c1656f2466310b84ee33b3e5f7b1de38a9e7d6698eb1`.
+No production code, layout, permission, schema or monetary formula changes. Successful D-507
+Windows/shipping builds, old managed suites and prior financial cohorts are not repeated; these
+two native cases are not new managed tests. Independent COLD/Activity1636ms/Wait1680ms is an
+activity observation, not whole-Home timing or general stability acceptance.
+
+Preserve initial host observation failures: Main pidof reports no process before launch; an early
+native hierarchy helper exits137; a subsequent guard finds no Home target because the original
+startup already presents Home. No input or financial write follows those refused guards. The
+first restoration reader uses the Windows default text encoding and refuses UTF-8 tuple data;
+correct only its explicit encoding, then compare the existing captures without UI/action replay.
+
+After terminal receipts uninstall only the new package. Original Main APK remains D-507/hash
+984f01095439a6ca3ff979755085d6fd5af6208256dc2345b7924ba7a031d9a6 without install/reset;
+Home979/all141 original public tuples and exact OS settings match, MainPID5443. Remove five new
+owned remote XMLs only after local/remote hash equality and retain local evidence. Release the
+coordinated phone turn. Main private database/keys, profiles and financial writers are untouched.
+General reminder/Doze/reboot, security/stability/performance/accessibility, API24/16KiB runtime,
+iOS/provider/Store and publication remain open. D-496/D-506 actual elapsed-day success and D-494's
+original failed time window stay unchanged. Continue genuinely uncovered backlog work.
+
+Clean the owned native build tree with dotnet clean (zero warnings/errors). Remove only the new
+unsigned APK/resource-designer copies (57,244,769 bytes); retain its signed acceptance APK and
+local evidence. Previously rejected D-507 host-file removals are not retried.

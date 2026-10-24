@@ -942,3 +942,13 @@ retain the last app-requested orientation after Unspecified. The fixed disposabl
 `review_return_portrait=true` solely to return its own window to portrait, without a qualification
 phase or source action; then resume original Main, verify its complete public tuples and uninstall
 only this new caller. Preserve old Home-review APK/data/stopped state and pending timed subjects.
+
+## Physical retained forecast tabs (D-508)
+
+Set ReviewForecastPhone=true and RuntimeIdentifier=android-arm64 for the complete signed Offline
+build. This selects pro.vafadar.zanance.forecastreturnreview, leaving retained Home callers intact.
+Invoke forecast-return once with fresh32-hex review_run/review_pass. The original source guards
+refuse an existing root/profile: never relaunch preparation after partial writes. Preserve native
+report and same-page/source evidence before retiring only this package. This cohort is original
+store fixture qualification, not financial-form acceptance. Successful Samsung evidence is already
+retained; do not replay it to repair reports or broaden language/layout claims.

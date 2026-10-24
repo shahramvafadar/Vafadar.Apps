@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Verified on a physical Android phone that returning to the same forecast or saved comparison refreshes current amounts while preserving the saved scenario and unsaved assumptions (D-508).
+
 - Android reminders delayed by the system can still appear through their scheduled local day, instead of disappearing after one hour; they are rejected the next day. No new permission is required.
 
 ### Android receipt-reading help (D-504)

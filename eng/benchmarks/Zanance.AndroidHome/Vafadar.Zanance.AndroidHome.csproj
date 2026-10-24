@@ -19,6 +19,11 @@
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
+  <!-- The physical retained-tab cohort must not replace a caller with retained financial evidence. -->
+  <PropertyGroup Condition="'$(ReviewForecastPhone)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.forecastreturnreview</ApplicationId>
+    <DefineConstants>$(DefineConstants);FORECAST_RETURN_PHONE_REVIEW</DefineConstants>
+  </PropertyGroup>
   <!-- New native source-help qualification owns no retained caller/financial data. -->
   <PropertyGroup Condition="'$(ReviewReceiptSource)' == 'true'">
     <ApplicationId>pro.vafadar.zanance.receiptsourcereview</ApplicationId>

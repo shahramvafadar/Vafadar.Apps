@@ -3316,3 +3316,13 @@ are retired; the complete signed384-AOT Offline Main candidate is adopted withou
 Home979/141 public tuples/three profiles/OS remain equal. This is not general timed accuracy,
 Doze/reboot/cold, API24/16KiB runtime, hardware/authentication, accessibility, iOS, provider/Store
 or release acceptance. Native controls/financial cohorts are not repeated for report repairs.
+
+### D-508 - Physical retained forecast-tab acceptance
+
+The two original D-497 retained-tab cases now pass on Samsung in a new independent Release/AOT
+ARM64 package: four real tab clicks, same snapshot page showing-10EUR, same forecast page showing
+97EUR with its what-if draft preserved. Immutable snapshot/base remain equal; only the new owned
+profile/package is retired. Main D-507/Home979/all141 public tuples/OS match without reinstall.
+No accepted financial cohort or unchanged successful suite/build is repeated; no new managed-test
+count or broad security/stability/accessibility/platform/release acceptance is claimed. Evidence:
+[physical retained-tab completion](quality/forecast-retained-tab-return.md).
