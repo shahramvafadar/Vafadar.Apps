@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Include="../FinancialSnapshotAssert.cs" Link="Infrastructure/FinancialSnapshotAssert.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Budget/BudgetFinancialProjection.cs" Link="Application/BudgetFinancialProjection.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Rates/DisplayUnitsViewModel.cs" Link="Application/DisplayUnitsViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/DisplayUnitPublication.cs" Link="Application/DisplayUnitPublication.cs" />

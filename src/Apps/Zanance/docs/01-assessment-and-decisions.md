@@ -9478,3 +9478,17 @@ The scope does not accept skip-missing-day policy, date-based ending, every cust
 weekend/holiday rule, future actual payments/delivery, cold/low-memory/ANR/performance, scaling/
 spoken accessibility, iOS, provider/company/Store/expert or publication. Preserve all previous
 failures and continue genuinely uncovered independent work rather than replaying these cases.
+
+## D-511 - Preserve complete financial snapshots after the Home revision migration
+
+Hosted D-509 CI has1331 failed/3875 successful/25 skipped cases; the shared test inventories
+reject its known migration-owned HomeFinancialRevision table. Explicitly include that table
+while retaining unknown-table refusal and exact complete no-write/rollback/repeated-action
+comparisons. Only accepted financial round trips or existing intentionally omitted financial
+writes allow a validated opaque-token difference. All financial rows/links/receipts stay compared.
+Two strict test-project builds have zero warnings/errors; retain1275 initial successes, repair
+59 newly reachable token expectations and pass69 focused continuation cases, including three
+new real-SQLite oracle guards. All1337 distinct selected cases now have successful receipts;
+this is not a whole-suite rerun. Production code/migration/APK and phone data remain D-509.
+A new exact-head hosted result remains pending at commit creation. Security/stability/performance/
+accessibility/iOS/provider/Store/release acceptance stays separate. Evidence: [CI snapshot oracles](quality/home-revision-ci-oracles.md).

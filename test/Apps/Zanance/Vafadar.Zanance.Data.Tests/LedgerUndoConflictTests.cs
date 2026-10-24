@@ -1,3 +1,4 @@
+using Vafadar.Zanance.Testing;
 using System.Text.Json;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -66,7 +67,7 @@ public sealed class LedgerUndoConflictTests : IDisposable
     {
         var f = await FixtureAsync(); var before = await SnapshotAsync(f.Services); var batch = await f.Store.DeleteEntryAsync(f.Original.Id, Ct);
         batch[0].Amount = 2000; batch[0].Tags.Add("changed"); var enumeration = batch.Single(); enumeration.Title = "Changed caller copy";
-        await f.Store.RestoreEntriesAsync(batch, Ct); Assert.Equal(before, await SnapshotAsync(f.Services));
+        await f.Store.RestoreEntriesAsync(batch, Ct); FinancialSnapshotAssert.EqualAfterWrites(before, await SnapshotAsync(f.Services));
     }
     [Theory]
     [InlineData("note")]
@@ -143,7 +144,7 @@ public sealed class LedgerUndoConflictTests : IDisposable
             Assert.True((await f.Store.SaveEntryAsync(existing, Ct)).Succeeded); var before = await SnapshotAsync(f.Services);
             await Assert.ThrowsAsync<InvalidOperationException>(() => f.Store.RestoreEntriesAsync(batch, Ct)); Assert.Equal(before, await SnapshotAsync(f.Services));
         }
-        else { await f.Store.RestoreEntriesAsync(batch, Ct); Assert.Equal(original, await SnapshotAsync(f.Services)); }
+        else { await f.Store.RestoreEntriesAsync(batch, Ct); FinancialSnapshotAssert.EqualAfterWrites(original, await SnapshotAsync(f.Services)); }
     }
 
     [Fact]
@@ -177,7 +178,7 @@ public sealed class LedgerUndoConflictTests : IDisposable
         }
         // Keep the complete no-write comparison, including every newly migrated private table.
         Assert.Equal(db.Model.GetEntityTypes().Select(entity => entity.GetTableName()).OfType<string>()
-            .Append("__EFMigrationsHistory").Append("__EFMigrationsLock").Distinct().Order(StringComparer.Ordinal), tables.Order(StringComparer.Ordinal)); var all = new Dictionary<string, List<string>>();
+            .Append("HomeFinancialRevision").Append("__EFMigrationsHistory").Append("__EFMigrationsLock").Distinct().Order(StringComparer.Ordinal), tables.Order(StringComparer.Ordinal)); var all = new Dictionary<string, List<string>>();
         foreach (var table in tables)
         {
             if (omitEntries && table == "Entries") continue;

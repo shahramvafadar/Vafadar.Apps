@@ -1,3 +1,4 @@
+using Vafadar.Zanance.Testing;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -109,7 +110,7 @@ public sealed class BudgetActionsFlowTests
         Assert.Equal(s.Source.AccountIds, copy.AccountIds); Assert.Equal(s.Source.CategoryLimits.Select(l => l.Limit), copy.CategoryLimits.Select(l => l.Limit));
         Assert.Equal(period == BudgetPeriod.Month ? (2026, 11) : (0, 0), (copy.Year, copy.Month));
         Assert.Equal(period == BudgetPeriod.Month ? default : BudgetPeriods.Step(period, s.Source.PeriodStart, 1), copy.PeriodStart);
-        Assert.Equal(other, await NonBudgetsAsync(f)); Assert.True(s.Actions.CanInteract);
+        FinancialSnapshotAssert.EqualAfterWrites(other, await NonBudgetsAsync(f)); Assert.True(s.Actions.CanInteract);
     }
 
     [Theory]

@@ -1,3 +1,4 @@
+using Vafadar.Zanance.Testing;
 using System.Text.Json;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -102,7 +103,7 @@ public sealed class RecoveryWritePolicyTests : IDisposable
         var f = await FixtureAsync();
         for (var i = 0; i < 4; i++) await f.Store.SaveAccountAsync(new() { Name = "Over-quota " + i, CurrencyCode = "EUR", OpeningDate = Day }, Ct);
         if (enabled) f.Enable(shared: expiredHost, host: !expiredHost);
-        var before = await SnapshotAsync(f.Provider); var detail = f.Detail(); var choices = await f.ChoicesAsync([detail]);
+        var before = await SnapshotAsync(f.Provider, financialRestoration: true); var detail = f.Detail(); var choices = await f.ChoicesAsync([detail]);
         var events = 0; f.Store.Changed += (_, _) => events++;
         var result = await f.Store.ImportAsync([detail], choices, Ct); Assert.Null(result.Conflict); Assert.Empty(result.Errors);
         Assert.Equal(1, result.Imported); Assert.Equal(7500, (await f.Store.GetEntryAsync(f.Aggregate.Id, Ct))!.Amount);
@@ -110,7 +111,7 @@ public sealed class RecoveryWritePolicyTests : IDisposable
         Assert.Equal(1, events);
         var restarted = Provider(f.Path, f.Source).GetRequiredService<ZananceStore>();
         Assert.False((await restarted.TryUndoImportAsync(result.BatchId!.Value, Ct)).Conflict);
-        Assert.Equal(before, await SnapshotAsync(f.Provider));
+        Assert.Equal(before, await SnapshotAsync(f.Provider, financialRestoration: true));
         Assert.Equal(5, (await f.Store.GetAccountsAsync(cancellationToken: Ct)).Count);
     }
 
@@ -354,7 +355,7 @@ public sealed class RecoveryWritePolicyTests : IDisposable
         public Task WriteAsync(Stream destination, CancellationToken cancellationToken) => Task.CompletedTask;
         public Task RestoreAsync(Stream source, CancellationToken cancellationToken) => Task.CompletedTask;
     }
-    private static async Task<string> SnapshotAsync(ServiceProvider provider)
+    private static async Task<string> SnapshotAsync(ServiceProvider provider, bool financialRestoration = false)
     {
         await using var db = await provider.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
         await db.Database.OpenConnectionAsync(Ct); var connection = db.Database.GetDbConnection(); var tables = new List<string>();
@@ -376,7 +377,8 @@ public sealed class RecoveryWritePolicyTests : IDisposable
             }
             rows.Sort(StringComparer.Ordinal); result[table] = rows;
         }
-        return JsonSerializer.Serialize(result);
+        var snapshot = JsonSerializer.Serialize(result);
+        return financialRestoration ? FinancialSnapshotAssert.NormalizeAfterWrites(snapshot) : snapshot;
     }
 
     /// <summary>Cached exact-scope facts plus a rendezvous before actual writer acquisition, never fake recovery rows.</summary>

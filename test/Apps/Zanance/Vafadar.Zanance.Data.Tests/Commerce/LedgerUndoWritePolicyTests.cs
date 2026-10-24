@@ -1,3 +1,4 @@
+using Vafadar.Zanance.Testing;
 using System.Text.Json;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -73,7 +74,7 @@ public sealed class LedgerUndoWritePolicyTests : IDisposable
         Assert.Equal(attachment.Id, Assert.Single(await f.Store.GetAttachmentsAsync(f.Original.Id, Ct)).Id);
         await f.Store.RestoreEntriesAsync(deleted, Ct);
         Assert.Equal(attachment.Id, Assert.Single(await f.Store.GetAttachmentsAsync(f.Original.Id, Ct)).Id);
-        Assert.Equal(before, await SnapshotAsync(f.Provider));
+        FinancialSnapshotAssert.EqualAfterWrites(before, await SnapshotAsync(f.Provider));
     }
 
     [Fact]
@@ -87,7 +88,7 @@ public sealed class LedgerUndoWritePolicyTests : IDisposable
         Assert.Equal(before, await SnapshotAsync(f.Provider)); await SqlAsync(f, "DROP TRIGGER RejectUndo");
         await f.Store.RestoreEntriesAsync(deleted, Ct);
         Assert.Equal(refund.Id, Assert.Single(await f.Store.GetRefundsAsync(f.Original.Id, Ct)).Id);
-        Assert.Equal(original, await SnapshotAsync(f.Provider));
+        FinancialSnapshotAssert.EqualAfterWrites(original, await SnapshotAsync(f.Provider));
     }
 
     [Fact]
@@ -102,7 +103,7 @@ public sealed class LedgerUndoWritePolicyTests : IDisposable
         var retained = await SnapshotAsync(f.Provider); var deleted = await f.Store.DeleteEntryAsync(f.Original.Id, Ct);
         await f.Store.RestoreEntriesAsync(deleted, Ct);
         Assert.Null((await f.Store.GetEntryAsync(refund.Id, Ct))!.RefundOfId);
-        Assert.Equal(retained, await SnapshotAsync(f.Provider));
+        FinancialSnapshotAssert.EqualAfterWrites(retained, await SnapshotAsync(f.Provider));
     }
 
     [Fact]
@@ -122,9 +123,9 @@ public sealed class LedgerUndoWritePolicyTests : IDisposable
         var otherOriginal = await SnapshotAsync(f.Provider); var otherDeleted = await f.Store.DeleteEntryAsync(f.Original.Id, Ct);
         await f.Store.RestoreEntriesAsync(otherDeleted, Ct);
         Assert.Null((await f.Store.GetEntryAsync(refund.Id, Ct))!.RefundOfId);
-        Assert.Equal(otherOriginal, await SnapshotAsync(f.Provider));
+        FinancialSnapshotAssert.EqualAfterWrites(otherOriginal, await SnapshotAsync(f.Provider));
         f.Provider.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>().MoveTo(f.Path); f.Source.ExpectedPath = f.Path;
-        await f.Store.RestoreEntriesAsync(deleted, Ct); Assert.Equal(original, await SnapshotAsync(f.Provider));
+        await f.Store.RestoreEntriesAsync(deleted, Ct); FinancialSnapshotAssert.EqualAfterWrites(original, await SnapshotAsync(f.Provider));
     }
 
     [Theory]
@@ -140,7 +141,7 @@ public sealed class LedgerUndoWritePolicyTests : IDisposable
         var events = 0; f.Store.Changed += (_, _) => events++;
         var deleted = await f.Store.DeleteEntriesAsync([f.Original.Id, f.Original.Id], Ct); Assert.Single(deleted);
         Assert.Null((await f.Store.GetEntryAsync(refund.Id, Ct))!.RefundOfId);
-        await f.Store.RestoreEntriesAsync(deleted, Ct); Assert.Equal(before, await SnapshotAsync(f.Provider)); Assert.Equal(2, events);
+        await f.Store.RestoreEntriesAsync(deleted, Ct); FinancialSnapshotAssert.EqualAfterWrites(before, await SnapshotAsync(f.Provider)); Assert.Equal(2, events);
         await f.Store.RestoreEntriesAsync(deleted, Ct); Assert.Equal(2, events);
     }
 
@@ -226,7 +227,7 @@ public sealed class LedgerUndoWritePolicyTests : IDisposable
         Assert.Equal(before, await SnapshotAsync(f.Provider)); Assert.Equal(0, events);
         await SqlAsync(f, "DROP TRIGGER FailLedgerUndo"); await OperationAsync();
         if (!restore) await f.Store.RestoreEntriesAsync(deleted, Ct);
-        Assert.Equal(original, await SnapshotAsync(f.Provider)); Assert.Equal(restore ? 1 : 2, events);
+        FinancialSnapshotAssert.EqualAfterWrites(original, await SnapshotAsync(f.Provider)); Assert.Equal(restore ? 1 : 2, events);
     }
 
     [Theory]
@@ -253,7 +254,7 @@ public sealed class LedgerUndoWritePolicyTests : IDisposable
         await f.Store.SaveEntryAsync(refund, Ct); var before = await SnapshotAsync(f.Provider); f.Enable();
         var deleted = await f.Store.DeleteEntriesAsync([parts[1].Id, parts[1].Id], Ct); Assert.Equal(2, deleted.Count);
         Assert.Equal(refund.Id, Assert.Single(await f.Store.GetEntriesAsync(cancellationToken: Ct)).Id);
-        await f.Store.RestoreEntriesAsync(deleted, Ct); Assert.Equal(before, await SnapshotAsync(f.Provider));
+        await f.Store.RestoreEntriesAsync(deleted, Ct); FinancialSnapshotAssert.EqualAfterWrites(before, await SnapshotAsync(f.Provider));
     }
 
     [Theory]
@@ -297,7 +298,7 @@ public sealed class LedgerUndoWritePolicyTests : IDisposable
         }
         // Keep the complete no-write comparison, including every newly migrated private table.
         Assert.Equal(db.Model.GetEntityTypes().Select(entity => entity.GetTableName()).OfType<string>()
-            .Append("__EFMigrationsHistory").Append("__EFMigrationsLock").Distinct().Order(StringComparer.Ordinal), tables.Order(StringComparer.Ordinal)); var all = new Dictionary<string, List<string>>();
+            .Append("HomeFinancialRevision").Append("__EFMigrationsHistory").Append("__EFMigrationsLock").Distinct().Order(StringComparer.Ordinal), tables.Order(StringComparer.Ordinal)); var all = new Dictionary<string, List<string>>();
         foreach (var table in tables)
         {
             if (omitEntries && table == "Entries") continue;

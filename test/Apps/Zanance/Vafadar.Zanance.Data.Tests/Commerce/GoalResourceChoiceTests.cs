@@ -343,7 +343,7 @@ public sealed class GoalResourceChoiceTests : IDisposable
         }
         // Keep the complete no-write comparison, including every newly migrated private table.
         Assert.Equal(db.Model.GetEntityTypes().Select(entity => entity.GetTableName()).OfType<string>()
-            .Append("__EFMigrationsHistory").Append("__EFMigrationsLock").Distinct().Order(StringComparer.Ordinal), tables.Order(StringComparer.Ordinal)); var all = new SortedDictionary<string, List<string>>();
+            .Append("HomeFinancialRevision").Append("__EFMigrationsHistory").Append("__EFMigrationsLock").Distinct().Order(StringComparer.Ordinal), tables.Order(StringComparer.Ordinal)); var all = new SortedDictionary<string, List<string>>();
         foreach (var table in tables.Where(table => choices || table != "ResourceSelections"))
         {
             using var command = connection.CreateCommand(); command.CommandText = "SELECT * FROM \"" + table + "\"";

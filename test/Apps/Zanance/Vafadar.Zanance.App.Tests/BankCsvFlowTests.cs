@@ -1,3 +1,4 @@
+using Vafadar.Zanance.Testing;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -77,7 +78,7 @@ public sealed class BankCsvFlowTests
         var reopened = new ImportExportViewModel(f.Store, f.Translator, new DateFormatter(f.Localization), f.Localization, f.Time,
             f.Services.GetRequiredService<HoldingStore>(), files, f.Platform);
         await reopened.LoadAsync(); f.Platform.Confirmations.Enqueue(true); await reopened.UndoCommand.ExecuteAsync(Assert.Single(reopened.Batches));
-        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct)); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct)); FinancialSnapshotAssert.EqualAfterWrites(before, await GoalChooserFlowTests.SnapshotAsync(f));
     }
 
     [Theory][InlineData("BtgWaehr", "USD")][InlineData("Storno", "J")][InlineData("ID", "100")][InlineData("Betrag", "12,345")][InlineData("BuchDatum", "31.02.2026")]

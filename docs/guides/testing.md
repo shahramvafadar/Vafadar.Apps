@@ -278,3 +278,20 @@ before initial attachment. Require actual callbacks in the second native window,
 while detached/retired and both roots alive. Debug/Main-identity builds refuse. Preserve successful
 cases and original Main data; remove only the newly owned helper and hash-matched XML captures.
 See its README and the app's quality/toolbar-observer-transitions.md for exact scope and evidence.
+
+## D-511 complete snapshots and opaque Home revisions
+
+HomeFinancialRevision is a known migration-owned table, not an EF entity. Include it explicitly
+alongside the modeled tables and migration history/lock in exact SQLite inventory assertions;
+never weaken the assertion to allow every unknown table. Ordinary complete no-write snapshots
+retain its actual bytes. Only explicit successful financial-write/restoration comparisons may use
+the shared test-only FinancialSnapshotAssert after validating its singleton row, Id and N-format
+Guid. Keep complete financial fields, all other tables and existing timestamp boundaries. Capture
+the actual post-restore snapshot for following repeated-Undo/read-only assertions.
+
+Retain focused successes. The D-509 log supplies73 classes' failed method selectors; the first
+selection passes1275/1334, followed by69 passing cases after correcting the59 remaining token
+expectations and checking three new refusal guards. The1337 distinct successful selected cases
+are not a full-suite count. Direct DLL selection uses -method and -result-xml; reject absent or
+empty reports, preserve failures, and clean only owned test output after the runners exit.
+[Evidence](../../src/Apps/Zanance/docs/quality/home-revision-ci-oracles.md).

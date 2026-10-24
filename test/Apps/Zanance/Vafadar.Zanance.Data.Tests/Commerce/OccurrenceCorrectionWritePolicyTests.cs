@@ -1,3 +1,4 @@
+using Vafadar.Zanance.Testing;
 using System.Text.Json;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -625,7 +626,7 @@ public sealed class OccurrenceCorrectionWritePolicyTests : IDisposable
         Assert.Equal(receipt.Data, Assert.IsType<EntryAttachment>(await f.Store.GetAttachmentAsync(receipt.Id, Ct)).Data);
         await f.Store.RestoreEntriesAsync(deleted, Ct);
         Assert.True(Assert.Single(await seed.Plans.GetStatesAsync(seed.Plan.Id, Ct)).AutoPostSuppressed);
-        Assert.Equal(before, await SnapshotAsync(f.Provider, ignoreAutoPostSuppressed: true));
+        FinancialSnapshotAssert.EqualAfterWrites(before, await SnapshotAsync(f.Provider, ignoreAutoPostSuppressed: true));
     }
 
     [Fact]
@@ -657,7 +658,7 @@ public sealed class OccurrenceCorrectionWritePolicyTests : IDisposable
         }
         // Keep the complete no-write comparison, including every newly migrated private table.
         Assert.Equal(db.Model.GetEntityTypes().Select(entity => entity.GetTableName()).OfType<string>()
-            .Append("__EFMigrationsHistory").Append("__EFMigrationsLock").Distinct().Order(StringComparer.Ordinal), tables.Order(StringComparer.Ordinal)); var all = new Dictionary<string, List<string>>();
+            .Append("HomeFinancialRevision").Append("__EFMigrationsHistory").Append("__EFMigrationsLock").Distinct().Order(StringComparer.Ordinal), tables.Order(StringComparer.Ordinal)); var all = new Dictionary<string, List<string>>();
         foreach (var table in tables)
         {
             using var command = connection.CreateCommand(); command.CommandText = "SELECT * FROM \"" + table + "\"";

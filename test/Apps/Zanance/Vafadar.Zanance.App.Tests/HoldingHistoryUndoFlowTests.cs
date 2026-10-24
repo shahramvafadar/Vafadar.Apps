@@ -1,3 +1,4 @@
+using Vafadar.Zanance.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Vafadar.Localization.Formatting;
@@ -65,7 +66,7 @@ public sealed class HoldingHistoryUndoFlowTests
         Assert.Equal(r.Refund.Id, kept.Id); Assert.Null(kept.RefundOfId); Assert.Equal(150, kept.Amount);
         await r.Holdings.RestoreAsync(result.Removed!, Ct);
         Assert.Equal(r.Fee.Id, (await f.Store.GetEntriesAsync(cancellationToken: Ct)).Single(e => e.Id == r.Refund.Id).RefundOfId);
-        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        FinancialSnapshotAssert.EqualAfterWrites(before, await GoalChooserFlowTests.SnapshotAsync(f));
     }
     [Fact]
     public async Task Retained_short_undo_cannot_be_inserted_into_another_file_with_the_same_original_ids()
@@ -169,10 +170,11 @@ public sealed class HoldingHistoryUndoFlowTests
         await editor.UndoCommand.ExecuteAsync(null); r.Holdings.Changed -= Fail;
         Assert.True(editor.UndoCommitted); Assert.False(editor.HasUndo); Assert.False(editor.CanUndo);
         Assert.Equal(f.Translator["Holding_HistoryRestoredRefresh"], editor.Error);
-        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f)); await editor.UndoCommand.ExecuteAsync(null);
-        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        var restored = await GoalChooserFlowTests.SnapshotAsync(f);
+        FinancialSnapshotAssert.EqualAfterWrites(before, restored); await editor.UndoCommand.ExecuteAsync(null);
+        Assert.Equal(restored, await GoalChooserFlowTests.SnapshotAsync(f));
         await editor.RefreshCommand.ExecuteAsync(null); Assert.True(editor.CanOpen); Assert.Null(editor.Error);
-        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        Assert.Equal(restored, await GoalChooserFlowTests.SnapshotAsync(f));
     }
     [Fact]
     public async Task Failed_undo_persistence_keeps_the_original_offer_and_retries_only_the_uncommitted_write()
@@ -185,7 +187,7 @@ public sealed class HoldingHistoryUndoFlowTests
         Assert.Equal(deleted, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.True(editor.HasUndo); Assert.True(editor.CanUndo);
         Assert.False(editor.UndoCommitted); Assert.Equal(f.Translator["Holding_HistoryUndoFailed"], editor.Error);
         await SqlAsync(f, "DROP TRIGGER RejectHoldingUndo;"); await editor.UndoCommand.ExecuteAsync(null);
-        Assert.True(editor.UndoCommitted); Assert.False(editor.HasUndo); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        Assert.True(editor.UndoCommitted); Assert.False(editor.HasUndo); FinancialSnapshotAssert.EqualAfterWrites(before, await GoalChooserFlowTests.SnapshotAsync(f));
     }
     [Fact]
     public async Task Known_delete_and_undo_remain_accepted_when_only_their_following_readback_fails()
@@ -197,10 +199,11 @@ public sealed class HoldingHistoryUndoFlowTests
         Assert.True(editor.DeleteCommitted); Assert.True(editor.CanUndo); Assert.Equal(f.Translator["Holding_HistoryDeletedRefresh"], editor.Error);
         await editor.UndoCommand.ExecuteAsync(null);
         Assert.True(editor.UndoCommitted); Assert.False(editor.CanUndo); Assert.Equal(f.Translator["Holding_HistoryRestoredRefresh"], editor.Error);
-        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        var restored = await GoalChooserFlowTests.SnapshotAsync(f);
+        FinancialSnapshotAssert.EqualAfterWrites(before, restored);
         editor.RefreshView = async () => await r.Holdings.ReadPriceReviewAsync(r.Type.Id, Ct);
         await editor.RefreshCommand.ExecuteAsync(null);
-        Assert.Null(editor.Error); Assert.True(editor.CanOpen); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        Assert.Null(editor.Error); Assert.True(editor.CanOpen); Assert.Equal(restored, await GoalChooserFlowTests.SnapshotAsync(f));
     }
     [Theory]
     [InlineData("refund")]
@@ -255,7 +258,7 @@ public sealed class HoldingHistoryUndoFlowTests
         Assert.Equal(deleted, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.True(editor.HasUndo); Assert.True(editor.CanUndo);
         Assert.False(editor.UndoCommitted); Assert.Equal(f.Translator["Holding_HistoryUndoFailed"], editor.Error);
         await editor.RefreshCommand.ExecuteAsync(null); await editor.UndoCommand.ExecuteAsync(null);
-        Assert.True(editor.UndoCommitted); Assert.False(editor.HasUndo); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        Assert.True(editor.UndoCommitted); Assert.False(editor.HasUndo); FinancialSnapshotAssert.EqualAfterWrites(before, await GoalChooserFlowTests.SnapshotAsync(f));
     }
     [Fact]
     public async Task Consumed_receipt_never_rearms_after_repeated_restore_attempts()
@@ -276,7 +279,7 @@ public sealed class HoldingHistoryUndoFlowTests
         await Assert.ThrowsAsync<HoldingEventReviewChangedException>(() => r.Holdings.RestoreReviewedHoldingAsync(removed, () => ++calls == 1, Ct));
         Assert.Equal(2, calls); Assert.Equal(deleted, await GoalChooserFlowTests.SnapshotAsync(f));
         await r.Holdings.RestoreReviewedHoldingAsync(removed, () => true, Ct);
-        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        FinancialSnapshotAssert.EqualAfterWrites(before, await GoalChooserFlowTests.SnapshotAsync(f));
     }
     [Fact]
     public async Task Real_advancing_audit_time_preserves_original_creation_money_and_refund_metadata()

@@ -1,3 +1,4 @@
+using Vafadar.Zanance.Testing;
 using System.Text.Json;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -140,7 +141,7 @@ public sealed class SelectedAccountWritePolicyTests : IDisposable
         await f.Store.AddAttachmentAsync(new() {EntryId=original.Id,FileName="owned.txt",ContentType="text/plain",Data=[1,2,3]}, Ct);
         f.Select(0,1,2); var before = await SnapshotAsync(f.Provider); var deleted = await f.Store.DeleteEntryAsync(original.Id,Ct);
         f.Select(1,2); await f.Store.RestoreEntriesAsync(deleted,Ct);
-        Assert.Equal(before, await SnapshotAsync(f.Provider)); Assert.Equal(2,f.Access.Current.AccountSelection!.SelectedIds.Count);
+        FinancialSnapshotAssert.EqualAfterWrites(before, await SnapshotAsync(f.Provider)); Assert.Equal(2,f.Access.Current.AccountSelection!.SelectedIds.Count);
     }
 
     [Theory]
@@ -383,7 +384,7 @@ public sealed class SelectedAccountWritePolicyTests : IDisposable
         }
         // Keep the complete no-write comparison, including every newly migrated private table.
         Assert.Equal(db.Model.GetEntityTypes().Select(entity => entity.GetTableName()).OfType<string>()
-            .Append("__EFMigrationsHistory").Append("__EFMigrationsLock").Distinct().Order(StringComparer.Ordinal), tables.Order(StringComparer.Ordinal)); var all = new Dictionary<string, List<string>>();
+            .Append("HomeFinancialRevision").Append("__EFMigrationsHistory").Append("__EFMigrationsLock").Distinct().Order(StringComparer.Ordinal), tables.Order(StringComparer.Ordinal)); var all = new Dictionary<string, List<string>>();
         foreach (var table in tables)
         {
             using var command = connection.CreateCommand(); command.CommandText = "SELECT * FROM \"" + table + "\"";

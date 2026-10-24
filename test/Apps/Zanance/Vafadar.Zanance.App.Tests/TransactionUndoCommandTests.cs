@@ -1,3 +1,4 @@
+using Vafadar.Zanance.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Zanance.Core.Accounts;
@@ -115,7 +116,7 @@ public sealed class TransactionUndoCommandTests
         Assert.IsType<DbUpdateException>(Assert.Single(f.Platform.Failures)); Assert.True(undo.CanUndo); Assert.Equal(TimeSpan.FromSeconds(6), undo.Remaining);
         Assert.Equal(0, refreshed); Assert.Equal(deleted, await SnapshotAsync(f));
         await db.Database.ExecuteSqlRawAsync("DROP TRIGGER RejectBoundUndo", Ct); await action.UndoDeleteCommand.ExecuteAsync(null);
-        Assert.False(undo.CanUndo); Assert.Equal(1, refreshed); Assert.Single(f.Platform.Failures); Assert.Equal(original, await SnapshotAsync(f, entry.Id, refund.Id));
+        Assert.False(undo.CanUndo); Assert.Equal(1, refreshed); Assert.Single(f.Platform.Failures); FinancialSnapshotAssert.EqualAfterWrites(original, await SnapshotAsync(f, entry.Id, refund.Id));
         Assert.Equal(refund.Id, Assert.Single(await f.Store.GetRefundsAsync(entry.Id, Ct)).Id);
     }
 
@@ -131,7 +132,7 @@ public sealed class TransactionUndoCommandTests
         }
         // Keep the complete no-write comparison, including every newly migrated private table.
         Assert.Equal(db.Model.GetEntityTypes().Select(entity => entity.GetTableName()).OfType<string>()
-            .Append("__EFMigrationsHistory").Append("__EFMigrationsLock").Distinct().Order(StringComparer.Ordinal), tables.Order(StringComparer.Ordinal)); var result = new Dictionary<string, List<string>>();
+            .Append("HomeFinancialRevision").Append("__EFMigrationsHistory").Append("__EFMigrationsLock").Distinct().Order(StringComparer.Ordinal), tables.Order(StringComparer.Ordinal)); var result = new Dictionary<string, List<string>>();
         foreach (var table in tables)
         {
             using var command = connection.CreateCommand(); command.CommandText = "SELECT * FROM \"" + table + "\"";

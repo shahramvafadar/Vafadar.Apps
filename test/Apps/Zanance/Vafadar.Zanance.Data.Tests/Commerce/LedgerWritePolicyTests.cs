@@ -1,3 +1,4 @@
+using Vafadar.Zanance.Testing;
 using System.Text.Json;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -114,13 +115,13 @@ public sealed partial class LedgerWritePolicyTests : IDisposable
     [Fact]
     public async Task Inactive_split_and_join_preserve_complete_original_event_and_all_other_tables()
     {
-        var f = await FixtureAsync(); var before = await SnapshotAsync(f.Provider); var (parts, delete) = Split(f);
+        var f = await FixtureAsync(); var before = await SnapshotAsync(f.Provider, financialRestoration: true); var (parts, delete) = Split(f);
         Assert.True((await f.Store.SaveEntriesAsync(parts, delete, parts[0].Id, Ct)).Succeeded);
         var stored = await f.Store.GetGroupAsync(parts[0].GroupId!.Value, Ct); Assert.Equal(10000, stored.Sum(e => e.Amount));
         Assert.All(stored, e => { Assert.Equal(f.Original.Title, e.Title); Assert.Equal(f.Original.Note, e.Note); Assert.Equal(f.Original.Tags, e.Tags); });
         var (joined, removed) = EntryActions.Join(stored.OrderBy(e => e.Id != f.Original.Id).ToList());
         Assert.True((await f.Store.SaveEntriesAsync([joined], removed, joined.Id, Ct)).Succeeded);
-        Assert.Equal(before, await SnapshotAsync(f.Provider));
+        Assert.Equal(before, await SnapshotAsync(f.Provider, financialRestoration: true));
     }
 
     [Theory]
@@ -455,7 +456,41 @@ public sealed partial class LedgerWritePolicyTests : IDisposable
         await db.Database.ExecuteSqlRawAsync(sql, Ct);
     }
 
-    private static async Task<string> SnapshotAsync(ServiceProvider provider, bool omitEntries = false)
+    [Fact]
+    [Trait("AT", "AT-511")]
+    public async Task Restoration_comparison_still_rejects_changed_financial_rows()
+    {
+        var f = await FixtureAsync(); var before = await SnapshotAsync(f.Provider);
+        var changed = f.Original.Copy(); changed.Amount++;
+        Assert.True((await f.Store.SaveEntryAsync(changed, Ct)).Succeeded);
+        var after = await SnapshotAsync(f.Provider);
+        Assert.NotEqual(before, after);
+        Assert.ThrowsAny<Xunit.Sdk.XunitException>(() => FinancialSnapshotAssert.EqualAfterWrites(before, after));
+    }
+
+    [Fact]
+    [Trait("AT", "AT-511")]
+    public async Task Restoration_comparison_refuses_a_malformed_revision_without_masking_it()
+    {
+        var f = await FixtureAsync(); var before = await SnapshotAsync(f.Provider);
+        await using var db = await f.Provider.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
+        await db.Database.ExecuteSqlRawAsync("UPDATE HomeFinancialRevision SET Revision='gggggggggggggggggggggggggggggggg' WHERE Id=1", Ct);
+        var after = await SnapshotAsync(f.Provider);
+        Assert.NotEqual(before, after);
+        Assert.ThrowsAny<Xunit.Sdk.XunitException>(() => FinancialSnapshotAssert.EqualAfterWrites(before, after));
+    }
+
+    [Fact]
+    [Trait("AT", "AT-511")]
+    public async Task Complete_no_write_inventory_still_refuses_an_unknown_table()
+    {
+        var f = await FixtureAsync();
+        await using var db = await f.Provider.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
+        await db.Database.ExecuteSqlRawAsync("CREATE TABLE UnexpectedPrivateData (Id INTEGER PRIMARY KEY)", Ct);
+        await Assert.ThrowsAnyAsync<Xunit.Sdk.XunitException>(() => SnapshotAsync(f.Provider));
+    }
+
+    private static async Task<string> SnapshotAsync(ServiceProvider provider, bool omitEntries = false, bool financialRestoration = false)
     {
         await using var db = await provider.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
         await db.Database.OpenConnectionAsync(Ct); var connection = db.Database.GetDbConnection(); var tables = new List<string>();
@@ -466,7 +501,7 @@ public sealed partial class LedgerWritePolicyTests : IDisposable
         }
         // Keep the complete no-write comparison, including every newly migrated private table.
         Assert.Equal(db.Model.GetEntityTypes().Select(entity => entity.GetTableName()).OfType<string>()
-            .Append("__EFMigrationsHistory").Append("__EFMigrationsLock").Distinct().Order(StringComparer.Ordinal), tables.Order(StringComparer.Ordinal)); var all = new Dictionary<string, List<string>>();
+            .Append("HomeFinancialRevision").Append("__EFMigrationsHistory").Append("__EFMigrationsLock").Distinct().Order(StringComparer.Ordinal), tables.Order(StringComparer.Ordinal)); var all = new Dictionary<string, List<string>>();
         foreach (var table in tables)
         {
             if (omitEntries && table == "Entries") continue;
@@ -480,7 +515,8 @@ public sealed partial class LedgerWritePolicyTests : IDisposable
             }
             rows.Sort(StringComparer.Ordinal); all[table] = rows;
         }
-        return JsonSerializer.Serialize(all);
+        var snapshot = JsonSerializer.Serialize(all);
+        return omitEntries || financialRestoration ? FinancialSnapshotAssert.NormalizeAfterWrites(snapshot) : snapshot;
     }
 
     /// <summary>Synchronous independent cached facts, with coordination before the actual writer wait.</summary>

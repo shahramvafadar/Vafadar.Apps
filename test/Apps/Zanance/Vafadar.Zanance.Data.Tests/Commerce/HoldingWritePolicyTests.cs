@@ -1,3 +1,4 @@
+using Vafadar.Zanance.Testing;
 using System.Text.Json;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -78,7 +79,7 @@ public sealed partial class HoldingWritePolicyTests : IDisposable
             Source.Current = new(Path, Context(plan, shared, member, host));
     }
 
-    private static async Task<string> SnapshotAsync(ServiceProvider provider)
+    private static async Task<string> SnapshotAsync(ServiceProvider provider, bool financialRestoration = false)
     {
         await using var db = await provider.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
         await db.Database.OpenConnectionAsync(Ct); var connection = db.Database.GetDbConnection(); var tables = new List<string>();
@@ -100,7 +101,8 @@ public sealed partial class HoldingWritePolicyTests : IDisposable
             }
             rows.Sort(StringComparer.Ordinal); result[table] = rows;
         }
-        return JsonSerializer.Serialize(result);
+        var snapshot = JsonSerializer.Serialize(result);
+        return financialRestoration ? FinancialSnapshotAssert.NormalizeAfterWrites(snapshot) : snapshot;
     }
 
     private static async Task SqlAsync(Fixture f, string sql)
@@ -271,7 +273,7 @@ public sealed partial class HoldingWritePolicyTests : IDisposable
     public async Task Original_undo_receipt_survives_membership_refusal()
     {
         var f = await FixtureAsync(); f.Enable(ProductPlan.Pro, shared: true);
-        var original = await SnapshotAsync(f.Provider);
+        var original = await SnapshotAsync(f.Provider, financialRestoration: true);
         var removed = (await f.Holdings.DeleteEventAsync(f.Opening.Id, Ct)).Removed;
         Assert.NotNull(removed); Assert.NotNull(removed.Receipt);
         f.Enable(ProductPlan.Pro, shared: true, member: false);
@@ -281,7 +283,7 @@ public sealed partial class HoldingWritePolicyTests : IDisposable
         Assert.Equal(deleted, await SnapshotAsync(f.Provider));
         f.Enable(ProductPlan.Pro, shared: true);
         await f.Holdings.RestoreAsync(removed, Ct);
-        Assert.Equal(original, await SnapshotAsync(f.Provider));
+        Assert.Equal(original, await SnapshotAsync(f.Provider, financialRestoration: true));
     }
 
     [Theory]
@@ -377,10 +379,10 @@ public sealed partial class HoldingWritePolicyTests : IDisposable
     public async Task Free_or_expired_host_can_delete_and_undo_the_complete_original_group(bool expiredHost)
     {
         var f = await FixtureAsync(); var item = f.Event(); await f.Holdings.SaveEventAsync(item, [f.Payment()], true, Ct);
-        var before = await SnapshotAsync(f.Provider); f.Enable(shared: expiredHost, host: !expiredHost);
+        var before = await SnapshotAsync(f.Provider, financialRestoration: true); f.Enable(shared: expiredHost, host: !expiredHost);
         var removed = await f.Holdings.DeleteEventAsync(item.Id, Ct); Assert.NotNull(removed.Removed); Assert.Null(removed.Conflict);
         Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
-        await f.Holdings.RestoreAsync(removed.Removed!, Ct); Assert.Equal(before, await SnapshotAsync(f.Provider));
+        await f.Holdings.RestoreAsync(removed.Removed!, Ct); Assert.Equal(before, await SnapshotAsync(f.Provider, financialRestoration: true));
         await f.Holdings.DeleteValuationAsync(f.Valuation.Id, Ct);
         Assert.DoesNotContain(await f.Holdings.GetValuationsAsync(cancellationToken: Ct), v => v.Id == f.Valuation.Id);
     }

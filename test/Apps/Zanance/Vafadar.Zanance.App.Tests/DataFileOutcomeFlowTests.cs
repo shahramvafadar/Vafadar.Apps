@@ -1,3 +1,4 @@
+using Vafadar.Zanance.Testing;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -115,7 +116,7 @@ public sealed partial class DataFileOutcomeFlowTests
         await vm.ImportCommand.ExecuteAsync(null); Assert.Equal(accepted, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.Equal(1, notified);
         f.Platform.Confirmations.Enqueue(true); await vm.UndoCommand.ExecuteAsync(originalBatch);
         Assert.Equal(f.Translator["Import_UndoDone"], vm.ImportResult); Assert.Equal(f.Translator["Import_UndoFollowUpFailed"], vm.UndoError);
-        Assert.Empty(vm.Batches); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.Equal(2, notified);
+        Assert.Empty(vm.Batches); FinancialSnapshotAssert.EqualAfterWrites(before, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.Equal(2, notified);
         Assert.False(vm.UndoCommand.CanExecute(originalBatch)); await vm.UndoCommand.ExecuteAsync(originalBatch); Assert.Equal(2, notified);
     }
 
@@ -212,7 +213,7 @@ public sealed partial class DataFileOutcomeFlowTests
         Assert.Equal(aggregate.Amount - detail.Amount, after.Single(row => row.Id == aggregate.Id).Amount);
         Assert.Equal(aggregate.Note, after.Single(row => row.Id == aggregate.Id).Note); Assert.Equal(detail.Note, after.Single(row => row.Id == detail.Id).Note);
         f.Platform.Confirmations.Enqueue(true); await vm.UndoCommand.ExecuteAsync(Assert.Single(vm.Batches));
-        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        FinancialSnapshotAssert.EqualAfterWrites(before, await GoalChooserFlowTests.SnapshotAsync(f));
     }
 
     [Fact]
