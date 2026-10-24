@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Checked monthly plan dates on a physical phone in Gregorian, Persian and lunar Hijri calendars, including shorter months and a three-occurrence ending, without posting transactions (D-510).
+
 - Refresh Home before revealing it when ledger, budget, exchange-rate or holding data changed during loading, so an old captured balance is not accepted as current (D-509).
 
 - Verified on a physical Android phone that returning to the same forecast or saved comparison refreshes current amounts while preserving the saved scenario and unsaved assumptions (D-508).

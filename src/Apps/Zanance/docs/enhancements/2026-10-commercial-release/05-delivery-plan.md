@@ -4422,3 +4422,15 @@ its owned profile; it does not claim the failed count as a pass. Strict builds a
 Offline384-AOT APK pass. Main no-reset migration preserves Home979/all141 public tuples/three
 profiles/OS. Evidence: [financial-source revision](../../quality/home-financial-source-revision.md).
 General runtime/performance/accessibility/platform/provider/Store/release gates stay separate.
+
+### D-510 - Original monthly calendar/count acceptance on Samsung
+
+Three distinct original fixed1EUR monthly definitions on one new zero-opening fictitious profile
+qualify Gregorian31/30/31, Persian31/30/30 and Hijri30/29/30 previews, named rule calendars and an
+ending count3. Each Save occurs once, Reminder/automatic recording remain off and All dates/All
+types history is empty. One ordinary Main/profile reopen retains all three original stored rows
+and Home0 without financial replay. Delete only the inactive fresh profile with both original
+confirmations; original Main12153/Home979/all141 public tuples/three profiles/OS/D-509 APK match.
+Remove154 hash-matched owned XMLs; no new managed-test count, build, existing successful cohort or
+financial posting is repeated. Evidence: [monthly calendar anchors](../../quality/physical-monthly-calendar-anchors.md).
+Skip/date-end/custom/holiday/timed/runtime/accessibility/iOS/provider/Store/release gates stay separate.
