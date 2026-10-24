@@ -9159,3 +9159,16 @@ installed-code digests pass; zero financial saves, no Main/phone/private-key acc
 helpers/owned AVDs, clean isolated output and61098430bytes of unused copies, preserving signed code.
 Full camera/corpus/saved-flow/Persian-image/iOS/ARM64/stability/accessibility/provider/Store/release
 qualification remains separate. See [exact original runtime evidence](../quality/android-receipt-runtime-compatibility.md).
+
+
+### D-527 - Original protected Home diagnostic status
+
+The independent Windows home-stages mode separates actual complete Home reading from final source
+validation on retained D-523 reference/tenfold generations. Four observations preserve complete
+original packets and exact portable schema/typed rows with unchanged financial revision, zero
+financial writes and no fixture recreation. Tenfold read463.71/570.91ms and validation146.28/123.70ms
+are local store boundaries, not Android/UI/cold timings or a product speedup. Strict independent
+build and missing-fixture refusal pass; no new managed cases or unchanged native suite/APK replay.
+Physical D-526 preserves its original opening900EUR/empty ledger and is qualified separately.
+Android projection/read diagnosis, whole-Home/two-second, ANR/accessibility/platform/external gates
+remain open. See [exact observations and limits](../quality/protected-home-stage-diagnosis.md).

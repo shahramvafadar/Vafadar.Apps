@@ -103,3 +103,20 @@ This skips reference and refuses an already existing tenfold folder. It cannot a
 accepted writes after a later tenfold failure; use verification-only mode for that source. The original
 failure, old timings and new continuation receipts remain distinct. Hosted failure attribution requires
 its actual logs; a locally reproduced snapshot failure alone is not that attribution.
+
+
+## D-527 - Read-only original Home stage diagnosis
+
+After building, use explicit `home-stages` with the existing marked reference and tenfold root:
+
+```powershell
+dotnet run --project eng/benchmarks/Zanance.ProtectedPerformance -c Release --no-build -- artifacts/protected-retained-run home-stages
+```
+
+Both shapes must already exist. Two observations per shape separate the actual complete read and
+final validator; full packet serialization/equality remains outside both timers. Complete before/
+after portable schema and typed rows, including the financial revision, must remain unchanged.
+No Save/Delete/search, seed, original older read sequence, UI or native rendering runs. Each run
+writes its own home-stages JSON; first-for-shape is not process/OS cold. Run only for a relevant
+unresolved diagnosis or after a relevant change, not to repeat already accepted checks.
+See [actual evidence and limits](../../../src/Apps/Zanance/docs/quality/protected-home-stage-diagnosis.md).

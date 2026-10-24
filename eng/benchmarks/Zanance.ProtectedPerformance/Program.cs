@@ -10,16 +10,17 @@ using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Performance;
 
-if (!OperatingSystem.IsWindows() || args.Length is < 1 or > 2 || (args.Length == 2 && args[1] is not ("resume" or "ledger" or "home" or "verify-retained" or "tenfold")))
-    throw new ArgumentException("Provide a new Windows fictitious output directory, or explicit resume/ledger/home/verify-retained/tenfold mode.");
+if (!OperatingSystem.IsWindows() || args.Length is < 1 or > 2 || (args.Length == 2 && args[1] is not ("resume" or "ledger" or "home" or "home-stages" or "verify-retained" or "tenfold")))
+    throw new ArgumentException("Provide a new Windows fictitious output directory, or explicit resume/ledger/home/home-stages/verify-retained/tenfold mode.");
 var requested = Path.GetFullPath(args[0]);
 var allowed = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "artifacts"));
 if (!requested.StartsWith(allowed + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
     throw new IOException("Independent performance output must be inside repository artifacts.");
 var homeOnly = args.Length == 2 && args[1] == "home";
+var homeStagesOnly = args.Length == 2 && args[1] == "home-stages";
 var verificationOnly = args.Length == 2 && args[1] == "verify-retained";
 var newTenfoldOnly = args.Length == 2 && args[1] == "tenfold";
-var resume = homeOnly || verificationOnly || newTenfoldOnly || (args.Length == 2 && args[1] == "resume");
+var resume = homeOnly || homeStagesOnly || verificationOnly || newTenfoldOnly || (args.Length == 2 && args[1] == "resume");
 var ledgerOnly = args.Length == 2 && args[1] == "ledger";
 var root = resume ? requested : FixtureDirectory.Create(requested);
 if (!File.Exists(Path.Combine(root, "fictitious-performance.marker"))) throw new IOException("Independent root marker missing.");
@@ -28,7 +29,8 @@ for (var ancestor = new DirectoryInfo(root); ancestor is not null; ancestor = an
 SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
 using var deadline = new CancellationTokenSource(TimeSpan.FromMinutes(10)); var ct = deadline.Token;
 var results = new List<object>();
-var output = Path.Combine(root, homeOnly ? "home-measurements-" + Guid.NewGuid().ToString("N") + ".json"
+var output = Path.Combine(root, homeStagesOnly ? "home-stages-" + Guid.NewGuid().ToString("N") + ".json"
+    : homeOnly ? "home-measurements-" + Guid.NewGuid().ToString("N") + ".json"
     : verificationOnly ? "readonly-verification-" + Guid.NewGuid().ToString("N") + ".json"
     : newTenfoldOnly ? "tenfold-measurements.json" : "measurements.json");
 foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
@@ -38,7 +40,7 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
     var existing = resume && Directory.Exists(folder);
     if (newTenfoldOnly && existing) throw new IOException("Tenfold-only continuation refuses already prepared data; never repeat its accepted writes.");
     if (verificationOnly && !existing) continue; // Never seed the still-unexecuted next shape to repair an observation.
-    if (homeOnly && !existing) throw new IOException("Home comparison requires both retained protected fixtures; never regenerate them.");
+    if ((homeOnly || homeStagesOnly) && !existing) throw new IOException("Home comparison requires both retained protected fixtures; never regenerate them.");
     if (!existing) _ = await PerformanceFixture.CreateAsync(folder, shape, ct);
     var original = Path.Combine(folder, "fixture.db");
     using var services = new ServiceCollection().AddZananceData(original, protectionRequired: true).BuildServiceProvider();
@@ -136,7 +138,10 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
         }
         var searchCounts = new Dictionary<string, int>();
         var savedTimes = new List<double>();
+        object? homeStages = null;
         if (verificationOnly) { /* Original accepted writes/timers are deliberately not replayed. */ }
+        else if (homeStagesOnly)
+            homeStages = await HomeReadStages.MeasureAsync(store, shape.Entries, PerformanceFixture.Today, ct);
         else if (homeOnly)
         {
             var goals = services.GetRequiredService<GoalStore>(); var holdings = services.GetRequiredService<HoldingStore>();
@@ -242,11 +247,12 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
             CompletePortableSchemaAndTypedRowsUnchanged = !expectedRevisionChange,
             CompletePortableFinancialSchemaAndTypedRowsUnchanged = true,
             OnlyValidatedOpaqueRevisionNormalized = expectedRevisionChange,
+            HomeStages = homeStages,
             SearchResultCounts = searchCounts, SavedRowsReadBackAndRemoved = savedTimes.Count,
             PlaintextOriginalRemoved = !File.Exists(original), CipherBytes = new FileInfo(generation.Path).Length });
     }
     await File.WriteAllTextAsync(output, JsonSerializer.Serialize(new
-    { Results = results, LedgerOnly = ledgerOnly, HomeOnly = homeOnly, VerificationOnly = verificationOnly, NewTenfoldOnly = newTenfoldOnly,
+    { Results = results, LedgerOnly = ledgerOnly, HomeOnly = homeOnly, HomeStagesOnly = homeStagesOnly, VerificationOnly = verificationOnly, NewTenfoldOnly = newTenfoldOnly,
         CipherVersion = "4.19.0", ActualProductionAssemblies = true,
         NativeUiOrDeviceAcceptance = false }, new JsonSerializerOptions { WriteIndented = true }), ct);
 }
