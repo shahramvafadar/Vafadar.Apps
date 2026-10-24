@@ -23,11 +23,12 @@ public sealed class MainActivity : MauiAppCompatActivity
         var run = Intent?.GetStringExtra("review_run");
         if (savedInstanceState is not null || PackageName != NativeReminderReview.Package ||
             run is null || !System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$")) return;
-        Window?.AddFlags(WindowManagerFlags.KeepScreenOn);
+        var timed = Intent?.GetBooleanExtra("review_timed_goal_period", false) == true;
+        if (!timed) Window?.AddFlags(WindowManagerFlags.KeepScreenOn);
         _ = PrepareAsync(run, Intent?.GetBooleanExtra("review_scheduled_only", false) == true,
             Intent?.GetBooleanExtra("review_goal_lifecycle", false) == true,
             Intent?.GetBooleanExtra("review_period_lifecycle", false) == true,
-            Intent?.GetBooleanExtra("review_goal_variants", false) == true, Intent?.GetStringExtra("review_route_phase"), Intent?.GetStringExtra("review_profile_phase"));
+            Intent?.GetBooleanExtra("review_goal_variants", false) == true, Intent?.GetStringExtra("review_route_phase"), Intent?.GetStringExtra("review_profile_phase"), timed);
     }
 
     /// <inheritdoc />
@@ -38,22 +39,24 @@ public sealed class MainActivity : MauiAppCompatActivity
         var profilePhase = intent?.GetStringExtra("review_profile_phase");
         if (PackageName == NativeReminderReview.Package && profilePhase is "restore" or "finish"
             && run is not null && System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$"))
-        { _ = PrepareAsync(run, false, false, false, false, null, profilePhase); return; }
+        { _ = PrepareAsync(run, false, false, false, false, null, profilePhase, false); return; }
         if (PackageName != NativeReminderReview.Package || intent?.GetStringExtra("review_route_phase") != "review"
             || run is null || !System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$")) return;
-        _ = PrepareAsync(run, false, false, false, false, "review", null);
+        _ = PrepareAsync(run, false, false, false, false, "review", null, false);
     }
 
     /// <summary>Waits for the real covered foreground startup before preparing notification metadata.</summary>
-    private async Task PrepareAsync(string run, bool scheduledOnly, bool goalLifecycle, bool periodLifecycle, bool goalVariants, string? routePhase, string? profilePhase)
+    private async Task PrepareAsync(string run, bool scheduledOnly, bool goalLifecycle, bool periodLifecycle, bool goalVariants, string? routePhase, string? profilePhase, bool timed)
     {
         try
         {
             var app = (App)Microsoft.Maui.Controls.Application.Current!;
             await app.WaitForStartupAsync();
-            if ((scheduledOnly ? 1 : 0) + (goalLifecycle ? 1 : 0) + (periodLifecycle ? 1 : 0) + (goalVariants ? 1 : 0) + (routePhase is null ? 0 : 1) + (profilePhase is null ? 0 : 1) > 1)
+            if ((scheduledOnly ? 1 : 0) + (goalLifecycle ? 1 : 0) + (periodLifecycle ? 1 : 0) + (goalVariants ? 1 : 0) + (routePhase is null ? 0 : 1) + (profilePhase is null ? 0 : 1) + (timed ? 1 : 0) > 1)
                 throw new IOException("Choose one independent reminder review.");
-            if (profilePhase is not null)
+            if (timed)
+                await NativeTimedGoalPeriodReview.PrepareAsync(IPlatformApplication.Current!.Services, run);
+            else if (profilePhase is not null)
                 await NativeGoalProfileScopeReview.PrepareAsync(IPlatformApplication.Current!.Services, run, profilePhase);
             else if (routePhase is not null)
                 await NativeGoalPeriodRouteReview.PublishAsync(IPlatformApplication.Current!.Services, run, routePhase);

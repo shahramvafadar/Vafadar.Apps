@@ -8926,3 +8926,14 @@ snapshot and recorded72. Only the new profile is removed with two confirmations;
 original profiles/141 public nodes/APK/OS are restored. No new unit tests or product-code changes.
 D-494 timed-delivery failure and D-497/newer Main adoption remain open; no whole-device,
 security/stability/accessibility/iOS/provider/Store/release acceptance is inferred.
+
+### D-507 status - bounded Android delayed delivery
+
+Owner-approved same-day expiry replaces the Android SDK's one-hour delivery cutoff. Original
+D-494 timed delivery remains failed at97 minutes; nine new source cases and an actual native
+notification-only regression verify later same-day display and next-day refusal. No new permission,
+SDK, schema or financial changes. Windows/complete384-AOT Offline builds are warning-free and
+Samsung Main adopts the signed candidate without reset, preserving Home979/141 public nodes/
+three profiles/OS. General timed/Doze/reboot/cold, security/stability/accessibility, API24/16KiB
+runtime, iOS/provider/Store and release acceptance remain open. No unchanged successful suite or
+financial fixture is replayed. See physical-timed-goal-period-reminders.md for the scoped evidence.

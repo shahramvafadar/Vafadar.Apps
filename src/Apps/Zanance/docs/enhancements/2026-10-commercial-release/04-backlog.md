@@ -5313,3 +5313,54 @@ confirmations; restore original three profiles/Main25043/Home979/141 public tupl
 remove137 owned hash-matched remote XMLs. No seed/snapshot/financial replay, build or unit-suite
 rerun. D-494 remains untouched/unfinished; D-497/newer Main phone adoption remains open.
 [Evidence](../../quality/physical-elapsed-forecast-comparison.md).
+
+## D-507 - Same-day Android reminder delivery after actual D-494 failure (2026-10-24)
+
+Owner accepts delayed Android delivery through the last instant of the originally scheduled local
+calendar day, rejects next-day delivery and keeps inexact scheduling without new permission types.
+Original D-49409:00 requests were dispatched by AlarmManager only at10:36:59.194/.200, beyond the
+old one-hour allowance. The exact SDK binary rejects those original timestamps under that old
+policy. The original timed criterion and interrupted cold lineage remain failed, not reclassified
+as a pass. The precise OS/OEM reason for deferral is unproven.
+
+ReminderDeliveryWindow computes the exclusive next-day boundary using the device zone, including
+DST, invalid midnight and the earlier ambiguous midnight; the SDK's inclusive endpoint ends one
+tick earlier. Original LocalNotificationScheduler.Request uses that allowance. Existing source/
+profile/privacy/permission/cancellation guards, generic text, scheduling mode and missed-date
+preparation remain unchanged. No exact-alarm permission, clock/configuration change, new SDK,
+schema or financial write. Nine new distinct source cases pass in8+1 selected runs; only the
+new ambiguous-boundary case runs after the first eight successes. Five separate actual-SDK
+checks accept the two old late timestamps/last-day tick and refuse midnight/next morning.
+
+A new notification-only signed Offline ARM64 package compiles the original request builder,
+publication guard/window and SDK, without a database or financial fixture. Its one actual native
+permission dialog applies only to that new UID. Two deliberately late09:00 requests on the real
+24October clock enter AlarmManager at12:48:24, its original receiver dispatches at12:48:29.713/.724,
+and native notification records show both unchanged generic messages at12:48:29.813/.856. The
+original scheduler refuses yesterday's request before native publication. This is controlled
+same-day late delivery, not a future09:00 punctuality, Doze, reboot, cold or general-device claim.
+The native package has98 AOT modules and v2/v3 signatures; no INTERNET or exact-alarm permission.
+
+Read the original D-494 protected source only after preserving actual dispatch: same24914/source
+match true and original run. Retire both finished fixture packages after evidence, verify no
+pending/blocked/posted work, and retain historical alarm records. Never replay successful account,
+plan, profile, notification-content-tap or financial setup to repair observations.
+
+Strict Windows and complete signed dual-architecture Offline APK builds pass without warnings.
+Shipping APK has384 AOT modules,408 ELF libraries with1608 load segments meeting static16KiB
+alignment and successful official ZIP alignment verification. This is not API24/16KiB runtime
+acceptance. The final APK hash is984f01095439a6ca3ff979755085d6fd5af6208256dc2345b7924ba7a031d9a6.
+
+Before this operation Main's earlier25043 was already absent; ordinary launch reaches27501 with
+unchanged D-495 APK/Home979/141 public tuples. After fixture retirement, one complete signed
+no-reset Main upgrade adopts D-507 (including D-497/D-499/D-500/D-504), yielding30005 and exactly
+the same public Home/three original profile names/OS. This adoption is not an additional phone
+acceptance of the deleted D-496 retained-tab scenario. Remove12 new owned XMLs after hash equality;
+retain local originals. Release the coordinated Samsung turn. No financial commands occur.
+
+Retain three observer issues without replaying native publication: notification record line
+endings, an unbounded delivery-history section and an incorrect demand that compressed native
+ZIP entries have mapping alignment. Official zipalign plus ELF checks resolve the static observer
+issue on the same unchanged APK. Native receiver/notification receipts come from the first actual
+accepted publication. General stability/accessibility/security/iOS/provider/Store/release gates
+remain separate. [Evidence](../../quality/physical-timed-goal-period-reminders.md).

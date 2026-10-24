@@ -2531,3 +2531,10 @@ and D-496 remain intact. Main remains D-495 until D-494 terminal cleanup; the la
 APK is D-504 and includes D-497/D-499/D-500. Persian OCR, OS scaling/spoken, general stability,
 iOS/provider/Store/publication and future-day acceptance remain open. No new SDK/model/schema/
 permission/commercial restriction. [Evidence](quality/android-receipt-source-help.md).
+
+### D-507 - Same-day Android reminder expiry
+
+An already scheduled Android reminder delayed by the system remains eligible through its original
+local calendar day, never into the next day. Generic/detail privacy, due dates, snooze semantics,
+missed-date preparation and ordinary context permission remain unchanged; no exact-time guarantee
+or new exact-alarm permission is introduced. No existing UI string or layout changes in this step.

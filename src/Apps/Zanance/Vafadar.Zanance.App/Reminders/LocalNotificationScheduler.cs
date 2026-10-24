@@ -99,7 +99,8 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
         return Task.CompletedTask;
     }
 
-    private static NotificationRequest Request(ReminderNotification reminder)
+    /// <summary>Builds the original native request without publishing it or changing financial state.</summary>
+    internal static NotificationRequest Request(ReminderNotification reminder)
     {
         var request = new NotificationRequest
         {
@@ -119,12 +120,12 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
             request.Schedule = new NotificationRequestSchedule
             {
                 NotifyTime = at,
-                // Android can deliver an inexact alarm more than a minute late (D-140). The plugin's default
-                // one-minute rejection window must not discard normal OS delivery; keep a bounded one-hour window.
+                // Android battery restrictions can defer inexact delivery beyond an hour (D-507).
+                // The owner accepts it through this original local day, never into tomorrow.
                 Android =
                 {
                     ScheduleMode = AndroidScheduleMode.InexactAllowWhileIdle,
-                    AllowedDelay = TimeSpan.FromHours(1),
+                    AllowedDelay = ReminderDeliveryWindow.UntilEndOfDay(new DateTimeOffset(at), TimeZoneInfo.Local),
                 },
             };
         }

@@ -3610,3 +3610,15 @@ configured data disk, followed by restoration of the original services. This doe
 deleting shared/unrelated cache, images, volumes or disks. Require Administrator and verified
 exclusive disk access; retain container IDs/running sets and before/after size evidence. Do not
 claim host space recovered without measurement. Preserve original recovery sources/snapshots.
+
+## Owner same-day Android reminder delivery (2026-10-24, D-507)
+
+The owner selected delayed delivery through the originally scheduled device-local calendar day,
+without a new permission type. Inexact alarms may arrive after an hour under Android restrictions;
+compute the original local day's exclusive next-midnight boundary, including DST/gaps/ambiguity,
+and reject next-day delivery. Keep source/profile/privacy/cancellation guards and missed-date
+preparation unchanged. Do not add exact-alarm permission or alter OS settings. Preserve D-494's
+failed original one-hour criterion and interrupted lineage; controlled same-day late regression
+is separate evidence. Retire finished independent callers after source/delivery receipts and verify
+no pending/blocked/posted work; do not leave obsolete future fixture alarms installed. New Main
+adoption follows a complete signed no-reset package and preserves existing profiles/data.

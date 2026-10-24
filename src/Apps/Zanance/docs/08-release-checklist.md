@@ -3306,3 +3306,13 @@ remaining financial commands. Saved80/recorded72/difference-8 and-10/-5/+7/resid
 profile reopening. Original Main979/141 public nodes/three profiles/APK/OS are restored and only
 that temporary profile is removed. D-494 failure and newer no-reset Main adoption remain separate;
 this closes no general platform/security/stability/accessibility/Store or publication gate.
+
+### D-507 delayed reminder correction
+
+Same-day late delivery is qualified through original request/SDK/native receiver/notification
+records; next-day refusal and DST midnight boundaries are covered. Original D-494 one-hour
+failure and interrupted lineage remain visible. Both finished independent packages and live work
+are retired; the complete signed384-AOT Offline Main candidate is adopted without reset while
+Home979/141 public tuples/three profiles/OS remain equal. This is not general timed accuracy,
+Doze/reboot/cold, API24/16KiB runtime, hardware/authentication, accessibility, iOS, provider/Store
+or release acceptance. Native controls/financial cohorts are not repeated for report repairs.

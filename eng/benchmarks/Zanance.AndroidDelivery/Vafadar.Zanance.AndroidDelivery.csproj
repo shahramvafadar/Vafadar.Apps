@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(RepoRoot)eng/Maui.props" />
+  <PropertyGroup>
+    <VafadarMauiTargetFrameworks>net10.0-android</VafadarMauiTargetFrameworks>
+    <TargetFrameworks>net10.0-android</TargetFrameworks>
+    <OutputType>Exe</OutputType>
+    <ApplicationId>pro.vafadar.zanance.reminderdeliveryreview</ApplicationId>
+    <ApplicationTitle>Zanance delivery review</ApplicationTitle>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
+    <RunAOTCompilation>true</RunAOTCompilation>
+    <PublishTrimmed>true</PublishTrimmed>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
+    <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
+    <AndroidManifest>AndroidManifest.xml</AndroidManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(OriginalAppRoot)Reminders/IReminderScheduler.cs" Link="Original/IReminderScheduler.cs" />
+    <Compile Include="$(OriginalAppRoot)Reminders/LocalNotificationScheduler.cs" Link="Original/LocalNotificationScheduler.cs" />
+    <Compile Include="$(OriginalAppRoot)Reminders/ReminderPublication.cs" Link="Original/ReminderPublication.cs" />
+    <Compile Include="$(OriginalAppRoot)Reminders/ReminderDeliveryWindow.cs" Link="Original/ReminderDeliveryWindow.cs" />
+    <AndroidResource Include="$(OriginalAppRoot)Platforms/Android/Resources/drawable/ic_stat_zanance.xml" Link="Resources/drawable/ic_stat_zanance.xml" />
+    <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Core/Vafadar.Zanance.Core.csproj" />
+    <PackageReference Include="Plugin.LocalNotification" />
+  </ItemGroup>
+  <ItemGroup>
+    <FrameworkReference Update="Microsoft.NETCore.App" RuntimeFrameworkVersion="$(VafadarSecurityRuntimeVersion)" />
+  </ItemGroup>
+  <Import Project="$(RepoRoot)eng/AndroidAotRuntime.targets" />
+  <Target Name="RequireIndependentIdentity" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.reminderdeliveryreview'" Text="Independent notification-only identity required." />
+  </Target>
+</Project>

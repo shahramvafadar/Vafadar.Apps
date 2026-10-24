@@ -124,6 +124,25 @@ stop/uninstall only then. Distinguish actual pending/blocked alarms from Additio
 which must remain untouched. Restore exact Main/OS/public UI. See [the actual route evidence](../../../src/Apps/Zanance/docs/quality/physical-goal-period-notification-routes.md)
 for the two cold routes and remaining timed/credential gates.
 
+## Original real-time goal and period delivery (D-494, in progress)
+
+Use exclusive review_timed_goal_period=true with one explicit32-hex review_run on a fresh fixture.
+After original covered startup and contextual permission, schedule tomorrow's original goal and
+period09:00 requests through ReminderService; never Show an immediate copy. Preserve complete
+source/settings and all original queue identities. A preparation marker refuses partial reseeding
+or replay. SDK intents contain no helper selector and cannot prepare again.
+
+Read /timed-goal-period-status only after actual receiver-start evidence and only when its process
+already exists. This endpoint does not prepare/rearm/open a window. Protected=false/SourceRead=false/
+SourceMatch=null is an unread source, not data loss. Preserve original native alarm/PendingIntent
+identities, notification creation times and receiver events before later source checks. Do not
+open the ordinary Activity until both due requests are consumed: original refresh could otherwise
+discard the remaining missed request. Never reinstall/upgrade/force-stop/uninstall/rearm a live
+cohort. Preserve its one-hour native window and report actual late results without widening it.
+After actual delivery and protected source comparison, retire only the new fixture and owned XMLs,
+verify actual pending/blocked/posted absence and restore Main/OS. See
+[the in-progress timed evidence](../../../src/Apps/Zanance/docs/quality/physical-timed-goal-period-reminders.md).
+
 ## Grouped goal and restored-profile scope (D-493)
 
 Use exclusive review_profile_phase=grouped/restore/finish with one original32-hex review_run.
@@ -144,3 +163,12 @@ restore/profile receipts; completed native actions/restore are never replayed. C
 verifies its source/scope, retires only inactive ownedB, then removes only the fresh fixture and
 its actual native work. Historical alarm records stay. No native dialog/password/credential or
 whole-device acceptance follows. See [scope evidence](../../../src/Apps/Zanance/docs/quality/physical-goal-profile-notification-scope.md).
+
+## D-494 historical outcome and D-507 correction
+
+The original one-hour timed cohort failed: the exact native requests reached the receiver at
+10:36:59 on24October rather than within09:00-10:00. Source equality and both original histories
+are retained. The owner subsequently approved same-day expiry; a separate notification-only
+caller in `eng/benchmarks/Zanance.AndroidDelivery` verifies that correction without reseeding this
+financial fixture. Both finished callers are retired and Main is upgraded without reset. Do not
+replay this old preparation or describe the old interrupted/cold/timing criterion as successful.
