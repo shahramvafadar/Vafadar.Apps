@@ -3601,3 +3601,12 @@ original portrait Home tuples as well as unchanged system settings. A disposable
 activity may restore that window state; never write system rotation/display settings or replay UI.
 Keep D-494/D-496 sources untouched. After D-494 consumption/cleanup, adopt only the latest verified
 complete signed candidate once without reset; D-504 supersedes D-500 as that ready candidate.
+
+## Owner physical Docker cleanup (2026-10-24, D-505)
+
+Distinguish removed Docker resources, shared cache accounting and physical VHDX allocation.
+The owner approved a temporary outage of all Docker containers solely for compacting the existing
+configured data disk, followed by restoration of the original services. This does not authorize
+deleting shared/unrelated cache, images, volumes or disks. Require Administrator and verified
+exclusive disk access; retain container IDs/running sets and before/after size evidence. Do not
+claim host space recovered without measurement. Preserve original recovery sources/snapshots.

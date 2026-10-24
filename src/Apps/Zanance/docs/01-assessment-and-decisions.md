@@ -9139,3 +9139,16 @@ and D-496 remain intact. Main remains D-495 until D-494 terminal cleanup; the la
 APK is D-504 and includes D-497/D-499/D-500. Persian OCR, OS scaling/spoken, general stability,
 iOS/provider/Store/publication and future-day acceptance remain open. No new SDK/model/schema/
 permission/commercial restriction. [Evidence](quality/android-receipt-source-help.md).
+
+## D-505 - Distinguish Docker cleanup from shared disk compaction (2026-10-24)
+
+Owner requests removal of unnecessary physical files and approves a temporary shared Docker
+outage with restoration of the original services. Retire two completed labelled/unmounted
+fictional volumes; preserve original container/status/image sets, recovery sources/snapshots and
+unrelated resources. Exact-ID cleanup of ten project cache records reclaims0B because retained
+images share their layers; do not claim323.4GB of shared cache belongs to this project. Measure
+the configured643440836608byte VHDX separately. Current non-admin session cannot compact it;
+prepare a path-checked elevated maintenance script with graceful shutdown, disk access check,
+finally restoration and before/after identity/size receipts. Syntax verification is not elevated
+runtime/health/space-recovery acceptance. No app/test/APK change or successful cohort replay.
+[Evidence](quality/docker-lifecycle.md#d-505---file-allocation-follow-up-2026-10-24).

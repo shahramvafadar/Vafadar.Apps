@@ -68,3 +68,36 @@ containers were retired, so historical restoration still requires reconstructing
 source ownership before the existing privacy-source guard will permit it. No guard was weakened
 and old snapshot restoration was not rerun. Never remove a private volume, snapshot or its image
 dependency as a routine retry, and never prune unrelated/shared engine resources globally.
+
+## D-505 - File allocation follow-up, 2026-10-24
+
+The owner requested actual file cleanup in addition to removed containers/images. A fresh
+inventory confirmed 31 containers,59 images,192 volumes and323.4GB of build-cache accounting.
+Two completed, unmounted, explicitly labelled fictional fixtures were retired through Docker:
+`zanance-billing-fixed-d304-ca8b5a6e31de` and `zanance-sync-linux-d292-20261015a`.
+Volume count became190; reported volume allocation changed6.489GB to6.486GB. All container
+identities/statuses and image identities remained equal. Recovery/source volumes remain protected.
+
+Ten cache records explicitly naming this project were targeted individually using exact IDs.
+Each reported0B reclaimed: their layers remain shared with retained images. This is not a
+successful cache-space reduction. The other cache records cannot be attributed exclusively to
+this project; no global cache/volume prune or unrelated deletion occurred.
+
+The configured shared disk is
+`E:\_Containers\DockerDesktop\DockerDesktopWSL\disk\docker_data.vhdx`, measured643440836608bytes.
+Removing Docker resources does not prove that this Windows file shrank. The owner approved a
+temporary outage of all Docker containers and restoration of the original running set. The
+current session is not Administrator and has no Optimize-VHD command, so services were not stopped
+and disk compaction has not run. No host free-space improvement is claimed.
+
+`eng/scripts/Compact-DockerDisk.ps1` prepares the approved maintenance operation for manual
+execution in an elevated Windows PowerShell session. It refuses non-admin execution before any
+mutation, verifies the configured data path, refuses running auto-remove containers, retains the
+original running/container-ID sets, gracefully stops containers and Docker, verifies exclusive
+disk access, invokes only DiskPart compact and restores Docker/the original running containers in
+finally. It never deletes a disk, image or volume and never terminates unrelated WSL distros.
+Its syntax is checked; elevated execution, measured reduction and restored application health
+remain pending. A zero DiskPart exit or equal running set is not proof of compaction or health.
+
+An additional attempted removal of old host test-output/Python-cache directories was refused
+before execution. Those directories remain; no host-file deletion is claimed for them.

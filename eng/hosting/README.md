@@ -233,3 +233,12 @@ the disposable runtime resources. Review ownership, mounts, retained recovery de
 other users of an image before deletion. Never prune the shared engine's global cache/images/volumes.
 The 323GB shared build cache was not attributed exclusively to this repository and remains untouched.
 See `src/Apps/Zanance/docs/quality/docker-lifecycle.md` for the actual stop/start verification.
+# Physical Docker disk maintenance
+
+Resource deletion and physical VHDX compaction are separate operations. For the owner-approved
+shared outage, run `eng/scripts/Compact-DockerDisk.ps1` manually in elevated Windows PowerShell
+with the configured `-DiskPath` and `-ApprovedSharedOutage`. Non-admin execution refuses before
+stopping services. Preserve its private receipt and verify application health after restoration;
+matching container states alone is not readiness. See the D-505 follow-up in
+`src/Apps/Zanance/docs/quality/docker-lifecycle.md`. Never delete the shared VHDX or globally prune
+other projects to recover space.
