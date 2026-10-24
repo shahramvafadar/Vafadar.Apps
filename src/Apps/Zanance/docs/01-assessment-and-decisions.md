@@ -9184,3 +9184,13 @@ guards preceded their intended input. Accepted commands are never replayed to re
 This is not whole-device/security/ANR/TalkBack/iOS/provider/Store or release acceptance.
 
 Evidence: [actual elapsed-day comparison](quality/physical-elapsed-forecast-comparison.md).
+
+### D-505 follow-up - observed shared physical reclamation (2026-10-24)
+
+A later external state change reduces the configured VHDX from643440836608 to45837451264bytes;
+shared cache accounting is now0B. Execution/actor is unverified and no elevated-script receipt is
+present, so do not attribute the operation or all shared cache to this project. Verify all31 IDs,
+original20-running set,190 retained volumes and all nine previously available protected image
+dependencies unchanged. Retained database/API are healthy, proxy running; historical missing
+seven dependencies remain missing. No compaction/restart/test is replayed just to reproduce a
+successful external result. [Evidence](quality/docker-lifecycle.md#d-505-later-physical-state-verification-24october0938utc).

@@ -101,3 +101,28 @@ remain pending. A zero DiskPart exit or equal running set is not proof of compac
 
 An additional attempted removal of old host test-output/Python-cache directories was refused
 before execution. Those directories remain; no host-file deletion is claimed for them.
+
+## D-505 later physical-state verification, 24October09:38UTC
+
+A subsequent read-only inventory observes an external change: configured docker_data.vhdx is
+now45837451264bytes versus the earlier643440836608bytes, a measured file-length reduction of
+597603385344bytes (597.60GB decimal). Shared build-cache accounting is now0B instead of323.4GB;
+image count is53 instead of59, with logical image accounting21.58GB. No private receipt from
+Compact-DockerDisk.ps1 exists in the recorded operator location. The operation/actor that changed
+this shared state is unverified; this report does not attribute its execution or shared-cache
+ownership to this project. Do not run another compaction merely to reproduce this observation.
+File-length reduction is measured separately from unrecorded before/after host free-space values.
+
+Compare the retained pre-cleanup inventory with the actual engine: all31 container identities
+and the exact original20-running set match. The190 volumes after the two intentional fixture
+removals remain exactly equal. All nine previously available dependencies from the16 protected
+image IDs remain available; the same seven historical dependencies were already absent. Six
+other image IDs disappeared, without intersecting those previously present protected dependencies.
+The original retained group's database/API report running healthy, proxy running and completed
+provision/migrate remain exited. No restart, restore, migration, build, financial command or
+unrelated previously successful qualification is repeated. This is live metadata/health evidence,
+not whole-database integrity, historical restore, public reachability or release acceptance.
+
+The original non-admin refusal remains a real historical result. No administrator escalation,
+shared cache prune or disk operation was performed during this follow-up. SDK compatibility
+runtime packages are still absent and the notification-expiry decision remains separate.

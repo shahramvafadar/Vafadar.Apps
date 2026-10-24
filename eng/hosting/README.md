@@ -242,3 +242,12 @@ stopping services. Preserve its private receipt and verify application health af
 matching container states alone is not readiness. See the D-505 follow-up in
 `src/Apps/Zanance/docs/quality/docker-lifecycle.md`. Never delete the shared VHDX or globally prune
 other projects to recover space.
+
+### Observed disk state after the D-505 handoff
+
+On24October09:38UTC the configured shared VHDX measures45.84GB instead of643.44GB and build
+cache accounting is0B. No operator-script receipt is present; the external execution/actor is
+unverified. All31 container IDs/original20-running set,190 volumes and nine locally available
+protected image dependencies are preserved; the retained database/API report healthy. Do not
+repeat disk maintenance to reproduce this completed external state change. Historical restore
+and full application acceptance remain separate; see the dated docker-lifecycle follow-up.
