@@ -19,6 +19,11 @@
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
+  <!-- The protected Home concurrency cohort owns no previous caller or financial source. -->
+  <PropertyGroup Condition="'$(ReviewHomeFinancial)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.homefinancialreview</ApplicationId>
+    <DefineConstants>$(DefineConstants);HOME_FINANCIAL_REVIEW</DefineConstants>
+  </PropertyGroup>
   <!-- The physical retained-tab cohort must not replace a caller with retained financial evidence. -->
   <PropertyGroup Condition="'$(ReviewForecastPhone)' == 'true'">
     <ApplicationId>pro.vafadar.zanance.forecastreturnreview</ApplicationId>

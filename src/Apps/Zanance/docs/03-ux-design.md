@@ -2548,3 +2548,17 @@ profile/package is retired. Main D-507/Home979/all141 public tuples/OS match wit
 No accepted financial cohort or unchanged successful suite/build is repeated; no new managed-test
 count or broad security/stability/accessibility/platform/release acceptance is claimed. Evidence:
 [physical retained-tab completion](quality/forecast-retained-tab-return.md).
+
+### D-509 - Home financial-source revision
+
+Reproduce Home accepting an old empty ledger after one original committed expense. Add a local
+migration-owned revision row and18 atomic triggers for ledger/budget/category-limit/rate/holding
+tables; capture it in the complete read and recheck before uncovering. Reuse bounded same-file
+refresh and preserve original access/input guards, with no financial replay or second complete
+history read.21 new distinct cases and115 related validation/migration/portable cases pass.
+Original native Home shows90 after its one fictitious expense; retain the failed exact-publication
+count guard. A read-only same-source continuation audits that accepted writer and deletes only
+its owned profile; it does not claim the failed count as a pass. Strict builds and the signed
+Offline384-AOT APK pass. Main no-reset migration preserves Home979/all141 public tuples/three
+profiles/OS. Evidence: [financial-source revision](quality/home-financial-source-revision.md).
+General runtime/performance/accessibility/platform/provider/Store/release gates stay separate.

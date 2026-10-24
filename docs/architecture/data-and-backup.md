@@ -2682,3 +2682,16 @@ ambiguous raw/decoded account identity refuses. Generic mapped titles/notes are 
 text. No entity/schema, compiled model, portable backup or financial relationship change.
 New contract3 requires a compatible reader; older reader compatibility is not established.
 See [bounded evidence](../../src/Apps/Zanance/docs/quality/csv-literal-identity.md).
+
+## Local Home financial publication marker (D-509)
+
+HomeFinancialRevision is a migration-owned single SQLite row plus18 AFTER triggers over Entries,
+Budgets, BudgetCategoryLimits, ExchangeRates, AssetTypes and AssetEvents. It is not an EF domain
+entity or sync/CSV/preference field. The complete read captures its32-hex opaque revision within
+its original transaction; final validation compares it in a fresh transaction after strict original
+file/access/input checks. A committed financial change causes the existing covered bounded reread.
+Rolled-back writes do not retire the packet. No second full financial read is needed for validation.
+The marker contains no financial value, credential or user identity. Whole-file backup carries
+this local bookkeeping under the existing protection; logical domain exports do not add it.
+Future SQLite rebuilds of these financial tables must explicitly preserve/recreate all18 triggers.
+The EF financial/compiled model is unchanged. See the application quality evidence for limitations.

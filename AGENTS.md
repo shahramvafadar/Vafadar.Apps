@@ -3622,3 +3622,16 @@ failed original one-hour criterion and interrupted lineage; controlled same-day 
 is separate evidence. Retire finished independent callers after source/delivery receipts and verify
 no pending/blocked/posted work; do not leave obsolete future fixture alarms installed. New Main
 adoption follows a complete signed no-reset package and preserves existing profiles/data.
+
+## D-509 - Home financial source validation
+
+Validate Home financial sources as well as original definitions before uncovering. Preserve the
+migration-owned local revision row and18 transactional INSERT/UPDATE/DELETE triggers on Entries,
+Budgets, BudgetCategoryLimits, ExchangeRates, AssetTypes and AssetEvents. Future SQLite table
+rebuilds must recreate those triggers. Capture the revision under the original read transaction;
+changed financial facts use the existing bounded same-file reread, never repeated writes or an
+unchecked stale publication. Keep actual-file/access/unchanged-definition refusals strict. This
+bookkeeping is not a new EF financial entity, sync record, CSV field or portable preference;
+whole-database backups retain their existing protection. A native terminal publication-count
+guard failure stays unaccepted even if its same retained source/current native amount is verified.
+Use an explicit read-only continuation and never reseed accepted financial work to repair reports.

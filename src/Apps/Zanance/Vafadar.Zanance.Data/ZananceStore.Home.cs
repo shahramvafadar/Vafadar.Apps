@@ -1,5 +1,6 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Holdings;
 using Vafadar.Zanance.Core.Ledger;
@@ -24,6 +25,9 @@ public sealed record HomeReadSnapshot(QuickResourceReview QuickResources, PlanWo
     GoalWorkSnapshot Goals, List<LedgerEntry> Entries, List<Budget> Budgets, List<ExchangeRate> Rates,
     List<AssetType> AssetTypes, List<AssetEvent> AssetEvents, Budget? MonthBudget, BudgetCarry Carry, int PeriodIndex)
 {
+    /// <summary>Gets the transactionally captured local revision of Home's financial source tables.</summary>
+    internal string FinancialRevision { get; init; } = string.Empty;
+
     /// <summary>Gets the captured actual file so one covered refresh cannot move to another selected profile.</summary>
     public string DatabasePath => QuickResources.TemplateChoice.DatabasePath;
 }
@@ -51,6 +55,7 @@ public sealed partial class ZananceStore
                 await db.Database.ExecuteSqlRawAsync("PRAGMA cache_size = -32768", cancellationToken);
             await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
             await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
+            var financialRevision = await ReadHomeFinancialRevisionAsync(db, cancellationToken);
             var quick = await GetQuickResourceReviewAsync(db, null, cancellationToken);
             var plans = await new PlanStore(contextFactory, this, commercialAccess).GetWorkSnapshotAsync(db, cancellationToken);
             var goals = await new GoalStore(contextFactory, commercialAccess).GetWorkSnapshotAsync(db, cancellationToken);
@@ -78,7 +83,8 @@ public sealed partial class ZananceStore
             var planAccess = plans.Access ?? throw new InvalidOperationException("Original Home plan authority is missing.");
             var goalAccess = goals.Access ?? throw new InvalidOperationException("Original Home goal authority is missing.");
             planAccess.EnsureSnapshotCurrent(); goalAccess.EnsureSnapshotCurrent();
-            return new HomeReadSnapshot(quick, plans, goals, entries, budgets, rates, types, events, budget, carry, periodIndex);
+            return new HomeReadSnapshot(quick, plans, goals, entries, budgets, rates, types, events, budget, carry, periodIndex)
+            { FinancialRevision = financialRevision };
         }, cancellationToken);
     }
 
@@ -125,6 +131,10 @@ public sealed partial class ZananceStore
             }
             // D-398: no persisted-source change may hide a different-file, retired-access or altered-input refusal.
             RequireOriginalInputs();
+            // D-509: definitions alone cannot detect a ledger/budget/rate/holding write after the read.
+            // A local trigger revision changes in the writer's transaction, without reading all ledger rows twice.
+            if (await ReadHomeFinancialRevisionAsync(db, cancellationToken) != snapshot.FinancialRevision)
+                throw new HomeSnapshotSupersededException();
             try
             {
                 await PlanStore.ValidateWorkSnapshotAsync(snapshot.Plans, db, cancellationToken, homeRefresh: true);
@@ -137,5 +147,17 @@ public sealed partial class ZananceStore
                 throw;
             }
         }, cancellationToken);
+    }
+
+    /// <summary>Reads local-only SQLite bookkeeping under the original complete-read/validation transaction.</summary>
+    private static async Task<string> ReadHomeFinancialRevisionAsync(ZananceDbContext db, CancellationToken ct)
+    {
+        await using var command = db.Database.GetDbConnection().CreateCommand();
+        command.Transaction = db.Database.CurrentTransaction?.GetDbTransaction();
+        command.CommandText = "SELECT Revision FROM HomeFinancialRevision WHERE Id = 1";
+        var revision = await command.ExecuteScalarAsync(ct) as string;
+        if (!Guid.TryParseExact(revision, "N", out _))
+            throw new InvalidOperationException("The original Home financial source revision is unavailable.");
+        return revision;
     }
 }

@@ -1174,3 +1174,11 @@ ledger/holding group context for safe Undo. It stays in the database and existin
 no extra peer snapshot, attachment bytes, credentials, public CSV field, permission, SDK, network
 transfer or new collection purpose is added. It is an equality witness, not anonymization or an
 authentication/encryption boundary. Existing profile deletion/backup retention rules apply.
+
+### D-509 local concurrency bookkeeping
+
+The encrypted profile database adds one opaque local HomeFinancialRevision row and atomic
+financial-table triggers. This is not a person/account identifier, credential, amount, analytics
+identifier or network flow. Logical financial exports/sync add no new entity/preference; existing
+whole-database backup naturally includes this internal bookkeeping under the same protection.
+No new permission, SDK, public service, telemetry or source-data retention policy is introduced.

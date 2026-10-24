@@ -952,3 +952,16 @@ refuse an existing root/profile: never relaunch preparation after partial writes
 report and same-page/source evidence before retiring only this package. This cohort is original
 store fixture qualification, not financial-form acceptance. Successful Samsung evidence is already
 retained; do not replay it to repair reports or broaden language/layout claims.
+
+## Protected Home financial-source change (D-509)
+
+ReviewHomeFinancial=true with RuntimeIdentifier=android-arm64 selects the independent
+pro.vafadar.zanance.homefinancialreview identity. home-financial-refresh uses one fresh run/pass
+and the actual original Home page/data adapter. The host commits one fictitious expense at the
+original post-read QuickAddTargetText notification while covered. Do not replay a partial run.
+Preserve source/accepted receipts and the exact native amount. The initial native terminal count
+guard failed; do not claim its publication count as accepted. Only home-financial-resume with the
+same run/fresh pass may audit that retained accepted source and retire its owned profile. It
+requires failure/accepted receipts, unique current owned identity and exact original ledger facts;
+it has no seed/financial writer. Retire the new package after that source cleanup. Keep original
+failed APK/report and separate initial/continuation PIDs; no all-device or financial-form claim.

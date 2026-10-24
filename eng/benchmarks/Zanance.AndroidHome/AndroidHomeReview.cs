@@ -23,6 +23,8 @@ internal static partial class AndroidHomeReview
     /// <summary>The independent install allowed to own these fictitious workloads.</summary>
 #if RECEIPT_SOURCE_REVIEW
     internal const string Package = "pro.vafadar.zanance.receiptsourcereview";
+#elif HOME_FINANCIAL_REVIEW
+    internal const string Package = "pro.vafadar.zanance.homefinancialreview";
 #elif FORECAST_RETURN_PHONE_REVIEW
     internal const string Package = "pro.vafadar.zanance.forecastreturnreview";
 #elif CURRENCY_FOCUS_REVIEW
@@ -129,6 +131,10 @@ internal static partial class AndroidHomeReview
                 await WriteReportAsync(root, phase, await ReviewNavigationPulseAsync(app, services, root, comparison!, ct), ct);
             else if (phase == "relocked-destinations")
                 await WriteReportAsync(root, phase, await ReviewRelockedDestinationsAsync(app, services, root, comparison!, ct), ct);
+            else if (phase == "home-financial-resume")
+                await WriteReportAsync(root, phase, await ResumeHomeFinancialRefreshAsync(app, services, root, comparison!, ct), ct);
+            else if (phase == "home-financial-refresh")
+                await WriteReportAsync(root, phase, await ReviewHomeFinancialRefreshAsync(app, services, root, comparison!, ct), ct);
             else if (phase == "forecast-return")
                 await WriteReportAsync(root, phase, await ReviewForecastReturnAsync(app, services, root, comparison!, ct), ct);
             else if (phase == "toolbar-observer")
