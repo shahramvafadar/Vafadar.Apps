@@ -6254,3 +6254,17 @@ financial writes remain0. Complete signed adoption verifies Main31882/Home979/14
 three original profiles, original Main chooser/Help, OS and timeout restoration;28 owned remote
 XMLs/new caller are retired. Bank customer specimens, native external picker, API24/16KiB runtime,
 all-platform security/stability/accessibility/provider/Store/release remain unqualified.
+
+### D-519 - Independent runtime-smoke and large-text cohort
+
+- Passed36 new SUPA Windows process-local scale2 contexts: six languages, two themes and three
+  actual widths;324 native font observations, eight tall endpoints, footer targets and original
+  typed rows verified. Zero financial writes; unchanged dialogs/native Import not replayed.
+- Passed complete signed Offline app installation, original first-run and empty Home/Plans/Budget/
+  Reports/Transactions navigation on actual API24/4096 and API35/16384 x86_64. App PIDs2754/4551
+  remain; no matching app fatal/ANR in captured bounded logs. API24 font setting is unset.
+- Keep full platform/native-engine/recovery/OCR, ARM64/phone, actual OS200%/TalkBack speech,
+  general stability/performance, iOS/provider/Store/release gates open.
+- Preserve pre-guest launch and observer failures; retire only new AVD fixtures and matched XMLs.
+
+See [D-519 evidence](quality/android-runtime-supa-large-text.md).

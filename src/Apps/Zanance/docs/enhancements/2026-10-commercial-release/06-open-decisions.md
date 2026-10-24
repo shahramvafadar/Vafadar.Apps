@@ -163,3 +163,15 @@ Owner answer: select ECB with the complete proposed conditions. This settles thi
 upstream data fee and required attribution/free-original/calculation handling; it does not authorize
 a paid feed, public deployment, metal/item pricing, bank connection or commercial activation. D-389
 records the complete compatible implementation and local qualification. Do not ask this choice again.
+
+## D-519 - Isolated compatibility SDK terms accepted2026-10-24
+
+The owner explicitly accepts the presented terms and authorizes installing only the three free
+official emulator/API24 default x86_64/API35 Google APIs ps16k x86_64 packages in the separate
+`E:\Zanance.ReviewBuilds\AndroidCompatibility\sdk` directory. This closes the earlier SDK licence
+owner gate; preserve the earlier refusal as history, not a continuing unanswered decision. Keep
+SDK/user/AVD configuration project/process-local, reuse existing ADB servers and preserve general
+SDK/licence, system settings, accounts, credentials and the physical phone. Existing official
+platform-tools are copied with identical adb hashes for root validation, without another download.
+No global installation, driver, system feature, account, spending or publication is authorized.
+D-519 qualifies only bounded actual runtime smoke, not full platform or release acceptance.

@@ -28,6 +28,15 @@ internal static partial class DebugSnapshots
         var path = Path.Combine(folder, "supa-native.db"); var setup = Path.Combine(folder, "supa-setup.json");
         var resume = Environment.GetEnvironmentVariable("VAFADAR_SUPA_NATIVE_RESUME") == "1";
         var finalHelp = Environment.GetEnvironmentVariable("VAFADAR_SUPA_FINAL_HELP") == "1";
+        var largeText = Environment.GetEnvironmentVariable("VAFADAR_SUPA_LARGE_TEXT") == "1";
+        var systemScale = 1d;
+        if (largeText)
+        {
+            if (!resume || finalHelp) throw new IOException("Large-text review requires only the retained fictitious source.");
+            using var scale = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(folder, "font-scale.json"), ct));
+            if (scale.RootElement.GetProperty("requestedScale").GetDouble() != 2) throw new IOException("Explicit double-size process-local review required.");
+            systemScale = scale.RootElement.GetProperty("systemScale").GetDouble();
+        }
         if (File.Exists(path) != resume || File.Exists(setup) != resume || !finalHelp && File.Exists(Path.Combine(folder, "complete.json")) || finalHelp && !resume)
             throw new IOException("Preserve incomplete original SUPA work; completed native contexts must not replay.");
         await using var fixture = new ServiceCollection().AddSingleton<TimeProvider>(TimeProvider.System).AddZananceData(path).BuildServiceProvider();
@@ -58,7 +67,7 @@ internal static partial class DebugSnapshots
             foreach (var theme in new[] { ThemeChoice.Light, ThemeChoice.Dark })
             foreach (var width in finalHelp ? new[] { 360 } : new[] { 360, 412, 1280 })
             {
-                var key = (finalHelp ? "final-help-" : "") + $"{language}-{theme}-{width}"; var receipt = Path.Combine(folder, key + "-complete.json");
+                var key = (finalHelp ? "final-help-" : largeText ? "large-text-" : "") + $"{language}-{theme}-{width}"; var receipt = Path.Combine(folder, key + "-complete.json");
                 await SetStoreThemeAsync(app, themes, theme); await SetLanguageAsync(app, local, language);
                 var helpText = text["Help_SupaCsv_Text"] + Environment.NewLine + Environment.NewLine + text.Format("Help_Example", text["Help_SupaCsv_Example"]);
                 if (File.Exists(receipt))
@@ -82,9 +91,12 @@ internal static partial class DebugSnapshots
                     for (var attempt = 0; attempt < 4; attempt++) { await Task.Delay(180, ct); if (Math.Abs(page.Width - width) <= 1) break; window.Width += width - page.Width; }
                     if (Math.Abs(page.Width - width) > 1) throw new IOException("Original SUPA page width differs.");
                     var scroll = VisualDescendants(page).OfType<ScrollView>().Single(); var reads = new List<object>();
-                    var help = VisualDescendants(page).OfType<Vafadar.Maui.Controls.HelpButton>().Single(button => button.Topic == "SupaCsv");
-                    await ScrollToViewIfNeededAsync(scroll, help); InvokeChoiceReview(VisualDescendants(help).OfType<Button>().Single(), reads);
-                    await CheckSupaHelpAsync(window, helpText, text["Common_Ok"], Path.Combine(folder, key), reads, ct);
+                    if (!largeText)
+                    {
+                        var help = VisualDescendants(page).OfType<Vafadar.Maui.Controls.HelpButton>().Single(button => button.Topic == "SupaCsv");
+                        await ScrollToViewIfNeededAsync(scroll, help); InvokeChoiceReview(VisualDescendants(help).OfType<Button>().Single(), reads);
+                        await CheckSupaHelpAsync(window, helpText, text["Common_Ok"], Path.Combine(folder, key), reads, ct);
+                    }
                     if (files.Picks != 0 || before != await ImportFinancialNativeReview.StoredAsync(fixture, ct))
                         throw new IOException("Original help selected a source or changed stored rows.");
                     if (finalHelp)
@@ -107,14 +119,35 @@ internal static partial class DebugSnapshots
                     consent.Toggle(); await Task.Delay(80, ct);
                     if (!model.BankAcknowledged || !model.CanRunImport) throw new IOException("Original SUPA consent did not enable current review.");
                     var chooser = page.FindByName<VerticalStackLayout>("BankPresetChooser"); var review = page.FindByName<VerticalStackLayout>("BankPresetReview");
+                    var footer = largeText ? VisualDescendants(page).OfType<WrappingAction>().Where(action => Visible(action)
+                        && (ReferenceEquals(action.Command, model.ImportCommand) || ReferenceEquals(action.Command, model.RefreshPreviewCommand))).ToArray() : [];
+                    var footerLabels = footer.SelectMany(action => VisualDescendants(action).OfType<Label>()).ToHashSet();
                     var labels = VisualDescendants(chooser).OfType<Label>().Where(label => label.Text is { Length: > 1 })
                         .Concat(VisualDescendants(review).OfType<Label>().Where(label => label.Text == model.BankSourceText
-                            || label.Text == model.BankPresetWarning || label.Text == model.BankPresetAcknowledgement)).Distinct().ToArray();
-                    var index = 0;
+                            || label.Text == model.BankPresetWarning || label.Text == model.BankPresetAcknowledgement)).Concat(footerLabels).Distinct().ToArray();
+                    var index = 0; var scaledReads = new List<object>();
                     foreach (var label in labels)
                     {
-                        await ScrollToViewIfNeededAsync(scroll, label); await Task.Delay(60, ct); CheckCaption(label, reads);
+                        if (!footerLabels.Contains(label)) await ScrollToViewIfNeededAsync(scroll, label);
+                        await Task.Delay(60, ct); CheckCaption(label, reads);
                         await CaptureWindowAsync(window, Path.Combine(folder, $"{key}-{index++}.png"));
+                        if (largeText) scaledReads.Add(await CheckSupaLargeCaptionAsync(label, scroll, systemScale,
+                            footerLabels.Contains(label), Path.Combine(folder, $"{key}-{index - 1}-end.png"), window, reads, ct));
+                    }
+                    if (largeText)
+                    {
+                        if (footer.Length != 2 || scroll.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.ScrollViewer viewport || viewport.ViewportHeight < 44)
+                            throw new IOException("Large original SUPA actions leave no reachable content viewport.");
+                        var actions = footer.Select(action => VisualDescendants(action).OfType<Button>().Single()).ToArray();
+                        foreach (var action in actions)
+                            if (action.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.Button native || !native.IsEnabled || native.ActualWidth < 44 || native.ActualHeight < 44)
+                                throw new IOException("Original large-text SUPA action target is unavailable.");
+                        if (before != await ImportFinancialNativeReview.StoredAsync(fixture, ct)) throw new IOException("Large-text review changed original rows.");
+                        await File.WriteAllTextAsync(receipt, JsonSerializer.Serialize(new { Warning = model.BankPresetWarning,
+                            Consent = model.BankPresetAcknowledgement, Help = helpText, RequestedFontScale = 2, PageWidth = page.Width,
+                            NativeFonts = scaledReads, ContentViewportHeight = viewport.ViewportHeight, RowsUnchanged = true,
+                            FinancialWrites = 0, UnchangedNativeDialogsNotReplayed = true, NativeImportNotInvoked = true }), ct);
+                        completed.Add(key); continue;
                     }
                     if (language == "en" && theme == ThemeChoice.Light && width == 360)
                     {
@@ -153,6 +186,31 @@ internal static partial class DebugSnapshots
                 ProcessId = Environment.ProcessId, RowsUnchanged = before == await ImportFinancialNativeReview.StoredAsync(fixture, ct), FinancialWrites = 0 }), ct);
         }
         finally { window.Width = oldWidth; window.Height = oldHeight; await SetStoreThemeAsync(app, themes, oldTheme); await SetLanguageAsync(app, local, oldLanguage); }
+    }
+
+    /// <summary>Proves actual double-size native text and reaches the final line of a tall original block.</summary>
+    private static async Task<object> CheckSupaLargeCaptionAsync(Label label, ScrollView scroll, double systemScale,
+        bool outsideViewport, string finalImage, Window window, List<object> reads, CancellationToken ct)
+    {
+        if (label.Handler?.PlatformView is not Microsoft.UI.Xaml.Controls.TextBlock native || label.FontSize <= 0
+            || !label.FontAutoScalingEnabled || Math.Abs(native.FontSize * systemScale / label.FontSize - 2) > 0.05)
+            throw new IOException("Original SUPA native font did not receive the explicit double-size review.");
+        reads.Add(native);
+        var reachedEnd = false;
+        if (!outsideViewport && scroll.Handler?.PlatformView is Microsoft.UI.Xaml.Controls.ScrollViewer viewport
+            && native.ActualHeight > viewport.ViewportHeight)
+        {
+            var position = native.TransformToVisual(viewport).TransformPoint(new Windows.Foundation.Point(0, 0));
+            var wanted = Math.Clamp(viewport.VerticalOffset + position.Y + native.ActualHeight - viewport.ViewportHeight, 0, viewport.ScrollableHeight);
+            NativeScrollProvider(viewport).SetScrollPercent(-1, wanted / viewport.ScrollableHeight * 100);
+            await Task.Delay(180, ct);
+            var bottom = native.TransformToVisual(viewport).TransformPoint(new Windows.Foundation.Point(0, native.ActualHeight));
+            if (bottom.Y < 1 || bottom.Y > viewport.ViewportHeight + 2) throw new IOException("Original tall SUPA text end remains unreachable.");
+            reachedEnd = true; await CaptureWindowAsync(window, finalImage);
+        }
+        return new { Text = label.Text, VirtualFontSize = label.FontSize, NativeFontSize = native.FontSize,
+            SystemScale = systemScale, ActualFontRatio = native.FontSize * systemScale / label.FontSize,
+            native.ActualWidth, native.ActualHeight, OutsideScrollViewport = outsideViewport, TallBlockEndReached = reachedEnd };
     }
 
     /// <summary>Original supplier-contract fictitious UTF-8 source; no external picker, bank or financial writer.</summary>

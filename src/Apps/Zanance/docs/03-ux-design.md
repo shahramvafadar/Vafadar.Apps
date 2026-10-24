@@ -2596,3 +2596,11 @@ text, own-window rendering and unchanged complete source rows. Six original Andr
 contexts at actual384dp pass with unchanged fixture/base typed rows; actual checked/command state
 is required after one switch click, independent of its listener-handled return. The installed Main
 chooser/Help and native OK/Back are also verified without file selection or financial writes.
+
+### D-519 - SUPA caption reachability under process-local scale2
+
+Original source/history warning and consent remain full growing text. Footer actions retain
+complete native caption allocation and at least44-unit targets while leaving a reachable content
+viewport. Thirty-six Windows contexts and eight tall final-line endpoints verify the pattern
+without replaying successful normal-scale dialogs or financial commands. This process-local
+stress is separate from actual Android OS scaling/spoken accessibility acceptance.

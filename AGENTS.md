@@ -1,5 +1,17 @@
 # AGENTS.md – working rules for this repository
 
+## Isolated Android compatibility SDK approval (owner, 2026-10-24, D-519)
+
+The owner explicitly accepts the presented SDK terms and approves installing the official free
+`emulator`, `system-images;android-24;default;x86_64` and
+`system-images;android-35;google_apis_ps16k;x86_64` packages only under
+`E:\Zanance.ReviewBuilds\AndroidCompatibility\sdk`. Keep SDK/user/AVD configuration scoped to that
+project directory and process. Do not change the general SDK, global environment, existing ADB
+servers, physical-device settings, accounts or credentials. Review official package metadata and
+retain the original licence refusal separately from this later approval. Installation, API names
+and static ELF/ZIP alignment are not runtime acceptance: verify each actual API/page size and run
+the complete signed app against fictitious owned data before qualifying that platform.
+
 ## Continue independent work during phone unavailability (owner, 2026-10-24, D-514)
 
 Whenever the phone is unavailable, continue ready approved work that does not require it rather

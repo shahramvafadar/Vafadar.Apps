@@ -9625,3 +9625,18 @@ recorded OS and exact timeout300000 are verified. Original Main SUPA chooser/Hel
 file selection or financial commands. Only the new caller and28 hash-matched remote XMLs are retired;
 local evidence and actual failed APKs remain. The physical turn is explicitly handed back. D-516 is
 locally complete; new-head hosted CI remains separate. See [original SUPA evidence](quality/supa-csv-import.md).
+
+## D-519 - Scoped SDK acceptance and new compatibility observations
+
+The owner accepts the presented official SDK terms for the three isolated compatibility packages;
+AGENTS.md records the narrow scope. General SDK/licence, existing ADB servers and physical phone
+remain unchanged. A DEBUG Windows continuation qualifies36 new SUPA scale2 contexts,324 actual
+native captions and eight tall endpoints with complete original typed rows and zero financial
+writes. Real Windows scale is unchanged; this does not qualify Android OS200% or spoken access.
+
+The unchanged complete signed D-516 candidate installs/runs on new actual API24/4096-byte and
+API35/16384-byte x86_64 AVDs. Original first-run once, Home0, empty Plans/Budget/Transactions,
+Reports and Home return preserve each app PID without ledger writes. This is bounded runtime
+compatibility, not full platform/security/performance/accessibility/release acceptance. Original
+setup/foreground/cleanup observer failures are retained and only incomplete work continues.
+See [runtime and large-text evidence](quality/android-runtime-supa-large-text.md).

@@ -2524,3 +2524,20 @@ source without financial writes; only that completed new caller is uninstalled. 
 proof, actual native source evidence and original Main no-reset adoption have separate receipts.
 Standard clean succeeds for all dedicated host/platform/native outputs; signed source/failure
 packages and local receipts remain. Never replay a financial writer to repair an observer.
+
+### D-519 - Scoped compatibility SDK and retained SUPA scale2 review
+
+The owner-approved SDK root is `E:\Zanance.ReviewBuilds\AndroidCompatibility\sdk` with project-local
+user/AVD directories. Existing official platform-tools may be copied there with identical hashes;
+keep the general SDK and its licence marker unchanged. Select the isolated tools root through
+process-local `AVDMANAGER_OPTS=-Dcom.android.sdkmanager.toolsdir=<isolated SDK>\cmdline-tools\latest`
+when using the already installed command-line manager. Existing ADB5038 is reused; no server
+restart or global environment change. Actual API/page-size output and complete signed-app runtime,
+not package names or static alignment, establish only the bounded result tested.
+
+For the retained fictitious Windows SUPA source, explicit `VAFADAR_SUPA_LARGE_TEXT=1` requires
+`VAFADAR_SUPA_NATIVE_RESUME=1` and process-local `VAFADAR_SNAPSHOT_FONT_SCALE=2`. Use a new owned
+copy of the original SQLite checkpoint, no accepted source/account/financial setup replay. The
+DEBUG Windows review records actual native ratios and tall endpoints and skips unchanged Help/
+financial confirmation dialogs. Never interpret this mode as real OS scale or platform acceptance.
+See [D-519 evidence](../../src/Apps/Zanance/docs/quality/android-runtime-supa-large-text.md).

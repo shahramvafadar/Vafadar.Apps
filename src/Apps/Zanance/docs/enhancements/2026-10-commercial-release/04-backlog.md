@@ -5520,3 +5520,15 @@ recorded OS and exact timeout300000 are verified. Original Main SUPA chooser/Hel
 file selection or financial commands. Only the new caller and28 hash-matched remote XMLs are retired;
 local evidence and actual failed APKs remain. The physical turn is explicitly handed back. D-516 is
 locally complete; new-head hosted CI remains separate. See [original SUPA evidence](../../quality/supa-csv-import.md).
+
+### D-519 - Minimum-API/16KiB smoke and remaining SUPA text layout
+
+Complete the new36-context SUPA process-local scale2 Windows matrix without repeating D-516
+normal-scale/native-dialog/financial acceptance. Actual324 native font ratios, eight tall final
+lines, footer targets and full typed-row equality pass; no financial writes. With the owner's
+new scoped SDK acceptance, the unchanged complete candidate passes first-run and bounded original
+Home/Plans/Budget/Reports/Transactions navigation on actual API24/4096 and API35/16384 x86_64.
+These close only the basic runtime-smoke subgate; full security/native-library/backup/OCR,
+ARM64/device, scaling/spoken access, stability/performance/iOS/provider/Store/release work remains.
+D-516 exact-head four workflows pass; its one-shot monitor is deleted. New-head CI is separate.
+See [qualification scope and preserved failures](../../quality/android-runtime-supa-large-text.md).

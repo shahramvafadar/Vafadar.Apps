@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Verified basic startup/navigation of the complete Android app on actual API24 and16KiB x86_64 systems, plus original SUPA review text at double size on Windows; full platform and accessibility acceptance remain separate (D-519).
+
 - Add an explicit SUPA4 software-export CSV review with source-history consent, complete paging, duplicate warnings and existing safe Undo; transfers and refunds require their original explicit relationships (D-516).
 
 - Correct plan weekend help in English, Spanish, French and Italian to explain that supported holidays are considered when their option is enabled (D-515).

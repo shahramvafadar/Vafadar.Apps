@@ -4554,3 +4554,15 @@ recorded OS and exact timeout300000 are verified. Original Main SUPA chooser/Hel
 file selection or financial commands. Only the new caller and28 hash-matched remote XMLs are retired;
 local evidence and actual failed APKs remain. The physical turn is explicitly handed back. D-516 is
 locally complete; new-head hosted CI remains separate. See [original SUPA evidence](../../quality/supa-csv-import.md).
+
+### D-519 - Continue independent qualification without a phone turn
+
+Owner-approved isolated SDK packages unlock actual x86_64 API24/4096 and API35/16384 runtime smoke.
+The unchanged signed D-516 candidate completes first-run and bounded empty Home/Plans/Budget/
+Reports/Transactions navigation with zero ledger writes. Both new app fixtures are retired and
+both new owned emulators stopped; the physical turn remains untouched. The new36-context SUPA
+Windows scale2 continuation uses the original source clone,324 real native font ratios and eight
+tall endpoints with unchanged full typed rows, without replaying normal-scale/dialog/financial
+successes. Strict Windows build and standard cleanup pass without warnings. No product dependency,
+schema or permission changes; complete platform/ARM64/security/OS-scale/spoken/stability/iOS and
+external release gates remain. [Scope and original failures](../../quality/android-runtime-supa-large-text.md).

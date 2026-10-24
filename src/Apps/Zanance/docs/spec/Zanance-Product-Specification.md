@@ -9071,3 +9071,12 @@ Main31882/Home979/141 public tuples, three original profiles and recorded OS; or
 chooser/Help is checked without file selection and timeout300000 is restored. Only the new caller
 and28 hash-matched remote XMLs are retired. Other bank revisions/customer files and platform/
 provider/security/stability/accessibility/Store/release acceptance stay separate.
+
+### D-519 - Runtime and scale2 qualification (Section31 continuation)
+
+No new product behavior or unit-test cases. Thirty-six new original SUPA Windows contexts verify
+324 actual double-size native captions, eight tall endpoints and unchanged full typed rows with
+zero financial writes; real OS scaling remains separate. The unchanged signed Offline D-516 APK
+passes original first-run/empty-data navigation on actual API24/4096 and API35/16384 x86_64 AVDs.
+Basic runtime smoke is qualified; complete platform/security/ARM64/OS200%/spoken/stability/iOS/
+provider/Store/release acceptance is not. Evidence: [D-519](../quality/android-runtime-supa-large-text.md).

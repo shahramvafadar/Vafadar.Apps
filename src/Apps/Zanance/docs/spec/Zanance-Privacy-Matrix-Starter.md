@@ -1193,3 +1193,10 @@ chosen target and same original software history. Structured AcctId/Ownr fields 
 stored notes; a source suffix is shown for review. Literal narrative can itself include personal
 information and is not advertised as fully redacted. No new SDK, permission, analytics, network
 flow or credential is added. No source/customer file is uploaded or bundled with the product.
+
+### D-519 - Test infrastructure boundary
+
+Isolated official emulator/API images introduce no shipping dependency, permission, network SDK,
+export or financial data change. New owned AVDs use fictitious zero accounts and no ledger writes;
+physical-phone data/accounts/settings remain untouched. See the current privacy matrix and
+[D-519 qualification](../quality/android-runtime-supa-large-text.md).

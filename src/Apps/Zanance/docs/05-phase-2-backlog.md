@@ -3602,3 +3602,10 @@ reader/parser: five correct Found, three Review, two NotFound including the no-t
 No financial save, new managed count, shipping source/SDK/permission or broader quality acceptance.
 QA-05 remains partial for six-language/camera/scanned/Persian/merchant/currency/device coverage.
 Original caller/Main/OS restored; D-494/D-496 preserved. [Evidence](quality/public-receipt-corpus.md).
+
+### D-519 - Independent qualification progression
+
+SUPA Windows scale2 continuation and basic signed-app runtime smoke on actual API24/4096 and
+API35/16384 x86_64 complete with zero financial writes. Keep complete platform/security/ARM64,
+Android OS scaling/spoken access and stability/performance, iOS and external gates open; the
+canonical commercial backlog and D-519 evidence define the bounded result.

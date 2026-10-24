@@ -3449,3 +3449,14 @@ tuples, three original profiles, OS and timeout300000 are verified; only the new
 caller/28 exact hash-matched remote XMLs are retired. New-head hosted CI remains separate.
 Build/static package proof never closes actual bank customer-file, external picker, API24/16KiB
 runtime, security/stability/accessibility/iOS/provider/Store/publication gates.
+
+### D-519 - Bounded runtime gates
+
+- [x] Complete signed D-516 app runs original first-run/empty navigation on actual x86_64
+  API24/4096-byte and API35/16384-byte systems; no financial writes or physical-phone input.
+- [x] New SUPA Windows scale2 page matrix36contexts/324native fonts/eight tall endpoints; full
+  typed rows retained, source/financial/native-dialog acceptance not replayed.
+- [ ] Full native-library/security/recovery/backup/OCR and ARM64/page-size platform acceptance.
+- [ ] Actual OS scaling/spoken accessibility, general stability/performance, iOS and external release gates.
+
+Owner SDK acceptance is scoped in AGENTS.md. [Evidence](quality/android-runtime-supa-large-text.md).
