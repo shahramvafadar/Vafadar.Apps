@@ -9640,3 +9640,15 @@ Reports and Home return preserve each app PID without ledger writes. This is bou
 compatibility, not full platform/security/performance/accessibility/release acceptance. Original
 setup/foreground/cleanup observer failures are retained and only incomplete work continues.
 See [runtime and large-text evidence](quality/android-runtime-supa-large-text.md).
+
+## D-520 - Original key-adapter runtime subgate
+
+The unchanged original key protector and independent fixed-identity review run on actual API24/
+4096 and API35/16384 x86_64 after D-519 SDK acceptance. One fresh run per UID completes creation,
+actual cold reopen with twelve refusals, and denied/authorized retirement without lost-key recreation.
+Six native receipts,24 tamper/binding refusals and four authority refusals add no managed test cases.
+API24 metadata is intentionally null; API35 level0 is software, not physical hardware protection.
+Preserve the command-line version-attribute and installed-digest observer failures; no phase or
+successful financial/device cohort is replayed. Retire only the new helpers and stop owned AVDs.
+No shipping source/APK or Main keys change. Full SEC/platform/authentication/iOS/release remains.
+[Original runtime evidence](quality/android-key-runtime-compatibility.md).

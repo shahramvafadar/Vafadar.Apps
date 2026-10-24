@@ -25,7 +25,7 @@ priority/order descriptions below.
 | ZCR-GOV-02 | Refresh spec §31, AGENTS.md §12 and outdated statements | 0/2 | P2 | S | Done (D-88; external confirmation/acceptance still open) | GOV-01 |
 | ZCR-SEC-01 | Threat model and encryption decision record + feasibility proof | 1 | P1 | M | In progress (D-264 Android/Windows official Community integration locally verified; iOS/external gates remain) | OD-04 approved |
 | ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | In progress (D-264 Android/Windows main encryption locally verified; iOS adoption and device gates remain) | SEC-01 |
-| ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-264 Android Keystore/Windows DPAPI per-generation keys locally verified; D-483 actual original-adapter generation/recovered security level1, cold/binding/tamper/authorized retirement on Samsung qualified in a separate UID; Main-key attestation, authentication, iOS/other device gates remain) | SEC-01 |
+| ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-264 Android Keystore/Windows DPAPI per-generation keys locally verified; D-483 actual original-adapter generation/recovered security level1, cold/binding/tamper/authorized retirement on Samsung qualified in a separate UID; D-520 original create/cold/tamper/retirement on actual API24/4096 and API35/16384 x86_64 qualified; Main-key attestation, authentication, iOS/other device gates remain) | SEC-01 |
 | ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | In progress (D-266 success-only device unlock; biometric/platform acceptance remains) | SEC-03, OD-04 |
 | ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-263 Android all-profile migration/lifecycle and native interruption cases delivered; broader fault/platform acceptance remains) | SEC-02, SEC-03 |
 | ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | In progress (D-264 Android/Windows optional recovery and explicit portable recovery locally verified; iOS/device acceptance remain) | SEC-04, OD-04 approved |
@@ -5532,3 +5532,14 @@ These close only the basic runtime-smoke subgate; full security/native-library/b
 ARM64/device, scaling/spoken access, stability/performance/iOS/provider/Store/release work remains.
 D-516 exact-head four workflows pass; its one-shot monitor is deleted. New-head CI is separate.
 See [qualification scope and preserved failures](../../quality/android-runtime-supa-large-text.md).
+
+### D-520 - API24/16KiB original key protection
+
+Complete the previously unobserved original protector create/cold/binding/tamper/authorized alias
+retirement subgate on actual x86_64 API24/4096 and API35/16384 systems. Each new UID keeps one
+original private fixture through all three phases; six phase receipts,24 negative binding cases
+and four denied retirements pass with no key export, Main access or financial writes. API24
+security-level metadata is unavailable; API35 reports software0. Existing Samsung level1 evidence
+is separate. Both new packages are removed and AVDs stopped; no shipping change or managed test
+increase. Complete database/migration/recovery/authentication/OEM/ARM64/iOS/release gates remain.
+[Evidence and preserved observer failures](../../quality/android-key-runtime-compatibility.md).

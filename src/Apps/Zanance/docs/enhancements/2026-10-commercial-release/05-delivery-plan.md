@@ -4566,3 +4566,12 @@ tall endpoints with unchanged full typed rows, without replaying normal-scale/di
 successes. Strict Windows build and standard cleanup pass without warnings. No product dependency,
 schema or permission changes; complete platform/ARM64/security/OS-scale/spoken/stability/iOS and
 external release gates remain. [Scope and original failures](../../quality/android-runtime-supa-large-text.md).
+
+### D-520 - Continue the untested native key runtime cohort
+
+The unchanged original key protector completes create, actual cold/twelve refusals and authorized
+retirement in each of the new API24/4096 and API35/16384 x86_64 environments. No accepted phone
+phase, financial setup or unrelated suite repeats. Retire new private fixtures without exporting
+keys/envelopes/digests/aliases; stop owned AVDs and clean build output. The remaining full SEC,
+ARM64/platform/authentication/biometric/OEM/iOS and external gates stay separate.
+See [bounded key compatibility](../../quality/android-key-runtime-compatibility.md).

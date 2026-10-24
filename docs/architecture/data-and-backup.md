@@ -2695,3 +2695,12 @@ The marker contains no financial value, credential or user identity. Whole-file 
 this local bookkeeping under the existing protection; logical domain exports do not add it.
 Future SQLite rebuilds of these financial tables must explicitly preserve/recreate all18 triggers.
 The EF financial/compiled model is unchanged. See the application quality evidence for limitations.
+
+### D-520 - Runtime key-adapter evidence boundary
+
+The existing Android protector's independent create/cold/tamper/retirement operations now have
+actual x86_64 API24/4096 and API35/16384 evidence. Its pre31 security metadata result remains null;
+API35 reports software0, not a hardware level. This adds no adapter/data/key algorithm or shipping
+change, and it does not imply complete encrypted-database/migration/recovery/OEM/authentication
+acceptance. Keep private fictitious expectations inside independent UIDs until final retirement.
+[Bounded compatibility](../../src/Apps/Zanance/docs/quality/android-key-runtime-compatibility.md).

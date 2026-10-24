@@ -1226,3 +1226,11 @@ permissions, Offline INTERNET absence, data model/export/financial behavior and 
 are unchanged. New AVD first-run uses fictitious zero accounts; no authentication or ledger
 posting occurs, the owned reminder explanation is declined, local proof remains private and
 matched remote XMLs/new AVD app fixtures are retired. Physical-phone data is untouched.
+
+### D-520 - Separate-UID key runtime observations
+
+Only the existing permission-free independent review package is installed on new owned AVD UIDs.
+Fictitious encrypted envelopes and private expectations stay inside those UIDs until uninstall;
+only nonsecret phase facts and OS-reported security levels leave them. No Main aliases, private
+key material, app database, account/authentication or financial data is accessed. No shipping SDK,
+permission, schema or privacy change; physical phone and original shipping candidate are untouched.

@@ -6268,3 +6268,15 @@ all-platform security/stability/accessibility/provider/Store/release remain unqu
 - Preserve pre-guest launch and observer failures; retire only new AVD fixtures and matched XMLs.
 
 See [D-519 evidence](quality/android-runtime-supa-large-text.md).
+
+### D-520 - Native key protection across two new runtimes
+
+- Pass original create/cold/retire on each x86_64 API24/4096 and API35/16384 system, retaining one
+  run per UID and proving actual helper process death before each subsequent phase.
+- Pass24 binding/tamper refusals and four denied removals; four authorized aliases stay absent
+  after unwrap refusal without replacement. Six native phase receipts are not managed test cases.
+- Preserve null security metadata on API24 and software0 on API35; no hardware-attestation claim.
+- Only public receipts leave the helpers. Main/private keys and successful phone/financial cohorts
+  remain untouched. Remove both fresh helpers and stop owned AVDs after installed digest equality.
+
+[Scope, command-line and digest-observer failures](quality/android-key-runtime-compatibility.md).

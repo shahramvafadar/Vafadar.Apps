@@ -3609,3 +3609,10 @@ SUPA Windows scale2 continuation and basic signed-app runtime smoke on actual AP
 API35/16384 x86_64 complete with zero financial writes. Keep complete platform/security/ARM64,
 Android OS scaling/spoken access and stability/performance, iOS and external gates open; the
 canonical commercial backlog and D-519 evidence define the bounded result.
+
+### D-520 - New native key runtime cohort complete
+
+Original key-protector create/cold/binding/tamper/authorized retirement completes on actual
+API24/4096 and API35/16384 x86_64 without financial writes or Main access. One retained fixture
+per new UID and six original phase receipts preserve all previously accepted phone work. Full
+SEC/platform/authentication/iOS and release acceptance remains in the canonical commercial backlog.

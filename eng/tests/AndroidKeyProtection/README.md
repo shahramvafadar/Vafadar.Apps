@@ -46,3 +46,20 @@ The D-483 physical run completes creation, cold binding/tamper checks and origin
 with source identities retained, Main unchanged and helper removed. These native scenarios are
 not a new managed test count. See
 [bounded physical evidence](../../../src/Apps/Zanance/docs/quality/physical-key-protection.md).
+
+## D-520 - Minimum-API and16KiB x86_64 qualification
+
+The existing default remains the original physical ARM64/API31 package. For a fresh independent
+compatibility cohort, override `-p:RuntimeIdentifier=android-x64` and
+`-p:SupportedOSPlatformVersion=24.0` on the same strict Release publish command, using its own
+artifact/package paths. Use24.0 rather than24: the command-line attribute needs a valid version;
+never disable the platform analyzer. Verify actual minimum API, ABI, permission absence and
+signature. The API24-minimum candidate has valid v2 and v3 signatures.
+
+ReadSecurityLevel intentionally returns null below31; the operations still run on API24. On the
+actual API35/16KiB emulator the observed value is software0. Neither establishes physical hardware
+protection or Main-key attestation. Keep one run per new UID through create/cold/retire, export only
+public facts and never private fixtures, prove old process death and do not replay accepted phases.
+The original D-483 phone cohort is retained, not repeated.
+
+[Six original phase receipts and cleanup](../../../src/Apps/Zanance/docs/quality/android-key-runtime-compatibility.md).

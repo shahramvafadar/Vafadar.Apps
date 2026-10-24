@@ -1200,3 +1200,10 @@ Isolated official emulator/API images introduce no shipping dependency, permissi
 export or financial data change. New owned AVDs use fictitious zero accounts and no ledger writes;
 physical-phone data/accounts/settings remain untouched. See the current privacy matrix and
 [D-519 qualification](../quality/android-runtime-supa-large-text.md).
+
+### D-520 - Independent key fixture boundary
+
+New AVD UIDs contain only fictitious private key expectations/envelopes. Only public phase facts
+are retained; private files/aliases are never exported, both packages are uninstalled after valid
+retirement, and Main/private keys are untouched. No production SDK/permission/data/export change.
+[Current evidence](../quality/android-key-runtime-compatibility.md).

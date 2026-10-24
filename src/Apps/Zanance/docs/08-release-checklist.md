@@ -3460,3 +3460,14 @@ runtime, security/stability/accessibility/iOS/provider/Store/publication gates.
 - [ ] Actual OS scaling/spoken accessibility, general stability/performance, iOS and external release gates.
 
 Owner SDK acceptance is scoped in AGENTS.md. [Evidence](quality/android-runtime-supa-large-text.md).
+
+### D-520 - Key-adapter minimum API and16KiB subgate
+
+- [x] Original key protector create, cold/tamper and authorized alias retirement qualify on actual
+  x86_64 API24/4096 and API35/16384 with one retained private fixture per UID.
+- [x] Private keys/envelopes/aliases/expected digests never exported; new helpers removed and
+  owned emulators stopped, existing ADB and physical Main untouched.
+- [ ] Full database/migration/backup/recovery/authentication/biometric/hardware/OEM/ARM64/iOS gates.
+
+Reported API35 software0 and API24 unavailable metadata are separate from D-483 Samsung level1.
+[Evidence](quality/android-key-runtime-compatibility.md).

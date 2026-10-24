@@ -9080,3 +9080,12 @@ zero financial writes; real OS scaling remains separate. The unchanged signed Of
 passes original first-run/empty-data navigation on actual API24/4096 and API35/16384 x86_64 AVDs.
 Basic runtime smoke is qualified; complete platform/security/ARM64/OS200%/spoken/stability/iOS/
 provider/Store/release acceptance is not. Evidence: [D-519](../quality/android-runtime-supa-large-text.md).
+
+### D-520 - Original key compatibility (Section31 continuation)
+
+Six original adapter phases on actual API24/4096 and API35/16384 x86_64 qualify creation, cold
+reopen,24 binding/tamper refusals, four denied retirements and four authorized alias removals
+without lost-key recreation. API24 level metadata is null; API35 software0 is not hardware
+attestation. No new managed tests, shipping source/permission/schema/financial change or Main key
+access. Full SEC/platform/authentication/iOS/release remains open.
+[Evidence](../quality/android-key-runtime-compatibility.md).
