@@ -2591,3 +2591,14 @@ death. Remove only an already-consumed observer marker before its next reuse. Au
 original facts and installed code before retiring new UIDs/owned AVDs. Twenty observations are ten
 barriers plus ten terminal receipts, not twenty terminal results or new managed cases.
 [Evidence and boundaries](../../src/Apps/Zanance/docs/quality/android-metadata-runtime-compatibility.md).
+
+
+### D-525 - Reuse receipt sources on the new runtime environments
+
+Opt in the existing local ReceiptCorpusRoot and ScannedReceiptRoot only for the independent
+AndroidHome Offline x86_64 Release package; keep19 exact inputs and original licence/attribution
+out of product assets. Isolate ArtifactsPath, verify API24 minimum, signatures, no network permission,
+ZIP/ELF alignment and source hashes, then run one fresh receipt-corpus and scanned-receipts cohort
+per new UID. Keep per-cohort PID and original chunked terminal report; observation expiry never
+authorizes rereading accepted documents. Audit installed code before uninstall/owned AVD shutdown.
+[Finite outcomes and cleanup](../../src/Apps/Zanance/docs/quality/android-receipt-runtime-compatibility.md).

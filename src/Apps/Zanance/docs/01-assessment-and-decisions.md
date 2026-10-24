@@ -9715,3 +9715,16 @@ code match; remove only new helpers and stop owned AVDs, preserving ADB/Main/pho
 This closes only named controlled metadata subgates, not natural power loss/hardware/OEM/ARM64,
 authentication, full platform/UI/stability/accessibility/iOS/provider/Store/release acceptance.
 See [actual metadata receipts and limits](quality/android-metadata-runtime-compatibility.md).
+
+
+### D-525 - Image/PDF native runtime compatibility
+
+The original reader/parser process ten licensed public photographs and nine fixed image-only PDFs
+once on each x86_64 API24/4096 and API35/16384 runtime. Preserve five correct Found/three Review/two
+NotFound photographs, five Latin scan totals, bounded last-page total and conflict/no-total refusals;
+Persian scan OCR remains unaccepted. Thirty-eight observations/four terminal batches add no managed
+cases. One new strict Offline signed192AOT/204ELF16KiB package, exact source assets/licence and
+installed-code digests pass; zero financial saves, no Main/phone/private-key access. Retire only new
+helpers/owned AVDs, clean isolated output and61098430bytes of unused copies, preserving signed code.
+Full camera/corpus/saved-flow/Persian-image/iOS/ARM64/stability/accessibility/provider/Store/release
+qualification remains separate. See [exact original runtime evidence](quality/android-receipt-runtime-compatibility.md).
