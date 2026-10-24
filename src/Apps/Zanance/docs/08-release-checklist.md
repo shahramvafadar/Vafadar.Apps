@@ -3298,3 +3298,11 @@ and D-496 remain intact. Main remains D-495 until D-494 terminal cleanup; the la
 APK is D-504 and includes D-497/D-499/D-500. Persian OCR, OS scaling/spoken, general stability,
 iOS/provider/Store/publication and future-day acceptance remain open. No new SDK/model/schema/
 permission/commercial restriction. [Evidence](quality/android-receipt-source-help.md).
+
+### D-506 actual next-day forecast qualification
+
+The original D-496 Samsung source completed its actual24October comparison and three one-time
+remaining financial commands. Saved80/recorded72/difference-8 and-10/-5/+7/residual0 persist after
+profile reopening. Original Main979/141 public nodes/three profiles/APK/OS are restored and only
+that temporary profile is removed. D-494 failure and newer no-reset Main adoption remain separate;
+this closes no general platform/security/stability/accessibility/Store or publication gate.

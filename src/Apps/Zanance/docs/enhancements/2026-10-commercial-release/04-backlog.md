@@ -5303,3 +5303,13 @@ and D-496 remain intact. Main remains D-495 until D-494 terminal cleanup; the la
 APK is D-504 and includes D-497/D-499/D-500. Persian OCR, OS scaling/spoken, general stability,
 iOS/provider/Store/publication and future-day acceptance remain open. No new SDK/model/schema/
 permission/commercial restriction. [Evidence](../../quality/android-receipt-source-help.md).
+
+### D-506 - Original elapsed-day Samsung forecast (D-496 complete)
+
+Completed actual24October original saved80/recorded90 comparison, one existing20 payment to70,
+and only one new expense5/income7 to72/difference-8. Components-10/-5/+7/residual0 and original
+snapshot metadata persist after profile reopening. Delete only the new inactive profile with both
+confirmations; restore original three profiles/Main25043/Home979/141 public tuples/APK/OS and
+remove137 owned hash-matched remote XMLs. No seed/snapshot/financial replay, build or unit-suite
+rerun. D-494 remains untouched/unfinished; D-497/newer Main phone adoption remains open.
+[Evidence](../../quality/physical-elapsed-forecast-comparison.md).

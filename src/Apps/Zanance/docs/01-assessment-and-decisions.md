@@ -9152,3 +9152,35 @@ prepare a path-checked elevated maintenance script with graceful shutdown, disk 
 finally restoration and before/after identity/size receipts. Syntax verification is not elevated
 runtime/health/space-recovery acceptance. No app/test/APK change or successful cohort replay.
 [Evidence](quality/docker-lifecycle.md#d-505---file-allocation-follow-up-2026-10-24).
+
+## D-506 - Actual elapsed-day forecast comparison (2026-10-24; completes D-496)
+
+Continue only the original23October Samsung D496_ElapsedForecast source on the actual24October
+clock, without replacing D-495 or touching D-494. Saved D496_NextDay stays23-31October with
+original next-day80EUR. Before new payment, day24 saved80/recorded90/difference+10 separates
+recorded-later-10 and other differences+20. Pay only the original D496_Planned20 once on24October:
+recorded70/difference-10, recorded-later-10 and residual0. Add only one original D496_Extra5 expense
+and one D496_Extra7 income on24October: recorded72/saved80/difference-8; parts-10/-5/+7/0 sum to-8.
+Original account/date/title/amount and individual pre-command/accepted receipts are retained.
+
+Reopen the same profile after returning Main:72 and original snapshot80/difference-8 persist.
+This is profile/database reopening, not a cold-process claim. Preserve the four ledger identities,
+original saved metadata and all prior successful preparation; no snapshot resave or financial
+replay. D-495 requires fresh Back/reopen for retained snapshot publication; D-497 phone adoption
+remains open because D-494 is unfinished. No candidate upgrade is performed.
+
+Return Main before deleting only the inactive owned profile through both original confirmations.
+Verify the exact original three profile names, Main25043/Home979/all141 public tuples/APK/OS;
+remove137 new owned remote XMLs only after local/remote SHA256 equality. Keep local originals.
+D-494 package/process/future requests are untouched. These observations are not new managed tests;
+no build, old test suite, authentication or unrelated accepted cohort is repeated.
+
+Retain observation failures: a Home quick-action opened an empty expense draft and was cancelled
+without input/Save; two early hierarchy captures were unavailable and continued without restart;
+account identity is on the original due-row witness rather than the occurrence editor; category
+chips do not expose a selected-name suffix; a retained transaction detail needs Back; the second
+profile-delete confirmation is generic and is bound to the first named confirmation. All failed
+guards preceded their intended input. Accepted commands are never replayed to repair observers.
+This is not whole-device/security/ANR/TalkBack/iOS/provider/Store or release acceptance.
+
+Evidence: [actual elapsed-day comparison](quality/physical-elapsed-forecast-comparison.md).
