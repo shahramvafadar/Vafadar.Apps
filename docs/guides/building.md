@@ -2569,3 +2569,14 @@ prior PID absence; never replay an accepted phase. Audit all36 records and insta
 before uninstalling only new helpers and stopping owned emulators. Private fixtures stay in their
 UID; retain existing signed code and public local evidence. No Main/phone/global SDK changes.
 See [actual cohort and limits](../../src/Apps/Zanance/docs/quality/android-profile-runtime-compatibility.md).
+
+
+### D-523 - Retain failed workload sources
+
+Use the independent protected-workload README verify-retained mode to compare an already accepted
+financial round trip without replaying it. Only an unprepared tenfold cohort may use tenfold mode;
+an existing folder refuses. Actual backup policies project a fresh encrypted rollback copy, which
+is removed after use; production key/factory/snapshot guards stay unchanged. Revision normalization
+is memory-only and limited to the validated Home singleton; every other typed value remains exact.
+Do not infer hosted failure cause from local reproduction when original hosted logs are gated.
+[Focused evidence](../../src/Apps/Zanance/docs/quality/protected-workload-revision-preservation.md).

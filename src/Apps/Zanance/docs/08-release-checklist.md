@@ -3501,3 +3501,19 @@ Full arbitrary-profile/hardware/OEM/ARM64/biometric/authentication/UI/stability/
 iOS/provider/Store/release acceptance remains open. D-521 CI/CodeQL pass; its separate Windows
 protected-workload workflow failure remains under investigation, with Android producer success
 preserved. See [bounded original runtime evidence](quality/android-profile-runtime-compatibility.md).
+
+
+### D-523 - Correct independent workload revision preservation
+
+The failed Windows qualifier step reproduces locally: deliberate validated Save/Delete operations
+restore all financial rows but correctly change HomeFinancialRevision. Keep production snapshot
+verification strict. Normalize only the validated opaque singleton in a disposable benchmark
+memory copy, then compare full schema/headers/triggers and every other typed row. Eight focused
+new cases cover round-trip/read-only acceptance and financial/schema/header/revision/boundary
+refusals. Revalidate the same retained reference from its original encrypted rollback projection
+without replaying financial commands; execute only the previously unprepared tenfold shape.
+Its four saves read back and remove exactly their own rows, and repeat admission refuses.
+No app/MAUI/Main/phone/dependency/schema/permission change or unrelated passing suite repeats.
+D-521 CI/CodeQL pass, Android producer succeeds, Windows protected measurement fails. Hosted logs
+still require owner sign-in; the local reproduced defect is not asserted as the hosted cause.
+Exact-head hosted success remains pending. See [local defect and hosted boundary](quality/protected-workload-revision-preservation.md).

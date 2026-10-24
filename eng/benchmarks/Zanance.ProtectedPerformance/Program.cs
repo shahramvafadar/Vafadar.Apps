@@ -10,14 +10,16 @@ using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Performance;
 
-if (!OperatingSystem.IsWindows() || args.Length is < 1 or > 2 || (args.Length == 2 && args[1] is not ("resume" or "ledger" or "home")))
-    throw new ArgumentException("Provide a new Windows fictitious output directory, or explicit resume/ledger/home mode.");
+if (!OperatingSystem.IsWindows() || args.Length is < 1 or > 2 || (args.Length == 2 && args[1] is not ("resume" or "ledger" or "home" or "verify-retained" or "tenfold")))
+    throw new ArgumentException("Provide a new Windows fictitious output directory, or explicit resume/ledger/home/verify-retained/tenfold mode.");
 var requested = Path.GetFullPath(args[0]);
 var allowed = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "artifacts"));
 if (!requested.StartsWith(allowed + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
     throw new IOException("Independent performance output must be inside repository artifacts.");
 var homeOnly = args.Length == 2 && args[1] == "home";
-var resume = homeOnly || (args.Length == 2 && args[1] == "resume");
+var verificationOnly = args.Length == 2 && args[1] == "verify-retained";
+var newTenfoldOnly = args.Length == 2 && args[1] == "tenfold";
+var resume = homeOnly || verificationOnly || newTenfoldOnly || (args.Length == 2 && args[1] == "resume");
 var ledgerOnly = args.Length == 2 && args[1] == "ledger";
 var root = resume ? requested : FixtureDirectory.Create(requested);
 if (!File.Exists(Path.Combine(root, "fictitious-performance.marker"))) throw new IOException("Independent root marker missing.");
@@ -26,11 +28,16 @@ for (var ancestor = new DirectoryInfo(root); ancestor is not null; ancestor = an
 SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
 using var deadline = new CancellationTokenSource(TimeSpan.FromMinutes(10)); var ct = deadline.Token;
 var results = new List<object>();
-var output = Path.Combine(root, homeOnly ? "home-measurements-" + Guid.NewGuid().ToString("N") + ".json" : "measurements.json");
+var output = Path.Combine(root, homeOnly ? "home-measurements-" + Guid.NewGuid().ToString("N") + ".json"
+    : verificationOnly ? "readonly-verification-" + Guid.NewGuid().ToString("N") + ".json"
+    : newTenfoldOnly ? "tenfold-measurements.json" : "measurements.json");
 foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
 {
+    if (newTenfoldOnly && shape == Workload.Reference) continue;
     var folder = Path.Combine(root, shape == Workload.Reference ? "reference" : "tenfold");
     var existing = resume && Directory.Exists(folder);
+    if (newTenfoldOnly && existing) throw new IOException("Tenfold-only continuation refuses already prepared data; never repeat its accepted writes.");
+    if (verificationOnly && !existing) continue; // Never seed the still-unexecuted next shape to repair an observation.
     if (homeOnly && !existing) throw new IOException("Home comparison requires both retained protected fixtures; never regenerate them.");
     if (!existing) _ = await PerformanceFixture.CreateAsync(folder, shape, ct);
     var original = Path.Combine(folder, "fixture.db");
@@ -81,7 +88,41 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
             finally { CryptographicOperations.ZeroMemory(originalKey); }
         }
         using var beforeBytes = new MemoryStream();
-        await services.GetRequiredService<IBackupSource>().WriteAsync(beforeBytes, ct);
+        if (verificationOnly)
+        {
+            // Recover the exact original portable projection from the immutable encrypted rollback.
+            // The actual backup policy/factory remains in charge; no financial write or key preparation repeats.
+            var rollback = generation.Path + ".rollback.db";
+            if (!File.Exists(rollback)) throw new IOException("Retained verification requires its original encrypted rollback.");
+            foreach (var suffix in new[] { "-wal", "-shm", "-journal" })
+                if (File.Exists(rollback + suffix)) throw new IOException("Retained rollback must be an immutable closed image.");
+            var baselinePath = Path.Combine(folder, "comparison-" + Guid.NewGuid().ToString("N") + ".db");
+            byte[] originalDigest;
+            using (var originalFile = File.OpenRead(rollback)) originalDigest = SHA256.HashData(originalFile);
+            var originalKey = await keys.ReadAsync(generation.Binding, ct);
+            try
+            {
+                File.Copy(rollback, baselinePath, overwrite: false);
+                // The original factory intentionally requires ReadWrite. Give it only a fresh encrypted
+                // copy, retaining the original rollback byte-for-byte instead of weakening that guard.
+                using var baseline = new ServiceCollection().AddZananceData(baselinePath, protectionRequired: true).BuildServiceProvider();
+                var baselineLocation = baseline.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
+                using (var owner = await baselineLocation.Access.AcquireExclusiveAsync(ct))
+                    baselineLocation.MoveToProtected(baselinePath, () => new SqliteConnection(new SqliteConnectionStringBuilder
+                    { DataSource = baselinePath, Mode = SqliteOpenMode.ReadWrite, Pooling = false,
+                        Password = Convert.ToBase64String(originalKey) }.ToString()), "4.19.0", owner);
+                await baseline.GetRequiredService<IBackupSource>().WriteAsync(beforeBytes, ct);
+            }
+            finally
+            {
+                CryptographicOperations.ZeroMemory(originalKey);
+                foreach (var suffix in new[] { "", "-wal", "-shm", "-journal" }) File.Delete(baselinePath + suffix);
+            }
+            using var retainedOriginal = File.OpenRead(rollback);
+            if (!CryptographicOperations.FixedTimeEquals(originalDigest, SHA256.HashData(retainedOriginal)))
+                throw new IOException("Retained rollback bytes changed during verification.");
+        }
+        else await services.GetRequiredService<IBackupSource>().WriteAsync(beforeBytes, ct);
         beforeBytes.Position = 0;
         await using var beforePortable = await SqliteMemorySnapshot.OpenAsync(beforeBytes, 256 * 1024 * 1024, ct);
         var store = services.GetRequiredService<ZananceStore>(); var plans = services.GetRequiredService<PlanStore>();
@@ -95,7 +136,8 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
         }
         var searchCounts = new Dictionary<string, int>();
         var savedTimes = new List<double>();
-        if (homeOnly)
+        if (verificationOnly) { /* Original accepted writes/timers are deliberately not replayed. */ }
+        else if (homeOnly)
         {
             var goals = services.GetRequiredService<GoalStore>(); var holdings = services.GetRequiredService<HoldingStore>();
             string? originalPacket = null;
@@ -192,15 +234,21 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
         await using var portable = await SqliteMemorySnapshot.OpenAsync(afterBytes, 256 * 1024 * 1024, ct);
         // Portable exports intentionally omit private sync/household rows and their sequence metadata.
         // Compare the complete original portable projection, not that projection against a raw private rollback.
-        await SqliteSnapshotVerifier.VerifyAsync(beforePortable.Connection, portable.Connection, ct);
+        var expectedRevisionChange = verificationOnly || savedTimes.Count != 0;
+        await WorkloadSnapshotVerifier.VerifyAsync(beforePortable.Connection, portable.Connection,
+            acceptedWrites: expectedRevisionChange, ct);
         results.Add(new { Shape = shape, ExistingFixtureResumed = existing, ProtectedPreparationMs = migrationMs,
             FirstThenThreeWarmMilliseconds = metrics, CompleteMigrationSchemaAndTypedRowsUnchanged = !existing,
-            CompletePortableSchemaAndTypedRowsUnchanged = true,
+            CompletePortableSchemaAndTypedRowsUnchanged = !expectedRevisionChange,
+            CompletePortableFinancialSchemaAndTypedRowsUnchanged = true,
+            OnlyValidatedOpaqueRevisionNormalized = expectedRevisionChange,
             SearchResultCounts = searchCounts, SavedRowsReadBackAndRemoved = savedTimes.Count,
             PlaintextOriginalRemoved = !File.Exists(original), CipherBytes = new FileInfo(generation.Path).Length });
     }
     await File.WriteAllTextAsync(output, JsonSerializer.Serialize(new
-    { Results = results, LedgerOnly = ledgerOnly, HomeOnly = homeOnly, CipherVersion = "4.19.0", ActualProductionAssemblies = true,
+    { Results = results, LedgerOnly = ledgerOnly, HomeOnly = homeOnly, VerificationOnly = verificationOnly, NewTenfoldOnly = newTenfoldOnly,
+        CipherVersion = "4.19.0", ActualProductionAssemblies = true,
         NativeUiOrDeviceAcceptance = false }, new JsonSerializerOptions { WriteIndented = true }), ct);
 }
-Console.WriteLine("Independent protected reference and tenfold workloads completed with unchanged financial data: " + output);
+if (results.Count == 0) throw new IOException("No retained workload was verified.");
+Console.WriteLine($"Independent protected verification completed for {results.Count} workload(s), verification-only={verificationOnly}: " + output);

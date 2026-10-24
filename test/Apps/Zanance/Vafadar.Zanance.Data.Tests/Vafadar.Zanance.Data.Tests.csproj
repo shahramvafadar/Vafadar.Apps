@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <Compile Include="../FinancialSnapshotAssert.cs" Link="Infrastructure/FinancialSnapshotAssert.cs" />
+    <Compile Include="../../../../eng/benchmarks/Zanance.ProtectedPerformance/WorkloadSnapshotVerifier.cs" Link="Performance/WorkloadSnapshotVerifier.cs" />
     <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" />
     <ProjectReference Include="..\..\..\..\src\Apps\Zanance\Vafadar.Zanance.Data\Vafadar.Zanance.Data.csproj" />
     <ProjectReference Include="..\..\..\..\src\Libraries\Vafadar.Localization\Vafadar.Localization.csproj" />

@@ -69,3 +69,37 @@ rate reads follow the actual enabled/multi-currency boundary. No search/save/unc
 Complete final logical preservation is still verified. Each run writes a separate home-measurements-<id>.json.
 Normal full hosted runs include the current complete Home read/validation cohort; ledger mode remains unchanged.
 The comparison is not MAUI rendering, full cold launch or a physical-device two-second measurement.
+
+## D-523 - Preserve financial data across deliberate round-trip writes
+
+HomeFinancialRevision is an opaque local concurrency token. A successful Save followed by Delete must
+change it even when all money and rows return to their original values. The benchmark comparator checks
+the original singleton integer identity and complete lowercase hexadecimal token, requires a changed
+token only after accepted writes, and normalizes exactly that field in a disposable memory copy.
+The unchanged production SqliteSnapshotVerifier still compares complete schema, headers, triggers and
+every other typed value. Original snapshots, financial values and production restore validation remain
+strict. Missing/extra/malformed revision rows, financial edits, schema/header changes and an incorrect
+accepted-write boundary must refuse.
+
+After a failed terminal comparison, preserve its existing fictitious generation and original rollback:
+
+```powershell
+dotnet run --project eng/benchmarks/Zanance.ProtectedPerformance -c Release --no-build -- artifacts/protected-failed-run verify-retained
+```
+
+This performs no financial commands or timing samples and does not create a missing workload. It uses
+the actual backup projection on a fresh encrypted copy of the original rollback, retains original-file
+digest equality, deletes only that copy, and compares with the current original generation. The actual
+protected factory's ReadWrite requirement is preserved; a ReadOnly creator is correctly refused.
+No private key or plaintext snapshot is exported. Each result has its own readonly-verification file.
+
+If reference completed its commands but tenfold was never prepared, explicitly continue only tenfold:
+
+```powershell
+dotnet run --project eng/benchmarks/Zanance.ProtectedPerformance -c Release --no-build -- artifacts/protected-failed-run tenfold
+```
+
+This skips reference and refuses an already existing tenfold folder. It cannot authorize re-running
+accepted writes after a later tenfold failure; use verification-only mode for that source. The original
+failure, old timings and new continuation receipts remain distinct. Hosted failure attribution requires
+its actual logs; a locally reproduced snapshot failure alone is not that attribution.
