@@ -9100,3 +9100,21 @@ unfinished observation uses exact retained source copies. Both late host-poll fa
 recorded. Shipping source/schema/dependencies/APK stay unchanged. Full all-profile/hardware/OEM/
 ARM64/authentication/iOS/general stability/accessibility/release remains separate.
 [Evidence](../quality/android-storage-runtime-compatibility.md).
+
+
+### D-522 - Native profile and restore runtime subgates
+
+Nine original two-profile/multi-generation cohorts pass in18 native phase receipts on each
+actual x86_64 API24/4096 and API35/16384 system. Covered startup, interrupted creation, missing
+envelopes, wrapping-alias loss, recovered retirement, validated/retained-preference restore,
+pending-reference refusal and consecutive restore recovery preserve original model/money/key
+invariants through proven cold process transitions. Reuse the complete D-521 signed package;
+zero new managed cases, no source/schema/permission/shipping change or repeated passing build.
+Prepare fictitious rows once per required new cohort; no accepted financial command is replayed.
+Installed public bytes match, only the new helpers are uninstalled and owned AVDs stopped.
+Physical Main/private keys, general SDK and existing ADB remain outside this turn.
+
+Full arbitrary-profile/hardware/OEM/ARM64/biometric/authentication/UI/stability/accessibility,
+iOS/provider/Store/release acceptance remains open. D-521 CI/CodeQL pass; its separate Windows
+protected-workload workflow failure remains under investigation, with Android producer success
+preserved. See [bounded original runtime evidence](../quality/android-profile-runtime-compatibility.md).

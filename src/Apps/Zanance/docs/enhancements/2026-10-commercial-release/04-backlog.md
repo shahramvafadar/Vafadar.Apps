@@ -27,8 +27,8 @@ priority/order descriptions below.
 | ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | In progress (D-264 Android/Windows main encryption locally verified; D-521 original schema/typed-row snapshot checks on actual x86_64 API24/4096 and API35/16384 qualified in separate UIDs; iOS adoption and wider device gates remain) | SEC-01 |
 | ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-264 Android Keystore/Windows DPAPI per-generation keys locally verified; D-483 actual original-adapter generation/recovered security level1, cold/binding/tamper/authorized retirement on Samsung qualified in a separate UID; D-520 original create/cold/tamper/retirement on actual API24/4096 and API35/16384 x86_64 qualified; Main-key attestation, authentication, iOS/other device gates remain) | SEC-01 |
 | ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | In progress (D-266 success-only device unlock; biometric/platform acceptance remains) | SEC-03, OD-04 |
-| ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-263 Android all-profile migration/lifecycle delivered; D-521 independent single-profile candidate/selection/missing-key controlled faults on actual x86_64 API24/4096 and API35/16384 qualified; wider all-profile/hardware/OEM/platform acceptance remains) | SEC-02, SEC-03 |
-| ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | In progress (D-264 Android/Windows optional recovery and explicit portable recovery locally verified; D-521 independent protected cold recovery with missing device envelope and wrong/damaged vault refusal on actual x86_64 API24/4096 and API35/16384 qualified; full authentication/iOS/device acceptance remains) | SEC-04, OD-04 approved |
+| ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-263 Android all-profile migration/lifecycle delivered; D-521 controlled storage faults and D-522 original two-profile startup/interrupted creation on actual x86_64 API24/4096 and API35/16384 qualified; arbitrary-profile/hardware/OEM/platform acceptance remains) | SEC-02, SEC-03 |
+| ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | In progress (D-264 Android/Windows optional recovery and explicit portable recovery locally verified; D-521 protected cold recovery and D-522 multiple missing envelopes/alias loss/recovered retirement/consecutive portable restores on actual x86_64 API24/4096 and API35/16384 qualified; full authentication/iOS/device acceptance remains) | SEC-04, OD-04 approved |
 | ZCR-SEC-07 | Final OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | In progress (D-263 final coupled Android policy delivered; iOS exclusion/OEM acceptance remain) | OD-10 approved |
 | ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | In progress (D-264 local Android/Windows; D-312 actual Samsung safety recovery and profile isolation verified; broader device/iOS gates remain) | SEC-03 |
 | ZCR-SEC-10 | Owner-approved PIN, screenshot choice and ownership clarification (D-63) | Maintenance | P1 | M | Done | Owner request 2026-10-08 |
@@ -5557,3 +5557,21 @@ Both new UIDs are retired and owned AVDs stopped;216029526bytes of unused new co
 No shipping/Main/phone change or private key export. All-profile/hardware/OEM/ARM64/authentication,
 broader UI/stability/accessibility/iOS/provider/Store/release gates remain.
 [Evidence and controller boundaries](../../quality/android-storage-runtime-compatibility.md).
+
+
+### D-522 - Native profile and restore runtime subgates
+
+Nine original two-profile/multi-generation cohorts pass in18 native phase receipts on each
+actual x86_64 API24/4096 and API35/16384 system. Covered startup, interrupted creation, missing
+envelopes, wrapping-alias loss, recovered retirement, validated/retained-preference restore,
+pending-reference refusal and consecutive restore recovery preserve original model/money/key
+invariants through proven cold process transitions. Reuse the complete D-521 signed package;
+zero new managed cases, no source/schema/permission/shipping change or repeated passing build.
+Prepare fictitious rows once per required new cohort; no accepted financial command is replayed.
+Installed public bytes match, only the new helpers are uninstalled and owned AVDs stopped.
+Physical Main/private keys, general SDK and existing ADB remain outside this turn.
+
+Full arbitrary-profile/hardware/OEM/ARM64/biometric/authentication/UI/stability/accessibility,
+iOS/provider/Store/release acceptance remains open. D-521 CI/CodeQL pass; its separate Windows
+protected-workload workflow failure remains under investigation, with Android producer success
+preserved. See [bounded original runtime evidence](../../quality/android-profile-runtime-compatibility.md).

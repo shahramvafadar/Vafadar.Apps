@@ -56,3 +56,14 @@ and avoid another financial seed. Both old late observations remain failed; succ
 phone and financial cohorts are not repeated. The intentionally debuggable helper and private
 fixtures remain outside Main; only public phase facts leave its own UID.
 [Native evidence and cleanup](../../../src/Apps/Zanance/docs/quality/android-storage-runtime-compatibility.md).
+
+
+### D-522 - Reuse the qualified package for profile runtime cohorts
+
+Reuse D-521 signed441faf38 without rebuilding for nine previously unobserved original profile/
+restore cohorts on each isolated API24/4096 and API35/16384 x86_64 runtime. Preserve each owned
+source run across its cold phases, claim a fresh public receipt nonce before dispatch and prove
+prior PID absence; never replay an accepted phase. Audit all36 records and installed public code
+before uninstalling only new helpers and stopping owned emulators. Private fixtures stay in their
+UID; retain existing signed code and public local evidence. No Main/phone/global SDK changes.
+See [actual cohort and limits](../../../src/Apps/Zanance/docs/quality/android-profile-runtime-compatibility.md).
