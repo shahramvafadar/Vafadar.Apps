@@ -3544,6 +3544,20 @@ Full camera/corpus/saved-flow/Persian-image/iOS/ARM64/stability/accessibility/pr
 qualification remains separate. See [exact original runtime evidence](quality/android-receipt-runtime-compatibility.md).
 
 
+### D-526 - Original physical SUPA import and durable Undo
+
+One new fictitious Samsung profile/account opens900EUR. The owner selects the exact original
+SUPA CSV in the external picker; actual full source/target/two-row review, original consent and
+one confirmation import30/-7.50, preserving quoted/UTF-8/CRLF narrative, two unreviewed ledger
+rows and Home922.50. One proven cached16616 death and COLD24834 preserve that same data and
+original durable batch; one original confirmed Undo returns900/All-history empty. Return Main979,
+delete only the fresh inactive profile with both confirmations, and preserve original three
+profiles/all141 public tuples/installed D-516 hash/OS/timeout300000. Delete97 owned hash-matched
+XMLs and one owned CSV; keep local receipts and all guard refusals. Zero new managed cases,
+financial replay, production changes, builds or passing-suite repeats. All bank/customer-file/
+platform/security/stability/accessibility/iOS/provider/Store/release gates remain separately open.
+See [original financial, cold, Undo and restoration evidence](quality/physical-supa-import-undo.md).
+
 ### D-527 - Home timing remains unaccepted
 
 The independent Windows home-stages mode separates actual complete Home reading from final source

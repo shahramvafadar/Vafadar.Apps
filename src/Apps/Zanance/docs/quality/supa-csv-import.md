@@ -144,3 +144,12 @@ Original bank/customer files and external picker, API24/16KiB runtime terms, gen
 whole-Home performance, spoken accessibility, Mac/iOS, provider/Store/expert and publication remain
 separate open gates. No old successful business suite, financial cohort or rejected performance
 experiment is repeated.
+
+
+## D-526 - Later original Samsung financial acceptance
+
+The owner-selected original SUPA file now completes one actual Samsung import, preserved cold
+read and durable Undo with opening900 ->922.50 ->900, original full narrative and Main restoration.
+This closes that finite original file/import/Undo subgate; customer files/banks/other relationships
+and full platform/release acceptance remain open. No successful D-516 suite/build/financial cohort
+is repeated. See [complete later receipts and limits](physical-supa-import-undo.md).

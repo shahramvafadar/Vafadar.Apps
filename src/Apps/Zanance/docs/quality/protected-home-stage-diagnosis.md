@@ -60,3 +60,8 @@ Android ANR cause or predict native UI costs. D-470 remains the actual loaded-ph
 Full Home/first-paint/cold/low-memory, two-second acceptance, general ANR/crash, audible accessibility,
 physical SUPA import/Undo, iOS, provider/Store/expert and publication gates remain open. D-526's
 profile, opening900EUR, empty ledger and pending source-selection checkpoint remain independent.
+
+
+D-526 subsequently completes the separate original Samsung SUPA file/import/cold/durable-Undo
+cohort and exact Main restoration. See [its actual financial evidence and limits](physical-supa-import-undo.md);
+it does not extend the Windows store timers above into Android performance acceptance.
