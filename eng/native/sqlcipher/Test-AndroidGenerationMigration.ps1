@@ -25,6 +25,7 @@ if ($StartupNotification -and -not $FreshStartup) { throw 'Startup notification 
 if ($RestoreSession -and -not $FreshStartup) { throw 'Restore-session check requires fresh-startup mode.' }
 if ($ProfileDeletionGuard -and -not $ProtectedStartup) { throw 'Deletion guard check requires protected-startup mode.' }
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
+Import-Module (Join-Path $PSScriptRoot 'AndroidExportObservation.psm1') -Force
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
 $candidate = Join-Path $root 'candidate'
 $manifest = Get-Content -LiteralPath (Join-Path $candidate 'manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json
@@ -67,28 +68,40 @@ function Invoke-OwnedMigration([string]$Phase, [string]$Identity, [string]$Barri
         & $adb -P $AdbPort -s $DeviceSerial shell run-as $package rm -f ('files/native-compatibility/migration-proofs/' + $Identity + '/metadata-staged.json')
         if ($LASTEXITCODE -ne 0) { throw 'Owned metadata barrier cleanup failed.' }
     }
+    $exportObservation = $null
+    if ($Barrier -eq 'export') {
+        $retainedFolder = 'files/native-compatibility/migration-proofs/' + $Identity
+        $name = (& $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat ($retainedFolder + '/candidate-path.txt') | Out-String).Trim()
+        if ($name -notmatch '^profile\.db\.[0-9a-f]{32}\.cipher\.db$') { throw 'Unexpected owned candidate filename.' }
+        $observationPath = Join-Path $root ('android-export-observation-' + [Guid]::NewGuid().ToString('N') + '.log')
+        $exportObservation = Start-OwnedAndroidExportObservation -AdbPath $adb -AdbPort $AdbPort -DeviceSerial $DeviceSerial `
+            -CandidatePath ($retainedFolder + '/' + $name) -ReportPath $observationPath
+    }
     & $adb -P $AdbPort -s $DeviceSerial shell am start -W -n $activity --es migration_phase $Phase --es migration_run $Identity | Out-Host
-    if ($LASTEXITCODE -ne 0) { throw 'Owned migration launch failed.' }
+    $launchExitCode = $LASTEXITCODE
+    if ($null -ne $exportObservation) {
+        # The armed observer deliberately terminates this Activity while am start may still be waiting.
+        $observed = Complete-OwnedAndroidExportObservation -Observation $exportObservation
+        if ($observed.Pending) { throw 'The same export observer is still live; preserve its handle and original fixture.' }
+        if ((& $adb -P $AdbPort -s $DeviceSerial shell pidof $package | Out-String).Trim()) {
+            throw 'The exact owned export process survived its observed termination.'
+        }
+        return $observed
+    }
+    if ($launchExitCode -ne 0) { throw 'Owned migration launch failed.' }
     $folder = 'files/native-compatibility/migration-proofs/' + $Identity
     $report = $null
     $maximumAttempts = if ($Phase -in @('validated-restore-create','validated-restore-reopen','retained-preselect-create','retained-preselect-reopen','retained-preferences-create','retained-preferences-reopen','recovery-chain-repair','recovery-chain-create','recovery-chain-reopen','recovery-pending-reference','alias-loss-future','alias-loss-create','alias-loss-reopen','all-profile-recovery-create','all-profile-recovery-reopen','recovered-retirement-create','recovered-retirement-reopen','recovery-import','recovery-native','recovery-retirement-create','recovery-retirement-reopen','recovery-create','recovery-reopen','profile-creation-pending','profile-creation-resume','profile-retirement-create','profile-retirement-reopen','retirement-discovery-resume','retirement-discovery','retirement-negatives','retirement-create','retirement-reopen','fresh-startup-create','fresh-startup-reopen','fresh-startup-notification','restore-session','restore-session-reopen')) { 600 } elseif ($Barrier -in @('restore-selected','package-partial','identity-staged','metadata-staged','new-profile-key') -or $Phase -in @('profile-maintenance','bootstrap-intent','bootstrap-create','all-profiles-create','all-profiles-reopen','new-profile-create','new-profile-resume','new-profile-reopen','profile-create-flow','profile-create-cold','safety-create','safety-reopen','startup-create','startup-reopen','fresh-startup-create','fresh-startup-reopen')) { 300 } else { 100 }
     for ($attempt=0; $attempt -lt $maximumAttempts; $attempt++) {
-        if ($Barrier -eq 'export') {
-            $name = (& $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat ($folder + '/candidate-path.txt') | Out-String).Trim()
-            if ($name -notmatch '^profile\.db\.[0-9a-f]{32}\.cipher\.db$') { throw 'Unexpected owned candidate filename.' }
-            & $adb -P $AdbPort -s $DeviceSerial shell run-as $package test -e ($folder + '/' + $name)
-            if ($LASTEXITCODE -eq 0) { $report = [pscustomobject]@{ ActualCandidateCreationObserved = $true }; break }
-        } else {
-            $path = if ($Barrier -in @('selected','restore-selected','package-partial','identity-staged','metadata-staged','new-profile-key')) { $folder + $(if ($Barrier -eq 'new-profile-key') { '/new-profile-key.json' } elseif ($Barrier -eq 'metadata-staged') { '/metadata-staged.json' } elseif ($Barrier -eq 'identity-staged') { '/identity-staged.json' } elseif ($Barrier -eq 'restore-selected') { '/restore-selected.json' } elseif ($Barrier -eq 'package-partial') { '/package-partial.json' } else { '/ready-selected.json' }) } else { 'files/result.json' }
-            $value = & $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat $path 2>$null
-            if ($LASTEXITCODE -eq 0) { $report = ($value | Out-String) | ConvertFrom-Json; break }
-        }
+        $path = if ($Barrier -in @('selected','restore-selected','package-partial','identity-staged','metadata-staged','new-profile-key')) { $folder + $(if ($Barrier -eq 'new-profile-key') { '/new-profile-key.json' } elseif ($Barrier -eq 'metadata-staged') { '/metadata-staged.json' } elseif ($Barrier -eq 'identity-staged') { '/identity-staged.json' } elseif ($Barrier -eq 'restore-selected') { '/restore-selected.json' } elseif ($Barrier -eq 'package-partial') { '/package-partial.json' } else { '/ready-selected.json' }) } else { 'files/result.json' }
+        $value = & $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat $path 2>$null
+        if ($LASTEXITCODE -eq 0) { $report = ($value | Out-String) | ConvertFrom-Json; break }
         if ((& $adb -P $AdbPort -s $DeviceSerial shell pidof $package | Out-String).Trim() -notmatch '^\d+$') {
             # A single failed/empty adb observation is not process death. Revalidate the same package,
             # then read its exact completion target again before reporting a terminal missing process.
             $live = (& $adb -P $AdbPort -s $DeviceSerial shell pidof $package | Out-String).Trim()
             if ($live -notmatch '^\d+$') {
-                $completion = if ($Barrier -eq 'export') { 'files/result.json' } else { $path }
+                $completion = $path
                 $finished = & $adb -P $AdbPort -s $DeviceSerial shell run-as $package cat $completion 2>$null
                 if ($LASTEXITCODE -eq 0) { $report = ($finished | Out-String) | ConvertFrom-Json; break }
                 throw 'Owned migration ended without evidence after revalidation.'

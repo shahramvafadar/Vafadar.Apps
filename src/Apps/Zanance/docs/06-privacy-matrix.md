@@ -1234,3 +1234,14 @@ Fictitious encrypted envelopes and private expectations stay inside those UIDs u
 only nonsecret phase facts and OS-reported security levels leave them. No Main aliases, private
 key material, app database, account/authentication or financial data is accessed. No shipping SDK,
 permission, schema or privacy change; physical phone and original shipping candidate are untouched.
+
+### D-521 - Independent storage/recovery fixtures only
+
+The fixed debuggable native review identity uses its own new AVD UIDs and actual original storage
+sources; Main never references it. Only its own signature receiver permission is declared, not
+INTERNET. Synthetic financial rows are prepared once in each necessary new-platform fixture;
+source continuation copies exact retained bytes without new ledger seeding. Private keys,
+envelopes/aliases/private digest expectations stay inside the helper; only boolean phase facts,
+public APK hashes and OS metadata leave it. Uninstall removes the new app fixtures without a
+claim of secure erasure. No production SDK, permission, schema, export or privacy change, and no
+physical-phone/Main key access. Preserve the explicit broader security/OEM/release boundaries.

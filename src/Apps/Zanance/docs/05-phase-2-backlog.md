@@ -3616,3 +3616,11 @@ Original key-protector create/cold/binding/tamper/authorized retirement complete
 API24/4096 and API35/16384 x86_64 without financial writes or Main access. One retained fixture
 per new UID and six original phase receipts preserve all previously accepted phone work. Full
 SEC/platform/authentication/iOS and release acceptance remains in the canonical commercial backlog.
+
+### D-521 - Actual storage runtime cohort
+
+Original schema51, encrypted snapshots/typed rows, controlled candidate/selection process faults,
+missing-key no-fallback and protected recovery qualify on actual x86_64 API24/4096 and API35/16384.
+Retain32final-cohort records, old failed polling windows and existing source/financial checkpoints;
+no managed test increase. Canonical backlog still owns full multi-profile/hardware/OEM/ARM64/
+authentication/iOS and external release gates.

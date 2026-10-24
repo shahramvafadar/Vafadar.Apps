@@ -24,11 +24,11 @@ priority/order descriptions below.
 | ZCR-GOV-01 | Audit, plan matrix, architecture, backlog and delivery plan | 0 | P1 | M | Done | – |
 | ZCR-GOV-02 | Refresh spec §31, AGENTS.md §12 and outdated statements | 0/2 | P2 | S | Done (D-88; external confirmation/acceptance still open) | GOV-01 |
 | ZCR-SEC-01 | Threat model and encryption decision record + feasibility proof | 1 | P1 | M | In progress (D-264 Android/Windows official Community integration locally verified; iOS/external gates remain) | OD-04 approved |
-| ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | In progress (D-264 Android/Windows main encryption locally verified; iOS adoption and device gates remain) | SEC-01 |
+| ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | In progress (D-264 Android/Windows main encryption locally verified; D-521 original schema/typed-row snapshot checks on actual x86_64 API24/4096 and API35/16384 qualified in separate UIDs; iOS adoption and wider device gates remain) | SEC-01 |
 | ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-264 Android Keystore/Windows DPAPI per-generation keys locally verified; D-483 actual original-adapter generation/recovered security level1, cold/binding/tamper/authorized retirement on Samsung qualified in a separate UID; D-520 original create/cold/tamper/retirement on actual API24/4096 and API35/16384 x86_64 qualified; Main-key attestation, authentication, iOS/other device gates remain) | SEC-01 |
 | ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | In progress (D-266 success-only device unlock; biometric/platform acceptance remains) | SEC-03, OD-04 |
-| ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-263 Android all-profile migration/lifecycle and native interruption cases delivered; broader fault/platform acceptance remains) | SEC-02, SEC-03 |
-| ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | In progress (D-264 Android/Windows optional recovery and explicit portable recovery locally verified; iOS/device acceptance remain) | SEC-04, OD-04 approved |
+| ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-263 Android all-profile migration/lifecycle delivered; D-521 independent single-profile candidate/selection/missing-key controlled faults on actual x86_64 API24/4096 and API35/16384 qualified; wider all-profile/hardware/OEM/platform acceptance remains) | SEC-02, SEC-03 |
+| ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | In progress (D-264 Android/Windows optional recovery and explicit portable recovery locally verified; D-521 independent protected cold recovery with missing device envelope and wrong/damaged vault refusal on actual x86_64 API24/4096 and API35/16384 qualified; full authentication/iOS/device acceptance remains) | SEC-04, OD-04 approved |
 | ZCR-SEC-07 | Final OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | In progress (D-263 final coupled Android policy delivered; iOS exclusion/OEM acceptance remain) | OD-10 approved |
 | ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | In progress (D-264 local Android/Windows; D-312 actual Samsung safety recovery and profile isolation verified; broader device/iOS gates remain) | SEC-03 |
 | ZCR-SEC-10 | Owner-approved PIN, screenshot choice and ownership clarification (D-63) | Maintenance | P1 | M | Done | Owner request 2026-10-08 |
@@ -5543,3 +5543,17 @@ security-level metadata is unavailable; API35 reports software0. Existing Samsun
 is separate. Both new packages are removed and AVDs stopped; no shipping change or managed test
 increase. Complete database/migration/recovery/authentication/OEM/ARM64/iOS/release gates remain.
 [Evidence and preserved observer failures](../../quality/android-key-runtime-compatibility.md).
+
+### D-521 - Independent encrypted-storage minimum-API/16KiB qualification
+
+Actual original model/51 migrations, missing/wrong-key/tamper refusal, encrypted portable staging,
+controlled candidate/selection interruption, no replacement on lost key and cold protected recovery
+qualify on x86_64 API24/4096 and API35/16384. Thirty-two final-cohort records and two original
+continuations retain all accepted source/financial work; zero new managed test cases. Initial
+late host-poll assertions remain failed observations. The corrected prearmed controller and exact
+retained source copies acquire only incomplete evidence without seeding another financial row.
+
+Both new UIDs are retired and owned AVDs stopped;216029526bytes of unused new copies are removed.
+No shipping/Main/phone change or private key export. All-profile/hardware/OEM/ARM64/authentication,
+broader UI/stability/accessibility/iOS/provider/Store/release gates remain.
+[Evidence and controller boundaries](../../quality/android-storage-runtime-compatibility.md).

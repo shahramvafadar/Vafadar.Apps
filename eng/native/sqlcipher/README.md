@@ -43,3 +43,16 @@ job environment before native/consumer work. Installation18.11.12315.225 with re
 compiler selects hosted20261021/candidate.9. Unknown or wrong host/compiler pairs refuse selection.
 Ordinary main/PR consumers retain their full source-build, archive, persistence and workload gates;
 the downloaded producer package is evidence, never a replacement source-built consumer feed.
+
+## D-521 - Actual API24/16KiB storage and controller evidence
+
+The immutable current Android native slices are reused, not rebuilt or repackaged. The independent
+103AOT x86_64 compatibility APK qualifies actual original model/migrations/snapshots, controlled
+candidate/selection process interruption, missing-key refusal and protected recovery on actual
+API24/4096 and API35/16384. A late host poll is not an export barrier: use the shared guarded
+AndroidExportObservation module to arm before launch and validate original KeyPrepared afterward.
+Read-only checkpoint diagnosis and explicit retained-source adoption preserve failed observations
+and avoid another financial seed. Both old late observations remain failed; successful source,
+phone and financial cohorts are not repeated. The intentionally debuggable helper and private
+fixtures remain outside Main; only public phase facts leave its own UID.
+[Native evidence and cleanup](../../../src/Apps/Zanance/docs/quality/android-storage-runtime-compatibility.md).

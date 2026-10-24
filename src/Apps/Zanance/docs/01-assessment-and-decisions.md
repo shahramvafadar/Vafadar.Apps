@@ -9652,3 +9652,20 @@ Preserve the command-line version-attribute and installed-digest observer failur
 successful financial/device cohort is replayed. Retire only the new helpers and stop owned AVDs.
 No shipping source/APK or Main keys change. Full SEC/platform/authentication/iOS/release remains.
 [Original runtime evidence](quality/android-key-runtime-compatibility.md).
+
+## D-521 - Actual storage runtime cohort and prearmed export observation
+
+The original Data/Shared compiled model and all51 migrations, encrypted snapshot/typed rows,
+selected cold migration, missing-key refusal and recovery qualify on actual x86_64 API24/4096
+and API35/16384. Each has16 final-cohort records; synthetic rows are prepared once per required
+new-platform case, no accepted financial command or phone source repeats. Exact retained source
+copies continue the unfinished export observation without new financial seeding.
+
+The old host poll reaches Selected/CandidateVerified before stopping and correctly fails its
+KeyPrepared assertion. Preserve both failures. Add read-only checkpoint observation and fixed-UID
+source adoption in the independent helper, and arm a guarded device-local observer before launch.
+The native post-kill check then proves original source/key preservation at KeyPrepared and the
+same migration completes. Ten controller contracts and two additional original continuations
+pass. No production source/APK changes; Main keys/phone stay outside scope. Full multi-profile,
+hardware/OEM/authentication/ARM64/iOS/performance/accessibility/release gates remain.
+[Whole cohort, actual failures and cleanup](quality/android-storage-runtime-compatibility.md).

@@ -6280,3 +6280,18 @@ See [D-519 evidence](quality/android-runtime-supa-large-text.md).
   remain untouched. Remove both fresh helpers and stop owned AVDs after installed digest equality.
 
 [Scope, command-line and digest-observer failures](quality/android-key-runtime-compatibility.md).
+
+### D-521 - Original storage and controlled-fault runtime cohort
+
+- Pass original first-schema through51migrations, compiled model, full typed-row portable staging,
+  correct/wrong/missing keys, changed-page refusal and no plaintext markers on both new runtimes.
+- Pass actual prearmed candidate/Selected process death and cold continuation, missing selected key
+  with no replacement/plaintext fallback, and protected cold recovery with damaged/wrong vault refusal.
+- Retain32final-cohort records, two late-original continuations and two read-only diagnostics;
+  preserve two old host-poll failures. Exact source copies avoid new financial seeding.
+- Pass ten targeted controller contracts. PS7 native execution and actual5.1 syntax-only evidence
+  remain distinct; no execution-policy change or override.
+- Remove only new helper UIDs, stop owned AVDs and unused copies; keep private fixtures off the host.
+
+No managed count increase or broad Main/all-profile/hardware/OEM/ARM64/iOS/release acceptance.
+[Evidence](quality/android-storage-runtime-compatibility.md).

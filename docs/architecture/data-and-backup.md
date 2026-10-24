@@ -2704,3 +2704,13 @@ API35 reports software0, not a hardware level. This adds no adapter/data/key alg
 change, and it does not imply complete encrypted-database/migration/recovery/OEM/authentication
 acceptance. Keep private fictitious expectations inside independent UIDs until final retirement.
 [Bounded compatibility](../../src/Apps/Zanance/docs/quality/android-key-runtime-compatibility.md).
+
+### D-521 - Controlled process faults on actual storage runtimes
+
+The unchanged original compiled model/51 migrations, typed-row portable staging and encrypted
+migration/recovery implementations qualify in separate UIDs on actual x86_64 API24/4096 and
+API35/16384. An existing-only source copy is hash-checked internally without financial reseeding.
+The independent controller arms before Activity wait/host latency, proves actual KeyPrepared or
+Selected interruption and retains the same source/key on continuation. It does not change product
+storage or accept all-profile/natural-power-loss/hardware/OEM/authentication/iOS boundaries.
+[Evidence](../../src/Apps/Zanance/docs/quality/android-storage-runtime-compatibility.md).

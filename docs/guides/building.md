@@ -2541,3 +2541,20 @@ copy of the original SQLite checkpoint, no accepted source/account/financial set
 DEBUG Windows review records actual native ratios and tall endpoints and skips unchanged Help/
 financial confirmation dialogs. Never interpret this mode as real OS scale or platform acceptance.
 See [D-519 evidence](../../src/Apps/Zanance/docs/quality/android-runtime-supa-large-text.md).
+
+### D-521 - Prearmed independent migration observation
+
+Use AndroidExportObservation.psm1 for the original fixed nativecompatibility identity. Require
+an absent strict owned candidate path and fresh report/metadata. Arm before am start -W; a host
+poll afterwards can already be after verification or selection. Pending keeps the same actual
+process handle, and a retained report/PID must be revalidated rather than relaunching. Use shared
+read access for the active redirect writer. Keep unavailable reattached exit metadata explicit;
+native candidate/PID/STOPPED and independent package-absence proofs remain mandatory.
+
+The helper's migration-inspect-interruption phase returns only retained journal/file booleans.
+For a necessary unexecuted observation, migration-adopt-source accepts only an explicit other
+owned run through migration_source_run, preserves exact plaintext-source bytes and current
+migrations, and does not invoke the financial seed. Never adopt an arbitrary/Main path or replay
+an accepted phase. PowerShell5.1 syntax-only checks are separate from actual7.6.5 execution;
+leave an existing script-execution refusal/policy unchanged. Independent debuggable packages are
+not product/phone APKs. [Full scope](../../src/Apps/Zanance/docs/quality/android-storage-runtime-compatibility.md).

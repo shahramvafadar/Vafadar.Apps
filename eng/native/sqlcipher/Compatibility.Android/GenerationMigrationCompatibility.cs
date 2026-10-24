@@ -15,7 +15,7 @@ namespace Vafadar.SqlCipher.Compatibility.Android;
 internal static class GenerationMigrationCompatibility
 {
     /// <summary>Creates a real original model or resumes/interrupts its captured native migration.</summary>
-    internal static async Task<string> RunAsync(string folder, string phase)
+    internal static async Task<string> RunAsync(string folder, string phase, string? retainedSourceRun = null)
     {
         if (phase is "validated-restore-create" or "validated-restore-reopen")
             return await RetainedRestoreCompatibility.RunAsync(folder, phase.EndsWith("-create", StringComparison.Ordinal), false, validatedDelivery: true);
@@ -156,14 +156,44 @@ internal static class GenerationMigrationCompatibility
         Guid installation;
         var original = Path.Combine(folder, "profile.db");
         var createdMigrations = 0;
-        if (phase == "migration-create")
+        if (phase is "migration-create" or "migration-adopt-source")
         {
             if (Directory.Exists(folder)) throw new InvalidOperationException("Use a fresh migration proof folder.");
             Directory.CreateDirectory(folder);
             initial = new(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()); installation = Guid.NewGuid();
             await File.WriteAllTextAsync(contextPath, string.Join("\n", initial.ProfileId.ToString("N"), initial.OriginalGeneration.ToString("N"),
                 initial.CandidateGeneration.ToString("N"), installation.ToString("N")));
-            createdMigrations = await CreateOriginalAsync(original);
+            if (phase == "migration-adopt-source")
+            {
+                // Continue a missed host observation from the exact retained source bytes, without another financial seed.
+                if (!Guid.TryParseExact(retainedSourceRun, "N", out var sourceRun) || sourceRun == Guid.Empty)
+                    throw new ArgumentException("An explicit retained source run is required.");
+                var sourceFolder = Path.Combine(Path.GetDirectoryName(folder)!, sourceRun.ToString("N"));
+                if (sourceFolder == folder || !Directory.Exists(sourceFolder)
+                    || (File.GetAttributes(sourceFolder) & FileAttributes.ReparsePoint) != 0)
+                    throw new IOException("Only another original caller-owned source may be retained.");
+                var source = Path.Combine(sourceFolder, "profile.db");
+                if ((File.GetAttributes(source) & FileAttributes.ReparsePoint) != 0)
+                    throw new IOException("The original retained source must be a regular file.");
+                var expected = await File.ReadAllTextAsync(Path.Combine(sourceFolder, "original-digest.txt"));
+                if (Convert.ToHexString(SHA256.HashData(await File.ReadAllBytesAsync(source))) != expected)
+                    throw new IOException("The retained original source changed before observation continuation.");
+                File.Copy(source, original, overwrite: false);
+                if (Convert.ToHexString(SHA256.HashData(await File.ReadAllBytesAsync(original))) != expected
+                    || Convert.ToHexString(SHA256.HashData(await File.ReadAllBytesAsync(source))) != expected)
+                    throw new IOException("The retained copy or original source bytes changed.");
+                File.Copy(Path.Combine(sourceFolder, "unrelated.txt"), Path.Combine(folder, "unrelated.txt"), overwrite: false);
+                _ = new ServiceCollection().AddZananceData(original);
+                var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(new SqliteConnectionStringBuilder
+                { DataSource = original, Pooling = false, Mode = SqliteOpenMode.ReadOnly }.ToString())
+                    .UseModel(ZananceDbContextModel.Instance).Options;
+                await using var current = new ZananceDbContext(options);
+                var applied = (await current.Database.GetAppliedMigrationsAsync()).ToArray();
+                if (!applied.SequenceEqual(current.Database.GetMigrations()))
+                    throw new IOException("The retained source lacks the original current migration set.");
+                createdMigrations = applied.Length;
+            }
+            else createdMigrations = await CreateOriginalAsync(original);
             await File.WriteAllTextAsync(Path.Combine(folder, "original-digest.txt"), Convert.ToHexString(SHA256.HashData(await File.ReadAllBytesAsync(original))));
         }
         else
@@ -177,10 +207,14 @@ internal static class GenerationMigrationCompatibility
         var session = new SqlCipherGenerationMigrationSession(initial, installation, original, journal, keys,
             new AndroidGenerationFileDurability(folder), () => { if (!Directory.Exists(folder)) throw new IOException("Retired fictitious lease."); },
             16 * 1024 * 1024, "4.19.0");
-        if (phase == "migration-create")
+        if (phase is "migration-create" or "migration-adopt-source")
         {
             await journal.CreateNewAsync();
             await File.WriteAllTextAsync(Path.Combine(folder, "candidate-path.txt"), Path.GetFileName(session.CandidatePath));
+            if (phase == "migration-adopt-source")
+                return System.Text.Json.JsonSerializer.Serialize(new { RetainedOriginalSourceAdopted = true,
+                    OriginalBytesPreserved = true, FinancialSeedReplayed = false, Migrations = createdMigrations,
+                    CurrentMigrationSetApplied = true });
             return "{\"OriginalModelCreated\":true,\"Migrations\":" + createdMigrations.ToString(System.Globalization.CultureInfo.InvariantCulture) + ",\"CurrentMigrationSetApplied\":true}";
         }
         if (phase == "migration-key-prepare")
@@ -191,6 +225,23 @@ internal static class GenerationMigrationCompatibility
             var envelope = Path.Combine(folder, initial.ProfileId.ToString("N") + "-" + initial.CandidateGeneration.ToString("N") + ".key");
             await File.WriteAllTextAsync(Path.Combine(folder, "envelope-digest.txt"), Convert.ToHexString(SHA256.HashData(await File.ReadAllBytesAsync(envelope))));
             return "{\"KeyDurablyPrepared\":true}";
+        }
+        if (phase == "migration-inspect-interruption")
+        {
+            // Observe the retained failed cohort without retrying migration or exporting private envelope digests.
+            var captured = await journal.ReadAsync();
+            var sourcePresent = File.Exists(original);
+            var sourceUnchanged = sourcePresent && Convert.ToHexString(SHA256.HashData(await File.ReadAllBytesAsync(original)))
+                == await File.ReadAllTextAsync(Path.Combine(folder, "original-digest.txt"));
+            var envelope = Path.Combine(folder, initial.ProfileId.ToString("N") + "-" + initial.CandidateGeneration.ToString("N") + ".key");
+            var envelopePresent = File.Exists(envelope);
+            var envelopeUnchanged = envelopePresent && Convert.ToHexString(SHA256.HashData(await File.ReadAllBytesAsync(envelope)))
+                == await File.ReadAllTextAsync(Path.Combine(folder, "envelope-digest.txt"));
+            return System.Text.Json.JsonSerializer.Serialize(new { ReadOnlyObservation = true,
+                Checkpoint = captured.Phase.ToString(), SourcePresent = sourcePresent, OriginalSourceDigestMatches = sourceUnchanged,
+                CandidatePresent = File.Exists(session.CandidatePath), RollbackPresent = File.Exists(session.RollbackPath),
+                ProtectedEnvelopePresent = envelopePresent, ProtectedEnvelopeDigestMatches = envelopeUnchanged,
+                PrivateMaterialExported = false, MigrationRetried = false });
         }
         if (phase == "migration-check-interruption")
         {

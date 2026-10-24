@@ -4575,3 +4575,13 @@ phase, financial setup or unrelated suite repeats. Retire new private fixtures w
 keys/envelopes/digests/aliases; stop owned AVDs and clean build output. The remaining full SEC,
 ARM64/platform/authentication/biometric/OEM/iOS and external gates stay separate.
 See [bounded key compatibility](../../quality/android-key-runtime-compatibility.md).
+
+### D-521 - Complete original storage cohort without a phone turn
+
+The native x86_64 minimum-API and16KiB cohort now covers actual schema51, snapshots/typed rows,
+controlled export/selection faults, missing-key no-fallback and cold recovery. Preserve all passing
+cases while correcting only the late export observer; use exact retained source bytes rather than
+financial reseeding. Keep two initial assertion failures, ten controller contracts and two original
+continuations separate from32 final-cohort records. Retire new helpers/AVDs and unused copies;
+shipping and physical Main remain unchanged. Full multi-profile/hardware/OEM/ARM64/iOS and external
+gates remain. [Scope](../../quality/android-storage-runtime-compatibility.md).

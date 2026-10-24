@@ -1207,3 +1207,11 @@ New AVD UIDs contain only fictitious private key expectations/envelopes. Only pu
 are retained; private files/aliases are never exported, both packages are uninstalled after valid
 retirement, and Main/private keys are untouched. No production SDK/permission/data/export change.
 [Current evidence](../quality/android-key-runtime-compatibility.md).
+
+### D-521 - Native storage evidence boundary
+
+Fictitious independent AVD UIDs retain all private key/vault/envelope state until uninstall;
+only public facts leave them. Retained source adoption copies exact owned bytes without new
+financial rows. The deliberately debuggable probe is separate from the signed non-debuggable
+shipping app; it has no INTERNET. No Main key/data, production SDK/permission/export or physical
+phone change. [Current scope](../quality/android-storage-runtime-compatibility.md).

@@ -3471,3 +3471,15 @@ Owner SDK acceptance is scoped in AGENTS.md. [Evidence](quality/android-runtime-
 
 Reported API35 software0 and API24 unavailable metadata are separate from D-483 Samsung level1.
 [Evidence](quality/android-key-runtime-compatibility.md).
+
+### D-521 - Bounded native storage runtime gate
+
+- [x] Original51-migration schema/key/tamper/portable typed-row and staging checks on actual
+  x86_64 API24/4096 and API35/16384.
+- [x] Prearmed candidate/Selected process interruption, original cold completion, missing-key
+  no-fallback and protected recovery on retained fictitious sources;32final-cohort records.
+- [x] Failed polling windows retained, ten controller contracts, fresh helpers/AVDs retired,
+  unused copies cleaned, no shipping/physical-phone/private-Main change.
+- [ ] Full all-profile/hardware/power-loss/OEM/ARM64/authentication/biometric/iOS and release gates.
+
+[Actual limits and source lineage](quality/android-storage-runtime-compatibility.md).

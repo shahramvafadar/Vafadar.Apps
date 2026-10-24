@@ -9089,3 +9089,14 @@ without lost-key recreation. API24 level metadata is null; API35 software0 is no
 attestation. No new managed tests, shipping source/permission/schema/financial change or Main key
 access. Full SEC/platform/authentication/iOS/release remains open.
 [Evidence](../quality/android-key-runtime-compatibility.md).
+
+### D-521 - Storage compatibility (Section31 continuation)
+
+Actual51-migration compiled-model schema, keyed/tamper/snapshot boundaries, controlled native
+candidate/selection interruption, missing-key refusal and protected recovery pass on x86_64
+API24/4096 and API35/16384.32final-cohort records and two additional original continuations are
+native evidence, not new managed tests. Existing financial commands/preparation are not replayed;
+unfinished observation uses exact retained source copies. Both late host-poll failures remain
+recorded. Shipping source/schema/dependencies/APK stay unchanged. Full all-profile/hardware/OEM/
+ARM64/authentication/iOS/general stability/accessibility/release remains separate.
+[Evidence](../quality/android-storage-runtime-compatibility.md).
