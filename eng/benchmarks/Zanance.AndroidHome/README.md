@@ -1039,6 +1039,21 @@ review_baseline; already applied migration is not repeated. Never overwrite a pr
 After an actual native death, an explicit review_current_progress names the original incomplete
 home-stages progress within that clone. Keep completed context packets and actual producing-code
 provenance; continue only missing cases. This is allowed only while production sources are unchanged.
+
+For a new cohort, retain `source-byte-baseline-<publicationComparison>.json` before the first
+native sample. It records every original/adopted file digest, the actual device-local date and
+Data/Core/publication module identities. Create it once with file and directory synchronization;
+create the initial empty progress packet before native work as well. A crash before any complete
+context is therefore an explicit zero-context continuation, not permission to prepare sources again.
+On continuation, use that original fingerprint and validate all prior file bytes before any new
+native observation. New metrics require the same local day and all three code identities. Completed
+report-only recovery may use a different observer/day, but still requires identical Data/Core and
+complete original/adopted source preservation. Never replace a missing historical fingerprint with
+a fresh one or count a later audit as evidence for a missing prior interval. The original D-532
+report-only recovery remains explicitly unaccepted for historical timing-interval byte equality.
+`Test-CurrentSourceByteIdentity.ps1` checks ten contracts against the actual identity predicate;
+it opens no database, device or UI. These host contracts are not physical runtime acceptance.
+
 For a completed inner report whose outer file guard failed, review_current_report=true requires all
 six completed packets and performs only source/control audits and report recovery. It never invokes
 the native timing body. Observe the exact live process using Read-ReviewReport.ps1 with

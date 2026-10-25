@@ -1424,3 +1424,22 @@ static checks and no-reset shipping upgrade24834->32206 pass. One original Main 
 all141 public tuples/three profiles/OS/timeout300000 remain; no Main financial writes or new managed
 cases. Retire the new helper and15 hash-matched XMLs. Full stability/accessibility/iOS/external
 release gates remain separate. See [complete runtime and package evidence](quality/transactions-title-add.md).
+
+
+### D-533 - Current physical Home with original timing-byte evidence
+
+Six actual Samsung current-Home contexts/twelve observations reuse the original encrypted10,000/
+100,000-row sources, with zero seed/financial commands or new keys. The original additive callback
+and complete schema/header/typed-row/native controls pass. Retain a create-once synchronized
+pre-native source/code/day fingerprint and zero-case progress; ten focused actual-policy contracts
+pass and the physical timing-interval byte/source guards pass. Preserve the undeclared Activity
+controller refusal; start the resolved original launcher once and observe the same32040 after the
+first report window expires. Separate clone and failed-adoption provenance. Tenfold4777.22-4992.71ms
+publications keep the two-second/general stability gates open; original D-532 historical-byte refusal
+and native death remain. Restore original caller UID10381/APK/stopped/grants/no-pending, Main24725/
+Home979/all141 tuples and OS; remove two owned hash-matched XMLs and explicitly return the phone.
+Three strict builds/standard clean pass;187287221bytes additional host deletion is refused before
+execution. No unchanged Windows/full-suite or accepted financial replay; product test count and
+shipping D-528 stay unchanged. Runtime/compiler/task10.0.13 identities match; no unsupported mix
+or general crash fix is established. Broader performance/accessibility/platform/release gates remain.
+[Original runtime evidence and remaining limits](quality/physical-current-home-stages.md).

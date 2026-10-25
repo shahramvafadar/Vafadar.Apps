@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Checked current Home publication on preserved small/large Samsung datasets without repeating financial entries; complete data guards pass, while the two-second speed target and general stability remain open (D-533).
+
 - Move the Transactions + beside its title, matching Home and Plans, and give the former bottom Add space to the list. Contextual bulk actions and Undo remain available (D-528).
 
 - Verified original profile recovery, interrupted creation and consecutive portable restores on API24 and16KiB x86_64 systems without changing the shipping app (D-522).

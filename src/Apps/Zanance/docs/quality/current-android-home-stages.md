@@ -11,8 +11,8 @@ The independent caller copies the two marked owned source trees within the same 
 original generation/catalogue/history/key-envelope bindings. Only those copies receive the actual
 ProtectedProfileStorage.UpgradeAsync callback. Admit only completed selected sequence-zero ancestry
 and the single pending20261024115108_HomeFinancialRevision suffix. Refuse other pending migrations.
-Use the original10,000/20/100 and100,000/200/1,000 row/account/schedule shapes; this emulator corpus
-has unreviewed rows, unlike the separately retained physical cohort. No main database/key is opened.
+Use the original10,000/20/100 and100,000/200/1,000 row/account/schedule shapes; both this emulator corpus
+and the separately retained physical cohort have unreviewed rows. No main database/key is opened.
 
 Before upgrade, actual ciphertext matches its authenticated original rollback. After upgrade, a
 disposable memory-only copy removes exactly the new18 named triggers, the new bookkeeping table
@@ -114,6 +114,26 @@ it does not identify the corrupted object/origin or prove independent root cause
 code frames and matched symbol evidence; register/stack-memory contents are not retained. No canary,
 GC override, diagnostic heap export, runtime replacement or production workaround is promoted.
 The random native fault is not fixed or disproved by completing the remaining samples.
+
+The later D-533 host investigation verifies the actual packaged runtime, not merely `dotnet --info`.
+Both the retained D-532 x64 ELF and prepared D-533 ARM64 ELF exactly match the restored10.0.13
+runtime packs; their original pack version files identify commit
+`4099f83977f4d29604a9aeb971fb0a7bc1d5f699`. The actual ARM64 cross-compiler reports that same
+version/revision, the compiler-task package records the same repository revision, and the strict
+build selects runtime/compiler/task10.0.13. Installed host/workload runtime10.0.12 is not the
+packaged runtime. Preserve the initial host-pack lookup separately rather than infer a downgrade
+or mix from it. No workload/global installation or runtime substitution occurs.
+
+The [exact packaged source](https://github.com/dotnet/dotnet/blob/4099f83977f4d29604a9aeb971fb0a7bc1d5f699/src/runtime/src/mono/mono/sgen/sgen-marksweep.c#L1123)
+physically places line1123 in `major_block_is_evacuating`, reading `block->obj_size_index`.
+The actual source file has3028 physical lines and SHA256
+`187186e75cce1955d03fed8ac888256ac79578928e64755338388dc8bb6e1ff3`.
+This source file is byte-identical in the installed10.0.12 revision; content equality does not
+substitute for identifying the actually packaged revision. A normalized browser line number must
+not replace DWARF/physical source lines. The lookup still localizes an invalid scan access only;
+it does not identify its origin. The related [upstream investigation](https://github.com/dotnet/runtime/issues/123537)
+remains open when checked25October2026. Neither a common root cause nor an applicable released fix
+is established. Previously rejected serial-major, bridge and canary experiments are not repeated.
 
 ## Restoration, cleanup and unresolved requirements
 

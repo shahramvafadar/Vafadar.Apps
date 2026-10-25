@@ -21,24 +21,24 @@ internal static partial class AndroidHomeReview
     {
         var resume = baseline != comparison;
         var clone = Path.Combine(Path.GetDirectoryName(root)!, "current-home-" + baseline, Path.GetFileName(root));
-        if (Directory.Exists(clone) != resume) throw new ReviewCheckException("Explicit original failed clone required for resumption.");
+        if (Directory.Exists(clone) != resume) throw new ReviewCheckException("Explicit original clone required for resumption.");
         var previousProgress = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetStringExtra("review_current_progress");
         var hasAdoption = File.Exists(Path.Combine(clone, "adoption-proof.json"));
         var reportOnly = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_current_report", false) == true;
         if (previousProgress is not null && (!System.Text.RegularExpressions.Regex.IsMatch(previousProgress, "^[0-9a-f]{32}$") || !hasAdoption))
             throw new ReviewCheckException("Explicit adopted partial publication lineage required.");
+        var failedAdoption = false;
         if (resume)
         {
-            var failed = false;
             foreach (var file in Directory.EnumerateFiles(root, "failure-*.json"))
             {
                 using var packet = JsonDocument.Parse(await File.ReadAllTextAsync(file, ct));
-                failed |= packet.RootElement.GetProperty("Comparison").GetString() == baseline
+                failedAdoption |= packet.RootElement.GetProperty("Comparison").GetString() == baseline
                     && packet.RootElement.GetProperty("ErrorType").GetString() == typeof(SqliteException).FullName
                     && packet.RootElement.GetProperty("Stack").GetString()!.Contains("BackupDatabase", StringComparison.Ordinal)
                     && packet.RootElement.GetProperty("Stack").GetString()!.Contains("AdoptCurrentHomeSchemaAsync", StringComparison.Ordinal);
             }
-            if (!failed || hasAdoption && previousProgress is null)
+            if (!hasAdoption && !failedAdoption || hasAdoption && previousProgress is null)
                 throw new ReviewCheckException("Only the recorded failed adoption or its retained partial publication may continue.");
         }
         var originals = new[] { "reference", "tenfold" }.ToDictionary(name => name,
@@ -74,11 +74,59 @@ internal static partial class AndroidHomeReview
             var progressPath = Path.Combine(clone, "progress-" + previousProgress + "-home-stages.json");
             using var progress = JsonDocument.Parse(await File.ReadAllTextAsync(progressPath, ct));
             var count = progress.RootElement.GetArrayLength();
-            if (count < 1 || count > 6 || (count == 6) != reportOnly)
+            if (count > 6 || (count == 6) != reportOnly)
                 throw new ReviewCheckException("Completed native observations require report-only recovery, never replay.");
             File.Copy(progressPath, Path.Combine(clone, "progress-before-resume-" + comparison + ".json"));
         }
         var publicationComparison = previousProgress ?? comparison;
+        var byteBaselinePath = Path.Combine(clone, "source-byte-baseline-" + publicationComparison + ".json");
+        var durableByteBaseline = File.Exists(byteBaselinePath);
+        var day = DateOnly.FromDateTime(services.GetRequiredService<TimeProvider>().GetLocalNow().DateTime)
+            .ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+        if (durableByteBaseline)
+        {
+            // D-533: a resumed process must retain the first pre-measurement source, rather
+            // than silently replacing its fingerprint after a native death or observer failure.
+            using var recorded = JsonDocument.Parse(await File.ReadAllTextAsync(byteBaselinePath, ct));
+            var packet = recorded.RootElement;
+            if (!CurrentHomeByteIdentityMatches(packet, publicationComparison, day,
+                typeof(ZananceStore).Module.ModuleVersionId, typeof(Core.Ledger.LedgerCalculator).Module.ModuleVersionId,
+                typeof(Features.Home.HomePage).Module.ModuleVersionId, reportOnly))
+                throw new ReviewCheckException("The original source/day/code fingerprint cannot be replaced during continuation.");
+            string[] ReadFiles(string section, string name) => packet.GetProperty(section).GetProperty(name).EnumerateArray()
+                .Select(item => item.GetString() ?? throw new ReviewCheckException("Incomplete stored source digest.")).ToArray();
+            if (packet.GetProperty("Originals").EnumerateObject().Count() != 2
+                || packet.GetProperty("Adopted").EnumerateObject().Count() != 2)
+                throw new ReviewCheckException("Both original source shapes must remain in the retained fingerprint.");
+            foreach (var name in new[] { "reference", "tenfold" })
+            {
+                var originalFiles = ReadFiles("Originals", name); var adoptedFiles = ReadFiles("Adopted", name);
+                if (!originalFiles.SequenceEqual(originals[name])
+                    || !CurrentHomeFilesPreserved(adoptedFiles, adopted[name], publicationComparison))
+                    throw new ReviewCheckException("The source changed after the original pre-measurement fingerprint.");
+                originals[name] = originalFiles; adopted[name] = adoptedFiles;
+            }
+        }
+        else if (!reportOnly)
+        {
+            if (previousProgress is not null)
+                throw new ReviewCheckException("Missing pre-measurement fingerprint; old observations cannot become new byte evidence.");
+            await using (var output = new FileStream(byteBaselinePath, FileMode.CreateNew, FileAccess.Write, FileShare.Read))
+                await JsonSerializer.SerializeAsync(output, new { Comparison = publicationComparison, Day = day,
+                    CapturedBeforeNativePublication = true, ProcessId = Environment.ProcessId,
+                    DataModule = typeof(ZananceStore).Module.ModuleVersionId,
+                    CoreModule = typeof(Core.Ledger.LedgerCalculator).Module.ModuleVersionId,
+                    CallerModule = typeof(Features.Home.HomePage).Module.ModuleVersionId,
+                    Originals = originals, Adopted = adopted }, cancellationToken: ct);
+            var durability = new AndroidGenerationFileDurability(clone);
+            await durability.SynchronizeFileAsync(byteBaselinePath, ct);
+            // Zero completed contexts is a valid continuation point before the first native sample.
+            var progressPath = Path.Combine(clone, "progress-" + publicationComparison + "-home-stages.json");
+            await using (var progress = new FileStream(progressPath, FileMode.CreateNew, FileAccess.Write, FileShare.Read))
+                await JsonSerializer.SerializeAsync(progress, Array.Empty<object>(), cancellationToken: ct);
+            await durability.SynchronizeFileAsync(progressPath, ct);
+            durableByteBaseline = true;
+        }
         if (reportOnly)
         {
             var audit = new List<object>();
@@ -97,13 +145,25 @@ internal static partial class AndroidHomeReview
                 throw new ReviewCheckException("An original source or adopted measurement source changed.");
         using var report = JsonDocument.Parse(await File.ReadAllTextAsync(
             Path.Combine(clone, "home-stages-" + publicationComparison + "-result.json"), ct));
-        return new { Comparison = comparison, RetainedPublicationComparison = previousProgress, FailedAdoptionBaseline = resume ? baseline : null, Adoptions = adoptions, CurrentHome = report.RootElement.Clone(),
-            OriginalEncryptedSourcesUnchanged = true, AdoptedSourcesUnchangedDuringMeasurement = !reportOnly,
+        return new { Comparison = comparison, OriginalCloneBaseline = baseline, RetainedPublicationComparison = previousProgress,
+            FailedAdoptionBaseline = resume && failedAdoption ? baseline : null, Adoptions = adoptions, CurrentHome = report.RootElement.Clone(),
+            OriginalEncryptedSourcesUnchanged = true, AdoptedSourcesUnchangedDuringMeasurement = durableByteBaseline,
             CompletedNativeObservationsRecoveredWithoutReplay = reportOnly, FinalReadOnlyAuditSourceFilesUnchanged = reportOnly,
-            HistoricalTimingExactByteEqualityAccepted = !reportOnly, PriorByteGuardRefusalPreserved = reportOnly,
+            HistoricalTimingExactByteEqualityAccepted = durableByteBaseline, OriginalPreMeasurementFingerprintRetained = durableByteBaseline,
+            PriorByteGuardRefusalPreserved = reportOnly && !durableByteBaseline,
             OriginalFinancialRowsPreservedAcrossMigration = true, FinancialCommands = 0, PreparationOrKeyCreation = false,
             MainPackageTouched = false, Device = DeviceEvidence(), GeneralPerformanceOrStabilityAccepted = false };
     }
+
+    /// <summary>Rejects a different source/code/day before continuing metrics; historical recovery adds no new UI observations.</summary>
+    private static bool CurrentHomeByteIdentityMatches(JsonElement packet, string comparison, string day,
+        Guid dataModule, Guid coreModule, Guid callerModule, bool reportOnly) =>
+        packet.GetProperty("Comparison").GetString() == comparison
+        && packet.GetProperty("CapturedBeforeNativePublication").GetBoolean()
+        && packet.GetProperty("DataModule").GetGuid() == dataModule
+        && packet.GetProperty("CoreModule").GetGuid() == coreModule
+        && (reportOnly || packet.GetProperty("CallerModule").GetGuid() == callerModule
+            && packet.GetProperty("Day").GetString() == day);
 
     /// <summary>Preserves every prior byte while permitting only the three exact newly captured presentation packets.</summary>
     private static bool CurrentHomeFilesPreserved(string[] before, string[] after, string comparison)

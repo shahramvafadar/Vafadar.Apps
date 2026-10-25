@@ -1,3 +1,5 @@
+#requires -PSEdition Core
+#requires -Version 7.3
 <#
 .SYNOPSIS Verifies the actual diagnostic file-preservation predicate without opening a database or UI.
 #>
