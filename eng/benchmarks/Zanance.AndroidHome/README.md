@@ -1026,3 +1026,29 @@ Use Read-ReviewReport.ps1 with that phase, exact original live PID, run/comparis
 physical transport; the phase selects its distinct observed identity. Expiry requires observing
 the same process, never replaying completed UI. Retire only the new helper after terminal evidence.
 See [complete shipping and runtime evidence](../../../src/Apps/Zanance/docs/quality/transactions-title-add.md).
+
+## Current Home on legacy protected workloads (D-532)
+
+The `home-current-stages` phase requires an existing marked run and a fresh review_pass. With
+review_baseline equal to review_pass, copy only its existing source trees within this same UID;
+never prepare rows or replacement keys. The production protected callback admits only the single
+known HomeFinancialRevision migration. Independent old-row/control comparisons protect all source
+facts. A record of the exact failed adoption can authorize its same partial clone via the original
+review_baseline; already applied migration is not repeated. Never overwrite a prior clone/control.
+
+After an actual native death, an explicit review_current_progress names the original incomplete
+home-stages progress within that clone. Keep completed context packets and actual producing-code
+provenance; continue only missing cases. This is allowed only while production sources are unchanged.
+For a completed inner report whose outer file guard failed, review_current_report=true requires all
+six completed packets and performs only source/control audits and report recovery. It never invokes
+the native timing body. Observe the exact live process using Read-ReviewReport.ps1 with
+-Phase home-current-stages, exact original run, fresh outer comparison and fresh output. Observation
+expiry never restarts a process; authoritative exit-info and original durable progress decide.
+
+Use the existing memory-only SQLCipher portable/export facilities for encrypted source transfer.
+Keep bookkeeping normalization in disposable memory only. Do not turn fresh read-only byte checks
+into missing historical timing-interval byte proof. The exact preserved refusal, recovered samples,
+matched native symbols and restoration are documented in
+[current Android Home qualification](../../../src/Apps/Zanance/docs/quality/current-android-home-stages.md).
+`Test-CurrentSourcePreservation.ps1` compiles the actual diagnostic predicate body and checks eight
+file-preservation contracts without opening a database/UI or mirroring a financial algorithm.

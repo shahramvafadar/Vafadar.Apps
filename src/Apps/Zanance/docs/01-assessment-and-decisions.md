@@ -9815,3 +9815,20 @@ not cold/Samsung/two-second or general stability acceptance. Strict Debug build/
 prelaunch missing-source refusal pass; no managed count or shipping APK change. Retain the broader
 performance/stability/accessibility/platform/external gates and pursue evidence-supported remaining
 work without replaying these accepted samples. [Evidence](quality/home-publication-stages.md).
+
+### D-532 - Current Android Home and preserved concurrent-major fault
+
+Reuse original retained Android rows/keys through independently copied encrypted sources. Their
+single D-509 additive migration uses the actual protected callback and preserves every original
+schema/header/typed row after normalizing only new bookkeeping in disposable memory. Six current
+API36/x64 native Home contexts/twelve samples retain all financial/native/layout checks. Preserve
+three completed reference contexts across actual4070/SIGSEGV; continue only the unexecuted tenfold
+contexts. Matched official symbols locate concurrent-major object scanning, without proving a cause
+or fix. Tenfold1939.55-2353.59ms navigation publications do not close the two-second/cold/phone gate.
+Recover the same completed inner report after an overbroad file guard counts new presentation
+outputs; eight exact-source guard contracts and four fresh read-only source/control audits pass,
+without UI or financial replay. Historical timing-interval exact-byte equality remains unaccepted.
+Restore caller UID10221/SHA/stopped/grants, Main2963/Home0/all120 public states and captured OS;
+remove three owned hash-matched XMLs and stop only the dedicated AVD. Strict builds/standard clean
+pass; additional residual host deletion is refused and not claimed. Shipping D-528 is unchanged.
+[Exact lineage, native fault and limits](quality/current-android-home-stages.md).

@@ -2649,3 +2649,20 @@ timelines and two own-window images, preserving source/installation/receipt equa
 or an observation timeout must not cause a relaunch. Do not reuse the completed D-531 run as new work.
 Only the changed Debug Windows path needs rebuilding; no shipping Android/financial replay is implied.
 See [actual scope and source evidence](../../src/Apps/Zanance/docs/quality/home-publication-stages.md).
+
+## D-532 - Current Android Home without financial preparation replay
+
+The independent original AndroidHome caller's home-current-stages phase adopts an encrypted copy
+of each retained legacy fixture using the actual protected startup migration callback. No original
+source, wrapping key or accepted financial command is replaced. Read the exact phase/resumption/
+report-only protocol in [its guide](../../eng/benchmarks/Zanance.AndroidHome/README.md#current-home-on-legacy-protected-workloads-d-532).
+Keep native exit-info, accepted progress and exact signed code: a report timeout is not death.
+For completed native packets, recover the original report and audit source/control rows without
+replaying UI or collecting new timings. Eight exact-source host guard contracts exclude only known
+new presentation outputs; source/key/retained-packet mutations still refuse. Historical byte equality
+is not inferred from a later successful audit. Reuse the approved ELF parser and exact official
+BuildId/debuglink-CRC symbols; retain code frames rather than registers/stack memory. Current SGen
+concurrent-major scanning remains an unfixed observed fault, distinct from earlier containing Tarjan
+frames without an established common or independent cause. No unsupported GC/runtime replacement
+or unchanged shipping/financial/full-suite check belongs to this bounded investigation.
+[Actual samples, restoration and limits](../../src/Apps/Zanance/docs/quality/current-android-home-stages.md).

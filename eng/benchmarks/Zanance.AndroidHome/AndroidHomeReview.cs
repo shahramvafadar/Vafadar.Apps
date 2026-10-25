@@ -674,6 +674,14 @@ internal static partial class AndroidHomeReview
                 Directory.CreateDirectory(root);
                 await WriteReportAsync(root, phase, await ReviewFilterActionsAsync(app, services, root, comparison!, ct), ct);
             }
+            else if (phase == "home-current-stages")
+            {
+                RequireRoot(root);
+                if (comparison is null || baseline is null)
+                    throw new ReviewCheckException("Explicit current-schema comparison required.");
+                await WriteReportAsync(root, phase,
+                    await ReviewCurrentHomeStagesAsync(app, services, root, comparison, baseline, ct), ct);
+            }
             else
             {
                 RequireRoot(root);
@@ -843,7 +851,7 @@ internal static partial class AndroidHomeReview
             throw new ReviewCheckException("Original Home Activity must own actual window focus.");
     }
 
-    private static async Task MeasureAsync(App app, IServiceProvider services, string root, string phase, string comparison, string baseline, CancellationToken ct)
+    private static async Task MeasureAsync(App app, IServiceProvider services, string root, string phase, string comparison, string baseline, CancellationToken ct, bool currentSchema = false)
     {
         var local = services.GetRequiredService<ILocalizationService>();
         app.OpenReviewShell();
@@ -1052,7 +1060,7 @@ internal static partial class AndroidHomeReview
                 try
                 {
                     await using var retainedRollback = new SqliteConnection(new SqliteConnectionStringBuilder
-                    { DataSource = generation.Path + ".rollback.db", Mode = SqliteOpenMode.ReadOnly, Pooling = false,
+                    { DataSource = generation.Path + (currentSchema ? ".current-home-control.db" : ".rollback.db"), Mode = SqliteOpenMode.ReadOnly, Pooling = false,
                         Password = Convert.ToBase64String(rawKey) }.ToString());
                     await retainedRollback.OpenAsync(ct);
                     await using var current = await data.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(ct);
@@ -1064,7 +1072,7 @@ internal static partial class AndroidHomeReview
         }
         await WriteReportAsync(root, phase, new { Comparison = comparison, BaselineComparison = baseline, Results = results, NativeReadProfiles = nativeReadProfiles, TagReaderContracts = tagReaderContracts, ReviewedInputGuards = reviewedInputGuards,
             DataModuleVersionId = typeof(ZananceStore).Module.ModuleVersionId, CallerModuleVersionId = typeof(HomePage).Module.ModuleVersionId,
-            CoreModuleVersionId = typeof(Core.Plans.Occurrences).Module.ModuleVersionId,
+            CoreModuleVersionId = typeof(Core.Plans.Occurrences).Module.ModuleVersionId, CurrentSchemaClone = currentSchema,
             OriginalProductionPage = true, OriginalWindowFocusRequired = true, RetainedCompletedCases = completed.ToArray(),
             ModuleIdentityScope = "Current completion caller; retained case packets preserve their original caller evidence",
             CompleteRawSchemaAndTypedRowsUnchanged = true, NoFinancialSave = true, Device = DeviceEvidence(), WholeAppColdStartupOrFullDeviceAcceptance = false,
