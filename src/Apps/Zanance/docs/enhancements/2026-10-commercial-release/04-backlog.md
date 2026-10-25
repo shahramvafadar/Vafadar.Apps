@@ -5964,3 +5964,23 @@ and OS match; seven owned hash-matched phone XMLs are removed. Ten owned bin/obj
 4179578901 logical file bytes are cleaned. No Main installation/private key/database read or
 financial replay occurs. The finite batch closes without a shipped runtime/performance change;
 two-second and broader qualification/release gates remain open.
+
+
+### D-544 - Withdraw bounded expansion scratch after original whole-Home comparison
+
+A source-only scratch candidate reduces host codec allocation23.692979% but its actual original
+Samsung100000-row publication3069.5168to3154.4552ms is2.767159% slower, failing the predeclared5%
+gate. Original source/financial/native controls and memory/dispatcher gates pass; no reverse/
+rescue pair follows. Restore production exactly; no Main installation or financial/seed/key
+operation occurs. Keep one new real SQLite digest-valid incomplete-compression fallback test,
+passing on the restored original codec. Eight scratch-only tests leave with the unshipped API;
+31 distinct selected candidate checks and strict builds are not a full-suite claim.
+
+Both same-head independent packages preserve original runtime/cipher and financial Core bytes;
+metadata inspection bounds eight new pool method roots in the same official CoreLib version,
+without claiming common IL/whole-AOT equality. The full uninstalled384AOT/408ELF signed candidate
+matches actual independent Data/Core. Original caller27694/b1d5/UID10381/storage/stopped and
+Main4090/D-542/Home979/all141 public states/OS are restored. Three owned hash-matched XMLs,
+16 completed bin/obj trees and two duplicate audit images are removed. Two-second, general
+security/stability/accessibility/platform/provider/Store/release and the broader goal stay open.
+[Exact candidate, refusals and final restoration](../../quality/bounded-home-scratch-buffers.md).

@@ -495,6 +495,31 @@ public sealed class HomeLedgerBlockStoreTests : IDisposable
         Assert.Equal(before, await StateAsync(db));
     }
 
+    [Fact, Trait("AT", "AT-82")]
+    public async Task Digest_valid_but_incomplete_compression_falls_back_to_all_original_rows_without_repair()
+    {
+        await using var db = await SeedAsync();
+        await db.Database.OpenConnectionAsync(Ct);
+        using var originalPayload = db.Database.GetDbConnection().CreateCommand();
+        originalPayload.CommandText = "SELECT Payload FROM HomeLedgerReadBlocks ORDER BY BlockId LIMIT 1";
+        var stored = Assert.IsType<byte[]>(await originalPayload.ExecuteScalarAsync(Ct));
+        Assert.True(stored.Length > 24);
+        var damaged = stored[..^1];
+        System.Buffers.Binary.BinaryPrimitives.WriteInt32LittleEndian(damaged.AsSpan(20), damaged.Length - 24);
+        await db.Database.ExecuteSqlRawAsync("UPDATE HomeLedgerReadBlocks SET Payload={0}, Digest={1}",
+            [damaged, System.Security.Cryptography.SHA256.HashData(damaged)], Ct);
+        await using var transaction = await db.Database.BeginTransactionAsync(Ct);
+        var expected = (await CompleteHomeLedgerReader.ReadAsync(db, Ct)).OrderByDescending(entry => entry.Date)
+            .ThenByDescending(entry => entry.CreatedAt).ToList();
+        var state = await StateAsync(db);
+        Assert.Equal(JsonSerializer.Serialize(expected), JsonSerializer.Serialize(await ZananceStore.ReadCompleteHomeLedgerAsync(db, Ct)));
+        Assert.Equal(state, await StateAsync(db));
+        using var retainedPayload = db.Database.GetDbConnection().CreateCommand();
+        retainedPayload.Transaction = transaction.GetDbTransaction();
+        retainedPayload.CommandText = "SELECT Payload FROM HomeLedgerReadBlocks ORDER BY BlockId LIMIT 1";
+        Assert.Equal(damaged, Assert.IsType<byte[]>(await retainedPayload.ExecuteScalarAsync(Ct)));
+    }
+
     [Fact]
     public async Task New_schema_cookie_declines_old_physical_blocks_and_original_commit_rebuilds_them()
     {
