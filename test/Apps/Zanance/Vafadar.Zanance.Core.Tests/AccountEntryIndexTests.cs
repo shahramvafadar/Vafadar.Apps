@@ -70,6 +70,36 @@ public sealed class AccountEntryIndexTests
     }
 
     [Fact, Trait("AT", "AT-82")]
+    public void Published_endpoint_slice_cannot_be_mutated_through_a_collection_cast()
+    {
+        var ledger = new LedgerBuilder(); var first = ledger.Account("First", 0); var second = ledger.Account("Second", 0);
+        var transfer = ledger.Transfer(first, second, 2);
+        var index = new AccountEntryIndex(ledger.Entries);
+        var original = index.For(first.Id);
+        var collection = Assert.IsAssignableFrom<ICollection<LedgerEntry>>(original);
+        Assert.True(collection.IsReadOnly);
+        Assert.Throws<NotSupportedException>(() => collection.Clear());
+        Assert.Throws<NotSupportedException>(() => collection.Add(new LedgerEntry()));
+        Assert.Same(original, index.For(first.Id));
+        Assert.Same(transfer, Assert.Single(index.For(first.Id)));
+        Assert.Same(transfer, Assert.Single(index.For(second.Id)));
+    }
+
+    [Fact, Trait("AT", "AT-82")]
+    public void Repeated_original_instance_and_unknown_account_keep_the_captured_slice()
+    {
+        var entry = new LedgerEntry { AccountId = Guid.NewGuid() };
+        entry.ToAccountId = entry.AccountId;
+        var input = new List<LedgerEntry> { entry, entry };
+        var index = new AccountEntryIndex(input);
+        input.Clear();
+        Assert.Empty(index.For(Guid.NewGuid()));
+        Assert.Equal(2, index.For(entry.AccountId).Count());
+        Assert.All(index.For(entry.AccountId), item => Assert.Same(entry, item));
+        Assert.Equal(2, index.For(entry.AccountId).Count());
+    }
+
+    [Fact, Trait("AT", "AT-82")]
     public void Scope_exclusion_and_checked_overflow_stay_with_the_balance_calculator()
     {
         var ledger = new LedgerBuilder(); var included = ledger.Account("Included", 1); var excluded = ledger.Account("Excluded", 0);

@@ -1515,3 +1515,22 @@ remove eight owned hash-matched remote files and return the phone. Product sourc
 no unchanged Windows/full suite repeats or new product test count. D-536 CI/CodeQL succeed and its
 one-shot is consumed/deleted. Two-second/general stability/accessibility/platform/release gates and
 the broader goal remain open. [Complete code-window evidence and limits](quality/physical-home-cpu-windows.md).
+
+### D-538 - Withdraw direct endpoint-index construction
+
+A direct original-reference loop lowers host constructor cost but offers no material allocation
+relief; its protected read-only-view variant adds8.46% allocation in the many-account shape.
+Twenty-six focused actual-Core cases, including two new collection-mutation/captured-slice
+contracts, and strict managed/independent ARM64 builds pass. Preserve one unexecuted fixture
+compile refusal, the observer240-second parameter refusal and its same10999 continuation,
+plus candidate12246's continued observation. Original/candidate single tenfold/en publications
+4131.4756/4010.2595ms pass all encrypted-source/adopted-byte/schema/typed-row/native/financial
+guards without seed/key/money replay. The2.933966% reduction fails the previously recorded5%
+each-pair criterion; omit the unnecessary second pair, restore exact original product source
+and pass only the two new tests on that rebuilt original. Restore caller UID10381/APK/stopped/
+grants and Main27069/Home979/all141 public states/OS; hash-clean two XMLs and return the phone.
+Three scoped cleans and177874001-byte unused-copy removal pass; automatic review refuses deletion
+of132837195 residual output bytes before execution, with no alternate attempt. D-537 CI/CodeQL
+succeed and its one-shot is consumed/deleted. Product/APK remainD-528; coverage adds two cases,
+not a complete-suite pass. Two-second/general stability/accessibility/platform/release gates
+and the broader goal stay open. [Complete evidence and limits](quality/withdrawn-account-index-loop.md).
