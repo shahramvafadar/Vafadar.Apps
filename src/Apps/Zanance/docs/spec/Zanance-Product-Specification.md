@@ -9271,3 +9271,21 @@ execution. No unchanged Windows/full-suite or accepted financial replay; product
 shipping D-528 stay unchanged. Runtime/compiler/task10.0.13 identities match; no unsupported mix
 or general crash fix is established. Broader performance/accessibility/platform/release gates remain.
 [Original runtime evidence and remaining limits](../quality/physical-current-home-stages.md).
+
+
+### D-534 - Bounded current Home CPU sampling
+
+Preserved original API36/x64 sources produce a code-address-only CPU sample with2733 samples,
+zero lost and no raw stack/register payload. The actual SDK classifies69 empty AOT objects;
+all123 method-bearing objects match the diagnostic signed artifact. Retain initial4010/SGen
+SIGSEGV and Android EXIT_SELF/status255 separately; same-source4313 continuation keeps the three
+accepted reference contexts and executes only missing tenfold contexts. Complete source/native
+and premeasurement-byte controls pass without seed/financial replay. Flat CPU is Mono40.98% and
+SQLCipher17.38%, but54.26% broken callchains preclude reliable inclusive/root attribution, KDF-only
+claims or a whole-Home/cold/phone speed conclusion. No product/runtime change or new product tests.
+Original caller restoration hits storage exhaustion; documented package-specific maintenance and
+Android KEEP_DATA code removal/reinstallation restore exact original digest/UID10221/stopped/grants.
+Main2878/Home0/all120 public tuples and OS match; three owned hash-matched remote files are removed
+and only the dedicated AVD is stopped. Post-restoration private DB/key reopen is not claimed.
+General stability, two-second, accessibility/platform/external gates and the broad goal stay open.
+[Actual sample, lineage, restoration and limits](../quality/current-home-cpu-sampling.md).

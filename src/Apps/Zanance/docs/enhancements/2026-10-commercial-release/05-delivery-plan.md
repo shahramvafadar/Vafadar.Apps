@@ -4738,3 +4738,19 @@ Restore caller UID10221/SHA/stopped/grants, Main2963/Home0/all120 public states 
 remove three owned hash-matched XMLs and stop only the dedicated AVD. Strict builds/standard clean
 pass; additional residual host deletion is refused and not claimed. Shipping D-528 is unchanged.
 [Exact lineage, native fault and limits](../../quality/current-android-home-stages.md).
+
+
+### D-534 - Current code-address CPU evidence and storage-safe restoration
+
+Complete the original API36/x64 retained-source capture without financial replay. Preserve the
+initial process's native death and Android exit classification, retain its three accepted reference
+contexts and run only missing tenfold contexts. Actual binary sample attributes exclude raw
+stack/register payload; broken frame chains limit findings to bounded flat CPU. Mono/crypto work
+is evidence for further focused diagnosis, not a fix, KDF attribution or whole-Home speed claim.
+Restore the exact independent caller through documented KEEP_DATA code removal after insufficient
+storage, preserving UID/grants and Main120 public states/OS; stop only the restored owned AVD.
+Keep exact build symbols needed for offline diagnosis. Finish documentation/commit/push and one
+16-minute exact-head CI; continue uncovered approved backlog work, without repeating settled
+GC switches, rejected readers or successful financial/native cohorts. Shipping D-528 and the
+remaining performance/stability/accessibility/platform/external gates stay unchanged.
+[Evidence](../../quality/current-home-cpu-sampling.md).
