@@ -6417,3 +6417,16 @@ D-528 receipts match, PID19056 exits0 and Default input desktop is unchanged. No
 commands, new managed cases or original normal-size replay. This named Windows layout subgate passes;
 real OS scaling, Android/speech/all-controls/stability/platform and release acceptance remain open.
 [Exact source and native evidence](quality/transactions-title-large-text.md).
+
+### D-531 - Current retained Windows Home publication
+
+Four new actual Home constructor/publication/native-layout timelines on the retained D-523 protected
+10,000/100,000-row sources complete in process61988/exit0. Advanced/default layout, all20/200 VM
+accounts, original balances, covered publication and no synchronous appearance reads match. Full
+portable schema/typed rows, every original source/metadata/envelope file, the independent installation
+inputs and original receipts remain unchanged; zero seed/financial commands or phone queries.
+Tenfold native layout completes1226.20/1144.04ms from before construction on this Windows path,
+not cold/Samsung/two-second or general stability acceptance. Strict Debug build/isolated cleanup and
+prelaunch missing-source refusal pass; no managed count or shipping APK change. Retain the broader
+performance/stability/accessibility/platform/external gates and pursue evidence-supported remaining
+work without replaying these accepted samples. [Evidence](quality/home-publication-stages.md).

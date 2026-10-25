@@ -1,5 +1,8 @@
 #if DEBUG && WINDOWS
 using System.Diagnostics;
+using System.ComponentModel;
+using System.Collections.Specialized;
+using System.Security.Cryptography;
 using System.Text.Json;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -17,9 +20,13 @@ namespace Vafadar.Zanance.App.Diagnostics;
 internal static partial class DebugSnapshots
 {
     /// <summary>Measures original native Home publication on retained protected reference and tenfold fixtures.</summary>
-    private static async Task ReviewHomeWorkloadAsync(App app, IServiceProvider services, string folder)
+    private static async Task ReviewHomeWorkloadAsync(App app, IServiceProvider services, string folder, bool stages = false)
     {
-        if (AppInfo.Current.PackageName != "pro.vafadar.zanance.storageacceptance")
+        var retainedRun = Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_RUN");
+        var retainedInstallation = stages && retainedRun is not null && Guid.TryParseExact(retainedRun, "N", out _)
+            && Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REPAIR") == "home-workload-stages"
+            && AppInfo.Current.PackageName == "pro.vafadar.zanance.storepreview." + retainedRun[..12];
+        if (stages ? !retainedInstallation : AppInfo.Current.PackageName != "pro.vafadar.zanance.storageacceptance")
             throw new IOException("Loaded Home review requires the independent compiled installation identity.");
         var root = Path.GetFullPath(Environment.GetEnvironmentVariable("VAFADAR_HOME_PERFORMANCE_ROOT")
             ?? throw new IOException("Provide the retained fictitious protected workload root."));
@@ -40,6 +47,7 @@ internal static partial class DebugSnapshots
                     throw new IOException("Retained independent workload identity is missing or redirected.");
             }
             Validate();
+            var sourceFiles = stages ? HomeWorkloadFileDigests(directory) : null;
             var original = Path.Combine(directory, "fixture.db");
             var identityPath = Path.Combine(directory, "identities.sqlite");
             var historyPath = original + ".restore-history.sqlite";
@@ -54,6 +62,16 @@ internal static partial class DebugSnapshots
                 var identities = new SqliteDatabaseIdentityCatalogue(identityPath, Validate);
                 var identity = (await identities.ReadAsync(ct)).Single();
                 var history = new SqliteProfileRestoreHistory(historyPath, identity.InitialCandidateKey, Validate);
+                if (stages)
+                {
+                    // A diagnostic continuation must not finish a prior migration or publish an unselected candidate.
+                    var ancestry = await history.ReadAsync(ct);
+                    var checkpoint = await new SqliteDatabaseGenerationJournal(original + ".generation.sqlite",
+                        identity.InitialMigration).ReadAsync(ct);
+                    if (ancestry.Count != 1 || ancestry[0].Sequence != 0 || !ancestry[0].Selected
+                        || checkpoint.Phase != DatabaseGenerationPhase.Completed)
+                        throw new IOException("Home stages require completed, selected original workload ancestry.");
+                }
                 generation = await SqlCipherProfileGeneration.OpenCurrentAsync(location, identities, "", original, history,
                     _ => throw new IOException("Unexpected restored workload."), keys, new WindowsGenerationFileDurability(directory),
                     owner, Validate, 256 * 1024 * 1024, "4.19.0", ct);
@@ -84,16 +102,37 @@ internal static partial class DebugSnapshots
                     var samples = new List<double>(); var gaps = new List<double>();
                     for (var sample = 0; sample < 2; sample++)
                     {
+                        // Observe actual published boundaries without inserting timers into production methods.
+                        // These wall-clock events include bindings and scheduling, not exclusive CPU-stage costs.
+                        var stageClock = Stopwatch.StartNew();
+                        var timeline = new List<object>();
+                        void Mark(string boundary) { if (stages) timeline.Add(new { Boundary = boundary,
+                            Milliseconds = stageClock.Elapsed.TotalMilliseconds, Thread = Environment.CurrentManagedThreadId }); }
+                        Mark("before-view-model-construction");
                         var reads = new HomeWindowReadFactory(data.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
                         var measuredStore = new ZananceStore(reads, data.GetRequiredService<TimeProvider>(), data.GetRequiredService<ICommercialWriteAccessSource>());
                         var vm = ActivatorUtilities.CreateInstance<HomeViewModel>(services, measuredStore);
+                        Mark("view-model-constructed");
+                        PropertyChangedEventHandler properties = (_, change) => Mark("property:" + change.PropertyName);
+                        var collections = new List<(INotifyCollectionChanged Source, NotifyCollectionChangedEventHandler Handler)>();
+                        void Observe(INotifyCollectionChanged source, string name)
+                        {
+                            if (!stages) return;
+                            NotifyCollectionChangedEventHandler handler = (_, change) => Mark(name + ":" + change.Action);
+                            source.CollectionChanged += handler; collections.Add((source, handler));
+                        }
+                        if (stages) vm.PropertyChanged += properties;
+                        Observe(vm.Balances, "balances"); Observe(vm.Periods, "periods"); Observe(vm.Upcoming, "upcoming");
+                        Observe(vm.Slices, "categories"); Observe(vm.Accounts, "accounts"); Observe(vm.PinnedGoals, "goals");
                         var page = new HomePage(vm)
                         { FlowDirection = local.CurrentLanguage.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight };
+                        Mark("page-constructed");
                         var presentations = 0;
                         vm.PresentingSnapshot += () =>
                         {
                             if (vm.Loading.IsReady) throw new IOException("Original section layout was applied after uncovering Home.");
                             presentations++;
+                            Mark("covered-layout-presented");
                         };
                         var heartbeat = Stopwatch.StartNew(); var last = heartbeat.Elapsed.TotalMilliseconds; var largest = 0d;
                         var timer = app.Dispatcher.CreateTimer(); timer.Interval = TimeSpan.FromMilliseconds(50);
@@ -103,6 +142,7 @@ internal static partial class DebugSnapshots
                         try
                         {
                             await page.PendingPublication;
+                            Mark("publication-ready");
                             if (reads.SynchronousCaptures != 0 || presentations != 1)
                                 throw new IOException("Home appearance reopened settings synchronously or missed covered layout publication.");
                             if (!vm.Loading.IsReady || vm.Accounts.Count != accountCount || !vm.HasEntries
@@ -116,6 +156,14 @@ internal static partial class DebugSnapshots
                             if (page.Handler?.PlatformView is not Microsoft.UI.Xaml.FrameworkElement native)
                                 throw new IOException("The actual native Home tree is unavailable.");
                             native.UpdateLayout(); clock.Stop();
+                            Mark("native-layout-complete");
+                            if (stages)
+                                await File.WriteAllTextAsync(Path.Combine(folder, $"{name}-{language}-{sample}-timeline.json"),
+                                    JsonSerializer.Serialize(new { Shape = name, Sample = sample, Timeline = timeline,
+                                        SourceMode = expected.QuickResources.Settings?.Mode.ToString(),
+                                        SourceHomeLayout = expected.QuickResources.Settings?.HomeLayout,
+                                        IncludesConstructors = true, ExistingCompleteFinancialControlsMatched = true,
+                                        OriginalModelId = typeof(HomeViewModel).Assembly.ManifestModule.ModuleVersionId }), ct);
                             await Task.Delay(75, ct); timer.Stop();
                             samples.Add(clock.Elapsed.TotalMilliseconds); gaps.Add(largest);
                             if (sample == 0)
@@ -124,6 +172,8 @@ internal static partial class DebugSnapshots
                         finally
                         {
                             timer.Stop(); page.RetirePublication(); await shell.Navigation.PopAsync(false);
+                            if (stages) vm.PropertyChanged -= properties;
+                            foreach (var observed in collections) observed.Source.CollectionChanged -= observed.Handler;
                             await originalHome.PendingPublication;
                         }
                     }
@@ -137,11 +187,24 @@ internal static partial class DebugSnapshots
                 await using var portable = await SqliteMemorySnapshot.OpenAsync(bytes, 256 * 1024 * 1024, ct);
                 await SqliteSnapshotVerifier.VerifyAsync(beforePortable.Connection, portable.Connection, ct);
             }
+            if (sourceFiles is not null && !sourceFiles.SequenceEqual(HomeWorkloadFileDigests(directory)))
+                throw new IOException("Retained workload files changed during native Home stage observation.");
         }
         await File.WriteAllTextAsync(Path.Combine(folder, "home-workload-proof.json"), JsonSerializer.Serialize(new
         { Results = results, OriginalProductionPage = true, CompletePortableSchemaAndTypedRowsUnchanged = true,
-            NoFinancialSave = true, ColdStartupOrPhoneAcceptance = false }), ct);
+            NoFinancialSave = true, ColdStartupOrPhoneAcceptance = false, ProcessId = Environment.ProcessId,
+            RetainedSourceFilesUnchanged = stages, ObservationTimeline = stages }), ct);
     }
+
+    /// <summary>Checks every original encrypted source, metadata and wrapping envelope without exporting its contents.</summary>
+    private static string[] HomeWorkloadFileDigests(string directory) => Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
+        .Order(StringComparer.Ordinal).Select(file =>
+        {
+            if ((File.GetAttributes(file) & FileAttributes.ReparsePoint) != 0)
+                throw new IOException("Redirected retained workload file refused.");
+            using var stream = File.OpenRead(file);
+            return Path.GetRelativePath(directory, file) + ":" + Convert.ToHexString(SHA256.HashData(stream));
+        }).ToArray();
 
     /// <summary>Delegates actual protected contexts and rejects accidental synchronous appearance reads.</summary>
     private sealed class HomeWindowReadFactory(IDbContextFactory<ZananceDbContext> inner) : IDbContextFactory<ZananceDbContext>

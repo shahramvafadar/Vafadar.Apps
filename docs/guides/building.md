@@ -2635,3 +2635,17 @@ receipts; never relaunch the script to repair an observation. Validate the actua
 PID/18 contexts/54 images/source/desktop before cleaning the isolated build. No Android or other
 passing cohort needs replay for these DEBUG/WINDOWS-only diagnostic changes.
 [Actual evidence](../../src/Apps/Zanance/docs/quality/transactions-title-large-text.md).
+
+## D-531 - Current Home timeline on retained protected sources
+
+`eng/scripts/Review-HomePublicationStages.ps1 -RunId <completed-store-run> -BuildRoot <isolated-current-build>
+-WorkloadRoot <existing-owned-protected-reference-root>` requires an already completed eighteen-context
+independent store installation and actual matching compiled identity. Build only Debug Windows with
+`-p:ContinuousIntegrationBuild=true -p:ApplicationId=pro.vafadar.zanance.storepreview.<first12run>
+--artifacts-path <isolated-current-build>`. The new `home-workload-stages` continuation returns before
+all financial seed paths. Both protected shapes must already have completed/selected original ancestry.
+The controller runs one private non-input desktop process, four English constructor/publication/layout
+timelines and two own-window images, preserving source/installation/receipt equality. Existing output
+or an observation timeout must not cause a relaunch. Do not reuse the completed D-531 run as new work.
+Only the changed Debug Windows path needs rebuilding; no shipping Android/financial replay is implied.
+See [actual scope and source evidence](../../src/Apps/Zanance/docs/quality/home-publication-stages.md).

@@ -31,7 +31,8 @@ internal static partial class DebugSnapshots
             throw StoreDraftRefusal(run, "desktop");
         var repairName = Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REPAIR");
         var headerLargeText = repairName == "transactions-header-large-text";
-        var repair = repairName == "en-budget" || headerLargeText;
+        var homeStages = repairName == "home-workload-stages";
+        var repair = repairName == "en-budget" || headerLargeText || homeStages;
         if (repair)
         {
             using var previous = JsonDocument.Parse(File.ReadAllText(Path.Combine(expectedOutput, "isolation.json")));
@@ -40,7 +41,9 @@ internal static partial class DebugSnapshots
                 || !previous.RootElement.GetProperty("EmptyBeforeStartup").GetBoolean()
                 || completed.RootElement.GetProperty("Package").GetString() != AppInfo.Current.PackageName
                 || !completed.RootElement.GetProperty("FinancialRowsUnchangedAfterSeeding").GetBoolean()
-                || Directory.Exists(Path.Combine(expectedOutput, headerLargeText ? "transactions-header-large-text" : "repair-en-budget"))
+                || Directory.Exists(Path.Combine(expectedOutput, homeStages ? "home-workload-stages" : headerLargeText ? "transactions-header-large-text" : "repair-en-budget"))
+                || homeStages && (completed.RootElement.GetProperty("Captures").GetArrayLength() != 18
+                    || !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_FONT_SCALE")))
                 || headerLargeText && (completed.RootElement.GetProperty("Captures").GetArrayLength() != 18
                     || Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_FONT_SCALE") != "2"))
                 throw StoreDraftRefusal(run, "repair");
@@ -77,11 +80,29 @@ internal static partial class DebugSnapshots
     private static async Task CaptureStoreDraftAsync(App app, IServiceProvider services, string folder)
     {
         var headerLargeText = Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REPAIR") == "transactions-header-large-text";
-        var isolation = Path.Combine(headerLargeText ? Path.GetDirectoryName(folder)! : folder, "isolation.json");
+        var homeStages = Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REPAIR") == "home-workload-stages";
+        var isolation = Path.Combine(headerLargeText || homeStages ? Path.GetDirectoryName(folder)! : folder, "isolation.json");
         if (!File.Exists(isolation)) throw new IOException("Verified store draft startup required.");
         var local = services.GetRequiredService<ILocalizationService>();
         var theme = services.GetRequiredService<ThemeService>();
         var store = services.GetRequiredService<ZananceStore>();
+        if (homeStages)
+        {
+            // D-531: continue the completed independent installation before every seed path.
+            // Observe the full current Home operation against retained protected workload files.
+            var before = JsonSerializer.Serialize(new { Accounts = await store.GetAccountsAsync(),
+                Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync(),
+                Plans = await services.GetRequiredService<PlanStore>().GetSchedulesAsync() });
+            await ReviewHomeWorkloadAsync(app, services, folder, stages: true);
+            var after = JsonSerializer.Serialize(new { Accounts = await store.GetAccountsAsync(),
+                Entries = await store.GetEntriesAsync(), Settings = await store.GetSettingsAsync(),
+                Plans = await services.GetRequiredService<PlanStore>().GetSchedulesAsync() });
+            if (before != after) throw new IOException("Retained installation inputs changed during Home stage observation.");
+            await File.WriteAllTextAsync(Path.Combine(folder, "installation-preservation.json"), JsonSerializer.Serialize(new
+            { Package = AppInfo.Current.PackageName, ProcessId = Environment.ProcessId, OriginalInputsUnchanged = true,
+                NoSeedOrFinancialCommands = true }));
+            return;
+        }
         if (headerLargeText)
         {
             // D-530: the completed original source is already populated. This continuation must
