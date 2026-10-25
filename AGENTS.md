@@ -3673,3 +3673,27 @@ bookkeeping is not a new EF financial entity, sync record, CSV field or portable
 whole-database backups retain their existing protection. A native terminal publication-count
 guard failure stays unaccepted even if its same retained source/current native amount is verified.
 Use an explicit read-only continuation and never reseed accepted financial work to repair reports.
+
+## D-540 - Complete encrypted ledger read transport
+
+Home may use the optional same-file encrypted row blocks only with the original compiled model,
+protected/audit pipeline and captured read transaction. Preserve all32 entry fields, physical
+rowid tie order and original stable date/creation ordering. Source entries remain financial
+authority. Missing/stale/unsupported/corrupt blocks fall back to the complete scalar reader;
+getters never repair storage or accept partial history. Keep source-count, revision, schema,
+typed bounds, bucket, order, codec and digest guards together.
+
+Refresh affected physical512-row buckets inside the original managed write transaction and
+validate original file/household/compound-cost authority before and after maintenance. SQL IO
+failure or cancellation rolls back that same write; unsupported derived values merely decline
+transport. Raw writers invalidate publication through all three Entry triggers. Future Entries
+table rebuilds must preserve those triggers as well as D-509's financial revision triggers;
+source-column or codec changes require explicit complete-field compatibility review/versioning.
+The three derived tables are not EF financial entities, sync records or portable preferences.
+
+Independent performance controls must read the original scalar source in a separate completed
+process with proven death before measurement, immutable source/code/day/UID/PID identity and
+actual chosen-path observation. Diagnostic retirement is restricted to the explicitly admitted
+normal empty independent caller and its exact old APK migration prefix, after durable original
+request and full memory/source proof. It never authorizes downgrading shipping Main or retained
+workload sources. Preserve failed observations and never replay accepted financial commands.

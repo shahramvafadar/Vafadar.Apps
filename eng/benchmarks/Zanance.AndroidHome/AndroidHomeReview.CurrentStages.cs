@@ -2,6 +2,8 @@ using System.Security.Cryptography;
 using System.Text.Json;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Data;
 using Vafadar.Zanance.App.Security;
@@ -13,7 +15,8 @@ namespace Vafadar.Zanance.App;
 
 internal static partial class AndroidHomeReview
 {
-    private const string CurrentHomeMigration = "20261024115108_HomeFinancialRevision";
+    private const string CurrentHomeMigration = "20261025092800_HomeLedgerReadBlocks";
+    private static readonly string[] CurrentHomeMigrationSuffix = ["20261024115108_HomeFinancialRevision", CurrentHomeMigration];
 
     /// <summary>Qualifies current native Home on encrypted copies of original rows without changing historical sources.</summary>
     private static async Task<object> ReviewCurrentHomeStagesAsync(App app, IServiceProvider services, string root,
@@ -28,6 +31,9 @@ internal static partial class AndroidHomeReview
         var cpuWindowOnly = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_current_cpu_window", false) == true;
         var oraclePhase = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetStringExtra("review_current_cpu_oracle");
         var separateOracle = oraclePhase is not null;
+        var ledgerTransport = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetStringExtra("review_current_ledger_transport") ?? "blocks";
+        if (ledgerTransport is not ("scalar" or "blocks") || ledgerTransport == "scalar" && !separateOracle)
+            throw new ReviewCheckException("Explicit scalar/blocks comparison requires independent complete financial controls.");
         if (separateOracle && (!cpuWindowOnly || reportOnly || oraclePhase is not ("prepare" or "measure")
             || oraclePhase == "prepare" && (resume || previousProgress is not null)
             || oraclePhase == "measure" && (!resume || previousProgress != baseline || !hasAdoption)))
@@ -110,7 +116,7 @@ internal static partial class AndroidHomeReview
             var packet = recorded.RootElement;
             if (!CurrentHomeByteIdentityMatches(packet, publicationComparison, day,
                 typeof(ZananceStore).Module.ModuleVersionId, typeof(Core.Ledger.LedgerCalculator).Module.ModuleVersionId,
-                typeof(Features.Home.HomePage).Module.ModuleVersionId, reportOnly, cpuWindowOnly, separateOracle))
+                typeof(Features.Home.HomePage).Module.ModuleVersionId, reportOnly, cpuWindowOnly, separateOracle, ledgerTransport))
                 throw new ReviewCheckException("The original source/day/code fingerprint cannot be replaced during continuation.");
             string[] ReadFiles(string section, string name) => packet.GetProperty(section).GetProperty(name).EnumerateArray()
                 .Select(item => item.GetString() ?? throw new ReviewCheckException("Incomplete stored source digest.")).ToArray();
@@ -133,6 +139,7 @@ internal static partial class AndroidHomeReview
             await using (var output = new FileStream(byteBaselinePath, FileMode.CreateNew, FileAccess.Write, FileShare.Read))
                 await JsonSerializer.SerializeAsync(output, new { Comparison = publicationComparison, Day = day,
                     CapturedBeforeNativePublication = true, ProcessId = Environment.ProcessId, CpuWindowOnly = cpuWindowOnly, SeparateCpuOracle = separateOracle,
+                    LedgerTransport = ledgerTransport,
                     DataModule = typeof(ZananceStore).Module.ModuleVersionId,
                     CoreModule = typeof(Core.Ledger.LedgerCalculator).Module.ModuleVersionId,
                     CallerModule = typeof(Features.Home.HomePage).Module.ModuleVersionId,
@@ -164,7 +171,7 @@ internal static partial class AndroidHomeReview
         }
         else
             await MeasureAsync(app, services, clone, "home-stages", publicationComparison, publicationComparison, ct,
-                currentSchema: true, cpuWindowOnly: cpuWindowOnly, separateOracle: separateOracle);
+                currentSchema: true, cpuWindowOnly: cpuWindowOnly, separateOracle: separateOracle, ledgerTransport: ledgerTransport);
         foreach (var name in new[] { "reference", "tenfold" })
             if (!originals[name].SequenceEqual(CurrentHomeFileDigests(Path.Combine(root, name)))
                 || !CurrentHomeFilesPreserved(adopted[name], CurrentHomeFileDigests(Path.Combine(clone, name)), publicationComparison))
@@ -188,8 +195,10 @@ internal static partial class AndroidHomeReview
 
     /// <summary>Rejects a different source/code/day before continuing metrics; historical recovery adds no new UI observations.</summary>
     private static bool CurrentHomeByteIdentityMatches(JsonElement packet, string comparison, string day,
-        Guid dataModule, Guid coreModule, Guid callerModule, bool reportOnly, bool cpuWindowOnly = false, bool separateOracle = false) =>
-        packet.GetProperty("Comparison").GetString() == comparison
+        Guid dataModule, Guid coreModule, Guid callerModule, bool reportOnly, bool cpuWindowOnly = false, bool separateOracle = false,
+        string ledgerTransport = "blocks") =>
+        (ledgerTransport is "scalar" or "blocks") && packet.GetProperty("Comparison").GetString() == comparison
+        && packet.TryGetProperty("LedgerTransport", out var transport) && transport.GetString() == ledgerTransport
         && packet.GetProperty("CapturedBeforeNativePublication").GetBoolean()
         && packet.GetProperty("DataModule").GetGuid() == dataModule
         && packet.GetProperty("CoreModule").GetGuid() == coreModule
@@ -276,8 +285,9 @@ internal static partial class AndroidHomeReview
             var pending = (await db.Database.GetPendingMigrationsAsync(ct)).ToArray();
             alreadyApplied = pending.Length == 0 && resume
                 && (await db.Database.GetAppliedMigrationsAsync(ct)).LastOrDefault() == CurrentHomeMigration;
-            if (!alreadyApplied && !pending.SequenceEqual(new[] { CurrentHomeMigration }))
-                throw new ReviewCheckException("Only the known additive Home revision suffix belongs to this qualification.");
+            if (!alreadyApplied && !pending.SequenceEqual(CurrentHomeMigrationSuffix)
+                && !pending.SequenceEqual(CurrentHomeMigrationSuffix.Skip(1)))
+                throw new ReviewCheckException("Only the known additive Home revision/read-block suffix belongs to this qualification.");
         }
         var key = await keys.ReadAsync(generation.Binding, ct);
         try
@@ -301,7 +311,7 @@ internal static partial class AndroidHomeReview
             portableBytes.Position = 0;
             await using var portable = await SqliteMemorySnapshot.OpenAsync(portableBytes, 256 * 1024 * 1024, ct);
             CryptographicOperations.ZeroMemory(portableBytes.GetBuffer().AsSpan(0, checked((int)portableBytes.Length)));
-            // Normalize only a disposable memory copy's new bookkeeping objects. The original
+            // Reverse only the exact declared additive suffix on a disposable memory copy. The original
             // ciphertext and every old schema/header/typed row must match the authenticated rollback.
             await using (var normalized = new SqliteConnection("Data Source=:memory:;Pooling=False"))
             {
@@ -309,23 +319,30 @@ internal static partial class AndroidHomeReview
                 var triggers = new List<string>();
                 await using (var command = normalized.CreateCommand())
                 {
-                    command.CommandText = "SELECT name FROM sqlite_master WHERE type='trigger' AND name GLOB 'HomeFinancialRevision_*' ORDER BY name";
+                    command.CommandText = "SELECT name FROM sqlite_master WHERE type='trigger' AND (name GLOB 'HomeFinancialRevision_*' OR name GLOB 'HomeLedgerReadBlocks_Entries_*') ORDER BY name";
                     await using var reader = await command.ExecuteReaderAsync(ct);
                     while (await reader.ReadAsync(ct)) triggers.Add(reader.GetString(0));
                 }
                 var expected = new[] { "Entries", "Budgets", "BudgetCategoryLimits", "ExchangeRates", "AssetTypes", "AssetEvents" }
                     .SelectMany(table => new[] { "INSERT", "UPDATE", "DELETE" }.Select(operation => "HomeFinancialRevision_" + table + "_" + operation))
+                    .Concat(new[] { "INSERT", "UPDATE", "DELETE" }.Select(operation => "HomeLedgerReadBlocks_Entries_" + operation))
                     .Order(StringComparer.Ordinal).ToArray();
                 if (!triggers.SequenceEqual(expected)) throw new ReviewCheckException("Complete original revision trigger set required.");
-                foreach (var trigger in triggers)
+                var oldApplied = new List<string>();
+                await using (var historyCommand = old.CreateCommand())
                 {
-                    await using var drop = normalized.CreateCommand(); drop.CommandText = "DROP TRIGGER \"" + trigger + "\"";
-                    await drop.ExecuteNonQueryAsync(ct);
+                    historyCommand.CommandText = "SELECT MigrationId FROM __EFMigrationsHistory ORDER BY MigrationId";
+                    await using var reader = await historyCommand.ExecuteReaderAsync(ct);
+                    while (await reader.ReadAsync(ct)) oldApplied.Add(reader.GetString(0));
                 }
-                await using var remove = normalized.CreateCommand();
-                remove.CommandText = "DROP TABLE HomeFinancialRevision; DELETE FROM __EFMigrationsHistory WHERE MigrationId=$migration";
-                remove.Parameters.AddWithValue("$migration", CurrentHomeMigration);
-                if (await remove.ExecuteNonQueryAsync(ct) != 1) throw new ReviewCheckException("Exactly one new migration record required.");
+                await using var normalizedContext = new ZananceDbContext(new DbContextOptionsBuilder<ZananceDbContext>()
+                    .UseSqlite(normalized).UseModel(ZananceDbContextModel.Instance).Options);
+                var currentApplied = (await normalizedContext.Database.GetAppliedMigrationsAsync(ct)).ToArray();
+                var expectedAdded = oldApplied.LastOrDefault() == CurrentHomeMigrationSuffix[0]
+                    ? CurrentHomeMigrationSuffix.Skip(1).ToArray() : CurrentHomeMigrationSuffix;
+                if (oldApplied.Count == 0 || !currentApplied.SequenceEqual(oldApplied.Concat(expectedAdded)))
+                    throw new ReviewCheckException("Original history plus only the exact additive suffix is required.");
+                await normalizedContext.GetService<IMigrator>().MigrateAsync(oldApplied[^1], ct);
                 await SqliteSnapshotVerifier.VerifyAsync(old, normalized, ct);
             }
             var controlPath = generation.Path + ".current-home-control.db";
@@ -338,7 +355,8 @@ internal static partial class AndroidHomeReview
             return new { Shape = Path.GetFileName(folder), ProductionSchemaCallback = true, PendingSuffix = CurrentHomeMigration,
                 ExistingCiphertextMatchedOriginalRollbackBeforeUpgrade = !alreadyApplied, OriginalAppliedMigrationNotRepeated = alreadyApplied,
                 AllOriginalSchemaHeadersAndTypedRowsPreserved = true,
-                ExactNewTriggerCount = 18, AdoptedEncryptedControlMatched = true, NoFinancialSaveOrNewKey = true };
+                ExactNewTriggerCount = 21, KnownAdditiveMigrationSuffix = CurrentHomeMigrationSuffix,
+                MemoryOnlyOriginalMigrationReversal = true, AdoptedEncryptedControlMatched = true, NoFinancialSaveOrNewKey = true };
         }
         finally { CryptographicOperations.ZeroMemory(key); }
     }

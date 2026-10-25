@@ -2714,3 +2714,24 @@ The independent controller arms before Activity wait/host latency, proves actual
 Selected interruption and retains the same source/key on continuation. It does not change product
 storage or accept all-profile/natural-power-loss/hardware/OEM/authentication/iOS boundaries.
 [Evidence](../../src/Apps/Zanance/docs/quality/android-storage-runtime-compatibility.md).
+
+### D-540 - Optional encrypted complete-row read blocks
+
+An additive raw-SQL migration adds HomeLedgerReadState, HomeLedgerReadBlocks and HomeLedgerDirtyBlocks
+without changing the EF entity model. Complete512-row physical buckets and all32 original fields
+remain derived data inside the original encrypted profile file. Entry triggers invalidate old/new
+rowid buckets and opaque revision; original managed transaction commit refreshes affected blocks,
+checking financial/file/household authority before and after. Unsupported original values leave
+transport unpublished; SQL failure/cancellation rolls back the same original transaction.
+
+Home getters require original compiled model/interceptors and the captured original transaction.
+Validate revision/schema/dirty/count, bounded typed payload/count/order/digest/codec before accepting
+all complete rows. Missing/stale/corrupt/unsupported transport falls back to the complete scalar
+reader and original stable ordering; getters never rebuild it. Restore/schema/VACUUM/raw-writer
+paths retain source authority. Whole-file backups keep their original protection and confirmation.
+
+Independent native diagnostics bind scalar-only controls in a separate process; actual chosen SQL
+paths are observed. An explicit normal-empty-caller-only retirement may reverse the two declared
+internal migrations to its actual old APK prefix after durable full source/memory proof. This is
+not product downgrade/recovery authority and never targets shipping Main or workload roots.
+[Qualification and remaining gates](../../src/Apps/Zanance/docs/quality/complete-ledger-read-blocks.md).

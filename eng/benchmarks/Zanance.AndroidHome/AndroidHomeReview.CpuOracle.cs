@@ -52,7 +52,9 @@ internal static partial class AndroidHomeReview
             app.OpenReviewShell();
             await SetLanguageAsync(app, local, "en", ct);
             var today = DateOnly.ParseExact(day, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-            var expected = await data.GetRequiredService<ZananceStore>().GetHomeSnapshotAsync(today, 0, ct);
+            using var scalar = new IsolatedHomeReadFactory(data.GetRequiredService<IDbContextFactory<ZananceDbContext>>(), data.GetRequiredService<TimeProvider>());
+            var scalarStore = new ZananceStore(scalar, data.GetRequiredService<TimeProvider>(), data.GetRequiredService<ICommercialWriteAccessSource>());
+            var expected = await scalarStore.GetHomeSnapshotAsync(today, 0, ct);
             if (expected.Entries.Count != Workload.Tenfold.Entries || expected.QuickResources.Accounts.Count != Workload.Tenfold.Accounts
                 || expected.Plans.Schedules.Count != Workload.Tenfold.Schedules)
                 throw new ReviewCheckException("Prepared original workload shape differs.");
@@ -63,7 +65,7 @@ internal static partial class AndroidHomeReview
             var recent = expected.Entries.Where(entry => entry.Date <= today)
                 .OrderByDescending(entry => entry.Date).ThenByDescending(entry => entry.CreatedAt).Take(3)
                 .Select(entry => { var row = presenter.Row(entry); return new CpuOracleRecent(row.Id, row.Title, row.AmountText, row.IsUnreviewed, row.Subtitle); }).ToArray();
-            var reads = new WindowReadFactory(data.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+            var reads = new WindowReadFactory(scalar);
             var store = new ZananceStore(reads, data.GetRequiredService<TimeProvider>(), data.GetRequiredService<ICommercialWriteAccessSource>());
             var vm = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store);
             string presentation;
@@ -76,6 +78,8 @@ internal static partial class AndroidHomeReview
                 presentation = CapturePresentation(vm);
             }
             finally { vm.RetirePublication(); }
+            if (scalar.CompleteScalarReads < 2 || scalar.DerivedTransportReads != 0)
+                throw new ReviewCheckException("Independent financial controls must use the complete original scalar reader.");
             var payload = JsonSerializer.Serialize(new { Balances = balances, Recent = recent, Presentation = presentation,
                 Entries = expected.Entries.Count, Accounts = expected.QuickResources.Accounts.Count, Schedules = expected.Plans.Schedules.Count });
             await WriteNewDurableCpuOracleAsync(root, payloadPath, payload, ct);
@@ -83,10 +87,12 @@ internal static partial class AndroidHomeReview
             var ready = new { Comparison = comparison, Day = day, SourceFingerprint = sourceFingerprint, PayloadSha256 = digest,
                 DataModule = typeof(ZananceStore).Module.ModuleVersionId, CoreModule = typeof(LedgerCalculator).Module.ModuleVersionId,
                 CallerModule = typeof(HomePage).Module.ModuleVersionId, PreparedProcessId = Environment.ProcessId,
-                PreparedUid = Android.OS.Process.MyUid(), CapturedBeforeNativePublication = true, NativePublications = 0, FinancialCommands = 0 };
+                PreparedUid = Android.OS.Process.MyUid(), CapturedBeforeNativePublication = true, NativePublications = 0, FinancialCommands = 0,
+                OriginalScalarLedgerControl = true, CompleteScalarReads = scalar.CompleteScalarReads, DerivedTransportReads = scalar.DerivedTransportReads };
             await WriteNewDurableCpuOracleAsync(root, readyPath, JsonSerializer.Serialize(ready), ct);
             return new { Comparison = comparison, CpuWindowOnly = true, SeparateCpuOracle = true, CpuOraclePrepared = true, PreparedProcessId = Environment.ProcessId,
-                NativePublications = 0, FinancialCommands = 0, FullOriginalLedgerAndProjectionUsed = true, PayloadSha256 = digest };
+                NativePublications = 0, FinancialCommands = 0, FullOriginalLedgerAndProjectionUsed = true, OriginalScalarLedgerControl = true,
+                CompleteScalarReads = scalar.CompleteScalarReads, DerivedTransportReads = scalar.DerivedTransportReads, PayloadSha256 = digest };
         }
     }
 
@@ -102,7 +108,9 @@ internal static partial class AndroidHomeReview
     /// <summary>Rejects stale source/code/day, same-process controls, another UID or incomplete preparation.</summary>
     private static bool IsolatedCpuOracleIdentityMatches(JsonElement packet, string comparison, string day, string sourceFingerprint,
         string payloadSha256, Guid dataModule, Guid coreModule, Guid callerModule, int processId, int uid) =>
-        packet.GetProperty("Comparison").GetString() == comparison && packet.GetProperty("Day").GetString() == day
+            packet.TryGetProperty("OriginalScalarLedgerControl", out var originalScalar) && originalScalar.ValueKind == JsonValueKind.True
+        && packet.GetProperty("CompleteScalarReads").GetInt32() >= 2 && packet.GetProperty("DerivedTransportReads").GetInt32() == 0
+        && packet.GetProperty("Comparison").GetString() == comparison && packet.GetProperty("Day").GetString() == day
         && packet.GetProperty("SourceFingerprint").GetString() == sourceFingerprint && packet.GetProperty("PayloadSha256").GetString() == payloadSha256
         && packet.GetProperty("DataModule").GetGuid() == dataModule && packet.GetProperty("CoreModule").GetGuid() == coreModule
         && packet.GetProperty("CallerModule").GetGuid() == callerModule

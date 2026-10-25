@@ -82,7 +82,13 @@ internal static class CompleteHomeLedgerReader
         {
             ct.ThrowIfCancellationRequested();
             var row = new CompleteHomeLedgerRow(reader, statement, Columns.Length);
-            entries.Add(new LedgerEntry(row.GetGuid(0))
+            entries.Add(Materialize(row, contract));
+        }
+        return entries;
+    }
+
+    /// <summary>Shares the original32-field model conversions between scalar reads and derived block preparation.</summary>
+    private static LedgerEntry Materialize(CompleteHomeLedgerRow row, ReadContract contract) => new(row.GetGuid(0))
             {
                 AccountId = row.GetGuid(1),
                 AggregatedFrom = row.IsDBNull(2) ? null : row.GetFieldValue<DateOnly>(2),
@@ -115,9 +121,46 @@ internal static class CompleteHomeLedgerReader
                 ToAccountId = row.IsDBNull(29) ? null : row.GetGuid(29),
                 ToAmount = row.IsDBNull(30) ? null : row.GetInt64(30),
                 UpdatedAt = (DateTimeOffset)contract.UpdatedAt.ConvertFromProvider(row.GetInt64(31))!,
-            });
+            };
+
+    /// <summary>
+    /// Reads one physical bucket for optional derived storage through the same original typed conversion.
+    /// A substituted/intercepted reader declines preparation rather than caching its observable replacement.
+    /// </summary>
+    internal static async Task<List<HomeLedgerPhysicalRow>?> ReadPhysicalBlockAsync(ZananceDbContext db, long blockId, CancellationToken ct)
+    {
+        var contract = Contracts.GetValue(db.Model, CreateContract);
+        var lower = unchecked(blockId << HomeLedgerBlockCodec.BlockShift);
+        if ((lower >> HomeLedgerBlockCodec.BlockShift) != blockId) return null;
+        var upper = lower | (HomeLedgerBlockCodec.MaxRows - 1);
+        var sql = Sql.Replace(" AS \"__OriginalNulls\" FROM", ", rowid AS \"__PhysicalId\" FROM", StringComparison.Ordinal)
+            .Replace(" ORDER BY rowid DESC", $" WHERE rowid BETWEEN {lower.ToString(System.Globalization.CultureInfo.InvariantCulture)} AND {upper.ToString(System.Globalization.CultureInfo.InvariantCulture)} ORDER BY rowid DESC", StringComparison.Ordinal);
+        var command = db.GetService<IRelationalCommandBuilderFactory>().Create().Append(sql, sensitive: false).Build();
+        var parameters = new RelationalCommandParameterObject(db.GetService<IRelationalConnection>(), null, null,
+            db, db.GetService<IRelationalCommandDiagnosticsLogger>(), CommandSource.FromSqlQuery);
+        await using var result = await command.ExecuteReaderAsync(parameters, ct);
+        if (result.DbDataReader is not SqliteDataReader reader || reader.GetType() != typeof(SqliteDataReader)
+            || reader.FieldCount != Columns.Length + 2
+            || !string.Equals(raw.sqlite3_sql(reader.Handle).utf8_to_string()?.Trim(), sql, StringComparison.Ordinal)) return null;
+        var rows = new List<HomeLedgerPhysicalRow>();
+        long? previous = null;
+        while (await reader.ReadAsync(ct))
+        {
+            ct.ThrowIfCancellationRequested();
+            var id = reader.GetInt64(Columns.Length + 1);
+            if (id >> HomeLedgerBlockCodec.BlockShift != blockId || previous is { } prior && id >= prior
+                || rows.Count == HomeLedgerBlockCodec.MaxRows) return null;
+            previous = id;
+            try { rows.Add(new(id, Materialize(new CompleteHomeLedgerRow(reader, reader.Handle, Columns.Length), contract))); }
+            catch (Exception error) when (error is InvalidOperationException or ArgumentException or FormatException
+                or OverflowException or InvalidDataException or System.Text.Json.JsonException)
+            {
+                // A legacy value unsupported by the original typed reader must not fail an unrelated writer
+                // merely because it also prepares optional transport. Original reads keep their own refusal.
+                return null;
+            }
         }
-        return entries;
+        return rows;
     }
 
     /// <summary>Refuses model drift rather than silently losing fields, conversions or future query filters.</summary>

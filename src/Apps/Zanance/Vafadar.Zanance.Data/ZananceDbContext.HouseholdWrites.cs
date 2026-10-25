@@ -19,6 +19,10 @@ public sealed partial class ZananceDbContext
     private readonly HashSet<Guid> insertedHouseholdSettlements = [];
     private readonly HashSet<(Guid CostId, Guid ContactId)> insertedHouseholdAllocations = [];
 
+    /// <summary>Custom model conversions or command observers retain the full original scalar reader.</summary>
+    internal bool CanUseHomeLedgerBlocks => ReferenceEquals(Model, CompiledModel.ZananceDbContextModel.Instance)
+        && HasOriginalReadPipeline(interceptor => interceptor is HouseholdCommitInterceptor);
+
     /// <inheritdoc />
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -118,10 +122,20 @@ public sealed partial class ZananceDbContext
     private sealed class HouseholdCommitInterceptor(ZananceDbContext owner) : DbTransactionInterceptor
     {
         public override InterceptionResult TransactionCommitting(DbTransaction transaction, TransactionEventData eventData, InterceptionResult result)
-        { owner.DemandHouseholdCommit(eventData.TransactionId); return result; }
-        public override ValueTask<InterceptionResult> TransactionCommittingAsync(DbTransaction transaction, TransactionEventData eventData,
+        {
+            owner.DemandHouseholdCommit(eventData.TransactionId);
+            HomeLedgerReadBlocks.MaintainAsync(owner, CancellationToken.None).GetAwaiter().GetResult();
+            owner.DemandHouseholdCommit(eventData.TransactionId);
+            return result;
+        }
+        public override async ValueTask<InterceptionResult> TransactionCommittingAsync(DbTransaction transaction, TransactionEventData eventData,
             InterceptionResult result, CancellationToken cancellationToken = default)
-        { cancellationToken.ThrowIfCancellationRequested(); owner.DemandHouseholdCommit(eventData.TransactionId); return ValueTask.FromResult(result); }
+        {
+            cancellationToken.ThrowIfCancellationRequested(); owner.DemandHouseholdCommit(eventData.TransactionId);
+            await HomeLedgerReadBlocks.MaintainAsync(owner, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested(); owner.DemandHouseholdCommit(eventData.TransactionId);
+            return result;
+        }
     }
 
     /// <inheritdoc />

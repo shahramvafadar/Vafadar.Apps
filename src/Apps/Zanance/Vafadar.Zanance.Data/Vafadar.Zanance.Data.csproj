@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="Vafadar.Zanance.Sync.Tests" />
+    <InternalsVisibleTo Include="Vafadar.Zanance.App.Tests" />
     <InternalsVisibleTo Include="HouseholdRoundtrip" />
     <InternalsVisibleTo Include="HouseholdJournal" />
     <EmbeddedResource Include="Migrations/PersonalSyncJournalUp.sql" LogicalName="Vafadar.Zanance.Sync.JournalUp.v1.sql" />

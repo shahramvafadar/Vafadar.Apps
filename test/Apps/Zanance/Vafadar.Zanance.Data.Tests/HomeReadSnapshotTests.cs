@@ -50,6 +50,52 @@ public sealed class HomeReadSnapshotTests : IDisposable
         await db.SaveChangesAsync(Ct);
     }
 
+    /// <summary>Derived preparation retains actual scalar conversions and physical tie ordering across signed buckets.</summary>
+    [Fact]
+    public async Task Physical_ledger_blocks_match_the_complete_original_reader_without_writing()
+    {
+        var provider = Create(); await SeedAsync(provider);
+        await using var db = await Factory(provider).CreateDbContextAsync(Ct);
+        await db.Database.ExecuteSqlRawAsync("UPDATE Entries SET rowid=CASE WHEN Kind=0 THEN -1 ELSE 512 END;", Ct);
+        await using var transaction = await db.Database.BeginTransactionAsync(Ct);
+        var scalar = await CompleteHomeLedgerReader.ReadAsync(db, Ct);
+        var physical = new List<HomeLedgerPhysicalRow>();
+        foreach (var bucket in new long[] { 1, 0, -1 })
+        {
+            var rows = await CompleteHomeLedgerReader.ReadPhysicalBlockAsync(db, bucket, Ct);
+            Assert.NotNull(rows); physical.AddRange(rows);
+        }
+        Assert.Equal(2, physical.Count);
+        Assert.Equal(JsonSerializer.Serialize(scalar), JsonSerializer.Serialize(physical.Select(row => row.Entry)));
+        Assert.True(physical[0].RowId > physical[1].RowId);
+        Assert.Null(await CompleteHomeLedgerReader.ReadPhysicalBlockAsync(db, long.MaxValue, Ct));
+        Assert.Equal(2, await db.Entries.CountAsync(Ct));
+    }
+
+    /// <summary>An intercepted bucket is not promoted into a future derived source.</summary>
+    [Fact]
+    public async Task Physical_block_preparation_declines_a_rewritten_prepared_statement()
+    {
+        var provider = Create(); await SeedAsync(provider);
+        var path = provider.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>().Path;
+        var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite($"Data Source={path};Pooling=False")
+            .UseModel(ZananceDbContextModel.Instance).AddInterceptors(new RewrittenPhysicalBlock()).Options;
+        await using var db = new ZananceDbContext(options);
+        await using var transaction = await db.Database.BeginTransactionAsync(Ct);
+        Assert.Null(await CompleteHomeLedgerReader.ReadPhysicalBlockAsync(db, 0, Ct));
+        Assert.Equal(2, (await CompleteHomeLedgerReader.ReadAsync(db, Ct)).Count);
+    }
+
+    private sealed class RewrittenPhysicalBlock : DbCommandInterceptor
+    {
+        public override ValueTask<InterceptionResult<DbDataReader>> ReaderExecutingAsync(DbCommand command,
+            CommandEventData eventData, InterceptionResult<DbDataReader> result, CancellationToken cancellationToken = default)
+        {
+            if (command.CommandText.Contains("__PhysicalId", StringComparison.Ordinal)) command.CommandText += " /* original observer */";
+            return ValueTask.FromResult(result);
+        }
+    }
+
     /// <summary>Empty display reads never become settings or selection writes and release both original leases.</summary>
     [Fact]
     public async Task Empty_home_uses_one_read_context_and_fresh_validation_without_creating_defaults()

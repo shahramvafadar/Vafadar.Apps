@@ -9383,3 +9383,44 @@ OS, hash-clean two XMLs, remove53992832 duplicate bytes, perform scoped cleans a
 Residual native cache131261554 bytes is inventoried; earlier cleanup refusals remain untouched.
 D-538 CI/CodeQL succeed and its one-shot is consumed/deleted. General stability/accessibility/
 platform/release gates and the broader goal remain open. [Complete evidence and scope](../quality/separate-process-home-oracle.md).
+
+### D-540 - Complete encrypted ledger transport (locally qualified and adopted)
+
+Preserve the complete32-field history and original physical/date/creation tie order while adding
+bounded512-row internal encrypted read blocks. The original source/writer/financial formulas stay
+authoritative; revision/schema/count/digest/type/pipeline guards fall back to scalar reads without
+getter repair. Original transaction commit validates authority before/after affected-block upkeep;
+cancellation/IO cannot leave a separately accepted financial edit. No EF entity/model/key/permission
+or new SDK change. Focused codec/migration/source/rollback/backup/restore/authority/observer checks
+pass in selective continuations; preserve original fixture/parameter/observation failures, not a
+full-suite green claim. Strict Windows and full signed offline dual-ABI384AOT builds pass.
+
+Two opposite-order, same-APK/source/day/module Samsung pairs use independent scalar controls in
+other proven-dead processes:4710.9157to3323.291ms and4665.0514to3304.8118ms (29.4555%/29.1581%).
+All original financial/native/recent/presentation and complete source guards match. Four single
+tenfold-English publications do not accept cold/full-device/language coverage or two-second Home.
+No accepted financial seed/key/command is repeated. The two-second objective remains open.
+
+The exact old caller APK supports50 migrations ending20261017013925; reverse only M1/M2 internal
+bookkeeping on empty independent Main/UID10381 using durable original request, actual memory Down
+and full source/schema/header/typed-row proof. Native18045 passes with no shipping/workload touch.
+Preserve an earlier undispatched17203 entry-registration omission; correct only its Activity
+allowlist and retain original performance APK/Data/Core exact-byte continuity without replay.
+Initial old-APK installation observation expires at35seconds with Play Protect foreground; retain
+that pending result. After the owner's personal decision, the same install completes with original
+b1d5 APK/UID10381; normal21974 startup reaches original onboarding, then stops with proven death.
+Main27069/Home979/all141 states/OS remain exact. A local UTF8-reader refusal precedes any shipping
+install; correct only encoding and preserve the baseline. After explicit handback, one complete signed no-reset upgrade adopts e0d3 shipping bytes and
+Main27069 becomes27774. Preserve the initial16-node Preparing refusal; the same process then
+matches Home979/all141 public states and all three original profile actions/selection/OS.
+Independent original caller APK/UID/stopped state/storage identities remain exact; remove only17
+owned hash-matched phone XMLs. No financial Save or private Main key/database read occurs.
+Independent new-candidate bootstrap also reaches
+original onboarding on API24/x64/4096 and API35/x64/simulated16384, with no UI/financial input;
+remove only new fixtures/two owned XMLs and prove both AVDs stopped with sharedADB76812 retained.
+Goal/full stability/accessibility/iOS/provider/Store/release remain open. [Evidence](../quality/complete-ledger-read-blocks.md).
+
+D-540 failed-case continuation while the phone gate remains: select only the eight initial store
+cases lacking any successful terminal outcome. Actual strict rebuild and all eight cases, including
+fixture disposal, pass; exact result-name comparison excludes previously successful/unrelated
+cases. Preserve initial failure receipts; no native financial commands or full-suite claim.

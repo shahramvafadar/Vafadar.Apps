@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Vafadar.Data.Conventions;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Vafadar.Data.Auditing;
 
 namespace Vafadar.Data;
 
@@ -19,6 +22,17 @@ namespace Vafadar.Data;
 public abstract class LocalDbContext : DbContext
 {
     private IDisposable? accessLease;
+
+    /// <summary>Allows derived read transports only with the original protection/auditing pipeline and explicitly owned app barriers.</summary>
+    protected bool HasOriginalReadPipeline(Func<IInterceptor, bool> isOwnedAppBarrier)
+    {
+        var options = this.GetService<IDbContextOptions>().FindExtension<CoreOptionsExtension>();
+        var interceptors = (options?.Interceptors ?? []).Concat(options?.SingletonInterceptors ?? [])
+            .Concat(this.GetService<IEnumerable<IInterceptor>>());
+        return interceptors.All(interceptor => interceptor.GetType() == typeof(AuditingSaveChangesInterceptor)
+            || interceptor is ProtectedSqliteCommandInterceptor or ProtectedSqliteConnectionInterceptor
+            || isOwnedAppBarrier(interceptor));
+    }
 
     /// <summary>Transfers exactly one factory lifetime lease to this context.</summary>
     internal void AttachAccessLease(IDisposable lease)

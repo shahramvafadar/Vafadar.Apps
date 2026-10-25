@@ -1233,3 +1233,18 @@ Full arbitrary-profile/hardware/OEM/ARM64/biometric/authentication/UI/stability/
 iOS/provider/Store/release acceptance remains open. D-521 CI/CodeQL pass; its separate Windows
 protected-workload workflow failure remains under investigation, with Android producer success
 preserved. See [bounded original runtime evidence](../quality/android-profile-runtime-compatibility.md).
+
+### D-540 - Optional complete-row transport (qualification in progress)
+
+Three internal derived tables duplicate complete original ledger fields only inside the same
+profile-encrypted SQLite file. They add no new collected category, portable preference, account,
+network/analytics SDK, permission or outside recipient. Original entries remain financial authority;
+missing/stale/corrupt/unsupported transport falls back to complete scalar reads without getter writes.
+Original backup encryption/protection and explicit confirmation remain unchanged. Derived blocks
+may travel with the original protected database; they never replace source records or recovery keys.
+
+Native qualification uses retained fictitious independent encrypted copies and separate scalar-only
+controls, not user Main private data. Retirement reverses only two declared internal migrations on
+the empty independent caller before restoring its actual old APK; shipping Main/workload roots are
+excluded. Complete signed no-reset Main adoption and original caller/public-state/profile restoration now pass. See the
+[complete evidence and boundaries](../quality/complete-ledger-read-blocks.md).

@@ -7,6 +7,7 @@ using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.CompiledModel;
+using Vafadar.Data;
 
 namespace Vafadar.Zanance.App.Tests;
 
@@ -14,6 +15,46 @@ namespace Vafadar.Zanance.App.Tests;
 [Trait("AT", "AT-294")]
 public sealed class ProtectedSchemaUpgradeTests
 {
+    /// <summary>Native adoption may reverse only its declared suffix on an independent memory clone for complete preservation proof.</summary>
+    [Theory, InlineData(false), InlineData(true)]
+    public async Task Memory_only_read_transport_reversal_preserves_every_original_schema_and_typed_row(bool withRevision)
+    {
+        SQLitePCL.Batteries_V2.Init();
+        var ct = TestContext.Current.CancellationToken;
+        await using var original = new SqliteConnection("Data Source=:memory:"); await original.OpenAsync(ct);
+        string target;
+        await using (var db = new ZananceDbContext(new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(original)
+            .UseModel(ZananceDbContextModel.Instance).Options))
+        {
+            var migrations = db.Database.GetMigrations().ToArray();
+            target = withRevision ? "20261024115108_HomeFinancialRevision" : migrations[^3];
+            await db.GetService<IMigrator>().MigrateAsync(target, ct);
+            var account = new Account { Name = "Retained transport control", CurrencyCode = "EUR", OpeningDate = new(2026, 10, 25) };
+            db.Accounts.Add(account);
+            db.Entries.Add(new LedgerEntry { AccountId = account.Id, Amount = 456, Date = new(2026, 10, 25), Title = "Original complete row", Tags = ["retained"] });
+            await db.SaveChangesAsync(ct);
+        }
+        await using var current = new SqliteConnection("Data Source=:memory:"); await current.OpenAsync(ct);
+        original.BackupDatabase(current);
+        await ProtectedProfileStorage.UpgradeAsync(current, ct);
+        await using (var db = new ZananceDbContext(new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(current)
+            .UseModel(ZananceDbContextModel.Instance).Options))
+        {
+            Assert.Equal("20261025092800_HomeLedgerReadBlocks", (await db.Database.GetAppliedMigrationsAsync(ct)).Last());
+            await using var read = await db.Database.BeginTransactionAsync(ct);
+            var cached = await HomeLedgerReadBlocks.TryReadAsync(db, ct); Assert.NotNull(cached);
+            Assert.Equal(456, Assert.Single(cached).Amount);
+        }
+        await using var normalized = new SqliteConnection("Data Source=:memory:"); await normalized.OpenAsync(ct);
+        current.BackupDatabase(normalized);
+        await using (var db = new ZananceDbContext(new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(normalized)
+            .UseModel(ZananceDbContextModel.Instance).Options))
+            await db.GetService<IMigrator>().MigrateAsync(target, ct);
+        await SqliteSnapshotVerifier.VerifyAsync(original, normalized, ct);
+        using var proof = current.CreateCommand(); proof.CommandText = "SELECT count(*) FROM HomeLedgerReadBlocks";
+        Assert.Equal(1L, await proof.ExecuteScalarAsync(ct)); // Actual upgraded source was never reversed.
+    }
+
     /// <summary>The actual callback upgrades an old supported application schema before new household journal queries can run.</summary>
     [Fact]
     public async Task Old_supported_schema_receives_pending_household_tables_and_preserves_its_original_rows()

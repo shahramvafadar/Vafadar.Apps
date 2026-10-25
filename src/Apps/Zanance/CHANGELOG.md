@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Speed up Home history loading while preserving every transaction and the original financial calculations (D-540).
+
 - Narrowed retained Samsung Home profiling to its actual read/publication/layout windows; source and financial data stay unchanged, while the two-second target remains open (D-537).
 
 - Checked current Home publication on preserved small/large Samsung datasets without repeating financial entries; complete data guards pass, while the two-second speed target and general stability remain open (D-533).

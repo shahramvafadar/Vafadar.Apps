@@ -94,7 +94,8 @@ public sealed partial class ZananceStore
         // The date index visits full encrypted rows out of page order. A reverse table scan avoids repeated
         // decryption, and supplies the same descending row identity used by the original reverse date scan
         // when both visible sort keys tie. Stable managed ordering needs no SQLite temporary sort file.
-        var entries = await CompleteHomeLedgerReader.ReadAsync(db, ct);
+        var entries = await HomeLedgerReadBlocks.TryReadAsync(db, ct)
+            ?? await CompleteHomeLedgerReader.ReadAsync(db, ct);
         ct.ThrowIfCancellationRequested();
         var ordered = entries.OrderByDescending(entry => entry.Date).ThenByDescending(entry => entry.CreatedAt).ToList();
         ct.ThrowIfCancellationRequested();

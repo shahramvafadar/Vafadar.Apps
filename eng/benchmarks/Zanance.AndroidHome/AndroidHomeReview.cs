@@ -674,6 +674,16 @@ internal static partial class AndroidHomeReview
                 Directory.CreateDirectory(root);
                 await WriteReportAsync(root, phase, await ReviewFilterActionsAsync(app, services, root, comparison!, ct), ct);
             }
+            else if (phase == "retire-home-read-blocks")
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$")
+                    || comparison is null || !System.Text.RegularExpressions.Regex.IsMatch(comparison, "^[0-9a-f]{32}$")
+                    || baseline != comparison) throw new ReviewCheckException("Explicit independent retirement lineage required.");
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0 || File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))
+                    throw new ReviewCheckException("Retirement outcome already exists; recover it without repeating maintenance.");
+                await WriteReportAsync(root, phase, await RetireCallerReadBlocksAsync(services, root, comparison, ct), ct);
+            }
             else if (phase == "home-current-stages")
             {
                 RequireRoot(root);
@@ -852,8 +862,10 @@ internal static partial class AndroidHomeReview
     }
 
     private static async Task MeasureAsync(App app, IServiceProvider services, string root, string phase, string comparison, string baseline, CancellationToken ct,
-        bool currentSchema = false, bool cpuWindowOnly = false, bool separateOracle = false)
+        bool currentSchema = false, bool cpuWindowOnly = false, bool separateOracle = false, string ledgerTransport = "blocks")
     {
+        if (ledgerTransport is not ("scalar" or "blocks") || ledgerTransport == "scalar" && !separateOracle)
+            throw new ReviewCheckException("Transport baseline requires the independent current-source protocol.");
         if (cpuWindowOnly && (!currentSchema || phase != "home-stages") || separateOracle && !cpuWindowOnly)
             throw new ReviewCheckException("CPU sampling requires the explicit current-schema publication scope.");
         var local = services.GetRequiredService<ILocalizationService>();
@@ -953,11 +965,15 @@ internal static partial class AndroidHomeReview
                         throw new ReviewCheckException("Original native Shell/Home is unavailable.");
                     await originalHome.PendingPublication;
                     var samples = new List<double>(); var gaps = new List<double>(); var notificationSamples = new List<object>();
+                    var transportSamples = new List<object>();
                     var uncollectedOracle = cpuWindowOnly && isolatedOracle is null ? releasedOracle!.IsAlive : (bool?)null;
                     for (var sample = 0; sample < (phase == "guard" || cpuWindowOnly ? 1 : 2); sample++)
                     {
                         RequireHomeWindowFocus();
-                        var reads = new WindowReadFactory(data.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+                        using var isolatedReads = separateOracle ? new IsolatedHomeReadFactory(
+                            data.GetRequiredService<IDbContextFactory<ZananceDbContext>>(), data.GetRequiredService<TimeProvider>(),
+                            useDerivedTransport: ledgerTransport == "blocks") : null;
+                        var reads = new WindowReadFactory(isolatedReads ?? data.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
                         var store = new ZananceStore(reads, data.GetRequiredService<TimeProvider>(), data.GetRequiredService<ICommercialWriteAccessSource>());
                         var vm = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store);
                         // D-320: observe existing public publication boundaries before native bindings subscribe.
@@ -1043,6 +1059,14 @@ internal static partial class AndroidHomeReview
                             if (isolatedOracle is not null ? presentation != isolatedOracle.Presentation
                                 : !File.Exists(originalPath) || presentation != await File.ReadAllTextAsync(originalPath, ct))
                                 throw new ReviewCheckException("Original complete financial presentation differs.");
+                            if (isolatedReads is not null)
+                            {
+                                if (ledgerTransport == "scalar" ? isolatedReads.CompleteScalarReads < 1 || isolatedReads.DerivedTransportReads != 0
+                                    : isolatedReads.DerivedBlockReads < 1 || isolatedReads.CompleteScalarReads != 0)
+                                    throw new ReviewCheckException("Requested transport was not the actual complete Home read path.");
+                                transportSamples.Add(new { Sample = sample, LedgerTransport = ledgerTransport,
+                                    isolatedReads.CompleteScalarReads, isolatedReads.DerivedBlockReads, isolatedReads.DerivedTransportReads });
+                            }
                             samples.Add(clock.Elapsed.TotalMilliseconds); gaps.Add(largest);
                             if (phase == "home-stages") lock (marks) notificationSamples.Add(new { Sample = sample, Marks = marks.ToArray() });
                         }
@@ -1062,6 +1086,7 @@ internal static partial class AndroidHomeReview
                         ActualNativeLayout = true, OriginalWindowFocusRequired = true, NoSynchronousSettingsRead = true,
                         FullOracleReferenceReleased = cpuWindowOnly && isolatedOracle is null, UncollectedOracleAtPublicationStart = uncollectedOracle,
                         NoFullOracleReadBeforePublication = separateOracle, ObservationProcessId = Environment.ProcessId,
+                        LedgerTransport = ledgerTransport, ActualTransportSamples = transportSamples,
                         SeparateOraclePreparationProcessId = isolatedOracle?.PreparedProcessId });
                     await File.WriteAllTextAsync(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json"), JsonSerializer.Serialize(results), ct);
                     _balanceEvidence = null;
