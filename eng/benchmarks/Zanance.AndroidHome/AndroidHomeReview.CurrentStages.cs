@@ -26,6 +26,12 @@ internal static partial class AndroidHomeReview
         var hasAdoption = File.Exists(Path.Combine(clone, "adoption-proof.json"));
         var reportOnly = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_current_report", false) == true;
         var cpuWindowOnly = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_current_cpu_window", false) == true;
+        var oraclePhase = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetStringExtra("review_current_cpu_oracle");
+        var separateOracle = oraclePhase is not null;
+        if (separateOracle && (!cpuWindowOnly || reportOnly || oraclePhase is not ("prepare" or "measure")
+            || oraclePhase == "prepare" && (resume || previousProgress is not null)
+            || oraclePhase == "measure" && (!resume || previousProgress != baseline || !hasAdoption)))
+            throw new ReviewCheckException("Separate CPU controls require fresh preparation or its explicit retained measurement lineage.");
         if (cpuWindowOnly)
         {
             // D-537: filter code samples against the original publication boundaries, not the source oracles.
@@ -104,7 +110,7 @@ internal static partial class AndroidHomeReview
             var packet = recorded.RootElement;
             if (!CurrentHomeByteIdentityMatches(packet, publicationComparison, day,
                 typeof(ZananceStore).Module.ModuleVersionId, typeof(Core.Ledger.LedgerCalculator).Module.ModuleVersionId,
-                typeof(Features.Home.HomePage).Module.ModuleVersionId, reportOnly, cpuWindowOnly))
+                typeof(Features.Home.HomePage).Module.ModuleVersionId, reportOnly, cpuWindowOnly, separateOracle))
                 throw new ReviewCheckException("The original source/day/code fingerprint cannot be replaced during continuation.");
             string[] ReadFiles(string section, string name) => packet.GetProperty(section).GetProperty(name).EnumerateArray()
                 .Select(item => item.GetString() ?? throw new ReviewCheckException("Incomplete stored source digest.")).ToArray();
@@ -126,7 +132,7 @@ internal static partial class AndroidHomeReview
                 throw new ReviewCheckException("Missing pre-measurement fingerprint; old observations cannot become new byte evidence.");
             await using (var output = new FileStream(byteBaselinePath, FileMode.CreateNew, FileAccess.Write, FileShare.Read))
                 await JsonSerializer.SerializeAsync(output, new { Comparison = publicationComparison, Day = day,
-                    CapturedBeforeNativePublication = true, ProcessId = Environment.ProcessId, CpuWindowOnly = cpuWindowOnly,
+                    CapturedBeforeNativePublication = true, ProcessId = Environment.ProcessId, CpuWindowOnly = cpuWindowOnly, SeparateCpuOracle = separateOracle,
                     DataModule = typeof(ZananceStore).Module.ModuleVersionId,
                     CoreModule = typeof(Core.Ledger.LedgerCalculator).Module.ModuleVersionId,
                     CallerModule = typeof(Features.Home.HomePage).Module.ModuleVersionId,
@@ -140,7 +146,13 @@ internal static partial class AndroidHomeReview
             await durability.SynchronizeFileAsync(progressPath, ct);
             durableByteBaseline = true;
         }
-        if (reportOnly)
+        if (oraclePhase == "prepare")
+        {
+            var fingerprint = Convert.ToHexString(SHA256.HashData(await File.ReadAllBytesAsync(byteBaselinePath, ct)));
+            var prepared = await PrepareHomeCpuOracleAsync(app, services, clone, publicationComparison, day, fingerprint, ct);
+            await WriteReportAsync(clone, "home-cpu-oracle", prepared, ct);
+        }
+        else if (reportOnly)
         {
             var audit = new List<object>();
             foreach (var name in new[] { "reference", "tenfold" })
@@ -152,18 +164,20 @@ internal static partial class AndroidHomeReview
         }
         else
             await MeasureAsync(app, services, clone, "home-stages", publicationComparison, publicationComparison, ct,
-                currentSchema: true, cpuWindowOnly: cpuWindowOnly);
+                currentSchema: true, cpuWindowOnly: cpuWindowOnly, separateOracle: separateOracle);
         foreach (var name in new[] { "reference", "tenfold" })
             if (!originals[name].SequenceEqual(CurrentHomeFileDigests(Path.Combine(root, name)))
                 || !CurrentHomeFilesPreserved(adopted[name], CurrentHomeFileDigests(Path.Combine(clone, name)), publicationComparison))
                 throw new ReviewCheckException("An original source or adopted measurement source changed.");
         using var report = JsonDocument.Parse(await File.ReadAllTextAsync(
-            Path.Combine(clone, "home-stages-" + publicationComparison + "-result.json"), ct));
+            Path.Combine(clone, (oraclePhase == "prepare" ? "home-cpu-oracle-" : "home-stages-") + publicationComparison + "-result.json"), ct));
         if ((report.RootElement.TryGetProperty("CpuWindowOnly", out var recordedScope) && recordedScope.GetBoolean()) != cpuWindowOnly)
             throw new ReviewCheckException("Completed publication belongs to another explicit CPU-window scope.");
+        if ((report.RootElement.TryGetProperty("SeparateCpuOracle", out var recordedIsolation) && recordedIsolation.GetBoolean()) != separateOracle)
+            throw new ReviewCheckException("Completed publication belongs to another oracle-process scope.");
         return new { Comparison = comparison, OriginalCloneBaseline = baseline, RetainedPublicationComparison = previousProgress,
             FailedAdoptionBaseline = resume && failedAdoption ? baseline : null, Adoptions = adoptions, CurrentHome = report.RootElement.Clone(),
-            CpuWindowOnly = cpuWindowOnly,
+            CpuWindowOnly = cpuWindowOnly, SeparateCpuOracle = separateOracle, CpuOraclePhase = oraclePhase,
             OriginalEncryptedSourcesUnchanged = true, AdoptedSourcesUnchangedDuringMeasurement = durableByteBaseline,
             CompletedNativeObservationsRecoveredWithoutReplay = reportOnly, FinalReadOnlyAuditSourceFilesUnchanged = reportOnly,
             HistoricalTimingExactByteEqualityAccepted = durableByteBaseline, OriginalPreMeasurementFingerprintRetained = durableByteBaseline,
@@ -174,12 +188,13 @@ internal static partial class AndroidHomeReview
 
     /// <summary>Rejects a different source/code/day before continuing metrics; historical recovery adds no new UI observations.</summary>
     private static bool CurrentHomeByteIdentityMatches(JsonElement packet, string comparison, string day,
-        Guid dataModule, Guid coreModule, Guid callerModule, bool reportOnly, bool cpuWindowOnly = false) =>
+        Guid dataModule, Guid coreModule, Guid callerModule, bool reportOnly, bool cpuWindowOnly = false, bool separateOracle = false) =>
         packet.GetProperty("Comparison").GetString() == comparison
         && packet.GetProperty("CapturedBeforeNativePublication").GetBoolean()
         && packet.GetProperty("DataModule").GetGuid() == dataModule
         && packet.GetProperty("CoreModule").GetGuid() == coreModule
         && (packet.TryGetProperty("CpuWindowOnly", out var recordedScope) && recordedScope.GetBoolean()) == cpuWindowOnly
+        && (packet.TryGetProperty("SeparateCpuOracle", out var recordedIsolation) && recordedIsolation.GetBoolean()) == separateOracle
         && (reportOnly || packet.GetProperty("CallerModule").GetGuid() == callerModule
             && packet.GetProperty("Day").GetString() == day);
 

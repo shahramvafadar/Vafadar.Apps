@@ -852,9 +852,9 @@ internal static partial class AndroidHomeReview
     }
 
     private static async Task MeasureAsync(App app, IServiceProvider services, string root, string phase, string comparison, string baseline, CancellationToken ct,
-        bool currentSchema = false, bool cpuWindowOnly = false)
+        bool currentSchema = false, bool cpuWindowOnly = false, bool separateOracle = false)
     {
-        if (cpuWindowOnly && (!currentSchema || phase != "home-stages"))
+        if (cpuWindowOnly && (!currentSchema || phase != "home-stages") || separateOracle && !cpuWindowOnly)
             throw new ReviewCheckException("CPU sampling requires the explicit current-schema publication scope.");
         var local = services.GetRequiredService<ILocalizationService>();
         app.OpenReviewShell();
@@ -872,6 +872,10 @@ internal static partial class AndroidHomeReview
                 var name = item.GetProperty("Shape").GetString(); var language = item.GetProperty("Language").GetString();
                 if (name is not ("reference" or "tenfold") || language is not ("en" or "fa" or "de") ||
                     cpuWindowOnly && (name != "tenfold" || language != "en") ||
+                    separateOracle && (!item.TryGetProperty("NoFullOracleReadBeforePublication", out var isolated) || !isolated.GetBoolean()
+                        || item.GetProperty("ObservationProcessId").GetInt32() <= 0
+                        || item.GetProperty("SeparateOraclePreparationProcessId").GetInt32() <= 0
+                        || item.GetProperty("ObservationProcessId").GetInt32() == item.GetProperty("SeparateOraclePreparationProcessId").GetInt32()) ||
                     !item.GetProperty("OriginalBalancesAndNativeTextMatched").GetBoolean() ||
                     !item.GetProperty("OriginalFinancialPresentationMatched").GetBoolean() ||
                     !item.TryGetProperty("OriginalWindowFocusRequired", out var focused) || !focused.GetBoolean() ||
@@ -906,8 +910,10 @@ internal static partial class AndroidHomeReview
             {
                 if (phase is not ("guard" or "home-stages")) nativeReadProfiles.Add(await ProfileNativeReadAsync(data, shape.Entries, ct));
                 var today = DateOnly.FromDateTime(services.GetRequiredService<TimeProvider>().GetLocalNow().DateTime);
-                var expected = await data.GetRequiredService<ZananceStore>().GetHomeSnapshotAsync(today, 0, ct);
-                if (expected.Entries.Count != shape.Entries || expected.QuickResources.Accounts.Count != shape.Accounts || expected.Plans.Schedules.Count != shape.Schedules)
+                var isolatedOracle = separateOracle ? await ReadIsolatedCpuOracleAsync(root, comparison,
+                    today.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture), ct) : null;
+                var expected = isolatedOracle is null ? await data.GetRequiredService<ZananceStore>().GetHomeSnapshotAsync(today, 0, ct) : null!;
+                if (isolatedOracle is null && (expected.Entries.Count != shape.Entries || expected.QuickResources.Accounts.Count != shape.Accounts || expected.Plans.Schedules.Count != shape.Schedules))
                     throw new ReviewCheckException("Retained complete workload shape differs.");
                 await using (var metadata = await data.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(ct))
                 {
@@ -919,19 +925,22 @@ internal static partial class AndroidHomeReview
                         Reader = collectionReader?.GetType().Name, CanonicalEmptyArrayReader = collectionReader?.GetType()
                             == typeof(Microsoft.EntityFrameworkCore.Storage.Json.JsonCollectionOfReferencesReaderWriter<List<string>, string>) });
                 }
-                var balances = LedgerCalculator.TotalBalances(expected.QuickResources.Accounts, expected.Entries, today);
+                var balances = isolatedOracle?.Balances ?? LedgerCalculator.TotalBalances(expected.QuickResources.Accounts, expected.Entries, today);
                 // D-383: preserve an independent old-order oracle outside every timed publication.
-                var expectedRecent = expected.Entries.Where(entry => entry.Date <= today)
-                    .OrderByDescending(entry => entry.Date).ThenByDescending(entry => entry.CreatedAt).Take(3).ToArray();
-                var expectedAccounts = expected.QuickResources.Accounts;
-                var expectedCategories = expected.QuickResources.Categories;
+                var expectedRecent = isolatedOracle is null ? expected.Entries.Where(entry => entry.Date <= today)
+                    .OrderByDescending(entry => entry.Date).ThenByDescending(entry => entry.CreatedAt).Take(3).ToArray() : Array.Empty<LedgerEntry>();
+                IReadOnlyList<Core.Accounts.Account> expectedAccounts = isolatedOracle is null ? expected.QuickResources.Accounts : Array.Empty<Core.Accounts.Account>();
+                IReadOnlyList<Core.Categories.Category> expectedCategories = isolatedOracle is null ? expected.QuickResources.Categories : Array.Empty<Core.Categories.Category>();
                 WeakReference? releasedOracle = null;
                 if (cpuWindowOnly)
                 {
                     // Keep the compact independent expectations, not a second rooted 100000-entry graph
                     // alongside the real Home read. Do not force collection or change the GC policy.
-                    releasedOracle = new WeakReference(expected.Entries);
-                    expected = null!;
+                    if (isolatedOracle is null)
+                    {
+                        releasedOracle = new WeakReference(expected.Entries);
+                        expected = null!;
+                    }
                     Android.Util.Log.Info("ZananceHomeCpuWindow", comparison + "|ready|" + Stopwatch.GetTimestamp());
                     // Give the external code-only recorder time to attach, outside every publication timer.
                     await Task.Delay(2000, ct);
@@ -944,7 +953,7 @@ internal static partial class AndroidHomeReview
                         throw new ReviewCheckException("Original native Shell/Home is unavailable.");
                     await originalHome.PendingPublication;
                     var samples = new List<double>(); var gaps = new List<double>(); var notificationSamples = new List<object>();
-                    var uncollectedOracle = cpuWindowOnly ? releasedOracle!.IsAlive : (bool?)null;
+                    var uncollectedOracle = cpuWindowOnly && isolatedOracle is null ? releasedOracle!.IsAlive : (bool?)null;
                     for (var sample = 0; sample < (phase == "guard" || cpuWindowOnly ? 1 : 2); sample++)
                     {
                         RequireHomeWindowFocus();
@@ -1019,18 +1028,20 @@ internal static partial class AndroidHomeReview
                             var recentPresenter = new Presentation.EntryPresenter(expectedAccounts.ToDictionary(account => account.Id),
                                 new Presentation.CategoryLookup(expectedCategories, services.GetRequiredService<Translator>()),
                                 services.GetRequiredService<Translator>(), local.CurrentCulture);
-                            var recentPackets = expectedRecent.Select(entry => recentPresenter.Row(entry)).ToArray();
-                            if (!vm.RecentEntries.Select(row => row.Id).SequenceEqual(expectedRecent.Select(entry => entry.Id))
-                                || vm.HasRecent != (expectedRecent.Length > 0)
+                            var recentPackets = isolatedOracle?.Recent ?? expectedRecent.Select(entry =>
+                            { var row = recentPresenter.Row(entry); return new CpuOracleRecent(row.Id, row.Title, row.AmountText, row.IsUnreviewed, row.Subtitle); }).ToArray();
+                            if (!vm.RecentEntries.Select(row => row.Id).SequenceEqual(recentPackets.Select(entry => entry.Id))
+                                || vm.HasRecent != (recentPackets.Length > 0)
                                 || vm.RecentEntries.Where((row, index) => row.Title != recentPackets[index].Title
                                     || row.AmountText != recentPackets[index].AmountText || row.IsUnreviewed != recentPackets[index].IsUnreviewed
                                     || !row.Subtitle.EndsWith(" · " + recentPackets[index].Subtitle, StringComparison.Ordinal)).Any())
                                 throw new ReviewCheckException("Original recent entry identities or formatted packets differ.");
                             var presentation = CapturePresentation(vm);
                             var originalPath = Path.Combine(folder, "presentation-" + baseline + "-" + language + ".json");
-                            if ((phase == "measure" || phase == "home-stages" && comparison == baseline) && !File.Exists(originalPath))
+                            if (isolatedOracle is null && (phase == "measure" || phase == "home-stages" && comparison == baseline) && !File.Exists(originalPath))
                                 await File.WriteAllTextAsync(originalPath, presentation, ct);
-                            if (!File.Exists(originalPath) || presentation != await File.ReadAllTextAsync(originalPath, ct))
+                            if (isolatedOracle is not null ? presentation != isolatedOracle.Presentation
+                                : !File.Exists(originalPath) || presentation != await File.ReadAllTextAsync(originalPath, ct))
                                 throw new ReviewCheckException("Original complete financial presentation differs.");
                             samples.Add(clock.Elapsed.TotalMilliseconds); gaps.Add(largest);
                             if (phase == "home-stages") lock (marks) notificationSamples.Add(new { Sample = sample, Marks = marks.ToArray() });
@@ -1049,7 +1060,9 @@ internal static partial class AndroidHomeReview
                         FirstThenSecondPublicationMilliseconds = samples, LargestDispatcherGapMilliseconds = gaps, PublicNotificationSamples = notificationSamples,
                         OriginalBalancesAndNativeTextMatched = true, OriginalFinancialPresentationMatched = true, OriginalRecentEntryPacketsMatched = true,
                         ActualNativeLayout = true, OriginalWindowFocusRequired = true, NoSynchronousSettingsRead = true,
-                        FullOracleReferenceReleased = cpuWindowOnly, UncollectedOracleAtPublicationStart = uncollectedOracle });
+                        FullOracleReferenceReleased = cpuWindowOnly && isolatedOracle is null, UncollectedOracleAtPublicationStart = uncollectedOracle,
+                        NoFullOracleReadBeforePublication = separateOracle, ObservationProcessId = Environment.ProcessId,
+                        SeparateOraclePreparationProcessId = isolatedOracle?.PreparedProcessId });
                     await File.WriteAllTextAsync(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json"), JsonSerializer.Serialize(results), ct);
                     _balanceEvidence = null;
                 }
@@ -1098,7 +1111,7 @@ internal static partial class AndroidHomeReview
         await WriteReportAsync(root, phase, new { Comparison = comparison, BaselineComparison = baseline, Results = results, NativeReadProfiles = nativeReadProfiles, TagReaderContracts = tagReaderContracts, ReviewedInputGuards = reviewedInputGuards,
             DataModuleVersionId = typeof(ZananceStore).Module.ModuleVersionId, CallerModuleVersionId = typeof(HomePage).Module.ModuleVersionId,
             CoreModuleVersionId = typeof(Core.Plans.Occurrences).Module.ModuleVersionId, CurrentSchemaClone = currentSchema,
-            CpuWindowOnly = cpuWindowOnly,
+            CpuWindowOnly = cpuWindowOnly, SeparateCpuOracle = separateOracle,
             PublicationScope = cpuWindowOnly ? "Single tenfold English publication for code sampling only" : "Original requested phase",
             OriginalProductionPage = true, OriginalWindowFocusRequired = true, RetainedCompletedCases = completed.ToArray(),
             ModuleIdentityScope = "Current completion caller; retained case packets preserve their original caller evidence",

@@ -3749,3 +3749,24 @@ of132837195 residual output bytes before execution, with no alternate attempt. D
 succeed and its one-shot is consumed/deleted. Product/APK remainD-528; coverage adds two cases,
 not a complete-suite pass. Two-second/general stability/accessibility/platform/release gates
 and the broader goal stay open. [Complete evidence and limits](quality/withdrawn-account-index-loop.md).
+
+### D-539 - Isolate complete Home controls in another process
+
+The released100000-row oracle remains alive in D-537/D-538; add explicit preparation/measurement
+scopes without changing product source, financial formulas or GC policy. Bind compact original
+balance/recent/full financial-presentation controls to source-byte-fingerprint/payload hashes,
+day, Data/Core/Caller MVIDs and preparation PID/UID. Thirty-eight exact-source identity/scope
+contracts and strict initial/full AOT builds pass without warnings/errors; no product test count
+or unchanged Windows/full-suite repeat. Complete signed offline/non-debuggable/non-profileable
+ARM64 APK has192 packaged AOT/204ELF/804LOAD static16KiB checks and v2/v3/ZIP verification.
+Actual15744/e9aac472 prepares original controls with zero target native publications; preserve
+its expired observation and recover the same final report. Prove15744 dead, then the same APK,
+without reinstall/adoption/seed/key/money replay, measures16357/275fc72d. No full target oracle
+read occurs before timing; complete original/adopted bytes/schema/typed rows and independent
+financial/native packets match. Elapsed4321.904ms/read2735.4251/model1304.2752/layout281.8074 and
+max dispatcher536.1012ms still fail the two-second objective; no product improvement/regression
+or causal GC claim. Restore caller UID10381/APK/stopped/grants and Main27069/Home979/all141 states/
+OS, hash-clean two XMLs, remove53992832 duplicate bytes, perform scoped cleans and return the phone.
+Residual native cache131261554 bytes is inventoried; earlier cleanup refusals remain untouched.
+D-538 CI/CodeQL succeed and its one-shot is consumed/deleted. General stability/accessibility/
+platform/release gates and the broader goal remain open. [Complete evidence and scope](quality/separate-process-home-oracle.md).

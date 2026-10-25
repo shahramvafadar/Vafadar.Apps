@@ -1102,3 +1102,29 @@ are half-open; require filtered sample counts to match this inspector before ass
 to a publication stage. Keep setup/postpublication samples outside Home conclusions. Resolve only
 containing functions in exact packaged AOT or BuildId/debuglink-CRC-matched official symbols.
 Self CPU shares across threads are not elapsed wall-time shares or a demonstrated root cause.
+
+
+## Separate preparation process for current Home controls (D-539)
+
+The ordinary CPU-window mode can leave the released full oracle graph alive before navigation.
+For stronger control isolation, add `review_current_cpu_oracle=prepare` to a new explicit
+`home-current-stages` / `review_current_cpu_window=true` comparison. Keep baseline equal to that
+new comparison and omit progress/report-only. This uses the retained existing fictitious source,
+not prepare/seed phases. Require its final CpuOraclePrepared receipt, full source guards and zero
+native publications of the target workload before ending only that completed independent process.
+Prove the exact preparation PID is absent; do not restart after an observation window expires.
+
+Start a fresh comparison on the same complete installed APK, with baseline and
+`review_current_progress` equal to the original prepared comparison and
+`review_current_cpu_oracle=measure`. No reinstall, schema adoption or full-ledger oracle read
+occurs in that measurement process. It loads bounded compact controls, checks exact payload/source
+hashes, day/MVID/scope and a different positive PID under the same UID, then runs one original
+tenfold/en Home publication and full postmeasurement typed-row audit. Compare its complete financial
+presentation with the separately prepared original projection. No forced collection or product
+runtime switch is used; no actual CPU recording is implied by the mode's name.
+
+Keep preparation and measurement receipts distinct. A prepared projection without native target
+navigation is not UI acceptance. Same-process, stale/tampered, cross-scope and incomplete controls
+must fail; ordinary historical controls cannot be relabeled as isolated. A different protocol/build/
+warming state cannot establish product speedup or regression. Keep original source/profile/key/
+financial inputs and all remaining performance, stability, accessibility and release gates intact.
