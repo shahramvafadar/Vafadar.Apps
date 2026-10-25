@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Narrowed retained Samsung Home profiling to its actual read/publication/layout windows; source and financial data stay unchanged, while the two-second target remains open (D-537).
+
 - Checked current Home publication on preserved small/large Samsung datasets without repeating financial entries; complete data guards pass, while the two-second speed target and general stability remain open (D-533).
 
 - Move the Transactions + beside its title, matching Home and Plans, and give the former bottom Add space to the list. Contextual bulk actions and Undo remain available (D-528).

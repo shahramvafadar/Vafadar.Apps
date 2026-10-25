@@ -25,6 +25,19 @@ internal static partial class AndroidHomeReview
         var previousProgress = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetStringExtra("review_current_progress");
         var hasAdoption = File.Exists(Path.Combine(clone, "adoption-proof.json"));
         var reportOnly = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_current_report", false) == true;
+        var cpuWindowOnly = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_current_cpu_window", false) == true;
+        if (cpuWindowOnly)
+        {
+            // D-537: filter code samples against the original publication boundaries, not the source oracles.
+            // Validate the native CLOCK_MONOTONIC domain before emitting absolute stopwatch timestamps.
+            if (System.Diagnostics.Stopwatch.Frequency != 1_000_000_000)
+                throw new ReviewCheckException("CPU window requires native nanosecond stopwatch ticks.");
+            var first = System.Diagnostics.Stopwatch.GetTimestamp();
+            var native = Java.Lang.JavaSystem.NanoTime();
+            var last = System.Diagnostics.Stopwatch.GetTimestamp();
+            if (native < first || native > last)
+                throw new ReviewCheckException("Native and managed CPU-window clocks differ.");
+        }
         if (previousProgress is not null && (!System.Text.RegularExpressions.Regex.IsMatch(previousProgress, "^[0-9a-f]{32}$") || !hasAdoption))
             throw new ReviewCheckException("Explicit adopted partial publication lineage required.");
         var failedAdoption = false;
@@ -91,7 +104,7 @@ internal static partial class AndroidHomeReview
             var packet = recorded.RootElement;
             if (!CurrentHomeByteIdentityMatches(packet, publicationComparison, day,
                 typeof(ZananceStore).Module.ModuleVersionId, typeof(Core.Ledger.LedgerCalculator).Module.ModuleVersionId,
-                typeof(Features.Home.HomePage).Module.ModuleVersionId, reportOnly))
+                typeof(Features.Home.HomePage).Module.ModuleVersionId, reportOnly, cpuWindowOnly))
                 throw new ReviewCheckException("The original source/day/code fingerprint cannot be replaced during continuation.");
             string[] ReadFiles(string section, string name) => packet.GetProperty(section).GetProperty(name).EnumerateArray()
                 .Select(item => item.GetString() ?? throw new ReviewCheckException("Incomplete stored source digest.")).ToArray();
@@ -113,7 +126,7 @@ internal static partial class AndroidHomeReview
                 throw new ReviewCheckException("Missing pre-measurement fingerprint; old observations cannot become new byte evidence.");
             await using (var output = new FileStream(byteBaselinePath, FileMode.CreateNew, FileAccess.Write, FileShare.Read))
                 await JsonSerializer.SerializeAsync(output, new { Comparison = publicationComparison, Day = day,
-                    CapturedBeforeNativePublication = true, ProcessId = Environment.ProcessId,
+                    CapturedBeforeNativePublication = true, ProcessId = Environment.ProcessId, CpuWindowOnly = cpuWindowOnly,
                     DataModule = typeof(ZananceStore).Module.ModuleVersionId,
                     CoreModule = typeof(Core.Ledger.LedgerCalculator).Module.ModuleVersionId,
                     CallerModule = typeof(Features.Home.HomePage).Module.ModuleVersionId,
@@ -138,15 +151,19 @@ internal static partial class AndroidHomeReview
             await File.WriteAllTextAsync(Path.Combine(clone, "read-only-audit-" + comparison + ".json"), JsonSerializer.Serialize(audit), ct);
         }
         else
-            await MeasureAsync(app, services, clone, "home-stages", publicationComparison, publicationComparison, ct, currentSchema: true);
+            await MeasureAsync(app, services, clone, "home-stages", publicationComparison, publicationComparison, ct,
+                currentSchema: true, cpuWindowOnly: cpuWindowOnly);
         foreach (var name in new[] { "reference", "tenfold" })
             if (!originals[name].SequenceEqual(CurrentHomeFileDigests(Path.Combine(root, name)))
                 || !CurrentHomeFilesPreserved(adopted[name], CurrentHomeFileDigests(Path.Combine(clone, name)), publicationComparison))
                 throw new ReviewCheckException("An original source or adopted measurement source changed.");
         using var report = JsonDocument.Parse(await File.ReadAllTextAsync(
             Path.Combine(clone, "home-stages-" + publicationComparison + "-result.json"), ct));
+        if ((report.RootElement.TryGetProperty("CpuWindowOnly", out var recordedScope) && recordedScope.GetBoolean()) != cpuWindowOnly)
+            throw new ReviewCheckException("Completed publication belongs to another explicit CPU-window scope.");
         return new { Comparison = comparison, OriginalCloneBaseline = baseline, RetainedPublicationComparison = previousProgress,
             FailedAdoptionBaseline = resume && failedAdoption ? baseline : null, Adoptions = adoptions, CurrentHome = report.RootElement.Clone(),
+            CpuWindowOnly = cpuWindowOnly,
             OriginalEncryptedSourcesUnchanged = true, AdoptedSourcesUnchangedDuringMeasurement = durableByteBaseline,
             CompletedNativeObservationsRecoveredWithoutReplay = reportOnly, FinalReadOnlyAuditSourceFilesUnchanged = reportOnly,
             HistoricalTimingExactByteEqualityAccepted = durableByteBaseline, OriginalPreMeasurementFingerprintRetained = durableByteBaseline,
@@ -157,11 +174,12 @@ internal static partial class AndroidHomeReview
 
     /// <summary>Rejects a different source/code/day before continuing metrics; historical recovery adds no new UI observations.</summary>
     private static bool CurrentHomeByteIdentityMatches(JsonElement packet, string comparison, string day,
-        Guid dataModule, Guid coreModule, Guid callerModule, bool reportOnly) =>
+        Guid dataModule, Guid coreModule, Guid callerModule, bool reportOnly, bool cpuWindowOnly = false) =>
         packet.GetProperty("Comparison").GetString() == comparison
         && packet.GetProperty("CapturedBeforeNativePublication").GetBoolean()
         && packet.GetProperty("DataModule").GetGuid() == dataModule
         && packet.GetProperty("CoreModule").GetGuid() == coreModule
+        && (packet.TryGetProperty("CpuWindowOnly", out var recordedScope) && recordedScope.GetBoolean()) == cpuWindowOnly
         && (reportOnly || packet.GetProperty("CallerModule").GetGuid() == callerModule
             && packet.GetProperty("Day").GetString() == day);
 

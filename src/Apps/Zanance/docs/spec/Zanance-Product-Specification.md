@@ -9324,3 +9324,22 @@ XMLs and one phone XML are hash-cleaned; standard cleans and111079544-byte dupli
 Automatic removal of251505548 bytes of three new output trees is refused before execution; no
 alternate deletion. Latest D-535 CI/CodeQL succeed. Product test count and wider acceptance stay open.
 [Actual comparison, storage recovery and limits](../quality/withdrawn-ledger-ordering.md).
+
+### D-537 - Physical Home CPU windows on retained sources
+
+Add an explicit one-publication tenfold/en code-sampling scope with native-monotonic boundaries,
+durable scope identity and a released strong full-ledger oracle reference. Ten exact-source scope
+contracts, ten unsafe-header refusals, one oversized-input refusal and retained2733/1324/0 native
+filter controls pass. Three necessary strict independent ARM64 publishes pass; only the final
+signed offline123-packaged-AOT/135ELF artifact is installed. Preserve first recorder exit134 before
+any samples and its completed4296.4346ms publication. One necessary CPU-only retry on the same APK
+records8634 samples/zero lost; exact native/inspector filters retain2380 inside4140.808074ms,
+partitioned2437.831921/1490.250461/212.725692ms. All original/adopted bytes, complete schema/typed
+rows and native financial/recent packets match without seed/key/financial replay. Official Mono
+BuildId/debuglink-CRC and packaged AOT symbols resolve actual function ranges; balance/index,
+SQLCipher and concurrent GC work coexist, unknown samples and an uncollected oracle limit causal
+claims. Restore original caller UID10381/APK/stopped/grants and Main27069/Home979/all141 states/OS,
+remove eight owned hash-matched remote files and return the phone. Product source/APK remainD-528;
+no unchanged Windows/full suite repeats or new product test count. D-536 CI/CodeQL succeed and its
+one-shot is consumed/deleted. Two-second/general stability/accessibility/platform/release gates and
+the broader goal remain open. [Complete code-window evidence and limits](../quality/physical-home-cpu-windows.md).

@@ -1067,3 +1067,38 @@ matched native symbols and restoration are documented in
 [current Android Home qualification](../../../src/Apps/Zanance/docs/quality/current-android-home-stages.md).
 `Test-CurrentSourcePreservation.ps1` compiles the actual diagnostic predicate body and checks eight
 file-preservation contracts without opening a database/UI or mirroring a financial algorithm.
+
+
+## One-publication code window (D-537)
+
+The existing `home-current-stages` phase accepts the explicit Intent boolean
+`review_current_cpu_window=true` only for diagnosis. It retains both original/adopted source
+byte and complete schema/typed-row guards, but measures one tenfold English publication.
+Its durable premeasurement identity includes the scope; a normal six-context report cannot be
+reused as this diagnostic, or conversely. Do not count this as full UI/device qualification.
+
+`ZananceHomeCpuWindow` emits comparison-scoped native-monotonic nanoseconds for ready,
+navigation-start, first QuickAddTargetText, final-model-publication and native-layout-ready.
+Validate timestamp frequency and native clock bracketing before capture. The ready attachment
+pause is outside timing. Release the strong full-ledger oracle without forced collection;
+record whether its weak reference is still alive, rather than claiming GC pressure is eliminated.
+
+Use the existing bounded code-only recorder with `--app`, exact PID, `cpu-clock:u`, frame
+pointers and explicit `--clockid monotonic`. Do not pass a custom `--tracepoint-events` file to
+the outer app runner: it needs its system event finder before creating its own metadata.
+Preserve recorder errors independently of completed publication reports. Retry only the missing
+CPU capture when justified; never replay financial preparation or an accepted six-context cohort.
+
+Before interpretation, validate the exact owned sample file with:
+
+```powershell
+python eng/benchmarks/Zanance.AndroidHome/Inspect-CodeSamples.py <owned-file> --sha256 <expected-digest> --pid <actual-pid> --output <fresh-metadata-file>
+```
+
+The inspector reads only safe header/sample identity and timestamps, rejecting other event/clock,
+raw stack/register/AUX fields, unknown records and files over16MiB. It does not symbolize code or
+establish speed/stability. Native `--filter-file` CLOCK monotonic GLOBAL_BEGIN/GLOBAL_END ranges
+are half-open; require filtered sample counts to match this inspector before assigning samples
+to a publication stage. Keep setup/postpublication samples outside Home conclusions. Resolve only
+containing functions in exact packaged AOT or BuildId/debuglink-CRC-matched official symbols.
+Self CPU shares across threads are not elapsed wall-time shares or a demonstrated root cause.

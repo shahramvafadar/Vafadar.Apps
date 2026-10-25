@@ -851,8 +851,11 @@ internal static partial class AndroidHomeReview
             throw new ReviewCheckException("Original Home Activity must own actual window focus.");
     }
 
-    private static async Task MeasureAsync(App app, IServiceProvider services, string root, string phase, string comparison, string baseline, CancellationToken ct, bool currentSchema = false)
+    private static async Task MeasureAsync(App app, IServiceProvider services, string root, string phase, string comparison, string baseline, CancellationToken ct,
+        bool currentSchema = false, bool cpuWindowOnly = false)
     {
+        if (cpuWindowOnly && (!currentSchema || phase != "home-stages"))
+            throw new ReviewCheckException("CPU sampling requires the explicit current-schema publication scope.");
         var local = services.GetRequiredService<ILocalizationService>();
         app.OpenReviewShell();
         await Task.Delay(1000, ct); // Let original empty-install foreground work settle outside the measurement.
@@ -868,16 +871,18 @@ internal static partial class AndroidHomeReview
             {
                 var name = item.GetProperty("Shape").GetString(); var language = item.GetProperty("Language").GetString();
                 if (name is not ("reference" or "tenfold") || language is not ("en" or "fa" or "de") ||
+                    cpuWindowOnly && (name != "tenfold" || language != "en") ||
                     !item.GetProperty("OriginalBalancesAndNativeTextMatched").GetBoolean() ||
                     !item.GetProperty("OriginalFinancialPresentationMatched").GetBoolean() ||
                     !item.TryGetProperty("OriginalWindowFocusRequired", out var focused) || !focused.GetBoolean() ||
-                    item.GetProperty("FirstThenSecondPublicationMilliseconds").GetArrayLength() != (phase == "guard" ? 1 : 2) ||
+                    item.GetProperty("FirstThenSecondPublicationMilliseconds").GetArrayLength() != (phase == "guard" || cpuWindowOnly ? 1 : 2) ||
                     !completed.Add(name + ":" + language)) throw new ReviewCheckException("Invalid retained completed case.");
                 results.Add(item.Clone());
             }
         }
         foreach (var (name, shape) in new[] { ("reference", Workload.Reference), ("tenfold", Workload.Tenfold) })
         {
+            if (cpuWindowOnly && name != "tenfold") continue;
             var folder = Path.Combine(root, name); RequireRoot(folder);
             var original = Path.Combine(folder, "fixture.db");
             var identityPath = Path.Combine(folder, "identities.sqlite");
@@ -918,7 +923,20 @@ internal static partial class AndroidHomeReview
                 // D-383: preserve an independent old-order oracle outside every timed publication.
                 var expectedRecent = expected.Entries.Where(entry => entry.Date <= today)
                     .OrderByDescending(entry => entry.Date).ThenByDescending(entry => entry.CreatedAt).Take(3).ToArray();
-                foreach (var language in phase == "guard" ? new[] { "en" } : new[] { "en", "fa", "de" })
+                var expectedAccounts = expected.QuickResources.Accounts;
+                var expectedCategories = expected.QuickResources.Categories;
+                WeakReference? releasedOracle = null;
+                if (cpuWindowOnly)
+                {
+                    // Keep the compact independent expectations, not a second rooted 100000-entry graph
+                    // alongside the real Home read. Do not force collection or change the GC policy.
+                    releasedOracle = new WeakReference(expected.Entries);
+                    expected = null!;
+                    Android.Util.Log.Info("ZananceHomeCpuWindow", comparison + "|ready|" + Stopwatch.GetTimestamp());
+                    // Give the external code-only recorder time to attach, outside every publication timer.
+                    await Task.Delay(2000, ct);
+                }
+                foreach (var language in phase == "guard" || cpuWindowOnly ? new[] { "en" } : new[] { "en", "fa", "de" })
                 {
                     if (completed.Contains(name + ":" + language)) continue;
                     await SetLanguageAsync(app, local, language, ct);
@@ -926,7 +944,8 @@ internal static partial class AndroidHomeReview
                         throw new ReviewCheckException("Original native Shell/Home is unavailable.");
                     await originalHome.PendingPublication;
                     var samples = new List<double>(); var gaps = new List<double>(); var notificationSamples = new List<object>();
-                    for (var sample = 0; sample < (phase == "guard" ? 1 : 2); sample++)
+                    var uncollectedOracle = cpuWindowOnly ? releasedOracle!.IsAlive : (bool?)null;
+                    for (var sample = 0; sample < (phase == "guard" || cpuWindowOnly ? 1 : 2); sample++)
                     {
                         RequireHomeWindowFocus();
                         var reads = new WindowReadFactory(data.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
@@ -940,7 +959,12 @@ internal static partial class AndroidHomeReview
                             if (phase != "home-stages") return;
                             lock (marks) marks.Add(new { Stage = stage, Milliseconds = clock.Elapsed.TotalMilliseconds });
                             if (stage is "navigation-start" or "property:QuickAddTargetText" or "final-model-publication" or "native-layout-ready")
+                            {
                                 Android.Util.Log.Info("ZananceHomeStage", comparison + "|" + name + "|" + language + "|" + sample + "|" + stage);
+                                if (cpuWindowOnly)
+                                    Android.Util.Log.Info("ZananceHomeCpuWindow", comparison + "|" + name + "|" + language + "|" + sample
+                                        + "|" + stage + "|" + Stopwatch.GetTimestamp());
+                            }
                         }
                         System.ComponentModel.PropertyChangedEventHandler changed = (_, args) =>
                         {
@@ -992,8 +1016,8 @@ internal static partial class AndroidHomeReview
                                     throw new ReviewCheckException("Real native balance differs from the complete original ledger.");
                             }
                             await Task.Delay(75, ct); timer.Stop();
-                            var recentPresenter = new Presentation.EntryPresenter(expected.QuickResources.Accounts.ToDictionary(account => account.Id),
-                                new Presentation.CategoryLookup(expected.QuickResources.Categories, services.GetRequiredService<Translator>()),
+                            var recentPresenter = new Presentation.EntryPresenter(expectedAccounts.ToDictionary(account => account.Id),
+                                new Presentation.CategoryLookup(expectedCategories, services.GetRequiredService<Translator>()),
                                 services.GetRequiredService<Translator>(), local.CurrentCulture);
                             var recentPackets = expectedRecent.Select(entry => recentPresenter.Row(entry)).ToArray();
                             if (!vm.RecentEntries.Select(row => row.Id).SequenceEqual(expectedRecent.Select(entry => entry.Id))
@@ -1024,7 +1048,8 @@ internal static partial class AndroidHomeReview
                     results.Add(new { Shape = name, Language = language, shape.Entries, shape.Accounts, shape.Schedules,
                         FirstThenSecondPublicationMilliseconds = samples, LargestDispatcherGapMilliseconds = gaps, PublicNotificationSamples = notificationSamples,
                         OriginalBalancesAndNativeTextMatched = true, OriginalFinancialPresentationMatched = true, OriginalRecentEntryPacketsMatched = true,
-                        ActualNativeLayout = true, OriginalWindowFocusRequired = true, NoSynchronousSettingsRead = true });
+                        ActualNativeLayout = true, OriginalWindowFocusRequired = true, NoSynchronousSettingsRead = true,
+                        FullOracleReferenceReleased = cpuWindowOnly, UncollectedOracleAtPublicationStart = uncollectedOracle });
                     await File.WriteAllTextAsync(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json"), JsonSerializer.Serialize(results), ct);
                     _balanceEvidence = null;
                 }
@@ -1073,6 +1098,8 @@ internal static partial class AndroidHomeReview
         await WriteReportAsync(root, phase, new { Comparison = comparison, BaselineComparison = baseline, Results = results, NativeReadProfiles = nativeReadProfiles, TagReaderContracts = tagReaderContracts, ReviewedInputGuards = reviewedInputGuards,
             DataModuleVersionId = typeof(ZananceStore).Module.ModuleVersionId, CallerModuleVersionId = typeof(HomePage).Module.ModuleVersionId,
             CoreModuleVersionId = typeof(Core.Plans.Occurrences).Module.ModuleVersionId, CurrentSchemaClone = currentSchema,
+            CpuWindowOnly = cpuWindowOnly,
+            PublicationScope = cpuWindowOnly ? "Single tenfold English publication for code sampling only" : "Original requested phase",
             OriginalProductionPage = true, OriginalWindowFocusRequired = true, RetainedCompletedCases = completed.ToArray(),
             ModuleIdentityScope = "Current completion caller; retained case packets preserve their original caller evidence",
             CompleteRawSchemaAndTypedRowsUnchanged = true, NoFinancialSave = true, Device = DeviceEvidence(), WholeAppColdStartupOrFullDeviceAcceptance = false,
