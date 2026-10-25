@@ -108,3 +108,7 @@ actual SDK classification, binary identities, sample attributes/flat reports, na
 restoration and owned-cleanup receipts remain. General ANR/crash, two-second/cold/low-memory,
 remaining accessibility/platform/provider/Store/public-release gates stay open. This evidence
 batch does not complete the broad delivery goal.
+
+D-535 subsequently performs a fresh original-adapter protected-source reopen after this maintenance;
+[its distinct four-source outcome](post-maintenance-source-retention.md) does not alter the earlier
+native death, sample limits or historical timing evidence.

@@ -25,7 +25,7 @@ priority/order descriptions below.
 | ZCR-GOV-02 | Refresh spec §31, AGENTS.md §12 and outdated statements | 0/2 | P2 | S | Done (D-88; external confirmation/acceptance still open) | GOV-01 |
 | ZCR-SEC-01 | Threat model and encryption decision record + feasibility proof | 1 | P1 | M | In progress (D-264 Android/Windows official Community integration locally verified; iOS/external gates remain) | OD-04 approved |
 | ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | In progress (D-264 Android/Windows main encryption locally verified; D-521 original schema/typed-row snapshot checks on actual x86_64 API24/4096 and API35/16384 qualified in separate UIDs; iOS adoption and wider device gates remain) | SEC-01 |
-| ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-264 Android Keystore/Windows DPAPI per-generation keys locally verified; D-483 actual original-adapter generation/recovered security level1, cold/binding/tamper/authorized retirement on Samsung qualified in a separate UID; D-520 original create/cold/tamper/retirement on actual API24/4096 and API35/16384 x86_64 qualified; Main-key attestation, authentication, iOS/other device gates remain) | SEC-01 |
+| ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-264 Android Keystore/Windows DPAPI per-generation keys locally verified; D-483 actual original-adapter generation/recovered security level1, cold/binding/tamper/authorized retirement on Samsung qualified in a separate UID; D-520 original create/cold/tamper/retirement on actual API24/4096 and API35/16384 x86_64 qualified; D-535 reopens four retained independent emulator sources after KEEP_DATA maintenance with existing keys and full source/control equality; Main-key attestation, authentication, iOS/other device gates remain) | SEC-01 |
 | ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | In progress (D-266 success-only device unlock; biometric/platform acceptance remains) | SEC-03, OD-04 |
 | ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-263 Android all-profile migration/lifecycle delivered; D-521 storage faults, D-522 two-profile startup/creation and D-524 original metadata staging/hot-journal rollback/selection on actual x86_64 API24/4096 and API35/16384 qualified; arbitrary-profile/hardware/OEM/platform acceptance remains) | SEC-02, SEC-03 |
 | ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | In progress (D-264 Android/Windows optional recovery and explicit portable recovery locally verified; D-521 protected cold recovery and D-522 multiple missing envelopes/alias loss/recovered retirement/consecutive portable restores on actual x86_64 API24/4096 and API35/16384 qualified; full authentication/iOS/device acceptance remains) | SEC-04, OD-04 approved |
@@ -5749,3 +5749,18 @@ Main2878/Home0/all120 public tuples and OS match; three owned hash-matched remot
 and only the dedicated AVD is stopped. Post-restoration private DB/key reopen is not claimed.
 General stability, two-second, accessibility/platform/external gates and the broad goal stay open.
 [Actual sample, lineage, restoration and limits](../../quality/current-home-cpu-sampling.md).
+
+
+### D-535 - Protected-source reopen after data-preserving maintenance
+
+One focused API36/x64 read-only audit verifies existing Android keys/generation bindings after
+D-534's KEEP_DATA code maintenance. Reuse the exact signed D-532 audit caller and original
+lineage; process3600 reopens four original/adopted sources, matching complete schema/headers/typed
+rows and all source files. Zero financial/seed/key creation, native UI or timing replay; historical
+D-532 timing-byte refusal remains false/unaccepted. Ordinary signed-r installations return the
+original caller UID10221/digest/stopped/grants, Main2845/Home0/all120 public states and exact OS.
+Two owned XMLs are hash-cleaned, one redundant57818872-byte host copy removed after equality and
+only the dedicated AVD stopped. No rebuild/unchanged suite or phone query; shipping D-528 unchanged.
+This bounds independent source retention, not Main-key attestation or general platform/stability/
+performance/accessibility/release acceptance. D-533 CI/CodeQL succeed and its follow-up is consumed.
+[Actual read-only outcome and scope](../../quality/post-maintenance-source-retention.md).

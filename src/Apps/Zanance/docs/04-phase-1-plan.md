@@ -1461,3 +1461,18 @@ Main2878/Home0/all120 public tuples and OS match; three owned hash-matched remot
 and only the dedicated AVD is stopped. Post-restoration private DB/key reopen is not claimed.
 General stability, two-second, accessibility/platform/external gates and the broad goal stay open.
 [Actual sample, lineage, restoration and limits](quality/current-home-cpu-sampling.md).
+
+
+### D-535 - Protected-source reopen after data-preserving maintenance
+
+One focused API36/x64 read-only audit verifies existing Android keys/generation bindings after
+D-534's KEEP_DATA code maintenance. Reuse the exact signed D-532 audit caller and original
+lineage; process3600 reopens four original/adopted sources, matching complete schema/headers/typed
+rows and all source files. Zero financial/seed/key creation, native UI or timing replay; historical
+D-532 timing-byte refusal remains false/unaccepted. Ordinary signed-r installations return the
+original caller UID10221/digest/stopped/grants, Main2845/Home0/all120 public states and exact OS.
+Two owned XMLs are hash-cleaned, one redundant57818872-byte host copy removed after equality and
+only the dedicated AVD stopped. No rebuild/unchanged suite or phone query; shipping D-528 unchanged.
+This bounds independent source retention, not Main-key attestation or general platform/stability/
+performance/accessibility/release acceptance. D-533 CI/CodeQL succeed and its follow-up is consumed.
+[Actual read-only outcome and scope](quality/post-maintenance-source-retention.md).
