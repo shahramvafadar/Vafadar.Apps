@@ -30,7 +30,7 @@ background above the scrolling form, keeping Windows content from drawing behind
 
 ```
 TabBar:   Home | Transactions | Plans | Insights | More
-          └── "+" add button on Home, Transactions and Plans (bottom end corner, mirrored in RTL)
+          └── "+" add button on Home, Transactions and Plans (compact header, physically right of title)
 Insights: top tabs Budget · Reports · Forecast · Goals
 More:     My money (Accounts, Owed to me) · Organize (Categories, Quick templates, Categorization rules)
           · Currency (Exchange rates, Display units) · Data and security (Backup, Import/Export, Profiles)
@@ -376,7 +376,8 @@ RTL/languages/themes, not only source styles. Full A11Y-03 and screen-reader/dev
 
 ## Persistent actions and financial identity (D-78)
 
-Reserve an Auto grid row below the star-sized scroll viewport for persistent Add/bulk actions. Put transient Undo
+Home, Transactions and Plans keep ordinary Add in their compact right-side title row (D-375/D-395/D-528).
+Other persistent Add actions and contextual bulk actions reserve an Auto row below the star-sized viewport. Put transient Undo
 in a further row and its button below the message. Retain touch targets, accessible names and existing visibility
 rules; scroll padding alone cannot prevent an overlay covering content before the user scrolls. Financial identity
 and amount/status have separate growing rows, with an icon spanning both and the real overlay button spanning the
@@ -1514,7 +1515,7 @@ sharing. Selection uses the original protected restore and explicit replacement 
 
 ## Stable first-plan publication (D-318)
 
-Plans keeps the actual collection/row template and persistent bottom Add target. Empty feedback has its own growing scroll viewport controlled by the existing empty state, avoiding Android empty-adapter exchange. The optional first-plan Add caption uses WrappingAction: preserve full translation/native scaling and the original real command-owning target. No segment toggle or extra Save is required to reveal a newly saved first plan.
+Plans keeps the actual collection/row template and the D-395 right-side title Add target. Empty feedback has its own growing scroll viewport controlled by the existing empty state, avoiding Android empty-adapter exchange. The optional first-plan Add caption uses WrappingAction: preserve full translation/native scaling and the original real command-owning target. No segment toggle or extra Save is required to reveal a newly saved first plan.
 
 ## Existing loan terms after repayment (D-319)
 
@@ -2604,3 +2605,18 @@ complete native caption allocation and at least44-unit targets while leaving a r
 viewport. Thirty-six Windows contexts and eight tall final-line endpoints verify the pattern
 without replaying successful normal-scale dialogs or financial commands. This process-local
 stress is separate from actual Android OS scaling/spoken accessibility acceptance.
+
+
+### D-528 - Transactions Add beside the title
+
+Owner-requested Transactions + now matches Home/Plans: original48px accessible command physically
+right of a growing title, original pushed Back, no reserved bottom Add band/overlay. Preserve full
+filters/results, empty invitations and separate contextual bulk/Undo rows; filter sizing reserves
+only the actual header and contextual actions. Eighteen Windows contexts/54 images qualify populated,
+filtered-empty and original selection states; six independent Samsung Release/AOT contexts qualify
+native Add/Cancel/bulk with unchanged original stored inputs. Retain controller/count and observation
+refusals without replaying completed work. Strict builds, complete signed Offline384AOT/408ELF16KiB
+static checks and no-reset shipping upgrade24834->32206 pass. One original Main Add/Cancel, Home979,
+all141 public tuples/three profiles/OS/timeout300000 remain; no Main financial writes or new managed
+cases. Retire the new helper and15 hash-matched XMLs. Full stability/accessibility/iOS/external
+release gates remain separate. See [complete runtime and package evidence](quality/transactions-title-add.md).

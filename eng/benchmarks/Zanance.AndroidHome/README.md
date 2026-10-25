@@ -1014,3 +1014,15 @@ The pre-execution caption observer also requires exact native text after the exi
 transformation and the final layout line reaching its complete UTF-16 text length. Geometry
 alone cannot qualify the correct translation. This observation-only correction precedes every
 SUPA Android case; it never replays an accepted native or financial command.
+
+
+## D-528 - Original Transactions title action
+
+Build the explicit independent `ReviewTransactionsHeader=true` ARM64 Release caller with the
+approved APK script. It owns `pro.vafadar.zanance.transactionsheaderreview` and accepts only
+`transactions-add-header`, with a fresh original review_run/review_pass. Six en/fa/de light/dark
+contexts exercise the actual native Add/Cancel and contextual selection without ledger writes.
+Use Read-ReviewReport.ps1 with that phase, exact original live PID, run/comparison and admitted
+physical transport; the phase selects its distinct observed identity. Expiry requires observing
+the same process, never replaying completed UI. Retire only the new helper after terminal evidence.
+See [complete shipping and runtime evidence](../../../src/Apps/Zanance/docs/quality/transactions-title-add.md).

@@ -260,6 +260,10 @@ internal static partial class DebugSnapshots
         {
             await ReviewReconciliationAsync(app, services, folder); return;
         }
+        if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "transactions-add-header")
+        {
+            await ReviewTransactionsAddHeaderAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REVIEW") == "plans-add-header")
         {
             await ReviewPlansAddHeaderAsync(app, services, folder); return;

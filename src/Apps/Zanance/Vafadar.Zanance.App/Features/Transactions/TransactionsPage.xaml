@@ -9,13 +9,26 @@
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Transactions"
     xmlns:ledger="clr-namespace:Vafadar.Zanance.Core.Ledger;assembly=Vafadar.Zanance.Core"
     x:DataType="local:TransactionsViewModel"
+    Shell.NavBarIsVisible="False"
     Title="{v:Translate Tx_Title}">
 
-    <!-- D-78: separate scrollable rows from persistent Add/bulk/Undo actions. -->
-    <Grid x:Name="TransactionsLayout" RowDefinitions="Auto,*,Auto,Auto">
+    <!-- D-528: match Home/Plans; only contextual bulk/Undo actions reserve bottom rows. -->
+    <Grid x:Name="TransactionsLayout" RowDefinitions="Auto,Auto,*,Auto,Auto">
+        <Grid x:Name="TransactionsHeader" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8" Padding="16,8" FlowDirection="LeftToRight">
+            <ImageButton x:Name="HeaderBack" IsVisible="False" WidthRequest="44" HeightRequest="44" Padding="11"
+                         BackgroundColor="{DynamicResource PrimarySoft}" CornerRadius="22" VerticalOptions="Center"
+                         SemanticProperties.Description="{v:Translate Common_Back}" Clicked="OnHeaderBackClicked" />
+            <Label Grid.Column="1" Text="{v:Translate Tx_Title}" Style="{StaticResource PageTitle}"
+                   LineBreakMode="WordWrap" VerticalOptions="Center" />
+            <Button x:Name="AddAction" Grid.Column="2" Style="{StaticResource FloatingAddButton}" Text="+"
+                    WidthRequest="48" HeightRequest="48" Margin="0" CornerRadius="16" VerticalOptions="Center"
+                    Command="{Binding AddCommand}" IsEnabled="{Binding Loading.IsReady}"
+                    SemanticProperties.Description="{v:Translate Tx_Add}"
+                    IsVisible="{Binding IsSelecting, Converter={StaticResource InvertedBoolConverter}}" />
+        </Grid>
         <!-- Search and frequent filters precede the optional controls opened with the filter button (D-27). -->
         <!-- D-108: long report scope captions remain reachable without consuming the result viewport. -->
-        <ScrollView x:Name="FiltersViewport" VerticalScrollBarVisibility="Default">
+        <ScrollView x:Name="FiltersViewport" Grid.Row="1" VerticalScrollBarVisibility="Default">
         <VerticalStackLayout Padding="16,8,16,4" Spacing="10" BackgroundColor="{DynamicResource PageBackground}" IsEnabled="{Binding Loading.IsReady}">
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                 <Border BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource DividerColor}" StrokeShape="RoundRectangle 14" Padding="4,0">
@@ -125,7 +138,7 @@
 
         <!-- Entries grouped by day -->
         <!-- The native grouped adapter receives the complete snapshot before becoming visible (D-76). -->
-        <CollectionView x:Name="ContentViewport" Grid.Row="1" ItemsSource="{Binding Days}" IsGrouped="True" SelectionMode="None" IsVisible="{Binding Loading.IsReady}">
+        <CollectionView x:Name="ContentViewport" Grid.Row="2" ItemsSource="{Binding Days}" IsGrouped="True" SelectionMode="None" IsVisible="{Binding Loading.IsReady}">
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate x:DataType="local:EntryDayGroup">
                     <Grid RowDefinitions="Auto,Auto" RowSpacing="4" Padding="16,14,16,6">
@@ -186,22 +199,18 @@
             </CollectionView.Footer>
         </CollectionView>
 
-        <VerticalStackLayout Grid.Row="1" Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+        <VerticalStackLayout Grid.Row="2" Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
             <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}"
                                WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
             <Label Text="{v:Translate Tx_Loading}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" SemanticProperties.Description="{v:Translate Tx_Loading}" />
         </VerticalStackLayout>
-        <VerticalStackLayout Grid.Row="1" Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+        <VerticalStackLayout Grid.Row="2" Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
             <Label Text="{v:Translate Error_Unexpected}" HorizontalTextAlignment="Center" />
             <Button x:Name="RetryLoadButton" Text="{v:Translate Tx_RetryLoad}" Style="{StaticResource SecondaryButton}" Clicked="OnReloadClicked" />
         </VerticalStackLayout>
 
-        <Button x:Name="AddAction" Grid.Row="2" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
-                IsEnabled="{Binding Loading.IsReady}"
-                SemanticProperties.Description="{v:Translate Tx_Add}" IsVisible="{Binding IsSelecting, Converter={StaticResource InvertedBoolConverter}}" />
-
         <!-- Bulk actions (F2-TX-04) -->
-        <Border x:Name="BulkActions" Grid.Row="2" IsVisible="{Binding IsSelecting}" VerticalOptions="End" Margin="8" Padding="12,8"
+        <Border x:Name="BulkActions" Grid.Row="3" IsVisible="{Binding IsSelecting}" VerticalOptions="End" Margin="8" Padding="12,8"
                 IsEnabled="{Binding Loading.IsReady}"
                 BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource DividerColor}" StrokeShape="RoundRectangle 16">
             <VerticalStackLayout Spacing="6">
@@ -220,7 +229,7 @@
         </Border>
 
         <!-- Undo after delete -->
-        <Border x:Name="UndoNotice" Grid.Row="3" IsVisible="{Binding ShowUndo}" VerticalOptions="End" Margin="16,0,16,12" Padding="16,4,8,4"
+        <Border x:Name="UndoNotice" Grid.Row="4" IsVisible="{Binding ShowUndo}" VerticalOptions="End" Margin="16,0,16,12" Padding="16,4,8,4"
                 BackgroundColor="{DynamicResource SnackbarBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8">
             <Grid RowDefinitions="Auto,Auto" RowSpacing="4">
                 <Label x:Name="UndoCaption" Text="{Binding UndoText}" TextColor="{DynamicResource SnackbarText}" VerticalOptions="Center" LineBreakMode="WordWrap" />

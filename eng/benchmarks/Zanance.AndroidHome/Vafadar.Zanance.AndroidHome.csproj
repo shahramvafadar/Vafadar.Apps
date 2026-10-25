@@ -19,6 +19,11 @@
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
+  <!-- Title-action qualification must not replace callers with retained financial evidence. -->
+  <PropertyGroup Condition="'$(ReviewTransactionsHeader)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.transactionsheaderreview</ApplicationId>
+    <DefineConstants>$(DefineConstants);TRANSACTIONS_HEADER_REVIEW</DefineConstants>
+  </PropertyGroup>
   <!-- Original SUPA presentation owns no accepted financial source or existing caller. -->
   <PropertyGroup Condition="'$(ReviewSupaCsv)' == 'true'">
     <ApplicationId>pro.vafadar.zanance.supacsvreview</ApplicationId>

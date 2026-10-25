@@ -2602,3 +2602,15 @@ ZIP/ELF alignment and source hashes, then run one fresh receipt-corpus and scann
 per new UID. Keep per-cohort PID and original chunked terminal report; observation expiry never
 authorizes rereading accepted documents. Audit installed code before uninstall/owned AVD shutdown.
 [Finite outcomes and cleanup](../../src/Apps/Zanance/docs/quality/android-receipt-runtime-compatibility.md).
+
+
+### Original Transactions title review (D-528)
+
+`eng/scripts/Run-StoreDrafts.ps1 -TransactionsAddHeaderReview` builds a fresh independent Windows
+identity/desktop and captures18 language/theme/width contexts with populated, filtered-empty and
+contextual selection presentations. Keep its source/financial preservation and terminal identity/
+count guards; do not reuse the ordinary development build under a different identity. Existing-build
+continuation requires that exact original run's own successful build artifacts and no previous live
+process. Once terminal observations exist, repair only an incorrect observer against those receipts;
+never relaunch successful UI or financial preparation to repair a report. Android uses the separate
+original caller described in [the qualification report](../../src/Apps/Zanance/docs/quality/transactions-title-add.md).

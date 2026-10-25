@@ -9755,3 +9755,18 @@ build and missing-fixture refusal pass; no new managed cases or unchanged native
 Physical D-526 preserves its original opening900EUR/empty ledger and is qualified separately.
 Android projection/read diagnosis, whole-Home/two-second, ANR/accessibility/platform/external gates
 remain open. See [exact observations and limits](quality/protected-home-stage-diagnosis.md).
+
+
+### D-528 - Transactions Add beside the title
+
+Owner-requested Transactions + now matches Home/Plans: original48px accessible command physically
+right of a growing title, original pushed Back, no reserved bottom Add band/overlay. Preserve full
+filters/results, empty invitations and separate contextual bulk/Undo rows; filter sizing reserves
+only the actual header and contextual actions. Eighteen Windows contexts/54 images qualify populated,
+filtered-empty and original selection states; six independent Samsung Release/AOT contexts qualify
+native Add/Cancel/bulk with unchanged original stored inputs. Retain controller/count and observation
+refusals without replaying completed work. Strict builds, complete signed Offline384AOT/408ELF16KiB
+static checks and no-reset shipping upgrade24834->32206 pass. One original Main Add/Cancel, Home979,
+all141 public tuples/three profiles/OS/timeout300000 remain; no Main financial writes or new managed
+cases. Retire the new helper and15 hash-matched XMLs. Full stability/accessibility/iOS/external
+release gates remain separate. See [complete runtime and package evidence](quality/transactions-title-add.md).

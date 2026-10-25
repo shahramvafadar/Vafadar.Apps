@@ -21,7 +21,9 @@ namespace Vafadar.Zanance.App;
 internal static partial class AndroidHomeReview
 {
     /// <summary>The independent install allowed to own these fictitious workloads.</summary>
-#if SUPA_CSV_REVIEW
+#if TRANSACTIONS_HEADER_REVIEW
+    internal const string Package = "pro.vafadar.zanance.transactionsheaderreview";
+#elif SUPA_CSV_REVIEW
     internal const string Package = "pro.vafadar.zanance.supacsvreview";
 #elif RECEIPT_SOURCE_REVIEW
     internal const string Package = "pro.vafadar.zanance.receiptsourcereview";
@@ -484,6 +486,13 @@ internal static partial class AndroidHomeReview
                 var width = Platform.CurrentActivity?.Intent?.GetIntExtra("review_os_width", 0) ?? 0;
                 var positionOnly = Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_header_native_position", false) == true;
                 await WriteReportAsync(root, (positionOnly ? "headers-os-native-" : "headers-os-") + width, await ReviewHeadersOsAsync(app, services, root, comparison!, ct), ct);
+            }
+            else if (phase == "transactions-add-header")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0 || File.Exists(Path.Combine(root, phase + "-" + comparison + "-result.json")))
+                    throw new ReviewCheckException("Fresh independent Transactions header review required.");
+                await WriteReportAsync(root, phase, await ReviewTransactionsHeaderAsync(app, services, root, comparison!, ct), ct);
             }
             else if (phase == "plans-add-header")
             {

@@ -1,5 +1,12 @@
 # AGENTS.md – working rules for this repository
 
+## Consistent Transactions title action (owner, 2026-10-25, D-528)
+
+Transactions uses the same compact right-of-title Add button as Home and Plans. Do not reserve
+a bottom row or overlay for ordinary Add. Preserve the original accessible command and the
+separate contextual bulk-selection and Undo rows; their temporary visibility must not overlap
+the transaction viewport. Keep original root/pushed Back behavior and source/financial safeguards.
+
 ## Isolated Android compatibility SDK approval (owner, 2026-10-24, D-519)
 
 The owner explicitly accepts the presented SDK terms and approves installing the official free
@@ -393,7 +400,8 @@ Air; verify/build/test within its actual environment when available. Never infer
   an override that pins locale or leaves startup covered is not platform acceptance. Distinguish Windows layout
   stress, native conversion observations and real OS, screen-reader and device acceptance.
 
-* Persistent Add/bulk/Undo actions reserve their own grid rows outside the scroll viewport. Financial identity and
+* Home, Plans and Transactions keep ordinary Add in their right-side title row (D-375/D-395/D-528).
+  Other persistent Add actions and contextual bulk/Undo actions reserve rows outside the scroll viewport. Financial identity and
   amount/status use separate rows; do not squeeze the title into a trailing-amount column. Debug review measures
   actual visible native rows, excluding hidden ancestors, and renders only the application's own window.
 
