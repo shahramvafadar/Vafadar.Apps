@@ -3585,11 +3585,22 @@ all141 public tuples/three profiles/OS/timeout300000 remain; no Main financial w
 cases. Retire the new helper and15 hash-matched XMLs. Full stability/accessibility/iOS/external
 release gates remain separate. See [complete runtime and package evidence](quality/transactions-title-add.md).
 
+
+### D-529 - Current complete-reader diagnosis is not release acceptance
+
+Original Windows/API36-x64/Samsung-ARM64 stages and exact original native caller/Main/OS restoration
+pass. Full rows/financial facts/source bytes remain unchanged; source migration, preparation and
+financial commands are zero. A typed-timestamp experiment is withdrawn; shipping D-528 is unchanged.
+Keep general ANR/crash, whole Home/two-second/cold/low-memory, audible accessibility, iOS and external
+release gates open. Do not replay accepted cohorts. [Exact evidence](quality/retained-ledger-stage-diagnosis.md).
+
+
 ### D-530 - Finite Transactions large-text evidence
 
 The changed title/action layout passes18 retained-source Windows process-scale2 contexts/54 images,
 with actual native text/viewport checks and no financial writes or seed replay. Original receipts,
 source and owner input desktop remain unchanged; strict Debug build/cleanup pass. Shipping D-528
 is unchanged. This is not actual Android OS200%, audible TalkBack, all accessibility, stability or
-release acceptance; physical D-529 and the broader qualification delivery remain pending.
+release acceptance. D-529 subsequently qualifies its finite reader-stage scope; broader qualification
+requirements remain pending.
 [Evidence](quality/transactions-title-large-text.md).

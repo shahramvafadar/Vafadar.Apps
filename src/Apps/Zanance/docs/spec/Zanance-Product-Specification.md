@@ -9202,6 +9202,18 @@ all141 public tuples/three profiles/OS/timeout300000 remain; no Main financial w
 cases. Retire the new helper and15 hash-matched XMLs. Full stability/accessibility/iOS/external
 release gates remain separate. See [complete runtime and package evidence](../quality/transactions-title-add.md).
 
+
+### D-529 - Complete-ledger diagnostic evidence
+
+Twelve original Windows/API36-x64/Samsung-ARM64 observations preserve full32-field/order/financial
+controls and snapshots without seed, migration or financial writes. Native source files/envelopes
+match exactly; original emulator and phone caller/Main/OS states are restored. Current phone30047 is
+preserved during this slot; no continuity from historical32206 is claimed. Typed timestamp dispatch
+is rejected after no material stable benefit, leaving production/shipping D-528 unchanged. Managed
+test totals are unchanged. These stage observations are not whole-Home/two-second/stability/platform
+acceptance. [Evidence and limits](../quality/retained-ledger-stage-diagnosis.md).
+
+
 ### D-530 - Transactions title large-text subgate
 
 The existing D-528 fictitious source passes18 new Windows process-scale2 contexts/54 own-window

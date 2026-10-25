@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
+    <!-- Explicit temporary replacement of the existing independent caller, never the shipping identity. -->
+    <ApplicationId>pro.vafadar.zanance.androidhomereview</ApplicationId>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
+    <OutputType>Exe</OutputType>
+    <RuntimeIdentifier Condition="'$(RetainedReaderEmulator)' != 'true'">android-arm64</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="'$(RetainedReaderEmulator)' == 'true'">android-x64</RuntimeIdentifier>
+    <DefineConstants Condition="'$(RetainedReaderEmulator)' == 'true'">$(DefineConstants);RETAINED_READER_EMULATOR</DefineConstants>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <RunAOTCompilation>true</RunAOTCompilation>
+    <PublishTrimmed>true</PublishTrimmed>
+    <IsPackable>false</IsPackable>
+    <Description>Read-only stage diagnosis on retained independent encrypted workloads without application startup or migrations.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.Data/Vafadar.Zanance.Data.csproj" />
+    <PackageReference Include="Vafadar.Native.SqlCipher.Android" />
+    <Compile Include="../Zanance.ProtectedPerformance/LedgerStageDiagnostics.cs" Link="LedgerStageDiagnostics.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidDatabaseKeyProtector.cs" Link="AndroidDatabaseKeyProtector.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidDatabaseKeyEnvelopeStore.cs" Link="AndroidDatabaseKeyEnvelopeStore.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidDatabaseKeyEnvelopeStore.Recovery.cs" Link="AndroidDatabaseKeyEnvelopeStore.Recovery.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidProfileRetirementFiles.cs" Link="AndroidProfileRetirementFiles.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidGenerationMigrationStorage.cs" Link="AndroidGenerationMigrationStorage.cs" />
+  </ItemGroup>
+</Project>

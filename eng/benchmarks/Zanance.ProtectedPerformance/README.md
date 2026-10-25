@@ -120,3 +120,22 @@ No Save/Delete/search, seed, original older read sequence, UI or native renderin
 writes its own home-stages JSON; first-for-shape is not process/OS cold. Run only for a relevant
 unresolved diagnosis or after a relevant change, not to repeat already accepted checks.
 See [actual evidence and limits](../../../src/Apps/Zanance/docs/quality/protected-home-stage-diagnosis.md).
+
+## D-529 - Read-only complete ledger and Core stages
+
+Use `ledger-stages` only for an unresolved current complete-reader diagnosis on both retained shapes:
+
+```powershell
+dotnet run --project eng/benchmarks/Zanance.ProtectedPerformance -c Release --no-build -- artifacts/protected-retained-run ledger-stages
+```
+
+Unlike the ordinary benchmark, this mode skips bootstrap and refuses unfinished/unselected ancestry,
+missing key directories or an existing plaintext original before opening its protected source. It
+does not prepare replacement fixtures. Two observations per shape measure the actual Data SQL
+projection, complete typed reader/sort and original Core methods. All32 persisted ledger properties/
+order, complete-history balances and complete portable snapshots/revision must match. Control work
+is outside timers. SQL stepping precedes typed reads on the same connection: do not interpret their
+difference as pure materialization cost or claim cold/UI/Android performance from these Windows data.
+Preserve accepted samples after an admission-only change rather than replaying them. The separate
+non-MAUI Android retained reader requires its own original physical evidence and caller restoration.
+See [current evidence and unfinished native acceptance](../../../src/Apps/Zanance/docs/quality/retained-ledger-stage-diagnosis.md).

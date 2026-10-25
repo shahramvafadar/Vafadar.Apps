@@ -6397,6 +6397,18 @@ all141 public tuples/three profiles/OS/timeout300000 remain; no Main financial w
 cases. Retire the new helper and15 hash-matched XMLs. Full stability/accessibility/iOS/external
 release gates remain separate. See [complete runtime and package evidence](quality/transactions-title-add.md).
 
+
+### D-529 - Original complete-ledger stage subgate
+
+Twelve actual Windows/API36-x64/Samsung-ARM64 observations pass full32-field/order, original financial
+controls and source preservation; a separate incomplete metadata fixture refuses before timing/key
+reads. Restore exact original caller APK/UID/stopped/grants and Main/public/OS on both native targets,
+with phone30047 preserved only during its fresh slot. Remove only new owned XMLs and return the phone;
+stop only the owned emulator. Reject the typed-timestamp experiment without a shipping change. No
+new managed cases or financial commands. Full Home/two-second, general QA-06/A11Y and platform gates
+remain open. [Evidence and boundaries](quality/retained-ledger-stage-diagnosis.md).
+
+
 ### D-530 - Changed Transactions title at Windows process scale2
 
 Eighteen new en/fa/de/Light-Dark/360-412-1280 populated/empty/bulk contexts yield54 own-window images

@@ -51,6 +51,7 @@ D-528 normal-size frames. No new managed cases or financial preparations/command
 
 This qualifies the named changed Windows layout at requested process scale2. It is not real Windows
 system scaling, Narrator, actual Android OS200%, audible TalkBack, all controls, general stability,
-full Home/two-second, iOS or release acceptance. Physical D-529 remains separate and unfinished.
+full Home/two-second, iOS or release acceptance. D-529 subsequently qualifies its separate physical
+reader-stage scope and exact restoration; it does not extend this Windows layout claim.
 The finite host subgate is delivered independently after final documentation, isolated-output
-cleanup and commit/push; keep physical D-529 and every other canonical gate open.
+cleanup and commit/push; keep broader whole-Home, OS/speech/platform and release gates open.

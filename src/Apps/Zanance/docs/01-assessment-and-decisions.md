@@ -9771,6 +9771,23 @@ all141 public tuples/three profiles/OS/timeout300000 remain; no Main financial w
 cases. Retire the new helper and15 hash-matched XMLs. Full stability/accessibility/iOS/external
 release gates remain separate. See [complete runtime and package evidence](quality/transactions-title-add.md).
 
+
+### D-529 - Retained complete-ledger stage diagnosis
+
+Twelve original Windows/API36-x64/Samsung-ARM64 observations separate actual SQL stepping, complete
+materialization/sort and Core operations while preserving all32 fields/order, financial controls and
+source snapshots; native original file/metadata/envelope bytes match authenticated rollback rows.
+Samsung tenfold typed reads1365.95/1476.00ms are stages, not whole Home/two-second acceptance. The
+emulator's exact caller/Main3341/Home0/120 public tuples/OS are restored and its AVD stopped. In the
+fresh explicit phone slot, current Main30047 differs from historical32206 for an unestablished cause;
+preserve its actual30047/APK/Home979/141 tuples throughout this turn. Restore original caller APK/
+UID10381/stopped/grants/no-pending state and exact timeout300000/OS, remove only two new hash-matched
+XMLs and explicitly return the phone. Reject typed timestamp dispatch after eight relevant comparison
+observations show no stable material benefit; restore exact production source and touch it. No seed,
+financial writer, new managed case or shipping change. General UI/cold/stability/platform/external
+gates remain open. See [actual evidence and limits](quality/retained-ledger-stage-diagnosis.md).
+
+
 ### D-530 - Retained Transactions title at double-size Windows text
 
 Close only the changed layout's Windows process-local large-text subgate while the Samsung is on
@@ -9781,6 +9798,7 @@ ratio2/full untrimmed title/allocated height, right48-unit Add, no bottom Add ro
 contextual bulk actions pass; original accounts/entries/settings/plans match. PID19056 exits0;
 Default input desktop is unchanged, strict Debug build/cleanup have zero warnings/errors. No financial
 preparation/commands, managed cases, OS setting change or Android/ordinary matrix replay. Shipping
-D-528 is unchanged. Deliver this finite host subgate independently; separate physical D-529 and actual Android
-OS200%, audible reader, full accessibility/stability/platform/release gates are not accepted.
+D-528 is unchanged. This finite host subgate is delivered independently; D-529 separately qualifies
+original reader stages. Actual Android OS200%, audible reader and full accessibility/stability/
+platform/release acceptance remain open.
 See [source, native observations and boundaries](quality/transactions-title-large-text.md).

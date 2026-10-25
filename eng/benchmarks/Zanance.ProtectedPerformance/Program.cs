@@ -10,17 +10,18 @@ using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Performance;
 
-if (!OperatingSystem.IsWindows() || args.Length is < 1 or > 2 || (args.Length == 2 && args[1] is not ("resume" or "ledger" or "home" or "home-stages" or "verify-retained" or "tenfold")))
-    throw new ArgumentException("Provide a new Windows fictitious output directory, or explicit resume/ledger/home/home-stages/verify-retained/tenfold mode.");
+if (!OperatingSystem.IsWindows() || args.Length is < 1 or > 2 || (args.Length == 2 && args[1] is not ("resume" or "ledger" or "home" or "home-stages" or "ledger-stages" or "verify-retained" or "tenfold")))
+    throw new ArgumentException("Provide a new Windows fictitious output directory, or explicit resume/ledger/home/home-stages/ledger-stages/verify-retained/tenfold mode.");
 var requested = Path.GetFullPath(args[0]);
 var allowed = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "artifacts"));
 if (!requested.StartsWith(allowed + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
     throw new IOException("Independent performance output must be inside repository artifacts.");
 var homeOnly = args.Length == 2 && args[1] == "home";
 var homeStagesOnly = args.Length == 2 && args[1] == "home-stages";
+var ledgerStagesOnly = args.Length == 2 && args[1] == "ledger-stages";
 var verificationOnly = args.Length == 2 && args[1] == "verify-retained";
 var newTenfoldOnly = args.Length == 2 && args[1] == "tenfold";
-var resume = homeOnly || homeStagesOnly || verificationOnly || newTenfoldOnly || (args.Length == 2 && args[1] == "resume");
+var resume = homeOnly || homeStagesOnly || ledgerStagesOnly || verificationOnly || newTenfoldOnly || (args.Length == 2 && args[1] == "resume");
 var ledgerOnly = args.Length == 2 && args[1] == "ledger";
 var root = resume ? requested : FixtureDirectory.Create(requested);
 if (!File.Exists(Path.Combine(root, "fictitious-performance.marker"))) throw new IOException("Independent root marker missing.");
@@ -29,7 +30,8 @@ for (var ancestor = new DirectoryInfo(root); ancestor is not null; ancestor = an
 SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlcipher());
 using var deadline = new CancellationTokenSource(TimeSpan.FromMinutes(10)); var ct = deadline.Token;
 var results = new List<object>();
-var output = Path.Combine(root, homeStagesOnly ? "home-stages-" + Guid.NewGuid().ToString("N") + ".json"
+var output = Path.Combine(root, ledgerStagesOnly ? "ledger-stages-" + Guid.NewGuid().ToString("N") + ".json"
+    : homeStagesOnly ? "home-stages-" + Guid.NewGuid().ToString("N") + ".json"
     : homeOnly ? "home-measurements-" + Guid.NewGuid().ToString("N") + ".json"
     : verificationOnly ? "readonly-verification-" + Guid.NewGuid().ToString("N") + ".json"
     : newTenfoldOnly ? "tenfold-measurements.json" : "measurements.json");
@@ -40,7 +42,7 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
     var existing = resume && Directory.Exists(folder);
     if (newTenfoldOnly && existing) throw new IOException("Tenfold-only continuation refuses already prepared data; never repeat its accepted writes.");
     if (verificationOnly && !existing) continue; // Never seed the still-unexecuted next shape to repair an observation.
-    if ((homeOnly || homeStagesOnly) && !existing) throw new IOException("Home comparison requires both retained protected fixtures; never regenerate them.");
+    if ((homeOnly || homeStagesOnly || ledgerStagesOnly) && !existing) throw new IOException("Home comparison requires both retained protected fixtures; never regenerate them.");
     if (!existing) _ = await PerformanceFixture.CreateAsync(folder, shape, ct);
     var original = Path.Combine(folder, "fixture.db");
     using var services = new ServiceCollection().AddZananceData(original, protectionRequired: true).BuildServiceProvider();
@@ -49,7 +51,10 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
     {
         if (!File.Exists(Path.Combine(folder, "fictitious-performance.marker"))) throw new IOException("Independent workload marker missing.");
     }
-    var keyFolder = Path.Combine(folder, "keys"); Directory.CreateDirectory(keyFolder);
+    var keyFolder = Path.Combine(folder, "keys");
+    if (ledgerStagesOnly && (!Directory.Exists(keyFolder) || File.Exists(original)))
+        throw new IOException("Ledger stages require the existing protected source and keys; no preparation is allowed.");
+    if (!ledgerStagesOnly) Directory.CreateDirectory(keyFolder);
     var keys = new WindowsGenerationKeyStore(keyFolder, Validate);
     var durability = new WindowsGenerationFileDurability(folder);
     var identityPath = Path.Combine(folder, "identities.sqlite");
@@ -58,13 +63,25 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
     using (var owner = await location.Access.AcquireExclusiveAsync(ct))
     {
         var clock = Stopwatch.StartNew();
-        await SqlCipherProfileBootstrap.PrepareAsync(location, owner, identityPath,
-            new Dictionary<string, string> { [""] = original }, !existing, keys, durability,
-            (_, _) => throw new IOException("No restore intent belongs to the fresh workload."), Validate,
-            256 * 1024 * 1024, "4.19.0", ct);
+        if (!ledgerStagesOnly)
+            await SqlCipherProfileBootstrap.PrepareAsync(location, owner, identityPath,
+                new Dictionary<string, string> { [""] = original }, !existing, keys, durability,
+                (_, _) => throw new IOException("No restore intent belongs to the fresh workload."), Validate,
+                256 * 1024 * 1024, "4.19.0", ct);
         var identities = new SqliteDatabaseIdentityCatalogue(identityPath, Validate);
         var identity = (await identities.ReadAsync(ct)).Single();
         var history = new SqliteProfileRestoreHistory(original + ".restore-history.sqlite", identity.InitialCandidateKey, Validate);
+        if (ledgerStagesOnly)
+        {
+            // The ordinary benchmark can resume preparation. This diagnostic must refuse it before
+            // opening the original generation rather than silently finishing an interrupted migration.
+            var ancestry = await history.ReadAsync(ct);
+            var checkpoint = await new SqliteDatabaseGenerationJournal(original + ".generation.sqlite",
+                identity.InitialMigration).ReadAsync(ct);
+            if (ancestry.Count != 1 || ancestry[0].Sequence != 0 || !ancestry[0].Selected
+                || checkpoint.Phase != DatabaseGenerationPhase.Completed)
+                throw new IOException("Ledger stages require completed, already selected original ancestry.");
+        }
         generation = await SqlCipherProfileGeneration.OpenCurrentAsync(location, identities, "", original, history,
             _ => throw new IOException("No restored generation belongs to the initial workload."), keys, durability,
             owner, Validate, 256 * 1024 * 1024, "4.19.0", ct);
@@ -140,6 +157,9 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
         var savedTimes = new List<double>();
         object? homeStages = null;
         if (verificationOnly) { /* Original accepted writes/timers are deliberately not replayed. */ }
+        else if (ledgerStagesOnly)
+            homeStages = await LedgerStageDiagnostics.MeasureAsync(services.GetRequiredService<IDbContextFactory<ZananceDbContext>>(),
+                shape.Entries, PerformanceFixture.Today, ct);
         else if (homeStagesOnly)
             homeStages = await HomeReadStages.MeasureAsync(store, shape.Entries, PerformanceFixture.Today, ct);
         else if (homeOnly)
@@ -252,7 +272,7 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
             PlaintextOriginalRemoved = !File.Exists(original), CipherBytes = new FileInfo(generation.Path).Length });
     }
     await File.WriteAllTextAsync(output, JsonSerializer.Serialize(new
-    { Results = results, LedgerOnly = ledgerOnly, HomeOnly = homeOnly, HomeStagesOnly = homeStagesOnly, VerificationOnly = verificationOnly, NewTenfoldOnly = newTenfoldOnly,
+    { Results = results, LedgerOnly = ledgerOnly, HomeOnly = homeOnly, HomeStagesOnly = homeStagesOnly, LedgerStagesOnly = ledgerStagesOnly, VerificationOnly = verificationOnly, NewTenfoldOnly = newTenfoldOnly,
         CipherVersion = "4.19.0", ActualProductionAssemblies = true,
         NativeUiOrDeviceAcceptance = false }, new JsonSerializerOptions { WriteIndented = true }), ct);
 }

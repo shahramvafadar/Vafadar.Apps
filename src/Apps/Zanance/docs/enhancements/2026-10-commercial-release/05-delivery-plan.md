@@ -4687,11 +4687,24 @@ all141 public tuples/three profiles/OS/timeout300000 remain; no Main financial w
 cases. Retire the new helper and15 hash-matched XMLs. Full stability/accessibility/iOS/external
 release gates remain separate. See [complete runtime and package evidence](../../quality/transactions-title-add.md).
 
+
+### D-529 - Retained complete-ledger diagnosis
+
+The original Windows/API36-x64/Samsung-ARM64 stages preserve complete source/financial facts with
+zero seed/preparation/migration/financial commands. Restore exact original native caller/Main/OS,
+stop only the owned emulator and explicitly return the phone. Reject typed timestamp dispatch
+without a stable material large-source benefit; shipping D-528 stays unchanged. Finish this finite
+batch's documentation/cleanup/commit/push and one16-minute exact-head CI. Next pursue supported
+current whole-Home projection/read qualification and genuinely uncovered stability/accessibility
+requirements; do not replay these accepted stages or the rejected candidate.
+[Evidence](../../quality/retained-ledger-stage-diagnosis.md).
+
+
 ### D-530 - Independent large-text work during the phone turn
 
 The retained D-528 source passes only the new Windows process-scale2 Transactions title/action
 contexts:18 cases/54 images, no original-size replay, seed or financial command. Original source/
 receipts/input desktop match and strict build/cleanup pass. Keep this host subgate distinct from
-actual Android OS200%/speech and physical D-529, which resumes only after explicit phone return.
+actual Android OS200%/speech and D-529, whose later original reader-stage qualification is separate.
 Deliver this finite host subgate independently with its own commit/push and one delayed exact-head
-CI. Keep physical D-529 and the broader qualification delivery unfinished. [Evidence](../../quality/transactions-title-large-text.md).
+CI. D-529 subsequently qualifies its finite reader-stage scope; the broader qualification delivery remains unfinished. [Evidence](../../quality/transactions-title-large-text.md).

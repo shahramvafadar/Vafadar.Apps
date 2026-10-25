@@ -5659,12 +5659,26 @@ all141 public tuples/three profiles/OS/timeout300000 remain; no Main financial w
 cases. Retire the new helper and15 hash-matched XMLs. Full stability/accessibility/iOS/external
 release gates remain separate. See [complete runtime and package evidence](../../quality/transactions-title-add.md).
 
+### D-529 - Retained complete-ledger stage diagnosis
+
+Twelve original Windows/API36-x64/Samsung-ARM64 stage observations preserve all32 fields/order,
+complete financial controls and source snapshots. Native source files/metadata/envelopes match
+original rollback rows, with no preparation/migration/seed/financial commands. Restore original
+emulator caller/Main/OS and stop that AVD; restore Samsung caller SHA/UID10381/stopped/grants/no-
+pending state and current Main30047/APK/Home979/all141 tuples/OS/timeout300000 before explicit
+handback. No continuity from historical32206 or cause for that earlier difference is claimed.
+Remove only new owned hash-matched XMLs. Reject typed timestamp dispatch after eight relevant
+comparison observations fail to show stable material benefit; restore exact production source.
+Strict builds/cleans pass; zero new managed cases and shipping D-528 stays unchanged. Full Home/
+two-second/general stability/accessibility/platform/release gates remain open.
+[Original evidence and limits](../../quality/retained-ledger-stage-diagnosis.md).
+
 ### D-530 - Retained Transactions title large-text subgate
 
-While physical D-529 waits for explicit phone return, the completed D-528 Windows source qualifies
+While physical D-529 was awaiting explicit phone return, the completed D-528 Windows source qualifies
 18 new process-scale2 contexts/54 own-window images in en/fa/de, two themes and360/412/1280. Full
 native title/ratio2/height, right Add and nonoverlapping contextual actions pass with unchanged
 accounts/entries/settings/plans/original receipts and no seed/financial command. Strict Debug build,
 PID19056/exit0, input-desktop preservation and isolated cleanup pass. Deliver the finite host subgate
-independently; physical D-529, shipping D-528 and general OS/audible/stability/release gates stay
-unchanged. [Evidence](../../quality/transactions-title-large-text.md).
+independently. D-529 subsequently qualifies its separate original reader-stage scope; shipping
+D-528 and broader OS/audible/stability/release gates remain unchanged. [Evidence](../../quality/transactions-title-large-text.md).
