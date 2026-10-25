@@ -41,6 +41,29 @@ public sealed partial class ZananceStore
         if (periodIndex is < 0 or > 1) throw new ArgumentOutOfRangeException(nameof(periodIndex));
         // Capture the factory lease before queuing work, so profile maintenance cannot redirect this read.
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return await ReadHomeSnapshotCoreAsync(db, today, periodIndex, cancellationToken);
+    }
+
+    /// <summary>Retains one original non-pooled context only for this explicitly disposed Home publication.</summary>
+    public async Task<HomeReadSession> BeginHomeReadSessionAsync(DateOnly today, int periodIndex,
+        CancellationToken cancellationToken = default)
+    {
+        if (periodIndex is < 0 or > 1) throw new ArgumentOutOfRangeException(nameof(periodIndex));
+        var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        try
+        {
+            var snapshot = await ReadHomeSnapshotCoreAsync(db, today, periodIndex, cancellationToken);
+            if (db.Database.CurrentTransaction is not null)
+                throw new InvalidOperationException("Home projection must not retain the snapshot read transaction.");
+            return new(snapshot, db, token => ValidateHomeSnapshotCoreAsync(db, snapshot, token));
+        }
+        catch { await db.DisposeAsync(); throw; }
+    }
+
+    /// <summary>Shares the complete original snapshot query and transaction across explicit operation lifetimes.</summary>
+    private async Task<HomeReadSnapshot> ReadHomeSnapshotCoreAsync(ZananceDbContext db, DateOnly today, int periodIndex,
+        CancellationToken cancellationToken)
+    {
         return await Task.Run(async () =>
         {
             // D-283: SQLite async APIs execute synchronously. Both key derivation and materialization belong
@@ -107,6 +130,13 @@ public sealed partial class ZananceStore
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await ValidateHomeSnapshotCoreAsync(db, snapshot, cancellationToken);
+    }
+
+    /// <summary>Always starts a fresh original validation transaction; a retained connection never means stale validation.</summary>
+    private async Task ValidateHomeSnapshotCoreAsync(ZananceDbContext db, HomeReadSnapshot snapshot,
+        CancellationToken cancellationToken)
+    {
         await Task.Run(async () =>
         {
             await db.Database.OpenConnectionAsync(cancellationToken);

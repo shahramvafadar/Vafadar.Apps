@@ -32,6 +32,9 @@ internal static partial class AndroidHomeReview
         var oraclePhase = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetStringExtra("review_current_cpu_oracle");
         var separateOracle = oraclePhase is not null;
         var ledgerTransport = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetStringExtra("review_current_ledger_transport") ?? "blocks";
+        var validationMode = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetStringExtra("review_current_validation_mode") ?? "retained";
+        if (validationMode is not ("separate" or "retained") || validationMode == "separate" && !separateOracle)
+            throw new ReviewCheckException("Original separate validation requires explicit independent current-source controls.");
         if (ledgerTransport is not ("scalar" or "blocks") || ledgerTransport == "scalar" && !separateOracle)
             throw new ReviewCheckException("Explicit scalar/blocks comparison requires independent complete financial controls.");
         if (separateOracle && (!cpuWindowOnly || reportOnly || oraclePhase is not ("prepare" or "measure")
@@ -116,7 +119,7 @@ internal static partial class AndroidHomeReview
             var packet = recorded.RootElement;
             if (!CurrentHomeByteIdentityMatches(packet, publicationComparison, day,
                 typeof(ZananceStore).Module.ModuleVersionId, typeof(Core.Ledger.LedgerCalculator).Module.ModuleVersionId,
-                typeof(Features.Home.HomePage).Module.ModuleVersionId, reportOnly, cpuWindowOnly, separateOracle, ledgerTransport))
+                typeof(Features.Home.HomePage).Module.ModuleVersionId, reportOnly, cpuWindowOnly, separateOracle, ledgerTransport, validationMode))
                 throw new ReviewCheckException("The original source/day/code fingerprint cannot be replaced during continuation.");
             string[] ReadFiles(string section, string name) => packet.GetProperty(section).GetProperty(name).EnumerateArray()
                 .Select(item => item.GetString() ?? throw new ReviewCheckException("Incomplete stored source digest.")).ToArray();
@@ -139,7 +142,7 @@ internal static partial class AndroidHomeReview
             await using (var output = new FileStream(byteBaselinePath, FileMode.CreateNew, FileAccess.Write, FileShare.Read))
                 await JsonSerializer.SerializeAsync(output, new { Comparison = publicationComparison, Day = day,
                     CapturedBeforeNativePublication = true, ProcessId = Environment.ProcessId, CpuWindowOnly = cpuWindowOnly, SeparateCpuOracle = separateOracle,
-                    LedgerTransport = ledgerTransport,
+                    LedgerTransport = ledgerTransport, ValidationMode = validationMode,
                     DataModule = typeof(ZananceStore).Module.ModuleVersionId,
                     CoreModule = typeof(Core.Ledger.LedgerCalculator).Module.ModuleVersionId,
                     CallerModule = typeof(Features.Home.HomePage).Module.ModuleVersionId,
@@ -171,7 +174,8 @@ internal static partial class AndroidHomeReview
         }
         else
             await MeasureAsync(app, services, clone, "home-stages", publicationComparison, publicationComparison, ct,
-                currentSchema: true, cpuWindowOnly: cpuWindowOnly, separateOracle: separateOracle, ledgerTransport: ledgerTransport);
+                currentSchema: true, cpuWindowOnly: cpuWindowOnly, separateOracle: separateOracle, ledgerTransport: ledgerTransport,
+                validationMode: validationMode);
         foreach (var name in new[] { "reference", "tenfold" })
             if (!originals[name].SequenceEqual(CurrentHomeFileDigests(Path.Combine(root, name)))
                 || !CurrentHomeFilesPreserved(adopted[name], CurrentHomeFileDigests(Path.Combine(clone, name)), publicationComparison))
@@ -184,7 +188,7 @@ internal static partial class AndroidHomeReview
             throw new ReviewCheckException("Completed publication belongs to another oracle-process scope.");
         return new { Comparison = comparison, OriginalCloneBaseline = baseline, RetainedPublicationComparison = previousProgress,
             FailedAdoptionBaseline = resume && failedAdoption ? baseline : null, Adoptions = adoptions, CurrentHome = report.RootElement.Clone(),
-            CpuWindowOnly = cpuWindowOnly, SeparateCpuOracle = separateOracle, CpuOraclePhase = oraclePhase,
+            CpuWindowOnly = cpuWindowOnly, SeparateCpuOracle = separateOracle, CpuOraclePhase = oraclePhase, ValidationMode = validationMode,
             OriginalEncryptedSourcesUnchanged = true, AdoptedSourcesUnchangedDuringMeasurement = durableByteBaseline,
             CompletedNativeObservationsRecoveredWithoutReplay = reportOnly, FinalReadOnlyAuditSourceFilesUnchanged = reportOnly,
             HistoricalTimingExactByteEqualityAccepted = durableByteBaseline, OriginalPreMeasurementFingerprintRetained = durableByteBaseline,
@@ -196,9 +200,11 @@ internal static partial class AndroidHomeReview
     /// <summary>Rejects a different source/code/day before continuing metrics; historical recovery adds no new UI observations.</summary>
     private static bool CurrentHomeByteIdentityMatches(JsonElement packet, string comparison, string day,
         Guid dataModule, Guid coreModule, Guid callerModule, bool reportOnly, bool cpuWindowOnly = false, bool separateOracle = false,
-        string ledgerTransport = "blocks") =>
+        string ledgerTransport = "blocks", string validationMode = "retained") =>
         (ledgerTransport is "scalar" or "blocks") && packet.GetProperty("Comparison").GetString() == comparison
         && packet.TryGetProperty("LedgerTransport", out var transport) && transport.GetString() == ledgerTransport
+        && (validationMode is "separate" or "retained")
+        && packet.TryGetProperty("ValidationMode", out var validation) && validation.GetString() == validationMode
         && packet.GetProperty("CapturedBeforeNativePublication").GetBoolean()
         && packet.GetProperty("DataModule").GetGuid() == dataModule
         && packet.GetProperty("CoreModule").GetGuid() == coreModule

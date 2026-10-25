@@ -3697,3 +3697,13 @@ actual chosen-path observation. Diagnostic retirement is restricted to the expli
 normal empty independent caller and its exact old APK migration prefix, after durable original
 request and full memory/source proof. It never authorizes downgrading shipping Main or retained
 workload sources. Preserve failed observations and never replay accepted financial commands.
+
+## D-541 - Bounded Home publication connection
+
+One covered Home publication may retain its original factory context through projection, with
+separate completed snapshot and fresh final-validation transactions. Never retain a transaction
+across UI projection, weaken the KDF, introduce a global key/connection cache or skip original
+file, access, input, financial-revision or definition checks. Dispose the old operation before
+period/source retry or uncovering, including failures; a recursive read holding the old lease
+can deadlock against pending maintenance. Independent comparisons must bind the requested
+validation mode to the immutable source/day/code fingerprint and observe actual context count.

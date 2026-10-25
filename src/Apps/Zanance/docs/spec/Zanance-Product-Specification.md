@@ -9424,3 +9424,30 @@ D-540 failed-case continuation while the phone gate remains: select only the eig
 cases lacking any successful terminal outcome. Actual strict rebuild and all eight cases, including
 fixture disposal, pass; exact result-name comparison excludes previously successful/unrelated
 cases. Preserve initial failure receipts; no native financial commands or full-suite claim.
+
+### D-541 - Home connection reuse status
+
+One covered Home publication now owns one original context across separate complete-read and
+fresh final-validation transactions. All original source/access/definition/financial checks remain;
+dispose before retry/uncovering, with no global key cache or financial change. Eight new data cases,
+four actual non-UI flow cases and one owned-observer case pass; three affected original cases pass.
+These13 newly added case variants and16 distinct selected receipts are not a rerun/current total
+of the full suite. Two initial failed fixture assertions continue only their two cases.
+
+Same-code/source Samsung pairs improve5.9096%/5.2783%, preserving complete financial/native packets;
+retained times3310.2394/3261.4481ms still fail the two-second objective. Strict Windows and complete
+offline Android384AOT builds pass; exact Data/Core equality is established after rejecting an
+artifact-path-dependent first package. Main a2d98e/PID29566 preserves Home979/all141 public states, all three original profiles and
+exact OS settings after the one signed no-reset upgrade and authorized normal Resume. Original
+independent caller bytes/UID/storage/grants/stopped state match; ten new owned hash-matched XMLs
+are removed. The earlier foreground refusal and17997 external task removal remain recorded.
+Two newly owned independent x64 compatibility fixtures qualify nonempty100000-row block reads
+and actual original Home publication on API24/4096-byte pages and API35/simulated16384-byte
+userspace pages over a4096-byte kernel. Each fixture is seeded once with110000 reference/tenfold
+rows; scalar controls finish in a separate proven-dead PID before the one native publication.
+Complete original schema/typed-row/financial/native guards pass with one context, one block read,
+zero scalar reads and no post-setup financial command/key/seed replay. Both initially absent
+packages are removed and only the two owned AVDs are stopped, preserving their settings.
+This is not hardware16KiB, whole-platform, startup, stability or two-second acceptance.
+Broader Android/iOS/security/accessibility/provider/Store/release gates remain separate.
+[Evidence and limitations](../quality/home-publication-connection.md).

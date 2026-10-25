@@ -67,7 +67,7 @@ internal static partial class AndroidHomeReview
                 .Select(entry => { var row = presenter.Row(entry); return new CpuOracleRecent(row.Id, row.Title, row.AmountText, row.IsUnreviewed, row.Subtitle); }).ToArray();
             var reads = new WindowReadFactory(scalar);
             var store = new ZananceStore(reads, data.GetRequiredService<TimeProvider>(), data.GetRequiredService<ICommercialWriteAccessSource>());
-            var vm = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store);
+            var vm = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store, new SeparateHomeReadOperationSource(store));
             string presentation;
             try
             {

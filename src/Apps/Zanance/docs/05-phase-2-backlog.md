@@ -3806,3 +3806,24 @@ Independent new-candidate bootstrap also reaches
 original onboarding on API24/x64/4096 and API35/x64/simulated16384, with no UI/financial input;
 remove only new fixtures/two owned XMLs and prove both AVDs stopped with sharedADB76812 retained.
 Goal/full stability/accessibility/iOS/provider/Store/release remain open. [Evidence](quality/complete-ledger-read-blocks.md).
+
+### D-541 - Bounded Home publication connection
+
+Same-APK/source Samsung pairs qualify one operation-local connection with fresh original final
+validation at5.9096%/5.2783% improvement. Sixteen distinct selected cases and strict builds pass;
+complete signed offline384AOT/static-package guards pass with exact qualified Data/Core images.
+Original caller retirement/restoration is complete. Main a2d98e/PID29566 preserves Home979/all141 public states, all three original profiles and
+exact OS settings after the one signed no-reset upgrade and authorized normal Resume. Original
+independent caller bytes/UID/storage/grants/stopped state match; ten new owned hash-matched XMLs
+are removed. The earlier foreground refusal and17997 external task removal remain recorded.
+Two newly owned independent x64 compatibility fixtures qualify nonempty100000-row block reads
+and actual original Home publication on API24/4096-byte pages and API35/simulated16384-byte
+userspace pages over a4096-byte kernel. Each fixture is seeded once with110000 reference/tenfold
+rows; scalar controls finish in a separate proven-dead PID before the one native publication.
+Complete original schema/typed-row/financial/native guards pass with one context, one block read,
+zero scalar reads and no post-setup financial command/key/seed replay. Both initially absent
+packages are removed and only the two owned AVDs are stopped, preserving their settings.
+This is not hardware16KiB, whole-platform, startup, stability or two-second acceptance.
+No accepted financial work repeats. Two-second
+Home and wider stability/accessibility/platform/release remain open in the canonical backlog.
+[Evidence](quality/home-publication-connection.md).

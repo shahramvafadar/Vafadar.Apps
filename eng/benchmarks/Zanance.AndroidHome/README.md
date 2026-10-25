@@ -1128,3 +1128,16 @@ navigation is not UI acceptance. Same-process, stale/tampered, cross-scope and i
 must fail; ordinary historical controls cannot be relabeled as isolated. A different protocol/build/
 warming state cannot establish product speedup or regression. Keep original source/profile/key/
 financial inputs and all remaining performance, stability, accessibility and release gates intact.
+
+### D-541 - Separate versus retained validation context
+
+The independent `review_current_validation_mode` accepts only `separate` or `retained` and is
+immutable in the current-source fingerprint. Both use the same actual production Home projection
+and complete block transport; separate calls the original public APIs, retained owns one bounded
+session with separate fresh transactions. Preparation always computes original scalar controls.
+Observe two/one actual contexts, zero dropped numeric diagnostic events, complete source packets
+and normal read-only publication. Keep all control/measurement PIDs and proven-death receipts.
+Missing/changed mode refuses continuation; old controls must not be relabeled. No production
+runtime switch or global key cache is introduced. Qualify opposite-order pairs without replaying
+accepted financial work, then restore only the independent caller through the existing empty-Main
+M1/M2 retirement guard. [Evidence](../../../src/Apps/Zanance/docs/quality/home-publication-connection.md).

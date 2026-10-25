@@ -28,7 +28,8 @@ $other = [guid]'44444444-4444-4444-4444-444444444444'
 $cases = [Collections.Generic.List[object]]::new()
 function New-IdentityPacket([hashtable]$Changes) {
     $fields = @{ Comparison=$comparison; Day=$day; CapturedBeforeNativePublication=$true;
-        DataModule=$data.ToString(); CoreModule=$core.ToString(); CallerModule=$caller.ToString() }
+        DataModule=$data.ToString(); CoreModule=$core.ToString(); CallerModule=$caller.ToString();
+        LedgerTransport='blocks'; ValidationMode='retained' }
     foreach ($key in $Changes.Keys) {
         if ($null -eq $Changes[$key]) { $fields.Remove($key) } else { $fields[$key]=$Changes[$key] }
     }
@@ -52,6 +53,9 @@ function Check-Identity([string]$Name, [hashtable]$Changes, [bool]$ReportOnly, [
 }
 Check-Identity 'Original source/day/code resumes' @{} $false $true
 Check-Identity 'Different comparison refuses' @{Comparison='22222222222222222222222222222222'} $false $false
+Check-Identity 'Different validation mode refuses' @{ValidationMode='separate'} $false $false
+Check-Identity 'Missing validation mode refuses' @{ValidationMode=$null} $false $false
+Check-Identity 'Unsupported validation mode refuses' @{ValidationMode='cached'} $false $false
 Check-Identity 'Post-observation fingerprint refuses' @{CapturedBeforeNativePublication=$false} $false $false
 Check-Identity 'Different data module refuses' @{DataModule=$other.ToString()} $false $false
 Check-Identity 'Different Core module refuses' @{CoreModule=$other.ToString()} $false $false

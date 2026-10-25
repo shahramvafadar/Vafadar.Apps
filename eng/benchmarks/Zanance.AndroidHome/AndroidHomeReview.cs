@@ -862,10 +862,13 @@ internal static partial class AndroidHomeReview
     }
 
     private static async Task MeasureAsync(App app, IServiceProvider services, string root, string phase, string comparison, string baseline, CancellationToken ct,
-        bool currentSchema = false, bool cpuWindowOnly = false, bool separateOracle = false, string ledgerTransport = "blocks")
+        bool currentSchema = false, bool cpuWindowOnly = false, bool separateOracle = false, string ledgerTransport = "blocks",
+        string validationMode = "retained")
     {
         if (ledgerTransport is not ("scalar" or "blocks") || ledgerTransport == "scalar" && !separateOracle)
             throw new ReviewCheckException("Transport baseline requires the independent current-source protocol.");
+        if (validationMode is not ("separate" or "retained") || validationMode == "separate" && !separateOracle)
+            throw new ReviewCheckException("Original validation comparison requires independent current-source controls.");
         if (cpuWindowOnly && (!currentSchema || phase != "home-stages") || separateOracle && !cpuWindowOnly)
             throw new ReviewCheckException("CPU sampling requires the explicit current-schema publication scope.");
         var local = services.GetRequiredService<ILocalizationService>();
@@ -975,7 +978,9 @@ internal static partial class AndroidHomeReview
                             useDerivedTransport: ledgerTransport == "blocks") : null;
                         var reads = new WindowReadFactory(isolatedReads ?? data.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
                         var store = new ZananceStore(reads, data.GetRequiredService<TimeProvider>(), data.GetRequiredService<ICommercialWriteAccessSource>());
-                        var vm = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store);
+                        IHomeReadOperationSource homeReads = validationMode == "separate"
+                            ? new SeparateHomeReadOperationSource(store) : new HomeReadOperationSource(store);
+                        var vm = ActivatorUtilities.CreateInstance<HomeViewModel>(services, store, homeReads);
                         // D-320: observe existing public publication boundaries before native bindings subscribe.
                         // No timing hook, financial algorithm or observer is introduced into the production app.
                         var clock = new Stopwatch(); var marks = new List<object>();
@@ -1064,8 +1069,15 @@ internal static partial class AndroidHomeReview
                                 if (ledgerTransport == "scalar" ? isolatedReads.CompleteScalarReads < 1 || isolatedReads.DerivedTransportReads != 0
                                     : isolatedReads.DerivedBlockReads < 1 || isolatedReads.CompleteScalarReads != 0)
                                     throw new ReviewCheckException("Requested transport was not the actual complete Home read path.");
-                                transportSamples.Add(new { Sample = sample, LedgerTransport = ledgerTransport,
-                                    isolatedReads.CompleteScalarReads, isolatedReads.DerivedBlockReads, isolatedReads.DerivedTransportReads });
+                                var trace = isolatedReads.CaptureReadEvents();
+                                if (trace.DroppedEvents != 0 || trace.FirstTimestampTicks <= 0
+                                    || !trace.Events.Any(value => value.Phase == "command-executed")
+                                    || trace.OwnedContexts != (validationMode == "retained" ? 1 : 2))
+                                    throw new ReviewCheckException("Owned bounded read observations are incomplete; retain the same publication.");
+                                transportSamples.Add(new { Sample = sample, LedgerTransport = ledgerTransport, ValidationMode = validationMode,
+                                    isolatedReads.CompleteScalarReads, isolatedReads.DerivedBlockReads, isolatedReads.DerivedTransportReads,
+                                    ReadEvents = new { trace.OwnedContexts, trace.DroppedEvents, trace.FirstTimestampTicks,
+                                        Events = trace.Events.Select(value => new { value.Context, value.Phase, value.Milliseconds }).ToArray() } });
                             }
                             samples.Add(clock.Elapsed.TotalMilliseconds); gaps.Add(largest);
                             if (phase == "home-stages") lock (marks) notificationSamples.Add(new { Sample = sample, Marks = marks.ToArray() });
@@ -1086,7 +1098,7 @@ internal static partial class AndroidHomeReview
                         ActualNativeLayout = true, OriginalWindowFocusRequired = true, NoSynchronousSettingsRead = true,
                         FullOracleReferenceReleased = cpuWindowOnly && isolatedOracle is null, UncollectedOracleAtPublicationStart = uncollectedOracle,
                         NoFullOracleReadBeforePublication = separateOracle, ObservationProcessId = Environment.ProcessId,
-                        LedgerTransport = ledgerTransport, ActualTransportSamples = transportSamples,
+                        LedgerTransport = ledgerTransport, ValidationMode = validationMode, ActualTransportSamples = transportSamples,
                         SeparateOraclePreparationProcessId = isolatedOracle?.PreparedProcessId });
                     await File.WriteAllTextAsync(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json"), JsonSerializer.Serialize(results), ct);
                     _balanceEvidence = null;

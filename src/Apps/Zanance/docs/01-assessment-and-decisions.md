@@ -10004,3 +10004,35 @@ D-540 failed-case continuation while the phone gate remains: select only the eig
 cases lacking any successful terminal outcome. Actual strict rebuild and all eight cases, including
 fixture disposal, pass; exact result-name comparison excludes previously successful/unrelated
 cases. Preserve initial failure receipts; no native financial commands or full-suite claim.
+
+### D-541 - Qualified and adopted bounded Home publication connection
+
+Retain one original protected factory context only through the covered Home publication, with
+separate snapshot and fresh validation transactions. Keep original file/access/input/revision/
+definition checks, KDF and financial formulas. Dispose before period/source retry or uncovering;
+the old context must not block pending maintenance while another factory read waits. Legacy
+APIs retain their separate scopes and share unchanged query/validation bodies.
+
+One independent-only numeric observer isolates owned EF contexts without SQL/data/key logging.
+Same-APK opposite-order Samsung100000-row pairs measure3518.1483to3310.2394ms and3443.1894to3261.4481ms,
+5.9096%/5.2783% improvement with complete original source/financial/native/presentation equality.
+Separate scalar controls finish in other proven-dead PIDs; no financial seed/key/command repeats.
+Sixteen distinct selected cases pass (13new/3affected original), strict Windows/full Android builds
+are clean, and384 actual packaged AOT/408ELF/static16KiB/ZIP/v2v3/privacy checks pass. Preserve two
+initial test-serialization failures and the separate artifact-path identity refusal; an aligned
+package restores exact qualified Data/Core image equality without replaying successful cohorts.
+Original independent caller retirement/startup/stopped state is restored. The final signed a2d98e
+Main install succeeds once. Main a2d98e/PID29566 preserves Home979/all141 public states, all three original profiles and
+exact OS settings after the one signed no-reset upgrade and authorized normal Resume. Original
+independent caller bytes/UID/storage/grants/stopped state match; ten new owned hash-matched XMLs
+are removed. The earlier foreground refusal and17997 external task removal remain recorded.
+Two newly owned independent x64 compatibility fixtures qualify nonempty100000-row block reads
+and actual original Home publication on API24/4096-byte pages and API35/simulated16384-byte
+userspace pages over a4096-byte kernel. Each fixture is seeded once with110000 reference/tenfold
+rows; scalar controls finish in a separate proven-dead PID before the one native publication.
+Complete original schema/typed-row/financial/native guards pass with one context, one block read,
+zero scalar reads and no post-setup financial command/key/seed replay. Both initially absent
+packages are removed and only the two owned AVDs are stopped, preserving their settings.
+This is not hardware16KiB, whole-platform, startup, stability or two-second acceptance.
+No two-second/stability/accessibility/platform/release completion claim.
+[Complete evidence](quality/home-publication-connection.md).

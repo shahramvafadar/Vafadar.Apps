@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Avoid opening the encrypted Home file twice during one refresh, while retaining fresh final validation of its original data (D-541).
+
 - Speed up Home history loading while preserving every transaction and the original financial calculations (D-540).
 
 - Narrowed retained Samsung Home profiling to its actual read/publication/layout windows; source and financial data stay unchanged, while the two-second target remains open (D-537).

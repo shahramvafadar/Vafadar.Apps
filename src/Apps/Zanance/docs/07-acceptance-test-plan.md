@@ -6619,3 +6619,30 @@ D-540 failed-case continuation while the phone gate remains: select only the eig
 cases lacking any successful terminal outcome. Actual strict rebuild and all eight cases, including
 fixture disposal, pass; exact result-name comparison excludes previously successful/unrelated
 cases. Preserve initial failure receipts; no native financial commands or full-suite claim.
+
+### D-541 - Operation-local Home publication acceptance
+
+Eight new real-SQLite session cases and four actual non-UI application-flow cases pass for context
+reuse, fresh writer visibility, original input/authority refusal, cancellation, maintenance drain,
+period changes and same-file reread under the original cover. One owned-only diagnostic case and
+three affected original authority/file cases also pass:16 distinct selected receipts,13new case
+variants, no full-suite or unrelated rerun. Initial two fixture-serialization failures are preserved
+and only those cases continue after correction.
+
+Four native original100000-row publications preserve complete source/financial/recent/presentation
+equality and actual one-versus-two context counts. Opposite pairs improve5.9096%/5.2783%; the target
+of two seconds remains unmet. Separate control PIDs finish and die before measurements.
+Main a2d98e/PID29566 preserves Home979/all141 public states, all three original profiles and
+exact OS settings after the one signed no-reset upgrade and authorized normal Resume. Original
+independent caller bytes/UID/storage/grants/stopped state match; ten new owned hash-matched XMLs
+are removed. The earlier foreground refusal and17997 external task removal remain recorded.
+Two newly owned independent x64 compatibility fixtures qualify nonempty100000-row block reads
+and actual original Home publication on API24/4096-byte pages and API35/simulated16384-byte
+userspace pages over a4096-byte kernel. Each fixture is seeded once with110000 reference/tenfold
+rows; scalar controls finish in a separate proven-dead PID before the one native publication.
+Complete original schema/typed-row/financial/native guards pass with one context, one block read,
+zero scalar reads and no post-setup financial command/key/seed replay. Both initially absent
+packages are removed and only the two owned AVDs are stopped, preserving their settings.
+This is not hardware16KiB, whole-platform, startup, stability or two-second acceptance.
+No general ANR/crash, spoken reader, device, iOS or release acceptance follows from these cases.
+[Full qualification](quality/home-publication-connection.md).

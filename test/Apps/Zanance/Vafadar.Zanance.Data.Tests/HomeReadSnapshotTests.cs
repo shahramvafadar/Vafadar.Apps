@@ -50,6 +50,127 @@ public sealed class HomeReadSnapshotTests : IDisposable
         await db.SaveChangesAsync(Ct);
     }
 
+    /// <summary>A publication owns one context but holds no SQLite transaction while its model is projected.</summary>
+    [Fact]
+    public async Task Scoped_home_session_reuses_one_context_and_releases_maintenance_on_disposal()
+    {
+        var provider = Create(); await SeedAsync(provider);
+        var counted = new CountedFactory(Factory(provider));
+        var store = Store(counted, provider.GetRequiredService<ICommercialWriteAccessSource>());
+        var session = await store.BeginHomeReadSessionAsync(Today, 0, Ct);
+        try
+        {
+            Assert.Equal(1, counted.Created);
+            Assert.Equal(2, session.Snapshot.Entries.Count);
+            Assert.Equal(-123, Assert.Single(session.Snapshot.QuickResources.Accounts).OpeningBalance);
+            await session.ValidateAsync(Ct);
+            Assert.Equal(1, counted.Created);
+            var gate = provider.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>().Access;
+            using var timeout = CancellationTokenSource.CreateLinkedTokenSource(Ct);
+            timeout.CancelAfter(TimeSpan.FromSeconds(5));
+            var maintenance = gate.AcquireExclusiveAsync(timeout.Token);
+            Assert.False(maintenance.IsCompleted);
+            await session.DisposeAsync();
+            using var owner = await maintenance;
+            gate.RequireDrainedOwner(owner);
+            await session.DisposeAsync();
+            await Assert.ThrowsAsync<ObjectDisposedException>(() => session.ValidateAsync(Ct));
+        }
+        finally { await session.DisposeAsync(); }
+    }
+
+    /// <summary>A separate writer commits between projection and validation; the retained connection sees a fresh revision.</summary>
+    [Theory, InlineData(false), InlineData(true)]
+    public async Task Scoped_home_session_rejects_committed_financial_or_definition_changes(bool definition)
+    {
+        var provider = Create(); await SeedAsync(provider);
+        var store = provider.GetRequiredService<ZananceStore>();
+        await using var session = await store.BeginHomeReadSessionAsync(Today, 0, Ct);
+        var originalEntries = JsonSerializer.Serialize(session.Snapshot.Entries);
+        var originalAccounts = JsonSerializer.Serialize(session.Snapshot.QuickResources.Accounts);
+        await using (var writer = await Factory(provider).CreateDbContextAsync(Ct))
+        {
+            if (definition) (await writer.Accounts.SingleAsync(Ct)).Name = "Changed while projecting";
+            else (await writer.Entries.SingleAsync(row => row.Kind == EntryKind.Expense, Ct)).Amount = 789;
+            await writer.SaveChangesAsync(Ct);
+        }
+        await Assert.ThrowsAsync<HomeSnapshotSupersededException>(() => session.ValidateAsync(Ct));
+        Assert.Equal(originalEntries, JsonSerializer.Serialize(session.Snapshot.Entries));
+        Assert.Equal(originalAccounts, JsonSerializer.Serialize(session.Snapshot.QuickResources.Accounts));
+    }
+
+    /// <summary>Connection reuse never bypasses the original in-memory input stamp.</summary>
+    [Fact]
+    public async Task Scoped_home_session_refuses_mutated_original_inputs()
+    {
+        var provider = Create(); await SeedAsync(provider);
+        await using var session = await provider.GetRequiredService<ZananceStore>().BeginHomeReadSessionAsync(Today, 0, Ct);
+        Assert.Single(session.Snapshot.QuickResources.Accounts).Name = "Unreviewed memory edit";
+        var error = await Assert.ThrowsAsync<InvalidOperationException>(() => session.ValidateAsync(Ct));
+        Assert.Contains("changed in memory", error.Message, StringComparison.Ordinal);
+    }
+
+    /// <summary>A cancelled validation does not retire the operation or leave a transaction blocking a subsequent writer.</summary>
+    [Fact]
+    public async Task Scoped_home_session_validation_cancellation_preserves_disposable_ownership()
+    {
+        var provider = Create(); await SeedAsync(provider);
+        var store = provider.GetRequiredService<ZananceStore>();
+        await using var session = await store.BeginHomeReadSessionAsync(Today, 0, Ct);
+        using var cancelled = new CancellationTokenSource(); cancelled.Cancel();
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => session.ValidateAsync(cancelled.Token));
+        await session.ValidateAsync(Ct);
+        await using var writer = await Factory(provider).CreateDbContextAsync(Ct);
+        (await writer.Accounts.SingleAsync(Ct)).Name = "Writer remains available";
+        await writer.SaveChangesAsync(Ct);
+        await Assert.ThrowsAsync<HomeSnapshotSupersededException>(() => session.ValidateAsync(Ct));
+    }
+
+    /// <summary>A cancelled begin cannot leave a context lease blocking exclusive maintenance.</summary>
+    [Fact]
+    public async Task Scoped_home_session_failed_begin_releases_original_factory_lease()
+    {
+        var provider = Create();
+        using var cancelled = new CancellationTokenSource(); cancelled.Cancel();
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
+            provider.GetRequiredService<ZananceStore>().BeginHomeReadSessionAsync(Today, 0, cancelled.Token));
+        var gate = provider.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>().Access;
+        using var timeout = CancellationTokenSource.CreateLinkedTokenSource(Ct);
+        timeout.CancelAfter(TimeSpan.FromSeconds(5));
+        using var owner = await gate.AcquireExclusiveAsync(timeout.Token);
+        gate.RequireDrainedOwner(owner);
+    }
+
+    /// <summary>A connection kept for projection cannot retain work rights after their original source is retired.</summary>
+    [Fact]
+    public async Task Scoped_home_session_refuses_retired_original_authority()
+    {
+        var provider = Create(); await SeedAsync(provider); var access = new AccessSource();
+        await using var session = await Store(Factory(provider), access).BeginHomeReadSessionAsync(Today, 0, Ct);
+        access.Current = new(provider.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>().Path,
+            new(ProductPlan.Free, new(EntitlementScopeKind.PersonalProfile, Guid.NewGuid())));
+        await Assert.ThrowsAsync<InvalidOperationException>(() => session.ValidateAsync(Ct));
+    }
+
+    /// <summary>Cancellation after an actual reader command closes the failed session's transaction and connection.</summary>
+    [Fact]
+    public async Task Scoped_home_session_cancelled_reader_never_leaves_a_partial_session_or_sqlite_lock()
+    {
+        var provider = Create(); await SeedAsync(provider);
+        using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(Ct);
+        var path = provider.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>().Path;
+        var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite($"Data Source={path};Pooling=False")
+            .UseModel(ZananceDbContextModel.Instance).AddInterceptors(new CancelEntryRead(cancellation)).Options;
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
+            Store(new DirectFactory(options), provider.GetRequiredService<ICommercialWriteAccessSource>())
+                .BeginHomeReadSessionAsync(Today, 0, cancellation.Token));
+        await using var connection = new Microsoft.Data.Sqlite.SqliteConnection(new Microsoft.Data.Sqlite.SqliteConnectionStringBuilder
+            { DataSource = path, Pooling = false, DefaultTimeout = 1 }.ToString());
+        await connection.OpenAsync(Ct);
+        using var exclusive = connection.CreateCommand(); exclusive.CommandText = "BEGIN EXCLUSIVE; ROLLBACK;";
+        await exclusive.ExecuteNonQueryAsync(Ct);
+    }
+
     /// <summary>Derived preparation retains actual scalar conversions and physical tie ordering across signed buckets.</summary>
     [Fact]
     public async Task Physical_ledger_blocks_match_the_complete_original_reader_without_writing()

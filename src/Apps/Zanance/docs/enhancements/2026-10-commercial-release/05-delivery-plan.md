@@ -4848,3 +4848,24 @@ OS, hash-clean two XMLs, remove53992832 duplicate bytes, perform scoped cleans a
 Residual native cache131261554 bytes is inventoried; earlier cleanup refusals remain untouched.
 D-538 CI/CodeQL succeed and its one-shot is consumed/deleted. General stability/accessibility/
 platform/release gates and the broader goal remain open. [Complete evidence and scope](../../quality/separate-process-home-oracle.md).
+
+### D-541 - Current performance delivery boundary
+
+The bounded Home connection candidate passes two opposite-order native/source comparisons and
+16 distinct selected cases; complete package checks pass after exact dependency-image alignment.
+Main a2d98e/PID29566 preserves Home979/all141 public states, all three original profiles and
+exact OS settings after the one signed no-reset upgrade and authorized normal Resume. Original
+independent caller bytes/UID/storage/grants/stopped state match; ten new owned hash-matched XMLs
+are removed. The earlier foreground refusal and17997 external task removal remain recorded.
+Two newly owned independent x64 compatibility fixtures qualify nonempty100000-row block reads
+and actual original Home publication on API24/4096-byte pages and API35/simulated16384-byte
+userspace pages over a4096-byte kernel. Each fixture is seeded once with110000 reference/tenfold
+rows; scalar controls finish in a separate proven-dead PID before the one native publication.
+Complete original schema/typed-row/financial/native guards pass with one context, one block read,
+zero scalar reads and no post-setup financial command/key/seed replay. Both initially absent
+packages are removed and only the two owned AVDs are stopped, preserving their settings.
+This is not hardware16KiB, whole-platform, startup, stability or two-second acceptance.
+Commit/push this verified batch and use one exact-head CI follow-up. Do not repeat accepted financial work, successful pairs
+or unrelated suites. The two-second target, wider stability/accessibility and external platform/
+provider/release gates remain unfinished; this batch does not complete the broader goal.
+[Evidence](../../quality/home-publication-connection.md).

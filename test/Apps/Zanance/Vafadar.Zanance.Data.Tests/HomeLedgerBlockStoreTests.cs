@@ -28,6 +28,40 @@ public sealed class HomeLedgerBlockStoreTests : IDisposable
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
     [Fact]
+    public async Task Read_timing_observes_only_owned_contexts_without_source_values_or_changing_transport()
+    {
+        var seeded = await SeedAsync(); await seeded.DisposeAsync();
+        var services = provider!;
+        using var measured = new IsolatedHomeReadFactory(services.GetRequiredService<IDbContextFactory<ZananceDbContext>>(),
+            TimeProvider.System, useDerivedTransport: true);
+        await using (var foreign = await services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct))
+            Assert.Equal(2, await foreign.Entries.CountAsync(Ct));
+        Assert.Empty(measured.CaptureReadEvents().Events);
+
+        await using (var read = await measured.CreateDbContextAsync(Ct))
+        {
+            Assert.True(read.CanUseHomeLedgerBlocks);
+            await using var transaction = await read.Database.BeginTransactionAsync(Ct);
+            Assert.Equal(2, (await ZananceStore.ReadCompleteHomeLedgerAsync(read, Ct)).Count);
+        }
+        var trace = measured.CaptureReadEvents();
+        Assert.Equal(1, trace.OwnedContexts); Assert.Equal(0, trace.DroppedEvents);
+        Assert.True(trace.FirstTimestampTicks > 0);
+        Assert.Contains(trace.Events, value => value.Phase == "connection-opening");
+        Assert.Contains(trace.Events, value => value.Phase == "connection-opened");
+        Assert.Contains(trace.Events, value => value.Phase == "command-executing");
+        Assert.Contains(trace.Events, value => value.Phase == "command-executed");
+        Assert.Contains(trace.Events, value => value.Phase == "connection-closed");
+        Assert.All(trace.Events, value => { Assert.Equal(1, value.Context); Assert.True(value.Milliseconds >= 0); });
+        Assert.Equal(trace.Events.OrderBy(value => value.Milliseconds), trace.Events);
+        var json = JsonSerializer.Serialize(trace);
+        Assert.DoesNotContain(services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>().Path, json, StringComparison.Ordinal);
+        Assert.DoesNotContain("SELECT", json, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("Entries", json, StringComparison.Ordinal);
+        Assert.Equal(1, measured.DerivedBlockReads); Assert.Equal(0, measured.CompleteScalarReads);
+    }
+
+    [Fact]
     public async Task Independent_candidate_observation_keeps_eligibility_and_proves_the_actual_block_read()
     {
         var seeded = await SeedAsync(); await seeded.DisposeAsync();

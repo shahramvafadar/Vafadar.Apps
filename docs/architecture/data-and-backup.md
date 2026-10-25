@@ -2735,3 +2735,14 @@ paths are observed. An explicit normal-empty-caller-only retirement may reverse 
 internal migrations to its actual old APK prefix after durable full source/memory proof. This is
 not product downgrade/recovery authority and never targets shipping Main or workload roots.
 [Qualification and remaining gates](../../src/Apps/Zanance/docs/quality/complete-ledger-read-blocks.md).
+
+### Bounded Home publication ownership (D-541)
+
+Home retains the original factory context only through one covered publication. The complete
+snapshot transaction ends before projection; final source/authority/input/definition validation
+uses a separate fresh SQLite transaction on that same connection. There is no global key cache,
+pooling/KDF change or skipped validation. Dispose before uncovering and before any period/source
+retry, including exceptions. Never wait for another factory context while retaining the old
+lease: pending exclusive maintenance must be able to drain it. Legacy public read/validate APIs
+keep their separate scoped contexts and share the unchanged original query/validation bodies.
+[Actual comparison and boundaries](../../src/Apps/Zanance/docs/quality/home-publication-connection.md).

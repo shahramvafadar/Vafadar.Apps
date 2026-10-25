@@ -1,4 +1,5 @@
 using System.Data.Common;
+using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -13,6 +14,7 @@ internal sealed class IsolatedHomeReadFactory(IDbContextFactory<ZananceDbContext
     private readonly List<(ZananceDbContext Captured, ZananceDbContext Reader)> captures = [];
     private readonly ScalarObserver observer = new();
     private readonly ReadAudit audit = new();
+    private readonly ReadEvents readEvents = new();
     private ILoggerFactory? logs;
     private readonly Lock gate = new();
     private bool disposed;
@@ -23,6 +25,15 @@ internal sealed class IsolatedHomeReadFactory(IDbContextFactory<ZananceDbContext
     internal int DerivedTransportReads => audit.DerivedReads;
     /// <summary>Gets actual completed payload-reader commands in candidate mode.</summary>
     internal int DerivedBlockReads => audit.BlockReads;
+
+    /// <summary>Copies bounded numeric events from owned readers only; SQL, source values, paths and keys are never retained.</summary>
+    internal ReadEventTrace CaptureReadEvents() => readEvents.Capture();
+
+    /// <summary>One monotonic observer-arrival mark, not a claim about the cause of an unobserved interval.</summary>
+    internal readonly record struct ReadEvent(int Context, string Phase, double Milliseconds);
+
+    /// <summary>Separates bounded diagnostic observations from original data or financial controls.</summary>
+    internal sealed record ReadEventTrace(int OwnedContexts, int DroppedEvents, long FirstTimestampTicks, ReadEvent[] Events);
 
     /// <inheritdoc />
     public ZananceDbContext CreateDbContext() => Wrap(original.CreateDbContext());
@@ -45,6 +56,7 @@ internal sealed class IsolatedHomeReadFactory(IDbContextFactory<ZananceDbContext
                 var builder = new DbContextOptionsBuilder<ZananceDbContext>(options).UseLoggerFactory(logs);
                 if (!useDerivedTransport) builder.AddInterceptors(observer);
                 var reader = new ZananceDbContext(builder.Options, time);
+                readEvents.Own(reader);
                 captures.Add((captured, reader)); return reader;
             }
         }
@@ -66,6 +78,7 @@ internal sealed class IsolatedHomeReadFactory(IDbContextFactory<ZananceDbContext
             disposed = true;
             foreach (var capture in captures) capture.Captured.Dispose();
             captures.Clear();
+            readEvents.Dispose();
             logs?.Dispose();
         }
     }
@@ -81,6 +94,88 @@ internal sealed class IsolatedHomeReadFactory(IDbContextFactory<ZananceDbContext
         {
             if (command.CommandText.Trim() != "PRAGMA cache_size = -32768")
                 throw new InvalidOperationException("Independent scalar controls cannot execute financial or schema writes.");
+        }
+    }
+
+    /// <summary>Observes original EF events without adding an interceptor or changing transport eligibility.</summary>
+    private sealed class ReadEvents : IObserver<DiagnosticListener>, IObserver<KeyValuePair<string, object?>>, IDisposable
+    {
+        private const int MaximumEvents = 512;
+        private readonly Lock gate = new();
+        private readonly Dictionary<DbContext, int> contexts = new(ReferenceEqualityComparer.Instance);
+        private readonly List<ReadEvent> events = [];
+        private readonly List<IDisposable> sources = [];
+        private readonly IDisposable all;
+        private long first;
+        private int dropped;
+        private bool disposed;
+
+        internal ReadEvents() => all = DiagnosticListener.AllListeners.Subscribe(this);
+
+        internal void Own(DbContext context)
+        {
+            lock (gate)
+            {
+                ObjectDisposedException.ThrowIf(disposed, this);
+                contexts.Add(context, contexts.Count + 1);
+            }
+        }
+
+        internal ReadEventTrace Capture()
+        {
+            lock (gate) return new(contexts.Count, dropped, first, events.ToArray());
+        }
+
+        void IObserver<DiagnosticListener>.OnNext(DiagnosticListener listener)
+        {
+            if (listener.Name != DbLoggerCategory.Name) return;
+            lock (gate)
+                if (!disposed) sources.Add(listener.Subscribe(this, name => Phase(name) is not null));
+        }
+
+        void IObserver<KeyValuePair<string, object?>>.OnNext(KeyValuePair<string, object?> item)
+        {
+            if (Phase(item.Key) is not { } phase || item.Value is not DbContextEventData { Context: { } context }) return;
+            lock (gate)
+            {
+                if (disposed || !contexts.TryGetValue(context, out var number)) return;
+                if (events.Count == MaximumEvents) { dropped++; return; }
+                var stamp = Stopwatch.GetTimestamp();
+                if (events.Count == 0) first = stamp;
+                events.Add(new(number, phase, Stopwatch.GetElapsedTime(first, stamp).TotalMilliseconds));
+            }
+        }
+
+        // These observers never format event payloads, exceptions, SQL or connection strings.
+        public void OnCompleted() { }
+        public void OnError(Exception error) { }
+
+        private static string? Phase(string name) => name switch
+        {
+            "Microsoft.EntityFrameworkCore.Database.Connection.ConnectionOpening" => "connection-opening",
+            "Microsoft.EntityFrameworkCore.Database.Connection.ConnectionOpened" => "connection-opened",
+            "Microsoft.EntityFrameworkCore.Database.Connection.ConnectionClosing" => "connection-closing",
+            "Microsoft.EntityFrameworkCore.Database.Connection.ConnectionClosed" => "connection-closed",
+            "Microsoft.EntityFrameworkCore.Database.Connection.ConnectionError" => "connection-error",
+            "Microsoft.EntityFrameworkCore.Database.Command.CommandExecuting" => "command-executing",
+            "Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted" => "command-executed",
+            "Microsoft.EntityFrameworkCore.Database.Command.CommandError" => "command-error",
+            _ => null
+        };
+
+        public void Dispose()
+        {
+            IDisposable[] detached;
+            lock (gate)
+            {
+                if (disposed) return;
+                disposed = true;
+                detached = sources.ToArray();
+                sources.Clear(); contexts.Clear();
+            }
+            // Listener registration has its own lock; detach outside ours to avoid lock-order inversion.
+            all.Dispose();
+            foreach (var source in detached) source.Dispose();
         }
     }
 

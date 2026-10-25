@@ -42,6 +42,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     private const int MaxSlices = 6;
 
     private readonly ZananceStore _store;
+    private readonly IHomeReadOperationSource _homeReads;
     /// <summary>Gets the actual reviewed template navigation source, independent of financial presentation.</summary>
     public TemplateNavigationViewModel TemplateNavigation { get; }
     private readonly Translator _translator;
@@ -61,7 +62,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     private readonly Vafadar.Backup.IBackupService _backup;
     private readonly SemaphoreSlim _loading = new(1, 1);
 
-    public HomeViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Receipts.ReceiptReadingSession receipts, Goals.GoalPresenter goalPresenter, Holdings.HoldingText holdingText, Vafadar.Backup.IBackupService backup, Interaction.IAppInteraction interaction, Presentation.UndoService undo)
+    public HomeViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, Vafadar.Zanance.App.Profiles.ProfileService profiles, Receipts.ReceiptReadingSession receipts, Goals.GoalPresenter goalPresenter, Holdings.HoldingText holdingText, Vafadar.Backup.IBackupService backup, Interaction.IAppInteraction interaction, Presentation.UndoService undo, IHomeReadOperationSource? homeReads = null)
     {
         Undo = undo; _undoAction = new(undo, interaction, LoadAsync);
         _backup = backup;
@@ -69,6 +70,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         _holdingText = holdingText;
         _goalPresenter = goalPresenter;
         _store = store;
+        _homeReads = homeReads ?? new HomeReadOperationSource(store);
         _receipts = receipts;
         _profiles = profiles;
         _translator = translator;
@@ -316,14 +318,14 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     {
         var today = Today;
         var culture = _localization.CurrentCulture;
-        var snapshot = await _store.GetHomeSnapshotAsync(today, PeriodIndex);
-        refresh.RequireOriginalFile(snapshot.DatabasePath);
-        // A period change while the worker reads is queued separately; never project its old budget as the new period.
-        while (snapshot.PeriodIndex != PeriodIndex)
-        {
-            snapshot = await _store.GetHomeSnapshotAsync(today, PeriodIndex);
-            refresh.RequireOriginalFile(snapshot.DatabasePath);
-        }
+        await HomePublicationReadLoop.RunAsync(_homeReads, today, () => PeriodIndex,
+            refresh.RequireOriginalFile, operation => ProjectHomeAsync(operation, today, culture));
+    }
+
+    /// <summary>Projects one complete packet while covered; the owning loop drains its connection before any retry.</summary>
+    private async Task<bool> ProjectHomeAsync(IHomeReadOperation operation, DateOnly today, System.Globalization.CultureInfo culture)
+    {
+        var snapshot = operation.Snapshot;
         var templateReview = snapshot.QuickResources;
         RequireCurrentPublication();
         var settings = templateReview.Settings ?? new ZananceSettings();
@@ -474,9 +476,9 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         LoadHoldings(snapshot, today);
         RequireCurrentPublication();
         HasAttention = UnreviewedCount > 0 || DueCount > 0 || ContractText is not null || ReimbursementText is not null || LowBalanceText is not null || GoalAttentionText is not null || ReviewText is not null || BackupText is not null;
-        await _store.ValidateHomeSnapshotAsync(snapshot);
+        await operation.ValidateAsync();
         RequireCurrentPublication();
-        if (snapshot.PeriodIndex != PeriodIndex) { await LoadCoreAsync(refresh); return; }
+        if (snapshot.PeriodIndex != PeriodIndex) return false;
         TemplateNavigation.Publish(templateReview);
         // Publish complete rows together: clearing first makes MAUI disconnect unchanged native template controls (D-353).
         var quickTemplates = TemplateNavigation.Items.Select(template =>
@@ -492,6 +494,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         CapturedHomeLayout = settings.HomeLayout;
         PresentingSnapshot?.Invoke();
         UpdateUndo();
+        return true;
     }
 
     // Remaining overall budget of the month, only when a budget exists (a missing budget is not zero, BUD-01).

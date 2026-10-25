@@ -2666,3 +2666,14 @@ concurrent-major scanning remains an unfixed observed fault, distinct from earli
 frames without an established common or independent cause. No unsupported GC/runtime replacement
 or unchanged shipping/financial/full-suite check belongs to this bounded investigation.
 [Actual samples, restoration and limits](../../src/Apps/Zanance/docs/quality/current-android-home-stages.md).
+
+### D-541 - Independent connection-lifetime comparison
+
+Use `review_current_validation_mode=separate|retained` only in the independent current-source
+protocol with `review_current_cpu_oracle=prepare|measure`; retain `review_current_ledger_transport=blocks`
+for this comparison. Both modes call actual production data/projection sources in one complete
+APK. Bind mode to the original premeasurement source/day/module fingerprint and observe actual
+two-versus-one contexts, not just requested flags. Never retrofit a missing mode onto old controls.
+Complete and prove each scalar-control process dead before its measurement, preserve successful
+receipts, and require opposite order. This is not a shipping feature flag or a key/KDF/runtime
+change. [Evidence and restoration](../../src/Apps/Zanance/docs/quality/home-publication-connection.md).

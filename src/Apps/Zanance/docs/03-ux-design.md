@@ -2629,3 +2629,11 @@ Eighteen retained-source Windows process-scale2 contexts/54 own-window images qu
 nonoverlapping contextual viewport without changing the design or shipping app. These observations
 are not actual Android OS scaling or spoken-reader acceptance.
 [Evidence and limits](quality/transactions-title-large-text.md).
+
+### D-541 - Covered Home read ownership
+
+Keep Home covered until its original final validation and operation disposal complete. A period
+or source retry drains the old connection before another read; file/authority/input refusals do
+not become stale actionable output. This changes neither visible layout nor financial formulas.
+The compact title Add action and contextual rows retain their existing ownership/geometry.
+[Measured qualification](quality/home-publication-connection.md).
