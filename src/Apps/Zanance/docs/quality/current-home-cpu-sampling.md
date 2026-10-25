@@ -112,3 +112,7 @@ batch does not complete the broad delivery goal.
 D-535 subsequently performs a fresh original-adapter protected-source reopen after this maintenance;
 [its distinct four-source outcome](post-maintenance-source-retention.md) does not alter the earlier
 native death, sample limits or historical timing evidence.
+
+D-536 later uses the initially unused default-stripped profileable artifact as an unsampled original
+baseline for a new ordering experiment. [The native comparison](withdrawn-ledger-ordering.md) rejects
+the candidate; it does not repeat or reinterpret this earlier eight-second CPU capture.

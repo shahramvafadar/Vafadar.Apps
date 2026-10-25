@@ -68,3 +68,8 @@ Its one-shot request is consumed and schedule deleted; no second GET or workflow
 Evidence pointer: `Zanance-D535-current.txt`, original preflight/install/launch/source audit,
 3600 observer, final restoration, owned cleanup and existing exact signed artifacts.
 The broad delivery goal and its remaining acceptance gates stay open.
+
+D-536 subsequently finds the caller APK absent at a new cold boot despite retained package metadata;
+that new code-persistence failure does not retroactively turn this earlier immediate source audit into
+a boot guarantee. [Explicit orderly-shutdown/cold recovery and limits](withdrawn-ledger-ordering.md)
+retain both outcomes separately.

@@ -4769,3 +4769,23 @@ only the dedicated AVD stopped. No rebuild/unchanged suite or phone query; shipp
 This bounds independent source retention, not Main-key attestation or general platform/stability/
 performance/accessibility/release acceptance. D-533 CI/CodeQL succeed and its follow-up is consumed.
 [Actual read-only outcome and scope](../../quality/post-maintenance-source-retention.md).
+
+
+### D-536 - Withdraw reduced-allocation ledger ordering
+
+A stable-merge sort reduces host allocation but slows every large shape; a cached UTC/day/ordinal
+candidate reduces100000-row host sort allocation4000504 to1600168 bytes and passes thirty original
+object-order shapes plus seven affected SQLite regressions. Actual original3844/candidate4548
+API36/x64 cohorts retain all schema/typed-row/native/financial/premeasurement-byte controls with
+zero seed/key/financial replay. Candidate report observation continues the same live4548 after
+its first window expires. Large-pair ratios1.0035/1.0123/0.9659 show no stable material Home benefit;
+withdraw all candidate product code and keep shipping D-528 unchanged, without phone repetition.
+Preserve an initially missing installed APK after boot; signed restore, sync/orderly shutdown and
+one new cold boot then retain exact original UID10221/APK/stopped/grants, Main2880/Home0/all120 states
+and OS. Root cause/power-loss safety remain unproved. Retire only two completed inactive emulator
+callers' code after exact APK backup; retain their data/keys/UIDs. Fresh returned phone Main27069/
+Home979/all141 states remains untouched except read-only preflight/owned XML cleanup. Five emulator
+XMLs and one phone XML are hash-cleaned; standard cleans and111079544-byte duplicate removal pass.
+Automatic removal of251505548 bytes of three new output trees is refused before execution; no
+alternate deletion. Latest D-535 CI/CodeQL succeed. Product test count and wider acceptance stay open.
+[Actual comparison, storage recovery and limits](../../quality/withdrawn-ledger-ordering.md).
