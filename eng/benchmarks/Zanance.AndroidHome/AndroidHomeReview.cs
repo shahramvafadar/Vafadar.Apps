@@ -1077,7 +1077,7 @@ internal static partial class AndroidHomeReview
                                 transportSamples.Add(new { Sample = sample, LedgerTransport = ledgerTransport, ValidationMode = validationMode,
                                     isolatedReads.CompleteScalarReads, isolatedReads.DerivedBlockReads, isolatedReads.DerivedTransportReads,
                                     ReadEvents = new { trace.OwnedContexts, trace.DroppedEvents, trace.FirstTimestampTicks,
-                                        Events = trace.Events.Select(value => new { value.Context, value.Phase, value.Milliseconds }).ToArray() } });
+                                        Events = trace.Events.Select(value => new { value.Context, value.Phase, value.Kind, value.Milliseconds }).ToArray() } });
                             }
                             samples.Add(clock.Elapsed.TotalMilliseconds); gaps.Add(largest);
                             if (phase == "home-stages") lock (marks) notificationSamples.Add(new { Sample = sample, Marks = marks.ToArray() });

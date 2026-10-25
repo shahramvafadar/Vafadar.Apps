@@ -29,7 +29,7 @@ $cases = [Collections.Generic.List[object]]::new()
 function New-IdentityPacket([hashtable]$Changes) {
     $fields = @{ Comparison=$comparison; Day=$day; CapturedBeforeNativePublication=$true;
         DataModule=$data.ToString(); CoreModule=$core.ToString(); CallerModule=$caller.ToString();
-        LedgerTransport='blocks'; ValidationMode='retained' }
+        LedgerTransport='blocks'; ValidationMode='retained'; RuntimeProfile='concurrent-default' }
     foreach ($key in $Changes.Keys) {
         if ($null -eq $Changes[$key]) { $fields.Remove($key) } else { $fields[$key]=$Changes[$key] }
     }
@@ -56,6 +56,10 @@ Check-Identity 'Different comparison refuses' @{Comparison='22222222222222222222
 Check-Identity 'Different validation mode refuses' @{ValidationMode='separate'} $false $false
 Check-Identity 'Missing validation mode refuses' @{ValidationMode=$null} $false $false
 Check-Identity 'Unsupported validation mode refuses' @{ValidationMode='cached'} $false $false
+Check-Identity 'Different runtime profile refuses' @{RuntimeProfile='concurrent-nursery32'} $false $false
+Check-Identity 'Historical report still refuses changed runtime profile' @{RuntimeProfile='concurrent-nursery32'} $true $false
+Check-Identity 'Missing runtime profile refuses' @{RuntimeProfile=$null} $false $false
+Check-Identity 'Unsupported runtime profile refuses' @{RuntimeProfile='unknown'} $false $false
 Check-Identity 'Post-observation fingerprint refuses' @{CapturedBeforeNativePublication=$false} $false $false
 Check-Identity 'Different data module refuses' @{DataModule=$other.ToString()} $false $false
 Check-Identity 'Different Core module refuses' @{CoreModule=$other.ToString()} $false $false

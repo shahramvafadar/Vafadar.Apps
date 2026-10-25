@@ -3716,3 +3716,14 @@ never replace original full-source or final-validation guards with collection no
 The separately owned chart/brush path is unchanged. A nonempty ordinary independent Main cannot
 use the empty-Main migration retirement route: keep its compatible caller/schema and original
 backup instead of downgrading retained data to restore an older diagnostic APK.
+
+## D-543 - Shipping-equivalent native measurement inputs
+
+Select an independent caller's RID through its project-local ReviewRuntimeIdentifier option;
+do not pass a global RuntimeIdentifier that recompiles plain financial dependencies for another
+PE architecture. Before promoting diagnostic performance results, verify actual packaged managed
+Data/Core payload identity with the complete shipping APK, as well as each APK's own build witness.
+A passing source comparison, static alignment or another architecture's positive timing does not
+replace this gate. Retain refusals and qualify changed actual inputs without replaying accepted
+financial/seed/key commands or unchanged successful tests. Fixed query labels may describe only
+owned contexts; never retain SQL, parameters, source values, paths or keys in diagnostic traces.

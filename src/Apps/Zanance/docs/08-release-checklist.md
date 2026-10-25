@@ -3850,3 +3850,33 @@ readback, never reinstall or money. Wider two-second/stability/accessibility/pla
 Store/release gates and the broader goal remain open.
 No release gate is closed merely by lower notification count or static package alignment.
 [Evidence](quality/home-row-snapshot-publication.md).
+
+
+### D-543 - Withdraw the shipping-equivalent large-nursery candidate
+
+Keep production D-542 unchanged after a bounded independent32MiB concurrent-nursery experiment.
+Earlier ARM64-library opposite-order results improve9.577468%/12.014471%, but their financial
+images do not match shipping AnyCPU and are not promoted. A project-local diagnostic RID fixes
+that input mismatch; all206 managed images match between the new profiles and actual packaged
+Data/Core match the full shipping image. The shipping-equivalent pair improves3145.0593to
+2801.7544ms, but terminal PSS/RSS increases112823/171516KiB exceed the predeclared65536KiB
+ceilings. Reject without reverse/rescue pairs or relaxed criteria. These are post-audit residency
+observations, not peak-memory or exclusive GC-causality evidence. The provisional app-only runtime
+configuration is removed and no shipping Main install occurs; the two-second goal stays open.
+
+Retain the fixed owned-query labels without SQL/parameters/values/paths/keys, one new actual
+SQLite privacy case plus one affected original case, and17 actual compiled fingerprint cases
+including four new runtime-profile refusals. Independent strict builds/full signed static
+shipping witnesses pass; this is not a full-suite or product performance acceptance. No accepted
+financial/seed/key operation or unchanged successful suite repeats. Original caller restoration
+uses the unchanged guarded empty-Main retirement; broader goal/security/stability/accessibility/
+platform/provider/Store/release gates remain open.
+[Exact inputs, failures and qualification boundary](quality/concurrent-home-runtime-qualification.md).
+
+
+Final D-543 restoration: original b1d5 caller22417 reaches unchanged English onboarding and is
+proven stopped with UID10381/storage/grants intact. Main4090/D-542/Home979/all141 public states
+and OS match; seven owned hash-matched phone XMLs are removed. Ten owned bin/obj trees totaling
+4179578901 logical file bytes are cleaned. No Main installation/private key/database read or
+financial replay occurs. The finite batch closes without a shipped runtime/performance change;
+two-second and broader qualification/release gates remain open.

@@ -30,7 +30,7 @@ internal sealed class IsolatedHomeReadFactory(IDbContextFactory<ZananceDbContext
     internal ReadEventTrace CaptureReadEvents() => readEvents.Capture();
 
     /// <summary>One monotonic observer-arrival mark, not a claim about the cause of an unobserved interval.</summary>
-    internal readonly record struct ReadEvent(int Context, string Phase, double Milliseconds);
+    internal readonly record struct ReadEvent(int Context, string Phase, string Kind, double Milliseconds);
 
     /// <summary>Separates bounded diagnostic observations from original data or financial controls.</summary>
     internal sealed record ReadEventTrace(int OwnedContexts, int DroppedEvents, long FirstTimestampTicks, ReadEvent[] Events);
@@ -142,8 +142,39 @@ internal sealed class IsolatedHomeReadFactory(IDbContextFactory<ZananceDbContext
                 if (events.Count == MaximumEvents) { dropped++; return; }
                 var stamp = Stopwatch.GetTimestamp();
                 if (events.Count == 0) first = stamp;
-                events.Add(new(number, phase, Stopwatch.GetElapsedTime(first, stamp).TotalMilliseconds));
+                events.Add(new(number, phase, item.Value is CommandEventData command ? QueryKind(command.Command.CommandText) : "connection",
+                    Stopwatch.GetElapsedTime(first, stamp).TotalMilliseconds));
             }
+        }
+
+        /// <summary>Emits only fixed query-family labels, never SQL, parameters, names or values.</summary>
+        private static string QueryKind(string sql)
+        {
+            // EF's outer FROM begins at column zero; nested subqueries are indented. Unknown SQL stays unclassified.
+            if (!sql.StartsWith("SELECT ", StringComparison.Ordinal)) return "other";
+            var start = sql.IndexOf("\nFROM \"", StringComparison.Ordinal);
+            if (start < 0) return "other";
+            var table = sql.AsSpan(start + 7);
+            var end = table.IndexOf('"');
+            if (end < 0) return "other";
+            return table[..end] switch
+            {
+                "Accounts" => "accounts",
+                "Categories" => "categories",
+                "Settings" => "settings",
+                "Schedules" => "plans",
+                "OccurrenceStates" => "plan-states",
+                "Goals" => "goals",
+                "GoalContributionPlans" => "goal-plans",
+                "GoalAllocations" => "goal-allocations",
+                "Budgets" => "budgets",
+                "ExchangeRates" => "rates",
+                "AssetTypes" => "holding-types",
+                "AssetEvents" => "holding-events",
+                "QuickTemplates" => "templates",
+                "SavedFilters" => "filters",
+                _ => "other"
+            };
         }
 
         // These observers never format event payloads, exceptions, SQL or connection strings.

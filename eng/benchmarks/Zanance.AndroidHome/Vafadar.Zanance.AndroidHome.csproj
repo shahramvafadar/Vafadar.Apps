@@ -15,6 +15,8 @@
     <RunAOTCompilation>true</RunAOTCompilation>
     <PublishTrimmed>true</PublishTrimmed>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <!-- D-543: choose the caller RID locally so plain financial dependencies retain shipping AnyCPU inputs. -->
+    <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == '' and '$(ReviewRuntimeIdentifier)' != ''">$(ReviewRuntimeIdentifier)</RuntimeIdentifier>
     <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">android-x64</RuntimeIdentifier>
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>

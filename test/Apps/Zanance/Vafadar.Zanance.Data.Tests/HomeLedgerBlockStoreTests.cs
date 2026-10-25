@@ -61,6 +61,36 @@ public sealed class HomeLedgerBlockStoreTests : IDisposable
         Assert.Equal(1, measured.DerivedBlockReads); Assert.Equal(0, measured.CompleteScalarReads);
     }
 
+    /// <summary>Actual EF command families never copy query parameters, arbitrary SQL or foreign activity into the trace.</summary>
+    [Fact]
+    public async Task Owned_query_labels_keep_parameters_and_foreign_queries_outside_trace()
+    {
+        var seeded = await SeedAsync(); await seeded.DisposeAsync();
+        var services = provider!;
+        var factory = services.GetRequiredService<IDbContextFactory<ZananceDbContext>>();
+        using var measured = new IsolatedHomeReadFactory(factory, TimeProvider.System, useDerivedTransport: true);
+        await using (var foreign = await factory.CreateDbContextAsync(Ct))
+            _ = await foreign.Budgets.CountAsync(Ct);
+        Assert.Empty(measured.CaptureReadEvents().Events);
+
+        const string parameter = "Fictitious parameter with FROM \"Budgets\" and no retained value";
+        await using (var read = await measured.CreateDbContextAsync(Ct))
+        {
+            Assert.Empty(await read.Accounts.Where(account => account.Name == parameter).Select(account => account.Id).ToListAsync(Ct));
+            _ = await read.Database.ExecuteSqlRawAsync("SELECT 1", Ct);
+        }
+        var trace = measured.CaptureReadEvents();
+        Assert.Equal(1, trace.OwnedContexts); Assert.Equal(0, trace.DroppedEvents);
+        Assert.Contains(trace.Events, value => value.Phase == "command-executed" && value.Kind == "accounts");
+        Assert.Contains(trace.Events, value => value.Phase == "command-executed" && value.Kind == "other");
+        Assert.DoesNotContain(trace.Events, value => value.Kind == "budgets");
+        var json = JsonSerializer.Serialize(trace);
+        Assert.DoesNotContain(parameter, json, StringComparison.Ordinal);
+        Assert.DoesNotContain("SELECT", json, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("Budgets", json, StringComparison.Ordinal);
+        Assert.DoesNotContain(services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>().Path, json, StringComparison.Ordinal);
+    }
+
     [Fact]
     public async Task Independent_candidate_observation_keeps_eligibility_and_proves_the_actual_block_read()
     {

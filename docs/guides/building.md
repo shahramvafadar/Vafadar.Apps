@@ -2688,3 +2688,14 @@ CPU-control runs. Record install/storage/observer refusals without relabeling th
 failures. A nonempty independent Main retains its compatible caller/schema; the empty-Main
 retirement protocol must not be widened to roll it back.
 [Actual qualification and restoration](../../src/Apps/Zanance/docs/quality/home-row-snapshot-publication.md).
+
+## Independent Android RID and shipping-image identity (D-543)
+
+For Zanance.AndroidHome, select ARM64 with the project-local ReviewRuntimeIdentifier property
+instead of exporting RuntimeIdentifier globally. A global RID also recompiles plain Core/Data
+for that PE architecture, so source equality does not establish shipping AnyCPU payload identity.
+Keep each diagnostic APK's actual-built AOT witness before another build overwrites its objects.
+Compare original packaged Data/Core payloads with the complete signed shipping APK before using
+native results to justify adoption. Preserve mismatches, original fingerprints and failed gates;
+changed actual images require relevant qualification without repeating financial/seed/key work.
+The32MiB nursery experiment was withdrawn; ordinary production runtime settings remain unchanged.
