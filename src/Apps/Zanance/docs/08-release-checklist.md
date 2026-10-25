@@ -3584,3 +3584,12 @@ static checks and no-reset shipping upgrade24834->32206 pass. One original Main 
 all141 public tuples/three profiles/OS/timeout300000 remain; no Main financial writes or new managed
 cases. Retire the new helper and15 hash-matched XMLs. Full stability/accessibility/iOS/external
 release gates remain separate. See [complete runtime and package evidence](quality/transactions-title-add.md).
+
+### D-530 - Finite Transactions large-text evidence
+
+The changed title/action layout passes18 retained-source Windows process-scale2 contexts/54 images,
+with actual native text/viewport checks and no financial writes or seed replay. Original receipts,
+source and owner input desktop remain unchanged; strict Debug build/cleanup pass. Shipping D-528
+is unchanged. This is not actual Android OS200%, audible TalkBack, all accessibility, stability or
+release acceptance; physical D-529 and the broader qualification delivery remain pending.
+[Evidence](quality/transactions-title-large-text.md).

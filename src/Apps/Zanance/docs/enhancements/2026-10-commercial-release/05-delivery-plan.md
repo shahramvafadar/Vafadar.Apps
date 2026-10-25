@@ -4686,3 +4686,12 @@ static checks and no-reset shipping upgrade24834->32206 pass. One original Main 
 all141 public tuples/three profiles/OS/timeout300000 remain; no Main financial writes or new managed
 cases. Retire the new helper and15 hash-matched XMLs. Full stability/accessibility/iOS/external
 release gates remain separate. See [complete runtime and package evidence](../../quality/transactions-title-add.md).
+
+### D-530 - Independent large-text work during the phone turn
+
+The retained D-528 source passes only the new Windows process-scale2 Transactions title/action
+contexts:18 cases/54 images, no original-size replay, seed or financial command. Original source/
+receipts/input desktop match and strict build/cleanup pass. Keep this host subgate distinct from
+actual Android OS200%/speech and physical D-529, which resumes only after explicit phone return.
+Deliver this finite host subgate independently with its own commit/push and one delayed exact-head
+CI. Keep physical D-529 and the broader qualification delivery unfinished. [Evidence](../../quality/transactions-title-large-text.md).

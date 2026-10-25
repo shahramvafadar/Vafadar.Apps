@@ -5658,3 +5658,13 @@ static checks and no-reset shipping upgrade24834->32206 pass. One original Main 
 all141 public tuples/three profiles/OS/timeout300000 remain; no Main financial writes or new managed
 cases. Retire the new helper and15 hash-matched XMLs. Full stability/accessibility/iOS/external
 release gates remain separate. See [complete runtime and package evidence](../../quality/transactions-title-add.md).
+
+### D-530 - Retained Transactions title large-text subgate
+
+While physical D-529 waits for explicit phone return, the completed D-528 Windows source qualifies
+18 new process-scale2 contexts/54 own-window images in en/fa/de, two themes and360/412/1280. Full
+native title/ratio2/height, right Add and nonoverlapping contextual actions pass with unchanged
+accounts/entries/settings/plans/original receipts and no seed/financial command. Strict Debug build,
+PID19056/exit0, input-desktop preservation and isolated cleanup pass. Deliver the finite host subgate
+independently; physical D-529, shipping D-528 and general OS/audible/stability/release gates stay
+unchanged. [Evidence](../../quality/transactions-title-large-text.md).

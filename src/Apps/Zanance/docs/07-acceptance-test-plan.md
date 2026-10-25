@@ -6396,3 +6396,12 @@ static checks and no-reset shipping upgrade24834->32206 pass. One original Main 
 all141 public tuples/three profiles/OS/timeout300000 remain; no Main financial writes or new managed
 cases. Retire the new helper and15 hash-matched XMLs. Full stability/accessibility/iOS/external
 release gates remain separate. See [complete runtime and package evidence](quality/transactions-title-add.md).
+
+### D-530 - Changed Transactions title at Windows process scale2
+
+Eighteen new en/fa/de/Light-Dark/360-412-1280 populated/empty/bulk contexts yield54 own-window images
+and native full-title/ratio2/height/viewport observations. Original source rows/settings/plans and
+D-528 receipts match, PID19056 exits0 and Default input desktop is unchanged. No financial preparation/
+commands, new managed cases or original normal-size replay. This named Windows layout subgate passes;
+real OS scaling, Android/speech/all-controls/stability/platform and release acceptance remain open.
+[Exact source and native evidence](quality/transactions-title-large-text.md).

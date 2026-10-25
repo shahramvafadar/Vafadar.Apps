@@ -9770,3 +9770,17 @@ static checks and no-reset shipping upgrade24834->32206 pass. One original Main 
 all141 public tuples/three profiles/OS/timeout300000 remain; no Main financial writes or new managed
 cases. Retire the new helper and15 hash-matched XMLs. Full stability/accessibility/iOS/external
 release gates remain separate. See [complete runtime and package evidence](quality/transactions-title-add.md).
+
+### D-530 - Retained Transactions title at double-size Windows text
+
+Close only the changed layout's Windows process-local large-text subgate while the Samsung is on
+its authorized other-project turn. Reuse the completed D-528 independent source before its seed
+branch, with separate scale2 observations and unchanged original receipts. Eighteen new en/fa/de,
+Light/Dark,360/412/1280 contexts produce54 own-window images/native title/viewport checks. Actual
+ratio2/full untrimmed title/allocated height, right48-unit Add, no bottom Add row and nonoverlapping
+contextual bulk actions pass; original accounts/entries/settings/plans match. PID19056 exits0;
+Default input desktop is unchanged, strict Debug build/cleanup have zero warnings/errors. No financial
+preparation/commands, managed cases, OS setting change or Android/ordinary matrix replay. Shipping
+D-528 is unchanged. Deliver this finite host subgate independently; separate physical D-529 and actual Android
+OS200%, audible reader, full accessibility/stability/platform/release gates are not accepted.
+See [source, native observations and boundaries](quality/transactions-title-large-text.md).

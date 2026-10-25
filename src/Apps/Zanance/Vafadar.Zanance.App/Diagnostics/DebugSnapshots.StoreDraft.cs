@@ -29,7 +29,9 @@ internal static partial class DebugSnapshots
         if (!GetUserObjectInformationW(GetThreadDesktop(GetCurrentThreadId()), 2, desktop, 512, out _)
             || !string.Equals(desktop.ToString(), "ZananceStore_" + run, StringComparison.OrdinalIgnoreCase))
             throw StoreDraftRefusal(run, "desktop");
-        var repair = Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REPAIR") == "en-budget";
+        var repairName = Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REPAIR");
+        var headerLargeText = repairName == "transactions-header-large-text";
+        var repair = repairName == "en-budget" || headerLargeText;
         if (repair)
         {
             using var previous = JsonDocument.Parse(File.ReadAllText(Path.Combine(expectedOutput, "isolation.json")));
@@ -38,7 +40,9 @@ internal static partial class DebugSnapshots
                 || !previous.RootElement.GetProperty("EmptyBeforeStartup").GetBoolean()
                 || completed.RootElement.GetProperty("Package").GetString() != AppInfo.Current.PackageName
                 || !completed.RootElement.GetProperty("FinancialRowsUnchangedAfterSeeding").GetBoolean()
-                || Directory.Exists(Path.Combine(expectedOutput, "repair-en-budget")))
+                || Directory.Exists(Path.Combine(expectedOutput, headerLargeText ? "transactions-header-large-text" : "repair-en-budget"))
+                || headerLargeText && (completed.RootElement.GetProperty("Captures").GetArrayLength() != 18
+                    || Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_FONT_SCALE") != "2"))
                 throw StoreDraftRefusal(run, "repair");
         }
         var data = Path.GetFullPath(FileSystem.AppDataDirectory);
@@ -72,11 +76,19 @@ internal static partial class DebugSnapshots
     /// <summary>Renders the current application in every existing language using one isolated fictitious database.</summary>
     private static async Task CaptureStoreDraftAsync(App app, IServiceProvider services, string folder)
     {
-        var isolation = Path.Combine(folder, "isolation.json");
+        var headerLargeText = Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REPAIR") == "transactions-header-large-text";
+        var isolation = Path.Combine(headerLargeText ? Path.GetDirectoryName(folder)! : folder, "isolation.json");
         if (!File.Exists(isolation)) throw new IOException("Verified store draft startup required.");
         var local = services.GetRequiredService<ILocalizationService>();
         var theme = services.GetRequiredService<ThemeService>();
         var store = services.GetRequiredService<ZananceStore>();
+        if (headerLargeText)
+        {
+            // D-530: the completed original source is already populated. This continuation must
+            // return before the onboarding/financial seed path, with separate scaled observations.
+            await ReviewTransactionsAddHeaderAsync(app, services, folder, largeText: true);
+            return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REPAIR") == "en-budget")
         {
             var before = JsonSerializer.Serialize(await store.GetEntriesAsync());

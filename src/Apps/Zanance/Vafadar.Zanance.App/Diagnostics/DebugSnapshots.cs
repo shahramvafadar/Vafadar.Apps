@@ -74,6 +74,10 @@ internal static partial class DebugSnapshots
         {
             return;
         }
+#if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_STORE_DRAFT_REPAIR") == "transactions-header-large-text")
+            folder = Path.Combine(folder, "transactions-header-large-text");
+#endif
 
         // Phone-like size so that the layout matches the primary target; VAFADAR_WINDOW_SIZE (e.g. 1280x820) checks wide windows.
         SetSize(window);

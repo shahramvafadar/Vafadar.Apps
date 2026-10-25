@@ -2614,3 +2614,24 @@ continuation requires that exact original run's own successful build artifacts a
 process. Once terminal observations exist, repair only an incorrect observer against those receipts;
 never relaunch successful UI or financial preparation to repair a report. Android uses the separate
 original caller described in [the qualification report](../../src/Apps/Zanance/docs/quality/transactions-title-add.md).
+
+
+## D-530 - Retained Transactions large-text review
+
+Build an isolated Debug Windows executable with the exact completed original store-review identity
+(`pro.vafadar.zanance.storepreview.<first12-of-run>`) and ContinuousIntegrationBuild=true. Retain its
+original isolation/complete/process/build receipts. Then run only the new scale2 boundary:
+
+```powershell
+./eng/scripts/Review-TransactionsHeaderLargeText.ps1 -RunId <completed-original-run> -BuildRoot <isolated-build-root>
+```
+
+Only an already completed eighteen-context source with no live original process is admitted. The
+new review returns before original financial seeding, uses the original private non-input desktop
+and app data, and stores54 new own-window images/native observations in a distinct subfolder.
+Original normal-size receipts remain byte-identical. The Debug font manager changes only this
+process; actual system scale is read, not written. A timeout retains the original scaled PID and
+receipts; never relaunch the script to repair an observation. Validate the actual terminal package/
+PID/18 contexts/54 images/source/desktop before cleaning the isolated build. No Android or other
+passing cohort needs replay for these DEBUG/WINDOWS-only diagnostic changes.
+[Actual evidence](../../src/Apps/Zanance/docs/quality/transactions-title-large-text.md).

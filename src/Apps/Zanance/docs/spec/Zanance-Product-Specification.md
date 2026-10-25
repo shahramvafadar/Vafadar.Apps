@@ -9201,3 +9201,12 @@ static checks and no-reset shipping upgrade24834->32206 pass. One original Main 
 all141 public tuples/three profiles/OS/timeout300000 remain; no Main financial writes or new managed
 cases. Retire the new helper and15 hash-matched XMLs. Full stability/accessibility/iOS/external
 release gates remain separate. See [complete runtime and package evidence](../quality/transactions-title-add.md).
+
+### D-530 - Transactions title large-text subgate
+
+The existing D-528 fictitious source passes18 new Windows process-scale2 contexts/54 own-window
+images with native full-title/height/ratio2, original right Add and nonoverlapping contextual actions.
+Accounts/entries/settings/plans and original receipts remain unchanged; no seed/financial command,
+new managed case or shipping change. Strict Debug build and isolated cleanup pass. This finite host
+subgate is delivered independently; physical D-529 and actual Android OS scaling/audible acceptance remain separate.
+[Evidence](../quality/transactions-title-large-text.md).

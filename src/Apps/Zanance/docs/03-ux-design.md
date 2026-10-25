@@ -2620,3 +2620,12 @@ static checks and no-reset shipping upgrade24834->32206 pass. One original Main 
 all141 public tuples/three profiles/OS/timeout300000 remain; no Main financial writes or new managed
 cases. Retire the new helper and15 hash-matched XMLs. Full stability/accessibility/iOS/external
 release gates remain separate. See [complete runtime and package evidence](quality/transactions-title-add.md).
+
+
+### D-530 - Transactions title at double-size review text
+
+Retain native scaling and let the title grow/wrap beside the fixed original48-unit right Add target.
+Eighteen retained-source Windows process-scale2 contexts/54 own-window images qualify the title and
+nonoverlapping contextual viewport without changing the design or shipping app. These observations
+are not actual Android OS scaling or spoken-reader acceptance.
+[Evidence and limits](quality/transactions-title-large-text.md).
