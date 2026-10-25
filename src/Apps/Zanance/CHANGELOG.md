@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Keep the existing Home calculations after a faster experimental scheduling change exceeded its predeclared memory-residency limit; no financial data or app behavior changes (D-545).
+
 - Keep the current Android runtime settings after an independent Home experiment exceeded its original memory-growth limit; improve diagnostic input identity without changing financial data (D-543).
 
 - Refresh Home period totals, upcoming plans, pinned goals and recent entries as complete row sets instead of clearing and rebuilding them one item at a time (D-542).

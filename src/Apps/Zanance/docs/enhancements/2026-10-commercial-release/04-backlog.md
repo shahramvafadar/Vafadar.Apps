@@ -5984,3 +5984,30 @@ Main4090/D-542/Home979/all141 public states/OS are restored. Three owned hash-ma
 16 completed bin/obj trees and two duplicate audit images are removed. Two-second, general
 security/stability/accessibility/platform/provider/Store/release and the broader goal stay open.
 [Exact candidate, refusals and final restoration](../../quality/bounded-home-scratch-buffers.md).
+
+
+### D-545 - Withdraw overlapped Home work after the fixed residency gate
+
+The candidate overlaps the unchanged original plan/forecast computations with covered ledger
+work, drains all siblings before operation disposal and classifies calendar-only covered retry
+separately from persisted-data authority. Thirty distinct selected checks pass (13 new/17 affected
+original), with strict Windows/full signed Android builds warning-free. Preserve initial test
+compiler/cancellation and runtime-version-observer refusals; rerun only the failed observer case.
+
+One same-day original Samsung100000-row pair improves3698.2818to3022.0211ms (18.285808%), but
+terminal RSS increases113540KiB above the fixed65536KiB gate. PSS increases13066KiB; dispatcher
+passes. Original source/schema/typed-row/financial/native guards pass; swap differs materially,
+so no exclusive code/peak-memory cause is proven. Withdraw without reverse/rescue or threshold
+change. Restore every production/test-project source exactly and remove the13 unshipped-API
+cases; no new product-test count, Main install, financial/seed/key or runtime change is claimed.
+
+Both independent APKs retain exact financial Data/Core/runtime engines; differing trimmed BCL
+images have the same original official versions/method sets, without common-IL equality proof.
+The uninstalled384AOT/408ELF full shipping candidate matches actual independent Data/Core.
+Original caller5336/b1d5/UID10381/storage/grants/stopped, Main4090/D-542/Home979/all141 attributes
+and OS are restored; three owned hash-matched XMLs are removed. The owner approves a temporary
+shared-phone handoff only after restoration. Continue independent work; the broader goal and
+performance/security/stability/accessibility/platform/provider/Store/release gates stay open.
+[Exact inputs, refusals and restoration](../../quality/overlapped-home-projection.md).
+Eight completed owned bin/obj trees (2322515022 logical bytes) and four duplicate audit
+images are removed; actual packages/reports/backups stay. No host free-space claim.
