@@ -2637,3 +2637,12 @@ or source retry drains the old connection before another read; file/authority/in
 not become stale actionable output. This changes neither visible layout nor financial formulas.
 The compact title Add action and contextual rows retain their existing ownership/geometry.
 [Measured qualification](quality/home-publication-connection.md).
+
+### D-542 - Complete Home row replacement
+
+Use complete row snapshots for period totals, upcoming plans, recent entries and pinned goals,
+matching accounts/balances/templates. Materialize all original rows before one Reset; never show
+an artificial empty set through Clear/Add. Empty real data still clears once. Preserve fresh equal
+rows for theme rebinding, original targets/order/text and covered final validation. This changes
+neither Home layout nor the separately owned chart/brush publication.
+[Native evidence](quality/home-row-snapshot-publication.md).

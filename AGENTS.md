@@ -3707,3 +3707,12 @@ file, access, input, financial-revision or definition checks. Dispose the old op
 period/source retry or uncovering, including failures; a recursive read holding the old lease
 can deadlock against pending maintenance. Independent comparisons must bind the requested
 validation mode to the immutable source/day/code fingerprint and observe actual context count.
+
+## D-542 - Complete Home row snapshots
+
+Stage original period, upcoming, recent and pinned-goal rows before the existing SnapshotCollection
+ReplaceAll call. Retain original formatting/order/identity/commands and fresh theme objects;
+never replace original full-source or final-validation guards with collection notifications.
+The separately owned chart/brush path is unchanged. A nonempty ordinary independent Main cannot
+use the empty-Main migration retirement route: keep its compatible caller/schema and original
+backup instead of downgrading retained data to restore an older diagnostic APK.

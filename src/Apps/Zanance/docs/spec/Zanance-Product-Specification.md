@@ -9451,3 +9451,30 @@ packages are removed and only the two owned AVDs are stopped, preserving their s
 This is not hardware16KiB, whole-platform, startup, stability or two-second acceptance.
 Broader Android/iOS/security/accessibility/provider/Store/release gates remain separate.
 [Evidence and limitations](../quality/home-publication-connection.md).
+
+### D-542 - Home row snapshot status
+
+Publish the original Home period/upcoming/recent/pinned-goal rows through the existing complete
+snapshot collection, staging each original row set before one Reset. Keep all original mappings,
+order, fresh theme objects, command identities, full reads, cover and final validation; chart/brush
+publication and layout remain unchanged. Eight related existing cases pass after this changed
+usage, not new-test/full-suite evidence. Strict Windows/full Android builds are warning-free.
+
+On the retained x64 API36 sources,12 light and12 distinct dark native publications across
+reference/tenfold and en/fa/de retain complete original schema/typed rows, financial/native
+presentation and recent packets. Each of the four row sets produces one Reset and no per-row Add.
+No successful seed, key or financial operation is replayed. These full-control elapsed samples
+are not a causal speedup or physical two-second claim. The compatible independent caller stays
+stopped on its additive schema because its ordinary Main is nonempty; empty-Main retirement is
+inapplicable. Original APK backup/retained sources/Light remain, and shipping emulator Main's
+120 original public states match the historical unchanged-APK baseline. Preserve its initial
+15-node startup-only observation refusal.26 owned hash-matched XMLs are removed; only that AVD
+is stopped.
+
+The complete signed offline package has384AOT/408ELF/1608LOAD static16KiB/ZIP/v2/v3 guards and exact
+actual packaged Data/Core LZ4 inputs matching the qualified independent APK. One Samsung no-reset
+upgrade tobc1ea2 retains PID4090/Home979/all141 public states, all three profiles and original OS.
+The unrelated-app foreground refusal is preserved and the owner's normal return resumes only
+readback, never reinstall or money. Wider two-second/stability/accessibility/platform/provider/
+Store/release gates and the broader goal remain open.
+[Scope](../quality/home-row-snapshot-publication.md).

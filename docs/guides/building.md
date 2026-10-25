@@ -2677,3 +2677,14 @@ two-versus-one contexts, not just requested flags. Never retrofit a missing mode
 Complete and prove each scalar-control process dead before its measurement, preserve successful
 receipts, and require opposite order. This is not a shipping feature flag or a key/KDF/runtime
 change. [Evidence and restoration](../../src/Apps/Zanance/docs/quality/home-publication-connection.md).
+
+### D-542 - Row-publication qualification on retained sources
+
+Read the existing home-current-stages numeric marks for periods/plans/recent/goals. Each changed
+row set should publish one Reset per complete original Home, with no incremental Add; verify
+original data/native packets separately. Keep distinct theme cohorts and successful receipts,
+use no Prepare/seed/financial replay, and do not compare full-oracle elapsed times with isolated
+CPU-control runs. Record install/storage/observer refusals without relabeling them as product
+failures. A nonempty independent Main retains its compatible caller/schema; the empty-Main
+retirement protocol must not be widened to roll it back.
+[Actual qualification and restoration](../../src/Apps/Zanance/docs/quality/home-row-snapshot-publication.md).

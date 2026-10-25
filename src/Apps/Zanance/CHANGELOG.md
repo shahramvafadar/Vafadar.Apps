@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Refresh Home period totals, upcoming plans, pinned goals and recent entries as complete row sets instead of clearing and rebuilding them one item at a time (D-542).
+
 - Avoid opening the encrypted Home file twice during one refresh, while retaining fresh final validation of its original data (D-541).
 
 - Speed up Home history loading while preserving every transaction and the original financial calculations (D-540).

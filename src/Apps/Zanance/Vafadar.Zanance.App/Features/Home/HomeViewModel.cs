@@ -86,9 +86,11 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     /// <summary>Gets complete currency totals without disconnecting every native amount row during a reload.</summary>
     public SnapshotCollection<CurrencyTotal> Balances { get; } = [];
 
-    public ObservableCollection<PeriodSummary> Periods { get; } = [];
+    /// <summary>Gets complete period totals without an intermediate empty native layout.</summary>
+    public SnapshotCollection<PeriodSummary> Periods { get; } = [];
 
-    public ObservableCollection<PlanRow> Upcoming { get; } = [];
+    /// <summary>Gets the complete ordered upcoming rows, rebound together after their original calculation.</summary>
+    public SnapshotCollection<PlanRow> Upcoming { get; } = [];
 
     public ObservableCollection<CategorySlice> Slices { get; } = [];
 
@@ -102,7 +104,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     public partial string? HoldingsText { get; set; }
 
     /// <summary>Gets the goals pinned to Home, at most two (ZEX-GO06).</summary>
-    public ObservableCollection<Goals.GoalRow> PinnedGoals { get; } = [];
+    public SnapshotCollection<Goals.GoalRow> PinnedGoals { get; } = [];
 
     [ObservableProperty]
     public partial bool HasPinnedGoals { get; set; }
@@ -118,7 +120,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     public partial bool HasQuickTemplates { get; set; }
 
     /// <summary>Gets the latest recorded entries (D-37), newest first, dated today at the latest.</summary>
-    public ObservableCollection<EntryRow> RecentEntries { get; } = [];
+    public SnapshotCollection<EntryRow> RecentEntries { get; } = [];
 
     [ObservableProperty]
     public partial bool HasRecent { get; set; }
@@ -425,17 +427,19 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         UnreviewedText = UnreviewedCount > 0 ? _translator.Format("Home_Unreviewed", UnreviewedCount) : null;
 
         // Income and expense of the period.
-        Periods.Clear();
+        // D-542: stage original rows before one Reset; Clear/Add disconnects each native row while covered.
+        var periodRows = new List<PeriodSummary>();
         foreach (var totals in facts.Totals)
         {
             var refunds = totals.Refunds > 0 ? _translator.Format("Home_Refunds", MoneyText.Format(totals.Refunds, totals.CurrencyCode, culture)) : null;
-            Periods.Add(new PeriodSummary(
+            periodRows.Add(new PeriodSummary(
                 MoneyText.Format(totals.NetIncome, totals.CurrencyCode, culture),
                 MoneyText.Format(totals.NetExpense, totals.CurrencyCode, culture),
                 MoneyText.Format(totals.Result, totals.CurrencyCode, culture, showPlus: true),
                 totals.Result < 0 ? EntryPresenter.DangerColor : EntryPresenter.IncomeColor,
                 refunds));
         }
+        Periods.ReplaceAll(periodRows);
 
         await LoadBudgetAsync(snapshot, settings.BudgetCalendar, allAccounts, entries, categoryList, today, culture);
         RequireCurrentPublication();
@@ -457,16 +461,17 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
 
         // The last entries show at a glance what was recorded and that a quick add worked.
         var presenter = new EntryPresenter(byId, categories, _translator, culture);
-        RecentEntries.Clear();
+        var recentRows = new List<EntryRow>();
         foreach (var entry in facts.Recent)
         {
             var row = presenter.Row(entry);
             var day = entry.Date == today ? _translator["Common_Today"]
                 : entry.Date == today.AddDays(-1) ? _translator["Home_Yesterday"]
                 : _dates.Format(entry.Date, DateFormatStyle.DayMonth);
-            RecentEntries.Add(row with { Subtitle = $"{day} · {row.Subtitle}" });
+            recentRows.Add(row with { Subtitle = $"{day} · {row.Subtitle}" });
         }
 
+        RecentEntries.ReplaceAll(recentRows);
         HasRecent = RecentEntries.Count > 0;
 
         ReimbursementText = facts.OpenReimbursementCount == 0 ? null : _translator.Format("Home_Reimbursements", facts.OpenReimbursementCount);
@@ -634,8 +639,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         // Keep that calculation off the window thread; a departed page still refuses publication below.
         var view = await Goals.GoalHomeProjection.ProjectAsync(snapshot, _goalPresenter, _translator, today);
         RequireCurrentPublication();
-        PinnedGoals.Clear();
-        foreach (var row in view.Pinned) PinnedGoals.Add(row);
+        PinnedGoals.ReplaceAll(view.Pinned);
         HasPinnedGoals = PinnedGoals.Count > 0;
         GoalAttentionText = view.Attention;
     }
@@ -680,7 +684,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
                 contracts[0].Schedule.Name, _dates.Format(contracts[0].Date, DateFormatStyle.Long))
               + (contracts.Count > 1 ? " " + _translator.Format("Home_MoreContracts", contracts.Count - 1) : string.Empty);
 
-        Upcoming.Clear();
+        var upcomingRows = new List<PlanRow>();
         foreach (var occurrence in computation.Upcoming)
         {
             var schedule = occurrence.Schedule;
@@ -688,7 +692,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             var overdue = occurrence.Status == OccurrenceView.Overdue;
             var look = overdue ? PlanLook.Danger : PlanLook.Future;
             var days = occurrence.DueDate.DayNumber - today.DayNumber;
-            Upcoming.Add(new PlanRow(
+            upcomingRows.Add(new PlanRow(
                 schedule.Id,
                 occurrence.OriginalDate,
                 schedule.Name,
@@ -707,6 +711,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
                 .WithDate(text, occurrence.DueDate, overdue, schedule.Kind));
         }
 
+        Upcoming.ReplaceAll(upcomingRows);
         HasUpcoming = Upcoming.Count > 0;
 
         // K04: what the next 30 days cost, known, estimated and unknown apart – the same number as the reports.
