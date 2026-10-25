@@ -487,6 +487,15 @@ internal static partial class AndroidHomeReview
                 var positionOnly = Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_header_native_position", false) == true;
                 await WriteReportAsync(root, (positionOnly ? "headers-os-native-" : "headers-os-") + width, await ReviewHeadersOsAsync(app, services, root, comparison!, ct), ct);
             }
+            else if (phase == "transactions-header-os")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0)
+                    throw new ReviewCheckException("Original nonredirected Transactions OS observation required.");
+                var width = Platform.CurrentActivity?.Intent?.GetIntExtra("review_os_width", 0) ?? 0;
+                await WriteReportAsync(root, phase + "-" + width,
+                    await ReviewTransactionsHeaderOsAsync(app, services, root, comparison!, ct), ct);
+            }
             else if (phase == "transactions-add-header")
             {
                 Directory.CreateDirectory(root);

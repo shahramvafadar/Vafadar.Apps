@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Checked the compact Transactions title action and result space at actual Android large text in Persian, English and German, preserving existing financial data and the current interface (D-546).
+
 - Keep the existing Home calculations after a faster experimental scheduling change exceeded its predeclared memory-residency limit; no financial data or app behavior changes (D-545).
 
 - Keep the current Android runtime settings after an independent Home experiment exceeded its original memory-growth limit; improve diagnostic input identity without changing financial data (D-543).

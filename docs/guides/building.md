@@ -2699,3 +2699,24 @@ Compare original packaged Data/Core payloads with the complete signed shipping A
 native results to justify adoption. Preserve mismatches, original fingerprints and failed gates;
 changed actual images require relevant qualification without repeating financial/seed/key work.
 The32MiB nursery experiment was withdrawn; ordinary production runtime settings remain unchanged.
+
+
+### Retained independent Transactions OS text check (D-546)
+
+The independent Android Home caller accepts only the explicit `transactions-header-os` selector,
+an owned existing nonempty ordinary source, actual Android OS font2.0 and `review_os_width`360/412.
+This guarded route refuses empty data; it never prepares accounts, ledger rows or keys. Use only
+the project-owned emulator, preserve its original settings and compatible installed APK backup,
+and restore both after the final original native/source checks. A nonempty ordinary caller must
+not use empty-Main migration retirement or an old incompatible APK. No shipping Main install,
+financial Add/Cancel/Save/Undo or unchanged successful cohort is needed for this observer-only work.
+
+The original read-only All filter can expose historical rows without creating new money. Wait for
+the actual ready publication, not only Shell's current-page assignment. Per-state JSON checkpoints
+retain complete earlier successes with their exact comparison/source/actual-package lineage;
+continue only missing states. A generic failed result does not imply zero earlier successful
+checkpoints. Read the original classified failure prefix as well as the width-specific success
+prefix, bound to the same actual PID/run/comparison. Never restart a successful case for an auditor
+assumption. OS2.0 is Android's real setting, not an exact two-times-font-pixel assertion.
+
+[Finite original observations and owned cleanup](../../src/Apps/Zanance/docs/quality/transactions-title-android-os-text.md).

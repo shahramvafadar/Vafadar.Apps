@@ -4926,3 +4926,31 @@ performance/security/stability/accessibility/platform/provider/Store/release gat
 [Exact inputs, refusals and restoration](../../quality/overlapped-home-projection.md).
 Eight completed owned bin/obj trees (2322515022 logical bytes) and four duplicate audit
 images are removed; actual packages/reports/backups stay. No host free-space claim.
+
+
+### D-546 - Original Transactions title at actual Android OS200%
+
+Close only the uncovered D-528/D-530 Android title/viewport subgate:36 distinct original native
+observations across360/412dp, en/fa/de, Light/Dark and populated/view-only empty/selection states.
+Actual OS font2.0 yields36px for this24dp title under Android nonlinear scaling; full original
+translated text, physically right48dp accessible Add, separate contextual rows and at least144dp
+results pass. Four original typed packets retain their digest; no seed/Save/Undo/native Add/Cancel
+or successful normal-size case repeats. No shipping UI/financial source or product-test count changes.
+
+Preserve the initial missing selector, later publication/source-precondition and host evidence/
+locale assumptions. Three earlier English/Light360 successes are retained; only15 missing360 and
+18 new412 states continue. Exact known comparison/source lineage is audited without scene replay.
+Independent strict builds and192AOT/204ELF/ZIP/v2/v3/static16KiB guards pass; no unchanged shipping
+Windows/Android build or managed suite repeats. Undo-visible/spoken/device/full A11Y remains open.
+
+Two install-space failures precede qualification. Capacity attempts do not resize source images;
+restore the exact original config and do not claim expansion. Retire only code of two ended owned
+probes with hash-exact backups/KEEP_DATA, preserving UID/CE/DE and every data/key source; actual
+free903608KiB admits install. Restore original compatible334ca caller5054/975 German/UID10221/
+stopped without nonempty schema retirement. Shipping Main99ee/2904/all120 public states and OS
+match; four owned emulator XMLs and one physical lease-guard XML are hash-cleaned, owned AVD stopped.
+Unused verified recovery copy9232397904bytes, completed build770497442bytes and initial unadmitted
+APK58990498bytes are removed; actually used packages/restore APKs remain. The owner-approved second
+phone lease is active; no phone input follows. Broader goal/performance/security/stability/
+accessibility/platform/provider/Store/release gates remain open.
+[Original observations, refusals and restoration](../../quality/transactions-title-android-os-text.md).
