@@ -9636,3 +9636,11 @@ packets unchanged, no ledger posting or review completion; managed test count do
 Only new UID/data/PIN are removed and exact original Main/OS restored. Actual SDK taps and native
 PIN controls are not real owner/device authentication or whole-platform acceptance. See
 [scope and preserved refusals](../quality/pin-covered-cold-notification-routes.md).
+
+
+D-554 update to Section31: packaged runtime/compiler/task10.0.14 corrects the newly published
+Brotli component issue.31 existing decoder/buffer/fallback cases run on actual14; strict Windows/
+Android and changed-runtime original nonempty codec/Home on API24/4096 and API35/simulated16384
+pass. No product algorithm/schema/permission or managed-count increase. Two fresh1031-row sources
+are retired with exact prior contexts. Physical adoption and general stability/performance/A11Y/
+platform/owner/service/release acceptance remain separate. See [evidence](../quality/runtime14-brotli-security-servicing.md).

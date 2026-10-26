@@ -2756,3 +2756,15 @@ financial/key/migration cohorts, touching Main or exporting private files/keys. 
 run/PID report chunks on timeout. Keep exact packaged Data/Core and own AOT/signature witnesses.
 After accepted reports, uninstall only these fresh packages and stop only these owned AVDs after
 matching all original package paths/settings/config. This is not hardware16KiB or release proof.
+
+
+### Official Brotli security runtime14 (D-554)
+
+The central VafadarSecurityRuntimeVersion now selects10.0.14 for actual Android Mono runtime,
+matching cross-compilers/task and self-contained Windows. Keep installed SDK/workloads/global
+settings unchanged. Verify actual native files and compiler/task revision0427b9, not just host
+SDK output. Run affected decoder tests with an actual14 scoped host; do not assume the installed
+older CLI runtime makes them14 tests. Capture each APK's own AOT witness before another build.
+Retain actual financial/Brotli byte identity and each distinct linked BCL input rather than claim
+all independently trimmed BCL images equal. No old successful financial/migration suite replay.
+[Original package/native/runtime evidence](../../src/Apps/Zanance/docs/quality/runtime14-brotli-security-servicing.md).

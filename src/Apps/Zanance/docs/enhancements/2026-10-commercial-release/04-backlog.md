@@ -6133,3 +6133,17 @@ Default compilation/package gates and scoped standard Clean pass. This narrows o
 routing: real owner authentication, physical locked taps, general security/stability/performance/
 A11Y/iOS/provider/Store/release and D551 phone restoration/adoption remain open.
 [Finite evidence](../../quality/pin-covered-cold-notification-routes.md).
+
+
+### D-554 - New official Brotli security servicing qualified independently
+
+Runtime/compiler/task14 replaces13 for affected Brotli decoding; SDK/workloads/MAUI/financial
+source/permissions and unrelated packages stay.31 affected cases run on actual14, strict builds,
+full384/192-own-AOT packages and both changed-runtime nonempty/fallback/native Home cohorts on
+API24/4096 and API35/simulated16384 pass.2062 new fixture rows are not tests or zero writes;
+only fresh fixtures are removed, original contexts restored and both AVDs stopped. Standard Clean
+removes3425 known files/1157275260bytes and only the redundant verified runtime archive. Explicit
+future candidate50f5 supersedes896e without an intermediate physical upgrade; D551 original caller
+Play Protect/restoration/adoption remains open. General Mono faults/performance/A11Y/platform/
+owner/provider/Store/service-runtime/release gates are not closed.
+[Official correction and bounded evidence](../../quality/runtime14-brotli-security-servicing.md).

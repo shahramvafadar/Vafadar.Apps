@@ -3986,3 +3986,9 @@ accessibility/platform/provider/Store/release gates remain open.
   two owned XMLs removed and AVD stopped. No successful cohort or financial command replay.
 - [ ] Physical original-caller Play Protect restore, explicit phone handback and later shipping
   adoption; general private-source/key, performance/stability/spoken-A11Y/platform/release gates.
+
+
+D-554's official runtime14 Brotli correction is qualified only for the recorded host/Android
+component cohorts and complete signed candidate50f5. Physical Main adoption is pending original
+caller Play Protect restoration. Do not treat this as general Mono fault, whole-platform/security,
+service/container runtime, Store or release acceptance, or overwrite historical runtime13 receipts.

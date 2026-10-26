@@ -10265,3 +10265,20 @@ fixture/PIN, verify native-work absence, preserve Main3018/896e/all120/identitie
 nine hash-matched XMLs and stop only owned AVD. Standard Clean removes1668 known files/311179421
 logical bytes. Genuine owner authentication, physical-phone and broader gates remain open.
 [Original observations and limits](quality/pin-covered-cold-notification-routes.md).
+
+
+### D-554 - Service the original Brotli runtime to official10.0.14
+
+The new25October OOB security release corrects Brotli APIs used by original Home blocks. Change
+only the central runtime/compiler/task pin13 to14; keep SDK/workloads/MAUI/GC/financial algorithms/
+schema/permissions and unrelated versions. Verify official MIT/source0427b9, actual both-ABI Mono/
+Brotli native files, actual cross-compilers/task revision and Windows self-contained14.31 affected
+existing cases run on isolated actual14; strict builds and384/192-own-AOT full packages pass.
+New API24/4096 and API35/simulated16384 original codec/fallback/Home cohorts preserve1031 rows
+each, retire only fresh fixtures and restore prior packages/settings/config/stop both AVDs.
+Preserve metadata/BCL observer refusals; distinct linked BCL bytes are not called identical.
+Standard Clean removes3425 known files/1157275260logical bytes, redundant verified archive only;
+used APKs and scoped test runtime remain. Explicitly select50f5 for the future single Main upgrade
+without rewriting896e historical baseline. Phone Play Protect/restoration/adoption remains open.
+No general Mono crash fix, all-platform/security/service deployment or release claim.
+[Exact source, native evidence and limits](quality/runtime14-brotli-security-servicing.md).

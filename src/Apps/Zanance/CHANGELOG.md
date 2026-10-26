@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Update the packaged .NET runtime to10.0.14 for the official security correction in compressed-data decoding, preserving existing financial data and calculations (D-554).
+
 - Read existing Home ledger blocks with one short-lived expansion buffer, reducing temporary allocations while preserving all original financial fields; two bounded large-source native comparisons improve by about6-7%, with the two-second target still open (D-547).
 
 - Keep enough transaction-result space when selection and Undo appear together at Android large text; include the title's actual safe-area position without changing financial actions (D-548).

@@ -7,7 +7,7 @@
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
-    <VafadarSecurityRuntimeVersion>10.0.13</VafadarSecurityRuntimeVersion>
+    <VafadarSecurityRuntimeVersion>10.0.14</VafadarSecurityRuntimeVersion>
     <!-- Servicing builds have a distinct immutable native package; one version never has alternate bytes. -->
     <VafadarWindowsCipherPackageVersion>4.19.0-candidate.7</VafadarWindowsCipherPackageVersion>
     <VafadarWindowsCipherPackageVersion Condition="'$(VafadarWindowsCipherVariant)' == 'servicing'">4.19.0-candidate.8</VafadarWindowsCipherPackageVersion>

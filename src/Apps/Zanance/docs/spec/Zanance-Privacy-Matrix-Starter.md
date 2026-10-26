@@ -1248,3 +1248,10 @@ controls, not user Main private data. Retirement reverses only two declared inte
 the empty independent caller before restoring its actual old APK; shipping Main/workload roots are
 excluded. Complete signed no-reset Main adoption and original caller/public-state/profile restoration now pass. See the
 [complete evidence and boundaries](../quality/complete-ledger-read-blocks.md).
+
+
+D-554 updates only the existing official MIT .NET runtime/compiler/task to10.0.14 for its Brotli
+security correction. No new SDK, permission, application network/data collection/export or financial
+algorithm/schema is introduced; the Offline APK still has no INTERNET permission. Native validation
+uses only new owned fictional sources removed afterward. Official build-time dependency retrieval
+and isolated host test runtime are not app network traffic or physical/private-key acceptance.

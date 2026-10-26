@@ -6831,3 +6831,13 @@ the observer never forces an artificial passing destination. One new fictitious 
 retired after both receipts; Main896e/all120/identities/OS/config persist. Two native outcomes are
 not managed tests or actual owner/device-authentication/physical-phone acceptance.
 [Evidence and remaining gates](quality/pin-covered-cold-notification-routes.md).
+
+
+D-554 qualifies only the new official runtime14 decoder component:31 affected existing cases
+on an actual14 host plus complete nonempty original codec/malformed scalar fallback/cache recovery/
+native Home on actual API24/x64/4096 and API35/x64 simulated16384. Full shipping and independent
+Core/Data/Brotli input equality/native official14 identity pass; all BCL-byte equality is explicitly
+not claimed because each own linked input differs. Fresh2062 total fixture rows are not managed
+cases. Both new sources/AVDs are retired and prior context restored. Physical no-reset adoption,
+whole stability/performance/A11Y/platform/service/authentication/release remain open.
+[Actual receipts and refusals](quality/runtime14-brotli-security-servicing.md).
