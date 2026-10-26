@@ -10399,8 +10399,25 @@ wrong cache cookie and changed payload are refused. Five new cases plus the11 af
 oracle cases pass16/16 on actual runtime14; strict original workload entrypoint build passes.
 This adds five cases to D-562's original18; it is not a new full-suite or native financial run.
 No production DLL, cipher, APK, UI, permission, financial algorithm or successful phone cohort
-changes/repeats in this follow-through. Actual corrected hosted workload success remains pending.
+changes/repeats in this follow-through. Final head5e2e9384 passes CI40319587370, native candidates40319587614 (including the actual protected workload step), and CodeQL40319587303; no second polling request is made.
 [Required CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40316474338),
 [preserved native workload failure](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40316473545).
 
 [Full bounded evidence](quality/ci-ledger-invalidation-and-exact-restore.md).
+
+
+### D-563 - Bounded independent native fault observation
+
+Add an opt-in independent-package observer for reviewed module-relative instruction locations,
+with original signal chaining, bounded private records and mandatory independent fatal correlation.
+Fifteen new actual-reader cases and fresh refusal/recovery/fatal/concurrency controls on x64 and
+ARM64 pass. One changed runtime14/x64/API36/4096 retained-source cohort arms successfully and
+preserves all six native contexts/twelve publications, original encrypted sources and complete
+financial presentation without seed/key/financial replay. The actual named record is empty and
+the process lives: no random crash correction or general stability acceptance is claimed.
+The original-code handback guard refuses nonempty independent Main before schema retirement;
+keep the compatible new caller stopped with original UID/storage/permissions and old APK backup.
+Ordinary emulator Main3035/50f5 and phone Main7028/8fd5 are preserved. Standard owned build cleanup
+and exact-head CI are separate recorded gates. Shipping code/APK, permissions, UI and GC settings
+are unchanged. QA-06, phone two-second, accessibility/platform/security/iOS/provider/Store/release
+remain open. [Full scope and actual failures](quality/bounded-native-fault-code-observation.md).

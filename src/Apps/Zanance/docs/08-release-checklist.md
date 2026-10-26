@@ -4033,10 +4033,27 @@ service/container runtime, Store or release acceptance, or overwrite historical 
   originally failed cases passing in selected local runs;18 genuinely new managed cases.
 - [x] D-562 strict Windows/complete signed Android and one fresh actual protected-store native
   delete/receipt-Undo cohort; shipping8fd5 no-reset adoption preserves Main Home979/all141/OS.
-- [ ] D-562 configured latest-head hosted CI success after the completed correction is pushed.
+- [x] D-562 configured hosted CI40319587370 succeeds on final correction5e2e9384.
   Local success does not close this gate. [D-562 evidence](quality/ci-ledger-invalidation-and-exact-restore.md)
 
 - [x] D-562 required hosted CI40316474338 succeeds on785b151b: Libraries/tests, Windows, Android.
-- [ ] D-562 separate hosted native-cipher Windows protected workload correction: reproduced
-  locally and16 focused cases pass, but actual corrected hosted result is still required.
+- [x] D-562 separate hosted native-cipher Windows protected workload correction: reproduced
+  locally and16 focused cases pass; actual corrected hosted run40319587614 now succeeds.
   Existing native producers/persistence/Android slices succeeded and are not manually repeated.
+
+
+### D-563 - Bounded independent native fault observation
+
+Add an opt-in independent-package observer for reviewed module-relative instruction locations,
+with original signal chaining, bounded private records and mandatory independent fatal correlation.
+Fifteen new actual-reader cases and fresh refusal/recovery/fatal/concurrency controls on x64 and
+ARM64 pass. One changed runtime14/x64/API36/4096 retained-source cohort arms successfully and
+preserves all six native contexts/twelve publications, original encrypted sources and complete
+financial presentation without seed/key/financial replay. The actual named record is empty and
+the process lives: no random crash correction or general stability acceptance is claimed.
+The original-code handback guard refuses nonempty independent Main before schema retirement;
+keep the compatible new caller stopped with original UID/storage/permissions and old APK backup.
+Ordinary emulator Main3035/50f5 and phone Main7028/8fd5 are preserved. Standard owned build cleanup
+and exact-head CI are separate recorded gates. Shipping code/APK, permissions, UI and GC settings
+are unchanged. QA-06, phone two-second, accessibility/platform/security/iOS/provider/Store/release
+remain open. [Full scope and actual failures](quality/bounded-native-fault-code-observation.md).

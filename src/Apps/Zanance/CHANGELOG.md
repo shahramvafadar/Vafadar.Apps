@@ -6,6 +6,9 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Add a private, optional independent diagnostic for bounded native fault locations; the shipping app and financial behavior are unchanged, and general crash qualification remains open (D-563).
+
+
 - Prevent derived Home refresh markers from blocking purchase/refund deletion or Undo; preserve original financial changes and portable-restore comparisons (D-562).
 
 - Complete the existing signed Android security update adoption on the retained Samsung while preserving Home and the compact Transactions title action (D-555).

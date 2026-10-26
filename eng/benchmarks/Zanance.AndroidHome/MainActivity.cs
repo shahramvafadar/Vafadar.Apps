@@ -16,7 +16,13 @@ public sealed class MainActivity : MauiAppCompatActivity
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         Window?.AddFlags(WindowManagerFlags.Secure);
+#if NATIVE_FAULT_PC_REVIEW
+        var faultObserverAccepted = savedInstanceState is not null || NativeFaultPcObserver.TryArm(this);
+#endif
         base.OnCreate(savedInstanceState);
+#if NATIVE_FAULT_PC_REVIEW
+        if (!faultObserverAccepted) return;
+#endif
         if (savedInstanceState is not null || PackageName != AndroidHomeReview.Package) return;
 #if RECEIPT_SOURCE_REVIEW
         // A flat device can retain the last app-requested landscape rotation after Unspecified.

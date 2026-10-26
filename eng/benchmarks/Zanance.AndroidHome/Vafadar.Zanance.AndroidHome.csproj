@@ -21,6 +21,19 @@
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
+  <!-- A process-local signal observer is never linked into the shipping application or another review flavor. -->
+  <PropertyGroup Condition="'$(ReviewNativeFaultPc)' == 'true'">
+    <DefineConstants>$(DefineConstants);NATIVE_FAULT_PC_REVIEW</DefineConstants>
+    <ReviewFaultPcAbi Condition="'$(RuntimeIdentifier)' == 'android-x64'">x86_64</ReviewFaultPcAbi>
+    <ReviewFaultPcAbi Condition="'$(RuntimeIdentifier)' == 'android-arm64'">arm64-v8a</ReviewFaultPcAbi>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(ReviewNativeFaultPc)' == 'true'">
+    <AndroidNativeLibrary Include="$(ReviewFaultPcLibrary)" Abi="$(ReviewFaultPcAbi)" />
+  </ItemGroup>
+  <Target Name="RequireOwnedNativeFaultPcInputs" BeforeTargets="PrepareForBuild" Condition="'$(ReviewNativeFaultPc)' == 'true'">
+    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.androidhomereview' or '$(ReviewFaultPcAbi)' == '' or !Exists('$(ReviewFaultPcLibrary)')"
+           Text="A verified native observer for the original independent package and exact ABI is required." />
+  </Target>
   <!-- D-562: a new native writer regression must never replace retained callers or shipping Main. -->
   <PropertyGroup Condition="'$(ReviewLedgerConflict)' == 'true'">
     <ApplicationId>pro.vafadar.zanance.ledgerconflictreview</ApplicationId>

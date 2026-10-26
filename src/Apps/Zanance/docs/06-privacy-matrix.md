@@ -1314,3 +1314,14 @@ field, permission, network access, provider or SDK. Its temporary distinct Andro
 package uses only new fictitious owned data and is removed after acceptance; it never reads
 Main private keys/databases. Existing protected source and backup policies remain unchanged.
 [Evidence](quality/ci-ledger-invalidation-and-exact-restore.md).
+
+
+### D-563 - Independent signal observation privacy boundary
+
+An explicit diagnostic build of the separate owned Home package can write at most32 private
+72-byte signal records containing original process/run identity, monotonic time and only a
+reviewed module-relative code offset. It exports no absolute pointer, raw stack/register/heap,
+financial content or key. No shipping reference, SDK, network/upload, permission, authentication,
+backup or product data path is added. Original signal handling and separate fatal-proof boundaries
+are qualified; a successful finite run with an empty record is not general crash acceptance.
+See [bounded evidence](quality/bounded-native-fault-code-observation.md).

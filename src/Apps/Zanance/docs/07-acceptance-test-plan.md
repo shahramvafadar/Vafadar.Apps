@@ -6899,3 +6899,29 @@ and11 affected comparison cases; original workload builds strict with zero warni
 No product/phone financial/build replay; corrected hosted native workload acceptance remains
 pending. D-562 now has23 genuinely new managed cases across its two relevant corrections, without
 a full-suite count or wider stability/platform acceptance claim.
+
+D-562 final hosted acceptance on5e2e9384: required CI40319587370, Native cipher candidates
+40319587614 and CodeQL40319587303 all complete successfully. The corrected Windows protected
+workload now passes on the actual hosted job; earlier native producer/persistence and Android
+checks remain successful. Both one-shot monitors are consumed/deleted. No failure is hidden by
+rerunning an unchanged job. General crash/ANR, two-second performance, accessibility, broader
+platform/provider/Store and release gates remain open.
+[Required CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40319587370),
+[native qualification](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40319587614).
+
+
+### D-563 - Bounded independent native fault observation
+
+Add an opt-in independent-package observer for reviewed module-relative instruction locations,
+with original signal chaining, bounded private records and mandatory independent fatal correlation.
+Fifteen new actual-reader cases and fresh refusal/recovery/fatal/concurrency controls on x64 and
+ARM64 pass. One changed runtime14/x64/API36/4096 retained-source cohort arms successfully and
+preserves all six native contexts/twelve publications, original encrypted sources and complete
+financial presentation without seed/key/financial replay. The actual named record is empty and
+the process lives: no random crash correction or general stability acceptance is claimed.
+The original-code handback guard refuses nonempty independent Main before schema retirement;
+keep the compatible new caller stopped with original UID/storage/permissions and old APK backup.
+Ordinary emulator Main3035/50f5 and phone Main7028/8fd5 are preserved. Standard owned build cleanup
+and exact-head CI are separate recorded gates. Shipping code/APK, permissions, UI and GC settings
+are unchanged. QA-06, phone two-second, accessibility/platform/security/iOS/provider/Store/release
+remain open. [Full scope and actual failures](quality/bounded-native-fault-code-observation.md).
