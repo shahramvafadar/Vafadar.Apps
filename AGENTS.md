@@ -189,8 +189,10 @@ live in the linked guides. When the owner sets a new rule, add it here in the sa
 * Derived ledger invalidation must preserve the original SQLite writer's conflict policy (D-562).
   Correct published trigger behavior with an additive migration; never rewrite a released migration.
   Portable-restore checks may normalize only validated local schema-cookie identity, and explicit
-  accepted-write diagnostics only validated opaque revision tokens in disposable memory. Preserve
-  all financial rows, payloads and source/schema guards; never weaken comparisons to hide CI failures.
+  accepted-write diagnostics only validated opaque revision tokens in disposable memory. A derived
+  cache-cookie refresh additionally requires unchanged actual protected-source cookies captured
+  around that workload, matching the final cache cookie; absent/mismatched evidence must refuse.
+  Preserve all financial rows, payloads and source/schema guards; never weaken comparisons to hide CI failures.
 
 ```powershell
 dotnet build src/Apps/Zanance/Vafadar.Zanance.App -f net10.0-windows10.0.19041.0 -p:ContinuousIntegrationBuild=true   # Windows

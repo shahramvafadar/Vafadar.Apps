@@ -94,3 +94,23 @@ the required delay. Local83-case success is not hosted success. Preserve later f
 continue only their relevant diagnosis. General native crash/ANR, two-second Home performance,
 accessibility, hardware16KiB, iOS, provider/authentication, Store and publication remain separate.
 No successful historical financial cohort, codec/OS matrix or unrelated suite was replayed.
+
+### D-562 hosted follow-through - original CI green, remaining protected workload correction
+
+The exact original correction head785b151b passes all required CI jobs in run40316474338:
+Libraries/tests, Windows and Android are successful; iOS is skipped, not qualified. CodeQL,
+identity and retained service workflows also succeed. The one-shot monitor is consumed/deleted.
+A separate native-cipher workflow40316473545 fails only its Windows protected workload snapshot
+comparison; native reproducibility, protected persistence and official Android slices already pass.
+Read only that failed job's log. A new focused compaction case reproduces the same comparison error.
+The physical protected-file copy can leave a stale derived schema cookie until the first accepted
+writer refreshes it. Keep every row, schema and compressed payload exact; normalize that one
+cached cookie only when before/after independently captured actual protected-source cookies are
+unchanged and the resulting cache cookie matches them. Missing evidence, changed source cookie,
+wrong cache cookie and changed payload are refused. Five new cases plus the11 affected original
+oracle cases pass16/16 on actual runtime14; strict original workload entrypoint build passes.
+This adds five cases to D-562's original18; it is not a new full-suite or native financial run.
+No production DLL, cipher, APK, UI, permission, financial algorithm or successful phone cohort
+changes/repeats in this follow-through. Actual corrected hosted workload success remains pending.
+[Required CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40316474338),
+[preserved native workload failure](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40316473545).

@@ -2769,3 +2769,10 @@ rows. Comparison helpers may normalize only that validated cookie for explicitly
 round trips. Accepted-write workload comparisons normalize only validated opaque revision tokens
 in disposable memory; original schemas, financial rows and compressed payloads remain exact.
 [Evidence](../../src/Apps/Zanance/docs/quality/ci-ledger-invalidation-and-exact-restore.md).
+
+D-562 hosted follow-through additionally binds accepted-write diagnostic cache-cookie refresh
+to actual protected-source schema cookies captured before and after the same workload. They must
+remain unchanged and match the final cache cookie; otherwise comparison refuses. Default oracles
+still compare cookies exactly without that evidence. Every schema, financial row and compressed
+payload remains exact. This changes independent diagnostics only, not source data or production
+restore/financial policy.

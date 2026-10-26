@@ -6208,3 +6208,44 @@ stability open. Restore original b1d5/stopped and Main18994/Home979/all141/OS, r
 OS reason3 lineage and all source evidence; four XMLs hash-clean. No financial/key/seed/accepted
 cohort replay. Phone handed to authorized other chat; independent CI diagnosis continues.
 [Finite scope, preserved errors and gates](../../quality/physical-runtime14-large-home-and-native-exit.md).
+
+### D-562 - Correct original hosted CI writer failures and preserve comparison boundaries
+
+Inspect the actual failed Libraries/tests job121422229286, not completed Windows/Android jobs.
+Current-source reproduction fails before correction; SQLite outer conflict policy and foreign-key
+SET NULL can override a trigger's OR IGNORE. An additive migration guards duplicate derived dirty
+markers while retaining original source writers/revisions and exact published migration history.
+Only validated local schema-cookie identity is normalized for explicit portable restores; accepted
+workload writes normalize only validated opaque revision tokens in disposable memory. Financial
+rows, payloads and schema guards remain exact. All83 original failures pass selected local runs;
+18 genuinely new cases cover the changed boundaries, without a full-suite count or replay claim.
+Strict builds and one new Samsung native original protected-store delete/actual-receipt Undo
+cohort pass. Remove only the fresh UID10397 fixture; one full signed no-reset upgrade adopts8fd5
+in Main7028/Home979/all141 with original UID/storage/permissions/OS and stopped caller preserved.
+Preserve initial Preparing/observer-key refusals, with no install or successful financial replay.
+Supported Clean removes17589 files/1861611432 logical bytes, preserving used APKs/evidence.
+Hosted latest-head CI success is still an explicit pending gate, distinct from local success.
+QA-06 general crash/ANR/two-second performance, A11Y/platform/provider/Store/release remain open.
+[Actual failures, selected reports and bounded native adoption](../../quality/ci-ledger-invalidation-and-exact-restore.md).
+
+### D-562 hosted follow-through - original CI green, remaining protected workload correction
+
+The exact original correction head785b151b passes all required CI jobs in run40316474338:
+Libraries/tests, Windows and Android are successful; iOS is skipped, not qualified. CodeQL,
+identity and retained service workflows also succeed. The one-shot monitor is consumed/deleted.
+A separate native-cipher workflow40316473545 fails only its Windows protected workload snapshot
+comparison; native reproducibility, protected persistence and official Android slices already pass.
+Read only that failed job's log. A new focused compaction case reproduces the same comparison error.
+The physical protected-file copy can leave a stale derived schema cookie until the first accepted
+writer refreshes it. Keep every row, schema and compressed payload exact; normalize that one
+cached cookie only when before/after independently captured actual protected-source cookies are
+unchanged and the resulting cache cookie matches them. Missing evidence, changed source cookie,
+wrong cache cookie and changed payload are refused. Five new cases plus the11 affected original
+oracle cases pass16/16 on actual runtime14; strict original workload entrypoint build passes.
+This adds five cases to D-562's original18; it is not a new full-suite or native financial run.
+No production DLL, cipher, APK, UI, permission, financial algorithm or successful phone cohort
+changes/repeats in this follow-through. Actual corrected hosted workload success remains pending.
+[Required CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40316474338),
+[preserved native workload failure](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40316473545).
+
+[Evidence](../../quality/ci-ledger-invalidation-and-exact-restore.md).

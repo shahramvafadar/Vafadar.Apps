@@ -106,6 +106,7 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
             }
             finally { CryptographicOperations.ZeroMemory(originalKey); }
         }
+        var originalSourceSchemaCookie = await ReadSourceSchemaCookieAsync(services, ct);
         using var beforeBytes = new MemoryStream();
         if (verificationOnly)
         {
@@ -261,12 +262,14 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
         // Compare the complete original portable projection, not that projection against a raw private rollback.
         var expectedRevisionChange = verificationOnly || savedTimes.Count != 0;
         await WorkloadSnapshotVerifier.VerifyAsync(beforePortable.Connection, portable.Connection,
-            acceptedWrites: expectedRevisionChange, ct);
+            acceptedWrites: expectedRevisionChange, ct, expectedRevisionChange
+                ? new(originalSourceSchemaCookie, await ReadSourceSchemaCookieAsync(services, ct)) : null);
         results.Add(new { Shape = shape, ExistingFixtureResumed = existing, ProtectedPreparationMs = migrationMs,
             FirstThenThreeWarmMilliseconds = metrics, CompleteMigrationSchemaAndTypedRowsUnchanged = !existing,
             CompletePortableSchemaAndTypedRowsUnchanged = !expectedRevisionChange,
             CompletePortableFinancialSchemaAndTypedRowsUnchanged = true,
-            OnlyValidatedOpaqueRevisionNormalized = expectedRevisionChange,
+            ValidatedOpaqueRevisionNormalized = expectedRevisionChange,
+            DerivedSchemaCookieBoundToActualProtectedSource = expectedRevisionChange,
             HomeStages = homeStages,
             SearchResultCounts = searchCounts, SavedRowsReadBackAndRemoved = savedTimes.Count,
             PlaintextOriginalRemoved = !File.Exists(original), CipherBytes = new FileInfo(generation.Path).Length });
@@ -278,3 +281,12 @@ foreach (var shape in new[] { Workload.Reference, Workload.Tenfold })
 }
 if (results.Count == 0) throw new IOException("No retained workload was verified.");
 Console.WriteLine($"Independent protected verification completed for {results.Count} workload(s), verification-only={verificationOnly}: " + output);
+
+static async Task<long> ReadSourceSchemaCookieAsync(IServiceProvider services, CancellationToken ct)
+{
+    await using var db = await services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(ct);
+    await db.Database.OpenConnectionAsync(ct);
+    await using var command = db.Database.GetDbConnection().CreateCommand();
+    command.CommandText = "PRAGMA schema_version;";
+    return Convert.ToInt64(await command.ExecuteScalarAsync(ct), System.Globalization.CultureInfo.InvariantCulture);
+}

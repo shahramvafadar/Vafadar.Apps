@@ -18,6 +18,51 @@ public sealed class WorkloadSnapshotVerifierTests : IDisposable
     public void Dispose() { SqliteTestPools.Clear(directory); directory.Dispose(); }
 
     [Theory, Trait("AT", "AT-82")]
+    [InlineData("captured", true)]
+    [InlineData("missing-evidence", false)]
+    [InlineData("changed-source-cookie", false)]
+    [InlineData("wrong-cache-cookie", false)]
+    [InlineData("changed-payload", false)]
+    public async Task Accepted_round_trip_after_physical_compaction_preserves_original_financial_snapshot(string scenario, bool accepted)
+    {
+        var folder = directory.Combine("compacted-original");
+        await PerformanceFixture.CreateAsync(folder, new(10, 2, 1), Ct);
+        using var services = new ServiceCollection().AddZananceData(Path.Combine(folder, "fixture.db")).BuildServiceProvider();
+        // Match protected-copy publication: physical cookie changes before the baseline is captured,
+        // while its old derived cache cookie is refreshed only by the later accepted writer.
+        long cookie;
+        await using (var db = await services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct))
+        {
+            await db.Database.ExecuteSqlRawAsync("VACUUM;", Ct);
+            await db.Database.OpenConnectionAsync(Ct);
+            await using var command = db.Database.GetDbConnection().CreateCommand();
+            command.CommandText = "PRAGMA schema_version;";
+            cookie = Convert.ToInt64(await command.ExecuteScalarAsync(Ct));
+        }
+        var source = services.GetRequiredService<IBackupSource>();
+        using var beforeBytes = new MemoryStream();
+        await source.WriteAsync(beforeBytes, Ct); beforeBytes.Position = 0;
+        await using var before = await SqliteMemorySnapshot.OpenAsync(beforeBytes, 16 * 1024 * 1024, Ct);
+        var store = services.GetRequiredService<ZananceStore>();
+        var entry = new LedgerEntry { AccountId = PerformanceFixture.Id(1, 0), Amount = 1234,
+            Date = PerformanceFixture.Today, Kind = EntryKind.Expense, Title = "Compacted original round-trip" };
+        Assert.True((await store.SaveEntryAsync(entry, Ct)).Succeeded);
+        Assert.Single(await store.DeleteEntryAsync(entry.Id, Ct));
+        await using (var db = await services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct))
+        {
+            if (scenario == "wrong-cache-cookie") await db.Database.ExecuteSqlRawAsync("UPDATE HomeLedgerReadState SET SchemaVersion=999;", Ct);
+            if (scenario == "changed-payload") await db.Database.ExecuteSqlRawAsync("UPDATE HomeLedgerReadBlocks SET Payload=zeroblob(length(Payload));", Ct);
+        }
+        using var afterBytes = new MemoryStream();
+        await source.WriteAsync(afterBytes, Ct); afterBytes.Position = 0;
+        await using var after = await SqliteMemorySnapshot.OpenAsync(afterBytes, 16 * 1024 * 1024, Ct);
+        var cookies = scenario == "missing-evidence" ? null
+            : new WorkloadSnapshotVerifier.SourceSchemaCookies(cookie, scenario == "changed-source-cookie" ? cookie + 1 : cookie);
+        if (accepted) await WorkloadSnapshotVerifier.VerifyAsync(before.Connection, after.Connection, true, Ct, cookies);
+        else await Assert.ThrowsAsync<InvalidDataException>(() => WorkloadSnapshotVerifier.VerifyAsync(before.Connection, after.Connection, true, Ct, cookies));
+    }
+
+    [Theory, Trait("AT", "AT-82")]
     [InlineData("round-trip", true)]
     [InlineData("read-only", true)]
     [InlineData("unaccepted-write", false)]

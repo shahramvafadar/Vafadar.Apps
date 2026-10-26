@@ -6891,3 +6891,11 @@ oracles. Strict builds and one new Samsung protected-store delete/receipt-Undo c
 complete signed8fd5 is adopted without reset in Main7028/Home979/all141 with original settings
 and caller preserved. Hosted latest-head CI remains pending until its actual result; broader
 stability/performance/accessibility/platform/provider/Store gates remain. [D-562 evidence](quality/ci-ledger-invalidation-and-exact-restore.md)
+
+D-562 hosted follow-through: all three required jobs of CI40316474338 pass on785b151b;
+iOS is skipped. Separate native-cipher Windows workload comparison still fails and is reproduced
+by one new targeted compaction case. Its narrow source-cookie-bound correction passes five new
+and11 affected comparison cases; original workload builds strict with zero warnings/errors.
+No product/phone financial/build replay; corrected hosted native workload acceptance remains
+pending. D-562 now has23 genuinely new managed cases across its two relevant corrections, without
+a full-suite count or wider stability/platform acceptance claim.

@@ -4035,3 +4035,8 @@ service/container runtime, Store or release acceptance, or overwrite historical 
   delete/receipt-Undo cohort; shipping8fd5 no-reset adoption preserves Main Home979/all141/OS.
 - [ ] D-562 configured latest-head hosted CI success after the completed correction is pushed.
   Local success does not close this gate. [D-562 evidence](quality/ci-ledger-invalidation-and-exact-restore.md)
+
+- [x] D-562 required hosted CI40316474338 succeeds on785b151b: Libraries/tests, Windows, Android.
+- [ ] D-562 separate hosted native-cipher Windows protected workload correction: reproduced
+  locally and16 focused cases pass, but actual corrected hosted result is still required.
+  Existing native producers/persistence/Android slices succeeded and are not manually repeated.
