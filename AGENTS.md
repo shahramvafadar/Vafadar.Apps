@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## Resume Zanance foreground and scoped installation prompts (owner, 2026-10-26, D-560)
+
+When Zanance is behind another app, use its normal Android launcher entry to bring the installed
+owned package forward, or normally relaunch it if necessary, without waiting for the owner.
+Verify the actual owned UID/window before further app input. This does not authorize force-stop,
+reset, duplicate installation or replaying accepted financial operations. Preserve an active
+other-project device lease and unfinished cohort/process checkpoints.
+
+For an already authorized Zanance candidate installation, the owner explicitly permits selecting
+the per-install Play Protect option to install without scanning, if that exact option is shown.
+Verify the prompt belongs to the current owned installation; preserve its existing installer
+attempt and observe the result rather than retrying. This narrow system-UI exception supersedes
+the foreground-only input rule for that prompt only. It does not authorize disabling Play Protect
+globally, granting unrelated permissions or entering passwords, credentials or real authentication.
+No already successful install needs to be repeated to exercise this permission.
+
 ## Consistent Transactions title action (owner, 2026-10-25, D-528)
 
 Transactions uses the same compact right-of-title Add button as Home and Plans. Do not reserve

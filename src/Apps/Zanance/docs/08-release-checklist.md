@@ -4015,3 +4015,9 @@ service/container runtime, Store or release acceptance, or overwrite historical 
 - [ ] Final selected-edition copy, real OAuth, current mobile assets, privacy/financial declarations,
   company/Store and publication acceptance remain open; D-559 does not close these gates.
   [Draft evidence](quality/store-draft-factual-boundaries.md).
+
+- [x] D-555 final physical runtime14 no-reset adoption: original Main18619/Home979/all141,
+  UID/CEDE/permissions/OS/caller and top-right ready Transactions Add/header preserved; three
+  new owned XMLs removed without reinstall or financial replay.
+- [ ] General security/data, physical performance/stability/A11Y, iOS/provider/Store/release
+  acceptance remains separate. [Scope and D-560 owner instructions](quality/physical-runtime14-final-adoption.md).

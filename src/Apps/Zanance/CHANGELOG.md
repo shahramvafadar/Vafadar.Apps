@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Complete the existing signed Android security update adoption on the retained Samsung while preserving Home and the compact Transactions title action (D-555).
+
 - Clarify the six-language store drafts about local data, optional provider backups and Android receipt-reading limits; identify older Windows screenshots as historical drafts (D-559).
 
 - Validate the current Android runtime with retained large Home data and prevent diagnostic schema checks from unintentionally upgrading their old test sources (D-558).

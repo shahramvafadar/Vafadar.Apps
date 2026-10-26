@@ -10332,3 +10332,22 @@ limits, all six supported languages and historical Windows asset provenance. Twe
 packets fit official30/80/4000 limits; no app/financial/test/build replay or publication. Preserve
 review-parser refusals and leave final edition/OAuth/mobile assets/declarations/Store gates open.
 [Focused evidence and counts](quality/store-draft-factual-boundaries.md).
+
+### D-555 - Retained Samsung runtime14 adoption completed
+
+The single previously successful no-reset50f5 installation is now observed in original new
+PID18619 after the owner returns Zanance. Home979/all141 public attributes, original UID/CEDE/
+permissions/OS and stopped b1d5 caller match. Original ready Transactions title/Add identity and
+bounds remain top-right, then original Home returns unchanged. Three new hash-matched XMLs
+removed; no reinstall/build/test/financial replay. General acceptance gates remain separate.
+[Final bounded evidence](quality/physical-runtime14-final-adoption.md).
+
+### D-560 - Owner permits normal foreground restoration and scoped install prompt
+
+Bring installed Zanance forward through its normal Android launcher or normally relaunch when
+needed; preserve process/accepted-operation checkpoints and other-project leases. Before further
+input verify actual owned UID/window. For an already authorized candidate, select the exact
+per-install Play Protect install-without-scanning option when shown and bound to that attempt.
+Do not disable global security, grant unrelated permissions or enter real authentication.
+No such action or repeated installation was necessary during D-555's completed continuation.
+[Authority, observations and limits](quality/physical-runtime14-final-adoption.md).

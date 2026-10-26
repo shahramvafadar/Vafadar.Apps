@@ -9672,3 +9672,10 @@ explicit backup/export and Android receipt limits. Twelve Offline/CloudBackupOnl
 fit official lengths; historical Windows images are not current mobile acceptance. No product
 source/permission/schema or managed-count change; no build/financial/native replay. Final release
 edition/OAuth/mobile assets/Store/publication gates remain. [Evidence](../quality/store-draft-factual-boundaries.md).
+
+D-555 final update to Section31: previously installed complete signed runtime14 package50f5
+is now accepted in original new Samsung Main18619, preserving Home979/all141 public states,
+UID/CEDE/permissions/OS/caller and original ready Transactions top-right title action. Three new
+hash-matched XMLs removed; no managed test/build/financial or accepted matrix replay. D-560
+records scoped owner foreground/per-install prompt authority, not product/permission changes.
+General qualification/release gates remain. [Evidence](../quality/physical-runtime14-final-adoption.md).

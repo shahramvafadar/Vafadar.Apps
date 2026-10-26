@@ -6187,3 +6187,13 @@ backup and states the original Android receipt limits. Twelve assembled packets 
 old Windows assets are historical. Documentation only, no successful app/financial cohort replay.
 REL-01/REL-03 remain open for final edition, real OAuth, mobile assets, declarations, company/
 Store and actual publication acceptance. [Bounded evidence](../../quality/store-draft-factual-boundaries.md).
+
+### D-555 / D-560 - Physical runtime14 final adoption completed; owner autonomy clarified
+
+Original one-time signed50f5 no-reset upgrade is accepted in same new Main18619 with Home979/
+all141/UID/CEDE/permissions/OS/caller preserved. Ready Transactions title/Add stays top-right;
+return Home exact, three newly owned XMLs cleaned. No accepted financial/native cohort repeats.
+Owner now permits normal owned-app foreground restoration and the exact per-install Play Protect
+install-without-scanning choice for an already authorized candidate, without global security or
+authentication changes. These permissions were not exercised unnecessarily. General stability,
+performance/A11Y/platform/provider/Store/release gates remain open. [Evidence](../../quality/physical-runtime14-final-adoption.md).
