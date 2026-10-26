@@ -28,7 +28,7 @@
     <PackageVersion Include="Microsoft.Maui.Essentials" Version="10.0.120" />
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageVersion Include="FluentIcons.Maui" Version="2.1.341" />
-    <PackageVersion Include="FluentIcons.Common" Version="2.1.341" />
+    <PackageVersion Include="FluentIcons.Common" Version="2.1.344" />
   </ItemGroup>
 
   <ItemGroup Label="Android">
