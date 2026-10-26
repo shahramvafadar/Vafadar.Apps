@@ -6197,3 +6197,14 @@ Owner now permits normal owned-app foreground restoration and the exact per-inst
 install-without-scanning choice for an already authorized candidate, without global security or
 authentication changes. These permissions were not exercised unnecessarily. General stability,
 performance/A11Y/platform/provider/Store/release gates remain open. [Evidence](../../quality/physical-runtime14-final-adoption.md).
+
+### D-561 - Current physical large Home boundary completed with original crash preserved
+
+Twelve publications/six original contexts pass final raw/financial/native/byte guards under
+runtime14 ARM64. Preserve real SIGSEGV28422; four completed contexts remain, only two resume
+in31321. Nine diagnostic-parser tests pass; actual own exit history is EXIT_SELF1/status255,
+not an accepted native tombstone. Tenfold median3954.76ms leaves two-second and general QA-06
+stability open. Restore original b1d5/stopped and Main18994/Home979/all141/OS, retaining old18619
+OS reason3 lineage and all source evidence; four XMLs hash-clean. No financial/key/seed/accepted
+cohort replay. Phone handed to authorized other chat; independent CI diagnosis continues.
+[Finite scope, preserved errors and gates](../../quality/physical-runtime14-large-home-and-native-exit.md).

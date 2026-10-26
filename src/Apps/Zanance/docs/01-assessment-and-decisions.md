@@ -10351,3 +10351,16 @@ per-install Play Protect install-without-scanning option when shown and bound to
 Do not disable global security, grant unrelated permissions or enter real authentication.
 No such action or repeated installation was necessary during D-555's completed continuation.
 [Authority, observations and limits](quality/physical-runtime14-final-adoption.md).
+
+### D-561 - Preserve current physical native death and resume only incomplete Home contexts
+
+Original runtime14/ARM64 large Home accepts four contexts in28422 before a real SGen-worker
+SIGSEGV. An independent exit-only Activity observes actual own-PID/UID OS EXIT_SELF1/status255
+and refuses to invent a native tombstone. Bounded allowlist parser has nine focused real-source
+cases; no registers/memory or main database export. Exact original cohort APK resumes only two
+unfinished contexts in31321, with complete original financial/native/byte guards. Tenfold median
+3954.76ms is not two-second acceptance or a causal runtime gain; original crash remains open.
+Original caller/bounded empty-Main retirement and four owned XML cleanup pass. Owner-authorized
+per-install Don't send resumes the same Play Protect restore without global-security change.
+Final Main18994 replaces18619 (OS reason3), with Home979/all141/APK/identity/storage/flags/OS
+preserved. No uninterrupted-process or broad stability claim. [Full evidence](quality/physical-runtime14-large-home-and-native-exit.md).

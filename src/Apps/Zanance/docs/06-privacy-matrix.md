@@ -1300,3 +1300,11 @@ four protected-source audits precede final code restoration, not a later whole-k
 owned code-only KEEP_DATA swaps preserve metadata identity; no global cache/data clear. Separate
 D555 cleanup removes three hash-matched completed phone XML copies without app input.
 [Full boundary](quality/runtime14-retained-large-home.md).
+
+D-561 independent development diagnostics only: an own-package/UID/prior-PID exit Activity reads
+bounded Android exit metadata. Only OS-classified native traces may enter an allowlist streaming
+reader; output is relative code PC/module basename/BuildId for the requested crashed thread.
+No registers, raw memory/absolute stack, logs, unrelated crash or private Main database/key export;
+discard buffers cleared. Actual phone record EXIT_SELF1/status255 is reported without tombstone
+acceptance. No production app SDK, permission, telemetry or network change. See the D-561 quality
+evidence; this diagnostic capability is not a general privacy/security acceptance.

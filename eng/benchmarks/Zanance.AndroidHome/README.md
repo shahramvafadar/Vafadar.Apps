@@ -1141,3 +1141,25 @@ Missing/changed mode refuses continuation; old controls must not be relabeled. N
 runtime switch or global key cache is introduced. Qualify opposite-order pairs without replaying
 accepted financial work, then restore only the independent caller through the existing empty-Main
 M1/M2 retirement guard. [Evidence](../../../src/Apps/Zanance/docs/quality/home-publication-connection.md).
+
+## Own prior native-exit inspection (D-561)
+
+NativeExitInspectionActivity is a separate independent-only Activity: it does not start MAUI or
+prepare/open a financial database. Resolve its actual manifest component from the qualified APK;
+do not guess the generated Java name. Require API31+, exact own UID/prior PID and32-hex run via
+review_exit_uid/review_exit_pid/review_exit_run. Read only the launched observer PID's bounded
+ZananceNativeExit fragments, validating run/index/count/uniqueness before decoding. Do not send
+review_phase, reuse a financial selector or relaunch a completed cohort for crash observation.
+
+NativeExitFrames consumes the AOSP tombstone protobuf with strict total/nested bounds and exports
+only requested crashed-thread relative code locations/module basenames/BuildIds. Unknown fields,
+other threads, registers, absolute stack/PC, logs and memory are discarded with cleared buffers.
+A logged SIGSEGV is not OS REASON_CRASH_NATIVE: return real own exit reason/status and explicit
+refusal when different, or unavailable/type-only failure when the original trace is absent.
+Never infer a backtrace, root arbitrary paths, dump memory or export the complete trace.
+
+Qualify actual executable/runtime identity before retained-source measurement. After diagnostic
+code changes, restore the exact original measured APK before resuming its immutable byte/module/
+day/progress lineage; keep every accepted context and fatal record. Empty normal independent
+Main metadata retirement is a separately guarded compatibility step, never a workload or shipping
+Main downgrade. No production app source references this diagnostic Activity or parser.

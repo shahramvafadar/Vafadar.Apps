@@ -9679,3 +9679,11 @@ UID/CEDE/permissions/OS/caller and original ready Transactions top-right title a
 hash-matched XMLs removed; no managed test/build/financial or accepted matrix replay. D-560
 records scoped owner foreground/per-install prompt authority, not product/permission changes.
 General qualification/release gates remain. [Evidence](../quality/physical-runtime14-final-adoption.md).
+
+D-561 update to Section31: actual runtime14 physical large Home completes twelve publications
+across six original contexts, retaining four before a real native death and resuming only two.
+Full financial/raw/native/byte guards pass; tenfold3954.76ms median does not meet two seconds.
+Nine new independent-diagnostic reader cases pass; actual OS exit reason1/status255 is preserved
+and no tombstone accepted. Final Main18994/Home979/all141/OS and original caller restored,
+with old18619 OS reason3 explicit. No product financial algorithm/model/permission change or
+full-suite replay. [Evidence and open gates](../quality/physical-runtime14-large-home-and-native-exit.md).

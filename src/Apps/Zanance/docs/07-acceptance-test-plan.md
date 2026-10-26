@@ -6875,3 +6875,11 @@ Transactions Add/header remain exact. Return Home and three owned XML removals p
 matrix/financial/build/test replay or new managed-count claim. D-560 records later owner-scoped
 foreground/install-prompt autonomy, not a newly exercised security or authentication acceptance.
 [Evidence and open gates](quality/physical-runtime14-final-adoption.md).
+
+D-561: four original physical runtime14 contexts in28422 plus only two resumed contexts in31321
+complete twelve publications with full original raw/native/financial/byte controls. Preserve actual
+SGen-worker SIGSEGV; no general stability or two-second acceptance. Nine new bounded diagnostic
+reader cases pass, while native exit-only Activity accurately returns own EXIT_SELF1/status255
+and no native trace acceptance. Original caller/OS and final Main18994/Home979/all141 restoration
+pass; old18619 OS reason3 is explicit, no private Main equality claim. No successful finance or
+native context replay. [Actual source/process lineage](quality/physical-runtime14-large-home-and-native-exit.md).

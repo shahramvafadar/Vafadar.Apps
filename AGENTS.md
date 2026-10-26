@@ -3757,3 +3757,20 @@ metadata retirement, through the original exclusive protected factory. Do not re
 Main retirement route for nonempty workloads or customer Main. Preserve failures and distinguish
 logical recovery from original ciphertext equality; never rewrite a prior byte fingerprint to
 hide a diagnostic mutation or replay accepted financial/native cases for observation repairs.
+
+## D-561 - Truthful own-exit diagnostics and retained native continuation
+
+A fatal native log does not authorize relabeling Android ApplicationExitInfo: require exact own
+independent package/UID/prior PID and OS native-crash reason before parsing a tombstone. Keep an
+EXIT_SELF/status record and missing trace explicit. Independent diagnostics may export only bounded
+relative code locations/module basenames/BuildIds for the requested crashed thread, never raw
+memory/registers/absolute stack, unrelated records or private shipping Main data. Resume only
+unfinished retained cases with their original executable/module/day/source/progress fingerprint;
+keep fatal events and accepted contexts instead of replaying them. Original Main PID can change:
+verify actual OS lineage/public data and do not claim uninterrupted survival.
+
+The observed per-install Play Protect send-for-security-check dialog for the already authorized
+Zanance Home review restoration uses Don't send for the owner's install-without-scanning path.
+Verify the exact app/pending attempt and leave Always send unknown apps unchanged. This is the
+same narrow per-install exception, not authority for other system UI, global security changes,
+permissions, credentials or duplicate installation.

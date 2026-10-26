@@ -4021,3 +4021,10 @@ service/container runtime, Store or release acceptance, or overwrite historical 
   new owned XMLs removed without reinstall or financial replay.
 - [ ] General security/data, physical performance/stability/A11Y, iOS/provider/Store/release
   acceptance remains separate. [Scope and D-560 owner instructions](quality/physical-runtime14-final-adoption.md).
+
+- [x] D-561 finite physical runtime14 large-Home source/native boundary: preserve four completed
+  contexts and real28422 SIGSEGV, resume only two in31321, full original controls and restoration.
+- [x] D-561 bounded own-exit diagnostic reports actual EXIT_SELF1/status255 instead of guessing a
+  native trace; nine focused parser cases pass. This does not qualify actual tombstone extraction.
+- [ ] General native-crash/ANR and physical two-second goal remain open; tenfold median3954.76ms.
+  [Original failures, restoration and limits](quality/physical-runtime14-large-home-and-native-exit.md).
