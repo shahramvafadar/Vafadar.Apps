@@ -3992,3 +3992,9 @@ D-554's official runtime14 Brotli correction is qualified only for the recorded 
 component cohorts and complete signed candidate50f5. Physical Main adoption is pending original
 caller Play Protect restoration. Do not treat this as general Mono fault, whole-platform/security,
 service/container runtime, Store or release acceptance, or overwrite historical runtime13 receipts.
+
+- [x] D-556 retained local API runtime14 servicing: exact app/probe bytes, fresh original13-to14
+  encrypted-confirmation/TLS cohort, original-config hash and private snapshot before replacement;
+  actual14/healthy/verified proxy HTTPS200 and unchanged original mounts/other containers.
+- [ ] General service security/private-data equality, providers/mail/public routing/Store/release
+  remain separate; D555 phone foreground acceptance is pending.

@@ -18,11 +18,15 @@ using Vafadar.Zanance.Core.Sync;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.Sync;
 
-if (args is not ["initial" or "cold" or "restored" or "public" or "public-refused" or "boundary" or "attachment" or "restored-files" or "renewed", var proxyAddress] || !IPAddress.TryParse(proxyAddress, out var proxy))
+if (args is not ["initial" or "cold" or "restored" or "public" or "public-refused" or "boundary" or "attachment" or "restored-files" or "renewed" or "runtime-before" or "runtime-after", var proxyAddress] || !IPAddress.TryParse(proxyAddress, out var proxy))
     throw new InvalidOperationException("Explicit fictional stage and owned proxy address required.");
 var stage = args[0];
+var runtimeServicing = stage is "runtime-before" or "runtime-after";
+var qualificationProject = Environment.GetEnvironmentVariable("ZANANCE_QUALIFICATION_PROJECT");
+if (runtimeServicing && qualificationProject != "zanance-runtime14-qualification-d556")
+    throw new InvalidOperationException("Runtime servicing requires its fresh exact fictional project.");
 SQLitePCL.Batteries_V2.Init();
-if (Environment.GetEnvironmentVariable("ZANANCE_QUALIFICATION_PROJECT") is not
+if (!runtimeServicing && qualificationProject is not
     ("zanance-selfhost" or "zanance-selfhost-restore-d293" or "zanance-selfhost-restore-files-d293"))
     throw new InvalidOperationException("Only the explicitly named fictional deployment projects can be qualified.");
 const string root = "/qualification";
@@ -32,7 +36,16 @@ using var deadline = new CancellationTokenSource(TimeSpan.FromMinutes(4)); var c
 Directory.CreateDirectory(root);
 var marker = Path.Combine(root, "fictitious.marker");
 var proofPath = Path.Combine(root, "original.json");
-if (stage == "initial")
+if (stage == "runtime-before")
+{
+    if (!File.Exists(marker))
+    {
+        Check(!Directory.EnumerateFileSystemEntries(root).Any(), "Fresh isolated runtime source required.");
+        await File.WriteAllTextAsync(marker, "Zanance fictional hosted qualification v1", ct);
+    }
+    else Check(File.Exists(Path.Combine(root, "runtime-registration-request.json")), "Preserve incomplete runtime preparation.");
+}
+else if (stage == "initial")
 {
     Check(!File.Exists(marker) && !File.Exists(proofPath), "Fresh isolated qualification required; existing fixtures are never reset.");
     await File.WriteAllTextAsync(marker, "Zanance fictional hosted qualification v1", ct);
@@ -44,7 +57,10 @@ var connection = "Host=database;Database=zanance;Username=zanance_owner;SSL Mode
 await using var db = new ServiceDbContext(new DbContextOptionsBuilder<ServiceDbContext>().UseNpgsql(connection).Options);
 // This caller must never access a service that contains an owner account or unrelated identity.
 var users = await db.Users.Select(user => user.Email).ToListAsync(ct);
-Check(stage == "initial" ? users.Count == 0 : users.Count == 1 && users[0] == email, "Only the empty or exact fictional identity fixture is allowed.");
+Check(stage == "runtime-before"
+    ? users.Count == 0 || users.Count == 1 && users[0] == email && File.Exists(Path.Combine(root, "runtime-registration-request.json"))
+    : stage == "initial" ? users.Count == 0 : users.Count == 1 && users[0] == email,
+    "Only the empty or exact fictional identity fixture is allowed.");
 using var trust = X509CertificateLoader.LoadCertificateFromFile("/proxy-trust/root.crt");
 if (stage == "boundary")
 {
@@ -96,6 +112,65 @@ using (var tcp = new TcpClient())
     await RunAsync(new("https://localhost:17443/", fingerprint));
 }
 
+/// <summary>Retains one fictional confirmation across a runtime-only rebase; never uses finance or owner credentials.</summary>
+async Task QualifyRuntimeServicingAsync(HttpClient http)
+{
+    var beforePath = Path.Combine(root, "runtime-before-proof.json");
+    if (stage == "runtime-before")
+    {
+        var requestPath = Path.Combine(root, "runtime-registration-request.json");
+        if (!File.Exists(requestPath))
+        {
+            Check(users.Count == 0, "Runtime fixture requires an empty isolated service.");
+            await File.WriteAllTextAsync(requestPath, JsonSerializer.Serialize(new { Stage = stage, FictionalIdentity = true }), ct);
+            using var registered = await http.PostAsJsonAsync("identity/register", new IdentityInput(email, password), ct);
+            Check(registered.StatusCode == HttpStatusCode.Accepted, "Original fictional registration refused.");
+        }
+        else Check(users.Count == 1 && users[0] == email, "Preserve incomplete registration rather than posting twice.");
+        var account = await db.Users.Where(user => user.Email == email).Select(user => new { user.Id, user.EmailConfirmed }).SingleAsync(ct);
+        Check(!account.EmailConfirmed, "Before-runtime confirmation must remain unfinished.");
+        var challenge = await db.Challenges.AsNoTracking().Where(row => row.UserId == account.Id && row.Purpose == "confirm")
+            .Select(row => new { row.Id, row.ProtectedMail }).SingleAsync(ct);
+        await File.WriteAllTextAsync(beforePath, JsonSerializer.Serialize(new { Stage = stage, Passed = true, User = account.Id,
+            Challenge = challenge.Id, ProtectedMailSHA256 = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(challenge.ProtectedMail))),
+            ActualOriginalHttps = true, ConfirmationNotConsumed = true, FinancialWrites = 0 }), ct);
+    }
+    else
+    {
+        using var before = JsonDocument.Parse(await File.ReadAllTextAsync(beforePath, ct));
+        var originalUser = before.RootElement.GetProperty("User").GetString();
+        var originalChallenge = before.RootElement.GetProperty("Challenge").GetGuid();
+        var account = await db.Users.Where(user => user.Email == email).Select(user => new { user.Id, user.EmailConfirmed }).SingleAsync(ct);
+        Check(account.Id == originalUser, "Original fictional identity changed during servicing.");
+        var requestPath = Path.Combine(root, "runtime-confirmation-request.json");
+        if (!account.EmailConfirmed)
+        {
+            Check(!File.Exists(requestPath), "Preserve in-flight confirmation rather than submitting twice.");
+            var challenge = await db.Challenges.AsNoTracking().Where(row => row.Id == originalChallenge)
+                .Select(row => new { row.Id, row.ProtectedMail }).SingleAsync(ct);
+            Check(Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(challenge.ProtectedMail)))
+                == before.RootElement.GetProperty("ProtectedMailSHA256").GetString(), "Protected mail changed before confirmation.");
+            // Only software machine authority in this exact fresh fictional project is consumed inside the caller.
+            using var certificate = X509Certificate2.CreateFromPemFile("/identities/protection.crt", "/identities/protection.key");
+            using var protection = new ServiceCollection().AddDataProtection().SetApplicationName("Vafadar.Zanance.Service")
+                .PersistKeysToFileSystem(new DirectoryInfo("/private/keys")).UnprotectKeysWithAnyCertificate(certificate).Services.BuildServiceProvider();
+            var mail = JsonSerializer.Deserialize<PrivateMail>(protection.GetRequiredService<IDataProtectionProvider>()
+                .CreateProtector("identity-mail-v1").Unprotect(challenge.ProtectedMail))!;
+            await File.WriteAllTextAsync(requestPath, JsonSerializer.Serialize(new { OriginalUser = account.Id,
+                OriginalChallenge = challenge.Id, NoTokenOrCredentialOutput = true }), ct);
+            using var confirmed = await http.PostAsJsonAsync("identity/complete", new ChallengeInput(challenge.Id, mail.Token, null), ct);
+            Check(confirmed.StatusCode == HttpStatusCode.NoContent, "Original confirmation failed after servicing.");
+        }
+        else Check(File.Exists(requestPath), "A different operation consumed the original confirmation.");
+        Check(await db.Users.Where(user => user.Id == originalUser).Select(user => user.EmailConfirmed).SingleAsync(ct),
+            "Original fictional confirmation did not persist.");
+        await File.WriteAllTextAsync(output, JsonSerializer.Serialize(new { Stage = stage, Passed = true, OriginalIdentityPreserved = true,
+            Runtime13ProtectedMailUnwrappedBy14 = true, Runtime13ConfirmationAcceptedBy14 = true,
+            OriginalProductionHttpsClient = true, FinancialWrites = 0, OwnerCredentialUsed = false }), ct);
+    }
+    Console.WriteLine("Original fictional runtime-servicing stage passed: " + stage);
+}
+
 async Task RunAsync(LocalSyncPeer peer)
 {
     // A local-only TCP relay preserves the real TLS bytes and original hostname/pin policy.
@@ -131,6 +206,11 @@ async Task RunAsync(LocalSyncPeer peer)
             throw new InvalidOperationException("An untrusted hosted certificate was accepted by the original client.");
         }
         using var health = await http.GetAsync("health/ready", ct); Check(health.IsSuccessStatusCode, "Real reverse-proxy readiness failed.");
+        if (runtimeServicing)
+        {
+            await QualifyRuntimeServicingAsync(http);
+            return;
+        }
         if (stage == "initial")
         {
             using var registration = await http.PostAsJsonAsync("identity/register", new IdentityInput(email, password), ct);

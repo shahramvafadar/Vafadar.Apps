@@ -6841,3 +6841,10 @@ not claimed because each own linked input differs. Fresh2062 total fixture rows 
 cases. Both new sources/AVDs are retired and prior context restored. Physical no-reset adoption,
 whole stability/performance/A11Y/platform/service/authentication/release remain open.
 [Actual receipts and refusals](quality/runtime14-brotli-security-servicing.md).
+
+D-556 qualifies the changed local service runtime: strict images, identical original published
+software, one new13-to14 original HTTPS/encrypted-confirmation cohort, then exact-config/private-
+snapshot guarded retained API adoption. Actual14/health/HTTPS200 and unchanged original mounts/
+other containers pass. No financial action, unchanged suite or phone cohort repeats; no managed-
+count increase. Preserve original failed wait/lint/observer/cleanup lookups.
+[Evidence and limits](quality/service-runtime14-exact-application.md).

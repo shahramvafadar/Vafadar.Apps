@@ -6147,3 +6147,13 @@ future candidate50f5 supersedes896e without an intermediate physical upgrade; D5
 Play Protect/restoration/adoption remains open. General Mono faults/performance/A11Y/platform/
 owner/provider/Store/service-runtime/release gates are not closed.
 [Official correction and bounded evidence](../../quality/runtime14-brotli-security-servicing.md).
+
+### D-556 - Retained local service runtime14 boundary completed
+
+Strict pinned images and exact original app/probe bytes pass. One new isolated13-to14 original
+HTTPS/encrypted-confirmation cohort passes once, without financial writes. Original Compose hash,
+mandatory private snapshot and actual retained API14/healthy/HTTPS200 qualify local runtime-only
+adoption; all original mounts/four other containers remain. New fixture/two unused images retired,
+rollback/snapshot retained. D555 phone acceptance and general security/stability/A11Y/performance/
+iOS/provider/public/Store/release remain open. No unchanged successful suite or operation repeats.
+[Bounded evidence](../../quality/service-runtime14-exact-application.md).

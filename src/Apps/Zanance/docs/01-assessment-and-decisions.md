@@ -10282,3 +10282,15 @@ used APKs and scoped test runtime remain. Explicitly select50f5 for the future s
 without rewriting896e historical baseline. Phone Play Protect/restoration/adoption remains open.
 No general Mono crash fix, all-platform/security/service deployment or release claim.
 [Exact source, native evidence and limits](quality/runtime14-brotli-security-servicing.md).
+
+### D-556 - Service the retained API runtime without changing application bytes
+
+Official ASP.NET14/SDK403 immutable pins replace13/402 in service build inputs. A runtime-only
+image preserves every original /app and /probe byte, avoiding deployment of newer source features
+or schema. One fresh13-to14 original HTTPS/encrypted-confirmation cohort passes without financial
+writes. Preserve lint/observer/one-shot wait refusals; do not replay accepted work. Reproduce the
+retained API config hash exactly, validate a fresh private drained snapshot, replace only API
+runtime and restart the same proxy. Actual14/healthy/verified HTTPS200, exact five mount sets and
+four unchanged other container identities pass. Remove two unused new images; retain live14,
+original rollback and private snapshot. Broader security/data/platform/provider/release gates stay
+open. [Original authority and finite evidence](quality/service-runtime14-exact-application.md).

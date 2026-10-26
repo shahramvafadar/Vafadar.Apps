@@ -63,3 +63,21 @@ mode0600 under the runner owner, unlike the earlier Windows host bind behavior. 
 the regular non-link copied root.crt and sets only that public file to0644. It changes no private key, deployed
 volume, TLS verifier, production endpoint or owner installation. A separate labeled Linux fixture proves the
 same-UID denial/correction; hosted full clients/private restore/transport renewal remain the actual gate.
+
+## D-556 Runtime-only servicing of a retained deployment
+
+Canonical sources can be newer than a retained deployment. Use ServiceRuntime.Dockerfile with
+verified immutable ORIGINAL_SERVICE_IMAGE/ORIGINAL_SERVICE_ID, pinned official base and a minimal
+context with no private state. Compare every /app and /probe hash and actual runtime versions.
+A new source build alone does not authorize its feature/schema rollout. Qualify encrypted
+confirmation through compose.runtime-servicing.yml only on its exact fresh project, empty owned
+environment and original production TLS client. Preserve successful-stage markers; a one-shot
+exiting0 must not trigger another startup/registration. Do not use --wait for the completed init job.
+
+Before retained adoption reproduce the original Compose hash from allowlisted public settings,
+use the existing drained private snapshot operation, preserve gateway/household/image/mount
+identity, then replace only API with --no-deps/--no-build and restart the same original proxy.
+Retain exact rollback image/snapshot and explicit immutable runtime image for later startup;
+never substitute default mutable tags. Verify actual runtime/health/TLS/other container identities.
+No public promotion or real authentication is implied.
+[Finite qualification and cleanup](../../quality/service-runtime14-exact-application.md).

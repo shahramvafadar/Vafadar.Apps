@@ -1255,3 +1255,9 @@ security correction. No new SDK, permission, application network/data collection
 algorithm/schema is introduced; the Offline APK still has no INTERNET permission. Native validation
 uses only new owned fictional sources removed afterward. Official build-time dependency retrieval
 and isolated host test runtime are not app network traffic or physical/private-key acceptance.
+
+D-556 updates existing official service runtime images only. One fresh isolated .invalid identity
+uses software machine authority inside its owned volumes, never owner credentials. No financial
+posting/public route/SDK/permission/collector/app traffic is added. Retire new fixture/software
+keys without host export; preserve retained mounts and private in-Docker rollback snapshot.
+TLS health is not broad database/key equality. [Scope](../quality/service-runtime14-exact-application.md).

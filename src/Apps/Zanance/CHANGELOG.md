@@ -6,6 +6,7 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Update the local service runtime security components while preserving its original application files and private storage, with a validated rollback snapshot (D-556).
 - Update the packaged .NET runtime to10.0.14 for the official security correction in compressed-data decoding, preserving existing financial data and calculations (D-554).
 
 - Read existing Home ledger blocks with one short-lived expansion buffer, reducing temporary allocations while preserving all original financial fields; two bounded large-source native comparisons improve by about6-7%, with the two-second target still open (D-547).

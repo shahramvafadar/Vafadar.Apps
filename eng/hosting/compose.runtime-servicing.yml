@@ -1,0 +1,45 @@
+# Only the fresh exact D556 fictional project may use this finite runtime qualification.
+services:
+  provision:
+    pull_policy: never
+  database:
+    pull_policy: never
+  migrate:
+    pull_policy: never
+  api:
+    pull_policy: never
+  proxy:
+    pull_policy: never
+  runtime-qualification-init:
+    image: ${ZANANCE_BOOTSTRAP_IMAGE:?Explicit existing immutable bootstrap image required}
+    pull_policy: never
+    user: "0:0"
+    network_mode: none
+    read_only: true
+    cap_drop: [ALL]
+    cap_add: [CHOWN]
+    security_opt: [no-new-privileges:true]
+    entrypoint: ["sh", "-c", 'test -z "$(ls -A /qualification)" && chmod 700 /qualification && chown 1654:1654 /qualification']
+    volumes: ["runtime-qualification:/qualification"]
+    labels: {pro.vafadar.fixture: runtime-servicing-d556}
+  runtime-qualification:
+    image: ${ZANANCE_QUALIFICATION_IMAGE:?Explicit qualified runtime caller image required}
+    pull_policy: never
+    user: "1654:1654"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: ["/tmp:uid=1654,gid=1654,mode=0700"]
+    environment:
+      DOTNET_EnableDiagnostics: "0"
+      ZANANCE_QUALIFICATION_PROJECT: ${COMPOSE_PROJECT_NAME}
+    command: ["${ZANANCE_RUNTIME_SERVICING_STAGE:?Explicit before/after stage required}", "${ZANANCE_PROXY_ADDRESS:?Explicit owned proxy address required}"]
+    networks: [database, service]
+    volumes:
+      - runtime-qualification:/qualification
+      - operator-identity:/identities:ro
+      - private:/private:ro
+      - ../../artifacts/runtime14-d556-proxy-root.crt:/proxy-trust/root.crt:ro
+    labels: {pro.vafadar.fixture: runtime-servicing-d556}
+volumes:
+  runtime-qualification:

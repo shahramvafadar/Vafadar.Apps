@@ -9644,3 +9644,10 @@ Android and changed-runtime original nonempty codec/Home on API24/4096 and API35
 pass. No product algorithm/schema/permission or managed-count increase. Two fresh1031-row sources
 are retired with exact prior contexts. Physical adoption and general stability/performance/A11Y/
 platform/owner/service/release acceptance remain separate. See [evidence](../quality/runtime14-brotli-security-servicing.md).
+
+D-556 update to Section31: local service runtime14 adoption is separately qualified. Every original
+published app/probe byte remains exact; one fresh original13-to14 encrypted confirmation passes.
+Original config hash/private snapshot precede API-only replacement; actual14/health/HTTPS200 and
+original mounts/other containers pass. No financial posting or managed-count increase, and no
+newer canonical feature/schema rollout. General data/security/platform/provider/public/release
+and D555 phone acceptance remain separate. [Evidence](../quality/service-runtime14-exact-application.md).
