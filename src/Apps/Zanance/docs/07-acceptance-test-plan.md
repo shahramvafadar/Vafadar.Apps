@@ -6925,3 +6925,18 @@ Ordinary emulator Main3035/50f5 and phone Main7028/8fd5 are preserved. Standard 
 and exact-head CI are separate recorded gates. Shipping code/APK, permissions, UI and GC settings
 are unchanged. QA-06, phone two-second, accessibility/platform/security/iOS/provider/Store/release
 remain open. [Full scope and actual failures](quality/bounded-native-fault-code-observation.md).
+
+
+### D-564 - Ordinary emulator ledger-guard adoption and owned code cleanup
+
+Accept existing signed shipping8fd5 once without reset on ordinary emulator Main3035to6123,
+with original all120 public attributes/zero balance, UID/CE/DE/permissions, size/density and five
+settings exact. Preserve actual storage refusals. Retire only the stopped finished Billing
+recovery caller's unused code after hash/certificate-verified APK backup, retaining its UID/data/
+keys/stored grants; do not touch the live historical snapshot caller. Restore compatible D563
+ebd9 stopped with original UID/storage/permissions, and hash-clean two new XMLs. The overly broad
+uninstalled-permission-declaration observer refusal is preserved and corrected without reinstall.
+No phone, private Main database/key, financial command, old successful suite or build is repeated.
+No AVD resize, data clear or global cache purge occurs. This completes the distinct ordinary
+emulator changed-APK gate; QA-06/A11Y/platform/iOS/provider/Store/release remain open.
+[Full boundary and failures](quality/ordinary-emulator-ledger-guard-adoption.md).
