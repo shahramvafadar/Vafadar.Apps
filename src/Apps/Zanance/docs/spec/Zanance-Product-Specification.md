@@ -9745,3 +9745,21 @@ No phone, private Main database/key, financial command, old successful suite or 
 No AVD resize, data clear or global cache purge occurs. This completes the distinct ordinary
 emulator changed-APK gate; QA-06/A11Y/platform/iOS/provider/Store/release remain open.
 [Full boundary and failures](../quality/ordinary-emulator-ledger-guard-adoption.md).
+
+
+### D-565 - Physical ARM64 bounded observer cohort and original handback
+
+Qualify the previously unperformed managed ARM64 observer boundary with one original retained-source
+cohort, no new financial/preparation/key commands. Strict complete signed dadba5/192AOT/205ELF and
+actual financial/runtime identity pass; all6 native contexts/12 publications and full source/native
+presentation guards pass in5178. The named record is empty and that process lives: random SGen
+crash/root cause remains unproved. Tenfold median3512.0725ms still exceeds the two-second target.
+Only the validated empty independent Main retires M1/M2/M3; original b1d5/UID/storage/permissions
+return through the same installer with the owner-authorized scoped Don't send option. Preserve
+German-onboarding observer refusal and restore English once in the same7667 without Next/financial
+work. Main7028/Home979/all141/both APKs/OS exactly return,5 XMLs hash-clean, and phone is handed back.
+One standard clean removes11586 files/637786410 logical bytes;4 unused unsigned copies remove
+117540593 bytes, used packages/proofs retained. D563 one-shot CodeQL passes/CI cancels; D564 CI and
+CodeQL pass, both schedules consumed/deleted. No old managed/native/financial success is replayed.
+QA-06/A11Y/security/platform/iOS/provider/Store/release remain open.
+[Full bounded evidence](../quality/physical-bounded-fault-observer.md).
