@@ -1294,3 +1294,15 @@ financial content or key. No shipping reference, SDK, network/upload, permission
 backup or product data path is added. Original signal handling and separate fatal-proof boundaries
 are qualified; a successful finite run with an empty record is not general crash acceptance.
 See [bounded evidence](../quality/bounded-native-fault-code-observation.md).
+
+
+### D-566 - Independent covered-startup diagnostic boundary
+
+An optional private partial observation has no shipping implementation; the compiler elides its
+method/call, verified against actual source. Only the explicit separate source-review package and
+valid owned run may emit at most four bounded exception type/code/sanitized-method packets. No
+exception messages, file paths, financial content, keys, Main database access, network/upload,
+SDK, permission, authentication or backup field is added. Copied original translated dialog text/
+geometry is fictitious native evidence. The fresh fixture is removed; original data and retained
+caller keys/grants are preserved. No global accessibility/security setting is changed.
+[Detailed bounded evidence](../quality/receipt-source-os-text-and-covered-startup.md).

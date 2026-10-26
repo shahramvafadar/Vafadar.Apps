@@ -4090,3 +4090,22 @@ One standard clean removes11586 files/637786410 logical bytes;4 unused unsigned 
 CodeQL pass, both schedules consumed/deleted. No old managed/native/financial success is replayed.
 QA-06/A11Y/security/platform/iOS/provider/Store/release remain open.
 [Full bounded evidence](quality/physical-bounded-fault-observer.md).
+
+
+### D-566 - Original receipt-source Help at actual OS200% and bounded startup diagnosis
+
+Qualify original native Help/OK/Cancel in en/fa/de, Light/Dark, exact360/412/680dp on API36/x64/4096.
+Preserve18 original320/412/640 scenes; continue only12 missing exact widths and skip all6 accepted412.
+All18 required exact contexts pass final-line reachability, original44dp actions and Persian RTL,
+with zero source/camera/file/financial commands. Correct only the observer's29px coordinate mismatch.
+The original covered startup failure is actual insufficient space below the unchanged553648128-byte
+protected guard; after backed-up finished-code-only KEEP_DATA retirement, one same-process Retry
+passes. Optional content-free independent startup diagnostics are compiler-elided from shipping;
+five new managed cases and two affected existing cases pass. Default Windows/Android strict and
+complete signed independent f288bc/192AOT/204ELF pass with actual financial/native identity to8fd5.
+Restore font/display/five settings, Main2902/all120/UID/storage/grants/8fd5 and stopped ebd9 exactly;
+remove only the fresh fixture,7 hash-matched XMLs, shut down only the owned AVD. Standard clean
+removes24947 files/2306666041 logical bytes;8 unused copies remove238366227 bytes, used evidence kept.
+D565 CI/CodeQL are green and its schedule consumed/deleted. Spoken/physical A11Y, QA-06, speed,
+security/platform/iOS/provider/Store/release remain open; no old financial success is replayed.
+[Full boundaries and preserved failures](quality/receipt-source-os-text-and-covered-startup.md).

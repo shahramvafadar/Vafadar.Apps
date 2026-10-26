@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Check original Android receipt-reading help at large system text in three languages and both themes; preserve financial data and add only a bounded independent startup diagnostic (D-566).
+
 - Add a private, optional independent diagnostic for bounded native fault locations; the shipping app and financial behavior are unchanged, and general crash qualification remains open (D-563).
 
 

@@ -2657,3 +2657,10 @@ fonts, accessible buttons and separate bulk/Undo rows remain intact. Header-posi
 size changes recompute the budget. The observed OS200%/360dp selection-plus-Undo defect is fixed;
 36 Undo states include412dp and a wide800dp window. This is layout acceptance, not a financial
 Undo or spoken-accessibility claim. [Actual boundary](quality/transactions-context-safe-area.md).
+
+
+D-566 verifies the original Android receipt-source Help/OK/Cancel at real OS200% in en/fa/de,
+both themes and exact360/412/680dp, including original44dp actions, Persian RTL and reachable
+last body line through native scrolling. No product layout/text change is required. Keep actual
+arranged dimensions separate from requested labels; preserve accepted scenes when continuing
+only missing widths. This does not qualify spoken TalkBack or every accessibility route.

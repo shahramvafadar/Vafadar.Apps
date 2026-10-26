@@ -1176,3 +1176,13 @@ Actual API36/ARM64/4096 qualification is native backend evidence, not form/UI ac
 Schema tools recognize only the explicit HomeFinancialRevision/HomeLedgerReadBlocks/
 HomeLedgerDirtyBlockConflictGuards suffix; no arbitrary migration or original-source rewrite.
 [Evidence](../../../src/Apps/Zanance/docs/quality/ci-ledger-invalidation-and-exact-restore.md).
+
+
+D-566: the distinct receipt-source caller accepts `review_receipt_os_text=true` only at actual
+OS font2.0. The explicit `review_source_help_exact_widths=true` continuation requires a successful
+original18-case baseline, deep-equal retained files and separate exact-width receipts; it skips
+already-exact cases. StartupViewModel's optional effect implementation exists only here, requires
+this owned package/selector/run, emits bounded type/code/method identities and cannot change cover
+or Retry. Default shipping compilation elides the effect. See the repository quality report
+`src/Apps/Zanance/docs/quality/receipt-source-os-text-and-covered-startup.md` for preserved failures,
+actual width/scroll evidence and restoration; no finance/source read is necessary.

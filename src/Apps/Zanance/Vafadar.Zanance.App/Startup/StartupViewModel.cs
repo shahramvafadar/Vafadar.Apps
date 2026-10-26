@@ -47,7 +47,14 @@ public partial class StartupViewModel(Func<Task> prepare, Func<Task<bool>>? reco
         if (running || completed) return;
         running = true; IsBusy = true; HasFailed = false;
         try { await prepare(); completed = true; }
-        catch (Exception error) when (error is not OutOfMemoryException) { HasFailed = true; }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            HasFailed = true;
+            ObservePreparationFailure(error);
+        }
         finally { running = false; IsBusy = false; }
     }
+
+    /// <summary>Optional native-effect observation; absent in shipping builds, where the call is elided.</summary>
+    partial void ObservePreparationFailure(Exception error);
 }

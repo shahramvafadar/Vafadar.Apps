@@ -10,6 +10,14 @@ public sealed class StartupFlowTests
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
+    [Fact, Trait("AT", "AT-222")]
+    public void Default_startup_source_emits_no_native_failure_observation_method()
+    {
+        // This assembly compiles the actual application source without any native diagnostic implementation.
+        Assert.Null(typeof(StartupViewModel).GetMethod("ObservePreparationFailure",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic));
+    }
+
     [Fact, Trait("AT", "AT-238")]
     public async Task Pending_backup_recovery_excludes_startup_and_other_recovery_until_its_explicit_result()
     {

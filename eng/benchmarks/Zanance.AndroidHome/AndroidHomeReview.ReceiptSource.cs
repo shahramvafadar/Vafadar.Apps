@@ -22,6 +22,11 @@ internal static partial class AndroidHomeReview
         var translator = services.GetRequiredService<Translator>();
         var interaction = services.GetRequiredService<IAppInteraction>();
         var activity = Platform.CurrentActivity ?? throw new ReviewCheckException("Owned source-help activity required.");
+        var osText = activity.Intent?.GetBooleanExtra("review_receipt_os_text", false) == true;
+        var fontScale = osText ? ReceiptSourceOsTextReview.RequireScale(activity) : activity.Resources?.Configuration?.FontScale ?? 0;
+        var exactWidths = activity.Intent?.GetBooleanExtra("review_source_help_exact_widths", false) == true;
+        if (exactWidths && (!osText || !resume)) throw new ReviewCheckException("Exact large-text continuation requires its existing successful source scope.");
+        Dictionary<string, System.Text.Json.JsonElement>? exactBaseline = null;
         var originalOrientation = activity.RequestedOrientation;
         var originalLanguage = local.CurrentLanguage.CultureName; var originalTheme = themes.Choice;
         var results = new List<object>();
@@ -36,7 +41,25 @@ internal static partial class AndroidHomeReview
                 originalFailed |= previous.RootElement.GetProperty("Failed").GetBoolean()
                     && previous.RootElement.GetProperty("Comparison").GetString() == baseline;
             }
-            if (!originalFailed) throw new ReviewCheckException("Only the original terminal failed observer may be continued.");
+            if (exactWidths)
+            {
+                var reportPath = Path.Combine(root, "receipt-source-help-" + baseline + "-result.json");
+                using var complete = System.Text.Json.JsonDocument.Parse(await File.ReadAllTextAsync(reportPath, ct));
+                var packet = complete.RootElement;
+                if (packet.GetProperty("Comparison").GetString() != baseline
+                    || !packet.GetProperty("OriginalOSScaledText").GetBoolean()
+                    || Math.Abs(packet.GetProperty("ActualOSFontScale").GetSingle() - 2f) > .001f
+                    || packet.GetProperty("FinancialSaves").GetInt32() != 0 || packet.GetProperty("CameraOrFileOpened").GetBoolean()
+                    || packet.GetProperty("Device").GetProperty("IndependentPackage").GetString() != Package)
+                    throw new ReviewCheckException("Original complete large-text source report required.");
+                var cases = packet.GetProperty("Results").EnumerateArray().ToArray();
+                if (cases.Length != 18 || !cases.Any(value =>
+                    Math.Abs(value.GetProperty("ActualHelpDialogDp").GetDouble() - value.GetProperty("RequestedDialogDp").GetInt32()) > 1))
+                    throw new ReviewCheckException("Only genuine missing exact widths may continue a successful source matrix.");
+                exactBaseline = cases.ToDictionary(value => $"{value.GetProperty("Language").GetString()}-{value.GetProperty("Theme").GetString()}-{value.GetProperty("RequestedDialogDp").GetInt32()}",
+                    value => value.Clone(), StringComparer.Ordinal);
+            }
+            else if (!originalFailed) throw new ReviewCheckException("Only the original terminal failed observer may be continued.");
         }
 
         IEnumerable<Android.Views.View> Walk(Android.Views.View view)
@@ -51,6 +74,7 @@ internal static partial class AndroidHomeReview
                 && v != activity.Window?.DecorView && v.LayoutParameters is WindowManagerLayoutParams);
         async Task<Android.Widget.TextView> Text(string expected)
         {
+            if (osText) return await ReceiptSourceOsTextReview.FindAsync(activity, expected, ct);
             for (var i = 0; i < 100; i++)
             {
                 ct.ThrowIfCancellationRequested();
@@ -72,6 +96,7 @@ internal static partial class AndroidHomeReview
             parameters.Width = pixels; activity.WindowManager!.UpdateViewLayout(dialog, parameters);
             for (var i = 0; i < 50 && dialog.Width != pixels; i++) await Task.Delay(40, ct);
             if (dialog.Width != pixels) throw new ReviewCheckException("Requested owned dialog width did not settle.");
+            if (osText) await Task.Delay(80, ct); // Let the real large-text descendants complete the resized native layout.
             return pixels / (double)density;
         }
         object Geometry(Android.Widget.TextView text)
@@ -122,17 +147,26 @@ internal static partial class AndroidHomeReview
                         var value = completed.RootElement;
                         if (value.GetProperty("Language").GetString() != language || value.GetProperty("Theme").GetString() != theme.ToString()
                             || value.GetProperty("RequestedDialogDp").GetInt32() != requested || value.GetProperty("NativeClicks").GetInt32() != 3
-                            || value.GetProperty("CameraOrFileOpened").GetBoolean() || value.GetProperty("FinancialSaves").GetInt32() != 0)
+                            || value.GetProperty("CameraOrFileOpened").GetBoolean() || value.GetProperty("FinancialSaves").GetInt32() != 0
+                            || osText && (!value.TryGetProperty("ActualOSFontScale", out var scale) || Math.Abs(scale.GetSingle() - 2f) > .001f))
                             throw new ReviewCheckException("Retained source-help case differs; do not replay it.");
+                        if (exactWidths && (exactBaseline is null || !exactBaseline.TryGetValue($"{language}-{theme}-{requested}", out var originalCase)
+                            || !System.Text.Json.JsonElement.DeepEquals(originalCase, value)))
+                            throw new ReviewCheckException("Original accepted source case changed; never replace its receipt.");
                         results.Add(value.Clone()); retained.Add(Path.GetFileName(casePath));
-                        if (requested != 412 || value.GetProperty("ActualHelpDialogDp").GetDouble() >= 411) continue;
-                        // This phone's unchanged portrait viewport is384dp. Retain that successful narrower
-                        // observation and complete only the missing exact412dp dialog in our own landscape window.
-                        casePath = Path.Combine(root, $"{language}-{theme}-412-exact.json");
+                        var missingExact = exactWidths
+                            ? Math.Abs(value.GetProperty("ActualSourceDialogDp").GetDouble() - requested) > 1
+                                || Math.Abs(value.GetProperty("ActualHelpDialogDp").GetDouble() - requested) > 1
+                            : requested == 412 && value.GetProperty("ActualHelpDialogDp").GetDouble() < 411;
+                        if (!missingExact) continue;
+                        // Retain the original narrower observations and run only genuinely missing exact targets.
+                        casePath = Path.Combine(root, $"{language}-{theme}-{requested}-exact.json");
                         if (File.Exists(casePath))
                         {
                             using var exact = System.Text.Json.JsonDocument.Parse(await File.ReadAllTextAsync(casePath, ct));
-                            if (exact.RootElement.GetProperty("ActualHelpDialogDp").GetDouble() is < 411 or > 413
+                            if (Math.Abs(exact.RootElement.GetProperty("ActualHelpDialogDp").GetDouble() - requested) > 1
+                                || exactWidths && (Math.Abs(exact.RootElement.GetProperty("ActualSourceDialogDp").GetDouble() - requested) > 1
+                                    || Math.Abs(exact.RootElement.GetProperty("ActualOSFontScale").GetSingle() - 2f) > .001f)
                                 || exact.RootElement.GetProperty("Language").GetString() != language
                                 || exact.RootElement.GetProperty("Theme").GetString() != theme.ToString()
                                 || exact.RootElement.GetProperty("CameraOrFileOpened").GetBoolean())
@@ -159,23 +193,43 @@ internal static partial class AndroidHomeReview
                     _receiptSourceStage = $"{language}/{theme}/{requested}/source";
                     var choice = ReceiptSourceChooser.ChooseAsync(translator, interaction, true, true);
                     var help = await Text(translator["Receipt_ImageHelp"]); var sourceWidth = await Width(requested);
-                    var source = Geometry(await Text(translator["Receipt_ImageHelp"])); Invoke(help);
+                    var source = osText
+                        ? await ReceiptSourceOsTextReview.ActionAsync(activity, translator["Receipt_ImageHelp"], ct)
+                        : Geometry(await Text(translator["Receipt_ImageHelp"]));
+                    if (osText) help = await Text(translator["Receipt_ImageHelp"]); // Native list scrolling may recycle the old row.
+                    Invoke(help);
                     _receiptSourceStage = $"{language}/{theme}/{requested}/help";
                     var message = await Text(translator["Receipt_ImageHelpText"]); var helpWidth = await Width(requested);
-                    var body = Geometry(await Text(translator["Receipt_ImageHelpText"]));
-                    var ok = await Text(translator["Common_Ok"]); Invoke(ok);
+                    var body = osText
+                        ? await ReceiptSourceOsTextReview.BodyAsync(activity, translator["Receipt_ImageHelpText"], ct)
+                        : Geometry(await Text(translator["Receipt_ImageHelpText"]));
+                    var ok = await Text(translator["Common_Ok"]);
+                    var okGeometry = osText ? await ReceiptSourceOsTextReview.ActionAsync(activity, translator["Common_Ok"], ct) : null;
+                    Invoke(ok);
                     _receiptSourceStage = $"{language}/{theme}/{requested}/cancel";
                     await Text(translator["Receipt_ImageHelp"]); await Width(requested);
-                    var cancel = await Text(translator["Common_Cancel"]); Invoke(cancel);
+                    var cancel = await Text(translator["Common_Cancel"]);
+                    var cancelGeometry = osText ? await ReceiptSourceOsTextReview.ActionAsync(activity, translator["Common_Cancel"], ct) : null;
+                    Invoke(cancel);
                     if (await choice.WaitAsync(TimeSpan.FromSeconds(10), ct) != ReceiptSourceChoice.Cancelled)
                         throw new ReviewCheckException("Help/cancel unexpectedly selected a native source.");
+                    if (exactWidths && (Math.Abs(sourceWidth - requested) > 1 || Math.Abs(helpWidth - requested) > 1))
+                        throw new ReviewCheckException("The original missing width is still capped; preserve the actual scene without claiming its target.");
                     var result = new { Language = language, Theme = theme.ToString(), RequestedDialogDp = requested,
                         ActualSourceDialogDp = sourceWidth, ActualHelpDialogDp = helpWidth,
-                        Source = source, Body = body, NativeClicks = 3, CameraOrFileOpened = false, FinancialSaves = 0 };
-                    await File.WriteAllTextAsync(Path.Combine(root, $"{language}-{theme}-{requested}.json"),
-                        System.Text.Json.JsonSerializer.Serialize(result), ct); results.Add(result);
+                        Source = source, Body = body, Ok = okGeometry, Cancel = cancelGeometry, ActualOSFontScale = fontScale,
+                        NativeClicks = 3, CameraOrFileOpened = false, FinancialSaves = 0 };
+                    await File.WriteAllTextAsync(casePath, System.Text.Json.JsonSerializer.Serialize(result), ct); results.Add(result);
                 }
             }
+        }
+        catch (Exception error) when (osText && error is not OutOfMemoryException)
+        {
+            // Preserve the actual failed native scene before the normal theme/orientation restoration.
+            LogReport("receipt-source-os-failure", Path.GetFileName(root), new
+            { Comparison = comparison, Stage = _receiptSourceStage, Evidence = ReceiptSourceOsTextReview.LastEvidence,
+                NoCameraFileReadOrFinancialSave = true });
+            throw;
         }
         finally
         {
@@ -185,6 +239,10 @@ internal static partial class AndroidHomeReview
         return new { Comparison = comparison, Results = results, RetainedCompletedCases = retained, OriginalSourceChooser = true,
             OriginalNativeInteraction = true, FinancialSaves = 0, CameraOrFileOpened = false,
             MainPackageTouched = false, SystemSettingsChanged = false, Device = DeviceEvidence(),
-            Boundary = "Owned dialog widths/app orientation; no OS scaling, spoken, camera, source-read or general stability acceptance" };
+            ActualOSFontScale = fontScale, OriginalOSScaledText = osText, ExactWidthContinuation = exactWidths,
+            OriginalSuccessfulBaseline = exactWidths ? baseline : null,
+            Boundary = osText
+                ? "Actual OS200% native dialog text/actions/scroll reachability only; no spoken/gesture/camera/source-read/general stability acceptance"
+                : "Owned dialog widths/app orientation; no OS scaling, spoken, camera, source-read or general stability acceptance" };
     }
 }
