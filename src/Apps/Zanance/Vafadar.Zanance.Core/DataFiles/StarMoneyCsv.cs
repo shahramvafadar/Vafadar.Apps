@@ -117,12 +117,16 @@ public static class StarMoneyCsv
     private static void ValidateSyntax(string text)
     {
         var quoted = false; var closed = false; var start = true; var columns = 1; var rows = 1; var length = 0;
+        // D-571: the established field bound counts decoded data, excluding delimiters and CSV quote syntax.
+        void CountCharacter()
+        { if (++length > 4096) throw new FormatException("A bank field exceeds its bound."); }
         for (var i = text.StartsWith('\uFEFF') ? 1 : 0; i < text.Length; i++)
         {
-            var c = text[i]; if (++length > 4096) throw new FormatException("A bank field exceeds its bound.");
+            var c = text[i];
             if (quoted)
             {
-                if (c == '"') { if (i + 1 < text.Length && text[i + 1] == '"') i++; else { quoted = false; closed = true; } }
+                if (c == '"') { if (i + 1 < text.Length && text[i + 1] == '"') { CountCharacter(); i++; } else { quoted = false; closed = true; } }
+                else CountCharacter();
                 continue;
             }
             if (c == '"') { if (!start || closed) throw new FormatException("Malformed bank CSV quotation."); quoted = true; start = false; continue; }
@@ -135,7 +139,7 @@ public static class StarMoneyCsv
                 start = true; closed = false; length = 0; columns = 1; continue;
             }
             if (closed) throw new FormatException("Unexpected content after a bank CSV quote.");
-            start = false;
+            CountCharacter(); start = false;
         }
         if (quoted) throw new FormatException("Incomplete bank CSV quotation.");
     }

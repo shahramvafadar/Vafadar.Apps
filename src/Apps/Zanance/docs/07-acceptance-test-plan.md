@@ -6993,3 +6993,23 @@ service descriptors. No application unit-test count, financial action, phone/emu
 visible UI or general crash correction is claimed. D568 native timing/adoption and the D567 real
 reboot/idle cohort remain unfinished; Loyan retains the physical lease. Preserve the broad goal.
 [Full defect, correction, refusals and acceptance boundaries](quality/android-archive-resource-retention.md).
+
+
+### D-571 - Preserve the complete permitted StarMoney field at CSV syntax boundaries
+
+Correct original preflight counting so separators and CSV quote syntax do not consume the existing
+4096-character decoded-field allowance. Preserve all original size/row/column bounds, strict syntax,
+source identity and explicit financial review. Five corrected boundary shapes fail before the fix;
+all10 boundary cases, two original non-UI application/real-SQLite review flows and five affected
+existing structure refusals pass on runtime14. These are12 new cases plus five existing cases;
+incorrect initial exception-type assumptions are retained separately and are not product failures.
+Strict Windows/complete offline Android builds have zero warnings/errors;384 own AOT/408 ELF,
+static16KiB/ZIP/v2/v3 and1422 exact Java resources pass. No Import/Undo, financial/native replay,
+phone command or D567 emulator input occurs. The combined review APK contains unfinished D568;
+refresh its matched financial inputs before physical comparison after explicit Loyan handback.
+Read only the historical D561 failed job: all83 cases/35 families exactly match the already fixed
+D562 packet; preserved selected passes and hosted green evidence avoid an unnecessary rerun.
+No current-head CI success is inferred. Three original bank sources clarify remaining contract
+admission, without a new preset, authentication, provider activation or support claim. The broad
+goal and D567/D568, native adoption, stability/speed/A11Y/platform/iOS/Store/release gates stay open.
+[Full corrected baseline, checks and source-admission limits](quality/starmoney-decoded-field-boundary.md).

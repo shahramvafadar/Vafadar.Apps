@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Accept complete bank CSV comments at the existing field-length limit, including quoted and multiline text, while preserving original safety bounds and explicit import review (D-571).
+
 - Preserve Java resources and service registrations across incremental Android APK builds without changing financial behavior (D-569).
 
 - Check original Android receipt-reading help at large system text in three languages and both themes; preserve financial data and add only a bounded independent startup diagnostic (D-566).
