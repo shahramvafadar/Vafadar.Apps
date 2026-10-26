@@ -114,3 +114,10 @@ Evidence pointer: Zanance-D566-current.txt. Original/diagnostic/corrected/exact 
 startup records, real storage guard proof, package/financial identities, focused test XMLs,
 strict build logs, permission-baseline lineage, actual public restoration and cleanup inventories
 remain local; no private key/database or credential is a tracked artifact.
+
+
+## One-use hosted follow-up
+
+The exact-head response for a028049f0378a60f5c5110a0163590997a54f825 is consumed once:
+CI40361566610 and CodeQL40361566150 both completed successfully. Its own schedule is deleted;
+no second GET is permitted. Hosted checks do not extend the bounded native/device acceptance.

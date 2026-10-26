@@ -1,0 +1,23 @@
+<Project DefaultTargets="_BuildApkEmbed">
+  <!-- D-569: exercise the installed SDK task directly; the output is deliberately not installable. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <OutputType>Library</OutputType>
+    <AndroidApplication>true</AndroidApplication>
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <IntermediateOutputPath>$(ReviewWorkDirectory)/intermediate/</IntermediateOutputPath>
+    <ApkFileIntermediate>$(IntermediateOutputPath)archive.apk</ApkFileIntermediate>
+  </PropertyGroup>
+  <UsingTask TaskName="Xamarin.Android.Tasks.CollectJarContentFilesForArchive" AssemblyFile="$(ReviewAndroidTasksAssembly)" />
+  <UsingTask TaskName="Xamarin.Android.Tasks.BuildArchive" AssemblyFile="$(ReviewAndroidTasksAssembly)" />
+  <Import Project="$(ReviewRepositoryRoot)/eng/AndroidArchiveFreshness.targets"
+          Condition="'$(ReviewArchiveFreshness)' == 'true'" />
+  <ItemGroup><FixtureJar Include="$(ReviewWorkDirectory)/fixture.jar" /></ItemGroup>
+  <Target Name="_BuildApkEmbed">
+    <CollectJarContentFilesForArchive AndroidPackageFormat="apk" JavaLibraries="@(FixtureJar)">
+      <Output TaskParameter="FilesToAddToArchive" ItemName="FixtureFiles" />
+    </CollectJarContentFilesForArchive>
+    <BuildArchive AndroidPackageFormat="apk" ApkInputPath="$(ReviewWorkDirectory)/resources.apk"
+                  ApkOutputPath="$(ApkFileIntermediate)" FilesToAddToArchive="@(FixtureFiles)" UseLibZipSharp="true" />
+  </Target>
+</Project>

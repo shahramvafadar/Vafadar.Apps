@@ -2784,3 +2784,20 @@ full control equality on disposable memory before any declared metadata retireme
 original exclusive protected context factory. A manually keyed handle cannot bypass lease guards.
 Logical recovery does not restore old ciphertext bytes or authorize rebinding old timing evidence.
 [Actual failures, correction and finite cohort](../../src/Apps/Zanance/docs/quality/runtime14-retained-large-home.md).
+
+
+### Incremental Android archive resource review (D-569)
+
+AndroidArchiveFreshness.targets refreshes only the validated generated intermediate APK for
+AndroidApplication=true APK builds; the SDK changes their OutputType to Library. AAB/library/
+non-Android builds are excluded. Do not substitute broad clean, manual APK repacking or a runtime
+change. Reject redirected paths and any archive outside its declared intermediate directory.
+
+Run `python eng/scripts/Review-AndroidArchiveFreshness.py --guards-only --work-directory <new-owned-directory>`
+for deletion-authority controls. For the installed SDK task regression, supply another new directory,
+`--android-tasks-assembly <official-installed-SDK-tools/Xamarin.Android.Build.Tasks.dll>` and
+`--java-sdk-directory <existing-approved-JDK>` instead of `--guards-only`. The owned Java fixture
+uses the existing JDK; no dependencies, devices, financial data or installation are involved.
+Original/guarded logs and results remain distinct. An already fixed SDK may not reproduce the
+original defect; all guarded retained/changed/removed-resource cases must still pass.
+[Actual complete-app admission failure and corrected property](../../src/Apps/Zanance/docs/quality/android-archive-resource-retention.md).

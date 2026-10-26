@@ -1,0 +1,61 @@
+<Project>
+  <!-- D-569: the installed Android SDK can drop existing JAR entries while incrementally merging an APK.
+       Start only that generated archive afresh, retaining successful compilation/AOT and every source input.
+       This is application APK packaging only, never an AAB, signed output, installation or general clean. -->
+  <UsingTask TaskName="VafadarValidateIntermediateAndroidArchive" TaskFactory="RoslynCodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)/Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <ProjectDirectory ParameterType="System.String" Required="true" />
+      <IntermediateDirectory ParameterType="System.String" Required="true" />
+      <Archive ParameterType="System.String" Required="true" />
+      <SafeArchive ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        try {
+            Func<string, string> portable = value => value.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar);
+            var project = Path.GetFullPath(portable(ProjectDirectory));
+            var root = Path.GetFullPath(Path.Combine(project, portable(IntermediateDirectory))).TrimEnd(Path.DirectorySeparatorChar);
+            var archive = Path.GetFullPath(Path.Combine(project, portable(Archive)));
+            var comparison = Path.DirectorySeparatorChar == '\\' ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+            var prefix = root + Path.DirectorySeparatorChar;
+            if (root.Length <= (Path.GetPathRoot(root) ?? string.Empty).Length
+                || !archive.StartsWith(prefix, comparison)
+                || !string.Equals(Path.GetExtension(archive), ".apk", StringComparison.OrdinalIgnoreCase)
+                || Path.GetFileName(archive).IndexOfAny(Path.GetInvalidFileNameChars()) >= 0) {
+                Log.LogError("The generated APK archive must stay strictly inside its declared project intermediate directory.");
+                return false;
+            }
+            // Reject redirected ancestors rather than deleting through a junction/symlink into another owner.
+            for (var directory = new DirectoryInfo(Path.GetDirectoryName(archive)); directory != null; directory = directory.Parent) {
+                if (directory.Exists && (directory.Attributes & FileAttributes.ReparsePoint) != 0) {
+                    Log.LogError("A redirected generated APK path is not an owned archive target.");
+                    return false;
+                }
+            }
+            if (File.Exists(archive) && (File.GetAttributes(archive) & FileAttributes.ReparsePoint) != 0) {
+                Log.LogError("A redirected generated APK file is not an owned archive target.");
+                return false;
+            }
+            SafeArchive = archive;
+        } catch (Exception error) {
+            Log.LogError("Generated APK ownership validation failed: " + error.GetType().Name);
+            return false;
+        }
+      ]]></Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="VafadarRefreshOwnedIntermediateAndroidArchive" BeforeTargets="_BuildApkEmbed;_BuildApkFastDev"
+          Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(AndroidApplication)' == 'true' and '$(AndroidPackageFormat)' != 'aab'">
+    <Error Condition="'$(IntermediateOutputPath)' == '' or '$(ApkFileIntermediate)' == ''"
+           Text="A declared project intermediate directory and generated APK archive are required." />
+    <VafadarValidateIntermediateAndroidArchive ProjectDirectory="$(MSBuildProjectDirectory)"
+        IntermediateDirectory="$(IntermediateOutputPath)" Archive="$(ApkFileIntermediate)">
+      <Output TaskParameter="SafeArchive" PropertyName="_VafadarOwnedArchiveToRefresh" />
+    </VafadarValidateIntermediateAndroidArchive>
+    <Delete Files="$(_VafadarOwnedArchiveToRefresh)" Condition="Exists('$(_VafadarOwnedArchiveToRefresh)')" />
+  </Target>
+</Project>

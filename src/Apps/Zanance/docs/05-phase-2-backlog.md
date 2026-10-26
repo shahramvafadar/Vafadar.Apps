@@ -3954,3 +3954,19 @@ removes24947 files/2306666041 logical bytes;8 unused copies remove238366227 byte
 D565 CI/CodeQL are green and its schedule consumed/deleted. Spoken/physical A11Y, QA-06, speed,
 security/platform/iOS/provider/Store/release remain open; no old financial success is replayed.
 [Full boundaries and preserved failures](quality/receipt-source-os-text-and-covered-startup.md).
+
+
+### D-569 - Preserve Java resources during incremental Android APK packaging
+
+Reproduce the installed36.1.69 BuildArchive defect directly: unchanged JAR resources/services
+are present on the first call and missing on the second. Refresh only the validated generated
+intermediate application APK before packaging; key on AndroidApplication, since the real SDK
+changes application OutputType to Library. Preserve the initial complete-app admission refusal.
+Three guarded resource/changed-and-removed-input cases, nine authority cases and one redirected
+path refusal pass. Strict Windows and corrected complete offline Android builds have zero
+warnings/errors;384 own AOT/408 ELF, static16KiB/ZIP/v2/v3 and actual native/financial identity
+checks pass. All1422 Java resource bytes match the retained healthy role, including both coroutine
+service descriptors. No application unit-test count, financial action, phone/emulator operation,
+visible UI or general crash correction is claimed. D568 native timing/adoption and the D567 real
+reboot/idle cohort remain unfinished; Loyan retains the physical lease. Preserve the broad goal.
+[Full defect, correction, refusals and acceptance boundaries](quality/android-archive-resource-retention.md).
