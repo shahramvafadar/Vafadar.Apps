@@ -1,11 +1,14 @@
 # Zanance – store listing (REL-03)
 
-Draft texts for Google Play in English, Persian, German, Spanish, French and Italian. The offline variant has no
-INTERNET permission; the connected variant supports optional user-owned Google Drive/OneDrive backup. Local
-Android encryption and backup policy are implemented; real OAuth, physical-device and Store acceptance remain
-open. These drafts do not authorize publication. iOS texts require its separate implementation and acceptance.
-Re-check the limits in Play Console
-before publishing: title 30 characters, short description 80, full description 4,000.
+Draft texts for Google Play in English, Persian, German, Spanish, French and Italian. The sections below
+describe the Offline edition and a separate cloud-backup-only edition, not every network-enabled build.
+Do not use the cloud-backup-only copy unchanged for personal sync, household sharing, billing or rate services.
+The final selected release, real OAuth, mobile assets, physical-device/Store and iOS acceptance remain gates.
+These drafts do not choose a release edition or authorize publication.
+
+Current Google Play limits are title30, short description80 and full description4000 characters;
+recheck the final selected text in Play Console before publication.
+[Official product-detail limits](https://support.google.com/googleplay/android-developer/answer/9859152?hl=en).
 
 Screenshots: `eng/scripts/Run-StoreDrafts.ps1` with fictitious data, light and dark, one set per language
 (`store/screenshots/<language>/`, see the list at the end).
@@ -14,15 +17,16 @@ Screenshots: `eng/scripts/Run-StoreDrafts.ps1` with fictitious data, light and d
 
 **Title:** Zanance – Budget & Money
 
-**Short description:** Private money manager: plans, budgets, reports. No account, no ads, offline.
+**Short description:** Private budgets, plans and reports. No ads or Zanance account required.
 
 **Full description:**
 
 Zanance keeps your money in view – privately, on your phone.
 
 Record income, expenses and transfers in seconds, plan rent, salary and bills ahead, and see what is left for the
-month. Everything stays on your device: there is no account, no advertising, no tracking, and the app does not use
-the internet at all.
+month.
+
+Your financial database stays on your device. You choose when and where to export files or make backups. Local bookkeeping needs no Zanance account. This Offline edition has no internet access, ads or tracking.
 
 What you can do
 • Accounts for cash, bank, savings, credit cards, loans and money you lent
@@ -34,7 +38,8 @@ What you can do
 • Reports with charts, a forecast of your balance, and a PDF of the month
 • Several currencies with your own exchange rates, and display units such as the toman
 • Gregorian, Persian (Solar Hijri) or lunar Hijri (Umm al-Qura) calendar, in English, Persian, German, Spanish, French and Italian, with right-to-left Persian layout
-• Receipt photos and PDF invoices attached to entries; read the total, date and shop on the device
+• Receipt photos and PDF invoices attached to entries.
+On Android, photos and scanned PDF pages are read with a Latin-script recognizer. Persian text in images is not supported. PDFs with selectable Persian text can be read. Always check the amount and currency before saving.
 • Separate profiles on one phone, e.g. personal and business
 • Quick add widget, dark theme, app lock with fingerprint or face
 • Backup files with optional password protection, CSV import and export
@@ -46,28 +51,29 @@ On Android, the financial database is encrypted with an automatic device-protect
 
 **Titel:** Zanance – Budget & Finanzen
 
-**Kurzbeschreibung:** Privater Finanzplaner: Pläne, Budgets, Berichte. Kein Konto, keine Werbung.
+**Kurzbeschreibung:** Konten, Budgets und Pläne – ohne Werbung oder Zanance-Konto.
 
 **Beschreibung:**
 
 Zanance behält Ihr Geld im Blick – privat, auf Ihrem Handy.
 
 Erfassen Sie Einnahmen, Ausgaben und Umbuchungen in Sekunden, planen Sie Miete, Gehalt und Rechnungen im Voraus und
-sehen Sie, was im Monat übrig bleibt. Alles bleibt auf Ihrem Gerät: kein Konto, keine Werbung, kein Tracking – die App
-nutzt das Internet überhaupt nicht.
+sehen Sie, was im Monat übrig bleibt.
+
+Ihre Finanzdatenbank bleibt auf Ihrem Gerät. Sie entscheiden, wann und wohin Sie Dateien exportieren oder Sicherungen erstellen. Für die lokale Buchführung brauchen Sie kein Zanance-Konto. Diese Offline-Version hat keinen Internetzugriff, keine Werbung und kein Tracking.
 
 Was Sie tun können
 • Konten für Bargeld, Bank, Sparen, Kreditkarten, Kredite und verliehenes Geld
 • Einnahmen, Ausgaben, Umbuchungen, Erstattungen und offene Forderungen, mit Kategorien und Schlagwörtern
 • Pläne für wiederkehrende Zahlungen mit Erinnerungen – Miete, Gehalt, Abos, Versicherungen – samt Kündigungsfristen
 • Budgets pro Monat, Woche oder zwei Wochen, auch mit Monatsbeginn am Zahltag: Limits je Kategorie, Umschläge oder
-  Flex-Budget mit Fixkosten, nicht monatlichen Kosten und einem flexiblen Limit, dazu Vorschläge aus Ihren Ausgaben;
-  Feiertage in Deutschland werden bei Fälligkeiten berücksichtigt
+  Flex-Budget mit Fixkosten, nicht monatlichen Kosten und einem flexiblen Limit, dazu Vorschläge aus Ihren Ausgaben
 • Sparziele mit zurückgelegtem Geld und vorgeschlagenen Beträgen
 • Berichte mit Diagrammen, eine Vorschau Ihres Kontostands und ein PDF des Monats
 • Mehrere Währungen mit eigenen Wechselkursen
 • Gregorianischer, persischer oder islamischer Mondkalender (Umm al-Qura), auf Deutsch, Englisch, Persisch, Spanisch, Französisch und Italienisch
-• Belegfotos und PDF-Rechnungen an Buchungen; Betrag, Datum und Geschäft direkt auf dem Gerät auslesen
+• Belegfotos und PDF-Rechnungen an Buchungen.
+Unter Android werden Fotos und gescannte PDF-Seiten mit einer Texterkennung für lateinische Schrift gelesen. Persischer Text in Bildern wird nicht unterstützt. PDF-Dateien mit auswählbarem persischem Text können gelesen werden. Prüfe vor dem Speichern immer Betrag und Währung.
 • Getrennte Profile auf einem Handy, z. B. privat und geschäftlich
 • Schnellerfassungs-Widget, dunkles Design, App-Sperre mit Fingerabdruck oder Gesicht
 • Sicherungsdateien mit optionalem Passwortschutz, CSV-Import und -Export
@@ -79,26 +85,29 @@ Auf Android ist die Finanzdatenbank mit einem automatisch erzeugten, gerätegesc
 
 **عنوان:** Zanance – بودجه و مدیریت پول
 
-**توضیح کوتاه:** مدیریت خصوصی پول: برنامه، بودجه و گزارش. بدون حساب، بدون تبلیغ، بدون اینترنت.
+**توضیح کوتاه:** ثبت محلی پول، بودجه و برنامه؛ بدون تبلیغ و بدون نیاز به حساب Zanance.
 
 **توضیح کامل:**
 
-Zanance پول شما را جلوی چشم نگه می‌دارد – خصوصی و روی گوشی خودتان.
+با Zanance، پولتان را جلوی چشم نگه دارید – خصوصی و روی گوشی خودتان.
 
 درآمد، هزینه و انتقال را در چند ثانیه ثبت کنید، اجاره، حقوق و قبض‌ها را از قبل برنامه‌ریزی کنید و ببینید چقدر از ماه
-باقی مانده است. همه‌چیز روی دستگاه شما می‌ماند: حساب کاربری، تبلیغ و ردیابی ندارد و اصلاً از اینترنت استفاده نمی‌کند.
+باقی مانده است.
+
+پایگاه‌دادهٔ مالی روی دستگاه شما نگه‌داری می‌شود. خودتان انتخاب می‌کنید چه زمانی و کجا خروجی یا پشتیبان بسازید. ثبت محلی به حساب کاربری Zanance نیاز ندارد. این نسخهٔ آفلاین به اینترنت دسترسی ندارد و تبلیغ یا ردیابی ندارد.
 
 چه کارهایی می‌توانید بکنید
 • حساب برای پول نقد، بانک، پس‌انداز، کارت اعتباری، وام و پولی که قرض داده‌اید
 • درآمد، هزینه، انتقال، برگشت وجه و طلب‌ها، با دسته و برچسب
 • برنامه برای پرداخت‌های تکراری با یادآوری – اجاره، حقوق، اشتراک، بیمه – همراه با مهلت لغو قرارداد
 • بودجهٔ ماهانه، هفتگی یا دوهفتگی، حتی با شروع ماه از روز حقوق: سقف هر دسته، پاکت‌ها یا بودجهٔ منعطف با قبض‌های ثابت،
-  قبض‌های غیرماهانه و یک سقف منعطف، همراه با پیشنهاد سقف از روی هزینه‌های شما؛ تعطیلات رسمی ایران در سررسیدها در نظر گرفته می‌شود
+  قبض‌های غیرماهانه و یک سقف منعطف، همراه با پیشنهاد سقف از روی هزینه‌های شما
 • اهداف پس‌انداز با پول کنار گذاشته‌شده و مبلغ پیشنهادی
 • گزارش با نمودار، پیش‌بینی مانده و فایل PDF ماه
 • چند ارز با نرخ‌های خودتان و واحد نمایش مثل تومان
 • تقویم شمسی، میلادی یا قمری (ام‌القری)، به فارسی، انگلیسی، آلمانی، اسپانیایی، فرانسوی و ایتالیایی؛ با چیدمان راست‌به‌چپ فارسی و انتخاب مستقل قالب اعداد
-• عکس رسید و فاکتور PDF کنار تراکنش؛ خواندن مبلغ، تاریخ و فروشگاه روی خود دستگاه
+• عکس رسید و فاکتور PDF کنار تراکنش.
+در Android، متن عکس‌ها و صفحه‌های اسکن‌شدهٔ PDF با یک خوانندهٔ خط لاتین خوانده می‌شود. متن فارسی در تصویر پشتیبانی نمی‌شود. فایل PDF با متن فارسیِ قابل انتخاب خوانده می‌شود. پیش از ذخیره، مبلغ و ارز را همیشه بررسی کنید.
 • پروفایل‌های جدا روی یک گوشی، مثلاً شخصی و کاری
 • ویجت ثبت سریع، تم تیره، قفل اپ با اثر انگشت یا چهره
 • فایل پشتیبان با حفاظت اختیاری رمز در دست خودتان، ورود و خروج CSV
@@ -112,7 +121,7 @@ Zanance پول شما را جلوی چشم نگه می‌دارد – خصوصی
 
 **Subtítulo (App Store):** Tu dinero, con un plan claro
 
-**Descripción breve:** Organiza gastos, presupuestos y objetivos. Sin anuncios ni cuenta en línea.
+**Descripción breve:** Gastos, presupuestos y objetivos. Sin anuncios ni cuenta Zanance.
 
 **Descripción completa** (offline variant; the variant with cloud backup is below):
 
@@ -130,12 +139,13 @@ TODO EN UN MISMO LUGAR
 • Informes, gráficos, previsiones de saldo y previsiones guardadas para compararlas con los resultados registrados.
 • Varias monedas, tipos de cambio introducidos por ti y unidades de visualización.
 • Calendarios gregoriano, persa e islámico lunar (Umm al-Qura), independientes del idioma.
-• Recibos en foto o PDF adjuntos a las transacciones, con lectura de texto en el dispositivo. Revisa siempre los datos detectados.
+• Recibos en foto o PDF adjuntos a las transacciones.
+En Android, las fotos y las páginas PDF escaneadas se leen con un reconocimiento de escritura latina. No se admite el texto persa en imágenes. Los PDF con texto persa seleccionable sí se pueden leer. Comprueba siempre el importe y la moneda antes de guardar.
 • Perfiles separados, registro rápido, modo claro y oscuro, y bloqueo de la app según las opciones del dispositivo.
 • Importación y exportación CSV e informes PDF. Una exportación no sustituye a una copia de seguridad.
 
 EN TU IDIOMA
-Disponible en español, inglés, alemán y persa. La app no cambia la moneda de tus cuentas al cambiar de idioma.
+Disponible en español, inglés, alemán, persa, francés e italiano. La app no cambia la moneda de tus cuentas al cambiar de idioma.
 
 CONTROL SOBRE TUS DATOS
 No necesitas una cuenta Zanance ni hay anuncios o seguimiento. Esta versión funciona sin acceso a internet. En Android, la base de datos financiera se cifra con una clave automática protegida por el dispositivo. La contraseña es opcional para las copias locales y las copias en la nube conectada, y está activada por defecto. Cualquiera que obtenga un archivo portátil sin protección puede leerlo. Si eliges protegerlo, conserva la contraseña: Zanance no la guarda. Los archivos financieros se excluyen de la copia del sistema Android y de la transferencia entre dispositivos; restaura una copia de Zanance en el nuevo dispositivo. El PIN de la app es independiente del cifrado de la base de datos.
@@ -181,7 +191,8 @@ L’ESSENTIEL, AU MÊME ENDROIT
 • Rapports, graphiques, prévisions de solde et prévisions enregistrées à comparer aux résultats ultérieurs.
 • Plusieurs devises, taux de change saisis par vous et unités d’affichage personnalisées.
 • Calendriers grégorien, persan et hégirien lunaire (Umm al-Qura), indépendants de la langue.
-• Photos de reçus et PDF joints aux opérations, avec lecture du texte sur l’appareil. Vérifiez toujours les informations détectées.
+• Photos de reçus et PDF joints aux opérations.
+Sous Android, les photos et les pages PDF numérisées sont lues par un outil de reconnaissance de l’écriture latine. Le texte persan dans les images n’est pas pris en charge. Les PDF contenant du texte persan sélectionnable peuvent être lus. Vérifiez toujours le montant et la devise avant d’enregistrer.
 • Profils séparés, ajout rapide, thèmes clair et sombre et verrouillage selon les options de l’appareil.
 • Importation et exportation CSV et rapports PDF. Une exportation ne remplace pas une sauvegarde.
 
@@ -226,7 +237,8 @@ NEL QUOTIDIANO
 • Conti per contanti, banca, risparmi, carte di credito, prestiti e denaro prestato.
 • Movimenti con categorie, tag, rimborsi e spese che altre persone ti rimborseranno.
 • Modelli rapidi, filtri salvati, regole per suggerire categorie e widget di inserimento rapido.
-• Foto delle ricevute e documenti PDF allegati ai movimenti. I dati letti dalle ricevute vanno verificati prima di salvarli.
+• Foto delle ricevute e documenti PDF allegati ai movimenti.
+Su Android, le foto e le pagine PDF scansionate vengono lette con un riconoscimento della scrittura latina. Il testo persiano nelle immagini non è supportato. È possibile leggere i PDF con testo persiano selezionabile. Controlla sempre l’importo e la valuta prima di salvare.
 
 PER PIANIFICARE
 • Piani per stipendio, affitto, bollette, abbonamenti e altri pagamenti, con promemoria e date dei contratti.
@@ -268,17 +280,20 @@ Zanance registra e organizza i dati: non esegue pagamenti o trasferimenti bancar
 
 ## Variant with cloud backup (D-35)
 
-Use these instead of the "no internet" sentences when the release is built with the OAuth clients of cloud backup.
+Use these only for a cloud-backup-only release with its real OAuth clients and provider acceptance.
+For EN/DE/FA replace the entire Offline privacy paragraph, the listed backup bullet and the applicable short
+description. Keep the same receipt-reading limit. For ES/FR/IT use the complete cloud descriptions below.
+This is not copy for personal sync, household sharing, billing or rate-service traffic.
 
 | | Text |
 |---|---|
-| EN short | Private money manager: plans, budgets, reports. No account, no ads. |
-| EN sentence | Everything stays on your device: there is no account, no advertising and no tracking. The app goes online only if you connect your own Google Drive or OneDrive for backup files with optional password protection. |
+| EN short | Private budgets, plans and reports. No ads or Zanance account required. |
+| EN sentence | Your financial database is stored locally. You choose when and where to export files or make backups. Local bookkeeping needs no Zanance account and has no ads or tracking. If you connect your own Google Drive or OneDrive account, this cloud-backup-only edition uses the internet to send backup files to that provider. |
 | EN bullet | • Backup files with optional password protection, kept locally or in your own Google Drive or OneDrive, CSV import and export |
-| DE Satz | Alles bleibt auf Ihrem Gerät: kein Konto, keine Werbung, kein Tracking. Online geht die App nur, wenn Sie Ihr eigenes Google Drive oder OneDrive für Sicherungsdateien mit optionalem Passwortschutz verbinden. |
+| DE Satz | Ihre Finanzdatenbank wird lokal gespeichert. Sie entscheiden, wann und wohin Sie Dateien exportieren oder Sicherungen erstellen. Die lokale Buchführung braucht kein Zanance-Konto; Werbung und Tracking gibt es nicht. Wenn Sie Ihr eigenes Google-Drive- oder OneDrive-Konto verbinden, nutzt diese reine Cloud-Backup-Version das Internet, um Sicherungsdateien an diesen Anbieter zu senden. |
 | DE Punkt | • Sicherungen mit optionalem Passwortschutz lokal oder in Ihrem eigenen Google Drive oder OneDrive, CSV-Import und -Export |
-| FA کوتاه | مدیریت خصوصی پول: برنامه، بودجه و گزارش. بدون حساب، بدون تبلیغ. |
-| FA جمله | همه‌چیز روی دستگاه شما می‌ماند: حساب کاربری، تبلیغ و ردیابی ندارد. اپ فقط وقتی به اینترنت وصل می‌شود که Google Drive یا OneDrive خودتان را برای پشتیبان با حفاظت اختیاری رمز متصل کنید. |
+| FA کوتاه | ثبت محلی پول، بودجه و برنامه؛ بدون تبلیغ و بدون نیاز به حساب Zanance. |
+| FA جمله | پایگاه‌دادهٔ مالی به‌صورت محلی نگه‌داری می‌شود. خودتان انتخاب می‌کنید چه زمانی و کجا خروجی یا پشتیبان بسازید. ثبت محلی به حساب Zanance نیاز ندارد و تبلیغ یا ردیابی ندارد. اگر حساب Google Drive یا OneDrive خودتان را متصل کنید، این نسخهٔ مخصوص پشتیبان ابری برای فرستادن فایل پشتیبان به همان ارائه‌دهنده از اینترنت استفاده می‌کند. |
 | FA مورد | • پشتیبان با حفاظت اختیاری رمز در دستگاه یا Google Drive یا OneDrive خودتان، ورود و خروج CSV |
 
 **ES – full description of a release with cloud backup** (complete text, used instead of the offline description above):
@@ -297,15 +312,16 @@ TODO EN UN MISMO LUGAR
 • Informes, gráficos, previsiones de saldo y previsiones guardadas para compararlas con los resultados registrados.
 • Varias monedas, tipos de cambio introducidos por ti y unidades de visualización.
 • Calendarios gregoriano, persa e islámico lunar (Umm al-Qura), independientes del idioma.
-• Recibos en foto o PDF adjuntos a las transacciones, con lectura de texto en el dispositivo. Revisa siempre los datos detectados.
+• Recibos en foto o PDF adjuntos a las transacciones.
+En Android, las fotos y las páginas PDF escaneadas se leen con un reconocimiento de escritura latina. No se admite el texto persa en imágenes. Los PDF con texto persa seleccionable sí se pueden leer. Comprueba siempre el importe y la moneda antes de guardar.
 • Perfiles separados, registro rápido, modo claro y oscuro, y bloqueo de la app según las opciones del dispositivo.
 • Importación y exportación CSV e informes PDF. Una exportación no sustituye a una copia de seguridad.
 
 EN TU IDIOMA
-Disponible en español, inglés, alemán y persa. La app no cambia la moneda de tus cuentas al cambiar de idioma.
+Disponible en español, inglés, alemán, persa, francés e italiano. La app no cambia la moneda de tus cuentas al cambiar de idioma.
 
 CONTROL SOBRE TUS DATOS
-No necesitas una cuenta Zanance ni hay anuncios o seguimiento. Puedes conectar tu propio Google Drive o OneDrive para guardar copias; la app usa internet para esta función opcional. En Android, la base de datos financiera se cifra con una clave automática protegida por el dispositivo. La contraseña es opcional para las copias locales y las copias en la nube conectada, y está activada por defecto. Cualquiera que obtenga un archivo portátil sin protección puede leerlo. Si eliges protegerlo, conserva la contraseña: Zanance no la guarda. Los archivos financieros se excluyen de la copia del sistema Android y de la transferencia entre dispositivos; restaura una copia de Zanance en el nuevo dispositivo. El PIN de la app es independiente del cifrado de la base de datos.
+La base de datos financiera se guarda en el dispositivo. Tú eliges cuándo y dónde exportar archivos o crear copias. Para el registro local no necesitas una cuenta Zanance y no hay anuncios ni seguimiento. Si conectas tu propia cuenta de Google Drive o OneDrive, esta versión con copia en la nube usa internet para enviar los archivos a ese proveedor. En Android, la base de datos financiera se cifra con una clave automática protegida por el dispositivo. La contraseña es opcional para las copias locales y las copias en la nube conectada, y está activada por defecto. Cualquiera que obtenga un archivo portátil sin protección puede leerlo. Si eliges protegerlo, conserva la contraseña: Zanance no la guarda. Los archivos financieros se excluyen de la copia del sistema Android y de la transferencia entre dispositivos; restaura una copia de Zanance en el nuevo dispositivo. El PIN de la app es independiente del cifrado de la base de datos.
 
 Zanance registra y organiza información: no realiza pagos ni transferencias bancarias. Los saldos y las previsiones dependen de tus registros; son estimaciones, no garantías ni asesoramiento de inversión. El bloqueo de la app y el cifrado de una copia de seguridad son protecciones distintas.
 
@@ -325,7 +341,8 @@ L’ESSENTIEL, AU MÊME ENDROIT
 • Rapports, graphiques, prévisions de solde et prévisions enregistrées à comparer aux résultats ultérieurs.
 • Plusieurs devises, taux de change saisis par vous et unités d’affichage personnalisées.
 • Calendriers grégorien, persan et hégirien lunaire (Umm al-Qura), indépendants de la langue.
-• Photos de reçus et PDF joints aux opérations, avec lecture du texte sur l’appareil. Vérifiez toujours les informations détectées.
+• Photos de reçus et PDF joints aux opérations.
+Sous Android, les photos et les pages PDF numérisées sont lues par un outil de reconnaissance de l’écriture latine. Le texte persan dans les images n’est pas pris en charge. Les PDF contenant du texte persan sélectionnable peuvent être lus. Vérifiez toujours le montant et la devise avant d’enregistrer.
 • Profils séparés, ajout rapide, thèmes clair et sombre et verrouillage selon les options de l’appareil.
 • Importation et exportation CSV et rapports PDF. Une exportation ne remplace pas une sauvegarde.
 
@@ -333,11 +350,11 @@ EN FRANÇAIS
 Utilisez Zanance en français. Changer de langue ne change pas la devise de vos comptes.
 
 VOS DONNÉES, VOS CHOIX
-Aucun compte Zanance, publicité ou suivi. Vous pouvez connecter votre propre Google Drive ou OneDrive pour les sauvegardes ; Internet est utilisé pour cette fonction facultative. Sur Android, la base financière est chiffrée avec une clé automatique protégée par l’appareil. La protection par mot de passe est facultative pour les sauvegardes locales et cloud connectées, et activée par défaut. Toute personne disposant d’un fichier portable non protégé peut le lire. Si vous choisissez cette protection, conservez le mot de passe : Zanance ne le mémorise pas. Les fichiers financiers sont exclus de la sauvegarde système Android et du transfert entre appareils ; restaurez une sauvegarde Zanance sur le nouvel appareil. Le PIN de l’application est indépendant du chiffrement de la base.
+La base financière est conservée sur votre appareil. Vous choisissez quand et où exporter des fichiers ou créer des sauvegardes. Aucun compte Zanance n’est nécessaire pour la gestion locale, sans publicité ni suivi. Si vous connectez votre propre compte Google Drive ou OneDrive, cette version avec sauvegarde cloud utilise Internet pour envoyer les fichiers à ce fournisseur. Sur Android, la base financière est chiffrée avec une clé automatique protégée par l’appareil. La protection par mot de passe est facultative pour les sauvegardes locales et cloud connectées, et activée par défaut. Toute personne disposant d’un fichier portable non protégé peut le lire. Si vous choisissez cette protection, conservez le mot de passe : Zanance ne le mémorise pas. Les fichiers financiers sont exclus de la sauvegarde système Android et du transfert entre appareils ; restaurez une sauvegarde Zanance sur le nouvel appareil. Le PIN de l’application est indépendant du chiffrement de la base.
 
 Zanance enregistre et organise vos informations : elle n’effectue aucun paiement ni virement bancaire. Les soldes dépendent de vos enregistrements ; les prévisions sont des estimations, sans garantie de résultat ni conseil en investissement. Le verrouillage de l’application ne chiffre pas sa base de données et reste distinct du chiffrement des sauvegardes.
 
-**IT â€“ full description of a release with cloud backup** (complete text, used instead of the offline description above):
+**IT – full description of a release with cloud backup** (complete text, used instead of the offline description above):
 
 Le tue finanze, con un piano chiaro.
 
@@ -347,7 +364,8 @@ NEL QUOTIDIANO
 • Conti per contanti, banca, risparmi, carte di credito, prestiti e denaro prestato.
 • Movimenti con categorie, tag, rimborsi e spese che altre persone ti rimborseranno.
 • Modelli rapidi, filtri salvati, regole per suggerire categorie e widget di inserimento rapido.
-• Foto delle ricevute e documenti PDF allegati ai movimenti. I dati letti dalle ricevute vanno verificati prima di salvarli.
+• Foto delle ricevute e documenti PDF allegati ai movimenti.
+Su Android, le foto e le pagine PDF scansionate vengono lette con un riconoscimento della scrittura latina. Il testo persiano nelle immagini non è supportato. È possibile leggere i PDF con testo persiano selezionabile. Controlla sempre l’importo e la valuta prima di salvare.
 
 PER PIANIFICARE
 • Piani per stipendio, affitto, bollette, abbonamenti e altri pagamenti, con promemoria e date dei contratti.
@@ -365,7 +383,7 @@ UNA VISIONE PIÙ AMPIA
 • Importazione ed esportazione CSV. I file CSV e i report PDF non sono backup e non sono crittografati.
 
 PRIVACY E BACKUP
-Zanance funziona senza un account Zanance e senza pubblicità. I dati finanziari sono conservati sul dispositivo. Puoi scegliere di collegare il tuo Google Drive o OneDrive per conservare backup con protezione facoltativa nel tuo spazio cloud. La connessione internet è usata per questa funzione facoltativa dopo il collegamento.
+Il database finanziario è conservato sul dispositivo. Scegli tu quando e dove esportare file o creare backup. Per la gestione locale non serve un account Zanance e non ci sono pubblicità o tracciamento. Se colleghi il tuo account Google Drive o OneDrive, questa versione con backup cloud usa internet per inviare i file a quel fornitore.
 
 Su Android, il database finanziario è crittografato con una chiave automatica protetta dal dispositivo. La protezione con password è facoltativa per i backup locali e nel cloud collegato ed è attiva per impostazione predefinita. Chiunque ottenga un file portatile non protetto può leggerlo. Se scegli la protezione, conserva la password: Zanance non la memorizza. I file finanziari sono esclusi dal backup di sistema Android e dal trasferimento tra dispositivi: ripristina un backup Zanance sul nuovo dispositivo. Il PIN dell’app è indipendente dalla crittografia del database.
 
@@ -384,7 +402,8 @@ Zanance registra e organizza i dati: non esegue pagamenti o trasferimenti bancar
 
 ## D-338 screenshot provenance
 
-All six folders contain eight current fictitious native Windows development drafts. Exact source,
+Each of the six folders contains eight historical D-338 fictitious native Windows development drafts. Exact source,
 RGB and image hashes are in `screenshots/capture-manifest.json`. The 596 x 1189 opaque RGB files
 preserve actual UI pixels. They are not mobile screenshots and do not meet recommended 1080 x 1920
-featured portrait resolution. No upload/publication occurred. [Evidence](../quality/store-drafts.md).
+featured portrait resolution. They do not demonstrate the later compact title actions or current mobile release.
+No new captures or upload/publication occurred. [Historical evidence](../quality/store-drafts.md).

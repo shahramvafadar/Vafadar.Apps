@@ -6179,3 +6179,11 @@ Compatible334ca/stopped, original Main2021/50f5/all120/OS/config and owned AVD s
 Source byte-lineage limits, compile/observer/lease/storage refusals and final-key-audit boundary
 remain explicit. D555 physical foreground and general performance/stability/A11Y/platform/provider/
 release remain open. [Full bounded evidence](../../quality/runtime14-retained-large-home.md).
+
+### D-559 - REL-01/REL-03 draft factual correction completed
+
+Six-language Offline/CloudBackupOnly copy now distinguishes local data from explicit provider
+backup and states the original Android receipt limits. Twelve assembled packets fit30/80/4000;
+old Windows assets are historical. Documentation only, no successful app/financial cohort replay.
+REL-01/REL-03 remain open for final edition, real OAuth, mobile assets, declarations, company/
+Store and actual publication acceptance. [Bounded evidence](../../quality/store-draft-factual-boundaries.md).

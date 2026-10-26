@@ -4009,3 +4009,9 @@ service/container runtime, Store or release acceptance, or overwrite historical 
 - [ ] Do not substitute that emulator cohort for physical two seconds, general ANR/crash/cold/
   low-memory/security/spoken A11Y/iOS/provider/release or D555 foreground acceptance. Retain the
   incorrect probe's physical-byte mutation and final code-restoration key-audit limit.
+
+- [x] D-559 correct six-language Offline/CloudBackupOnly draft facts; twelve complete packets fit
+  official30/80/4000 limits, preserve Android receipt limits and label historical Windows assets.
+- [ ] Final selected-edition copy, real OAuth, current mobile assets, privacy/financial declarations,
+  company/Store and publication acceptance remain open; D-559 does not close these gates.
+  [Draft evidence](quality/store-draft-factual-boundaries.md).

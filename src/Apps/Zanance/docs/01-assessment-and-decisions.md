@@ -10323,3 +10323,12 @@ audits pass; no accepted native case repeats. Restore compatible334ca/stopped an
 50f5/all120/OS/config, remove three owned XMLs and stop owned AVD. Four scoped Cleans and four
 unused APK deletions retain all used artifacts and failure evidence. No broad completion claim.
 [Evidence, source correction and limits](quality/runtime14-retained-large-home.md).
+
+### D-559 - Correct store-copy factual boundaries without choosing a release
+
+Correct all six Offline/CloudBackupOnly draft variants: local database versus explicit export/
+provider backup, no Zanance account for local bookkeeping, exact approved Android receipt-reading
+limits, all six supported languages and historical Windows asset provenance. Twelve assembled
+packets fit official30/80/4000 limits; no app/financial/test/build replay or publication. Preserve
+review-parser refusals and leave final edition/OAuth/mobile assets/declarations/Store gates open.
+[Focused evidence and counts](quality/store-draft-factual-boundaries.md).

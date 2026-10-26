@@ -9666,3 +9666,9 @@ original logical recovery/four existing-key source audits pass without Home/fina
 Original Main2021/50f5/all120/OS/config and compatible caller/stopped state are restored and owned
 AVD stopped. General physical performance/stability/security/A11Y/platform/release gates remain.
 [Evidence and precise recovery limits](../quality/runtime14-retained-large-home.md).
+
+D-559 update to Section31: six-language store drafts accurately separate local bookkeeping,
+explicit backup/export and Android receipt limits. Twelve Offline/CloudBackupOnly review packets
+fit official lengths; historical Windows images are not current mobile acceptance. No product
+source/permission/schema or managed-count change; no build/financial/native replay. Final release
+edition/OAuth/mobile assets/Store/publication gates remain. [Evidence](../quality/store-draft-factual-boundaries.md).

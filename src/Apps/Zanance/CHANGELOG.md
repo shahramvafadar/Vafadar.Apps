@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Clarify the six-language store drafts about local data, optional provider backups and Android receipt-reading limits; identify older Windows screenshots as historical drafts (D-559).
+
 - Validate the current Android runtime with retained large Home data and prevent diagnostic schema checks from unintentionally upgrading their old test sources (D-558).
 
 - Update the local service runtime security components while preserving its original application files and private storage, with a validated rollback snapshot (D-556).
