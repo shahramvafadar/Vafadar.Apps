@@ -14,9 +14,16 @@
     <RunAOTCompilation>true</RunAOTCompilation>
     <PublishTrimmed>true</PublishTrimmed>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <!-- D-553: scope the native caller RID without recompiling plain financial libraries for that RID. -->
+    <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == '' and '$(ReviewRuntimeIdentifier)' != ''">$(ReviewRuntimeIdentifier)</RuntimeIdentifier>
     <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">android-x64</RuntimeIdentifier>
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
+  </PropertyGroup>
+  <!-- D-553: fresh PIN-route data cannot replace any retained physical reminder fixture. -->
+  <PropertyGroup Condition="'$(ReviewLockedReminderRoutes)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.lockedreminderreview</ApplicationId>
+    <DefineConstants>$(DefineConstants);LOCKED_REMINDER_REVIEW</DefineConstants>
   </PropertyGroup>
   <!-- D-320: measure the original release compilation inputs as well as its source/native library. -->
   <ItemGroup Condition="'$(Configuration)' == 'Release'">
@@ -72,7 +79,7 @@
     <Exec Command="pwsh -NoProfile -File &quot;$(RepoRoot)eng/native/sqlcipher/Ensure-AndroidPackage.ps1&quot;" />
   </Target>
   <Target Name="ValidateIndependentReminderIdentity" BeforeTargets="PrepareForBuild">
-    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.androidreminderreview'"
+    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.androidreminderreview' and '$(ApplicationId)' != 'pro.vafadar.zanance.lockedreminderreview'"
            Text="Native reminder qualification must keep its independent Android application id." />
   </Target>
   <Import Project="$(RepoRoot)eng/AndroidAotRuntime.targets" />

@@ -172,3 +172,21 @@ are retained. The owner subsequently approved same-day expiry; a separate notifi
 caller in `eng/benchmarks/Zanance.AndroidDelivery` verifies that correction without reseeding this
 financial fixture. Both finished callers are retired and Main is upgraded without reset. Do not
 replay this old preparation or describe the old interrupted/cold/timing criterion as successful.
+
+
+## PIN-covered cold content routes (D-553)
+
+ReviewLockedReminderRoutes=true selects only pro.vafadar.zanance.lockedreminderreview. Choose its
+RID through project-local ReviewRuntimeIdentifier, never a global RuntimeIdentifier. Explicit
+review_route_phase=goal/review retains one original32-hex review_run and the same fresh protected
+source. No prior package/fixture is replaced. Original PinLock/SecurePinStorage configure only a
+fictional independent PIN; never log/export its value or use any owner authentication.
+
+Publish one original immediate goal copy, then prove cached death and make one actual native
+content tap. Preserve real SDK/PID/payload/covered state before the original native PIN unlock.
+Only its exact ready original goal/source permits the one review publication. Repeat only the
+previously unexecuted cold review route, not accepted metadata or financial operations. Covered
+status reports actual underlying page type and no financial source read; null match means unread.
+Cleanup retires only the new package after both receipts, checks actual native work absence and
+restores original Main/packages/OS before stopping only the owned AVD. See
+[actual bounded evidence](../../../src/Apps/Zanance/docs/quality/pin-covered-cold-notification-routes.md).

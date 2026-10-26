@@ -23,6 +23,10 @@ public sealed class MainActivity : MauiAppCompatActivity
         var run = Intent?.GetStringExtra("review_run");
         if (savedInstanceState is not null || PackageName != NativeReminderReview.Package ||
             run is null || !System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$")) return;
+#if LOCKED_REMINDER_REVIEW
+        // D-553: only the new covered content routes may prepare this fresh package.
+        if (Intent?.GetStringExtra("review_route_phase") is not ("goal" or "review")) return;
+#endif
         var timed = Intent?.GetBooleanExtra("review_timed_goal_period", false) == true;
         if (!timed) Window?.AddFlags(WindowManagerFlags.KeepScreenOn);
         _ = PrepareAsync(run, Intent?.GetBooleanExtra("review_scheduled_only", false) == true,
@@ -37,6 +41,9 @@ public sealed class MainActivity : MauiAppCompatActivity
         base.OnNewIntent(intent);
         var run = intent?.GetStringExtra("review_run");
         var profilePhase = intent?.GetStringExtra("review_profile_phase");
+#if LOCKED_REMINDER_REVIEW
+        if (intent?.GetStringExtra("review_route_phase") != "review") return;
+#endif
         if (PackageName == NativeReminderReview.Package && profilePhase is "restore" or "finish"
             && run is not null && System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$"))
         { _ = PrepareAsync(run, false, false, false, false, null, profilePhase, false); return; }

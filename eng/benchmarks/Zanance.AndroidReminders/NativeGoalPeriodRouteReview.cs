@@ -12,6 +12,7 @@ using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Plans;
 using Vafadar.Zanance.Core.Reminders;
+using Vafadar.Zanance.Core.Security;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App;
@@ -21,6 +22,26 @@ internal static class NativeGoalPeriodRouteReview
 {
     private static string Root => Path.Combine(FileSystem.AppDataDirectory, "goal-period-route-review");
     private sealed record Identity(string Run, Guid Account, Guid Goal, DateOnly Date);
+
+#if LOCKED_REMINDER_REVIEW
+    private static int _nativeTaps;
+
+    /// <summary>Observes actual SDK tap delivery only; never reads PIN state, prepares storage or opens a destination.</summary>
+    internal static void ObserveLockedNativeTap(IServiceProvider services)
+    {
+        if (Android.App.Application.Context.PackageName != NativeReminderReview.Package) throw new IOException("Independent locked route identity required.");
+        services.GetRequiredService<ReminderService>().Scheduler.Tapped += (_, link) =>
+        {
+            if (!File.Exists(Path.Combine(Root, "identity.json"))) return;
+            var ordinal = Interlocked.Increment(ref _nativeTaps);
+            var digest = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(link)));
+            File.WriteAllText(Path.Combine(Root, $"locked-tap-{Android.OS.Process.MyPid()}-{ordinal}.json"),
+                JsonSerializer.Serialize(new { Pid = Android.OS.Process.MyPid(), Ordinal = ordinal, PayloadSHA256 = digest,
+                    LockedAtSDKDelivery = services.GetRequiredService<AppLockService>().IsLocked,
+                    ActualSchedulerTapped = true, SourceRead = false, CredentialRead = false }));
+        };
+    }
+#endif
 
     /// <summary>Publishes only an explicit unfinished synthetic route copy, retaining original financial dates and payload.</summary>
     internal static async Task PublishAsync(IServiceProvider services, string run, string phase)
@@ -53,12 +74,28 @@ internal static class NativeGoalPeriodRouteReview
                 await store.UpdateSettingsAsync(settings => { settings.OnboardingCompleted = true; settings.NotificationsShowDetails = false;
                     settings.ReviewReminderEnabled = true; settings.MonthStartDay = Math.Min(28, today.Day); settings.ReviewProgress = null; });
                 await SettleAsync(reminders);
+#if LOCKED_REMINDER_REVIEW
+                // Fresh independent SecureStorage only. Never read/configure an owner's PIN or call device authentication.
+                var access = services.GetRequiredService<AppLockService>();
+                if (access.PinEnabled || access.DeviceLockEnabled || access.IsLocked)
+                    throw new IOException("Fresh unlocked independent PIN source required.");
+                var pinResult = await access.Pin.SetAsync(string.Empty, FictitiousPin(run));
+                if (pinResult.Outcome != PinOutcome.Success) throw new IOException("Fictitious independent PIN setup refused.");
+                await File.WriteAllTextAsync(Path.Combine(Root, "fictitious-pin-configured.json"),
+                    JsonSerializer.Serialize(new { Run = run, OriginalPinService = true, OwnerCredentialUsed = false }));
+#endif
                 await File.WriteAllTextAsync(Path.Combine(Root, "source.json"), await PacketAsync(services));
             }
             else ids = JsonSerializer.Deserialize<Identity>(await File.ReadAllTextAsync(marker)) ?? throw new IOException("Retain original identity.");
             if (ids.Run != run || !File.Exists(Path.Combine(Root, "source.json"))) throw new IOException("Preserve original partial route setup; no reseeding.");
             var appLock = services.GetRequiredService<AppLockService>();
+#if LOCKED_REMINDER_REVIEW
+            if (!appLock.PinEnabled || appLock.DeviceLockEnabled || appLock.IsLocked
+                || !File.Exists(Path.Combine(Root, "fictitious-pin-configured.json")))
+                throw new IOException("Only the original unlocked fictitious PIN source may publish once.");
+#else
             if (appLock.IsEnabled || appLock.IsLocked) throw new IOException("No configured credential acceptance in this cohort.");
+#endif
             if (phase == "review")
             {
                 if (!File.Exists(Path.Combine(Root, "goal-posted.json"))) throw new IOException("Original goal publication missing.");
@@ -83,7 +120,8 @@ internal static class NativeGoalPeriodRouteReview
             if (File.Exists(posting)) throw new IOException("Retain partial original notification publication; never duplicate it.");
             var result = new { Run = run, Pid = Android.OS.Process.MyPid(), Phase = phase, request.NotificationId,
                 request.Title, request.Description, OriginalScheduledAt = request.Schedule?.NotifyTime, ImmediateCopy = true,
-                FinancialSourceUnchanged = true, CredentialConfigured = false };
+                FinancialSourceUnchanged = true, CredentialConfigured = appLock.PinEnabled, RealOwnerCredential = false,
+                PayloadSHA256 = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(request.ReturningData ?? string.Empty))) };
             await File.WriteAllTextAsync(posting, JsonSerializer.Serialize(result));
             // This explicit independent display copy qualifies content routing, never actual09:00 alarm execution.
             await reminders.Scheduler.ShowAsync(new ReminderNotification(request.NotificationId, request.Title ?? string.Empty,
@@ -107,11 +145,15 @@ internal static class NativeGoalPeriodRouteReview
         var appLock = services.GetRequiredService<AppLockService>();
         var page = await MainThread.InvokeOnMainThreadAsync(() =>
         {
+            var cover = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Page?
+                .Navigation.ModalStack.OfType<LockPage>().Any() == true;
+            if (appLock.IsLocked) return new { Page = Shell.Current?.CurrentPage?.GetType().Name, GoalId = (Guid?)null, GoalName = (string?)null,
+                GoalReady = false, ReviewTitle = (string?)null, ReviewReady = false, ReviewDone = 0, Cover = cover };
             var current = Shell.Current?.CurrentPage;
             var goal = current?.BindingContext as GoalDetailViewModel; var review = current?.BindingContext as PeriodReviewViewModel;
             return new { Page = current?.GetType().Name, GoalId = goal?.Summary?.Id, GoalName = goal?.Summary?.Name,
                 GoalReady = goal?.CanView == true, ReviewTitle = review?.Title, ReviewReady = review is { NothingToReview: false, Steps.Count: 5 },
-                ReviewDone = review?.Steps.Count(step => step.IsDone) ?? 0 };
+                ReviewDone = review?.Steps.Count(step => step.IsDone) ?? 0, Cover = cover };
         });
         var posted = new List<JsonElement>();
         foreach (var phase in new[] { "goal", "review" })
@@ -121,8 +163,10 @@ internal static class NativeGoalPeriodRouteReview
         }
         var error = Path.Combine(Root, "error.json");
         return JsonSerializer.Serialize(new { Run = ids?.Run, Pid = Android.OS.Process.MyPid(), Protected = location.IsProtected,
-            SourceRead = location.IsProtected && ids is not null, SourceMatch = location.IsProtected && ids is not null && await MatchesAsync(services),
-            Locked = appLock.IsLocked, CredentialConfigured = appLock.IsEnabled, Destination = page, Posted = posted,
+            SourceRead = location.IsProtected && ids is not null && !appLock.IsLocked,
+            SourceMatch = location.IsProtected && ids is not null && !appLock.IsLocked ? await MatchesAsync(services) : (bool?)null,
+            Locked = appLock.IsLocked, CredentialConfigured = appLock.IsEnabled, appLock.PinEnabled, Destination = page, Posted = posted,
+            NativeTaps = Directory.Exists(Root) ? Directory.GetFiles(Root, "locked-tap-*.json").Select(file => JsonSerializer.Deserialize<JsonElement>(File.ReadAllText(file))).ToArray() : [],
             Error = File.Exists(error) ? JsonSerializer.Deserialize<JsonElement>(await File.ReadAllTextAsync(error)) : (JsonElement?)null });
     }
 
@@ -154,6 +198,11 @@ internal static class NativeGoalPeriodRouteReview
             Entries = await store.GetEntriesAsync(), Allocations = await goals.GetAllocationsAsync(), Schedules = await plans.GetSchedulesAsync(),
             States = await plans.GetStatesAsync(), Events = await holdings.GetEventsAsync(), Types = await holdings.GetTypesAsync() });
     }
+
+#if LOCKED_REMINDER_REVIEW
+    /// <summary>Derives only this public fictional run's four-digit fixture; never logs/exports a credential.</summary>
+    private static string FictitiousPin(string run) => string.Concat(run.Take(4).Select(value => (char)('0' + value % 10)));
+#endif
 
     private static void RequirePackage()
     {

@@ -13,6 +13,9 @@ public sealed class MainApplication(IntPtr handle, JniHandleOwnership ownership)
         var app = MauiProgram.CreateMauiApp();
         // Subscription only: never prepare/open a database or read key material during Application creation.
         NativeGoalProfileScopeReview.ObserveNativeTap(app.Services);
+#if LOCKED_REMINDER_REVIEW
+        NativeGoalPeriodRouteReview.ObserveLockedNativeTap(app.Services);
+#endif
         return app;
     }
 }

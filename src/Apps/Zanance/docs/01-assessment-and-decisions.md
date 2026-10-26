@@ -10250,3 +10250,18 @@ criterion change follows. Restore all five original production files and origina
 shipping4521 is never installed. Preserve the initial unadmitted own-AOT witness ordering error
 and only its necessary repair. Experimental61 cases do not increase current-product test count.
 [Complete original evidence and withdrawal](quality/home-captured-index-projection.md).
+
+
+### D-553 - Qualify original PIN-covered cold goal/current-review content routes
+
+During the physical Play Protect wait, complete only this uncovered combination on owned emulator
+API36/x64/4096. One new UID10218 protected fixture/PIN, two actual cached deaths, two native SDK
+content taps and two original PIN unlocks preserve full intentionally populated source packets,
+original goal100/150/50 and review0/5. Observers do not read finance below the cover. No production
+algorithm, permission or SDK changes; no managed-count increase/financial posting/old cohort replay.
+Default caller Compile and final192-own-AOT Offline package pass. Preserve both pre-install build/
+observer refusals, host observation refusals and the single actual tap lineage. Retire only new
+fixture/PIN, verify native-work absence, preserve Main3018/896e/all120/identities/OS/config, remove
+nine hash-matched XMLs and stop only owned AVD. Standard Clean removes1668 known files/311179421
+logical bytes. Genuine owner authentication, physical-phone and broader gates remain open.
+[Original observations and limits](quality/pin-covered-cold-notification-routes.md).

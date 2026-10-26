@@ -9628,3 +9628,11 @@ fixed whole-Home and dispatcher gates. Original product sources/tests are restor
 current-product test count does not increase and shipping4521 is not adopted. No reverse pair
 or accepted financial replay occurs. D551 original caller restoration/current qualified896e
 adoption remains separate. See [withdrawal](../quality/home-captured-index-projection.md).
+
+
+D-553 qualification update to Section31: two new original cold content routes under the original
+PIN cover pass on an owned API36/x64/4096 emulator. New fixture metadata/PIN is once-only, source
+packets unchanged, no ledger posting or review completion; managed test count does not increase.
+Only new UID/data/PIN are removed and exact original Main/OS restored. Actual SDK taps and native
+PIN controls are not real owner/device authentication or whole-platform acceptance. See
+[scope and preserved refusals](../quality/pin-covered-cold-notification-routes.md).

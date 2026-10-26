@@ -14,7 +14,11 @@ namespace Vafadar.Zanance.App;
 internal static class NativeReminderReview
 {
     /// <summary>The only application identity authorized to own this fictitious qualification data.</summary>
+#if LOCKED_REMINDER_REVIEW
+    internal const string Package = "pro.vafadar.zanance.lockedreminderreview";
+#else
     internal const string Package = "pro.vafadar.zanance.androidreminderreview";
+#endif
     private const string AccountName = "Cold reminder fixture account";
     private const string PlanName = "Cold reminder fixture plan";
     private static string Marker => Path.Combine(FileSystem.AppDataDirectory, "native-reminder-fixture.txt");
