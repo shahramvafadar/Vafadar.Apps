@@ -150,7 +150,7 @@ public sealed class ProfileFileWorkFlowTests
         var before = await GoalChooserFlowTests.SnapshotAsync(f.Flow); var backup = Assert.Single(f.Services.GetServices<IBackupSource>());
         using var stream = new MemoryStream(); await backup.WriteAsync(stream, Ct); Assert.True(stream.Length > 0);
         stream.Position = 0; await backup.RestoreAsync(stream, Ct);
-        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f.Flow));
+        Vafadar.Zanance.Testing.FinancialSnapshotAssert.EqualAfterPortableRoundTrip(before, await GoalChooserFlowTests.SnapshotAsync(f.Flow));
         Assert.False(f.Access.Capture(f.MainPath).Context!.ProfileWork!.CanStartNewWork);
     }
 

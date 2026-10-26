@@ -10364,3 +10364,21 @@ Original caller/bounded empty-Main retirement and four owned XML cleanup pass. O
 per-install Don't send resumes the same Play Protect restore without global-security change.
 Final Main18994 replaces18619 (OS reason3), with Home979/all141/APK/identity/storage/flags/OS
 preserved. No uninterrupted-process or broad stability claim. [Full evidence](quality/physical-runtime14-large-home-and-native-exit.md).
+
+### D-562 - Preserve original writer conflict policy and exact restore comparisons
+
+Actual CI job121422229286 contains83 failures (31 Data/52 App). Reproduce the shared financial
+delete/Undo error before fixing it. SQLite can override trigger OR IGNORE with the outer conflict
+policy or foreign-key action. Add migration20261026104025 to guard duplicate derived bucket
+insertion with NOT EXISTS; retain the revision update, original atomic writer and published old
+migration. Require exact corrected trigger definitions in the reader. No entity/compiled-model change.
+Portable restore normalizes only its validated local schema cookie; accepted-write workload
+comparison normalizes only validated opaque revision tokens in memory and keeps source/payload
+comparison exact. Eighteen new managed cases and all83 original failures pass selected local
+runs; hosted success is still a separate post-push gate. Strict Windows/complete signed Android
+builds have zero warnings/errors. A fresh distinct-package native protected-store cohort performs
+one purchase/refund deletion/actual receipt Undo and passes the changed derived-reader boundary;
+remove only that new fixture. One complete no-reset upgrade adopts8fd5 in Main7028 with original
+Home979/all141/UID/storage/permissions/OS/caller preserved. Retain initial Preparing and host-key
+observer refusals without reinstall or accepted-operation replay. General stability, two-second,
+accessibility, iOS/provider/Store/release gates remain. [D-562 evidence](quality/ci-ledger-invalidation-and-exact-restore.md)

@@ -26,6 +26,9 @@ public sealed class WorkloadSnapshotVerifierTests : IDisposable
     [InlineData("schema-edit", false)]
     [InlineData("header-edit", false)]
     [InlineData("invalid-revision", false)]
+    [InlineData("invalid-ledger-revision", false)]
+    [InlineData("derived-codec", false)]
+    [InlineData("derived-schema-cookie", false)]
     public async Task Only_an_explicit_round_trip_revision_change_is_allowed(string scenario, bool accepted)
     {
         var folder = directory.Combine("original");
@@ -52,6 +55,9 @@ public sealed class WorkloadSnapshotVerifierTests : IDisposable
                 "schema-edit" => "CREATE INDEX IndependentUnexpectedIndex ON Entries(Title);",
                 "header-edit" => "PRAGMA user_version=123;",
                 "invalid-revision" => "UPDATE HomeFinancialRevision SET Revision='zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz';",
+                "invalid-ledger-revision" => "UPDATE HomeLedgerReadState SET Revision='zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz';",
+                "derived-codec" => "UPDATE HomeLedgerReadState SET CodecVersion=2;",
+                "derived-schema-cookie" => "UPDATE HomeLedgerReadState SET SchemaVersion=999;",
                 _ => null
             };
             if (sql is not null) await db.Database.ExecuteSqlRawAsync(sql, Ct);

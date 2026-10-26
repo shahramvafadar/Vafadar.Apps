@@ -9,6 +9,46 @@ namespace Vafadar.Zanance.Data.Tests;
 public sealed class FinancialSnapshotTransportTests
 {
     [Fact]
+    public void Portable_round_trip_allows_only_a_validated_local_schema_cookie_change()
+    {
+        var original = Snapshot(1);
+        var changed = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(original)!;
+        var state = JsonSerializer.Deserialize<object?[]>(Assert.Single(changed["HomeLedgerReadState"]))!;
+        state[3] = 456L;
+        changed["HomeLedgerReadState"] = [JsonSerializer.Serialize(state)];
+        FinancialSnapshotAssert.EqualAfterPortableRoundTrip(original, JsonSerializer.Serialize(changed));
+        Assert.NotEqual(original, JsonSerializer.Serialize(changed));
+    }
+
+    [Theory]
+    [InlineData("HomeFinancialRevision")]
+    [InlineData("Entries")]
+    [InlineData("Accounts")]
+    [InlineData("Settings")]
+    public void Portable_cookie_normalization_keeps_authoritative_values_exact(string table)
+    {
+        var original = Snapshot(1);
+        var changed = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(original)!;
+        changed[table] = ["changed authoritative value"];
+        Assert.NotEqual(FinancialSnapshotAssert.NormalizeAfterPortableRoundTrip(original),
+            FinancialSnapshotAssert.NormalizeAfterPortableRoundTrip(JsonSerializer.Serialize(changed)));
+    }
+
+    [Theory]
+    [InlineData(1)]
+    [InlineData(2)]
+    public void Portable_cookie_normalization_does_not_ignore_either_ledger_revision(int index)
+    {
+        var original = Snapshot(1);
+        var changed = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(original)!;
+        var state = JsonSerializer.Deserialize<object?[]>(Assert.Single(changed["HomeLedgerReadState"]))!;
+        state[index] = Guid.NewGuid().ToString("N");
+        changed["HomeLedgerReadState"] = [JsonSerializer.Serialize(state)];
+        Assert.NotEqual(FinancialSnapshotAssert.NormalizeAfterPortableRoundTrip(original),
+            FinancialSnapshotAssert.NormalizeAfterPortableRoundTrip(JsonSerializer.Serialize(changed)));
+    }
+
+    [Fact]
     public void Equivalent_typed_transport_can_regroup_physical_rows_after_an_accepted_round_trip()
         => FinancialSnapshotAssert.EqualAfterWrites(Snapshot(1), Snapshot(512));
 

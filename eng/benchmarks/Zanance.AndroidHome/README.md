@@ -1163,3 +1163,16 @@ code changes, restore the exact original measured APK before resuming its immuta
 day/progress lineage; keep every accepted context and fatal record. Empty normal independent
 Main metadata retirement is a separately guarded compatibility step, never a workload or shipping
 Main downgrade. No production app source references this diagnostic Activity or parser.
+
+## D-562 fresh native writer-conflict qualification
+
+ReviewLedgerConflict=true builds the separate pro.vafadar.zanance.ledgerconflictreview package.
+Use phase ledger-conflict only in a new owned UID, with review_conflict_uid matching its actual
+UID. The phase uses the original protected factory/store and derived reader, durable planned IDs
+and accepted-operation guards. Preserve completed reports; never repeat a successful financial
+command to repair an observer. A prior deletion request without its private returned receipt is
+a refusal, not permission to reconstruct Undo. Remove only the finished fresh package.
+Actual API36/ARM64/4096 qualification is native backend evidence, not form/UI acceptance.
+Schema tools recognize only the explicit HomeFinancialRevision/HomeLedgerReadBlocks/
+HomeLedgerDirtyBlockConflictGuards suffix; no arbitrary migration or original-source rewrite.
+[Evidence](../../../src/Apps/Zanance/docs/quality/ci-ledger-invalidation-and-exact-restore.md).

@@ -83,11 +83,11 @@ public sealed class BackupRestoreFlowTests
         var session = Session(f, backup, runtime); session.IsOnboarding = true; await PrepareAsync(session, package); await session.RestoreCommand.ExecuteAsync(null);
         Assert.True(session.HasCompleted); Assert.False(session.HasPreview); Assert.False(session.CanRestore); Assert.False(session.CanSelect); Assert.True(session.CanFinish); Assert.False(session.CanLeave);
         Assert.Equal(f.Translator["Backup_RestoredFollowUpFailed"], session.Error); Assert.NotNull(session.Result); Assert.Null(session.PickedName); Assert.Empty(session.Password);
-        Assert.Equal(expected, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.Equal(1, runtime.Safety); Assert.Equal(1, runtime.Primary);
+        Vafadar.Zanance.Testing.FinancialSnapshotAssert.EqualAfterPortableRoundTrip(expected, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.Equal(1, runtime.Safety); Assert.Equal(1, runtime.Primary);
         await session.RestoreCommand.ExecuteAsync(null); session.CancelCommand.Execute(null); await PrepareAcceptedNoopAsync(session, package);
         Assert.True(session.HasCompleted); Assert.Equal(1, runtime.Primary); runtime.Refuse = null; await session.FinishCommand.ExecuteAsync(null);
         Assert.Null(session.Error); Assert.True(session.CanLeave); Assert.False(session.CanFinish); Assert.Equal(1, runtime.Opened);
-        Assert.Equal(1, runtime.Safety); Assert.Equal(1, runtime.Primary); Assert.Equal(expected, await GoalChooserFlowTests.SnapshotAsync(f));
+        Assert.Equal(1, runtime.Safety); Assert.Equal(1, runtime.Primary); Vafadar.Zanance.Testing.FinancialSnapshotAssert.EqualAfterPortableRoundTrip(expected, await GoalChooserFlowTests.SnapshotAsync(f));
     }
     private static async Task PrepareAcceptedNoopAsync(BackupRestoreSession session, byte[] package)
     { using var input = new MemoryStream(package, writable: false); await session.PrepareAsync(input, "Must not become a second replacement.zanbak"); }
@@ -98,7 +98,7 @@ public sealed class BackupRestoreFlowTests
         using var f = new FlowFixture(); var last = new LaterSource(); var backup = Service(f, last); var (package, expected) = await PackageAsync(f, backup);
         var runtime = new Runtime(f, backup); var session = Session(f, backup, runtime); await PrepareAsync(session, package); last.Refuse = true;
         await session.RestoreCommand.ExecuteAsync(null); Assert.False(session.HasCompleted); Assert.False(session.HasPreview); Assert.False(session.CanRestore); Assert.True(session.NeedsReview);
-        Assert.Equal(f.Translator["Backup_Error_RestoreFailed"], session.Error); Assert.Equal(expected, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.Equal(1, runtime.Primary);
+        Assert.Equal(f.Translator["Backup_Error_RestoreFailed"], session.Error); Vafadar.Zanance.Testing.FinancialSnapshotAssert.EqualAfterPortableRoundTrip(expected, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.Equal(1, runtime.Primary);
         await session.RestoreCommand.ExecuteAsync(null); Assert.Equal(1, runtime.Primary); last.Refuse = false; await session.CheckCommand.ExecuteAsync(null);
         Assert.True(session.CanRestore); await session.RestoreCommand.ExecuteAsync(null); Assert.True(session.HasCompleted); Assert.Equal(2, runtime.Primary); Assert.Equal(1, runtime.Opened);
     }

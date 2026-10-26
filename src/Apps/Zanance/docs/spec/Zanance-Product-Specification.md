@@ -9687,3 +9687,12 @@ Nine new independent-diagnostic reader cases pass; actual OS exit reason1/status
 and no tombstone accepted. Final Main18994/Home979/all141/OS and original caller restored,
 with old18619 OS reason3 explicit. No product financial algorithm/model/permission change or
 full-suite replay. [Evidence and open gates](../quality/physical-runtime14-large-home-and-native-exit.md).
+
+D-562: repair the actual CI writer defect with an additive duplicate-marker guard migration,
+preserving original financial operations and exact source comparison. All83 original failures
+pass locally;18 genuinely new managed cases cover conflict policies and narrow restore/workload
+oracles. Strict builds and one new Samsung protected-store delete/receipt-Undo cohort pass;
+complete signed8fd5 is adopted without reset in Main7028/Home979/all141 with original settings
+and caller preserved. Hosted latest-head CI remains pending until its actual result; broader
+stability/performance/accessibility/platform/provider/Store gates remain. [D-562 evidence](../quality/ci-ledger-invalidation-and-exact-restore.md)
+This is an update to Section31; no full-suite count or whole-device acceptance is inferred.

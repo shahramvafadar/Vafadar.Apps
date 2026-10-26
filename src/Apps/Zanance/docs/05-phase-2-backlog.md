@@ -3877,3 +3877,11 @@ D-550 full signed896e no-reset upgrade qualifies retained-emulator Main adoption
 UID/CEDE/permission flags/all120 public attributes/zero balance/OS/config and stopped compatible
 caller retained. Only two owned XMLs removed/AVD stopped; no prior cohort/test/financial replay.
 Physical original-caller restore/handback/adoption and broader release gates remain separate.
+
+D-562: repair the actual CI writer defect with an additive duplicate-marker guard migration,
+preserving original financial operations and exact source comparison. All83 original failures
+pass locally;18 genuinely new managed cases cover conflict policies and narrow restore/workload
+oracles. Strict builds and one new Samsung protected-store delete/receipt-Undo cohort pass;
+complete signed8fd5 is adopted without reset in Main7028/Home979/all141 with original settings
+and caller preserved. Hosted latest-head CI remains pending until its actual result; broader
+stability/performance/accessibility/platform/provider/Store gates remain. [D-562 evidence](quality/ci-ledger-invalidation-and-exact-restore.md)

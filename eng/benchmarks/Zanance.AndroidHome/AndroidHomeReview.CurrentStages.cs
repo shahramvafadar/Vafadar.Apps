@@ -16,8 +16,8 @@ namespace Vafadar.Zanance.App;
 
 internal static partial class AndroidHomeReview
 {
-    private const string CurrentHomeMigration = "20261025092800_HomeLedgerReadBlocks";
-    private static readonly string[] CurrentHomeMigrationSuffix = ["20261024115108_HomeFinancialRevision", CurrentHomeMigration];
+    private const string CurrentHomeMigration = "20261026104025_HomeLedgerDirtyBlockConflictGuards";
+    private static readonly string[] CurrentHomeMigrationSuffix = ["20261024115108_HomeFinancialRevision", "20261025092800_HomeLedgerReadBlocks", CurrentHomeMigration];
 
     /// <summary>Qualifies current native Home on encrypted copies of original rows without changing historical sources.</summary>
     private static async Task<object> ReviewCurrentHomeStagesAsync(App app, IServiceProvider services, string root,
@@ -310,8 +310,8 @@ internal static partial class AndroidHomeReview
             var pending = (await db.Database.GetPendingMigrationsAsync(ct)).ToArray();
             alreadyApplied = pending.Length == 0 && resume
                 && (await db.Database.GetAppliedMigrationsAsync(ct)).LastOrDefault() == CurrentHomeMigration;
-            if (!alreadyApplied && !pending.SequenceEqual(CurrentHomeMigrationSuffix)
-                && !pending.SequenceEqual(CurrentHomeMigrationSuffix.Skip(1)))
+            if (!alreadyApplied && !Enumerable.Range(0, CurrentHomeMigrationSuffix.Length)
+                    .Any(skip => pending.SequenceEqual(CurrentHomeMigrationSuffix.Skip(skip))))
                 throw new ReviewCheckException("Only the known additive Home revision/read-block suffix belongs to this qualification.");
         }
         var key = await keys.ReadAsync(generation.Binding, ct);
@@ -363,8 +363,8 @@ internal static partial class AndroidHomeReview
                 await using var normalizedContext = new ZananceDbContext(new DbContextOptionsBuilder<ZananceDbContext>()
                     .UseSqlite(normalized).UseModel(ZananceDbContextModel.Instance).Options);
                 var currentApplied = (await normalizedContext.Database.GetAppliedMigrationsAsync(ct)).ToArray();
-                var expectedAdded = oldApplied.LastOrDefault() == CurrentHomeMigrationSuffix[0]
-                    ? CurrentHomeMigrationSuffix.Skip(1).ToArray() : CurrentHomeMigrationSuffix;
+                var oldSuffixIndex = Array.IndexOf(CurrentHomeMigrationSuffix, oldApplied.LastOrDefault());
+                var expectedAdded = CurrentHomeMigrationSuffix.Skip(oldSuffixIndex + 1).ToArray();
                 if (oldApplied.Count == 0 || !currentApplied.SequenceEqual(oldApplied.Concat(expectedAdded)))
                     throw new ReviewCheckException("Original history plus only the exact additive suffix is required.");
                 await normalizedContext.GetService<IMigrator>().MigrateAsync(oldApplied[^1], ct);

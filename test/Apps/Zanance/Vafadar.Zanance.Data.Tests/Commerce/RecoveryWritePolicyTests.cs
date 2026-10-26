@@ -164,7 +164,7 @@ public sealed class RecoveryWritePolicyTests : IDisposable
         // Make a real data difference without using an enforced creation path or changing cached paid facts.
         await SqlAsync(f, "UPDATE Accounts SET Name='Temporary changed name'");
         package.Position = 0; await f.Backup.RestoreAsync(package, Ct);
-        Assert.Equal(before, await SnapshotAsync(f.Provider)); Assert.Equal(facts, f.Source.Current);
+        Vafadar.Zanance.Testing.FinancialSnapshotAssert.EqualAfterPortableRoundTrip(before, await SnapshotAsync(f.Provider)); Assert.Equal(facts, f.Source.Current);
         Assert.Equal(5, (await f.Store.GetAccountsAsync(cancellationToken: Ct)).Count);
         Assert.Equal(4, (await f.Store.GetTemplatesAsync(Ct)).Count); Assert.Equal(2, (await goals.GetGoalsAsync(Ct)).Count);
     }

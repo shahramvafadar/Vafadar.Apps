@@ -2759,3 +2759,13 @@ writer, key/KDF, source authority, compiled model or financial algorithm changes
 decoder retains its original allocation path. Sixteen new product cases and native full-source
 comparisons qualify this lifetime; final Main adoption remains separately pending.
 [Actual native admission and limits](../../src/Apps/Zanance/docs/quality/read-owned-home-expansion-buffer.md).
+
+## D-562 derived invalidation and restore identity
+
+Derived ledger dirty markers must never override a caller's original SQLite conflict policy.
+Use the additive conflict-guard migration and exact reader definitions; published migrations stay
+immutable. A portable restore may change SQLite's local schema cookie without changing financial
+rows. Comparison helpers may normalize only that validated cookie for explicitly portable
+round trips. Accepted-write workload comparisons normalize only validated opaque revision tokens
+in disposable memory; original schemas, financial rows and compressed payloads remain exact.
+[Evidence](../../src/Apps/Zanance/docs/quality/ci-ledger-invalidation-and-exact-restore.md).

@@ -21,6 +21,11 @@
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
+  <!-- D-562: a new native writer regression must never replace retained callers or shipping Main. -->
+  <PropertyGroup Condition="'$(ReviewLedgerConflict)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.ledgerconflictreview</ApplicationId>
+    <DefineConstants>$(DefineConstants);LEDGER_CONFLICT_REVIEW</DefineConstants>
+  </PropertyGroup>
   <!-- D-549: new minimum-API/page-size codec fixtures cannot touch retained callers or Main. -->
   <PropertyGroup Condition="'$(ReviewLedgerCodecCompatibility)' == 'true'">
     <ApplicationId>pro.vafadar.zanance.ledgercodeccompatibility</ApplicationId>

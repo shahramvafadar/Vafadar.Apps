@@ -11,6 +11,24 @@ internal static class FinancialSnapshotAssert
     internal static void EqualAfterWrites(string expected, string actual) =>
         Assert.Equal(NormalizeAfterWrites(expected), NormalizeAfterWrites(actual));
 
+    /// <summary>Portable SQLite compaction changes its local schema cookie, not financial rows or revision identities.</summary>
+    internal static void EqualAfterPortableRoundTrip(string expected, string actual) =>
+        Assert.Equal(NormalizeAfterPortableRoundTrip(expected), NormalizeAfterPortableRoundTrip(actual));
+
+    /// <summary>Allows only the validated local schema cookie; every other stored value remains compared exactly.</summary>
+    internal static string NormalizeAfterPortableRoundTrip(string snapshot)
+    {
+        var tables = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(snapshot)!;
+        NormalizeLedgerTransport(tables, removeDerivedValues: false);
+        if (tables.TryGetValue("HomeLedgerReadState", out var rows))
+        {
+            var values = JsonSerializer.Deserialize<object?[]>(Assert.Single(rows))!;
+            if (values[3] is not null) values[3] = "<validated-portable-schema-cookie>";
+            tables["HomeLedgerReadState"] = [JsonSerializer.Serialize(values)];
+        }
+        return JsonSerializer.Serialize(tables);
+    }
+
     /// <summary>Normalizes validated revision/derived transport after accepted writes, preserving all authoritative rows.</summary>
     internal static string NormalizeAfterWrites(string snapshot)
     {
@@ -30,7 +48,7 @@ internal static class FinancialSnapshotAssert
     /// Validate their shape/integrity/readiness, then exclude only this internal transport from financial equality.
     /// Ordinary no-write snapshots never call this normalization and continue comparing every stored byte.
     /// </summary>
-    private static void NormalizeLedgerTransport(Dictionary<string, List<string>> tables)
+    private static void NormalizeLedgerTransport(Dictionary<string, List<string>> tables, bool removeDerivedValues = true)
     {
         string[] names = ["HomeLedgerReadState", "HomeLedgerReadBlocks", "HomeLedgerDirtyBlocks"];
         if (names.All(name => !tables.ContainsKey(name))) return; // Historical first-schema snapshots remain valid.
@@ -67,6 +85,7 @@ internal static class FinancialSnapshotAssert
             if (tables.TryGetValue("Entries", out var entries)) Assert.Equal(entries.Count, count);
         }
         // The complete Entries/accounts/plans/settings/etc snapshots remain untouched and compared exactly.
-        foreach (var name in names) tables[name] = ["<validated-derived-ledger-transport>"];
+        if (removeDerivedValues)
+            foreach (var name in names) tables[name] = ["<validated-derived-ledger-transport>"];
     }
 }

@@ -40,7 +40,7 @@ public sealed class ProtectedSchemaUpgradeTests
         await using (var db = new ZananceDbContext(new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(current)
             .UseModel(ZananceDbContextModel.Instance).Options))
         {
-            Assert.Equal("20261025092800_HomeLedgerReadBlocks", (await db.Database.GetAppliedMigrationsAsync(ct)).Last());
+            Assert.Equal("20261026104025_HomeLedgerDirtyBlockConflictGuards", (await db.Database.GetAppliedMigrationsAsync(ct)).Last());
             await using var read = await db.Database.BeginTransactionAsync(ct);
             var cached = await HomeLedgerReadBlocks.TryReadAsync(db, ct); Assert.NotNull(cached);
             Assert.Equal(456, Assert.Single(cached).Amount);

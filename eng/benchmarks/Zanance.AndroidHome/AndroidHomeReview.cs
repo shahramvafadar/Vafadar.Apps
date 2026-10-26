@@ -21,7 +21,9 @@ namespace Vafadar.Zanance.App;
 internal static partial class AndroidHomeReview
 {
     /// <summary>The independent install allowed to own these fictitious workloads.</summary>
-#if LEDGER_CODEC_COMPATIBILITY
+#if LEDGER_CONFLICT_REVIEW
+    internal const string Package = "pro.vafadar.zanance.ledgerconflictreview";
+#elif LEDGER_CODEC_COMPATIBILITY
     internal const string Package = "pro.vafadar.zanance.ledgercodeccompatibility";
 #elif TRANSACTIONS_HEADER_REVIEW
     internal const string Package = "pro.vafadar.zanance.transactionsheaderreview";
@@ -69,6 +71,14 @@ internal static partial class AndroidHomeReview
                 var resumeUnreviewed = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_resume_unreviewed", false) == true;
                 await Task.Run(() => PrepareAsync(root, ct, unreviewed: phase == "prepare-unreviewed", resumeUnreviewed), ct);
                 await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, UnreviewedCorpus = phase == "prepare-unreviewed", NativeOverflowRefusals = phase == "prepare-unreviewed" ? CheckUnreviewedOverflow() : 0, CoreModuleVersionId = typeof(LedgerCalculator).Module.ModuleVersionId, MainPackageTouched = false, Device = DeviceEvidence() }, ct);
+            }
+            else if (phase == "ledger-conflict")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0)
+                    throw new ReviewCheckException("Owned nonredirected native conflict source required.");
+                await WriteReportAsync(root, phase,
+                    await ReviewLedgerConflictAsync(services, root, comparison!, ct), ct);
             }
             else if (phase == "ledger-codec-compat")
             {

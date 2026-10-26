@@ -1308,3 +1308,9 @@ No registers, raw memory/absolute stack, logs, unrelated crash or private Main d
 discard buffers cleared. Actual phone record EXIT_SELF1/status255 is reported without tombstone
 acceptance. No production app SDK, permission, telemetry or network change. See the D-561 quality
 evidence; this diagnostic capability is not a general privacy/security acceptance.
+
+D-562 privacy boundary: the additive derived-marker migration introduces no personal-data
+field, permission, network access, provider or SDK. Its temporary distinct Android regression
+package uses only new fictitious owned data and is removed after acceptance; it never reads
+Main private keys/databases. Existing protected source and backup policies remain unchanged.
+[Evidence](quality/ci-ledger-invalidation-and-exact-restore.md).

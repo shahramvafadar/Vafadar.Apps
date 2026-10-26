@@ -153,19 +153,10 @@ internal static class HomeLedgerReadBlocks
         if (await NumberAsync(db, "SELECT count(*) FROM sqlite_master WHERE type='trigger' AND tbl_name IN ('HomeLedgerReadBlocks','HomeLedgerReadState','HomeLedgerDirtyBlocks')", ct).ConfigureAwait(false) != 0) return false;
         foreach (var operation in new[] { "INSERT", "UPDATE", "DELETE" })
         {
-            var oldBucket = operation == "INSERT" ? "" : "INSERT OR IGNORE INTO HomeLedgerDirtyBlocks VALUES (OLD.rowid >> 9);";
-            var newBucket = operation == "DELETE" ? "" : "INSERT OR IGNORE INTO HomeLedgerDirtyBlocks VALUES (NEW.rowid >> 9);";
-            var expected = $"""
-                CREATE TRIGGER HomeLedgerReadBlocks_Entries_{operation} AFTER {operation} ON Entries
-                BEGIN
-                    UPDATE HomeLedgerReadState SET Revision = lower(hex(randomblob(16))) WHERE Id = 1;
-                    {oldBucket}
-                    {newBucket}
-                END
-                """;
+            var expected = Migrations.HomeLedgerDirtyBlockConflictGuards.TriggerSql(operation);
             await using var result = await QueryAsync(db, $"SELECT sql FROM sqlite_master WHERE type='trigger' AND name='HomeLedgerReadBlocks_Entries_{operation}'", ct).ConfigureAwait(false);
             if (!await result.DbDataReader.ReadAsync(ct).ConfigureAwait(false)
-                || Compact(result.DbDataReader.GetString(0).TrimEnd(';')) != Compact(expected)) return false;
+                || Compact(result.DbDataReader.GetString(0).TrimEnd(';')) != Compact(expected.TrimEnd(';'))) return false;
         }
         // New/missing/shadowed source columns require review rather than obsolete32-field blocks.
         var columns = db.Model.FindEntityType(typeof(LedgerEntry))!.GetProperties()

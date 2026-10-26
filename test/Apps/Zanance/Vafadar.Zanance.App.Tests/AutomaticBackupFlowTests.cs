@@ -28,7 +28,7 @@ public sealed class AutomaticBackupFlowTests
         account.Name = "Later explicit edit"; await f.Flow.Store.SaveAccountAsync(account, Ct);
         await using var input = await f.Storage.OpenReadAsync(file.Id, Ct); using var bytes = new MemoryStream(); await input.CopyToAsync(bytes, Ct);
         await f.Backup.RestorePackageAsync(bytes.ToArray(), cancellationToken: Ct);
-        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f.Flow));
+        Vafadar.Zanance.Testing.FinancialSnapshotAssert.EqualAfterPortableRoundTrip(before, await GoalChooserFlowTests.SnapshotAsync(f.Flow));
     }
 
     [Fact, Trait("AT", "AT-281")]

@@ -17,7 +17,9 @@ namespace Vafadar.Zanance.Performance;
 internal static class ReadBlockSchemaRetirement
 {
     /// <summary>The sole additive transport migration this diagnostic can retire.</summary>
-    internal const string Current = "20261025092800_HomeLedgerReadBlocks";
+    internal const string Current = "20261026104025_HomeLedgerDirtyBlockConflictGuards";
+    /// <summary>The original derived block migration, preceding the conflict-policy correction.</summary>
+    internal const string ReadBlocks = "20261025092800_HomeLedgerReadBlocks";
     /// <summary>The earlier internal revision suffix also absent from the retained original APK.</summary>
     internal const string Intermediate = "20261024115108_HomeFinancialRevision";
     /// <summary>The exact predecessor supported by the retained original caller.</summary>
@@ -53,7 +55,7 @@ internal static class ReadBlockSchemaRetirement
         var applied = (await db.Database.GetAppliedMigrationsAsync(ct).ConfigureAwait(false)).ToArray();
         var known = db.Database.GetMigrations().ToArray();
         if (applied.Length == 0 || !applied.SequenceEqual(known.Take(applied.Length))
-            || applied[^1] is not (Current or Intermediate or Target))
+            || applied[^1] is not (Current or ReadBlocks or Intermediate or Target))
             throw new InvalidDataException("Only the exact original caller migration prefix can be retired.");
         var retired = applied[^1] == Target;
         if (retired && !File.Exists(requestPath)) throw new InvalidDataException("An original retirement request is required for recovery.");
@@ -118,7 +120,7 @@ internal static class ReadBlockSchemaRetirement
             if (columns.Count == 0) throw new InvalidDataException("Complete original columns are required.");
             var projection = string.Join(",", columns.Select(column => $"typeof({Quote(column)}),CASE WHEN typeof({Quote(column)}) IN ('text','blob') THEN CAST({Quote(column)} AS BLOB) ELSE {Quote(column)} END"));
             var order = string.Join(",", columns.Select(column => $"typeof({Quote(column)}),{Quote(column)} COLLATE BINARY"));
-            var filter = projectReadBlocks && table == "__EFMigrationsHistory" ? $" WHERE MigrationId NOT IN ('{Intermediate}','{Current}')" : "";
+            var filter = projectReadBlocks && table == "__EFMigrationsHistory" ? $" WHERE MigrationId NOT IN ('{Intermediate}','{ReadBlocks}','{Current}')" : "";
             command.CommandText = $"SELECT {projection} FROM {Quote(table)}{filter} ORDER BY {order}";
             await using var rows = await command.ExecuteReaderAsync(ct).ConfigureAwait(false);
             while (await rows.ReadAsync(ct).ConfigureAwait(false))

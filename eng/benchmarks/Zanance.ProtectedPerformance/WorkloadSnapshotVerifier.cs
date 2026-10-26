@@ -33,9 +33,52 @@ internal static class WorkloadSnapshotVerifier
         update.Parameters.AddWithValue("$original", originalRevision);
         if (await update.ExecuteNonQueryAsync(cancellationToken) != 1)
             throw new InvalidDataException("Workload revision normalization must affect exactly one owned memory row.");
+        // D-562: an accepted insert/delete round trip also advances the ledger cache's opaque
+        // tokens. Normalize only those identities; payloads, buckets, counts and schema remain exact.
+        var originalLedger = await ReadLedgerTokens(before, cancellationToken);
+        var currentLedger = await ReadLedgerTokens(after, cancellationToken);
+        if ((originalLedger is null) != (currentLedger is null))
+            throw new InvalidDataException("Derived workload schema presence changed.");
+        if (originalLedger is not null && currentLedger is not null)
+        {
+            await using var ledger = normalized.CreateCommand();
+            ledger.CommandText = """
+                UPDATE HomeLedgerReadState SET Revision=$current,PublishedRevision=$published
+                WHERE Id=1 AND Revision=$original AND PublishedRevision IS $originalPublished;
+                """;
+            ledger.Parameters.AddWithValue("$current", currentLedger.Revision);
+            ledger.Parameters.AddWithValue("$published", (object?)currentLedger.Published ?? DBNull.Value);
+            ledger.Parameters.AddWithValue("$original", originalLedger.Revision);
+            ledger.Parameters.AddWithValue("$originalPublished", (object?)originalLedger.Published ?? DBNull.Value);
+            if (await ledger.ExecuteNonQueryAsync(cancellationToken) != 1)
+                throw new InvalidDataException("Exactly one original derived memory identity is required.");
+        }
         await SqliteSnapshotVerifier.VerifyAsync(normalized, after, cancellationToken);
-        if (await ReadRevision(before, cancellationToken) != originalRevision)
+        if (await ReadRevision(before, cancellationToken) != originalRevision
+            || await ReadLedgerTokens(before, cancellationToken) != originalLedger)
             throw new InvalidDataException("Original workload snapshot was modified.");
+    }
+
+    private sealed record LedgerTokens(string Revision, string? Published);
+
+    /// <summary>Requires exact singleton token storage without reading or changing financial rows.</summary>
+    private static async Task<LedgerTokens?> ReadLedgerTokens(SqliteConnection connection, CancellationToken ct)
+    {
+        await using var command = connection.CreateCommand();
+        command.CommandText = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='HomeLedgerReadState';";
+        if (Convert.ToInt64(await command.ExecuteScalarAsync(ct), System.Globalization.CultureInfo.InvariantCulture) == 0) return null;
+        command.CommandText = "SELECT typeof(Id),Id,typeof(Revision),Revision,typeof(PublishedRevision),PublishedRevision FROM HomeLedgerReadState;";
+        await using var rows = await command.ExecuteReaderAsync(ct);
+        if (!await rows.ReadAsync(ct) || rows.GetString(0) != "integer" || rows.GetInt64(1) != 1
+            || rows.GetString(2) != "text" || rows.GetString(4) is not ("text" or "null"))
+            throw new InvalidDataException("Derived workload singleton identity or storage type differs.");
+        var revision = rows.GetString(3);
+        var published = rows.IsDBNull(5) ? null : rows.GetString(5);
+        if (revision.Length != 32 || revision.Any(c => !char.IsAsciiHexDigitLower(c))
+            || published is not null && (published.Length != 32 || published.Any(c => !char.IsAsciiHexDigitLower(c)))
+            || await rows.ReadAsync(ct))
+            throw new InvalidDataException("Derived workload revisions must remain bounded opaque tokens.");
+        return new LedgerTokens(revision, published);
     }
 
     /// <summary>Requires the original singleton integer identity and a complete lowercase hexadecimal token.</summary>

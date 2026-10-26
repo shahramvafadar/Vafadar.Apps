@@ -1591,3 +1591,11 @@ Independent new-candidate bootstrap also reaches
 original onboarding on API24/x64/4096 and API35/x64/simulated16384, with no UI/financial input;
 remove only new fixtures/two owned XMLs and prove both AVDs stopped with sharedADB76812 retained.
 Goal/full stability/accessibility/iOS/provider/Store/release remain open. [Evidence](quality/complete-ledger-read-blocks.md).
+
+D-562: repair the actual CI writer defect with an additive duplicate-marker guard migration,
+preserving original financial operations and exact source comparison. All83 original failures
+pass locally;18 genuinely new managed cases cover conflict policies and narrow restore/workload
+oracles. Strict builds and one new Samsung protected-store delete/receipt-Undo cohort pass;
+complete signed8fd5 is adopted without reset in Main7028/Home979/all141 with original settings
+and caller preserved. Hosted latest-head CI remains pending until its actual result; broader
+stability/performance/accessibility/platform/provider/Store gates remain. [D-562 evidence](quality/ci-ledger-invalidation-and-exact-restore.md)

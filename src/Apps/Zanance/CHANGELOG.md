@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Prevent derived Home refresh markers from blocking purchase/refund deletion or Undo; preserve original financial changes and portable-restore comparisons (D-562).
+
 - Complete the existing signed Android security update adoption on the retained Samsung while preserving Home and the compact Transactions title action (D-555).
 
 - Clarify the six-language store drafts about local data, optional provider backups and Android receipt-reading limits; identify older Windows screenshots as historical drafts (D-559).

@@ -4028,3 +4028,10 @@ service/container runtime, Store or release acceptance, or overwrite historical 
   native trace; nine focused parser cases pass. This does not qualify actual tombstone extraction.
 - [ ] General native-crash/ANR and physical two-second goal remain open; tenfold median3954.76ms.
   [Original failures, restoration and limits](quality/physical-runtime14-large-home-and-native-exit.md).
+
+- [x] D-562 current-source financial writer conflict reproduction, additive migration and83
+  originally failed cases passing in selected local runs;18 genuinely new managed cases.
+- [x] D-562 strict Windows/complete signed Android and one fresh actual protected-store native
+  delete/receipt-Undo cohort; shipping8fd5 no-reset adoption preserves Main Home979/all141/OS.
+- [ ] D-562 configured latest-head hosted CI success after the completed correction is pushed.
+  Local success does not close this gate. [D-562 evidence](quality/ci-ledger-invalidation-and-exact-restore.md)
