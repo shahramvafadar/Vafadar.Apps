@@ -4954,3 +4954,24 @@ APK58990498bytes are removed; actually used packages/restore APKs remain. The ow
 phone lease is active; no phone input follows. Broader goal/performance/security/stability/
 accessibility/platform/provider/Store/release gates remain open.
 [Original observations, refusals and restoration](../../quality/transactions-title-android-os-text.md).
+
+
+### D-547 / D-548 - Finish current coupled batch before publication
+
+The read-owned buffer now passes two fixed matched native pairs, each within one actual day,
+including the opposite-order26October continuation after a preserved midnight refusal. The independent phone lease does not pause the active
+goal: the actual contextual Transactions safe-area defect is now fixed and36 native Undo states,
+six source checks, strict builds and exact emulator restoration pass. Latest complete package
+Data/Core identity is qualified after retaining the separate-root mismatch. The native component is admitted; finish the same original-caller install pending Play Protect,
+restore/hand back the phone, adopt only the final verified Main package when available and
+publish the completed batch. No successful financial/native
+scene or unrelated suite repeats. [Home boundary](../../quality/read-owned-home-expansion-buffer.md),
+[Transactions boundary](../../quality/transactions-context-safe-area.md).
+
+
+D-549 independently closes only D-540's nonempty original codec gap on API24/4096 and simulated
+API35/16384 with in-process native/managed proof, original fallback/recovery and native Home.
+Both fresh once-only fixtures/packages are removed and original packages/settings/config restored;
+the two owned AVDs stop. No old key/migration/financial cohort or successful suite is replayed.
+Continue pending original-caller phone restoration/handoff and later final Main adoption; do not
+substitute this cohort for hardware16KiB, stability, spoken A11Y, iOS or release acceptance.

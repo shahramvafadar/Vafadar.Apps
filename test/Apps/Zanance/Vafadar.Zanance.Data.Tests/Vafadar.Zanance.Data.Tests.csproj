@@ -4,6 +4,7 @@
     <Compile Include="../FinancialSnapshotAssert.cs" Link="Infrastructure/FinancialSnapshotAssert.cs" />
     <Compile Include="../../../../eng/benchmarks/Zanance.ProtectedPerformance/WorkloadSnapshotVerifier.cs" Link="Performance/WorkloadSnapshotVerifier.cs" />
     <Compile Include="../../../../eng/benchmarks/Zanance.AndroidHome/IsolatedHomeReadFactory.cs" Link="Performance/IsolatedHomeReadFactory.cs" />
+    <Compile Include="../../../../eng/benchmarks/Zanance.AndroidHome/NativePublicationMemory.cs" Link="Performance/NativePublicationMemory.cs" />
     <Compile Include="../../../../eng/benchmarks/Zanance.AndroidHome/ReadBlockSchemaRetirement.cs" Link="Performance/ReadBlockSchemaRetirement.cs" />
     <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" />
     <ProjectReference Include="..\..\..\..\src\Apps\Zanance\Vafadar.Zanance.Data\Vafadar.Zanance.Data.csproj" />

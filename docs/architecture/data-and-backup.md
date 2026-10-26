@@ -2746,3 +2746,16 @@ retry, including exceptions. Never wait for another factory context while retain
 lease: pending exclusive maintenance must be able to drain it. Legacy public read/validate APIs
 keep their separate scoped contexts and share the unchanged original query/validation bodies.
 [Actual comparison and boundaries](../../src/Apps/Zanance/docs/quality/home-publication-connection.md).
+
+
+### Read-owned ledger expansion lifetime (D-547)
+
+One original HomeLedgerReadBlocks.TryReadAsync call owns one fresh bounded expansion buffer.
+Reuse capacity only within that read; clear the whole old capacity on growth and the whole final
+capacity on Dispose before normal return, scalar fallback, error or cancellation. Do not retain
+plaintext in a static/global pool, across profiles/reads or into UI projection. Original codec-v1
+keeps all32 fields/order/strict UTF8 and independently mutable returned entities/tags. No schema,
+writer, key/KDF, source authority, compiled model or financial algorithm changes. The standalone
+decoder retains its original allocation path. Sixteen new product cases and native full-source
+comparisons qualify this lifetime; final Main adoption remains separately pending.
+[Actual native admission and limits](../../src/Apps/Zanance/docs/quality/read-owned-home-expansion-buffer.md).

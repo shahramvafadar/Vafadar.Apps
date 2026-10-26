@@ -76,7 +76,19 @@ internal static class HomeLedgerBlockCodec
     }
 
     /// <summary>Creates independent mutable domain rows only from an exact bounded block and expected physical bucket.</summary>
-    internal static List<HomeLedgerPhysicalRow> Decode(ReadOnlySpan<byte> payload, long bucket, CancellationToken ct = default)
+    internal static List<HomeLedgerPhysicalRow> Decode(ReadOnlySpan<byte> payload, long bucket, CancellationToken ct = default) =>
+        DecodeCore(payload, bucket, null, ct);
+
+    /// <summary>Uses only a fresh read-owned buffer; all32 original fields, bounds and output independence stay unchanged.</summary>
+    internal static List<HomeLedgerPhysicalRow> DecodeWithBuffer(ReadOnlySpan<byte> payload, long bucket,
+        HomeLedgerBlockBuffer buffer, CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(buffer);
+        return DecodeCore(payload, bucket, buffer, ct);
+    }
+
+    private static List<HomeLedgerPhysicalRow> DecodeCore(ReadOnlySpan<byte> payload, long bucket,
+        HomeLedgerBlockBuffer? buffer, CancellationToken ct)
     {
         if (payload.Length < HeaderBytes || payload.Length > HeaderBytes + BrotliEncoder.GetMaxCompressedLength(MaxUncompressedBytes)
             || BinaryPrimitives.ReadInt32LittleEndian(payload) != Magic
@@ -90,7 +102,7 @@ internal static class HomeLedgerBlockCodec
             || compressedBytes < 1 || compressedBytes != payload.Length - HeaderBytes)
             throw new InvalidDataException("Invalid derived ledger block bounds.");
         ct.ThrowIfCancellationRequested();
-        var raw = new byte[rawBytes];
+        Span<byte> raw = buffer is null ? new byte[rawBytes] : buffer.GetSpan(rawBytes);
         var decoder = new BrotliDecoder();
         try
         {

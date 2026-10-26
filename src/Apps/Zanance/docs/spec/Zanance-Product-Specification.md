@@ -9583,3 +9583,32 @@ APK58990498bytes are removed; actually used packages/restore APKs remain. The ow
 phone lease is active; no phone input follows. Broader goal/performance/security/stability/
 accessibility/platform/provider/Store/release gates remain open.
 [Original observations, refusals and restoration](../quality/transactions-title-android-os-text.md).
+
+
+### D-547 / D-548 - Current Section31 maintenance checkpoint
+
+Transactions filter budgeting now includes the actual arranged header offset: the observed
+selection/Undo120dp failure becomes a minimum144dp in36 native states across360/412/800dp,
+en/fa/de and both themes at OS200%. Six actual-source regression cases pass; one earlier native
+success and36 unaffected D-546 scenes are retained without replay. Four original typed packets,
+original controls and financial behavior are preserved. No successful Undo/write is claimed.
+[Runtime scope](../quality/transactions-context-safe-area.md).
+
+The separate read-owned Home buffer passes native component admission; Main adoption is pending:83 selected checks include16 new product
+candidate cases,12 diagnostic cases and55 affected original cases; host allocation improves
+23.524924%. Exact native/shipping Data/Core and strict package checks pass, and two matched native pairs improve6.228291%/7.010858% within every fixed memory/dispatcher gate.
+The unmatched25October reverse role and midnight refusal remain; only the unqualified pair is
+completed at actual26October. Original-caller Play Protect restoration and Main adoption are pending. These
+counts do not replace the product's established full-suite baseline;36 native states are not
+unit tests. General stability/performance/A11Y/platform/provider/Store/release stay open.
+[Pending native gate](../quality/read-owned-home-expansion-buffer.md).
+
+
+D-549 qualification update to Section31: the outstanding nonempty original ledger codec,
+malformed-compressed-payload scalar fallback/exact cache recovery and original native Home balance
+pass on API24/x64 with native/managed4096-byte pages and API35/x64 simulated16384-byte pages.
+Two distinct once-only fixtures use2062 total synthetic rows and six native case outcomes; managed
+unit-test totals do not increase. Both new packages/data are removed, original package paths and
+OS/AVD configuration match, and both owned AVDs stop. Exact packaged Data/Core match shipping896e.
+No physical16KiB, whole-platform, general stability/A11Y/performance, iOS/provider/Store/release
+acceptance is added. Original phone restoration and later Main adoption remain pending.

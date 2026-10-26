@@ -10168,3 +10168,41 @@ APK58990498bytes are removed; actually used packages/restore APKs remain. The ow
 phone lease is active; no phone input follows. Broader goal/performance/security/stability/
 accessibility/platform/provider/Store/release gates remain open.
 [Original observations, refusals and restoration](quality/transactions-title-android-os-text.md).
+
+
+### D-547 - Read-owned expansion buffer, native component admitted
+
+One disposable buffer per original ledger-block read removes repeated raw expansions without a
+global pool, cache, schema, key/KDF or financial change. It clears full retired/final capacities
+before return/fallback/error/cancellation. Host allocation falls23.524924%;83 selected cases pass
+(16 new product candidates,12 diagnostic contracts,55 original). Strict builds and exact complete
+shipping Data/Core inputs pass. Two matched whole-Home/native-boundary memory pairs pass at6.228291%/7.010858%,
+with opposite order on actual26October after a preserved25October midnight refusal. Do not adopt from host evidence,
+change D-545's verdict or mark the broader active goal complete.
+[Exact pending admission](quality/read-owned-home-expansion-buffer.md).
+
+### D-548 - Actual safe-area space in the contextual Transactions viewport
+
+A real OS200% selection-plus-Undo scene leaves120dp rather than144 because the original budget
+omits the header's actual24dp top offset. Use its arranged bottom, not a hardcoded inset; preserve
+all original controls/Back/commands and separate rows. Six focused cases and36 native Undo states
+across360/412/800dp, three languages/two themes pass with exact source preservation. Retain one
+prior success and continue35 states. Actual-source constraint audit retains36 D-546 normal
+scenes without replay. Emulator Main/caller/OS and owned-output cleanup are verified. Full signed
+latest package inputs pass; physical adoption awaits the pending original-caller Play Protect restore
+and final Main handoff. The independently qualified repository batch proceeds to exact-head CI. No financial Undo, speech/general A11Y, stability/platform or release acceptance is added.
+[Actual defect, refusals and restoration](quality/transactions-context-safe-area.md).
+
+
+### D-549 - Nonempty codec on actual API24 and simulated16KiB runtime
+
+The distinct owned Release/AOT caller preserves every original field in1031 new fictitious rows
+per platform, observes original scalar/nonempty-block routes, digest-valid malformed payload
+fallback/exact recovery and native Home balance. Native and managed pages both report4096 on
+API24 and16384 on simulated API35. Packaged Data/Core exactly match shipping896e;192 own AOT
+images/204ELF/static alignment/offline/signature pass. Six native case outcomes add no unit tests
+or accepted phone financial replay. Both new packages/fixtures are removed, original package
+paths/settings/config match and both AVDs stop. Preserve compile/preboot/UID/parser refusals.
+[Original coverage and limits](quality/nonempty-codec-android-compatibility.md). Hardware16KiB,
+full-platform, stability/performance/A11Y/iOS/provider/Store/release and pending phone restoration
+remain separate.

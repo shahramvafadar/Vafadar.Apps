@@ -17,7 +17,8 @@ internal static class HomeLedgerReadBlocks
     private const int MaxPayloadBytes = HomeLedgerBlockCodec.MaxUncompressedBytes + 1024 * 1024;
 
     /// <summary>Returns fresh complete rows only for the captured schema/revision; getters never rebuild or repair storage.</summary>
-    internal static async Task<List<LedgerEntry>?> TryReadAsync(ZananceDbContext db, CancellationToken ct)
+    internal static async Task<List<LedgerEntry>?> TryReadAsync(ZananceDbContext db, CancellationToken ct,
+        Func<HomeLedgerBlockBuffer>? createBuffer = null)
     {
         if (!db.CanUseHomeLedgerBlocks || db.Database.CurrentTransaction is null) return null;
         var state = await ReadStateAsync(db, ct).ConfigureAwait(false);
@@ -33,6 +34,9 @@ internal static class HomeLedgerReadBlocks
                 CASE WHEN typeof(Digest)='blob' AND length(Digest)=32 THEN Digest ELSE NULL END
             FROM HomeLedgerReadBlocks ORDER BY BlockId DESC
             """, ct).ConfigureAwait(false);
+        // D-547: disposal precedes return/fallback and the caller's projection, including reader failure/cancellation.
+        using var buffer = createBuffer is null ? new HomeLedgerBlockBuffer()
+            : createBuffer() ?? throw new InvalidOperationException("A fresh owned ledger buffer is required.");
         var reader = result.DbDataReader;
         long? previous = null;
         while (await reader.ReadAsync(ct).ConfigureAwait(false))
@@ -45,7 +49,7 @@ internal static class HomeLedgerReadBlocks
             var payload = reader.GetFieldValue<byte[]>(2); var digest = reader.GetFieldValue<byte[]>(3);
             if (digest.Length != 32 || !CryptographicOperations.FixedTimeEquals(SHA256.HashData(payload), digest)) return null;
             List<HomeLedgerPhysicalRow> rows;
-            try { rows = HomeLedgerBlockCodec.Decode(payload, id, ct); }
+            try { rows = HomeLedgerBlockCodec.DecodeWithBuffer(payload, id, buffer, ct); }
             catch (Exception error) when (error is InvalidDataException or DecoderFallbackException) { return null; }
             if (rows.Count != count || entries.Count + (long)rows.Count > state.Rows) return null;
             foreach (var row in rows) entries.Add(row.Entry);

@@ -21,7 +21,9 @@ namespace Vafadar.Zanance.App;
 internal static partial class AndroidHomeReview
 {
     /// <summary>The independent install allowed to own these fictitious workloads.</summary>
-#if TRANSACTIONS_HEADER_REVIEW
+#if LEDGER_CODEC_COMPATIBILITY
+    internal const string Package = "pro.vafadar.zanance.ledgercodeccompatibility";
+#elif TRANSACTIONS_HEADER_REVIEW
     internal const string Package = "pro.vafadar.zanance.transactionsheaderreview";
 #elif SUPA_CSV_REVIEW
     internal const string Package = "pro.vafadar.zanance.supacsvreview";
@@ -67,6 +69,14 @@ internal static partial class AndroidHomeReview
                 var resumeUnreviewed = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_resume_unreviewed", false) == true;
                 await Task.Run(() => PrepareAsync(root, ct, unreviewed: phase == "prepare-unreviewed", resumeUnreviewed), ct);
                 await WriteReportAsync(root, phase, new { Prepared = true, Fictitious = true, UnreviewedCorpus = phase == "prepare-unreviewed", NativeOverflowRefusals = phase == "prepare-unreviewed" ? CheckUnreviewedOverflow() : 0, CoreModuleVersionId = typeof(LedgerCalculator).Module.ModuleVersionId, MainPackageTouched = false, Device = DeviceEvidence() }, ct);
+            }
+            else if (phase == "ledger-codec-compat")
+            {
+                Directory.CreateDirectory(root);
+                if (RedirectedAncestors(root).Length != 0)
+                    throw new ReviewCheckException("Owned nonredirected codec compatibility source required.");
+                await WriteReportAsync(root, phase,
+                    await ReviewLedgerCodecCompatibilityAsync(app, services, root, comparison!, ct), ct);
             }
             else if (phase == "supa-csv")
             {
@@ -487,14 +497,14 @@ internal static partial class AndroidHomeReview
                 var positionOnly = Platform.CurrentActivity?.Intent?.GetBooleanExtra("review_header_native_position", false) == true;
                 await WriteReportAsync(root, (positionOnly ? "headers-os-native-" : "headers-os-") + width, await ReviewHeadersOsAsync(app, services, root, comparison!, ct), ct);
             }
-            else if (phase == "transactions-header-os")
+            else if (phase is "transactions-header-os" or "transactions-undo-os")
             {
                 Directory.CreateDirectory(root);
                 if (RedirectedAncestors(root).Length != 0)
                     throw new ReviewCheckException("Original nonredirected Transactions OS observation required.");
                 var width = Platform.CurrentActivity?.Intent?.GetIntExtra("review_os_width", 0) ?? 0;
                 await WriteReportAsync(root, phase + "-" + width,
-                    await ReviewTransactionsHeaderOsAsync(app, services, root, comparison!, ct), ct);
+                    await ReviewTransactionsHeaderOsAsync(app, services, root, comparison!, ct, phase == "transactions-undo-os"), ct);
             }
             else if (phase == "transactions-add-header")
             {
@@ -978,6 +988,7 @@ internal static partial class AndroidHomeReview
                     await originalHome.PendingPublication;
                     var samples = new List<double>(); var gaps = new List<double>(); var notificationSamples = new List<object>();
                     var transportSamples = new List<object>();
+                    var boundaryMemorySamples = new List<object>();
                     var uncollectedOracle = cpuWindowOnly && isolatedOracle is null ? releasedOracle!.IsAlive : (bool?)null;
                     for (var sample = 0; sample < (phase == "guard" || cpuWindowOnly ? 1 : 2); sample++)
                     {
@@ -1041,6 +1052,13 @@ internal static partial class AndroidHomeReview
                                 throw new ReviewCheckException("Complete original Home publication differs.");
                             if (page.Handler?.PlatformView is not Android.Views.View native) throw new ReviewCheckException("Android native Home tree unavailable.");
                             await WaitLayoutAsync(native, ct); Mark("native-layout-ready"); clock.Stop();
+                            if (cpuWindowOnly && separateOracle)
+                            {
+                                // D-547: end both measured windows before diagnostic memory/control work, retaining the last gap.
+                                largest = Math.Max(largest, heartbeat.Elapsed.TotalMilliseconds - last);
+                                timer.Stop();
+                                boundaryMemorySamples.Add(CaptureNativePublicationMemory(sample));
+                            }
                             RequireHomeWindowFocus();
                             var texts = NativeTexts(native).ToHashSet(StringComparer.Ordinal);
                             foreach (var balance in balances)
@@ -1108,6 +1126,7 @@ internal static partial class AndroidHomeReview
                         FullOracleReferenceReleased = cpuWindowOnly && isolatedOracle is null, UncollectedOracleAtPublicationStart = uncollectedOracle,
                         NoFullOracleReadBeforePublication = separateOracle, ObservationProcessId = Environment.ProcessId,
                         LedgerTransport = ledgerTransport, ValidationMode = validationMode, ActualTransportSamples = transportSamples,
+                        NativeReadyMemorySamples = boundaryMemorySamples,
                         SeparateOraclePreparationProcessId = isolatedOracle?.PreparedProcessId });
                     await File.WriteAllTextAsync(Path.Combine(root, "progress-" + comparison + "-" + phase + ".json"), JsonSerializer.Serialize(results), ct);
                     _balanceEvidence = null;

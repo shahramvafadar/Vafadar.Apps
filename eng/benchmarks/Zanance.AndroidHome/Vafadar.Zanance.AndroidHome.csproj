@@ -21,6 +21,11 @@
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
+  <!-- D-549: new minimum-API/page-size codec fixtures cannot touch retained callers or Main. -->
+  <PropertyGroup Condition="'$(ReviewLedgerCodecCompatibility)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.ledgercodeccompatibility</ApplicationId>
+    <DefineConstants>$(DefineConstants);LEDGER_CODEC_COMPATIBILITY</DefineConstants>
+  </PropertyGroup>
   <!-- Title-action qualification must not replace callers with retained financial evidence. -->
   <PropertyGroup Condition="'$(ReviewTransactionsHeader)' == 'true'">
     <ApplicationId>pro.vafadar.zanance.transactionsheaderreview</ApplicationId>

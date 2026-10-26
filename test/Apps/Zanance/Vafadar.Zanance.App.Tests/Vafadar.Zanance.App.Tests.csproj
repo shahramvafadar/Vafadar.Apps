@@ -175,6 +175,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/UndoService.cs" Link="Application/UndoService.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Transactions/TransactionUndoViewModel.cs" Link="Application/TransactionUndoViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Transactions/TransactionSummary.cs" Link="Application/TransactionSummary.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Transactions/TransactionsFilterViewportBudget.cs" Link="Application/TransactionsFilterViewportBudget.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/SnapshotLoadState.cs" Link="Application/SnapshotLoadState.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/SnapshotCollection.cs" Link="Application/SnapshotCollection.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/SnapshotProjectionCache.cs" Link="Application/SnapshotProjectionCache.cs" />

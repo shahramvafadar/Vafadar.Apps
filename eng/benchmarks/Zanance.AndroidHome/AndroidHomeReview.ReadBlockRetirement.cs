@@ -15,7 +15,7 @@ internal static partial class AndroidHomeReview
     private static async Task<object> RetireCallerReadBlocksAsync(IServiceProvider services, string root, string comparison, CancellationToken ct)
     {
         var uid = Android.OS.Process.MyUid();
-        if (Package != "pro.vafadar.zanance.androidhomereview" || AppInfo.Current.PackageName != Package
+        if (!string.Equals(Package, "pro.vafadar.zanance.androidhomereview", StringComparison.Ordinal) || AppInfo.Current.PackageName != Package
             || Platform.CurrentActivity?.Intent?.GetIntExtra("review_retire_uid", -1) != uid
             || Platform.CurrentActivity?.Intent?.GetStringExtra("review_retire_target") != ReadBlockSchemaRetirement.Target
             || Platform.CurrentActivity?.Intent?.GetStringExtra("review_retire_original_apk") != "b1d5d3343ca54a002279c412b205fc9a21f70b7c181cd9d4bc4badf8c3206757")

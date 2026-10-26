@@ -2720,3 +2720,39 @@ prefix, bound to the same actual PID/run/comparison. Never restart a successful 
 assumption. OS2.0 is Android's real setting, not an exact two-times-font-pixel assertion.
 
 [Finite original observations and owned cleanup](../../src/Apps/Zanance/docs/quality/transactions-title-android-os-text.md).
+
+
+### Native publication memory and uncovered Transactions states (D-547 / D-548)
+
+New separate-oracle Home measurements preflight the original self-memory API in preparation,
+prove that process dead, then collect aggregate PSS/RSS/VmSwap immediately after native readiness
+and clock stop, before post-control graphs. Stop the dispatcher timer including its last gap
+before observation. PSS already includes proportional swap; do not add VmSwap again. Terminal
+post-audit counters remain diagnostics, never retroactively relabelled D-545 target/peak values.
+Keep both APKs' own AOT witnesses and actual packaged shipping Data/Core identity. A separate
+output-root build can differ: retain that refusal and qualify actual final inputs rather than
+assuming source/architecture labels prove equality. No raw status, memory contents, keys, source
+values or SQL is logged. [Pending native gate](../../src/Apps/Zanance/docs/quality/read-owned-home-expansion-buffer.md).
+
+The explicit independent transactions-undo-os selector admits only the retained owned emulator,
+actual OS200% and360/412/800dp for uncovered Undo/selection-plus-Undo geometry. It changes only
+view visibility and restores it; never create/delete/Undo money for layout. Durable exact source/
+comparison checkpoints skip accepted scenes, and the actual budget audits unchanged prior
+constraints without re-rendering. Retain classified predicate failures, restore original OS and
+compatible nonempty caller, hash-clean only owned XMLs and stop the owned AVD.
+[Actual safe-area correction](../../src/Apps/Zanance/docs/quality/transactions-context-safe-area.md).
+
+
+### Independent nonempty codec compatibility (D-549)
+
+The independent AndroidHome project accepts project-local `ReviewLedgerCodecCompatibility=true`
+and `ReviewRuntimeIdentifier=android-x64`; never pass a global RID into plain financial libraries.
+Its distinct `pro.vafadar.zanance.ledgercodeccompatibility` accepts only `ledger-codec-compat`.
+Use only the approved isolated SDK/owned AVDs. Before any fixture write, its actual in-process
+native sysconf and managed page size must both match API24/4096 or simulated API35/16384.
+This explicit new-platform cohort writes1031 new synthetic rows once per fresh UID, with durable
+planned ids/checkpoints and original cache recovery bytes; it never authorizes repeating old
+financial/key/migration cohorts, touching Main or exporting private files/keys. Observe original
+run/PID report chunks on timeout. Keep exact packaged Data/Core and own AOT/signature witnesses.
+After accepted reports, uninstall only these fresh packages and stop only these owned AVDs after
+matching all original package paths/settings/config. This is not hardware16KiB or release proof.

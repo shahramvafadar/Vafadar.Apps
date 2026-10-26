@@ -6,6 +6,8 @@ Transactions uses the same compact right-of-title Add button as Home and Plans. 
 a bottom row or overlay for ordinary Add. Preserve the original accessible command and the
 separate contextual bulk-selection and Undo rows; their temporary visibility must not overlap
 the transaction viewport. Keep original root/pushed Back behavior and source/financial safeguards.
+Budget the result viewport from the actual arranged header bottom, including safe-area space;
+never hardcode an inset or let contextual Undo/selection rows consume the reserved results (D-548).
 
 ## Isolated Android compatibility SDK approval (owner, 2026-10-24, D-519)
 

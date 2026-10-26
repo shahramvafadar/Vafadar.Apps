@@ -11,12 +11,12 @@ internal static partial class AndroidHomeReview
 {
     /// <summary>Qualifies only the uncovered actual OS-scaled title/context rows on retained independent data.</summary>
     private static async Task<object> ReviewTransactionsHeaderOsAsync(App app, IServiceProvider services, string root,
-        string comparison, CancellationToken ct)
+        string comparison, CancellationToken ct, bool undoOnly = false)
     {
         var width = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Intent?.GetIntExtra("review_os_width", 0) ?? 0;
         var resources = Android.App.Application.Context.Resources;
         if (Package != "pro.vafadar.zanance.androidhomereview" || AppInfo.Current.PackageName != Package
-            || Android.OS.Build.Model != "sdk_gphone64_x86_64" || width is not (360 or 412)
+            || Android.OS.Build.Model != "sdk_gphone64_x86_64" || (width is not (360 or 412) && !(undoOnly && width == 800))
             || Math.Abs((resources?.Configuration?.FontScale ?? 0) - 2f) > 0.01f
             || resources?.DisplayMetrics is not { Density: > 0 } metrics || Math.Abs(metrics.WidthPixels / metrics.Density - width) > 1)
             throw new ReviewCheckException("Retained independent emulator and actual OS200% Transactions width required.");
@@ -79,7 +79,7 @@ internal static partial class AndroidHomeReview
             foreach (var theme in new[] { ThemeChoice.Light, ThemeChoice.Dark })
             foreach (var language in new[] { "en", "fa", "de" })
             {
-                var states = new[] { "populated", "empty", "selection" };
+                var states = undoOnly ? new[] { "undo", "selection-undo" } : new[] { "populated", "empty", "selection" };
                 var files = states.Select(state => Path.Combine(root, $"transactions-os-{width}-{language}-{theme}-{state}.json")).ToArray();
                 if (files.All(File.Exists))
                 {
@@ -107,7 +107,7 @@ internal static partial class AndroidHomeReview
                 // Retained historical rows need the original read-only All filter, not fresh entries or a changed clock.
                 model.ClearFiltersCommand.Execute(null);
                 await Until(() => model.Days.Count > 0 || model.Loading.HasFailed);
-                var populated = model.Days; var wasEmpty = model.IsEmpty;
+                var populated = model.Days; var wasEmpty = model.IsEmpty; var wasUndo = model.ShowUndo;
                 if (populated.Count == 0 || wasEmpty) throw new ReviewCheckException("Original populated transaction scene required without financial preparation.");
                 try
                 {
@@ -116,19 +116,22 @@ internal static partial class AndroidHomeReview
                         if (File.Exists(files[index])) { observations.Add(JsonSerializer.Deserialize<JsonElement>(await File.ReadAllTextAsync(files[index], ct))); continue; }
                         model.StopSelectingCommand.Execute(null); model.Days = populated; model.IsEmpty = wasEmpty;
                         if (states[index] == "empty") { model.Days = []; model.IsEmpty = true; }
-                        if (states[index] == "selection") model.StartSelectingCommand.Execute(null);
-                        var geometry = await Diagnostics.TransactionsAddHeaderReview.CheckAsync(page, ct);
+                        if (states[index] is "selection" or "selection-undo") model.StartSelectingCommand.Execute(null);
+                        if (undoOnly) model.ShowUndo = true;
+                        var geometry = undoOnly ? await CheckOriginalUndoGeometryAsync(page, ct)
+                            : await Diagnostics.TransactionsAddHeaderReview.CheckAsync(page, ct);
                         var native = await Native(page);
+                        var undoNative = undoOnly ? await ReviewVisibleUndoRowAsync(page, metrics.Density, ct) : null;
                         if (before != await Stored()) throw new ReviewCheckException("Transactions OS observation changed original financial inputs.");
                         var observation = JsonSerializer.SerializeToElement(new { Comparison = comparison, Width = width,
-                            Language = language, Theme = theme.ToString(), State = states[index], geometry, native,
-                            OriginalDigest = originalDigest, FinancialCommands = 0, ViewOnlyEmptyOrSelection = true,
+                            Language = language, Theme = theme.ToString(), State = states[index], geometry, native, undoNative,
+                            OriginalDigest = originalDigest, FinancialCommands = 0, ViewOnlyEmptyOrSelection = true, ViewOnlyUndoVisibility = undoOnly, NoDeleteOrUndoCommand = true,
                             ReadOnlyOriginalAllFilter = model.PeriodIndex == 3, OriginalDisplayedPeriod = model.PeriodNames[model.PeriodIndex],
                             OriginalStoredInputsUnchanged = true, NativeAddCancelNotReplayed = true });
                         await File.WriteAllTextAsync(files[index], observation.GetRawText(), ct); observations.Add(observation);
                     }
                 }
-                finally { model.StopSelectingCommand.Execute(null); model.Days = populated; model.IsEmpty = wasEmpty; }
+                finally { model.StopSelectingCommand.Execute(null); model.Days = populated; model.IsEmpty = wasEmpty; model.ShowUndo = wasUndo; }
             }
         }
         finally

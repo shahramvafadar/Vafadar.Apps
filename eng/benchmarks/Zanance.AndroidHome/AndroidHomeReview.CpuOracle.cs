@@ -51,6 +51,9 @@ internal static partial class AndroidHomeReview
             var local = services.GetRequiredService<ILocalizationService>();
             app.OpenReviewShell();
             await SetLanguageAsync(app, local, "en", ct);
+            await AwaitOriginalMoneyWindowAsync(ct);
+            var memoryPreflight = new { ProcessId = Environment.ProcessId, CallerUid = Android.OS.Process.MyUid(),
+                Counters = CaptureSelfMemoryCounters(), OnlyPlatformPreflightNotNativeTarget = true };
             var today = DateOnly.ParseExact(day, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
             using var scalar = new IsolatedHomeReadFactory(data.GetRequiredService<IDbContextFactory<ZananceDbContext>>(), data.GetRequiredService<TimeProvider>());
             var scalarStore = new ZananceStore(scalar, data.GetRequiredService<TimeProvider>(), data.GetRequiredService<ICommercialWriteAccessSource>());
@@ -91,6 +94,7 @@ internal static partial class AndroidHomeReview
                 OriginalScalarLedgerControl = true, CompleteScalarReads = scalar.CompleteScalarReads, DerivedTransportReads = scalar.DerivedTransportReads };
             await WriteNewDurableCpuOracleAsync(root, readyPath, JsonSerializer.Serialize(ready), ct);
             return new { Comparison = comparison, CpuWindowOnly = true, SeparateCpuOracle = true, CpuOraclePrepared = true, PreparedProcessId = Environment.ProcessId,
+                NativeMemoryCollectorPreflight = memoryPreflight,
                 NativePublications = 0, FinancialCommands = 0, FullOriginalLedgerAndProjectionUsed = true, OriginalScalarLedgerControl = true,
                 CompleteScalarReads = scalar.CompleteScalarReads, DerivedTransportReads = scalar.DerivedTransportReads, PayloadSha256 = digest };
         }

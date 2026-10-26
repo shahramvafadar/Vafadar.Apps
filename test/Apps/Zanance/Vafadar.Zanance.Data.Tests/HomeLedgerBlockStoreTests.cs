@@ -21,7 +21,7 @@ namespace Vafadar.Zanance.Data.Tests;
 
 /// <summary>Original SQLite writers/transactions and complete scalar reads govern optional derived transport.</summary>
 [Trait("AT", "AT-82")]
-public sealed class HomeLedgerBlockStoreTests : IDisposable
+public sealed partial class HomeLedgerBlockStoreTests : IDisposable
 {
     private readonly TemporaryDirectory directory = new();
     private ServiceProvider? provider;

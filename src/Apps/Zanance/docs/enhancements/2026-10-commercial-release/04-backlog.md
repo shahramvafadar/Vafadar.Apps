@@ -6039,3 +6039,42 @@ APK58990498bytes are removed; actually used packages/restore APKs remain. The ow
 phone lease is active; no phone input follows. Broader goal/performance/security/stability/
 accessibility/platform/provider/Store/release gates remain open.
 [Original observations, refusals and restoration](../../quality/transactions-title-android-os-text.md).
+
+
+### D-547 / D-548 - Current continuous-delivery checkpoint
+
+The original Home read-owned expansion candidate passes its fixed host allocation/latency gate,
+83 selected checks and strict complete builds. Two matched native pairs pass every fixed gate, improving6.228291%/7.010858%;
+four paired publications plus one preserved unmatched25October role create no financial seed/Save/key.
+Original caller restoration is pending the same Play Protect install; no Main upgrade has started. The latest complete UI candidate
+matches its frozen actual Data/Core inputs. Preserve the fixed criteria and original D-545
+withdrawal. [Pending read-buffer boundary](../../quality/read-owned-home-expansion-buffer.md).
+
+While the physical phone is in its owner-approved other-project lease, fix the actual Transactions
+safe-area/contextual-row defect. Six source cases and36 original native Undo/selection-plus-Undo
+states pass at OS200%/360/412/800dp in en/fa/de and Light/Dark. Keep one earlier success and35
+continued/new states;36 old normal scenes are constraint-audited without replay. Four original
+source packets stay identical; no seed/Save/delete/Undo/key/financial command occurs. Exact
+emulator caller/Main/OS restoration and three owned XML removals pass; the AVD is stopped.
+[Original defect and acceptance](../../quality/transactions-context-safe-area.md).
+
+Ten completed owned build trees1291774420logical bytes, two superseded uninstalled APK copies
+194142014bytes and four redundant BCL images2332470bytes are removed; used native packages,
+restore backups and all reports remain. No host free-space causal claim. Physical adoption,
+final original-caller restoration and the broader active goal remain unfinished. Independently
+qualified repository implementation proceeds to exact-head CI without claiming phone completion. Spoken A11Y,
+general stability/two-second, API24/nonempty-codec/hardware16KiB, iOS/provider/Store/release gates
+are not closed by these observations.
+
+
+### D-549 - Nonempty Android compatibility gap qualified independently
+
+Only the outstanding nonempty original codec/fallback/native Home cohort is now qualified on
+actual API24/x64/4096 and API35/x64 simulated16384 native/managed pages. Two once-only owned
+fixtures contain2062 total synthetic rows; no prior phone writes, key/migration/bootstrap cohorts
+or successful tests are replayed. Actual shipping Data/Core identity and complete signed192AOT
+package checks pass. Both new fixtures/packages are removed; prior packages/settings/config
+match and both owned AVDs stop. [Exact evidence](../../quality/nonempty-codec-android-compatibility.md).
+Hardware16KiB and all broader platform/stability/A11Y/release gates remain open. D547/548 original
+phone caller restoration, safe final handoff and later shipping adoption are pending. The
+independently completed implementation/compatibility cohort proceeds to exact-head CI.

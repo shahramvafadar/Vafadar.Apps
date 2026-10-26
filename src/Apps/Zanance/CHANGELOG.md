@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Read existing Home ledger blocks with one short-lived expansion buffer, reducing temporary allocations while preserving all original financial fields; two bounded large-source native comparisons improve by about6-7%, with the two-second target still open (D-547).
+
+- Keep enough transaction-result space when selection and Undo appear together at Android large text; include the title's actual safe-area position without changing financial actions (D-548).
+
 - Checked the compact Transactions title action and result space at actual Android large text in Persian, English and German, preserving existing financial data and the current interface (D-546).
 
 - Keep the existing Home calculations after a faster experimental scheduling change exceeded its predeclared memory-residency limit; no financial data or app behavior changes (D-545).

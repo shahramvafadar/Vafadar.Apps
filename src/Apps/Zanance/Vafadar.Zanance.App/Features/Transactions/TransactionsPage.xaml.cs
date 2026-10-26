@@ -13,6 +13,7 @@ public partial class TransactionsPage : ContentPage
         BindingContext = _viewModel = viewModel;
         TransactionsLayout.SizeChanged += OnFilterLayoutChanged;
         TransactionsHeader.SizeChanged += OnFilterLayoutChanged;
+        TransactionsHeader.PropertyChanged += OnHeaderLayoutPropertyChanged;
         BulkActions.SizeChanged += OnFilterLayoutChanged;
         UndoNotice.SizeChanged += OnFilterLayoutChanged;
         BulkActions.PropertyChanged += OnActionVisibilityChanged;
@@ -23,14 +24,20 @@ public partial class TransactionsPage : ContentPage
     // Native text scaling and wrapping remain enabled; bound the viewport, never the text or its financial result.
     private void OnFilterLayoutChanged(object? sender, EventArgs e)
     {
-        if (TransactionsLayout.Height <= 0) { return; }
+        if (TransactionsLayout.Height <= 0 || TransactionsHeader.Height <= 0) { return; }
         static double Reserved(View element) => element.IsVisible ? Math.Max(44, element.Height) + element.Margin.VerticalThickness : 0;
-        var dock = TransactionsHeader.Height + TransactionsHeader.Margin.VerticalThickness
-            + Reserved(BulkActions) + Reserved(UndoNotice);
-        var results = Math.Min(144, TransactionsLayout.Height / 3);
-        var limit = Math.Max(44, TransactionsLayout.Height - dock - results);
+        // D-548: the arranged header position includes Android container-safe-area space; height alone omits it.
+        var headerBottom = Math.Max(0, TransactionsHeader.Y) + TransactionsHeader.Height + TransactionsHeader.Margin.Bottom;
+        var limit = TransactionsFilterViewportBudget.Calculate(TransactionsLayout.Height, headerBottom,
+            Reserved(BulkActions) + Reserved(UndoNotice), TransactionsLayout.Padding.Bottom);
         if (Math.Abs(FiltersViewport.MaximumHeightRequest - limit) > .5)
         { FiltersViewport.MaximumHeightRequest = limit; }
+    }
+
+    /// <summary>Recomputes the original viewport when only the arranged safe-area/header position changes.</summary>
+    private void OnHeaderLayoutPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName is nameof(VisualElement.Y) or nameof(View.Margin)) { OnFilterLayoutChanged(sender, EventArgs.Empty); }
     }
 
     private void OnActionVisibilityChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)

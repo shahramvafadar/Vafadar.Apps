@@ -2646,3 +2646,14 @@ an artificial empty set through Clear/Add. Empty real data still clears once. Pr
 rows for theme rebinding, original targets/order/text and covered final validation. This changes
 neither Home layout nor the separately owned chart/brush publication.
 [Native evidence](quality/home-row-snapshot-publication.md).
+
+
+### Contextual Transactions rows and arranged safe areas (D-548)
+
+The compact physically right-of-title Add action remains unchanged. Reserve the original
+transaction-result space from the actual arranged header bottom, including container safe-area
+spacing, rather than header height alone or a fixed platform inset. Filters may scroll; original
+fonts, accessible buttons and separate bulk/Undo rows remain intact. Header-position/margin and
+size changes recompute the budget. The observed OS200%/360dp selection-plus-Undo defect is fixed;
+36 Undo states include412dp and a wide800dp window. This is layout acceptance, not a financial
+Undo or spoken-accessibility claim. [Actual boundary](quality/transactions-context-safe-area.md).

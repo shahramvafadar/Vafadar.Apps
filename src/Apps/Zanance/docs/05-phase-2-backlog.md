@@ -3854,3 +3854,20 @@ The unrelated-app foreground refusal is preserved and the owner's normal return 
 readback, never reinstall or money. Wider two-second/stability/accessibility/platform/provider/
 Store/release gates and the broader goal remain open.
 [Source and qualification](quality/home-row-snapshot-publication.md).
+
+
+### D-548 - Contextual Transactions maintenance
+
+The observed safe-area omission is fixed and36 new/retained native Undo states plus six focused
+source checks pass, with no financial/Undo command or old normal-scene replay. Physical latest-
+candidate adoption and publication await the pending original-caller Play Protect restore;
+D-547 native admission now passes both matched pairs; broader phase and
+external release gates remain open. [Exact scope](quality/transactions-context-safe-area.md).
+
+
+D-549 qualifies the remaining nonempty original codec/fallback/recovery/native Home path on
+API24/4096 and simulated API35/16384 actual native/managed pages. Two fresh once-only synthetic
+fixtures, complete source preservation, exact shipping Data/Core and six native outcomes are
+recorded separately from previous successful cohorts. Both fresh packages/data are removed and
+owned AVDs stopped after exact package/settings/config checks. Hardware16KiB, whole-platform,
+performance/stability/A11Y/iOS/provider/Store/release and pending phone adoption remain open.

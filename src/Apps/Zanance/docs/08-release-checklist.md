@@ -3955,3 +3955,27 @@ APK58990498bytes are removed; actually used packages/restore APKs remain. The ow
 phone lease is active; no phone input follows. Broader goal/performance/security/stability/
 accessibility/platform/provider/Store/release gates remain open.
 [Original observations, refusals and restoration](quality/transactions-title-android-os-text.md).
+
+
+### D-547 / D-548 - Current unreleased qualification boundary
+
+- [x] Observed contextual Transactions safe-area defect: six source cases and36 original native
+  Undo states; complete source, minimum viewport, controls and emulator restoration pass.
+- [x] Latest complete signed two-ABI candidate384AOT/408ELF/ZIP/static16KiB/v2/v3 and actual
+  financial Data/Core identity with the frozen Home candidate are qualified.
+- [x] D-547 fixed native gate: two actual same-day pairs,6.228291%/7.010858%, each passes all
+  memory/dispatcher/source guards; original unmatched role/day refusal remain explicit.
+- [ ] Finish the same original-caller install pending Play Protect, then final Main adoption/
+  restoration, commit/push and one exact-head CI.
+- [ ] Remaining broad stability/performance/A11Y/platform/provider/Store/release gates remain open.
+
+[Home admission](quality/read-owned-home-expansion-buffer.md),
+[Transactions acceptance](quality/transactions-context-safe-area.md).
+
+
+- [x] D-549 narrow nonempty original codec/fallback/recovery/native Home on actual API24/x64/4096
+  and simulated API35/x64/16384 native/managed pages, with exact shipping Data/Core identity;
+  both fresh fixture packages removed and original packages/settings/config retained/AVDs stopped.
+- [ ] Physical16KiB/full-platform acceptance and all separate stability/A11Y/performance/iOS/
+  provider/Store/release gates; pending physical original-caller restoration and later final
+  shipping adoption are not closed by the independent D-549 cohort.

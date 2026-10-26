@@ -6781,3 +6781,27 @@ APK58990498bytes are removed; actually used packages/restore APKs remain. The ow
 phone lease is active; no phone input follows. Broader goal/performance/security/stability/
 accessibility/platform/provider/Store/release gates remain open.
 [Original observations, refusals and restoration](quality/transactions-title-android-os-text.md).
+
+
+### D-548 - AT-50 contextual-row safe-area regression
+
+The actual ready Android selection-plus-Undo viewport originally measures120dp. Its arranged-
+header budget now retains at least144dp in36 native Undo states at OS200%/360/412/800dp, en/fa/de,
+Light/Dark, with complete translated title/notice and44dp original Undo target. Six source cases
+pass; source packets and original command/Back/title placement are preserved. One prior success
+and36 unaffected D-546 normal scenes are retained by exact lineage/actual-budget constraints,
+not replayed. No financial delete/Undo/Save/seed/key occurs. Main/caller/OS emulator restoration
+passes; physical latest-candidate adoption waits for pending original-caller Play Protect restoration
+and a new safe phone turn; D-547's two matched native pairs are admitted. This is
+geometry only, not journal/financial Undo, speech/general A11Y or release acceptance.
+[Exact acceptance](quality/transactions-context-safe-area.md).
+
+
+D-549 adds two new-platform nonempty-codec cohorts only: API24/native+managed4096 and simulated
+API35/native+managed16384. Each preserves1031 new fictitious rows, compares complete original
+scalar/block results, observes digest-valid malformed payload fallback/exact recovery and checks
+original native Home against Core balance. Six native outcomes are not unit tests or zero
+fixture writes. The original runs/receipts are retained, both fresh packages/fixtures removed,
+prior packages/settings/config preserved and both AVDs stopped. No replay of prior protection,
+migration, bootstrap or accepted financial cases. See [scope](quality/nonempty-codec-android-compatibility.md).
+Hardware16KiB and general platform/stability/spoken-A11Y/release acceptance remain open.
