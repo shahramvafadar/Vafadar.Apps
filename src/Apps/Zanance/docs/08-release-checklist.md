@@ -4002,3 +4002,10 @@ service/container runtime, Store or release acceptance, or overwrite historical 
 - [x] D-557 one complete signed50f5/runtime14 no-reset retained-emulator adoption, original
   identity/permissions/all120 Home attributes/zero balance/OS/config/caller preserved; owned
   XML cleanup and actual AVD shutdown. Broader/physical acceptance remains separate.
+
+- [x] D-558 finite current-runtime large original Home: six contexts/twelve publications and
+  complete financial/raw/native preservation; six new schema-probe/repair cases, authenticated
+  original logical recovery and four protected-source audits, final Main/caller/OS restoration.
+- [ ] Do not substitute that emulator cohort for physical two seconds, general ANR/crash/cold/
+  low-memory/security/spoken A11Y/iOS/provider/release or D555 foreground acceptance. Retain the
+  incorrect probe's physical-byte mutation and final code-restoration key-audit limit.

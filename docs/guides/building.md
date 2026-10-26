@@ -2768,3 +2768,19 @@ older CLI runtime makes them14 tests. Capture each APK's own AOT witness before 
 Retain actual financial/Brotli byte identity and each distinct linked BCL input rather than claim
 all independently trimmed BCL images equal. No old successful financial/migration suite replay.
 [Original package/native/runtime evidence](../../src/Apps/Zanance/docs/quality/runtime14-brotli-security-servicing.md).
+
+## D-558 Reproduce actual financial images before native qualification
+
+Doc-only commits can change compiled informational version/SourceLink/PDB identity without
+changing algorithms. Do not waive actual PE equality. First prove original frozen compile inputs
+exactly match, then explicitly reproduce the original version, SourceRoot revision and recorded
+artifact path, retaining current Git/source provenance separately. An embedded old version is
+not proof of current HEAD. Capture own AOT and decode actual assembly stores against their own
+linked files before another compilation or Clean. Keep architecture-specific store tags explicit.
+
+Retained-source schema timing must reject pending/unknown histories before the startup callback.
+Use an explicitly owned copy for migrations. Exact incident repair requires original authenticated
+full control equality on disposable memory before any declared metadata retirement, and the
+original exclusive protected context factory. A manually keyed handle cannot bypass lease guards.
+Logical recovery does not restore old ciphertext bytes or authorize rebinding old timing evidence.
+[Actual failures, correction and finite cohort](../../src/Apps/Zanance/docs/quality/runtime14-retained-large-home.md).

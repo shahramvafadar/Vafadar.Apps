@@ -6166,3 +6166,16 @@ refusals stay visible; original process continues without replay. Only three new
 XMLs are removed and owned AVD actually stops. No build/test/financial cohort repeats.
 D555 phone foreground acceptance and general security/stability/performance/A11Y/platform/
 provider/release remain open. [Scope](../../quality/runtime14-retained-emulator-adoption.md).
+
+### D-558 - Current-runtime large-source lifecycle and diagnostic admission qualified
+
+Six current API36/x64/4096 contexts/twelve original Home publications preserve complete financial,
+raw and native packets; six tenfold observations1511-1818ms are this emulator only. Exact decoded
+financial/Brotli and native14 inputs match shipping; no financial/seed/key replay. Six new actual
+SQLite admission/repair cases pass. An incorrectly chosen old schema probe's additive change to
+the original reference is retained and authenticated logical recovery passes; original ciphertext
+is explicitly not called unchanged. Four protected sources reopen before final code restoration.
+Compatible334ca/stopped, original Main2021/50f5/all120/OS/config and owned AVD shutdown pass.
+Source byte-lineage limits, compile/observer/lease/storage refusals and final-key-audit boundary
+remain explicit. D555 physical foreground and general performance/stability/A11Y/platform/provider/
+release remain open. [Full bounded evidence](../../quality/runtime14-retained-large-home.md).

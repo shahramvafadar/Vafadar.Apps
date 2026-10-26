@@ -650,6 +650,11 @@ internal static partial class AndroidHomeReview
                     throw new ReviewCheckException("Completed original settings review must not be repeated.");
                 await WriteReportAsync(root, phase, await ReviewSettingsReadAsync(root, comparison!, ct), ct);
             }
+            else if (phase == "repair-schema-probe")
+            {
+                RequireRoot(root);
+                await WriteReportAsync(root, phase, await RepairSchemaProbeAsync(root, comparison!, ct), ct);
+            }
             else if (phase == "schema")
             {
                 RequireRoot(root);

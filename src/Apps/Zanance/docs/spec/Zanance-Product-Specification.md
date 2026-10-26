@@ -9657,3 +9657,12 @@ on retained API36/x64/4096 ordinary Main, preserving UID/CEDE/permissions/all120
 zero balance/OS/config/compatible caller. Three newly owned XMLs removed and owned AVD actually
 stopped. No new managed count, build or accepted native/financial replay. Phone foreground and
 broader release gates remain separate. [Evidence](../quality/runtime14-retained-emulator-adoption.md).
+
+D-558 update to Section31: current runtime14 full original large Home passes six contexts/twelve
+native publications with original packets and exact financial/runtime package identity. Six
+new real SQLite diagnostic admission/repair cases pass; no new full-suite count is inferred.
+Preserve an incorrectly selected schema probe and reference ciphertext mutation; authenticated
+original logical recovery/four existing-key source audits pass without Home/financial replay.
+Original Main2021/50f5/all120/OS/config and compatible caller/stopped state are restored and owned
+AVD stopped. General physical performance/stability/security/A11Y/platform/release gates remain.
+[Evidence and precise recovery limits](../quality/runtime14-retained-large-home.md).

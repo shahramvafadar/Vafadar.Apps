@@ -6854,3 +6854,12 @@ qualified full signed50f5. Original UID/CEDE/permissions/all120 Home states/zero
 and compatible caller remain exact; three owned XMLs removed and AVD actually stopped. Preserve
 boot/Preparing refusals without relaunch, financial or accepted native-cohort replay. No new
 managed case. [Bounded evidence](quality/runtime14-retained-emulator-adoption.md).
+
+D-558: twelve current runtime14 original large-Home publications pass six en/fa/de source contexts
+with actual financial/runtime image identity and original complete raw/native packets. Tenfold
+1511-1818ms is finite emulator evidence only. Six new real SQLite schema-probe/repair cases pass;
+the actual original pending probe refuses before upgrading. Preserve the host's incorrect old
+probe and its reference metadata mutation; authenticated full logical recovery/four protected
+source audits pass without repeating Home or financial actions. Final original Main/OS/caller
+restoration and owned cleanup pass; final code restoration does not imply a later workload key
+audit. [Exact lineage, errors and limits](quality/runtime14-retained-large-home.md).

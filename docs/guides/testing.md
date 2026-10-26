@@ -207,6 +207,19 @@ filters select the relevant methods. Do not assume another runner's --filter-cla
 inspect discovery/summary and reject zero selected tests. A dotnet test/Microsoft.Testing.Platform
 invocation has a different argument surface. [Current evidence](../../src/Apps/Zanance/docs/quality/complete-history-row-packet.md).
 
+### D-558 Unchanged-source schema-probe admission
+
+The six new actual SQLite cases select only `-method '*Schema_probe_*'` from the compiled Data
+test DLL, using the scoped actual14 runtime. Require six non-skipped cases and zero errors/failures.
+They cover pending-history byte preservation, borrowed ownership, no missing-file creation,
+cancellation and authenticated full-control acceptance/refusal before metadata repair. No old
+successful suite repeats. Prefer `-result-xml` for future direct-runner XML output; D558's accepted
+`-xml` emits a deprecation notice, which does not justify replaying its six successful cases.
+Native source ownership/keys/protected leases still require the exact
+owned emulator adapter; never invoke a migrator merely to check a legacy source's keys.
+Keep an incorrectly mutated fixture's logical recovery distinct from unchanged ciphertext and
+from the earlier accepted native cohort. [Evidence](../../src/Apps/Zanance/docs/quality/runtime14-retained-large-home.md).
+
 ## D-363 complete settings regressions
 
 SettingsReadTests has eight cases for all original EF values/nulls, earliest identity, detached/fresh

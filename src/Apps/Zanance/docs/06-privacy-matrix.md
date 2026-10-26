@@ -1291,3 +1291,12 @@ uses software machine authority inside its owned volumes, never owner credential
 posting/public route/SDK/permission/collector/app traffic is added. Retire new fixture/software
 keys without host export; preserve retained mounts and private in-Docker rollback snapshot.
 TLS health is not broad database/key equality. [Scope](quality/service-runtime14-exact-application.md).
+
+D-558 uses only retained fictitious independent-emulator sources and existing software key adapters.
+No customer Main/key extraction, financial posting, new permission/SDK/network/account or clock/
+OS change. Bounded in-process control snapshots and raw keys are cleared on exit. Preserve the
+wrong diagnostic probe's source ciphertext mutation and authenticated logical recovery separately;
+four protected-source audits precede final code restoration, not a later whole-key claim. Exact
+owned code-only KEEP_DATA swaps preserve metadata identity; no global cache/data clear. Separate
+D555 cleanup removes three hash-matched completed phone XML copies without app input.
+[Full boundary](quality/runtime14-retained-large-home.md).

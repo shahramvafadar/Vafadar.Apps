@@ -3729,3 +3729,15 @@ A passing source comparison, static alignment or another architecture's positive
 replace this gate. Retain refusals and qualify changed actual inputs without replaying accepted
 financial/seed/key commands or unchanged successful tests. Fixed query labels may describe only
 owned contexts; never retain SQL, parameters, source values, paths or keys in diagnostic traces.
+
+## D-558 - Diagnostic schema admission and authenticated fixture recovery
+
+An unchanged-source schema probe must first require the exact current migration history and
+dispose its protected generation even when that precondition fails. Never invoke a startup
+migrator merely to audit a retained legacy source or its keys; use an explicitly owned copy.
+Corrective fixture work requires exact owned UID/run/failure/source authority and full original
+authenticated schema/header/typed-row equality on disposable memory before any actual declared
+metadata retirement, through the original exclusive protected factory. Do not reuse the normal
+Main retirement route for nonempty workloads or customer Main. Preserve failures and distinguish
+logical recovery from original ciphertext equality; never rewrite a prior byte fingerprint to
+hide a diagnostic mutation or replay accepted financial/native cases for observation repairs.

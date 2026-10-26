@@ -10305,3 +10305,21 @@ initial15-node Preparing packet; same original2451 reaches ready without relaunc
 three new hash-matched XMLs, stop owned AVD and prove host/serial absent with shared5038 retained.
 No financial write, managed-count increase, successful cohort replay or phone command.
 [Original authority and limitations](quality/runtime14-retained-emulator-adoption.md).
+
+### D-558 - Qualify current large Home and protect unchanged-source diagnostics
+
+One finite original API36/x64/4096 runtime14 cohort passes twelve publications in six en/fa/de
+reference/tenfold contexts, with complete original financial/raw/native packets and pre-native
+byte fingerprint. Actual decoded Core/Data/Brotli and native engines match shipping50f5; preserve
+unadmitted metadata/PDB preparation refusals. Six tenfold samples1511-1818ms are emulator-only,
+not physical/cold/general stability or a causal runtime gain. No financial/key/seed replay.
+An incorrectly selected post-KEEP_DATA schema probe then applies only the two additive metadata
+migrations to original reference before rejecting its old control. Retain that failure and changed
+cipher bytes. Add current-history admission, generation cleanup and six real SQLite regressions.
+Exact owned virtual source repair first proves the authenticated full original control in memory,
+then uses the original exclusive protected factory/durable retirement. Preserve its earlier
+pre-write lease refusal. Full original schema/headers/typed rows and four existing protected-source
+audits pass; no accepted native case repeats. Restore compatible334ca/stopped and shipping2021/
+50f5/all120/OS/config, remove three owned XMLs and stop owned AVD. Four scoped Cleans and four
+unused APK deletions retain all used artifacts and failure evidence. No broad completion claim.
+[Evidence, source correction and limits](quality/runtime14-retained-large-home.md).

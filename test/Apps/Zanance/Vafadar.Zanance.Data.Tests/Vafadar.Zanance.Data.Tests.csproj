@@ -6,6 +6,7 @@
     <Compile Include="../../../../eng/benchmarks/Zanance.AndroidHome/IsolatedHomeReadFactory.cs" Link="Performance/IsolatedHomeReadFactory.cs" />
     <Compile Include="../../../../eng/benchmarks/Zanance.AndroidHome/NativePublicationMemory.cs" Link="Performance/NativePublicationMemory.cs" />
     <Compile Include="../../../../eng/benchmarks/Zanance.AndroidHome/ReadBlockSchemaRetirement.cs" Link="Performance/ReadBlockSchemaRetirement.cs" />
+    <Compile Include="../../../../eng/benchmarks/Zanance.AndroidHome/SchemaProbeAdmission.cs" Link="Performance/SchemaProbeAdmission.cs" />
     <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" />
     <ProjectReference Include="..\..\..\..\src\Apps\Zanance\Vafadar.Zanance.Data\Vafadar.Zanance.Data.csproj" />
     <ProjectReference Include="..\..\..\..\src\Libraries\Vafadar.Localization\Vafadar.Localization.csproj" />

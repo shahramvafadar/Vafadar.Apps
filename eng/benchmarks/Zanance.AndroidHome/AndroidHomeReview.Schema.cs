@@ -7,6 +7,7 @@ using Vafadar.Data;
 using Vafadar.Zanance.App.Startup;
 using Vafadar.Zanance.App.Security;
 using Vafadar.Zanance.Data;
+using Vafadar.Zanance.Performance;
 
 namespace Vafadar.Zanance.App;
 
@@ -25,24 +26,27 @@ internal static partial class AndroidHomeReview
             using var data = new ServiceCollection().AddZananceData(original, protectionRequired: true).BuildServiceProvider();
             var location = data.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
             var keys = new AndroidGenerationKeyStore(Path.Combine(folder, "keys"));
-            SqlCipherProfileGeneration generation; var opens = 0; double elapsed; bool closed;
-            using (var owner = await location.Access.AcquireExclusiveAsync(ct))
+            SqlCipherProfileGeneration? generation = null;
+            var opens = 0; double elapsed; bool closed;
+            try
             {
-                var identities = new SqliteDatabaseIdentityCatalogue(identityPath, () => RequireRoot(folder));
-                var identity = (await identities.ReadAsync(ct)).Single();
-                var history = new SqliteProfileRestoreHistory(original + ".restore-history.sqlite", identity.InitialCandidateKey, () => RequireRoot(folder));
-                generation = await SqlCipherProfileGeneration.OpenCurrentAsync(location, identities, "", original, history,
-                    _ => throw new ReviewCheckException("No restored workload is expected."), keys, new AndroidGenerationFileDurability(folder),
-                    owner, () => RequireRoot(folder), 256 * 1024 * 1024, "4.19.0", ct);
-                generation.Publish(location, owner);
-                await using var connection = generation.CreateConnection();
-                connection.StateChange += (_, args) => { if (args.CurrentState == System.Data.ConnectionState.Open) opens++; };
-                var watch = Stopwatch.StartNew(); await ProtectedProfileStorage.UpgradeAsync(connection, ct); watch.Stop();
-                elapsed = watch.Elapsed.TotalMilliseconds; closed = connection.State == System.Data.ConnectionState.Closed;
-                location.Access.RequireDrainedOwner(owner);
-            }
-            using (generation)
-            {
+                using (var owner = await location.Access.AcquireExclusiveAsync(ct))
+                {
+                    var identities = new SqliteDatabaseIdentityCatalogue(identityPath, () => RequireRoot(folder));
+                    var identity = (await identities.ReadAsync(ct)).Single();
+                    var history = new SqliteProfileRestoreHistory(original + ".restore-history.sqlite", identity.InitialCandidateKey, () => RequireRoot(folder));
+                    generation = await SqlCipherProfileGeneration.OpenCurrentAsync(location, identities, "", original, history,
+                        _ => throw new ReviewCheckException("No restored workload is expected."), keys, new AndroidGenerationFileDurability(folder),
+                        owner, () => RequireRoot(folder), 256 * 1024 * 1024, "4.19.0", ct);
+                    generation.Publish(location, owner);
+                    await using var connection = generation.CreateConnection();
+                    // D-558: unchanged-source probes must refuse pending migrations before invoking the callback.
+                    await SchemaProbeAdmission.RequireSettledAsync(connection, ct);
+                    connection.StateChange += (_, args) => { if (args.CurrentState == System.Data.ConnectionState.Open) opens++; };
+                    var watch = Stopwatch.StartNew(); await ProtectedProfileStorage.UpgradeAsync(connection, ct); watch.Stop();
+                    elapsed = watch.Elapsed.TotalMilliseconds; closed = connection.State == System.Data.ConnectionState.Closed;
+                    location.Access.RequireDrainedOwner(owner);
+                }
                 var rawKey = await keys.ReadAsync(generation.Binding, ct);
                 try
                 {
@@ -56,6 +60,8 @@ internal static partial class AndroidHomeReview
                 }
                 finally { CryptographicOperations.ZeroMemory(rawKey); }
             }
+            // A refused precondition owns a generation too; do not leave its key alive until collection.
+            finally { generation?.Dispose(); }
             if (!closed) throw new ReviewCheckException("Original schema callback leaked an open handle.");
             results.Add(new { Shape = name, NativeConnectionOpens = opens, CallbackMilliseconds = elapsed,
                 ClosedCallerStateRestored = closed, CompleteOriginalRawSchemaAndTypedRowsUnchanged = true });

@@ -10,6 +10,7 @@ using Vafadar.Zanance.App.Security;
 using Vafadar.Zanance.App.Startup;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.CompiledModel;
+using Vafadar.Zanance.Performance;
 
 namespace Vafadar.Zanance.App;
 
@@ -234,7 +235,8 @@ internal static partial class AndroidHomeReview
     }
 
     /// <summary>Rechecks only existing encrypted source/control rows after a completed native cohort, without UI or metrics.</summary>
-    private static async Task<object> AuditCurrentHomeSourceAsync(string folder, bool adopted, CancellationToken ct)
+    private static async Task<object> AuditCurrentHomeSourceAsync(string folder, bool adopted, CancellationToken ct,
+        bool requirePendingProbeRefusal = false)
     {
         RequireRoot(folder);
         var original = Path.Combine(folder, "fixture.db");
@@ -260,13 +262,21 @@ internal static partial class AndroidHomeReview
                 Mode = SqliteOpenMode.ReadOnly, Pooling = false, Password = password }.ToString());
             await current.OpenAsync(ct); await control.OpenAsync(ct);
             await SqliteSnapshotVerifier.VerifyAsync(control, current, ct);
+            if (requirePendingProbeRefusal)
+            {
+                var refused = false;
+                try { await SchemaProbeAdmission.RequireSettledAsync(current, ct); }
+                catch (InvalidDataException) { refused = true; }
+                if (!refused) throw new ReviewCheckException("The pending original schema must refuse an unchanged-source probe.");
+            }
             await using var pending = current.CreateCommand(); pending.CommandText = "SELECT COUNT(*) FROM __EFMigrationsHistory WHERE MigrationId=$migration";
             pending.Parameters.AddWithValue("$migration", CurrentHomeMigration);
             var count = Convert.ToInt64(await pending.ExecuteScalarAsync(ct));
             if (count != (adopted ? 1 : 0)) throw new ReviewCheckException("Original and adopted schema boundaries differ.");
             return new { Shape = Path.GetFileName(folder), Adopted = adopted, OriginalOrCurrentControlMatchedAllSchemaHeadersAndTypedRows = true,
                 ExactCapturedDirectory = true, ExistingOnlyReadOnlyConnections = true, NewMigrationPresent = adopted,
-                UiOrTimingObservationsReplayed = false, FinancialCommands = 0 };
+                UiOrTimingObservationsReplayed = false, FinancialCommands = 0,
+                PendingSchemaProbeRefused = requirePendingProbeRefusal };
         }
         finally { CryptographicOperations.ZeroMemory(key); }
     }
