@@ -4125,3 +4125,27 @@ service descriptors. No application unit-test count, financial action, phone/emu
 visible UI or general crash correction is claimed. D568 native timing/adoption and the D567 real
 reboot/idle cohort remain unfinished; Loyan retains the physical lease. Preserve the broad goal.
 [Full defect, correction, refusals and acceptance boundaries](quality/android-archive-resource-retention.md).
+
+
+### D-568 - Withdraw the prepared Home publication after failed physical gates
+
+After explicit authorized Loyan handback, preserve the fresh owned Main3130 baseline and original
+retained100000-row source. Same-day original/candidate ARM64 processes5215/6816 use separate completed
+scalar controls4471/5980 and complete source/native/financial/byte guards. Original3015.6854ms becomes
+3284.7178ms (-8.9211% gain); dispatcher441.1000 becomes474.6848ms, failing the1.05-relative gate.
+PSS/RSS growth14397/14200KiB stays inside65536, but both main gates fail. No opposite-order/rescue
+pair or candidate Main adoption occurs. Restore six exact original files; remove only four new
+unpublished source/test files with private copies retained. Thirteen experimental cases are
+withdrawn with the API and add0 final shipping tests; successful financial/native suites are not replayed.
+Retire only validated empty independent Main bookkeeping M1/M2/M3 with full original source proof,
+restore b1d5 in the same owned installer using authorized Don't send, and verify original61-node
+English startup before stopping that caller. Strict restored Windows/full Android have0 warnings/
+errors; complete signed4a6cb5be/384AOT/408ELF/1422 resources passes offline/ZIP/v2/v3/static16KiB.
+Main upgrades once without reset3130to9856, with exact UID/CE/DE/permissions, all141 Home attributes/
+Home979 and all three original profile-page states. CSV D571 stays; no clock/system setting/financial
+command is changed. Pair26October and final adoption27October are explicit.15 owned XMLs hash-clean;
+12769 final-build outputs/1098816790 logical bytes and two unused copies/97644359bytes are removed.
+A prior574552517-byte residual deletion remains automatically rejected/unperformed; no bypass.
+D567's real idle/reboot cohort is untouched. Whole-Home two seconds, general stability/audible/device/
+iOS/provider/Store/release gates remain open. This closes the experiment, not the overall goal.
+[Exact failed gates, preserved refusals and restored delivery](quality/home-prepared-publication.md).

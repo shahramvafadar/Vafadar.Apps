@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Keep the original Home behavior after a guarded preparation experiment failed its speed and interface-pause limits; preserve financial data and the completed CSV correction (D-568).
+
 - Accept complete bank CSV comments at the existing field-length limit, including quoted and multiline text, while preserving original safety bounds and explicit import review (D-571).
 
 - Preserve Java resources and service registrations across incremental Android APK builds without changing financial behavior (D-569).
