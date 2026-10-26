@@ -6157,3 +6157,12 @@ adoption; all original mounts/four other containers remain. New fixture/two unus
 rollback/snapshot retained. D555 phone acceptance and general security/stability/A11Y/performance/
 iOS/provider/public/Store/release remain open. No unchanged successful suite or operation repeats.
 [Bounded evidence](../../quality/service-runtime14-exact-application.md).
+
+### D-557 - Retained ordinary emulator runtime14 adoption completed
+
+One full signed50f5 no-reset upgrade over896e preserves original UID/CEDE/permissions/all120
+Home attributes/zero balance/OS/config and stopped compatible caller. Initial boot/Preparing
+refusals stay visible; original process continues without replay. Only three new hash-matched
+XMLs are removed and owned AVD actually stops. No build/test/financial cohort repeats.
+D555 phone foreground acceptance and general security/stability/performance/A11Y/platform/
+provider/release remain open. [Scope](../../quality/runtime14-retained-emulator-adoption.md).
