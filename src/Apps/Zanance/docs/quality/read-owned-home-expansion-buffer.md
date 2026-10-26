@@ -8,9 +8,11 @@ the first is25October, the completed opposite-order pair26October. Original sour
 rows, financial/native/recent controls, one-context read ownership and proven separate oracle
 process death pass. No financial/seed/key operation or runtime/GC/SDK change occurs. The two-second
 and general performance/stability/accessibility/platform/release gates remain open. Original
-caller restoration is still blocked by the same pending Play Protect install. This repository
-batch records the independently qualified implementation and original failures; final phone
-restoration/Main adoption and exact-head CI remain separate uncompleted gates.
+caller restoration has now completed through that same original install: b1d5/UID10381/CE134622/
+DE135779 starts normally in23985, then stops. Shipping Main4090/bc1e/Home979/all141 public
+attributes and exact original OS match; four newly owned XMLs are hash-cleaned and the phone is
+explicitly handed to the authorized other-project turn. Repository implementation is pushed;
+physical shipping adoption awaits the next safe lease and exact-head CI remains separate.
 
 | Matched actual day | Original ms | Candidate ms | Gain | Boundary PSS original/candidate KiB | Boundary RSS original/candidate KiB | Dispatcher original/candidate ms |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -126,3 +128,11 @@ two superseded uninstalled full-package copies194142014bytes and four redundant 
 copies2332470bytes. Keep actually used native APKs, all reports and required restore backups.
 No unrelated archive/container/source/device data is touched; no measured host free-space or
 causal reclamation claim is made. The physical Main remains D-542/PID4090 at this checkpoint.
+
+
+Current D552 continuation: the authorized other-project turn has returned and original Main4090/
+Home979/public attributes/OS are independently verified. The new shared-index candidate is then
+withdrawn after native gate failure. Its independent caller restore is a new single no-reset
+request currently waiting at Play Protect; the exact original screen timeout300000 is restored.
+Do not confuse this new interruption with the completed D547 restoration above. Qualified896e
+physical Main adoption remains unperformed. See the [D552 evidence](home-captured-index-projection.md).

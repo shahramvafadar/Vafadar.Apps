@@ -10219,3 +10219,34 @@ retaining896e as its current Main baseline. Reuse exact unchanged package/build 
 legacy host UID spelling refusal precedes the first launch. Physical original-caller Play Protect
 restore, final phone handback/adoption and all broader gates remain open.
 [Adoption and limits](quality/shipping-read-buffer-safe-area-adoption.md).
+
+
+### D-551 - Final original-caller restoration; physical shipping adoption in progress
+
+The same pending original install now completes, without retry/reset or a changed decision gate.
+Original b1d5/UID10381/CE134622/DE135779 starts ordinary onboarding in23985 and is then stopped.
+Main remains D542/bc1e/PID4090/Home979 with all141 public attributes and exact original settings;
+four newly owned hash-matched XMLs are removed. The phone is explicitly handed to the authorized
+other-project turn; issue no further command until its explicit return. Prepare only the bounded
+896e shipping no-reset adoption and directly changed Transactions header read for that next turn.
+No financial seed/Save/delete/Undo or old native matrix replay belongs to it. Physical adoption
+is not yet accepted; retain all broader gates and the active goal.
+
+Standard registered-output Clean succeeds in five configurations after the original arm asset
+refusal and proper project-local restore; no build/test runs. All3763 known registered files
+(1323292168logical bytes) are absent and all nine used/restore APKs remain hash-exact. Recursive
+folder deletion was policy-refused before execution and was not retried equivalently. Two obj
+trees still contain1032675493logical bytes of generated caches; do not claim total cleanup or
+causal host free-space recovery, and retain the unfinished cleanup boundary.
+
+
+### D-552 - Withdraw shared captured Home index after native gate failure
+
+One publication-owned unchanged index can serve original forecast/goal algorithms; host allocations
+fall30.785900% and composition median36.364312%, with61 selected cases and strict builds/package
+proofs. Actual same-day Samsung first pair instead regresses3070.9061 to3086.8201ms and dispatcher
+440.5617 to473.4141ms, failing both fixed gates despite lower boundary PSS/RSS. No reverse/retry or
+criterion change follows. Restore all five original production files and original tests exactly;
+shipping4521 is never installed. Preserve the initial unadmitted own-AOT witness ordering error
+and only its necessary repair. Experimental61 cases do not increase current-product test count.
+[Complete original evidence and withdrawal](quality/home-captured-index-projection.md).

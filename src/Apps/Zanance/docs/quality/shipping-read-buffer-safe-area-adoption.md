@@ -7,8 +7,9 @@ The exact complete signed offline shipping896e candidate96,628,469bytes is adopt
 unperformed shipping-Main adoption after D-547/D-548/D-549 independent qualification, not a replay
 of their managed tests, native layout/codec cohorts or financial operations. No source, model,
 permission, SDK, key/KDF, setting, account, authentication, clock or financial command changes.
-The physical-phone restoration remains pending the owner's Play Protect decision; no phone
-command or lease expansion belongs to this cohort.
+No phone command or lease expansion belongs to this cohort. The separate original physical
+caller installation has since completed; its exact restoration and explicit handback are
+recorded with D-547. Physical shipping adoption awaits a later safe lease.
 
 ## Original/current lineage and observations
 
@@ -40,5 +41,15 @@ that host reader; no installation/startup/financial step repeats.
 This proves only the bounded no-reset adoption/public-state lineage above. It does not establish
 whole-private-database/key equality, cold Home timing, two-second performance, general ANR/crash,
 spoken accessibility, hardware16KiB, all-device/platform, iOS/provider/Store or release acceptance.
-The physical original-caller installation still awaits the owner; its final restoration/handback
-and later shipping Main adoption remain open and are not replaced by this emulator result.
+The same physical original-caller installation has since completed without retry; original
+APK/UID/CEDE/stopped, Main4090/Home979/all141 public attributes and OS match, four new owned XMLs
+are hash-cleaned and the phone is explicitly handed back. Later physical shipping Main adoption
+remains open and is not replaced by this emulator result.
+
+
+Current D552 continuation: the authorized other-project turn has returned and original Main4090/
+Home979/public attributes/OS are independently verified. The new shared-index candidate is then
+withdrawn after native gate failure. Its independent caller restore is a new single no-reset
+request currently waiting at Play Protect; the exact original screen timeout300000 is restored.
+Do not confuse this new interruption with the completed D547 restoration above. Qualified896e
+physical Main adoption remains unperformed. See the [D552 evidence](home-captured-index-projection.md).

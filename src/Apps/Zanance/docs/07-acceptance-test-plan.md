@@ -6813,3 +6813,11 @@ balance/OS/config and stopped compatible334ca caller persist across original2969
 startups. No selector, financial command, managed/native cohort replay or private-key/DB export.
 Two owned XMLs are hash-cleaned and the AVD stops. Physical restore/adoption and all broader
 private-source, stability/performance/A11Y/platform/release gates remain open.
+
+
+D-552 preserves first-pair failure rather than broadening native acceptance: baseline3070.9061ms
+versus candidate3086.8201ms and dispatcher440.5617 versus473.4141ms fail the fixed gain/dispatcher
+gates; lower boundary PSS/RSS pass. Original complete source/financial/native guards match and
+both separate preparation processes end before their targets. No reverse pair, financial command,
+current-product test-count increase or shipping adoption follows. Original source/tests restored;
+[experimental evidence](quality/home-captured-index-projection.md) stays distinct from product acceptance.

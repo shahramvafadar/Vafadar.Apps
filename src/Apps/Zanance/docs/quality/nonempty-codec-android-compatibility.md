@@ -43,9 +43,10 @@ physical16KiB-device claim.
 Both new packages/UID fixtures are removed after preserving complete reports. All prior package
 paths, the five recorded settings and exact owned AVD configuration match before/after. Both
 owned AVDs are actually absent after scoped shutdown. No XML screenshot, old probe retirement,
-old data/key deletion or phone command occurs. The pending phone original-caller restoration
-and later shipping adoption remain separate; they are not prerequisites for admitting only
-this independent codec cohort. No hardware16KiB,
+old data/key deletion or phone command occurs. The same phone original-caller install has since completed with verified original APK/UID/
+CEDE/stopped state and Main4090/Home979/all141 public attributes/OS; four newly owned XMLs are
+hash-cleaned and the phone is explicitly returned to the authorized other-project turn. Later
+physical shipping adoption and exact-head CI remain separate from this independent codec cohort. No hardware16KiB,
 full-platform, cold/performance, general ANR/crash, accessibility, private-key equality, iOS,
 provider/Store or release acceptance follows from this scope.
 
@@ -59,3 +60,11 @@ changing source; explicit UTF-8 corrects that helper. A cross-ABI host parser fi
 ARM store, then uses the actual x64 store/version; packaged Data/Core equality passes without
 rerendering or rebuilding. API35's preboot guard refuses before installation, and its UID observer
 is corrected before the first launch, retaining the one successful install.
+
+
+Current D552 continuation: the authorized other-project turn has returned and original Main4090/
+Home979/public attributes/OS are independently verified. The new shared-index candidate is then
+withdrawn after native gate failure. Its independent caller restore is a new single no-reset
+request currently waiting at Play Protect; the exact original screen timeout300000 is restored.
+Do not confuse this new interruption with the completed D547 restoration above. Qualified896e
+physical Main adoption remains unperformed. See the [D552 evidence](home-captured-index-projection.md).

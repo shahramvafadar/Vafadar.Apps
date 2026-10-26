@@ -6091,3 +6091,32 @@ emulator Main. No test/native cohort/financial operation is replayed.
 original-caller Play Protect completion, final phone handback and later Main adoption remain
 pending; whole private DB/key, general stability/two-second/A11Y/platform/external release gates
 are not closed by this public-state lineage check.
+
+
+### D-551 - Active physical adoption checkpoint after exact original restoration
+
+The original phone caller restore is now complete through the same install: b1d5/UID10381/
+CE134622/DE135779/ordinary23985/stopped; Main remains D542/bc1e/PID4090/Home979/all141 public
+attributes with exact original OS. Four newly owned hash-matched XMLs are removed and the phone
+is explicitly released to the authorized other-project turn. No Zanance phone command follows
+until its explicit handback. The frozen complete896e no-reset shipping adoption and directly
+changed native Transactions header read are prepared only; physical adoption is still open.
+No financial command, accepted seed or previous successful matrix is repeated.
+
+Five supported registered-output Clean configurations remove all3763 known files/1323292168
+logical bytes while preserving all nine required used/restore APKs exactly. Recursive folder
+deletion is refused by local execution policy before launch, not bypassed; two generated obj
+caches totaling1032675493logical bytes remain. This is partial cleanup, not causal free-space
+proof. The one check of implementation c6fa records three successful workflows and canceled CI;
+the one check of later78f4 records successful CodeQL and CI still running. Both one-shot schedules
+are consumed/deleted; no second request or final CI success is claimed.
+
+
+### D-552 - Captured-index candidate rejected; continue qualified adoption
+
+The host-admitted reuse of one original Home index fails its fixed first native pair: whole Home
+is0.518218% slower and dispatcher exceeds1.05 times baseline; memory limits pass. No reverse pair,
+accepted financial write or successful-suite replay occurs. Original sources/tests are restored
+exactly and shipping4521 is never installed. Do not reopen this settled experiment for more samples.
+[Original host/native evidence](../../quality/home-captured-index-projection.md). Continue D551
+with the independently qualified896e package, then genuinely uncovered remaining backlog gates.

@@ -82,8 +82,18 @@ actually used native packages/reports; no private shipping Main database/key is 
 
 The physical phone remains in the owner-approved other-project lease; no phone command occurs
 during it. D-547's frozen Home comparison now passes both matched native pairs. The full latest package includes
-the natively admitted read-buffer candidate, so Main installation now
-waits for the same pending original-caller Play Protect restore and a safe new phone turn. The
-independently qualified repository implementation can proceed to exact-head CI meanwhile. Do not stop the broader active goal or infer
+the natively admitted read-buffer candidate, so physical Main installation now
+awaits only a safe new phone turn. The same original-caller Play Protect install has completed
+without retry/reset; original b1d5/UID/CEDE/stopped and shipping Main4090/bc1e/Home979/all141 public
+attributes/OS match. Four newly owned XMLs are hash-cleaned and the phone is explicitly returned
+to the authorized other-project turn. Repository implementation is pushed; exact-head CI is separate. Do not stop the broader active goal or infer
 that all ready/platform/security/stability/accessibility/provider/Store/release work is complete.
 Spoken TalkBack, real financial Undo, physical new-layout adoption and iOS remain separate gates.
+
+
+Current D552 continuation: the authorized other-project turn has returned and original Main4090/
+Home979/public attributes/OS are independently verified. The new shared-index candidate is then
+withdrawn after native gate failure. Its independent caller restore is a new single no-reset
+request currently waiting at Play Protect; the exact original screen timeout300000 is restored.
+Do not confuse this new interruption with the completed D547 restoration above. Qualified896e
+physical Main adoption remains unperformed. See the [D552 evidence](home-captured-index-projection.md).
