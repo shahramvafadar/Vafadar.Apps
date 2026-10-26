@@ -86,3 +86,26 @@ This extends contract admission, not the completed fourteen-market discovery/ran
 After terminal builds and package verification, standard clean removes 13162 registered files /
 1263497093 logical bytes from the three owned D571 build/test contexts. Preserve the used signed
 APK and local proof receipts. This is logical output accounting, not measured host free space.
+
+
+## Matched preparation follow-through
+
+The first subsequent D568 candidate has different actual Core/Data PE bytes from the pre-push full
+reference despite matching informational revisions; the guard refuses it before any install.
+Preserve that refusal and rebuild only the full Android reference in the current repository context.
+Actual SourceLink now names6ee929d4, while the explicitly shared informational revision remains
+64f10faa; do not relabel either fingerprint. Current full f1ced065, candidate1eb8655c and original
+ce3f86cc have actual equal Core/Data/compression/native engines. The206 managed role assemblies
+differ only in the app;1422 Java resource names/bytes and DEX/manifest/resource table are exact.
+Both independent roles have192 own AOT/204 ELF and complete offline signed/static-alignment checks.
+The temporary original Home source lease ends with exact candidate restoration and1782 frozen
+inputs exact. This refresh does not replay a managed/native/financial success, and grants no phone
+input before explicit Loyan handback. The combined packages still include unaccepted D568.
+Two unused first-build copies additionally remove97646044 logical bytes; used signed evidence stays.
+
+
+After all three package admissions and exact candidate-source restoration, standard clean removes
+15826 registered files /1208120589 logical bytes. Preserve the first wrong-RID clean refusal; only
+the native ARM64 clean is corrected and succeeds, without a new restore/build/test. Six unused
+unsigned/designer copies remove213211287 logical bytes after inventory/hash checks; all used signed
+packages and evidence remain. No host free-space reduction or native acceptance is inferred.
