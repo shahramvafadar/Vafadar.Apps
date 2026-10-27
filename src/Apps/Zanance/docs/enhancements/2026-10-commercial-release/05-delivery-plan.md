@@ -5086,3 +5086,19 @@ Fresh official-source review finds no newly released MAUI fix beyond current
 10.0.120; open upstream investigations do not identify our native cause. Keep
 all qualification/external gates and goal open; Loyan retains the phone lease.
 [Completed cleanup, refusal and source boundaries](../../quality/notification-prototype-cleanup.md).
+
+
+### D-595 - Reconcile completed subgates before scheduling new qualification
+
+The canonical A11Y-03 summary omitted D-566 even though its original receipt-source
+Help/OK/Cancel cohort already completed18 exact OS200% contexts with native text,
+44dp actions, RTL and scroll reachability. Restore that evidence reference rather
+than repeating the matrix. Separate the D-580 paired queued-delivery correction and
+D-553 covered cold routes from still-open physical punctuality/authentication; keep
+failed timed windows explicit. Reconcile the stale enhancement overview: D-292 is
+locally qualified, while real public/provider acceptance remains open. Add concrete
+next-admission boundaries for receipts, security and performance to the canonical
+backlog, without marking their parent gates complete or treating hour estimates as
+new execution authority. D-594 remains in force; no TalkBack/native/financial action,
+product change, new managed case or repeated successful build is needed for this
+source-evidence correction. Verify the exact linked reports and document diff.

@@ -4541,3 +4541,19 @@ alternate-engine/SDK work without assuming approval or chasing its question. Kee
 existing Persian UI/features and completed evidence; this is an execution-order
 deferral, not full accessibility/release acceptance or a change to jurisdictions,
 financial behavior, accounts or publishing. Other work and the overall goal continue.
+
+
+### D-595 - Reconcile completed subgates before scheduling new qualification
+
+The canonical A11Y-03 summary omitted D-566 even though its original receipt-source
+Help/OK/Cancel cohort already completed18 exact OS200% contexts with native text,
+44dp actions, RTL and scroll reachability. Restore that evidence reference rather
+than repeating the matrix. Separate the D-580 paired queued-delivery correction and
+D-553 covered cold routes from still-open physical punctuality/authentication; keep
+failed timed windows explicit. Reconcile the stale enhancement overview: D-292 is
+locally qualified, while real public/provider acceptance remains open. Add concrete
+next-admission boundaries for receipts, security and performance to the canonical
+backlog, without marking their parent gates complete or treating hour estimates as
+new execution authority. D-594 remains in force; no TalkBack/native/financial action,
+product change, new managed case or repeated successful build is needed for this
+source-evidence correction. Verify the exact linked reports and document diff.

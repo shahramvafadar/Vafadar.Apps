@@ -1,6 +1,7 @@
 # Enhancement ZCR – commercial release (Free, Plus, Pro)
 
-**Status refreshed 2026-10-15:** personal sync D-292 is in progress and unpublished. Consolidated owner
+**Status reconciled 2026-10-27 (D-595):** personal sync D-292 is implemented and locally qualified,
+not publicly accepted or released. Do not rebuild the delivered local framework to close external gates. Consolidated owner
 approvals and scope exceptions are recorded in [06-open-decisions.md](06-open-decisions.md). Subsequent
 maintenance and ready local sections have been delivered; their current states and remaining gates live in
 [04-backlog.md](04-backlog.md). D-69 authorizes continuous delivery of ready planned work; open product/licence,
