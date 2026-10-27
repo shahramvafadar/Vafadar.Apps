@@ -47,3 +47,22 @@ dirty-draft confirmation. It does not qualify Persian speech: the owner hears
 English in the original historical clip. See
 `src/Apps/Zanance/docs/quality/current-candidate-localized-reader.md` for evidence,
 restoration and the remaining acoustic/diagnostic boundaries.
+
+
+## Natural local-capture completion (D-590)
+
+A configured recorder duration is a wall-clock deadline, not a duration to replace
+with a short host tail after gestures. Record monotonic process start and the actual
+configured natural limit, allow a finite initialization/completion margin, and
+observe that same live process while original Main/window and restoration guards
+remain valid. Never restart because an observation expires or replay an accepted
+gesture to recover missed evidence. On interruption restore the original reader
+state and retain the incomplete capture as a refusal, not a finalized pass.
+
+Only exit0 plus exact finite RIFF/chunk/file bounds admit a complete original WAV.
+Keep the source recording unchanged: no trim, repair, synthesis or upload. Actual
+reader focus and valid PCM do not establish language or intelligibility; retain the
+owner's explicit sound-only answer separately. A40-second capture may have slightly
+less than40 seconds of PCM. D590 acquires only the remaining German Home title;
+accepted category/financial operations are not repeated, and Persian speech remains
+open. See `src/Apps/Zanance/docs/quality/natural-german-reader-recording.md`.

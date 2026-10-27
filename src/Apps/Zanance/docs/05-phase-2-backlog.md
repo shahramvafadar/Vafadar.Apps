@@ -4322,3 +4322,19 @@ no source execution, build, install, voice selection, reader/financial/test repl
 Isolated SDK terms/scope await the owner; the prior legacy cancellation remains
 binding. Persian speech and broader delivery gates stay open.
 [Complete newer-source review and remaining approval](quality/newer-persian-speech-source-review.md).
+
+
+### D-590 - Finish the remaining German capture without replaying accepted actions
+
+Correct the actual host recorder-budget failure using monotonic start, the explicit
+40-second natural limit and25-second finite margin under original window/watchdog
+guards. One original German Home-title exploration gains actual reader focus;
+there is no activation/form/category/financial replay or engine/voice choice.
+The recorder exits0 naturally after43.3333 host seconds; original PCM16/stereo48k
+WAV7577712 bytes has exact finite RIFF/chunks and39.4667 PCM seconds. Human sound
+confirmation is pending, not inferred from focus, container validity or visible text.
+Main22461/f748/Home979/all141/UIDCEDE/permissions/EnglishLight, original14 settings/
+presence and caller are exact; fresh helper10405 is removed once and16 owned XMLs/
+675159 logical bytes hash-cleaned. No shipping rebuild or old successful test replay.
+Persian and wider product/external gates remain open.
+[Complete original recording and restoration](quality/natural-german-reader-recording.md).
