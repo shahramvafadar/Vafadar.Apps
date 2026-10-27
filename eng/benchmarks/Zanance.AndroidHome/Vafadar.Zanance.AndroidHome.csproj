@@ -117,6 +117,14 @@
     <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.receiptcamerareview'"
            Text="Receipt camera capture requires its fresh independent identity; shipping and retained callers are excluded." />
   </Target>
+  <!-- D-598: only the fresh camera caller can carry the fixed fictitious quality control. -->
+  <ItemGroup Condition="'$(ReviewCameraCapture)' == 'true' and '$(ReviewCameraQualityInput)' != ''">
+    <MauiAsset Include="$(ReviewCameraQualityInput)" LogicalName="camera-quality-control.png" />
+  </ItemGroup>
+  <Target Name="RequireOwnedCameraQualityInput" BeforeTargets="PrepareForBuild" Condition="'$(ReviewCameraQualityInput)' != ''">
+    <Error Condition="'$(ReviewCameraCapture)' != 'true' or '$(ApplicationId)' != 'pro.vafadar.zanance.receiptcamerareview' or !Exists('$(ReviewCameraQualityInput)')"
+           Text="Camera quality control requires the fresh independent camera identity and an existing fictitious input." />
+  </Target>
   <!-- New native source-help qualification owns no retained caller/financial data. -->
   <PropertyGroup Condition="'$(ReviewReceiptSource)' == 'true'">
     <ApplicationId>pro.vafadar.zanance.receiptsourcereview</ApplicationId>

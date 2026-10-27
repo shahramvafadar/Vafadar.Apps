@@ -125,3 +125,14 @@ identities, input/package proofs, failed compile/AOT/focus/Preparing observation
 create-once install/run/input markers, all original native packets, retirement,
 restoration and cleanup/refusal receipts. Publish the complete batch and schedule
 one exact-head check after16minutes; the broad delivery goal remains active.
+
+## One-use hosted follow-up
+
+The single exact-head response after16minutes reports
+[CI40571330917](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40571330917)
+and [CodeQL40571330778](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40571330778)
+completed/success for79ae766f. Preserve the create-new consumed marker and full
+response. The monitor is deleted; no second request or unrelated rerun is made.
+This does not expand the finite native/quality acceptance above. D-598 separately
+isolates the fixed input's whole-text concern in the
+[direct-control/camera-frame record](emulator-camera-text-boundary.md).

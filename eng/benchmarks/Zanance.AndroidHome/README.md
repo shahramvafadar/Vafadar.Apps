@@ -1251,3 +1251,17 @@ Respect the owner's autonomous owned-emulator/risk-based physical-device rule in
 AGENTS.md. The original Main/caller/configuration remain protected, and previous
 policy-rejected cleanup scopes must never be retried.
 [Full original packets, text losses and restoration](../../../src/Apps/Zanance/docs/quality/emulator-camera-acquisition.md).
+
+## D-598 camera text boundary
+
+For the fresh camera identity only, `ReviewCameraQualityInput` packages the unchanged
+fictitious control as `camera-quality-control.png`; runtime SHA256 admission refuses
+another input. `review_camera_quality=true` with the original GUID-N run selects a
+separate quality-only branch after original startup. It reads that PNG directly,
+then performs one original source/camera acquisition and reads its recognition and
+stored pixels. It never repeats D-597 cancellation or invokes a financial command.
+Only the metadata-free compact synthetic JPEG is exported, using a create-new file
+in this fresh package's external-files directory; raw camera data stays transient.
+Compare actual words and the original frame, never a total-only assertion or invented
+letters. Terminal observation completion does not imply whole-camera quality passed.
+[Complete D-598 comparison, clipping and preservation](../../../src/Apps/Zanance/docs/quality/emulator-camera-text-boundary.md).

@@ -10294,3 +10294,22 @@ before execution;966files/130925594bytes remain with no alternate deletion. Phys
 camera/corpus, merchant/text, remaining platform/release gates and the full goal stay
 open. D-594 remains in force.
 [Complete native boundary and preservation](../quality/emulator-camera-acquisition.md).
+
+### D-598 - Isolate fixed camera-input clipping from native text reading
+
+The unchanged original synthetic PNG reads its complete header/footer through the
+original native reader. One fresh quality-only Camera2 source/Shutter/Done, without
+old cancellation or financial replay, produces a visibly right-clipped960x1280
+frame. Recognition and stored-copy reads lose exactly the same text; missing letters
+are not invented and no product OCR/financial change is made. Complete camera/merchant
+quality remains open. Strict independent signed74460cf2/192AOT/204ELF/static16KiB and
+three identity-admission outcomes are qualified; no new managed test count or default
+app rebuild. Only fresh10218 is retired; Main2893/885f6df5/all120 public dictionaries,
+UIDCEDE/actual permissions/caller/settings/config match. Volatile permission-object
+headers caused the preserved first host refusal; raw dump equality is not claimed.
+Five XMLs/110805bytes,1264 standard Clean outputs/296342657bytes and two unused
+copies/59881004bytes are removed. Residual bin/obj removal is rejected before execution;
+966files/130952293bytes remain without retry. Owned AVD is stopped; no phone action,
+private Main DB/key read or financial write occurs. D-597's one-use hosted response
+reports CI and CodeQL success and its monitor is deleted. The full goal and D-594
+execution order remain active.[Complete fixed-input text boundary](../quality/emulator-camera-text-boundary.md).

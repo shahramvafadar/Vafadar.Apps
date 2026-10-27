@@ -8,7 +8,7 @@ using Vafadar.Zanance.Core.Receipts;
 namespace Vafadar.Zanance.App;
 
 /// <summary>Observes original source choice, external camera results and preparation without financial/profile commands.</summary>
-internal static class CameraCaptureReview
+internal static partial class CameraCaptureReview
 {
     private const string Package = "pro.vafadar.zanance.receiptcamerareview";
     private const string Tag = "ZananceCameraCapture";
@@ -52,6 +52,12 @@ internal static class CameraCaptureReview
             var runtime = IPlatformApplication.Current!.Services.GetRequiredService<IReceiptRuntime>();
             if (runtime is not MauiReceiptRuntime) throw new InvalidDataException("Original receipt runtime required.");
             if (CameraFiles(activity) != 0) throw new InvalidDataException("Fresh owned camera source required.");
+
+            if (activity.Intent?.GetBooleanExtra("review_camera_quality", false) == true)
+            {
+                await RunQualityAsync(activity, runtime);
+                return;
+            }
 
             Emit("cancel-source-open", new { FinancialCommands = 0 });
             var cancelled = await runtime.PickAsync();
