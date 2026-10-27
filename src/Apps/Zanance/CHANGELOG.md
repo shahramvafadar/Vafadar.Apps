@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Preserve local acoustic evidence from the completed reader checks without repeating device or financial operations; Persian intelligibility remains explicitly unconfirmed, and the app is unchanged (D-573).
+
 - Check original nonfinancial expense navigation with the installed Android reader in three languages; keep all financial data and preserve the remaining spoken-accessibility gates (D-572).
 
 - Keep the original Home behavior after a guarded preparation experiment failed its speed and interface-pause limits; preserve financial data and the completed CSV correction (D-568).

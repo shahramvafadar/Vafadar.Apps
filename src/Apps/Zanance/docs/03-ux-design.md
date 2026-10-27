@@ -2679,3 +2679,20 @@ Restore original system-setting values and absent-key presence on every connecti
 APK/runtime/source, original caller and financial data stay unchanged. Remaining spoken/field/
 scroll/theme/width/full-workflow, stability/speed/platform/provider/Store/release gates stay open.
 [Complete scope, refusals and actual evidence](quality/physical-reader-scope.md).
+
+
+### D-573 - Local acoustic evidence without replaying accepted native gestures
+
+Decode the five existing D572 playback WAVs locally with explicit original model paths and no
+expected-caption grammar/prompt; verify original hashes and retain full hypotheses privately.
+English expense/Cancel and German expense/Cancel/amount terms occur; Persian expected terms do
+not. Only the two unresolved Persian clips receive a distinct English diagnostic pass, finding
+role words without proving a cause. Three zero-PCM controls are empty. No transcript upload,
+phone/emulator input, new voice/engine, application SDK/build/test/financial/gesture replay occurs.
+This is machine acoustic evidence, not human intelligibility, pronunciation or complete A11Y.
+Owner listening to the existing Persian clip remains pending while independent work continues.
+The canonical A11Y-01 row now records D572's actual current-candidate native qualification.
+Four redundant archives/155134714 logical bytes remain: automatic review rejects removal before
+launch with no detailed reason; no alternate deletion or recovered-space claim follows. Used
+runtime/models/notices, WAVs and proofs remain. D567 and the broader goal/gates stay active.
+[Exact evidence, unresolved Persian boundary and refusal](quality/local-reader-acoustic-evidence.md).
