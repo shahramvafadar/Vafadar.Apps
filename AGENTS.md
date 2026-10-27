@@ -1,5 +1,22 @@
 # AGENTS.md – working rules for this repository
 
+## Temporary scoped Samsung reader qualification (owner, 2026-10-27, D-572)
+
+The owner directed uninterrupted continuation after the concrete temporary physical TalkBack
+proposal and its reviewed signed package. This authorizes temporary activation of the installed
+Samsung TalkBack and the separate owned, candidate/UID/device-bound reader review service, its
+specific service confirmations and bounded local playback recording while Zanance owns the window.
+Record exact prior accessibility/TTS/font/display/timeout state before activation and restore it
+at completion or interruption, including absent values. The existing emulator-only helper must
+remain unchanged, and the D-567 reboot/idle emulator must not be touched.
+
+This exception permits only the stated reader test; no microphone, cloud transcription/upload,
+voice download or engine replacement, account/authentication input, financial Save or global
+security change is authorized. Only original nonfinancial caption/window/focus-bound gestures
+are allowed. A callback, speech request or waveform energy does not prove intelligibility.
+Keep current app/profile/data/permissions and other-project leases; genuine device authentication
+remains with the owner. Temporary screen-awake changes remain separately bounded by D-517.
+
 ## Resume Zanance foreground and scoped installation prompts (owner, 2026-10-26, D-560)
 
 When Zanance is behind another app, use its normal Android launcher entry to bring the installed

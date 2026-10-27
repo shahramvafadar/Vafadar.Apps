@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Check original nonfinancial expense navigation with the installed Android reader in three languages; keep all financial data and preserve the remaining spoken-accessibility gates (D-572).
+
 - Keep the original Home behavior after a guarded preparation experiment failed its speed and interface-pause limits; preserve financial data and the completed CSV correction (D-568).
 
 - Accept complete bank CSV comments at the existing field-length limit, including quoted and multiline text, while preserving original safety bounds and explicit import review (D-571).

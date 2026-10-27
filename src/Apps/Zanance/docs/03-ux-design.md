@@ -2664,3 +2664,18 @@ both themes and exact360/412/680dp, including original44dp actions, Persian RTL 
 last body line through native scrolling. No product layout/text change is required. Keep actual
 arranged dimensions separate from requested labels; preserve accepted scenes when continuing
 only missing widths. This does not qualify spoken TalkBack or every accessibility route.
+
+
+### D-572 - Scope the first original physical reader gesture cohort
+
+Use a distinct Samsung/API36/ARM64/current-Main-UID/APK-bound service; preserve the old emulator-only
+helper and D567 idle/reboot cohort.24 new actual-policy AT-572 cases and strict complete offline
+37AOT/47ELF/v3 packaging pass. With direct contextual owner authority and finite restoration,
+English/Persian/German actual accessibility focus opens the original expense form and actual Cancel
+returns Home, three opens/three Cancels and zero financial/profile/seed/key commands. Continue only
+unfinished Cancels after preserved IME/host-observer refusals; no accepted activation is replayed.
+Bounded local playback is retained without upload/transcription or claimed intelligibility.
+Restore original system-setting values and absent-key presence on every connection; production
+APK/runtime/source, original caller and financial data stay unchanged. Remaining spoken/field/
+scroll/theme/width/full-workflow, stability/speed/platform/provider/Store/release gates stay open.
+[Complete scope, refusals and actual evidence](quality/physical-reader-scope.md).

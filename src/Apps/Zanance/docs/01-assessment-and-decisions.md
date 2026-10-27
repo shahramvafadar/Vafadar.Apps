@@ -10533,3 +10533,18 @@ A prior574552517-byte residual deletion remains automatically rejected/unperform
 D567's real idle/reboot cohort is untouched. Whole-Home two seconds, general stability/audible/device/
 iOS/provider/Store/release gates remain open. This closes the experiment, not the overall goal.
 [Exact failed gates, preserved refusals and restored delivery](quality/home-prepared-publication.md).
+
+
+### D-572 - Scope the first original physical reader gesture cohort
+
+Use a distinct Samsung/API36/ARM64/current-Main-UID/APK-bound service; preserve the old emulator-only
+helper and D567 idle/reboot cohort.24 new actual-policy AT-572 cases and strict complete offline
+37AOT/47ELF/v3 packaging pass. With direct contextual owner authority and finite restoration,
+English/Persian/German actual accessibility focus opens the original expense form and actual Cancel
+returns Home, three opens/three Cancels and zero financial/profile/seed/key commands. Continue only
+unfinished Cancels after preserved IME/host-observer refusals; no accepted activation is replayed.
+Bounded local playback is retained without upload/transcription or claimed intelligibility.
+Restore original system-setting values and absent-key presence on every connection; production
+APK/runtime/source, original caller and financial data stay unchanged. Remaining spoken/field/
+scroll/theme/width/full-workflow, stability/speed/platform/provider/Store/release gates stay open.
+[Complete scope, refusals and actual evidence](quality/physical-reader-scope.md).
