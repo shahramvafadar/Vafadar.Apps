@@ -2876,3 +2876,12 @@ cases include two optimized subprocesses. A build-only admission change reuses
 unchanged product/native evidence; validate actual preparation through its Core
 MSBuild target without repeating successful full packages or financial workflows.
 [Focused admission evidence](../../src/Apps/Zanance/docs/quality/notification-source-admission.md).
+
+D-582 reuses the already verified f7488d1d full product for the distinct retained
+API36/x64 ordinary-Main no-reset adoption. Keep the new authorized version lineage;
+old8fd5 is a historical baseline, never an automatic rollback target. Verify original
+UID/CEDE/permission/public-state/settings before and after normal launcher startup.
+Do not recreate a retired timed fixture, replay successful finance, restart shared
+ADB or touch a phone in another project's turn. Only owned hash-matched XML cleanup
+and the exact completed AVD stop are authorized by this finite cohort.
+[Current emulator lineage](../../src/Apps/Zanance/docs/quality/retained-notification-core-adoption.md).

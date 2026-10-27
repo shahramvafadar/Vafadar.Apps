@@ -10711,3 +10711,17 @@ its full Windows/Android/native/adoption results; no app change, new package,
 financial/native replay or phone/emulator command. Loyan retains the phone lease;
 overall qualification and external gates/goal remain open.
 [Complete reproduced defect and focused evidence](quality/notification-source-admission.md).
+
+### D-582 - Retained ordinary API36 adoption of corrected notification Core
+
+Reuse the verified complete signed f7488d1d product without rebuilding. On the
+retained API36/x64/4096 ordinary Main, one no-reset upgrade preserves UID10217/
+CE352809/DE82676/permission flags, all120 public Home attributes/zero balance,
+caller ebd910c2 metadata/process absence, five settings and320x640/density160.
+Actual Main3080 becomes3656; no historical PID equality, private database/key
+comparison, financial command or new reminder is claimed. Two owned XMLs are
+hash-cleaned and only emulator5570 is stopped, with original config hashes exact.
+Current emulator Main is now f7488d1d; never downgrade to historical8fd5. Phone
+stays with Dev Loyan1 until explicit return. No new managed tests, product builds
+or financial/native-success replay; broad qualification/external gates stay open.
+[Complete ordinary adoption and limits](quality/retained-notification-core-adoption.md).
