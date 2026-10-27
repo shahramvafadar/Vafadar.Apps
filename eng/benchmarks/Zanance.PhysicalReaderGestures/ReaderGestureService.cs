@@ -55,15 +55,19 @@ public sealed class ReaderGestureService : AccessibilityService
             if (!PhysicalReaderPolicy.CurrentCallback(version, _bindingVersion, !_destroyed)) return;
             if (admitted is null) { Emit(new { Kind = "refused", Reason = "physical-owner-admission" }); return; }
             _admittedInstall = admitted; _ownerContext = context;
-            var keys = new HashSet<string>(["Entry_NewExpense", "Common_Cancel", "Tab_More", "About_Title", "Common_Back", "Tab_Home"], StringComparer.Ordinal);
-            foreach (var file in Assets!.List("captions") ?? [])
+            foreach (var language in new[] { "en", "fa", "de", "es", "fr", "it" })
             {
-                using var stream = Assets.Open("captions/" + file);
-                foreach (var entry in XDocument.Load(stream).Root!.Elements("data"))
-                    if (keys.Contains((string?)entry.Attribute("name") ?? "") && entry.Element("value")?.Value is { Length: > 0 } caption)
-                        _safeCaptions.Add(caption);
+                var suffix = language == "en" ? "" : "." + language;
+                var original = new Dictionary<string, string>(StringComparer.Ordinal);
+                foreach (var prefix in new[] { "AppResources", "SharedStrings" })
+                {
+                    using var stream = Assets!.Open("captions/" + prefix + suffix + ".resx");
+                    foreach (var entry in XDocument.Load(stream).Root!.Elements("data"))
+                        if (entry.Attribute("name")?.Value is { } key && entry.Element("value")?.Value is { } value)
+                            original.Add(key, value);
+                }
+                _safeCaptions.UnionWith(PhysicalReaderCaptions.FromOriginalResources(key => original[key]));
             }
-            if (_safeCaptions.Count < keys.Count) throw new InvalidOperationException("Original safe captions unavailable.");
             _commands = 0; _connected = SystemClock.ElapsedRealtime(); _current = this;
             Emit(new { Kind = "ready", PhysicalTargetAdmitted = true, OwnerUid = PhysicalReaderPolicy.OwnerUid,
                 OwnerApk = PhysicalReaderPolicy.OwnerApkSha256, PublicDispatchGesture = true,

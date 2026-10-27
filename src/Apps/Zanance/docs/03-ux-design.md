@@ -2737,3 +2737,13 @@ switching clears the old caption; tapping the selected category restores plain n
 Six changed native language/theme contexts are qualified without financial Save.
 This is a caption-state correction, not complete TalkBack speech acceptance.
 [Native evidence and remaining gates](quality/category-selection-semantics.md).
+
+### Reader selection is distinct from gesture callbacks (D-579)
+
+Qualify original category state through actual reader focus and bounded gestures,
+not a node-action substitute. Preserve intermediate native states; a completed
+gesture does not alone prove the final exclusive selection. Continue only unfinished
+observations/inputs on the same draft, never replay accepted category choices or
+financial writes. Current English category/Cancel state is qualified; two complete
+recordings provide machine acoustic evidence, not full speech intelligibility.
+[Finite native reader cohort](quality/original-category-reader-states.md).

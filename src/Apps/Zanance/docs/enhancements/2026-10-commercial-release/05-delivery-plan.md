@@ -5000,3 +5000,11 @@ reboot/idle deadline, remaining speech/workflow/accessibility and general stabil
 performance gates remain open; iOS/provider/Store/identity gates retain their real
 external dependencies. Never repeat accepted native financial commands or settled
 cohorts to fill a wait. Keep the overall goal active.
+
+D579 completes only the newly changed English original category reader cohort,
+without a production rebuild/install or accepted selection/financial replay. Current
+Main510a3197/22604/Home979/all141 public states and14 exact system settings remain.
+The fresh helper is retired. Preserve initial native/recorder/refusal boundaries;
+full spoken/workflow/stability/iOS/provider/Store/release acceptance stays open.
+Continue D567 only from its original native deadline/handles and source checkpoints,
+without touching its future requests or treating callback/elapsed time as completion.

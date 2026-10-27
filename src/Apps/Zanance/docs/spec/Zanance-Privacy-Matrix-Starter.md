@@ -1355,3 +1355,15 @@ and native library bytes. The Accounts change only refreshes original reads on r
 navigation: no schema, permission, provider, export or financial-data-category change.
 [Evidence](../quality/coreclr-original-ui-feasibility.md) and
 [product boundary](../quality/retained-account-overview-navigation.md).
+
+### D-579 scoped native reader follow-through
+
+No production data category, network SDK, permission or provider changes. The
+separate candidate/UID/device-bound helper has no Activity/network/microphone/private
+Main storage access; it is retired after actual nonfinancial category gestures and
+exact restoration of all14 original system settings and key presence. Only two new
+complete local playback WAVs are decoded locally with the previously reviewed
+tool/model; no upload, voice replacement, regenerated speech or old-success replay.
+Raw transcripts/audio remain private diagnostic evidence, not product analytics or
+human intelligibility acceptance. Earlier failed recordings/refusals remain distinct.
+[Current scope and retention](../quality/original-category-reader-states.md).

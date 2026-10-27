@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Check original category selection with the installed Android reader while preserving existing transactions and settings; broader spoken accessibility remains open (D-579).
+
 - Announce when an entry category is selected and clear the announcement when deselected, using the existing translations (D-578).
 
 - Refresh account balances when returning to a retained Accounts tab, preserving all existing financial records (D-577).

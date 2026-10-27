@@ -27,7 +27,7 @@ internal static class PhysicalReaderTarget
             Build.SupportedAbis?.FirstOrDefault() ?? "", (int)(context.Resources?.DisplayMetrics?.DensityDpi ?? 0));
         // Check all public metadata before opening even the public APK; actual digest is still mandatory afterward.
         if (!PhysicalReaderPolicy.PublicTargetMatches(device, before)) return null;
-        if (new FileInfo(before.SourceApk).Length != 97075103) return null;
+        if (!PhysicalReaderPolicy.PublicApkLengthMatches(new FileInfo(before.SourceApk).Length)) return null;
         await using var source = File.OpenRead(before.SourceApk);
         var digest = Convert.ToHexString(await SHA256.HashDataAsync(source, cancellationToken));
         return PhysicalReaderPolicy.SameInstall(before, ReadInstall(context))

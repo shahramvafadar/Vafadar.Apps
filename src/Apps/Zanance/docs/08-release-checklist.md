@@ -4267,3 +4267,22 @@ financial/native bytes and1422 resources are checked; the no-reset Main adoption
 and original public Home/settings/caller restoration pass. This does not complete
 spoken accessibility, stability/performance, iOS/provider/Store or product release.
 [Evidence, retained refusals and cleanup limits](quality/category-selection-semantics.md).
+
+### D-579 - Original category state through the actual installed reader
+
+The separate helper is freshly bound to signed Main510a3197/97,058,719 bytes and
+original UID10380; production source/APK/runtime are unchanged. Eleven new actual
+policy/resource cases pass in10+1 selected runs; old successful suites are retained.
+Original English reader focus/gestures open one empty expense form, select Food,
+select Housing, observe settled exclusivity, deselect Housing and Cancel without
+financial Save. Preserve the old-length guard refusal, late IME, intermediate
+two-selected native snapshot and failed initial recording; no accepted input is
+replayed and no exclusive cache/product cause is asserted. Two complete local
+recordings retain native provenance; one unconstrained post-decode observation
+finds Housing/selected, without human or general spoken acceptance. All14 original
+settings/presence and Main22604/Home979/all141 public attributes/caller are exact.
+Only fresh UID10400 is retired;956 registered files and3 owned XMLs are cleaned.
+Additional residual/loose deletions are rejected before execution and not retried.
+D567, broader accessibility/stability/platform/external release gates and the goal
+remain open. Native observations add no managed cases beyond the11 stated here.
+[Complete finite reader cohort and limits](quality/original-category-reader-states.md).
