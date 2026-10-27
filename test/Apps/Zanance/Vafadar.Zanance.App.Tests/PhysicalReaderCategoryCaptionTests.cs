@@ -55,6 +55,8 @@ public sealed class PhysicalReaderCategoryCaptionTests
         var device = new PhysicalReaderDevice("samsung", "SM-A176B", 36, "arm64-v8a", 450);
         var install = new ReaderOwnerInstall(10380, false, "/data/app/fictitious/pro.vafadar.zanance/base.apk", 100);
         Assert.True(PhysicalReaderPolicy.Admits(device, install,
+            "f7488d1da0bbed5b9910a7ace960ef5f883da008f31dd24e173e9421996ae9c7"));
+        Assert.False(PhysicalReaderPolicy.Admits(device, install,
             "510a3197cb6d77bf69df03d10f3d4079286726a82fecce557f8a4bebeef3b879"));
         Assert.False(PhysicalReaderPolicy.Admits(device, install,
             "4a6cb5be5effa30cf02ce74600774b84d777e71de29463ea6db4fac52117d38c"));

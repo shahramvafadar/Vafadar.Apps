@@ -1,5 +1,25 @@
 # AGENTS.md – working rules for this repository
 
+## Temporary standalone Persian speech-engine trial (owner, 2026-10-27, D-587)
+
+After Android blocks the reviewed legacy package, the owner explicitly chooses to cancel that
+attempt and investigate a newer compatible option. Do not choose Install anyway, retry that
+blocked APK, or silently replace it with another binary. Any newer candidate needs its own
+review and explicit installation/selection approval. The initial trial approval below does not
+override this later decision; no engine/language choice occurred for the cancelled attempt.
+
+The owner explicitly approves one limited trial of the reviewed standalone eSpeak1.52.0
+package from F-Droid, including temporary installation and engine/Persian-language selection,
+followed by exact original engine/language/settings restoration and removal of only that fresh
+temporary installation. Verify the exact reviewed APK digest and the package's prior absence;
+never overwrite or remove an existing owner installation. Its bundled local voice-data setup and
+specific settings navigation are within this trial, not permission for network voice downloads,
+accounts, authentication, unrelated permissions or permanent device changes. The package is not
+linked into Zanance. Preserve Main, all financial data and accepted-operation checkpoints; keep
+the bounded existing reader/playback rules and qualify actual speech rather than synthesizing
+replacement evidence. Restore the original private Samsung engine/use-system-language state,
+all captured setting values and absent-key presence, then return normally to Zanance.
+
 ## Read-only Samsung speech-language inspection (owner, 2026-10-27, D-586)
 
 The owner explicitly permits opening the system text-to-speech page and navigating only to

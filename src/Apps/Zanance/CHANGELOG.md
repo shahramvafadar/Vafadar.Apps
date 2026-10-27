@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Keep the original speech engine after the owner declines a blocked legacy alternative; preserve settings and the remaining Persian speech gate (D-587).
+
+- Keep the reader qualification regression aligned with the actual signed candidate while continuing to reject both retired packages; application behavior is unchanged (D-588).
+
 - Identify the device speech-engine/language limitation separately from app text; preserve the original voice choices, settings and financial data (D-586).
 
 - Check the remaining Persian and German category-reader states on the current installed app; preserve financial data and record that Persian speech is still unaccepted (D-585).

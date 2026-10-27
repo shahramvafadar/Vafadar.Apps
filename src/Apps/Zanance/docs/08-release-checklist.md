@@ -4402,3 +4402,42 @@ replay. Persian speech needs a supported engine/voice and separate actual-reader
 qualification; current permission is read-only, not installation/selection approval.
 General A11Y/stability/speed/iOS/provider/Store/public release and the goal stay open.
 [Complete engine-route evidence, cleanup and limits](quality/installed-speech-engine-metadata.md).
+
+### D-587 - Close the owner-cancelled legacy Persian engine candidate
+
+Review the standalone F-Droid1.52.0/code22 APK and source against the pinned signed
+repository index: exact digest/size/signer, no requested permissions, ARM64 and
+bundled Persian data, minimum21/target33. Initial owner approval permits one
+bounded temporary trial, but Android blocks the old target with Unsafe app blocked.
+The owner declines Install anyway and requests a newer compatible option. The
+original attempt is already terminal with VERIFICATION_FAILURE when cancellation
+input is guarded; no stale tap, override, second install, engine/language choice,
+synthesis or financial command occurs, and the package remains absent.
+Preserve late Samsung default-key normalization rather than rewriting the baseline;
+restore original absence with bounded stable observations and exact14-value/presence
+checks. Actual Main22461 existed before the install attempt; OS metadata records
+old18235 LOW_MEMORY/importance400/status0/trace null. Preserve this selected public
+state recovery without claiming PID survival, crash cause or full DB/key equality.
+Main f748/UIDCEDE/permissions/Home979/all141/EnglishLight and original caller are
+exact. Three hash-matched remote XMLs/68374 logical bytes are removed; used failed
+APK/source/provenance and local receipts remain. Host-only recorder review finds
+three110-second captures terminated by a12-second final tail before their natural
+limit; no audio is repaired, regenerated or replayed to fake acceptance.
+Newer compatible review is authorized, but another install/selection needs fresh
+approval. Persian speech and broader product/external gates stay open.
+[Complete provenance, rejection and preservation](quality/legacy-persian-engine-candidate.md).
+
+### D-588 - Correct the stale current-reader CI expectation
+
+Both final D585/D586 hosted CI runs fail only the older current-category-candidate
+method; native Windows/Android jobs and CodeQL pass. Preserve5576 total/one failure/
+25 skipped, and delete the two consumed one-shot schedules. Current policy correctly
+requires f748 while the old test expects510a. Reproduce only that exact method on
+latest ef9d03bc, then update the independent current literal and explicitly reject
+both prior510a/4a6c digests. One selected existing case changes from red to green;
+no new case, policy relaxation, shipping change, financial test or successful native
+build replay. Strict affected test-project build passes. Standard Clean removes393
+registered outputs/164750580 logical bytes with no ownership outlier/remnant.
+Fresh hosted success is still pending its single delayed check after push; old
+failures and broader product/external gates are not erased or marked accepted.
+[Complete hosted cause and focused repair](quality/current-reader-ci-regression.md).
