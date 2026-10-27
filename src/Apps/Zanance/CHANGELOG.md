@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Check the remaining Persian and German category-reader states on the current installed app; preserve financial data and record that Persian speech is still unaccepted (D-585).
+
 - Preserve distinct simultaneous Android reminders instead of replacing one another in the native broadcast queue; scheduling times and privacy choices remain unchanged (D-580).
 
 - Check original category selection with the installed Android reader while preserving existing transactions and settings; broader spoken accessibility remains open (D-579).

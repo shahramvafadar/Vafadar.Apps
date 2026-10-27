@@ -33,3 +33,17 @@ No financial Save, new profile, app rebuild/install, original-helper change or D
 operation is needed. The fresh UID10400 helper is retired after exact Main/settings restoration.
 See `src/Apps/Zanance/docs/quality/original-category-reader-states.md` for current evidence,
 retained refusals and cleanup boundaries; D572's qualification report remains historical.
+
+## Current candidate and correlated refusals (D-585)
+
+The current policy admits only signed f748 Main with the same public length/UID;
+prior510a cannot inherit admission. Refusals echo only a canonical32-lowercase-hex
+request id and a fixed local guard code. Unknown native messages and arbitrary
+request text are redacted; original safety guards and time/command limits remain.
+Three new selected managed cases and an actual stale-window negative control
+qualify this boundary. Only the owned inactive helper is updated, never Main.
+The localized native continuation preserves partial failures and the later expected
+dirty-draft confirmation. It does not qualify Persian speech: the owner hears
+English in the original historical clip. See
+`src/Apps/Zanance/docs/quality/current-candidate-localized-reader.md` for evidence,
+restoration and the remaining acoustic/diagnostic boundaries.

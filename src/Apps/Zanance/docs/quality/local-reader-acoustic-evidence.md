@@ -63,10 +63,16 @@ D572 request/focus/window/candidate provenance and bounded capture intervals rem
 precise acoustic event alignment is not repaired by replaying its accepted gestures. Full transcripts
 stay local and are not published as authoritative text or copied into the repository.
 
-Ask the owner to listen to the existing local Persian opening clip and report whether the original
-expense title is understandable. A preselected/unanswered option is not a result. Continue ready
-independent backlog work while that observation is pending; no overall completion or new voice/
-settings authorization follows from elapsed time or another project's handback.
+On 27 October the owner listens to the unchanged historical Persian-context opening recording
+(SHA256 cd1e299f818cda2405155cacae4fac09dfb49c6dae900f64708ca56ba3c8159b) and reports that
+the played speech is English, not Persian. The earlier answer concerns the legible in-app textual
+title only and does not accept speech. Preserve the negative listening result: Persian speech
+remains unaccepted. The recording's historical filename and the native Persian caption do not
+establish its spoken language, and this feedback does not identify whether the caption was omitted,
+mispronounced or obscured by stock reader speech. No engine fault or application cause is proven.
+Continue diagnosis using retained native/audio evidence without replaying accepted gestures,
+fabricating Persian speech or silently downloading/selecting a voice. No new voice/settings
+authorization or overall accessibility completion follows from this listening result.
 
 ## Retention and cleanup refusal
 

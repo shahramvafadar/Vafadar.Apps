@@ -7234,3 +7234,24 @@ No new managed cases or full product build; nonempty data/full onboarding/hardwa
 16KiB/punctuality/stability/A11Y/iOS/external release gates and goal remain open.
 Phone remains exclusive to Dev Loyan1 until explicit return.
 [Complete current-product bootstrap and limits](quality/corrected-core-platform-bootstrap.md).
+
+### D-585 - Current-candidate localized reader states and correlated refusals
+
+The scoped physical reader is rebound to the exact current f748 product after
+explicit phone return. Three distinct new policy cases pass in selected runs;
+preserve the actual candidate regression, wrong runner option and synthetic
+request-length mistake separately. Scoped strict helper builds and signed offline
+packages pass; Main is not rebuilt/reinstalled and no accepted financial command
+is replayed. Fixed refusal codes retain canonical request lineage without arbitrary
+exception text, verified natively by a stale-window refusal before any gesture.
+German/Light initial/selected/exclusive/deselected/Cancel states pass. Preserve the
+Persian intermediate selection loss and generic refusal; the remaining retained
+draft and later focused exclusive-transition diagnostic have separate receipts.
+The later Cancel opens the expected dirty-draft dialog; preserve the wrong host
+Home expectation and use only original owned Discard for cleanup, not reader
+confirmation acceptance. The owner's historical recording feedback is English,
+not Persian; textual legibility does not accept speech. Original English/Light,
+Main/Home/settings identity, helper retirement and cleanup have independent proofs.
+General speech/pronunciation and the unexplained earlier loss, stability/speed,
+iOS/provider/Store/public release gates and the overall goal remain open.
+[Complete native evidence, failures and limits](quality/current-candidate-localized-reader.md).

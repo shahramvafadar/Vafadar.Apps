@@ -77,7 +77,7 @@ public sealed class ReaderGestureService : AccessibilityService
         catch (System.OperationCanceledException) { }
         catch (Exception error)
         {
-            if (!_destroyed) Emit(new { Kind = "refused", ErrorType = error.GetType().FullName });
+            if (!_destroyed) EmitRefusal(null, error);
         }
     }
 
@@ -104,7 +104,7 @@ public sealed class ReaderGestureService : AccessibilityService
         }
         catch (Exception error)
         {
-            if (!_destroyed) Emit(new { Kind = "refused", ErrorType = error.GetType().FullName });
+            if (!_destroyed) EmitRefusal(null, error);
         }
     }
 
@@ -126,10 +126,18 @@ public sealed class ReaderGestureService : AccessibilityService
     internal static void Receive(Intent intent)
     {
         var service = _current;
-        if (service is null) { Emit(new { Kind = "refused", Reason = "service-unavailable" }); return; }
+        var request = PhysicalReaderPolicy.RefusalRequest(intent.GetStringExtra("request"));
+        if (service is null) { Emit(new { Kind = "refused", Request = request, Reason = "service-unavailable" }); return; }
         try { service.Execute(intent); }
-        catch (Exception error) { Emit(new { Kind = "refused", ErrorType = error.GetType().FullName }); }
+        catch (Exception error) { EmitRefusal(request, error); }
     }
+
+    /// <summary>Retain request lineage and a fixed guard code without exporting arbitrary exception data.</summary>
+    private static void EmitRefusal(string? request, Exception error) => Emit(new
+    {
+        Kind = "refused", Request = PhysicalReaderPolicy.RefusalRequest(request),
+        Reason = PhysicalReaderPolicy.RefusalReason(error.Message), ErrorType = error.GetType().FullName
+    });
 
     /// <summary>Dispatches bounded reader navigation/exploration or reviewed nonfinancial activation; never performs node actions.</summary>
     private void Execute(Intent intent)

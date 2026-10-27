@@ -13,14 +13,39 @@ internal static class PhysicalReaderPolicy
     internal const string Owner = "pro.vafadar.zanance";
     /// <summary>UID captured after the explicit Samsung handback; a reinstall or another device must refuse.</summary>
     internal const int OwnerUid = 10380;
-    /// <summary>The complete signed D-578 product; a future upgrade requires fresh admission (D-579).</summary>
-    internal const string OwnerApkSha256 = "510a3197cb6d77bf69df03d10f3d4079286726a82fecce557f8a4bebeef3b879";
+    /// <summary>The complete signed D-580 product, freshly bound after the explicit phone return (D-585).</summary>
+    internal const string OwnerApkSha256 = "f7488d1da0bbed5b9910a7ace960ef5f883da008f31dd24e173e9421996ae9c7";
     /// <summary>Public APK byte count of the same candidate; retain the exact pre-hash admission check.</summary>
     internal const long OwnerApkBytes = 97058719;
     /// <summary>Maximum lifetime of one explicitly enabled review connection.</summary>
     internal const long LifetimeMilliseconds = 5 * 60 * 1000;
     /// <summary>Finite command budget; successful callbacks alone never establish application acceptance.</summary>
     internal const int MaximumCommands = 96;
+
+    /// <summary>Correlate only canonical public request ids; never echo arbitrary caller text.</summary>
+    internal static string? RefusalRequest(string? request) =>
+        request is { Length: 32 } && request.All(value => value is >= '0' and <= '9' or >= 'a' and <= 'f')
+            ? request : null;
+
+    /// <summary>D-585: report only fixed local guard reasons, never native exception messages or captions.</summary>
+    internal static string RefusalReason(string? message) => message switch
+    {
+        "Finite serialized original review required." => "finite-serialized-session",
+        "Original application window is not focused." => "owner-window-not-focused",
+        "Stale original window." => "stale-owner-window",
+        "Original viewport unavailable." => "owner-viewport-unavailable",
+        "One original visible safe target is required for exploration." => "safe-target-not-unique",
+        "Original target must be fully inside its owned viewport." => "target-outside-owner-viewport",
+        "Original safe destination must belong to this tree." => "safe-destination-missing",
+        "Original scroll viewport unavailable." => "scroll-viewport-unavailable",
+        "Exact original safe accessibility focus required before activation." => "exact-safe-focus-missing",
+        "Unknown bounded operation." => "unknown-operation",
+        "Original gesture was not built." => "gesture-not-built",
+        "Original bounded tree required." => "bounded-owner-tree",
+        "Bounded caption required." => "bounded-caption",
+        "Bounded public observation required." => "bounded-public-observation",
+        _ => "unclassified-native-refusal"
+    };
 
     /// <summary>Refuses other hardware, OS/ABI/density, UID, debug package, unreadable identity or candidate bytes.</summary>
     internal static bool Admits(PhysicalReaderDevice device, ReaderOwnerInstall install, string digest) =>
