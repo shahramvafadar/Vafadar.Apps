@@ -4331,10 +4331,24 @@ Correct the actual host recorder-budget failure using monotonic start, the expli
 guards. One original German Home-title exploration gains actual reader focus;
 there is no activation/form/category/financial replay or engine/voice choice.
 The recorder exits0 naturally after43.3333 host seconds; original PCM16/stereo48k
-WAV7577712 bytes has exact finite RIFF/chunks and39.4667 PCM seconds. Human sound
-confirmation is pending, not inferred from focus, container validity or visible text.
+WAV7577712 bytes has exact finite RIFF/chunks and39.4667 PCM seconds. The owner explicitly
+confirms this exact title sound is German and understandable; this is not inferred
+from focus, container validity or visible text and does not accept other utterances.
 Main22461/f748/Home979/all141/UIDCEDE/permissions/EnglishLight, original14 settings/
 presence and caller are exact; fresh helper10405 is removed once and16 owned XMLs/
 675159 logical bytes hash-cleaned. No shipping rebuild or old successful test replay.
 Persian and wider product/external gates remain open.
 [Complete original recording and restoration](quality/natural-german-reader-recording.md).
+
+
+### D-591 - Accept only the directly heard German title and retain the Persian gap
+
+The owner explicitly confirms the original D590 sound is German and understandable;
+bind acceptance to WAVf061e241/7577712 bytes and only Neue Ausgabe. Preserve the
+negative historical Persian listening result and broader speech gates. Host-only
+inspection of17 existing Persian packets shows no Housing activation, an
+uncorrelated refusal and Food-selected focus records5523/8575ms after Housing focus.
+This does not prove immediate clearing or the later managed-state/cached-caption
+cause. Original toggle/theme/kind semantics stay unchanged; no speculative fix,
+new Android command, gesture, recording, test/build or financial replay occurs.
+[Direct acceptance and original packet limits](quality/direct-german-listening-and-fa-lineage.md).

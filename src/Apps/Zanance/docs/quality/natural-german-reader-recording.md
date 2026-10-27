@@ -2,8 +2,8 @@
 
 Status: the observed host recording-budget failure is corrected for this new
 bounded capture. The actual German title focus and a complete original recording
-are acquired; human language/intelligibility confirmation remains pending. This
-is not a full German workflow or spoken-accessibility pass.
+are acquired, and the owner explicitly confirms that this exact sound is German
+and understandable. This is not a full German workflow or spoken-accessibility pass.
 
 ## Why a distinct remaining observation is necessary
 
@@ -56,8 +56,9 @@ configured40-second wall-clock limit is not relabelled as40 seconds of PCM.
 No trimming, repair, replacement synthesis, transcription, microphone or cloud
 upload occurs. Container completion/focus do not prove audible language, correct
 pronunciation or intelligibility. Present only the actual local original file and
-ask the owner specifically about the sound, not the visible German text. Keep the
-answer pending until received; prior textual clarity is not acoustic acceptance.
+ask the owner specifically about the sound, not the visible German text. The direct
+answer confirms that it is German and understandable. This accepts only the exact
+Neue Ausgabe title in this clip; prior textual clarity is not acoustic acceptance.
 
 ## Exact restoration and retirement
 
@@ -77,7 +78,7 @@ There is no new compiled output, product build/test replay or cleanup of earlier
 policy-refused scopes. The source app/APK and managed-test count do not change.
 
 Persian voice/build-tool approval remains the separate D589 owner gate; no newer
-engine installation is implied. German human listening and broader A11Y, stability,
+engine installation is implied. The exact German title listening gate is accepted; broader A11Y, stability,
 two-second performance, iOS/providers/Store/public-release gates and the overall
-goal remain open. Do not repeat this successful focus/capture solely while awaiting
-an answer.
+goal remain open. Do not repeat this successful focus/capture or infer acceptance of other
+utterances, workflows or Persian from this answer.
