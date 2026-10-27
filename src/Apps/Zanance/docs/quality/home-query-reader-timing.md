@@ -172,3 +172,12 @@ inputs and native/cleanup receipts. Publish the complete batch and schedule one
 exact-head CI check after16minutes. Full performance/stability, security, remaining
 accessibility, physical hardware/iOS/provider/Store/publication gates stay open;
 TalkBack stays last and Persian speech parked. The overall goal remains active.
+
+## D-601 - Subsequent candidate does not qualify from this interval
+
+The later bounded immutable-text candidate is closed at its physical whole-Home gate:
+0.2676% is below 5%, despite favorable host/emulator observations. Reference financial
+PEs also do not reproduce adopted shipping identity; pair-local equality is not D-543.
+All product sources/tests return exactly to their original bytes. Do not reuse D-599's
+inclusive reader duration as proof of an exclusive codec cause or product speed gain.
+[Complete source/input limits and accepted-report recovery](withdrawn-ledger-text-reuse.md).

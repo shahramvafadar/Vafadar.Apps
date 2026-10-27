@@ -4464,3 +4464,28 @@ all120/settings/config; no phone input. Twelve XMLs/484581bytes,1263 Clean outpu
 retirement is rejected before execution;967files/130910659bytes remain without retry.
 Protected comparison sources stay bound for continuation; no shared alias is retired.
 No new managed tests or default app change/build; the full goal and D-594 stay active.[Complete original timing boundary](quality/home-query-reader-timing.md).
+
+### D-601 - Withdraw ledger text reuse and recover the original retirement report
+
+Bounded immutable Note/Payee reuse passes a four-shape host prerequisite and two owned
+emulator pairs, but the physical first pair is only 3129.0962 to 3120.7219ms (0.2676%),
+below the frozen 5% gate. Withdraw all product changes and five experimental cases;
+final new managed count is zero. The 69 selected executions include those five cases,
+not a larger retained suite. No phone reverse/rescue, shipping build or Main upgrade.
+Reference Core/Data shipping-byte identity is not reproduced; pair checks cannot replace
+D-543, and no shipping-equivalent performance acceptance is claimed.
+
+Fix the actual read-only observer's missing retirement phase, require its Comparison,
+and select only an already listening explicit ADB server (default 5038). Recover original
+PID11081's accepted report without repeating retirement; three bounded observer outcomes
+pass. Full empty independent-Main schema proof precedes original B1D5 restoration.
+Main24382/885f6df5/Home979/all141, caller actual English onboarding/all61/UIDCEDE/flags/
+absence/stopped=false and 14 settings/presence match; emulator/Main/caller/config also
+restore exactly. No financial/seed/key replay or private shipping Main DB/key read.
+Standard Clean removes 9148 registered files/2253169797 logical bytes; 18 new XMLs/
+714460bytes retire. Three further removal scopes are rejected before execution with
+`blocked by policy`; 6376 files/1413241028bytes remain without retry or alternate deletion.
+Protected evidence/shared aliases remain. The overall goal and D-594 execution order stay
+active; two-second, stability, security, remaining accessibility and external gates stay open.
+
+[Complete candidate rejection, input limits and observer repair](quality/withdrawn-ledger-text-reuse.md).

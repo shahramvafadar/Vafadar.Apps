@@ -2885,3 +2885,18 @@ Do not recreate a retired timed fixture, replay successful finance, restart shar
 ADB or touch a phone in another project's turn. Only owned hash-matched XML cleanup
 and the exact completed AVD stop are authorized by this finite cohort.
 [Current emulator lineage](../../src/Apps/Zanance/docs/quality/retained-notification-core-adoption.md).
+
+## D-601 - Observe accepted native retirement without replay
+
+The independent `eng/benchmarks/Zanance.AndroidHome/Read-ReviewReport.ps1` accepts
+`retire-home-read-blocks` only with the original comparison binding. Supply the existing
+Run, ProcessId, Comparison and a fresh output path; the native operation must already
+have been launched and completed under its own original source guards.
+
+`-AdbServerPort 5038` remains the default. When the approved physical transport belongs
+to another already listening local server, pass its explicit port together with
+`-PhysicalDevice -DeviceTransportId`. The reader refuses an absent listener rather than
+starting another shared server. Do not reconnect devices or replay accepted operations
+to repair an observer argument or recover missing report chunks.
+
+[Qualified recovery, refused inputs and preserved device state](../../src/Apps/Zanance/docs/quality/withdrawn-ledger-text-reuse.md).

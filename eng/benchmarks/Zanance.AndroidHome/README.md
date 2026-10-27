@@ -1285,3 +1285,21 @@ reader lifetime, and exclude all events outside the original publication markers
 An observation timeout preserves the same PID; an accepted case is never repeated to
 repair metadata. Respect create-new output and actual source/code/day identity.
 [Complete D-599 evidence, refused input and restoration](../../../src/Apps/Zanance/docs/quality/home-query-reader-timing.md).
+
+## D-601 - Recover the original retirement report on its existing server
+
+`Read-ReviewReport.ps1 -Phase retire-home-read-blocks` now requires the original Run,
+Comparison and ProcessId, like the original native operation. It only observes the
+already launched independent process; it does not retire a schema itself. Missing
+report/timeout is never a reason to replay retirement, startup, financial writes or
+successful native observations.
+
+`-AdbServerPort` defaults to 5038. For a physical transport on an already running 5037
+server, pass `-PhysicalDevice -DeviceTransportId <actual original transport> -AdbServerPort 5037`.
+The selected local server must already listen; the reader does not connect a new transport,
+start another absent server, or change the original device/PID/run/comparison/chunk and
+create-new output guards. Preserve a rejected invocation and recover the same process.
+The empty-Main retirement remains separately restricted by the original native UID/APK/
+schema/full-source proof; this reader change does not authorize another retirement scope.
+
+[Complete D-601 negative performance outcome and restoration](../../../src/Apps/Zanance/docs/quality/withdrawn-ledger-text-reuse.md).
