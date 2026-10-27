@@ -11048,3 +11048,15 @@ Protected evidence/shared aliases remain. The overall goal and D-594 execution o
 active; two-second, stability, security, remaining accessibility and external gates stay open.
 
 [Complete candidate rejection, input limits and observer repair](quality/withdrawn-ledger-text-reuse.md).
+
+### D-602 - Reserve Samsung without cross-chat coordination
+
+The owner reserves the phone fully for Zanance until explicitly changed; earlier Loyan
+turn/handoff requirements no longer require coordination or another availability question.
+Necessary low-risk actions remain autonomous under D-597, preserving original state/data and
+accepted-operation checkpoints. For an already authorized Zanance installation, select the
+specific `Do not send` / `Don't send` security-scanning option independently after verifying
+its current owned package/installer attempt. This reaffirms the per-install D-560 exception;
+other high-risk actions and genuine authentication retain their existing owner boundaries.
+No device command, installation, test or financial operation is needed to record this rule.
+The overall delivery goal and D-594's TalkBack execution order remain active.

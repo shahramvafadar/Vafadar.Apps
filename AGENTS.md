@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## Exclusive Samsung availability and Do not send installation prompt (owner, 2026-10-27, D-602)
+
+Until the owner explicitly changes this instruction, the Samsung phone is fully reserved for
+Zanance. No coordination or availability confirmation with the Loyan chat is required. This
+supersedes earlier cross-chat turn/handoff requirements for the current reservation. Continue
+necessary low-risk actions independently under D-597, preserving accounts, data, settings and
+accepted-operation checkpoints; genuinely high-risk actions remain owner decisions.
+
+For an already authorized Zanance installation, the owner explicitly permits dismissing the
+specific security scanning prompt by selecting its `Do not send` / `Don't send` option without
+another confirmation. Verify the prompt belongs to the current owned package and existing
+installer attempt; observe that attempt's result rather than repeating the installation.
+This reaffirms D-560's per-install exception, not global security changes, unrelated unsafe-app
+overrides or real authentication. No successful installation needs to be repeated to exercise it.
+
 ## Autonomous owned-emulator work and risk-based phone actions (owner, 2026-10-27, D-597)
 
 In the emulator owned by Zanance, perform whatever is necessary for the approved project work
