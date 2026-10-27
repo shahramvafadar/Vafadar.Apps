@@ -66,3 +66,23 @@ owner's explicit sound-only answer separately. A40-second capture may have sligh
 less than40 seconds of PCM. D590 acquires only the remaining German Home title;
 accepted category/financial operations are not repeated, and Persian speech remains
 open. See `src/Apps/Zanance/docs/quality/natural-german-reader-recording.md`.
+
+
+## Structurally guarded primary tabs and current deferral (D-593/D-594)
+
+Use only tab-explore/tab-activate for the four original read-only primary tabs.
+A caption is not command authority: Italian Cancel/Undo aliases are removed from
+legacy captions and the combined multilingual set. Primary operations additionally
+require all five original visible enabled FrameLayout peers in one contiguous
+LTR band inside the actual owner viewport, exactly one selected peer and an
+unselected/clickable requested destination with actual matching accessibility focus.
+The selected peer may omit its redundant click action, as the real reader does;
+this never permits an unclickable target. Copy only public Selected metadata.
+
+The current English primary navigation cohort is complete; native RTL geometry and
+new-clip intelligibility are not accepted. The owner now puts further TalkBack work
+last behind every other available task and parks Persian speech/engine preparation.
+Do not start a new cohort, recording or listening request, or chase the SDK question.
+Keep used packages, original audio/refusals and exact restoration records, including
+the explicit native drawing-order difference. See
+`src/Apps/Zanance/docs/quality/read-only-primary-tab-reader.md` and AGENTS.md D594.

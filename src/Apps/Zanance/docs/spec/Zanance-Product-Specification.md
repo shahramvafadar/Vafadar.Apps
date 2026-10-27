@@ -10201,3 +10201,38 @@ is rejected before process creation with blocked by policy,20files/422324bytes
 remain and no alternate deletion runs. Complete Home speed and broader gates stay
 open; no host result is a native/two-second acceptance.
 [Complete host eligibility result and cleanup boundary](../quality/rejected-tag-list-allocation.md).
+
+
+### D-593 - Bound the current read-only primary-tab reader cohort
+
+Add dedicated primary-tab operations and copied native Selected metadata only to
+the independent helper. Full five-peer/native-role/viewport/unique-selection guards
+reject financial-caption aliases; preserve the Italian Cancel/Undo collision and
+block ambiguous legacy captions.17 distinct new selected cases plus six affected
+existing category-resource cases pass. First native peer-clickability assumption
+refuses before a tab gesture; reproduce its failure, allow only the selected peer's
+missing redundant action, upgrade the fresh helper once and continue only the four
+unperformed Transactions/Plans/Insights/Home steps. Actual focus/selected/title
+observations pass; the accepted initial negative control is not replayed or rebound.
+Natural original recording exits0; human acceptance of the new clip is not claimed.
+Owner English Housing/selected acceptance applies only to historical clip8fed9094.
+Main22461/f748/Home979/UIDCEDE/permissions/EnglishLight, original14 settings/presence
+and caller match; strict141-node comparison preserves one drawing-order1-to2 delta,
+not byte equality. Retire only fresh10406, hash-clean3XML/155778bytes and standard
+Clean767files/220472438logical bytes. Extra build-root removal is rejected before
+execution;422files/18765916bytes remain without alternate deletion. Product code,
+financial writes/keys/voice choices and unrelated successful tests are not changed.
+[Complete current cohort, refusals and preservation](../quality/read-only-primary-tab-reader.md).
+
+
+### D-594 - Put further TalkBack last and park Persian speech preparation
+
+The owner considers current TalkBack testing sufficient for now. Finish only the
+active cohort's terminal restoration, owned cleanup and documentation. Further
+TalkBack tests/recordings/listening requests follow all other available backlog
+work; Persian spoken TalkBack has no current priority given no present Iran rollout
+plan and limited anticipated Persian-language usage in Europe. Park the proposed
+alternate-engine/SDK work without assuming approval or chasing its question. Keep
+existing Persian UI/features and completed evidence; this is an execution-order
+deferral, not full accessibility/release acceptance or a change to jurisdictions,
+financial behavior, accounts or publishing. Other work and the overall goal continue.

@@ -1422,3 +1422,16 @@ All public metadata and own XML receipts remain local; no engine-private traffic
 or whole-device network behavior is claimed audited. Fresh fixture retirement and
 exact Main/settings preservation are distinct from spoken-language acceptance.
 [Complete evidence and limits](quality/installed-speech-engine-metadata.md).
+
+
+### D-593/D-594 scoped reader evidence and deferral
+
+The existing independent reader adds only the original native tab Selected flag to
+bounded public owner-window metadata and uses distinct structurally guarded primary
+navigation commands. No application SDK/permission, Internet/microphone, private
+Main data/key access or voice download/selection is added. Original local playback
+stays unchanged/local; callbacks and focus are not human speech acceptance. Fresh
+helper10406 is retired and original14 setting values/presence are restored; the
+explicit one-attribute drawing-order delta is retained without claiming byte-exact
+public UI or private data equality. Further TalkBack and Persian engine work are
+now deferred by the owner; no new recording/listening request follows.

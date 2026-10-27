@@ -5,6 +5,7 @@
     <Compile Include="../../../../eng/benchmarks/Zanance.AndroidHome/LoadedColdShellPolicy.cs" Link="IndependentReview/LoadedColdShellPolicy.cs" />
     <Compile Include="../../../../eng/benchmarks/Zanance.PhysicalReaderGestures/PhysicalReaderPolicy.cs" Link="IndependentReview/PhysicalReaderPolicy.cs" />
     <Compile Include="../../../../eng/benchmarks/Zanance.PhysicalReaderGestures/PhysicalReaderCaptions.cs" Link="IndependentReview/PhysicalReaderCaptions.cs" />
+    <Compile Include="../../../../eng/benchmarks/Zanance.PhysicalReaderGestures/PhysicalReaderTabRow.cs" Link="IndependentReview/PhysicalReaderTabRow.cs" />
     <Compile Include="../FinancialSnapshotAssert.cs" Link="Infrastructure/FinancialSnapshotAssert.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Budget/BudgetFinancialProjection.cs" Link="Application/BudgetFinancialProjection.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Rates/DisplayUnitsViewModel.cs" Link="Application/DisplayUnitsViewModel.cs" />

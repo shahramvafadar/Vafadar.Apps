@@ -1,5 +1,12 @@
 # 05 – Delivery plan
 
+**Current owner order (D-594,2026-10-27):** do all other available backlog work
+before further TalkBack testing. Persian speech/alternate-engine preparation is
+parked with no current priority. Close only the active reader cohort's preservation,
+cleanup and records. Retain unresolved gates and existing Persian UI; continue the
+overall goal and non-TalkBack work without waiting for an engine decision.
+
+
 **Way of working:** one section at a time. The owner approves a section; it is built, tested, documented, committed
 and pushed; then exactly one next section is proposed. The owner authorized continuous delivery of ready planned
 work on 2026-10-08 (D-69), superseding the per-section wait for that scope. Unresolved owner decisions, licence

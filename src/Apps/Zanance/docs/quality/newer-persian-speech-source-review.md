@@ -2,7 +2,8 @@
 
 Status: the owner-cancelled1.52.0 attempt remains closed. A genuine newer upstream
 source candidate is identified and reviewed; no newer engine is built, installed,
-selected or acoustically accepted. Isolated build-tool scope/terms await the owner.
+selected or acoustically accepted. The build-tool proposal is now parked by the later owner priority decision D594;
+no installation/selection approval is inferred.
 
 ## Actual Samsung catalogue, without a download
 
@@ -95,3 +96,12 @@ separate D588 hosted repair check is not replaced with a local green claim.
 - [Pinned local data extraction](https://github.com/espeak-ng/espeak-ng/blob/ba90c8e9f440ad544f674a790bb5f53878b6ffc5/android/src/com/reecedunn/espeak/CheckVoiceData.java)
 - [Samsung catalogue navigation and separate download step](https://www.samsung.com/us/support/answer/ANS10003701/)
 - [Official SDK package metadata](https://dl.google.com/android/repository/repository2-3.xml)
+
+
+## Later execution order (D-594)
+
+The owner defers further TalkBack behind every other available task and gives
+Persian speech no current priority. Park this proposal and its question; do not
+install tools/voices, chase an answer or replace the cancelled legacy package.
+Record a later answer if received without overriding that execution order. Existing
+Persian UI/functional translations and the overall delivery goal remain unchanged.

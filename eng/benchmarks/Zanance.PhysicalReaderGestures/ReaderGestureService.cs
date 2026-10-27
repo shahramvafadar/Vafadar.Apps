@@ -23,6 +23,8 @@ public sealed class ReaderGestureService : AccessibilityService
     internal const string LogTag = "ZanancePhysicalReader";
     private static ReaderGestureService? _current;
     private readonly HashSet<string> _safeCaptions = new(StringComparer.Ordinal);
+    private readonly HashSet<string> _financialCaptions = new(StringComparer.Ordinal);
+    private readonly List<IReadOnlyList<string>> _shellTabs = [];
     private readonly Handler _handler = new(Looper.MainLooper!);
     private bool _busy;
     private int _commands;
@@ -55,6 +57,7 @@ public sealed class ReaderGestureService : AccessibilityService
             if (!PhysicalReaderPolicy.CurrentCallback(version, _bindingVersion, !_destroyed)) return;
             if (admitted is null) { Emit(new { Kind = "refused", Reason = "physical-owner-admission" }); return; }
             _admittedInstall = admitted; _ownerContext = context;
+            _shellTabs.Clear(); _safeCaptions.Clear(); _financialCaptions.Clear();
             foreach (var language in new[] { "en", "fa", "de", "es", "fr", "it" })
             {
                 var suffix = language == "en" ? "" : "." + language;
@@ -67,7 +70,11 @@ public sealed class ReaderGestureService : AccessibilityService
                             original.Add(key, value);
                 }
                 _safeCaptions.UnionWith(PhysicalReaderCaptions.FromOriginalResources(key => original[key]));
+                _shellTabs.Add(PhysicalReaderCaptions.ShellTabsFromOriginalResources(key => original[key]));
+                foreach (var key in new[] { "Common_Save", "Common_Delete", "Common_Undo" }) _financialCaptions.Add(original[key]);
             }
+            // A caption from another language cannot reintroduce a financial alias into the legacy gesture scope.
+            _safeCaptions.ExceptWith(_financialCaptions);
             _commands = 0; _connected = SystemClock.ElapsedRealtime(); _current = this;
             Emit(new { Kind = "ready", PhysicalTargetAdmitted = true, OwnerUid = PhysicalReaderPolicy.OwnerUid,
                 OwnerApk = PhysicalReaderPolicy.OwnerApkSha256, PublicDispatchGesture = true,
@@ -158,6 +165,16 @@ public sealed class ReaderGestureService : AccessibilityService
         using var path = new Android.Graphics.Path();
         var bounds = tree.Bounds;
         if (bounds[2] - bounds[0] < 200 || bounds[3] - bounds[1] < 200) throw new InvalidOperationException("Original viewport unavailable.");
+        var primaryTab = operation is "tab-explore" or "tab-activate";
+        if (primaryTab)
+        {
+            var expectedTab = intent.GetStringExtra("caption");
+            var candidates = nodes.Select(node => new ReaderTabNode(node.Description, node.Class, node.Visible,
+                node.Enabled, node.Clickable, node.Password, node.Selected, node.Bounds)).ToArray();
+            var minimum = PhysicalReaderPolicy.MinimumTargetPixels(Resources?.DisplayMetrics?.Density ?? float.NaN);
+            if (expectedTab is null || !_shellTabs.Any(captions => PhysicalReaderTabRow.Admits(candidates, captions, expectedTab, minimum, bounds)))
+                throw new InvalidOperationException("Original complete native tab row required.");
+        }
         var x = (bounds[0] + bounds[2]) / 2f; var y = (bounds[1] + bounds[3]) / 2f;
         using var gesture = new GestureDescription.Builder();
         using var secondPath = new Android.Graphics.Path();
@@ -167,12 +184,13 @@ public sealed class ReaderGestureService : AccessibilityService
             path.MoveTo(x - direction * 70, y); path.LineTo(x + direction * 70, y);
             gesture.AddStroke(new GestureDescription.StrokeDescription(path, 0, 180));
         }
-        else if (operation == "explore")
+        else if (operation is "explore" or "tab-explore")
         {
             var expected = intent.GetStringExtra("caption");
             var targets = nodes.Where(value => value.Visible && value.Enabled && value.Clickable && !value.Password
+                && (!primaryTab || value.Class == "android.widget.FrameLayout")
                 && (value.Description == expected || value.Text == expected)).ToArray();
-            if (expected is null || !_safeCaptions.Contains(expected) || targets.Length != 1)
+            if (expected is null || (!primaryTab && !_safeCaptions.Contains(expected)) || targets.Length != 1)
                 throw new InvalidOperationException("One original visible safe target is required for exploration.");
             var target = targets[0].Bounds;
             var minimum = PhysicalReaderPolicy.MinimumTargetPixels(Resources?.DisplayMetrics?.Density ?? float.NaN);
@@ -200,11 +218,12 @@ public sealed class ReaderGestureService : AccessibilityService
             gesture.AddStroke(new GestureDescription.StrokeDescription(path, 0, 350));
             gesture.AddStroke(new GestureDescription.StrokeDescription(secondPath, 0, 350));
         }
-        else if (operation == "activate")
+        else if (operation is "activate" or "tab-activate")
         {
             var expected = intent.GetStringExtra("caption");
-            if (expected is null || !_safeCaptions.Contains(expected) || focused.Length != 1
+            if (expected is null || (!primaryTab && !_safeCaptions.Contains(expected)) || focused.Length != 1
                 || focused[0].Password || !focused[0].Visible || !focused[0].Enabled
+                || (primaryTab && (focused[0].Class != "android.widget.FrameLayout" || focused[0].Selected))
                 || (focused[0].Description != expected && focused[0].Text != expected))
                 throw new InvalidOperationException("Exact original safe accessibility focus required before activation.");
             path.MoveTo(x, y);
@@ -282,7 +301,8 @@ public sealed class ReaderGestureService : AccessibilityService
         }
         return new Node(node.WindowId, node.ClassName?.ToString(), node.Password ? null : Text(node.TextFormatted),
             node.Password ? null : Text(node.ContentDescriptionFormatted), node.Password, node.VisibleToUser,
-            node.Enabled, node.AccessibilityFocused, node.Clickable, node.Scrollable, [bounds.Left, bounds.Top, bounds.Right, bounds.Bottom], []);
+            node.Enabled, node.AccessibilityFocused, node.Clickable, node.Scrollable, node.Selected,
+            [bounds.Left, bounds.Top, bounds.Right, bounds.Bottom], []);
     }
 
     /// <summary>Enumerates the copied original tree without holding native node handles.</summary>
@@ -308,7 +328,8 @@ public sealed class ReaderGestureService : AccessibilityService
 
     /// <summary>Immutable original native metadata with explicit redaction and focus.</summary>
     private sealed record Node(int WindowId, string? Class, string? Text, string? Description, bool Password,
-        bool Visible, bool Enabled, bool AccessibilityFocused, bool Clickable, bool Scrollable, int[] Bounds, IReadOnlyList<Node> Children);
+        bool Visible, bool Enabled, bool AccessibilityFocused, bool Clickable, bool Scrollable, bool Selected,
+        int[] Bounds, IReadOnlyList<Node> Children);
 }
 
 /// <summary>Receives commands only from senders holding Android's privileged dump permission.</summary>

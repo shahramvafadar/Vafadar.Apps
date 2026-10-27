@@ -32,8 +32,13 @@ public sealed class PhysicalReaderCategoryCaptionTests
         Assert.Contains(housing, captions);
         Assert.Contains(string.Format(culture, Read("Common_ChipSelected"), food), captions);
         Assert.Contains(string.Format(culture, Read("Common_ChipSelected"), housing), captions);
-        Assert.Contains(Read("Common_Cancel"), captions);
+        var cancel = Read("Common_Cancel");
+        if (new[] { "Common_Save", "Common_Delete", "Common_Undo" }.Any(key => Read(key) == cancel))
+            Assert.DoesNotContain(cancel, captions);
+        else Assert.Contains(cancel, captions);
         Assert.DoesNotContain(Read("Common_Save"), captions);
+        Assert.DoesNotContain(Read("Common_Delete"), captions);
+        Assert.DoesNotContain(Read("Common_Undo"), captions);
         Assert.DoesNotContain("arbitrary account or command", captions);
     }
 

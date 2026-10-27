@@ -2,7 +2,7 @@ using System.Globalization;
 
 namespace Vafadar.Zanance.PhysicalReaderGestures;
 
-/// <summary>D-579: finite original nonfinancial captions, including the changed category selection state.</summary>
+/// <summary>Finite original captions with distinct category and structurally guarded primary-tab scopes (D-593).</summary>
 internal static class PhysicalReaderCaptions
 {
     /// <summary>Builds one language's reviewed whitelist from the original bundled application/shared resources.</summary>
@@ -26,7 +26,23 @@ internal static class PhysicalReaderCaptions
             result.Add(name);
             result.Add(selected);
         }
+        // D-593: for example, Italian Cancel and Undo share a caption. Refuse the alias rather than guessing its command.
+        foreach (var key in new[] { "Common_Save", "Common_Delete", "Common_Undo" }) result.Remove(Caption(read(key)));
         return result;
+    }
+
+    /// <summary>Names the four read-only primary destinations, never a translated financial action.</summary>
+    internal static IReadOnlySet<string> PrimaryTabsFromOriginalResources(Func<string, string> read) =>
+        ShellTabsFromOriginalResources(read).Take(4).ToHashSet(StringComparer.Ordinal);
+
+    /// <summary>Retains the original five-tab shell order for native role/row admission, not arbitrary caption matching.</summary>
+    internal static IReadOnlyList<string> ShellTabsFromOriginalResources(Func<string, string> read)
+    {
+        var tabs = new[] { "Tab_Home", "Tab_Transactions", "Tab_Plans", "Tab_Insights", "Tab_More" }
+            .Select(key => Caption(read(key))).ToArray();
+        if (tabs.Distinct(StringComparer.Ordinal).Count() != 5)
+            throw new InvalidOperationException("Five distinct original shell tabs are required.");
+        return tabs;
     }
 
     /// <summary>Rejects absent or unbounded captions; no user-provided name or arbitrary operation is admitted.</summary>

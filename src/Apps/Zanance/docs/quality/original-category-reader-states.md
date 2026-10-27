@@ -101,3 +101,13 @@ The protected D-567 real-time reboot/idle cohort, original future requests and t
 overall goal remain active. General spoken accessibility/workflows, stability/ANR/
 crash, performance/two-second, real authentication, iOS/provider/Store/public service
 and release acceptance remain unfinished; this finite reader cohort does not close them.
+
+
+## Later direct English listening answer (D-593)
+
+The owner explicitly confirms Housing and selected are both clear in original
+clip8fed9094/8581232 bytes from category-en-light-04. This accepts those words in
+that historical510a recording only. It does not turn the separate machine decode,
+other clip, current APK, Persian or every utterance into human acceptance. D594
+subsequently defers further TalkBack work and listening requests behind all other
+available work; keep this existing evidence without replay.

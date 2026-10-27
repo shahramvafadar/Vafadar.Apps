@@ -34,6 +34,7 @@ internal static class PhysicalReaderPolicy
         "Original application window is not focused." => "owner-window-not-focused",
         "Stale original window." => "stale-owner-window",
         "Original viewport unavailable." => "owner-viewport-unavailable",
+        "Original complete native tab row required." => "native-tab-row-required",
         "One original visible safe target is required for exploration." => "safe-target-not-unique",
         "Original target must be fully inside its owned viewport." => "target-outside-owner-viewport",
         "Original safe destination must belong to this tree." => "safe-destination-missing",

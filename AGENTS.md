@@ -1,5 +1,22 @@
 # AGENTS.md – working rules for this repository
 
+## Defer further TalkBack work behind all other available work (owner, 2026-10-27, D-594)
+
+The owner considers the TalkBack testing already sufficient for now. Finish only the active
+cohort's terminal observation, exact restoration, owned-output cleanup and documentation;
+do not start another TalkBack cohort, recording or listening request while any other ready
+backlog work remains. Further TalkBack testing has the lowest execution priority. Preserve
+completed evidence and unresolved findings; this is a scheduling deferral, not full accessibility
+acceptance or removal of release requirements. Other Android, performance, stability, security
+and non-TalkBack accessibility work retain their own priorities and authorizations.
+
+Persian spoken TalkBack has no current priority: the owner has no present delivery plan for Iran
+and expects limited Persian-language usage in Europe. Park the proposed alternate-engine/SDK
+preparation and do not chase its pending approval or install/select a voice. Keep existing Persian
+UI translations and functionality; do not silently remove language support or change jurisdictions,
+privacy, accounts, financial behavior or publication policy. A later approval answer may be recorded
+without overriding this newer execution order. The overall delivery goal remains active.
+
 ## Temporary standalone Persian speech-engine trial (owner, 2026-10-27, D-587)
 
 After Android blocks the reviewed legacy package, the owner explicitly chooses to cancel that
