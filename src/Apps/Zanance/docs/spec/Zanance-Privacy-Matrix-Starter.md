@@ -1378,3 +1378,16 @@ and all compilation inputs are bounded/digest-verified; failed evidence is prese
 All completed fresh fixture UIDs are retired and owned XMLs hash-cleaned; the failed
 original D567 outcome remains distinct from corrected comparison results.
 [Complete source, native evidence and limits](../quality/reboot-paired-delivery-diagnosis.md).
+
+### D-586 - Qualification-only public speech metadata
+
+Product flows, SDKs and permissions are unchanged. An isolated offline package
+with no requested permission queries public voice/language/default-engine metadata;
+it requests no speech, voice data, microphone, upload, account or private file.
+The public-client/private-reader engine routes differ and are reported separately.
+Owner-approved read-only speech-language UI inspection changes no selected option;
+platform normalization of an absent default-engine key is detected and restored.
+All public metadata and own XML receipts remain local; no engine-private traffic
+or whole-device network behavior is claimed audited. Fresh fixture retirement and
+exact Main/settings preservation are distinct from spoken-language acceptance.
+[Complete evidence and limits](../quality/installed-speech-engine-metadata.md).

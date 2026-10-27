@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <SupportedOSPlatformVersion>36.0</SupportedOSPlatformVersion>
+    <OutputType>Exe</OutputType>
+    <ApplicationId>pro.vafadar.zanance.ttsinventoryreview</ApplicationId>
+    <ApplicationTitle>Zanance local speech metadata review</ApplicationTitle>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
+    <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <RunAOTCompilation>true</RunAOTCompilation>
+    <AndroidPackageFormats>apk</AndroidPackageFormats>
+    <AndroidKeyStore>false</AndroidKeyStore>
+    <AndroidManifest>AndroidManifest.xml</AndroidManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../Zanance.PhysicalReaderGestures/PhysicalReaderPolicy.cs" Link="Admission/PhysicalReaderPolicy.cs" />
+    <Compile Include="../Zanance.PhysicalReaderGestures/PhysicalReaderTarget.cs" Link="Admission/PhysicalReaderTarget.cs" />
+  </ItemGroup>
+  <Target Name="SelectServicedInventoryRuntime" BeforeTargets="ProcessFrameworkReferences">
+    <ItemGroup>
+      <FrameworkReference Condition="'%(FrameworkReference.Identity)' == 'Microsoft.NETCore.App'">
+        <RuntimeFrameworkVersion>$(VafadarSecurityRuntimeVersion)</RuntimeFrameworkVersion>
+      </FrameworkReference>
+    </ItemGroup>
+  </Target>
+  <Import Project="$(RepoRoot)eng/AndroidAotRuntime.targets" />
+</Project>

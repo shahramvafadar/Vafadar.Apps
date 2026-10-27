@@ -1,5 +1,15 @@
 # AGENTS.md – working rules for this repository
 
+## Read-only Samsung speech-language inspection (owner, 2026-10-27, D-586)
+
+The owner explicitly permits opening the system text-to-speech page and navigating only to
+Samsung's speech-language list to inspect it, then returning to Zanance. This is a narrow
+foreground-input exception for that read-only inspection. Do not select a language, voice or
+engine, download voice data, change a setting, grant a permission or enter authentication.
+Verify the actual system-settings/Samsung speech window and its package UID before navigation,
+preserve exact prior settings and Main state, and return through the normal owned launcher.
+This permission does not qualify Persian pronunciation or authorize later voice changes.
+
 ## Temporary scoped Samsung reader qualification (owner, 2026-10-27, D-572)
 
 The owner directed uninterrupted continuation after the concrete temporary physical TalkBack

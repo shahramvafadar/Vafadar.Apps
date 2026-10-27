@@ -10074,3 +10074,26 @@ Main/Home/settings identity, helper retirement and cleanup have independent proo
 General speech/pronunciation and the unexplained earlier loss, stability/speed,
 iOS/provider/Store/public release gates and the overall goal remain open.
 [Complete native evidence, failures and limits](../quality/current-candidate-localized-reader.md).
+
+### D-586 - Distinguish public speech metadata from the actual Samsung reader
+
+An independent no-permission/no-Activity/no-service signed package performs one
+metadata request without voice selection, synthesis or financial commands. Public
+Google reports473 voices, Persian unsupported/no Persian entry and English default;
+actual approved TalkBackPID13984 instead binds private Samsung SMT. Do not confuse
+these engine routes. The owner authorizes read-only system speech-language pages:
+Samsung3.5.02.16 has14 currently exposed language/region entries, no Persian, and
+Use system language selected with actual en-US. No language/voice/engine or download
+entry is selected. Preserve API36 deprecation and copied-verifier refusals, plus
+an empty-service-list restoration error corrected without reader reactivation.
+Opening system settings normalizes an absent default-engine key; restore original
+absence rather than claiming no side effect. Main18235/f748/Home979/all141/UIDCEDE/
+permissions/EnglishLight, all14 values/presence and original caller are exact.
+Only fresh inventoryUID10402 is retired. Standard Clean removes70 registered files/
+12845517 logical bytes and nine hash-matched XMLs/262149 bytes. Additional retirement
+of the new residual root is rejected before execution;88 files/5006367 bytes remain,
+with no alternate deletion. No new managed-test count, shipping rebuild or financial
+replay. Persian speech needs a supported engine/voice and separate actual-reader
+qualification; current permission is read-only, not installation/selection approval.
+General A11Y/stability/speed/iOS/provider/Store/public release and the goal stay open.
+[Complete engine-route evidence, cleanup and limits](../quality/installed-speech-engine-metadata.md).

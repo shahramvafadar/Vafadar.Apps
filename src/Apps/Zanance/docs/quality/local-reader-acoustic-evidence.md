@@ -85,3 +85,13 @@ D571 residual-root refusal, and neither is claimed resolved. No host free-space 
 
 No new product-test count, application release, public service/provider/Store/iOS acceptance,
 whole-Home two-second result or general ANR/crash correction is delivered by this diagnostic batch.
+
+## Later installed-engine route inspection (D-586)
+
+A current public metadata client uses Google, but the actual privileged Samsung
+reader binds private Samsung SMT. Owner-approved read-only Settings inspection
+finds14 currently exposed language/region entries without Persian, with Use system
+language and actual en-US. Preserve this environment finding independently of the
+old clip; do not infer exact historical acoustic alignment or install/select an
+alternate engine without authorization. Main and all original settings are restored.
+[Current route/language evidence and limits](installed-speech-engine-metadata.md).
