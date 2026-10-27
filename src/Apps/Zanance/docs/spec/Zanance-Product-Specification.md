@@ -1117,7 +1117,7 @@ The owner has approved the main product decisions. The following were resolved t
 | Reviewing automatic entries | Preserve this document's posted/confirmed model and choose appropriate UX. | Automatic and imported entries are Unreviewed; "Needs review" chips and filters on Home, Plans and Transactions; "Mark as reviewed" in the entry details. |
 | Missing-rate display and rounding rules | Consistent, explainable behavior; do not change original amounts. | Latest manual rate on or before the date, inverse rates allowed, half away from zero to the minor unit; combined totals only when all rates exist, otherwise "incomplete". |
 | Documentation location | Follow repository conventions; Section 29 paths/deliverables are suggestions. | `src/Apps/Zanance/docs`; this specification is kept in `src/Apps/Zanance/docs/spec`. |
-| Free/Plus/Pro, pricing and online services | Follow D-61 and the canonical ZCR plan; unresolved quota, provider, cost and sale choices stay gated. | Plan design approved; billing, quotas, sync and shared services are not implemented. No ads/application analytics; configured Cloud builds contain authentication/storage and native SDKs documented in the SDK review. |
+| Free/Plus/Pro, pricing and online services | Follow D-61 and the canonical ZCR plan; unresolved quota, provider, cost and sale choices stay gated. | Local entitlement/quota, Android billing verification, personal sync and E2EE household implementations are qualified only at their recorded scopes (D-292/D-294/D-295). Commercial enforcement and real purchases are inactive; genuine store/provider/public-hosting and platform acceptance remain open. No ads/application analytics; selected online editions and native SDKs follow the build-specific SDK review. |
 
 **RISK-01:** The largest risk is turning Phase 1 into an endless project. Mitigation: explicit completion criteria and delivery of usable vertical slices.
 
@@ -10390,3 +10390,14 @@ SEC-07 actual OEM/device-transfer and iOS gates stay open. Overall delivery rema
 active; further TalkBack stays last and Persian speech parked under D-594.
 
 [Complete native evidence and limitations](../quality/android-live-backup-eligibility.md).
+
+### D-604 - Align current optional-service and backup disclosure inventories
+
+Correct the obsolete absent-feature, active Android OS-backup and cloud-only data-flow
+claims against current source. Personal service-readable sync, household payload E2EE,
+aggregate-analysis prerequisites, explicitly fetched ECB references and inactive real
+purchases retain distinct boundaries. Both app/starter flow rows agree; old SDK/build
+versions remain explicitly historical. Submission answers and the public policy stay
+drafts requiring the actual selected artifact/processor/platform acceptance. No product
+change, new managed test, build, native/financial replay, publication or account action.
+[Source-backed corrections and document verification](../quality/current-privacy-inventory-alignment.md).

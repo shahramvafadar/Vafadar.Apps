@@ -28,11 +28,17 @@ The actual package MIT/Google SDK terms and service Apache2.0 notices are bundle
 no rights to Zanance source, which remains all rights reserved. See the exact current artifacts/evidence in
 src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/12-billing-delivery.md.
 
-Reviewed 2026-10-08 against the current application sources, resolved Android libraries and complete signed Release
-APKs. This is the current local/cloud-backup baseline. Billing, identity backend, sync, AI and bank SDKs are absent;
-repeat the review before any is introduced. Source checks do not prove native runtime traffic or store acceptance.
+Historical 2026-10-08 inventory: the package versions and original Offline/Cloud artifacts below describe that
+reviewed baseline, not the complete current optional-service graph. D-292/D-294/D-295/D-298/D-389 add locally
+implemented personal/household, billing, aggregate-analysis and ECB boundaries. The current app privacy matrix
+and D-604 reconciliation distinguish their actual activation and encryption scopes. Refresh exact dependency,
+permission, endpoint and runtime-traffic evidence for the selected submission artifact; do not infer absence
+from an older inventory or qualification from source alone.
 
-## Build boundaries
+[D-604 current inventory reconciliation](../../src/Apps/Zanance/docs/quality/current-privacy-inventory-alignment.md)
+records the inspected implementation boundaries without repeating native or financial cohorts.
+
+## Reviewed baseline build boundaries (2026-10-08)
 
 | Variant/platform | Network boundary | Disclosure / evidence |
 |---|---|---|
@@ -46,7 +52,7 @@ application configuration, preserves the owner's local configuration and leaves 
 Portable backup password protection stays optional under D-62. An unprotected file is readable, even inside a
 connected cloud account; HTTPS and portable-file encryption are different boundaries.
 
-## Current SDK inventory
+## Historical 2026-10-08 SDK inventory
 
 Versions below are resolved .NET wrapper packages, not an assertion of the latest native Maven version.
 
@@ -111,15 +117,20 @@ separate from these PowerShell cases. No app UI, financial schema, production pr
 ## Store declarations and remaining gates
 
 * Android Offline: verify the exact submitted Release artifact has no INTERNET. OS backups and user shares are
-  separate flows; OD-10 is still open. Never reuse the Cloud declaration blindly.
+  separate flows; OD-10 is settled and D-263 implements Android exclusions. OEM/device-transfer and iOS
+  acceptance remain open; D-603 current framework ineligibility is not payload evidence. Never reuse another
+  edition's declaration blindly.
 * Android Cloud: declare user-initiated backup/account flows and applicable ML Kit SDK diagnostics under current Play
   definitions. Password is optional; transit encryption does not imply password-protected files. No developer server,
   application advertising, tracking or crash-reporting service is added.
 * iOS: current source manifest declares no tracking and the framework required-reason APIs. It does not prove cloud
   backup or third-party SDK disclosure is complete. Review all merged SDK privacy manifests in the signed build;
   Apple console submissions and owner/account/signing actions remain release gates.
-* Billing/sync/AI: no current runtime SDK evidence exists because these features are not implemented. Each section
-  must repeat the dependency/permission/endpoint review and update this matrix before enabling its online build.
+* Optional services: local implementations exist. Android billing has the separate D-295 SDK graph; personal
+  sync is service-readable, household finance uses E2EE with visible membership metadata, and aggregate analysis
+  has no configured production provider. ECB daily references are explicitly fetched through the service. Exact
+  selected-artifact traffic, real store/provider acceptance and final processor/retention declarations remain
+  gates. These are not absent features merely because their public/commercial activation is unfinished.
 * Physical device/native traffic and real OAuth refresh/revoke/restore acceptance remain QA-02/QA-07. No new sign-in,
   purchase, provider account or production service was performed for this audit.
 

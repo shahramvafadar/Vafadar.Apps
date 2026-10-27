@@ -23,7 +23,8 @@ Data safety, Apple App Privacy) straightforward.
 ## Process
 
 * Any change that collects, stores, sends or shares a new kind of data (or adds a permission or SDK) updates the
-  privacy matrix in the same pull request (the PR template asks for it).
+  privacy matrix in the same pull request (the PR template asks for it). Distinguish locally implemented optional
+  services from public activation, and personal service-readable sync from household E2EE.
 * Before each store release, compare the matrix with the Play Data safety form and the App Store privacy details.
 * The policy is published on `vafadar.pro` (e.g. GitHub Pages or the website of the domain) at a stable URL that is
   entered in the store listings and in the Google OAuth consent screen.
@@ -33,4 +34,5 @@ Data safety, Apple App Privacy) straightforward.
 
 
 [Zanance SDK/build review](zanance-sdk-review.md) records the current online/offline permission and diagnostics
-boundaries; repeat it on SDK changes and before adding billing/sync providers.
+boundaries. Its dated baseline inventory is historical; use the current app matrix for optional services and
+refresh the exact selected artifact before activation or submission.

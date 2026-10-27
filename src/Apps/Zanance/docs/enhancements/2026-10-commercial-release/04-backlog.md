@@ -48,7 +48,7 @@ priority/order descriptions below.
 | Id | Title | Wave | Prio | Size | State | Depends on |
 |---|---|---|---|---|---|---|
 | ZCR-GOV-01 | Audit, plan matrix, architecture, backlog and delivery plan | 0 | P1 | M | Done | – |
-| ZCR-GOV-02 | Refresh spec §31, AGENTS.md §12 and outdated statements | 0/2 | P2 | S | Done (D-88; external confirmation/acceptance still open) | GOV-01 |
+| ZCR-GOV-02 | Refresh spec §31, AGENTS.md §12 and outdated statements | 0/2 | P2 | S | Done (D-88; D-604 corrects current optional-service/backup/privacy contradictions; external confirmation/acceptance still open) | GOV-01 |
 | ZCR-SEC-01 | Threat model and encryption decision record + feasibility proof | 1 | P1 | M | In progress (D-264 Android/Windows official Community integration locally verified; iOS/external gates remain) | OD-04 approved |
 | ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | In progress (D-264 Android/Windows main encryption locally verified; D-521 original schema/typed-row snapshot checks on actual x86_64 API24/4096 and API35/16384 qualified in separate UIDs; iOS adoption and wider device gates remain) | SEC-01 |
 | ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-264 Android Keystore/Windows DPAPI per-generation keys locally verified; D-483 actual original-adapter generation/recovered security level1, cold/binding/tamper/authorized retirement on Samsung qualified in a separate UID; D-520 original create/cold/tamper/retirement on actual API24/4096 and API35/16384 x86_64 qualified; D-535 reopens four retained independent emulator sources after KEEP_DATA maintenance with existing keys and full source/control equality; Main-key attestation, authentication, iOS/other device gates remain) | SEC-01 |
@@ -58,7 +58,7 @@ priority/order descriptions below.
 | ZCR-SEC-07 | Final OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | In progress (D-263 packaged policy; D-603 live framework rejects both owned packages on emulator/Samsung with unchanged settings; actual OEM/device-transfer and iOS acceptance remain) | OD-10 approved |
 | ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | In progress (D-264 local Android/Windows; D-312 actual Samsung safety recovery and profile isolation verified; broader device/iOS gates remain) | SEC-03 |
 | ZCR-SEC-10 | Owner-approved PIN, screenshot choice and ownership clarification (D-63) | Maintenance | P1 | M | Done | Owner request 2026-10-08 |
-| ZCR-SEC-09 | Network/SDK review of online builds; privacy texts | 1/3 | P2 | S | Done (current baseline; repeat for future SDKs) | – |
+| ZCR-SEC-09 | Network/SDK review of online builds; privacy texts | 1/3 | P2 | S | Baseline engineering review recorded; D-604 aligns current source/flow inventory and labels old package artifacts historical; exact selected-release traffic, processor and Store declarations remain gates | – |
 | ZCR-LOC-01 | Release bug list from the owner's phone tests | 2 | P1 | M | Proposed | owner reports |
 | ZCR-LOC-02 | Goal contribution reminders (ZEX-S0306) | 2 | P2 | M | Done (local/emulator; D-488 lifecycle, D-491 calendar/source queues, D-492 ordinary cold tap and D-493 grouped tap/restored-profile old-file refusal qualified; D-580 corrects proven queued broadcast cancellation with fresh four-request native delivery; original D-567 timed window remains failed and broader punctuality/Doze/OEM/platform gates remain) | – |
 | ZCR-LOC-03 | Optional period review reminder (ZEX-S0610) | 2 | P2 | S | Done (local/emulator; D-489 physical three-calendar queues/progress/privacy and D-492 ordinary unlocked cold current-review content tap qualified; D-580 corrects proven queued broadcast cancellation with fresh four-request native delivery; original D-567 timed window remains failed and broader punctuality/Doze/OEM/platform gates remain) | – |
@@ -6941,3 +6941,14 @@ SEC-07 actual OEM/device-transfer and iOS gates stay open. Overall delivery rema
 active; further TalkBack stays last and Persian speech parked under D-594.
 
 [Complete native evidence and limitations](../../quality/android-live-backup-eligibility.md).
+
+### D-604 - Align current optional-service and backup disclosure inventories
+
+Correct the obsolete absent-feature, active Android OS-backup and cloud-only data-flow
+claims against current source. Personal service-readable sync, household payload E2EE,
+aggregate-analysis prerequisites, explicitly fetched ECB references and inactive real
+purchases retain distinct boundaries. Both app/starter flow rows agree; old SDK/build
+versions remain explicitly historical. Submission answers and the public policy stay
+drafts requiring the actual selected artifact/processor/platform acceptance. No product
+change, new managed test, build, native/financial replay, publication or account action.
+[Source-backed corrections and document verification](../../quality/current-privacy-inventory-alignment.md).

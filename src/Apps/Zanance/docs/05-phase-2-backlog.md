@@ -4511,3 +4511,14 @@ SEC-07 actual OEM/device-transfer and iOS gates stay open. Overall delivery rema
 active; further TalkBack stays last and Persian speech parked under D-594.
 
 [Complete native evidence and limitations](quality/android-live-backup-eligibility.md).
+
+### D-604 - Align current optional-service and backup disclosure inventories
+
+Correct the obsolete absent-feature, active Android OS-backup and cloud-only data-flow
+claims against current source. Personal service-readable sync, household payload E2EE,
+aggregate-analysis prerequisites, explicitly fetched ECB references and inactive real
+purchases retain distinct boundaries. Both app/starter flow rows agree; old SDK/build
+versions remain explicitly historical. Submission answers and the public policy stay
+drafts requiring the actual selected artifact/processor/platform acceptance. No product
+change, new managed test, build, native/financial replay, publication or account action.
+[Source-backed corrections and document verification](quality/current-privacy-inventory-alignment.md).

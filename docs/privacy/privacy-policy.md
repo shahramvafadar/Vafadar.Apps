@@ -14,7 +14,7 @@ This policy covers the apps published by Shahram Vafadar ("I", "me") under the n
 ## Summary
 
 * Your data is stored **on your device**.
-* Local-only use keeps finance on the device. Optional identity, encrypted synchronization/sharing, purchase
+* Local-only use keeps finance on the device. Optional identity, synchronization/sharing, purchase
   verification and explicitly consented service features have separate online data flows described below.
   The current service is qualified locally; its public activation and final processor declarations are pending.
   Cloud-backup builds can also access your own Google Drive or OneDrive. Google ML Kit diagnostics are described below.
@@ -133,7 +133,10 @@ Questions about privacy: _privacy@vafadar.pro_ (to be set up), or open an issue 
 The optional service can retain identity/account metadata, device/session and purchase-verification metadata,
 plus encrypted synchronization/sharing objects. Disclosed optional analysis has its own explicit consent;
 transport encryption does not make an intentionally submitted analysis packet opaque to its recipient.
-Application-layer encrypted finance and device/private keys remain separate from TLS protection.
+Personal synchronization uses HTTPS and server-side protection; the selected service can process those
+financial records and attachments, so it is not end-to-end encrypted. Household financial payloads use
+application-layer E2EE; the service can still observe membership, timing and ciphertext-size metadata.
+Device/private keys remain separate from TLS protection. A recipient can retain previously downloaded data.
 
 The approved hosting path uses Cloudflare Tunnel on the current machine. Cloudflare terminates public TLS
 and can process visitor IP, request/routing metadata and identity request plaintext. Its role is service
