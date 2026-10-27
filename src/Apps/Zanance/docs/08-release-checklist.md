@@ -4258,3 +4258,12 @@ remaining A11Y issue. No unrelated successful suite or financial command is repl
 
 [Runtime source, refusals and retirement](quality/coreclr-original-ui-feasibility.md).
 [Original Accounts correction and actual Mono adoption](quality/retained-account-overview-navigation.md).
+
+### D-578 - Scoped category accessibility correction
+
+Original native category-state descriptions are qualified in six contexts on signed
+offline510a3197 after zero-warning Windows/Android builds. Source inputs, actual
+financial/native bytes and1422 resources are checked; the no-reset Main adoption
+and original public Home/settings/caller restoration pass. This does not complete
+spoken accessibility, stability/performance, iOS/provider/Store or product release.
+[Evidence, retained refusals and cleanup limits](quality/category-selection-semantics.md).

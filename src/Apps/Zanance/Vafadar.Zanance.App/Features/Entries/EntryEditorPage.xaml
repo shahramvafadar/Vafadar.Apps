@@ -157,7 +157,7 @@
                                         </Border>
                                         <Button Style="{StaticResource OverlayButton}" CornerRadius="22"
                                                 Command="{Binding SelectCategoryCommand, Source={RelativeSource AncestorType={x:Type local:EntryEditorViewModel}}, x:DataType=local:EntryEditorViewModel}"
-                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" />
+                                                CommandParameter="{Binding .}" SemanticProperties.Description="{Binding AccessibilityName}" />
                                     </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>

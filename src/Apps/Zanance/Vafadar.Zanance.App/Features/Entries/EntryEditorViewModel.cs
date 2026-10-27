@@ -48,8 +48,13 @@ public sealed partial class CategoryChoice(Guid id, string name, Symbol icon, Co
     /// <summary>Gets the chip background: the light category colour when selected.</summary>
     public Color Fill => IsSelected ? Background : Presentation.Palette.CardBackground;
 
+    /// <summary>Gets the original category name with the shared localized selection announcement.</summary>
+    public string AccessibilityName => IsSelected
+        ? Translator.Instance.Format("Common_ChipSelected", Name)
+        : Name;
+
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(Outline), nameof(Fill))]
+    [NotifyPropertyChangedFor(nameof(Outline), nameof(Fill), nameof(AccessibilityName))]
     public partial bool IsSelected { get; set; }
 }
 

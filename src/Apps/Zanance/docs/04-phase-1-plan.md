@@ -1761,3 +1761,12 @@ remaining A11Y issue. No unrelated successful suite or financial command is repl
 
 [Runtime source, refusals and retirement](quality/coreclr-original-ui-feasibility.md).
 [Original Accounts correction and actual Mono adoption](quality/retained-account-overview-navigation.md).
+
+### D-578 - Original category-state maintenance
+
+The entry category's native semantic caption now reflects original selection in the
+existing shared translations. Strict builds and24 changed native states in six
+contexts pass, without financial Save or old-suite replay. English/Light, Home979,
+all141 public attributes and original system/package state are restored. Broader
+accessibility, stability and release gates remain open.
+[Scoped evidence](quality/category-selection-semantics.md).

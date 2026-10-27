@@ -4123,3 +4123,10 @@ remaining A11Y issue. No unrelated successful suite or financial command is repl
 
 [Runtime source, refusals and retirement](quality/coreclr-original-ui-feasibility.md).
 [Original Accounts correction and actual Mono adoption](quality/retained-account-overview-navigation.md).
+
+### D-578 - Original category selection caption
+
+The observed missing native selected-state caption is corrected and qualified in
+six original language/theme contexts, without financial writes. The canonical
+commercial backlog retains overall A11Y/stability/platform/external gates.
+[Scoped correction](quality/category-selection-semantics.md).

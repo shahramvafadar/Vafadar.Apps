@@ -9951,3 +9951,16 @@ remaining A11Y issue. No unrelated successful suite or financial command is repl
 
 [Runtime source, refusals and retirement](../quality/coreclr-original-ui-feasibility.md).
 [Original Accounts correction and actual Mono adoption](../quality/retained-account-overview-navigation.md).
+
+### D-578 - Original category native selection semantics
+
+The entry editor's existing category buttons now use the shared translated selected
+caption and update it with original selection changes. Visible labels/targets and
+financial behavior are unchanged.24 native states in six en/fa/de Light/Dark
+contexts pass without amount input or Save; strict Windows/full signed offline
+Android builds pass and original financial/native/resource bytes remain equal.
+Main510a3197/22604/Home979/all141 public attributes, original English/Light/system
+settings and caller are preserved. Native observations add no managed tests.
+Complete spoken accessibility, general stability/two-second, other platforms and
+external release gates remain open; D567 and the delivery goal remain active.
+[Complete scoped report](../quality/category-selection-semantics.md).

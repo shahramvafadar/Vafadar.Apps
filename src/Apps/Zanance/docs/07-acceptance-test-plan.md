@@ -7146,3 +7146,15 @@ remaining A11Y issue. No unrelated successful suite or financial command is repl
 
 [Runtime source, refusals and retirement](quality/coreclr-original-ui-feasibility.md).
 [Original Accounts correction and actual Mono adoption](quality/retained-account-overview-navigation.md).
+
+### D-578 - Original entry-category native state
+
+Passed on the complete signed Mono candidate510a3197: en/fa/de x Light/Dark, each
+Food selected, Housing exclusively selected, Food selected again and Food deselected.
+All24 native captions and unchanged visible names pass. Original Cancel returns
+without amount/title/Save; no financial preparation or accepted command is replayed.
+Main22604/Home979/all141 public attributes, English/Light, original timeout/settings
+and original caller metadata/process absence are restored. Covered-frame, observer
+and incidental caller top-activity refusals remain. Managed test count unchanged;
+intelligible TalkBack speech and the whole accessibility pass remain open.
+[Full evidence and limits](quality/category-selection-semantics.md).

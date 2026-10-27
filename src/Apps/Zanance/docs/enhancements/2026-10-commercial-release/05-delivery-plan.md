@@ -4982,3 +4982,21 @@ Main, preserving original UID/CEDE/permission flags/all120 public states/zero ba
 and stopped compatible caller. Only two owned XMLs are removed and the owned AVD stops. Keep896e
 as current emulator Main,99ee as historical baseline. No previous successful cohort/financial
 action repeats. Physical original-caller restore/handback and later Main adoption remain pending.
+
+### Current finite delivery checkpoint through D-578
+
+D576 experimental CoreCLR feasibility remains separate from the original product;
+its own fresh package is retired after source/cached-death acceptance. D577 repairs
+the retained original Accounts read without repeating accepted money; its exact-head
+CI/CodeQL succeeded once. D578 repairs original category semantic selection and
+qualifies24 changed native states in six contexts, with strict builds and no Save.
+Current Samsung Main is complete signed Mono510a3197/PID22604 after one no-reset
+upgrade, with Home979/all141 public attributes, English/Light, original UID/CEDE/
+permission/system state and caller preserved. Historical APK/process rows above
+are evidence checkpoints, not instructions to downgrade or repeat installation.
+
+Continue only executable uncovered qualification. The protected D567 real-time
+reboot/idle deadline, remaining speech/workflow/accessibility and general stability/
+performance gates remain open; iOS/provider/Store/identity gates retain their real
+external dependencies. Never repeat accepted native financial commands or settled
+cohorts to fill a wait. Keep the overall goal active.

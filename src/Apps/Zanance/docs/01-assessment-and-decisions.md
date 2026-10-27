@@ -10646,3 +10646,19 @@ one native container drawing-order delta and observer refusals without calling a
 attributes identical or claiming private Main database equality. Runtime/CoreCLR and
 broader release qualifications remain separate; D567/the overall goal stay active.
 [Complete correction, package and native boundary](quality/retained-account-overview-navigation.md).
+
+### D-578 - Announce original entry-category selection
+
+Reproduce the original selected Food caption missing its state on production Mono.
+Use the existing six-language `Common_ChipSelected` format in a dependent semantic
+name; notify it from original selection and bind only the overlay description.
+No visible design, command, permission, source or financial calculation changes.
+Strict Windows/full signed offline Android pass with zero warnings/errors; actual
+Core/Data/compression/native engines and1422 resources match installed b577.
+Adopt510a3197 once without reset. Six original en/fa/de x Light/Dark expense drafts
+qualify24 native select/exclusive-switch/deselect states, with no amount or Save.
+Restore English/Light, Main22604/Home979/all141 public attributes, original settings
+and caller metadata; preserve covered-frame/caller-process/observer refusals and
+the actual cached900 caller retirement. No general spoken/stability/release claim.
+The D577 exact-head CI and CodeQL each succeeded once; its schedule was removed.
+[Complete category correction and verification boundary](quality/category-selection-semantics.md).

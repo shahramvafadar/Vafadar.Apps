@@ -2727,3 +2727,13 @@ remaining A11Y issue. No unrelated successful suite or financial command is repl
 
 [Runtime source, refusals and retirement](quality/coreclr-original-ui-feasibility.md).
 [Original Accounts correction and actual Mono adoption](quality/retained-account-overview-navigation.md).
+
+### Original entry-category semantic state (D-578)
+
+Keep category names visually unchanged. The original real overlay button announces
+its translated name plus the shared selected suffix only while selected, with
+dependent-property notification after every original selection command. Exclusive
+switching clears the old caption; tapping the selected category restores plain names.
+Six changed native language/theme contexts are qualified without financial Save.
+This is a caption-state correction, not complete TalkBack speech acceptance.
+[Native evidence and remaining gates](quality/category-selection-semantics.md).
