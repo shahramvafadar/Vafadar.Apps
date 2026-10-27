@@ -55,7 +55,7 @@ priority/order descriptions below.
 | ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | In progress (D-266 success-only device unlock; D-553 original emulator PIN-covered cold goal/current-review routes qualified; real owner/biometric/platform acceptance remains) | SEC-03, OD-04 |
 | ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-263 Android all-profile migration/lifecycle delivered; D-521 storage faults, D-522 two-profile startup/creation and D-524 original metadata staging/hot-journal rollback/selection on actual x86_64 API24/4096 and API35/16384 qualified; arbitrary-profile/hardware/OEM/platform acceptance remains) | SEC-02, SEC-03 |
 | ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | In progress (D-264 Android/Windows optional recovery and explicit portable recovery locally verified; D-521 protected cold recovery and D-522 multiple missing envelopes/alias loss/recovered retirement/consecutive portable restores on actual x86_64 API24/4096 and API35/16384 qualified; full authentication/iOS/device acceptance remains) | SEC-04, OD-04 approved |
-| ZCR-SEC-07 | Final OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | In progress (D-263 final coupled Android policy delivered; iOS exclusion/OEM acceptance remain) | OD-10 approved |
+| ZCR-SEC-07 | Final OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | In progress (D-263 packaged policy; D-603 live framework rejects both owned packages on emulator/Samsung with unchanged settings; actual OEM/device-transfer and iOS acceptance remain) | OD-10 approved |
 | ZCR-SEC-08 | Encrypted safety copies before restore | 1 | P2 | S | In progress (D-264 local Android/Windows; D-312 actual Samsung safety recovery and profile isolation verified; broader device/iOS gates remain) | SEC-03 |
 | ZCR-SEC-10 | Owner-approved PIN, screenshot choice and ownership clarification (D-63) | Maintenance | P1 | M | Done | Owner request 2026-10-08 |
 | ZCR-SEC-09 | Network/SDK review of online builds; privacy texts | 1/3 | P2 | S | Done (current baseline; repeat for future SDKs) | – |
@@ -6919,3 +6919,25 @@ Protected evidence/shared aliases remain. The overall goal and D-594 execution o
 active; two-second, stability, security, remaining accessibility and external gates stay open.
 
 [Complete record](../../quality/withdrawn-ledger-text-reuse.md).
+
+
+### D-603 - Observe live Android backup eligibility without a payload request
+
+The fixed shell-only observer binds the original owned package UIDs before typed
+BackupManager status/eligibility queries. API36 emulator returns Main10217=false,
+caller10221=false and Settings-provider1000=true while backup is disabled. Samsung
+returns Main10380=false/caller10381=false while its original backup-enabled state
+remains true. These are five real framework replies, not actual OEM transfer or
+cloud-payload exclusion. A wrong expected UID refuses before service binding; errors
+never substitute false. Strict corrected Java/D8 compilation passes; the initial
+module-path warning refusal remains. No product code/dependency/permission change,
+managed test addition, app rebuild, backup/restore, authentication or financial replay.
+
+Both original APK/UID/CEDE/flags/stopped/PID states, eleven settings, boot/backup state
+and display context remain unchanged. Two new hash-bound remote JARs retire with
+6236 logical bytes removed; local used build witnesses remain. The owned AVD stops
+with exact configuration preserved; both ADB servers and phone context remain.
+SEC-07 actual OEM/device-transfer and iOS gates stay open. Overall delivery remains
+active; further TalkBack stays last and Persian speech parked under D-594.
+
+[Complete native evidence and limitations](../../quality/android-live-backup-eligibility.md).

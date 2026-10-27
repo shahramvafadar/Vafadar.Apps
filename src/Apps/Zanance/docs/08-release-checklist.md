@@ -4643,3 +4643,25 @@ Protected evidence/shared aliases remain. The overall goal and D-594 execution o
 active; two-second, stability, security, remaining accessibility and external gates stay open.
 
 [Complete candidate rejection, input limits and observer repair](quality/withdrawn-ledger-text-reuse.md).
+
+
+### D-603 - Observe live Android backup eligibility without a payload request
+
+The fixed shell-only observer binds the original owned package UIDs before typed
+BackupManager status/eligibility queries. API36 emulator returns Main10217=false,
+caller10221=false and Settings-provider1000=true while backup is disabled. Samsung
+returns Main10380=false/caller10381=false while its original backup-enabled state
+remains true. These are five real framework replies, not actual OEM transfer or
+cloud-payload exclusion. A wrong expected UID refuses before service binding; errors
+never substitute false. Strict corrected Java/D8 compilation passes; the initial
+module-path warning refusal remains. No product code/dependency/permission change,
+managed test addition, app rebuild, backup/restore, authentication or financial replay.
+
+Both original APK/UID/CEDE/flags/stopped/PID states, eleven settings, boot/backup state
+and display context remain unchanged. Two new hash-bound remote JARs retire with
+6236 logical bytes removed; local used build witnesses remain. The owned AVD stops
+with exact configuration preserved; both ADB servers and phone context remain.
+SEC-07 actual OEM/device-transfer and iOS gates stay open. Overall delivery remains
+active; further TalkBack stays last and Persian speech parked under D-594.
+
+[Complete native evidence and limitations](quality/android-live-backup-eligibility.md).

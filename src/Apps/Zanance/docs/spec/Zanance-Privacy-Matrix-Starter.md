@@ -1447,3 +1447,17 @@ checks separately. Actual source/key aliases remain protected and are not retire
 Only owned XML/build/unused-publish output is removed within recorded authority;
 policy-rejected residual output remains without an alternate attempt. The physical
 phone is untouched, and original Main/caller/settings/configuration are restored.
+
+
+## D-603 - Read-only OS backup policy metadata
+
+An independent shell-only Java observer exports fixed package names/UIDs, device
+class/API, user0 and three BackupManager policy/status booleans. It binds the two
+original owned UIDs before service access; only the owned emulator adds a Settings
+provider eligibility control, without reading that provider's contents. Errors emit
+the exception type and explicit missing-result flag, never messages or stacks.
+There is no product SDK/permission, payload backup/restore request, transport/account
+selection or private database/key read. The existing framework may consult its
+transport's eligibility policy; this is not a claim of no possible network activity.
+Local bounded witnesses remain; the two fresh remote JARs are hash-cleaned. Current
+framework ineligibility is not actual OEM/device-transfer exclusion acceptance.

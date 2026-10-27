@@ -11060,3 +11060,24 @@ its current owned package/installer attempt. This reaffirms the per-install D-56
 other high-risk actions and genuine authentication retain their existing owner boundaries.
 No device command, installation, test or financial operation is needed to record this rule.
 The overall delivery goal and D-594's TalkBack execution order remain active.
+
+### D-603 - Observe live Android backup eligibility without a payload request
+
+The fixed shell-only observer binds the original owned package UIDs before typed
+BackupManager status/eligibility queries. API36 emulator returns Main10217=false,
+caller10221=false and Settings-provider1000=true while backup is disabled. Samsung
+returns Main10380=false/caller10381=false while its original backup-enabled state
+remains true. These are five real framework replies, not actual OEM transfer or
+cloud-payload exclusion. A wrong expected UID refuses before service binding; errors
+never substitute false. Strict corrected Java/D8 compilation passes; the initial
+module-path warning refusal remains. No product code/dependency/permission change,
+managed test addition, app rebuild, backup/restore, authentication or financial replay.
+
+Both original APK/UID/CEDE/flags/stopped/PID states, eleven settings, boot/backup state
+and display context remain unchanged. Two new hash-bound remote JARs retire with
+6236 logical bytes removed; local used build witnesses remain. The owned AVD stops
+with exact configuration preserved; both ADB servers and phone context remain.
+SEC-07 actual OEM/device-transfer and iOS gates stay open. Overall delivery remains
+active; further TalkBack stays last and Persian speech parked under D-594.
+
+[Complete native evidence and limitations](quality/android-live-backup-eligibility.md).
