@@ -6883,3 +6883,14 @@ all120/settings/config; no phone input. Twelve XMLs/484581bytes,1263 Clean outpu
 retirement is rejected before execution;967files/130910659bytes remain without retry.
 Protected comparison sources stay bound for continuation; no shared alias is retired.
 No new managed tests or default app change/build; the full goal and D-594 stay active.[Complete original timing boundary](../../quality/home-query-reader-timing.md).
+
+### D-600 - Close checked primitive inlining at its fixed host gate
+
+Two isolated strict builds and separate actual10.0.14 processes preserve every original
+field/order/mutable-list guard and410 truncated/102 mutated outcome comparisons.
+Combined median improvement0.1895381% misses the frozen5% gate; allocations are unchanged.
+Production sources stay exact; no app/device/financial or successful old suite replay.
+Standard Clean removes28 registered outputs/655940bytes;20 residual files/423338bytes
+have no later removal completion receipt, so deletion is not claimed or retried.
+D-599's one-use CI and CodeQL are both successful and its monitor is deleted.
+The full goal and D-594 execution order stay active. [Complete host rejection](../../quality/rejected-checked-primitive-inlining.md).
