@@ -7366,3 +7366,19 @@ This does not prove immediate clearing or the later managed-state/cached-caption
 cause. Original toggle/theme/kind semantics stay unchanged; no speculative fix,
 new Android command, gesture, recording, test/build or financial replay occurs.
 [Direct acceptance and original packet limits](quality/direct-german-listening-and-fa-lineage.md).
+
+
+### D-592 - Reject tag-list reuse before native work when the host gate fails
+
+Freeze/link actual original codec/domain sources in two fresh isolated host roles;
+only the private candidate reuses the entry's already-owned tag list. Strict builds
+and full original-field/order/null/duplicate/mutability guards pass on actual14/X64.
+One paired empty/mixed comparison allocates5047904/5383776 bytes for reference and
+4785760/5159520 for candidate:combined4.6627% fails the predeclared5% host gate.
+Close it without production change, app packaging, native/financial/seed/key input
+or successful unrelated test replay. Shipping/model/migration inputs stay exact.
+Standard Clean removes28files/593170 logical bytes; further residual-file removal
+is rejected before process creation with blocked by policy,20files/422324bytes
+remain and no alternate deletion runs. Complete Home speed and broader gates stay
+open; no host result is a native/two-second acceptance.
+[Complete host eligibility result and cleanup boundary](quality/rejected-tag-list-allocation.md).
