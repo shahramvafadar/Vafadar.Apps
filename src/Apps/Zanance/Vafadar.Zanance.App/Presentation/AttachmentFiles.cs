@@ -85,33 +85,8 @@ internal static class AttachmentFiles
 
     private static string CacheFolder => Path.Combine(FileSystem.CacheDirectory, "attachments");
 
-    // Files written for sharing: CSV exports and PDF reports (ImportExportViewModel, ReportsViewModel).
-    private static readonly string[] SharedFilePatterns = ["zanance-export-*.csv", "zanance-holdings-*.csv", "zanance-report-*.pdf"];
-
-    /// <summary>
-    /// Removes the copies written for opening attachments and the files written for sharing (exports and reports). They
-    /// are plain, unencrypted files, so they are deleted on every start and after "Delete all data" instead of staying in
-    /// the cache until the system clears it.
-    /// </summary>
-    public static void ClearCache()
-    {
-        try
-        {
-            if (Directory.Exists(CacheFolder))
-            {
-                Directory.Delete(CacheFolder, recursive: true);
-            }
-
-            foreach (var file in SharedFilePatterns.SelectMany(pattern => Directory.EnumerateFiles(FileSystem.CacheDirectory, pattern)))
-            {
-                File.Delete(file);
-            }
-        }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
-        {
-            // A file still open in another app is removed on a later start.
-        }
-    }
+    /// <summary>Removes original temporary viewer/export copies and abandoned camera originals on startup and after data deletion.</summary>
+    public static void ClearCache() => AttachmentCache.Clear(FileSystem.CacheDirectory);
 
     /// <summary>Writes the attachment to the cache and opens it with the app the device chooses.</summary>
     /// <returns><see langword="false"/> when no app could open it.</returns>

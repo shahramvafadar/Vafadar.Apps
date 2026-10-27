@@ -5102,3 +5102,17 @@ backlog, without marking their parent gates complete or treating hour estimates 
 new execution authority. D-594 remains in force; no TalkBack/native/financial action,
 product change, new managed case or repeated successful build is needed for this
 source-evidence correction. Verify the exact linked reports and document diff.
+
+
+### D-596 - Original interrupted-camera cleanup delivered
+
+The actual shared cache cleanup now retires only abandoned original-format camera
+JPEGs at the next startup/data deletion. Four new filesystem cases and one original
+native new-process startup prove the finite correction without sensor/OCR/financial
+replay. Complete signed885f6df5 is adopted once without reset on emulator and Samsung;
+original identities/settings/public content are preserved, with the exact phone
+ScrollView drawing-order2-to1 difference and failed strict attribute comparison
+retained. Camera acquisition/real corpus, genuine authentication/OEM/provider and
+other final gates remain open. Further TalkBack stays last under D-594. Residual
+D-596 bin/obj retirement is rejected before execution; no alternate cleanup runs.
+[Complete scope, failed controls, native outcome and preservation](../../quality/camera-original-cache-retirement.md).

@@ -23,7 +23,7 @@ internal static class CameraCapture
     public static async Task<byte[]?> TakePhotoAsync()
     {
         var activity = Platform.CurrentActivity ?? throw new InvalidOperationException("No activity to start the camera from.");
-        var folder = new Java.IO.File(activity.CacheDir, "camera");
+        var folder = new Java.IO.File(activity.CacheDir, Presentation.AttachmentCache.CameraDirectoryName);
         folder.Mkdirs();
         var file = new Java.IO.File(folder, $"{Guid.NewGuid():N}.jpg");
         try

@@ -7417,3 +7417,23 @@ alternate-engine/SDK work without assuming approval or chasing its question. Kee
 existing Persian UI/features and completed evidence; this is an execution-order
 deferral, not full accessibility/release acceptance or a change to jurisdictions,
 financial behavior, accounts or publishing. Other work and the overall goal continue.
+
+
+### D-596 - Retire camera originals left by an interrupted capture
+
+Two original-filesystem regressions reproduce a gap in startup/data-deletion cleanup:
+raw GUID JPEG camera outputs survive when process termination skips `finally`.
+The actual shared cleanup now retires only that adapter's top-level opaque JPEGs,
+without following links or deleting unrelated/nested/root files. Four new focused
+cases pass after the two initial failures. Original Android startup in a fresh UID
+removes one staged synthetic original after proven cached-process death; no actual
+camera/OCR/financial scenario is replayed. Strict Windows/full signed Android pass.
+One no-reset emulator upgrade preserves all120 public tuples; one Samsung upgrade
+preserves Home979/141 public captions, geometry and states/UIDCEDE/permissions and
+14 settings/presence, with an explicit ScrollView drawing-order2-to1 delta, not full
+attribute-byte equality. Used signed885f6df5 and independent7781748a remain;4906 standard
+Clean outputs/1523573710bytes and four unused copies/157450351bytes are removed.
+Further eight-root retirement is rejected before execution with blocked by policy;
+4030files/688445756bytes remain without an alternate attempt. Camera quality, wider
+platform/release gates and the full goal remain open; D-594 scheduling is unchanged.
+[Original cleanup, native preservation and exact limits](quality/camera-original-cache-retirement.md).

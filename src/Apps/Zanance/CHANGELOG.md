@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Remove abandoned raw receipt-camera files at the next startup after an interrupted capture, while preserving unrelated cache files (D-596).
+
 - Keep the original speech engine after the owner declines a blocked legacy alternative; preserve settings and the remaining Persian speech gate (D-587).
 
 - Keep the reader qualification regression aligned with the actual signed candidate while continuing to reject both retired packages; application behavior is unchanged (D-588).

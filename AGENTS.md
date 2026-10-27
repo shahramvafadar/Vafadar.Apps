@@ -371,6 +371,10 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data 
   Recognition uses its own bounded upright image; only the compact metadata-free copy enters attachments/backups.
   Home and attachment rereads never save before confirmation or erase an existing amount when no new total is found.
   Latin OCR accent tolerance is keyword/exclusion-only (D-325); preserve original source, numeric and currency evidence.
+* Interrupted Android camera cleanup (D-596): retire only top-level GUID-N JPEG originals in the
+  application-private camera cache on startup/data deletion. Do not follow directory/file links,
+  recurse into camera subdirectories or remove unrelated names. Preserve normal capture finally
+  cleanup, source limits, metadata-free stored copies and original external-camera permissions.
 * Tests accompany every feature; name tests by behaviour and tag acceptance scenarios with `[Trait("AT", "AT-xx")]`.
 * Application flow tests (D-73): compile actual non-UI app sources in `Vafadar.Zanance.App.Tests` through explicit
   native-effect ports, with real isolated SQLite/localization. Never duplicate application algorithms or create fake

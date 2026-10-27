@@ -1435,3 +1435,17 @@ helper10406 is retired and original14 setting values/presence are restored; the
 explicit one-attribute drawing-order delta is retained without claiming byte-exact
 public UI or private data equality. Further TalkBack and Persian engine work are
 now deferred by the owner; no new recording/listening request follows.
+
+
+## D-596 - Abandoned camera cache originals
+
+A camera original may contain source metadata before compact preparation. Its
+normal finally cleanup cannot run after process termination. On next startup or
+explicit data deletion, retire only original-format top-level GUID-N JPEGs from
+the app-private camera cache; never follow directory/file links or visit unrelated
+names/nested paths. Keep existing best-effort IO handling. This adds no permission,
+SDK, backup field, network/export or financial record. A fresh independent native
+startup qualifies cleanup of fictitious bytes; it is not camera/OCR, secure erasure,
+private Main-store or whole-device acceptance. Exact evidence and preservation are
+in the camera-original-cache-retirement quality record; failed strict UI ordering
+and residual-output deletion refusal remain explicit.

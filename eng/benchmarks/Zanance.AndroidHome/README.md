@@ -1213,3 +1213,22 @@ unit tests or financial commands. The completed fresh package was removed; do no
 reinstall/reseed it to repeat successful evidence. Main remains the separately signed
 Mono product. See [D-576](../../../src/Apps/Zanance/docs/quality/coreclr-original-ui-feasibility.md)
 and [D-577](../../../src/Apps/Zanance/docs/quality/retained-account-overview-navigation.md).
+
+
+## D-596 original camera-cache startup boundary
+
+`ReviewCameraCache=true` selects only the fresh
+`pro.vafadar.zanance.cameracachereview` identity. The original Main launcher returns
+before any historical review phase for this identity. The independent DUMP-protected
+`pro.vafadar.zanance.review.CameraCacheReviewActivity` accepts a GUID-N
+`camera_cache_run` and explicit `camera_cache_phase=stage|verify`. Stage refuses an
+existing fixture journal; it creates only one eight-byte fictitious GUID JPEG and
+unrelated preservation controls. After proven cached/adj900 death, use the ordinary
+original Main launcher without a selector/run. Verify requires the same journal and
+a different process and does not call cleanup itself. Only the original App startup
+may retire the source. No camera app, permission grant, source recognition, financial
+preparation or accepted command replay belongs to this cohort. Retire only the fresh
+UID after terminal proof; preserve old callers/Main/settings and original reports.
+See the [complete D-596 quality record](../../../src/Apps/Zanance/docs/quality/camera-original-cache-retirement.md) for signed identities, adoption, explicit
+phone drawing-order delta and rejected residual-output retirement. This is not
+sensor quality, natural low-memory, cold-speed or full receipt acceptance.
