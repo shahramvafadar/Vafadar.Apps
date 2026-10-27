@@ -21,6 +21,14 @@
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
+  <!-- D-574: a loaded cold cohort reuses original owned sources, never a shipping UID or an older financial phase. -->
+  <PropertyGroup Condition="'$(ReviewLoadedColdStart)' == 'true'">
+    <DefineConstants>$(DefineConstants);LOADED_COLD_START_REVIEW</DefineConstants>
+  </PropertyGroup>
+  <Target Name="RequireOriginalLoadedColdIdentity" BeforeTargets="PrepareForBuild" Condition="'$(ReviewLoadedColdStart)' == 'true'">
+    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.androidhomereview' or '$(RuntimeIdentifier)' != 'android-arm64' or '$(ReviewNativeFaultPc)' == 'true'"
+           Text="Loaded cold review requires only the original independent ARM64 caller, without a fault observer." />
+  </Target>
   <!-- A process-local signal observer is never linked into the shipping application or another review flavor. -->
   <PropertyGroup Condition="'$(ReviewNativeFaultPc)' == 'true'">
     <DefineConstants>$(DefineConstants);NATIVE_FAULT_PC_REVIEW</DefineConstants>
@@ -111,12 +119,12 @@
   <!-- Compile original production sources and XAML; the application never references this independent caller. -->
   <ItemGroup>
     <Compile Include="$(OriginalAppRoot)**/*.cs"
-             Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)Platforms/Windows/**;$(OriginalAppRoot)Platforms/iOS/**;$(OriginalAppRoot)Platforms/Android/MainActivity.cs"
+             Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)artifacts/**;$(OriginalAppRoot)Platforms/Windows/**;$(OriginalAppRoot)Platforms/iOS/**;$(OriginalAppRoot)Platforms/Android/MainActivity.cs"
              Link="%(RecursiveDir)%(Filename)%(Extension)" />
     <Compile Include="*.cs" />
     <Compile Include="../Zanance.Performance/PerformanceFixture.cs" Link="PerformanceFixture.cs" />
     <MauiXaml Include="$(OriginalAppRoot)**/*.xaml"
-              Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)Platforms/Windows/**"
+              Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)artifacts/**;$(OriginalAppRoot)Platforms/Windows/**"
               Link="%(RecursiveDir)%(Filename)%(Extension)" />
     <EmbeddedResource Include="$(OriginalAppRoot)Resources/Strings/*.resx" Link="Resources/Strings/%(Filename)%(Extension)" />
     <AndroidResource Include="$(OriginalAppRoot)Platforms/Android/Resources/**" Link="Resources/%(RecursiveDir)%(Filename)%(Extension)" />

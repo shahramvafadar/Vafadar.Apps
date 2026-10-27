@@ -2683,3 +2683,5 @@ D-294 local household delivery is complete at the recorded Windows/emulator/loca
 - Verify the current budget appears once after a saved limit changes during Home loading, without posting money.
 - Add one focused original-source regression; retain the distinct historical expense-count failure.
 - The shipping app and APK are unchanged. General stability, accessibility and release gates remain open.
+
+- D-574 qualification: completed original retained10k/100k Samsung loaded-cold observations with full source equality; the two-second target and general stability remain unaccepted. This observer-only work changes no shipping financial behavior.

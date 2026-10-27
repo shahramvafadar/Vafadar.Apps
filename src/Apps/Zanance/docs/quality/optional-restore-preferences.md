@@ -97,3 +97,10 @@ preparation has not run. After the independent process was quiesced, Main instal
 This correction is not complete backup/key/database security acceptance, general
 ANR/crash remediation, audible accessibility, iOS, provider/public hosting,
 Store approval or publication. The broad goal remains active.
+
+Subsequent D-574 continuation completed both independent shell-to-ready observations,
+corrected only the tenfold caller presentation oracle, retired the two fresh profiles
+and restored the original independent caller/Main. The SDK refusals and the dated
+D-575 retained-state account above remain historical evidence, not current pending work.
+See [the completed finite cohort](loaded-cold-command-boundary.md); general performance
+and stability acceptance remain open.

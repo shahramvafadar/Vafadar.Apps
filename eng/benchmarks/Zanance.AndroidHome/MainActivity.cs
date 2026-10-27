@@ -8,6 +8,9 @@ namespace Vafadar.Zanance.App;
 
 /// <summary>Runs requested independent performance phases after the original covered application startup.</summary>
 [Activity(Theme = "@style/Maui.SplashTheme", MainLauncher = true, LaunchMode = LaunchMode.SingleTop,
+#if LOADED_COLD_START_REVIEW
+    Permission = Android.Manifest.Permission.Dump,
+#endif
     ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode |
         ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density | ConfigChanges.Locale | ConfigChanges.LayoutDirection)]
 public sealed class MainActivity : MauiAppCompatActivity
@@ -15,6 +18,9 @@ public sealed class MainActivity : MauiAppCompatActivity
     /// <inheritdoc />
     protected override void OnCreate(Bundle? savedInstanceState)
     {
+#if LOADED_COLD_START_REVIEW
+        if (OperatingSystem.IsAndroidVersionAtLeast(36)) LoadedColdStartNative.CaptureActivityEntry();
+#endif
         Window?.AddFlags(WindowManagerFlags.Secure);
 #if NATIVE_FAULT_PC_REVIEW
         var faultObserverAccepted = savedInstanceState is not null || NativeFaultPcObserver.TryArm(this);
@@ -35,6 +41,11 @@ public sealed class MainActivity : MauiAppCompatActivity
             return;
         }
 #endif
+#if LOADED_COLD_START_REVIEW
+        // No older writer/preparation phase may run in this one-purpose current-source cohort.
+        LoadedColdStartReview.Start(this);
+        return;
+#else
         var phase = Intent?.GetStringExtra("review_phase");
         var run = Intent?.GetStringExtra("review_run");
         var comparison = Intent?.GetStringExtra("review_pass");
@@ -77,6 +88,7 @@ public sealed class MainActivity : MauiAppCompatActivity
             Android.Util.Log.Info("ZananceHomeStage", comparison + "|household-os-foreground-sync-stopped");
         }
         _ = RunAsync(phase, run, comparison, baseline);
+#endif
     }
 
     private async Task RunAsync(string phase, string run, string? comparison, string? baseline)

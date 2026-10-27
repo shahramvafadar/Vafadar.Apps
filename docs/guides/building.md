@@ -2820,3 +2820,19 @@ Run `python eng/scripts/Review-GitOutputGuards.py --work-directory <new-owned-di
 for the actual hook output/source boundaries. The fixture creates no commit, uses local personal
 identity only and never changes the real index, global Git configuration or existing files.
 Ignored generated artifacts are outputs; actual ignored source and staged output still refuse.
+
+
+### D-574 loaded cold observer boundary
+
+The independent Home project has an explicit ReviewLoadedColdStart flavor for the
+owned Samsung/API36/UID10381 source cohort. Its loaded-cold sources and
+`loaded-cold-shell.c` are never linked into shipping. The native shell command
+accepts only the fixed owned component and32-hex request/run; its exclusive marker
+and the app CreateNew receipt must both remain consumed. CLOCK_MONOTONIC and
+CLOCK_BOOTTIME are independently bound to actual native entry/ready frame and boot.
+A PID0 SDK record is still invalid; shell-to-ready includes dispatch overhead and
+must not be labelled OS-launch latency. Keep immutable prepared snapshots and
+separate presentation-correction receipts; never repeat accepted restores, seeds
+or money commands to repair observation. Reuse reviewed existing retirement code
+only after original typed-source proof, excluding shipping Main/workload roots.
+See [the completed cohort](../../src/Apps/Zanance/docs/quality/loaded-cold-command-boundary.md).

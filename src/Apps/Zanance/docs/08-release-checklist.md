@@ -4203,3 +4203,27 @@ or freed-space claim. D574's two SDK-native PID0 cold refusals and original prep
 remain retained; no accepted cold timing/two-second result is claimed. D567, spoken acceptance,
 general stability/security, iOS/provider/Store/release and the broad goal remain open.
 [Full correction, original native outcome and remaining boundaries](quality/optional-restore-preferences.md).
+
+
+### D-574 - Original loaded cold boundary on retained Samsung sources
+
+Completed the finite reference/tenfold cold cohort without repeating the accepted
+source restores or financial/seed commands. The SDK's PID0 records remain refused.
+A separately bound one-shot native shell-to-ready interval, including dispatch
+overhead, measured8062.511917ms for10,000 entries and17756.488064ms for100,000;
+one observation each, not OS-launch metrics, repeated medians or a two-second pass.
+All prepared typed rows, financial/read/final cache cookies and original presentation
+matched. The tenfold caller's mistaken old-reference presentation was preserved,
+then corrected through an independent read-only receipt; no baseline was overwritten.
+An ordinary covered startup failure required one native Retry in the same18144;
+its unknown cause and the original refusal remain, not a general stability fix.
+
+Five new provenance tests, the prior six lifetime/seven corrected storage cases,
+strict caller builds and complete signed offline packages retain their distinct
+evidence. Only two fresh profiles were deleted; original independent Main/source
+and keys verified, necessary M1/M2/M3 bookkeeping retired before b1d5 restoration.
+Main623b/11430/Home979/all141/UID/CEDE/permissions/settings preserved. No D567
+emulator action, unrelated test/financial replay or production-schema downgrade.
+General QA-06/two-second, ANR/crash, A11Y, platform/provider/Store/release remain open.
+
+[Full source, failure, clock and retirement evidence](quality/loaded-cold-command-boundary.md).
