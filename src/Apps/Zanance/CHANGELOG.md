@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Ignore empty saved snooze items so other reminders and valid snoozes continue to update (D-605).
+
 - Remove abandoned raw receipt-camera files at the next startup after an interrupted capture, while preserving unrelated cache files (D-596).
 
 - Keep the original speech engine after the owner declines a blocked legacy alternative; preserve settings and the remaining Persian speech gate (D-587).

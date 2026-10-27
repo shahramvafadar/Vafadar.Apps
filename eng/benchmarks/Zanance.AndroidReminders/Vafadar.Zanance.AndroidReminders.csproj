@@ -30,6 +30,15 @@
     <ApplicationId>pro.vafadar.zanance.timedidlereminderreview</ApplicationId>
     <DefineConstants>$(DefineConstants);TIMED_IDLE_REMINDER_REVIEW</DefineConstants>
   </PropertyGroup>
+  <!-- D-605: corrupt local snooze slots use a fresh owned emulator identity, never retained cohorts. -->
+  <PropertyGroup Condition="'$(ReviewSnoozeCache)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.snoozecachereview</ApplicationId>
+    <DefineConstants>$(DefineConstants);SNOOZE_CACHE_REVIEW</DefineConstants>
+  </PropertyGroup>
+  <Target Name="RequireFreshSnoozeCacheIdentity" BeforeTargets="PrepareForBuild" Condition="'$(ReviewSnoozeCache)' == 'true'">
+    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.snoozecachereview' or '$(RuntimeIdentifier)' != 'android-x64' or '$(ReviewTimedIdleReminders)' == 'true' or '$(ReviewLockedReminderRoutes)' == 'true'"
+           Text="The snooze cache review requires only its fresh independent x64 identity." />
+  </Target>
   <!-- D-320: measure the original release compilation inputs as well as its source/native library. -->
   <ItemGroup Condition="'$(Configuration)' == 'Release'">
     <AndroidAotProfile Include="$(OriginalAppRoot)Platforms/Android/Profiles/startup.aprof" />
@@ -37,11 +46,11 @@
   <!-- Compile original production sources and XAML; the application never references this independent caller. -->
   <ItemGroup>
     <Compile Include="$(OriginalAppRoot)**/*.cs"
-             Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)Platforms/Windows/**;$(OriginalAppRoot)Platforms/iOS/**;$(OriginalAppRoot)Platforms/Android/MainActivity.cs;$(OriginalAppRoot)Platforms/Android/MainApplication.cs"
+             Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)artifacts/**;$(OriginalAppRoot)Platforms/Windows/**;$(OriginalAppRoot)Platforms/iOS/**;$(OriginalAppRoot)Platforms/Android/MainActivity.cs;$(OriginalAppRoot)Platforms/Android/MainApplication.cs"
              Link="%(RecursiveDir)%(Filename)%(Extension)" />
     <Compile Include="*.cs" />
     <MauiXaml Include="$(OriginalAppRoot)**/*.xaml"
-              Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)Platforms/Windows/**"
+              Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)artifacts/**;$(OriginalAppRoot)Platforms/Windows/**"
               Link="%(RecursiveDir)%(Filename)%(Extension)" />
     <EmbeddedResource Include="$(OriginalAppRoot)Resources/Strings/*.resx" Link="Resources/Strings/%(Filename)%(Extension)" />
     <AndroidResource Include="$(OriginalAppRoot)Platforms/Android/Resources/**" Link="Resources/%(RecursiveDir)%(Filename)%(Extension)" />
@@ -86,7 +95,7 @@
   <Target Name="ValidateIndependentReminderIdentity" BeforeTargets="PrepareForBuild">
     <Error Condition="'$(ReviewTimedIdleReminders)' == 'true' and '$(ReviewLockedReminderRoutes)' == 'true'"
            Text="Choose one distinct independent reminder cohort; never combine retained identities." />
-    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.androidreminderreview' and '$(ApplicationId)' != 'pro.vafadar.zanance.lockedreminderreview' and '$(ApplicationId)' != 'pro.vafadar.zanance.timedidlereminderreview'"
+    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.androidreminderreview' and '$(ApplicationId)' != 'pro.vafadar.zanance.lockedreminderreview' and '$(ApplicationId)' != 'pro.vafadar.zanance.timedidlereminderreview' and ('$(ReviewSnoozeCache)' != 'true' or '$(ApplicationId)' != 'pro.vafadar.zanance.snoozecachereview')"
            Text="Native reminder qualification must keep its independent Android application id." />
   </Target>
   <Import Project="$(RepoRoot)eng/AndroidAotRuntime.targets" />

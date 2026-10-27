@@ -23,6 +23,14 @@ public sealed class MainActivity : MauiAppCompatActivity
         var run = Intent?.GetStringExtra("review_run");
         if (savedInstanceState is not null || PackageName != NativeReminderReview.Package ||
             run is null || !System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$")) return;
+#if SNOOZE_CACHE_REVIEW
+        if (Intent?.GetBooleanExtra("review_snooze_cache", false) == true)
+        {
+            Window?.AddFlags(WindowManagerFlags.KeepScreenOn);
+            SnoozeCacheReview.Start(this, run);
+        }
+        return;
+#else
 #if TIMED_IDLE_REMINDER_REVIEW
         // D-567: this fresh package may arm only real future original goal/period requests.
         if (Intent?.GetBooleanExtra("review_timed_goal_period", false) != true) return;
@@ -37,6 +45,7 @@ public sealed class MainActivity : MauiAppCompatActivity
             Intent?.GetBooleanExtra("review_goal_lifecycle", false) == true,
             Intent?.GetBooleanExtra("review_period_lifecycle", false) == true,
             Intent?.GetBooleanExtra("review_goal_variants", false) == true, Intent?.GetStringExtra("review_route_phase"), Intent?.GetStringExtra("review_profile_phase"), timed);
+#endif
     }
 
     /// <inheritdoc />
@@ -44,7 +53,15 @@ public sealed class MainActivity : MauiAppCompatActivity
     {
         base.OnNewIntent(intent);
         // D-567: original SDK delivery cannot prepare or rearm a timed cohort.
-#if !TIMED_IDLE_REMINDER_REVIEW
+#if SNOOZE_CACHE_REVIEW
+        var run = intent?.GetStringExtra("review_run");
+        if (PackageName == NativeReminderReview.Package && intent?.GetBooleanExtra("review_snooze_cache", false) == true
+            && run is not null && System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$"))
+        {
+            Intent = intent;
+            SnoozeCacheReview.Start(this, run);
+        }
+#elif !TIMED_IDLE_REMINDER_REVIEW
         var run = intent?.GetStringExtra("review_run");
         var profilePhase = intent?.GetStringExtra("review_profile_phase");
 #if LOCKED_REMINDER_REVIEW

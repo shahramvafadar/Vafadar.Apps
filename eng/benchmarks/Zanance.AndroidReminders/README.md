@@ -190,3 +190,19 @@ status reports actual underlying page type and no financial source read; null ma
 Cleanup retires only the new package after both receipts, checks actual native work absence and
 restores original Main/packages/OS before stopping only the owned AVD. See
 [actual bounded evidence](../../../src/Apps/Zanance/docs/quality/pin-covered-cold-notification-routes.md).
+
+## D-605 bounded null-snooze cache review
+
+`-p:ReviewSnoozeCache=true` selects only the fresh
+`pro.vafadar.zanance.snoozecachereview` identity and android-x64. It cannot be combined
+with the retained timed or locked cohorts. Actual runtime admission requires the
+owned API36 ranchu emulator and an explicit GUID-N `review_run` plus
+`review_snooze_cache=true`. Normal startup remains covered; a first warm intent is
+admitted without replaying an active or consumed run. It uses one fresh zero-opening
+account/unposted future plan, original service/scheduler and a twenty-null-slot cache,
+not a ledger operation or immediate notification. Read the terminal packet before
+retirement; failures/deadlines never authorize reseeding or replacing retained data.
+The bounded startup observer emits only types/methods and fixed source refusal labels.
+The explicit original-source globs exclude retained artifacts as well as bin/obj.
+
+[Complete actual result and restoration](../../../src/Apps/Zanance/docs/quality/null-snooze-cache-reconstruction.md).

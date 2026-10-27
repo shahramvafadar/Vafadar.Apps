@@ -1461,3 +1461,16 @@ selection or private database/key read. The existing framework may consult its
 transport's eligibility policy; this is not a claim of no possible network activity.
 Local bounded witnesses remain; the two fresh remote JARs are hash-cleaned. Current
 framework ineligibility is not actual OEM/device-transfer exclusion acceptance.
+
+## D-605 - Bound independent cache-failure diagnostics
+
+Production only ignores null saved snooze slots; no SDK, permission, financial schema,
+credential or data destination changes. The fresh emulator-only review emits own UID/PID,
+run, counts, source digests and bounded caught exception type/managed-method names or fixed
+source refusal labels, never arbitrary messages/paths, private shipping database/keys,
+raw financial packets or native memory/registers. It requests only its own temporary
+notification permission and queues future fictitious reminders, then cancels/removes
+them and its package. Temporary code-only KEEP_DATA maintenance of a stopped prior
+independent package restores its exact original APK/UID/CEDE/permission/stopped metadata;
+no legacy provider/database is opened. These are private local engineering witnesses,
+not product telemetry, a new provider flow or whole-security/release acceptance.

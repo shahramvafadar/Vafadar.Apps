@@ -5245,3 +5245,22 @@ versions remain explicitly historical. Submission answers and the public policy 
 drafts requiring the actual selected artifact/processor/platform acceptance. No product
 change, new managed test, build, native/financial replay, publication or account action.
 [Source-backed corrections and document verification](../../quality/current-privacy-inventory-alignment.md).
+
+### D-605 - Preserve queue reconstruction across null saved snooze slots
+
+Five fresh regressions reproduce valid-JSON null slots aborting Core/actual SQLite
+reminder publication. Filter only null records before the original queue cap; retain
+all fields, original source/privacy validation and deadlines. Five new plus one affected
+existing managed case pass; no full-suite or successful financial/native replay. Strict
+Windows and complete signed Offline384AOT/408ELF product checks pass. One fresh API36/x64
+native cohort publishes original plan+snooze after20 nulls, preserves the complete typed
+fictitious source and zero ledger, then removes both requests and only its new fixture.
+
+Preserve real startup/storage/AOT/observer refusals; never weaken the staging-space
+bound. Restore exact prior stopped portable code with KEEP_DATA ownership/flags unchanged.
+Samsung no-reset adoption24382/885f6df5 to17668/1f9816c4 preserves all141 original public
+attributes/Home979 and package/settings guards; the first51-node loading observation
+continues only in the same process. Original emulated Main/zero/all120 is restored and
+its AVD stops. Eight XMLs/207653bytes and3175 registered Clean outputs/1041974987logical
+bytes retire; used evidence remains. Delivery, broad stability/security/OEM/other platform
+and release gates stay open; TalkBack remains last. [Complete evidence](../../quality/null-snooze-cache-reconstruction.md).

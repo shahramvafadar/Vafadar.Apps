@@ -70,7 +70,9 @@ public static class ReminderSnoozes
 
         try
         {
-            return JsonSerializer.Deserialize<SnoozedReminder[]>(json) ?? [];
+            // A valid JSON array can still contain null elements (D-605). Ignore only those
+            // damaged slots before callers apply the queue cap; keep real snoozes unchanged.
+            return JsonSerializer.Deserialize<SnoozedReminder?[]>(json)?.OfType<SnoozedReminder>().ToArray() ?? [];
         }
         catch (JsonException)
         {
