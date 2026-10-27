@@ -4599,3 +4599,22 @@ before execution;966files/130925594bytes remain with no alternate deletion. Phys
 camera/corpus, merchant/text, remaining platform/release gates and the full goal stay
 open. D-594 remains in force.
 [Complete native boundary and preservation](quality/emulator-camera-acquisition.md).
+
+### D-599 - Bound original command and reader timing before another Home candidate
+
+One new original100k English publication on the owned API36/x64/4096 emulator records
+527 fixed typed EF events,109 inside its original publication window, with zero drops.
+Whole1664.9301ms, command intervals9.1219ms and reader lifetimes433.7934ms are distinct
+instrumented boundaries, not exclusive CPU costs or a phone/cold/two-second pass.
+Eleven compilation starts/plans occur outside the window and none inside. Original
+full financial/native/schema/typed-row/source/ciphertext controls pass; separate scalar
+oracle4086 is proven dead before target4279. There is no financial/seed/key replay.
+A refused provisional package is never installed; final53725d08 has exact adopted
+Core/Data/Brotli PE/native-engine identity,192AOT/204ELF/static16KiB and strict build
+proof. The observer records no SQL/parameters/payload strings/keys/native addresses.
+Restore actual ebd9/114 German public dictionaries and stopped flag, Main2942/885f6df5/
+all120/settings/config; no phone input. Twelve XMLs/484581bytes,1263 Clean outputs/
+296011853bytes and five unused copies/178872682bytes are removed. Further bin/obj
+retirement is rejected before execution;967files/130910659bytes remain without retry.
+Protected comparison sources stay bound for continuation; no shared alias is retired.
+No new managed tests or default app change/build; the full goal and D-594 stay active.[Complete original timing boundary](quality/home-query-reader-timing.md).

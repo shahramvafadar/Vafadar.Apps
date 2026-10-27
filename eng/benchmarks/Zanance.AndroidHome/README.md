@@ -1265,3 +1265,23 @@ in this fresh package's external-files directory; raw camera data stays transien
 Compare actual words and the original frame, never a total-only assertion or invented
 letters. Terminal observation completion does not imply whole-camera quality passed.
 [Complete D-598 comparison, clipping and preservation](../../../src/Apps/Zanance/docs/quality/emulator-camera-text-boundary.md).
+
+## D-599 bounded original EF timing
+
+`ReviewHomeQueryTiming=true` admits only the original x64 independent identity,
+without native sampling/fault/cold flags. Explicit ranchu/runtime admission requires
+`review_current_query_timing=true`, `review_current_cpu_window=true` and the existing
+separate `review_current_cpu_oracle=measure` protocol. Its preparation does not collect
+metadata or post a native target. Observe one new tenfold publication only after
+complete scalar controls in a proven-dead separate process; never regenerate data.
+The protected root source remains unchanged. Its historical CPU-window caption is
+not native sampling authority: this variant emits monotonic clock metadata only.
+
+The independent observer buffers four fixed typed EF events without reading SQL,
+parameters, payload strings, Context/Command/Reader contents, source values, paths,
+keys or private shipping Main. Require zero dropped/error events and complete original
+financial/native/schema/source/byte controls. Record command duration separately from
+reader lifetime, and exclude all events outside the original publication markers.
+An observation timeout preserves the same PID; an accepted case is never repeated to
+repair metadata. Respect create-new output and actual source/code/day identity.
+[Complete D-599 evidence, refused input and restoration](../../../src/Apps/Zanance/docs/quality/home-query-reader-timing.md).

@@ -1434,3 +1434,16 @@ results. Camera2 permission rows, original Main/caller/settings/config match.
 This is not all-image/merchant quality, secure erasure, private Main data equality
 or real-sensor/platform/release acceptance. See the emulator-camera-acquisition
 quality record for exact ownership, original text loss and cleanup limits.
+
+## D-599 - Independent timing metadata only
+
+The opt-in x64 emulator caller observes four fixed typed EF events only around the
+original requested measure. Its bounded records contain kind, monotonic ticks,
+managed thread, local ordinal and optional duration; it never reads SQL, parameters,
+Context/Command/Reader contents, expressions, payload strings, keys or private Main.
+There is no network SDK/permission, analytics, native address/memory capture or
+shipping integration. Existing reports retain original fictitious financial/source
+checks separately. Actual source/key aliases remain protected and are not retired.
+Only owned XML/build/unused-publish output is removed within recorded authority;
+policy-rejected residual output remains without an alternate attempt. The physical
+phone is untouched, and original Main/caller/settings/configuration are restored.

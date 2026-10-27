@@ -128,3 +128,12 @@ Publish the complete batch and schedule one exact-head check after16minutes.
 The product/shipping885f6df5 is unchanged. Full delivery, performance/stability,
 security, remaining accessibility, physical16KiB, iOS, providers/Store and release
 are separate. TalkBack remains last and Persian speech parked under D-594.
+
+## One-use hosted follow-up
+
+The sole exact-head response after16minutes reports
+[CI40574539564](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40574539564)
+still in_progress, and
+[CodeQL40574539510](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40574539510)
+completed/success forad71ee9a. Keep the consumed marker/full response and delete the
+one-use monitor. No second request or final CI conclusion is inferred.

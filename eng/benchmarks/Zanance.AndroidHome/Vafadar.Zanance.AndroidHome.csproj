@@ -125,6 +125,14 @@
     <Error Condition="'$(ReviewCameraCapture)' != 'true' or '$(ApplicationId)' != 'pro.vafadar.zanance.receiptcamerareview' or !Exists('$(ReviewCameraQualityInput)')"
            Text="Camera quality control requires the fresh independent camera identity and an existing fictitious input." />
   </Target>
+  <!-- D-599: collect bounded original EF timing metadata only in the owned x64 caller. -->
+  <PropertyGroup Condition="'$(ReviewHomeQueryTiming)' == 'true'">
+    <DefineConstants>$(DefineConstants);HOME_QUERY_TIMING_REVIEW</DefineConstants>
+  </PropertyGroup>
+  <Target Name="RequireOwnedHomeQueryTiming" BeforeTargets="PrepareForBuild" Condition="'$(ReviewHomeQueryTiming)' == 'true'">
+    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.androidhomereview' or '$(RuntimeIdentifier)' != 'android-x64' or '$(EnableCodeSampling)' == 'true' or '$(ReviewNativeFaultPc)' == 'true' or '$(ReviewLoadedColdStart)' == 'true'"
+           Text="Home query timing requires the independent x64 caller without sampling, native faults or loaded-cold phases." />
+  </Target>
   <!-- New native source-help qualification owns no retained caller/financial data. -->
   <PropertyGroup Condition="'$(ReviewReceiptSource)' == 'true'">
     <ApplicationId>pro.vafadar.zanance.receiptsourcereview</ApplicationId>

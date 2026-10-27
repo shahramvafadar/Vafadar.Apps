@@ -181,9 +181,15 @@ internal static partial class AndroidHomeReview
             await File.WriteAllTextAsync(Path.Combine(clone, "read-only-audit-" + comparison + ".json"), JsonSerializer.Serialize(audit), ct);
         }
         else
+        {
+#if HOME_QUERY_TIMING_REVIEW
+            // Subscribe only around the requested original measure, after its separate source oracle.
+            using var queryTiming = new HomeQueryTimingReview(clone, publicationComparison);
+#endif
             await MeasureAsync(app, services, clone, "home-stages", publicationComparison, publicationComparison, ct,
                 currentSchema: true, cpuWindowOnly: cpuWindowOnly, separateOracle: separateOracle, ledgerTransport: ledgerTransport,
                 validationMode: validationMode);
+        }
         foreach (var name in new[] { "reference", "tenfold" })
             if (!originals[name].SequenceEqual(CurrentHomeFileDigests(Path.Combine(root, name)))
                 || !CurrentHomeFilesPreserved(adopted[name], CurrentHomeFileDigests(Path.Combine(clone, name)), publicationComparison))
@@ -199,6 +205,10 @@ internal static partial class AndroidHomeReview
             CpuWindowOnly = cpuWindowOnly, SeparateCpuOracle = separateOracle, CpuOraclePhase = oraclePhase, ValidationMode = validationMode, RuntimeProfile = runtimeProfile,
             OriginalEncryptedSourcesUnchanged = true, AdoptedSourcesUnchangedDuringMeasurement = durableByteBaseline,
             CompletedNativeObservationsRecoveredWithoutReplay = reportOnly, FinalReadOnlyAuditSourceFilesUnchanged = reportOnly,
+#if HOME_QUERY_TIMING_REVIEW
+            QueryTimings = oraclePhase == "measure" ? JsonSerializer.Deserialize<JsonElement>(
+                await File.ReadAllTextAsync(Path.Combine(clone, "query-timing-" + publicationComparison + ".json"), ct)) : (JsonElement?)null,
+#endif
             HistoricalTimingExactByteEqualityAccepted = durableByteBaseline, OriginalPreMeasurementFingerprintRetained = durableByteBaseline,
             PriorByteGuardRefusalPreserved = reportOnly && !durableByteBaseline,
             OriginalFinancialRowsPreservedAcrossMigration = true, FinancialCommands = 0, PreparationOrKeyCreation = false,
