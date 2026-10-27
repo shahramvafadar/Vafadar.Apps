@@ -2869,3 +2869,10 @@ opt out to preserve the original failure; they are never shipping candidates.
 The release workflow's prerequisite update does not authorize running publication.
 [Source build and guard instructions](../../eng/notifications/README.md).
 [Actual delivery evidence and limits](../../src/Apps/Zanance/docs/quality/reboot-paired-delivery-diagnosis.md).
+
+D-581 requires explicit source rejection even under Python `-O`/`PYTHONOPTIMIZE`;
+never replace these checks with removable assertions. Seven actual preparation
+cases include two optimized subprocesses. A build-only admission change reuses
+unchanged product/native evidence; validate actual preparation through its Core
+MSBuild target without repeating successful full packages or financial workflows.
+[Focused admission evidence](../../src/Apps/Zanance/docs/quality/notification-source-admission.md).

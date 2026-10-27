@@ -4,6 +4,8 @@ import importlib.util
 import json
 from pathlib import Path
 import shutil
+import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -55,7 +57,7 @@ class SourcePreparationTests(unittest.TestCase):
         archive = self.cache / "upstream.zip"
         changed = archive.read_bytes()[:-1]
         archive.write_bytes(changed)
-        with self.assertRaises(AssertionError):
+        with self.assertRaises(ValueError):
             SOURCE.prepare(self.here)
         self.assertFalse((self.cache / "source").exists())
         self.assertEqual(archive.read_bytes(), changed)
@@ -63,7 +65,7 @@ class SourcePreparationTests(unittest.TestCase):
     def test_unreviewed_replacement_refuses_before_compilation_source(self):
         replacement = self.here / "AndroidUtils.cs"
         replacement.write_bytes(replacement.read_bytes() + b"\n// Unreviewed fixture change.\n")
-        with self.assertRaises(AssertionError):
+        with self.assertRaises(ValueError):
             SOURCE.prepare(self.here)
         self.assertFalse((self.cache / "source").exists())
 
@@ -72,7 +74,7 @@ class SourcePreparationTests(unittest.TestCase):
         target = self.cache / "source/GeofenceHandlerRegistry.cs"
         changed = target.read_bytes() + b"\n// Changed retained source fixture.\n"
         target.write_bytes(changed)
-        with self.assertRaises(AssertionError):
+        with self.assertRaises(ValueError):
             SOURCE.prepare(self.here)
         self.assertEqual(target.read_bytes(), changed)
 
@@ -80,9 +82,35 @@ class SourcePreparationTests(unittest.TestCase):
         SOURCE.prepare(self.here)
         extra = self.cache / "source/Unexpected.cs"
         extra.write_bytes(b"// Unexpected owned fixture input.\n")
-        with self.assertRaises(AssertionError):
+        with self.assertRaises(ValueError):
             SOURCE.prepare(self.here)
         self.assertTrue(extra.exists())
+
+    def run_optimized_preparation(self):
+        """Exercise the actual production entry point under Python's assertion-free mode."""
+        return subprocess.run(
+            [sys.executable, "-B", "-O", "-c",
+             "import runpy,sys; runpy.run_path(sys.argv[1])['prepare'](sys.argv[2])",
+             str(HERE / "Prepare-NotificationCore.py"), str(self.here)],
+            capture_output=True, text=True, timeout=30, check=False)
+
+    def test_optimized_interpreter_refuses_unreviewed_replacement(self):
+        replacement = self.here / "AndroidUtils.cs"
+        changed = replacement.read_bytes() + b"\n// Unreviewed optimized-input fixture.\n"
+        replacement.write_bytes(changed)
+        result = self.run_optimized_preparation()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertFalse((self.cache / "source").exists())
+        self.assertEqual(replacement.read_bytes(), changed)
+
+    def test_optimized_interpreter_refuses_changed_cached_source(self):
+        SOURCE.prepare(self.here)
+        target = self.cache / "source/GeofenceHandlerRegistry.cs"
+        changed = target.read_bytes() + b"\n// Changed optimized-cache fixture.\n"
+        target.write_bytes(changed)
+        result = self.run_optimized_preparation()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(target.read_bytes(), changed)
 
 
 if __name__ == "__main__":

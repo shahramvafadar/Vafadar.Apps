@@ -26,6 +26,12 @@ They preserve original failing outcomes and must never be used as shipping packa
 Do not add a global feed, change source mapping or weaken digest checks to build.
 
 Run `python eng/notifications/test_source_preparation.py` after relevant source-input
-changes. The five tests execute actual preparation against disposable owned inputs;
+changes. The seven tests execute actual preparation against disposable owned inputs;
 they do not post notifications, prepare financial data or establish native delivery.
 See [the actual comparison and qualification limits](../../src/Apps/Zanance/docs/quality/reboot-paired-delivery-diagnosis.md).
+
+D-581 uses explicit input rejection rather than Python `assert`: `-O` and
+`PYTHONOPTIMIZE` must never disable source/license/archive/cache admission. Two
+subprocess regressions run actual preparation with `-O` and changed replacement or
+cached source; both must refuse without replacing the failed inputs. This changes
+build admission only; every reviewed SDK compilation byte remains D-580.

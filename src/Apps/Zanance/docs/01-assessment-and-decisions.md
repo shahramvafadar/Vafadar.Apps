@@ -10698,3 +10698,16 @@ and terminal fixture retirement; its continuation schedule is deleted after exac
 restoration and owned AVD stop. No punctuality/Doze/general stability claim. Phone
 is explicitly handed to Dev Loyan1 until return; the overall goal remains active.
 [Complete source, native evidence and limits](quality/reboot-paired-delivery-diagnosis.md).
+
+### D-581 - Mandatory notification source admission under Python optimization
+
+Two actual optimized-subprocess regressions first admit changed replacement/cache
+inputs and fail. Replace removable Python assertions with explicit ValueError
+rejection for every manifest/license/archive/path/source/cache check. All seven
+related source guards pass (two new, five affected existing); one actual strict
+Core/MSBuild preparation under PYTHONOPTIMIZE=1 passes without warnings/errors.
+All SDK compilation bytes and used signed f7488d1d APK remain exact D580. Reuse
+its full Windows/Android/native/adoption results; no app change, new package,
+financial/native replay or phone/emulator command. Loyan retains the phone lease;
+overall qualification and external gates/goal remain open.
+[Complete reproduced defect and focused evidence](quality/notification-source-admission.md).

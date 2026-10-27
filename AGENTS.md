@@ -3812,3 +3812,8 @@ and explicit corrected file revision, checkout line endings and original notices
 the three named independent baseline projects may retain the defective upstream Core;
 never ship them, add a global feed or claim an upstream signed replacement package.
 Native comparison success does not turn the original D-567 timed failure into a pass.
+
+D-581: build-source admission must use explicit rejection that survives Python `-O`
+and `PYTHONOPTIMIZE`. Never rely on removable `assert` for manifest, license,
+archive, replacement, path or retained compilation-cache verification. Preserve
+refused inputs and verify the actual preparation entry point under optimization.
