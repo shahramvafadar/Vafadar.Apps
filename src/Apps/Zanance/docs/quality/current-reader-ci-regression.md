@@ -1,6 +1,6 @@
 # Current reader candidate regression repair (D-588)
 
-Status: exact hosted cause reproduced and corrected locally; fresh hosted result pending.
+Status: exact hosted cause reproduced/corrected locally and fresh exact-head CI/CodeQL successful.
 
 ## Actual hosted evidence
 
@@ -42,3 +42,16 @@ its own single delayed CI result; local success does not establish hosted succes
 The independent temporary speech-engine trial and all broader accessibility,
 stability/performance, iOS/provider/Store/public release gates remain separate.
 The overall goal stays active until its actual scope is achieved.
+
+
+## Fresh hosted outcome
+
+The only GET for a8c5db09d05bdfa342fb368ea44a6f9d17521512 reports both workflows
+completed/success: [CI40538715325](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40538715325)
+and [CodeQL40538715374](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40538715374).
+Preserve the atomic consumption marker and full response; delete only this schedule.
+The observation occurs21.20 minutes after the commit, later than the desired15–18
+minutes. Initial PowerShell DateTime-kind subtraction incorrectly reports negative
+elapsed minutes; preserve it and record the timezone-aware correction separately.
+Do not repeat the request. This closes the witnessed stale-test failure, without
+reopening successful native checks or accepting broader product/release gates.

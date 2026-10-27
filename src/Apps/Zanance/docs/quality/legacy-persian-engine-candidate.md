@@ -1,7 +1,8 @@
 # Reviewed legacy Persian engine and cancelled installation (D-587)
 
 Status: legacy candidate closed by the owner's decision; newer compatible option
-remains to be investigated. No Persian runtime or spoken acceptance is obtained.
+is reviewed separately in [D589](newer-persian-speech-source-review.md). No newer
+engine is installed and no Persian runtime or spoken acceptance is obtained.
 
 ## Concrete host review
 

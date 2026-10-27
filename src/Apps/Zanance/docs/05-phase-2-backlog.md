@@ -4300,6 +4300,25 @@ both prior510a/4a6c digests. One selected existing case changes from red to gree
 no new case, policy relaxation, shipping change, financial test or successful native
 build replay. Strict affected test-project build passes. Standard Clean removes393
 registered outputs/164750580 logical bytes with no ownership outlier/remnant.
-Fresh hosted success is still pending its single delayed check after push; old
-failures and broader product/external gates are not erased or marked accepted.
+The single delayed exact-head check for a8c5db09 reports CI40538715325 and
+CodeQL40538715374 completed/success; preserve the21.20-minute commit-to-observation
+delay, consumed receipt and deleted schedule. Initial host DateTime-kind arithmetic
+is corrected separately without changing the consumed marker or repeating GET.
+The stale-test CI failure is closed; broader product/external gates remain open.
 [Complete hosted cause and focused repair](quality/current-reader-ci-regression.md).
+
+
+### D-589 - Review a genuine newer speech source without retrying the blocked APK
+
+Read the actual Samsung download catalogue to a stable bottom:39 language/region
+captions, no Persian/Farsi; no download/voice/engine selection. Return normally to
+Main22461/f748/Home979/all141 exact public attributes, original14 values/presence
+and caller state; preserve transient-focus/list/encoding/cleanup refusals without
+replaying successful input. Ten owned hash-matched XMLs/310990 bytes are removed.
+Official stable eSpeak remains1.52.0; pinned upstream ba90c8e9 has1.53.0/code23/
+target36 and bundled Persian data, but no completed reviewed binary or runtime
+acceptance. Inspect original source, manifest, extractor and official build metadata;
+no source execution, build, install, voice selection, reader/financial/test replay.
+Isolated SDK terms/scope await the owner; the prior legacy cancellation remains
+binding. Persian speech and broader delivery gates stay open.
+[Complete newer-source review and remaining approval](quality/newer-persian-speech-source-review.md).
