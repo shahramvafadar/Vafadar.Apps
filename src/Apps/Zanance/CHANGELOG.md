@@ -6,6 +6,9 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Refresh account balances when returning to a retained Accounts tab, preserving all existing financial records (D-577).
+
+
 - Restore portable backups that omit optional display preferences while preserving existing display choices; continue rejecting malformed preferences (D-575).
 
 - Preserve local acoustic evidence from the completed reader checks without repeating device or financial operations; Persian intelligibility remains explicitly unconfirmed, and the app is unchanged (D-573).

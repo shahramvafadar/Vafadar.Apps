@@ -12,7 +12,7 @@
     <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <DefineConstants>$(DefineConstants);ZANANCE_INDEPENDENT_HOME_REVIEW</DefineConstants>
-    <RunAOTCompilation>true</RunAOTCompilation>
+    <RunAOTCompilation Condition="'$(ReviewCoreClrRuntime)' != 'true'">true</RunAOTCompilation>
     <PublishTrimmed>true</PublishTrimmed>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <!-- D-543: choose the caller RID locally so plain financial dependencies retain shipping AnyCPU inputs. -->
@@ -21,6 +21,28 @@
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
+  <!-- D-576: an explicit experimental runtime cohort never replaces shipping or a retained caller. -->
+  <PropertyGroup Condition="'$(ReviewCoreClrRuntime)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.coreclrruntimereview</ApplicationId>
+    <ApplicationTitle>Zanance CoreCLR review</ApplicationTitle>
+    <UseMonoRuntime>false</UseMonoRuntime>
+    <RunAOTCompilation>false</RunAOTCompilation>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+    <EnablePreviewFeatures>true</EnablePreviewFeatures>
+    <DefineConstants>$(DefineConstants);CORECLR_RUNTIME_REVIEW</DefineConstants>
+  </PropertyGroup>
+  <Target Name="RequireOwnedCoreClrRuntimeReview" BeforeTargets="PrepareForBuild"
+          Condition="'$(ReviewCoreClrRuntime)' == 'true' or '$(UseMonoRuntime)' == 'false'">
+    <Error Condition="'$(ReviewCoreClrRuntime)' != 'true' or '$(ApplicationId)' != 'pro.vafadar.zanance.coreclrruntimereview' or '$(RuntimeIdentifier)' != 'android-arm64' or '$(_AndroidRuntime)' != 'CoreCLR' or '$(EnablePreviewFeatures)' != 'true' or '$(ReviewLoadedColdStart)' == 'true' or '$(ReviewNativeFaultPc)' == 'true'"
+           Text="Experimental CoreCLR requires its separate ARM64 review identity and explicit SDK opt-in; shipping and retained callers are excluded." />
+  </Target>
+  <Target Name="SelectMatchingCoreClrReviewCompiler" BeforeTargets="ProcessFrameworkReferences" Condition="'$(ReviewCoreClrRuntime)' == 'true'">
+    <ItemGroup>
+      <KnownCrossgen2Pack Update="Microsoft.NETCore.App.Crossgen2" Condition="'%(KnownCrossgen2Pack.TargetFramework)' == 'net10.0'">
+        <Crossgen2PackVersion>$(VafadarSecurityRuntimeVersion)</Crossgen2PackVersion>
+      </KnownCrossgen2Pack>
+    </ItemGroup>
+  </Target>
   <!-- D-574: a loaded cold cohort reuses original owned sources, never a shipping UID or an older financial phase. -->
   <PropertyGroup Condition="'$(ReviewLoadedColdStart)' == 'true'">
     <DefineConstants>$(DefineConstants);LOADED_COLD_START_REVIEW</DefineConstants>

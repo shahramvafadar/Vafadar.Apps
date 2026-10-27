@@ -2836,3 +2836,21 @@ separate presentation-correction receipts; never repeat accepted restores, seeds
 or money commands to repair observation. Reuse reviewed existing retirement code
 only after original typed-source proof, excluding shipping Main/workload roots.
 See [the completed cohort](../../src/Apps/Zanance/docs/quality/loaded-cold-command-boundary.md).
+
+
+## Isolated experimental Android runtime comparison (D-576)
+
+The independent AndroidHome project alone has an explicit `ReviewCoreClrRuntime` flavor.
+Keep its unique package/actual UID, ARM64 RID and SDK experimental acknowledgement scoped
+to that project/process. Runtime and Crossgen2 must match the pinned security runtime;
+verify actual assets, runtime configuration, signature/offline identity, native engines
+and source before any owned install. A CoreCLR ReadyToRun package is not Mono AOT, shipping
+approval or an accepted crash fix. The source provider is absent from production.
+
+D-577's actual Mono product retains all financial/native bytes; the local comparative
+build binds unchanged dependency generated paths/source-link metadata before byte
+comparison. Never normalize stored financial rows to hide a build-input mismatch. Retain
+failed observers, bind the actual used baseline APK SHA and check all Java metadata
+resources, not just the non-META-INF files. Use standard clean on exact owned roots and
+keep used packages/proofs; never retry previously rejected cleanup through another path.
+[Runtime evidence](../../src/Apps/Zanance/docs/quality/coreclr-original-ui-feasibility.md).

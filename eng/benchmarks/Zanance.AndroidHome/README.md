@@ -1186,3 +1186,30 @@ this owned package/selector/run, emits bounded type/code/method identities and c
 or Retry. Default shipping compilation elides the effect. See the repository quality report
 `src/Apps/Zanance/docs/quality/receipt-source-os-text-and-covered-startup.md` for preserved failures,
 actual width/scroll evidence and restoration; no finance/source read is necessary.
+
+
+## D-576 explicit experimental runtime flavor
+
+`ReviewCoreClrRuntime=true` is an independent research-only ARM64 build flavor with
+`ReviewRuntimeIdentifier=android-arm64`. It uses its own `coreclrruntimereview` application
+identity, SDK `UseMonoRuntime=false`/`EnablePreviewFeatures=true`, and matching official
+runtime/Crossgen2 versions from the existing security runtime property. Do not set these
+properties globally or apply them to shipping/retained packages. Guards reject another
+identity, runtime, ABI or incompatible cold/fault cohort. Use the existing complete signed
+offline APK pipeline; a build alone is not native qualification or production approval.
+
+The source provider admits only the recorded Samsung/API/UID and shell UID2000 with DUMP,
+a32-hex run and fixed checkpoint paths. It observes original completed startup/unlocked
+focused storage, with an empty-source seal before any finance; it never starts preparation
+or dispatches an old phase. Modal/unfocused reads refuse without source access; exceptions
+are contained at JNI with bounded content-free type/method evidence. No arbitrary query,
+file, SQL, key, raw exception message or financial operation is exposed. The actual old
+schema fingerprint is reused without projecting any rows/cookies away. The observed UID
+is a cohort admission, not permission to infer or reuse a shipping/other caller's UID.
+
+D-577 records real Shell retained-tab events and original Accounts publication tasks;
+that observer does not refresh or synthesize events. Native counters/contexts are not
+unit tests or financial commands. The completed fresh package was removed; do not
+reinstall/reseed it to repeat successful evidence. Main remains the separately signed
+Mono product. See [D-576](../../../src/Apps/Zanance/docs/quality/coreclr-original-ui-feasibility.md)
+and [D-577](../../../src/Apps/Zanance/docs/quality/retained-account-overview-navigation.md).

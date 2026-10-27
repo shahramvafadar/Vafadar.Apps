@@ -26,6 +26,10 @@ public sealed class MainActivity : MauiAppCompatActivity
         var faultObserverAccepted = savedInstanceState is not null || NativeFaultPcObserver.TryArm(this);
 #endif
         base.OnCreate(savedInstanceState);
+#if CORECLR_RUNTIME_REVIEW
+        // Capture only the original window; a provider request must never start storage preparation.
+        CoreClrRuntimeObservation.Attach(this);
+#endif
 #if NATIVE_FAULT_PC_REVIEW
         if (!faultObserverAccepted) return;
 #endif

@@ -4092,3 +4092,34 @@ emulator action, unrelated test/financial replay or production-schema downgrade.
 General QA-06/two-second, ANR/crash, A11Y, platform/provider/Store/release remain open.
 
 [Full source, failure, clock and retirement evidence](quality/loaded-cold-command-boundary.md).
+
+
+### D-576 / D-577 - Isolated runtime feasibility and current retained Accounts
+
+The original retained Accounts list was reproduced at97/0/97 after the accepted ledger
+and Home had81/20/101. Route the actual retained Shell tab callback through the original
+shared page read; preserve all calculations, writers, Back behavior and source rules.
+Reuse the same four accepted rows: no account, money, seed, key or successful preparation
+is repeated for the correction. Six native en/fa/de x Light/Dark contexts reuse one
+Accounts instance with complete protected schema/header/typed-row fingerprints unchanged.
+Six new AT-576 source-admission cases pass once; native contexts/commands are not unit tests.
+
+The separate experimental .NET10 CoreCLR14/R2R package is never production adoption.
+Preserve the observer's JNI readiness failure and other refusals; contain a refused
+query without reading source or killing its process. Actual cached/adj900 death and
+normal12938 return preserve all original source and101EUR. Only that fresh package is
+removed; D567 is untouched. The product remains Mono/SGen, with strict Windows/full
+Android zero-warning builds,384 own AOT/408 ELF,1422 exact resources and actual
+Core/Data/compression/native engines equal to623b. Complete signed b577 is adopted
+once without reset: Main12021/Home979/UID/CEDE/permissions/settings and original caller
+are preserved. Relevant native navigation changes only one container drawing-order;
+raw refusals/differences remain, without full-tree bitwise equality or private Main
+DB/key claims.26,113 owned output files/9,306,774,621 logical bytes and104 owned remote
+XML files are cleaned; used packages/proofs and earlier refused scopes remain.
+
+General ANR/crash, speed/two-second, complete A11Y, platform/provider/Store/release and
+the overall goal remain open. Category selected-state semantics are an observed
+remaining A11Y issue. No unrelated successful suite or financial command is replayed.
+
+[Runtime source, refusals and retirement](quality/coreclr-original-ui-feasibility.md).
+[Original Accounts correction and actual Mono adoption](quality/retained-account-overview-navigation.md).

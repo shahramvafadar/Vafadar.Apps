@@ -25,6 +25,10 @@ internal static class ReadBlockSchemaRetirement
     /// <summary>The exact predecessor supported by the retained original caller.</summary>
     internal const string Target = "20261017013925_MarketSourceCompanionState";
 
+    /// <summary>Hashes every original schema/header/storage-class/value without projecting away any bookkeeping.</summary>
+    internal static Task<string> CompleteFingerprintAsync(SqliteConnection connection, CancellationToken ct) =>
+        FingerprintAsync(connection, ct, projectReadBlocks: false);
+
     /// <summary>Actual migration/verification outcome; no financial operation is replayed to recover a missing outer report.</summary>
     internal sealed record Result(bool AlreadyRetired, string ExpectedFingerprint, bool CompleteOriginalSourceVerified,
         string TargetMigration, int FinancialCommands, string[] RemovedMigrationIds);

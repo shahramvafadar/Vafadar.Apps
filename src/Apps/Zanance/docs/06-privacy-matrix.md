@@ -1369,3 +1369,20 @@ Four redundant archives/155134714 logical bytes remain: automatic review rejects
 launch with no detailed reason; no alternate deletion or recovered-space claim follows. Used
 runtime/models/notices, WAVs and proofs remain. D567 and the broader goal/gates stay active.
 [Exact evidence, unresolved Persian boundary and refusal](quality/local-reader-acoustic-evidence.md).
+
+
+### D-576 / D-577 - Independent runtime evidence and unchanged production data surface
+
+The experimental CoreCLR source provider is compiled only into its own fresh ARM64
+package, protected by DUMP plus exact shell/package/UID/run/readiness admission. It
+never prepares storage from provider startup, performs financial commands, or reads
+shipping Main storage. A sealed two-account/four-entry fictitious cohort emits only
+bounded original values and full logical typed-source hashes; no key, exception message,
+heap/register/trace export, SDK upload, online identity or network permission is added. Only the completed
+fresh package is uninstalled; local private evidence is retained and hash-owned remote
+XML/output copies are cleaned. Actual production APK has no experimental provider or
+CoreCLR/JIT library, retains Mono, no INTERNET permission or debug/profile flags and unchanged financial
+and native library bytes. The Accounts change only refreshes original reads on retained
+navigation: no schema, permission, provider, export or financial-data-category change.
+[Evidence](quality/coreclr-original-ui-feasibility.md) and
+[product boundary](quality/retained-account-overview-navigation.md).

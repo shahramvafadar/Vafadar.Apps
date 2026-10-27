@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Include="../../../../eng/benchmarks/Zanance.AndroidHome/CoreClrRuntimeReadPolicy.cs" Link="IndependentReview/CoreClrRuntimeReadPolicy.cs" />
     <Compile Include="../../../../eng/benchmarks/Zanance.AndroidHome/LoadedColdStartPolicy.cs" Link="IndependentReview/LoadedColdStartPolicy.cs" />
     <Compile Include="../../../../eng/benchmarks/Zanance.AndroidHome/LoadedColdShellPolicy.cs" Link="IndependentReview/LoadedColdShellPolicy.cs" />
     <Compile Include="../../../../eng/benchmarks/Zanance.PhysicalReaderGestures/PhysicalReaderPolicy.cs" Link="IndependentReview/PhysicalReaderPolicy.cs" />

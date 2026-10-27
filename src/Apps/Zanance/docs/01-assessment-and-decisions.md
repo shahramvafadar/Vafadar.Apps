@@ -10611,3 +10611,38 @@ emulator action, unrelated test/financial replay or production-schema downgrade.
 General QA-06/two-second, ANR/crash, A11Y, platform/provider/Store/release remain open.
 
 [Full source, failure, clock and retirement evidence](quality/loaded-cold-command-boundary.md).
+
+
+### D-576 - Keep experimental CoreCLR feasibility isolated from product delivery
+
+Review the official experimental .NET10 Android runtime only in a new ARM64 package/UID,
+with matching signed runtime/compiler14 and explicit research-only SDK opt-in, not a
+warning suppression or production runtime swap. Source observation is shell/DUMP-bound,
+requires original ready/unlocked focused storage and an empty initial seal, and exports
+only a bounded fictitious packet plus complete logical typed-source digest. It never
+prepares or writes finance. Six fresh policy cases pass; original account/opening and
+four money forms run once each, six native language/theme contexts retain the same data,
+and actual cached/adj900 process death recovers it through the ordinary launcher.
+Preserve the observer JNI failure and fix its refusal boundary rather than replaying
+an accepted operation. Reject incorrect build/runtime/input observations honestly.
+Retire only the fresh package after source acceptance, keep all used evidence, restore
+Main/caller/OS and clean only owned outputs. This does not diagnose or fix general SGen,
+qualify a production CoreCLR move, or close stability/performance/A11Y/release gates.
+[Complete evidence](quality/coreclr-original-ui-feasibility.md).
+
+### D-577 - Refresh the original Accounts list on retained Shell activation
+
+The same accepted D576 source exposed an actual original UI defect: Accounts remained
+97/0/97 while four accepted ledger rows and Home had81/20/101. Its loader relied solely
+on OnAppearing, which Android need not invoke on a retained tab. Add Accounts to the
+existing guarded native Shell dispatch and share the original outstanding load with
+appearance. No calculation, financial writer, source or visual layout is replaced.
+Reuse the accepted rows; complete logical protected-source digests and six actual
+language/theme contexts match. Strict Windows/full offline Android pass; final b577
+preserves actual financial/compression PE and native bytes,1422 resources,384 AOT/408 ELF.
+Adopt the Mono product once without reset, preserving original public Home979/141 nodes,
+UID/CEDE/permissions/settings and b1d5 caller. Actual Mono tab return is verified; retain
+one native container drawing-order delta and observer refusals without calling all final
+attributes identical or claiming private Main database equality. Runtime/CoreCLR and
+broader release qualifications remain separate; D567/the overall goal stay active.
+[Complete correction, package and native boundary](quality/retained-account-overview-navigation.md).
