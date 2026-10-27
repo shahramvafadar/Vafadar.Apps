@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Preserve distinct simultaneous Android reminders instead of replacing one another in the native broadcast queue; scheduling times and privacy choices remain unchanged (D-580).
+
 - Check original category selection with the installed Android reader while preserving existing transactions and settings; broader spoken accessibility remains open (D-579).
 
 - Announce when an entry category is selected and clear the announcement when deselected, using the existing translations (D-578).

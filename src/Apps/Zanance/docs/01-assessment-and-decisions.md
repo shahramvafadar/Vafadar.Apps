@@ -10681,3 +10681,20 @@ Additional residual/loose deletions are rejected before execution and not retrie
 D567, broader accessibility/stability/platform/external release gates and the goal
 remain open. Native observations add no managed cases beyond the11 stated here.
 [Complete finite reader cohort and limits](quality/original-category-reader-states.md).
+
+### D-580 - Preserve distinct queued Android reminders
+
+Original D567 history proves Android canceled a queued goal with
+mBroadcastConsumerSkipAndCanceled: the SDK applied Activity SingleTop's numeric
+replace-pending bit to broadcasts. Keep it only in the Activity branch. Build the
+original MIT Core from a SHA-pinned official archive plus one reviewed source
+replacement, preserving public assembly identity and Android-only scope. Actual
+four-request baseline/correction comparison is two delivered/two skipped versus
+four delivered/zero skipped, with exact financial/SDK Main PE inputs. Five new
+preparation guards and strict Windows/full offline Android pass; adopt f7488d1d
+once without reset, preserving Main21746/Home979/all141 public attributes, UID/CEDE,
+permissions and14 settings. Retain original D567 one-hour failure, full source match
+and terminal fixture retirement; its continuation schedule is deleted after exact
+restoration and owned AVD stop. No punctuality/Doze/general stability claim. Phone
+is explicitly handed to Dev Loyan1 until return; the overall goal remains active.
+[Complete source, native evidence and limits](quality/reboot-paired-delivery-diagnosis.md).

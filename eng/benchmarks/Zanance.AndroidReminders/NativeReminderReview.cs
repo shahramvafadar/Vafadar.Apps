@@ -14,7 +14,9 @@ namespace Vafadar.Zanance.App;
 internal static class NativeReminderReview
 {
     /// <summary>The only application identity authorized to own this fictitious qualification data.</summary>
-#if LOCKED_REMINDER_REVIEW
+#if TIMED_IDLE_REMINDER_REVIEW
+    internal const string Package = "pro.vafadar.zanance.timedidlereminderreview";
+#elif LOCKED_REMINDER_REVIEW
     internal const string Package = "pro.vafadar.zanance.lockedreminderreview";
 #else
     internal const string Package = "pro.vafadar.zanance.androidreminderreview";

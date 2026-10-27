@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <OutputType>Library</OutputType>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AssemblyName>Plugin.LocalNotification.Core</AssemblyName>
+    <RootNamespace>Plugin.LocalNotification.Core</RootNamespace>
+    <Version>1.1.2</Version>
+    <AssemblyVersion>1.1.2.0</AssemblyVersion>
+    <FileVersion>1.1.2.580</FileVersion>
+    <InformationalVersion>1.1.2-vafadar.broadcastfix</InformationalVersion>
+    <IsPackable>false</IsPackable>
+    <IsAotCompatible>true</IsAotCompatible>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <NotificationCoreSource>$(RepoRoot)artifacts/notification-core/source/</NotificationCoreSource>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" />
+  </ItemGroup>
+  <Target Name="PrepareReviewedNotificationCoreSource" BeforeTargets="PrepareForBuild">
+    <Exec Command="pwsh -NoProfile -File &quot;$(MSBuildThisFileDirectory)Prepare-NotificationCore.ps1&quot;" />
+    <!-- Preparation precedes this dynamic include on fresh restore/build hosts. -->
+    <ItemGroup>
+      <Compile Include="$(NotificationCoreSource)*.cs;$(NotificationCoreSource)Models/**/*.cs;$(NotificationCoreSource)Platforms/Android/**/*.cs" />
+    </ItemGroup>
+  </Target>
+</Project>

@@ -25,6 +25,11 @@
     <ApplicationId>pro.vafadar.zanance.lockedreminderreview</ApplicationId>
     <DefineConstants>$(DefineConstants);LOCKED_REMINDER_REVIEW</DefineConstants>
   </PropertyGroup>
+  <!-- D-567: a fresh timed/reboot/idle cohort must never replace retained notification evidence. -->
+  <PropertyGroup Condition="'$(ReviewTimedIdleReminders)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.timedidlereminderreview</ApplicationId>
+    <DefineConstants>$(DefineConstants);TIMED_IDLE_REMINDER_REVIEW</DefineConstants>
+  </PropertyGroup>
   <!-- D-320: measure the original release compilation inputs as well as its source/native library. -->
   <ItemGroup Condition="'$(Configuration)' == 'Release'">
     <AndroidAotProfile Include="$(OriginalAppRoot)Platforms/Android/Profiles/startup.aprof" />
@@ -79,7 +84,9 @@
     <Exec Command="pwsh -NoProfile -File &quot;$(RepoRoot)eng/native/sqlcipher/Ensure-AndroidPackage.ps1&quot;" />
   </Target>
   <Target Name="ValidateIndependentReminderIdentity" BeforeTargets="PrepareForBuild">
-    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.androidreminderreview' and '$(ApplicationId)' != 'pro.vafadar.zanance.lockedreminderreview'"
+    <Error Condition="'$(ReviewTimedIdleReminders)' == 'true' and '$(ReviewLockedReminderRoutes)' == 'true'"
+           Text="Choose one distinct independent reminder cohort; never combine retained identities." />
+    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.androidreminderreview' and '$(ApplicationId)' != 'pro.vafadar.zanance.lockedreminderreview' and '$(ApplicationId)' != 'pro.vafadar.zanance.timedidlereminderreview'"
            Text="Native reminder qualification must keep its independent Android application id." />
   </Target>
   <Import Project="$(RepoRoot)eng/AndroidAotRuntime.targets" />

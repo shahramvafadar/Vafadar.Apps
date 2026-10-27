@@ -9983,3 +9983,15 @@ Additional residual/loose deletions are rejected before execution and not retrie
 D567, broader accessibility/stability/platform/external release gates and the goal
 remain open. Native observations add no managed cases beyond the11 stated here.
 [Complete finite reader cohort and limits](../quality/original-category-reader-states.md).
+
+### D-580 - Preserve distinct queued Android reminders
+
+Android simultaneous reminder delivery retains each original request instead
+of inheriting Activity SingleTop's broadcast replace-pending bit. Original payload,
+privacy, tap lock, deadline and financial rules stay unchanged. Five new source
+preparation tests pass; native paired/queue observations add no managed test count.
+The causal comparison is baseline2/4 versus corrected4/4, with original financial
+inputs exact. Strict Windows/full signed Android and no-reset Samsung adoption pass.
+Original D567 timed gate remains FAIL; full source/terminal cleanup complete. This
+does not qualify general punctuality, Doze, stability, accessibility or release.
+[Complete source, native evidence and limits](../quality/reboot-paired-delivery-diagnosis.md).

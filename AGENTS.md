@@ -3799,3 +3799,16 @@ Zanance Home review restoration uses Don't send for the owner's install-without-
 Verify the exact app/pending attempt and leave Always send unknown apps unchanged. This is the
 same narrow per-install exception, not authority for other system UI, global security changes,
 permissions, credentials or duplicate installation.
+
+## D-580 - Distinct queued notification broadcasts and pinned source inputs
+
+Keep Activity SingleTop only on the SDK's Activity intent: the same numeric bit is
+Android broadcast REPLACE_PENDING and can cancel distinct simultaneous reminders.
+Preserve original request identity, payload/privacy, scheduling/deadline and permissions.
+Android uses the reviewed source-built Core under `eng/notifications`; require its exact
+official archive, original-source, replacement and MIT-license hashes. Preserve failed
+or unexpected cache inputs instead of weakening validation. Keep public assembly identity
+and explicit corrected file revision, checkout line endings and original notices. Only
+the three named independent baseline projects may retain the defective upstream Core;
+never ship them, add a global feed or claim an upstream signed replacement package.
+Native comparison success does not turn the original D-567 timed failure into a pass.

@@ -7,5 +7,6 @@
 
   <Import Project="$(RepoRoot)eng\AppSecrets.targets" />
   <Import Project="$(RepoRoot)eng\AndroidArchiveFreshness.targets" />
+  <Import Project="$(RepoRoot)eng/notifications/NotificationCore.Android.targets" />
 
 </Project>

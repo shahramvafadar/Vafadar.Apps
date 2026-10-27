@@ -1789,3 +1789,14 @@ Additional residual/loose deletions are rejected before execution and not retrie
 D567, broader accessibility/stability/platform/external release gates and the goal
 remain open. Native observations add no managed cases beyond the11 stated here.
 [Complete finite reader cohort and limits](quality/original-category-reader-states.md).
+
+### D-580 - Preserve distinct queued Android reminders
+
+The observed skipped reminder is corrected at the SDK's original broadcast
+intent factory. Four-request controlled comparison qualifies distinct delivery,
+not the original D567 one-hour window. Five new preparation tests pass; strict
+Windows and complete offline Android pass without warnings. Production f7488d1d
+is adopted once with original public/data-ownership/system guards. D567 ends as a
+failed timed qualification with accepted source and completed retirement, not a
+successful cohort. Continue uncovered gates without replaying accepted money.
+[Complete source, native evidence and limits](quality/reboot-paired-delivery-diagnosis.md).

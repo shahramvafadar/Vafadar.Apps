@@ -5008,3 +5008,16 @@ The fresh helper is retired. Preserve initial native/recorder/refusal boundaries
 full spoken/workflow/stability/iOS/provider/Store/release acceptance stays open.
 Continue D567 only from its original native deadline/handles and source checkpoints,
 without touching its future requests or treating callback/elapsed time as completion.
+
+### D-580 - Preserve distinct queued Android reminders
+
+This checkpoint supersedes earlier instructions to keep D567 pending. The
+original one-hour cohort failed, its source matched, and its exact skipped-broadcast
+cause was reproduced and corrected in fresh request-only cohorts. Retire that failed
+fixture once, restore original emulator Main120/caller/settings/idle and stop only
+its AVD; all are complete and its continuation schedule is removed. Preserve the
+original failure and all accepted source/financial checkpoints. Main f7488d1d is
+adopted once without reset on Samsung and handed to Loyan until explicit return.
+Continue ready independent backlog; do not rerun successful financial/native suites
+or claim general punctuality/A11Y/stability/platform/external acceptance.
+[Complete source, native evidence and limits](../../quality/reboot-paired-delivery-diagnosis.md).

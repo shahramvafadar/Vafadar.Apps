@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <VafadarNotificationCoreBaseline>true</VafadarNotificationCoreBaseline>
+    <SupportedOSPlatformVersion>35.0</SupportedOSPlatformVersion>
+    <UseMaui>true</UseMaui>
+    <OutputType>Exe</OutputType>
+    <ApplicationId>pro.vafadar.zanance.notificationdeliveryreview</ApplicationId>
+    <ApplicationTitle>Zanance notification delivery review</ApplicationTitle>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
+    <RuntimeIdentifier>android-x64</RuntimeIdentifier>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <RunAOTCompilation>true</RunAOTCompilation>
+    <AndroidPackageFormats>apk</AndroidPackageFormats>
+    <AndroidKeyStore>false</AndroidKeyStore>
+    <AndroidManifest>AndroidManifest.xml</AndroidManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Plugin.LocalNotification" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
+    <PackageReference Include="Microsoft.Maui.Controls" />
+    <ProjectReference Include="../../../src/Apps/Zanance/Vafadar.Zanance.Core/Vafadar.Zanance.Core.csproj" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Reminders/IReminderScheduler.cs" Link="Original/IReminderScheduler.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Reminders/LocalNotificationScheduler.cs" Link="Original/LocalNotificationScheduler.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Reminders/ReminderDeliveryWindow.cs" Link="Original/ReminderDeliveryWindow.cs" />
+    <Compile Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Reminders/ReminderPublication.cs" Link="Original/ReminderPublication.cs" />
+    <AndroidResource Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/Resources/drawable/ic_stat_zanance.xml" Link="Resources/drawable/ic_stat_zanance.xml" />
+    <AndroidAsset Include="../../../src/Apps/Zanance/Vafadar.Zanance.App/Resources/Strings/AppResources.resx" Link="captions/AppResources.resx" />
+  </ItemGroup>
+  <Target Name="SelectOriginalServicedDeliveryRuntime" BeforeTargets="ProcessFrameworkReferences">
+    <ItemGroup>
+      <FrameworkReference Condition="'%(FrameworkReference.Identity)' == 'Microsoft.NETCore.App'">
+        <RuntimeFrameworkVersion>$(VafadarSecurityRuntimeVersion)</RuntimeFrameworkVersion>
+      </FrameworkReference>
+    </ItemGroup>
+  </Target>
+  <Import Project="$(RepoRoot)eng/AndroidAotRuntime.targets" />
+</Project>

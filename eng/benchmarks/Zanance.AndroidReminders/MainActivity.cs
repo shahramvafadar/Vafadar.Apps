@@ -23,6 +23,10 @@ public sealed class MainActivity : MauiAppCompatActivity
         var run = Intent?.GetStringExtra("review_run");
         if (savedInstanceState is not null || PackageName != NativeReminderReview.Package ||
             run is null || !System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$")) return;
+#if TIMED_IDLE_REMINDER_REVIEW
+        // D-567: this fresh package may arm only real future original goal/period requests.
+        if (Intent?.GetBooleanExtra("review_timed_goal_period", false) != true) return;
+#endif
 #if LOCKED_REMINDER_REVIEW
         // D-553: only the new covered content routes may prepare this fresh package.
         if (Intent?.GetStringExtra("review_route_phase") is not ("goal" or "review")) return;
@@ -39,6 +43,8 @@ public sealed class MainActivity : MauiAppCompatActivity
     protected override void OnNewIntent(Intent? intent)
     {
         base.OnNewIntent(intent);
+        // D-567: original SDK delivery cannot prepare or rearm a timed cohort.
+#if !TIMED_IDLE_REMINDER_REVIEW
         var run = intent?.GetStringExtra("review_run");
         var profilePhase = intent?.GetStringExtra("review_profile_phase");
 #if LOCKED_REMINDER_REVIEW
@@ -50,6 +56,7 @@ public sealed class MainActivity : MauiAppCompatActivity
         if (PackageName != NativeReminderReview.Package || intent?.GetStringExtra("review_route_phase") != "review"
             || run is null || !System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$")) return;
         _ = PrepareAsync(run, false, false, false, false, "review", null, false);
+#endif
     }
 
     /// <summary>Waits for the real covered foreground startup before preparing notification metadata.</summary>

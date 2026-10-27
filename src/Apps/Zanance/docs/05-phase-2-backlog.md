@@ -4149,3 +4149,16 @@ Additional residual/loose deletions are rejected before execution and not retrie
 D567, broader accessibility/stability/platform/external release gates and the goal
 remain open. Native observations add no managed cases beyond the11 stated here.
 [Complete finite reader cohort and limits](quality/original-category-reader-states.md).
+
+### D-580 - Preserve distinct queued Android reminders
+
+Close the diagnosed queued-broadcast cancellation defect: baseline2/4 versus
+corrected4/4 actual deliveries after real reboot/controlled idle, exact financial
+and SDK Main binaries. Keep five new preparation guards, strict builds and one
+no-reset Samsung adoption. D567's original deadline remains failed; its obsolete
+fixture is retired only after source acceptance/cause proof, original Main120/
+caller/settings restoration and owned AVD stop. Its schedule alone is removed.
+Phone now belongs to Dev Loyan1 until explicit return. Further real-time reminder
+reliability, accessibility, stability/performance, iOS and external release gates
+remain open; no accepted financial command or old successful suite is repeated.
+[Complete source, native evidence and limits](quality/reboot-paired-delivery-diagnosis.md).

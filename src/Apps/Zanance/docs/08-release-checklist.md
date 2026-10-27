@@ -4286,3 +4286,17 @@ Additional residual/loose deletions are rejected before execution and not retrie
 D567, broader accessibility/stability/platform/external release gates and the goal
 remain open. Native observations add no managed cases beyond the11 stated here.
 [Complete finite reader cohort and limits](quality/original-category-reader-states.md).
+
+### D-580 - Preserve distinct queued Android reminders
+
+Verified: SHA-pinned official source correction/retained MIT notice, five
+actual preparation guards, baseline2/4 versus corrected4/4 native queued delivery,
+strict Windows and signed offline two-ABI APK384AOT/408ELF/1608 static load segments.
+Actual native engines and1422 resources match prior510a; current financial/Data PE
+bytes differ and are retained without claiming old binary or private DB equality.
+One no-reset Samsung adoption preserves signature/UID/CEDE/flags/14settings and
+Home979/all141 public states. Phone is handed to Loyan; no command before return.
+D567 original window FAIL remains, source/retirement/restoration complete and its
+schedule deleted. No general punctuality/stability/A11Y/hardware16KiB/iOS/provider/
+Store/publication acceptance; do not run release workflow to verify source setup.
+[Complete source, native evidence and limits](quality/reboot-paired-delivery-diagnosis.md).

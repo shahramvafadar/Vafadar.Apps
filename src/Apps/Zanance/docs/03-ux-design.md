@@ -2747,3 +2747,13 @@ observations/inputs on the same draft, never replay accepted category choices or
 financial writes. Current English category/Cancel state is qualified; two complete
 recordings provide machine acoustic evidence, not full speech intelligibility.
 [Finite native reader cohort](quality/original-category-reader-states.md).
+
+### D-580 - Preserve distinct queued Android reminders
+
+Do not let simultaneous generic reminders replace one another in Android's
+broadcast queue. Preserve original request identity, captions, privacy, tap-through
+lock and same-day policy; this correction changes no visible layout or permission.
+Native verification uses separate owned packages and original generic captions,
+without preparing accounts or repeating accepted financial actions. A skipped
+broadcast and a missed punctuality window are separate failures.
+[Complete source, native evidence and limits](quality/reboot-paired-delivery-diagnosis.md).

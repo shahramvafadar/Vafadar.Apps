@@ -48,6 +48,8 @@
 
   <ItemGroup Label="Notifications">
     <PackageVersion Include="Plugin.LocalNotification" Version="14.1.2" />
+    <!-- D-580: Android source override retains the official dependency identity; explicit references only. -->
+    <PackageVersion Include="Plugin.LocalNotification.Core" Version="1.1.2" />
   </ItemGroup>
 
   <ItemGroup Label="Syncfusion">

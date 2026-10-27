@@ -49,3 +49,7 @@ eng/native/sqlcipher/windows.crypto.profile.json text eol=crlf
 
 # Retain the upstream SDK notice text verbatim, including its original end-of-line spaces.
 src/Apps/Zanance/Vafadar.Zanance.App/Resources/Raw/ThirdPartyNotices.txt whitespace=-blank-at-eol
+
+# D-580: exact reviewed replacement/license digests must survive every host checkout.
+eng/notifications/AndroidUtils.cs text eol=crlf whitespace=-blank-at-eol
+eng/notifications/LICENSE.upstream text eol=lf

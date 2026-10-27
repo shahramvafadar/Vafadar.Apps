@@ -2854,3 +2854,18 @@ failed observers, bind the actual used baseline APK SHA and check all Java metad
 resources, not just the non-META-INF files. Use standard clean on exact owned roots and
 keep used packages/proofs; never retry previously rejected cleanup through another path.
 [Runtime evidence](../../src/Apps/Zanance/docs/quality/coreclr-original-ui-feasibility.md).
+
+## Reviewed notification source build (D-580)
+
+Android projects referencing Plugin.LocalNotification automatically use the reviewed
+source-built Core under `eng/notifications`. Install project build prerequisites
+Python3 and PowerShell7; CI explicitly supplies Python3.13. The preparation wrapper
+serializes the project-owned cache and verifies the official archive, original
+sources, MIT license and one AndroidUtils replacement. A changed/extra cached input
+must refuse and remain preserved; never disable source mapping or add a global feed.
+Public assembly identity remains1.1.2.0, corrected file revision1.1.2.580. Windows
+keeps the ordinary package. Three named independent baseline projects alone may
+opt out to preserve the original failure; they are never shipping candidates.
+The release workflow's prerequisite update does not authorize running publication.
+[Source build and guard instructions](../../eng/notifications/README.md).
+[Actual delivery evidence and limits](../../src/Apps/Zanance/docs/quality/reboot-paired-delivery-diagnosis.md).

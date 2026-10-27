@@ -6522,3 +6522,16 @@ Additional residual/loose deletions are rejected before execution and not retrie
 D567, broader accessibility/stability/platform/external release gates and the goal
 remain open. Native observations add no managed cases beyond the11 stated here.
 [Complete finite reader cohort and limits](../../quality/original-category-reader-states.md).
+
+### D-580 - Preserve distinct queued Android reminders
+
+The skipped D567 goal is diagnosed and the SDK broadcast-flag defect corrected.
+Five new guards, strict builds, real queued comparison2/4 versus4/4 and one no-reset
+Samsung adoption are complete. D567 original one-hour failure stays recorded; its
+source match, obsolete fixture retirement, original emulator Main120/settings/caller
+restoration and AVD stop are complete, and its continuation schedule is deleted.
+Current Samsung Main f7488d1d/PID21746/Home979/all141 is handed to Dev Loyan1.
+Resume only uncovered independent work until explicit phone return. Whole-Home
+two seconds, stability, complete accessibility, real-time/OEM reminder reliability,
+iOS and external identity/provider/Store/public release gates remain open.
+[Complete source, native evidence and limits](../../quality/reboot-paired-delivery-diagnosis.md).

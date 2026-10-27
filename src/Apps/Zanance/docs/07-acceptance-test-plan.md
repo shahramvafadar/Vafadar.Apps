@@ -7177,3 +7177,17 @@ Additional residual/loose deletions are rejected before execution and not retrie
 D567, broader accessibility/stability/platform/external release gates and the goal
 remain open. Native observations add no managed cases beyond the11 stated here.
 [Complete finite reader cohort and limits](quality/original-category-reader-states.md).
+
+### D-580 - Preserve distinct queued Android reminders
+
+Five new actual source-preparation tests pass once. Distinct SDK-only and
+original MAUI-bootstrap two-request cohorts each deliver2/2 after real reboot;
+the causal four-request baseline delivers2/skips2 and corrected cohort delivers4/
+skips0, with actual native queue history and exact financial/SDK Main inputs.
+Twelve new scheduled requests total are native observations, not managed tests.
+Original D567 review is3602055ms late and goal is skipped: original one-hour gate
+FAIL remains, source match PASS and terminal retirement/restoration complete.
+Strict Windows/full offline Android and one full signed Samsung no-reset adoption
+pass, preserving Home979/all141 public states and14 settings. General punctuality,
+Doze/OEM/cold/tap/reader/stability/hardware16KiB/iOS/external gates stay separate.
+[Complete source, native evidence and limits](quality/reboot-paired-delivery-diagnosis.md).

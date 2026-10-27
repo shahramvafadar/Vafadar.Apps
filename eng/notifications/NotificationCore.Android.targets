@@ -1,0 +1,19 @@
+<Project>
+  <!-- D-580: a source-built Android replacement preserves the SDK's public assembly identity.
+       Exclude the corresponding transitive package assets; other platforms remain original. -->
+  <PropertyGroup>
+    <_UsesLocalNotification>@(PackageReference->WithMetadataValue('Identity', 'Plugin.LocalNotification'))</_UsesLocalNotification>
+    <_NotificationBaselineProject Condition="'$(MSBuildProjectName)' == 'Vafadar.Zanance.NotificationDelivery' or '$(MSBuildProjectName)' == 'Vafadar.Zanance.OriginalNotificationDelivery' or '$(MSBuildProjectName)' == 'Vafadar.Zanance.NotificationQueue'">true</_NotificationBaselineProject>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0-android' and '$(_UsesLocalNotification)' != '' and '$(VafadarNotificationCoreBaseline)' != 'true'">
+    <PackageReference Include="Plugin.LocalNotification.Core"
+                      Condition="'@(PackageReference->WithMetadataValue('Identity', 'Plugin.LocalNotification.Core'))' == ''" />
+    <PackageReference Update="Plugin.LocalNotification.Core" ExcludeAssets="all" />
+    <ProjectReference Include="$(RepoRoot)eng/notifications/Plugin.LocalNotification.Core.csproj"
+                      Condition="'@(ProjectReference->WithMetadataValue('Filename', 'Plugin.LocalNotification.Core'))' == ''" />
+  </ItemGroup>
+  <Target Name="RefuseUnscopedOriginalNotificationCore" BeforeTargets="PrepareForBuild"
+          Condition="'$(VafadarNotificationCoreBaseline)' == 'true' and '$(_NotificationBaselineProject)' != 'true'">
+    <Error Text="Only the three independent notification diagnosis projects may retain the original Android broadcast defect." />
+  </Target>
+</Project>

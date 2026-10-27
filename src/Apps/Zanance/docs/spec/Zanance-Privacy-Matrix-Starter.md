@@ -1367,3 +1367,14 @@ tool/model; no upload, voice replacement, regenerated speech or old-success repl
 Raw transcripts/audio remain private diagnostic evidence, not product analytics or
 human intelligibility acceptance. Earlier failed recordings/refusals remain distinct.
 [Current scope and retention](../quality/original-category-reader-states.md).
+
+### D-580 - Preserve distinct queued Android reminders
+
+Retain the existing Android notification SDK/MIT notice; compile its pinned
+original Core with one reviewed broadcast-flag correction. There are no new runtime
+permissions, network access, financial data or exports. Private diagnostic queues
+use separate fictitious UIDs/generic captions and no financial store. Source archive
+and all compilation inputs are bounded/digest-verified; failed evidence is preserved.
+All completed fresh fixture UIDs are retired and owned XMLs hash-cleaned; the failed
+original D567 outcome remains distinct from corrected comparison results.
+[Complete source, native evidence and limits](../quality/reboot-paired-delivery-diagnosis.md).

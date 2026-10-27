@@ -71,6 +71,10 @@ jobs:
       - name: Install MAUI Android workload
         run: dotnet workload install maui-android
 
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+
       # Share the qualified producer cache with CI; validate exact package entries before restore.
       - name: Cache source-built Android cipher
         uses: actions/cache@v4

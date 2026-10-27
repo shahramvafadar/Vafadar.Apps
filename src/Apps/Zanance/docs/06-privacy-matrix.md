@@ -1398,3 +1398,14 @@ tool/model; no upload, voice replacement, regenerated speech or old-success repl
 Raw transcripts/audio remain private diagnostic evidence, not product analytics or
 human intelligibility acceptance. Earlier failed recordings/refusals remain distinct.
 [Current scope and retention](quality/original-category-reader-states.md).
+
+### D-580 - Preserve distinct queued Android reminders
+
+The Android SDK Core is rebuilt from the pinned official MIT source with one
+broadcast-flag correction; the original notice remains applicable. No new SDK,
+permission, network at runtime, account, financial field or export is introduced.
+Build-time download is bounded and SHA-verified; changed cache/source inputs refuse.
+Independent request-only cohorts contain generic captions and no financial store;
+private native/local failure receipts remain local. Retire only their owned UIDs,
+posted/pending requests and hash-matched XMLs. No shipping key/database read occurs.
+[Complete source, native evidence and limits](quality/reboot-paired-delivery-diagnosis.md).
