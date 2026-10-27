@@ -10741,3 +10741,18 @@ No new managed cases or full product build; nonempty data/full onboarding/hardwa
 16KiB/punctuality/stability/A11Y/iOS/external release gates and goal remain open.
 Phone remains exclusive to Dev Loyan1 until explicit return.
 [Complete current-product bootstrap and limits](quality/corrected-core-platform-bootstrap.md).
+
+### D-584 - Unused prototype standard cleanup and explicit retirement refusal
+
+Five standard cleans remove all411 registered files/7868802 logical bytes
+from exact unused notification prototype project roots, with zero ownership
+outliers/registered remnants. Used signed f748 product, live pinned archive and
+local native/failure proofs remain exact. Additional guarded retirement of the
+remaining E NotificationCore root is rejected before process creation with only
+blocked by policy; no deletion or planned backup/manifest occurs from that
+command, and no alternate deletion or old refused scope is attempted. Additional
+retirement remains incomplete. No build/test/device/financial/Docker replay.
+Fresh official-source review finds no newly released MAUI fix beyond current
+10.0.120; open upstream investigations do not identify our native cause. Keep
+all qualification/external gates and goal open; Loyan retains the phone lease.
+[Completed cleanup, refusal and source boundaries](quality/notification-prototype-cleanup.md).
