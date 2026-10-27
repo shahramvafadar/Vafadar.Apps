@@ -101,11 +101,9 @@ public sealed class ProtectedProfileStorage
         await ValidatePortableSourcesAsync(entries, maximumBytes, Check, ct).ConfigureAwait(false);
         var original = capture.CurrentOriginalPath;
         var legacy = capture.OriginalPaths.Single(pair => pair.Value == original).Key;
-        var identity = (await new SqliteDatabaseIdentityCatalogue(identityPath, Check).ReadAsync(ct).ConfigureAwait(false)).Single(row => row.LegacyProfileId == legacy);
-        // Capture performs portable JSON/allowlist validation only; this path is never created or opened.
-        var preferences = new SqlCipherRestorePreferences(original + ".preflight.preferences.cipher.db", identity.InitialCandidateKey,
-            keys, durability, cipherVersion, restoreKeys);
-        _ = preferences.Capture(entries.TryGetValue("display-settings.json", out var display) ? display : null, restoreSettings); Check();
+        _ = (await new SqliteDatabaseIdentityCatalogue(identityPath, Check).ReadAsync(ct).ConfigureAwait(false)).Single(row => row.LegacyProfileId == legacy);
+        // Validate the original identity and portable JSON/allowlist before reserving any restore state.
+        _ = SqlCipherRestorePreferences.CapturePackagePreferences(entries, restoreSettings, restoreKeys); Check();
         var receiver = await PrepareRestoreAsync(owner, ct).ConfigureAwait(false);
         await receiver.RestoreAsync(manifest, entries, ct).ConfigureAwait(false);
     }

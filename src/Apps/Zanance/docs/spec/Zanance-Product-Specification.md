@@ -9874,3 +9874,25 @@ Four redundant archives/155134714 logical bytes remain: automatic review rejects
 launch with no detailed reason; no alternate deletion or recovered-space claim follows. Used
 runtime/models/notices, WAVs and proofs remain. D567 and the broader goal/gates stay active.
 [Exact evidence, unresolved Persian boundary and refusal](../quality/local-reader-acoustic-evidence.md).
+
+### D-575 - Preserve omitted optional restore preferences
+
+Correct the reproduced original protected-restore rejection of a package without optional
+`display-settings.json`. Explicit nullable memory preserves missing choices; present empty/
+malformed JSON still refuses, explicit null affects only allowlisted preferences, and device
+security is excluded. Four new AT-575 behaviors pass across selected runs: one genuine failure
+is corrected and only that failed case is rerun; the other three successful cases are retained.
+Original native restore returns once after proving no earlier restore intent or accepted data;
+complete copied rows match. Remaining observations preserve the original accepted restore and
+all prepared source/cookie guards. Strict Windows/full offline Android have zero warnings/errors;
+384 own AOT/408 ELF,1422 exact resources, ZIP/v2/v3/static16KiB and actual native/managed identity
+are checked. Main receives the complete signed no-reset upgrade with all141 public Home
+attributes/Home979, UID/CE/DE/permissions and exact system settings preserved. No ledger Save,
+Import, Undo or old financial/seed sequence is replayed.
+
+Generated project-relative output is excluded from source discovery after its removal was
+rejected before execution;449 residual files/118359992 logical bytes remain, without bypass
+or freed-space claim. D574's two SDK-native PID0 cold refusals and original prepared profile
+remain retained; no accepted cold timing/two-second result is claimed. D567, spoken acceptance,
+general stability/security, iOS/provider/Store/release and the broad goal remain open.
+[Full correction, original native outcome and remaining boundaries](../quality/optional-restore-preferences.md).

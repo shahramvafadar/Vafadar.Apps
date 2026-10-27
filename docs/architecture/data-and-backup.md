@@ -2776,3 +2776,13 @@ remain unchanged and match the final cache cookie; otherwise comparison refuses.
 still compare cookies exactly without that evidence. Every schema, financial row and compressed
 payload remains exact. This changes independent diagnostics only, not source data or production
 restore/financial policy.
+
+### Omitted portable preference sources (D-575)
+
+Whole protected restore, active-profile preflight and key-loss staging share original package
+preference capture. An omitted `display-settings.json` stays nullable absent memory; a present
+zero-length source is malformed JSON and must not be treated as omitted. Avoid a conditional
+`ReadOnlyMemory<byte>`/null expression: its implicit array conversion can create present empty
+memory. Preserve the original allowlist/current-value behavior before reserving native restore
+ancestry. No fallback receiver, financial rewrite, new permission or weaker source guard is used.
+[Actual original failure and selected/native verification](../../src/Apps/Zanance/docs/quality/optional-restore-preferences.md).

@@ -41,6 +41,9 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Build">
+    <!-- A previous invocation can leave project-relative output after ArtifactsPath changes.
+         Generated output is never ordinary source; keep current SDK-generated items explicit. -->
+    <DefaultItemExcludes>$(DefaultItemExcludes);**/artifacts/**</DefaultItemExcludes>
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
     <TreatWarningsAsErrors Condition="'$(ContinuousIntegrationBuild)' == 'true'">true</TreatWarningsAsErrors>
     <Deterministic>true</Deterministic>

@@ -78,7 +78,7 @@ public sealed class SqlCipherPackageRestoreReceiver : IBackupPackageRestoreRecei
         if (!entries.TryGetValue("database.sqlite", out var database) || entries.Keys.Any(name => name is not "database.sqlite" and not "display-settings.json"))
             throw new InvalidDataException("Protected restore package has missing or unsupported sources.");
         if (database.Length > maximumBytes) throw new InvalidDataException("Portable database exceeds restore bound.");
-        var packet = preferences.Capture(entries.TryGetValue("display-settings.json", out var display) ? display : null, settings);
+        var packet = preferences.CapturePackage(entries, settings);
         Check(ct);
         var state = await journal.ReadAsync(ct).ConfigureAwait(false); Check(ct);
         if (state != captured || state.Phase != DatabaseGenerationPhase.Original)

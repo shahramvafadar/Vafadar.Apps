@@ -2801,3 +2801,22 @@ uses the existing JDK; no dependencies, devices, financial data or installation 
 Original/guarded logs and results remain distinct. An already fixed SDK may not reproduce the
 original defect; all guarded retained/changed/removed-resource cases must still pass.
 [Actual complete-app admission failure and corrected property](../../src/Apps/Zanance/docs/quality/android-archive-resource-retention.md).
+
+### Generated output and explicit artifact identity (D-575)
+
+Pass an absolute `ArtifactsPath` when overriding it. A relative property can be resolved under
+each referenced project and leave generated C# beneath its source directory. Default source
+discovery excludes nested artifacts trees; an explicit original-app benchmark source link must
+exclude its artifacts tree as well. Current SDK-generated inputs remain explicitly included.
+A clean checkout and a source tree with retained prior outputs must compile the same owned
+source set. Deletion refusal is not permission for an alternate removal or a freed-space claim.
+
+For unchanged-assembly comparisons, capture actual SourceLink URL/generated virtual paths and
+source bytes, not just informational revision text. Check an explicit compilation-context import
+actually exists before invoking a build. Retain intentional source changes and before/after
+refusals; never edit PE bytes to manufacture identity.
+
+Run `python eng/scripts/Review-GitOutputGuards.py --work-directory <new-owned-directory-outside-checkout> --shell <existing-Git-sh>`
+for the actual hook output/source boundaries. The fixture creates no commit, uses local personal
+identity only and never changes the real index, global Git configuration or existing files.
+Ignored generated artifacts are outputs; actual ignored source and staged output still refuse.

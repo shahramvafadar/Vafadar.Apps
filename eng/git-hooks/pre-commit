@@ -20,7 +20,7 @@ for ident in "$author" "$committer"; do
 done
 
 # Guard: no secrets, databases, keystores or build output in commits.
-forbidden=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '(^|/)(bin|obj)/|Directory\.Secrets\.props$|\.(keystore|jks|db|db-wal|db-shm)$' || true)
+forbidden=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '(^|/)(bin|obj|artifacts)/|Directory\.Secrets\.props$|\.(keystore|jks|db|db-wal|db-shm)$' || true)
 if [ -n "$forbidden" ]; then
   echo "pre-commit: these files must not be committed:" >&2
   echo "$forbidden" >&2
@@ -36,7 +36,7 @@ if [ -n "$attribution" ]; then
 fi
 
 # Guard: source files hidden by an ignore rule compile locally but are missing in CI.
-ignored=$(git status --ignored --porcelain src test docs eng | grep '^!!' | grep -vE '/(bin|obj)/|\.user$' || true)
+ignored=$(git status --ignored --porcelain src test docs eng | grep '^!!' | grep -vE '/(bin|obj|artifacts)/|\.user$' || true)
 if [ -n "$ignored" ]; then
   echo "pre-commit: source files are ignored by a .gitignore rule:" >&2
   echo "$ignored" >&2

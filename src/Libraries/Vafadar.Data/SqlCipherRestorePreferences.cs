@@ -37,6 +37,22 @@ public sealed class SqlCipherRestorePreferences
     public RestorePreferencePacket Capture(ReadOnlyMemory<byte>? portable, ISettingsStore settings) =>
         CapturePortable(portable, settings, allowed);
 
+    /// <summary>Captures the optional original preference source from a validated complete package.</summary>
+    public RestorePreferencePacket CapturePackage(IReadOnlyDictionary<string, ReadOnlyMemory<byte>> entries, ISettingsStore settings) =>
+        CapturePackagePreferences(entries, settings, allowed);
+
+    /// <summary>Keeps an omitted source distinct from a present malformed or empty JSON payload.</summary>
+    public static RestorePreferencePacket CapturePackagePreferences(IReadOnlyDictionary<string, ReadOnlyMemory<byte>> entries,
+        ISettingsStore settings, IReadOnlyList<string> allowed)
+    {
+        ArgumentNullException.ThrowIfNull(entries);
+        // ReadOnlyMemory has an implicit array conversion: a conditional null arm can
+        // become present empty memory. An omitted optional source must stay nullable null.
+        ReadOnlyMemory<byte>? portable = null;
+        if (entries.TryGetValue("display-settings.json", out var display)) portable = display;
+        return CapturePortable(portable, settings, allowed);
+    }
+
     /// <summary>Validates and snapshots only explicit portable preferences before any native recovery effects.</summary>
     public static RestorePreferencePacket CapturePortable(ReadOnlyMemory<byte>? portable, ISettingsStore settings,
         IReadOnlyList<string> allowed)

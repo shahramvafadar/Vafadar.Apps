@@ -69,8 +69,7 @@ internal abstract class ProtectedBackupRecovery(IServiceProvider services) : IPr
                 Check();
                 await ProtectedProfileStorage.ValidatePortableSourcesAsync(entries,
                     Vafadar.Backup.Security.DeviceSafetyEncryption.MaximumPackageBytes, Check, token).ConfigureAwait(false);
-                var portable = SqlCipherRestorePreferences.CapturePortable(
-                    entries.TryGetValue("display-settings.json", out var values) ? values : null, settings, LocalizationService.PortableKeys);
+                var portable = SqlCipherRestorePreferences.CapturePackagePreferences(entries, settings, LocalizationService.PortableKeys);
                 Check();
                 var baseRoot = FileSystem.AppDataDirectory; var id = Guid.NewGuid().ToString("N"); var root = Root(baseRoot, id);
                 // mkdir is no-replace. A failed staging directory is retained; it cannot become an active empty installation.
