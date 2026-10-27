@@ -4327,3 +4327,19 @@ Current emulator Main is now f7488d1d; never downgrade to historical8fd5. Phone
 stays with Dev Loyan1 until explicit return. No new managed tests, product builds
 or financial/native-success replay; broad qualification/external gates stay open.
 [Complete ordinary adoption and limits](quality/retained-notification-core-adoption.md).
+
+### D-583 - Current corrected product bootstrap on isolated compatibility systems
+
+Reuse complete signed f7488d1d without rebuilding for two fresh original-app
+bootstrap cohorts. API24/kernel4096 UID10062/PID2745 reaches original Welcome/
+Step1 with51 nodes; DE inode is unavailable, not invented. API35/userspace16384/
+kernel4096 UID10207/PID3993 reaches original Welcome and exposes all six language
+names after one owned body scroll; initial offscreen names are not a proven defect.
+No language/Next/restore/profile/financial action or SDK request is sent. Preserve
+metadata/tool/focus/label observer refusals without install or launch replay.
+Both fresh Main fixtures are retired, original package absence/five settings/size/
+density/config exact, four owned XMLs hash-cleaned and both owned AVDs stopped.
+No new managed cases or full product build; nonempty data/full onboarding/hardware
+16KiB/punctuality/stability/A11Y/iOS/external release gates and goal remain open.
+Phone remains exclusive to Dev Loyan1 until explicit return.
+[Complete current-product bootstrap and limits](quality/corrected-core-platform-bootstrap.md).
