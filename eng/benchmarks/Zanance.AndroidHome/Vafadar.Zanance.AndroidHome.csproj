@@ -108,6 +108,15 @@
     <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.cameracachereview'"
            Text="Camera-cache review requires a fresh independent identity; shipping and retained callers are excluded." />
   </Target>
+  <!-- Original source choice/camera acquisition has a new identity and no financial preparation phase. -->
+  <PropertyGroup Condition="'$(ReviewCameraCapture)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.receiptcamerareview</ApplicationId>
+    <DefineConstants>$(DefineConstants);CAMERA_CAPTURE_REVIEW</DefineConstants>
+  </PropertyGroup>
+  <Target Name="RequireOriginalCameraCaptureIdentity" BeforeTargets="PrepareForBuild" Condition="'$(ReviewCameraCapture)' == 'true'">
+    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.receiptcamerareview'"
+           Text="Receipt camera capture requires its fresh independent identity; shipping and retained callers are excluded." />
+  </Target>
   <!-- New native source-help qualification owns no retained caller/financial data. -->
   <PropertyGroup Condition="'$(ReviewReceiptSource)' == 'true'">
     <ApplicationId>pro.vafadar.zanance.receiptsourcereview</ApplicationId>

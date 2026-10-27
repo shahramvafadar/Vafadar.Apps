@@ -8,7 +8,7 @@ namespace Vafadar.Zanance.App;
 
 /// <summary>Runs requested independent performance phases after the original covered application startup.</summary>
 [Activity(Theme = "@style/Maui.SplashTheme", MainLauncher = true, LaunchMode = LaunchMode.SingleTop,
-#if LOADED_COLD_START_REVIEW
+#if LOADED_COLD_START_REVIEW || CAMERA_CAPTURE_REVIEW
     Permission = Android.Manifest.Permission.Dump,
 #endif
     ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode |
@@ -26,6 +26,14 @@ public sealed class MainActivity : MauiAppCompatActivity
         var faultObserverAccepted = savedInstanceState is not null || NativeFaultPcObserver.TryArm(this);
 #endif
         base.OnCreate(savedInstanceState);
+#if CAMERA_CAPTURE_REVIEW
+        // This fresh source-only caller cannot enter historical preparation or financial phases.
+        if (PackageName == "pro.vafadar.zanance.receiptcamerareview")
+        {
+            if (savedInstanceState is null) CameraCaptureReview.Start(this);
+            return;
+        }
+#endif
 #if CORECLR_RUNTIME_REVIEW
         // Capture only the original window; a provider request must never start storage preparation.
         CoreClrRuntimeObservation.Attach(this);
@@ -105,6 +113,17 @@ public sealed class MainActivity : MauiAppCompatActivity
         Android.Util.Log.Info("ZananceHomeStage", comparison + "|startup-ready");
         await AndroidHomeReview.RunAsync(app, services, phase, run, comparison, baseline);
     }
+
+#if CAMERA_CAPTURE_REVIEW
+    /// <inheritdoc />
+    protected override void OnActivityResult(int requestCode, Result resultCode, Android.Content.Intent? data)
+    {
+        base.OnActivityResult(requestCode, resultCode, data);
+        // Forward the real external Activity result to the original production camera adapter.
+        if (CameraCapture.OnActivityResult(requestCode, resultCode))
+            CameraCaptureReview.RecordNativeResult(requestCode, resultCode);
+    }
+#endif
 
     /// <inheritdoc />
     public override void OnConfigurationChanged(Android.Content.Res.Configuration newConfig)

@@ -1232,3 +1232,22 @@ UID after terminal proof; preserve old callers/Main/settings and original report
 See the [complete D-596 quality record](../../../src/Apps/Zanance/docs/quality/camera-original-cache-retirement.md) for signed identities, adoption, explicit
 phone drawing-order delta and rejected residual-output retirement. This is not
 sensor quality, natural low-memory, cold-speed or full receipt acceptance.
+
+
+## D-597 original emulator camera acquisition
+
+`ReviewCameraCapture=true` requires the new
+`pro.vafadar.zanance.receiptcamerareview` identity and protects its launcher with
+DUMP. An explicit GUID-N `review_camera_run` starts only the original source
+adapter, after original covered startup; no historical preparation/financial phase
+can run. The original CameraCapture callback bridge receives actual external
+Activity results. Create-new journal/input markers retain one cancellation and one
+photo without replay. Use an owned emulator imagefile input, never a host webcam.
+Source selection, Camera2 Back, Shutter and Done are real guarded native inputs;
+no result, source choice or prepared image is injected. The observer invokes no
+Home command, commercial-access decision, financial editor/Save or profile command.
+Do not mistake its bounded total1490EUR for whole OCR/merchant/sensor acceptance.
+Respect the owner's autonomous owned-emulator/risk-based physical-device rule in
+AGENTS.md. The original Main/caller/configuration remain protected, and previous
+policy-rejected cleanup scopes must never be retried.
+[Full original packets, text losses and restoration](../../../src/Apps/Zanance/docs/quality/emulator-camera-acquisition.md).

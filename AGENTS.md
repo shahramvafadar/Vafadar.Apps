@@ -1,5 +1,19 @@
 # AGENTS.md – working rules for this repository
 
+## Autonomous owned-emulator work and risk-based phone actions (owner, 2026-10-27, D-597)
+
+In the emulator owned by Zanance, perform whatever is necessary for the approved project work
+without requesting separate permission for each action. This supersedes the earlier foreground-only
+input restriction for that owned emulator, including required camera/file/system UI interactions.
+Keep actions scoped to the owned emulator and fictitious project data; preserve unfinished cohorts
+and accepted-operation checkpoints, restore temporary test changes and clean owned outputs.
+
+On the real phone, independently decide whether an action is necessary and low risk, then perform
+it without another approval question. Ask the owner before high-risk physical-device actions.
+Preserve an active other-project lease, original accounts/data and existing checkpoints. This
+execution authority does not turn tests into release acceptance or authorize entering real
+credentials, impersonating authentication, spending, publication or unrelated resources.
+
 ## Defer further TalkBack work behind all other available work (owner, 2026-10-27, D-594)
 
 The owner considers the TalkBack testing already sufficient for now. Finish only the active

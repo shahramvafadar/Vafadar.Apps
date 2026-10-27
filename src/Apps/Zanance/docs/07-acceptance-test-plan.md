@@ -7437,3 +7437,25 @@ Further eight-root retirement is rejected before execution with blocked by polic
 4030files/688445756bytes remain without an alternate attempt. Camera quality, wider
 platform/release gates and the full goal remain open; D-594 scheduling is unchanged.
 [Original cleanup, native preservation and exact limits](quality/camera-original-cache-retirement.md).
+
+
+### D-597 - Autonomous emulator work and original camera-result qualification
+
+The owner explicitly authorizes necessary project work in the Zanance-owned emulator
+without repeated permission, and necessary low-risk real-phone actions autonomously;
+high-risk phone actions still require the owner. Preserve other leases, data and
+accepted checkpoints. The original receipt source/camera/provider/preparation/reader
+adapters complete one real Camera2 cancellation and one shutter/Done on an owned
+synthetic image in the same2222/UID10218. Native results0/-1 and cache-zero outcomes
+are preserved. Found14.9/TryMinor(EUR)1490 is qualified without any financial command;
+header/footer text loss remains explicit, not whole-camera/OCR acceptance. Reuse the
+prepared signedd8b63158 once after approval, without reinstall or old scene replay.
+Retire only the fresh helper; original Main3042/885f6df5/all120 public attributes,
+UIDCEDE/permissions, five settings/config and caller match; the phone is untouched.
+No default app change/build or new managed count: three build-admission checks and
+two new native cases are distinct.1263 registered outputs/296045935bytes and two
+unused copies/59824542bytes are removed. Further native bin/obj retirement is rejected
+before execution;966files/130925594bytes remain with no alternate deletion. Physical
+camera/corpus, merchant/text, remaining platform/release gates and the full goal stay
+open. D-594 remains in force.
+[Complete native boundary and preservation](quality/emulator-camera-acquisition.md).

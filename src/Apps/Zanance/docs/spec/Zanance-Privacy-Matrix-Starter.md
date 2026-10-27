@@ -1418,3 +1418,19 @@ startup qualifies cleanup of fictitious bytes; it is not camera/OCR, secure eras
 private Main-store or whole-device acceptance. Exact evidence and preservation are
 in the camera-original-cache-retirement quality record; failed strict UI ordering
 and residual-output deletion refusal remain explicit.
+
+
+## D-597 - Independent original-camera qualification
+
+A fresh independent offline package uses the original contextual source chooser,
+FileProvider, external Camera2 result and receipt preparation/reader on one owned
+synthetic emulator image. It has no CAMERA/storage/INTERNET permission; no webcam,
+physical phone, real receipt, financial Save, backup or provider is involved.
+The ordinary camera original is deleted on cancel/read; only the existing compact
+copy and transient recognition bytes exist in the observer's memory. Fictitious OCR
+text and content-free lifecycle/control metadata remain local evidence; no new
+shipping logger/export/SDK is introduced. Retire only the fresh UID after both
+results. Camera2 permission rows, original Main/caller/settings/config match.
+This is not all-image/merchant quality, secure erasure, private Main data equality
+or real-sensor/platform/release acceptance. See the emulator-camera-acquisition
+quality record for exact ownership, original text loss and cleanup limits.
