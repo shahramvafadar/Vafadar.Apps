@@ -4750,3 +4750,12 @@ outputs retire;20 residual files/423356bytes remain after pre-execution policy r
 - [x] Used witnesses remain; standard/AVD/unused-output retirement and all residual refusals are explicit.
 - [ ] Overall two-second, stability/security/accessibility, physical/iOS/provider/Store/release gates remain open.
 [Evidence and exact limits](quality/rejected-ledger-brotli-quality.md).
+
+### D-615 - Merchant correction is separate from full camera acceptance
+
+Strict builds and the finite corrected parser/native reread pass. The camera source
+still lacks actual header/footer pixels; full-frame and representative physical
+corpus acceptance stay open. Preserve the failed diagnostic onboarding navigation,
+unused-output cleanup refusal and existing D-607 physical baseline/deadlines. No
+phone adoption, security/stability/accessibility/iOS/provider/Store release is implied.
+[Evidence and exact limits](quality/portrait-camera-merchant-boundary.md).

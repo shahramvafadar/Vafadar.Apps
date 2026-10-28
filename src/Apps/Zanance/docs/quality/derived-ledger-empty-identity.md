@@ -123,3 +123,10 @@ no-reset adoption; that physical gate stays open. Document/push this locally ver
 fix and schedule one exact-head CI check after16minutes. The overall goal, broad
 stability/security/accessibility, iOS/provider/Store/publication gates remain open;
 TalkBack stays last under D-594. Evidence:`%TEMP%\Zanance-D611-current.txt`.
+
+## Consumed one-use hosted follow-up
+
+[Local identity backend](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40626322553): completed/success. [Self-hosted service qualification](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40626322529): completed/success. [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40626322624): completed/success. [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40626322605): completed/success.
+Only the original single exact-head response is used. Its consumed marker and response
+are retained; only that one-use monitor is deleted. No second request or broader release
+conclusion is inferred. Cancellation cause and an unfinished CI result are not guessed.

@@ -2787,3 +2787,13 @@ Keep original source/camera/confirmation flow. A growing camera output is refuse
 the existing photo-preparation error path rather than read without an encoded bound.
 No crop/text inference, new prompt, layout, control or financial behavior changes.
 [Evidence and exact limits](quality/bounded-camera-source-read.md).
+
+### D-615 - Keep missing receipt merchants empty for review
+
+When a complete receipt date appears before a merchant header, do not fill Payee
+from that date or subsequent item rows. Preserve an actual earlier shop and the
+original amount/unit review; never invent pixels outside the acquired photo.
+No new prompt/layout/string or automatic financial write is introduced. Native
+parser reread passes; attempted editor navigation during fresh onboarding is not
+accepted as a checked form.
+[Evidence and exact limits](quality/portrait-camera-merchant-boundary.md).

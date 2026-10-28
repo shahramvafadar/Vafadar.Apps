@@ -20,7 +20,7 @@ Do not count an estimate or an unspecified broader-device statement as a ready t
 |---|---|---|
 | A11Y-03 | D-566 original receipt-source dialogs:18 exact OS200% contexts,360/412/680dp, en/fa/de, both themes, native scroll reachability. See [receipt-source evidence](../../quality/receipt-source-os-text-and-covered-startup.md). | Other changed controls need a named missing layout assertion before another matrix. Physical-device acceptance is separate; this does not reopen the completed emulator cohort. |
 | QA-07 / QA-01 notifications | D-580 original broadcast-flag correction and paired queued delivery after reboot/idle; D-553 PIN-covered cold routes on the emulator. See [paired-delivery diagnosis](../../quality/reboot-paired-delivery-diagnosis.md) and [covered cold routes](../../quality/pin-covered-cold-notification-routes.md). | Punctual physical reboot/idle delivery and genuine owner authentication remain separate. Do not repeat the defective baseline, late-delivery cohort, financial setup or old taps to manufacture punctuality. |
-| QA-05 receipts | D-504 source help, D-566 large-text dialogs, D-525 finite public corpus compatibility and D-473 accepted receipt Save/reread. | Original camera acquisition and broader real supported receipts remain partial. First inspect the original acquisition path and available source samples; no repeated accepted Save/attachment operation is needed for read-only acquisition quality. Persian image OCR is not implied by selectable-text PDF support. |
+| QA-05 receipts | D-613 camera source bound and D-615 missing-header merchant correction join the retained source/corpus evidence. | D-615 new portrait camera framing fails; same-JPEG parser correction passes without another capture or financial write. Full supported camera/merchant corpus and physical adoption remain open; no editor acceptance from the onboarding navigation failure. |
 | SEC-03/04/06/07 | Existing isolated key, recovery, migration and covered-route proofs remain valid only within their recorded scope. | Real owner/biometric transitions and OEM backup acceptance require their actual platform inputs; do not read Main private keys/database or replace authentication with a synthetic pass. |
 | QA-06 performance | Retained reference/tenfold measurements and rejected candidates remain recorded. | A new candidate needs a concrete measured bottleneck and unchanged source/financial guards. A new host microbenchmark or another unchanged timing run is not complete Home/two-second acceptance. |
 
@@ -7079,3 +7079,17 @@ conditional temporary source; no refused prior scope is revisited. Overall perfo
 security/stability/A11Y/iOS/provider/Store/release gates and D-607 remain separate;
 the goal stays active and TalkBack last.
 [Complete measurements, exact inputs and limits](../../quality/rejected-ledger-brotli-quality.md).
+
+### D-615 - Missing portrait pixels and an observed merchant correction
+
+One new720x960 portrait control reads all9 lines directly but the original camera
+result contains only5, with measured vertical coverage about210-749 of960 source
+pixels. Header/footer and true merchant are outside the stored image; no OCR/crop
+workaround or repeated shutter is used. Correct the separate date-as-merchant defect:
+7 original failures,10 new/45 related passes and a same-JPEG native reread give null
+merchant with unchanged23.45EUR. Diagnostic editor navigation from fresh onboarding
+fails and is not form acceptance. Strict Windows/full384AOT APK pass. Fresh UID/AVD
+and owned XML are retired; supplementary cleanup refusal is preserved without retry.
+Full supported camera/corpus and physical adoption remain open, D-607 unchanged,
+TalkBack last and the overall delivery goal active.
+[Evidence and exact limits](../../quality/portrait-camera-merchant-boundary.md).

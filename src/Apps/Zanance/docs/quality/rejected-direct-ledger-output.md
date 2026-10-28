@@ -69,3 +69,10 @@ creation with `blocked by policy`. All20 residual files/423356 logical bytes rem
 no alternate command, subset, custom cleanup or escalation follows. These sizes are
 logical file sizes, not measured host free space. Keep original sources, role diff,
 build/run records, gate proof and refusal at `%TEMP%\Zanance-D610-current.txt`.
+
+## Consumed one-use hosted follow-up
+
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40619234493): completed/success. [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40619234454): completed/success.
+Only the original single exact-head response is used. Its consumed marker and response
+are retained; only that one-use monitor is deleted. No second request or broader release
+conclusion is inferred. Cancellation cause and an unfinished CI result are not guessed.

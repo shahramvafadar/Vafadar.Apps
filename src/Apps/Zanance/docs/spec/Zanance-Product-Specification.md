@@ -10477,3 +10477,14 @@ sample iterations do not increase managed totals. Full32-field/order/source and 
 controls pass, but the candidate fails original Home latency/dispatcher gates and is
 not adopted. Track performance and release acceptance separately from host eligibility.
 [Evidence and exact limits](../quality/rejected-ledger-brotli-quality.md).
+
+### D-615 - Preserve missing receipt-merchant evidence
+
+A valid complete date before any header ends the original merchant search; dates
+and later item rows do not become a suggested shop. Totals, currency/unit evidence,
+original date parsing and explicit review/save policy remain unchanged. Ten new
+cases and45 related existing cases pass, with a same-JPEG corrected native reread.
+The new portrait source itself still loses its header/footer; editor navigation
+from a fresh onboarding root fails and is not form acceptance. Builds pass; complete
+camera/corpus, physical adoption and all separate release gates remain open.
+[Evidence and exact limits](../quality/portrait-camera-merchant-boundary.md).

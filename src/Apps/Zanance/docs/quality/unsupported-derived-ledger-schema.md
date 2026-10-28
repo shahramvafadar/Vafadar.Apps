@@ -87,3 +87,10 @@ its original accepted source remain untouched; physical adoption of the new prod
 waits behind that cohort. Do not revive rejected performance candidates or another
 unchanged timing matrix. General stability, two-second performance, complete security,
 TalkBack/A11Y, iOS, provider/Store and publication gates remain open. Goal stays active.
+
+## Consumed one-use hosted follow-up
+
+[Local identity backend](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40629181530): completed/success. [Self-hosted service qualification](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40629181548): completed/success. [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40629181557): completed/success. [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40629181533): completed/success.
+Only the original single exact-head response is used. Its consumed marker and response
+are retained; only that one-use monitor is deleted. No second request or broader release
+conclusion is inferred. Cancellation cause and an unfinished CI result are not guessed.

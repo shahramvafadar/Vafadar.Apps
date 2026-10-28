@@ -80,3 +80,10 @@ an accepted Save, or relabelling this stored frame. Physical camera scene availa
 and a broader admissible receipt corpus remain actual inputs. General stability,
 security, accessibility, iOS, provider/Store/publication and the complete delivery
 goal remain open; D-594's TalkBack execution order is unchanged.
+
+## Consumed one-use hosted follow-up
+
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40618142579): completed/success. [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40618142568): completed/cancelled.
+Only the original single exact-head response is used. Its consumed marker and response
+are retained; only that one-use monitor is deleted. No second request or broader release
+conclusion is inferred. Cancellation cause and an unfinished CI result are not guessed.

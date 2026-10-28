@@ -184,3 +184,10 @@ no source/financial preparation, early source read or manual rearm is repeated.
 
 QA-06/two-second, broad stability/security/accessibility, iOS/provider/Store and
 release gates remain open. The overall goal stays active; TalkBack remains last.
+
+## Consumed one-use hosted follow-up
+
+[CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40652088958): in_progress/no conclusion. [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40652088925): completed/success.
+Only the original single exact-head response is used. Its consumed marker and response
+are retained; only that one-use monitor is deleted. No second request or broader release
+conclusion is inferred. Cancellation cause and an unfinished CI result are not guessed.

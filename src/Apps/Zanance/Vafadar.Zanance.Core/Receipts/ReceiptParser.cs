@@ -112,7 +112,8 @@ public static partial class ReceiptParser
         var lines = normalized.Replace("\f", "\n[page boundary]\n", StringComparison.Ordinal)
             .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         var evidence = FindTotal(lines, uncertainLayout);
-        return new ReceiptSuggestion(evidence.Amount, FindDate(lines, today ?? DateOnly.FromDateTime(DateTime.Today)), FindMerchant(lines))
+        var readDay = today ?? DateOnly.FromDateTime(DateTime.Today);
+        return new ReceiptSuggestion(evidence.Amount, FindDate(lines, readDay), FindMerchant(lines, readDay))
         {
             AmountStatus = evidence.AmountStatus,
             Candidates = evidence.Candidates,
@@ -411,15 +412,47 @@ public static partial class ReceiptParser
         return false;
     }
 
-    private static string? FindMerchant(string[] lines) =>
-        lines.Take(4).FirstOrDefault(l =>
+    /// <summary>Reads only a header before the first complete date, never guessing a shop from a clipped receipt body.</summary>
+    private static string? FindMerchant(string[] lines, DateOnly today)
+    {
+        foreach (var line in lines.Take(4))
         {
-            var tokens = Tokens(l);
-            return l != "[page boundary]" && l.Count(char.IsLetter) >= 3
+            // D-615: a clipped camera frame may start with its date. Item rows below it cannot restore the missing header.
+            if (IsMerchantDateBoundary(line, today)) return null;
+            var tokens = Tokens(line);
+            if (line != "[page boundary]" && line.Count(char.IsLetter) >= 3
                 && !NotMerchant.Any(k => Has(tokens, k))
                 && !StrongTotal.Concat(WeakTotal).Any(k => Has(tokens, k))
-                && !l.Contains("www.", StringComparison.OrdinalIgnoreCase) && !l.Contains('@');
-        })?.Trim();
+                && !line.Contains("www.", StringComparison.OrdinalIgnoreCase) && !line.Contains('@'))
+                return line.Trim();
+        }
+        return null;
+    }
+
+    /// <summary>Recognizes complete calendar-date rows without changing the existing receipt-date suggestion.</summary>
+    private static bool IsMerchantDateBoundary(string line, DateOnly today)
+    {
+        var numeric = DatePattern().Match(line);
+        if (numeric.Success && numeric.Index == 0 && numeric.Length == line.Length && TryDate(numeric, today, out _))
+            return true;
+        // Exact full dates preserve names such as "Studio 54" and "28 OCT 2026 MARKET"; no loose current-year inference.
+        if (!MerchantNamedDate().IsMatch(line)) return false;
+        foreach (var culture in MerchantDateCultures)
+            if (DateOnly.TryParseExact(line, MerchantDateFormats, culture, DateTimeStyles.AllowWhiteSpaces, out _))
+                return true;
+        return false;
+    }
+
+    private static readonly string[] MerchantDateFormats = ["d MMM yyyy", "d MMMM yyyy", "d. MMM yyyy", "d. MMMM yyyy"];
+    private static readonly CultureInfo[] MerchantDateCultures =
+    [
+        CultureInfo.GetCultureInfo("en-US"), CultureInfo.GetCultureInfo("de-DE"),
+        CultureInfo.GetCultureInfo("es-ES"), CultureInfo.GetCultureInfo("fr-FR"),
+        CultureInfo.GetCultureInfo("it-IT"), CultureInfo.GetCultureInfo("fa-IR"),
+    ];
+
+    [GeneratedRegex(@"^\d{1,2}\.?\s+\p{L}+\.?\s+\d{4}$", RegexOptions.CultureInvariant)]
+    private static partial Regex MerchantNamedDate();
 
     [GeneratedRegex(@"(?<![\p{L}\p{N}.,+−-])[+−-]?\d+(?:[.,]\d+)*[−-]?(?![\p{L}\p{N}.,])", RegexOptions.CultureInvariant)]
     private static partial Regex AmountPattern();

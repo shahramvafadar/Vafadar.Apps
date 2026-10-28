@@ -11172,3 +11172,14 @@ gains6.92095% on that host but original native Home1908.2973 to2156.9117ms and d
 Preserve the actually observed local-cache cookie refusal and fully verified copy-only
 admission; source/financial guards and all tracked code remain original.
 [Evidence, retained failures and residual cleanup limits](quality/rejected-ledger-brotli-quality.md).
+
+### D-615 - Missing camera headers do not turn dates into merchants
+
+One new portrait source still loses its actual header/footer in the camera result.
+Preserve that framing failure, exact source and one acquisition; do not invent OCR.
+Seven original parser failures show the surviving date becomes a shop. End merchant
+search at a full valid date before any header, without changing total/currency/date
+or accepted writes. Ten new plus45 directly related cases and an exact retained-JPEG
+native reread pass. Diagnostic editor navigation during fresh onboarding fails and
+is not accepted. Strict builds pass; physical adoption waits for D-607.
+[Evidence and exact limits](quality/portrait-camera-merchant-boundary.md).

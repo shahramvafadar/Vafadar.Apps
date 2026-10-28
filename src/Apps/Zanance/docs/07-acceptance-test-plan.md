@@ -7632,3 +7632,13 @@ financial/native/source controls. Native1908.2973 to2156.9117ms and dispatcher r
 The diagnostic cache-cookie correction is declared only on verified fictitious copies.
 Two-second, physical, cold/search/migration and broader gates remain open.
 [Evidence and exact limits](quality/rejected-ledger-brotli-quality.md).
+
+### D-615 - QA-05 unchanged-frame merchant boundary
+
+One new portrait Camera2 result fails complete framing; direct input returns all9
+lines, camera paths only5. Seven original parser regressions fail;10 new plus45
+selected related cases pass after the finite date-boundary correction. Same accepted
+JPEG/native reader now yields null merchant and unchanged23.45EUR without another
+shutter or financial command. Editor opening from fresh onboarding fails; no form,
+whole-camera/corpus/physical acceptance is inferred. Strict builds pass.
+[Evidence and exact limits](quality/portrait-camera-merchant-boundary.md).

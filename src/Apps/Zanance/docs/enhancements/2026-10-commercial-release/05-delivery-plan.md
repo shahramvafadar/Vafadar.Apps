@@ -5320,3 +5320,12 @@ own completed outputs; do not reverse, repeat successful financial work or promo
 a host result. The separately authorized D-607 reboot/deadline cohort remains open.
 Continue genuinely ready work, with TalkBack last and external gates unchanged.
 [Evidence and exact limits](../../quality/rejected-ledger-brotli-quality.md).
+
+### D-615 - Finish the observed merchant defect without rescuing a clipped frame
+
+Retain one new failed portrait acquisition and fix its actual date-as-merchant
+suggestion through the exact saved frame. No shutter/financial success is replayed.
+Full-frame camera evidence still needs a supported complete source; keep the
+onboarding navigation failure explicit and D-607 physical/deadline cohort untouched.
+Continue ready work, with TalkBack last and external decisions unchanged.
+[Evidence and exact limits](../../quality/portrait-camera-merchant-boundary.md).

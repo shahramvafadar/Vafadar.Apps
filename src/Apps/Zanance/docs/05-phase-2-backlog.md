@@ -4594,3 +4594,11 @@ first original100000-row native Home publication; dispatcher ratio1.13058 also f
 No reverse, physical test, product promotion or successful financial replay follows.
 All tracked sources restore; owned outputs retire with explicit residual refusals.
 [Evidence and exact limits](quality/rejected-ledger-brotli-quality.md).
+
+### D-615 - Bound portrait framing and correct the observed merchant suggestion
+
+The finite new camera input still has missing header/footer pixels. Correct the
+independent date-as-merchant defect with10 new/45 related cases and one unchanged-JPEG
+native reread; no old acquisition/financial success is repeated. Preserve onboarding
+navigation failure and keep full-frame, physical/corpus and D-607 gates open.
+[Evidence and exact limits](quality/portrait-camera-merchant-boundary.md).

@@ -90,3 +90,10 @@ No phone command or D-607 source/handle change occurs. Product no-reset adoption
 stays behind that cohort. Full camera-text/corpus, punctual reminders, general
 stability/performance/security/A11Y, iOS/provider/Store/publication remain open;
 TalkBack remains last and the overall delivery goal stays active.
+
+## Consumed one-use hosted follow-up
+
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40631425691): completed/success. [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/40631425718): completed/success.
+Only the original single exact-head response is used. Its consumed marker and response
+are retained; only that one-use monitor is deleted. No second request or broader release
+conclusion is inferred. Cancellation cause and an unfinished CI result are not guessed.
