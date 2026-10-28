@@ -360,8 +360,9 @@ public static partial class ReceiptParser
     private static DateOnly? FindNamedDate(string[] lines)
     {
         DateOnly? found = null;
-        foreach (var line in lines)
+        foreach (var sourceLine in lines)
         {
+            var line = WithoutPrintedClock(sourceLine);
             if (!MerchantNamedDate().IsMatch(line)
                 || !int.TryParse(line.AsSpan(line.Length - 4), NumberStyles.None, CultureInfo.InvariantCulture, out var year))
                 continue;
@@ -457,6 +458,7 @@ public static partial class ReceiptParser
     /// <summary>Recognizes complete calendar-date rows independently of the date suggestion's precedence.</summary>
     private static bool IsMerchantDateBoundary(string line, DateOnly today)
     {
+        line = WithoutPrintedClock(line);
         var numeric = DatePattern().Match(line);
         if (numeric.Success && numeric.Index == 0 && numeric.Length == line.Length && TryDate(numeric, today, out _))
             return true;
@@ -467,6 +469,17 @@ public static partial class ReceiptParser
                 return true;
         return false;
     }
+
+    /// <summary>Removes only a complete trailing printed clock; date validation still requires the entire remaining row.</summary>
+    private static string WithoutPrintedClock(string line)
+    {
+        // D-626: receipt date/time rows are metadata, not merchant names. Preserve labels, zones and malformed clocks.
+        var match = PrintedClockSuffix().Match(line);
+        return match.Success ? line[..match.Index].TrimEnd() : line;
+    }
+
+    [GeneratedRegex(@"\s+(?:[01]?\d|2[0-3]):[0-5]\d(?::[0-5]\d)?$", RegexOptions.CultureInvariant)]
+    private static partial Regex PrintedClockSuffix();
 
     private static readonly string[] MerchantDateFormats = ["d MMM yyyy", "d MMMM yyyy", "d. MMM yyyy", "d. MMMM yyyy"];
     private static readonly CultureInfo[] MerchantDateCultures =

@@ -10567,3 +10567,13 @@ progress and RTL remain unchanged; six native contexts and strict Windows/Androi
 builds qualify the finite correction. No managed/financial replay or full physical
 Home acceptance is inferred. D-607 and broader delivery gates remain open.
 [Evidence and exact limits](../quality/transparent-progress-theme-surface.md).
+
+
+### D-626 - Bounded complete receipt date/time rows
+
+Recognize a complete valid printed clock suffix only as part of original full-date
+validation for merchant boundaries and named-date suggestions. No loose year/zone
+or time repair, numeric precedence or amount-rule change.53focused distinct final
+cases and one new original unsaved image-to-editor draft pass; no financial write
+or accepted old source replay. Physical adoption waits for D-607; broader gates stay.
+[Evidence and exact limits](../quality/receipt-printed-timestamp-boundary.md).

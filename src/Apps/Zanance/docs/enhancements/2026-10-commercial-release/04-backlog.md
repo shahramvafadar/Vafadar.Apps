@@ -7205,3 +7205,17 @@ Fresh package/XMLs retire, emulator stops; avdmanager partial deletion and one
 supplemental policy refusal leave3173files/5573203969logicalbytes without retry.
 D-624 images stay historical, physical adoption waits for D-607, goal remains active.
 [Evidence and exact limits](../../quality/transparent-progress-theme-surface.md).
+
+
+### D-626 - Complete printed timestamp and missing-merchant boundary
+
+Eight original regressions establish that complete date/clock rows can become shop
+or item names. Bounded clock removal only before full existing date/calendar checks
+fixes that; numeric priority/conflict refusal and money/source bodies stay exact.
+19new+34affected existing focused cases, strict builds/full offline APK and one new
+original PNG/reader/unsaved Date/empty-payee draft pass. Preserve Simple/clipped-field
+observer failures; same draft continues, Discard once and final All/All-types empty.
+Fresh UID/35XML/newPNG/25AVD files retire; four-root policy refusal leaves2720files/
+444548733logicalbytes without retry. No old financial/receipt success or phone action;
+D-607 and adoption stay open, overall goal active and TalkBack last.
+[Evidence and exact limits](../../quality/receipt-printed-timestamp-boundary.md).

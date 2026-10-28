@@ -11288,3 +11288,16 @@ change. Six contexts/eighteen actual arranged bars preserve progress, RTL, color
 and geometry. Strict builds/full offline APK pass; physical adoption waits for
 D-607. Native retirement and supplemental cleanup rejection are explicit.
 [Evidence and exact limits](quality/transparent-progress-theme-surface.md).
+
+
+### D-626 - Complete printed timestamps do not invent a merchant
+
+Eight real original parser failures show date/time rows becoming merchant or item
+names. Strip only a bounded valid trailing clock before full original calendar/date
+validation; keep actual source/merchant text, numeric precedence, conflict refusal
+and money bodies unchanged.19new+34affected existing cases, strict builds and one
+original PNG/reader/unsaved Date/empty-payee draft qualify the finite correction.
+Continue the same draft after Simple visibility/clipped-bounds observer refusals;
+Discard once, final history empty/Home0. Fresh retirement and cleanup refusal are
+explicit; D-607 and broader gates stay open.
+[Evidence and exact limits](quality/receipt-printed-timestamp-boundary.md).
