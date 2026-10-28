@@ -148,3 +148,11 @@ cleanup. Full receipt corpus, broader performance/security/stability/non-TalkBac
 hardware16KiB, iOS, provider/OAuth, accounts, Store/legal/release gates remain distinct. TalkBack
 stays last. These48 observations are not new managed tests or full acceptance of all those gates.
 The overall delivery goal remains active.
+
+
+## Later progress-surface correction (D-625)
+
+[The documented theme-key correction](transparent-progress-theme-surface.md) removes
+the observed white progress corners in a separate actual native cohort. These48
+historical draft images remain unchanged; this link is not a recapture or a claim
+that the corrected shipping APK produced them.

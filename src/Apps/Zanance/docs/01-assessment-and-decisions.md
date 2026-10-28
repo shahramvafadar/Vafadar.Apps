@@ -11276,3 +11276,15 @@ source, terminal/restoration and retirement evidence pass; cleanup refusal remai
 
 Complete the missing Android counterpart to historical Windows assets as48 actual frames in six languages, using the existing signed D-621 APK and one new original-UI demo dataset. Preserve ten accepted operations, close entity writing before capture, reject only one unfinished German IME frame and retain the actual French-navigation ANR/recovery. Exact original settings and fresh-UID/AVD retirement are recorded; supplemental cleanup refusal remains. The latest owner reply keeps Samsung with Zanance and supersedes a briefly issued temporary turn before any installation; explicit peer return is reported, not fresh device evidence.
 [Evidence and exact limits](quality/android-store-drafts.md).
+
+
+### D-625 - Use the supported progress theme surface above implicit styles
+
+The installed control's local theme background wins over the existing transparent
+implicit style. One actual original/corrected native comparison establishes that
+its documented resource keys remove white corner slivers. Palette.Apply supplies
+a transparent semantic surface before CommonTheme; no financial/style/private-API
+change. Six contexts/eighteen actual arranged bars preserve progress, RTL, colors
+and geometry. Strict builds/full offline APK pass; physical adoption waits for
+D-607. Native retirement and supplemental cleanup rejection are explicit.
+[Evidence and exact limits](quality/transparent-progress-theme-surface.md).

@@ -38,6 +38,7 @@ internal static class Palette
         ["RefundLine"] = ("#BCDDEF", "#1E4561"),
         ["PageBackground"] = ("#E8ECF2", "#111827"),
         ["CardBackground"] = ("#FFFFFF", "#1C2536"),
+        ["ProgressSurface"] = ("#00000000", "#00000000"),
         ["SurfaceMuted"] = ("#F1F4F8", "#232D40"),
         ["SecondaryText"] = ("#4A5568", "#AEB8C6"),
         ["DividerColor"] = ("#D5DCE6", "#2B364B"),
@@ -120,7 +121,7 @@ internal static class Palette
 
     public static Color DividerColor => Get("DividerColor");
 
-    /// <summary>Writes the variant into <paramref name="resources"/>; dynamic resources update at once.</summary>
+    /// <summary>Writes the semantic variant and control-theme aliases into <paramref name="resources"/>.</summary>
     public static void Apply(ResourceDictionary resources, bool dark)
     {
         ArgumentNullException.ThrowIfNull(resources);
@@ -129,6 +130,11 @@ internal static class Palette
         {
             resources[key] = Get(key);
         }
+
+        // D-625: the progress control sets its internal theme background as a local value, above implicit styles.
+        // Define its documented paint before selecting the custom theme, so rounded corners expose the parent surface.
+        resources["SfLinearProgressBarBackground"] = Get("ProgressSurface");
+        resources["SfLinearProgressBarTheme"] = "CommonTheme";
     }
 
     /// <summary>Returns the current value of a semantic color.</summary>

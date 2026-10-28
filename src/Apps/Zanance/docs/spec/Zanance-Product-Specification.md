@@ -10557,3 +10557,13 @@ Strict independent build and restoration/retirement pass; cleanup refusal is exp
 
 The existing D-621 application produces48 actual six-language Android development frames on one fresh API36/x64/4096 emulator. One new fictitious original-UI dataset is written once and closed before capture. Runtime, schema, financial rules and managed test count are unchanged. Preserve one rejected IME frame, the actual navigation ANR and same-data recovery; final data/visible preferences and owned retirement are scoped observations, not complete DB/key or release acceptance.
 [Evidence and exact limits](../quality/android-store-drafts.md).
+
+
+### D-625 - Transparent progress-control theme surface
+
+A semantic transparent background and documented control-theme aliases prevent
+light slivers around rounded progress tracks. Original bindings, geometry,
+progress and RTL remain unchanged; six native contexts and strict Windows/Android
+builds qualify the finite correction. No managed/financial replay or full physical
+Home acceptance is inferred. D-607 and broader delivery gates remain open.
+[Evidence and exact limits](../quality/transparent-progress-theme-surface.md).

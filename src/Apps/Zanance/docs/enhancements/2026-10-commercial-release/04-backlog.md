@@ -7192,3 +7192,16 @@ shipping, D-607, Loyan turn and all broader gates remain; goal active, TalkBack 
 
 Deliver48 actual1080x1920 RGB frames with raw/native/pixel provenance and no image retouching, using the existing D-621 signed APK. One new demo dataset has ten checkpointed original operations; no entity writing during capture. Preserve47 successful originals and replace only the unfinished German IME frame. Actual French-navigation ANR and terminal-proved same-data recovery remain unresolved; final scoped data/settings match.393 owned XMLs/fresh package and24 AVD files retire; six files/7732bytes remain after one supplemental policy refusal, no retry. Latest owner reservation keeps Samsung with Zanance; peer returns before any install. D-607 and broader gates remain open, overall goal active.
 [Evidence and exact limits](../../quality/android-store-drafts.md).
+
+
+### D-625 - Remove rounded-progress white corners through official theme keys
+
+Actual installed control metadata and one original/native theme-key action isolate
+the local background above implicit styles. Production Palette.Apply now publishes
+a transparent semantic surface before CommonTheme. Six contexts/eighteen arranged
+bars retain progress/height/radii/fill/RTL, with corner pixels matching the parent.
+Strict Windows/full offline Android pass; no financial or unchanged-suite replay.
+Fresh package/XMLs retire, emulator stops; avdmanager partial deletion and one
+supplemental policy refusal leave3173files/5573203969logicalbytes without retry.
+D-624 images stay historical, physical adoption waits for D-607, goal remains active.
+[Evidence and exact limits](../../quality/transparent-progress-theme-surface.md).
