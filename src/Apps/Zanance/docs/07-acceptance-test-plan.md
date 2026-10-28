@@ -7651,3 +7651,13 @@ rotated-poster text is genuinely imperfect and retained. No stored/direct reread
 financial action or new unit-test count. This finite source assertion closes; broader
 physical/corpus, whole-scene OCR and original editor acceptance remain separate.
 [Evidence and exact limits](quality/complete-virtual-scene-camera-source.md).
+
+### D-617 - Original onboarding transition and receipt editor fields
+
+Reproduce the account header/name being hidden by the prior preferences offset.
+The unchanged controls in independent step ScrollViews pass the exact original case
+and18 en/fa/de Light/Dark360/412/680 contexts. One initial zero account and two real
+Home/picker/reader/editor visits show the admitted complete merchant versus empty
+missing-header payee, both23.45EUR. Discard both; All/All types remains empty.
+Retain renderer admission and observer failures without successful operation replay.
+[Evidence and exact limits](quality/original-receipt-drafts-and-onboarding-scroll.md).

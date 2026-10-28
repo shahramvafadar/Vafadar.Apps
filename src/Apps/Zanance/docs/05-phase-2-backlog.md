@@ -4610,3 +4610,11 @@ shop and23.45EUR through original Camera2/preparation/recognition. No old direct
 OCR, shutter, Cancel, managed success or financial command is repeated. Preserve the
 extra rotated-poster OCR row and historical imagefile failures; no product change.
 [Evidence and exact limits](quality/complete-virtual-scene-camera-source.md).
+
+### D-617 - Finish the original receipt editor assertion and observed onboarding defect
+
+Exact original and18 layout contexts pass after independent step scroll ownership.
+Two original complete-product receipt drafts retain23.45EUR with correct/empty payee,
+then cancel without ledger writes. One fresh zero account is setup, not a replay of
+prior financial success. No new unit count or whole-corpus/physical acceptance.
+[Evidence and remaining gates](quality/original-receipt-drafts-and-onboarding-scroll.md).

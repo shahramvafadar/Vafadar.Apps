@@ -10497,3 +10497,12 @@ One corrupted rotated-poster line remains in actual text. No product behavior/mo
 permission/test count changes, no financial operation and no camera-corpus/general
 OCR claim. Existing imagefile failures and D-607 physical/deadline cohort stay intact.
 [Evidence and exact limits](../quality/complete-virtual-scene-camera-source.md).
+
+### D-617 - Original onboarding and receipt draft field continuity
+
+Onboarding steps retain independent scroll ownership while preserving original fields
+and financial behavior. Exact failure input and18 changed native contexts pass; two
+original unsaved receipt drafts keep23.45EUR and respectively correct/empty merchant.
+One fresh opening-zero account is created once; no ledger write or new unit-test count.
+Full signed package passes static checks; physical adoption and broader gates remain.
+[Evidence and exact limits](../quality/original-receipt-drafts-and-onboarding-scroll.md).

@@ -5338,3 +5338,12 @@ additional imperfect rotated-poster text. Retire only that fresh fixture and res
 diagnostics. No further imagefile rescue or settled reader/financial repetition.
 D-607 and broader physical/corpus/release gates remain active; TalkBack stays last.
 [Evidence and exact limits](../../quality/complete-virtual-scene-camera-source.md).
+
+### D-617 - Finish the named original form boundary before another cohort
+
+Correct the observed shared onboarding scroll offset and finish the existing compact
+images through the complete original product flow.19 native visibility observations
+and two unsaved drafts pass; one fresh zero account only, no financial success replay.
+Retire the fresh environment and preserve both cleanup refusals. D-607 continues;
+physical adoption awaits it, TalkBack stays last and no broad gate is relabeled.
+[Evidence and exact limits](../../quality/original-receipt-drafts-and-onboarding-scroll.md).

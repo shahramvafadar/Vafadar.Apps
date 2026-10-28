@@ -60,133 +60,138 @@
 
         <!-- Keep the scrolling form below the fixed progress bar and above the action buttons (D-62). -->
         <Grid Grid.Row="1" IsClippedToBounds="True">
-            <ScrollView>
-                <VerticalStackLayout x:Name="Body" Padding="0,8,0,16" Spacing="12" HorizontalOptions="Center">
+            <!-- D-617: each step owns its scroll position; a scrolled preferences page must not hide the next header. -->
+            <Grid x:Name="Body" HorizontalOptions="Center">
 
                     <!-- Step 1: welcome and language -->
-                    <VerticalStackLayout IsVisible="{Binding IsStep1}" Spacing="0">
-                        <!-- The Zanance symbol (D-26) in a soft halo; an image, so it is never mirrored in right-to-left layouts. -->
-                        <Border WidthRequest="132" HeightRequest="132" StrokeShape="RoundRectangle 66" StrokeThickness="1"
-                                BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource PrimaryLine}"
-                                HorizontalOptions="Center" Margin="0,24,0,0">
-                            <Image Source="zanance_symbol.png" WidthRequest="80" HeightRequest="77" Aspect="AspectFit"
-                                   HorizontalOptions="Center" VerticalOptions="Center" SemanticProperties.Description="Zanance" />
-                        </Border>
-                        <Label Text="{v:Translate Onb_WelcomeTitle}" FontFamily="{DynamicResource DisplayFont}" FontSize="30"
-                               TextColor="{DynamicResource AmountText}" HorizontalTextAlignment="Center" Margin="0,24,0,4" />
-                        <Label Text="{v:Translate Onb_Tagline}" FontSize="17" TextColor="{DynamicResource Primary}"
-                               HorizontalTextAlignment="Center" />
-                        <Label Text="{v:Translate Onb_WelcomeText}" Style="{StaticResource Secondary}" FontSize="15"
-                               HorizontalTextAlignment="Center" Margin="8,12,8,0" />
+                    <ScrollView IsVisible="{Binding IsStep1}">
+                        <VerticalStackLayout Padding="0,8,0,16" Spacing="0">
+                            <!-- The Zanance symbol (D-26) in a soft halo; an image, so it is never mirrored in right-to-left layouts. -->
+                            <Border WidthRequest="132" HeightRequest="132" StrokeShape="RoundRectangle 66" StrokeThickness="1"
+                                    BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource PrimaryLine}"
+                                    HorizontalOptions="Center" Margin="0,24,0,0">
+                                <Image Source="zanance_symbol.png" WidthRequest="80" HeightRequest="77" Aspect="AspectFit"
+                                       HorizontalOptions="Center" VerticalOptions="Center" SemanticProperties.Description="Zanance" />
+                            </Border>
+                            <Label Text="{v:Translate Onb_WelcomeTitle}" FontFamily="{DynamicResource DisplayFont}" FontSize="30"
+                                   TextColor="{DynamicResource AmountText}" HorizontalTextAlignment="Center" Margin="0,24,0,4" />
+                            <Label Text="{v:Translate Onb_Tagline}" FontSize="17" TextColor="{DynamicResource Primary}"
+                                   HorizontalTextAlignment="Center" />
+                            <Label Text="{v:Translate Onb_WelcomeText}" Style="{StaticResource Secondary}" FontSize="15"
+                                   HorizontalTextAlignment="Center" Margin="8,12,8,0" />
 
-                        <!-- D-91: keep the full restore alternative readable at native large-text sizes. -->
-                        <p:WrappingAction x:Name="WelcomeRestoreAction" Text="{v:Translate Onb_RestoreButton}" Command="{Binding RestoreBackupCommand}"
-                                          Appearance="Secondary" Margin="0,16,0,0" IsEnabled="{Binding IsNotBusy}" />
-                        <p:WrappingAction Text="{v:Translate Sync_FirstRunOpen}" Command="{Binding RestoreSyncedProfileCommand}"
-                                          IsVisible="{Binding PersonalSyncAvailable}" IsEnabled="{Binding IsNotBusy}" Margin="0,8,0,0" />
-                        <p:WrappingAction Text="{v:Translate Household_Title}" Command="{Binding OpenHouseholdCommand}"
-                                          IsVisible="{Binding PersonalSyncAvailable}" IsEnabled="{Binding IsNotBusy}" />
+                            <!-- D-91: keep the full restore alternative readable at native large-text sizes. -->
+                            <p:WrappingAction x:Name="WelcomeRestoreAction" Text="{v:Translate Onb_RestoreButton}" Command="{Binding RestoreBackupCommand}"
+                                              Appearance="Secondary" Margin="0,16,0,0" IsEnabled="{Binding IsNotBusy}" />
+                            <p:WrappingAction Text="{v:Translate Sync_FirstRunOpen}" Command="{Binding RestoreSyncedProfileCommand}"
+                                              IsVisible="{Binding PersonalSyncAvailable}" IsEnabled="{Binding IsNotBusy}" Margin="0,8,0,0" />
+                            <p:WrappingAction Text="{v:Translate Household_Title}" Command="{Binding OpenHouseholdCommand}"
+                                              IsVisible="{Binding PersonalSyncAvailable}" IsEnabled="{Binding IsNotBusy}" />
 
-                        <Label Text="{v:Translate Settings_Language}" Style="{StaticResource SectionHeader}" Margin="4,28,4,6" />
-                        <Border Style="{StaticResource Card}" Padding="6">
-                            <CollectionView ItemsSource="{Binding Languages}" SelectionMode="Single" SelectedItem="{Binding SelectedLanguage}">
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate x:DataType="loc:AppLanguage">
-                                        <Border Padding="14,12" Margin="0,2" StrokeThickness="1" StrokeShape="RoundRectangle 12"
-                                                BackgroundColor="Transparent" Stroke="Transparent" SemanticProperties.Description="{Binding NativeName}">
-                                            <Grid ColumnDefinitions="*,Auto">
-                                                <Label Text="{Binding NativeName}" FontSize="17" VerticalOptions="Center" />
-                                                <fi:SymbolIcon x:Name="Check" Grid.Column="1" Symbol="CheckmarkCircle" FontSize="22"
-                                                               ForegroundColor="{DynamicResource Primary}" IsVisible="False" VerticalOptions="Center" />
-                                            </Grid>
-                                            <VisualStateManager.VisualStateGroups>
-                                                <VisualStateGroup Name="CommonStates">
-                                                    <VisualState Name="Normal" />
-                                                    <VisualState Name="Selected">
-                                                        <VisualState.Setters>
-                                                            <Setter Property="BackgroundColor" Value="{DynamicResource PrimarySoft}" />
-                                                            <Setter Property="Stroke" Value="{DynamicResource Primary}" />
-                                                            <Setter TargetName="Check" Property="IsVisible" Value="True" />
-                                                        </VisualState.Setters>
-                                                    </VisualState>
-                                                </VisualStateGroup>
-                                            </VisualStateManager.VisualStateGroups>
-                                        </Border>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
-                        </Border>
-                    </VerticalStackLayout>
+                            <Label Text="{v:Translate Settings_Language}" Style="{StaticResource SectionHeader}" Margin="4,28,4,6" />
+                            <Border Style="{StaticResource Card}" Padding="6">
+                                <CollectionView ItemsSource="{Binding Languages}" SelectionMode="Single" SelectedItem="{Binding SelectedLanguage}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="loc:AppLanguage">
+                                            <Border Padding="14,12" Margin="0,2" StrokeThickness="1" StrokeShape="RoundRectangle 12"
+                                                    BackgroundColor="Transparent" Stroke="Transparent" SemanticProperties.Description="{Binding NativeName}">
+                                                <Grid ColumnDefinitions="*,Auto">
+                                                    <Label Text="{Binding NativeName}" FontSize="17" VerticalOptions="Center" />
+                                                    <fi:SymbolIcon x:Name="Check" Grid.Column="1" Symbol="CheckmarkCircle" FontSize="22"
+                                                                   ForegroundColor="{DynamicResource Primary}" IsVisible="False" VerticalOptions="Center" />
+                                                </Grid>
+                                                <VisualStateManager.VisualStateGroups>
+                                                    <VisualStateGroup Name="CommonStates">
+                                                        <VisualState Name="Normal" />
+                                                        <VisualState Name="Selected">
+                                                            <VisualState.Setters>
+                                                                <Setter Property="BackgroundColor" Value="{DynamicResource PrimarySoft}" />
+                                                                <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                                                <Setter TargetName="Check" Property="IsVisible" Value="True" />
+                                                            </VisualState.Setters>
+                                                        </VisualState>
+                                                    </VisualStateGroup>
+                                                </VisualStateManager.VisualStateGroups>
+                                            </Border>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </Border>
+                        </VerticalStackLayout>
+                    </ScrollView>
 
                     <!-- Step 2: theme, experience, report currency and calendar (D-62). -->
-                    <VerticalStackLayout IsVisible="{Binding IsStep2}" Spacing="0">
-                        <Border Style="{StaticResource StepIcon}" Margin="0,24,0,0">
-                            <fi:SymbolIcon Symbol="Money" FontSize="34" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <Label Text="{v:Translate Onb_CurrencyIntro}" FontFamily="{DynamicResource DisplayFont}" FontSize="26"
-                               TextColor="{DynamicResource AmountText}" HorizontalTextAlignment="Center" Margin="0,16,0,4" />
-                        <Label Text="{v:Translate Onb_CurrencyText}" Style="{StaticResource Secondary}" FontSize="15" HorizontalTextAlignment="Center" Margin="8,0" />
+                    <ScrollView IsVisible="{Binding IsStep2}">
+                        <VerticalStackLayout Padding="0,8,0,16" Spacing="0">
+                            <Border Style="{StaticResource StepIcon}" Margin="0,24,0,0">
+                                <fi:SymbolIcon Symbol="Money" FontSize="34" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="{v:Translate Onb_CurrencyIntro}" FontFamily="{DynamicResource DisplayFont}" FontSize="26"
+                                   TextColor="{DynamicResource AmountText}" HorizontalTextAlignment="Center" Margin="0,16,0,4" />
+                            <Label Text="{v:Translate Onb_CurrencyText}" Style="{StaticResource Secondary}" FontSize="15" HorizontalTextAlignment="Center" Margin="8,0" />
 
-                        <Label Text="{v:Translate Theme_Title}" Style="{StaticResource SectionHeader}" />
-                        <Border Style="{StaticResource Card}">
-                            <Picker ItemsSource="{Binding ThemeNames}" SelectedIndex="{Binding ThemeIndex}" SemanticProperties.Description="{v:Translate Theme_Title}" />
-                        </Border>
-                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
-                            <Label Text="{v:Translate Settings_Experience}" Style="{StaticResource SectionHeader}" />
-                            <v:HelpButton Grid.Column="1" Topic="Mode" Margin="0,12,0,0" />
-                        </Grid>
-                        <Border Style="{StaticResource Card}">
-                            <VerticalStackLayout Spacing="8">
-                                <Picker ItemsSource="{Binding ModeNames}" SelectedIndex="{Binding ModeIndex}" SemanticProperties.Description="{v:Translate Settings_Experience}" />
-                                <Label Text="{v:Translate Mode_Hint}" Style="{StaticResource Secondary}" />
-                            </VerticalStackLayout>
-                        </Border>
-                        <Border Style="{StaticResource Card}" Margin="0,16,0,0">
-                            <VerticalStackLayout Spacing="0">
-                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
-                                    <Label Text="{v:Translate Onb_CurrencyTitle}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
-                                    <v:HelpButton Grid.Column="1" Topic="ReportCurrency" Margin="0,-4,0,0" />
-                                </Grid>
-                                <Border Style="{StaticResource FieldBox}">
-                                    <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency, Mode=TwoWay}"
-                                        SemanticProperties.Description="{v:Translate Onb_CurrencyTitle}" />
-                                </Border>
-                                <Label Text="{v:Translate Settings_Calendar}" Style="{StaticResource FieldLabel}" Margin="0,16,0,4" />
-                                <Picker ItemsSource="{Binding Calendars}" SelectedItem="{Binding SelectedCalendar}"
-                                        SemanticProperties.Description="{v:Translate Settings_Calendar}" />
-                                <settings:RegionalPreferencesView BindingContext="{Binding Regional}" />
-                            </VerticalStackLayout>
-                        </Border>
-                        <Label Text="{v:Translate Onb_LaterText}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" Margin="8,16,8,0" />
-                    </VerticalStackLayout>
+                            <Label Text="{v:Translate Theme_Title}" Style="{StaticResource SectionHeader}" />
+                            <Border Style="{StaticResource Card}">
+                                <Picker ItemsSource="{Binding ThemeNames}" SelectedIndex="{Binding ThemeIndex}" SemanticProperties.Description="{v:Translate Theme_Title}" />
+                            </Border>
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
+                                <Label Text="{v:Translate Settings_Experience}" Style="{StaticResource SectionHeader}" />
+                                <v:HelpButton Grid.Column="1" Topic="Mode" Margin="0,12,0,0" />
+                            </Grid>
+                            <Border Style="{StaticResource Card}">
+                                <VerticalStackLayout Spacing="8">
+                                    <Picker ItemsSource="{Binding ModeNames}" SelectedIndex="{Binding ModeIndex}" SemanticProperties.Description="{v:Translate Settings_Experience}" />
+                                    <Label Text="{v:Translate Mode_Hint}" Style="{StaticResource Secondary}" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Style="{StaticResource Card}" Margin="0,16,0,0">
+                                <VerticalStackLayout Spacing="0">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6" HorizontalOptions="Start">
+                                        <Label Text="{v:Translate Onb_CurrencyTitle}" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
+                                        <v:HelpButton Grid.Column="1" Topic="ReportCurrency" Margin="0,-4,0,0" />
+                                    </Grid>
+                                    <Border Style="{StaticResource FieldBox}">
+                                        <inputs:SfComboBox Style="{StaticResource CurrencyBox}" ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding ReportCurrency, Mode=TwoWay}"
+                                            SemanticProperties.Description="{v:Translate Onb_CurrencyTitle}" />
+                                    </Border>
+                                    <Label Text="{v:Translate Settings_Calendar}" Style="{StaticResource FieldLabel}" Margin="0,16,0,4" />
+                                    <Picker ItemsSource="{Binding Calendars}" SelectedItem="{Binding SelectedCalendar}"
+                                            SemanticProperties.Description="{v:Translate Settings_Calendar}" />
+                                    <settings:RegionalPreferencesView BindingContext="{Binding Regional}" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Label Text="{v:Translate Onb_LaterText}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" Margin="8,16,8,0" />
+                        </VerticalStackLayout>
+                    </ScrollView>
 
                     <!-- Step 3: first account -->
-                    <VerticalStackLayout IsVisible="{Binding IsStep3}" Spacing="0">
-                        <Border Style="{StaticResource Card}" Margin="0,16,0,0">
-                            <VerticalStackLayout Spacing="8">
-                                <Label Text="{v:Translate Onb_RestoreText}" Style="{StaticResource Secondary}" />
-                                <p:WrappingAction x:Name="AccountRestoreAction" Text="{v:Translate Onb_RestoreButton}" Command="{Binding RestoreBackupCommand}"
-                                                  Appearance="Secondary" IsEnabled="{Binding IsNotBusy}" />
-                                <p:WrappingAction Text="{v:Translate Sync_FirstRunOpen}" Command="{Binding RestoreSyncedProfileCommand}"
-                                                  IsVisible="{Binding PersonalSyncAvailable}" IsEnabled="{Binding IsNotBusy}" />
-                                <p:WrappingAction Text="{v:Translate Household_Title}" Command="{Binding OpenHouseholdCommand}"
-                                                  IsVisible="{Binding PersonalSyncAvailable}" IsEnabled="{Binding IsNotBusy}" />
-                            </VerticalStackLayout>
-                        </Border>
-                        <Border Style="{StaticResource StepIcon}" Margin="0,24,0,0">
-                            <fi:SymbolIcon Symbol="Wallet" FontSize="34" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <Label Text="{v:Translate Onb_AccountTitle}" FontFamily="{DynamicResource DisplayFont}" FontSize="26"
-                               TextColor="{DynamicResource AmountText}" HorizontalTextAlignment="Center" Margin="0,16,0,4" />
-                        <Label Text="{v:Translate Onb_AccountText}" Style="{StaticResource Secondary}" FontSize="15" HorizontalTextAlignment="Center" Margin="8,0" />
+                    <ScrollView IsVisible="{Binding IsStep3}">
+                        <VerticalStackLayout Padding="0,8,0,16" Spacing="0">
+                            <Border Style="{StaticResource Card}" Margin="0,16,0,0">
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="{v:Translate Onb_RestoreText}" Style="{StaticResource Secondary}" />
+                                    <p:WrappingAction x:Name="AccountRestoreAction" Text="{v:Translate Onb_RestoreButton}" Command="{Binding RestoreBackupCommand}"
+                                                      Appearance="Secondary" IsEnabled="{Binding IsNotBusy}" />
+                                    <p:WrappingAction Text="{v:Translate Sync_FirstRunOpen}" Command="{Binding RestoreSyncedProfileCommand}"
+                                                      IsVisible="{Binding PersonalSyncAvailable}" IsEnabled="{Binding IsNotBusy}" />
+                                    <p:WrappingAction Text="{v:Translate Household_Title}" Command="{Binding OpenHouseholdCommand}"
+                                                      IsVisible="{Binding PersonalSyncAvailable}" IsEnabled="{Binding IsNotBusy}" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Style="{StaticResource StepIcon}" Margin="0,24,0,0">
+                                <fi:SymbolIcon Symbol="Wallet" FontSize="34" ForegroundColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="{v:Translate Onb_AccountTitle}" FontFamily="{DynamicResource DisplayFont}" FontSize="26"
+                                   TextColor="{DynamicResource AmountText}" HorizontalTextAlignment="Center" Margin="0,16,0,4" />
+                            <Label Text="{v:Translate Onb_AccountText}" Style="{StaticResource Secondary}" FontSize="15" HorizontalTextAlignment="Center" Margin="8,0" />
 
-                        <Border Style="{StaticResource Card}" Margin="0,24,0,0">
-                            <accounts:AccountFormView BindingContext="{Binding Account}" />
-                        </Border>
-                        <Label Text="{v:Translate Onb_ZeroHint}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" Margin="8,16,8,0" />
-                    </VerticalStackLayout>
-                </VerticalStackLayout>
-            </ScrollView>
+                            <Border Style="{StaticResource Card}" Margin="0,24,0,0">
+                                <accounts:AccountFormView BindingContext="{Binding Account}" />
+                            </Border>
+                            <Label Text="{v:Translate Onb_ZeroHint}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" Margin="8,16,8,0" />
+                        </VerticalStackLayout>
+                    </ScrollView>
+            </Grid>
         </Grid>
 
         <!-- D-364: reflow whole scaled commands rather than clipping a word inside a fixed half-width native button. -->

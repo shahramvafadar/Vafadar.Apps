@@ -20,7 +20,7 @@ Do not count an estimate or an unspecified broader-device statement as a ready t
 |---|---|---|
 | A11Y-03 | D-566 original receipt-source dialogs:18 exact OS200% contexts,360/412/680dp, en/fa/de, both themes, native scroll reachability. See [receipt-source evidence](../../quality/receipt-source-os-text-and-covered-startup.md). | Other changed controls need a named missing layout assertion before another matrix. Physical-device acceptance is separate; this does not reopen the completed emulator cohort. |
 | QA-07 / QA-01 notifications | D-580 original broadcast-flag correction and paired queued delivery after reboot/idle; D-553 PIN-covered cold routes on the emulator. See [paired-delivery diagnosis](../../quality/reboot-paired-delivery-diagnosis.md) and [covered cold routes](../../quality/pin-covered-cold-notification-routes.md). | Punctual physical reboot/idle delivery and genuine owner authentication remain separate. Do not repeat the defective baseline, late-delivery cohort, financial setup or old taps to manufacture punctuality. |
-| QA-05 receipts | D-613 camera source bound, D-615 missing-header merchant correction and D-616 complete primary scene text/shop/total. | One supported virtual-scene camera source passes all9 primary rows; extra secondary OCR and historical imagefile failures remain explicit. Broader physical/corpus and editor acceptance remain open, without financial replay. |
+| QA-05 receipts | D-613 bounded camera source, D-615 merchant boundary, D-616 complete primary scene text and D-617 original complete/empty-payee receipt drafts. | Named complete-source and original editor assertions pass; retain secondary OCR and historical imagefile failures. Broader physical/corpus and no-reset adoption remain separate, without financial replay. |
 | SEC-03/04/06/07 | Existing isolated key, recovery, migration and covered-route proofs remain valid only within their recorded scope. | Real owner/biometric transitions and OEM backup acceptance require their actual platform inputs; do not read Main private keys/database or replace authentication with a synthetic pass. |
 | QA-06 performance | Retained reference/tenfold measurements and rejected candidates remain recorded. | A new candidate needs a concrete measured bottleneck and unchanged source/financial guards. A new host microbenchmark or another unchanged timing run is not complete Home/two-second acceptance. |
 
@@ -7106,3 +7106,16 @@ cleanup refusal is recorded without retry. This finite complete-source assertion
 finishes, while physical/corpus/editor and broader release gates remain separate.
 D-607 stays untouched and the goal active; TalkBack remains last.
 [Evidence and exact limits](../../quality/complete-virtual-scene-camera-source.md).
+
+### D-617 - Original receipt drafts and independent onboarding scroll ownership
+
+An actual shared preferences offset hides the next account header/name before any
+write. Independent original step ScrollViews preserve every control/command/footer.
+Strict builds, exact original failure input and18 changed native contexts pass.
+One fresh zero account enables two original Home/file/reader/editor drafts with
+correct versus empty merchant and unchanged23.45EUR; both discarded, All/All types
+empty. No camera/parser-suite/financial replay or new unit count. Fresh environment
+restores/retires; two supplementary cleanup scopes remain after policy rejection,
+without retry. D-607 stays pending and untouched; physical adoption, broader corpus
+and release gates remain separate. Overall goal active, TalkBack last.
+[Evidence and exact limits](../../quality/original-receipt-drafts-and-onboarding-scroll.md).

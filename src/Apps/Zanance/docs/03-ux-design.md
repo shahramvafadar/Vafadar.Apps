@@ -2797,3 +2797,12 @@ No new prompt/layout/string or automatic financial write is introduced. Native
 parser reread passes; attempted editor navigation during fresh onboarding is not
 accepted as a checked form.
 [Evidence and exact limits](quality/portrait-camera-merchant-boundary.md).
+
+### D-617 - Independent onboarding scroll offsets and explicit receipt draft review
+
+Each onboarding step owns its scroll position. Scrolling regional preferences must
+not hide the first-account header/name after Next. Preserve the existing original
+controls, content width and fixed progress/footer; do not add delayed scroll hacks.
+A complete original receipt draft shows its merchant; missing-header data leaves
+Payee empty while preserving the amount. Both remain unsaved until explicit Save.
+[Original native evidence and limits](quality/original-receipt-drafts-and-onboarding-scroll.md).

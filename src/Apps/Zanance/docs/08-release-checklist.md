@@ -4768,3 +4768,12 @@ new product/Windows build, unit count or financial operation is claimed. Fresh U
 AVD, five XMLs and local endpoint are retired; residual cleanup refusal is preserved.
 Physical/corpus/editor, stability/security/A11Y/iOS/provider/Store/release gates remain.
 [Evidence and exact limits](quality/complete-virtual-scene-camera-source.md).
+
+### D-617 - Finite original form acceptance is separate from release
+
+Independent onboarding step offsets,19 actual visibility observations and two original
+receipt draft fields pass with strict Windows/full offline Android builds. No new
+unit suite, transaction Save, phone adoption or whole-DB/security/corpus acceptance.
+Fresh UID/AVD/settings/XML restoration passes; two supplementary cleanup requests are
+rejected without retry. D-607, broader platform and external release gates remain.
+[Evidence and exact limits](quality/original-receipt-drafts-and-onboarding-scroll.md).

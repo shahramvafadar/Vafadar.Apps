@@ -11193,3 +11193,14 @@ crop failures. Use the installed official room-walk macro after a real preview
 precondition; do not read credentials, bypass a refused API or alter source pixels.
 No product/test/financial change; broader physical/corpus/editor gates stay separate.
 [Evidence and exact limits](quality/complete-virtual-scene-camera-source.md).
+
+### D-617 - Keep onboarding step scroll ownership and qualify original receipt drafts
+
+The original preferences offset hides the next account title/name before any write.
+Give each unchanged step its own ScrollView; preserve all controls/commands and fixed
+chrome, without ScrollToAsync or platform callbacks. Strict builds, exact original
+failure input and18 changed native contexts pass. One fresh zero account enables
+two original Home/picker/editor drafts: correct shop versus empty missing-header
+payee, both23.45EUR; cancel both and retain an empty ledger. Cleanup refusals and
+renderer/observer failures remain explicit; D-607 and physical adoption stay open.
+[Evidence and exact limits](quality/original-receipt-drafts-and-onboarding-scroll.md).
