@@ -5288,3 +5288,12 @@ The one paired host comparison misses its frozen allocation threshold. Do not pr
 it, repeat samples or replay settled financial/native work. Preserve the exact
 production sources, unfinished D-607 and explicit residual-cleanup refusal.
 [Scope, values and refusal](../../quality/rejected-direct-ledger-output.md).
+
+### D-611 - Complete the empty-cache-identity fix without financial replay
+
+Original six failures are corrected and one native remaining path completes using the
+accepted source after read-only observer correction. Full typed comparison is preserved
+through the original protected memory exporter. Keep D-607/last phone baseline intact;
+physical product adoption follows its actual terminal state, not a repeated setup.
+Both residual cleanup refusals remain explicit and are not retried.
+[Evidence and exact limits](../../quality/derived-ledger-empty-identity.md).

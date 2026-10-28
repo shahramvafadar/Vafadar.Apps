@@ -1487,3 +1487,11 @@ Main database/key, arbitrary exception message, credentials, audio or financial 
 is exported. Only this fresh package and hash-matched owned XMLs are retired; original
 settings and package ownership return exactly. This is not actual disk-full, whole
 privacy/security/OEM or release acceptance.
+
+### D-611 - Independent cache-failure diagnostic scope
+
+The new disposable emulator fixture has fictitious rows only. Fixed metadata/digests
+and numeric errors are bounded; the original complete comparison uses RAM-only protected
+export with cleared buffers, not a portable file or private Main/key read. Product
+permissions, libraries, network behavior and Store declarations do not change.
+[Evidence and exact limits](../quality/derived-ledger-empty-identity.md).

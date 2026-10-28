@@ -10444,3 +10444,12 @@ The complete32-field private host candidate is closed before integration, native
 or financial operation. Favorable9.5956553% host latency does not replace the failed
 allocation gate, full Home/two-second or device acceptance.
 [Scope, values and refusal](../quality/rejected-direct-ledger-output.md).
+
+### D-611 - Empty optional identity does not discard authoritative rows
+
+Six distinct new managed cases and three affected existing cases pass after six real
+baseline failures. No full-suite total is rerun or inflated with the native observation.
+All32 fields, v1 format, source/revision/schema guards and original identity policy stay
+unchanged; no model/migration change. Native local correctness and static package checks
+do not establish physical adoption or full release readiness.
+[Evidence and exact limits](../quality/derived-ledger-empty-identity.md).

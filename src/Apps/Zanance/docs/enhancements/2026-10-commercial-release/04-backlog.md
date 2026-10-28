@@ -7007,3 +7007,22 @@ change or financial replay follows. Standard Clean removes28 registered files/
 blocked by policy;20 files/423356bytes remain and no alternate attempt follows.
 QA-06/two-second and all broader gates remain open; unfinished D-607 and TalkBack
 ordering are preserved. [Complete record](../../quality/rejected-direct-ledger-output.md).
+
+### D-611 - Empty derived ledger identity uses the complete original source
+
+Six actual failures reproduce a zero cached GUID escaping as a domain argument
+exception. Add only the exact derived identity guard; all32 fields/v1/source/schema/
+revision/writer checks and authoritative identity policy remain. Six new plus three
+affected cases, strict Windows and complete signed Offline384AOT/408ELF pass. One
+fresh API36/x64 native Home observes blocks1/scalar1 and90EUR, using the same accepted
+two rows and prior cache mutation without replay. Initial helper SqliteException,
+observer/command failures and post-observer-only full baseline remain explicit;
+original protected memory export and complete typed comparison pass without repair.
+Only fresh UID10216/AVD and40051bytes of XML retire;2806 registered Clean outputs/
+903120142 logical bytes are removed. Further three artifact-root and isolated SDK
+user-home deletions are rejected before process creation with blocked by policy;
+1513files/250041737bytes and6files/7732bytes remain without alternate attempts.
+Samsung's last D-606 baseline and D-607 are untouched; guarded adoption of the ready
+67c7cda8 product APK remains pending. General stability/security/performance/A11Y,
+iOS/provider/Store/publication remain open; the goal stays active and TalkBack last.
+[Complete regression, native lineage and limits](../../quality/derived-ledger-empty-identity.md).

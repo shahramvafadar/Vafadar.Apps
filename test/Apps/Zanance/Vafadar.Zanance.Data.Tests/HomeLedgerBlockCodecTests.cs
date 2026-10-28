@@ -8,6 +8,22 @@ namespace Vafadar.Zanance.Data.Tests;
 /// <summary>Complete typed-row transport retains original values/order and rejects unsupported derived bytes.</summary>
 public sealed class HomeLedgerBlockCodecTests
 {
+    /// <summary>A malformed derived identity must decline optional transport, including after a valid prefix row.</summary>
+    [Theory, Trait("AT", "AT-82")]
+    [InlineData(0, false), InlineData(1, false), InlineData(0, true), InlineData(1, true)]
+    public void Empty_derived_entry_identity_is_invalid_data(int damagedRow, bool buffered)
+    {
+        var payload = Encode([new(511, Entry(true)), new(510, Entry(false))]);
+        var damaged = EmptyDerivedIdentityPayload.Damage(payload, 0, damagedRow);
+        if (buffered)
+        {
+            using var buffer = new HomeLedgerBlockBuffer();
+            Assert.Throws<InvalidDataException>(() => HomeLedgerBlockCodec.DecodeWithBuffer(damaged, 0, buffer,
+                TestContext.Current.CancellationToken));
+        }
+        else Assert.Throws<InvalidDataException>(() => Decode(damaged, 0));
+    }
+
     [Theory, Trait("AT", "AT-82")]
     [InlineData(false), InlineData(true)]
     public void Every_original_field_round_trips_without_normalization(bool populated)

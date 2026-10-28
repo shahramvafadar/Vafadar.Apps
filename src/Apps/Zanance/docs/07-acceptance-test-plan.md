@@ -7599,3 +7599,12 @@ Both private roles preserve all32 fields/order, independent mutable tags, cancel
 fails; these controls do not establish SQLite fallback, native publication or a new
 shipped managed-test count.
 [Scope, values and refusal](quality/rejected-direct-ledger-output.md).
+
+### D-611 - AT-82 empty derived identities and complete source fallback
+
+Baseline6/6 fails; corrected9/9 passes include first/second row, buffered/unbuffered and
+actual SQLite no-partial/no-repair cases. One API36/x64/4096 original Home observes
+blocks1/scalar1 and90EUR with complete typed schema/row preservation after the existing
+cache mutation. Accepted two-row setup/cache damage are not repeated; the full baseline
+begins after the read-only observer, not before the initial helper exception.
+[Evidence and exact limits](quality/derived-ledger-empty-identity.md).

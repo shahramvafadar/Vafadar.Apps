@@ -4564,3 +4564,11 @@ The new complete-entry output strategy fails its declared host allocation prereq
 no native/financial replay or source integration follows. The canonical performance
 parent remains open; rejected output retirement is not reported as complete.
 [Scope, values and refusal](quality/rejected-direct-ledger-output.md).
+
+### D-611 - Empty derived-identity fallback locally verified
+
+The actual decoder now declines an empty optional identity, retaining complete original
+SQLite rows and damaged-cache bytes. Six new/three affected checks and one native Home
+pass; no old financial/native cohort repeats. Ready product adoption on Samsung remains
+separate behind D-607; the canonical backlog retains broader gates.
+[Evidence and exact limits](quality/derived-ledger-empty-identity.md).

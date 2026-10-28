@@ -4720,3 +4720,11 @@ Full host control parity passes; prior allocation eligibility fails at3.6945719%
 versus5%. Product/native release gates remain unchanged. All28 registered Clean
 outputs retire;20 residual files/423356bytes remain after pre-execution policy refusal.
 [Scope, values and refusal](quality/rejected-direct-ledger-output.md).
+
+### D-611 - Malformed derived identity local engineering boundary
+
+- [x] Six new and three affected managed cases; strict Windows and complete signed Offline384AOT/408ELF.
+- [x] Original native Home fallback, original full typed verifier and no accepted setup/cache-write replay.
+- [x] Only fresh UID/AVD retired and registered Clean outputs removed; retain explicit residual deletion refusals.
+- [ ] Physical no-reset adoption waits behind D-607; no broad stability/security/iOS/release acceptance.
+[Evidence and exact limits](quality/derived-ledger-empty-identity.md).

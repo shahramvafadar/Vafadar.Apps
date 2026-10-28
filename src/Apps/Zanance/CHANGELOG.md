@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Keep Home readable from the complete original ledger when an optional cached row has an empty identity; do not publish partial rows or repair source data while reading (D-611).
+
 - Keep the original complete-ledger reader after a direct-output candidate misses its declared host allocation gate; no application behavior changes (D-610).
 
 - Bound the existing emulated receipt-camera text clipping from original image geometry; keep complete camera/merchant quality unaccepted and application behavior unchanged (D-609).

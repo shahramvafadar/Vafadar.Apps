@@ -11139,3 +11139,12 @@ Full fields/ownership/cancellation and malformed outcomes match; host latency im
 9.5956553% but allocation reduction3.6945719% misses the prior5% gate. No product or
 native promotion; standard Clean succeeds and residual deletion is explicitly refused.
 [Scope, values and refusal](quality/rejected-direct-ledger-output.md).
+
+### D-611 - Decline empty derived ledger identities before the domain constructor
+
+Six regressions reproduce ArgumentException escaping optional-cache fallback. Check only
+the derived empty GUID and keep the original constructor/source identity policy unchanged.
+Six new plus three affected cases, strict Windows/complete Offline Android and one
+original native fallback pass. Preserve helper failures and post-observer baseline limits.
+Physical adoption waits behind the unchanged D-607 cohort.
+[Evidence and exact limits](quality/derived-ledger-empty-identity.md).

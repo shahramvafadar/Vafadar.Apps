@@ -121,7 +121,10 @@ internal static class HomeLedgerBlockCodec
             if (rowId >> BlockShift != bucket || previous is { } prior && rowId >= prior)
                 throw new InvalidDataException("Derived ledger ordering or bucket differs.");
             previous = rowId;
-            var entry = new LedgerEntry(reader.Guid())
+            var entryId = reader.Guid();
+            // D-611: optional cache damage must decline transport before the original domain constructor rejects it.
+            if (entryId == Guid.Empty) throw new InvalidDataException("Invalid derived ledger identity.");
+            var entry = new LedgerEntry(entryId)
             {
                 AccountId = reader.Guid(), AggregatedFrom = reader.Day(), AggregatedTo = reader.Day(), Amount = reader.Long(),
                 CategoryId = reader.OptionalGuid(), CreatedAt = reader.Timestamp(), Date = reader.RequiredDay(),

@@ -2765,3 +2765,11 @@ space-preflight refusal shows the storage-specific translated notice; do not inf
 from arbitrary exception text. Hide key-code/backup recovery and reject retained recovery
 callbacks until explicit Retry. A new generic failure restores existing choices; never
 relax space/source checks or treat missing secure access as successful authentication.
+
+### D-611 - A broken optional cache must not replace a readable original Home
+
+When an optional block contains an empty entry identity, retain the covered original
+read and publish the complete SQLite source rather than a partial prefix or unrelated
+recovery action. Do not repair the cache in a getter or normalize an original record
+identity. No layout/control/translation or financial confirmation changes.
+[Evidence and exact limits](quality/derived-ledger-empty-identity.md).

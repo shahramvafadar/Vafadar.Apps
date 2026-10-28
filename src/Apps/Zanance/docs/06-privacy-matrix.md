@@ -1518,3 +1518,12 @@ Main database/key, arbitrary exception message, credentials, audio or financial 
 is exported. Only this fresh package and hash-matched owned XMLs are retired; original
 settings and package ownership return exactly. This is not actual disk-full, whole
 privacy/security/OEM or release acceptance.
+
+### D-611 - Bounded malformed-cache diagnostic metadata
+
+Only the fresh independent emulator UID records fixed phases, migration/table names and
+counts, numeric SQLite codes and fictitious-row digests. The original32MiB-bounded
+protected memory exporter/full typed verifier stay in RAM with cleared buffers; no raw
+SQL/message/path/key/source dump or plaintext file is exported. No product permission,
+SDK, endpoint or normal data flow changes; the phone is untouched.
+[Evidence and exact limits](quality/derived-ledger-empty-identity.md).

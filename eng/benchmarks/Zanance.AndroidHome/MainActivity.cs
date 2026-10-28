@@ -26,6 +26,13 @@ public sealed class MainActivity : MauiAppCompatActivity
         var faultObserverAccepted = savedInstanceState is not null || NativeFaultPcObserver.TryArm(this);
 #endif
         base.OnCreate(savedInstanceState);
+#if DERIVED_LEDGER_IDENTITY_REVIEW
+        if (PackageName == "pro.vafadar.zanance.ledgeridentityreview")
+        {
+            if (savedInstanceState is null) AndroidHomeReview.StartDerivedLedgerIdentity(this);
+            return;
+        }
+#endif
 #if CAMERA_CAPTURE_REVIEW
         // This fresh source-only caller cannot enter historical preparation or financial phases.
         if (PackageName == "pro.vafadar.zanance.receiptcamerareview")
@@ -114,6 +121,18 @@ public sealed class MainActivity : MauiAppCompatActivity
         await AndroidHomeReview.RunAsync(app, services, phase, run, comparison, baseline);
     }
 
+#if DERIVED_LEDGER_IDENTITY_REVIEW
+    /// <summary>Admits an explicit read-only continuation in the same owned Activity without replaying preparation.</summary>
+    protected override void OnNewIntent(Android.Content.Intent? intent)
+    {
+        base.OnNewIntent(intent);
+        Intent = intent;
+        if (PackageName == "pro.vafadar.zanance.ledgeridentityreview"
+            && (intent?.GetBooleanExtra("review_identity_inspect", false) == true
+                || intent?.GetBooleanExtra("review_identity_resume", false) == true))
+            AndroidHomeReview.StartDerivedLedgerIdentity(this);
+    }
+#endif
 #if CAMERA_CAPTURE_REVIEW
     /// <inheritdoc />
     protected override void OnActivityResult(int requestCode, Result resultCode, Android.Content.Intent? data)
