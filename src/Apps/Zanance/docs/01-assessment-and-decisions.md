@@ -11223,3 +11223,16 @@ encode-only processes preserve input digests; no decoder/timing/native work foll
 Official upstream fast-path source is consistent, not a proved installed-binary source
 match. Keep production unchanged rather than relabel an unmet premise or tune a rescue.
 [Evidence, primary sources and exact limits](quality/requested-brotli-window-admission.md).
+
+### D-620 - Restore the published delivery plan's existing evidence link
+
+A bounded audit of11 published primary planning/acceptance documents finds one
+broken local file link among2576 local links: the D-507 delivery-plan evidence uses
+quality/ at the nested enhancement directory instead of ../../quality/. Its existing
+tracked timed-reminder report is the unique intended target and matches the original
+paragraph; correct only that relative path. Five apparent file-only failures are
+valid published directories and remain unchanged. Preserve the initial audit and
+its directory classification, then verify the published proposal links, excluding
+unfinished D-607 working content.
+No fragment/remote availability or historical acceptance is inferred. No product,
+status, test/build/device/financial operation or pending D-607 content changes.

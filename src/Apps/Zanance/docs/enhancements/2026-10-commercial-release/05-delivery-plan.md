@@ -4404,7 +4404,7 @@ endings, an unbounded delivery-history section and an incorrect demand that comp
 ZIP entries have mapping alignment. Official zipalign plus ELF checks resolve the static observer
 issue on the same unchanged APK. Native receiver/notification receipts come from the first actual
 accepted publication. General stability/accessibility/security/iOS/provider/Store/release gates
-remain separate. [Evidence](quality/physical-timed-goal-period-reminders.md).
+remain separate. [Evidence](../../quality/physical-timed-goal-period-reminders.md).
 
 ### D-508 - Physical retained forecast-tab acceptance
 
