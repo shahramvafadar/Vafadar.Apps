@@ -4812,3 +4812,12 @@ D-621 package stay unchanged. Standard retirement succeeds; the entire383file/
 47900145byte supplemental scope remains after policy refusal without retry. The
 owner's temporary Loyan turn requires explicit return and preserves all D-607 work.
 [Evidence and exact limits](quality/connected-unlaid-scroll-lifetime.md).
+
+### D-623 - A declined layout hypothesis is not a stability fix
+
+The original validation helper actually refuses the held unlaid target. No original
+application failure, other-window global-event premise or candidate is established.
+Keep shipping D-621, native source provenance and remaining stability/platform gates;
+do not repeat passed cases to rescue a hypothesis.383files/47902933bytes remain after
+one combined cleanup rejection, without retry; phone/D-607 and Loyan turn unchanged.
+[Evidence and exact limits](quality/original-validation-layout-refusal.md).

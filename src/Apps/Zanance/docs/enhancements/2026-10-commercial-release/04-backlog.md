@@ -7174,3 +7174,15 @@ honest. No product/managed-test/financial replay;383files/47900145bytes remain w
 cleanup retry. Owner-approved temporary Loyan phone turn preserves all three D-607
 alarms and requires explicit return. Overall goal active; TalkBack last, broader gates open.
 [Evidence and exact limits](../../quality/connected-unlaid-scroll-lifetime.md).
+
+### D-623 - Original validation helper refuses the held unlaid target
+
+One new linked-helper call in a fresh API36/x64/4096 UID returns false while its
+original target is attached/focused/unlaid0x0/layout-requested. Later parent release
+lays it out; no second helper/stock-scroll/financial request or candidate follows.
+The other-window global callback premise and actual application failure remain
+unproved, so no speculative product fix is shipped. Preserve exact source and native
+terminal/page/settings proofs; fresh UID/AVD retire and465 outputs Clean.383files/
+47902933bytes remain after one combined cleanup rejection with no retry. D-621
+shipping, D-607, Loyan turn and all broader gates remain; goal active, TalkBack last.
+[Evidence and exact limits](../../quality/original-validation-layout-refusal.md).

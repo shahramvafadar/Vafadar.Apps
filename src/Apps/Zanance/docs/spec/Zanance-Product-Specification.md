@@ -10542,3 +10542,12 @@ disconnection. No product behavior, managed test count, financial schema/operati
 historical ANR cause or shipping package changes. Keep compiler/observer/refused
 cleanup evidence, exact settings and fresh retirement. Broader delivery gates remain.
 [Evidence and exact limits](../quality/connected-unlaid-scroll-lifetime.md).
+
+### D-623 - Original validation helper retains its bounded native refusal
+
+One actual API36/x64/4096 call to the exact linked product helper returns false for
+an attached/focused/unlaid0x0/layout-requested native target. Subsequent native layout
+is observed without another helper or scroll request. No product change, managed
+case count, financial operation, complete editor acceptance or ANR fix is inferred.
+Strict independent build and restoration/retirement pass; cleanup refusal is explicit.
+[Evidence and exact limits](../quality/original-validation-layout-refusal.md).

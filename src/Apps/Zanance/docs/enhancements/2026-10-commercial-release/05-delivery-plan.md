@@ -5385,3 +5385,12 @@ Retire only the fresh UID/AVD/outputs, keep the supplemental cleanup refusal and
 publish this finished evidence. The separately authorized temporary Loyan phone turn
 preserves D-607 and requires explicit return; independent work continues throughout.
 [Evidence and exact limits](../../quality/connected-unlaid-scroll-lifetime.md).
+
+### D-623 - Decline a product workaround without the original failure
+
+Inspect original validation paths and call the actual current helper once under the
+new held-layout input. Its false result does not admit a patch. Preserve the missing
+global-callback premise and original application fault requirement; no rescue/input
+sweep or old financial/native success repeats. Finish documentation, fresh retirement
+and one exact-head CI. Loyan phone turn, D-607 and the full active goal stay separate.
+[Evidence and exact limits](../../quality/original-validation-layout-refusal.md).

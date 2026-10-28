@@ -7701,3 +7701,12 @@ revision and native outcomes are checked beyond a Success flag. Preserve four AP
 analyzer refusals and the wrong all-ScrollView terminal guard, then verify restoration
 from its same saved native packet. No financial or old successful test replay.
 [Evidence and exact limits](quality/connected-unlaid-scroll-lifetime.md).
+
+### D-623 - Check the original helper before changing page scrolling
+
+One native original helper call returns false while its actual target stays attached,
+focused,unlaid0x0/layout-requested. Later parent release lays it out; no second helper
+or original stock scroll request occurs. This does not prove another window-global
+callback, broad safety or a historical ANR fix. Original source and final settings/
+page/owned retirement are exact; no new managed test or financial replay is counted.
+[Evidence and exact limits](quality/original-validation-layout-refusal.md).

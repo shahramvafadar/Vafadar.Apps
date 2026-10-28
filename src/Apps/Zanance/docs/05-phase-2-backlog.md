@@ -4653,3 +4653,11 @@ bounded pending task. Preserve D-455's distinct hidden-root failures and all bro
 app correlation gates. No product/financial/test count changes or old successful
 cohort repeats. Fresh environment retires; one supplemental cleanup refusal remains.
 [Evidence and exact limits](quality/connected-unlaid-scroll-lifetime.md).
+
+### D-623 - Original validation-layout refusal, no speculative product change
+
+The exact linked current helper refuses the held unlaid native target. A different
+window-global event and original application fault remain unproved; no candidate
+or second helper/scroll/financial operation is admitted. Fresh UID/AVD retire and
+product/test counts remain unchanged, with one supplemental cleanup refusal.
+[Evidence and exact limits](quality/original-validation-layout-refusal.md).

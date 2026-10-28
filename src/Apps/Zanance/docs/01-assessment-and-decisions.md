@@ -11260,3 +11260,13 @@ fresh-UID/AVD retirement pass; compiler/observer and cleanup failures are retain
 The owner then explicitly authorizes a temporary Loyan phone turn protecting D-607;
 communicate its constraints without early phone queries, and require explicit return.
 [Evidence and exact limits](quality/connected-unlaid-scroll-lifetime.md).
+
+### D-623 - Preserve the original validation helper after its actual refusal
+
+Inspect original editor call sites before proposing a scroll workaround. One fresh
+linked-helper API36/x64/4096 observation returns false for the genuinely attached/
+focused/unlaid0x0/requested target. No false-positive or original-app fault is proved;
+other-window global callback admission is not established. Close this candidate
+without a production patch or passed-case replay. Strict independent build, exact
+source, terminal/restoration and retirement evidence pass; cleanup refusal remains.
+[Evidence and exact limits](quality/original-validation-layout-refusal.md).

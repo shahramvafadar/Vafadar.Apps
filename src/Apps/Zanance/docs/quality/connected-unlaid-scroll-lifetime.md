@@ -122,3 +122,9 @@ and the full delivery goal remain open. D-607's original future cohort and its c
 reboot are protected. TalkBack remains last. Publish this finished documentation and
 perform one exact-head CI check after16minutes; consume/delete only its own monitor.
 Local original evidence: %TEMP%/Zanance-D622-current.txt.
+
+## Later original validation-helper observation (D-623)
+
+[The exact current helper](original-validation-layout-refusal.md) returns false for
+a new held unlaid target. It is not another stock scroll request or a replay of these
+two completed cases; no product patch or historical ANR conclusion follows.
