@@ -11236,3 +11236,14 @@ its directory classification, then verify the published proposal links, excludin
 unfinished D-607 working content.
 No fragment/remote availability or historical acceptance is inferred. No product,
 status, test/build/device/financial operation or pending D-607 content changes.
+
+### D-621 - Suggest a complete source-named date only after original numeric lookup
+
+The same full named rows already bound the merchant header but never reached Date.
+Keep the entire original numeric/calendar priority; add only a complete supported
+source-calendar fallback with year bounds, no missing-year/UI-locale guess and no
+choice between distinct named dates.13 original failures become24 new passes; preserve
+and update the one historical boundary-only null-Date assertion.67 unique selected
+passes, strict builds and one original new past-date PNG/editor/Discard route pass
+without financial posting. Windows restore and cleanup failures remain explicit.
+[Evidence and exact limits](quality/complete-named-receipt-date-suggestions.md).

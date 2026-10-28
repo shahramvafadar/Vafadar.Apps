@@ -4634,3 +4634,13 @@ Original inputs and product remain exact; no decoder/warmup/timing/native/financ
 work is repeated. Preserve primary-source qualification and the one cleanup refusal.
 QA-06 remains open without another unchanged timing cohort or new product test count.
 [Evidence and exact limits](quality/requested-brotli-window-admission.md).
+
+### D-621 - Close the observed complete named-date suggestion gap
+
+The original numeric/calendar policy remains exact.24 new cases and43 selected
+existing cases pass; one new ordinary complete-product file/reader/editor route
+shows2025-10-27,7.10EUR and BAY MARKET before Discard, with final empty ledger.
+Strict builds pass, initial Windows restore and cleanup refusal remain preserved.
+No camera/old source/financial success or unrelated suite is repeated; broader gates
+and physical adoption after actual D-607 completion remain separate.
+[Evidence and exact limits](quality/complete-named-receipt-date-suggestions.md).

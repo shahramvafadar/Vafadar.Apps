@@ -4793,3 +4793,12 @@ Production quality1/window22, all original source/model/runtime inputs and produ
 test counts stay unchanged. No native/application build, performance, memory, financial
 or broader release acceptance follows. One residual cleanup refusal is retained.
 [Evidence and exact limits](quality/requested-brotli-window-admission.md).
+
+### D-621 - Bound the complete named-date extension and native field evidence
+
+Strict Windows/full offline384AOT APK and67 unique focused cases pass. One actual
+original PNG/editor route proves a past2025 date, not default today, before unsaved
+Discard and empty ledger. No all-device/corpus/Persian-camera/iOS, financial Save,
+stability/security/A11Y or release acceptance is inferred. D-607 stays untouched;
+used package and failures remain, residual cleanup is refused once without retry.
+[Evidence and exact limits](quality/complete-named-receipt-date-suggestions.md).

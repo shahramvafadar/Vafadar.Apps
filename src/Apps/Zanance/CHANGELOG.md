@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Recognize complete receipt dates with month names when no valid numeric date is found; do not choose between conflicting named dates or guess a missing year (D-621).
+
 - Keep the first-account title and name visible after scrolling onboarding preferences; verify correct and missing receipt merchants in the original unsaved expense form (D-617).
 
 - Verify complete primary receipt text, shop and total through one supported synthetic camera scene; retain earlier clipped-input and secondary-text limitations without another financial write (D-616).

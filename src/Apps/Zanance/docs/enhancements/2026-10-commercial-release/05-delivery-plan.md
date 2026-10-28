@@ -5365,3 +5365,12 @@ header/size witnesses. Do not silently change the input, sweep settings or reuse
 rejected candidate. No product/device/financial change; standard host Clean passes,
 residual deletion is refused once, and D-607/overall goal remain active.
 [Evidence and exact limits](../../quality/requested-brotli-window-admission.md).
+
+### D-621 - Finish the source-date gap without replaying camera or monetary success
+
+Preserve numeric/calendar/merchant policies and add only the unambiguous full named
+fallback. Complete67 unique relevant checks, strict packages and one new past-date
+source through the original editor before Discard; keep one fresh zero-account setup
+and zero transaction writes. Retire that fresh environment and preserve the one new
+cleanup refusal. D-607/physical adoption and all broader gates remain independent.
+[Evidence and exact limits](../../quality/complete-named-receipt-date-suggestions.md).

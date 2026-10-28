@@ -17,8 +17,8 @@ public sealed class ReceiptMerchantBoundaryTests
         Assert.Equal(23.45m, result.Amount);
         Assert.True(Assert.Single(result.Candidates).TryMinor("EUR", out var minor));
         Assert.Equal(2345, minor);
-        // Named-month recognition here is only a merchant boundary, not a new financial-date parser.
-        Assert.Null(result.Date);
+        // D-621 extends the former boundary-only recognition to this complete source date, still only an unsaved suggestion.
+        Assert.Equal(new DateOnly(2026, 10, 28), result.Date);
     }
 
     /// <summary>Never guesses a merchant from item rows after a complete date in the supported source languages.</summary>

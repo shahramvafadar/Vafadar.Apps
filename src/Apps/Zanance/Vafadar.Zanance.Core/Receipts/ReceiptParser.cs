@@ -28,7 +28,7 @@ public sealed record ReceiptSuggestion(decimal? Amount, DateOnly? Date, string? 
 /// <summary>
 /// Reads the total, the date and the merchant from the text of a receipt (on-device OCR, D-31). It prefers a line with a
 /// total keyword (Total, Summe, Gesamt, Totale, جمع, مبلغ قابل پرداخت …). Item prices never substitute for a total. Persian and
-/// Arabic digits are accepted; dates may be Gregorian, Solar Hijri or lunar Hijri (a year from 1300 to 1500 is read in the
+/// Arabic digits are accepted; dates may be Gregorian, Solar Hijri or lunar Hijri (a numeric year from 1300 to 1500 is read in the
 /// Hijri calendar that gives the date nearer to today: solar years are now around 1405, lunar years around 1447).
 /// </summary>
 public static partial class ReceiptParser
@@ -352,7 +352,32 @@ public static partial class ReceiptParser
             }
         }
 
-        return null;
+        // D-621: preserve every original numeric/calendar choice before considering a full named date row.
+        return FindNamedDate(lines);
+    }
+
+    /// <summary>Uses complete source-calendar rows without guessing a year or choosing between different named dates.</summary>
+    private static DateOnly? FindNamedDate(string[] lines)
+    {
+        DateOnly? found = null;
+        foreach (var line in lines)
+        {
+            if (!MerchantNamedDate().IsMatch(line)
+                || !int.TryParse(line.AsSpan(line.Length - 4), NumberStyles.None, CultureInfo.InvariantCulture, out var year))
+                continue;
+            foreach (var culture in MerchantDateCultures)
+            {
+                // A spelled month identifies its source calendar; UI language and nearest-calendar inference do not.
+                var allowedYear = culture.DateTimeFormat.Calendar is PersianCalendar
+                    ? year is >= 1300 and <= 1500
+                    : culture.DateTimeFormat.Calendar is GregorianCalendar && year is >= 2000 and <= 2100;
+                if (!allowedYear || !DateOnly.TryParseExact(line, MerchantDateFormats, culture,
+                        DateTimeStyles.AllowWhiteSpaces, out var date)) continue;
+                if (found is { } previous && previous != date) return null;
+                found = date;
+            }
+        }
+        return found;
     }
 
     private static bool TryDate(Match match, DateOnly today, out DateOnly date)
@@ -429,7 +454,7 @@ public static partial class ReceiptParser
         return null;
     }
 
-    /// <summary>Recognizes complete calendar-date rows without changing the existing receipt-date suggestion.</summary>
+    /// <summary>Recognizes complete calendar-date rows independently of the date suggestion's precedence.</summary>
     private static bool IsMerchantDateBoundary(string line, DateOnly today)
     {
         var numeric = DatePattern().Match(line);

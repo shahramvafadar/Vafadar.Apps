@@ -7680,3 +7680,13 @@ This rejects the proposed actual16 premise before decode/timing/native work.15 p
 RFC header discriminator self-checks are not new product tests. No speed or memory
 acceptance is inferred, no old successful suite or financial operation repeats.
 [Evidence and exact limits](quality/requested-brotli-window-admission.md).
+
+### D-621 - Full source-named receipt dates with original numeric precedence
+
+13 of24 new cases fail on original code; all24 pass after the bounded fallback.
+Keep9 passed merchant controls, preserve the historical null-Date failure, then run
+only its intentional exact-date expectation update and selected original date cases.
+Final unique union67 passes. One fresh PNG dated27October2025 reaches actual original
+Month10/Day27/Year2025 fields without typing; amount710EURminor/merchant/account stay
+intact. Cancel/Discard, Home0 and All/All-types empty pass; no financial posting.
+[Evidence and exact limits](quality/complete-named-receipt-date-suggestions.md).

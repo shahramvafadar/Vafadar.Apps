@@ -2815,3 +2815,13 @@ accessibility text can remain full while bounds are clipped: viewport-edge recta
 do not establish a complete field.18 final contexts validate the unchanged product;
 no font/caption/control/command is reduced or replaced and no Start is invoked.
 [Evidence and exact limits](quality/onboarding-independent-scroll-os-text.md).
+
+### D-621 - Source-named dates remain explicit unsaved receipt suggestions
+
+A complete supported named date may populate the original Date field only when no
+valid original numeric date is found. Different named dates, partial/labeled rows or
+unsupported years do not supply an automatic date. Keep existing draft date behavior,
+source note and explicit Save review; never infer source calendar from UI language.
+One original2025 image-to-form observation distinguishes extraction from today's2026
+default and cancels without financial writes. No new control/string/layout is added.
+[Evidence and exact limits](quality/complete-named-receipt-date-suggestions.md).

@@ -10523,3 +10523,12 @@ synthetic shapes. Record that mismatch before any decoder/timing/native claim; t
 product stays quality1/window22 with no model/runtime/test-count change. The complete
 Home/two-second and other unfinished gates remain unaccepted.
 [Evidence and primary-source limits](../quality/requested-brotli-window-admission.md).
+
+### D-621 - Complete source-named dates as reviewed receipt suggestions
+
+After original numeric lookup fails, full standalone supported month-name dates may
+supply the existing unsaved Date suggestion, with original source-year bounds and
+no UI-locale, missing-year or conflicting-row guess.24 new/43 existing selected cases
+and one original new2025 PNG-to-editor route pass with strict builds and no financial
+posting. Full-suite counts, broader corpus/platform and release gates are not inferred.
+[Evidence and exact limits](../quality/complete-named-receipt-date-suggestions.md).

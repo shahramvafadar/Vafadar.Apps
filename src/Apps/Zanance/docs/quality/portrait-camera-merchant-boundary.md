@@ -146,3 +146,12 @@ camera result returns all9 primary lines and the correct merchant/total, with on
 additional imperfect rotated-poster line retained. This does not relabel either
 imagefile failure or the diagnostic onboarding navigation failure.
 [Original D-616 evidence](complete-virtual-scene-camera-source.md).
+
+## Later complete named-date extension
+
+D-621 later adds a full named-date fallback while keeping numeric precedence. The
+historical null-Date assertion here belonged to D-615's boundary-only scope; retain
+its original failure/passing evidence and original package. New dated input and
+original editor fields have separate evidence, without rerunning this camera or
+calling its old date field a new extraction result.
+[Later named-date evidence](complete-named-receipt-date-suggestions.md).
