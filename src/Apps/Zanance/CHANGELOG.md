@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Retain original ledger compression after a host-eligible quality0 candidate fails the first original native Home latency and dispatcher gates; no product or runtime change (D-614).
+
 - Enforce the existing photo-size limit while reading camera output, including files that grow after the first size check (D-613).
 
 - Keep Home and valid account saves working from the original source when optional ledger-cache columns are unsupported (D-612).

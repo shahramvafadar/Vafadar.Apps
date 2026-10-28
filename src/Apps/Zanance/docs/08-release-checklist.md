@@ -4742,3 +4742,11 @@ outputs retire;20 residual files/423356bytes remain after pre-execution policy r
 - [x] One original camera result and raw-cache retirement without OCR/financial replay.
 - [ ] Physical adoption follows D-607; camera text/corpus and wider release gates stay open.
 [Evidence and exact limits](quality/bounded-camera-source-read.md).
+
+### D-614 - Rejected encoder eligibility is not a release improvement
+
+- [x] Original host stage observation, six affected existing cases and strict complete Android inputs.
+- [x] Actual native/source controls reject quality0 at unchanged latency/dispatcher gates; tracked code restores.
+- [x] Used witnesses remain; standard/AVD/unused-output retirement and all residual refusals are explicit.
+- [ ] Overall two-second, stability/security/accessibility, physical/iOS/provider/Store/release gates remain open.
+[Evidence and exact limits](quality/rejected-ledger-brotli-quality.md).

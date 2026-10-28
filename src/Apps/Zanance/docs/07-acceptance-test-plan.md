@@ -7622,3 +7622,13 @@ Two original filesystem growth cases fail; six new selected cases pass after reu
 the unchanged stream bound. One actual native JPEG/callback/empty-cache proof covers
 normal integration only; no oversized native attack or camera whole-text claim.
 [Evidence and exact limits](quality/bounded-camera-source-read.md).
+
+### D-614 - QA-06 frozen first-pair codec rejection
+
+Six affected existing codec cases pass once; no new shipped test/full-suite rerun.
+Both roles match actual complete-product Core/Data/compression inputs and original
+financial/native/source controls. Native1908.2973 to2156.9117ms and dispatcher ratio
+1.13058 reject quality0; original protected-source/schema-cookie guards are not weakened.
+The diagnostic cache-cookie correction is declared only on verified fictitious copies.
+Two-second, physical, cold/search/migration and broader gates remain open.
+[Evidence and exact limits](quality/rejected-ledger-brotli-quality.md).

@@ -11163,3 +11163,12 @@ unchanged original picker stream reader for camera output, preserving the origin
 64MiB ceiling, URI/result/error and finally deletion. Two actual filesystem regressions
 and six corrected cases, strict builds and one finite native callback/retirement pass.
 [Evidence and exact limits](quality/bounded-camera-source-read.md).
+
+### D-614 - Host codec eligibility cannot replace original native Home
+
+Original private stage counters identify about46-49% host expansion wall time. Quality0
+gains6.92095% on that host but original native Home1908.2973 to2156.9117ms and dispatcher
+177.8566 to201.0806ms fail fixed gates. Reject without reverse/rescue or product change.
+Preserve the actually observed local-cache cookie refusal and fully verified copy-only
+admission; source/financial guards and all tracked code remain original.
+[Evidence, retained failures and residual cleanup limits](quality/rejected-ledger-brotli-quality.md).

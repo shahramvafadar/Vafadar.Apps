@@ -10468,3 +10468,12 @@ Six distinct new managed cases pass, with two actual old-read regressions. No fu
 suite total is rerun or native action counted as a test. The encoded64MiB limit,
 metadata-free image preparation, financial confirmation and camera permissions remain.
 [Evidence and exact limits](../quality/bounded-camera-source-read.md).
+
+### D-614 - Original complete-ledger compression retained after native rejection
+
+No new shipped managed case or product/model/migration change. Six affected existing
+codec cases pass once on the temporary candidate; native publications and private
+sample iterations do not increase managed totals. Full32-field/order/source and native
+controls pass, but the candidate fails original Home latency/dispatcher gates and is
+not adopted. Track performance and release acceptance separately from host eligibility.
+[Evidence and exact limits](../quality/rejected-ledger-brotli-quality.md).

@@ -5311,3 +5311,12 @@ The new stat/read growth gap is corrected through the original bounded picker re
 Finite focused/native checks finish while D-607 and physical Main remain untouched.
 Do not relabel clipped historical frames or repeat old OCR/Save/financial successes.
 [Evidence and exact limits](../../quality/bounded-camera-source-read.md).
+
+### D-614 - Reject the new codec candidate without displacing ready work
+
+Host eligibility is positive but the first matched original native pair rejects
+quality0. Restore all tracked code, retain actual failures/proofs and retire only
+own completed outputs; do not reverse, repeat successful financial work or promote
+a host result. The separately authorized D-607 reboot/deadline cohort remains open.
+Continue genuinely ready work, with TalkBack last and external gates unchanged.
+[Evidence and exact limits](../../quality/rejected-ledger-brotli-quality.md).

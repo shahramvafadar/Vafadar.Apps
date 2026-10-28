@@ -4586,3 +4586,11 @@ Six fresh focused cases and one changed original native acquisition pass; no old
 cancellation, OCR, Save, seed or financial cohort repeats. D-598 whole-frame/text
 limitations and D-607/physical product adoption remain separate.
 [Evidence and exact limits](quality/bounded-camera-source-read.md).
+
+### D-614 - Close lower-quality encoding at its first native rejection gate
+
+A distinct encoder-only host candidate passes eligibility but is13.028% slower in the
+first original100000-row native Home publication; dispatcher ratio1.13058 also fails.
+No reverse, physical test, product promotion or successful financial replay follows.
+All tracked sources restore; owned outputs retire with explicit residual refusals.
+[Evidence and exact limits](quality/rejected-ledger-brotli-quality.md).
