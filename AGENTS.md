@@ -1,5 +1,16 @@
 # AGENTS.md – working rules for this repository
 
+## Keep Samsung with Zanance for now (owner,2026-10-28)
+
+The owner's latest direct reply keeps Samsung with Zanance for now. This supersedes
+any temporary handoff issued before that reply; do not grant another Loyan turn without
+fresh owner authority. The other chat has been told to begin no new phone action.
+If an installation had already started before the notice, preserve that same attempt
+and request its actual status and explicit return; never retry, force-stop or reboot it.
+Issue no competing phone command while that existing attempt's ownership is unresolved.
+Keep all three original D-607 deadlines and its packages, data and settings untouched;
+continue independent emulator work without an early physical source observation.
+
 ## Temporary Samsung turn for Loyan with D-607 preserved (owner,2026-10-28,D-622)
 
 The owner explicitly authorizes communicating and granting a temporary Samsung turn to

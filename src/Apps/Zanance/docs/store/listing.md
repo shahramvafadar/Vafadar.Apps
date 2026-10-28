@@ -407,3 +407,14 @@ RGB and image hashes are in `screenshots/capture-manifest.json`. The 596 x 1189 
 preserve actual UI pixels. They are not mobile screenshots and do not meet recommended 1080 x 1920
 featured portrait resolution. They do not demonstrate the later compact title actions or current mobile release.
 No new captures or upload/publication occurred. [Historical evidence](../quality/store-drafts.md).
+
+
+## D-624 Android draft counterpart
+
+The [new Android index](screenshots/android/README.md) contains eight actual1080x1920 RGB
+frames per language, preserving all native pixels and the historical Windows originals.
+For this new set, Plans means upcoming unpaid monthly plans; Accounts means checking/cash
+and total, with savings below the initial viewport, not a displayed loan. Home shows the
+initial balance/attention/budget viewport, not every pinned goal. One rejected IME frame and
+an actual navigation ANR/recovery are retained in the [quality report](../quality/android-store-drafts.md).
+These remain drafts: final composition, edition, account/console acceptance and publication are open.

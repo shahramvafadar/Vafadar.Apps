@@ -11270,3 +11270,9 @@ other-window global callback admission is not established. Close this candidate
 without a production patch or passed-case replay. Strict independent build, exact
 source, terminal/restoration and retirement evidence pass; cleanup refusal remains.
 [Evidence and exact limits](quality/original-validation-layout-refusal.md).
+
+
+### D-624 - Deliver actual Android drafts without reopening accepted writes
+
+Complete the missing Android counterpart to historical Windows assets as48 actual frames in six languages, using the existing signed D-621 APK and one new original-UI demo dataset. Preserve ten accepted operations, close entity writing before capture, reject only one unfinished German IME frame and retain the actual French-navigation ANR/recovery. Exact original settings and fresh-UID/AVD retirement are recorded; supplemental cleanup refusal remains. The latest owner reply keeps Samsung with Zanance and supersedes a briefly issued temporary turn before any installation; explicit peer return is reported, not fresh device evidence.
+[Evidence and exact limits](quality/android-store-drafts.md).

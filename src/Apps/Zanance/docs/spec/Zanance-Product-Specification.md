@@ -10551,3 +10551,9 @@ is observed without another helper or scroll request. No product change, managed
 case count, financial operation, complete editor acceptance or ANR fix is inferred.
 Strict independent build and restoration/retirement pass; cleanup refusal is explicit.
 [Evidence and exact limits](../quality/original-validation-layout-refusal.md).
+
+
+### D-624 - Android draft assets, unchanged application behavior
+
+The existing D-621 application produces48 actual six-language Android development frames on one fresh API36/x64/4096 emulator. One new fictitious original-UI dataset is written once and closed before capture. Runtime, schema, financial rules and managed test count are unchanged. Preserve one rejected IME frame, the actual navigation ANR and same-data recovery; final data/visible preferences and owned retirement are scoped observations, not complete DB/key or release acceptance.
+[Evidence and exact limits](../quality/android-store-drafts.md).

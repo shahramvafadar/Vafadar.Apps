@@ -4821,3 +4821,9 @@ Keep shipping D-621, native source provenance and remaining stability/platform g
 do not repeat passed cases to rescue a hypothesis.383files/47902933bytes remain after
 one combined cleanup rejection, without retry; phone/D-607 and Loyan turn unchanged.
 [Evidence and exact limits](quality/original-validation-layout-refusal.md).
+
+
+### D-624 - Android assets remain development drafts
+
+The new six-language48-frame1080x1920 Android set has native/image/pixel provenance; the historical Windows set is unchanged. One IME replacement and an actual navigation ANR/recovery are explicit. Long/scrolling labels, offscreen content and dark-progress white corner slivers remain visible. No selected edition, console validation, Store upload, physical/iOS or general stability/A11Y acceptance follows. D-607 and phone adoption remain separate.
+[Evidence and exact limits](quality/android-store-drafts.md).

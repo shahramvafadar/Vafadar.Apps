@@ -83,3 +83,12 @@ No owner data, credentials, account access or external upload was used.
 Sources: [Play preview assets](https://support.google.com/googleplay/android-developer/answer/9866151?hl=en-en),
 [CreateDesktopW](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-createdesktopw),
 [STARTUPINFO desktop](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/ns-processthreadsapi-startupinfow).
+
+
+## Later Android counterpart (D-624)
+
+The historical48 Windows images and their manifest remain unchanged. A separate complete
+[Android draft set](../store/screenshots/android/README.md) now supplies actual1080x1920
+native phone-size frames in all six existing languages. Its source data, failure/recovery,
+image-only replacement and retirement limits are independently [documented](android-store-drafts.md);
+it does not retroactively turn the Windows frames into mobile or release evidence.

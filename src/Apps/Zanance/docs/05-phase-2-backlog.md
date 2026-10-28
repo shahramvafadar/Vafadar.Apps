@@ -4661,3 +4661,9 @@ window-global event and original application fault remain unproved; no candidate
 or second helper/scroll/financial operation is admitted. Fresh UID/AVD retire and
 product/test counts remain unchanged, with one supplemental cleanup refusal.
 [Evidence and exact limits](quality/original-validation-layout-refusal.md).
+
+
+### D-624 - Six-language Android draft asset batch complete
+
+Eight actual1080x1920 RGB frames per language cover the eight planned roles; historical Windows originals remain. Source/image/pixel/native hashes and scoped data preservation are recorded. One rejected frame is replaced without financial replay; an actual ANR remains unresolved. This closes the Android draft artifact batch only, not final Store composition, release edition, accounts, physical adoption or publication.
+[Evidence and exact limits](quality/android-store-drafts.md).

@@ -5394,3 +5394,9 @@ global-callback premise and original application fault requirement; no rescue/in
 sweep or old financial/native success repeats. Finish documentation, fresh retirement
 and one exact-head CI. Loyan phone turn, D-607 and the full active goal stay separate.
 [Evidence and exact limits](../../quality/original-validation-layout-refusal.md).
+
+
+### D-624 - Finish the Android asset batch without a partial image helper release
+
+All48 actual native drafts, image/native provenance, manual review, original-UI preservation, restoration and fresh retirement form one batch. Do not rerun successful builds/tests or old financial fixtures for documentation/assets. One image-only replacement and the actual ANR/recovery remain honest. No physical or D-607 command occurs; the latest explicit owner phone reservation is recorded. Final Store composition/edition/accounts/publication and all broader gates remain separate.
+[Evidence and exact limits](../../quality/android-store-drafts.md).

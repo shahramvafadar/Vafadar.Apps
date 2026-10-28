@@ -7710,3 +7710,9 @@ or original stock scroll request occurs. This does not prove another window-glob
 callback, broad safety or a historical ANR fix. Original source and final settings/
 page/owned retirement are exact; no new managed test or financial replay is counted.
 [Evidence and exact limits](quality/original-validation-layout-refusal.md).
+
+
+### D-624 - Actual Android draft provenance and retained failures
+
+Review all48 actual API36/x64/4096 frames and exact RGB serialization, retaining47 successful originals and replacing one unfinished IME frame. Confirm the same three ledger entries, two unpaid plans, three accounts, budget and goal after capture/recovery, with no entity Save replay. Actual PID4188 ANR/native Close/terminal proof/one normal launch to18878 remains a failure, not a stability pass. Visible OS/profile restoration and fresh retirement pass; no new managed test/build count.
+[Evidence and exact limits](quality/android-store-drafts.md).

@@ -7186,3 +7186,9 @@ terminal/page/settings proofs; fresh UID/AVD retire and465 outputs Clean.383file
 47902933bytes remain after one combined cleanup rejection with no retry. D-621
 shipping, D-607, Loyan turn and all broader gates remain; goal active, TalkBack last.
 [Evidence and exact limits](../../quality/original-validation-layout-refusal.md).
+
+
+### D-624 - Complete six-language Android development draft assets
+
+Deliver48 actual1080x1920 RGB frames with raw/native/pixel provenance and no image retouching, using the existing D-621 signed APK. One new demo dataset has ten checkpointed original operations; no entity writing during capture. Preserve47 successful originals and replace only the unfinished German IME frame. Actual French-navigation ANR and terminal-proved same-data recovery remain unresolved; final scoped data/settings match.393 owned XMLs/fresh package and24 AVD files retire; six files/7732bytes remain after one supplemental policy refusal, no retry. Latest owner reservation keeps Samsung with Zanance; peer returns before any install. D-607 and broader gates remain open, overall goal active.
+[Evidence and exact limits](../../quality/android-store-drafts.md).
