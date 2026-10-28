@@ -5304,3 +5304,10 @@ Original read/account-write failures are fixed and finite focused/native checks 
 Preserve D-607 and last physical baseline; apply the ready complete product only after
 that cohort actually ends. Do not repeat successful native/financial or rejected candidates.
 [Evidence and exact limits](../../quality/unsupported-derived-ledger-schema.md).
+
+### D-613 - Finish actual camera read boundary without replaying receipt work
+
+The new stat/read growth gap is corrected through the original bounded picker reader.
+Finite focused/native checks finish while D-607 and physical Main remain untouched.
+Do not relabel clipped historical frames or repeat old OCR/Save/financial successes.
+[Evidence and exact limits](../../quality/bounded-camera-source-read.md).

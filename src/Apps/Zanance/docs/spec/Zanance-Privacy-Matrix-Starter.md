@@ -1502,3 +1502,10 @@ The new independent owned emulator uses fictitious data only and RAM-only protec
 full comparison. No Main/private key, permission, SDK, network or Store declaration
 changes; retain the exact diagnostic/output-retirement limits.
 [Evidence and exact limits](../quality/unsupported-derived-ledger-schema.md).
+
+### D-613 - Camera stream bound preserves existing privacy policy
+
+Actual source bytes are bounded before image preparation; raw camera output still
+retires in the original finally. Only fictitious emulator capture is used, with no
+image/credential/private Main export or new SDK/permission/Store declaration.
+[Evidence and exact limits](../quality/bounded-camera-source-read.md).

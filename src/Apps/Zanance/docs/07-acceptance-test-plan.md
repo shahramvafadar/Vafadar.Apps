@@ -7615,3 +7615,10 @@ Fourteen new original-SQLite cases cover seven read faults and seven valid accou
 saves; three affected original cases pass. Preserve closed-connection and stale-build
 harness failures. Native Home publishes90EUR with blocks0/scalar1 and full typed equality.
 [Evidence and exact limits](quality/unsupported-derived-ledger-schema.md).
+
+### D-613 - AT-171 actual camera source bound after length admission
+
+Two original filesystem growth cases fail; six new selected cases pass after reusing
+the unchanged stream bound. One actual native JPEG/callback/empty-cache proof covers
+normal integration only; no oversized native attack or camera whole-text claim.
+[Evidence and exact limits](quality/bounded-camera-source-read.md).

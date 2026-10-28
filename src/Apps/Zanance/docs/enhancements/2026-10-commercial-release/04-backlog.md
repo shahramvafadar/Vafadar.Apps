@@ -7042,3 +7042,20 @@ Standard Clean removes2805 registered files/790937047 logical bytes; four-root r
 deletion is rejected with blocked by policy.1508files/248417153bytes plus six isolated
 user-home files/7732bytes remain without retry. Fresh UID/AVD and39831bytes XML retire.
 [Original failures, exact scope and limits](../../quality/unsupported-derived-ledger-schema.md).
+
+### D-613 - Actual camera output uses the original bounded source reader
+
+A camera file can grow after its early stat; the original unbounded read reproduces
+two actual filesystem failures. Reuse the unchanged picker stream algorithm/64MiB
+limit in the camera path and preserve URI/result/error/finally retirement. Six new
+focused cases, strict Windows/complete Offline Android and one actual fresh emulator
+camera callback/JPEG/empty-cache proof pass. No old Cancel/OCR/Save/seed/financial
+operation repeats and no clipped text is invented. Only the fresh fixture/AVD/XML
+retire; cleanup receipts distinguish registered Clean from residual refusal. D-607
+and last physical Main stay untouched; guarded product adoption remains pending.
+Full camera-text/corpus, stability/security/performance/A11Y/iOS/provider/Store/release
+remain open; goal active and TalkBack last.
+Standard Clean removes2828 registered files/809261077bytes; four-root and four loose
+publish-file deletions are rejected with blocked by policy, leaving248559729+7732
+and157483478 logical bytes without retry. Fresh UID/AVD and15224bytes XML retire.
+[Original growth failures and finite native proof](../../quality/bounded-camera-source-read.md).

@@ -1534,3 +1534,10 @@ Only the fresh fictitious emulator UID exports bounded stage/count/digest metada
 Original full typed comparison uses cleared RAM and the protected snapshot APIs;
 no plaintext file, private Main/key, raw SQL/error message or phone read is introduced.
 [Evidence and exact limits](quality/unsupported-derived-ledger-schema.md).
+
+### D-613 - Bounded camera bytes retain original transient-source ownership
+
+The original raw source stays transient and its finally deletion remains. Independent
+emulator diagnostics export only fixed phases/counts/digests/dimensions, no raw photo,
+Main data/key, credential, financial rows, new permission or network SDK.
+[Evidence and exact limits](quality/bounded-camera-source-read.md).

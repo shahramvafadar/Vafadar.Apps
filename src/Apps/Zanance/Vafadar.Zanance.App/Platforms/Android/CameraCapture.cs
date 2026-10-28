@@ -46,7 +46,7 @@ internal static class CameraCapture
                 throw new InvalidDataException("The camera source file is too large.");
             }
 
-            return await File.ReadAllBytesAsync(file.AbsolutePath);
+            return await Presentation.AttachmentFiles.ReadCameraSourceAsync(file.AbsolutePath);
         }
         finally
         {

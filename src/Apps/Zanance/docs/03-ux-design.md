@@ -2780,3 +2780,10 @@ Original covered Home publishes complete authoritative rows through scalar fallb
 No getter repairs storage, no layout/control/string changes, and no extra recovery
 action replaces a valid account-name save.
 [Evidence and exact limits](quality/unsupported-derived-ledger-schema.md).
+
+### D-613 - Oversized actual camera bytes retain original receipt errors
+
+Keep original source/camera/confirmation flow. A growing camera output is refused by
+the existing photo-preparation error path rather than read without an encoded bound.
+No crop/text inference, new prompt, layout, control or financial behavior changes.
+[Evidence and exact limits](quality/bounded-camera-source-read.md).

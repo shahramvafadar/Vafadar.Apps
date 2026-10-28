@@ -13,12 +13,9 @@ internal sealed record PreparedAttachment(string Name, string ContentType, byte[
 /// Picks and prepares attachments (F2-TX-04). Photos are stored as metadata-free JPEGs of at most 1600 px. Recognition
 /// uses a separate bounded, upright copy of the transient original (D-64), never included in PendingAttachment.
 /// </summary>
-internal static class AttachmentFiles
+internal static partial class AttachmentFiles
 {
     private const float MaxEdge = 1600;
-
-    /// <summary>The encoded source-file limit, before preparing the much smaller stored photo.</summary>
-    internal const int MaxSourceBytes = 64 * 1024 * 1024;
 
     public static async Task<PreparedAttachment?> PickAsync(string title, bool forRecognition = false)
     {
@@ -40,24 +37,6 @@ internal static class AttachmentFiles
         await using var stream = await file.OpenReadAsync();
         return await PrepareAsync(file.FileName, string.IsNullOrEmpty(file.ContentType) ? Guess(file.FileName) : file.ContentType,
             await ReadSourceAsync(stream), forRecognition);
-    }
-
-    /// <summary>Reads a picked/captured source with an encoded-byte bound, including non-seekable picker streams.</summary>
-    internal static async Task<byte[]> ReadSourceAsync(Stream stream)
-    {
-        using var buffer = new MemoryStream();
-        var chunk = new byte[81920];
-        int read;
-        while ((read = await stream.ReadAsync(chunk)) > 0)
-        {
-            if (buffer.Length + read > MaxSourceBytes)
-            {
-                throw new InvalidDataException("The source file is too large.");
-            }
-
-            buffer.Write(chunk, 0, read);
-        }
-        return buffer.ToArray();
     }
 
     /// <summary>Prepares a camera photo for storage, retaining the transient original only for recognition.</summary>

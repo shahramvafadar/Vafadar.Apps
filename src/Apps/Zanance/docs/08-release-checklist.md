@@ -4735,3 +4735,10 @@ outputs retire;20 residual files/423356bytes remain after pre-execution policy r
 - [x] One original native scalar fallback and full typed comparison without repair/replay.
 - [ ] Physical product adoption waits behind D-607; wider release gates stay open.
 [Evidence and exact limits](quality/unsupported-derived-ledger-schema.md).
+
+### D-613 - Camera byte limit engineering boundary
+
+- [x] Two original growth failures and six corrected cases; strict Windows/complete Offline Android.
+- [x] One original camera result and raw-cache retirement without OCR/financial replay.
+- [ ] Physical adoption follows D-607; camera text/corpus and wider release gates stay open.
+[Evidence and exact limits](quality/bounded-camera-source-read.md).

@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/AttachmentFiles.Source.cs" Link="Application/AttachmentFiles.Source.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Presentation/AttachmentCache.cs" Link="Application/AttachmentCache.cs" />
     <Compile Include="../../../../eng/benchmarks/Zanance.AndroidHome/CoreClrRuntimeReadPolicy.cs" Link="IndependentReview/CoreClrRuntimeReadPolicy.cs" />
     <Compile Include="../../../../eng/benchmarks/Zanance.AndroidHome/LoadedColdStartPolicy.cs" Link="IndependentReview/LoadedColdStartPolicy.cs" />

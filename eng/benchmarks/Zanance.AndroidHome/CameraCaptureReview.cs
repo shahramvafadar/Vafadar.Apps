@@ -53,6 +53,12 @@ internal static partial class CameraCaptureReview
             if (runtime is not MauiReceiptRuntime) throw new InvalidDataException("Original receipt runtime required.");
             if (CameraFiles(activity) != 0) throw new InvalidDataException("Fresh owned camera source required.");
 
+            if (activity.Intent?.GetBooleanExtra("review_camera_bounded_source", false) == true)
+            {
+                await RunBoundedSourceAsync(activity);
+                return;
+            }
+
             if (activity.Intent?.GetBooleanExtra("review_camera_quality", false) == true)
             {
                 await RunQualityAsync(activity, runtime);

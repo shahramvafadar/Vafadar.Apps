@@ -4579,3 +4579,10 @@ Fourteen new cases plus three affected existing cases pass in selected continuat
 Strict builds and one original native fallback pass; physical adoption stays behind
 D-607 and broader gates remain separate.
 [Evidence and exact limits](quality/unsupported-derived-ledger-schema.md).
+
+### D-613 - Camera source byte boundary locally verified
+
+Six fresh focused cases and one changed original native acquisition pass; no old
+cancellation, OCR, Save, seed or financial cohort repeats. D-598 whole-frame/text
+limitations and D-607/physical product adoption remain separate.
+[Evidence and exact limits](quality/bounded-camera-source-read.md).

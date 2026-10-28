@@ -10461,3 +10461,10 @@ Full-suite totals are not rerun, native observations are not counted as tests.
 All32 financial fields, actual source/schema guards and original writer policy remain;
 no model/migration change or full-device acceptance is claimed.
 [Evidence and exact limits](../quality/unsupported-derived-ledger-schema.md).
+
+### D-613 - Camera and picker share the original encoded-source limit
+
+Six distinct new managed cases pass, with two actual old-read regressions. No full
+suite total is rerun or native action counted as a test. The encoded64MiB limit,
+metadata-free image preparation, financial confirmation and camera permissions remain.
+[Evidence and exact limits](../quality/bounded-camera-source-read.md).

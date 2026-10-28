@@ -11155,3 +11155,11 @@ Validate the exact three-table/eleven-column optional contract with one metadata
 Unsupported shapes decline transport rather than failing the original Home/account writer.
 Real IO/cancellation and all financial/source/writer guards stay unchanged.
 [Evidence and exact limits](quality/unsupported-derived-ledger-schema.md).
+
+### D-613 - Bound actual camera bytes after native source acceptance
+
+A stat-only camera check does not bound a file that grows before reading. Reuse the
+unchanged original picker stream reader for camera output, preserving the original
+64MiB ceiling, URI/result/error and finally deletion. Two actual filesystem regressions
+and six corrected cases, strict builds and one finite native callback/retirement pass.
+[Evidence and exact limits](quality/bounded-camera-source-read.md).
