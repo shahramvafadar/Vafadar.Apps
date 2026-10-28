@@ -4602,3 +4602,11 @@ independent date-as-merchant defect with10 new/45 related cases and one unchange
 native reread; no old acquisition/financial success is repeated. Preserve onboarding
 navigation failure and keep full-frame, physical/corpus and D-607 gates open.
 [Evidence and exact limits](quality/portrait-camera-merchant-boundary.md).
+
+### D-616 - Finish the named complete-camera-source assertion
+
+One new supported virtual-scene frame yields all9 original primary lines, the actual
+shop and23.45EUR through original Camera2/preparation/recognition. No old direct/stored
+OCR, shutter, Cancel, managed success or financial command is repeated. Preserve the
+extra rotated-poster OCR row and historical imagefile failures; no product change.
+[Evidence and exact limits](quality/complete-virtual-scene-camera-source.md).

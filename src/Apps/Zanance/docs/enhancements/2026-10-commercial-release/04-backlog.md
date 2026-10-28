@@ -20,7 +20,7 @@ Do not count an estimate or an unspecified broader-device statement as a ready t
 |---|---|---|
 | A11Y-03 | D-566 original receipt-source dialogs:18 exact OS200% contexts,360/412/680dp, en/fa/de, both themes, native scroll reachability. See [receipt-source evidence](../../quality/receipt-source-os-text-and-covered-startup.md). | Other changed controls need a named missing layout assertion before another matrix. Physical-device acceptance is separate; this does not reopen the completed emulator cohort. |
 | QA-07 / QA-01 notifications | D-580 original broadcast-flag correction and paired queued delivery after reboot/idle; D-553 PIN-covered cold routes on the emulator. See [paired-delivery diagnosis](../../quality/reboot-paired-delivery-diagnosis.md) and [covered cold routes](../../quality/pin-covered-cold-notification-routes.md). | Punctual physical reboot/idle delivery and genuine owner authentication remain separate. Do not repeat the defective baseline, late-delivery cohort, financial setup or old taps to manufacture punctuality. |
-| QA-05 receipts | D-613 camera source bound and D-615 missing-header merchant correction join the retained source/corpus evidence. | D-615 new portrait camera framing fails; same-JPEG parser correction passes without another capture or financial write. Full supported camera/merchant corpus and physical adoption remain open; no editor acceptance from the onboarding navigation failure. |
+| QA-05 receipts | D-613 camera source bound, D-615 missing-header merchant correction and D-616 complete primary scene text/shop/total. | One supported virtual-scene camera source passes all9 primary rows; extra secondary OCR and historical imagefile failures remain explicit. Broader physical/corpus and editor acceptance remain open, without financial replay. |
 | SEC-03/04/06/07 | Existing isolated key, recovery, migration and covered-route proofs remain valid only within their recorded scope. | Real owner/biometric transitions and OEM backup acceptance require their actual platform inputs; do not read Main private keys/database or replace authentication with a synthetic pass. |
 | QA-06 performance | Retained reference/tenfold measurements and rejected candidates remain recorded. | A new candidate needs a concrete measured bottleneck and unchanged source/financial guards. A new host microbenchmark or another unchanged timing run is not complete Home/two-second acceptance. |
 
@@ -7093,3 +7093,16 @@ and owned XML are retired; supplementary cleanup refusal is preserved without re
 Full supported camera/corpus and physical adoption remain open, D-607 unchanged,
 TalkBack last and the overall delivery goal active.
 [Evidence and exact limits](../../quality/portrait-camera-merchant-boundary.md).
+
+### D-616 - Complete primary camera frame and merchant through the supported scene
+
+The exact unedited D-615 input, on official wall/table scene posters, reaches the
+original native reader with all9 primary lines, NORTH HARBOR MARKET and2345minorEUR.
+One new shutter/Done/recognition only; preserve one extra corrupted rotated-poster
+line and both closed imagefile crop failures. No direct/stored/control OCR, unit
+suite, product build or financial success is replayed. Temporary diagnostic source
+returns to HEAD and the fresh UID/AVD/five XMLs/local endpoint are retired; residual
+cleanup refusal is recorded without retry. This finite complete-source assertion
+finishes, while physical/corpus/editor and broader release gates remain separate.
+D-607 stays untouched and the goal active; TalkBack remains last.
+[Evidence and exact limits](../../quality/complete-virtual-scene-camera-source.md).

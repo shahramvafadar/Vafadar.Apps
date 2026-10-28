@@ -138,3 +138,11 @@ D-607 source comparison after reboot and real delivery remain open. Broader rece
 camera/merchant corpus, public providers/Store, stability, two-second performance,
 accessibility, iOS and release are separate gates; TalkBack remains last. The overall
 delivery goal remains active. Evidence pointer:%TEMP%\Zanance-D615-current.txt.
+
+## Subsequent independent complete-source evidence
+
+D-616 preserves this exact unedited input in the supported virtual scene. One new
+camera result returns all9 primary lines and the correct merchant/total, with one
+additional imperfect rotated-poster line retained. This does not relabel either
+imagefile failure or the diagnostic onboarding navigation failure.
+[Original D-616 evidence](complete-virtual-scene-camera-source.md).

@@ -5329,3 +5329,12 @@ Full-frame camera evidence still needs a supported complete source; keep the
 onboarding navigation failure explicit and D-607 physical/deadline cohort untouched.
 Continue ready work, with TalkBack last and external decisions unchanged.
 [Evidence and exact limits](../../quality/portrait-camera-merchant-boundary.md).
+
+### D-616 - Close the named complete-source acquisition without financial replay
+
+Supported scene posters and the installed room-walk macro admit an actual complete
+primary receipt. One shutter/reader call verifies nine rows/shop/total; preserve the
+additional imperfect rotated-poster text. Retire only that fresh fixture and restore
+diagnostics. No further imagefile rescue or settled reader/financial repetition.
+D-607 and broader physical/corpus/release gates remain active; TalkBack stays last.
+[Evidence and exact limits](../../quality/complete-virtual-scene-camera-source.md).

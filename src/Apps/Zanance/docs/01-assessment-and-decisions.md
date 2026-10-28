@@ -11183,3 +11183,13 @@ or accepted writes. Ten new plus45 directly related cases and an exact retained-
 native reread pass. Diagnostic editor navigation during fresh onboarding fails and
 is not accepted. Strict builds pass; physical adoption waits for D-607.
 [Evidence and exact limits](quality/portrait-camera-merchant-boundary.md).
+
+### D-616 - Admit complete primary camera text through the supported scene route
+
+The unchanged D-615 portrait source on official scene posters reaches the original
+reader with all9 primary lines and correct merchant/2345EURminor after one shutter.
+Preserve the extra corrupted rotated-poster OCR row and both historical imagefile
+crop failures. Use the installed official room-walk macro after a real preview
+precondition; do not read credentials, bypass a refused API or alter source pixels.
+No product/test/financial change; broader physical/corpus/editor gates stay separate.
+[Evidence and exact limits](quality/complete-virtual-scene-camera-source.md).

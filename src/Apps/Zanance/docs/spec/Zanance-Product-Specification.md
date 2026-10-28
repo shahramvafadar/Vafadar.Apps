@@ -10488,3 +10488,12 @@ The new portrait source itself still loses its header/footer; editor navigation
 from a fresh onboarding root fails and is not form acceptance. Builds pass; complete
 camera/corpus, physical adoption and all separate release gates remain open.
 [Evidence and exact limits](../quality/portrait-camera-merchant-boundary.md).
+
+### D-616 - Complete primary camera-frame and merchant evidence
+
+The unchanged portrait source is acquired once through supported virtual-scene
+Camera2; original recognition returns all9 primary rows, correct shop and23.45EUR.
+One corrupted rotated-poster line remains in actual text. No product behavior/model/
+permission/test count changes, no financial operation and no camera-corpus/general
+OCR claim. Existing imagefile failures and D-607 physical/deadline cohort stay intact.
+[Evidence and exact limits](../quality/complete-virtual-scene-camera-source.md).

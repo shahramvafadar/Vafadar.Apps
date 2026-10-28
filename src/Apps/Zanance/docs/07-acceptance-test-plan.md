@@ -7642,3 +7642,12 @@ JPEG/native reader now yields null merchant and unchanged23.45EUR without anothe
 shutter or financial command. Editor opening from fresh onboarding fails; no form,
 whole-camera/corpus/physical acceptance is inferred. Strict builds pass.
 [Evidence and exact limits](quality/portrait-camera-merchant-boundary.md).
+
+### D-616 - QA-05 complete primary virtual-scene camera text
+
+Actual preconditioned scene preview, one native callback and one original recognition
+read qualify all9 primary rows, NORTH HARBOR MARKET and2345minorEUR inPID4868. Extra
+rotated-poster text is genuinely imperfect and retained. No stored/direct reread,
+financial action or new unit-test count. This finite source assertion closes; broader
+physical/corpus, whole-scene OCR and original editor acceptance remain separate.
+[Evidence and exact limits](quality/complete-virtual-scene-camera-source.md).

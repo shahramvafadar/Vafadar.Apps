@@ -4759,3 +4759,12 @@ corpus acceptance stay open. Preserve the failed diagnostic onboarding navigatio
 unused-output cleanup refusal and existing D-607 physical baseline/deadlines. No
 phone adoption, security/stability/accessibility/iOS/provider/Store release is implied.
 [Evidence and exact limits](quality/portrait-camera-merchant-boundary.md).
+
+### D-616 - Complete synthetic camera source is finite evidence
+
+All9 primary rows/shop/total pass through one actual virtual-scene acquisition. Keep
+both earlier imagefile crops and the extra corrupted secondary-poster OCR line. No
+new product/Windows build, unit count or financial operation is claimed. Fresh UID,
+AVD, five XMLs and local endpoint are retired; residual cleanup refusal is preserved.
+Physical/corpus/editor, stability/security/A11Y/iOS/provider/Store/release gates remain.
+[Evidence and exact limits](quality/complete-virtual-scene-camera-source.md).
