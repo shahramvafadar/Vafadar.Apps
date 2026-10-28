@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Keep the original complete-ledger reader after a direct-output candidate misses its declared host allocation gate; no application behavior changes (D-610).
+
 - Bound the existing emulated receipt-camera text clipping from original image geometry; keep complete camera/merchant quality unaccepted and application behavior unchanged (D-609).
 
 - Explain known low device storage during startup and keep key or backup recovery hidden until storage is freed and Retry is chosen (D-606).

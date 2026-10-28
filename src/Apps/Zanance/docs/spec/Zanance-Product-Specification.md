@@ -10437,3 +10437,10 @@ The retained original frame enlarges line geometry by4/3 while losing right-side
 header/footer content. No OCR/amount/merchant behavior or supported receipt claim is
 changed. Existing test counts/builds remain historical, not rerun; full camera quality
 stays open. [Evidence](../quality/original-camera-frame-geometry.md).
+
+### D-610 - No product or managed-count change from direct output
+
+The complete32-field private host candidate is closed before integration, native build
+or financial operation. Favorable9.5956553% host latency does not replace the failed
+allocation gate, full Home/two-second or device acceptance.
+[Scope, values and refusal](../quality/rejected-direct-ledger-output.md).

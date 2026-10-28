@@ -6994,3 +6994,16 @@ No new native/managed test, build, image edit or financial operation occurs. QA-
 still requires an actually complete supported camera input; do not pad this source,
 replay accepted operations or relabel its clipped result. The overall goal stays
 active and TalkBack remains last. [Geometry and limits](../../quality/original-camera-frame-geometry.md).
+
+### D-610 - Direct complete-ledger destination rejected before native work
+
+A distinct private candidate removes per-block physical-row lists and final-list
+growth while sharing all original32-field parsing/guards. Complete values/order,
+mutable ownership/cancellation and malformed outcomes match. Combined host latency
+improves9.5956553%, but allocation reduction3.6945719% misses the frozen5% engineering
+eligibility threshold. No extra sample/reverse/rescue, native build/install, product
+change or financial replay follows. Standard Clean removes28 registered files/
+661242 logical bytes. Further four-root deletion is rejected before execution with
+blocked by policy;20 files/423356bytes remain and no alternate attempt follows.
+QA-06/two-second and all broader gates remain open; unfinished D-607 and TalkBack
+ordering are preserved. [Complete record](../../quality/rejected-direct-ledger-output.md).

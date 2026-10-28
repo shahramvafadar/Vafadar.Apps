@@ -7591,3 +7591,11 @@ Six original ink-box pairs agree with a4/3 height mapping; header/footer endings
 outside the stored width. This is retained-image analysis, not a new native/managed
 test or full-text pass. Do not repeat accepted shutter/Save work or repair the input
 to relabel D-598. [Exact witnesses and limits](quality/original-camera-frame-geometry.md).
+
+### D-610 - Finite direct-output controls only
+
+Both private roles preserve all32 fields/order, independent mutable tags, cancellation,
+410 truncated rows and102 mutations plus wrong-bucket outcomes. Allocation eligibility
+fails; these controls do not establish SQLite fallback, native publication or a new
+shipped managed-test count.
+[Scope, values and refusal](quality/rejected-direct-ledger-output.md).

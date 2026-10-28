@@ -4713,3 +4713,10 @@ No financial/native success replay or new TalkBack cohort. [Evidence](quality/st
 - [ ] Complete supported camera receipt/merchant text remains unaccepted; clipped pixels cannot establish it.
 
 No app build/test, financial command or publication is added. [Evidence](quality/original-camera-frame-geometry.md).
+
+### D-610 - Rejected candidate is not performance acceptance
+
+Full host control parity passes; prior allocation eligibility fails at3.6945719%
+versus5%. Product/native release gates remain unchanged. All28 registered Clean
+outputs retire;20 residual files/423356bytes remain after pre-execution policy refusal.
+[Scope, values and refusal](quality/rejected-direct-ledger-output.md).

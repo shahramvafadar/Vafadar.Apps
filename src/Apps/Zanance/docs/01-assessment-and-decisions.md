@@ -11131,3 +11131,11 @@ height mapping with horizontal clipping, not complete-text camera acceptance. Ex
 installed emulator source identity remains unproven; no OCR/financial/product change
 is justified. No new build, native/managed test or financial command.
 [Measured boundary and remaining input](quality/original-camera-frame-geometry.md).
+
+### D-610 - Direct complete-ledger destination closes at its fixed host gate
+
+Remove only intermediate physical-row lists and final-list growth in private copies.
+Full fields/ownership/cancellation and malformed outcomes match; host latency improves
+9.5956553% but allocation reduction3.6945719% misses the prior5% gate. No product or
+native promotion; standard Clean succeeds and residual deletion is explicitly refused.
+[Scope, values and refusal](quality/rejected-direct-ledger-output.md).

@@ -5281,3 +5281,10 @@ Retained D-598 images explain the observed horizontal text loss geometrically; d
 not replay its successful acquisition/reader/financial actions or pad its input to
 manufacture acceptance. QA-05 next requires genuinely complete framed receipt input.
 No new product build/test or release gate closes. [Evidence](../../quality/original-camera-frame-geometry.md).
+
+### D-610 - Close the direct-output prerequisite without device replay
+
+The one paired host comparison misses its frozen allocation threshold. Do not promote
+it, repeat samples or replay settled financial/native work. Preserve the exact
+production sources, unfinished D-607 and explicit residual-cleanup refusal.
+[Scope, values and refusal](../../quality/rejected-direct-ledger-output.md).

@@ -4557,3 +4557,10 @@ The original clipped D-598 frame is geometrically bounded without another camera
 reader run. QA-05 still needs an actually complete supported camera input; no managed
 count, product behavior or completed financial result changes. State remains in the
 canonical backlog. [Evidence](quality/original-camera-frame-geometry.md).
+
+### D-610 - Direct ledger output not adopted
+
+The new complete-entry output strategy fails its declared host allocation prerequisite;
+no native/financial replay or source integration follows. The canonical performance
+parent remains open; rejected output retirement is not reported as complete.
+[Scope, values and refusal](quality/rejected-direct-ledger-output.md).
