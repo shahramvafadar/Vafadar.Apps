@@ -11,8 +11,23 @@ public partial class AccountRow : Grid
     {
         if (BindingContext is AccountItem item)
         {
-            // An event handler: a failing navigation shows a message instead of ending the app.
-            await Presentation.Failures.GuardAsync(() => Shell.Current.GoToAsync(AppShell.AccountDetailRoute, new Dictionary<string, object> { ["id"] = item.Id }));
+            // D-627: the actual owning page rejects old rows while covered, retired or bound to another file.
+            for (Element? owner = this; owner is not null; owner = owner.Parent)
+            {
+                if (owner is AccountsPage page)
+                {
+                    await Presentation.Failures.GuardAsync(() => page.OpenAccountAsync(item));
+                    return;
+                }
+                // The same original row also belongs to Home. Preserve that route without treating it as an Accounts owner.
+                if (owner is Home.HomePage { BindingContext: Home.HomeViewModel home }
+                    && home.Loading.IsReady && home.Accounts.Any(current => ReferenceEquals(current, item)))
+                {
+                    await Presentation.Failures.GuardAsync(() => Shell.Current.GoToAsync(AppShell.AccountDetailRoute,
+                        new Dictionary<string, object> { ["id"] = item.Id }));
+                    return;
+                }
+            }
         }
     }
 }

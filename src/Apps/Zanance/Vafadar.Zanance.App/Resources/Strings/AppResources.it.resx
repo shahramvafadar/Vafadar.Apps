@@ -8487,4 +8487,10 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Startup_StorageLow" xml:space="preserve">
     <value>Non c’è abbastanza spazio libero sul dispositivo per preparare i tuoi dati in sicurezza. Libera spazio e riprova. I tuoi dati finanziari restano nascosti.</value>
   </data>
+  <data name="Accounts_Loading" xml:space="preserve">
+    <value>Caricamento dei conti…</value>
+  </data>
+  <data name="Accounts_RetryLoad" xml:space="preserve">
+    <value>Riprova</value>
+  </data>
 </root>

@@ -7219,3 +7219,23 @@ Fresh UID/35XML/newPNG/25AVD files retire; four-root policy refusal leaves2720fi
 444548733logicalbytes without retry. No old financial/receipt success or phone action;
 D-607 and adoption stay open, overall goal active and TalkBack last.
 [Evidence and exact limits](../../quality/receipt-printed-timestamp-boundary.md).
+
+
+### D-627 - Complete original Accounts read, cover and native target lifetime
+
+One original-file deferred snapshot replaces separate settings-creating reads;
+worker projection retains original balances/order/group/archive/conversion/holding
+separation. Validate original financial revision and complete Accounts/Settings,
+bounded same-file retries, covered single-reset publication and current-row identity.
+Actual retained-tab departure initially failed; preserve it, correct original Shell
+retirement and repeat only that predicate after same-fixture no-reset upgrade.
+30new focused cases/21existing resource checks, strict Windows/full offline384AOT/
+408ELF/1608static16KiB APK, six original language/theme contexts plus800dp and360dp/
+OS200% covers, Accounts/Home detail routes and final Home100/empty history pass.
+No financial setup/transaction/old success replay or phone/D-607 command occurs.
+212XML/9643451bytes and fresh UID/AVD retire; five standard cleans pass. Automatic
+review refuses nine-root/eight-file supplemental cleanup before process creation:
+3790files/1277853856logicalbytes remain, no retry/subset/alternative. Used signed
+APKs/evidence remain. No shipping-PE equivalence, performance/ANR or broad acceptance;
+physical adoption waits for D-607 and overall goal remains active/TalkBack last.
+[Full source, failures and exact limits](../../quality/covered-original-account-overview.md).

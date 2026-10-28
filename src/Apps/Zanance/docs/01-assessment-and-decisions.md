@@ -11301,3 +11301,20 @@ Continue the same draft after Simple visibility/clipped-bounds observer refusals
 Discard once, final history empty/Home0. Fresh retirement and cleanup refusal are
 explicit; D-607 and broader gates stay open.
 [Evidence and exact limits](quality/receipt-printed-timestamp-boundary.md).
+
+
+### D-627 - Complete original account-list read and covered publication
+
+Replace separate source/settings-creating reads with one original-file deferred
+snapshot and worker projection; compare original financial revision and complete
+Accounts/Settings separately before bounded same-file retry. Keep all financial
+math/order/holding separation. Publish rows once under local Loading/error/Retry,
+retire accepted retained-tab/root departures and guard actual current row commands,
+including the shared Home route.30new focused cases,21existing resource checks,
+strict builds and finite original-page native observations pass. Preserve the real
+first tab-retirement failure and correct only that predicate on the same no-reset
+fixture. Six language/theme contexts, actual360dp/OS200% covers,800dp frame, current
+Accounts/Home detail routes and final source-visible/settings preservation pass.
+Fresh UID/212XML/AVD retire; supplemental3790file deletion is policy-refused. No
+financial replay, shipping-byte/performance/ANR or physical-adoption claim follows.
+[Complete source, native outcome and limits](quality/covered-original-account-overview.md).

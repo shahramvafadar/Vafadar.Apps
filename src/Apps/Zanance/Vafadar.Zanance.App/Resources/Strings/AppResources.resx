@@ -8532,4 +8532,10 @@ Original XML SHA-256: {5}</value>
   <data name="Startup_StorageLow" xml:space="preserve">
     <value>There is not enough free device storage to prepare your data safely. Free some space, then try again. Your financial data remains hidden.</value>
   </data>
+  <data name="Accounts_Loading" xml:space="preserve">
+    <value>Loading accounts…</value>
+  </data>
+  <data name="Accounts_RetryLoad" xml:space="preserve">
+    <value>Try again</value>
+  </data>
 </root>

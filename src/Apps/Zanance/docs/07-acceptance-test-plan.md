@@ -7716,3 +7716,16 @@ page/owned retirement are exact; no new managed test or financial replay is coun
 
 Review all48 actual API36/x64/4096 frames and exact RGB serialization, retaining47 successful originals and replacing one unfinished IME frame. Confirm the same three ledger entries, two unpaid plans, three accounts, budget and goal after capture/recovery, with no entity Save replay. Actual PID4188 ANR/native Close/terminal proof/one normal launch to18878 remains a failure, not a stability pass. Visible OS/profile restoration and fresh retirement pass; no new managed test/build count.
 [Evidence and exact limits](quality/android-store-drafts.md).
+
+
+### D-627 - Original Accounts source, cover and row ownership
+
+Thirty focused real-store/VM cases and21existing resource checks pass. Keep the
+initial actual held-tab failure; correct Shell departure retirement and repeat only
+that failed predicate after one same-fixture no-reset independent upgrade. Initial
+cover/error/Retry, current Accounts row and shared Home row routes, six language/
+theme contexts,360dp/OS200% covers and800dp view pass with one unchanged100EUR opening
+and empty ledger. Original display/OS settings return;212owned XMLs and fresh UID/AVD
+retire. Five standard cleans pass; supplemental3790file cleanup is policy-refused.
+No successful financial command, old receipt suite or physical/D-607 action repeats.
+[Full original inputs and exact limits](quality/covered-original-account-overview.md).

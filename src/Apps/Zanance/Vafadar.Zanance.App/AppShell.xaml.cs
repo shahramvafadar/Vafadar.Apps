@@ -14,6 +14,7 @@ namespace Vafadar.Zanance.App;
 public partial class AppShell : Shell
 {
     private readonly HashSet<Features.Home.HomePage> _publishedHomes = [];
+    private readonly HashSet<AccountsPage> _publishedAccountOverviews = [];
     private bool _navigationRetired;
 
     /// <summary>Records actual published Home instances; lazy ShellContent.Content may not expose its cached page.</summary>
@@ -21,6 +22,13 @@ public partial class AppShell : Shell
     {
         if (_navigationRetired) home.RetirePublication();
         else _publishedHomes.Add(home);
+    }
+
+    /// <summary>Tracks original lazy account pages so shell replacement retires pending reads and native rows too.</summary>
+    internal void RegisterAccountOverview(AccountsPage page)
+    {
+        if (_navigationRetired) page.RetireShellPublication();
+        else _publishedAccountOverviews.Add(page);
     }
     /// <summary>Route of the account list.</summary>
     public const string AccountsRoute = AppRoutes.AccountsRoute;
@@ -234,6 +242,12 @@ public partial class AppShell : Shell
         if (CurrentPage?.BindingContext is Features.Sharing.HouseholdViewModel household && !household.CanLeave && args.CanCancel) args.Cancel();
         if (CurrentPage?.BindingContext is Features.Sharing.HouseholdCostsViewModel costs && !costs.CanLeave && args.CanCancel) args.Cancel();
         base.OnNavigating(args);
+        // D-627: a routed Accounts page can remain cached across tabs without OnDisappearing.
+        // Retire only after the original leave guards accept this actual tab departure.
+        if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
+                or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
+            && CurrentPage is AccountsPage accounts)
+            accounts.RetirePublication();
         // D-406: Android can retain a routed More page across tabs without OnDisappearing.
         // Retire its original financial review only after navigation survives the existing leave guards.
         if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
@@ -253,6 +267,8 @@ public partial class AppShell : Shell
     internal void RetireNavigationBindings()
     {
         _navigationRetired = true;
+        foreach (var accounts in _publishedAccountOverviews) accounts.RetireShellPublication();
+        _publishedAccountOverviews.Clear();
         Navigated -= OnRetainedDetailsTabActivated;
 #if ANDROID
         if (Handler is AccessibleShellRenderer renderer) renderer.RetireNavigation();

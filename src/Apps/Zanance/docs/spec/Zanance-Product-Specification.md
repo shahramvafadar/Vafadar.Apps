@@ -10577,3 +10577,17 @@ or time repair, numeric precedence or amount-rule change.53focused distinct fina
 cases and one new original unsaved image-to-editor draft pass; no financial write
 or accepted old source replay. Physical adoption waits for D-607; broader gates stay.
 [Evidence and exact limits](../quality/receipt-printed-timestamp-boundary.md).
+
+
+### D-627 - Consistent covered account-list publication
+
+One original deferred source transaction and worker calculation provide complete
+account groups/totals/archive/holdings without creating settings. Preserve original
+financial formulas, ordering, conditional conversions and separate quantities;
+validate original revision plus Accounts/Settings before bounded same-file retries.
+Local cover/Retry, accepted-tab/root retirement and current object-bound row routes
+include Home's existing shared row.30new focused cases and21existing resource checks,
+strict builds, same-fixture corrected native retirement, six language/theme contexts,
+minimum OS200% and wide views pass. Native counts are not extra unit tests. Physical
+adoption waits for D-607; broad stability/performance/security/A11Y/release remain.
+[Evidence and exact limits](../quality/covered-original-account-overview.md).

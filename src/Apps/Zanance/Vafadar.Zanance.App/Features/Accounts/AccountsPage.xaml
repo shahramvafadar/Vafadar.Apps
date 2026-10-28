@@ -11,7 +11,8 @@
     Title="{v:Translate Accounts_Title}">
 
     <!-- D-78: reserve the Add action below the viewport so it never covers readable content. -->
-    <Grid RowDefinitions="*,Auto">
+    <Grid>
+    <Grid x:Name="ReadySurface" RowDefinitions="*,Auto" IsVisible="{Binding Loading.IsReady}">
         <ScrollView x:Name="ContentViewport">
             <VerticalStackLayout Padding="16" Spacing="8">
 
@@ -91,5 +92,14 @@
 
         <Button x:Name="AddAction" Grid.Row="1" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
                 SemanticProperties.Description="{v:Translate Accounts_Add}" />
+    </Grid>
+        <VerticalStackLayout x:Name="LoadingSurface" Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
+            <Label x:Name="LoadingCaption" Text="{v:Translate Accounts_Loading}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+        <VerticalStackLayout x:Name="ErrorSurface" Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+            <Label x:Name="ErrorCaption" Text="{v:Translate Error_Unexpected}" HorizontalTextAlignment="Center" />
+            <Button x:Name="RetryLoadButton" Text="{v:Translate Accounts_RetryLoad}" Style="{StaticResource SecondaryButton}" Clicked="OnReloadClicked" />
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

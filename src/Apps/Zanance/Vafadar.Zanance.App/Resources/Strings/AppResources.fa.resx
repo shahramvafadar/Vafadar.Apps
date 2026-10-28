@@ -8498,4 +8498,10 @@
   <data name="Startup_StorageLow" xml:space="preserve">
     <value>فضای خالی دستگاه برای آماده‌سازی امن داده‌ها کافی نیست. مقداری فضا خالی کنید و دوباره تلاش کنید. اطلاعات مالی شما همچنان پنهان می‌ماند.</value>
   </data>
+  <data name="Accounts_Loading" xml:space="preserve">
+    <value>در حال بارگذاری حساب‌ها…</value>
+  </data>
+  <data name="Accounts_RetryLoad" xml:space="preserve">
+    <value>تلاش دوباره</value>
+  </data>
 </root>

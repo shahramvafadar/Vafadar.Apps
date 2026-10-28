@@ -8498,4 +8498,10 @@ Original-XML SHA-256: {5}</value>
   <data name="Startup_StorageLow" xml:space="preserve">
     <value>Der freie Gerätespeicher reicht nicht aus, um deine Daten sicher vorzubereiten. Schaffe Platz und versuche es erneut. Deine Finanzdaten bleiben verborgen.</value>
   </data>
+  <data name="Accounts_Loading" xml:space="preserve">
+    <value>Konten werden geladen…</value>
+  </data>
+  <data name="Accounts_RetryLoad" xml:space="preserve">
+    <value>Erneut versuchen</value>
+  </data>
 </root>

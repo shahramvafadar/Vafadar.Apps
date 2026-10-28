@@ -2825,3 +2825,16 @@ source note and explicit Save review; never infer source calendar from UI langua
 One original2025 image-to-form observation distinguishes extraction from today's2026
 default and cancels without financial writes. No new control/string/layout is added.
 [Evidence and exact limits](quality/complete-named-receipt-date-suggestions.md).
+
+
+### D-627 - One complete original account overview behind its own cover
+
+Hide original ready rows and Add/debt/holdings actions during initial/refresh reads
+or errors. Show translated loading feedback and a local original Retry; publish
+complete original groups/native totals/archive/holding quantities together. A
+retained tab or retired shell cannot expose an old native target or finish an old
+read into the next page lifetime. Preserve original Accounts and Home row routes,
+Back behavior, sorting, tiles and ready layout; no new financial Save is introduced.
+Six native language/theme contexts and named minimum/scaled/wide assertions pass,
+with observation refusals retained and source/settings exactly scoped.
+[Evidence and exact limits](quality/covered-original-account-overview.md).
