@@ -1527,3 +1527,10 @@ protected memory exporter/full typed verifier stay in RAM with cleared buffers; 
 SQL/message/path/key/source dump or plaintext file is exported. No product permission,
 SDK, endpoint or normal data flow changes; the phone is untouched.
 [Evidence and exact limits](quality/derived-ledger-empty-identity.md).
+
+### D-612 - Fresh optional-schema diagnostic scope
+
+Only the fresh fictitious emulator UID exports bounded stage/count/digest metadata.
+Original full typed comparison uses cleared RAM and the protected snapshot APIs;
+no plaintext file, private Main/key, raw SQL/error message or phone read is introduced.
+[Evidence and exact limits](quality/unsupported-derived-ledger-schema.md).

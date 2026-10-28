@@ -7608,3 +7608,10 @@ blocks1/scalar1 and90EUR with complete typed schema/row preservation after the e
 cache mutation. Accepted two-row setup/cache damage are not repeated; the full baseline
 begins after the read-only observer, not before the initial helper exception.
 [Evidence and exact limits](quality/derived-ledger-empty-identity.md).
+
+### D-612 - AT-82 unsupported optional column contracts
+
+Fourteen new original-SQLite cases cover seven read faults and seven valid account
+saves; three affected original cases pass. Preserve closed-connection and stale-build
+harness failures. Native Home publishes90EUR with blocks0/scalar1 and full typed equality.
+[Evidence and exact limits](quality/unsupported-derived-ledger-schema.md).

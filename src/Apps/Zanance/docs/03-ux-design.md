@@ -2773,3 +2773,10 @@ read and publish the complete SQLite source rather than a partial prefix or unre
 recovery action. Do not repair the cache in a getter or normalize an original record
 identity. No layout/control/translation or financial confirmation changes.
 [Evidence and exact limits](quality/derived-ledger-empty-identity.md).
+
+### D-612 - Keep original Home readable when optional cache columns are unsupported
+
+Original covered Home publishes complete authoritative rows through scalar fallback.
+No getter repairs storage, no layout/control/string changes, and no extra recovery
+action replaces a valid account-name save.
+[Evidence and exact limits](quality/unsupported-derived-ledger-schema.md).

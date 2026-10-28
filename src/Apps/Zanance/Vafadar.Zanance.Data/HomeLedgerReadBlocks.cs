@@ -130,7 +130,34 @@ internal static class HomeLedgerReadBlocks
 
     private static async Task<State?> ReadStateAsync(ZananceDbContext db, CancellationToken ct)
     {
-        if (await NumberAsync(db, "SELECT count(*) FROM sqlite_master WHERE type='table' AND name IN ('HomeLedgerReadState','HomeLedgerReadBlocks','HomeLedgerDirtyBlocks')", ct).ConfigureAwait(false) != 3) return null;
+        // D-612: table existence alone does not admit optional column contracts. Decline before any
+        // data query/maintenance when metadata is unsupported; real SQLite IO/cancellation still propagates.
+        if (await NumberAsync(db, """
+            WITH expected(tbl, cid, name, type, required, key) AS (VALUES
+                ('HomeLedgerReadState',0,'Id','INTEGER',1,1),
+                ('HomeLedgerReadState',1,'Revision','TEXT',1,0),
+                ('HomeLedgerReadState',2,'PublishedRevision','TEXT',0,0),
+                ('HomeLedgerReadState',3,'SchemaVersion','INTEGER',0,0),
+                ('HomeLedgerReadState',4,'CodecVersion','INTEGER',0,0),
+                ('HomeLedgerReadState',5,'RowCount','INTEGER',0,0),
+                ('HomeLedgerReadBlocks',0,'BlockId','INTEGER',1,1),
+                ('HomeLedgerReadBlocks',1,'RowCount','INTEGER',1,0),
+                ('HomeLedgerReadBlocks',2,'Payload','BLOB',0,0),
+                ('HomeLedgerReadBlocks',3,'Digest','BLOB',0,0),
+                ('HomeLedgerDirtyBlocks',0,'BlockId','INTEGER',1,1)),
+            actual AS (
+                SELECT 'HomeLedgerReadState' AS tbl, * FROM pragma_table_xinfo('HomeLedgerReadState')
+                UNION ALL SELECT 'HomeLedgerReadBlocks', * FROM pragma_table_xinfo('HomeLedgerReadBlocks')
+                UNION ALL SELECT 'HomeLedgerDirtyBlocks', * FROM pragma_table_xinfo('HomeLedgerDirtyBlocks'))
+            SELECT CASE WHEN
+                (SELECT count(*) FROM sqlite_master WHERE type='table'
+                    AND name IN ('HomeLedgerReadState','HomeLedgerReadBlocks','HomeLedgerDirtyBlocks'))=3
+                AND (SELECT count(*) FROM actual)=11
+                AND (SELECT count(*) FROM actual a JOIN expected e ON a.tbl=e.tbl AND a.cid=e.cid
+                    AND a.name=e.name COLLATE BINARY AND upper(a.type)=e.type
+                    AND a."notnull"=e.required AND a.pk=e.key AND a.hidden=0 AND a.dflt_value IS NULL)=11
+                THEN 1 ELSE 0 END
+            """, ct).ConfigureAwait(false) != 1) return null;
         await using var result = await QueryAsync(db, """
             SELECT CASE WHEN typeof(Revision)='text' THEN Revision ELSE NULL END,
                 CASE WHEN typeof(PublishedRevision)='text' THEN PublishedRevision ELSE NULL END,

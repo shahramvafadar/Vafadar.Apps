@@ -1495,3 +1495,10 @@ and numeric errors are bounded; the original complete comparison uses RAM-only p
 export with cleared buffers, not a portable file or private Main/key read. Product
 permissions, libraries, network behavior and Store declarations do not change.
 [Evidence and exact limits](../quality/derived-ledger-empty-identity.md).
+
+### D-612 - Optional schema review retains existing privacy boundary
+
+The new independent owned emulator uses fictitious data only and RAM-only protected
+full comparison. No Main/private key, permission, SDK, network or Store declaration
+changes; retain the exact diagnostic/output-retirement limits.
+[Evidence and exact limits](../quality/unsupported-derived-ledger-schema.md).

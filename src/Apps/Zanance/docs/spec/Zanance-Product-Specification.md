@@ -10453,3 +10453,11 @@ All32 fields, v1 format, source/revision/schema guards and original identity pol
 unchanged; no model/migration change. Native local correctness and static package checks
 do not establish physical adoption or full release readiness.
 [Evidence and exact limits](../quality/derived-ledger-empty-identity.md).
+
+### D-612 - Unsupported optional columns preserve original financial authority
+
+Fourteen distinct new managed cases and three affected existing cases pass.
+Full-suite totals are not rerun, native observations are not counted as tests.
+All32 financial fields, actual source/schema guards and original writer policy remain;
+no model/migration change or full-device acceptance is claimed.
+[Evidence and exact limits](../quality/unsupported-derived-ledger-schema.md).

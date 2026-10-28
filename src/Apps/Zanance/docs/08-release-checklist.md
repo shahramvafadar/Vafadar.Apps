@@ -4728,3 +4728,10 @@ outputs retire;20 residual files/423356bytes remain after pre-execution policy r
 - [x] Only fresh UID/AVD retired and registered Clean outputs removed; retain explicit residual deletion refusals.
 - [ ] Physical no-reset adoption waits behind D-607; no broad stability/security/iOS/release acceptance.
 [Evidence and exact limits](quality/derived-ledger-empty-identity.md).
+
+### D-612 - Optional column refusal local engineering boundary
+
+- [x]14 new/3 affected selected managed cases, strict Windows/complete signed Offline Android.
+- [x] One original native scalar fallback and full typed comparison without repair/replay.
+- [ ] Physical product adoption waits behind D-607; wider release gates stay open.
+[Evidence and exact limits](quality/unsupported-derived-ledger-schema.md).

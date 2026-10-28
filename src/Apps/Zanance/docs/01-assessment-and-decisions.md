@@ -11148,3 +11148,10 @@ Six new plus three affected cases, strict Windows/complete Offline Android and o
 original native fallback pass. Preserve helper failures and post-observer baseline limits.
 Physical adoption waits behind the unchanged D-607 cohort.
 [Evidence and exact limits](quality/derived-ledger-empty-identity.md).
+
+### D-612 - Admit optional column metadata before reading or maintaining it
+
+Validate the exact three-table/eleven-column optional contract with one metadata query.
+Unsupported shapes decline transport rather than failing the original Home/account writer.
+Real IO/cancellation and all financial/source/writer guards stay unchanged.
+[Evidence and exact limits](quality/unsupported-derived-ledger-schema.md).

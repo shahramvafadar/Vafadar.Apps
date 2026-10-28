@@ -5297,3 +5297,10 @@ through the original protected memory exporter. Keep D-607/last phone baseline i
 physical product adoption follows its actual terminal state, not a repeated setup.
 Both residual cleanup refusals remain explicit and are not retried.
 [Evidence and exact limits](../../quality/derived-ledger-empty-identity.md).
+
+### D-612 - Finish actual optional-schema defects without old financial replay
+
+Original read/account-write failures are fixed and finite focused/native checks finish.
+Preserve D-607 and last physical baseline; apply the ready complete product only after
+that cohort actually ends. Do not repeat successful native/financial or rejected candidates.
+[Evidence and exact limits](../../quality/unsupported-derived-ledger-schema.md).

@@ -4572,3 +4572,10 @@ SQLite rows and damaged-cache bytes. Six new/three affected checks and one nativ
 pass; no old financial/native cohort repeats. Ready product adoption on Samsung remains
 separate behind D-607; the canonical backlog retains broader gates.
 [Evidence and exact limits](quality/derived-ledger-empty-identity.md).
+
+### D-612 - Unsupported derived-schema fallback locally verified
+
+Fourteen new cases plus three affected existing cases pass in selected continuations.
+Strict builds and one original native fallback pass; physical adoption stays behind
+D-607 and broader gates remain separate.
+[Evidence and exact limits](quality/unsupported-derived-ledger-schema.md).

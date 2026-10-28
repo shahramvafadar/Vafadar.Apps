@@ -21,7 +21,15 @@
     <OriginalAppRoot>$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/</OriginalAppRoot>
     <AndroidManifest>../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
-  <!-- D-611: malformed-cache qualification owns a fresh identity and leaves retained runtime cohorts untouched. -->
+  <!-- Malformed-cache qualification owns a fresh identity and leaves retained runtime cohorts untouched. -->
+  <PropertyGroup Condition="'$(ReviewDerivedLedgerSchema)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.ledgerschemareview</ApplicationId>
+    <DefineConstants>$(DefineConstants);DERIVED_LEDGER_SCHEMA_REVIEW</DefineConstants>
+  </PropertyGroup>
+  <Target Name="RequireFreshDerivedLedgerSchema" BeforeTargets="PrepareForBuild" Condition="'$(ReviewDerivedLedgerSchema)' == 'true'">
+    <Error Condition="'$(ApplicationId)' != 'pro.vafadar.zanance.ledgerschemareview' or '$(RuntimeIdentifier)' != 'android-x64' or '$(ReviewDerivedLedgerIdentity)' == 'true' or '$(ReviewCoreClrRuntime)' == 'true' or '$(ReviewNativeFaultPc)' == 'true' or '$(EnableCodeSampling)' == 'true'"
+           Text="Derived schema qualification requires its fresh owned x64 identity and unchanged Mono runtime." />
+  </Target>
   <PropertyGroup Condition="'$(ReviewDerivedLedgerIdentity)' == 'true'">
     <ApplicationId>pro.vafadar.zanance.ledgeridentityreview</ApplicationId>
     <DefineConstants>$(DefineConstants);DERIVED_LEDGER_IDENTITY_REVIEW</DefineConstants>

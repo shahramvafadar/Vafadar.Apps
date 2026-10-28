@@ -26,6 +26,13 @@ public sealed class MainActivity : MauiAppCompatActivity
         var faultObserverAccepted = savedInstanceState is not null || NativeFaultPcObserver.TryArm(this);
 #endif
         base.OnCreate(savedInstanceState);
+#if DERIVED_LEDGER_SCHEMA_REVIEW
+        if (PackageName == "pro.vafadar.zanance.ledgerschemareview")
+        {
+            if (savedInstanceState is null) AndroidHomeReview.StartDerivedLedgerSchema(this);
+            return;
+        }
+#endif
 #if DERIVED_LEDGER_IDENTITY_REVIEW
         if (PackageName == "pro.vafadar.zanance.ledgeridentityreview")
         {

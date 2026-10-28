@@ -7026,3 +7026,19 @@ Samsung's last D-606 baseline and D-607 are untouched; guarded adoption of the r
 67c7cda8 product APK remains pending. General stability/security/performance/A11Y,
 iOS/provider/Store/publication remain open; the goal stays active and TalkBack last.
 [Complete regression, native lineage and limits](../../quality/derived-ledger-empty-identity.md).
+
+### D-612 - Unsupported optional ledger columns retain original reads and writes
+
+One metadata query now declines unsupported three-table/eleven-column contracts before
+optional data reads/maintenance; original SQLite errors/cancellation and financial
+source/schema/identity/writer guards stay intact. Fourteen new plus three affected cases,
+strict Windows/complete Offline Android and one fresh original native scalar fallback
+pass. Retain actual fourteen original failures separately from harness closed-connection
+and stale incremental-DLL observations. No cache repair, financial replay, Main/private
+key or phone input occurs. Only the fresh native fixture/AVD/output scope is retired;
+physical product adoption waits behind D-607. Wider stability/security/performance/A11Y,
+iOS/provider/Store/publication gates remain open and the overall goal stays active.
+Standard Clean removes2805 registered files/790937047 logical bytes; four-root residual
+deletion is rejected with blocked by policy.1508files/248417153bytes plus six isolated
+user-home files/7732bytes remain without retry. Fresh UID/AVD and39831bytes XML retire.
+[Original failures, exact scope and limits](../../quality/unsupported-derived-ledger-schema.md).

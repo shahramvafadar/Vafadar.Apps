@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Keep Home and valid account saves working from the original source when optional ledger-cache columns are unsupported (D-612).
+
 - Keep Home readable from the complete original ledger when an optional cached row has an empty identity; do not publish partial rows or repair source data while reading (D-611).
 
 - Keep the original complete-ledger reader after a direct-output candidate misses its declared host allocation gate; no application behavior changes (D-610).

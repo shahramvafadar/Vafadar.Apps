@@ -2786,3 +2786,13 @@ zero-length source is malformed JSON and must not be treated as omitted. Avoid a
 memory. Preserve the original allowlist/current-value behavior before reserving native restore
 ancestry. No fallback receiver, financial rewrite, new permission or weaker source guard is used.
 [Actual original failure and selected/native verification](../../src/Apps/Zanance/docs/quality/optional-restore-preferences.md).
+## D-612: optional ledger column admission
+
+Before reading or maintaining optional Home ledger transport, admit its three known
+tables and eleven column contracts through one transaction-bound metadata statement.
+Unsupported names, affinities, nullability, primary keys, defaults or hidden/extra
+columns decline transport before referencing their data. The actual schema-cookie,
+source revision/count and original writer checks remain independent. Do not repair
+schema in getters, catch arbitrary SQLite errors or normalize original data. Genuine
+IO/cancellation still aborts the original operation. See the bounded
+[regression and native evidence](../../src/Apps/Zanance/docs/quality/unsupported-derived-ledger-schema.md).
