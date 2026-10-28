@@ -4626,3 +4626,11 @@ contexts without new build/test/source/financial work. Preserve the disqualified
 initial observer and exact owned cleanup refusal. Other broader device/accessibility
 and external gates remain separate; do not repeat this finite matrix unchanged.
 [Evidence and exact limits](quality/onboarding-independent-scroll-os-text.md).
+
+### D-619 - Close the unmet actual16-window premise before native work
+
+Two private encode-only roles show actual22 versus18 even though the candidate asks16.
+Original inputs and product remain exact; no decoder/warmup/timing/native/financial
+work is repeated. Preserve primary-source qualification and the one cleanup refusal.
+QA-06 remains open without another unchanged timing cohort or new product test count.
+[Evidence and exact limits](quality/requested-brotli-window-admission.md).

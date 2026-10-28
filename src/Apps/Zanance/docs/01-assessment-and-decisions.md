@@ -11214,3 +11214,12 @@ same original PID4260. Disqualify the initial clipped-native-bounds apparent pas
 retain it and strengthen source-bound admission before final cases. Exact owned
 restoration/retirement passes; six residual config files remain after policy rejection.
 [Evidence and exact limits](quality/onboarding-independent-scroll-os-text.md).
+
+### D-619 - Admit actual compressed input before performance claims
+
+A separate requested quality1/window16 hypothesis preserves all original fields and
+buffers, but every actual candidate header is18 versus reference22. Two strict private
+encode-only processes preserve input digests; no decoder/timing/native work follows.
+Official upstream fast-path source is consistent, not a proved installed-binary source
+match. Keep production unchanged rather than relabel an unmet premise or tune a rescue.
+[Evidence, primary sources and exact limits](quality/requested-brotli-window-admission.md).

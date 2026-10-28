@@ -4785,3 +4785,11 @@ no new source, build, unit-test count, account, financial or speech acceptance. 
 the disqualified observer receipt and cleanup refusal. This finite changed-layout
 assertion closes; other accessibility/platform/security/release gates remain open.
 [Evidence and exact limits](quality/onboarding-independent-scroll-os-text.md).
+
+### D-619 - Reject an unmet performance input without release claims
+
+The requested16-window candidate actually emits18 and closes at encode admission.
+Production quality1/window22, all original source/model/runtime inputs and product
+test counts stay unchanged. No native/application build, performance, memory, financial
+or broader release acceptance follows. One residual cleanup refusal is retained.
+[Evidence and exact limits](quality/requested-brotli-window-admission.md).

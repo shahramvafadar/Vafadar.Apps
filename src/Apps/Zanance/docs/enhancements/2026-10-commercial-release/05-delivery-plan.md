@@ -5356,3 +5356,12 @@ then validate remaining original layouts and exact restoration without account/s
 receipt/financial/TalkBack operations, new builds or unit suites. Fresh UID/AVD and
 XML retire; six residual config files remain after policy refusal with no retry.
 [Evidence and exact limits](../../quality/onboarding-independent-scroll-os-text.md).
+
+### D-619 - Inspect actual encoder inputs before another native cohort
+
+The independent requested-window hypothesis produces18 rather than the proposed16.
+Close at encode admission, retaining identical original source digests and actual
+header/size witnesses. Do not silently change the input, sweep settings or reuse a
+rejected candidate. No product/device/financial change; standard host Clean passes,
+residual deletion is refused once, and D-607/overall goal remain active.
+[Evidence and exact limits](../../quality/requested-brotli-window-admission.md).

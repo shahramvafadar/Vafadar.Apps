@@ -7671,3 +7671,12 @@ apparent pass is explicitly disqualified, not counted. No account Start, financi
 receipt, TalkBack, build or managed-suite operation is replayed. Same PID4260 and
 exact original settings restoration/fresh UID/AVD retirement are recorded.
 [Evidence and exact limits](quality/onboarding-independent-scroll-os-text.md).
+
+### D-619 - Parameter values do not establish actual transport inputs
+
+Two .NET10.0.14/X64 encode-only processes preserve the original complete input digests.
+All256 reference headers encode22; all256 candidate headers encode18 despite requesting16.
+This rejects the proposed actual16 premise before decode/timing/native work.15 private
+RFC header discriminator self-checks are not new product tests. No speed or memory
+acceptance is inferred, no old successful suite or financial operation repeats.
+[Evidence and exact limits](quality/requested-brotli-window-admission.md).

@@ -10515,3 +10515,11 @@ No source/model/test count/build or financial behavior changes. Initial observer
 failure is preserved and disqualified; this is not whole-accessibility or physical
 release acceptance. D-607 and other unfinished gates remain separate.
 [Evidence and exact limits](../quality/onboarding-independent-scroll-os-text.md).
+
+### D-619 - Preserve original codec after actual input admission differs
+
+A private quality1/window16 request emits actual18-bit windows on both original
+synthetic shapes. Record that mismatch before any decoder/timing/native claim; the
+product stays quality1/window22 with no model/runtime/test-count change. The complete
+Home/two-second and other unfinished gates remain unaccepted.
+[Evidence and primary-source limits](../quality/requested-brotli-window-admission.md).
