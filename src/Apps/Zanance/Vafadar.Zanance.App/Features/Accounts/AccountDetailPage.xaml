@@ -123,7 +123,7 @@
             </Border>
         </VerticalStackLayout>
     </ScrollView>
-    <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8">
+    <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" IsVisible="{Binding Loading.IsReady}">
         <Label Text="{Binding Conversion.Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Conversion.Error, Converter={StaticResource IsNotNullConverter}}" />
         <Label Text="{Binding Conversion.Result}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding Conversion.Result, Converter={StaticResource IsNotNullConverter}}" />
         <Label Text="{Binding Installment.Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Installment.Error, Converter={StaticResource IsNotNullConverter}}" />
@@ -136,6 +136,7 @@
     </VerticalStackLayout>
     <VerticalStackLayout Padding="32" VerticalOptions="Center" Spacing="12" IsVisible="{Binding Loading.HasFailed}">
         <Label Text="{Binding LoanWorkFeedback}" Style="{StaticResource ErrorText}" />
+        <p:WrappingAction Text="{v:Translate Account_Refresh}" Command="{Binding RefreshLoanCommand}" IsEnabled="{Binding IsNotBusy}" />
     </VerticalStackLayout>
     </Grid>
 </ContentPage>

@@ -27,6 +27,9 @@ public sealed class ReconciliationReadReview
         _ = Math.Abs(checked(Result.Observed - Result.Recorded));
     }
 
+    /// <summary>Gets the actual original file so an account page cannot compare a same-ID account in another profile.</summary>
+    public string DatabasePath => _path;
+
     /// <summary>Gets the original account identity.</summary>
     public Guid AccountId { get; }
     /// <summary>Gets the original currency; presentation cannot replace the reviewed financial unit.</summary>

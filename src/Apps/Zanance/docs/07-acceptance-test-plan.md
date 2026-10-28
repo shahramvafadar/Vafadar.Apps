@@ -7744,3 +7744,16 @@ prove360/800dp plus German/Persian OS200% wrapping with zero DB/financial outcom
 Both fresh UID/AVD sets and80owned XMLs retire; two supplemental refusals remain.
 No accepted financial, old suite or physical/D-607 operation is repeated.
 [Full evidence and exact limits](quality/original-account-conversion-ownership.md).
+
+### D-629 – Original account-detail source and lifetime
+
+The four original failures (late read publication, retired Edit route, retired installment
+confirmation actually posting, mixed-file earmark) now pass.29distinct new focused cases
+include actual WAL/SQLite transaction, mutation/refusal, bounded retry, draft, ordering,
+free-permission and accepted-writer feedback coverage;6affected existing language cases
+pass separately. One fresh original native cohort checks loading/error/Retry, held-reader
+retirement, actual100/25/75, original90/10loan split and a single deliberately stale native
+Save rejected after original Home navigation. No new ledger entry is accepted. Ten named
+display contexts are observations, not unit tests. Strict builds and exact owned cleanup/
+restoration are in [the full report](quality/complete-original-account-detail.md); same-page
+draft preservation is not OS-recreated-page persistence or physical/shipping acceptance.

@@ -4677,3 +4677,13 @@ original native Cancel/conversion and scoped presentation checks pass without re
 Font-recreation lifetime and physical adoption are separate, two cleanup refusals
 stay explicit, and the overall delivery goal remains active.
 [Evidence and exact limits](quality/original-account-conversion-ownership.md).
+
+### D-629 – Original complete account-detail batch
+
+Complete original-file source, worker figures, covered loading/error/Retry, current-page
+drafts and original route/consent/writer ownership are implemented and qualified by29new
+focused cases,6affected existing cases and the original Release/AOT native cohort. The
+actual stale installment confirmation produces no ledger delta; accepted notification
+failures remain one-shot. Strict Windows/full offline Android pass. See
+[complete evidence](quality/complete-original-account-detail.md). Physical adoption after
+D-607 and broad security/stability/performance/platform/release gates remain open.

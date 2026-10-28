@@ -7258,3 +7258,26 @@ Two supplemental automatic-review refusals leave4048files/781344136bytes and
 975files/124738138bytes with no retry/subset/alternative. Used signed APKs/evidence
 remain; D-607/phone/adoption and broader gates stay separate, overall goal active.
 [Complete source, failures and exact limits](../../quality/original-account-conversion-ownership.md).
+
+### D-629 – Complete original account detail and retired-command refusal
+
+- Original account detail now captures optional settings/accounts/all32ledger fields/
+  categories/goals/allocations from one configured-file transaction, privately projects
+  original formulas/order and publishes all figures under one loading owner.
+- Local failure/explicit Retry preserves current-page raw reconciliation drafts. All
+  original routes and installment consent/writer retire with the page; actual accepted
+  results survive notification failure without reposting. Paid-analysis refusal keeps
+  the free balance and essential warning visible.
+- Four actual original failures are corrected;29new focused cases and6affected existing
+  loan notification cases pass. Strict Windows/full offline signed384AOT Android pass.
+- Original Release/AOT UI checks loading/error/Retry, retired held read,100/25/75,
+  principal90/interest10 and same native installment Save rejected after original Home
+  navigation. Two original accounts/one goal/one allocation, zero ledger entries; no
+  successful financial operation is repeated. Ten display contexts are observations.
+- Exact original app/OS settings and source return;141XMLs and the fresh UID/AVD retire.
+  Four standard cleans pass; supplemental six-root deletion is refused before process
+  creation,3707files/572186440logicalbytes remain without retry/alternate/subset.
+- [Full account-detail evidence](../../quality/complete-original-account-detail.md).
+  Samsung/D-607 deadlines remain untouched; no-reset adoption waits for its actual
+  terminal source/delivery/cleanup. General stability/whole-Home two-second/security/
+  all accessibility/iOS/provider/Store/publication gates stay open; goal stays active.

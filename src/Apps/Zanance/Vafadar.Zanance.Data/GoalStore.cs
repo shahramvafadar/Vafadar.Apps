@@ -144,7 +144,7 @@ public sealed partial class GoalStore(IDbContextFactory<ZananceDbContext> contex
     }
 
     /// <summary>Keeps the established original state/priority/date/name ordering for every complete read.</summary>
-    private static List<Goal> Ordered(IEnumerable<Goal> goals) =>
+    internal static List<Goal> Ordered(IEnumerable<Goal> goals) =>
         [.. goals.OrderBy(g => StateOrder(g.State)).ThenBy(g => g.Priority).ThenBy(g => g.TargetDate ?? DateOnly.MaxValue).ThenBy(g => g.Name)];
 
     /// <summary>Returns one goal.</summary>
@@ -165,8 +165,12 @@ public sealed partial class GoalStore(IDbContextFactory<ZananceDbContext> contex
         }
 
         var list = await query.ToListAsync(cancellationToken);
-        return [.. list.OrderByDescending(a => a.Date).ThenByDescending(a => a.CreatedAt)];
+        return OrderedAllocations(list);
     }
+
+    /// <summary>Keeps the original date/audit order before earmark arithmetic or complete-source publication.</summary>
+    internal static List<GoalAllocation> OrderedAllocations(IEnumerable<GoalAllocation> allocations)
+        => [.. allocations.OrderByDescending(a => a.Date).ThenByDescending(a => a.CreatedAt)];
 
     /// <summary>
     /// Inserts or updates a goal. A balance goal needs an account, and an account has at most one active or paused balance

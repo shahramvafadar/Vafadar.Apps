@@ -118,7 +118,7 @@ public sealed class LoanReadReview
 }
 
 /// <summary>Reads coherent original loan inputs without creating Settings or changing financial data.</summary>
-public sealed class LoanWorkStore(IDbContextFactory<ZananceDbContext> factory, ICommercialWriteAccessSource source, TimeProvider time)
+public sealed partial class LoanWorkStore(IDbContextFactory<ZananceDbContext> factory, ICommercialWriteAccessSource source, TimeProvider time)
 {
     /// <summary>Allows explicit new reads only within the displayed original file; it grants no feature or write.</summary>
     public async Task ValidateFileAsync(LoanReadReview reviewed, CancellationToken cancellationToken = default)

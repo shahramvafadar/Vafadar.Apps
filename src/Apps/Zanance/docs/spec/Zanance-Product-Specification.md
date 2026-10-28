@@ -10605,3 +10605,16 @@ strict builds, original native Cancel/one conversion, six accepted-page contexts
 unit tests. Actual font-change root retirement remains; physical adoption waits for
 D-607 and broad security/stability/performance/A11Y/platform/release gates stay open.
 [Evidence and exact limits](../quality/original-account-conversion-ownership.md).
+
+### D-629 – Complete original account-detail publication and command lifetime
+
+The original detail page now uses one coherent configured-file transaction for optional
+settings/accounts/full ledger/categories/goals/allocations, worker projection and guarded
+complete publication. Local failure/Retry retains current-page raw reconciliation input.
+Original financial/order/permission policy remains; all original routes retire with the
+page, and installment consent/atomic writer validate owner before commit while retaining
+known accepted results after follow-through failure.29new focused cases,6affected existing
+cases, strict builds and original Release/AOT native read/retirement/stale-consent/display
+evidence pass; native accepted ledger delta is zero. See [full evidence](../quality/complete-original-account-detail.md).
+Physical adoption waits for D-607; full OS-recreated drafts, general stability/security/
+performance/accessibility/platform/provider/Store/publication are not accepted by this batch.

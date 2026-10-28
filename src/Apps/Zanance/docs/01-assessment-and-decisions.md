@@ -11333,3 +11333,16 @@ Six same-result contexts and14separate content-only layouts do not establish fon
 recreation persistence; preserve the actual return to Home. Both fresh environments
 retire, two supplemental cleanup refusals stay explicit; phone/D-607 remain untouched.
 [Complete original source, failures and limits](quality/original-account-conversion-ownership.md).
+
+## D-629 – Complete original account-detail source and command ownership (2026-10-28)
+
+Account detail now reads optional settings, accounts, all ledger fields, categories,
+goals and allocations from one original-file SQLite snapshot, with worker projection,
+covered complete publication and bounded retries only for persisted same-file edits.
+Keep original formulas/order and raw reconciliation input; retire reads/routes/native
+installment consent on departure. The original writer validates owner before Save/commit
+and preserves known accepted results after failed notifications. Four original regressions
+are corrected;29new and6affected existing cases pass. Original native UI verifies loading/
+error/Retry, retired-read and stale-consent rejection,100/25/75, ten display contexts and
+zero ledger writes. See [full evidence](quality/complete-original-account-detail.md).
+D-607/phone, physical adoption and broad release gates stay separate.

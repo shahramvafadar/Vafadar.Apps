@@ -2851,3 +2851,14 @@ pass. Separate compiled-content360/800dp and two OS200% arrangements use no fina
 source or accepted-outcome injection; the actual original font-change root retirement
 remains a separate boundary, not persistent-message acceptance.
 [Evidence and exact limits](quality/original-account-conversion-ownership.md).
+
+## Complete original account detail (D-629)
+
+Cover the whole body and ready footer until one validated original-file projection is
+ready; a read error has local translated feedback and explicit original Refresh. Preserve
+raw amount/reason/date during current-page read failures and display changes. Original
+money, movement, earmark and loan figures publish together; paid-analysis refusal keeps
+the free balance/manual path visible. Retire navigation and native payment consent on
+actual departure, without repeating accepted writes. Ten native display contexts include
+three360dp/OS200% ready footers and the German scaled local error. OS root recreation is
+separate from same-page draft preservation. See [evidence](quality/complete-original-account-detail.md).

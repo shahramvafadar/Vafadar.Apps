@@ -21,7 +21,7 @@ public sealed class AccountReconciliationSession(ZananceStore store)
     public void Invalidate() { Interlocked.Increment(ref _revision); Review = null; _reviewCurrent = null; }
 
     /// <summary>Compares the signed original raw balance without reparsing through current display preferences.</summary>
-    public Task<ReconciliationReadReview?> CompareObservedAsync(Guid accountId, string currency, DateOnly date)
+    public Task<ReconciliationReadReview?> CompareObservedAsync(Guid accountId, string currency, DateOnly date, Func<bool>? isCurrent = null, string? originalFile = null)
     {
         var input = ObservedMoney; var edit = input.Revision;
         if (input.NeedsReview(currency)) throw new InvalidOperationException("The observed balance requires complete monetary reentry.");
@@ -29,11 +29,11 @@ public sealed class AccountReconciliationSession(ZananceStore store)
         if (input.Context is not { } context || !context.TryParse(negative ? text[1..] : text, out var observed))
             throw new FormatException("The original observed balance is invalid.");
         return CompareAsync(accountId, negative ? -observed : observed, date,
-            () => input.Revision == edit && input.MatchesCurrent(currency), originalCurrency: currency);
+            () => input.Revision == edit && input.MatchesCurrent(currency) && isCurrent?.Invoke() != false, originalCurrency: currency, originalFile: originalFile);
     }
 
     /// <summary>Publishes only an unchanged original comparison; a match marks metadata under the same guarded writer.</summary>
-    public async Task<ReconciliationReadReview?> CompareAsync(Guid accountId, long observed, DateOnly date, Func<bool>? isCurrent = null, string? originalCurrency = null)
+    public async Task<ReconciliationReadReview?> CompareAsync(Guid accountId, long observed, DateOnly date, Func<bool>? isCurrent = null, string? originalCurrency = null, string? originalFile = null)
     {
         if (Interlocked.CompareExchange(ref _busy, 1, 0) != 0) return null;
         Invalidate(); Committed = false; var revision = _revision;
@@ -41,6 +41,8 @@ public sealed class AccountReconciliationSession(ZananceStore store)
         {
             var review = await store.ReadReconciliationAsync(accountId, observed, date);
             if (revision != _revision || isCurrent?.Invoke() == false) return null;
+            if (originalFile is not null && originalFile != review.DatabasePath)
+                throw new InvalidOperationException("The original balance comparison belongs to another opened file.");
             if (originalCurrency is not null && !string.Equals(originalCurrency, review.CurrencyCode, StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException("The account currency changed before its original balance comparison.");
             if (review.Result.Difference == 0)

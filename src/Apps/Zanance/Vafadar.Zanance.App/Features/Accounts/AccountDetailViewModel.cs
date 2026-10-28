@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
@@ -15,6 +14,7 @@ using Vafadar.Zanance.Core.Money;
 using Vafadar.Zanance.Core.Reports;
 using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data;
+using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.App.Features.Accounts;
 
@@ -24,17 +24,20 @@ namespace Vafadar.Zanance.App.Features.Accounts;
 /// </summary>
 public sealed partial class AccountDetailViewModel(
     ZananceStore store,
-    GoalStore goals,
     Translator translator,
     ILocalizationService localization,
     IDateFormatter dates,
-    TimeProvider time, Data.Commerce.LoanWorkStore loanReader, LoanInstallmentSession installment, AccountConversionSession conversion, Interaction.IAppInteraction interaction) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
+    TimeProvider time, Data.Commerce.LoanWorkStore loanReader, LoanInstallmentSession installment, AccountConversionSession conversion, Interaction.IAppInteraction interaction) : ViewModelBase, Presentation.IThemeAware
 {
     private Guid _id;
     private bool _pageActive;
+    private long _readRevision;
+    private CancellationTokenSource _readLifetime = new();
+    private AccountDetailSnapshot? _displayed;
+    private string? _originalFile;
     private Data.Commerce.LoanReadReview? _loanReview;
     /// <summary>Gets covered complete publication; failed reads retain drafts behind explicit Retry.</summary>
-    public SnapshotLoadState Loading { get; } = new();
+    [ObservableProperty] public partial SnapshotLoadState Loading { get; private set; } = new();
     /// <summary>Gets the original confirmed installment lifetime and accepted outcome.</summary>
     public LoanInstallmentSession Installment { get; } = installment;
     /// <summary>Owns original account-to-holding consent, accepted outcome and native follow-through.</summary>
@@ -53,7 +56,7 @@ public sealed partial class AccountDetailViewModel(
     private Account? _account;
     private readonly AccountReconciliationSession _reconciliation = new(store);
 
-    public ObservableCollection<AmountLine> Movement { get; } = [];
+    public SnapshotCollection<AmountLine> Movement { get; } = [];
 
     [ObservableProperty]
     public partial string? Name { get; set; }
@@ -101,7 +104,6 @@ public sealed partial class AccountDetailViewModel(
     [ObservableProperty]
     public partial string? LoanPayoffText { get; set; }
 
-    private long _outstanding;
 
     [ObservableProperty]
     public partial string? ConfirmedText { get; set; }
@@ -141,9 +143,8 @@ public sealed partial class AccountDetailViewModel(
     [ObservableProperty]
     public partial bool CanConvert { get; set; }
 
-    /// <summary>Gets the colour of the balance: red when it is negative, e.g. a loan (D-27).</summary>
-    [ObservableProperty]
-    public partial Color? BalanceColor { get; set; }
+    // Native semantic colors remain in the platform partial; all original financial policy is linked unchanged.
+    partial void ApplyBalanceColor(bool negative);
 
     private DateOnly Today => DateOnly.FromDateTime(time.GetLocalNow().DateTime);
 
@@ -152,79 +153,147 @@ public sealed partial class AccountDetailViewModel(
         ArgumentNullException.ThrowIfNull(query);
         if (query.TryGetValue("id", out var value) && value is Guid id)
         {
-            if (_id != id) { InvalidateReconciliation(); ObservedText = string.Empty; Reason = string.Empty; }
-            _id = id; Conversion.SetOwner(id, _pageActive);
+            if (_id != id) { RetireRead(); InvalidateReconciliation(); ObservedText = string.Empty; Reason = string.Empty; Name = null; }
+            _id = id; Conversion.SetOwner(id, _pageActive); Installment.SetOwner(id, _pageActive);
         }
     }
 
     // Loading keeps the reconciliation being typed: the observed balance, the reason and a chosen date stay.
-    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
+    async Task Presentation.IThemeAware.RefreshThemeAsync() { RetireRead(); await LoadAsync(); }
 
     public async Task LoadAsync()
     {
-        try { await Loading.RunAsync(LoadCoreAsync, () => { }); }
+        if (!_pageActive || _id == Guid.Empty) return;
+        var loading = Loading; var revision = _readRevision; var token = _readLifetime.Token; var id = _id;
+        var display = DisplayIdentity(); var day = Today; Prepared? prepared = null;
+        bool OwnsPage() => _pageActive && id == _id && revision == _readRevision && ReferenceEquals(loading, Loading);
+        void RequireCurrent()
+        {
+            token.ThrowIfCancellationRequested();
+            if (!OwnsPage() || display != DisplayIdentity() || day != Today)
+                throw new OperationCanceledException("The original account detail read retired.", token);
+        }
+        try
+        {
+            await loading.RunAsync(async () =>
+            {
+                for (var attempt = 0; ; attempt++)
+                {
+                    RequireCurrent();
+                    var snapshot = await loanReader.ReadAccountDetailAsync(token);
+                    RequireCurrent(); _originalFile ??= snapshot.DatabasePath;
+                    if (_originalFile != snapshot.DatabasePath) throw new InvalidOperationException("The original account detail cannot follow another profile.");
+                    try
+                    {
+                        var result = await Task.Run(() => Prepare(snapshot, id, token), token);
+                        await loanReader.ValidateAccountDetailAsync(snapshot, token); RequireCurrent();
+                        snapshot.EnsureCurrent(); prepared = result; return;
+                    }
+                    catch (AccountDetailSupersededException) when (attempt < 2) { RequireCurrent(); }
+                }
+            }, () =>
+            {
+                RequireCurrent(); var result = prepared ?? throw new InvalidOperationException("Complete original account detail is missing.");
+                void Publish(Action change)
+                {
+                    RequireCurrent(); result.Source.EnsureCurrent(); change();
+                    RequireCurrent(); result.Source.EnsureCurrent();
+                }
+                Publish(() => _account = result.Account);
+                Publish(() => Name = result.Name);
+                Publish(() => UnitNote = result.UnitNote);
+                Publish(() => TypeName = result.TypeName);
+                Publish(() => DebtActionText = result.DebtActionText);
+                Publish(() => CounterpartyText = result.CounterpartyText);
+                Publish(() => IncompleteText = result.IncompleteText);
+                Publish(() => ReconciledText = result.ReconciledText);
+                Publish(() => BalanceText = result.BalanceText);
+                Publish(() => EarmarkText = result.EarmarkText);
+                Publish(() => ConfirmedText = result.ConfirmedText);
+                Publish(() => MonthText = result.MonthText);
+                Publish(() => LoanNextText = result.LoanNextText);
+                Publish(() => LoanPayoffText = result.LoanPayoffText);
+                Publish(() => LoanWorkFeedback = result.LoanWorkFeedback);
+                Publish(() => LoanEssentialWarning = result.LoanEssentialWarning);
+                Publish(() => ManualLoanActionText = result.ManualLoanActionText);
+                Publish(() => IsArchived = result.IsArchived);
+                Publish(() => IsDebt = result.IsDebt);
+                Publish(() => CanConvert = result.CanConvert);
+                Publish(() => MissingLoanTerms = result.MissingLoanTerms);
+                Publish(() => HasLoanTerms = result.HasLoanTerms);
+                Publish(() => ShowDebtAction = result.ShowDebtAction);
+                Publish(() => ShowLoanEstimate = result.ShowLoanEstimate);
+                Publish(() => Icon = result.Icon);
+                Publish(() => ApplyBalanceColor(result.IsNegative));
+                Publish(() => Movement.ReplaceAll(result.Movement));
+                Publish(RefreshObservedMoney);
+                if (ReconcileDate == default) Publish(() => ReconcileDate = result.Source.Loan.Day);
+                _displayed = result.Source; _loanReview = result.Source.Loan;
+            });
+        }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { LoanWorkFeedback = CommercialFailureMessage.OrFallback(exception, translator, "Account_ReadFailed"); }
+        { if (OwnsPage()) LoanWorkFeedback = CommercialFailureMessage.OrFallback(exception, translator, "Account_ReadFailed"); }
+    }
+
+    private string DisplayIdentity() => $"{localization.CurrentLanguage.CultureName}|{localization.CurrentCulture.Name}|{localization.CurrentCalendar}|{localization.CurrentDigits}|{localization.FormattingCultureName}";
+
+    /// <summary>Retires pending reads and native targets without changing the observed-balance or reason draft.</summary>
+    private void RetireRead()
+    {
+        _readRevision++; _displayed = null; _loanReview = null;
+        var old = _readLifetime; _readLifetime = new(); Loading = new(); old.Cancel(); old.Dispose();
+        InvalidateReconciliation();
     }
 
     /// <summary>Explicitly refreshes the same original account without resetting reconciliation input.</summary>
     [RelayCommand]
     private Task RefreshLoanAsync() => LoadAsync();
 
-    private async Task LoadCoreAsync()
+    private Prepared Prepare(AccountDetailSnapshot snapshot, Guid id, CancellationToken token)
     {
-        var reviewed = await loanReader.ReadAsync();
-        if (_loanReview is not null) await loanReader.ValidateFileAsync(_loanReview);
-        _loanReview = reviewed;
-        _account = reviewed.Accounts.FirstOrDefault(a => a.Id == _id);
-        if (_account is not { } account)
-        {
-            throw new InvalidOperationException("The original account is no longer available.");
-        }
-
+        token.ThrowIfCancellationRequested();
+        var reviewed = snapshot.Loan;
+        var account = reviewed.Accounts.FirstOrDefault(item => item.Id == id)
+            ?? throw new InvalidOperationException("The original account is no longer available.");
+        var prepared = new Prepared(snapshot, account, translator, dates);
         var culture = localization.CurrentCulture;
         var settings = reviewed.Settings;
         var entries = reviewed.Entries;
         var today = reviewed.Day;
-        if (ReconcileDate == default)
-        {
-            ReconcileDate = today;
-        }
 
-        Name = account.Name;
-        UnitNote = DisplayUnitNote.For(translator, account.CurrencyCode);
-        RefreshObservedMoney();
-        TypeName = translator[$"AccountType_{account.Type}"];
-        Icon = Icons.Parse(account.Icon, Icons.For(account.Type));
-        IsArchived = account.IsArchived;
-        DebtActionText = account.IsArchived ? null : account.Type switch
+        prepared.Name = account.Name;
+        prepared.UnitNote = DisplayUnitNote.For(translator, account.CurrencyCode);
+        prepared.TypeName = translator[$"AccountType_{account.Type}"];
+        prepared.Icon = Icons.Parse(account.Icon, Icons.For(account.Type));
+        prepared.IsArchived = account.IsArchived;
+        prepared.DebtActionText = account.IsArchived ? null : account.Type switch
         {
             AccountType.Loan => translator["Account_RecordRepayment"],
             AccountType.Lent => translator["Account_RecordReturn"],
             _ => null,
         };
-        CounterpartyText = account.Counterparty is { } counterparty ? translator.Format(account.Type == AccountType.Loan ? "Account_LentBy" : "Account_BorrowedBy", counterparty) : null;
-        IncompleteText = account.OpeningBalanceKnown ? null : translator["Account_IncompleteHint"];
-        IsDebt = account.Type.IsDebt() && !account.IsArchived;
-        ReconciledText = account.LastReconciledOn is { } reconciled
+        prepared.CounterpartyText = account.Counterparty is { } counterparty ? translator.Format(account.Type == AccountType.Loan ? "Account_LentBy" : "Account_BorrowedBy", counterparty) : null;
+        prepared.IncompleteText = account.OpeningBalanceKnown ? null : translator["Account_IncompleteHint"];
+        prepared.IsDebt = account.Type.IsDebt() && !account.IsArchived;
+        prepared.ReconciledText = account.LastReconciledOn is { } reconciled
             ? translator.Format("Account_LastReconciled", dates.Format(reconciled, DateFormatStyle.Short))
             : translator["Account_NeverReconciled"];
-        CanConvert = account.Type == AccountType.Asset && !account.IsArchived && settings.Shows(Feature.AccountConversion);
+        prepared.CanConvert = account.Type == AccountType.Asset && !account.IsArchived && settings.Shows(Feature.AccountConversion);
 
         // Posted balance and, when unreviewed entries exist, the confirmed-only balance next to it (FIN-12).
         var balance = LedgerCalculator.Balance(account, entries, today);
         var confirmed = LedgerCalculator.Balance(account, entries, today, confirmedOnly: true);
-        BalanceText = MoneyText.Format(balance, account.CurrencyCode, culture);
-        BalanceColor = balance < 0 ? EntryPresenter.DangerColor : Palette.AmountText;
-        LoadLoanEstimate(account, culture);
+        prepared.BalanceText = MoneyText.Format(balance, account.CurrencyCode, culture);
+        prepared.IsNegative = balance < 0;
+        prepared.LoadLoanEstimate(account, culture);
 
         // Money set aside for goals in this account and what is still free (F2-GOAL-05).
-        var earmark = Core.Goals.GoalCalculator.Accounts(await goals.GetGoalsAsync(), await goals.GetAllocationsAsync(), new Dictionary<Guid, long> { [account.Id] = balance })
+        var earmark = Core.Goals.GoalCalculator.Accounts(snapshot.Inputs.Goals, snapshot.Inputs.Allocations, new Dictionary<Guid, long> { [account.Id] = balance })
             .FirstOrDefault(e => e.AccountId == account.Id);
-        EarmarkText = earmark is null ? null
+        prepared.EarmarkText = earmark is null ? null
             : translator.Format("Account_Earmarked", MoneyText.Format(earmark.Earmarked, account.CurrencyCode, culture), MoneyText.Format(earmark.Unallocated, account.CurrencyCode, culture))
               + (earmark.Shortfall > 0 ? " · " + translator.Format("Goals_Shortfall", MoneyText.Format(earmark.Shortfall, account.CurrencyCode, culture)) : string.Empty);
-        ConfirmedText = confirmed != balance
+        prepared.ConfirmedText = confirmed != balance
             ? translator.Format("Account_ConfirmedOnly", MoneyText.Format(confirmed, account.CurrencyCode, culture))
             : null;
 
@@ -232,20 +301,20 @@ public sealed partial class AccountDetailViewModel(
         var startDay = settings.MonthStartDay;
         var (year, month) = PeriodMath.MonthOf(today, calendar, startDay);
         var (from, to) = PeriodMath.MonthRange(year, month, calendar, startDay);
-        MonthText = startDay > 1
+        prepared.MonthText = startDay > 1
             ? $"{dates.Format(from, DateFormatStyle.Short)} – {dates.Format(to, DateFormatStyle.Short)}"
             : dates.Format(from, DateFormatStyle.MonthYear);
         var movement = ReportCalculator.AccountMovements([account], entries, from, to).Single();
         string Format(long value, bool plus = false) => MoneyText.Format(value, account.CurrencyCode, culture, showPlus: plus);
-        Movement.Clear();
+        prepared.Movement.Clear();
 
         // A balance below zero is a problem or a debt (red, D-27); the movements in between keep their signs only.
-        Movement.Add(new AmountLine(translator["Report_Opening"], Format(movement.Opening), true, movement.Opening < 0));
+        prepared.Movement.Add(new AmountLine(translator["Report_Opening"], Format(movement.Opening), true, movement.Opening < 0));
         void Add(string key, long value, bool negative = false)
         {
             if (value != 0)
             {
-                Movement.Add(new AmountLine(translator[key], Format(negative ? -value : value, plus: true), false));
+                prepared.Movement.Add(new AmountLine(translator[key], Format(negative ? -value : value, plus: true), false));
             }
         }
 
@@ -257,62 +326,117 @@ public sealed partial class AccountDetailViewModel(
         Add("Report_TransfersIn", movement.TransfersIn);
         Add("Report_TransfersOut", movement.TransfersOut, negative: true);
         Add("Report_Adjustments", movement.Adjustments);
-        Movement.Add(new AmountLine(translator["Report_Closing"], Format(movement.Closing), true, movement.Closing < 0));
-        await loanReader.ValidateAsync(reviewed);
+        prepared.Movement.Add(new AmountLine(translator["Report_Closing"], Format(movement.Closing), true, movement.Closing < 0));
+        token.ThrowIfCancellationRequested(); return prepared;
     }
 
-    private void LoadLoanEstimate(Account account, System.Globalization.CultureInfo culture)
+    /// <summary>Original figures privately staged on the worker before any native property/row publication.</summary>
+    private sealed class Prepared(AccountDetailSnapshot source, Account account, Translator translator, IDateFormatter dates)
     {
-        var reviewed = _loanReview ?? throw new InvalidOperationException("Missing original loan review.");
-        _outstanding = reviewed.Outstanding(account);
-        // D-319: a repaid balance stops estimates; it does not erase the terms already stored on the account.
-        MissingLoanTerms = IsDebt && account.Installment is not > 0;
-        HasLoanTerms = IsDebt && account.Installment is > 0 && _outstanding > 0;
-        ShowDebtAction = DebtActionText is not null && !HasLoanTerms;
-        ShowLoanEstimate = false; LoanNextText = LoanPayoffText = LoanWorkFeedback = null;
-        LoanEssentialWarning = reviewed.HasUnderpaymentWarning(account) ? translator["Loan_NeverPaidOff"] : null;
-        ManualLoanActionText = DebtActionText;
-        if (!HasLoanTerms) return;
-        if (reviewed.Permission(Core.Commerce.CommercialFeature.LoanAnalysis) != Core.Commerce.FeaturePermission.Allowed)
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal AccountDetailSnapshot Source { get; } = source;
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal Account Account { get; } = account;
+        private readonly LoanReadReview _loanReview = source.Loan;
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal List<AmountLine> Movement { get; } = [];
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal string? Name { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal string? UnitNote { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal string? TypeName { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal string? DebtActionText { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal string? CounterpartyText { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal string? IncompleteText { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal string? ReconciledText { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal string? BalanceText { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal string? EarmarkText { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal string? ConfirmedText { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal string? MonthText { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal string? LoanNextText { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal string? LoanPayoffText { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal string? LoanWorkFeedback { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal string? LoanEssentialWarning { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal string? ManualLoanActionText { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal bool IsArchived { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal bool IsDebt { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal bool CanConvert { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal bool MissingLoanTerms { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal bool HasLoanTerms { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal bool ShowDebtAction { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal bool ShowLoanEstimate { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal Symbol Icon { get; set; }
+        /// <summary>Retains a fully staged original value until current-owner publication.</summary>
+        internal bool IsNegative { get; set; }
+
+        /// <summary>Runs the original permission, warning and schedule formulas only on the unpublished worker projection.</summary>
+        internal void LoadLoanEstimate(Account account, System.Globalization.CultureInfo culture)
         {
-            LoanWorkFeedback = CommercialFailureMessage.Describe(new Data.Commerce.CommercialWriteRejectedException(
-                Core.Commerce.CommercialFeature.LoanAnalysis, reviewed.Permission(Core.Commerce.CommercialFeature.LoanAnalysis)), translator);
-            return;
+            var reviewed = _loanReview ?? throw new InvalidOperationException("Missing original loan review.");
+            var outstanding = reviewed.Outstanding(account);
+            // D-319: a repaid balance stops estimates; it does not erase the terms already stored on the account.
+            MissingLoanTerms = IsDebt && account.Installment is not > 0;
+            HasLoanTerms = IsDebt && account.Installment is > 0 && outstanding > 0;
+            ShowDebtAction = DebtActionText is not null && !HasLoanTerms;
+            ShowLoanEstimate = false; LoanNextText = LoanPayoffText = LoanWorkFeedback = null;
+            LoanEssentialWarning = reviewed.HasUnderpaymentWarning(account) ? translator["Loan_NeverPaidOff"] : null;
+            ManualLoanActionText = DebtActionText;
+            if (!HasLoanTerms) return;
+            if (reviewed.Permission(Core.Commerce.CommercialFeature.LoanAnalysis) != Core.Commerce.FeaturePermission.Allowed)
+            {
+                LoanWorkFeedback = CommercialFailureMessage.Describe(new Data.Commerce.CommercialWriteRejectedException(
+                    Core.Commerce.CommercialFeature.LoanAnalysis, reviewed.Permission(Core.Commerce.CommercialFeature.LoanAnalysis)), translator);
+                return;
+            }
+            var (interest, principal) = reviewed.Split(account);
+            string Money(long value) => MoneyText.Format(value, account.CurrencyCode, culture);
+            LoanNextText = translator.Format("Loan_Next", Money(interest + principal), Money(principal), Money(interest));
+            var schedule = reviewed.Schedule(account);
+            LoanPayoffText = schedule.LastDate is { } last
+                ? translator.Format("Loan_Payoff", schedule.Installments.Count, dates.Format(last, DateFormatStyle.MonthYear), Money(schedule.TotalInterest))
+                : translator["Loan_NeverPaidOff"];
+            ShowLoanEstimate = true; ManualLoanActionText = translator["Loan_OtherAmount"];
         }
-        var (interest, principal) = reviewed.Split(account);
-        string Money(long value) => MoneyText.Format(value, account.CurrencyCode, culture);
-        LoanNextText = translator.Format("Loan_Next", Money(interest + principal), Money(principal), Money(interest));
-        var schedule = reviewed.Schedule(account);
-        LoanPayoffText = schedule.LastDate is { } last
-            ? translator.Format("Loan_Payoff", schedule.Installments.Count, dates.Format(last, DateFormatStyle.MonthYear), Money(schedule.TotalInterest))
-            : translator["Loan_NeverPaidOff"];
-        ShowLoanEstimate = true; ManualLoanActionText = translator["Loan_OtherAmount"];
     }
 
     // D-171: the original calculated payment is revalidated by the same writer that commits its whole batch.
     [RelayCommand]
     private async Task RecordInstallmentAsync()
     {
-        if (IsBusy || !Loading.IsReady || _loanReview is not { } reviewed) return;
+        if (IsBusy || !_pageActive || !Loading.IsReady || !HasLoanTerms || _loanReview is not { } reviewed) return;
+        var id = _id;
+        bool Current() => _pageActive && _id == id && ReferenceEquals(_loanReview, reviewed) && Loading.IsReady;
         IsBusy = true;
-        try { await Installment.RecordAsync(reviewed, _id); await LoadAsync(); }
+        try { await Installment.RecordAsync(reviewed, id, Current); if (Current()) await LoadAsync(); }
         finally { IsBusy = false; }
     }
 
     [RelayCommand]
-    private async Task ShowScheduleAsync()
-    {
-        if (IsBusy || !Loading.IsReady || _loanReview is not { } reviewed) return;
-        IsBusy = true;
-        try
-        {
-            await loanReader.ValidateAsync(reviewed); reviewed.Demand(Core.Commerce.CommercialFeature.LoanAnalysis);
-            await interaction.NavigateAsync(AppShell.LoanScheduleRoute, new Dictionary<string, object> { ["id"] = _id, ["loanReview"] = reviewed });
-        }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        { LoanWorkFeedback = CommercialFailureMessage.OrFallback(exception, translator, "Loan_ReadFailed"); }
-        finally { IsBusy = false; }
-    }
+    private Task ShowScheduleAsync() => HasLoanTerms && _loanReview is { } reviewed
+        ? NavigateCurrentAsync(AppRoutes.LoanScheduleRoute, new Dictionary<string, object> { ["id"] = _id, ["loanReview"] = reviewed },
+            () => reviewed.Demand(Core.Commerce.CommercialFeature.LoanAnalysis)) : Task.CompletedTask;
 
     /// <summary>Retires a previous comparison immediately when its original amount or date changes.</summary>
     partial void OnObservedTextChanged(string value)
@@ -328,13 +452,19 @@ public sealed partial class AccountDetailViewModel(
     /// <summary>Retains raw observation while retiring pending native consent when this page leaves.</summary>
     public void SetReconciliationActive(bool active)
     {
-        _pageActive = active; Conversion.SetOwner(_id, active);
+        var changed = _pageActive != active;
+        _pageActive = active; Conversion.SetOwner(_id, active); Installment.SetOwner(_id, active);
+        if (changed && !active) RetireRead();
         localization.Changed -= OnObservedDisplayChanged;
         if (active) localization.Changed += OnObservedDisplayChanged;
         else InvalidateReconciliation();
         RefreshObservedMoney();
     }
-    private void OnObservedDisplayChanged(object? sender, EventArgs args) { RefreshObservedMoney(); Conversion.RefreshFeedback(); }
+    private void OnObservedDisplayChanged(object? sender, EventArgs args)
+    {
+        RefreshObservedMoney(); Conversion.RefreshFeedback();
+        RetireRead(); if (_pageActive) _ = LoadAsync();
+    }
     private void RefreshObservedMoney()
     {
         UnitNote = DisplayUnitNote.ForInput(translator, _reconciliation.ObservedMoney, _account?.CurrencyCode ?? Currencies.Euro.Code);
@@ -350,15 +480,16 @@ public sealed partial class AccountDetailViewModel(
     [RelayCommand]
     private async Task CompareAsync()
     {
-        if (IsBusy || !Loading.IsReady || _account is not { } account) return;
+        if (IsBusy || !_pageActive || !Loading.IsReady || _account is not { } account || _displayed is not { } snapshot) return;
+        var current = CurrentPublication(snapshot);
         Error = null; InvalidateReconciliation();
         if (_reconciliation.ObservedMoney.NeedsReview(account.CurrencyCode))
         { Error = translator.Format("Plan_InputUnitChanged", MoneyText.UnitName(account.CurrencyCode)); return; }
         IsBusy = true;
         try
         {
-            var review = await _reconciliation.CompareObservedAsync(_id, account.CurrencyCode, ReconcileDate);
-            if (review is null) return;
+            var review = await _reconciliation.CompareObservedAsync(account.Id, account.CurrencyCode, ReconcileDate, current, snapshot.DatabasePath);
+            if (review is null || !current()) return;
             var result = review.Result; var culture = localization.CurrentCulture;
             ResultText = result.Difference == 0 ? translator["Reconcile_Match"]
                 : translator.Format("Reconcile_Difference", MoneyText.Format(result.Recorded, review.CurrencyCode, culture),
@@ -378,6 +509,7 @@ public sealed partial class AccountDetailViewModel(
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
+            if (!current()) return;
             InvalidateReconciliation();
             Error = _reconciliation.Committed ? translator["Reconcile_Done"]
                 : exception is FormatException ? translator["Amount_Invalid"]
@@ -389,7 +521,8 @@ public sealed partial class AccountDetailViewModel(
     [RelayCommand]
     private async Task AdjustAsync()
     {
-        if (IsBusy || !Loading.IsReady) return;
+        if (IsBusy || !_pageActive || !Loading.IsReady || _displayed is not { } snapshot) return;
+        var current = CurrentPublication(snapshot);
         Error = null;
         if (_account is { } original && _reconciliation.ObservedMoney.NeedsReview(original.CurrencyCode))
         {
@@ -402,44 +535,83 @@ public sealed partial class AccountDetailViewModel(
         {
             var saved = await _reconciliation.AdjustAsync(() => interaction.ConfirmAsync(translator["Reconcile_Adjust"],
                 translator["Reconcile_AdjustMessage"], translator["Reconcile_Adjust"], translator["Common_Cancel"]), () => Reason);
+            if (!current()) return;
             if (saved is null) { CanAdjust = _reconciliation.Review is not null; return; }
             if (!saved.Succeeded)
             { Error = string.Join(Environment.NewLine, saved.Errors.Select(e => translator[$"LedgerError_{e}"])); return; }
-            await PublishReconciliationAsync();
+            await PublishReconciliationAsync(current);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            if (_reconciliation.Committed) await PublishReconciliationAsync();
+            if (!current()) return;
+            if (_reconciliation.Committed) await PublishReconciliationAsync(current);
             else { InvalidateReconciliation(); Error = CommercialFailureMessage.OrFallback(exception, translator, "Reconcile_ReviewAgain"); }
         }
         finally { IsBusy = false; }
     }
 
     /// <summary>Publishes the accepted outcome even if a subscriber failed; never repeats the financial operation.</summary>
-    private async Task PublishReconciliationAsync()
+    private async Task PublishReconciliationAsync(Func<bool> current)
     {
-        ObservedText = string.Empty; Reason = string.Empty; CanAdjust = false; HintText = null;
-        ResultText = translator["Reconcile_Done"]; await LoadAsync();
+        if (!current()) return; ObservedText = string.Empty;
+        if (!current()) return; Reason = string.Empty;
+        if (!current()) return; CanAdjust = false;
+        if (!current()) return; HintText = null;
+        if (!current()) return; ResultText = translator["Reconcile_Done"];
+        if (current()) await LoadAsync();
     }
 
     [RelayCommand]
     private Task DebtActionAsync()
     {
-        if (_account is null)
-        {
-            return Task.CompletedTask;
-        }
-
+        if (_account is not { } account || !account.Type.IsDebt() || account.IsArchived) return Task.CompletedTask;
         var query = new Dictionary<string, object> { ["kind"] = nameof(EntryKind.Transfer) };
-        query[_account.Type == AccountType.Loan ? "to" : "from"] = _account.Id;
-        return Shell.Current.GoToAsync(AppShell.EntryEditorRoute, query);
+        query[account.Type == AccountType.Loan ? "to" : "from"] = account.Id;
+        return NavigateCurrentAsync(AppRoutes.EntryEditorRoute, query);
     }
 
-    /// <summary>Opens an unsaved principal-only transfer reminder; the estimate never becomes an automatic payment.</summary>
+    /// <summary>Opens only the original current debt's unsaved reminder; it never posts the analytical estimate.</summary>
     [RelayCommand]
-    private Task RepaymentReminderAsync() => _account is { } account && account.Type.IsDebt()
-        ? Shell.Current.GoToAsync(AppShell.PlanEditorRoute, new Dictionary<string, object> { ["fromDebt"] = account.Id })
+    private Task RepaymentReminderAsync() => _account is { } account && account.Type.IsDebt() && !account.IsArchived
+        ? NavigateCurrentAsync(AppRoutes.PlanEditorRoute, new Dictionary<string, object> { ["fromDebt"] = account.Id })
         : Task.CompletedTask;
+
+    private Func<bool> CurrentPublication(AccountDetailSnapshot snapshot)
+    {
+        var loading = Loading; var revision = _readRevision; var id = _id; var display = DisplayIdentity();
+        return () => snapshot.Loan.Day == Today && _pageActive && id == _id && revision == _readRevision && ReferenceEquals(loading, Loading)
+            && loading.IsReady && ReferenceEquals(snapshot, _displayed) && display == DisplayIdentity();
+    }
+
+    private async Task NavigateCurrentAsync(string route, IDictionary<string, object>? parameters, Action? demand = null)
+    {
+        if (IsBusy || !_pageActive || !Loading.IsReady || _displayed is not { } snapshot) return;
+        var current = CurrentPublication(snapshot); var loading = Loading; var token = _readLifetime.Token;
+        IsBusy = true;
+        try
+        {
+            await loanReader.ValidateAccountDetailAsync(snapshot, token);
+            if (!current()) return;
+            try { demand?.Invoke(); }
+            catch (CommercialWriteRejectedException rejected)
+            {
+                // Paid analysis refusal must not hide the original free balance, essential warning or repayment path.
+                if (current()) LoanWorkFeedback = CommercialFailureMessage.OrFallback(rejected, translator, "Loan_ReadFailed");
+                return;
+            }
+            if (current()) await interaction.NavigateAsync(route, parameters);
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            if (!current()) return;
+            LoanWorkFeedback = CommercialFailureMessage.OrFallback(exception, translator, "Account_ReadFailed");
+            if (!current()) return;
+            try { await loading.RunAsync(() => Task.FromException(exception), () => { }); }
+            catch (Exception original) when (ReferenceEquals(original, exception)) { }
+            if (ReferenceEquals(loading, Loading)) { _displayed = null; _loanReview = null; }
+        }
+        finally { IsBusy = false; }
+    }
 
     // D-628: only the original active page may confirm its own file-bound conversion; acceptance survives follow-up failure.
     [RelayCommand]
@@ -462,16 +634,16 @@ public sealed partial class AccountDetailViewModel(
     }
 
     [RelayCommand]
-    private Task EditAsync() => Shell.Current.GoToAsync(AppShell.AccountEditorRoute, new Dictionary<string, object> { ["id"] = _id });
+    private Task EditAsync() => NavigateCurrentAsync(AppRoutes.AccountEditorRoute, new Dictionary<string, object> { ["id"] = _id });
 
     // A new expense on this account: the account page is the context account of the entry (ZEX-S0103, S0202).
     [RelayCommand]
-    private Task AddEntryHereAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute, new Dictionary<string, object>
+    private Task AddEntryHereAsync() => IsArchived ? Task.CompletedTask : NavigateCurrentAsync(AppRoutes.EntryEditorRoute, new Dictionary<string, object>
     {
         ["kind"] = nameof(EntryKind.Expense),
         ["account"] = _id,
     });
 
     [RelayCommand]
-    private Task ShowEntriesAsync() => Shell.Current.GoToAsync("//transactions", new Dictionary<string, object> { ["account"] = _id.ToString() });
+    private Task ShowEntriesAsync() => NavigateCurrentAsync("//transactions", new Dictionary<string, object> { ["account"] = _id.ToString() });
 }
