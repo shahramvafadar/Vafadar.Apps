@@ -4777,3 +4777,11 @@ unit suite, transaction Save, phone adoption or whole-DB/security/corpus accepta
 Fresh UID/AVD/settings/XML restoration passes; two supplementary cleanup requests are
 rejected without retry. D-607, broader platform and external release gates remain.
 [Evidence and exact limits](quality/original-receipt-drafts-and-onboarding-scroll.md).
+
+### D-618 - Bound the changed onboarding layout qualification
+
+The existing D-617 APK passes18 actual OS200% onboarding viewport contexts; this adds
+no new source, build, unit-test count, account, financial or speech acceptance. Keep
+the disqualified observer receipt and cleanup refusal. This finite changed-layout
+assertion closes; other accessibility/platform/security/release gates remain open.
+[Evidence and exact limits](quality/onboarding-independent-scroll-os-text.md).

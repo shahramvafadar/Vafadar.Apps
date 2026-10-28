@@ -10506,3 +10506,12 @@ original unsaved receipt drafts keep23.45EUR and respectively correct/empty merc
 One fresh opening-zero account is created once; no ledger write or new unit-test count.
 Full signed package passes static checks; physical adoption and broader gates remain.
 [Evidence and exact limits](../quality/original-receipt-drafts-and-onboarding-scroll.md).
+
+### D-618 - Large-text onboarding evidence without behavior changes
+
+18 distinct actual OS200% en/fa/de Light/Dark360/412/680 contexts qualify the changed
+step-owned scroll/content and fixed-footer boundary in the original D-617 product.
+No source/model/test count/build or financial behavior changes. Initial observer
+failure is preserved and disqualified; this is not whole-accessibility or physical
+release acceptance. D-607 and other unfinished gates remain separate.
+[Evidence and exact limits](../quality/onboarding-independent-scroll-os-text.md).

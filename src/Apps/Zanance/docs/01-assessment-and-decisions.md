@@ -11204,3 +11204,13 @@ two original Home/picker/editor drafts: correct shop versus empty missing-header
 payee, both23.45EUR; cancel both and retain an empty ledger. Cleanup refusals and
 renderer/observer failures remain explicit; D-607 and physical adoption stay open.
 [Evidence and exact limits](quality/original-receipt-drafts-and-onboarding-scroll.md).
+
+### D-618 - Actual OS200% evidence for independent onboarding viewports
+
+Reuse the complete D-617 signed product without a build, financial setup or receipt
+read.18 distinct en/fa/de Light/Dark360/412/680 contexts pass actual OS200% content,
+step-owned scroll, full Name reachability and separate fixed-footer geometry in the
+same original PID4260. Disqualify the initial clipped-native-bounds apparent pass;
+retain it and strengthen source-bound admission before final cases. Exact owned
+restoration/retirement passes; six residual config files remain after policy rejection.
+[Evidence and exact limits](quality/onboarding-independent-scroll-os-text.md).

@@ -4618,3 +4618,11 @@ Two original complete-product receipt drafts retain23.45EUR with correct/empty p
 then cancel without ledger writes. One fresh zero account is setup, not a replay of
 prior financial success. No new unit count or whole-corpus/physical acceptance.
 [Evidence and remaining gates](quality/original-receipt-drafts-and-onboarding-scroll.md).
+
+### D-618 - Finish the named changed-onboarding OS200% assertion
+
+The existing complete D-617 product passes18 actual OS200% viewport/direction/footer
+contexts without new build/test/source/financial work. Preserve the disqualified
+initial observer and exact owned cleanup refusal. Other broader device/accessibility
+and external gates remain separate; do not repeat this finite matrix unchanged.
+[Evidence and exact limits](quality/onboarding-independent-scroll-os-text.md).

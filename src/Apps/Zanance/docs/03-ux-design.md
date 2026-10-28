@@ -2806,3 +2806,12 @@ controls, content width and fixed progress/footer; do not add delayed scroll hac
 A complete original receipt draft shows its merchant; missing-header data leaves
 Payee empty while preserving the amount. Both remain unsaved until explicit Save.
 [Original native evidence and limits](quality/original-receipt-drafts-and-onboarding-scroll.md).
+
+### D-618 - Native large-text onboarding viewport boundaries
+
+At actual OS200%, independent steps retain their own scroll positions and the
+original account title/Name remain reachable without content/footer overlap. Native
+accessibility text can remain full while bounds are clipped: viewport-edge rectangles
+do not establish a complete field.18 final contexts validate the unchanged product;
+no font/caption/control/command is reduced or replaced and no Start is invoked.
+[Evidence and exact limits](quality/onboarding-independent-scroll-os-text.md).

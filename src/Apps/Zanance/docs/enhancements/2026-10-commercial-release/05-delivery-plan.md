@@ -5347,3 +5347,12 @@ and two unsaved drafts pass; one fresh zero account only, no financial success r
 Retire the fresh environment and preserve both cleanup refusals. D-607 continues;
 physical adoption awaits it, TalkBack stays last and no broad gate is relabeled.
 [Evidence and exact limits](../../quality/original-receipt-drafts-and-onboarding-scroll.md).
+
+### D-618 - Qualify the named large-text boundary without replaying normal cases
+
+Use the existing full signed product for18 actual OS200% onboarding contexts after
+D-617's viewport change. Preserve and disqualify the clipped-bounds initial observer,
+then validate remaining original layouts and exact restoration without account/seed/
+receipt/financial/TalkBack operations, new builds or unit suites. Fresh UID/AVD and
+XML retire; six residual config files remain after policy refusal with no retry.
+[Evidence and exact limits](../../quality/onboarding-independent-scroll-os-text.md).

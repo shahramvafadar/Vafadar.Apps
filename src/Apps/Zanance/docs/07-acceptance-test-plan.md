@@ -7661,3 +7661,13 @@ Home/picker/reader/editor visits show the admitted complete merchant versus empt
 missing-header payee, both23.45EUR. Discard both; All/All types remains empty.
 Retain renderer admission and observer failures without successful operation replay.
 [Evidence and exact limits](quality/original-receipt-drafts-and-onboarding-scroll.md).
+
+### D-618 - Independent original onboarding content at actual OS200%
+
+18 final en/fa/de Light/Dark360/412/680 contexts prove a genuinely scrolled preferences
+source, independent account top, reachable complete original title/Name and fixed
+Back/Next/Start caption/target separation with actual RTL ordering. A clipped-bounds
+apparent pass is explicitly disqualified, not counted. No account Start, financial,
+receipt, TalkBack, build or managed-suite operation is replayed. Same PID4260 and
+exact original settings restoration/fresh UID/AVD retirement are recorded.
+[Evidence and exact limits](quality/onboarding-independent-scroll-os-text.md).
