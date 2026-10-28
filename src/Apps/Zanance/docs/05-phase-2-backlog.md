@@ -4644,3 +4644,12 @@ Strict builds pass, initial Windows restore and cleanup refusal remain preserved
 No camera/old source/financial success or unrelated suite is repeated; broader gates
 and physical adoption after actual D-607 completion remain separate.
 [Evidence and exact limits](quality/complete-named-receipt-date-suggestions.md).
+
+### D-622 - Connected/unlaid framework observation, not a general stability pass
+
+Two new native requests establish actual attachment/focus with0x0/unlaid/requested
+layout. Original task completion follows native layout release; disconnect leaves a
+bounded pending task. Preserve D-455's distinct hidden-root failures and all broader
+app correlation gates. No product/financial/test count changes or old successful
+cohort repeats. Fresh environment retires; one supplemental cleanup refusal remains.
+[Evidence and exact limits](quality/connected-unlaid-scroll-lifetime.md).

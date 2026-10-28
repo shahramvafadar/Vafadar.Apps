@@ -11247,3 +11247,16 @@ and update the one historical boundary-only null-Date assertion.67 unique select
 passes, strict builds and one original new past-date PNG/editor/Discard route pass
 without financial posting. Windows restore and cleanup failures remain explicit.
 [Evidence and exact limits](quality/complete-named-receipt-date-suggestions.md).
+
+### D-622 - Observe a genuinely attached, unlaid native scroll lifetime
+
+The old hidden-root readiness failures remain unchanged. A new independent visible
+native child with parent layout suppressed actually satisfies the stock10.0.120
+handler's pending-layout predicate before two distinct original scroll requests.
+Release completes one; handler retirement leaves the other pending at the bounded
+250ms observation. No historical ANR cause, infinite task or product fix is inferred.
+Strict native build, exact framework provenance, original settings/restoration and
+fresh-UID/AVD retirement pass; compiler/observer and cleanup failures are retained.
+The owner then explicitly authorizes a temporary Loyan phone turn protecting D-607;
+communicate its constraints without early phone queries, and require explicit return.
+[Evidence and exact limits](quality/connected-unlaid-scroll-lifetime.md).

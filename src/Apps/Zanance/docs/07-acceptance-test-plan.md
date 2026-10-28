@@ -7690,3 +7690,14 @@ Final unique union67 passes. One fresh PNG dated27October2025 reaches actual ori
 Month10/Day27/Year2025 fields without typing; amount710EURminor/merchant/account stay
 intact. Cancel/Discard, Home0 and All/All-types empty pass; no financial posting.
 [Evidence and exact limits](quality/complete-named-receipt-date-suggestions.md).
+
+### D-622 - Admit the native predicate before classifying pending scrolls
+
+A fresh API36/x64/4096 package observes two original public scroll requests against
+actually attached/focused,never-laid-out0x0 native controls. Pending250ms then layout
+release completes the first; retirement leaves the second incomplete250ms afterward.
+The older hidden-root assertion is not retrospectively accepted. Original framework
+revision and native outcomes are checked beyond a Success flag. Preserve four API
+analyzer refusals and the wrong all-ScrollView terminal guard, then verify restoration
+from its same saved native packet. No financial or old successful test replay.
+[Evidence and exact limits](quality/connected-unlaid-scroll-lifetime.md).

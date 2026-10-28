@@ -5374,3 +5374,14 @@ source through the original editor before Discard; keep one fresh zero-account s
 and zero transaction writes. Retire that fresh environment and preserve the one new
 cleanup refusal. D-607/physical adoption and all broader gates remain independent.
 [Evidence and exact limits](../../quality/complete-named-receipt-date-suggestions.md).
+
+### D-622 - Finish the missing native predicate without replaying old setup
+
+Freeze a visible native-parent suppression fixture instead of repeating D-455's
+already-laid-out hidden root. Require actual attachment/focus/unlaid0x0/requested
+layout before each original request; retain release and retirement outcomes with
+actual framework identity. No product workaround or historical ANR attribution.
+Retire only the fresh UID/AVD/outputs, keep the supplemental cleanup refusal and
+publish this finished evidence. The separately authorized temporary Loyan phone turn
+preserves D-607 and requires explicit return; independent work continues throughout.
+[Evidence and exact limits](../../quality/connected-unlaid-scroll-lifetime.md).

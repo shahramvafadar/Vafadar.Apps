@@ -4802,3 +4802,13 @@ Discard and empty ledger. No all-device/corpus/Persian-camera/iOS, financial Sav
 stability/security/A11Y or release acceptance is inferred. D-607 stays untouched;
 used package and failures remain, residual cleanup is refused once without retry.
 [Evidence and exact limits](quality/complete-named-receipt-date-suggestions.md).
+
+### D-622 - Pending scroll evidence does not qualify general Android stability
+
+The connected/unlaid fixture closes one named predicate gap with two bounded native
+outcomes. It is not a historical ANR reproduction, shipping call-site fix, infinite
+lifetime or phone/two-second/cold acceptance. Product/runtime/financial source and
+D-621 package stay unchanged. Standard retirement succeeds; the entire383file/
+47900145byte supplemental scope remains after policy refusal without retry. The
+owner's temporary Loyan turn requires explicit return and preserves all D-607 work.
+[Evidence and exact limits](quality/connected-unlaid-scroll-lifetime.md).

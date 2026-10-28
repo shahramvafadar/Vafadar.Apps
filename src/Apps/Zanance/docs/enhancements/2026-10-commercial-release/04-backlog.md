@@ -7161,3 +7161,16 @@ remain preserved. Fresh UID/AVD/25 XML/input copy retire,2789 standard outputs c
 2727files/542567717bytes remain after one supplemental policy rejection, no retry.
 D-607/physical adoption and broader corpus/release gates remain separate, goal active.
 [Evidence and exact limits](../../quality/complete-named-receipt-date-suggestions.md).
+
+### D-622 - Actual connected/unlaid native scroll outcomes
+
+One new independent visible native child under suppressed parent layout establishes
+attachment/focus/unlaid0x0/requested layout before two distinct stock scroll requests.
+One completes after release; the other remains pending250ms after handler retirement.
+Preserve D-455's hidden-root refusals and do not infer historical ANR/CPU/infinite-task
+or product-fix acceptance. Strict isolated build/provenance/restoration/fresh-retirement
+pass; four compiler sites, one terminal observer and supplemental cleanup refusal are
+honest. No product/managed-test/financial replay;383files/47900145bytes remain with no
+cleanup retry. Owner-approved temporary Loyan phone turn preserves all three D-607
+alarms and requires explicit return. Overall goal active; TalkBack last, broader gates open.
+[Evidence and exact limits](../../quality/connected-unlaid-scroll-lifetime.md).

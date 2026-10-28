@@ -1,5 +1,17 @@
 # AGENTS.md – working rules for this repository
 
+## Temporary Samsung turn for Loyan with D-607 preserved (owner,2026-10-28,D-622)
+
+The owner explicitly authorizes communicating and granting a temporary Samsung turn to
+Loyan, with all Zanance data and the three original D-607 deadlines untouched. This
+supersedes the exclusive reservation only until explicit return of that turn. Issue no
+phone command before that return; continue independent approved work in the meantime.
+The handoff does not authorize a Zanance/D-607 launch, provider query, installation,
+upgrade, reset, force-stop, rearm, another reboot or clock/battery/idle/permission change.
+Do not perform an early D-607 source observation to support coordination. Keep its
+consumed reboot and post-reboot unread source state; historical Main PID observations
+are historical, not current liveness claims. Genuine authentication remains with the owner.
+
 ## Exclusive Samsung availability and Do not send installation prompt (owner, 2026-10-27, D-602)
 
 Until the owner explicitly changes this instruction, the Samsung phone is fully reserved for

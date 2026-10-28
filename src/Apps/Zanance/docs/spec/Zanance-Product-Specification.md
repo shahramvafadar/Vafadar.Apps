@@ -10532,3 +10532,13 @@ no UI-locale, missing-year or conflicting-row guess.24 new/43 existing selected 
 and one original new2025 PNG-to-editor route pass with strict builds and no financial
 posting. Full-suite counts, broader corpus/platform and release gates are not inferred.
 [Evidence and exact limits](../quality/complete-named-receipt-date-suggestions.md).
+
+### D-622 - Finite actual unlaid native scroll qualification
+
+An independent API36/x64/4096 stock MAUI10.0.120 control is actually attached/focused
+but0x0/unlaid/layout-requested before each of two distinct scroll requests. One task
+completes after native layout release; the other remains pending250ms after handler
+disconnection. No product behavior, managed test count, financial schema/operation,
+historical ANR cause or shipping package changes. Keep compiler/observer/refused
+cleanup evidence, exact settings and fresh retirement. Broader delivery gates remain.
+[Evidence and exact limits](../quality/connected-unlaid-scroll-lifetime.md).

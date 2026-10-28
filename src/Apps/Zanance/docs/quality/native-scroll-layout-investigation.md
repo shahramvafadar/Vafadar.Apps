@@ -61,3 +61,11 @@ Primary references: [pinned handler source](https://github.com/dotnet/maui/blob/
 [upstream scroll-readiness change](https://github.com/dotnet/maui/pull/39213),
 [SR12 draft candidate](https://github.com/dotnet/maui/pull/38782),
 [serviced runtime metadata](https://builds.dotnet.microsoft.com/dotnet/release-metadata/10.0/releases.json).
+
+## Later connected/unlaid fixture (D-622)
+
+[New bounded native observations](connected-unlaid-scroll-lifetime.md) establish the
+underlying stock handler predicate with a separately visible native child and
+suppressed parent layout. They do not turn these old hidden-root setup failures
+into successes, reproduce a historical ANR or change the product. No old original
+request, retained source or financial operation is replayed.
