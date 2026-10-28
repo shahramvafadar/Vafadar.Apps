@@ -10591,3 +10591,17 @@ strict builds, same-fixture corrected native retirement, six language/theme cont
 minimum OS200% and wide views pass. Native counts are not extra unit tests. Physical
 adoption waits for D-607; broad stability/performance/security/A11Y/release remain.
 [Evidence and exact limits](../quality/covered-original-account-overview.md).
+
+### D-628 - Original legacy-account conversion source and accepted receipt
+
+A full original account/history review binds file/access/date/recorded balance and
+native page lifetime. The original atomic writer refuses changed/caller-authored
+facts and preserves original one-unit/positive-value/unknown-nonpositive formulas.
+One consumed review and typed accepted identities survive notification/navigation
+failure without financial replay. Original footer feedback and three keys translate
+in six languages.28new focused cases, two old affected conversion checks/21resources,
+strict builds, original native Cancel/one conversion, six accepted-page contexts and
+14separate compiled-content layouts pass. Native/layout observations are not new
+unit tests. Actual font-change root retirement remains; physical adoption waits for
+D-607 and broad security/stability/performance/A11Y/platform/release gates stay open.
+[Evidence and exact limits](../quality/original-account-conversion-ownership.md).

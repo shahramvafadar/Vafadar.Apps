@@ -2838,3 +2838,16 @@ Back behavior, sorting, tiles and ready layout; no new financial Save is introdu
 Six native language/theme contexts and named minimum/scaled/wide assertions pass,
 with observation refusals retained and source/settings exactly scoped.
 [Evidence and exact limits](quality/covered-original-account-overview.md).
+
+### D-628 - Saved conversion and native follow-through are separate feedback
+
+The original name and recorded value belong to one confirmed original file/date
+and page lifetime. Cancel and retired consent write nothing. A committed conversion
+shows success even if Changed or native navigation fails; explain that Holdings
+contains the saved result rather than suggesting another financial submission.
+Use the existing footer, semantic colors and full wrapping six-language captions;
+refresh translations without rereading/converting. Six real accepted-page contexts
+pass. Separate compiled-content360/800dp and two OS200% arrangements use no financial
+source or accepted-outcome injection; the actual original font-change root retirement
+remains a separate boundary, not persistent-message acceptance.
+[Evidence and exact limits](quality/original-account-conversion-ownership.md).

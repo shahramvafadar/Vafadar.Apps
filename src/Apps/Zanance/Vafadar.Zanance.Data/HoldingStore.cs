@@ -396,66 +396,89 @@ public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>
-    /// Converts a legacy valued-asset account into a holding (ZEX-S0408), only after the user confirmed the preview: a
-    /// count type named like the account in its currency, an opening holding of one unit at <paramref name="location"/>
-    /// with the balance as value and cost basis, and the account archived (it stays restorable, its entries stay).
-    /// Returns the new type, or <see langword="null"/> when the account is not an active asset account.
+    /// Converts a current-file legacy account only when the supplied value exactly matches its original recorded balance.
+    /// Interactive previews must retain <see cref="AccountConversionReview"/> and use the reviewed overload instead.
     /// </summary>
     public async Task<AssetType?> ConvertAccountAsync(Guid accountId, long balance, DateOnly date, string location, CancellationToken cancellationToken = default)
     {
+        var review = await ReadAccountConversionAsync(accountId, date, cancellationToken);
+        if (review is null) return null;
+        if (review.Balance != balance) throw new AccountConversionChangedException("The supplied conversion value differs from the original balance.");
+        return await ConvertAccountAsync(review, location, () => true, cancellationToken);
+    }
+
+    /// <summary>
+    /// Converts only the confirmed original account/file/history into one valued unit and archives that account atomically.
+    /// Original nonpositive values remain unknown; accepted results survive post-commit notification failures.
+    /// </summary>
+    public async Task<AssetType> ConvertAccountAsync(AccountConversionReview review, string location, Func<bool> isCurrent,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(review); ArgumentNullException.ThrowIfNull(isCurrent);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
-        var account = await db.Accounts.FirstOrDefaultAsync(a => a.Id == accountId, cancellationToken);
-        if (account is null || account.Type != Core.Accounts.AccountType.Asset || account.IsArchived)
+        var result = await Task.Run(async () =>
         {
-            return null;
-        }
-
-        write.DemandFeature(CommercialFeature.ManageHoldings);
-        var place = await db.AssetLocations.Where(l => !l.IsArchived).OrderBy(l => l.SortOrder).FirstOrDefaultAsync(cancellationToken);
-        if (place is null)
-        {
-            place = new AssetLocation { Name = location };
-            db.AssetLocations.Add(place);
-        }
-
-        var type = new AssetType
-        {
-            Name = account.Name,
-            Kind = AssetKind.Other,
-            Dimension = AssetDimension.Count,
-            PriceCurrencyCode = account.CurrencyCode,
-            SortOrder = await db.AssetTypes.CountAsync(cancellationToken),
-        };
-        db.AssetTypes.Add(type);
-        var known = balance > 0 ? balance : (long?)null;
-        db.AssetEvents.Add(new AssetEvent
-        {
-            AssetTypeId = type.Id,
-            LocationId = place.Id,
-            Kind = AssetEventKind.Opening,
-            Quantity = Quantities.PerGramOrUnit,
-            Date = date,
-            BasisAmount = known,
-        });
-        if (known is { } value)
-        {
-            db.AssetValuations.Add(new AssetValuation
+            review.Begin(); var committed = false;
+            try
             {
-                AssetTypeId = type.Id,
-                CurrencyCode = account.CurrencyCode,
-                Date = date,
-                PricePerUnitMilli = AssetValuationService.PricePerUnitMilliOf(value, Quantities.PerGramOrUnit),
-            });
-        }
+                review.RequireFile(db);
+                await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+                write.DemandFeature(CommercialFeature.ManageHoldings);
+                await review.ValidateAsync(db, cancellationToken);
+                if (!isCurrent()) throw new AccountConversionChangedException("The original conversion confirmation retired.");
+                var account = await db.Accounts.SingleAsync(a => a.Id == review.AccountId, cancellationToken);
+                if (account.Type != Core.Accounts.AccountType.Asset || account.IsArchived)
+                    throw new AccountConversionChangedException("The original account is no longer an active valued asset.");
+                var place = await db.AssetLocations.Where(l => !l.IsArchived).OrderBy(l => l.SortOrder).FirstOrDefaultAsync(cancellationToken);
+                if (place is null)
+                {
+                    place = new AssetLocation { Name = location };
+                    db.AssetLocations.Add(place);
+                }
 
-        account.IsArchived = true;
-        write.EnsureCurrent();
-        await db.SaveChangesAsync(cancellationToken);
-        write.EnsureCurrent();
-        await write.CommitAsync(cancellationToken);
-        Changed?.Invoke(this, EventArgs.Empty);
-        return type;
+                var type = new AssetType
+                {
+                    Name = account.Name,
+                    Kind = AssetKind.Other,
+                    Dimension = AssetDimension.Count,
+                    PriceCurrencyCode = account.CurrencyCode,
+                    SortOrder = await db.AssetTypes.CountAsync(cancellationToken),
+                };
+                db.AssetTypes.Add(type);
+                var known = review.Balance > 0 ? review.Balance : (long?)null;
+                db.AssetEvents.Add(new AssetEvent
+                {
+                    AssetTypeId = type.Id,
+                    LocationId = place.Id,
+                    Kind = AssetEventKind.Opening,
+                    Quantity = Quantities.PerGramOrUnit,
+                    Date = review.Date,
+                    BasisAmount = known,
+                });
+                if (known is { } value)
+                {
+                    db.AssetValuations.Add(new AssetValuation
+                    {
+                        AssetTypeId = type.Id,
+                        CurrencyCode = account.CurrencyCode,
+                        Date = review.Date,
+                        PricePerUnitMilli = AssetValuationService.PricePerUnitMilliOf(value, Quantities.PerGramOrUnit),
+                    });
+                }
+
+                account.IsArchived = true;
+                write.EnsureCurrent();
+                await db.SaveChangesAsync(cancellationToken);
+                await review.ValidateAsync(db, cancellationToken, ownArchiveUpdatedAt: account.UpdatedAt);
+                write.EnsureCurrent();
+                if (!isCurrent()) throw new AccountConversionChangedException("The original conversion retired before commit.");
+                await write.CommitAsync(cancellationToken); committed = true;
+                return type;
+            }
+            finally { review.End(committed); }
+        }, cancellationToken);
+        // Preserve the original caller's notification context after the worker's known commit and consumed review.
+        return CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty), result);
     }
 
     /// <summary>Returns the asset type whose purchase or sale owns the entries of <paramref name="groupId"/>, if any.</summary>

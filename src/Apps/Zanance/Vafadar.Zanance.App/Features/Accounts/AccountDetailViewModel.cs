@@ -25,18 +25,20 @@ namespace Vafadar.Zanance.App.Features.Accounts;
 public sealed partial class AccountDetailViewModel(
     ZananceStore store,
     GoalStore goals,
-    HoldingStore holdings,
     Translator translator,
     ILocalizationService localization,
     IDateFormatter dates,
-    TimeProvider time, Data.Commerce.LoanWorkStore loanReader, LoanInstallmentSession installment, Interaction.IAppInteraction interaction) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
+    TimeProvider time, Data.Commerce.LoanWorkStore loanReader, LoanInstallmentSession installment, AccountConversionSession conversion, Interaction.IAppInteraction interaction) : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
 {
     private Guid _id;
+    private bool _pageActive;
     private Data.Commerce.LoanReadReview? _loanReview;
     /// <summary>Gets covered complete publication; failed reads retain drafts behind explicit Retry.</summary>
     public SnapshotLoadState Loading { get; } = new();
     /// <summary>Gets the original confirmed installment lifetime and accepted outcome.</summary>
     public LoanInstallmentSession Installment { get; } = installment;
+    /// <summary>Owns original account-to-holding consent, accepted outcome and native follow-through.</summary>
+    public AccountConversionSession Conversion { get; } = conversion;
     /// <summary>Gets translated current loan access/read feedback.</summary>
     [ObservableProperty] public partial string? LoanWorkFeedback { get; private set; }
     /// <summary>Gets whether original paid estimates and installment tools can be shown.</summary>
@@ -151,7 +153,7 @@ public sealed partial class AccountDetailViewModel(
         if (query.TryGetValue("id", out var value) && value is Guid id)
         {
             if (_id != id) { InvalidateReconciliation(); ObservedText = string.Empty; Reason = string.Empty; }
-            _id = id;
+            _id = id; Conversion.SetOwner(id, _pageActive);
         }
     }
 
@@ -326,12 +328,13 @@ public sealed partial class AccountDetailViewModel(
     /// <summary>Retains raw observation while retiring pending native consent when this page leaves.</summary>
     public void SetReconciliationActive(bool active)
     {
+        _pageActive = active; Conversion.SetOwner(_id, active);
         localization.Changed -= OnObservedDisplayChanged;
         if (active) localization.Changed += OnObservedDisplayChanged;
         else InvalidateReconciliation();
         RefreshObservedMoney();
     }
-    private void OnObservedDisplayChanged(object? sender, EventArgs args) => RefreshObservedMoney();
+    private void OnObservedDisplayChanged(object? sender, EventArgs args) { RefreshObservedMoney(); Conversion.RefreshFeedback(); }
     private void RefreshObservedMoney()
     {
         UnitNote = DisplayUnitNote.ForInput(translator, _reconciliation.ObservedMoney, _account?.CurrencyCode ?? Currencies.Euro.Code);
@@ -438,27 +441,24 @@ public sealed partial class AccountDetailViewModel(
         ? Shell.Current.GoToAsync(AppShell.PlanEditorRoute, new Dictionary<string, object> { ["fromDebt"] = account.Id })
         : Task.CompletedTask;
 
-    // ZEX-S0408: a preview first; only a confirmation creates the holding and archives the account (restorable).
+    // D-628: only the original active page may confirm its own file-bound conversion; acceptance survives follow-up failure.
     [RelayCommand]
     private async Task ConvertToHoldingAsync()
     {
-        if (_account is not { } account || !CanConvert)
+        if (IsBusy || !Loading.IsReady || !_pageActive || _account is not { } account || !CanConvert) return;
+        var id = _id;
+        bool Current() => _pageActive && _id == id && ReferenceEquals(_account, account) && Loading.IsReady && CanConvert;
+        IsBusy = true;
+        try
         {
-            return;
+            await Conversion.ConvertAsync(id, Current);
+            if (Conversion.AcceptedOutcome?.AccountId == id && _pageActive && _id == id)
+            {
+                // The old page remains only when follow-through failed; reread it without another conversion.
+                CanConvert = false; IsArchived = true; await LoadAsync();
+            }
         }
-
-        var balance = LedgerCalculator.Balance(account, await store.GetEntriesAsync(), Today);
-        var value = balance > 0 ? MoneyText.Format(balance, account.CurrencyCode, localization.CurrentCulture) : translator["Holding_ValueUnknown"];
-        if (!await Shell.Current.DisplayAlertAsync(translator["Account_ConvertToHolding"], translator.Format("Account_ConvertPreview", account.Name, value),
-                translator["Account_ConvertConfirm"], translator["Common_Cancel"]))
-        {
-            return;
-        }
-
-        if (await holdings.ConvertAccountAsync(account.Id, balance, Today, translator["Holding_DefaultLocation"]) is { } type)
-        {
-            await Shell.Current.GoToAsync($"../{AppShell.HoldingDetailRoute}", new Dictionary<string, object> { ["id"] = type.Id });
-        }
+        finally { IsBusy = false; }
     }
 
     [RelayCommand]

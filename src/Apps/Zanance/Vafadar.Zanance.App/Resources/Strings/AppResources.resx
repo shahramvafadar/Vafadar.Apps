@@ -8538,4 +8538,13 @@ Original XML SHA-256: {5}</value>
   <data name="Accounts_RetryLoad" xml:space="preserve">
     <value>Try again</value>
   </data>
+  <data name="Account_Converted" xml:space="preserve">
+    <value>Account converted to a holding.</value>
+  </data>
+  <data name="Account_ConvertedFollowUpFailed" xml:space="preserve">
+    <value>The conversion was saved, but the view could not be updated. Open Holdings to see the result.</value>
+  </data>
+  <data name="Account_ConversionReviewAgain" xml:space="preserve">
+    <value>The conversion could not be completed. Refresh the account and review it again.</value>
+  </data>
 </root>

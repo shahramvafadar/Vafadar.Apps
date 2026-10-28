@@ -8504,4 +8504,13 @@ Original-XML SHA-256: {5}</value>
   <data name="Accounts_RetryLoad" xml:space="preserve">
     <value>Erneut versuchen</value>
   </data>
+  <data name="Account_Converted" xml:space="preserve">
+    <value>Konto in einen Vermögenswert umgewandelt.</value>
+  </data>
+  <data name="Account_ConvertedFollowUpFailed" xml:space="preserve">
+    <value>Die Umwandlung wurde gespeichert, aber die Ansicht konnte nicht aktualisiert werden. Öffnen Sie die Vermögenswerte, um das Ergebnis zu sehen.</value>
+  </data>
+  <data name="Account_ConversionReviewAgain" xml:space="preserve">
+    <value>Die Umwandlung konnte nicht abgeschlossen werden. Aktualisieren und prüfen Sie das Konto erneut.</value>
+  </data>
 </root>

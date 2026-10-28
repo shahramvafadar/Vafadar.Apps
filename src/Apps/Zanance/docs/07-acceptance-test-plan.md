@@ -7729,3 +7729,18 @@ and empty ledger. Original display/OS settings return;212owned XMLs and fresh UI
 retire. Five standard cleans pass; supplemental3790file cleanup is policy-refused.
 No successful financial command, old receipt suite or physical/D-607 action repeats.
 [Full original inputs and exact limits](quality/covered-original-account-overview.md).
+
+### D-628 - Complete original conversion review, consent, commit and feedback
+
+Four real original failures become corrected passes;28distinct new selected cases
+and two affected old conversion/21resource checks pass. Keep harness/filter refusals
+and repeat only four affected feedback cases after their final change. Strict
+Windows/full offline Android pass. One original Asset100EUR onboarding, Cancel and
+one actual conversion produce one archived account/opening holding/valuation with
+empty ledger; deliberate post-commit Changed and route failures retain typed receipt.
+Six same-source accepted-page contexts pass. Font200% returns the root to Home and
+is not retained-footer acceptance. Fourteen separate native compiled-content layouts
+prove360/800dp plus German/Persian OS200% wrapping with zero DB/financial outcome.
+Both fresh UID/AVD sets and80owned XMLs retire; two supplemental refusals remain.
+No accepted financial, old suite or physical/D-607 operation is repeated.
+[Full evidence and exact limits](quality/original-account-conversion-ownership.md).

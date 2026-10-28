@@ -4667,3 +4667,13 @@ product/test counts remain unchanged, with one supplemental cleanup refusal.
 
 Eight actual1080x1920 RGB frames per language cover the eight planned roles; historical Windows originals remain. Source/image/pixel/native hashes and scoped data preservation are recorded. One rejected frame is replaced without financial replay; an actual ANR remains unresolved. This closes the Android draft artifact batch only, not final Store composition, release edition, accounts, physical adoption or publication.
 [Evidence and exact limits](quality/android-store-drafts.md).
+
+### D-628 - Complete original account-to-holding conversion ownership
+
+Complete original review, file/source/consent guard, atomic writer and typed accepted
+follow-through are integrated in the existing account detail. Original formulas and
+explicit preview stay.28new focused cases, affected checks, strict builds, one
+original native Cancel/conversion and scoped presentation checks pass without replay.
+Font-recreation lifetime and physical adoption are separate, two cleanup refusals
+stay explicit, and the overall delivery goal remains active.
+[Evidence and exact limits](quality/original-account-conversion-ownership.md).

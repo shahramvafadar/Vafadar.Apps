@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- Bind account-to-holding confirmation to the original account, history and file; keep a saved conversion visible when notification or navigation fails, without submitting it again (D-628).
+
 - Load account groups and totals together behind local loading/retry feedback; prevent retired tab reads or old account rows from navigating, while preserving the Home account route (D-627).
 
 - Recognize complete receipt dates with month names when no valid numeric date is found; do not choose between conflicting named dates or guess a missing year (D-621).

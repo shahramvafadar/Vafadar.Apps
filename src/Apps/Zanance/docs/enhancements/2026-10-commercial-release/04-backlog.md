@@ -7239,3 +7239,22 @@ review refuses nine-root/eight-file supplemental cleanup before process creation
 APKs/evidence remain. No shipping-PE equivalence, performance/ANR or broad acceptance;
 physical adoption waits for D-607 and overall goal remains active/TalkBack last.
 [Full source, failures and exact limits](../../quality/covered-original-account-overview.md).
+
+### D-628 - Complete original reviewed account-to-holding conversion
+
+Capture complete original account/history/date/file/access and validate around the
+original atomic writer. Reject caller-authored/stale balances, changed source/file
+and retired consent; preserve original one-unit/nonpositive-value formulas and
+all ledger rows. Consume actual accepted review and preserve typed result through
+post-commit Changed/navigation failures, with original translated footer feedback.
+28new selected cases, two affected old conversion checks/21resources and strict
+Windows/full offline384AOT/408ELF/1608static16KiB APK pass. One original Cancel and
+one conversion archive the100EUR asset and create one holding/opening/valuation,
+ledger empty; six same-source native contexts pass without financial replay.
+Actual font200 root return to Home remains;14separate original-content360/800dp/
+scaled arrangements have no DB or accepted financial outcome and prove layout only.
+Both fresh UID/AVD sets and80XML/3210287bytes retire, seven standard cleans pass.
+Two supplemental automatic-review refusals leave4048files/781344136bytes and
+975files/124738138bytes with no retry/subset/alternative. Used signed APKs/evidence
+remain; D-607/phone/adoption and broader gates stay separate, overall goal active.
+[Complete source, failures and exact limits](../../quality/original-account-conversion-ownership.md).

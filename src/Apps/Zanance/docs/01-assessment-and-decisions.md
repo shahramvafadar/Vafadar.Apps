@@ -11318,3 +11318,18 @@ Accounts/Home detail routes and final source-visible/settings preservation pass.
 Fresh UID/212XML/AVD retire; supplemental3790file deletion is policy-refused. No
 financial replay, shipping-byte/performance/ANR or physical-adoption claim follows.
 [Complete source, native outcome and limits](quality/covered-original-account-overview.md).
+
+### D-628 - Original reviewed account conversion and accepted-result ownership
+
+Bind complete original account/history/date/access/file before explicit native
+confirmation. Validate inside the original atomic writer before mutation and
+commit; only its proved own archive flag/audit may normalize. Preserve original
+one-unit/basis/nonpositive rules and compatibility API with actual-balance guard.
+Retire old page/tab/root consent, consume one accepted review and retain its typed
+result across Changed/native-route failures. Three feedback captions translate in
+all six languages without another write.28new focused cases, two affected existing
+checks/21resources, strict builds, original native Cancel and one conversion pass.
+Six same-result contexts and14separate content-only layouts do not establish font-
+recreation persistence; preserve the actual return to Home. Both fresh environments
+retire, two supplemental cleanup refusals stay explicit; phone/D-607 remain untouched.
+[Complete original source, failures and limits](quality/original-account-conversion-ownership.md).

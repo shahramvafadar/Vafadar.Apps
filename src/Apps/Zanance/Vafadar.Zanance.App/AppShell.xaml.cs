@@ -15,6 +15,7 @@ public partial class AppShell : Shell
 {
     private readonly HashSet<Features.Home.HomePage> _publishedHomes = [];
     private readonly HashSet<AccountsPage> _publishedAccountOverviews = [];
+    private readonly HashSet<AccountDetailPage> _publishedAccountDetails = [];
     private bool _navigationRetired;
 
     /// <summary>Records actual published Home instances; lazy ShellContent.Content may not expose its cached page.</summary>
@@ -29,6 +30,13 @@ public partial class AppShell : Shell
     {
         if (_navigationRetired) page.RetireShellPublication();
         else _publishedAccountOverviews.Add(page);
+    }
+
+    /// <summary>Registers actual original account-detail owners so root retirement also retires pending financial consent.</summary>
+    internal void RegisterAccountDetail(AccountDetailPage page)
+    {
+        if (_navigationRetired) page.RetireShellCommands();
+        else _publishedAccountDetails.Add(page);
     }
     /// <summary>Route of the account list.</summary>
     public const string AccountsRoute = AppRoutes.AccountsRoute;
@@ -248,6 +256,11 @@ public partial class AppShell : Shell
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
             && CurrentPage is AccountsPage accounts)
             accounts.RetirePublication();
+        // D-628: original account conversion/reconciliation dialogs cannot outlive an accepted retained-tab departure.
+        if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
+                or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
+            && CurrentPage is AccountDetailPage accountDetail)
+            accountDetail.RetireCommands();
         // D-406: Android can retain a routed More page across tabs without OnDisappearing.
         // Retire its original financial review only after navigation survives the existing leave guards.
         if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
@@ -269,6 +282,8 @@ public partial class AppShell : Shell
         _navigationRetired = true;
         foreach (var accounts in _publishedAccountOverviews) accounts.RetireShellPublication();
         _publishedAccountOverviews.Clear();
+        foreach (var account in _publishedAccountDetails) account.RetireShellCommands();
+        _publishedAccountDetails.Clear();
         Navigated -= OnRetainedDetailsTabActivated;
 #if ANDROID
         if (Handler is AccessibleShellRenderer renderer) renderer.RetireNavigation();

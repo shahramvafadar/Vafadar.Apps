@@ -8481,4 +8481,13 @@ SHA-256 du XML original : {5}</value>
   <data name="Accounts_RetryLoad" xml:space="preserve">
     <value>Réessayer</value>
   </data>
+  <data name="Account_Converted" xml:space="preserve">
+    <value>Compte converti en actif.</value>
+  </data>
+  <data name="Account_ConvertedFollowUpFailed" xml:space="preserve">
+    <value>La conversion a été enregistrée, mais l’affichage n’a pas pu être actualisé. Ouvrez les actifs pour voir le résultat.</value>
+  </data>
+  <data name="Account_ConversionReviewAgain" xml:space="preserve">
+    <value>La conversion n’a pas pu être effectuée. Actualisez le compte et vérifiez-le à nouveau.</value>
+  </data>
 </root>

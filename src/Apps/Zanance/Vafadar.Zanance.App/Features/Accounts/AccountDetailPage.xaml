@@ -124,6 +124,8 @@
         </VerticalStackLayout>
     </ScrollView>
     <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8">
+        <Label Text="{Binding Conversion.Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Conversion.Error, Converter={StaticResource IsNotNullConverter}}" />
+        <Label Text="{Binding Conversion.Result}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding Conversion.Result, Converter={StaticResource IsNotNullConverter}}" />
         <Label Text="{Binding Installment.Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Installment.Error, Converter={StaticResource IsNotNullConverter}}" />
         <Label Text="{Binding Installment.Result}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding Installment.Result, Converter={StaticResource IsNotNullConverter}}" />
         <p:WrappingAction Text="{v:Translate Account_Refresh}" Command="{Binding RefreshLoanCommand}" IsEnabled="{Binding IsNotBusy}" />
