@@ -4541,3 +4541,12 @@ continues only in the same process. Original emulated Main/zero/all120 is restor
 its AVD stops. Eight XMLs/207653bytes and3175 registered Clean outputs/1041974987logical
 bytes retire; used evidence remains. Delivery, broad stability/security/OEM/other platform
 and release gates stay open; TalkBack remains last. [Complete evidence](quality/null-snooze-cache-reconstruction.md).
+
+### D-606 - Specific safe startup storage guidance completed
+
+Classify only the actual unchanged staging-space preflight with a typed IOException;
+retain the covered original Retry and block inappropriate key/backup recovery callbacks.
+Seven new plus four affected managed cases pass; eighteen new synthetic native layouts
+and full package/adoption checks pass. No successful financial/old reminder cohort or
+unrelated suite repeats. General low-space recovery and external release gates remain
+open. [Scope and receipts](quality/startup-storage-guidance.md).

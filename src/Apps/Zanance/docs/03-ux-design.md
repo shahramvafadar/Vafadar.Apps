@@ -2757,3 +2757,11 @@ Native verification uses separate owned packages and original generic captions,
 without preparing accounts or repeating accepted financial actions. A skipped
 broadcast and a missed punctuality window are separate failures.
 [Complete source, native evidence and limits](quality/reboot-paired-delivery-diagnosis.md).
+
+## D-606 - Known low-space startup guidance
+
+Keep the existing financial cover and scrolling Retry surface. Only the typed original
+space-preflight refusal shows the storage-specific translated notice; do not infer it
+from arbitrary exception text. Hide key-code/backup recovery and reject retained recovery
+callbacks until explicit Retry. A new generic failure restores existing choices; never
+relax space/source checks or treat missing secure access as successful authentication.

@@ -7574,3 +7574,13 @@ continues only in the same process. Original emulated Main/zero/all120 is restor
 its AVD stops. Eight XMLs/207653bytes and3175 registered Clean outputs/1041974987logical
 bytes retire; used evidence remains. Delivery, broad stability/security/OEM/other platform
 and release gates stay open; TalkBack remains last. [Complete evidence](quality/null-snooze-cache-reconstruction.md).
+
+### D-606 - AT-198/AT-222 covered storage refusal
+
+One actual SQLite image reaches the original space guard one byte below its bound,
+with unchanged bytes/no key/candidate effect. Six original-VM cases preserve covered
+Retry/recovery classification and retained-command exclusion; four affected old recovery
+cases pass. Three original failures are preserved. Eighteen synthetic native layouts
+at OSfont2.0 and360/412/1024 validate full captions and Retry targets in en/fa/de,
+light/dark. These18 observations are not unit tests or actual disk-full/authentication
+acceptance. [Full limits](quality/startup-storage-guidance.md).

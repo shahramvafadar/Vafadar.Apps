@@ -9,7 +9,8 @@
             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{DynamicResource Primary}"
                 WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
             <Label Text="{v:Translate Startup_Loading}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" IsVisible="{Binding IsBusy}" />
-            <Label Text="{v:Translate Startup_Failed}" HorizontalTextAlignment="Center" IsVisible="{Binding HasFailed}" />
+            <Label Text="{v:Translate Startup_Failed}" HorizontalTextAlignment="Center" IsVisible="{Binding ShowGenericFailure}" />
+            <Label Text="{v:Translate Startup_StorageLow}" HorizontalTextAlignment="Center" IsVisible="{Binding ShowStorageFailure}" />
             <Button Text="{v:Translate Startup_Retry}" Style="{StaticResource SecondaryButton}" HeightRequest="-1" MinimumHeightRequest="44"
                 IsVisible="{Binding HasFailed}" Command="{Binding InitializeCommand}" />
             <VerticalStackLayout IsVisible="{Binding HasFailed}">

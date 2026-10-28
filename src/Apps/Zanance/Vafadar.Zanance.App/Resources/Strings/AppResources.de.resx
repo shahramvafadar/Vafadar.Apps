@@ -8495,4 +8495,7 @@ Original-XML SHA-256: {5}</value>
   <data name="SupaCsv_Acknowledge" xml:space="preserve">
     <value>Ich habe alle Posten sowie ursprünglichen Softwarebestand und Konto geprüft: nur gewöhnliche gebuchte Einnahmen/Ausgaben, keine Überträge, Erstattungen, Rückgaben, Vormerkungen oder Sammelposten. IDs eines anderen Softwarebestands gelten nicht als Wiederimportbeleg.</value>
   </data>
+  <data name="Startup_StorageLow" xml:space="preserve">
+    <value>Der freie Gerätespeicher reicht nicht aus, um deine Daten sicher vorzubereiten. Schaffe Platz und versuche es erneut. Deine Finanzdaten bleiben verborgen.</value>
+  </data>
 </root>

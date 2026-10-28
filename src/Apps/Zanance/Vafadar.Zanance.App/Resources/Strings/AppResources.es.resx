@@ -8464,4 +8464,7 @@ SHA-256 del XML original: {5}</value>
   <data name="SupaCsv_Acknowledge" xml:space="preserve">
     <value>He revisado cada fila y el historial original del programa y la cuenta: solo ingresos y gastos ordinarios contabilizados, sin transferencias, devoluciones, retornos, pendientes ni agrupaciones. No considero los identificadores de otro historial como prueba de reimportación.</value>
   </data>
+  <data name="Startup_StorageLow" xml:space="preserve">
+    <value>No hay suficiente espacio libre en el dispositivo para preparar tus datos de forma segura. Libera espacio y vuelve a intentarlo. Tus datos financieros siguen ocultos.</value>
+  </data>
 </root>

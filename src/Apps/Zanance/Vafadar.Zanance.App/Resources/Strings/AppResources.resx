@@ -8529,4 +8529,7 @@ Original XML SHA-256: {5}</value>
   <data name="SupaCsv_Acknowledge" xml:space="preserve">
     <value>I checked every row and the original software history/account: posted ordinary income/expenses only, with no transfers, refunds, reversals, pending or batch records. I am not treating IDs from another software history as repeat proof.</value>
   </data>
+  <data name="Startup_StorageLow" xml:space="preserve">
+    <value>There is not enough free device storage to prepare your data safely. Free some space, then try again. Your financial data remains hidden.</value>
+  </data>
 </root>

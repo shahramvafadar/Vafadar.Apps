@@ -5264,3 +5264,13 @@ continues only in the same process. Original emulated Main/zero/all120 is restor
 its AVD stops. Eight XMLs/207653bytes and3175 registered Clean outputs/1041974987logical
 bytes retire; used evidence remains. Delivery, broad stability/security/OEM/other platform
 and release gates stay open; TalkBack remains last. [Complete evidence](../../quality/null-snooze-cache-reconstruction.md).
+
+### D-606 - Covered startup space refusal batch
+
+Delivered the actual guard classification, six-language original startup guidance,
+retained-command exclusion and explicit Retry state. Three baseline failures become
+seven fresh/four affected passing managed cases. Eighteen finite synthetic native
+layouts and full signed product/adoption checks complete the batch without a financial
+or old successful cohort replay. Preserve the first loading observation and failed
+helper/precondition evidence. Broader delivery gates remain active and separate.
+[Receipts](../../quality/startup-storage-guidance.md).

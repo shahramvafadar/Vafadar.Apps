@@ -11111,3 +11111,15 @@ continues only in the same process. Original emulated Main/zero/all120 is restor
 its AVD stops. Eight XMLs/207653bytes and3175 registered Clean outputs/1041974987logical
 bytes retire; used evidence remains. Delivery, broad stability/security/OEM/other platform
 and release gates stay open; TalkBack remains last. [Complete evidence](quality/null-snooze-cache-reconstruction.md).
+
+### D-606 - Keep the known staging-space refusal on a safe covered Retry surface
+
+A fixed IOException subtype identifies only the original bounded staging-space guard;
+its exact required-space predicate and all key/source/candidate checks remain unchanged.
+Startup shows specific six-language guidance and suppresses both recovery choices and
+retained callbacks until explicit Retry. Seven fresh tests and four affected existing
+cases pass after three genuine baseline failures. Eighteen original-control synthetic
+Android layouts cover three widths/languages and both themes at actual OS font2.0;
+strict Windows/complete signed Offline builds and no-reset Samsung adoption preserve
+Home979/all141 public attributes. This is not actual disk-exhaustion/authentication or
+whole-security/stability/release acceptance. [Evidence](quality/startup-storage-guidance.md).

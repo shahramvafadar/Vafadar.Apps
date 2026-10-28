@@ -4695,3 +4695,13 @@ continues only in the same process. Original emulated Main/zero/all120 is restor
 its AVD stops. Eight XMLs/207653bytes and3175 registered Clean outputs/1041974987logical
 bytes retire; used evidence remains. Delivery, broad stability/security/OEM/other platform
 and release gates stay open; TalkBack remains last. [Complete evidence](quality/null-snooze-cache-reconstruction.md).
+
+### D-606 - Storage guidance engineering evidence
+
+- [x] Original space predicate preserved; seven new/four affected managed cases pass.
+- [x] Six translations and18 finite original-control synthetic Android layouts pass.
+- [x] Strict Windows and complete signed Offline384AOT/408ELF product checks pass.
+- [x] One Samsung no-reset upgrade preserves Home979/all141 public attributes and OS/ownership.
+- [ ] Arbitrary real low-disk recovery, whole private-data equality and broad release gates remain separate.
+
+No financial/native success replay or new TalkBack cohort. [Evidence](quality/startup-storage-guidance.md).

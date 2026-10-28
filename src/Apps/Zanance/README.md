@@ -507,3 +507,9 @@ Transaction forms now publish complete original source data behind a loading cov
 retained raw draft and keep old callbacks/known Saves from adopting another form. Missing sources
 never become guessed new transactions; duplicate transfers retain both fees. Focused and native
 evidence, negative observations and remaining gates are in [the qualification record](docs/quality/entry-editor-publication.md).
+
+## D-606 - Covered startup storage guidance
+
+The known staging-space refusal now explains safe retry without offering key/backup
+recovery while space is insufficient. [Focused evidence and remaining boundaries](docs/quality/startup-storage-guidance.md)
+separates real SQLite guard tests, synthetic native layouts and signed no-reset adoption.

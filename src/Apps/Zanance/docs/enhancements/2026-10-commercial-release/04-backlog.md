@@ -6971,3 +6971,14 @@ continues only in the same process. Original emulated Main/zero/all120 is restor
 its AVD stops. Eight XMLs/207653bytes and3175 registered Clean outputs/1041974987logical
 bytes retire; used evidence remains. Delivery, broad stability/security/OEM/other platform
 and release gates stay open; TalkBack remains last. [Complete evidence](../../quality/null-snooze-cache-reconstruction.md).
+
+### D-606 - Known staging-space startup guidance delivered
+
+A concrete D-605 failure-path UX gap is closed without weakening the original space
+bound: typed fixed refusal, six-language covered Retry and hidden/blocked key/backup
+recovery while insufficient space is known. Seven new plus four affected cases and
+18 distinct synthetic native layouts pass; complete signed no-reset adoption preserves
+Home979/all141 public attributes. This completes this bounded defect, not general
+low-disk recovery/security/stability/iOS/provider/Store/publication. The overall goal
+stays active; do not replay settled tests/financial work or reprioritize TalkBack.
+[Evidence](../../quality/startup-storage-guidance.md).

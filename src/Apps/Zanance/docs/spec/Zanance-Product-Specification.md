@@ -10420,3 +10420,13 @@ continues only in the same process. Original emulated Main/zero/all120 is restor
 its AVD stops. Eight XMLs/207653bytes and3175 registered Clean outputs/1041974987logical
 bytes retire; used evidence remains. Delivery, broad stability/security/OEM/other platform
 and release gates stay open; TalkBack remains last. [Complete evidence](../quality/null-snooze-cache-reconstruction.md).
+
+### D-606 - Known startup space refusal and covered recovery choices
+
+Only the actual original staging-space guard now supplies typed storage guidance;
+no threshold, financial, key, permission, SDK or authentication policy changes.
+Retry resets the specific reason; a new generic failure restores original recovery.
+Seven distinct new managed cases and four affected existing cases pass; full-suite
+count is not rerun/reasserted. Eighteen new synthetic native layouts are observations,
+not tests/authentication/disk-full acceptance. Complete signed adoption preserves
+Home979/all141 public attributes. [Scope](../quality/startup-storage-guidance.md).

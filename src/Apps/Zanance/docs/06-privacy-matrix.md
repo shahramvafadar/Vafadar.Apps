@@ -1505,3 +1505,16 @@ them and its package. Temporary code-only KEEP_DATA maintenance of a stopped pri
 independent package restores its exact original APK/UID/CEDE/permission/stopped metadata;
 no legacy provider/database is opened. These are private local engineering witnesses,
 not product telemetry, a new provider flow or whole-security/release acceptance.
+
+## D-606 - Local startup notice layout diagnostics
+
+Product only classifies the fixed original staging-space refusal and changes covered
+startup text/recovery visibility; no new SDK, permission, financial field, data destination,
+telemetry or authentication policy. The fresh emulator-only Application hosts original
+controls with an explicitly synthetic fault and never constructs financial storage,
+accounts or reminder services. Local bounded layout logs contain declared language/theme,
+line/target dimensions and booleans; local XML/UID/PID/APK/OS receipts stay private. No
+Main database/key, arbitrary exception message, credentials, audio or financial payload
+is exported. Only this fresh package and hash-matched owned XMLs are retired; original
+settings and package ownership return exactly. This is not actual disk-full, whole
+privacy/security/OEM or release acceptance.

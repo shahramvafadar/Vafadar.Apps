@@ -31,7 +31,7 @@ public static class SqlCipherRestoreStaging
         await using var source = await SqliteMemorySnapshot.OpenAsync(portable, maximumBytes, cancellationToken).ConfigureAwait(false);
         validateAccess(); cancellationToken.ThrowIfCancellationRequested();
         if (durability.AvailableBytes < checked((long)maximumBytes * 2 + 16 * 1024 * 1024))
-            throw new IOException("Insufficient space for bounded encrypted restore staging.");
+            throw new InsufficientDatabaseStorageException();
         await keys.PrepareAsync(binding, cancellationToken).ConfigureAwait(false);
         validateAccess(); cancellationToken.ThrowIfCancellationRequested();
         var key = await keys.ReadAsync(binding, cancellationToken).ConfigureAwait(false);
