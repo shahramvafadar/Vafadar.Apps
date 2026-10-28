@@ -7301,3 +7301,23 @@ remain; D-607/phone/adoption and broader gates stay separate, overall goal activ
   Phone/D-607/three deadlines and prior refused scopes are untouched. Physical adoption
   and general security/stability/performance/accessibility/iOS/provider/Store/publication
   gates remain open; overall goal remains active.
+
+### D-631 - Complete original reimbursement source and current publication
+
+Two actual original-store composition failures mixed actual file/currency/amount
+inputs. One original worker transaction now captures complete account/category/ledger
+facts; retain original arithmetic/order/formatting, original-file Retry binding and
+fresh source/access/revision/metadata validation before covered complete publication.
+Original page/tab/root/display and row commands retire; expected row/source refusals
+use local error/Retry. Nine distinct new focused cases and strict signed offline
+packages pass. One original native opening100 and expense10/reimbursable10 feed the
+same original page through command refusal/Retry, held cover/cancel/retained return,
+valid detail navigation, six en/fa/de-theme contexts and local read failure/Retry.
+Financial packet/settings remain equal; no successful previous setup or payment is
+replayed. Fresh UID/package/AVD and61hash-matched XMLs retire; four standard cleans
+remove1943055171logicalbytes. Six supplemental roots/3707files/572857429logicalbytes
+are rejected before process creation with blocked by policy and are not retried.
+[Full evidence and preserved observations](../../quality/complete-original-reimbursements.md).
+D-607's three deadlines/phone/incomplete batch stay untouched. Physical adoption,
+general security/database/key/stability/two-second/accessibility/platform/iOS/provider/
+Store/publication remain separate; overall goal active and TalkBack last.

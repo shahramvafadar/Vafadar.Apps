@@ -4827,3 +4827,12 @@ one combined cleanup rejection, without retry; phone/D-607 and Loyan turn unchan
 
 The new six-language48-frame1080x1920 Android set has native/image/pixel provenance; the historical Windows set is unchanged. One IME replacement and an actual navigation ANR/recovery are explicit. Long/scrolling labels, offscreen content and dark-progress white corner slivers remain visible. No selected edition, console validation, Store upload, physical/iOS or general stability/A11Y acceptance follows. D-607 and phone adoption remain separate.
 [Evidence and exact limits](quality/android-store-drafts.md).
+
+### D-631 - Reimbursement source/publication evidence
+
+[Complete original reimbursement evidence](quality/complete-original-reimbursements.md)
+records two original composition failures, nine selected passing cases, strict signed
+offline packages and actual native original route/read/command/display/retirement.
+The single setup expense is not repeated. Keep D-607's three original deadlines and
+phone state unchanged; this is no physical adoption, general stability/two-second/
+security/accessibility/iOS/provider/Store/publication acceptance.

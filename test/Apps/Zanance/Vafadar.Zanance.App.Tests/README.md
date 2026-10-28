@@ -116,3 +116,15 @@ SQLite/localization and explicit native-effect ports. Nineteen new cases cover o
 source, stable new identity, complete type metadata, raw validation/correction, dimension refusal,
 SQL retry/retirement, missing-row redelivery, known accepted outcomes and discard. Counts reflect
 retained selective cohorts, not a full-suite replay. Native source/XAML/Save/feedback remain separate.
+
+### D-631 - Original reimbursement source boundaries
+
+ReimbursementOriginalReadBoundaryTests adds eight actual original-store/SQLite cases
+for mixed source refusal, complete packet validation, retry-file binding and ordered
+refund preservation. ReimbursementWorkerTransactionTests adds one real WAL concurrent
+writer/worker case. The saved failing baseline composes the exact original three store
+reads, not a fake rendered view model. Nine distinct cases pass in selected runs;
+actual original native view-model/page/command ownership stays in the separately
+recorded cohort. No MAUI/Shell facade, original arithmetic replacement or broad old
+financial suite is added. See the application's complete-original-reimbursements
+quality record for failures, native scope and remaining gates.

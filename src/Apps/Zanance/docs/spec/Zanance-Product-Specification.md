@@ -10630,3 +10630,15 @@ interest/read/error/tab-return/last-row/display flow preserves an empty ledger. 
 [complete evidence](../quality/complete-original-loan-schedule.md). Physical adoption after
 D-607 and broad device/security/stability/performance/accessibility/iOS/provider/Store/
 publication remain separate; no estimate is posted merely by opening this page.
+
+### D-631 - Original reimbursement publication
+
+One original-file transaction now supplies all account/category/ledger inputs for
+the original outstanding-reimbursement calculator, with worker reads, fresh source
+validation and complete covered rows/totals. Retained commands and page/tab/root/
+display owners retire safely; failed original source validation offers local Retry.
+Nine new selected cases, strict builds and the original native route/cover/Retry/
+retained-return/six-display cohort pass without replaying accepted financial work.
+[Complete evidence](../quality/complete-original-reimbursements.md). This does not
+qualify the full database/keys, all device/stability/performance/accessibility gates,
+iOS/provider/Store/release or physical adoption before D-607 ends.

@@ -7769,3 +7769,14 @@ rows/58.98EUR interest, six language/theme contexts and complete last-row reacha
 are bounded observations, not new unit tests or a payment. Strict builds/restoration and
 cleanup limits are [recorded here](quality/complete-original-loan-schedule.md); broader
 OS/device/accessibility/security/performance/iOS/provider/publication gates stay open.
+
+### D-631 - Original reimbursement page
+
+Nine focused source/worker cases pass; the original independent API36/x64/4096 page
+shows one real original expense10EUR with reimbursable10, actual local row-command
+refusal/Retry, held covered read/departure cancellation/retained return, valid original
+detail navigation, six en/fa/de x Light/Dark contexts and a separate failed-read cover.
+Complete named financial packet and restored settings remain equal. These are native
+observations, not extra unit tests, a new OS200/width matrix or physical acceptance.
+[Full provenance, failures and retirement](quality/complete-original-reimbursements.md).
+D-607 and all broader release gates remain open independently.

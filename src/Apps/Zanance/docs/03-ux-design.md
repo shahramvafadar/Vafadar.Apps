@@ -2873,3 +2873,13 @@ retained return reads fresh original facts without posting a payment. Six origin
 language/theme contexts, Persian error/Retry and complete last-row reachability have
 [bounded native evidence](quality/complete-original-loan-schedule.md); this adds no full
 OS scaling, device, speech or release acceptance.
+
+### D-631 - Original outstanding-reimbursement ownership
+
+Keep the complete original reimbursement row list and per-currency totals covered
+until the original transaction, projection and fresh source validation finish. A
+retired page/tab/root/display cannot uncover old rows or navigate from their retained
+objects. Original row validation refusal uses the same local error/Retry without a
+financial action. Share appearance/retained-tab loading; preserve original detail,
+Back, payer/date/money presentation and one complete collection Reset. See
+[actual original-page evidence](quality/complete-original-reimbursements.md).

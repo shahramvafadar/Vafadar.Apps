@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-631: keep outstanding reimbursement amounts, currencies and rows tied to one current original file; cover failures with Retry and refuse retired row commands.
+
 - D-630: publish complete original repayment schedules under current file/page/display ownership, with local Retry and unchanged estimate/financial policies.
 
 - D-629: publish complete original account detail from one validated file snapshot; retain drafts and retire original native command/consent owners without replaying accepted writes.

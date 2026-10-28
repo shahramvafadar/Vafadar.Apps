@@ -11358,3 +11358,16 @@ existing free-policy cases pass, as do strict builds and the original independen
 cohort with11rows/58.98EUR interest and zero ledger entries. See
 [full original schedule evidence](quality/complete-original-loan-schedule.md).
 D-607/phone/physical adoption and general release gates remain separate.
+
+## D-631 - Coherent original reimbursement source and publication (2026-10-29)
+
+Two actual original-store composition failures expose mixed-file/currency/amount
+inputs. Capture one original context/deferred transaction on a worker, preserve
+complete original facts/calculators/order, validate the original file/access/ledger
+revision/account-category metadata and privately publish the complete native result.
+Retire page/tab/root/display owners and revalidate retained original row commands;
+expected refusal remains local with Retry. Nine distinct new selected cases, strict
+builds and original native command/cover/cancellation/return/six-display contexts pass
+with one original expense and no repeated accepted setup. See
+[complete evidence](quality/complete-original-reimbursements.md). D-607/phone and broad
+release gates remain separate; no migration/formula/runtime/permission change occurs.
