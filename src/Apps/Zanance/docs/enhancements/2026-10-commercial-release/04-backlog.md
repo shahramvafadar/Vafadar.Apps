@@ -7281,3 +7281,23 @@ remain; D-607/phone/adoption and broader gates stay separate, overall goal activ
   Samsung/D-607 deadlines remain untouched; no-reset adoption waits for its actual
   terminal source/delivery/cleanup. General stability/whole-Home two-second/security/
   all accessibility/iOS/provider/Store/publication gates stay open; goal stays active.
+
+### D-630 – Complete original loan schedule and current native publication
+
+- Correct four original source/query/publication failures. Keep original financial and
+  paid/free policies; worker reads/validation and private staging precede one covered
+  Reset. Actual page/tab/root/display departure retires old publication and explicit
+  Retry stays bound to the original file.
+- 14 new focused cases and 6 affected existing free-policy cases, strict Windows/full
+  offline384AOT/408ELF/1608static16KiB Android pass.
+- Original native UI qualifies cover/error/Retry, held-read Home departure and actual
+  retained More return,11original estimated rows/58.98EUR interest, six language/theme
+  ready contexts, Persian error and complete last-row reachability. One zero Checking
+  and one original loan reference are created once; zero ledger/payment entries.
+- Original app/OS/settings/source restore;92XMLs/3930513bytes and fresh UID/AVD retire.
+  Four standard cleans pass; six-root supplemental deletion is rejected before process
+  creation with3707files/572321406logicalbytes remaining, no retry/subset/alternate.
+- [Full original schedule evidence](../../quality/complete-original-loan-schedule.md).
+  Phone/D-607/three deadlines and prior refused scopes are untouched. Physical adoption
+  and general security/stability/performance/accessibility/iOS/provider/Store/publication
+  gates remain open; overall goal remains active.

@@ -7757,3 +7757,15 @@ Save rejected after original Home navigation. No new ledger entry is accepted. T
 display contexts are observations, not unit tests. Strict builds and exact owned cleanup/
 restoration are in [the full report](quality/complete-original-account-detail.md); same-page
 draft preservation is not OS-recreated-page persistence or physical/shipping acceptance.
+
+### D-630 – Original repayment schedule source and publication
+
+Four real original failures now pass.14distinct new focused cases include exact original
+Loan/Lent calculator/row equality, page/query/display/day retirement, error/Retry, foreign
+handoff refusal, shared read and actual worker/WAL transaction;6affected existing free-
+policy language cases pass separately. Original native acquisition cover/error/Retry and
+actual Home/retained More return preserve full source and zero ledger entries.11estimated
+rows/58.98EUR interest, six language/theme contexts and complete last-row reachability
+are bounded observations, not new unit tests or a payment. Strict builds/restoration and
+cleanup limits are [recorded here](quality/complete-original-loan-schedule.md); broader
+OS/device/accessibility/security/performance/iOS/provider/publication gates stay open.

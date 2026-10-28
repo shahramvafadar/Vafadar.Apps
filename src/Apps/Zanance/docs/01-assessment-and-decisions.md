@@ -11346,3 +11346,15 @@ are corrected;29new and6affected existing cases pass. Original native UI verifie
 error/Retry, retired-read and stale-consent rejection,100/25/75, ten display contexts and
 zero ledger writes. See [full evidence](quality/complete-original-account-detail.md).
 D-607/phone, physical adoption and broad release gates stay separate.
+
+## D-630 – Complete original loan schedule and current publication owner (2026-10-28)
+
+Four original schedule failures are corrected: partial Add publication, Name/Rows assigned
+before final source refusal, stale name for another identity and Ready after a pending
+request's query changes. Preserve original LoanReadReview/calculator/permissions/day; move
+original query/validation work off UI, stage all rows, validate before one covered Reset and
+retire actual page/tab/root/display owners. Fourteen new focused cases and six affected
+existing free-policy cases pass, as do strict builds and the original independent native
+cohort with11rows/58.98EUR interest and zero ledger entries. See
+[full original schedule evidence](quality/complete-original-loan-schedule.md).
+D-607/phone/physical adoption and general release gates remain separate.

@@ -40,7 +40,7 @@
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>
-    <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8">
+    <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" IsVisible="{Binding Loading.IsReady}">
         <Label Text="{Binding Feedback}" Style="{StaticResource ErrorText}" IsVisible="{Binding Feedback, Converter={StaticResource IsNotNullConverter}}" />
         <Label Text="{Binding EssentialWarning}" TextColor="{DynamicResource WarningText}" IsVisible="{Binding EssentialWarning, Converter={StaticResource IsNotNullConverter}}" />
         <p:WrappingAction Text="{v:Translate Loan_Refresh}" Command="{Binding RefreshCommand}" IsEnabled="{Binding Loading.IsLoading, Converter={StaticResource InvertedBoolConverter}}" />
@@ -48,6 +48,10 @@
     <VerticalStackLayout Padding="32" VerticalOptions="Center" Spacing="12" IsVisible="{Binding Loading.IsLoading}">
         <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" />
         <Label Text="{v:Translate Loan_Loading}" HorizontalTextAlignment="Center" />
+    </VerticalStackLayout>
+    <VerticalStackLayout Padding="32" VerticalOptions="Center" Spacing="12" IsVisible="{Binding Loading.HasFailed}">
+        <Label Text="{Binding Feedback}" Style="{StaticResource ErrorText}" />
+        <p:WrappingAction Text="{v:Translate Loan_Refresh}" Command="{Binding RefreshCommand}" />
     </VerticalStackLayout>
     </Grid>
 </ContentPage>

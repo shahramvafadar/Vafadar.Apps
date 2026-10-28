@@ -18,6 +18,8 @@ public sealed class LoanReadReview
     private readonly bool _hasSettings;
     /// <summary>Retains the exact configured file for native destination and writer validation.</summary>
     internal readonly string DatabasePath;
+    /// <summary>Gets the original configured file for read-only destination ownership; it grants no writer or feature.</summary>
+    public string OriginalFilePath => DatabasePath;
     /// <summary>Captures complete original inputs before any native choice or confirmation.</summary>
     internal LoanReadReview(string path, CommercialFileAccess access, TimeProvider time, DateOnly day, ZananceSettings? settings,
         List<Account> accounts, List<LedgerEntry> entries, List<Category> categories)
@@ -132,22 +134,30 @@ public sealed partial class LoanWorkStore(IDbContextFactory<ZananceDbContext> fa
         var day = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         await using var db = await factory.CreateDbContextAsync(cancellationToken); var path = DatabaseFileIdentity.ConfiguredPath(db);
         var access = new CommercialFileAccess(source, path); access.EnsureSnapshotCurrent(); access.DemandFeature(CommercialFeature.History);
-        await db.Database.OpenConnectionAsync(cancellationToken);
-        await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
-        await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
-        var settings = await db.Settings.AsNoTracking().OrderBy(item => item.CreatedAt).FirstOrDefaultAsync(cancellationToken);
-        var review = new LoanReadReview(path, access, time, day, settings, await db.Accounts.AsNoTracking().ToListAsync(cancellationToken),
-            await db.Entries.AsNoTracking().ToListAsync(cancellationToken), await db.Categories.AsNoTracking().ToListAsync(cancellationToken));
-        review.EnsureCurrent(); return review;
+        // D-630: capture original file/access above before handing the sole reader to its worker.
+        return await Task.Run(async () =>
+        {
+            await db.Database.OpenConnectionAsync(cancellationToken);
+            await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
+            await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
+            var settings = await db.Settings.AsNoTracking().OrderBy(item => item.CreatedAt).FirstOrDefaultAsync(cancellationToken);
+            var review = new LoanReadReview(path, access, time, day, settings, await db.Accounts.AsNoTracking().ToListAsync(cancellationToken),
+                await db.Entries.AsNoTracking().ToListAsync(cancellationToken), await db.Categories.AsNoTracking().ToListAsync(cancellationToken));
+            cancellationToken.ThrowIfCancellationRequested(); review.EnsureCurrent(); return review;
+        }, cancellationToken);
     }
     /// <summary>Rejects a retired actual file or financial packet after native choices and before destination publication.</summary>
     public async Task ValidateAsync(LoanReadReview reviewed, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(reviewed); reviewed.EnsureCurrent(); await using var db = await factory.CreateDbContextAsync(cancellationToken);
         if (reviewed.DatabasePath != DatabaseFileIdentity.ConfiguredPath(db)) throw new InvalidOperationException("The original loan file changed.");
-        await db.Database.OpenConnectionAsync(cancellationToken);
-        await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
-        await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
-        await reviewed.ValidatePacketAsync(db, null, cancellationToken); reviewed.EnsureCurrent();
+        // The same complete original packet is checked on a worker, never incrementally published on UI.
+        await Task.Run(async () =>
+        {
+            await db.Database.OpenConnectionAsync(cancellationToken);
+            await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
+            await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
+            await reviewed.ValidatePacketAsync(db, null, cancellationToken); reviewed.EnsureCurrent();
+        }, cancellationToken);
     }
 }

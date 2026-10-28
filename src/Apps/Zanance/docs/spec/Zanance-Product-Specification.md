@@ -10618,3 +10618,15 @@ cases, strict builds and original Release/AOT native read/retirement/stale-conse
 evidence pass; native accepted ledger delta is zero. See [full evidence](../quality/complete-original-account-detail.md).
 Physical adoption waits for D-607; full OS-recreated drafts, general stability/security/
 performance/accessibility/platform/provider/Store/publication are not accepted by this batch.
+
+### D-630 – Original complete estimated repayment schedule
+
+Original complete loan inputs and validation now run on workers, preserving original
+calculation/permission/day/file policy. The original native page privately stages all
+rows before a validated covered Reset; query, page, retained-tab, root and display changes
+retire old publication. Local failure offers explicit original Retry.14new focused cases,
+6affected existing cases and strict builds pass; the original native11-row/58.98EUR
+interest/read/error/tab-return/last-row/display flow preserves an empty ledger. See
+[complete evidence](../quality/complete-original-loan-schedule.md). Physical adoption after
+D-607 and broad device/security/stability/performance/accessibility/iOS/provider/Store/
+publication remain separate; no estimate is posted merely by opening this page.

@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-630: publish complete original repayment schedules under current file/page/display ownership, with local Retry and unchanged estimate/financial policies.
+
 - D-629: publish complete original account detail from one validated file snapshot; retain drafts and retire original native command/consent owners without replaying accepted writes.
 
 - Bind account-to-holding confirmation to the original account, history and file; keep a saved conversion visible when notification or navigation fails, without submitting it again (D-628).

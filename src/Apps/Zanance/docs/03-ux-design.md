@@ -2862,3 +2862,14 @@ the free balance/manual path visible. Retire navigation and native payment conse
 actual departure, without repeating accepted writes. Ten native display contexts include
 three360dp/OS200% ready footers and the German scaled local error. OS root recreation is
 separate from same-page draft preservation. See [evidence](quality/complete-original-account-detail.md).
+
+## Original complete repayment schedule (D-630)
+
+Keep the original estimate, row captions and contract disclaimer. A complete validated
+same-file source is privately staged before one covered row publication; another identity
+clears its old caption. Local read failure hides ready rows/footer and offers original
+translated Refresh. Page/tab/root/display departure retires pending publication; actual
+retained return reads fresh original facts without posting a payment. Six original
+language/theme contexts, Persian error/Retry and complete last-row reachability have
+[bounded native evidence](quality/complete-original-loan-schedule.md); this adds no full
+OS scaling, device, speech or release acceptance.

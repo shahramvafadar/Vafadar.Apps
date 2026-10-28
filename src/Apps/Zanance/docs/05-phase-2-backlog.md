@@ -4687,3 +4687,13 @@ actual stale installment confirmation produces no ledger delta; accepted notific
 failures remain one-shot. Strict Windows/full offline Android pass. See
 [complete evidence](quality/complete-original-account-detail.md). Physical adoption after
 D-607 and broad security/stability/performance/platform/release gates remain open.
+
+### D-630 – Complete original repayment schedule
+
+Original source/query/lifetime failures are corrected with worker read/validation, private
+complete projection, current page/display/file guards and one covered Reset.14new focused
+cases and6affected existing free-policy cases pass; strict Windows/full offline Android
+and the original native source/cover/error/Retry/tab-return/11-row/last-row/display cohort
+pass without a ledger post. See [full evidence](quality/complete-original-loan-schedule.md).
+Physical adoption after D-607 and general security/stability/performance/platform/release
+gates remain open; no previously accepted financial operation is replayed.
