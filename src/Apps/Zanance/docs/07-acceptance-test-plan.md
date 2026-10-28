@@ -7584,3 +7584,10 @@ cases pass. Three original failures are preserved. Eighteen synthetic native lay
 at OSfont2.0 and360/412/1024 validate full captions and Retry targets in en/fa/de,
 light/dark. These18 observations are not unit tests or actual disk-full/authentication
 acceptance. [Full limits](quality/startup-storage-guidance.md).
+
+### D-609 - Existing camera-frame quality boundary
+
+Six original ink-box pairs agree with a4/3 height mapping; header/footer endings fall
+outside the stored width. This is retained-image analysis, not a new native/managed
+test or full-text pass. Do not repeat accepted shutter/Save work or repair the input
+to relabel D-598. [Exact witnesses and limits](quality/original-camera-frame-geometry.md).

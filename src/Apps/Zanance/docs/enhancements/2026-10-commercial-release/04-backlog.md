@@ -6982,3 +6982,15 @@ Home979/all141 public attributes. This completes this bounded defect, not genera
 low-disk recovery/security/stability/iOS/provider/Store/publication. The overall goal
 stays active; do not replay settled tests/financial work or reprioritize TalkBack.
 [Evidence](../../quality/startup-storage-guidance.md).
+
+### D-609 - Original camera geometry bounded without another acquisition
+
+The unchanged D-598 PNG/JPEG digests and six line groups establish a4/3 height
+mapping with top-left horizontal clipping. Only720 of1280 input columns fit under
+that inferred mapping; the original header/footer endings lie outside the stored
+frame. Exact installed emulator source identity and exclusive internal cause remain
+unproven. No OCR/financial/product change or whole-text acceptance is justified.
+No new native/managed test, build, image edit or financial operation occurs. QA-05
+still requires an actually complete supported camera input; do not pad this source,
+replay accepted operations or relabel its clipped result. The overall goal stays
+active and TalkBack remains last. [Geometry and limits](../../quality/original-camera-frame-geometry.md).

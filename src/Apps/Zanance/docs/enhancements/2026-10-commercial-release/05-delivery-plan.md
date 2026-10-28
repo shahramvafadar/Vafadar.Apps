@@ -5274,3 +5274,10 @@ layouts and full signed product/adoption checks complete the batch without a fin
 or old successful cohort replay. Preserve the first loading observation and failed
 helper/precondition evidence. Broader delivery gates remain active and separate.
 [Receipts](../../quality/startup-storage-guidance.md).
+
+### D-609 - Bound the missing camera input before another cohort
+
+Retained D-598 images explain the observed horizontal text loss geometrically; do
+not replay its successful acquisition/reader/financial actions or pad its input to
+manufacture acceptance. QA-05 next requires genuinely complete framed receipt input.
+No new product build/test or release gate closes. [Evidence](../../quality/original-camera-frame-geometry.md).

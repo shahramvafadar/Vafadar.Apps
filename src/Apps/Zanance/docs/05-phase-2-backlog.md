@@ -4550,3 +4550,10 @@ Seven new plus four affected managed cases pass; eighteen new synthetic native l
 and full package/adoption checks pass. No successful financial/old reminder cohort or
 unrelated suite repeats. General low-space recovery and external release gates remain
 open. [Scope and receipts](quality/startup-storage-guidance.md).
+
+### D-609 - Retained camera geometry only
+
+The original clipped D-598 frame is geometrically bounded without another camera or
+reader run. QA-05 still needs an actually complete supported camera input; no managed
+count, product behavior or completed financial result changes. State remains in the
+canonical backlog. [Evidence](quality/original-camera-frame-geometry.md).

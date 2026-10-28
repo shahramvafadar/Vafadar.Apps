@@ -10430,3 +10430,10 @@ Seven distinct new managed cases and four affected existing cases pass; full-sui
 count is not rerun/reasserted. Eighteen new synthetic native layouts are observations,
 not tests/authentication/disk-full acceptance. Complete signed adoption preserves
 Home979/all141 public attributes. [Scope](../quality/startup-storage-guidance.md).
+
+### D-609 - Camera quality evidence without a new test count
+
+The retained original frame enlarges line geometry by4/3 while losing right-side
+header/footer content. No OCR/amount/merchant behavior or supported receipt claim is
+changed. Existing test counts/builds remain historical, not rerun; full camera quality
+stays open. [Evidence](../quality/original-camera-frame-geometry.md).

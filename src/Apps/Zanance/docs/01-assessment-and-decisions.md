@@ -11123,3 +11123,11 @@ Android layouts cover three widths/languages and both themes at actual OS font2.
 strict Windows/complete signed Offline builds and no-reset Samsung adoption preserve
 Home979/all141 public attributes. This is not actual disk-exhaustion/authentication or
 whole-security/stability/release acceptance. [Evidence](quality/startup-storage-guidance.md).
+
+### D-609 - Measure the retained camera frame without replay
+
+Original D-598 input/stored digests and all six ink boxes establish a4/3 top-left
+height mapping with horizontal clipping, not complete-text camera acceptance. Exact
+installed emulator source identity remains unproven; no OCR/financial/product change
+is justified. No new build, native/managed test or financial command.
+[Measured boundary and remaining input](quality/original-camera-frame-geometry.md).

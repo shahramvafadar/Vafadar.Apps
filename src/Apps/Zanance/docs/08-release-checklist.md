@@ -4705,3 +4705,11 @@ and release gates stay open; TalkBack remains last. [Complete evidence](quality/
 - [ ] Arbitrary real low-disk recovery, whole private-data equality and broad release gates remain separate.
 
 No financial/native success replay or new TalkBack cohort. [Evidence](quality/startup-storage-guidance.md).
+
+### D-609 - Camera framing remains a release input
+
+- [x] Bind the two original D-598 digests and measure all six line groups without image mutation.
+- [x] Preserve mismatched public/installed emulator source versions and avoid an exclusive internal-cause claim.
+- [ ] Complete supported camera receipt/merchant text remains unaccepted; clipped pixels cannot establish it.
+
+No app build/test, financial command or publication is added. [Evidence](quality/original-camera-frame-geometry.md).
