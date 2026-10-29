@@ -2954,3 +2954,8 @@ Cover incomplete source, keep explicit Retry and complete saved-value review. Pr
 ## D-643 original asset-event consent and receipts
 
 Native Back/Close/Cancel share one original frame/draft guard. A pending discard disables Save and another prompt. Failed source keeps Close and explicit Retry; another pending Retry cannot replace its loading owner. Preserve live choice identities, independent raw units and later unsaved text after an accepted change. [Evidence](quality/original-asset-event-frame-and-receipts.md).
+
+
+## D-644 original inline price ownership
+
+Keep exact raw/date/mode input separate from a known accepted manual price. Original toolbar/hardware Back and archive departure share current-frame/current-draft consent. A retained Android tab resumes the original covered loader; failed current source keeps explicit Retry and departed commands stay disabled. A historical receipt never labels a newer refused attempt as saved. [Evidence](quality/original-holding-price-draft-ownership.md).

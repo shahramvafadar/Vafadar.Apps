@@ -1902,3 +1902,8 @@ Original type/history/preferences, cancellable covered publication, raw draft re
 ## D-643 original event-frame continuation
 
 Complete original native frame, consent and accepted-draft lifetime while retaining the delivered coherent reader and financial writer. No financial rule/model change or successful-operation replay; wider platform/adoption gates remain separate. [Evidence](quality/original-asset-event-frame-and-receipts.md).
+
+
+## D-644 original holding-price continuation
+
+Complete the original detail price form and native frame/receipt lifetime without changing original quantity/value rules or replaying accepted financial operations. The retained-tab defect and truthful historical-receipt feedback are corrected with original successes preserved; broader adoption and platform gates remain separate. [Evidence](quality/original-holding-price-draft-ownership.md).

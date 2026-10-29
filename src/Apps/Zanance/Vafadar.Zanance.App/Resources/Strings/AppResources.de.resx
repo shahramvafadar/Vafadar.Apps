@@ -8609,4 +8609,7 @@ Original-XML SHA-256: {5}</value>
   <data name="AssetEvent_SavedDraftChanged" xml:space="preserve">
     <value>Die ursprüngliche Änderung wurde gespeichert. Neuere Eingaben sind nicht gespeichert. Beim Schließen kannst du entscheiden, ob du sie verwerfen möchtest.</value>
   </data>
+  <data name="Holding_PriceSavedDraftChanged" xml:space="preserve">
+    <value>Der Preis wurde gespeichert. Ihre spätere Eingabe bleibt separat erhalten. Aktualisieren Sie die Preise und prüfen Sie das gespeicherte Ergebnis, bevor Sie eine weitere Änderung speichern.</value>
+  </data>
 </root>

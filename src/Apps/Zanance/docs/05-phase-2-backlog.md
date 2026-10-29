@@ -4734,3 +4734,8 @@ Original type-editor source and ownership are delivered within their documented 
 ## D-643 implementation continuation
 
 Original asset-event frame and accepted raw-draft behavior are delivered within the recorded independent scope. Remaining executable state stays in the canonical commercial backlog; this historical plan is not another task queue. [Evidence](quality/original-asset-event-frame-and-receipts.md).
+
+
+## D-644 implementation continuation
+
+Original holding-detail price draft/frame/receipt behavior is delivered within the recorded independent scope. Remaining executable state stays in the canonical commercial backlog; this historical plan is not another task queue. [Evidence](quality/original-holding-price-draft-ownership.md).

@@ -35,9 +35,33 @@ public sealed partial class HoldingDetailViewModel(
     Translator translator,
     ILocalizationService localization,
     TimeProvider time,
-    IAppInteraction interaction) : ViewModelBase, Presentation.IThemeAware
+    IAppInteraction interaction) : ViewModelBase, Presentation.IThemeAware, IUnsavedChanges
 {
     private Guid _id;
+    private bool _viewActive = true, _leaving;
+    private Func<bool>? _rootOwner;
+    /// <summary>Gets the original inline price draft, independently of accepted history or archive receipts.</summary>
+    public bool IsDirty => PriceEditor.IsDirty;
+    /// <summary>Allows only the current original frame to request Back.</summary>
+    public bool CanLeave => _viewActive && (_rootOwner?.Invoke() ?? true) && !_leaving
+        && !PriceEditor.Busy && !HistoryEditor.Busy && !ArchiveEditor.Busy;
+    /// <summary>Binds the actual weak native root without retaining a completed Shell.</summary>
+    internal void BindRootOwner(Func<bool> owner) => _rootOwner = owner;
+    [RelayCommand]
+    private async Task BackAsync()
+    {
+        if (!CanLeave) return;
+        var revision = _revision; var editor = PriceEditor; var draft = editor.CaptureDraft(); _leaving = true;
+        bool Current() => _viewActive && (_rootOwner?.Invoke() ?? true) && revision == _revision
+            && ReferenceEquals(editor, PriceEditor) && draft == editor.CaptureDraft();
+        try
+        {
+            if ((!IsDirty || await interaction.ConfirmAsync(translator["Common_DiscardTitle"], translator["Common_DiscardMessage"],
+                translator["Common_Discard"], translator["Common_KeepEditing"])) && Current())
+                await interaction.NavigateAsync("..");
+        }
+        finally { _leaving = false; }
+    }
     private int _revision;
     private CancellationTokenSource _lifetime = new();
     private HoldingDetailSnapshot? _original, _displayed;
@@ -141,7 +165,7 @@ public sealed partial class HoldingDetailViewModel(
     /// <summary>Retires pending reads and native targets, preserving the separate raw price and short Undo receipt.</summary>
     public void Retire()
     {
-        _revision++; _displayed = null;
+        _viewActive = false; _revision++; _displayed = null;
         var old = _lifetime; _lifetime = new(); Loading = new();
         PriceEditor.Leave(); HistoryEditor.Retire(); ArchiveEditor.Retire(); old.Cancel(); old.Dispose();
     }
@@ -149,11 +173,17 @@ public sealed partial class HoldingDetailViewModel(
     /// <summary>Reads/prepares one original detail off UI, then publishes every visible field under its original cover.</summary>
     public async Task LoadAsync()
     {
+        if (_rootOwner?.Invoke() == false) return;
+        _viewActive = true;
         var revision = _revision; var loading = Loading; var token = _lifetime.Token; var id = _id;
         var priceOwner = PriceEditor; var historyOwner = HistoryEditor; var archiveOwner = ArchiveEditor;
+        priceOwner.ViewActive = () => _viewActive && !Loading.IsLoading && !_leaving && (_rootOwner?.Invoke() ?? true) && ReferenceEquals(PriceEditor, priceOwner);
         priceOwner.ViewReady = () => Loading.IsReady && !NotFound && _id == id && ReferenceEquals(PriceEditor, priceOwner);
         historyOwner.ViewReady = () => Loading.IsReady && !NotFound && _id == id && ReferenceEquals(HistoryEditor, historyOwner);
-        archiveOwner.ViewReady = () => Loading.IsReady && !NotFound && _id == id && ReferenceEquals(ArchiveEditor, archiveOwner);
+        archiveOwner.DepartureStamp = () => priceOwner.CaptureDraft();
+        archiveOwner.ConfirmDraftDeparture = async () => !priceOwner.IsDirty || await interaction.ConfirmAsync(
+            translator["Common_DiscardTitle"], translator["Common_DiscardMessage"], translator["Common_Discard"], translator["Common_KeepEditing"]);
+        archiveOwner.ViewReady = () => _viewActive && !_leaving && (_rootOwner?.Invoke() ?? true) && !priceOwner.Busy && Loading.IsReady && !NotFound && _id == id && ReferenceEquals(ArchiveEditor, archiveOwner);
         void Availability(object? sender, System.ComponentModel.PropertyChangedEventArgs args)
         {
             if (args.PropertyName != nameof(SnapshotLoadState.IsReady)) return;
@@ -164,7 +194,7 @@ public sealed partial class HoldingDetailViewModel(
         void Current()
         {
             token.ThrowIfCancellationRequested();
-            if (_revision != revision || !ReferenceEquals(loading, Loading) || id != _id)
+            if (!_viewActive || _rootOwner?.Invoke() == false || _revision != revision || !ReferenceEquals(loading, Loading) || id != _id)
                 throw new OperationCanceledException("Original holding detail retired.", token);
         }
         try

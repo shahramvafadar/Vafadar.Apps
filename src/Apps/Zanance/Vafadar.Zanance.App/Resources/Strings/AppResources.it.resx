@@ -8598,4 +8598,7 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="AssetEvent_SavedDraftChanged" xml:space="preserve">
     <value>La modifica originale è stata salvata. I dati inseriti dopo non sono stati salvati. Chiudendo il modulo puoi decidere se scartarli.</value>
   </data>
+  <data name="Holding_PriceSavedDraftChanged" xml:space="preserve">
+    <value>Il prezzo è stato salvato. I dati inseriti successivamente sono conservati separatamente. Aggiorna i prezzi e controlla il risultato salvato prima di salvare un’altra modifica.</value>
+  </data>
 </root>

@@ -33,6 +33,7 @@ public partial class AppShell : Shell
     private readonly List<WeakReference<GoalEditorPage>> _publishedGoalEditors = [];
     private readonly List<WeakReference<BudgetEditorPage>> _publishedBudgetEditors = [];
     private readonly List<WeakReference<AssetTypeEditorPage>> _publishedAssetTypeEditors = [];
+    private readonly List<WeakReference<HoldingDetailPage>> _publishedHoldingDetails = [];
     private readonly List<WeakReference<AssetEventEditorPage>> _publishedAssetEventEditors = [];
     private bool _navigationRetired;
     /// <summary>Gets whether this actual native root can still own an original account editor or accepted return.</summary>
@@ -45,6 +46,16 @@ public partial class AppShell : Shell
     internal bool OwnsAssetTypeEditorPublication => !_navigationRetired;
     /// <summary>Gets whether this actual root still owns original event forms and their consent.</summary>
     internal bool OwnsAssetEventEditorPublication => !_navigationRetired;
+    /// <summary>Gets whether this root still owns its original holding detail frames.</summary>
+    internal bool OwnsHoldingDetailPublication => !_navigationRetired;
+    /// <summary>Registers only weak native detail pages for terminal root retirement.</summary>
+    internal void RegisterHoldingDetail(HoldingDetailPage page)
+    {
+        if (_navigationRetired) { page.RetireShellPublication(); return; }
+        _publishedHoldingDetails.RemoveAll(reference => !reference.TryGetTarget(out _));
+        if (!_publishedHoldingDetails.Any(reference => reference.TryGetTarget(out var existing) && ReferenceEquals(existing, page)))
+            _publishedHoldingDetails.Add(new(page));
+    }
 
     /// <summary>Records actual published Home instances; lazy ShellContent.Content may not expose its cached page.</summary>
     internal void RegisterHomePublication(Features.Home.HomePage home)
@@ -369,6 +380,7 @@ public partial class AppShell : Shell
         // D-577: the list can be retained too; otherwise it keeps pre-transfer/refund balances until Back/reopen.
         if (CurrentPage is AccountsPage accounts) await Presentation.Failures.GuardAsync(accounts.RefreshForNavigationAsync);
         else if (CurrentPage is AccountDetailPage account) await Presentation.Failures.GuardAsync(account.RefreshForNavigationAsync);
+        else if (CurrentPage is HoldingDetailPage holdingDetail) await Presentation.Failures.GuardAsync(holdingDetail.RefreshForNavigationAsync);
         else if (CurrentPage is LoanSchedulePage schedule) await Presentation.Failures.GuardAsync(schedule.RefreshForNavigationAsync);
         else if (CurrentPage is ReimbursementsPage reimbursements) await Presentation.Failures.GuardAsync(reimbursements.RefreshForNavigationAsync);
         else if (CurrentPage is PlansPage planCenter) await Presentation.Failures.GuardAsync(planCenter.RefreshForNavigationAsync);
@@ -450,6 +462,7 @@ public partial class AppShell : Shell
         {
             if (CurrentPage is CategoriesPage categories) categories.RetirePublication();
             if (CurrentPage is AccountEditorPage accountEditor) accountEditor.RetirePublication();
+            if (CurrentPage is HoldingDetailPage holdingDetail) holdingDetail.RetirePublication();
             if (CurrentPage is AssetEventEditorPage eventEditor) eventEditor.RetirePublication();
             if (Navigation.ModalStack.LastOrDefault() is AssetEventEditorPage modalEvent) modalEvent.RetirePublication();
             if (Navigation.ModalStack.LastOrDefault() is NavigationPage eventNavigation && eventNavigation.CurrentPage is AssetEventEditorPage wrappedEvent) wrappedEvent.RetirePublication();
@@ -523,6 +536,9 @@ public partial class AppShell : Shell
         foreach (var reference in _publishedAssetTypeEditors)
             if (reference.TryGetTarget(out var editor)) editor.RetireShellPublication();
         _publishedAssetTypeEditors.Clear();
+        foreach (var reference in _publishedHoldingDetails)
+            if (reference.TryGetTarget(out var detail)) detail.RetireShellPublication();
+        _publishedHoldingDetails.Clear();
         foreach (var reference in _publishedAssetEventEditors)
             if (reference.TryGetTarget(out var editor)) editor.RetireShellPublication();
         _publishedAssetEventEditors.Clear();

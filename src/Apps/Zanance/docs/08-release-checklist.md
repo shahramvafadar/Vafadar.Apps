@@ -4899,3 +4899,8 @@ Original source and independent native form checks pass within the recorded scop
 ## D-643 bounded original event-frame gate
 
 Original frame/receipt behavior and the documented independent native cases pass. Later physical no-reset adoption after D-607, broader security/performance/stability/accessibility/iOS/provider/store and release gates remain; neither component packaging nor these bounded cases close them. [Evidence](quality/original-asset-event-frame-and-receipts.md).
+
+
+## D-644 bounded original holding-price gate
+
+Original frame/draft/receipt behavior and the recorded independent native cases pass. Later physical no-reset adoption after D-607, wider DB/key/security/performance/stability/accessibility/iOS/provider/Store and release gates remain; packaging and bounded source equality do not close them. [Evidence](quality/original-holding-price-draft-ownership.md).

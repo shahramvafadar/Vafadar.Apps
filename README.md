@@ -117,7 +117,7 @@ Performance, general stability, remaining accessibility, provider/store and plat
 
 | Delivery track | Current boundary |
 |---|---|
-| Completed source work | Original editor/read/command ownership batches through D-643; see the dated backlog entries for focused checks and native evidence |
+| Completed source work | Original editor/read/command ownership batches through D-644; see the dated backlog entries for focused checks and native evidence |
 | Remaining implementation and acceptance | Follow the canonical backlog; completed source batches do not close physical, provider or platform acceptance |
 | Physical adoption | Later source/package changes await the actual completion of the protected D-607 reminder cohort; no early observation or upgrade is implied |
 | Performance and stability | The general two-second Home target and general ANR/crash qualification remain open; rejected experiments are retained as historical findings |

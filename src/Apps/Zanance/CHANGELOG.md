@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-644: preserve newer inline price input after a saved valuation, protect original detail Back/archive consent, resume retained tabs and distinguish old receipts from later read/write failures.
+
 - D-643: bind holding-event Back, discard and Retry to their original frame; retain later unsaved input after a known saved change, and refresh original captions without changing physical units.
 
 - D-642: keep asset-type forms tied to their original file and complete settings/history, retain raw physical values through Retry, and separate known saved metadata from newer unsaved text.

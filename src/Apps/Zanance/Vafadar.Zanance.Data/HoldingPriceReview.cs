@@ -95,7 +95,7 @@ public sealed partial class HoldingStore
 
     /// <summary>Saves exactly one new manual price against its original displayed facts and current draft.</summary>
     public async Task SaveReviewedValuationAsync(HoldingPriceReview review, AssetValuation valuation,
-        Func<bool> isCurrent, CancellationToken ct = default)
+        Func<bool> isCurrent, CancellationToken ct = default, Action? accepted = null)
     {
         ArgumentNullException.ThrowIfNull(review); ArgumentNullException.ThrowIfNull(valuation); ArgumentNullException.ThrowIfNull(isCurrent);
         review.Begin(); var committed = false;
@@ -107,14 +107,14 @@ public sealed partial class HoldingStore
             var copy = new AssetValuation(valuation.Id) { AssetTypeId = valuation.AssetTypeId, Date = valuation.Date,
                 CurrencyCode = valuation.CurrencyCode, PricePerUnitMilli = valuation.PricePerUnitMilli,
                 Source = valuation.Source, Note = valuation.Note, CreatedAt = valuation.CreatedAt, UpdatedAt = valuation.UpdatedAt };
-            await SaveValuationCoreAsync(copy, ct, review, isCurrent); committed = true;
+            await SaveValuationCoreAsync(copy, ct, review, isCurrent, accepted); committed = true;
         }
         catch (CommittedWriteNotificationException) { committed = true; throw; }
         finally { review.End(committed); }
     }
 
     /// <summary>Deletes only a price still equal to the original confirmed row and original displayed history.</summary>
-    public async Task DeleteReviewedValuationAsync(HoldingPriceReview review, Guid id, Func<bool> isCurrent, CancellationToken ct = default)
+    public async Task DeleteReviewedValuationAsync(HoldingPriceReview review, Guid id, Func<bool> isCurrent, CancellationToken ct = default, Action? accepted = null)
     {
         ArgumentNullException.ThrowIfNull(review); ArgumentNullException.ThrowIfNull(isCurrent);
         review.Begin(); var committed = false;
@@ -122,7 +122,7 @@ public sealed partial class HoldingStore
         {
             if (!review.Inputs.Valuations.Any(v => v.Id == id))
                 throw new HoldingEventReviewChangedException("Confirmed price is outside the original review.");
-            await DeleteValuationCoreAsync(id, ct, review, isCurrent); committed = true;
+            await DeleteValuationCoreAsync(id, ct, review, isCurrent, accepted); committed = true;
         }
         catch (CommittedWriteNotificationException) { committed = true; throw; }
         finally { review.End(committed); }

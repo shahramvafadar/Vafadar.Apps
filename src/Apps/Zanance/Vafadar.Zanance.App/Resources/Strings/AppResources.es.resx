@@ -8578,4 +8578,7 @@ SHA-256 del XML original: {5}</value>
   <data name="AssetEvent_SavedDraftChanged" xml:space="preserve">
     <value>El cambio original se ha guardado. Los datos introducidos después no se han guardado. Al cerrar el formulario puedes decidir si quieres descartarlos.</value>
   </data>
+  <data name="Holding_PriceSavedDraftChanged" xml:space="preserve">
+    <value>El precio se ha guardado. Tu entrada posterior se conserva por separado. Actualiza los precios y revisa el resultado guardado antes de guardar otro cambio.</value>
+  </data>
 </root>

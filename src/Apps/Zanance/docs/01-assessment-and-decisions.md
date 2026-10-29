@@ -11699,3 +11699,34 @@ APKs/evidence/pre-refusal source archive stay. Phone/D-607/three deadlines/unrea
 physical adoption and broad DB/key/security/ANR/performance/A11Y/iOS/provider/Store/release gates stay
 open. Overall goal active and TalkBack last; whole PE/BCL equality is not claimed.
 [Complete evidence](quality/original-asset-event-frame-and-receipts.md).
+
+
+### D-644 - Original holding-detail price draft and accepted ownership (2026-10-29)
+
+The original inline manual-price form retains later raw/date/mode input after real acceptance and
+publishes its receipt before fallible Changed handlers. Historical known success no longer labels a
+later refused write or failed read as saved. Native toolbar/hardware Back and terminal archive review
+the same frame/draft; root/tab/query departure and pending covered reads cannot reactivate old price
+commands. The actual retained Android tab returns through the same covered loader even without an
+appearance callback. Live translated choices retain numeric context. Original coherent source,
+quantity/per-unit/total math, historical prices, commercial guards and writer semantics remain;
+there is no model/migration/permission/runtime or financial-formula change.
+
+Twenty distinct new and44affected existing cases pass. Eight original failures and implementation/
+observer/restoration refusals remain with corrected continuations. Final strict Windows and complete
+offline384AOT/408ELF/1608staticLOAD shipping pass. Fresh API36/x64/4096 UID10216 keeps one boot and
+original source across necessary no-reset PID4626/5596/7228 updates; preparation is never replayed.
+Native pending Back/Keep editing, departed Save refusal, corrected tab return, real read-failure Retry,
+12normal-scale ready contexts and hardware Back/discard pass. Exactly one manual price12.34EUR is
+accepted with a failing notification/newer raw99.99; only its valuation row changes and ledger/events
+stay0. Six separate accepted-feedback contexts and original Close/discard preserve the complete
+accepted source without another Save.
+
+Original queried settings/boot/1080x1920/420/enSystem restore; only fresh UID/data,51hash-matched XMLs/
+1995996bytes and its owned AVD retire. Four standard cleans remove28955files1974307074logicalbytes;
+official AVD deletion removes25files5573587979logicalbytes. Supplemental19-target deletion is rejected
+before process creation:3732files1457130556logicalbytes remain with no retry/subset/alternate/move/
+escalation/reuse. Used APKs/evidence/pre-refusal source archive remain. Phone/D-607/three deadlines/
+unread source are untouched. Physical adoption and broader DB/key/security/ANR/performance/A11Y/
+iOS/provider/Store/release gates stay open; overall delivery active and TalkBack last.
+[Complete evidence](quality/original-holding-price-draft-ownership.md).

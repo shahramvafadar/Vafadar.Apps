@@ -8609,4 +8609,7 @@
   <data name="AssetEvent_SavedDraftChanged" xml:space="preserve">
     <value>تغییر اصلی ذخیره شد. ورودی جدیدتر ذخیره نشده است. با بستن فرم می‌توانید دربارهٔ کنارگذاشتن آن تصمیم بگیرید.</value>
   </data>
+  <data name="Holding_PriceSavedDraftChanged" xml:space="preserve">
+    <value>قیمت ذخیره شد. ورودی تازهٔ شما جداگانه حفظ شده است. پیش از ذخیرهٔ تغییر دیگری، قیمت‌ها را بازخوانی و نتیجهٔ ذخیره‌شده را بررسی کنید.</value>
+  </data>
 </root>

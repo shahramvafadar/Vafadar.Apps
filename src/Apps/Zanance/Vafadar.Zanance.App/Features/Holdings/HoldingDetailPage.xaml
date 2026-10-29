@@ -10,6 +10,9 @@
     x:DataType="local:HoldingDetailViewModel"
     Title="{Binding Name}">
 
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding BackCommand}" />
+    </Shell.BackButtonBehavior>
     <Grid>
     <Grid x:Name="ReadySurface" RowDefinitions="*,Auto" IsVisible="{Binding Loading.IsReady}">
         <Label x:Name="MissingSurface" Text="{v:Translate Holding_NotFound}" Margin="32" HorizontalTextAlignment="Center" IsVisible="{Binding NotFound}" />

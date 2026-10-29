@@ -8643,4 +8643,7 @@ Original XML SHA-256: {5}</value>
   <data name="AssetEvent_SavedDraftChanged" xml:space="preserve">
     <value>The original change was saved. Newer input has not been saved. Close this form to review whether to discard it.</value>
   </data>
+  <data name="Holding_PriceSavedDraftChanged" xml:space="preserve">
+    <value>The price was saved. Your later input is kept separately. Refresh to review the saved price before saving another change.</value>
+  </data>
 </root>

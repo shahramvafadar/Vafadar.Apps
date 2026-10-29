@@ -530,7 +530,7 @@ public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> con
         SaveValuationCoreAsync(valuation, cancellationToken);
 
     private async Task SaveValuationCoreAsync(AssetValuation valuation, CancellationToken cancellationToken,
-        HoldingPriceReview? review = null, Func<bool>? isCurrent = null)
+        HoldingPriceReview? review = null, Func<bool>? isCurrent = null, Action? accepted = null)
     {
         ArgumentNullException.ThrowIfNull(valuation);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
@@ -554,7 +554,8 @@ public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> con
         write.EnsureCurrent();
         if (isCurrent?.Invoke() == false) throw new HoldingEventReviewChangedException("Original price operation retired before commit.");
         await write.CommitAsync(cancellationToken);
-        CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty));
+        // Receipt publication belongs after the real commit and before ordinary notifications (D-644).
+        CommittedWriteNotification.Publish(() => { accepted?.Invoke(); Changed?.Invoke(this, EventArgs.Empty); });
     }
 
     /// <summary>Deletes a valuation.</summary>
@@ -562,7 +563,7 @@ public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> con
         DeleteValuationCoreAsync(id, cancellationToken);
 
     private async Task DeleteValuationCoreAsync(Guid id, CancellationToken cancellationToken,
-        HoldingPriceReview? review = null, Func<bool>? isCurrent = null)
+        HoldingPriceReview? review = null, Func<bool>? isCurrent = null, Action? accepted = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
@@ -572,7 +573,8 @@ public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> con
         await db.AssetValuations.Where(v => v.Id == id).ExecuteDeleteAsync(cancellationToken);
         if (isCurrent?.Invoke() == false) throw new HoldingEventReviewChangedException("Original price operation retired before commit.");
         await write.CommitAsync(cancellationToken);
-        CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty));
+        // Receipt publication belongs after the real commit and before ordinary notifications (D-644).
+        CommittedWriteNotification.Publish(() => { accepted?.Invoke(); Changed?.Invoke(this, EventArgs.Empty); });
     }
 
     /// <summary>Returns the category of fees, for the fee expense of a purchase or sale (ZEX-P09).</summary>

@@ -73,3 +73,7 @@ Original asset-type editor source, Retry and accepted metadata ownership (D-642)
 
 Original asset-event native frame, pending Retry and accepted draft lifetime (D-643):
 [Focused and original native evidence](quality/original-asset-event-frame-and-receipts.md), preserving D-607 and separate physical/platform gates.
+
+
+Original holding-detail inline price drafts, retained tabs and accepted receipts (D-644):
+[Focused and original native evidence](quality/original-holding-price-draft-ownership.md), preserving D-607 and separate physical/platform gates.

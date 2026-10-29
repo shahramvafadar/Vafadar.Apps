@@ -7865,3 +7865,8 @@ Seventeen new focused cases and22affected existing cases pass. Independent origi
 ## D-643 original event-frame acceptance
 
 17new and35affected existing cases pass. Original pending Back/departed Save refusal, explicit Retry,18normal-scale ready contexts, retained-source no-reset adoption, held duplicate-Retry refusal and one noncash event acceptance are qualified. Six separate accepted-feedback contexts and actual Close/discard preserve exactly one event and ledger0; general platform/release acceptance remains open. [Evidence](quality/original-asset-event-frame-and-receipts.md).
+
+
+## D-644 original holding-price acceptance
+
+20new and44affected existing cases pass. Native pending Back/departed Save refusal, actual corrected retained-tab return, failure/Retry,12normal-scale ready contexts and hardware Back/discard are qualified. One manual price acceptance retains newer raw input despite notification failure; six separate accepted-feedback contexts and final Home preserve one valuation and ledger/events0. No original accepted write is replayed. [Evidence](quality/original-holding-price-draft-ownership.md).

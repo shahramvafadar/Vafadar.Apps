@@ -19,7 +19,18 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
     private bool _initialized;
     private readonly Presentation.MoneyDraftInput _money = new();
     private long _modeRevision;
-    partial void OnModeIndexChanged(int value) => _modeRevision++;
+    private long _dateRevision;
+    private bool _publishingDisplay;
+    private string? _feedbackKey;
+    private bool _acceptedNeedsRefresh;
+    partial void OnDateChanged(DateOnly value) => _dateRevision++;
+    /// <summary>Gets whether the inline form contains an unaccepted original price.</summary>
+    public bool IsDirty => !string.IsNullOrWhiteSpace(Raw);
+    /// <summary>Captures raw/date/mode and input history for one native consent.</summary>
+    internal string CaptureDraft() => Draft();
+    /// <summary>Requires the actual owning frame independently of a failed source cover.</summary>
+    internal Func<bool>? ViewActive { get; set; }
+    partial void OnModeIndexChanged(int value) { if (!_publishingDisplay) _modeRevision++; }
     /// <summary>Gets the manual price's original monetary unit until complete clearing and reentry.</summary>
     public string InputUnitName => _money.UnitName(_display?.Inputs.Type.PriceCurrencyCode ?? "EUR");
     /// <summary>Explains the manual price's original display-unit factor.</summary>
@@ -40,7 +51,24 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
     {
         OnPropertyChanged(nameof(InputUnitName)); OnPropertyChanged(nameof(InputUnitNote)); OnPropertyChanged(nameof(InputFormatNote)); OnPropertyChanged(nameof(InputContextError));
     }
-    private void OnMoneyDisplayChanged(object? sender, EventArgs args) => RefreshMoneyTexts();
+    private void OnMoneyDisplayChanged(object? sender, EventArgs args)
+    {
+        if (!(ViewActive?.Invoke() ?? true)) return;
+        var selected = ModeIndex;
+        _publishingDisplay = true;
+        try
+        {
+            if (_display is { } display)
+            {
+                ModeNames = [text.PerUnit(display.Inputs.Type), translator["Holding_PriceTotal"]];
+                ModeIndex = selected; Label = translator.Format("Holding_PriceIn", display.Inputs.Type.PriceCurrencyCode);
+            }
+            if (_feedbackKey is { } key) Error = translator[key];
+            RefreshMoneyTexts();
+        }
+        finally { _publishingDisplay = false; }
+    }
+    private void Feedback(string? key) { _feedbackKey = key; Error = key is null ? null : translator[key]; }
     /// <summary>Tracks display-only captions while the owning detail is actually presented.</summary>
     public void SetMoneyPresentationActive(bool active)
     {
@@ -77,13 +105,13 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
     /// <summary>Gets whether confirmation, writing or refresh owns the form.</summary>
     [ObservableProperty] public partial bool Busy { get; set; }
     /// <summary>Gets whether original facts still permit the price form to submit.</summary>
-    public bool CanSubmit => (ViewReady?.Invoke() ?? true) && !Busy && _review is not null && !NeedsRefresh;
+    public bool CanSubmit => (ViewActive?.Invoke() ?? true) && (ViewReady?.Invoke() ?? true) && !Busy && _review is not null && !NeedsRefresh;
     /// <summary>Applies the owning detail cover without changing standalone editor authority or raw input.</summary>
     internal Func<bool>? ViewReady { get; set; }
     /// <summary>Refreshes native command enablement after the owning complete cover changes.</summary>
     internal void NotifyViewReady() { RefreshMoneyTexts(); PublishState(); }
     /// <summary>Gets whether an explicit read-only refresh is available.</summary>
-    public bool CanRefresh => !Busy;
+    public bool CanRefresh => !Busy && (ViewActive?.Invoke() ?? true);
     partial void OnBusyChanged(bool value) => PublishState();
     partial void OnNeedsRefreshChanged(bool value) => PublishState();
     private void PublishState()
@@ -117,12 +145,12 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
         RefreshMoneyTexts();
         return _display.Inputs;
     }
-    private string Draft() => Presentation.DraftFingerprint.Create(Raw, Date, ModeIndex, _money.Stamp, _money.Revision, _modeRevision);
+    private string Draft() => Presentation.DraftFingerprint.Create(Raw, Date, ModeIndex, _money.Stamp, _money.Revision, _modeRevision, _dateRevision);
     [RelayCommand(CanExecute = nameof(CanSubmit))]
     private async Task SaveAsync()
     {
         if (!CanSubmit || _review is not { } review) return;
-        Error = null;
+        Feedback(null);
         var type = review.Inputs.Type;
         RefreshMoneyTexts();
         if (_money.NeedsReview(type.PriceCurrencyCode)) return;
@@ -143,8 +171,8 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
         var value = new AssetValuation { AssetTypeId = type.Id, CurrencyCode = type.PriceCurrencyCode,
             Date = Date, PricePerUnitMilli = price, Source = ValuationSource.Manual };
         var draft = Draft(); var revision = _revision;
-        await WriteAsync(value.Id, false, () => store.SaveReviewedValuationAsync(review, value,
-            () => revision == _revision && ReferenceEquals(_review, review) && draft == Draft() && !_money.NeedsReview(type.PriceCurrencyCode)));
+        await WriteAsync(value.Id, false, draft, accepted => store.SaveReviewedValuationAsync(review, value,
+            () => revision == _revision && ReferenceEquals(_review, review) && draft == Draft() && CanOwnWrite() && !_money.NeedsReview(type.PriceCurrencyCode), accepted: accepted));
     }
     /// <summary>Confirms the original row and refuses a changed confirmation or any changed original source.</summary>
     public async Task DeleteAsync(Guid id, string description)
@@ -155,17 +183,20 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
         {
             if (!await interaction.ConfirmAsync(translator["Holding_DeletePrice"], description,
                 translator["Common_Delete"], translator["Common_Cancel"])) return;
-            await WriteAsync(id, true, () => store.DeleteReviewedValuationAsync(review, id,
-                () => revision == _revision && ReferenceEquals(_review, review) && draft == Draft()));
+            await WriteAsync(id, true, draft, accepted => store.DeleteReviewedValuationAsync(review, id,
+                () => revision == _revision && ReferenceEquals(_review, review) && draft == Draft() && CanOwnWrite(), accepted: accepted));
         }
         finally { Busy = false; }
     }
-    private async Task WriteAsync(Guid id, bool deletion, Func<Task> write)
+    private bool CanOwnWrite() => (ViewActive?.Invoke() ?? true) && (ViewReady?.Invoke() ?? true);
+    private async Task WriteAsync(Guid id, bool deletion, string submitted, Func<Action, Task> write)
     {
-        Busy = true; var accepted = false; Error = null; AcceptedId = null; LastWasDeletion = false;
-        try { await write(); accepted = true; }
-        catch (CommittedWriteNotificationException) { accepted = true; Error = translator["Holding_PriceSavedRefresh"]; }
-        catch (HoldingEventReviewChangedException) { Retire(); Error = translator["Holding_PriceSourceChanged"]; }
+        Busy = true; var accepted = false; Feedback(null);
+        // D-644: expose the actual receipt before fallible Changed handlers can alter the form.
+        void Accept() { accepted = true; AcceptedId = id; LastWasDeletion = deletion; _acceptedNeedsRefresh = true; }
+        try { await write(Accept); Accept(); }
+        catch (CommittedWriteNotificationException) { accepted = true; Feedback("Holding_PriceSavedRefresh"); }
+        catch (HoldingEventReviewChangedException) { Retire(); Feedback("Holding_PriceSourceChanged"); }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         { Retire(); Error = Presentation.CommercialFailureMessage.OrFallback(exception, translator, "Common_SaveFailed", draftKept: true); }
         finally
@@ -174,27 +205,33 @@ public sealed partial class HoldingPriceEditor(HoldingStore store, HoldingText t
             {
                 AcceptedId = id; LastWasDeletion = deletion; Retire();
                 // A deleted old row never clears a separately retained unsaved price draft.
-                if (!deletion) Raw = string.Empty;
+                if (!deletion && submitted == Draft()) Raw = string.Empty;
+                if (!deletion && IsDirty) Feedback("Holding_PriceSavedDraftChanged");
             }
             Busy = false;
         }
-        if (accepted && Error is null) await RefreshAsync();
+        if (accepted && Error is null)
+        {
+            if (CanRefresh) await RefreshAsync();
+            else Feedback("Holding_PriceSavedRefresh");
+        }
     }
     [RelayCommand(CanExecute = nameof(CanRefresh))]
     private async Task RefreshAsync()
     {
-        if (Busy) return;
+        if (!CanRefresh) return;
         Busy = true; Retire(); _display = null; ReadingExplicitRefresh = true;
         try
         {
             NeedsRefresh = false;
             if (ReloadView is { } reload) await reload(); else await LoadAsync(_id);
-            Error = null;
+            _acceptedNeedsRefresh = false; Feedback(null);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            Retire(); Error = AcceptedId is not null ? translator["Holding_PriceSavedRefresh"]
-                : Presentation.CommercialFailureMessage.OrFallback(exception, translator, "Common_SaveFailed", draftKept: true);
+            Retire();
+            if (_acceptedNeedsRefresh) Feedback("Holding_PriceSavedRefresh");
+            else { Feedback(null); Error = Presentation.CommercialFailureMessage.OrFallback(exception, translator, "Common_SaveFailed", draftKept: true); }
         }
         finally { ReadingExplicitRefresh = false; Busy = false; }
     }

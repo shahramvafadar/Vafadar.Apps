@@ -21,6 +21,10 @@ public sealed partial class HoldingArchiveEditor(HoldingStore store, Translator 
 #endif
     /// <summary>Reads current original displayed facts only through explicit owner refresh.</summary>
     public Func<Task<HoldingPriceReview?>>? RefreshView { get; set; }
+    /// <summary>Lets the actual owning detail review its separate inline draft before a terminal departure.</summary>
+    internal Func<Task<bool>>? ConfirmDraftDeparture { get; set; }
+    /// <summary>Binds the original inline draft to both native archive consents.</summary>
+    internal Func<string>? DepartureStamp { get; set; }
     /// <summary>Gets whether the original archive is known to have committed; Refresh never rearms it.</summary>
     public bool Committed { get; private set; }
     /// <summary>Gets whether confirmation or persistence currently owns the original operation.</summary>
@@ -60,12 +64,15 @@ public sealed partial class HoldingArchiveEditor(HoldingStore store, Translator 
     private async Task ArchiveAsync()
     {
         if (!CanArchive || _displayed is not { } review) return;
-        var revision = _revision; Busy = true; Error = null;
+        var revision = _revision; var draft = DepartureStamp?.Invoke(); Busy = true; Error = null;
+        bool Current() => revision == _revision && ReferenceEquals(_displayed, review)
+            && (ViewReady?.Invoke() ?? true) && draft == DepartureStamp?.Invoke();
         try
         {
+            if (ConfirmDraftDeparture is { } confirm && (!await confirm() || !Current())) return;
             if (!await interaction.ConfirmAsync(translator["Holding_Archive"], translator["Holding_ArchiveMessage"],
                 translator["Holding_Archive"], translator["Common_Cancel"])) return;
-            await store.ArchiveReviewedTypeAsync(review, () => revision == _revision && ReferenceEquals(_displayed, review));
+            await store.ArchiveReviewedTypeAsync(review, Current);
             Committed = true;
         }
         catch (CommittedWriteNotificationException) { Committed = true; Error = translator["Holding_ArchiveSavedRefresh"]; }
@@ -73,7 +80,7 @@ public sealed partial class HoldingArchiveEditor(HoldingStore store, Translator 
         catch (Exception exception) when (exception is not OutOfMemoryException)
         { Retire(); Error = Presentation.CommercialFailureMessage.OrFallback(exception, translator, "Common_SaveFailed", draftKept: true); }
         finally { if (Committed) Retire(); Busy = false; }
-        if (Committed && Error is null)
+        if (Committed && Error is null && (ViewReady?.Invoke() ?? true) && draft == DepartureStamp?.Invoke())
         {
             try { await interaction.NavigateAsync(".."); }
             catch (Exception exception) when (exception is not OutOfMemoryException) { Error = translator["Holding_ArchiveSavedRefresh"]; }
