@@ -10,8 +10,22 @@ Interface language, regional date/number formats, digit shapes and holiday rules
 | Product name | **Zanance** – shown untranslated in the app, stores and notifications; code and folders use the same name (D-24) |
 | App id | `pro.vafadar.zanance` – Android package and iOS bundle id (permanent once published) |
 | Platforms | Android (first), iOS, Windows |
-| Status | 🚧 Phase 1 feature-complete; cloud backup (OneDrive and Google Drive on Android, iOS and Windows) implemented and waiting for OAuth clients and a device test (D-35, D-50): accounts, entries, transfers, refunds, categories, plans with Gregorian/Persian recurrence and automatic posting, Home dashboard, budget, reports, forecast, reminders, manual exchange rates, CSV import/export, optionally encrypted local/cloud backup files (D-62), first-run restore without a new account, theme/experience choices, Simple/Advanced, app lock. Phase 2A in progress: goals with optional contribution-date reminders, rollover and envelope budgets, splits, partial payments, contracts, reimbursements, tags, rules, loans with a repayment estimate, assets, receipts, weekday rules, display units such as the toman, forecast scenarios, saved filters, PDF reports, a customizable Home, a dark theme, flex, weekly and two-week budgets with pay-cycle months and limit suggestions, public holidays, a quick add widget, receipt and PDF invoice reading, and local profiles. Status: [phase 1 plan](docs/04-phase-1-plan.md), [phase 2 backlog](docs/05-phase-2-backlog.md). |
+| Status | Active Android implementation and qualification; not publicly released. Core finance and extended workflows are implemented with bounded source/native evidence. Remaining work and acceptance gates are tracked in the [canonical commercial backlog](docs/enhancements/2026-10-commercial-release/04-backlog.md), [specification status](docs/spec/Zanance-Product-Specification.md) and [release checklist](docs/08-release-checklist.md). Real OAuth/provider/store acceptance and Mac/iOS qualification remain separate. Windows is a development target. |
 | Solution filter | [`Vafadar.Zanance.slnf`](../../../Vafadar.Zanance.slnf) |
+
+## Current documentation snapshot — 29 October 2026
+
+Recent completed batches qualify original account details (D-629), Plans (D-633), templates (D-634),
+Transactions (D-635), period review (D-636) and categorization rules (D-637), with each quality report retaining
+its actual source, native and package limits. Category management (D-638) is unfinished and is not included
+in completed delivery. D-607 remains a protected timed physical reboot/reminder cohort; no early source
+observation or candidate upgrade is implied by this documentation refresh.
+
+The API project provides optional identity, protected household synchronization and billing infrastructure.
+Core local finance remains usable without a service. General stability, the two-second performance target,
+remaining accessibility, genuine providers/stores and platform release acceptance are still separate gates.
+Further TalkBack testing is deferred behind other ready work by the owner; Persian speech is parked.
+The cumulative notes and test counts below are historical evidence, not a current whole-product test total.
 
 ## Projects
 
@@ -20,6 +34,7 @@ Interface language, regional date/number formats, digit shapes and holiday rules
 | [`Vafadar.Zanance.Core`](Vafadar.Zanance.Core) | Domain model and calculations (platform independent): ledger, plans and recurrence, budget, reports, forecast, reminders, rates, CSV |
 | [`Vafadar.Zanance.Data`](Vafadar.Zanance.Data) | `ZananceDbContext`, migrations, stores, automatic posting, backup summary |
 | [`Vafadar.Zanance.Reports`](Vafadar.Zanance.Reports) | PDF reports with the embedded Vazirmatn font (right-to-left aware) |
+| [`Vafadar.Zanance.Api`](Vafadar.Zanance.Api) | Optional ASP.NET Core identity, protected household and billing-related service; PostgreSQL storage |
 | [`Vafadar.Zanance.App`](Vafadar.Zanance.App) | .NET MAUI app: pages, view models, platform code |
 
 Tests: [`test/Apps/Zanance`](../../../test/Apps/Zanance).

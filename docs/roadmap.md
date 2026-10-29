@@ -1,5 +1,15 @@
 # Roadmap
 
+## Reading this roadmap
+
+As of 29 October 2026, this is a high-level and partly historical phase outline. Current delivered batches,
+owner decisions and unresolved acceptance gates live in the
+[canonical commercial backlog](../src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/04-backlog.md)
+and [specification status](../src/Apps/Zanance/docs/spec/Zanance-Product-Specification.md).
+Earlier planned entries below must not be interpreted as absence of the optional API/household/billing code
+now in the repository, or as evidence that real provider, store, iOS or public-release gates have passed.
+For current platform priorities and technology coverage, see the [repository README](../README.md).
+
 ## Phase 0 – Foundation ✅ (September 2026)
 
 - [x] Repository structure, central build configuration, `.slnx` solution and solution filters

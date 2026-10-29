@@ -1,5 +1,17 @@
 # Documentation
 
+## Current status and entry points
+
+Refreshed 29 October 2026. Start with the [repository README](../README.md) for the technology map and
+[Zanance README](../src/Apps/Zanance/README.md) for product scope. The
+[canonical commercial backlog](../src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/04-backlog.md)
+and [specification](../src/Apps/Zanance/docs/spec/Zanance-Product-Specification.md) own current implementation
+and acceptance status. The roadmap describes broader phases; dated quality reports retain historical evidence.
+Unfinished work, including protected timed cohorts, is not marked complete by this documentation refresh.
+
+The optional [self-hosted service guide](../eng/hosting/README.md) covers existing operational tooling;
+its presence does not establish public hosting, genuine provider acceptance or release readiness.
+
 ## Architecture
 
 * [Overview](architecture/overview.md) – goals, building blocks, dependency rules, technology stack
