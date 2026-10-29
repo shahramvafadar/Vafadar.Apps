@@ -431,12 +431,18 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Inserts or updates a budget including its category limits.</summary>
-    public async Task SaveBudgetAsync(Budget budget, CancellationToken cancellationToken = default, BudgetEditorReview? review = null, Func<bool>? inputCurrent = null, Action? accepted = null)
+    public async Task SaveBudgetAsync(Budget budget, CancellationToken cancellationToken = default, BudgetEditorReview? review = null, Func<bool>? inputCurrent = null, Action? accepted = null, BudgetEditorSnapshot? originalSource = null)
     {
         ArgumentNullException.ThrowIfNull(budget);
         DemandOriginalInput();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null || originalSource is not null);
+        if (originalSource is not null)
+        {
+            // D-641: complete original history validation shares the actual budget writer transaction.
+            await Task.Run(() => ValidateOriginalBudgetEditorAsync(originalSource, db, cancellationToken), cancellationToken);
+            DemandOriginalInput();
+        }
         if (review is not null) await ValidateBudgetEditorReviewAsync(review, db, cancellationToken);
         var existing = await db.Budgets.FirstOrDefaultAsync(b => b.Id == budget.Id, cancellationToken);
         // D-121: updates retain stored period/currency identity. Never count a caller's ignored changed date/code

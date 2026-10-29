@@ -171,6 +171,7 @@ public sealed partial class BudgetActionsViewModel(ZananceStore store, Translato
                 ["id"] = (object?)originalId ?? null!, ["scope"] = review.Choices.ReminderScope,
                 ["year"] = visit.Year, ["month"] = visit.Month, ["calendar"] = visit.Calendar,
                 ["currency"] = visit.Currency, ["period"] = visit.Period, ["start"] = visit.Start,
+                ["budgetEditorOrigin"] = review.CreateEditorOrigin(),
             });
             return false;
         });

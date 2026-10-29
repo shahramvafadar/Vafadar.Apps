@@ -66,7 +66,16 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     private readonly Translator _translator;
     private readonly ILocalizationService _localization;
     private readonly IAppInteraction _interaction;
-    private readonly SemaphoreSlim _loadGate = new(1, 1);
+    private CancellationTokenSource _readLifetime = new();
+    private Task? _pendingRead;
+    private long _readRevision, _pendingView;
+    private bool _resumeRead, _routeRetired, _invalidRoute;
+    private BudgetEditorSnapshot? _source;
+    private BudgetEditorOrigin? _origin;
+    private string? _sourceFile;
+    private Func<bool>? _ownsRoot;
+    private Action? _publicationGuard;
+    private Draft? _retainedReadDraft, _retainedReadBaseline;
     private readonly Guid _newId = Guid.CreateVersion7();
     private BudgetEditorReview? _review;
     private BudgetModel? _budget;
@@ -137,11 +146,11 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     /// <summary>Gets whether this form has an explicit changed-saved-value review waiting.</summary>
     public bool RequiresReview => _pendingReview;
     /// <summary>Gets whether original corrections may be edited.</summary>
-    public bool CanInteract => !_departed && IsReady && !_loading && !IsBusy && !_committed && _work.CanCorrect;
+    public bool CanInteract => !_departed && !_routeRetired && OwnsRoot && IsReady && !_loading && !IsBusy && !_committed && _work.CanCorrect;
     /// <summary>Gets whether the draft can be closed without interrupting publication or a write.</summary>
-    public bool CanLeave => !_loading && !IsBusy;
+    public bool CanLeave => !_departed && OwnsRoot && !IsBusy;
     /// <summary>Gets whether an explicit reload can be requested; it never resubmits a Save.</summary>
-    public bool CanReload => !_loading && !IsBusy && !_committed;
+    public bool CanReload => !_departed && !_routeRetired && OwnsRoot && !_loading && !IsBusy && !_committed;
     /// <summary>Gets separate new-tool and retained-method correction affordances.</summary>
     public bool CanChooseMethod => CanInteract && (_work.CanConfigure(BudgetMethod.Envelopes, BudgetRollover.None, _period)
         || _budget?.Method is BudgetMethod.Envelopes or BudgetMethod.Flex || MethodIndex != (int)(_budget?.Method ?? BudgetMethod.Limits));
@@ -158,7 +167,7 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     /// <summary>Gets whether a complete current review can save this configuration; the writer rechecks capacity.</summary>
     public bool CanSave => CanInteract && !_needsReload && !_pendingReview && MonetaryInputsCurrent && DraftAllowed();
     /// <inheritdoc />
-    public bool IsDirty => !_committed && _baseline is not null && Fingerprint(CaptureDraft()) != Fingerprint(_baseline);
+    public bool IsDirty => _baseline is not null && Fingerprint(CaptureDraft()) != Fingerprint(_baseline);
 
     /// <summary>Retains one explicit identity; native empty/repeated modal-attachment queries never erase a draft.</summary>
     public async Task ApplyQueryAsync(IDictionary<string, object> query)
@@ -167,9 +176,12 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
         if (_hasQuery)
         {
             if (query.Count == 0) return;
-            if (query.Any(pair => pair.Key is "id" or "scope" or "year" or "month" or "calendar" or "period" or "start" or "currency"
+            if (query.Any(pair => pair.Key is "id" or "scope" or "year" or "month" or "calendar" or "period" or "start" or "currency" or "budgetEditorOrigin"
                 && (_openingQuery is null || !_openingQuery.TryGetValue(pair.Key, out var original) || !Equals(original, pair.Value))))
-                throw new InvalidOperationException("A retained budget draft cannot be rebound to another identity.");
+            {
+                _routeRetired = true; RetireRead(); IsReady = false; _needsReload = true;
+                Error = _translator["Budget_LoadFailed"]; RefreshCapabilities();
+            }
             return;
         }
         _openingQuery = new Dictionary<string, object>(query);
@@ -181,25 +193,54 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
         _periodStart = query.TryGetValue("start", out var start) && start is DateOnly date ? date : default;
         _currency = query.TryGetValue("currency", out var currency) && currency is string code ? code : "EUR";
         _openedScope = query.TryGetValue("scope", out var origin) && origin is string original ? original : null;
+        _origin = query.TryGetValue("budgetEditorOrigin", out var sourceOrigin) ? sourceOrigin as BudgetEditorOrigin : null;
+        _sourceFile = _origin?.DatabasePath;
+        // A parent's explicit null id denotes a new period, not a malformed requested edit.
+        _invalidRoute = identity is not null && (identity is not Guid requested || requested == Guid.Empty)
+            || sourceOrigin is not null && _origin is null;
         await LoadAsync(false);
     }
     /// <summary>Starts publication only when navigation supplied no identity; construction remains read-free.</summary>
     public async Task EnsureLoadedAsync()
     {
         if (!_hasQuery) await ApplyQueryAsync(new Dictionary<string, object>());
-        else { await _loadGate.WaitAsync(); _loadGate.Release(); }
+        else if (_pendingRead is { IsCompleted: false } pending && _pendingView == _viewRevision) await pending;
     }
-    private async Task LoadAsync(bool keepDraft)
+    private Task LoadAsync(bool keepDraft)
     {
-        await _loadGate.WaitAsync();
-        var draft = keepDraft ? CaptureDraft() : null; var baseline = _baseline; var prior = _review;
-        _loading = true; IsReady = false; Error = null; RefreshCapabilities();
+        if (_departed || _routeRetired || !OwnsRoot || _committed) return Task.CompletedTask;
+        if (_pendingRead is { IsCompleted: false } pending && _pendingView == _viewRevision) return pending;
+        _pendingView = _viewRevision;
+        return _pendingRead = LoadCoreAsync(keepDraft);
+    }
+    private async Task LoadCoreAsync(bool keepDraft)
+    {
+        RetireRead(); var revision = _readRevision; var owner = _viewRevision; var token = _readLifetime.Token;
+        BudgetEditorSnapshot? captured = null;
+        void Current()
+        {
+            token.ThrowIfCancellationRequested();
+            if (!OwnsView(owner) || _routeRetired || revision != _readRevision)
+                throw new OperationCanceledException("The original budget form read retired.", token);
+            captured?.EnsureAccessCurrent();
+        }
+        // D-641: a cancelled partial publication must not replace the preexisting editable draft on resumption.
+        var draft = keepDraft ? _retainedReadDraft ?? CaptureDraft() : null;
+        var baseline = keepDraft ? _retainedReadBaseline ?? _baseline : _baseline; var prior = _source;
+        if (draft is not null && baseline is not null) { _retainedReadDraft = draft; _retainedReadBaseline = baseline; }
+        Current(); _loading = true; IsReady = false; Error = null; RefreshCapabilities();
         try
         {
-            var review = await _store.GetBudgetEditorReviewAsync();
+            if (_invalidRoute) throw new InvalidOperationException("The requested original budget route is invalid.");
+            if (_source is null) _origin?.EnsureCurrent(); Current();
+            captured = await _store.GetBudgetEditorSnapshotAsync(path =>
+            { Current(); _sourceFile ??= path; return _sourceFile == path; }, token);
+            Current(); await _store.ValidateBudgetEditorSnapshotAsync(captured, token); Current();
+            var changedInputs = prior is not null && !await Task.Run(() => captured.HasSameInputs(prior), token);
+            Current(); var review = captured.Review;
             if (_openedScope is not null && _openedScope != review.Choices.ReminderScope)
                 throw new InvalidOperationException("This budget draft belongs to another profile file.");
-            var settings = review.Settings ?? new ZananceSettings();
+            var settings = captured.Settings;
             if (_year == 0 && _period == BudgetPeriod.Month && _id is null)
             {
                 _calendar = settings.BudgetCalendar;
@@ -215,21 +256,23 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
             var target = original ?? Configuration();
             var periods = BudgetPeriods.Before(target.Period, target.Year, target.Month, target.PeriodStart,
                 target.Calendar, settings.MonthStartDay, BudgetSuggestions.PeriodsFor(target.Period));
-            var entries = await _store.GetEntriesAsync(periods[^1].First, periods[0].Last);
-            await _store.ValidateBudgetEditorReviewAsync(review);
-
-            // Publish all complete references and defaults synchronously before enabling any native field.
-            _publishing = true; _openedScope ??= review.Choices.ReminderScope; _review = review; _work = review.Choices.Work;
+            // D-641: keep the original inclusive period filter/order on this complete same-file history.
+            var entries = captured.Entries.Where(row => row.Date >= periods[^1].First && row.Date <= periods[0].Last)
+                .OrderByDescending(row => row.Date).ThenByDescending(row => row.CreatedAt).ToList();
+            Current();
+            // Native callbacks may retire this exact frame during any field or collection notification.
+            draft = _retainedReadDraft ?? draft; baseline = _retainedReadBaseline ?? baseline;
+            _publicationGuard = Current; _publishing = true; _openedScope ??= review.Choices.ReminderScope; _review = review; _work = review.Choices.Work;
             _budget = original; if (original is not null) _id = original.Id;
             _year = target.Year; _month = target.Month; _calendar = target.Calendar; _period = target.Period; _periodStart = target.PeriodStart;
             _currency = target.CurrencyCode; _entries = entries; _pastPeriods = periods;
-            _lookup = new CategoryLookup(review.Categories, _translator); IsAdvanced = settings.Shows(Feature.BudgetOptions);
-            IsWeekly = _period != BudgetPeriod.Month; CurrencyCode = _currency;
+            _lookup = new CategoryLookup(review.Categories, _translator); Publish(() => IsAdvanced = settings.Shows(Feature.BudgetOptions));
+            Publish(() => IsWeekly = _period != BudgetPeriod.Month); Publish(() => CurrencyCode = _currency);
             _totalCulture = _localization.CurrentCulture; _totalInput = MoneyInputContext.Capture(_currency, _totalCulture);
-            TotalText = original?.TotalLimit is { } total ? _totalInput.ForInput(total) : string.Empty;
-            AlertsEnabled = original?.AlertsEnabled ?? true; RolloverIndex = (int)(original?.Rollover ?? BudgetRollover.None);
-            MethodIndex = (int)(original?.Method ?? BudgetMethod.Limits);
-            ScopeAccounts.Clear();
+            Publish(() => TotalText = original?.TotalLimit is { } total ? _totalInput.ForInput(total) : string.Empty);
+            Publish(() => AlertsEnabled = original?.AlertsEnabled ?? true); Publish(() => RolloverIndex = (int)(original?.Rollover ?? BudgetRollover.None));
+            Publish(() => MethodIndex = (int)(original?.Method ?? BudgetMethod.Limits));
+            Publish(ScopeAccounts.Clear);
             var savedAccounts = original?.AccountIds ?? [];
             var accountIds = review.Accounts.Where(item => !item.IsArchived && item.IncludeInTotals && item.CurrencyCode == _currency)
                 .Select(item => item.Id).Concat(savedAccounts).Concat(draft?.Accounts.Keys.AsEnumerable() ?? []).Distinct().ToArray();
@@ -237,9 +280,9 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
             {
                 var row = new ScopeAccount(accountId, AccountName(accountId)) { IsIncluded = savedAccounts.Count == 0 || savedAccounts.Contains(accountId) };
                 row.PropertyChanged += (_, args) => { if (args.PropertyName == nameof(row.IsIncluded) && !_publishing && ScopeAccounts.Contains(row)) DraftChanged(); };
-                ScopeAccounts.Add(row);
+                Publish(() => ScopeAccounts.Add(row));
             }
-            Limits.Clear();
+            Publish(Limits.Clear);
             var categoryIds = review.Categories.Where(item => item.Kind == CategoryKind.Expense && item.ParentId is null && !item.IsArchived)
                 .OrderBy(item => item.SortOrder).Select(item => item.Id).Concat(original?.CategoryLimits.Select(item => item.CategoryId) ?? [])
                 .Concat(draft?.Limits.Keys.AsEnumerable() ?? []).Distinct().ToArray();
@@ -257,18 +300,29 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
                         { row.InputCulture = _localization.CurrentCulture; row.Input = MoneyInputContext.Capture(_currency, row.InputCulture); }
                         row.Error = null; DraftChanged();
                     } };
-                Limits.Add(row);
+                Publish(() => Limits.Add(row));
             }
             _baseline = CaptureDraft();
             if (draft is not null && baseline is not null) MergeDraft(draft, baseline);
-            _needsReload = false; _pendingReview = prior is not null && baseline is not null && !prior.MatchesInputs(review) && IsDirty;
-            ReloadedSavedSummary = _pendingReview ? SavedSummary(original) : null;
-            RefreshDisplay(); IsReady = true;
+            Current(); _needsReload = false; _pendingReview = prior is not null && baseline is not null && changedInputs && IsDirty;
+            Publish(() => ReloadedSavedSummary = _pendingReview ? SavedSummary(original) : null);
+            RefreshDisplayCore(); Current(); _source = captured; Publish(() => IsReady = true);
+            _retainedReadDraft = _retainedReadBaseline = null;
         }
+        catch (OperationCanceledException) when (token.IsCancellationRequested || !OwnsView(owner) || revision != _readRevision) { }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { Error = _translator["Budget_LoadFailed"]; await _interaction.ShowFailureAsync(exception); }
-        finally { _publishing = false; _loading = false; RefreshCapabilities(); _loadGate.Release(); }
+        {
+            if (OwnsView(owner) && revision == _readRevision)
+            { _needsReload = true; IsReady = false; Error = _translator["Budget_LoadFailed"]; }
+        }
+        finally
+        {
+            if (_publicationGuard == (Action)Current) _publicationGuard = null;
+            if (OwnsView(owner) && revision == _readRevision)
+            { _publishing = false; _loading = false; RefreshCapabilities(); }
+        }
     }
+    private void Publish(Action action) { var guard = _publicationGuard; guard?.Invoke(); action(); guard?.Invoke(); }
     private string SavedSummary(BudgetModel? original) => _translator.Format("Budget_ReloadedSaved",
         original?.TotalLimit is { } value ? MoneyText.Format(value, _currency, _localization.CurrentCulture) : _translator["Budget_NoLimit"],
         original is not { AccountIds.Count: > 0 } ? _translator["ActiveItems_BudgetAllAccounts"] : string.Join(", ", original.AccountIds.Select(AccountName)),
@@ -316,6 +370,15 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
         : _translator.Format("Budget_MissingReference", id.ToString("N"));
     /// <summary>Refreshes native-facing captions without changing indexes, raw amounts, scopes or input cultures.</summary>
     public void RefreshDisplay()
+    {
+        if (_departed || !OwnsRoot) return;
+        var pending = _hasQuery && _loading && !IsReady;
+        _viewRevision++; if (pending) RetireRead();
+        // An old publication guard belongs to the retired read; the new live display has its own revision.
+        _publicationGuard = null; RefreshDisplayCore();
+        if (pending && !_routeRetired && !_committed) _ = LoadAsync(_baseline is not null);
+    }
+    private void RefreshDisplayCore()
     {
         var publishing = _publishing; _publishing = true;
         try
@@ -367,6 +430,7 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     private void DraftChanged()
     {
         if (_publishing) return;
+        if (_loading && _retainedReadBaseline is not null) _retainedReadDraft = CaptureDraft();
         _draftRevision++; RefreshMoneyInputs(); CalculateSuggestions(); RefreshCapabilities();
     }
     partial void OnTotalTextChanged(string oldValue, string newValue)
@@ -411,13 +475,20 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
             row.InputCulture = _localization.CurrentCulture; row.Input = MoneyInputContext.Capture(_currency, row.InputCulture);
             row.Text = row.Input.ForInput(row.Suggested!.Value); DraftChanged();
         } }
+    private bool OwnsSource(BudgetEditorSnapshot source, long owner)
+    {
+        if (!OwnsView(owner) || _routeRetired || !ReferenceEquals(source, _source)) return false;
+        try { source.EnsureAccessCurrent(); return true; }
+        catch (InvalidOperationException) { return false; }
+    }
     [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
+        if (!CanInteract) return;
         RefreshMoneyInputs();
-        if (!CanSave || _review is not { } review) return;
-        var draft = Fingerprint(CaptureDraft()); var revision = _draftRevision; var owner = _viewRevision;
-        bool Current() => !_departed && owner == _viewRevision && revision == _draftRevision && draft == Fingerprint(CaptureDraft())
+        if (!CanSave || _review is not { } review || _source is not { } source) return;
+        var submitted = CaptureDraft(); var draft = Fingerprint(submitted); var revision = _draftRevision; var owner = _viewRevision;
+        bool Current() => OwnsSource(source, owner) && revision == _draftRevision && draft == Fingerprint(CaptureDraft())
             && ReferenceEquals(review, _review) && MonetaryInputsCurrent;
         IsBusy = true; Error = TotalError = null;
         try
@@ -435,32 +506,52 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
                 if (!row.Input!.TryParse(row.Text, out var amount) || amount < 0) { row.Error = _translator["Amount_Invalid"]; valid = false; }
                 else limits.Add(new() { CategoryId = row.CategoryId, Limit = amount });
             }
+            if (!Current())
+            {
+                if (!OwnsView(owner)) return;
+                if (!OwnsSource(source, owner)) { _needsReload = true; Error = _translator["Budget_SaveFailed"]; }
+                else Error = _translator["Goal_DraftUnitChanged"];
+                return;
+            }
             if (!valid) return;
-            if (!Current()) { Error = _translator["Goal_DraftUnitChanged"]; return; }
             if (total is null && limits.Count == 0) { Error = _translator["Budget_NothingToSave"]; return; }
             if (ScopeAccounts.Count > 0 && ScopeAccounts.All(row => !row.IsIncluded)) { Error = _translator["Budget_NoAccountChosen"]; return; }
             var candidate = Configuration(); candidate.TotalLimit = total; candidate.CategoryLimits = limits;
-            await _store.SaveBudgetAsync(candidate, review: review, inputCurrent: Current, accepted: () => _committed = true);
-            // Retire the draft before returning. A failed native return cannot repeat a committed financial configuration.
-            _budget = candidate; _committed = true; _baseline = CaptureDraft(); RefreshCapabilities();
+            await _store.SaveBudgetAsync(candidate, review: review, originalSource: source, inputCurrent: Current, accepted: () =>
+            {
+                // D-641: bind the actual submitted draft before Changed or native input can fail or arrive late.
+                _budget = candidate; _baseline = submitted; _committed = true; _pendingReview = false;
+            });
+            if (!OwnsView(owner)) return;
+            if (Fingerprint(CaptureDraft()) != draft) { Error = _translator["Budget_SavedDraftChanged"]; return; }
             try { await _interaction.NavigateAsync(".."); }
             catch (Exception exception) when (exception is not OutOfMemoryException)
-            { Error = _translator["Budget_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); }
+            { if (OwnsView(owner)) { Error = _translator["Budget_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); } }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { _needsReload = !_committed; Error = _committed ? _translator["Budget_SavedReturnFailed"] : CommercialFailureMessage.OrFallback(exception, _translator, "Budget_SaveFailed", draftKept: true); await _interaction.ShowFailureAsync(exception); }
+        {
+            if (!OwnsView(owner)) return;
+            _needsReload = !_committed; Error = _committed ? _translator["Budget_SavedReturnFailed"]
+                : CommercialFailureMessage.OrFallback(exception, _translator, "Budget_SaveFailed", draftKept: true);
+            if (_committed && Fingerprint(CaptureDraft()) != draft) Error += "\n\n" + _translator["Budget_SavedDraftChanged"];
+            await _interaction.ShowFailureAsync(exception);
+        }
         finally { IsBusy = false; RefreshCapabilities(); }
     }
     [RelayCommand(CanExecute = nameof(CanLeave))]
     private async Task CancelAsync()
     {
-        if (!CanLeave) return; IsBusy = true;
+        if (!CanLeave) return;
+        var owner = _viewRevision; var draft = Fingerprint(CaptureDraft());
+        bool Current() => OwnsView(owner) && draft == Fingerprint(CaptureDraft());
+        IsBusy = true;
         try
         {
-            if (!IsDirty || await _interaction.ConfirmAsync(_translator["Common_DiscardTitle"], _translator["Common_DiscardMessage"],
-                _translator["Common_Discard"], _translator["Common_KeepEditing"])) await _interaction.NavigateAsync("..");
+            if ((!IsDirty || await _interaction.ConfirmAsync(_translator["Common_DiscardTitle"], _translator["Common_DiscardMessage"],
+                _translator["Common_Discard"], _translator["Common_KeepEditing"])) && Current()) await _interaction.NavigateAsync("..");
         }
-        catch (Exception exception) when (exception is not OutOfMemoryException) { await _interaction.ShowFailureAsync(exception); }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { if (OwnsView(owner)) await _interaction.ShowFailureAsync(exception); }
         finally { IsBusy = false; }
     }
     private static string MoneyStamp(MoneyInputContext? input) => DraftFingerprint.Create(input?.Currency.Code, input?.Unit,
@@ -475,7 +566,27 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     /// <summary>Exposes the reason for required reentry even for formerly hidden category limits.</summary>
     public string? MoneyReviewText => !MonetaryInputsCurrent ? _translator["Goal_DraftUnitChanged"] : null;
     /// <summary>Retires pending callbacks with the original native editor frame.</summary>
-    public void SetViewActive(bool active) { _departed = !active; _viewRevision++; RefreshCapabilities(); }
+    public void SetViewActive(bool active)
+    {
+        if (active == !_departed) return;
+        _departed = !active; _viewRevision++;
+        if (!active)
+        {
+            _resumeRead = _hasQuery && _loading && !IsReady; RetireRead();
+            if (_resumeRead) IsReady = false;
+        }
+        else if (_hasQuery && !_committed && !_routeRetired && OwnsRoot && (_resumeRead || _source is not null))
+        { _resumeRead = false; _ = LoadAsync(_baseline is not null); }
+        RefreshCapabilities();
+    }
+    /// <summary>Binds this exact form to the root that published it, never a later replacement.</summary>
+    public void BindRootOwner(Func<bool> ownsRoot) { ArgumentNullException.ThrowIfNull(ownsRoot); _ownsRoot = ownsRoot; }
+    private bool OwnsRoot => _ownsRoot?.Invoke() != false;
+    private bool OwnsView(long owner) => !_departed && OwnsRoot && owner == _viewRevision;
+    private void RetireRead()
+    {
+        _readRevision++; var old = _readLifetime; _readLifetime = new(); old.Cancel(); old.Dispose();
+    }
     private void RefreshMoneyInputs()
     {
         var changed = !_committed && NeedsReview(TotalText, _totalInput);
@@ -504,14 +615,14 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
         string.Join(';', draft.Accounts.OrderBy(row => row.Key).Select(row => row.Key.ToString("N") + ":" + row.Value)));
     private void MergeDraft(Draft draft, Draft baseline)
     {
-        if (draft.Total != baseline.Total || MoneyStamp(draft.Input) != MoneyStamp(baseline.Input)) { TotalText = draft.Total; _totalCulture = draft.Culture; _totalInput = draft.Input; }
-        if (draft.Alerts != baseline.Alerts) AlertsEnabled = draft.Alerts;
-        if (draft.Method != baseline.Method) MethodIndex = draft.Method;
-        if (draft.Rollover != baseline.Rollover) RolloverIndex = draft.Rollover;
+        if (draft.Total != baseline.Total || MoneyStamp(draft.Input) != MoneyStamp(baseline.Input)) { Publish(() => TotalText = draft.Total); _totalCulture = draft.Culture; _totalInput = draft.Input; }
+        if (draft.Alerts != baseline.Alerts) Publish(() => AlertsEnabled = draft.Alerts);
+        if (draft.Method != baseline.Method) Publish(() => MethodIndex = draft.Method);
+        if (draft.Rollover != baseline.Rollover) Publish(() => RolloverIndex = draft.Rollover);
         foreach (var row in Limits)
             if (draft.Limits.TryGetValue(row.CategoryId, out var edited) && (!baseline.Limits.TryGetValue(row.CategoryId, out var old) || edited.Text != old.Text || MoneyStamp(edited.Input) != MoneyStamp(old.Input)))
-            { row.Text = edited.Text; row.InputCulture = edited.Culture; row.Input = edited.Input; }
+            { Publish(() => row.Text = edited.Text); row.InputCulture = edited.Culture; row.Input = edited.Input; }
         foreach (var row in ScopeAccounts)
-            if (draft.Accounts.TryGetValue(row.Id, out var edited) && (!baseline.Accounts.TryGetValue(row.Id, out var old) || edited != old)) row.IsIncluded = edited;
+            if (draft.Accounts.TryGetValue(row.Id, out var edited) && (!baseline.Accounts.TryGetValue(row.Id, out var old) || edited != old)) Publish(() => row.IsIncluded = edited);
     }
 }

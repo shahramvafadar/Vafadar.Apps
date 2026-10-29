@@ -8580,4 +8580,7 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Goal_SavedDraftChanged" xml:space="preserve">
     <value>L’obiettivo è stato salvato. Le modifiche più recenti restano in questa pagina senza essere salvate. Chiudi la pagina solo se vuoi scartarle.</value>
   </data>
+  <data name="Budget_SavedDraftChanged" xml:space="preserve">
+    <value>Il budget è stato salvato. Hai modifiche più recenti non salvate: controllale prima di chiudere questo modulo.</value>
+  </data>
 </root>

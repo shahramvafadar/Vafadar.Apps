@@ -8625,4 +8625,7 @@ Original XML SHA-256: {5}</value>
   <data name="Goal_SavedDraftChanged" xml:space="preserve">
     <value>The goal was saved. Newer edits remain on this page and were not saved. Close this page only if you want to discard those edits.</value>
   </data>
+  <data name="Budget_SavedDraftChanged" xml:space="preserve">
+    <value>The budget was saved. You have newer unsaved changes; close this form only after reviewing them.</value>
+  </data>
 </root>

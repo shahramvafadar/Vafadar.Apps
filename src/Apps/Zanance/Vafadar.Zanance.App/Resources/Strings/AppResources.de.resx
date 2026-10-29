@@ -8591,4 +8591,7 @@ Original-XML SHA-256: {5}</value>
   <data name="Goal_SavedDraftChanged" xml:space="preserve">
     <value>Das Ziel wurde gespeichert. Neuere Änderungen bleiben auf dieser Seite ungespeichert. Schließen Sie die Seite nur, wenn Sie diese Änderungen verwerfen möchten.</value>
   </data>
+  <data name="Budget_SavedDraftChanged" xml:space="preserve">
+    <value>Das Budget wurde gespeichert. Neuere Änderungen sind noch nicht gespeichert. Prüfe sie, bevor du dieses Formular schließt.</value>
+  </data>
 </root>

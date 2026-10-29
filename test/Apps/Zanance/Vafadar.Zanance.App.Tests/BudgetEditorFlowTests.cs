@@ -178,8 +178,9 @@ public sealed class BudgetEditorFlowTests
         using var f = new FlowFixture(); var s = await SeedAsync(f); await OpenAsync(s); s.Editor.TotalText = "321.45";
         var before = await RowsAsync(f);
         object value = key switch { "id" => Guid.NewGuid(), "year" => 2027, _ => "foreign" };
-        await Assert.ThrowsAsync<InvalidOperationException>(() => s.Editor.ApplyQueryAsync(new Dictionary<string, object> { [key] = value }));
-        Assert.Equal("321.45", s.Editor.TotalText); Assert.Equal(before, await RowsAsync(f));
+        await s.Editor.ApplyQueryAsync(new Dictionary<string, object> { [key] = value });
+        Assert.True(s.Editor.IsCovered); Assert.False(s.Editor.CanSave); Assert.True(s.Editor.IsDirty);
+        Assert.NotNull(s.Editor.Error); Assert.Equal("321.45", s.Editor.TotalText); Assert.Equal(before, await RowsAsync(f));
     }
 
     [Theory]
@@ -334,7 +335,7 @@ public sealed class BudgetEditorFlowTests
         using var f = new FlowFixture(); var s = await SeedAsync(f, paid: false); Enable(f, s, ProductPlan.Plus); await OpenAsync(s);
         s.Editor.MethodIndex = (int)BudgetMethod.Envelopes; s.Editor.TotalText = "321.45"; Assert.True(s.Editor.CanSave);
         Enable(f, s, ProductPlan.Free); var before = await RowsAsync(f); await s.Editor.SaveCommand.ExecuteAsync(null);
-        Assert.Single(f.Platform.Failures); Assert.Equal(before, await RowsAsync(f)); Assert.False(s.Editor.CanSave);
+        Assert.Empty(f.Platform.Failures); Assert.NotNull(s.Editor.Error); Assert.Equal(before, await RowsAsync(f)); Assert.False(s.Editor.CanSave);
         await s.Editor.ReloadCommand.ExecuteAsync(null); Assert.Equal((int)BudgetMethod.Envelopes, s.Editor.MethodIndex);
         Assert.True(s.Editor.RequiresReview); s.Editor.AcceptReviewCommand.Execute(null); Assert.False(s.Editor.CanSave);
         s.Editor.MethodIndex = (int)BudgetMethod.Limits; Assert.True(s.Editor.CanSave); Assert.Equal(before, await RowsAsync(f));

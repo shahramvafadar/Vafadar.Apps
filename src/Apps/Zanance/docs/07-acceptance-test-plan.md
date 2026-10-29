@@ -7850,3 +7850,8 @@ gates remain separate; D-607 is untouched. [Full evidence](quality/complete-orig
 ## D-640 original goal editor
 
 Twenty new focused and eighteen affected existing cases pass. Eighteen original ready contexts and three error covers retain source identity; exactly one original metadata Save survives notification failure. A separate empty-source final rights delta refuses one Save, preserves the raw draft through explicit Retry and discards without a financial write. Full-source/restoration/fresh-only retirement proofs pass; physical adoption and broader release gates remain open. [Evidence](quality/complete-original-goal-editor-source.md).
+
+
+## D-641 original budget editor
+
+Twenty-one new and twenty affected existing focused cases pass. Independent native original Budget/Edit verifies pending Cancel, departed Save refusal, explicit error Retry, eighteen ready layout contexts, cached-rights/raw-draft refusal and one total-limit Save with notification failure. Only declared budget total/update-time differs across seventeen observed tables; ledger remains empty. Exact restoration/fresh retirement pass. This is not whole-PE identity, physical adoption or broad release acceptance. [Evidence](quality/complete-original-budget-editor-source.md).

@@ -1887,3 +1887,8 @@ facts, not broad release acceptance. D-607/phone/three original deadlines remain
 ## D-640 original goal editor
 
 The complete original goal editor implementation and independent native qualification are delivered, including coherent original source, page/root/consent ownership, accepted receipt and final cached-rights Reload boundary. Physical adoption waits for actual terminal D-607; no protected deadline or successful financial operation is replayed. [Evidence](quality/complete-original-goal-editor-source.md).
+
+
+## D-641 original budget editor
+
+Complete original budget editor source/lifetime/draft/receipt implementation and bounded independent native qualification are delivered. Original financial and quota policies remain. Physical adoption waits for actual D-607 completion and does not replay earlier accepted configuration or financial operations. [Evidence](quality/complete-original-budget-editor-source.md).

@@ -9,6 +9,9 @@ namespace Vafadar.Zanance.Data;
 /// <summary>Complete original budget editor references and rights, paired with the eventual actual-file writer.</summary>
 public sealed class BudgetEditorReview
 {
+    /// <summary>Passes only original-file and cached-access authority to a child form, without retaining this graph.</summary>
+    public BudgetEditorOrigin CreateEditorOrigin() => new(Choices.DatabasePath, Choices.Access);
+
     internal BudgetEditorReview(BudgetChoiceSnapshot choices, IReadOnlyList<Account> accounts,
         IReadOnlyList<Category> categories, ZananceSettings? settings)
     {

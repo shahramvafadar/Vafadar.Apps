@@ -4719,3 +4719,8 @@ The canonical commercial backlog and broad release gates remain authoritative.
 ## D-640 original goal editor
 
 Original goal editor source/lifetime/receipt engineering work is complete in the independent scope. Keep actual physical adoption and broad security/stability/performance/accessibility/platform/provider/release acceptance separate; D-607 and deferred TalkBack priority remain unchanged. [Evidence](quality/complete-original-goal-editor-source.md).
+
+
+## D-641 original budget editor
+
+Original budget editor coherence, cancelled/retained publication, explicit retry and accepted writer ownership are delivered in the independent scope. Physical adoption and broad security/stability/performance/accessibility/platform/provider/release gates remain separate; D-607 and deferred TalkBack priority are unchanged. [Evidence](quality/complete-original-budget-editor-source.md).

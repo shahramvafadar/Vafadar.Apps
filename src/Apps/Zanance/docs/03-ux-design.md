@@ -2939,3 +2939,8 @@ dialog and explicit accepted Close remain. [Actual original verification](qualit
 ## D-640 original goal editor
 
 Cover the original goal form during acquisition/failure, keep explicit Retry and raw draft, and retire old page/tab/root consent. A withdrawn original editing right disables Save until explicit Reload. Accepted Save and newer unsaved input have separate Close/discard behavior; never close another owner from a late response. [Evidence](quality/complete-original-goal-editor-source.md).
+
+
+## D-641 original budget editor
+
+Keep the original budget form covered through loading/failure with explicit visible Retry. Retain exact raw totals/category limits/account scope and parse contexts across interrupted reloads. Original period/header/footer remain complete, stale access disables Save until explicit Reload, and accepted results and newer drafts have separate Close/discard ownership. [Evidence](quality/complete-original-budget-editor-source.md).

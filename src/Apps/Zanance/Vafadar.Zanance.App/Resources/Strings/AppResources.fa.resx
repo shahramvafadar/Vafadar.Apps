@@ -8591,4 +8591,7 @@
   <data name="Goal_SavedDraftChanged" xml:space="preserve">
     <value>هدف ذخیره شد. تغییرهای تازه‌تر در این صفحه مانده‌اند و ذخیره نشده‌اند. فقط اگر می‌خواهید آن‌ها را کنار بگذارید، صفحه را ببندید.</value>
   </data>
+  <data name="Budget_SavedDraftChanged" xml:space="preserve">
+    <value>بودجه ذخیره شد. تغییرهای تازه‌تری دارید که ذخیره نشده‌اند؛ پیش از بستن این فرم آن‌ها را بررسی کنید.</value>
+  </data>
 </root>

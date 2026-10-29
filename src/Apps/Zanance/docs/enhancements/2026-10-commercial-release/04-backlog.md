@@ -7569,3 +7569,33 @@ logical, not measured host free space. Phone/D-607/three original deadlines/unre
 untouched. Physical adoption, broader DB/key/security/stability/performance/accessibility,
 iOS/provider/Store/release gates remain separate; overall delivery stays active.
 [Complete evidence](../../quality/complete-original-goal-editor-source.md).
+
+
+### D-641 - Complete original budget editor source and ownership (2026-10-29)
+
+Budget forms now acquire original periods/choices, complete references/preferences and 32-field
+history from one captured file and deferred worker transaction. Complete stored/detached source
+and cached-access checks protect publication and the same actual writer transaction. Parent origin
+is narrow; original page/tab/root/query/display/draft/consent ownership prevents retired work.
+Explicit Retry retains raw total/category/account drafts, including cancellation after partial saved-
+value publication. Accepted receipts precede fallible notifications and preserve newer input without
+another accepted Save. Original scope, currency, recurrence/period, quota, method, rollover and
+suggestion rules remain; no model/migration/permission or financial formula changes.
+
+Twenty-one distinct new cases and twenty affected existing cases pass in focused selections. Strict
+Windows and complete final offline 384AOT/408ELF/1608staticLOAD packages pass. Original independent
+API36/x64/4096 UI verifies pending Cancel/departed Save refusal, read-failure Retry, eighteen ready
+contexts across three languages/two themes/three widths, raw ` 234.5600 ` through cached-rights
+refusal and failed Reload/Retry, and exactly one total-limit Save with notification failure. Complete
+observed seventeen-table source permits only budget total/update-time changes; the ledger stays 0.
+The Persian date observer's Latin-digit assumption is preserved/corrected without product changes
+or replaying two successful contexts. Core/Data are both AnyCPU but whole PE equality is not claimed.
+
+Exact original restore, fresh UID/data and 43 hash-matched XMLs (1,430,588bytes) retire. Official
+owned AVD deletion removes 25files/5,284,180,957logicalbytes; four standard cleans remove 28,957files/
+1,971,683,674logicalbytes. Six-root/ten-file supplemental deletion is rejected before process creation,
+leaving 3,724files/1,045,782,003logicalbytes with no retry/subset/alternate/move/escalation/reuse. Used
+packages/failures/evidence remain. Phone/D-607/three deadlines/unread source are untouched. Physical
+adoption and broad DB/key/security/stability/performance/A11Y/iOS/provider/Store/release gates remain
+separate. Overall delivery stays active and TalkBack remains last.
+[Complete evidence](../../quality/complete-original-budget-editor-source.md).

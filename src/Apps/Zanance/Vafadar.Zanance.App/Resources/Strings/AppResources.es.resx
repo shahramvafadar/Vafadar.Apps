@@ -8560,4 +8560,7 @@ SHA-256 del XML original: {5}</value>
   <data name="Goal_SavedDraftChanged" xml:space="preserve">
     <value>El objetivo se ha guardado. Los cambios más recientes siguen en esta página sin guardar. Cierra la página solo si quieres descartarlos.</value>
   </data>
+  <data name="Budget_SavedDraftChanged" xml:space="preserve">
+    <value>El presupuesto se ha guardado. Tienes cambios posteriores sin guardar; revísalos antes de cerrar este formulario.</value>
+  </data>
 </root>
