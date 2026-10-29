@@ -10642,3 +10642,25 @@ retained-return/six-display cohort pass without replaying accepted financial wor
 [Complete evidence](../quality/complete-original-reimbursements.md). This does not
 qualify the full database/keys, all device/stability/performance/accessibility gates,
 iOS/provider/Store/release or physical adoption before D-607 ends.
+
+### D-632 - Original plan-detail read and lifecycle acceptance
+
+Complete original detail/work inputs now share one actual-file worker snapshot and
+covered publication. Preserve original calculations/routes/deletion rules, same-page
+resume draft and stable continuation identity; retire native consent and preserve known
+commit before notification/return.22new focused cases and original native one-time
+Pause/Resume/End/Delete pass with empty ledger and exact full financial packet. See
+[full quality evidence](../quality/complete-original-plan-detail.md). This does not
+qualify root-recreated drafts, OS200% text, phone/adoption, ANR/crash, whole-Home speed,
+all accessibility, iOS/provider/Store/publication or protected D-607.
+
+D-632 completion addendum: the separate bounded layout cohort completes12missing
+360/680dp receipt contexts and18loading/18error-Retry contexts across360/412/680dp,
+en/de/fa and both themes. Current-window XML/native line-end/ellipsis/height/bounds
+checks agree, without old financial form commands. Preserve the failed copy/managed
+exit, committed-copy observation failure and21actual audit-time differences; complete
+new-source comparisons remain exact. No old-source/key identity or OS200% claim.
+Additional fresh UID/AVD and179XMLs retire; total five standard cleans remove
+2588206899logicalbytes. Two supplemental refusals leave698380075logicalbytes with no
+retry/subset/alternate/move/escalation. See the full D-632 quality record; D-607/phone,
+physical adoption and broad release gates remain separate.

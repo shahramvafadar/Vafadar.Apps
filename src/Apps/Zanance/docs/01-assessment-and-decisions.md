@@ -11371,3 +11371,26 @@ builds and original native command/cover/cancellation/return/six-display context
 with one original expense and no repeated accepted setup. See
 [complete evidence](quality/complete-original-reimbursements.md). D-607/phone and broad
 release gates remain separate; no migration/formula/runtime/permission change occurs.
+
+## D-632 - Original plan-detail source and lifecycle ownership (2026-10-29)
+
+Bind original complete detail/work policy to one file/worker transaction and covered
+publication. Retire page/tab/root/query/display owners, rows and native consent.
+Prepared Pause/Resume/End/Delete preserve original domain/writer policies, stable
+continuation identity and known acceptance before notification/return. Same-page
+resume drafts survive actual local failure/Retry; a replaced root is not retention.
+Twenty-two new selected cases, strict builds and the original native cycle pass with
+zero ledger entries. Correct actual six-language plan-loading/Retry wording. See
+[full evidence and limits](quality/complete-original-plan-detail.md). D-607/physical
+adoption and broad release gates remain separate.
+
+D-632 completion addendum: the separate bounded layout cohort completes12missing
+360/680dp receipt contexts and18loading/18error-Retry contexts across360/412/680dp,
+en/de/fa and both themes. Current-window XML/native line-end/ellipsis/height/bounds
+checks agree, without old financial form commands. Preserve the failed copy/managed
+exit, committed-copy observation failure and21actual audit-time differences; complete
+new-source comparisons remain exact. No old-source/key identity or OS200% claim.
+Additional fresh UID/AVD and179XMLs retire; total five standard cleans remove
+2588206899logicalbytes. Two supplemental refusals leave698380075logicalbytes with no
+retry/subset/alternate/move/escalation. See the full D-632 quality record; D-607/phone,
+physical adoption and broad release gates remain separate.

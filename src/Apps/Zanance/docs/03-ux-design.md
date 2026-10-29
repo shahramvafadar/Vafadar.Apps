@@ -2883,3 +2883,23 @@ objects. Original row validation refusal uses the same local error/Retry without
 financial action. Share appearance/retained-tab loading; preserve original detail,
 Back, payer/date/money presentation and one complete collection Reset. See
 [actual original-page evidence](quality/complete-original-reimbursements.md).
+
+### D-632 - Original plan detail and accepted lifecycle result
+
+Keep the original fields, six upcoming/twelve history rows and original routes under
+one complete loading/error/plan-specific Retry owner. Retain current-page Resume
+date input, retire stale row/confirmation owners, and display an actual saved result
+before notification/return can fail. The follow-up message says not to repeat the
+accepted change. Six same-page receipt language/theme contexts pass; root replacement
+is explicitly not draft retention. [Native scope](quality/complete-original-plan-detail.md).
+
+D-632 completion addendum: the separate bounded layout cohort completes12missing
+360/680dp receipt contexts and18loading/18error-Retry contexts across360/412/680dp,
+en/de/fa and both themes. Current-window XML/native line-end/ellipsis/height/bounds
+checks agree, without old financial form commands. Preserve the failed copy/managed
+exit, committed-copy observation failure and21actual audit-time differences; complete
+new-source comparisons remain exact. No old-source/key identity or OS200% claim.
+Additional fresh UID/AVD and179XMLs retire; total five standard cleans remove
+2588206899logicalbytes. Two supplemental refusals leave698380075logicalbytes with no
+retry/subset/alternate/move/escalation. See the full D-632 quality record; D-607/phone,
+physical adoption and broad release gates remain separate.

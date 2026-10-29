@@ -8513,4 +8513,22 @@ Original-XML SHA-256: {5}</value>
   <data name="Account_ConversionReviewAgain" xml:space="preserve">
     <value>Die Umwandlung konnte nicht abgeschlossen werden. Aktualisieren und prüfen Sie das Konto erneut.</value>
   </data>
+  <data name="Plan_DetailReadFailed" xml:space="preserve">
+    <value>Der Plan konnte nicht gelesen werden. Laden Sie die aktuellen Details erneut.</value>
+  </data>
+  <data name="Plan_DetailChanged" xml:space="preserve">
+    <value>Die Änderung wurde gespeichert.</value>
+  </data>
+  <data name="Plan_DetailChangedFollowUpFailed" xml:space="preserve">
+    <value>Ihre Änderung wurde gespeichert. Die Ansicht oder Erinnerungen konnten jedoch nicht aktualisiert werden. Wiederholen Sie die Änderung nicht.</value>
+  </data>
+  <data name="Plan_DetailActionFailed" xml:space="preserve">
+    <value>Die Änderung konnte nicht abgeschlossen werden. Laden Sie vor einem erneuten Versuch die aktuellen Details.</value>
+  </data>
+  <data name="Plan_DetailLoading" xml:space="preserve">
+    <value>Plan wird geladen…</value>
+  </data>
+  <data name="Plan_DetailRetryLoad" xml:space="preserve">
+    <value>Plan erneut laden</value>
+  </data>
 </root>

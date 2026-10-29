@@ -4836,3 +4836,28 @@ offline packages and actual native original route/read/command/display/retiremen
 The single setup expense is not repeated. Keep D-607's three original deadlines and
 phone state unchanged; this is no physical adoption, general stability/two-second/
 security/accessibility/iOS/provider/Store/publication acceptance.
+
+### D-632 - Original plan-detail source/consent evidence
+
+- [x] Original actual-file read/writer failures corrected;22new selected cases.
+- [x] Strict Windows/full offline signed Android, corrected plan-specific captions,
+  actual original native lifecycle and known saved/no-repeat follow-up, zero ledger.
+- [x] Exact original source/settings/OS restoration;97hash-matched XMLs and fresh
+  UID/AVD retired; four standard cleans remove1945006299logicalbytes.
+- [ ] Supplemental six-root cleanup: automatic review rejects before process creation;
+ 3710files/572982856logicalbytes remain. No retry/subset/alternate/move/escalation.
+- [ ] Physical adoption after actual D-607 terminal delivery/source/cleanup and all
+  general security/stability/performance/accessibility/iOS/provider/Store gates.
+
+[Exact evidence and limitations](quality/complete-original-plan-detail.md).
+
+D-632 completion addendum: the separate bounded layout cohort completes12missing
+360/680dp receipt contexts and18loading/18error-Retry contexts across360/412/680dp,
+en/de/fa and both themes. Current-window XML/native line-end/ellipsis/height/bounds
+checks agree, without old financial form commands. Preserve the failed copy/managed
+exit, committed-copy observation failure and21actual audit-time differences; complete
+new-source comparisons remain exact. No old-source/key identity or OS200% claim.
+Additional fresh UID/AVD and179XMLs retire; total five standard cleans remove
+2588206899logicalbytes. Two supplemental refusals leave698380075logicalbytes with no
+retry/subset/alternate/move/escalation. See the full D-632 quality record; D-607/phone,
+physical adoption and broad release gates remain separate.

@@ -7321,3 +7321,35 @@ are rejected before process creation with blocked by policy and are not retried.
 D-607's three deadlines/phone/incomplete batch stay untouched. Physical adoption,
 general security/database/key/stability/two-second/accessibility/platform/iOS/provider/
 Store/publication remain separate; overall goal active and TalkBack last.
+
+### D-632 - Complete original plan detail and lifecycle ownership
+
+Three actual original-store mixed-source/Pause/Delete failures are corrected by one
+original file/worker transaction and immutable detail/work authority. Keep original
+formulas/order/routes, complete covered publication, current-page date drafts and
+original native consent/writer ownership. Stable resume and known accepted results
+prevent replay after notification/return failure.22new selected cases, strict builds
+and original native loading/error/Retry/retired-read/routes/lifecycle checks pass.
+One original account/plan setup, zero ledger; six same-page receipt contexts retained.
+Actual caption defect corrected in six languages; root replacement and dump/density
+failures preserved without repeated accepted commands. Exact source/settings/OS return,
+97XMLs and fresh UID/AVD retire; standard cleans remove1945006299logicalbytes. Six-root
+supplemental removal is refused before process creation with3710files/572982856bytes
+remaining; no retry/subset/alternate/move/escalation.
+[Full evidence](../../quality/complete-original-plan-detail.md). D-607/phone/three
+deadlines/incomplete batch remain untouched. Physical adoption and broad database/key/
+security/stability/two-second/accessibility/iOS/provider/Store/publication gates remain
+open; overall goal active, TalkBack last.
+
+D-632 final missing-layout admission is complete:12receipt contexts at360/680dp,
+18loading and18error/Retry contexts at360/412/680dp, all en/de/fa Light/Dark, with
+actual native complete-line/ellipsis/height/bounds and owned-window XML agreement.
+The distinct layout fixture restores recorded fictitious values through the original
+EF path;21new audit stamps are preserved as differences, not normalized or called
+old-source equality. One separate nonfinancial End creates the real receipt; no old
+financial form command is replayed. Additional managed-exit/postcommit-observation/
+trigger/import failures remain explicit. New source/plan/settings/OS return exactly;
+179additional XMLs and fresh UID/AVD retire. Total five standard cleans remove
+2588206899logicalbytes; two separate supplemental refusals leave698380075logicalbytes
+with no retry/subset/alternate/move/escalation. Goal remains active; protected D-607
+and physical/external/general release gates remain open.

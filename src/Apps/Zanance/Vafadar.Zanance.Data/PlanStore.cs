@@ -118,7 +118,7 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
         SaveSchedulesCoreAsync(schedules, cancellationToken);
 
     private async Task SaveSchedulesCoreAsync(IEnumerable<Schedule> schedules, CancellationToken cancellationToken,
-        PlanEditorReadSnapshot? original = null, Func<bool>? isCurrent = null, Action? accepted = null)
+        PlanEditorReadSnapshot? original = null, Func<bool>? isCurrent = null, Action? accepted = null, PlanDetailSnapshot? detail = null)
     {
         ArgumentNullException.ThrowIfNull(schedules);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
@@ -129,6 +129,7 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
         if (original is not null)
         {
             await ValidateEditorUnderContextAsync(original, db, cancellationToken);
+            if (detail is not null) await ValidateDetailUnderContextAsync(detail, db, cancellationToken);
             if (batch.Count != 1 || original.Request.PlanId is null
                 && await db.Schedules.AsNoTracking().AnyAsync(s => s.Id == batch[0].Id, cancellationToken))
                 throw new InvalidOperationException("A new original plan cannot replace an existing identity.");
@@ -173,7 +174,7 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
         SaveSplitCoreAsync(previous, next, cancellationToken);
 
     private async Task<bool> SaveSplitCoreAsync(Schedule previous, Schedule next, CancellationToken cancellationToken,
-        PlanEditorReadSnapshot? original = null, Func<bool>? isCurrent = null, Action? accepted = null)
+        PlanEditorReadSnapshot? original = null, Func<bool>? isCurrent = null, Action? accepted = null, PlanDetailSnapshot? detail = null)
     {
         ArgumentNullException.ThrowIfNull(previous);
         ArgumentNullException.ThrowIfNull(next);
@@ -187,6 +188,7 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
         if (original is not null)
         {
             await ValidateEditorUnderContextAsync(original, db, cancellationToken);
+            if (detail is not null) await ValidateDetailUnderContextAsync(detail, db, cancellationToken);
             if (await db.Schedules.AsNoTracking().AnyAsync(s => s.Id == next.Id, cancellationToken))
                 throw new InvalidOperationException("The original plan continuation identity is already stored.");
         }
@@ -272,11 +274,22 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
 
     /// <summary>Deletes a plan without history; plans with settled occurrences can only be ended.</summary>
     /// <returns><see langword="false"/> when the plan has history.</returns>
-    public async Task<bool> DeleteScheduleAsync(Guid scheduleId, CancellationToken cancellationToken = default)
+    public Task<bool> DeleteScheduleAsync(Guid scheduleId, CancellationToken cancellationToken = default) =>
+        DeleteScheduleCoreAsync(scheduleId, cancellationToken);
+
+    private async Task<bool> DeleteScheduleCoreAsync(Guid scheduleId, CancellationToken cancellationToken,
+        PlanDetailSnapshot? detail = null, Func<bool>? isCurrent = null, Action? accepted = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        void Current() => EnsureOriginalEditorOwner(detail?.Source, db, isCurrent);
+        Current();
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         write.DemandFeature(CommercialFeature.DeleteData);
+        if (detail is not null)
+        {
+            if (detail.Source.Request.PlanId != scheduleId) throw new PlanEditorSourceChangedException();
+            await ValidateDetailUnderContextAsync(detail, db, cancellationToken);
+        }
 
         // The actual writer owns the history check through deletion; another service cannot settle meanwhile.
         if (await db.Entries.AnyAsync(e => e.ScheduleId == scheduleId, cancellationToken)
@@ -286,9 +299,17 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
         }
 
         await db.OccurrenceStates.Where(s => s.ScheduleId == scheduleId).ExecuteDeleteAsync(cancellationToken);
-        await db.Schedules.Where(s => s.Id == scheduleId).ExecuteDeleteAsync(cancellationToken);
+        var deleted = await db.Schedules.Where(s => s.Id == scheduleId).ExecuteDeleteAsync(cancellationToken);
+        if (detail is not null)
+        {
+            if (deleted != 1) throw new PlanEditorSourceChangedException();
+            detail.Source.ValidateDeletedInputs(await ReadEditorInputsAsync(db,
+                new CommercialFileAccess(commercialAccess, detail.Source.DatabasePath), detail.Source.Request, cancellationToken));
+        }
+        Current(); write.EnsureCurrent();
         await write.CommitAsync(cancellationToken);
-        OnChanged();
+        accepted?.Invoke();
+        if (detail is null) OnChanged(); else CommittedWriteNotification.Publish(OnChanged);
         return true;
     }
 

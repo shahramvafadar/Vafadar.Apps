@@ -7780,3 +7780,26 @@ Complete named financial packet and restored settings remain equal. These are na
 observations, not extra unit tests, a new OS200/width matrix or physical acceptance.
 [Full provenance, failures and retirement](quality/complete-original-reimbursements.md).
 D-607 and all broader release gates remain open independently.
+
+### D-632 - Complete original plan detail
+
+Twenty-two distinct new selected SQLite/action/transaction cases and strict builds
+pass. Actual original native source covers loading/cancel/retained return, occurrence/
+edit/final-bill routes without writes, one Pause with post-commit notification failure,
+six receipt contexts, corrected local read failure/Retry retaining2November draft,
+one linked Resume/End/Delete, full financial equality and zero ledger entries. Native
+observations/resource checks are not extra unit cases. Density-stale observation is
+disqualified; actual OS text size is unmeasured. Root replacement and failed dump are
+preserved. [Complete evidence](quality/complete-original-plan-detail.md); phone/D-607
+and general release gates remain open.
+
+D-632 completion addendum: the separate bounded layout cohort completes12missing
+360/680dp receipt contexts and18loading/18error-Retry contexts across360/412/680dp,
+en/de/fa and both themes. Current-window XML/native line-end/ellipsis/height/bounds
+checks agree, without old financial form commands. Preserve the failed copy/managed
+exit, committed-copy observation failure and21actual audit-time differences; complete
+new-source comparisons remain exact. No old-source/key identity or OS200% claim.
+Additional fresh UID/AVD and179XMLs retire; total five standard cleans remove
+2588206899logicalbytes. Two supplemental refusals leave698380075logicalbytes with no
+retry/subset/alternate/move/escalation. See the full D-632 quality record; D-607/phone,
+physical adoption and broad release gates remain separate.

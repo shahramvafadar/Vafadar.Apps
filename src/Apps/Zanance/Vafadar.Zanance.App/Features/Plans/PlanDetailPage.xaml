@@ -26,11 +26,17 @@
         </DataTemplate>
     </ContentPage.Resources>
 
-    <Grid>
+    <Grid RowDefinitions="Auto,*">
+        <VerticalStackLayout Padding="16,8" Spacing="4" IsVisible="{Binding Actions.Result, Converter={StaticResource IsNotNullConverter}}">
+            <Label Text="{Binding Actions.Result}" TextColor="{DynamicResource Primary}" />
+            <Label Text="{Binding Actions.Feedback}" Style="{StaticResource ErrorText}" IsVisible="{Binding Actions.Feedback, Converter={StaticResource IsNotNullConverter}}" />
+        </VerticalStackLayout>
+        <Grid Grid.Row="1">
+        <Grid IsVisible="{Binding Loading.IsReady}">
         <Label Text="{v:Translate Entry_NotFound}" Margin="32" HorizontalTextAlignment="Center" IsVisible="{Binding NotFound}" />
 
         <ScrollView IsVisible="{Binding NotFound, Converter={StaticResource InvertedBoolConverter}}">
-            <VerticalStackLayout Padding="16" Spacing="8">
+            <VerticalStackLayout Padding="16" Spacing="8" IsEnabled="{Binding Actions.IsBusy, Converter={StaticResource InvertedBoolConverter}}">
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{Binding Name}" FontSize="20" FontAttributes="Bold" />
@@ -85,5 +91,15 @@
                         TextColor="{DynamicResource ExpenseText}" IsVisible="{Binding CanDelete}" />
             </VerticalStackLayout>
         </ScrollView>
+        </Grid>
+        <VerticalStackLayout Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
+            <Label Text="{v:Translate Plan_DetailLoading}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+            <Label Text="{Binding Feedback}" HorizontalTextAlignment="Center" />
+            <Button Text="{v:Translate Plan_DetailRetryLoad}" Style="{StaticResource SecondaryButton}" Clicked="OnReloadClicked" />
+        </VerticalStackLayout>
+        </Grid>
     </Grid>
 </ContentPage>

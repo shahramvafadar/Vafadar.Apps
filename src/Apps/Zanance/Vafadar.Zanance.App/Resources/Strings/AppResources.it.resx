@@ -8502,4 +8502,22 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Account_ConversionReviewAgain" xml:space="preserve">
     <value>Non è stato possibile completare la conversione. Aggiorna il conto e controllalo di nuovo.</value>
   </data>
+  <data name="Plan_DetailReadFailed" xml:space="preserve">
+    <value>Non è stato possibile leggere questo piano. Riprova per caricare i dettagli attuali.</value>
+  </data>
+  <data name="Plan_DetailChanged" xml:space="preserve">
+    <value>La modifica è stata salvata.</value>
+  </data>
+  <data name="Plan_DetailChangedFollowUpFailed" xml:space="preserve">
+    <value>La modifica è stata salvata, ma non è stato possibile aggiornare la schermata o i promemoria. Non ripetere la modifica.</value>
+  </data>
+  <data name="Plan_DetailActionFailed" xml:space="preserve">
+    <value>Non è stato possibile completare la modifica. Ricarica i dettagli attuali prima di riprovare.</value>
+  </data>
+  <data name="Plan_DetailLoading" xml:space="preserve">
+    <value>Caricamento del piano…</value>
+  </data>
+  <data name="Plan_DetailRetryLoad" xml:space="preserve">
+    <value>Ricarica il piano</value>
+  </data>
 </root>

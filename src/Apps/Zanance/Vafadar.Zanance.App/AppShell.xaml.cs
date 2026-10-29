@@ -18,6 +18,7 @@ public partial class AppShell : Shell
     private readonly HashSet<AccountDetailPage> _publishedAccountDetails = [];
     private readonly HashSet<LoanSchedulePage> _publishedLoanSchedules = [];
     private readonly HashSet<ReimbursementsPage> _publishedReimbursements = [];
+    private readonly HashSet<PlanDetailPage> _publishedPlanDetails = [];
     private bool _navigationRetired;
 
     /// <summary>Records actual published Home instances; lazy ShellContent.Content may not expose its cached page.</summary>
@@ -51,6 +52,12 @@ public partial class AppShell : Shell
     {
         if (_navigationRetired) page.RetireShellPublication();
         else _publishedReimbursements.Add(page);
+    }
+    /// <summary>Registers original plan-detail owners so root replacement retires pending reads and native consent.</summary>
+    internal void RegisterPlanDetail(PlanDetailPage page)
+    {
+        if (_navigationRetired) page.RetireShellPublication();
+        else _publishedPlanDetails.Add(page);
     }
     /// <summary>Route of the account list.</summary>
     public const string AccountsRoute = AppRoutes.AccountsRoute;
@@ -252,6 +259,7 @@ public partial class AppShell : Shell
         else if (CurrentPage is AccountDetailPage account) await Presentation.Failures.GuardAsync(account.RefreshForNavigationAsync);
         else if (CurrentPage is LoanSchedulePage schedule) await Presentation.Failures.GuardAsync(schedule.RefreshForNavigationAsync);
         else if (CurrentPage is ReimbursementsPage reimbursements) await Presentation.Failures.GuardAsync(reimbursements.RefreshForNavigationAsync);
+        else if (CurrentPage is PlanDetailPage planDetail) await Presentation.Failures.GuardAsync(planDetail.RefreshForNavigationAsync);
         else if (CurrentPage is OccurrencePage occurrence) await Presentation.Failures.GuardAsync(occurrence.RefreshForNavigationAsync);
         // D-497: Insights can retain both the forecast and its saved comparison while another tab changes the ledger.
         else if (CurrentPage is Features.Forecast.ForecastPage forecast) await Presentation.Failures.GuardAsync(forecast.RefreshForNavigationAsync);
@@ -287,6 +295,11 @@ public partial class AppShell : Shell
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
             && CurrentPage is ReimbursementsPage reimbursements)
             reimbursements.RetirePublication();
+        // D-632: a native confirmation and row target cannot outlive the original retained plan-detail page.
+        if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
+                or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
+            && CurrentPage is PlanDetailPage planDetail)
+            planDetail.RetirePublication();
         // D-406: Android can retain a routed More page across tabs without OnDisappearing.
         // Retire its original financial review only after navigation survives the existing leave guards.
         if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
@@ -314,6 +327,8 @@ public partial class AppShell : Shell
         _publishedLoanSchedules.Clear();
         foreach (var reimbursements in _publishedReimbursements) reimbursements.RetireShellPublication();
         _publishedReimbursements.Clear();
+        foreach (var planDetail in _publishedPlanDetails) planDetail.RetireShellPublication();
+        _publishedPlanDetails.Clear();
         Navigated -= OnRetainedDetailsTabActivated;
 #if ANDROID
         if (Handler is AccessibleShellRenderer renderer) renderer.RetireNavigation();

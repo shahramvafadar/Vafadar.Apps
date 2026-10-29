@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-632: keep complete plan details and lifecycle confirmations tied to the original file and page; retain resume drafts and known saved results without repeating accepted changes.
+
 - D-631: keep outstanding reimbursement amounts, currencies and rows tied to one current original file; cover failures with Retry and refuse retired row commands.
 
 - D-630: publish complete original repayment schedules under current file/page/display ownership, with local Retry and unchanged estimate/financial policies.

@@ -128,3 +128,14 @@ actual original native view-model/page/command ownership stays in the separately
 recorded cohort. No MAUI/Shell facade, original arithmetic replacement or broad old
 financial suite is added. See the application's complete-original-reimbursements
 quality record for failures, native scope and remaining gates.
+
+### D-632 - Original plan detail and consent/writer boundaries
+
+PlanDetailOriginalBoundaryTests preserves three actual original-store composition/
+writer failures. PlanDetailActionFlowTests covers15distinct original native-effect
+consent/acceptance cases; PlanDetailWriterRetirementTests covers3real transactional
+rollback cases; PlanDetailWorkerTransactionTests covers1real WAL/worker snapshot.
+Twenty-two distinct new cases pass selectively. No replacement financial calculator,
+MAUI/Shell facade, broad financial suite replay or migration is added. Actual native
+source/page/route/date-draft/receipt evidence and limits remain in the D-632 quality
+record; native observations and resource checks are not extra unit tests.

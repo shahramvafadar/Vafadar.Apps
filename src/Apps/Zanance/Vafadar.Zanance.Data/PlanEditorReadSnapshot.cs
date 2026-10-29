@@ -104,6 +104,14 @@ public sealed class PlanEditorReadSnapshot
         EnsureInputsUnchanged();
         if (_stamp != Capture(current)) throw new PlanEditorSourceChangedException();
     }
+    /// <summary>Validates only the exact declared history-free deletion, preserving all original reference facts.</summary>
+    internal void ValidateDeletedInputs(PlanEditorReadInputs current)
+    {
+        EnsureCurrent();
+        if (Inputs.Settlements.Count != 0 || Inputs.States.Any(s => s.Status != OccurrenceStatus.Open)
+            || Capture(current) != Capture(Inputs with { Schedule = null, States = [], Settlements = [] }))
+            throw new PlanEditorSourceChangedException();
+    }
     /// <summary>Admits one original writer; accepted plans cannot be submitted again.</summary>
     internal void BeginWrite()
     {

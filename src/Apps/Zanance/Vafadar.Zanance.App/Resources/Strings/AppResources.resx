@@ -8547,4 +8547,22 @@ Original XML SHA-256: {5}</value>
   <data name="Account_ConversionReviewAgain" xml:space="preserve">
     <value>The conversion could not be completed. Refresh the account and review it again.</value>
   </data>
+  <data name="Plan_DetailReadFailed" xml:space="preserve">
+    <value>This plan could not be read. Retry to load its current details.</value>
+  </data>
+  <data name="Plan_DetailChanged" xml:space="preserve">
+    <value>The change was saved.</value>
+  </data>
+  <data name="Plan_DetailChangedFollowUpFailed" xml:space="preserve">
+    <value>Your change was saved, but the view or reminders could not refresh. Do not repeat the change.</value>
+  </data>
+  <data name="Plan_DetailActionFailed" xml:space="preserve">
+    <value>The change could not be completed. Reload the current details before trying again.</value>
+  </data>
+  <data name="Plan_DetailLoading" xml:space="preserve">
+    <value>Loading plan…</value>
+  </data>
+  <data name="Plan_DetailRetryLoad" xml:space="preserve">
+    <value>Load plan again</value>
+  </data>
 </root>
