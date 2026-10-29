@@ -8552,4 +8552,10 @@
   <data name="Templates_DeletedReadFailed" xml:space="preserve">
     <value>قالب حذف شد، اما فهرست به‌روز نشد. فهرست را دوباره بارگیری کنید؛ حذف را تکرار نکنید.</value>
   </data>
+  <data name="Review_Loading" xml:space="preserve">
+    <value>در حال بارگذاری مرور دوره…</value>
+  </data>
+  <data name="Review_RetryLoad" xml:space="preserve">
+    <value>بارگذاری دوبارهٔ مرور</value>
+  </data>
 </root>

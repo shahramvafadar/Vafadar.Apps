@@ -8552,4 +8552,10 @@ Original-XML SHA-256: {5}</value>
   <data name="Templates_DeletedReadFailed" xml:space="preserve">
     <value>Die Vorlage wurde gelöscht, aber die Liste konnte nicht aktualisiert werden. Laden Sie die Liste neu; löschen Sie die Vorlage nicht erneut.</value>
   </data>
+  <data name="Review_Loading" xml:space="preserve">
+    <value>Zeitraumrückblick wird geladen…</value>
+  </data>
+  <data name="Review_RetryLoad" xml:space="preserve">
+    <value>Rückblick erneut laden</value>
+  </data>
 </root>

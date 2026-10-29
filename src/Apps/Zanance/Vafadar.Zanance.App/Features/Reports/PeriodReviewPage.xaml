@@ -9,7 +9,8 @@
     x:DataType="local:PeriodReviewViewModel"
     Title="{Binding Title}">
 
-    <Grid RowDefinitions="*,Auto">
+    <Grid>
+    <Grid RowDefinitions="*,Auto" IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding CanInteract}">
         <ScrollView>
             <VerticalStackLayout Padding="16" Spacing="8">
                 <Label Text="{v:Translate Review_Intro}" Style="{StaticResource Secondary}" Margin="4,0" />
@@ -41,5 +42,14 @@
 
         <Button Grid.Row="1" Margin="16" Style="{StaticResource PrimaryButton}" Text="{v:Translate Review_Finish}" Command="{Binding FinishCommand}"
                 IsVisible="{Binding NothingToReview, Converter={StaticResource InvertedBoolConverter}}" />
+    </Grid>
+    <VerticalStackLayout Padding="24" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+        <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" />
+        <Label Text="{v:Translate Review_Loading}" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+    </VerticalStackLayout>
+    <VerticalStackLayout Padding="24" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+        <Label Text="{Binding Feedback}" TextColor="{DynamicResource DebtText}" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+        <Button Text="{v:Translate Review_RetryLoad}" Style="{StaticResource PrimaryButton}" Command="{Binding ReloadCommand}" IsEnabled="{Binding CanReload}" />
+    </VerticalStackLayout>
     </Grid>
 </ContentPage>

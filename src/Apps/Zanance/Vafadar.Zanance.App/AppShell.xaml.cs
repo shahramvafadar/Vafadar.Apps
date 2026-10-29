@@ -23,6 +23,7 @@ public partial class AppShell : Shell
     private readonly HashSet<PlansPage> _publishedPlanCenters = [];
     private readonly HashSet<Features.Templates.TemplatesPage> _publishedTemplateCenters = [];
     private readonly HashSet<TransactionsPage> _publishedTransactionCenters = [];
+    private readonly HashSet<Features.Reports.PeriodReviewPage> _publishedPeriodReviews = [];
     private bool _navigationRetired;
 
     /// <summary>Records actual published Home instances; lazy ShellContent.Content may not expose its cached page.</summary>
@@ -80,6 +81,12 @@ public partial class AppShell : Shell
     {
         if (_navigationRetired) page.RetireShellPublication();
         else _publishedTransactionCenters.Add(page);
+    }
+    /// <summary>Tracks original checklist pages so retained progress and row owners retire with their root.</summary>
+    internal void RegisterPeriodReview(Features.Reports.PeriodReviewPage page)
+    {
+        if (_navigationRetired) page.RetireShellPublication();
+        else _publishedPeriodReviews.Add(page);
     }
     /// <summary>Route of the account list.</summary>
     public const string AccountsRoute = AppRoutes.AccountsRoute;
@@ -284,6 +291,7 @@ public partial class AppShell : Shell
         else if (CurrentPage is PlansPage planCenter) await Presentation.Failures.GuardAsync(planCenter.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Templates.TemplatesPage templates) await Presentation.Failures.GuardAsync(templates.RefreshForNavigationAsync);
         else if (CurrentPage is TransactionsPage transactions) await Presentation.Failures.GuardAsync(transactions.RefreshForNavigationAsync);
+        else if (CurrentPage is Features.Reports.PeriodReviewPage review) await Presentation.Failures.GuardAsync(review.RefreshForNavigationAsync);
         else if (CurrentPage is PlanDetailPage planDetail) await Presentation.Failures.GuardAsync(planDetail.RefreshForNavigationAsync);
         else if (CurrentPage is OccurrencePage occurrence) await Presentation.Failures.GuardAsync(occurrence.RefreshForNavigationAsync);
         // D-497: Insights can retain both the forecast and its saved comparison while another tab changes the ledger.
@@ -340,6 +348,11 @@ public partial class AppShell : Shell
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
             && CurrentPage is TransactionsPage transactions)
             transactions.RetirePublication();
+        // D-636: retained checklist rows must not save progress after actual tab departure.
+        if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
+                or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
+            && CurrentPage is Features.Reports.PeriodReviewPage review)
+            review.RetirePublication();
         // D-406: Android can retain a routed More page across tabs without OnDisappearing.
         // Retire its original financial review only after navigation survives the existing leave guards.
         if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
@@ -375,6 +388,8 @@ public partial class AppShell : Shell
         _publishedTemplateCenters.Clear();
         foreach (var transactions in _publishedTransactionCenters) transactions.RetireShellPublication();
         _publishedTransactionCenters.Clear();
+        foreach (var review in _publishedPeriodReviews) review.RetireShellPublication();
+        _publishedPeriodReviews.Clear();
         Navigated -= OnRetainedDetailsTabActivated;
 #if ANDROID
         if (Handler is AccessibleShellRenderer renderer) renderer.RetireNavigation();

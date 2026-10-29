@@ -8529,4 +8529,10 @@ SHA-256 du XML original : {5}</value>
   <data name="Templates_DeletedReadFailed" xml:space="preserve">
     <value>Le modèle a été supprimé, mais la liste n’a pas pu être actualisée. Rechargez-la sans répéter la suppression.</value>
   </data>
+  <data name="Review_Loading" xml:space="preserve">
+    <value>Chargement du bilan de la période…</value>
+  </data>
+  <data name="Review_RetryLoad" xml:space="preserve">
+    <value>Recharger le bilan</value>
+  </data>
 </root>

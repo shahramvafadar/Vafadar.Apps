@@ -8586,4 +8586,10 @@ Original XML SHA-256: {5}</value>
   <data name="Templates_DeletedReadFailed" xml:space="preserve">
     <value>The template was deleted, but the list could not be refreshed. Reload the list; do not delete it again.</value>
   </data>
+  <data name="Review_Loading" xml:space="preserve">
+    <value>Loading the period review…</value>
+  </data>
+  <data name="Review_RetryLoad" xml:space="preserve">
+    <value>Load the review again</value>
+  </data>
 </root>

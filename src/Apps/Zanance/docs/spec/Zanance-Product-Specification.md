@@ -10719,3 +10719,26 @@ AVD stops. Four standard cleans pass; six-root supplemental deletion is refused 
 process creation, leaving3775files/6437103903logicalbytes with no retry or alternate path.
 [Full evidence and preserved failures](../quality/complete-original-transactions.md).
 D-607/phone/three deadlines and broad release gates remain separate; overall goal active.
+
+
+### D-636 - Complete original period review and progress ownership (2026-10-29)
+
+The actual original multi-call reader mixes two files. Replace it with a complete
+first-file worker snapshot and fresh source validation; keep original period/occurrence/
+reconciliation/goal/backup rules. Publish whole original rows under cover, retire actual
+page/tab/root/display/day/row owners and bind original progress/finish to the reviewed
+source and actual due period through the atomic writer. Acceptance precedes fallible
+notification and survives failed read/explicit Retry. Preserve the D-636 old-day Finish
+regression and corrected refusal. Seventeen distinct focused cases and final strict
+Windows/full offline signed Android pass. Original native54read/layout states pass,
+retaining9successes before an actual native status11exit and only45remaining observations
+after ordinary resume; its cause and broad stability remain unproven. One no-reset final
+candidate preserves the same fixture; one original tick and one finish/failed-read/Retry
+change only progress/actual audit time with ledger0and complete remaining source exact.
+Original display/five settings/size/density/boot return; only fresh UID/267hash-matched XMLs
+retire and the exact owned AVD is deleted with its official manager. Six standard cleans
+remove29348files/2039434402logicalbytes; six-root supplemental removal is refused before
+process creation, leaving3339files/490314931logicalbytes without retry/subset/alternate/
+move/escalation/reuse. [Complete evidence](../quality/complete-original-period-review.md).
+No model/schema/formula/permission change. D-607/phone/three deadlines and all broad
+release gates remain separate; overall goal active and TalkBack last.

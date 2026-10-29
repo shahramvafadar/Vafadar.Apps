@@ -8521,4 +8521,10 @@ SHA-256 del XML original: {5}</value>
   <data name="Templates_DeletedReadFailed" xml:space="preserve">
     <value>Se eliminó la plantilla, pero no se pudo actualizar la lista. Vuelve a cargarla; no repitas la eliminación.</value>
   </data>
+  <data name="Review_Loading" xml:space="preserve">
+    <value>Cargando la revisión del período…</value>
+  </data>
+  <data name="Review_RetryLoad" xml:space="preserve">
+    <value>Volver a cargar la revisión</value>
+  </data>
 </root>
