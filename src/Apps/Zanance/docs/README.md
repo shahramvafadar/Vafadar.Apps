@@ -61,3 +61,7 @@ Protected D-607 and broad release/platform acceptance remain separate.
 
 Original category overview/editor source and accepted metadata ownership (D-638):
 [focused and original native evidence](quality/complete-original-category-management.md), with physical adoption and broader release gates separate.
+
+Original account editor source, default/receipt and native presentation ownership (D-639):
+[focused failures, actual continuations and terminal limits](quality/complete-original-account-editor-source.md).
+Physical adoption awaits the protected D-607 terminal gate.

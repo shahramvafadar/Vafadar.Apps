@@ -230,7 +230,12 @@ public sealed partial class AccountsViewModel(ZananceStore store, Translator tra
         try
         {
             await store.ValidateAccountOverviewAccessAsync(snapshot, token);
-            if (Current()) await interaction.NavigateAsync(route, parameters);
+            if (Current())
+            {
+                if (route == AppRoutes.AccountEditorRoute)
+                    parameters = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>()) { ["accountEditorOrigin"] = snapshot.EditorOrigin };
+                await interaction.NavigateAsync(route, parameters);
+            }
         }
         catch (OperationCanceledException) when (token.IsCancellationRequested) { }
         catch (Exception ex) when (ex is not OutOfMemoryException)

@@ -45,11 +45,14 @@ public sealed class AccountArchiveResult
 {
     private readonly Account _account;
     /// <summary>Captures the accepted state without exposing mutable internal fields.</summary>
-    internal AccountArchiveResult(Account account, bool defaultCleared) { _account = account.CopyForEditing(); DefaultCleared = defaultCleared; }
+    internal AccountArchiveResult(Account account, bool defaultCleared, AccountCurrencyLock currencyLock)
+    { _account = account.CopyForEditing(); DefaultCleared = defaultCleared; CurrencyLock = currencyLock; }
     /// <summary>Gets a detached accepted account copy, never a writable internal result packet.</summary>
     public Account Account => _account.CopyForEditing();
     /// <summary>Gets whether this transaction cleared the exact archived default, without choosing another.</summary>
     public bool DefaultCleared { get; }
+    /// <summary>Gets actual post-write currency constraints captured before the same writer released its file.</summary>
+    public AccountCurrencyLock CurrencyLock { get; }
 }
 
 /// <summary>An archive transaction committed before its original change publication failed.</summary>
@@ -81,16 +84,24 @@ public sealed partial class ZananceStore
 
     /// <summary>Rechecks reviewed rows under one actual writer, then atomically updates archive, plans, choices and exact default.</summary>
     public async Task<AccountArchiveResult> WriteAccountArchiveAsync(AccountArchiveReview reviewed, bool archive, PlanStore plans,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default, Func<bool>? isCurrent = null,
+        AccountEditorSnapshot? originalSource = null, Action? accepted = null)
     {
         ArgumentNullException.ThrowIfNull(reviewed); ArgumentNullException.ThrowIfNull(plans);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        void Current()
+        {
+            if (isCurrent?.Invoke() == false) throw new OperationCanceledException("The original account archive owner retired.");
+            reviewed.Access.EnsureSnapshotCurrent(); originalSource?.RequireOriginal(db);
+        }
+        Current();
         if (DatabaseFileIdentity.ConfiguredPath(db) != reviewed.Path || reviewed.IsArchived == archive)
             throw new InvalidOperationException("The archive review belongs to another file or action.");
         await plans.VerifyArchiveStoreAsync(this, reviewed.Path, cancellationToken);
-        reviewed.Access.EnsureSnapshotCurrent();
+        Current();
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
-        reviewed.Access.EnsureSnapshotCurrent();
+        Current();
+        if (originalSource is not null) await ValidateOriginalAccountEditorAsync(originalSource, db, cancellationToken);
         if (DateOnly.FromDateTime(time.GetLocalNow().DateTime) != reviewed.Day)
             throw new InvalidOperationException("The reviewed archive day changed.");
         var original = await db.Accounts.AsNoTracking().SingleAsync(row => row.Id == reviewed.Id, cancellationToken);
@@ -108,11 +119,14 @@ public sealed partial class ZananceStore
         var settings = archive ? await db.Settings.OrderBy(row => row.CreatedAt).FirstOrDefaultAsync(cancellationToken) : null;
         var clear = settings?.DefaultAccountId == target.Id;
         if (clear) settings!.DefaultAccountId = null;
-        reviewed.Access.EnsureSnapshotCurrent(); write.EnsureCurrent();
+        Current(); write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
-        reviewed.Access.EnsureSnapshotCurrent();
+        Current();
+        var currencyLock = await CurrencyLockAsync(db, target, cancellationToken);
+        Current();
         await write.CommitAsync(cancellationToken);
-        var result = new AccountArchiveResult(target, clear);
+        accepted?.Invoke();
+        var result = new AccountArchiveResult(target, clear, currencyLock);
         var failures = new List<Exception>();
         try { OnChanged(); } catch (Exception exception) when (exception is not OutOfMemoryException) { failures.Add(exception); }
         if (ending.Count > 0)

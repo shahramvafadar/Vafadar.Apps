@@ -6271,7 +6271,7 @@ Category limits:
     <value>Refresh account and access</value>
   </data>
   <data name="Account_Loading" xml:space="preserve">
-    <value>Loading the original account…</value>
+    <value>Loading account…</value>
   </data>
   <data name="Account_ReadFailed" xml:space="preserve">
     <value>The account could not be loaded completely. Refresh to try again; your reconciliation input is kept.</value>
@@ -8612,5 +8612,14 @@ Original XML SHA-256: {5}</value>
   </data>
   <data name="Category_Unavailable" xml:space="preserve">
     <value>The original category is no longer available in this form. Close it and open the category again. Your unsaved text is still here.</value>
+  </data>
+  <data name="Account_RetryLoad" xml:space="preserve">
+    <value>Retry account</value>
+  </data>
+  <data name="Account_Unavailable" xml:space="preserve">
+    <value>This account is unavailable or has changed. Close this form and open the account again. Your draft has not been saved.</value>
+  </data>
+  <data name="Account_SavedDraftChanged" xml:space="preserve">
+    <value>The account was saved, but the text now shown includes changes that were not saved. Review them before closing.</value>
   </data>
 </root>

@@ -18,7 +18,7 @@ public sealed record AccountOverviewInputs(ZananceSettings? Settings, List<Accou
     List<ExchangeRate> Rates, List<AssetType> Types, List<AssetEvent> Events);
 
 /// <summary>Owns the original file, cached access and complete input identity of one covered account-list read.</summary>
-public sealed class AccountOverviewSnapshot
+public sealed class AccountOverviewSnapshot : IAccountEditorOrigin
 {
     private readonly CommercialFileAccess _access;
     private readonly string _stamp;
@@ -31,11 +31,13 @@ public sealed class AccountOverviewSnapshot
 
     /// <summary>Gets all original detached facts; caller mutation refuses later validation instead of changing authority.</summary>
     public AccountOverviewInputs Inputs { get; }
+    /// <summary>Gets the small original editor handoff without retaining this overview's ledger graph in the modal.</summary>
+    public AccountEditorOrigin EditorOrigin { get; }
 
     /// <summary>Captures complete input identities only on the read worker, never while native rows are publishing.</summary>
     internal AccountOverviewSnapshot(string path, CommercialFileAccess access, string revision, AccountOverviewInputs inputs)
     {
-        DatabasePath = path; _access = access; Revision = revision; Inputs = inputs;
+        DatabasePath = path; _access = access; Revision = revision; Inputs = inputs; EditorOrigin = new(path, access);
         _stamp = Capture(inputs, AccountOverviewJson.Default.AccountOverviewInputs);
         _metadataStamp = Capture(new AccountOverviewMetadata(inputs.Settings, inputs.Accounts), AccountOverviewJson.Default.AccountOverviewMetadata);
     }

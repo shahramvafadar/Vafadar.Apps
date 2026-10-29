@@ -256,6 +256,14 @@ public sealed partial class AccountFormModel : ObservableObject
         }
     }
 
+    /// <summary>Refreshes only original currency restrictions without replacing any unsaved monetary or text input.</summary>
+    public void RefreshCurrencyLock(AccountCurrencyLock currencyLock)
+    {
+        ArgumentNullException.ThrowIfNull(currencyLock);
+        CurrencyLocked = currencyLock.IsLocked;
+        CurrencyLockText = currencyLock.IsLocked ? _translator.Format("Account_CurrencyLockedBy", LockReasons(currencyLock)) : null;
+    }
+
     /// <summary>Fills the form from an account.</summary>
     public void Load(Account account, CultureInfo culture, AccountCurrencyLock currencyLock)
     {

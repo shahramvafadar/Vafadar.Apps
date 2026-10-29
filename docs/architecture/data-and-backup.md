@@ -2825,3 +2825,14 @@ permission change is introduced. [Focused and actual native evidence](../../src/
 ## D-638 bounded category source and writer receipts
 
 Category overview/editor reads capture every category field from one actual file/access under a deferred worker transaction. A merge alone obtains the complete original reference graph and immutable streamed digest; ordinary category reads do not load the ledger. Validate fresh complete source and current page/draft/consent through the protected original writer commit. Same-writer post-write receipts carry accepted save/move/merge results before releasing that lease. Preserve original algorithms, unrestricted category policy and financial conflict behavior; no schema/model/migration change is introduced.
+
+## D-639 original account/default snapshot and commit
+
+ReadAccountEditorAsync captures optional settings, complete ordered accounts, currency-lock
+counts and original work explanation from the same actual protected context and deferred worker
+transaction. Reads never initialize settings. Narrow parent origins retain file/access/day, not
+a parent's ledger graph. Validate complete detached and persisted facts inside the original writer.
+SaveAccountAsync stages the explicit default in that same transaction; account/archive receipts
+are captured before fallible publication. Preserve original conflict, financial/currency/quota
+policies and additive schema history; no model/migration change is needed.
+[Exact source and native limits](../../src/Apps/Zanance/docs/quality/complete-original-account-editor-source.md).

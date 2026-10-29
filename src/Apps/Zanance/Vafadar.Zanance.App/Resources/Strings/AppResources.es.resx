@@ -6211,7 +6211,7 @@ Límites por categoría:
     <value>Actualizar cuenta y acceso</value>
   </data>
   <data name="Account_Loading" xml:space="preserve">
-    <value>Cargando los datos originales de la cuenta…</value>
+    <value>Cargando la cuenta…</value>
   </data>
   <data name="Account_ReadFailed" xml:space="preserve">
     <value>No se pudo cargar toda la cuenta. Actualízala para intentarlo de nuevo; se conservan los datos de conciliación introducidos.</value>
@@ -8547,5 +8547,14 @@ SHA-256 del XML original: {5}</value>
   </data>
   <data name="Category_Unavailable" xml:space="preserve">
     <value>La categoría original ya no está disponible en este formulario. Ciérralo y vuelve a abrir la categoría. Tu texto sin guardar sigue aquí.</value>
+  </data>
+  <data name="Account_RetryLoad" xml:space="preserve">
+    <value>Volver a cargar la cuenta</value>
+  </data>
+  <data name="Account_Unavailable" xml:space="preserve">
+    <value>Esta cuenta no está disponible o ha cambiado. Cierra este formulario y abre la cuenta de nuevo. Tu borrador no se ha guardado.</value>
+  </data>
+  <data name="Account_SavedDraftChanged" xml:space="preserve">
+    <value>La cuenta se ha guardado, pero el texto actual incluye cambios sin guardar. Revísalos antes de cerrar.</value>
   </data>
 </root>

@@ -599,7 +599,12 @@ public sealed partial class AccountDetailViewModel(
                 if (current()) LoanWorkFeedback = CommercialFailureMessage.OrFallback(rejected, translator, "Loan_ReadFailed");
                 return;
             }
-            if (current()) await interaction.NavigateAsync(route, parameters);
+            if (current())
+            {
+                if (route == AppRoutes.AccountEditorRoute)
+                    parameters = new Dictionary<string, object>(parameters ?? new Dictionary<string, object>()) { ["accountEditorOrigin"] = snapshot.EditorOrigin };
+                await interaction.NavigateAsync(route, parameters);
+            }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {

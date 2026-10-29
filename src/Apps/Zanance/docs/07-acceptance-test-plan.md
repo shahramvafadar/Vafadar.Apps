@@ -7833,3 +7833,15 @@ stability, accessibility, phone/iOS/provider/Store or publication acceptance is 
 ## D-638 original category management acceptance
 
 Focused29new/four existing affected cases and48 original native read/layout states pass in the independent API36/x64/4096 scope. Six original metadata commands run once, including failed post-move read/Retry, archived-parent name Save, same-page draft display refresh and native parent-into-child merge. Ledger remains0; the actual departed editor Save is refused. Final source/restoration/UID/owned-AVD retirement proofs and cleanup refusal are retained. This does not accept physical Main adoption, whole private DB/keys or wider release gates.
+
+## D-639 original account editor acceptance
+
+Twenty-one new focused cases, five affected existing cases and strict Windows/full offline APK
+checks pass. Fresh API36/x64/4096 original UI verifies checking/loan identity and raw fields,
+six en/fa/de loading/error covers and explicit Retry, cancelled pending read and actual departed
+Save refusal. One actual name Save survives notification failure with Save disabled; one native
+archive clears the same original default. The complete observed source permits only declared
+metadata/default deltas and keeps zero ledger entries. Same-UID correction follows the preserved
+fast-failure defect; no accepted seed/Save/archive is replayed. Exact restore and fresh-only
+retirement pass, with supplemental cleanup refusal recorded. Physical adoption and broad release
+gates remain separate; D-607 is untouched. [Full evidence](quality/complete-original-account-editor-source.md).

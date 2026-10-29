@@ -6231,7 +6231,7 @@ Limiti per categoria:
     <value>Aggiorna conto e accesso</value>
   </data>
   <data name="Account_Loading" xml:space="preserve">
-    <value>Caricamento dei dati originali del conto…</value>
+    <value>Caricamento del conto…</value>
   </data>
   <data name="Account_ReadFailed" xml:space="preserve">
     <value>Non è stato possibile caricare completamente il conto. Aggiornalo per riprovare; i dati di riconciliazione inseriti vengono conservati.</value>
@@ -8567,5 +8567,14 @@ SHA-256 dell’XML originale: {5}</value>
   </data>
   <data name="Category_Unavailable" xml:space="preserve">
     <value>La categoria originale non è più disponibile in questo modulo. Chiudilo e riapri la categoria. Il testo non salvato è ancora conservato qui.</value>
+  </data>
+  <data name="Account_RetryLoad" xml:space="preserve">
+    <value>Ricarica il conto</value>
+  </data>
+  <data name="Account_Unavailable" xml:space="preserve">
+    <value>Questo conto non è disponibile o è cambiato. Chiudi il modulo e riapri il conto. La bozza non è stata salvata.</value>
+  </data>
+  <data name="Account_SavedDraftChanged" xml:space="preserve">
+    <value>Il conto è stato salvato, ma il testo attuale contiene modifiche non salvate. Controllale prima di chiudere.</value>
   </data>
 </root>

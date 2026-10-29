@@ -20,7 +20,7 @@
             </FlexLayout>
         </Grid>
 
-        <ScrollView Grid.Row="1">
+        <ScrollView Grid.Row="1" IsVisible="{Binding Loading.IsReady}">
             <VerticalStackLayout Padding="16" Spacing="8">
                 <Border Style="{StaticResource Card}" IsEnabled="{Binding CanInteract}">
                     <local:AccountFormView x:Name="AccountForm" BindingContext="{Binding Form}" />
@@ -47,7 +47,7 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <VerticalStackLayout Grid.Row="2" Padding="16,8,16,16" Spacing="8" BackgroundColor="{DynamicResource PageBackground}">
+        <VerticalStackLayout Grid.Row="2" Padding="16,8,16,16" Spacing="8" BackgroundColor="{DynamicResource PageBackground}" IsVisible="{Binding Loading.IsReady}">
             <Label Text="{Binding WorkText}" Style="{StaticResource Secondary}"
                    IsVisible="{Binding WorkText, Converter={StaticResource IsNotNullConverter}}" />
             <p:WrappingAction Text="{v:Translate Editor_ReviewWork}" Command="{Binding ReviewWorkCommand}"
@@ -56,6 +56,14 @@
                    IsVisible="{Binding SaveError, Converter={StaticResource IsNotNullConverter}}" />
         <Button Margin="0" Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Save}"
                 Command="{Binding SaveCommand}" IsEnabled="{Binding CanSave}" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="1" Padding="24" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" />
+            <Label Text="{v:Translate Account_Loading}" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="1" Padding="24" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+            <Label Text="{Binding SaveError}" Style="{StaticResource ErrorText}" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+            <Button Text="{v:Translate Account_RetryLoad}" Style="{StaticResource PrimaryButton}" Command="{Binding ReloadCommand}" IsEnabled="{Binding CanReload}" />
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

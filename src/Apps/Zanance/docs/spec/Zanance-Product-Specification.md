@@ -10809,3 +10809,32 @@ D-607/phone/all three deadlines/post-reboot unread source stay untouched. Physic
 whole DB/key/security/ANR/crash/two-second performance/A11Y/iOS/provider/Store/release remain
 separate. The overall goal stays active and TalkBack remains last.
 [Complete evidence](../quality/complete-original-category-management.md).
+
+### D-639 - Complete original account editor source and ownership (2026-10-29)
+
+Read account/default/currency constraints and work explanation from one original file and
+worker transaction without initializing storage or loading ledger history. Parent routes carry
+only narrow file/access/day authority. Preserve complete detached/source guards, raw drafts,
+original quota/currency policy and native page/root/tab/consent ownership through commit.
+Account and explicit default share one protected transaction; Save/archive retain actual
+accepted receipts before fallible notifications and never discard text arriving afterward.
+Initial native appearance cannot quietly retry a failed read; only interrupted pending reads
+resume, while failures require visible Retry.
+
+Twenty-one distinct new focused cases and five affected existing cases pass. Strict Windows
+and the full signed offline384AOT/408ELF product pass. Six actual en/fa/de loading/error covers,
+explicit Retry, original checking/loan reads, pending-reader cancellation/departed Save refusal,
+one name Save with notification failure and one native-confirmed default-clearing archive pass
+on a fresh API36/x64/4096 source. Accepted operations and empty ledger are not replayed.
+Only declared account/default deltas differ in the complete observed thirteen-table source.
+Preserve the native fast-failure regression, observer/encoding/transition errors and rejected
+network-capable output separately. Same-UID correction preserves source and baseline lineage.
+
+Exact OS/size/density/boot/enSystem and used APK restore; only the fresh UID/56hash-matched XMLs
+and owned AVD retire. Four standard cleans remove28959files/1965700909logicalbytes; official AVD
+deletion removes24files/5556089708logicalbytes. Six-root supplemental deletion is rejected before
+process creation, leaving3716files/578572070logicalbytes; never retry/subset/alternate/move/escalate/reuse.
+Used packages/evidence remain. Phone/D-607/all three deadlines/unread source are untouched;
+physical adoption and broader DB/key/security/ANR/performance/A11Y/iOS/provider/Store/release gates
+remain separate. Overall delivery stays active.
+[Complete source and native evidence](../quality/complete-original-account-editor-source.md).

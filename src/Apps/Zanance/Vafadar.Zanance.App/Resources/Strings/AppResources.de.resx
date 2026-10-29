@@ -6242,7 +6242,7 @@ Kategorielimits:
     <value>Konto und Berechtigung aktualisieren</value>
   </data>
   <data name="Account_Loading" xml:space="preserve">
-    <value>Die ursprünglichen Kontodaten werden geladen…</value>
+    <value>Konto wird geladen…</value>
   </data>
   <data name="Account_ReadFailed" xml:space="preserve">
     <value>Das Konto konnte nicht vollständig geladen werden. Aktualisieren Sie es erneut; Ihre Eingaben zum Kontenabgleich bleiben erhalten.</value>
@@ -8578,5 +8578,14 @@ Original-XML SHA-256: {5}</value>
   </data>
   <data name="Category_Unavailable" xml:space="preserve">
     <value>Die ursprüngliche Kategorie ist in diesem Formular nicht mehr verfügbar. Schließe es und öffne die Kategorie erneut. Dein ungespeicherter Text bleibt hier erhalten.</value>
+  </data>
+  <data name="Account_RetryLoad" xml:space="preserve">
+    <value>Konto erneut laden</value>
+  </data>
+  <data name="Account_Unavailable" xml:space="preserve">
+    <value>Dieses Konto ist nicht verfügbar oder wurde geändert. Schließen Sie dieses Formular und öffnen Sie das Konto erneut. Ihr Entwurf wurde nicht gespeichert.</value>
+  </data>
+  <data name="Account_SavedDraftChanged" xml:space="preserve">
+    <value>Das Konto wurde gespeichert. Der jetzt angezeigte Text enthält jedoch nicht gespeicherte Änderungen. Prüfen Sie diese vor dem Schließen.</value>
   </data>
 </root>

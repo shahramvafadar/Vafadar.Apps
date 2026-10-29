@@ -6242,7 +6242,7 @@
     <value>تازه‌سازی حساب و دسترسی</value>
   </data>
   <data name="Account_Loading" xml:space="preserve">
-    <value>در حال بارگذاری اطلاعات حساب…</value>
+    <value>در حال بارگذاری حساب…</value>
   </data>
   <data name="Account_ReadFailed" xml:space="preserve">
     <value>بارگذاری کامل حساب ممکن نشد. برای تلاش دوباره، اطلاعات را تازه کنید؛ ورودی‌های تطبیق موجودی حفظ شده‌اند.</value>
@@ -8578,5 +8578,14 @@
   </data>
   <data name="Category_Unavailable" xml:space="preserve">
     <value>دستهٔ اصلی دیگر در این فرم در دسترس نیست. فرم را ببندید و دسته را دوباره باز کنید. متن ذخیره‌نشدهٔ شما هنوز حفظ شده است.</value>
+  </data>
+  <data name="Account_RetryLoad" xml:space="preserve">
+    <value>تلاش دوباره برای حساب</value>
+  </data>
+  <data name="Account_Unavailable" xml:space="preserve">
+    <value>این حساب در دسترس نیست یا تغییر کرده است. فرم را ببندید و حساب را دوباره باز کنید. پیش‌نویس شما ذخیره نشده است.</value>
+  </data>
+  <data name="Account_SavedDraftChanged" xml:space="preserve">
+    <value>حساب ذخیره شد، اما متن فعلی شامل تغییراتی است که ذخیره نشده‌اند. پیش از بستن، آن‌ها را بررسی کنید.</value>
   </data>
 </root>

@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Vafadar.Zanance.App.Interaction;
+using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Data.Commerce;
 using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
@@ -31,18 +32,66 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     private IOriginalAccountHandoff? _originalAccountHandoff;
     private bool _presented = true;
     private long _presentationRevision;
+    private long _readRevision, _pendingPresentation, _workReadRevision;
+    private CancellationTokenSource _readLifetime = new();
+    private Task? _pendingRead;
+    private Dictionary<string, object>? _route;
+    private Guid? _requestedId;
+    private bool _requestedEdit, _routeInvalid, _routeRetired, _formInitialized;
+    private string? _sourceFile;
+    private Guid? _originalDefault;
+    private AccountEditorSnapshot? _editorSource;
+    private IAccountEditorOrigin? _origin;
+    private Func<bool>? _rootCurrent;
+
+    /// <summary>Binds only the actual page adapter's original native root; headless explicit ports need no global Shell.</summary>
+    internal void BindRootOwner(Func<bool> current) => _rootCurrent = current ?? throw new ArgumentNullException(nameof(current));
+    private bool OwnsRoot => _rootCurrent?.Invoke() != false;
+
+    /// <summary>Gets the original form's whole loading/error cover; Retry never invokes a metadata or financial writer.</summary>
+    [ObservableProperty]
+    public partial SnapshotLoadState Loading { get; private set; } = new();
+
+    /// <summary>Gets whether the same captured route can retry its original-file reader.</summary>
+    public bool CanReload => _route is not null && !_routeRetired && _presented && !IsBusy && !_committed && !Loading.IsLoading;
+
     /// <summary>Retires this nested child's pending callbacks on departure without discarding an uncommitted raw form.</summary>
     internal void SetPresentationActive(bool active)
     {
-        if (_presented != active) { _presented = active; _presentationRevision++; }
+        var resumed = active && !_presented;
+        if (_presented != active)
+        {
+            _presented = active; _presentationRevision++;
+            if (!active) { RetireRead(); _workReadRevision++; _reviewingWork = false; }
+        }
         _localization.Changed -= OnDisplayChanged;
-        if (active) _localization.Changed += OnDisplayChanged;
-        Form.RefreshTexts();
+        if (active)
+        {
+            _localization.Changed += OnDisplayChanged;
+            Form.RefreshTexts();
+            // D-639: initial appearance can follow a completed failure; only an interrupted pending read resumes.
+            if (resumed && _route is not null && Loading.IsLoading && !_committed) _ = LoadAsync();
+        }
         RefreshAccess();
     }
-    private void OnDisplayChanged(object? sender, EventArgs args) => Form.RefreshTexts();
-    private bool OwnsChild(long revision) => _presented && revision == _presentationRevision
+    private void OnDisplayChanged(object? sender, EventArgs args)
+    {
+        var pendingRead = Loading.IsLoading;
+        _presentationRevision++; RetireRead(); Form.RefreshTexts(); RefreshTitle();
+        // Translation/format changes preserve already captured source and raw monetary input; only an unfinished read restarts.
+        if (pendingRead && _presented && _route is not null && !_committed) _ = LoadAsync();
+        RefreshAccess();
+    }
+    private void RetireRead()
+    {
+        _readRevision++; var old = _readLifetime; _readLifetime = new(); old.Cancel(); old.Dispose();
+    }
+    private bool OwnsPresentation(long revision) => _presented && OwnsRoot && revision == _presentationRevision
         && (_originalAccountHandoff is null || _originalAccountHandoff.IsOwned);
+    private bool OwnsChild(long revision) => !_routeRetired && OwnsPresentation(revision);
+    private void RefreshTitle() => Title = _translator[Form.IsDebtType
+        ? (_requestedEdit ? "Debt_EditTitle" : "Debt_NewTitle")
+        : (_requestedEdit ? "Account_EditTitle" : "Account_NewTitle")];
 
     /// <summary>Creates the original form without starting database or native work.</summary>
     public AccountEditorViewModel(ZananceStore store, PlanStore plans, Translator translator, ILocalizationService localization, TimeProvider time, IAppInteraction interaction)
@@ -72,7 +121,7 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     public AccountFormModel Form { get; }
 
     /// <summary>Gets whether user input can change this loaded, not-yet-committed form.</summary>
-    public bool CanInteract => !_loading && !IsBusy && !_committed && OwnsChild(_presentationRevision);
+    public bool CanInteract => !_loading && Loading.IsReady && !IsBusy && !_committed && OwnsChild(_presentationRevision);
     /// <summary>Gets whether a financial Save can run; a committed account cannot be resubmitted.</summary>
     public bool CanSave => CanInteract && Form.MoneyContextsReady && !_reviewingWork && !_workFailed && !_workRetired && _work is not null && WorkRestriction is null;
     /// <summary>Gets whether a pending writer must finish before leaving this form.</summary>
@@ -85,26 +134,44 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
         : _workRetired ? _translator["Editor_WorkRetired"]
         : WorkRestriction is { } restriction ? Presentation.CommercialFailureMessage.Describe(restriction, _translator) : null;
     /// <summary>Gets whether the original availability can be explicitly refreshed without changing any draft.</summary>
-    public bool CanReviewWork => !_loading && !IsBusy && !_committed && !_reviewingWork;
+    public bool CanReviewWork => _route is not null && _presented && !_routeRetired && !IsBusy && !_committed && !_reviewingWork && !Loading.IsLoading;
     private async Task ReadWorkAsync()
     {
+        if (!_formInitialized) { await LoadAsync(); return; }
+        var presentation = _presentationRevision; var source = _editorSource; var workRead = ++_workReadRevision;
         _reviewingWork = true; RefreshAccess();
         try
         {
-            _originalAccountHandoff?.EnsureCurrent();
-            var next = _originalAccountHandoff is { } child ? await child.ReadWorkAsync(_store) : await _store.ReadEditorWorkAsync();
-            _originalAccountHandoff?.EnsureCurrent();
-            next.EnsureCurrent(); _work = next; _workFailed = false; _workRetired = false;
+            EditorWorkReview next; AccountEditorSnapshot? fresh = null;
+            if (_originalAccountHandoff is { } child)
+            {
+                child.EnsureCurrent(); next = await child.ReadWorkAsync(_store); child.EnsureCurrent();
+            }
+            else
+            {
+                if (source is null) throw new AccountEditorUnavailableException();
+                fresh = await _store.ReadAccountEditorAsync(_requestedId, path => path == source.DatabasePath);
+                if (!fresh.HasSameInputs(source)) throw new AccountEditorUnavailableException();
+                next = fresh.Work;
+            }
+            if (workRead != _workReadRevision || !OwnsChild(presentation) || !ReferenceEquals(source, _editorSource)) return;
+            next.EnsureCurrent(); if (fresh is not null) _editorSource = fresh;
+            _work = next; _workFailed = false; _workRetired = false;
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { _work = null; _workFailed = true; }
-        finally { _reviewingWork = false; RefreshAccess(); }
+        {
+            if (workRead == _workReadRevision && OwnsChild(presentation) && ReferenceEquals(source, _editorSource)) { _work = null; _workFailed = true; }
+        }
+        finally { if (workRead == _workReadRevision && OwnsChild(presentation)) { _reviewingWork = false; RefreshAccess(); } }
     }
     [RelayCommand(CanExecute = nameof(CanReviewWork))]
-    private Task ReviewWorkAsync() => ReadWorkAsync();
+    private Task ReviewWorkAsync() => CanReviewWork ? ReadWorkAsync() : Task.CompletedTask;
+    [RelayCommand(CanExecute = nameof(CanReload))]
+    private Task ReloadAsync() => CanReload ? LoadAsync() : Task.CompletedTask;
 
     private void RefreshAccess()
     {
+        OnPropertyChanged(nameof(CanReload)); ReloadCommand.NotifyCanExecuteChanged();
         OnPropertyChanged(nameof(WorkText)); OnPropertyChanged(nameof(CanReviewWork)); ReviewWorkCommand.NotifyCanExecuteChanged();
         OnPropertyChanged(nameof(CanLeave)); OnPropertyChanged(nameof(CanInteract)); OnPropertyChanged(nameof(CanSave)); OnPropertyChanged(nameof(CloseText));
         SaveCommand.NotifyCanExecuteChanged(); ToggleArchiveCommand.NotifyCanExecuteChanged(); CancelCommand.NotifyCanExecuteChanged();
@@ -146,50 +213,150 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     public async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
-        _presentationRevision++;
+        if (query.TryGetValue("accountEditorOrigin", out var parentOrigin))
+        {
+            // Retain only a small authority handle, not the parent's complete account/ledger snapshot.
+            var normalizedOrigin = parentOrigin switch
+            {
+                AccountEditorOrigin captured => captured,
+                AccountOverviewSnapshot overview => overview.EditorOrigin,
+                AccountDetailSnapshot detail => detail.EditorOrigin,
+                _ => throw new ArgumentException("The original account editor parent source is invalid.")
+            };
+            query = new Dictionary<string, object>(query) { ["accountEditorOrigin"] = normalizedOrigin };
+        }
+        if (_route is not null)
+        {
+            if (_route.Count != query.Count || _route.Any(pair => !query.TryGetValue(pair.Key, out var value) || !Equals(value, pair.Value)))
+            {
+                _routeRetired = true; RetireRead(); _loading = true; _editorSource = null; _work = null;
+                SaveError = _translator["Account_Unavailable"]; var failed = Loading = new();
+                try { await failed.RunAsync(() => Task.FromException(new AccountEditorUnavailableException()), () => { }); }
+                catch (AccountEditorUnavailableException) { }
+                RefreshAccess();
+            }
+            return;
+        }
+        _route = new(query); _presentationRevision++;
+        if (query.TryGetValue("accountEditorOrigin", out var origin))
+        {
+            if (origin is not AccountEditorOrigin captured)
+                throw new ArgumentException("The original account editor parent source is invalid.");
+            _origin = captured; _sourceFile = captured.DatabasePath;
+        }
+        _requestedEdit = query.TryGetValue("id", out var requested);
+        if (_requestedEdit)
+        {
+            if (requested is Guid id && id != Guid.Empty) _requestedId = id;
+            else _routeInvalid = true;
+        }
         var originalVisit = query.TryGetValue("originalAccountHandoff", out var handoff);
         if (originalVisit || query.TryGetValue("entryAccountHandoff", out handoff))
         {
-            if (handoff is not IOriginalAccountHandoff visit || query.ContainsKey("id")
+            if (handoff is not IOriginalAccountHandoff visit || query.ContainsKey("id") || _origin is not null
                 || originalVisit && query.ContainsKey("entryAccountHandoff"))
                 throw new ArgumentException("The original nested account route is invalid.");
-            visit.EnsureCurrent(); _originalAccountHandoff = visit;
+            _originalAccountHandoff = visit;
         }
-        var settings = _originalAccountHandoff?.Settings ?? (_originalAccountHandoff is null ? await _store.GetSettingsAsync() : new ZananceSettings());
-        Form.ShowAdvanced = settings.Shows(Feature.AccountOptions);
+        RefreshTitle(); await LoadAsync();
+    }
 
-        if (query.TryGetValue("id", out var value) && value is Guid id
-            && (await _store.GetAccountsAsync()).FirstOrDefault(a => a.Id == id) is { } account)
+    /// <summary>Shares only the same live presentation read; a retired pending reader never blocks its new owner.</summary>
+    public Task LoadAsync()
+    {
+        if (_route is null || !OwnsChild(_presentationRevision) || _committed || IsBusy) return Task.CompletedTask;
+        if (_pendingRead is { IsCompleted: false } && _pendingPresentation == _presentationRevision) return _pendingRead;
+        _pendingPresentation = _presentationRevision;
+        return _pendingRead = LoadCoreAsync();
+    }
+
+    private async Task LoadCoreAsync()
+    {
+        RetireRead(); _workReadRevision++; var revision = _readRevision; var presentation = _presentationRevision;
+        var token = _readLifetime.Token; var state = Loading = new();
+        _loading = true; _reviewingWork = true; SaveError = null;
+        AccountEditorSnapshot? captured = null; ZananceSettings? settings = null; EditorWorkReview? work = null;
+        Account? original = null; var currencyLock = AccountCurrencyLock.None;
+        void Current()
         {
-            _account = account;
-            Form.Load(account, _localization.CurrentCulture, await _store.GetCurrencyLockAsync(id));
-            IsExisting = true;
-            IsArchived = account.IsArchived;
-            IsDefault = settings.DefaultAccountId == id;
-            Title = _translator["Account_EditTitle"];
+            token.ThrowIfCancellationRequested();
+            if (revision != _readRevision || !OwnsChild(presentation)) throw new OperationCanceledException("The original account reader retired.", token);
+            captured?.EnsureCurrent(); _origin?.EnsureCurrent(); _originalAccountHandoff?.EnsureCurrent();
         }
-        else
+        try
         {
-            Form.CurrencyCode = _originalAccountHandoff?.SuggestedCurrencyCode ?? settings.DefaultCurrencyCode;
-            if (query.TryGetValue("debt", out var debt) && debt is true)
+            var pending = state.RunAsync(async () =>
             {
-                Form.TypeIndex = (int)AccountType.Loan;
-            }
-            else if (debt is AccountType type && type.IsDebt())
+                Current(); if (_routeInvalid) throw new AccountEditorUnavailableException();
+                if (_originalAccountHandoff is { } child)
+                {
+                    settings = child.Settings ?? new ZananceSettings(); work = await child.ReadWorkAsync(_store); Current();
+                }
+                else
+                {
+                    captured = await _store.ReadAccountEditorAsync(_requestedId, path =>
+                    {
+                        _sourceFile ??= path; return _sourceFile == path;
+                    }, token);
+                    Current();
+                    await _store.ValidateAccountEditorAsync(captured, token); Current();
+                    settings = captured.Settings; work = captured.Work; currencyLock = captured.Inputs.CurrencyLock;
+                    original = _requestedId is { } id ? captured.Inputs.Accounts.Single(row => row.Id == id) : null;
+                    if (_formInitialized && (!captured.MatchesAccount(_account) || settings.DefaultAccountId != _originalDefault
+                        || currencyLock.IsLocked && !string.Equals(Form.CurrencyCode, _account.CurrencyCode, StringComparison.OrdinalIgnoreCase)))
+                        throw new AccountEditorUnavailableException();
+                }
+                work!.EnsureCurrent(); Current();
+            }, () =>
             {
-                Form.TypeIndex = (int)type;
+                void Publish(Action action) { Current(); action(); Current(); }
+                Publish(() => Form.ShowAdvanced = settings!.Shows(Feature.AccountOptions));
+                if (!_formInitialized)
+                {
+                    if (original is not null)
+                    {
+                        _account = original.CopyForEditing();
+                        Publish(() => IsExisting = true); Publish(() => IsArchived = original.IsArchived);
+                        Publish(() => Form.Load(_account, _localization.CurrentCulture, currencyLock));
+                        Publish(() => IsDefault = settings!.DefaultAccountId == _account.Id);
+                    }
+                    else
+                    {
+                        Publish(() => Form.CurrencyCode = _originalAccountHandoff?.SuggestedCurrencyCode ?? settings!.DefaultCurrencyCode);
+                        if (_route!.TryGetValue("debt", out var debt))
+                        {
+                            if (debt is true) Publish(() => Form.TypeIndex = (int)AccountType.Loan);
+                            else if (debt is AccountType type && type.IsDebt()) Publish(() => Form.TypeIndex = (int)type);
+                        }
+                    }
+                    Current(); _originalDefault = settings!.DefaultAccountId; _snapshot = Snapshot(); _formInitialized = true;
+                }
+                Publish(() => Form.RefreshCurrencyLock(currencyLock)); Publish(RefreshTitle);
+                _editorSource = captured; _work = work; _workFailed = false; _workRetired = false;
+            });
+            RefreshAccess(); await pending;
+        }
+        catch (OperationCanceledException) when (revision != _readRevision || !OwnsChild(presentation)) { }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            if (revision == _readRevision && OwnsChild(presentation))
+            {
+                _editorSource = null; _work = null; _workFailed = true;
+                SaveError = exception is AccountEditorUnavailableException ? _translator["Account_Unavailable"]
+                    : CommercialFailureMessage.OrFallback(exception, _translator, "Error_Unexpected");
             }
         }
-
-        Title = _translator[Form.IsDebtType ? (IsExisting ? "Debt_EditTitle" : "Debt_NewTitle") : (IsExisting ? "Account_EditTitle" : "Account_NewTitle")];
-
-        await ReadWorkAsync();
-        _snapshot = Snapshot(); _loading = false; RefreshAccess();
+        finally
+        {
+            if (revision == _readRevision && OwnsChild(presentation))
+            { _loading = !state.IsReady; _reviewingWork = false; RefreshAccess(); }
+        }
     }
 
     [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
+        if (!CanInteract) return;
         Form.RefreshMoneyTexts();
         if (!CanSave) return;
         var presentation = _presentationRevision;
@@ -197,34 +364,40 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
         bool CurrentDraft() => OwnsChild(presentation) && ReferenceEquals(_work, originalWork)
             && Snapshot() == raw && Form.MoneyRevision == moneyRevision && Form.MoneyContextsReady;
         IsBusy = true; SaveError = null;
-        var target = _account.CopyForEditing();
+        var target = _account.CopyForEditing(); Account? acceptedAccount = null;
+        void AcceptOriginal(Account actual)
+        {
+            // Record the exact writer result before fallible observers, without publishing a second financial command.
+            acceptedAccount = actual; _account = actual; _committed = true; _snapshot = raw;
+        }
         try
         {
             // Disable input before the account read, so another native Save cannot race validation.
             _originalAccountHandoff?.EnsureCurrent();
-            var accounts = _originalAccountHandoff?.Accounts ?? await _store.GetAccountsAsync();
+            var accounts = _originalAccountHandoff?.Accounts ?? _editorSource?.Inputs.Accounts
+                ?? throw new AccountEditorUnavailableException();
             if (!Form.TryApply(target, _localization.CurrentCulture, accounts)) return;
             if (!CurrentDraft()) throw new InvalidOperationException("The original account input changed before Save.");
             if (_originalAccountHandoff is { } child)
             {
                 await child.SaveAsync(_store, target, IsDefault, CurrentDraft);
-                _account = target; _committed = true; _snapshot = Snapshot(); RefreshAccess();
+                _account = target; _committed = true; _snapshot = raw; RefreshAccess();
                 if (child.NotificationFailed) { SaveError = _translator["Account_SavedNeedsReview"]; return; }
             }
-            else if (!await _store.SaveAccountAsync(target, isCurrent: CurrentDraft, originalWork: originalWork))
+            else if (!await _store.SaveAccountAsync(target, isCurrent: CurrentDraft, originalWork: originalWork, originalSource: _editorSource,
+                makeDefault: IsDefault, accepted: AcceptOriginal))
             {
                 SaveError = Form.CurrencyLockText ?? _translator["Account_CurrencyLocked"];
                 return;
             }
             if (_originalAccountHandoff is null)
             {
-                _account = target; _committed = true; _snapshot = Snapshot(); RefreshAccess();
-                await _store.UpdateOriginalAccountDefaultAsync(_account.Id, IsDefault, originalWork, () => OwnsChild(presentation));
+                _account = acceptedAccount ?? target; _committed = true; _snapshot = raw; RefreshAccess();
             }
         }
         catch (CommittedWriteNotificationException)
         {
-            _account = target; _committed = true; _snapshot = Snapshot(); RefreshAccess();
+            _account = acceptedAccount ?? target; _committed = true; _snapshot = raw; RefreshAccess();
             SaveError = _translator["Account_SavedNeedsReview"]; return;
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
@@ -239,24 +412,33 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
         try
         {
             if (!OwnsChild(presentation)) return;
+            if (Snapshot() != raw) { SaveError = _translator["Account_SavedDraftChanged"]; return; }
             await _interaction.NavigateAsync("..");
-            if (_originalAccountHandoff is null && !IsExisting && Form.IsDebtType)
-                await _interaction.NavigateAsync(AppRoutes.AccountDetailRoute, new Dictionary<string, object> { ["id"] = _account.Id });
+            if (_originalAccountHandoff is null && !IsExisting && Form.IsDebtType && OwnsRoot && _editorSource is { } source)
+            {
+                await _store.ValidateAccountEditorAccessAsync(source);
+                if (OwnsRoot) await _interaction.NavigateAsync(AppRoutes.AccountDetailRoute, new Dictionary<string, object> { ["id"] = _account.Id });
+            }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            SaveError = _translator["Editor_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception);
+            SaveError = _translator["Editor_SavedReturnFailed"]; if (OwnsRoot) await _interaction.ShowFailureAsync(exception);
         }
     }
 
     [RelayCommand(CanExecute = nameof(CanInteract))]
     private async Task ToggleArchiveAsync()
     {
-        if (!CanInteract) return;
+        if (!CanInteract || !IsExisting || _editorSource is not { } source) return;
+        var presentation = _presentationRevision; var raw = Snapshot();
+        bool Current() => OwnsChild(presentation) && ReferenceEquals(source, _editorSource) && Snapshot() == raw;
         IsBusy = true; SaveError = null; AccountArchiveResult? accepted = null;
         try
         {
+            await _store.ValidateAccountEditorAsync(source);
+            if (!Current()) return;
             var reviewed = await _store.ReadAccountArchiveAsync(_account.Id);
+            if (!Current()) return;
             if (reviewed.IsArchived != IsArchived) throw new InvalidOperationException("The original archive state changed.");
             var archive = !IsArchived; var action = _translator[archive ? "Account_Archive" : "Account_Unarchive"];
             if (archive || IsDirty)
@@ -265,17 +447,27 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
                     : _translator.Format("Account_ArchiveWithPlans", reviewed.PlanNames.Count, string.Join(", ", reviewed.PlanNames.Take(5)));
                 if (!archive) message = _translator["Account_UnarchiveDraft"];
                 if (IsDirty) message += "\n\n" + _translator["Account_ArchiveDraftDiscard"];
-                if (!await _interaction.ConfirmAsync(action, message, action, _translator["Common_KeepEditing"])) return;
+                if (!await _interaction.ConfirmAsync(action, message, action, _translator["Common_KeepEditing"]) || !Current()) return;
             }
-            accepted = await _store.WriteAccountArchiveAsync(reviewed, archive, _plans);
+            accepted = await _store.WriteAccountArchiveAsync(reviewed, archive, _plans, isCurrent: Current, originalSource: source);
+            var laterDraft = Snapshot() != raw;
             AcceptArchive(accepted);
-            Form.Load(_account, _localization.CurrentCulture, await _store.GetCurrencyLockAsync(_account.Id));
+            if (laterDraft)
+            {
+                _snapshot = raw; SaveError = _translator["Account_SavedDraftChanged"]; return;
+            }
+            if (!OwnsChild(presentation)) return;
+            Form.Load(_account, _localization.CurrentCulture, accepted.CurrencyLock);
             _snapshot = Snapshot();
-            if (accepted.DefaultCleared) await _interaction.AlertAsync(_translator["Account_Archive"], _translator["Account_DefaultCleared"], _translator["Common_Ok"]);
+            if (accepted.DefaultCleared && OwnsChild(presentation)) await _interaction.AlertAsync(_translator["Account_Archive"], _translator["Account_DefaultCleared"], _translator["Common_Ok"]);
         }
         catch (AccountArchivePublicationException exception)
         {
-            accepted = exception.Result; AcceptArchive(accepted); SaveError = _translator["Account_ArchiveSavedReview"]; return;
+            var laterDraft = Snapshot() != raw;
+            accepted = exception.Result; AcceptArchive(accepted);
+            if (laterDraft) _snapshot = raw;
+            SaveError = _translator["Account_ArchiveSavedReview"] + (laterDraft ? "\n\n" + _translator["Account_SavedDraftChanged"] : string.Empty);
+            return;
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -284,9 +476,9 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
             return;
         }
         finally { IsBusy = false; }
-        try { await _interaction.NavigateAsync(".."); }
+        try { if (OwnsChild(presentation)) await _interaction.NavigateAsync(".."); }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { SaveError = _translator["Editor_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); }
+        { if (OwnsChild(presentation)) { SaveError = _translator["Editor_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); } }
     }
 
     private void AcceptArchive(AccountArchiveResult result)
@@ -300,17 +492,22 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     private async Task CancelAsync()
     {
         var presentation = _presentationRevision;
-        if (!OwnsChild(presentation)) return;
-        if (_loading || _committed || !IsDirty || await ConfirmDiscardAsync())
+        if (!OwnsPresentation(presentation)) return;
+        if (!_formInitialized || !IsDirty || await ConfirmDiscardAsync())
         {
-            if (!OwnsChild(presentation)) return;
+            if (!OwnsPresentation(presentation)) return;
             try { await _interaction.NavigateAsync(".."); }
             catch (Exception exception) when (exception is not OutOfMemoryException) { await _interaction.ShowFailureAsync(exception); }
         }
     }
 
     /// <summary>Asks whether unsaved changes may be discarded.</summary>
-    public Task<bool> ConfirmDiscardAsync() => _interaction.ConfirmAsync(
-        _translator["Common_DiscardTitle"], _translator["Common_DiscardMessage"], _translator["Common_Discard"], _translator["Common_KeepEditing"]);
+    public async Task<bool> ConfirmDiscardAsync()
+    {
+        var presentation = _presentationRevision; var raw = Snapshot();
+        bool Current() => OwnsPresentation(presentation) && Snapshot() == raw;
+        return Current() && await _interaction.ConfirmAsync(_translator["Common_DiscardTitle"],
+            _translator["Common_DiscardMessage"], _translator["Common_Discard"], _translator["Common_KeepEditing"]) && Current();
+    }
 
 }

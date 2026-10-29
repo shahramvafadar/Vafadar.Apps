@@ -214,19 +214,30 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     /// </summary>
     /// <returns><see langword="false"/> when the currency change was refused.</returns>
     public async Task<bool> SaveAccountAsync(Account account, CancellationToken cancellationToken = default,
-        Func<bool>? isCurrent = null, EditorWorkReview? originalWork = null)
+        Func<bool>? isCurrent = null, EditorWorkReview? originalWork = null, AccountEditorSnapshot? originalSource = null,
+        bool? makeDefault = null, Action<Account>? accepted = null)
     {
         ArgumentNullException.ThrowIfNull(account);
+        if (originalSource is not null)
+        {
+            if (originalSource.RequestedId is { } requested ? requested != account.Id : originalSource.Inputs.Accounts.Any(row => row.Id == account.Id))
+                throw new AccountEditorUnavailableException();
+            // The reviewed writer owns a private submitted packet; later caller edits cannot change an awaited write.
+            account = account.CopyForEditing();
+        }
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         void Current()
         {
             originalWork?.RequireFile(DatabaseFileIdentity.ConfiguredPath(db));
+            originalSource?.RequireOriginal(db);
             if (isCurrent?.Invoke() == false) throw new InvalidOperationException("The original account draft changed.");
         }
         Current();
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken,
-            requireTransaction: isCurrent is not null || originalWork is not null);
+            requireTransaction: isCurrent is not null || originalWork is not null || originalSource is not null || makeDefault is not null);
         Current();
+
+        if (originalSource is not null) await ValidateOriginalAccountEditorAsync(originalSource, db, cancellationToken);
 
         var existing = await db.Accounts.AsNoTracking().FirstOrDefaultAsync(a => a.Id == account.Id, cancellationToken);
         await CheckAccountWorkAsync(db, write, account, existing, cancellationToken);
@@ -246,11 +257,12 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         }
 
         await write.PrepareAccountChangeAsync(db, account, existing, cancellationToken);
+        if (makeDefault is { } choice) await StageOriginalAccountDefaultAsync(db, account, choice, initializeMissing: true, cancellationToken);
         Current(); write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
         Current();
         await write.CommitAsync(cancellationToken);
-
+        accepted?.Invoke(account.CopyForEditing());
         CommittedWriteNotification.Publish(OnChanged);
         return true;
     }

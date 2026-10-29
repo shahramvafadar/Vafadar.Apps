@@ -27,7 +27,10 @@ public partial class AppShell : Shell
     private readonly HashSet<RulesPage> _publishedRules = [];
     private readonly HashSet<CategoryEditorPage> _publishedCategoryEditors = [];
     private readonly HashSet<CategoriesPage> _publishedCategoryCenters = [];
+    private readonly List<WeakReference<AccountEditorPage>> _publishedAccountEditors = [];
     private bool _navigationRetired;
+    /// <summary>Gets whether this actual native root can still own an original account editor or accepted return.</summary>
+    internal bool OwnsAccountEditorPublication => !_navigationRetired;
 
     /// <summary>Records actual published Home instances; lazy ShellContent.Content may not expose its cached page.</summary>
     internal void RegisterHomePublication(Features.Home.HomePage home)
@@ -111,6 +114,15 @@ public partial class AppShell : Shell
     }
     /// <summary>Route of the account list.</summary>
     public const string AccountsRoute = AppRoutes.AccountsRoute;
+
+    /// <summary>Tracks original account form roots without retaining every completed modal for the entire session.</summary>
+    internal void RegisterAccountEditor(AccountEditorPage page)
+    {
+        if (_navigationRetired) { page.RetireShellPublication(); return; }
+        _publishedAccountEditors.RemoveAll(reference => !reference.TryGetTarget(out _));
+        if (!_publishedAccountEditors.Any(reference => reference.TryGetTarget(out var existing) && ReferenceEquals(existing, page)))
+            _publishedAccountEditors.Add(new(page));
+    }
 
     /// <summary>Route of the account editor (query: <c>id</c> for an existing account).</summary>
     public const string AccountEditorRoute = AppRoutes.AccountEditorRoute;
@@ -387,6 +399,9 @@ public partial class AppShell : Shell
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged))
         {
             if (CurrentPage is CategoriesPage categories) categories.RetirePublication();
+            if (CurrentPage is AccountEditorPage accountEditor) accountEditor.RetirePublication();
+            if (Navigation.ModalStack.LastOrDefault() is AccountEditorPage modalAccount) modalAccount.RetirePublication();
+            if (Navigation.ModalStack.LastOrDefault() is NavigationPage accountNavigation && accountNavigation.CurrentPage is AccountEditorPage wrappedAccount) wrappedAccount.RetirePublication();
             if (CurrentPage is CategoryEditorPage categoryEditor) categoryEditor.RetirePublication();
             if (Navigation.ModalStack.LastOrDefault() is CategoryEditorPage modalCategory) modalCategory.RetirePublication();
             if (Navigation.ModalStack.LastOrDefault() is NavigationPage modalNavigation && modalNavigation.CurrentPage is CategoryEditorPage wrappedCategory) wrappedCategory.RetirePublication();
@@ -434,6 +449,9 @@ public partial class AppShell : Shell
         _publishedCategoryEditors.Clear();
         foreach (var categories in _publishedCategoryCenters) categories.RetireShellPublication();
         _publishedCategoryCenters.Clear();
+        foreach (var reference in _publishedAccountEditors)
+            if (reference.TryGetTarget(out var editor)) editor.RetireShellPublication();
+        _publishedAccountEditors.Clear();
         Navigated -= OnRetainedDetailsTabActivated;
 #if ANDROID
         if (Handler is AccessibleShellRenderer renderer) renderer.RetireNavigation();

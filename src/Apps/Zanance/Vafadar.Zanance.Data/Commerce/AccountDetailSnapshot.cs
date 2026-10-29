@@ -18,7 +18,7 @@ public sealed record AccountDetailInputs(ZananceSettings? Settings, List<Account
     List<Category> Categories, List<Goal> Goals, List<GoalAllocation> Allocations);
 
 /// <summary>Owns complete account, loan, movement and earmark facts without granting another financial operation.</summary>
-public sealed class AccountDetailSnapshot
+public sealed class AccountDetailSnapshot : IAccountEditorOrigin
 {
     private readonly string _stamp;
     private readonly string? _defaultSettingsStamp;
@@ -26,7 +26,7 @@ public sealed class AccountDetailSnapshot
     /// <summary>Captures immutable original identities on the worker before native presentation.</summary>
     internal AccountDetailSnapshot(string path, CommercialFileAccess access, TimeProvider time, DateOnly day, AccountDetailInputs inputs)
     {
-        DatabasePath = path; Inputs = inputs;
+        DatabasePath = path; Inputs = inputs; EditorOrigin = new(path, access, time, day);
         Loan = new LoanReadReview(path, access, time, day, inputs.Settings, inputs.Accounts, inputs.Entries, inputs.Categories);
         _stamp = CaptureInputs(inputs);
         // The original nonpersisted Settings object has its own generated identity: compare only that same captured object for caller mutation.
@@ -37,6 +37,8 @@ public sealed class AccountDetailSnapshot
     public string DatabasePath { get; }
     /// <summary>Gets complete detached original facts; any caller edit invalidates the publication review.</summary>
     public AccountDetailInputs Inputs { get; }
+    /// <summary>Gets only the original editor file/access/day, without extending this detail's full-ledger lifetime.</summary>
+    public AccountEditorOrigin EditorOrigin { get; }
     /// <summary>Gets the original loan review created from the very same transaction and original permission snapshot.</summary>
     public LoanReadReview Loan { get; }
 

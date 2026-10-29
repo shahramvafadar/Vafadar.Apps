@@ -2926,3 +2926,11 @@ All72changed native caption/target states and18same-capture original RTL row che
 ## D-638 original category overview and editor
 
 Cover category lists and the modal editor while their complete original source is loading or failed; expose explicit read-only Retry. Retain original Add placement, icon/color order, native merge/archive confirmations and unsaved fields. An unavailable requested edit keeps its edit title and never becomes a new category. Rebind selected identities after display changes, retain archived original parents, and retire old page/tab/root/consent commands. Acceptance and retry must not replay an earlier writer.
+
+## D-639 original account editor read and accepted drafts
+
+Keep requested Edit identity under a complete loading/error cover with visible read-only Retry.
+Initial appearance must not hide a failed acquisition by retrying implicitly. Preserve raw money
+text and later unsaved text independently from accepted account/archive receipts; an old native
+consent or departed page cannot commit or close another owner. The original default-cleared
+dialog and explicit accepted Close remain. [Actual original verification](quality/complete-original-account-editor-source.md).

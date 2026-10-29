@@ -6219,7 +6219,7 @@ Plafonds par catégorie :
     <value>Actualiser le compte et l’accès</value>
   </data>
   <data name="Account_Loading" xml:space="preserve">
-    <value>Chargement des données originales du compte…</value>
+    <value>Chargement du compte…</value>
   </data>
   <data name="Account_ReadFailed" xml:space="preserve">
     <value>Le compte n’a pas pu être entièrement chargé. Actualisez-le pour réessayer ; vos données de rapprochement sont conservées.</value>
@@ -8555,5 +8555,14 @@ SHA-256 du XML original : {5}</value>
   </data>
   <data name="Category_Unavailable" xml:space="preserve">
     <value>La catégorie d’origine n’est plus disponible dans ce formulaire. Fermez-le et ouvrez à nouveau la catégorie. Votre texte non enregistré est conservé ici.</value>
+  </data>
+  <data name="Account_RetryLoad" xml:space="preserve">
+    <value>Recharger le compte</value>
+  </data>
+  <data name="Account_Unavailable" xml:space="preserve">
+    <value>Ce compte n’est plus disponible ou a été modifié. Fermez ce formulaire et ouvrez à nouveau le compte. Votre brouillon n’a pas été enregistré.</value>
+  </data>
+  <data name="Account_SavedDraftChanged" xml:space="preserve">
+    <value>Le compte a été enregistré, mais le texte affiché contient des modifications non enregistrées. Vérifiez-les avant de fermer.</value>
   </data>
 </root>
