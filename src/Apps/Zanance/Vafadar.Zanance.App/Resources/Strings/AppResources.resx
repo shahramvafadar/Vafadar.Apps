@@ -8592,4 +8592,10 @@ Original XML SHA-256: {5}</value>
   <data name="Review_RetryLoad" xml:space="preserve">
     <value>Load the review again</value>
   </data>
+  <data name="Rules_Loading" xml:space="preserve">
+    <value>Loading categorization rules…</value>
+  </data>
+  <data name="Rules_RetryLoad" xml:space="preserve">
+    <value>Reload rules</value>
+  </data>
 </root>

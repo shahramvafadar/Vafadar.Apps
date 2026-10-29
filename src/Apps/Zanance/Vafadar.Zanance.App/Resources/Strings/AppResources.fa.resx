@@ -8558,4 +8558,10 @@
   <data name="Review_RetryLoad" xml:space="preserve">
     <value>بارگذاری دوبارهٔ مرور</value>
   </data>
+  <data name="Rules_Loading" xml:space="preserve">
+    <value>در حال بارگذاری قوانین دسته‌بندی…</value>
+  </data>
+  <data name="Rules_RetryLoad" xml:space="preserve">
+    <value>بارگذاری دوبارهٔ قوانین</value>
+  </data>
 </root>

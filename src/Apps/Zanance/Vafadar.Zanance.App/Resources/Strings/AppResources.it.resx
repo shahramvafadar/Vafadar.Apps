@@ -8547,4 +8547,10 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Review_RetryLoad" xml:space="preserve">
     <value>Ricarica il riepilogo</value>
   </data>
+  <data name="Rules_Loading" xml:space="preserve">
+    <value>Caricamento delle regole di categorizzazione…</value>
+  </data>
+  <data name="Rules_RetryLoad" xml:space="preserve">
+    <value>Ricarica le regole</value>
+  </data>
 </root>

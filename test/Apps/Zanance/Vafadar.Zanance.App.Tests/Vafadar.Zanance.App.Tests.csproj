@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Categories/RulesViewModel.cs" Link="Application/RulesViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Reports/PeriodReviewViewModel.cs" Link="Application/PeriodReviewViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Accounts/AccountDetailViewModel.cs" Link="Application/AccountDetailViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Reports/AmountLine.cs" Link="Application/AmountLine.cs" />

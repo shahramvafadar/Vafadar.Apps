@@ -24,6 +24,7 @@ public partial class AppShell : Shell
     private readonly HashSet<Features.Templates.TemplatesPage> _publishedTemplateCenters = [];
     private readonly HashSet<TransactionsPage> _publishedTransactionCenters = [];
     private readonly HashSet<Features.Reports.PeriodReviewPage> _publishedPeriodReviews = [];
+    private readonly HashSet<RulesPage> _publishedRules = [];
     private bool _navigationRetired;
 
     /// <summary>Records actual published Home instances; lazy ShellContent.Content may not expose its cached page.</summary>
@@ -87,6 +88,12 @@ public partial class AppShell : Shell
     {
         if (_navigationRetired) page.RetireShellPublication();
         else _publishedPeriodReviews.Add(page);
+    }
+    /// <summary>Tracks original rule pages and their pending native consent across root replacement.</summary>
+    internal void RegisterRules(RulesPage page)
+    {
+        if (_navigationRetired) page.RetireShellPublication();
+        else _publishedRules.Add(page);
     }
     /// <summary>Route of the account list.</summary>
     public const string AccountsRoute = AppRoutes.AccountsRoute;
@@ -291,6 +298,7 @@ public partial class AppShell : Shell
         else if (CurrentPage is PlansPage planCenter) await Presentation.Failures.GuardAsync(planCenter.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Templates.TemplatesPage templates) await Presentation.Failures.GuardAsync(templates.RefreshForNavigationAsync);
         else if (CurrentPage is TransactionsPage transactions) await Presentation.Failures.GuardAsync(transactions.RefreshForNavigationAsync);
+        else if (CurrentPage is RulesPage rules) await Presentation.Failures.GuardAsync(rules.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Reports.PeriodReviewPage review) await Presentation.Failures.GuardAsync(review.RefreshForNavigationAsync);
         else if (CurrentPage is PlanDetailPage planDetail) await Presentation.Failures.GuardAsync(planDetail.RefreshForNavigationAsync);
         else if (CurrentPage is OccurrencePage occurrence) await Presentation.Failures.GuardAsync(occurrence.RefreshForNavigationAsync);
@@ -353,6 +361,11 @@ public partial class AppShell : Shell
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
             && CurrentPage is Features.Reports.PeriodReviewPage review)
             review.RetirePublication();
+        // D-637: an original rule confirmation cannot outlive an accepted retained-tab departure.
+        if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
+                or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
+            && CurrentPage is RulesPage rules)
+            rules.RetirePublication();
         // D-406: Android can retain a routed More page across tabs without OnDisappearing.
         // Retire its original financial review only after navigation survives the existing leave guards.
         if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
@@ -390,6 +403,8 @@ public partial class AppShell : Shell
         _publishedTransactionCenters.Clear();
         foreach (var review in _publishedPeriodReviews) review.RetireShellPublication();
         _publishedPeriodReviews.Clear();
+        foreach (var rules in _publishedRules) rules.RetireShellPublication();
+        _publishedRules.Clear();
         Navigated -= OnRetainedDetailsTabActivated;
 #if ANDROID
         if (Handler is AccessibleShellRenderer renderer) renderer.RetireNavigation();

@@ -7443,3 +7443,27 @@ process creation, leaving3339files/490314931logicalbytes without retry/subset/al
 move/escalation/reuse. [Complete evidence](../../quality/complete-original-period-review.md).
 No model/schema/formula/permission change. D-607/phone/three deadlines and all broad
 release gates remain separate; overall goal active and TalkBack last.
+
+
+### D-637 - Complete original categorization rule ownership (2026-10-29)
+
+Original separate readers mix actual files; original save/SQL delete accept retired owners.
+Preserve all three real failures. Read complete original categories/rules on one worker
+lease/transaction, validate complete source/access/file and publish all original rows/options
+under one cover with explicit read-only Retry. Preserve raw drafts, exact selected category,
+original sorting/default choice, D-125 rights and original writer trim/replacement semantics.
+Page/tab/root/display/native-consent/draft owners remain through the original atomic writer;
+known acceptance precedes notification and survives failed read/Retry without a command replay.
+Fifteen distinct new focused cases plus seven affected existing policy cases pass. Strict
+Windows/full offline signed Android pass; product9d05ce3e has384ownAOT/408ELF/1608staticLOAD.
+Original native24states on one fresh API36/x64/4096 UID10216/PID4954 pass, with one Add and
+one new-rule Delete only, zero ledger writes and the complete observed packet returned exact.
+Preserve Picker record-equality, zero-test filter, private compile/readiness, display numeral,
+More-route and shown-IME input failures; continue only unaccepted work on the same process.
+Original five settings/size/density/boot/app display return. Only fresh UID/108hash-matched
+XMLs and the exact owned AVD retire; seven standard cleans remove29718files/2191765404
+logicalbytes. Supplemental seven-root deletion is refused before process creation, leaving
+3415files/492762725logicalbytes; no retry/subset/alternate/move/escalation/reuse. No model,
+schema/formula/permission change. D-607/phone/three deadlines/unread source remain untouched;
+physical adoption and all broad release gates stay separate. Overall goal active, TalkBack last.
+[Complete evidence](../../quality/complete-original-categorization-rules.md).

@@ -648,7 +648,8 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         SaveCategoryRuleCoreAsync(rule, cancellationToken);
 
     private async Task SaveCategoryRuleCoreAsync(CategoryRule rule, CancellationToken cancellationToken,
-        EntryDetailSnapshot? original = null, Func<bool>? isCurrent = null, Action? accepted = null)
+        EntryDetailSnapshot? original = null, Func<bool>? isCurrent = null, Action? accepted = null,
+        CategoryRulesReadSnapshot? rulesOriginal = null, ZananceDbContext? capturedContext = null)
     {
         ArgumentNullException.ThrowIfNull(rule);
         var match = rule.Match.Trim();
@@ -657,12 +658,19 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             throw new ArgumentException("The text of a rule is too short.", nameof(rule));
         }
 
-        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        if (original is not null) RequireEntryDetailOwner(original, db, isCurrent!);
+        await using var owned = capturedContext is null ? await contextFactory.CreateDbContextAsync(cancellationToken) : null;
+        var db = capturedContext ?? owned!;
+        void Current()
+        {
+            if (original is not null) RequireEntryDetailOwner(original, db, isCurrent!);
+            if (rulesOriginal is not null) RequireCategoryRulesOwner(rulesOriginal, db, isCurrent!);
+        }
+        Current();
         // D-125: matching and replacement share the actual writer even in unrestricted test builds. Separate
         // providers cannot both read an absent pattern and insert duplicates before the implicit Save transaction.
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         if (original is not null) await ValidateEntryDetailUnderContextAsync(original, db, cancellationToken);
+        if (rulesOriginal is not null) await ValidateCategoryRulesWriterAsync(rulesOriginal, db, cancellationToken);
         var existing = await db.CategoryRules.AsNoTracking().FirstOrDefaultAsync(r => r.Id == rule.Id, cancellationToken);
         var same = (await db.CategoryRules.Where(r => r.Kind == rule.Kind && r.Id != rule.Id).ToListAsync(cancellationToken))
             .Where(r => string.Equals(r.Match, match, StringComparison.CurrentCultureIgnoreCase)).ToList();
@@ -682,25 +690,43 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             db.CategoryRules.Add(rule);
         }
 
-        if (original is not null) RequireEntryDetailOwner(original, db, isCurrent!);
+        Current();
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
-        if (original is not null) RequireEntryDetailOwner(original, db, isCurrent!);
+        Current();
         await write.CommitAsync(cancellationToken);
         accepted?.Invoke();
-        if (original is not null) CommittedWriteNotification.Publish(OnChanged);
+        if (rulesOriginal is not null) _ = CommittedWriteNotification.Publish(OnChanged, rule.Id);
+        else if (original is not null) CommittedWriteNotification.Publish(OnChanged);
         else OnChanged();
     }
 
     /// <summary>Deletes a rule; saved entries keep their categories.</summary>
-    public async Task DeleteCategoryRuleAsync(Guid id, CancellationToken cancellationToken = default)
+    public Task DeleteCategoryRuleAsync(Guid id, CancellationToken cancellationToken = default) =>
+        DeleteCategoryRuleCoreAsync(id, cancellationToken);
+
+    private async Task DeleteCategoryRuleCoreAsync(Guid id, CancellationToken cancellationToken,
+        CategoryRulesReadSnapshot? original = null, Func<bool>? isCurrent = null, Action? accepted = null,
+        ZananceDbContext? capturedContext = null)
     {
-        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
+        await using var owned = capturedContext is null ? await contextFactory.CreateDbContextAsync(cancellationToken) : null;
+        var db = capturedContext ?? owned!;
+        void Current() { if (original is not null) RequireCategoryRulesOwner(original, db, isCurrent!); }
+        Current();
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: original is not null);
+        if (original is not null)
+        {
+            if (!original.Rules.Any(rule => rule.Id == id)) throw new InvalidOperationException("Choose an original rule before deleting it.");
+            await ValidateCategoryRulesWriterAsync(original, db, cancellationToken);
+        }
         write.DemandFeature(CommercialFeature.DeleteData);
+        Current();
         await db.CategoryRules.Where(r => r.Id == id).ExecuteDeleteAsync(cancellationToken);
+        Current();
         await write.CommitAsync(cancellationToken);
-        OnChanged();
+        accepted?.Invoke();
+        if (original is not null) _ = CommittedWriteNotification.Publish(OnChanged, id);
+        else OnChanged();
     }
 
     /// <summary>Returns the quick entry templates in their order (TX-04).</summary>

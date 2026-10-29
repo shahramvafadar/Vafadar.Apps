@@ -8,7 +8,8 @@
     x:DataType="local:RulesViewModel"
     Title="{v:Translate Rules_Title}">
 
-    <ScrollView>
+    <Grid>
+    <ScrollView IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding CanInteract}">
         <VerticalStackLayout Padding="16" Spacing="8">
             <Label Text="{v:Translate Rules_Intro}" Style="{StaticResource Secondary}" />
 
@@ -42,4 +43,13 @@
             </Border>
         </VerticalStackLayout>
     </ScrollView>
+    <VerticalStackLayout Padding="24" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+        <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" />
+        <Label Text="{v:Translate Rules_Loading}" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+    </VerticalStackLayout>
+    <VerticalStackLayout Padding="24" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+        <Label Text="{Binding Feedback}" TextColor="{DynamicResource DebtText}" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+        <Button Text="{v:Translate Rules_RetryLoad}" Style="{StaticResource PrimaryButton}" Command="{Binding ReloadCommand}" IsEnabled="{Binding CanReload}" />
+    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

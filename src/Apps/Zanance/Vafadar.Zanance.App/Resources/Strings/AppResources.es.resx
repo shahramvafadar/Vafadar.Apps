@@ -8527,4 +8527,10 @@ SHA-256 del XML original: {5}</value>
   <data name="Review_RetryLoad" xml:space="preserve">
     <value>Volver a cargar la revisión</value>
   </data>
+  <data name="Rules_Loading" xml:space="preserve">
+    <value>Cargando reglas de categorización…</value>
+  </data>
+  <data name="Rules_RetryLoad" xml:space="preserve">
+    <value>Volver a cargar las reglas</value>
+  </data>
 </root>
