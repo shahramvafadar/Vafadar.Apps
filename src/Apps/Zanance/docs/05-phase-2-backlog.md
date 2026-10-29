@@ -4705,3 +4705,12 @@ commands. Preserve original formulas/routes and actual permission flow; share ap
 navigation and retain explicit error/Retry. See
 [full current evidence](quality/complete-original-plans-center.md). This history does not
 replace the canonical commercial backlog or complete its broad parent release gates.
+
+## D-634 - Original template-center engineering delivery
+
+Keep complete original definitions and independent rights tied to their original file
+and current native owner. Cover failures with explicit Reload, refuse old confirmation
+responses and retain accepted deletion through its following refresh. Nine focused new
+cases and72changed native states pass; no old successful financial operation is replayed.
+[Full source, restoration and cleanup record](quality/complete-original-template-center.md).
+The canonical commercial backlog and broad release gates remain authoritative.

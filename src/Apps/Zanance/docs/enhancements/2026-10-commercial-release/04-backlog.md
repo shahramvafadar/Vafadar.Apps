@@ -7374,3 +7374,26 @@ remaining and no retry/subset/alternate/move/escalation/reuse. See
 D-607/phone/three original deadlines/incomplete batch stay untouched. Physical adoption,
 whole database/key/security/stability/two-second/accessibility/iOS/provider/Store/
 publication remain separate; overall goal active, TalkBack last.
+
+### D-634 - Complete original template center and deletion ownership
+
+The published actual page opens an old-row confirmation over Home; original writer
+retirement and postcommit notification regressions also fail before correction. One
+original-file worker snapshot/validation, whole covered row publication, original
+page/tab/root/display/row retirement and explicit Reload correct the complete list.
+Retain original definition/rights/order/money/confirmation/writer policy; check current
+owner inside the writer and preserve known accepted deletion through notification/read
+failure. Four real six-language captions distinguish failed read from already deleted.
+Nine new focused cases, corrected strict Windows/full offline signed Android packages
+and the original independent native cohort pass. One original definition is deleted once
+with zero ledger entries; its accepted result survives the following read failure and
+explicit Retry. All72changed states across en/fa/de, both themes and360/412/680dp pass
+actual native text/window checks, with original source matching exactly after the one
+declared definition delta. Original settings/OS return; only the fresh UID/AVD and167
+hash-matched XMLs retire. Four standard cleans remove1947378928logicalbytes. Supplemental
+twelve-target removal is refused before process creation, leaving3720files/784791322
+logicalbytes without retry/subset/alternate/move/escalation/reuse. These are engineering
+facts, not broad release acceptance. D-607/phone/three original deadlines remain untouched.
+[Full source/native/cleanup evidence](../../quality/complete-original-template-center.md).
+Whole database/key/security/stability/two-second/accessibility/iOS/provider/Store/
+publication and physical adoption remain separate; overall goal active, TalkBack last.

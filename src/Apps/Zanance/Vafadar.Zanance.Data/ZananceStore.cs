@@ -753,17 +753,28 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Deletes a template; entries created from it are not affected.</summary>
-    public async Task DeleteTemplateAsync(Guid id, CancellationToken cancellationToken = default, QuickResourceReview? review = null)
+    public async Task DeleteTemplateAsync(Guid id, CancellationToken cancellationToken = default, QuickResourceReview? review = null,
+        Func<bool>? isCurrent = null)
     {
+        void Current()
+        {
+            if (isCurrent?.Invoke() == false) throw new InvalidOperationException("The original template deletion retired.");
+        }
+        Current();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         if (review is not null) await ValidateQuickResourceReviewAsync(review, db, cancellationToken);
         write.DemandFeature(CommercialFeature.DeleteData);
         write.PrepareQuickResourceChange(QuotaKind.QuickTemplates, await db.Templates.Select(t => t.Id).ToListAsync(cancellationToken), id, deleting: true);
+        Current(); write.EnsureCurrent();
         await db.Templates.Where(t => t.Id == id).ExecuteDeleteAsync(cancellationToken);
+        Current();
         await db.SaveChangesAsync(cancellationToken);
+        Current(); write.EnsureCurrent();
         await write.CommitAsync(cancellationToken);
-        OnChanged();
+        // D-634: a subscriber failure follows acceptance; the actual caller must not offer the deletion again.
+        if (review is not null) CommittedWriteNotification.Publish(OnChanged);
+        else OnChanged();
     }
 
     /// <summary>Returns the saved transaction list filters in their order (REP-08).</summary>

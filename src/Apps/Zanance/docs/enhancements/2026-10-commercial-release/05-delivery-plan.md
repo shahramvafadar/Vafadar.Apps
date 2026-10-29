@@ -5412,3 +5412,15 @@ pass. Four standard cleans remove1946610288logicalbytes; retain the supplemental
 six-root refusal without retry or reuse. Deliver the verified whole batch with one
 owner commit/push and one exact-head CI after sixteen minutes. [Evidence and preserved failures](../../quality/complete-original-plans-center.md).
 Keep D-607/phone/three deadlines and all broad release gates untouched.
+
+### D-634 - Deliver the original template center as one complete batch
+
+Original complete quick-resource packet, worker transaction, first-file Retry, whole
+covered publication, native owner/row retirement and delete writer/known commit form
+one verified batch. Nine new focused cases and72native states pass; do not replay those
+successes or the one accepted definition deletion. Exact expected source delta and
+original settings/OS return, fresh retirement and four standard cleans are recorded;
+the supplemental twelve-target refusal is preserved without retries or reuse.
+Publish only this completed batch and schedule one exact-head CI after sixteen minutes.
+[Evidence and exact limits](../../quality/complete-original-template-center.md).
+Keep D-607/phone/three deadlines and the overall active goal separate.

@@ -1866,3 +1866,19 @@ Retry are implemented. Ten focused new data cases and corrected strict packages 
 original native assertions,54layout states, exact restoration and fresh retirement pass in
 [the quality evidence](quality/complete-original-plans-center.md). This is not whole-release
 completion. Protected physical D-607 and external/platform/security/stability gates remain.
+
+## D-634 - Complete original template-center batch
+
+Original coherent read/publication, explicit error/Reload, actual page/row retirement
+and delete writer/known-acceptance boundaries are delivered together.
+Nine new focused cases, corrected strict Windows/full offline signed Android packages
+and the original independent native cohort pass. One original definition is deleted once
+with zero ledger entries; its accepted result survives the following read failure and
+explicit Retry. All72changed states across en/fa/de, both themes and360/412/680dp pass
+actual native text/window checks, with original source matching exactly after the one
+declared definition delta. Original settings/OS return; only the fresh UID/AVD and167
+hash-matched XMLs retire. Four standard cleans remove1947378928logicalbytes. Supplemental
+twelve-target removal is refused before process creation, leaving3720files/784791322
+logicalbytes without retry/subset/alternate/move/escalation/reuse. These are engineering
+facts, not broad release acceptance. D-607/phone/three original deadlines remain untouched.
+[Evidence and remaining broad gates](quality/complete-original-template-center.md).

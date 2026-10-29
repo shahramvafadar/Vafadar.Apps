@@ -8574,4 +8574,16 @@ Original XML SHA-256: {5}</value>
   <data name="Plans_RetryLoad" xml:space="preserve">
     <value>Load plans again</value>
   </data>
+  <data name="Templates_Loading" xml:space="preserve">
+    <value>Loading your templates…</value>
+  </data>
+  <data name="Templates_ReadFailed" xml:space="preserve">
+    <value>Your templates could not be read. Reload to see their current details.</value>
+  </data>
+  <data name="Templates_Reload" xml:space="preserve">
+    <value>Reload templates</value>
+  </data>
+  <data name="Templates_DeletedReadFailed" xml:space="preserve">
+    <value>The template was deleted, but the list could not be refreshed. Reload the list; do not delete it again.</value>
+  </data>
 </root>

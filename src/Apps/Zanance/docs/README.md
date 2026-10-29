@@ -54,3 +54,7 @@ Incremental Android manifest variants and retained binding/GC investigation:
 Original Plans center source, publication and native command ownership (D-633):
 [focused data/native evidence and exact qualification limits](quality/complete-original-plans-center.md).
 Protected D-607 and broader release/platform acceptance remain separate.
+
+Original template-list source, native command and deletion ownership (D-634):
+[nine focused cases,72native states, exact expected source delta and cleanup limits](quality/complete-original-template-center.md).
+Protected D-607 and broad release/platform acceptance remain separate.

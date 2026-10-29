@@ -47,6 +47,11 @@ public sealed class QuickResourceReview
     public ResourceChoiceSnapshot FilterChoice { get; }
     /// <summary>Gets independent activity, history, correction, delete and creation rights.</summary>
     public QuickResourceWorkPolicy Work { get; }
+    /// <summary>Checks cached original-file access around native publication without exposing its internal access objects.</summary>
+    public void EnsureCurrent()
+    {
+        TemplateChoice.Access.EnsureSnapshotCurrent(); FilterChoice.Access.EnsureSnapshotCurrent();
+    }
     /// <summary>Checks original file identity for retaining process-local names; it grants no capability or financial right.</summary>
     public bool BelongsToSameFile(QuickResourceReview other)
     {

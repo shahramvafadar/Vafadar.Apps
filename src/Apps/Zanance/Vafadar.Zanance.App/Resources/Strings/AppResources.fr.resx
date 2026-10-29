@@ -8517,4 +8517,16 @@ SHA-256 du XML original : {5}</value>
   <data name="Plans_RetryLoad" xml:space="preserve">
     <value>Recharger les plans</value>
   </data>
+  <data name="Templates_Loading" xml:space="preserve">
+    <value>Chargement de vos modèles…</value>
+  </data>
+  <data name="Templates_ReadFailed" xml:space="preserve">
+    <value>Vos modèles n’ont pas pu être lus. Rechargez-les pour voir les informations actuelles.</value>
+  </data>
+  <data name="Templates_Reload" xml:space="preserve">
+    <value>Recharger les modèles</value>
+  </data>
+  <data name="Templates_DeletedReadFailed" xml:space="preserve">
+    <value>Le modèle a été supprimé, mais la liste n’a pas pu être actualisée. Rechargez-la sans répéter la suppression.</value>
+  </data>
 </root>

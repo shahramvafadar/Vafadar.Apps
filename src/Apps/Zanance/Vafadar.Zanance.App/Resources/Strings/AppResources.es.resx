@@ -8509,4 +8509,16 @@ SHA-256 del XML original: {5}</value>
   <data name="Plans_RetryLoad" xml:space="preserve">
     <value>Volver a cargar los planes</value>
   </data>
+  <data name="Templates_Loading" xml:space="preserve">
+    <value>Cargando tus plantillas…</value>
+  </data>
+  <data name="Templates_ReadFailed" xml:space="preserve">
+    <value>No se pudieron leer tus plantillas. Vuelve a cargarlas para ver los datos actuales.</value>
+  </data>
+  <data name="Templates_Reload" xml:space="preserve">
+    <value>Volver a cargar plantillas</value>
+  </data>
+  <data name="Templates_DeletedReadFailed" xml:space="preserve">
+    <value>Se eliminó la plantilla, pero no se pudo actualizar la lista. Vuelve a cargarla; no repitas la eliminación.</value>
+  </data>
 </root>

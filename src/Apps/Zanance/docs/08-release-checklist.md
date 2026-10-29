@@ -4873,3 +4873,19 @@ creation with573530995logicalbytes remaining, without retry/subset/alternate/mov
 Do not count static alignment as hardware acceptance or a narrow native result as whole
 database/security/stability/speed/accessibility/iOS/provider/Store/publication acceptance.
 D-607's original three deadlines and the overall active goal remain separate.
+
+## D-634 - Original template-center source and deletion gate
+
+Nine new focused cases, corrected strict Windows/full offline signed Android packages
+and the original independent native cohort pass. One original definition is deleted once
+with zero ledger entries; its accepted result survives the following read failure and
+explicit Retry. All72changed states across en/fa/de, both themes and360/412/680dp pass
+actual native text/window checks, with original source matching exactly after the one
+declared definition delta. Original settings/OS return; only the fresh UID/AVD and167
+hash-matched XMLs retire. Four standard cleans remove1947378928logicalbytes. Supplemental
+twelve-target removal is refused before process creation, leaving3720files/784791322
+logicalbytes without retry/subset/alternate/move/escalation/reuse. These are engineering
+facts, not broad release acceptance. D-607/phone/three original deadlines remain untouched.
+[Original native source and exact limits](quality/complete-original-template-center.md).
+Keep physical adoption, whole database/key/security/stability/two-second/accessibility/
+iOS/provider/Store/publication acceptance separate; the overall goal stays active.

@@ -8540,4 +8540,16 @@
   <data name="Plans_RetryLoad" xml:space="preserve">
     <value>بارگذاری دوبارهٔ پلن‌ها</value>
   </data>
+  <data name="Templates_Loading" xml:space="preserve">
+    <value>در حال بارگیری قالب‌های شما…</value>
+  </data>
+  <data name="Templates_ReadFailed" xml:space="preserve">
+    <value>قالب‌های شما خوانده نشدند. برای دیدن جزئیات فعلی، دوباره بارگیری کنید.</value>
+  </data>
+  <data name="Templates_Reload" xml:space="preserve">
+    <value>بارگیری دوبارهٔ قالب‌ها</value>
+  </data>
+  <data name="Templates_DeletedReadFailed" xml:space="preserve">
+    <value>قالب حذف شد، اما فهرست به‌روز نشد. فهرست را دوباره بارگیری کنید؛ حذف را تکرار نکنید.</value>
+  </data>
 </root>

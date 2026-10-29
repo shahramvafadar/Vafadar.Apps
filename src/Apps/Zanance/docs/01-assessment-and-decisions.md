@@ -11411,3 +11411,28 @@ exact source/settings/OS restoration and fresh retirement pass, as recorded in
 [the full quality record](quality/complete-original-plans-center.md). No old financial
 command replay, phone command, new permission, schema migration or formula change.
 D-607's three original deadlines and all broad release gates remain separate.
+
+## D-634 - Original template center and deletion ownership (2026-10-29)
+
+The actual published page leaves its actions live after Home departure and opens an
+old-row native confirmation. Original action regressions also delete after writer
+retirement and misreport an accepted deletion when its notification fails. Preserve
+all three failures. Bind the complete original quick-resource packet to one actual-file
+worker transaction, first-file Retry and fresh complete validation; privately order and
+publish whole original rows under cover. Retire real page/tab/root/display/row owners,
+share one appearance/navigation presence and preserve known acceptance through reload.
+The original confirmation, quota, delete-data rights and writer transaction remain;
+current-owner checks now roll back retirement and postcommit notification retains
+committed semantics. Four real six-language captions keep local error and known-deleted
+feedback explicit. No model/schema/migration/financial formula/permission changes.
+Nine new focused cases, corrected strict Windows/full offline signed Android packages
+and the original independent native cohort pass. One original definition is deleted once
+with zero ledger entries; its accepted result survives the following read failure and
+explicit Retry. All72changed states across en/fa/de, both themes and360/412/680dp pass
+actual native text/window checks, with original source matching exactly after the one
+declared definition delta. Original settings/OS return; only the fresh UID/AVD and167
+hash-matched XMLs retire. Four standard cleans remove1947378928logicalbytes. Supplemental
+twelve-target removal is refused before process creation, leaving3720files/784791322
+logicalbytes without retry/subset/alternate/move/escalation/reuse. These are engineering
+facts, not broad release acceptance. D-607/phone/three original deadlines remain untouched.
+[Full evidence and preserved failures](quality/complete-original-template-center.md).

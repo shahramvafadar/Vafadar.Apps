@@ -11,7 +11,7 @@
     Title="{v:Translate Templates_Title}">
 
     <Grid RowDefinitions="*,Auto">
-    <ScrollView IsVisible="{Binding Loading.IsReady}">
+    <ScrollView IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding CanInteract}">
         <VerticalStackLayout Padding="16" Spacing="8">
             <Label Text="{v:Translate Templates_Intro}" Style="{StaticResource Secondary}" />
 
@@ -46,12 +46,12 @@
     </ScrollView>
     <VerticalStackLayout Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
         <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
-        <Label Text="{v:Translate ActiveItems_Loading}" HorizontalTextAlignment="Center" />
+        <Label Text="{v:Translate Templates_Loading}" HorizontalTextAlignment="Center" />
     </VerticalStackLayout>
-    <Label Text="{v:Translate ActiveItems_LoadFailed}" Margin="32" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}" />
+    <Label Text="{Binding Feedback}" Margin="32" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}" />
     <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8">
         <Label Text="{Binding Actions.Feedback}" Style="{StaticResource ErrorText}" IsVisible="{Binding Actions.Feedback, Converter={StaticResource IsNotNullConverter}}" />
-        <p:WrappingAction Text="{v:Translate ActiveItems_Reload}" Command="{Binding ReloadCommand}" />
+        <p:WrappingAction Text="{v:Translate Templates_Reload}" Command="{Binding ReloadCommand}" IsEnabled="{Binding CanReload}" />
     </VerticalStackLayout>
     </Grid>
 </ContentPage>

@@ -10676,3 +10676,23 @@ cases and corrected strict packages pass. Native54changed-layout states, exact r
 acceptance remains separately tracked in
 [the quality record](../quality/complete-original-plans-center.md); no full-suite count,
 physical adoption or general release acceptance is inferred. D-607 remains untouched.
+
+### D-634 - Original quick-template center and accepted deletion
+
+Read complete original definitions, references, settings and work/choice authority in
+one original-file worker transaction. Bind Retry, stage original order/presentation and
+publish whole rows under cover; retire actual page/tab/root/display and native command
+owners. Original delete consent/rights/writer validation remain; retirement rolls back
+and notification failure after commit cannot make the deletion retryable.
+Nine new focused cases, corrected strict Windows/full offline signed Android packages
+and the original independent native cohort pass. One original definition is deleted once
+with zero ledger entries; its accepted result survives the following read failure and
+explicit Retry. All72changed states across en/fa/de, both themes and360/412/680dp pass
+actual native text/window checks, with original source matching exactly after the one
+declared definition delta. Original settings/OS return; only the fresh UID/AVD and167
+hash-matched XMLs retire. Four standard cleans remove1947378928logicalbytes. Supplemental
+twelve-target removal is refused before process creation, leaving3720files/784791322
+logicalbytes without retry/subset/alternate/move/escalation/reuse. These are engineering
+facts, not broad release acceptance. D-607/phone/three original deadlines remain untouched.
+[Full quality evidence](../quality/complete-original-template-center.md). This adds9new
+focused cases, not72unit tests, and does not claim whole-database/key equality.

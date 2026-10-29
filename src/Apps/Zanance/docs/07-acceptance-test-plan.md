@@ -7815,3 +7815,17 @@ or payment is replayed. All54changed ready/loading/error/Retry states, exact ter
 restoration and fresh retirement pass, with their actual scope tracked in
 [the quality record](quality/complete-original-plans-center.md); do not promote unfinished
 or indirect observations to acceptance. Phone/D-607 and broader release gates remain open.
+
+## D-634 - Original template-center admission
+
+Preserve original native old-row confirmation over Home and two real action/writer
+regressions before correction. Nine new focused cases admit worker/WAL, first-file
+Retry, complete-source mutation, retired confirmation, rollback and known commit.
+Actual original native Home departure refuses the old command; held read cancellation,
+retained return, error/Reload and72changed caption/window states pass. Exactly one
+definition deletion admits its accepted result plus failed-read/reload without another
+delete or financial entry. Original source baseline is then correctly changed; all
+other captured facts and the declared one-definition delta match exactly.
+Restoration/fresh retirement and supplemental refusal remain explicit in
+[the quality record](quality/complete-original-template-center.md). No broad security,
+stability, accessibility, phone/iOS/provider/Store or publication acceptance is inferred.

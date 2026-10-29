@@ -2912,3 +2912,13 @@ six-language loading/error/Retry text and disabled title action until Ready. On 
 page presence, appearance and Shell navigation share their publication; a failed read
 waits for explicit Retry. Retire original row commands on actual tab/root/page/display/
 segment departure. See [native evidence and limits](quality/complete-original-plans-center.md).
+
+## D-634 - Complete original template-list publication
+
+Keep original template kind/category/account/money/icon presentation and real deletion
+confirmation. Show only one complete validated original row array; cover loading and
+local failure, keep explicit Reload and disable it during pending read/native work.
+Retired rows cannot open confirmation over another tab. A committed deletion followed
+by a failed read is described as already deleted, never as a command to repeat.
+All72changed native caption/target states and18same-capture original RTL row checks pass.
+[Exact source and geometry scope](quality/complete-original-template-center.md).

@@ -2808,3 +2808,16 @@ row/Add/review navigation. First-file Retry binding survives an initial read fai
 page/tab/root/display/segment retirement invalidates old authority. No schema migration,
 formula, storage format, permission or credential change is introduced. See
 [actual focused/native evidence](../../src/Apps/Zanance/docs/quality/complete-original-plans-center.md).
+
+### D-634 - Original template-center read and delete authority
+
+ReadTemplateCenterAsync captures one actual configured file before SQL and performs
+complete original QuickResourceReview reads/validation in a deferred worker SQLite
+transaction. ValidateTemplateCenterAsync rechecks the exact same file and complete
+original packet on a worker. Original entry/filter clients keep their general APIs.
+Cached original access checks remain encapsulated by QuickResourceReview.EnsureCurrent;
+full metadata/work validation is not replaced by that cheap native publication guard.
+DeleteTemplateAsync retains its original rights/selection/writer transaction and adds
+current-owner checks before/after awaited work and before commit. Reviewed notification
+failures preserve committed semantics. No model/migration, currency formula, key or
+permission change is introduced. [Focused and actual native evidence](../../src/Apps/Zanance/docs/quality/complete-original-template-center.md).

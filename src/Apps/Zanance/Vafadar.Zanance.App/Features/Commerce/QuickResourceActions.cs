@@ -49,6 +49,24 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
         _draftReview = _review = review; Feedback = null; RefreshAvailability();
     }
 
+    /// <summary>Covers a list refresh and retires its previous callbacks without making an accepted deletion retryable.</summary>
+    public void CoverTemplateCenter()
+    {
+        ++_generation; _review = null; RefreshAvailability();
+    }
+
+    /// <summary>Adopts a complete validated list packet while retaining a known accepted deletion through its reload.</summary>
+    public void PublishTemplateCenter(QuickResourceReview review)
+    {
+        ArgumentNullException.ThrowIfNull(review);
+        if (review.SourceEntry is not null) throw new InvalidOperationException("A template center cannot adopt an entry draft.");
+        // D-634: ordinary detail replacement resets acceptance; a postcommit list refresh must retain it.
+        ++_generation; _review = null;
+        if (_draftReview is { } previous && !review.BelongsToSameFile(previous))
+        { TemplateNameDraft = null; FilterNameDraft = null; }
+        _draftReview = _review = review; Feedback = null; RefreshAvailability();
+    }
+
     /// <summary>Retires the previous review before reading; opening creates no preferences or financial rows.</summary>
     public async Task LoadAsync(Guid? sourceId = null)
     {
@@ -134,7 +152,7 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
             if (!await interaction.ConfirmAsync(translator["Templates_Delete"], original.Name,
                 translator["Common_Delete"], translator["Common_Cancel"])) return false;
             await ValidateAsync(review);
-            await store.DeleteTemplateAsync(id, review: review); return true;
+            await store.DeleteTemplateAsync(id, review: review, isCurrent: () => ReferenceEquals(review, _review)); return true;
         }, reload);
     }
 

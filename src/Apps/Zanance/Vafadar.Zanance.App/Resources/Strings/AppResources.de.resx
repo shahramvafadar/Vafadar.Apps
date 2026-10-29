@@ -8540,4 +8540,16 @@ Original-XML SHA-256: {5}</value>
   <data name="Plans_RetryLoad" xml:space="preserve">
     <value>Planungen erneut laden</value>
   </data>
+  <data name="Templates_Loading" xml:space="preserve">
+    <value>Ihre Vorlagen werden geladen…</value>
+  </data>
+  <data name="Templates_ReadFailed" xml:space="preserve">
+    <value>Ihre Vorlagen konnten nicht gelesen werden. Laden Sie die aktuellen Details erneut.</value>
+  </data>
+  <data name="Templates_Reload" xml:space="preserve">
+    <value>Vorlagen neu laden</value>
+  </data>
+  <data name="Templates_DeletedReadFailed" xml:space="preserve">
+    <value>Die Vorlage wurde gelöscht, aber die Liste konnte nicht aktualisiert werden. Laden Sie die Liste neu; löschen Sie die Vorlage nicht erneut.</value>
+  </data>
 </root>
