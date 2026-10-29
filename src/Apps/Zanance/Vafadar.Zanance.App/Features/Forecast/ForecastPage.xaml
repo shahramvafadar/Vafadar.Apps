@@ -146,7 +146,7 @@
         <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" IsVisible="{Binding Loading.IsReady}">
             <Label Text="{Binding Workspace.Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Workspace.Error, Converter={StaticResource IsNotNullConverter}}" />
             <Label Text="{Binding Workspace.Result}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding Workspace.Result, Converter={StaticResource IsNotNullConverter}}" />
-            <p:WrappingAction Text="{v:Translate Forecast_Refresh}" Command="{Binding RefreshAccessCommand}" IsEnabled="{Binding CanInteract}" />
+            <p:WrappingAction Text="{v:Translate Forecast_Refresh}" Command="{Binding RefreshAccessCommand}" IsEnabled="{Binding CanReload}" />
         </VerticalStackLayout>
         <VerticalStackLayout Grid.RowSpan="2" Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
             <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" />
@@ -154,7 +154,7 @@
         </VerticalStackLayout>
         <VerticalStackLayout Grid.RowSpan="2" Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
             <Label Text="{v:Translate Forecast_LoadFailed}" HorizontalTextAlignment="Center" />
-            <p:WrappingAction Text="{v:Translate Forecast_Refresh}" Command="{Binding RefreshAccessCommand}" />
+            <p:WrappingAction Text="{v:Translate Forecast_Refresh}" Command="{Binding RefreshAccessCommand}" IsEnabled="{Binding CanReload}" />
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

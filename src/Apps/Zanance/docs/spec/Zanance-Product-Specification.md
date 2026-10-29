@@ -11017,3 +11017,34 @@ alternate/move/escalation/reuse. Used packages/evidence/pre-refusal source archi
 Phone/D-607/three deadlines/unread source are untouched. Physical adoption and broad DB/key/
 security/ANR/performance/A11Y/iOS/provider/Store/release gates stay open; overall delivery active.
 [Evidence](../quality/original-saved-comparison-source-and-delete.md).
+
+
+### D-646 - Complete original forecast workspace, prompts and Save receipts (2026-10-29)
+
+Forecast source, current row membership, native name/scenario prompts and actual transactional
+saved-path writes bind to the original file and page/tab/root/display generation. Computation
+uses the original worker calculator; complete covered publication and explicit Retry preserve
+raw names/scenarios. Writer checks complete original facts before/after SQL and native ownership
+before commit; actual accepted identities precede fallible Changed notification. A live forecast
+tab with a draft/prompt/receipt now survives display changes in place and accepted captions follow
+current language. Original math/scope/currency/dates/access remain; no model/migration change occurs.
+
+Twenty distinct new and 31 affected existing cases pass. Five published failures and the later
+real root/caption failure remain with corrected continuations. Strict Windows and complete offline
+384AOT/408ELF/1608staticLOAD shipping pass. Fresh API36/x64/4096 uses one account/one unpaid plan and
+no ledger posts. Native pending tab/read cancellation, departed Save refusal, Retry, name Cancel,
+one local scenario/Reset and 12 ready contexts pass. After the first actual saved definition,
+display rebuild loses process-local state while the stored source remains intact. Necessary
+no-reset continuation read-adopts the exact same source, never a synthetic receipt. One DISTINCT
+metadata payload qualifies only the new display/receipt branch: six contexts retain the same
+native model, later raw name and current complete feedback. Both definitions remain; all other
+17 observed tables are equal. D-506 and financial successes are not replayed.
+
+Original queried settings/boot/1080x1920/420/enSystem restore; only fresh UID/data, 92 hash-matched
+XMLs / 3,921,942 bytes and its AVD retire. Four standard cleans remove 28,955 files / 1,979,237,863
+logical bytes; official AVD deletion removes 25 files / 5,499,597,828 logical bytes. Supplemental
+14-target cleanup is rejected before process creation: 3,717 files / 894,383,181 logical bytes remain
+with no retry/subset/alternate/move/escalation/reuse. Used APKs/evidence/pre-refusal archives remain.
+Phone/D-607/three deadlines/unread source are untouched. Physical adoption and broad DB/key/security/
+ANR/performance/A11Y/iOS/provider/Store/release gates stay open; overall delivery remains active.
+[Evidence](../quality/original-forecast-workspace-prompt-and-receipts.md).

@@ -1714,7 +1714,8 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
 
     /// <summary>Saves the original currency snapshots together; no accepted subset can survive a rejected batch.</summary>
     public async Task<IReadOnlyList<Guid>> SaveForecastSnapshotsAsync(IEnumerable<Core.Forecasts.ForecastSnapshot> snapshots,
-        ForecastReadSnapshot? reviewed = null, CancellationToken cancellationToken = default)
+        ForecastReadSnapshot? reviewed = null, CancellationToken cancellationToken = default,
+        Func<bool>? isCurrent = null, Action<IReadOnlyList<Guid>>? accepted = null)
     {
         ArgumentNullException.ThrowIfNull(snapshots); var batch = snapshots.ToList();
         if (batch.Count == 0 || batch.Any(item => item is null) || batch.Select(item => item.Id).Distinct().Count() != batch.Count)
@@ -1722,14 +1723,19 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         write.DemandFeature(CommercialFeature.AdvancedForecast); reviewed?.DemandWriterFile(db);
+        if (reviewed is not null) await reviewed.ValidateSaveAsync(db, cancellationToken);
+        if (isCurrent?.Invoke() == false) throw new InvalidOperationException("Original forecast Save retired.");
         var ids = batch.Select(item => item.Id).ToArray();
         if (await db.ForecastSnapshots.AnyAsync(item => ids.Contains(item.Id), cancellationToken))
             throw new InvalidOperationException("A forecast snapshot cannot be changed.");
         db.ForecastSnapshots.AddRange(batch);
         write.EnsureCurrent(); reviewed?.DemandWriterFile(db);
         await db.SaveChangesAsync(cancellationToken);
+        if (reviewed is not null) await reviewed.ValidateSaveAsync(db, cancellationToken, ids.ToHashSet());
+        if (isCurrent?.Invoke() == false) throw new InvalidOperationException("Original forecast Save retired before commit.");
         reviewed?.DemandWriterFile(db); await write.CommitAsync(cancellationToken);
-        return CommittedWriteNotification.Publish<IReadOnlyList<Guid>>(OnChanged, ids);
+        // D-646: actual accepted identities precede fallible observers and never authorize a replay.
+        return CommittedWriteNotification.Publish<IReadOnlyList<Guid>>(() => { accepted?.Invoke(ids); OnChanged(); }, ids);
     }
 
     /// <summary>Deletes owned saved data independently of paid analytical access, with exact membership/file checks.</summary>

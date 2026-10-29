@@ -99,6 +99,13 @@ public sealed class ForecastReadSnapshot
         if (!Snapshots.Any(item => item.Id == snapshot.Id)) throw new InvalidOperationException("The saved forecast belongs to another read.");
         var result = SnapshotComparer.Compare(snapshot, Accounts, Entries, day); EnsureCurrent(); return result;
     }
+    /// <summary>Validates complete original inputs in the actual saved-path writer, excluding only its own new identities.</summary>
+    internal async Task ValidateSaveAsync(ZananceDbContext db, CancellationToken ct, IReadOnlySet<Guid>? inserted = null)
+    {
+        DemandWriterFile(db); var current = await ForecastWorkStore.ReadFactsAsync(db, ct);
+        if (inserted is not null) current = current with { Snapshots = current.Snapshots.Where(item => !inserted.Contains(item.Id)).ToList() };
+        RequireFacts(current);
+    }
     /// <summary>Rejects an original reviewed computation targeting a different current writer file.</summary>
     internal void DemandWriterFile(ZananceDbContext db, CommercialFeature feature = CommercialFeature.AdvancedForecast)
     {

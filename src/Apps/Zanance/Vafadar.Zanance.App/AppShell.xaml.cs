@@ -33,6 +33,7 @@ public partial class AppShell : Shell
     private readonly List<WeakReference<GoalEditorPage>> _publishedGoalEditors = [];
     private readonly List<WeakReference<BudgetEditorPage>> _publishedBudgetEditors = [];
     private readonly List<WeakReference<AssetTypeEditorPage>> _publishedAssetTypeEditors = [];
+    private readonly List<WeakReference<Features.Forecast.ForecastPage>> _publishedForecastWorkspaces = [];
     private readonly List<WeakReference<Features.Forecast.SnapshotPage>> _publishedSavedComparisons = [];
     private readonly List<WeakReference<HoldingDetailPage>> _publishedHoldingDetails = [];
     private readonly List<WeakReference<AssetEventEditorPage>> _publishedAssetEventEditors = [];
@@ -49,6 +50,15 @@ public partial class AppShell : Shell
     internal bool OwnsAssetEventEditorPublication => !_navigationRetired;
     /// <summary>Gets whether this root still owns its original holding detail frames.</summary>
     internal bool OwnsHoldingDetailPublication => !_navigationRetired;
+    /// <summary>Gets whether this root still owns its original process-local forecast workspaces.</summary>
+    internal bool OwnsForecastWorkspacePublication => !_navigationRetired;
+    /// <summary>Tracks only weak native workspaces for terminal root retirement.</summary>
+    internal void RegisterForecastWorkspace(Features.Forecast.ForecastPage page)
+    {
+        if (_navigationRetired) { page.RetireShellPublication(); return; }
+        _publishedForecastWorkspaces.RemoveAll(reference => !reference.TryGetTarget(out _));
+        if (!_publishedForecastWorkspaces.Any(reference => reference.TryGetTarget(out var existing) && ReferenceEquals(existing, page))) _publishedForecastWorkspaces.Add(new(page));
+    }
     /// <summary>Gets whether this root still owns its original saved forecast comparisons.</summary>
     internal bool OwnsSavedComparisonPublication => !_navigationRetired;
     /// <summary>Tracks weak original saved-comparison pages without retaining their data through a completed root.</summary>
@@ -473,6 +483,7 @@ public partial class AppShell : Shell
         {
             if (CurrentPage is CategoriesPage categories) categories.RetirePublication();
             if (CurrentPage is AccountEditorPage accountEditor) accountEditor.RetirePublication();
+            if (CurrentPage is Features.Forecast.ForecastPage forecastWorkspace) forecastWorkspace.RetirePublication();
             if (CurrentPage is Features.Forecast.SnapshotPage savedComparison) savedComparison.RetirePublication();
             if (CurrentPage is HoldingDetailPage holdingDetail) holdingDetail.RetirePublication();
             if (CurrentPage is AssetEventEditorPage eventEditor) eventEditor.RetirePublication();
@@ -548,6 +559,9 @@ public partial class AppShell : Shell
         foreach (var reference in _publishedAssetTypeEditors)
             if (reference.TryGetTarget(out var editor)) editor.RetireShellPublication();
         _publishedAssetTypeEditors.Clear();
+        foreach (var reference in _publishedForecastWorkspaces)
+            if (reference.TryGetTarget(out var workspace)) workspace.RetireShellPublication();
+        _publishedForecastWorkspaces.Clear();
         foreach (var reference in _publishedSavedComparisons)
             if (reference.TryGetTarget(out var comparison)) comparison.RetireShellPublication();
         _publishedSavedComparisons.Clear();

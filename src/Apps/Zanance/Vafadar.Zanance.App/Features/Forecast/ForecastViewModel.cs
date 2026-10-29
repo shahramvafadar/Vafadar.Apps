@@ -69,7 +69,33 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
     private readonly TimeProvider _time;
     private ForecastScenario _scenario => Workspace.Scenario;
     private Dictionary<Guid, string> _planCurrencies = [];
-    private readonly SemaphoreSlim _loading = new(1, 1);
+    private bool _active = true;
+    private long _revision;
+    private CancellationTokenSource _lifetime = new();
+    private Func<bool>? _rootOwner;
+    /// <summary>Gets whether a tab-root rebuild would discard native prompt ownership, a raw draft or known accepted work.</summary>
+    public bool HasRetainedWork => IsBusy || Workspace.IsBusy || !Workspace.Scenario.IsEmpty
+        || Workspace.SnapshotName.Length != 0 || Workspace.AcceptedSnapshotIds.Count != 0;
+    private bool OwnsFrame => _active && (_rootOwner?.Invoke() ?? true);
+    /// <summary>Binds the original root without retaining its native page.</summary>
+    internal void BindRootOwner(Func<bool> owner) { _rootOwner = owner ?? throw new ArgumentNullException(nameof(owner)); PublishAvailability(); }
+    /// <summary>Retires reads, native prompts and row commands while preserving original drafts and accepted results.</summary>
+    public void SetActive(bool active)
+    {
+        if (_active == active) return; _active = active;
+        if (active) _localization.Changed += OnLanguageChanged; else _localization.Changed -= OnLanguageChanged;
+        RetirePublication(); Workspace.SetActive(active);
+    }
+    private void OnLanguageChanged(object? sender, EventArgs args) { RetirePublication(); if (OwnsFrame) _ = Presentation.Failures.GuardAsync(LoadAsync); }
+    private void RetirePublication()
+    {
+        ++_revision; var old = _lifetime; _lifetime = new(); Loading = new(); old.Cancel(); old.Dispose(); PublishAvailability();
+    }
+    private void PublishAvailability()
+    {
+        OnPropertyChanged(nameof(HasRetainedWork)); OnPropertyChanged(nameof(CanInteract)); OnPropertyChanged(nameof(CanReload)); OnPropertyChanged(nameof(CanSave));
+        SaveSnapshotCommand.NotifyCanExecuteChanged();
+    }
 
     /// <summary>Composes the original native projection with guarded computation, draft and explicit native effects.</summary>
     public ForecastViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, ForecastWorkStore work, IForecastInteraction? interaction = null)
@@ -80,27 +106,30 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
         _time = time;
         HorizonNames = [translator["Forecast_EndOfMonth"], translator["Forecast_30Days"], translator["Forecast_90Days"]];
         BasisText = string.Empty;
-        Workspace = new ForecastWorkspace(work, store, translator);
-        Workspace.PropertyChanged += (_, _) => { OnPropertyChanged(nameof(CanInteract)); OnPropertyChanged(nameof(CanSave)); SaveSnapshotCommand.NotifyCanExecuteChanged(); };
-        PropertyChanged += (_, e) => { if (e.PropertyName == nameof(IsBusy)) { OnPropertyChanged(nameof(CanInteract)); OnPropertyChanged(nameof(CanSave)); SaveSnapshotCommand.NotifyCanExecuteChanged(); } };
+        Workspace = new ForecastWorkspace(work, store, translator); Workspace.BindOwner(() => OwnsFrame);
+        _localization.Changed += OnLanguageChanged;
+        Workspace.PropertyChanged += (_, _) => PublishAvailability();
+        PropertyChanged += (_, e) => { if (e.PropertyName == nameof(IsBusy)) PublishAvailability(); };
         Loading.PropertyChanged += (_, _) => OnPropertyChanged(nameof(CanInteract));
     }
 
     /// <summary>Gets the actual process-local forecast draft and original guarded writer.</summary>
     public ForecastWorkspace Workspace { get; }
     /// <summary>Gets coverage through original read and complete native projection publication.</summary>
-    public SnapshotLoadState Loading { get; } = new();
+    [ObservableProperty] public partial SnapshotLoadState Loading { get; private set; } = new();
     /// <summary>Gets native input availability after complete covered publication.</summary>
-    public bool CanInteract => Loading.IsReady && !Workspace.IsBusy && !IsBusy;
+    public bool CanInteract => OwnsFrame && Loading.IsReady && !Workspace.IsBusy && !IsBusy;
     /// <summary>Gets whether the reviewed original computation may save one explicit new batch.</summary>
-    public bool CanSave => Workspace.CanSave && !IsBusy;
+    public bool CanSave => OwnsFrame && Loading.IsReady && Workspace.CanSave && !IsBusy;
+    /// <summary>Gets current explicit Retry availability, including a covered failure.</summary>
+    public bool CanReload => OwnsFrame && !Loading.IsLoading && !Workspace.IsBusy && !IsBusy;
     /// <summary>Gets the original translated month-end, thirty-day and ninety-day choices.</summary>
-    public IReadOnlyList<string> HorizonNames { get; }
+    [ObservableProperty] public partial IReadOnlyList<string> HorizonNames { get; private set; } = [];
 
-    public ObservableCollection<ForecastCard> Cards { get; } = [];
+    public SnapshotCollection<ForecastCard> Cards { get; } = [];
 
     /// <summary>Gets the saved forecasts, newest first (ZEX-S0803); listed in both modes once they exist.</summary>
-    public ObservableCollection<SnapshotRow> Snapshots { get; } = [];
+    public SnapshotCollection<SnapshotRow> Snapshots { get; } = [];
 
     [ObservableProperty]
     public partial bool HasSnapshots { get; set; }
@@ -134,7 +163,7 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
         Workspace.BeginNewDraft(); _ = Presentation.Failures.GuardAsync(LoadAsync);
     }
     [RelayCommand]
-    private Task RefreshAccessAsync() { Workspace.BeginNewDraft(); return LoadAsync(); }
+    private Task RefreshAccessAsync() { if (!CanReload) return Task.CompletedTask; Workspace.BeginNewDraft(); return LoadAsync(); }
 
     /// <summary>Computes the forecast of the chosen horizon.</summary>
     /// <remarks>Appearing, the horizon and the scenario can ask at once; loads run one after the other (as on Home, CR07-05).</remarks>
@@ -143,40 +172,41 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
 
     public async Task LoadAsync()
     {
-        await _loading.WaitAsync();
-        try
-        {
-            await Loading.RunAsync(LoadCoreAsync, () => { });
-        }
-        finally
-        {
-            _loading.Release();
-        }
+        if (!OwnsFrame) return; RetirePublication(); var revision = _revision; var token = _lifetime.Token; var owner = Loading;
+        bool Current() => OwnsFrame && revision == _revision && ReferenceEquals(owner, Loading) && !token.IsCancellationRequested;
+        void RequireCurrent() { token.ThrowIfCancellationRequested(); if (!Current()) throw new OperationCanceledException("Original native forecast retired.", token); }
+        void Changed(object? sender, System.ComponentModel.PropertyChangedEventArgs args) => PublishAvailability();
+        owner.PropertyChanged += Changed;
+        try { await owner.RunAsync(() => LoadCoreAsync(RequireCurrent), () => RequireCurrent()); }
+        catch (OperationCanceledException) when (!Current()) { }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { if (Current()) Workspace.ReportAnalysisFailure(exception); }
+        finally { owner.PropertyChanged -= Changed; PublishAvailability(); }
     }
 
-    private async Task LoadCoreAsync()
+    private async Task LoadCoreAsync(Action RequireCurrent)
     {
         var today = Today;
         var calendar = Presentation.Calendars.ToPeriod(_localization.CurrentCalendar);
-        await Workspace.LoadAsync(HorizonIndex, calendar, today);
+        await Workspace.LoadAsync(HorizonIndex, calendar, today); RequireCurrent();
         if (Workspace.Review is not { } review) return;
         review.EnsureCurrent();
-        IsAdvanced = review.Settings.Shows(Feature.ForecastDetails);
+        var isAdvanced = review.Settings.Shows(Feature.ForecastDetails);
         var horizon = review.Horizon(HorizonIndex, calendar, today);
         var accounts = review.Accounts; var entries = review.Entries; var schedules = review.Schedules;
-        HasAccounts = accounts.Count > 0;
+        var hasAccounts = accounts.Count > 0;
         var accountCurrencies = accounts.ToDictionary(a => a.Id, a => a.CurrencyCode);
-        _planCurrencies = schedules.Where(p => accountCurrencies.ContainsKey(p.AccountId)).ToDictionary(p => p.Id, p => accountCurrencies[p.AccountId]);
+        var planCurrencies = schedules.Where(p => accountCurrencies.ContainsKey(p.AccountId)).ToDictionary(p => p.Id, p => accountCurrencies[p.AccountId]);
         var forecasts = Workspace.Forecasts;
-        PublishSnapshots(); HasScenario = !_scenario.IsEmpty;
+        var snapshots = PrepareSnapshots(review); var hasScenario = !_scenario.IsEmpty;
         var culture = _localization.CurrentCulture;
 
         // The basis is always visible: accounts, base date, horizon, and whether unreviewed entries are included (FOR-09).
-        BasisText = _translator.Format("Forecast_Basis", _dates.Format(today, DateFormatStyle.Long), _dates.Format(horizon, DateFormatStyle.Long));
+        IReadOnlyList<string> horizonNames = [_translator["Forecast_EndOfMonth"], _translator["Forecast_30Days"], _translator["Forecast_90Days"]];
+        var basisText = _translator.Format("Forecast_Basis", _dates.Format(today, DateFormatStyle.Long), _dates.Format(horizon, DateFormatStyle.Long));
         var unreviewed = entries.Count(e => e.Review == ReviewState.Unreviewed);
-        UnreviewedText = unreviewed > 0 ? _translator.Format("Forecast_Unreviewed", unreviewed) : null;
+        var unreviewedText = unreviewed > 0 ? _translator.Format("Forecast_Unreviewed", unreviewed) : null;
 
-        Cards.Clear();
+        var cards = new List<ForecastCard>();
         foreach (var forecast in forecasts)
         {
             var currency = Currencies.TryGet(forecast.CurrencyCode, out var known) ? known : Currencies.Euro;
@@ -201,13 +231,13 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
                 item.IsExcluded,
                 item.IsMoved,
                 item.IsAmountAssumed,
-                item.ScheduleId is { } id ? _planCurrencies.GetValueOrDefault(id) : null,
-                item.Effect is { } value && item.ScheduleId is { } plan && string.Equals(_planCurrencies.GetValueOrDefault(plan), forecast.CurrencyCode, StringComparison.OrdinalIgnoreCase) ? Math.Abs(value) : null)).ToList();
+                item.ScheduleId is { } id ? planCurrencies.GetValueOrDefault(id) : null,
+                item.Effect is { } value && item.ScheduleId is { } plan && string.Equals(planCurrencies.GetValueOrDefault(plan), forecast.CurrencyCode, StringComparison.OrdinalIgnoreCase) ? Math.Abs(value) : null)).ToList();
 
             var warning = forecast.GoesNegative
                 ? _translator.Format("Forecast_Shortfall", _dates.Format(forecast.MinimumDate, DateFormatStyle.Long))
                 : null;
-            Cards.Add(new ForecastCard(
+            cards.Add(new ForecastCard(
                 forecast.CurrencyCode,
                 MoneyText.Format(forecast.EndBalance, forecast.CurrencyCode, culture),
                 _translator.Format("Forecast_Lowest", MoneyText.Format(forecast.Minimum, forecast.CurrencyCode, culture), _dates.Format(forecast.MinimumDate, DateFormatStyle.DayMonth)),
@@ -217,19 +247,18 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
                 [.. forecast.Path.Select(p => new PathPoint(p.Date.ToDateTime(TimeOnly.MinValue), (double)MoneyText.ToDecimal(p.Balance, currency)))],
                 rows));
         }
+        await Workspace.ValidatePublicationAsync(review); RequireCurrent();
+        void Publish(Action action) { RequireCurrent(); review.EnsurePublicationAccess(); action(); RequireCurrent(); }
+        Publish(() => HorizonNames = horizonNames); Publish(() => IsAdvanced = isAdvanced); Publish(() => HasAccounts = hasAccounts);
+        Publish(() => _planCurrencies = planCurrencies); Publish(() => HasScenario = hasScenario);
+        Publish(() => BasisText = basisText); Publish(() => UnreviewedText = unreviewedText);
+        Publish(() => Cards.ReplaceAll(cards)); Publish(() => Snapshots.ReplaceAll(snapshots)); Publish(() => HasSnapshots = snapshots.Length > 0);
     }
 
-    private void PublishSnapshots()
-    {
-        Snapshots.Clear();
-        foreach (var snapshot in Workspace.Review?.Snapshots ?? [])
-        {
-            Snapshots.Add(new SnapshotRow(snapshot.Id, snapshot.Name, _translator.Format("Snapshot_Saved", _dates.Format(snapshot.BaseDate, DateFormatStyle.Short), snapshot.CurrencyCode,
-                MoneyText.Format(snapshot.Minimum, snapshot.CurrencyCode, _localization.CurrentCulture), _dates.Format(snapshot.MinimumDate, DateFormatStyle.Short))));
-        }
-
-        HasSnapshots = Snapshots.Count > 0;
-    }
+    private SnapshotRow[] PrepareSnapshots(ForecastReadSnapshot? review) => (review?.Snapshots ?? []).Select(snapshot =>
+        new SnapshotRow(snapshot.Id, snapshot.Name, _translator.Format("Snapshot_Saved", _dates.Format(snapshot.BaseDate, DateFormatStyle.Short), snapshot.CurrencyCode,
+            MoneyText.Format(snapshot.Minimum, snapshot.CurrencyCode, _localization.CurrentCulture), _dates.Format(snapshot.MinimumDate, DateFormatStyle.Short)))).ToArray();
+    private void PublishSnapshots() { var rows = PrepareSnapshots(Workspace.Review); Snapshots.ReplaceAll(rows); HasSnapshots = rows.Length > 0; }
 
     // ZEX-S0803: the forecast as it is now – path, scope and assumptions – kept read-only for a later comparison.
     [RelayCommand(CanExecute = nameof(CanSave))]
@@ -240,31 +269,45 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
             return;
         }
 
+        var revision = _revision;
+        bool Current() => OwnsFrame && revision == _revision && ReferenceEquals(Workspace.Review, reviewed);
         IsBusy = true;
         try
         {
-            await Workspace.ValidateAnalysisAsync(reviewed);
+            await Workspace.ValidateAnalysisAsync(reviewed); if (!Current()) return;
             var name = await _interaction.PromptAsync(_translator["Snapshot_SaveTitle"], _translator["Snapshot_SaveMessage"], _translator["Common_Save"], _translator["Common_Cancel"],
                 initialValue: string.IsNullOrEmpty(Workspace.SnapshotName) ? _dates.Format(Workspace.BaseDate, DateFormatStyle.Short) : Workspace.SnapshotName, maxLength: 80);
-            if (string.IsNullOrWhiteSpace(name))
+            if (!Current() || string.IsNullOrWhiteSpace(name))
             {
                 return;
             }
 
             var assumptions = string.Join("; ", Cards.SelectMany(c => c.Rows).Where(r => r.Badge is not null && (r.IsExcluded || r.IsMoved || r.IsAmountAssumed)).Select(r => $"{r.Name}: {r.Badge}"));
-            await Workspace.SaveAsync(name, assumptions, AppInfo.Current.VersionString);
-            PublishSnapshots();
+            await Workspace.SaveAsync(name, assumptions, AppInfo.Current.VersionString, Current);
+            if (OwnsFrame && revision == _revision) PublishSnapshots();
         }
-        catch (Exception exception) when (exception is not OutOfMemoryException) { Workspace.ReportAnalysisFailure(exception); }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { if (OwnsFrame && revision == _revision) await CoverSourceFailureAsync(exception); }
         finally { IsBusy = false; }
 
     }
 
     [RelayCommand]
-    private Task OpenSnapshotAsync(SnapshotRow row) => _interaction.NavigateAsync(AppShell.SnapshotRoute, new Dictionary<string, object> { ["id"] = row.Id });
+    private async Task OpenSnapshotAsync(SnapshotRow row)
+    {
+        if (!CanInteract || !Snapshots.Any(item => ReferenceEquals(item, row)) || Workspace.Review is not { } review) return;
+        var revision = _revision;
+        try
+        {
+        await Workspace.ValidatePublicationAsync(review);
+        if (OwnsFrame && revision == _revision && Snapshots.Any(item => ReferenceEquals(item, row)))
+            await _interaction.NavigateAsync(AppShell.SnapshotRoute, new Dictionary<string, object> { ["id"] = row.Id });
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { if (OwnsFrame && revision == _revision) await CoverSourceFailureAsync(exception); }
+    }
 
     [RelayCommand]
-    private Task AddPlanAsync() => _interaction.NavigateAsync(AppShell.PlanEditorRoute);
+    private Task AddPlanAsync() => CanInteract ? _interaction.NavigateAsync(AppShell.PlanEditorRoute) : Task.CompletedTask;
 
     // FOR-04, FOR-10: a plan item can be left out, or assumed on another date or with another amount, for this view only;
     // nothing is saved.
@@ -276,7 +319,10 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
             return;
         }
 
-        if (!CanInteract || Workspace.Review is not { } reviewed) return;
+        if (!CanInteract || !Cards.SelectMany(card => card.Rows).Any(item => ReferenceEquals(item, row)) || Workspace.Review is not { } reviewed) return;
+        var revision = _revision;
+        bool Current() => OwnsFrame && revision == _revision && ReferenceEquals(Workspace.Review, reviewed)
+            && Cards.SelectMany(card => card.Rows).Any(item => ReferenceEquals(item, row));
         IsBusy = true;
         try
         {
@@ -287,14 +333,16 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
             var amount = row.IsAmountAssumed ? _translator["Forecast_RestoreAmount"] : _translator["Forecast_AssumeAmount"];
             string[] actions = row.IsExcluded ? [open, toggle] : [open, toggle, row.IsMoved ? restore : move, amount];
             var choice = await _interaction.ChooseAsync(row.Name, _translator["Common_Cancel"], actions);
+            if (!Current()) return;
             if (choice == open)
             {
+                await Workspace.ValidatePublicationAsync(reviewed); if (!Current()) return;
                 await _interaction.NavigateAsync(AppShell.OccurrenceRoute, new Dictionary<string, object> { ["plan"] = plan, ["date"] = original });
                 return;
             }
 
             if (choice is null || choice == _translator["Common_Cancel"]) return;
-            await Workspace.ValidateAnalysisAsync(reviewed);
+            await Workspace.ValidateAnalysisAsync(reviewed); if (!Current()) return;
             if (choice == restore)
             {
                 Workspace.EditScenario(s => s.SetDate(plan, original, null));
@@ -323,7 +371,7 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
                     return;
                 }
 
-                await Workspace.ValidateAnalysisAsync(reviewed);
+                await Workspace.ValidateAnalysisAsync(reviewed); if (!Current()) return;
                 Workspace.EditScenario(s => s.SetAmount(plan, original, assumed));
             }
             else if (choice == move)
@@ -336,7 +384,7 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
                     return;
                 }
 
-                await Workspace.ValidateAnalysisAsync(reviewed);
+                await Workspace.ValidateAnalysisAsync(reviewed); if (!Current()) return;
                 Workspace.EditScenario(s => s.SetDate(plan, original, row.Date.AddDays(days)));
             }
             else
@@ -346,7 +394,7 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
 
             await LoadAsync();
         }
-        catch (Exception exception) when (exception is not OutOfMemoryException) { Workspace.ReportAnalysisFailure(exception); }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { if (OwnsFrame && revision == _revision) await CoverSourceFailureAsync(exception); }
         finally { IsBusy = false; }
 
     }
@@ -354,7 +402,7 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
     /// <summary>Assumes another amount for a plan item of this view (FOR-10); nothing is saved.</summary>
     internal async Task AssumeAmountAsync(ForecastRow row, long amount)
     {
-        if (row is { ScheduleId: { } plan, OriginalDate: { } original })
+        if (CanInteract && Cards.SelectMany(card => card.Rows).Any(item => ReferenceEquals(item, row)) && row is { ScheduleId: { } plan, OriginalDate: { } original })
         {
             Workspace.EditScenario(s => s.SetAmount(plan, original, amount));
             await LoadAsync();
@@ -368,4 +416,14 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
         Workspace.ResetScenario();
         await LoadAsync();
     }
+    /// <summary>Covers stale source authority while preserving raw scenario/name and known accepted identities.</summary>
+    private async Task CoverSourceFailureAsync(Exception exception)
+    {
+        RetirePublication(); Workspace.SetActive(false); Workspace.SetActive(true); Workspace.ReportAnalysisFailure(exception);
+        var failed = Loading;
+        try { await failed.RunAsync(() => Task.FromException(exception), () => { }); }
+        catch (Exception observed) when (ReferenceEquals(observed, exception)) { }
+        PublishAvailability();
+    }
+
 }

@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-646: bind forecast rows, scenario/name prompts and saved paths to their original source; preserve drafts and accepted receipts through display changes, with current translated feedback and no automatic re-save.
+
 - D-645: validate complete saved-comparison sources, publish under current page/query ownership, cover read failures with Retry and preserve accepted deletion receipts without deleting again.
 
 - D-644: preserve newer inline price input after a saved valuation, protect original detail Back/archive consent, resume retained tabs and distinguish old receipts from later read/write failures.

@@ -511,7 +511,10 @@ public partial class App : Application
         }
     });
 
-    private static bool IsOnTab(Shell shell) => shell.Navigation.NavigationStack.Count <= 1 && shell.Navigation.ModalStack.Count == 0;
+    // D-646: a forecast tab can own an unsaved scenario/name or a known Save receipt just like a pushed editor.
+    // Rebuild only after leaving that live workspace; native theme/localization refreshes it in place.
+    private static bool IsOnTab(Shell shell) => shell.Navigation.NavigationStack.Count <= 1 && shell.Navigation.ModalStack.Count == 0
+        && shell.CurrentPage?.BindingContext is not Features.Forecast.ForecastViewModel { HasRetainedWork: true };
 
     private void OnShellNavigated(object? sender, ShellNavigatedEventArgs e)
     {
