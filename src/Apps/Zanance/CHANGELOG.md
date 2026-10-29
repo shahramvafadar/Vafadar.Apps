@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-642: keep asset-type forms tied to their original file and complete settings/history, retain raw physical values through Retry, and separate known saved metadata from newer unsaved text.
+
 - D-641: keep budget forms and spending suggestions tied to their original source, retain raw edits through interrupted Reload/Retry, and preserve known saved limits when returning or notifying fails.
 
 - D-640: keep goal forms tied to their complete original source, preserve unsaved text through explicit Retry, disable stale Save after editing rights change, and retain known saved results without submitting them again.

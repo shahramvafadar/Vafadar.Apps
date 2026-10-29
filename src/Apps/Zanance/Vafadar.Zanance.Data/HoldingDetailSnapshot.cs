@@ -23,6 +23,8 @@ public sealed class HoldingDetailSnapshot
 
     /// <summary>Gets the captured actual file, independently of later selected-profile metadata.</summary>
     public string DatabasePath { get; }
+    /// <summary>Passes only original actual-file and access authority to the existing type editor.</summary>
+    public AssetTypeEditorOrigin CreateTypeEditorOrigin() => new(DatabasePath, _access);
     /// <summary>Gets the original requested type identity, including an original missing row.</summary>
     public Guid TypeId { get; }
     /// <summary>Gets the original coherent writer review, or null for a verified missing type.</summary>

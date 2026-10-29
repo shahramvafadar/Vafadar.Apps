@@ -4889,3 +4889,8 @@ facts, not broad release acceptance. D-607/phone/three original deadlines remain
 [Original native source and exact limits](quality/complete-original-template-center.md).
 Keep physical adoption, whole database/key/security/stability/two-second/accessibility/
 iOS/provider/Store/publication acceptance separate; the overall goal stays active.
+
+
+## D-642 bounded type-editor gate
+
+Original source and independent native form checks pass within the recorded scope. Keep later physical no-reset adoption after D-607, general security/performance/stability/accessibility/iOS/provider/store gates open; this is not full release acceptance. [Evidence](quality/complete-original-asset-type-editor-source.md).

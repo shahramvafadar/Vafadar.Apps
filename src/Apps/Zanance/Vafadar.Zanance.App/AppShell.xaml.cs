@@ -1,3 +1,4 @@
+using Vafadar.Zanance.App.Features.Holdings;
 using Vafadar.Zanance.App.Features.Transactions;
 using Vafadar.Zanance.App.Features.Accounts;
 using Vafadar.Zanance.App.Features.Backup;
@@ -31,6 +32,7 @@ public partial class AppShell : Shell
     private readonly List<WeakReference<AccountEditorPage>> _publishedAccountEditors = [];
     private readonly List<WeakReference<GoalEditorPage>> _publishedGoalEditors = [];
     private readonly List<WeakReference<BudgetEditorPage>> _publishedBudgetEditors = [];
+    private readonly List<WeakReference<AssetTypeEditorPage>> _publishedAssetTypeEditors = [];
     private bool _navigationRetired;
     /// <summary>Gets whether this actual native root can still own an original account editor or accepted return.</summary>
     internal bool OwnsAccountEditorPublication => !_navigationRetired;
@@ -38,6 +40,8 @@ public partial class AppShell : Shell
     internal bool OwnsGoalEditorPublication => !_navigationRetired;
     /// <summary>Gets whether this original root still owns its budget form.</summary>
     internal bool OwnsBudgetEditorPublication => !_navigationRetired;
+    /// <summary>Gets whether this actual root still owns its original asset-type forms.</summary>
+    internal bool OwnsAssetTypeEditorPublication => !_navigationRetired;
 
     /// <summary>Records actual published Home instances; lazy ShellContent.Content may not expose its cached page.</summary>
     internal void RegisterHomePublication(Features.Home.HomePage home)
@@ -147,6 +151,15 @@ public partial class AppShell : Shell
         _publishedBudgetEditors.RemoveAll(reference => !reference.TryGetTarget(out _));
         if (!_publishedBudgetEditors.Any(reference => reference.TryGetTarget(out var existing) && ReferenceEquals(existing, page)))
             _publishedBudgetEditors.Add(new(page));
+    }
+
+    /// <summary>Tracks weak actual type editors without retaining completed forms through the root.</summary>
+    internal void RegisterAssetTypeEditor(AssetTypeEditorPage page)
+    {
+        if (_navigationRetired) { page.RetireShellPublication(); return; }
+        _publishedAssetTypeEditors.RemoveAll(reference => !reference.TryGetTarget(out _));
+        if (!_publishedAssetTypeEditors.Any(reference => reference.TryGetTarget(out var existing) && ReferenceEquals(existing, page)))
+            _publishedAssetTypeEditors.Add(new(page));
     }
 
     /// <summary>Route of the account editor (query: <c>id</c> for an existing account).</summary>
@@ -425,6 +438,9 @@ public partial class AppShell : Shell
         {
             if (CurrentPage is CategoriesPage categories) categories.RetirePublication();
             if (CurrentPage is AccountEditorPage accountEditor) accountEditor.RetirePublication();
+            if (CurrentPage is AssetTypeEditorPage typeEditor) typeEditor.RetirePublication();
+            if (Navigation.ModalStack.LastOrDefault() is AssetTypeEditorPage modalType) modalType.RetirePublication();
+            if (Navigation.ModalStack.LastOrDefault() is NavigationPage typeNavigation && typeNavigation.CurrentPage is AssetTypeEditorPage wrappedType) wrappedType.RetirePublication();
             if (CurrentPage is BudgetEditorPage budgetEditor) budgetEditor.RetirePublication();
             if (Navigation.ModalStack.LastOrDefault() is BudgetEditorPage modalBudget) modalBudget.RetirePublication();
             if (Navigation.ModalStack.LastOrDefault() is NavigationPage budgetNavigation && budgetNavigation.CurrentPage is BudgetEditorPage wrappedBudget) wrappedBudget.RetirePublication();
@@ -489,6 +505,9 @@ public partial class AppShell : Shell
         foreach (var reference in _publishedBudgetEditors)
             if (reference.TryGetTarget(out var editor)) editor.RetireShellPublication();
         _publishedBudgetEditors.Clear();
+        foreach (var reference in _publishedAssetTypeEditors)
+            if (reference.TryGetTarget(out var editor)) editor.RetireShellPublication();
+        _publishedAssetTypeEditors.Clear();
         Navigated -= OnRetainedDetailsTabActivated;
 #if ANDROID
         if (Handler is AccessibleShellRenderer renderer) renderer.RetireNavigation();

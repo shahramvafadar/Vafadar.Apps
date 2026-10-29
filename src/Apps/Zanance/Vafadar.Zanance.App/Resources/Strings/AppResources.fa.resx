@@ -8594,4 +8594,16 @@
   <data name="Budget_SavedDraftChanged" xml:space="preserve">
     <value>بودجه ذخیره شد. تغییرهای تازه‌تری دارید که ذخیره نشده‌اند؛ پیش از بستن این فرم آن‌ها را بررسی کنید.</value>
   </data>
+  <data name="AssetType_Loading" xml:space="preserve">
+    <value>در حال بارگذاری نوع دارایی…</value>
+  </data>
+  <data name="AssetType_LoadFailed" xml:space="preserve">
+    <value>نوع دارایی بارگذاری نشد. ویرایش‌های شما حفظ شده‌اند. برای بررسی مقدارهای ذخیره‌شدهٔ فعلی دوباره تلاش کنید.</value>
+  </data>
+  <data name="AssetType_ReloadReview" xml:space="preserve">
+    <value>جزئیات ذخیره‌شده تغییر کرده‌اند. پیش از نگه‌داشتن ویرایش‌های خود، مقدارهای ذخیره‌شدهٔ فعلی را در بالا بررسی کنید.</value>
+  </data>
+  <data name="AssetType_SavedDraftChanged" xml:space="preserve">
+    <value>نوع دارایی ذخیره شد. تغییرهای تازه‌تری دارید که ذخیره نشده‌اند؛ پیش از بستن این فرم آن‌ها را بررسی کنید.</value>
+  </data>
 </root>

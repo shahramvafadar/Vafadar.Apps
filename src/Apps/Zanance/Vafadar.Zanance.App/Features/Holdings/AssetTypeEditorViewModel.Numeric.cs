@@ -29,30 +29,31 @@ public sealed partial class AssetTypeEditorViewModel
     partial void OnPurityTextChanging(string value)
     {
         // D-437: partial typing after a display change retains the original parser; only full clearing renews it.
-        if (!_initialized || string.IsNullOrWhiteSpace(PurityText) || string.IsNullOrWhiteSpace(value)) _purityCulture = CapturePhysicalCulture();
+        if (!_publishing && (!_initialized || string.IsNullOrWhiteSpace(PurityText) || string.IsNullOrWhiteSpace(value))) _purityCulture = CapturePhysicalCulture();
     }
     partial void OnUnitWeightTextChanging(string value)
     {
-        if (!_initialized || string.IsNullOrWhiteSpace(UnitWeightText) || string.IsNullOrWhiteSpace(value)) _weightCulture = CapturePhysicalCulture();
+        if (!_publishing && (!_initialized || string.IsNullOrWhiteSpace(UnitWeightText) || string.IsNullOrWhiteSpace(value))) _weightCulture = CapturePhysicalCulture();
     }
-    partial void OnPurityTextChanged(string value) { if (_initialized) _revision++; PurityError = null; RefreshNumericPresentation(); }
-    partial void OnUnitWeightTextChanged(string value) { if (_initialized) _revision++; UnitWeightError = null; RefreshNumericPresentation(); }
-    partial void OnNameChanged(string value) { if (_initialized) _revision++; NameError = null; }
-    partial void OnMetalIndexChanged(int value) { if (_initialized) _revision++; }
-    partial void OnCountUnitNameChanged(string value) { if (_initialized) _revision++; }
-    partial void OnDivisibleChanged(bool value) { if (_initialized) _revision++; }
-    partial void OnCurrencyCodeChanged(string value) { if (_initialized) _revision++; }
-    partial void OnNoteChanged(string value) { if (_initialized) _revision++; }
+    partial void OnPurityTextChanged(string value) { DraftChanged(); PurityError = null; RefreshNumericPresentation(); }
+    partial void OnUnitWeightTextChanged(string value) { DraftChanged(); UnitWeightError = null; RefreshNumericPresentation(); }
+    partial void OnNameChanged(string value) { DraftChanged(); NameError = null; }
+    partial void OnMetalIndexChanged(int value) { DraftChanged(); }
+    partial void OnCountUnitNameChanged(string value) { DraftChanged(); }
+    partial void OnDivisibleChanged(bool value) { DraftChanged(); }
+    partial void OnCurrencyCodeChanged(string value) { DraftChanged(); }
+    partial void OnNoteChanged(string value) { DraftChanged(); }
 
     /// <summary>Publishes only display metadata; raw values and original cultures stay unchanged.</summary>
     public void RefreshNumericPresentation()
     {
+        if (_departed || !OwnsRoot) return;
         if (NameError is not null) NameError = _translator["AssetType_NameRequired"];
         if (PurityError is not null) PurityError = _translator["AssetType_PurityInvalid"];
         if (UnitWeightError is not null) UnitWeightError = _translator["AssetType_WeightInvalid"];
         OnPropertyChanged(nameof(PurityFormatNote)); OnPropertyChanged(nameof(UnitWeightFormatNote)); OnPropertyChanged(nameof(UnitWeightExample));
     }
-    private void OnNumericDisplayChanged(object? sender, EventArgs args) => RefreshNumericPresentation();
+    private void OnNumericDisplayChanged(object? sender, EventArgs args) => RefreshDisplay();
     /// <summary>Attaches display notifications only while the actual original native page is present.</summary>
     public void SetNumericPresentationActive(bool active)
     {

@@ -8628,4 +8628,16 @@ Original XML SHA-256: {5}</value>
   <data name="Budget_SavedDraftChanged" xml:space="preserve">
     <value>The budget was saved. You have newer unsaved changes; close this form only after reviewing them.</value>
   </data>
+  <data name="AssetType_Loading" xml:space="preserve">
+    <value>Loading asset type…</value>
+  </data>
+  <data name="AssetType_LoadFailed" xml:space="preserve">
+    <value>The asset type could not be loaded. Your edits are retained. Try again to review the current saved values.</value>
+  </data>
+  <data name="AssetType_ReloadReview" xml:space="preserve">
+    <value>The saved details changed. Review the current saved values above before keeping your edits.</value>
+  </data>
+  <data name="AssetType_SavedDraftChanged" xml:space="preserve">
+    <value>The asset type was saved. You have newer unsaved changes; review them before closing this form.</value>
+  </data>
 </root>

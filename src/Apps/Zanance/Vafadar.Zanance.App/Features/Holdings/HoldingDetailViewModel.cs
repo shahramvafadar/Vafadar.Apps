@@ -343,7 +343,11 @@ public sealed partial class HoldingDetailViewModel(
         try
         {
             await holdings.ValidateDetailAccessAsync(source, token);
-            if (Current()) await interaction.NavigateAsync(route, parameters);
+            if (Current())
+            {
+                if (route == AppRoutes.AssetTypeEditorRoute) parameters["assetTypeEditorOrigin"] = source.CreateTypeEditorOrigin();
+                await interaction.NavigateAsync(route, parameters);
+            }
         }
         catch (OperationCanceledException) when (token.IsCancellationRequested) { }
         catch (Exception ex) when (ex is not OutOfMemoryException)

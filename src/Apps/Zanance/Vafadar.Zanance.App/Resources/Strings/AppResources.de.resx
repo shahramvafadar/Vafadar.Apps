@@ -8594,4 +8594,16 @@ Original-XML SHA-256: {5}</value>
   <data name="Budget_SavedDraftChanged" xml:space="preserve">
     <value>Das Budget wurde gespeichert. Neuere Änderungen sind noch nicht gespeichert. Prüfe sie, bevor du dieses Formular schließt.</value>
   </data>
+  <data name="AssetType_Loading" xml:space="preserve">
+    <value>Anlageart wird geladen…</value>
+  </data>
+  <data name="AssetType_LoadFailed" xml:space="preserve">
+    <value>Die Anlageart konnte nicht geladen werden. Deine Änderungen bleiben erhalten. Versuche es erneut, um die aktuell gespeicherten Werte zu prüfen.</value>
+  </data>
+  <data name="AssetType_ReloadReview" xml:space="preserve">
+    <value>Die gespeicherten Angaben haben sich geändert. Prüfe die aktuell gespeicherten Werte oben, bevor du deine Änderungen beibehältst.</value>
+  </data>
+  <data name="AssetType_SavedDraftChanged" xml:space="preserve">
+    <value>Die Anlageart wurde gespeichert. Neuere Änderungen sind noch nicht gespeichert. Prüfe sie, bevor du dieses Formular schließt.</value>
+  </data>
 </root>

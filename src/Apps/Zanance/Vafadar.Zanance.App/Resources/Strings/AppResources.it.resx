@@ -8583,4 +8583,16 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Budget_SavedDraftChanged" xml:space="preserve">
     <value>Il budget è stato salvato. Hai modifiche più recenti non salvate: controllale prima di chiudere questo modulo.</value>
   </data>
+  <data name="AssetType_Loading" xml:space="preserve">
+    <value>Caricamento del tipo di bene…</value>
+  </data>
+  <data name="AssetType_LoadFailed" xml:space="preserve">
+    <value>Non è stato possibile caricare il tipo di bene. Le tue modifiche sono conservate. Riprova per controllare i valori attualmente salvati.</value>
+  </data>
+  <data name="AssetType_ReloadReview" xml:space="preserve">
+    <value>I dati salvati sono cambiati. Controlla i valori attuali qui sopra prima di mantenere le tue modifiche.</value>
+  </data>
+  <data name="AssetType_SavedDraftChanged" xml:space="preserve">
+    <value>Il tipo di bene è stato salvato. Hai modifiche più recenti non salvate: controllale prima di chiudere questo modulo.</value>
+  </data>
 </root>

@@ -182,7 +182,15 @@ public sealed partial class HoldingsViewModel(HoldingStore holdings, HoldingText
         try
         {
             await holdings.ValidateOverviewAccessAsync(snapshot, token);
-            if (Current()) await interaction.NavigateAsync(route, parameters);
+            if (Current())
+            {
+                if (route == AppRoutes.AssetTypeEditorRoute)
+                {
+                    parameters = parameters is null ? new Dictionary<string, object>() : new Dictionary<string, object>(parameters);
+                    parameters["assetTypeEditorOrigin"] = snapshot.CreateTypeEditorOrigin();
+                }
+                await interaction.NavigateAsync(route, parameters);
+            }
         }
         catch (OperationCanceledException) when (token.IsCancellationRequested) { }
         catch (Exception ex) when (ex is not OutOfMemoryException)

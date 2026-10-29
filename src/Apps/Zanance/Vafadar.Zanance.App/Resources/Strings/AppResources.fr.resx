@@ -8571,4 +8571,16 @@ SHA-256 du XML original : {5}</value>
   <data name="Budget_SavedDraftChanged" xml:space="preserve">
     <value>Le budget a été enregistré. Des modifications plus récentes ne sont pas enregistrées ; vérifiez-les avant de fermer ce formulaire.</value>
   </data>
+  <data name="AssetType_Loading" xml:space="preserve">
+    <value>Chargement du type d’actif…</value>
+  </data>
+  <data name="AssetType_LoadFailed" xml:space="preserve">
+    <value>Le type d’actif n’a pas pu être chargé. Vos modifications sont conservées. Réessayez pour vérifier les valeurs actuellement enregistrées.</value>
+  </data>
+  <data name="AssetType_ReloadReview" xml:space="preserve">
+    <value>Les informations enregistrées ont changé. Vérifiez les valeurs actuelles ci-dessus avant de conserver vos modifications.</value>
+  </data>
+  <data name="AssetType_SavedDraftChanged" xml:space="preserve">
+    <value>Le type d’actif a été enregistré. Des modifications plus récentes ne sont pas enregistrées ; vérifiez-les avant de fermer ce formulaire.</value>
+  </data>
 </root>

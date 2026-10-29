@@ -7599,3 +7599,32 @@ packages/failures/evidence remain. Phone/D-607/three deadlines/unread source are
 adoption and broad DB/key/security/stability/performance/A11Y/iOS/provider/Store/release gates remain
 separate. Overall delivery stays active and TalkBack remains last.
 [Complete evidence](../../quality/complete-original-budget-editor-source.md).
+
+
+### D-642 - Complete original asset-type editor source and ownership (2026-10-29)
+
+Original type/history/preferences are read from one captured file and deferred worker transaction,
+without creating missing settings. Narrow parent file/access origin, immutable complete source and
+actual page/tab/root/query/display/draft/consent ownership protect the existing writer. Covered
+loading/failure uses explicit Retry; raw name/note/purity/weight/unit/currency and independent parse
+cultures survive failed and partially published reloads. Changed saved values require review; live
+captions preserve original choices. Actual accepted receipts precede notifications, keep newer raw
+text dirty and cannot replay Save or navigate another owner. Original metal, purity, quantity,
+dimension-lock, quota, archive/icon/order and financial rules remain; no model/migration change.
+
+Seventeen distinct new cases and twenty-two affected existing cases pass. Strict Windows and full
+offline384AOT/408ELF/1608staticLOAD shipping APK pass; independent193AOT/205ELF/808LOAD is source-scoped,
+not whole-PE equality. Fresh API36/x64/4096 PID4831 verifies pending Cancel/departed Save refusal,
+read-failure Retry, eighteen en/fa/de/Light/Dark/360/412/680 ready contexts at OSfont1.0, raw
+`  D642 retained native name  ` through rights refusal and failed Retry, and exactly one metadata
+Save with notification failure/newer dirty Note and original Close/discard. Complete17-table source
+permits only AssetType.Name/UpdatedAt changes; original Note remains and ledger0. Observer/method-name
+refusals are preserved and corrected without accepted-input replay or financial setup.
+
+Original settings/boot/1080x1920/420/en/System restore; fresh UID/data and34hash-matched XMLs1,683,700bytes
+retire, only fresh AVD stops and official deletion succeeds. Four standard cleans pass. Eleven-target
+supplemental cleanup is blocked before process creation,3,720files849,566,076logicalbytes remain;
+never retry/subset/alternate/move/escalate/reuse. Used packages/evidence/pre-refusal private source
+archive remain. Phone/D-607/three deadlines/unread source untouched; physical adoption and broader
+security/DB/key/ANR/performance/A11Y/iOS/provider/Store/release gates stay open. Overall goal active.
+[Complete evidence](../../quality/complete-original-asset-type-editor-source.md).

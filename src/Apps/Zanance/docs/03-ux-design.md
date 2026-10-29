@@ -2944,3 +2944,8 @@ Cover the original goal form during acquisition/failure, keep explicit Retry and
 ## D-641 original budget editor
 
 Keep the original budget form covered through loading/failure with explicit visible Retry. Retain exact raw totals/category limits/account scope and parse contexts across interrupted reloads. Original period/header/footer remain complete, stale access disables Save until explicit Reload, and accepted results and newer drafts have separate Close/discard ownership. [Evidence](quality/complete-original-budget-editor-source.md).
+
+
+## D-642 original asset-type editor
+
+Cover incomplete source, keep explicit Retry and complete saved-value review. Preserve raw physical-value parse contexts and choices through display/reload changes. Retire native Back/discard/Save with the original frame; accepted metadata and a later draft require separate Close/discard ownership. [Evidence](quality/complete-original-asset-type-editor-source.md).

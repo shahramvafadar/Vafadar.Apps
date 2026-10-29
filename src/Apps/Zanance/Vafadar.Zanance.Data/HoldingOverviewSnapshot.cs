@@ -24,6 +24,8 @@ public sealed class HoldingOverviewSnapshot
 
     /// <summary>Gets the actual original file; a retry cannot follow a later profile selection.</summary>
     public string DatabasePath { get; }
+    /// <summary>Passes only original actual-file and access authority to a new type form.</summary>
+    public AssetTypeEditorOrigin CreateTypeEditorOrigin() => new(DatabasePath, _access);
 
     /// <summary>Gets the detached original inputs; modifying them invalidates publication validation.</summary>
     public HoldingOverviewInputs Inputs { get; }

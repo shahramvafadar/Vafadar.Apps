@@ -26,6 +26,31 @@ public sealed class HoldingTypeReview
     public bool Editing { get; }
     /// <summary>Gets the original display facts; mutation invalidates their authority.</summary>
     public HoldingTypeInputs Inputs { get; }
+    /// <summary>Gets the actual captured file for the narrow original form boundary.</summary>
+    internal string DatabasePath => _path;
+    /// <summary>Checks only immutable cached access for repeated native frame guards.</summary>
+    internal void EnsureAccessCurrent() => _access.EnsureSnapshotCurrent();
+    /// <summary>Refuses expired access or caller-mutated original type/history without opening a connection.</summary>
+    internal void EnsureCurrent()
+    {
+        EnsureAccessCurrent();
+        if (_packet != Packet(Inputs)) throw new HoldingEventReviewChangedException("Original type editor inputs changed in memory.");
+    }
+    /// <summary>Refuses another configured file before opening it for an original form validation.</summary>
+    internal void RequireFile(ZananceDbContext db)
+    {
+        EnsureAccessCurrent();
+        if (_path != DatabaseFileIdentity.ConfiguredPath(db))
+            throw new HoldingEventReviewChangedException("Original type editor file changed.");
+    }
+    /// <summary>Compares complete original inputs for explicit reload while permitting replacement of expired rights.</summary>
+    internal bool HasSameInputs(HoldingTypeReview previous)
+    {
+        EnsureCurrent();
+        if (previous._packet != Packet(previous.Inputs)) throw new HoldingEventReviewChangedException("Previous original type inputs changed in memory.");
+        return Id == previous.Id && Editing == previous.Editing && _path == previous._path && _packet == previous._packet
+            && Equals(_access.Context, previous._access.Context);
+    }
     /// <summary>Claims one original unmodified writer, refusing concurrent or consumed authority.</summary>
     internal void Begin()
     {
@@ -79,7 +104,8 @@ public sealed partial class HoldingStore
         access.EnsureSnapshotCurrent(); return result;
     }
     /// <summary>Saves one exact original type draft with fresh rights, dimension protection and known accepted outcome.</summary>
-    public async Task<bool> SaveReviewedTypeAsync(HoldingTypeReview review, AssetType type, Func<bool> isCurrent, CancellationToken ct = default)
+    public async Task<bool> SaveReviewedTypeAsync(HoldingTypeReview review, AssetType type, Func<bool> isCurrent, CancellationToken ct = default,
+        Action? accepted = null, AssetTypeEditorSnapshot? originalSource = null)
     {
         ArgumentNullException.ThrowIfNull(review); ArgumentNullException.ThrowIfNull(type); ArgumentNullException.ThrowIfNull(isCurrent);
         review.Begin(); var committed = false;
@@ -91,6 +117,11 @@ public sealed partial class HoldingStore
             await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, ct, requireTransaction: true);
             write.DemandFeature(review.Editing ? CommercialFeature.Corrections : CommercialFeature.ManageHoldings);
             await review.ValidateAsync(db, ct);
+            if (originalSource is not null)
+            {
+                if (!ReferenceEquals(originalSource.Review, review)) throw new HoldingEventReviewChangedException("Original type form review changed.");
+                await Task.Run(() => originalSource.ValidateAsync(db, ct), ct);
+            }
             if (!isCurrent()) throw new HoldingEventReviewChangedException("Original type draft retired.");
             var original = review.Inputs.Type;
             if (copy.IsArchived != (original?.IsArchived ?? false) || copy.Icon != original?.Icon
@@ -101,6 +132,7 @@ public sealed partial class HoldingStore
             write.EnsureCurrent(); await db.SaveChangesAsync(ct); write.EnsureCurrent();
             if (!isCurrent()) throw new HoldingEventReviewChangedException("Original type draft retired before commit.");
             await write.CommitAsync(ct); committed = true;
+            accepted?.Invoke();
             CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty)); return true;
         }
         catch (CommittedWriteNotificationException) { committed = true; throw; }

@@ -65,3 +65,7 @@ Original category overview/editor source and accepted metadata ownership (D-638)
 Original account editor source, default/receipt and native presentation ownership (D-639):
 [focused failures, actual continuations and terminal limits](quality/complete-original-account-editor-source.md).
 Physical adoption awaits the protected D-607 terminal gate.
+
+
+Original asset-type editor source, Retry and accepted metadata ownership (D-642):
+[Focused and original native evidence](quality/complete-original-asset-type-editor-source.md); physical adoption and broader gates remain separate.

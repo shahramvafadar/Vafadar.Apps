@@ -20,8 +20,11 @@
             </FlexLayout>
         </Grid>
 
-        <ScrollView Grid.Row="1">
+        <ScrollView Grid.Row="1" IsVisible="{Binding IsReady}">
             <VerticalStackLayout Padding="16" Spacing="8">
+                <Label Text="{Binding ReloadedSavedSummary}" IsVisible="{Binding RequiresReview}" />
+                <Label Text="{v:Translate AssetType_ReloadReview}" IsVisible="{Binding RequiresReview}" />
+                <p:WrappingAction Text="{v:Translate Goal_KeepEdits}" Command="{Binding AcceptReviewCommand}" IsVisible="{Binding RequiresReview}" />
                 <Border IsEnabled="{Binding CanEdit}" Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="{v:Translate AssetType_Name}" Style="{StaticResource FieldLabel}" Margin="0" />
@@ -86,10 +89,20 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <Label x:Name="AssetTypeFeedback" Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+
             </VerticalStackLayout>
         </ScrollView>
 
-        <p:WrappingAction Grid.Row="2" Margin="16" Appearance="Primary" Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding CanSave}" />
+        <Grid Grid.Row="1" BackgroundColor="{DynamicResource PageBackground}" IsVisible="{Binding IsCovered}">
+            <VerticalStackLayout VerticalOptions="Center" Padding="16" Spacing="8">
+                <ActivityIndicator IsRunning="{Binding IsLoading}" Color="{DynamicResource Primary}" />
+                <Label Text="{v:Translate AssetType_Loading}" IsVisible="{Binding IsLoading}" HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+        </Grid>
+        <VerticalStackLayout Grid.Row="2" Padding="16,8,16,16" Spacing="8">
+            <Label x:Name="AssetTypeFeedback" Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
+            <p:WrappingAction Text="{v:Translate Settings_RetryLoad}" Command="{Binding ReloadCommand}" IsVisible="{Binding ShowRetry}" />
+            <p:WrappingAction Appearance="Primary" Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" IsVisible="{Binding IsReady}" />
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

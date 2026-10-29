@@ -7855,3 +7855,8 @@ Twenty new focused and eighteen affected existing cases pass. Eighteen original 
 ## D-641 original budget editor
 
 Twenty-one new and twenty affected existing focused cases pass. Independent native original Budget/Edit verifies pending Cancel, departed Save refusal, explicit error Retry, eighteen ready layout contexts, cached-rights/raw-draft refusal and one total-limit Save with notification failure. Only declared budget total/update-time differs across seventeen observed tables; ledger remains empty. Exact restoration/fresh retirement pass. This is not whole-PE identity, physical adoption or broad release acceptance. [Evidence](quality/complete-original-budget-editor-source.md).
+
+
+## D-642 original type-editor acceptance
+
+Seventeen new focused cases and22affected existing cases pass. Independent original native pending Cancel, departed Save refusal, explicit Retry,18normal-scale ready contexts, retained raw rights/refusal/Retry and one metadata acceptance with notification failure/newer draft pass. Complete source changes only type Name/UpdatedAt; no ledger write. Physical adoption remains separate. [Evidence](quality/complete-original-asset-type-editor-source.md).

@@ -1892,3 +1892,8 @@ The complete original goal editor implementation and independent native qualific
 ## D-641 original budget editor
 
 Complete original budget editor source/lifetime/draft/receipt implementation and bounded independent native qualification are delivered. Original financial and quota policies remain. Physical adoption waits for actual D-607 completion and does not replay earlier accepted configuration or financial operations. [Evidence](quality/complete-original-budget-editor-source.md).
+
+
+## D-642 complete original type forms
+
+Original type/history/preferences, cancellable covered publication, raw draft review and accepted-result ownership are locally/native qualified. No new financial setup or repeated prior successful suites; platform/adoption gates remain separate. [Evidence](quality/complete-original-asset-type-editor-source.md).
