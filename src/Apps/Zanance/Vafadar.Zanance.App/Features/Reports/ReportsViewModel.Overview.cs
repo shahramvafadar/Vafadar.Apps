@@ -185,7 +185,7 @@ public sealed partial class ReportsViewModel
     [RelayCommand]
     private Task ExplainBudgetAsync() => ExplainAsync("K01", BudgetText ?? string.Empty,
         _budget is { } b ? [new(_translator["Report_BudgetLimit"], Money(b.Limit), false), new("− " + _translator["Report_BudgetSpent"], Money(b.Spent), false), new("= " + _translator["Report_BudgetRemaining"], Money(b.Limit - b.Spent), true, b.Limit < b.Spent)] : [],
-        () => Shell.Current.GoToAsync(AppShell.BudgetRoute));
+        () => new ReportNavigation(AppShell.BudgetRoute));
 
     // K11: the comparison period has the same length while the period runs (AT30); Simple shows the top three.
     private void BuildChanges(IReadOnlyCollection<LedgerEntry> entries, CategoryLookup categories)
@@ -303,17 +303,20 @@ public sealed partial class ReportsViewModel
     }
 
     [RelayCommand]
-    private Task OpenTagAsync(TagReportRow row) =>
-        Shell.Current.GoToAsync("//transactions", new Dictionary<string, object> { ["from"] = _from, ["to"] = _to, ["kind"] = KindFilter.Expenses, ["inTotals"] = AccountScopeIndex == 0, ["currency"] = _currency, ["search"] = "#" + row.Tag, ["scope"] = ScopeText });
+    private Task OpenTagAsync(TagReportRow row) => !CanRunCommands || !RowCurrent(TagRows, row, 0) ? Task.CompletedTask
+        : NavigateReportAsync(CreateDrill(KindFilter.Expenses, null, null).WithQueryItem("search", "#" + row.Tag), () => RowCurrent(TagRows, row, 0));
 
     [RelayCommand]
-    private Task OpenCategoryAsync(CategoryReportRow row) => Drill(KindFilter.Expenses, row.CategoryIds, row.Name);
+    private Task OpenCategoryAsync(CategoryReportRow row) => !CanRunCommands || !RowCurrent(CategoryRows, row, 0) ? Task.CompletedTask
+        : NavigateReportAsync(CreateDrill(KindFilter.Expenses, row.CategoryIds, row.Name), () => RowCurrent(CategoryRows, row, 0));
 
     [RelayCommand]
-    private Task OpenSliceAsync(CategorySlice slice) => Drill(KindFilter.Expenses, slice.CategoryIds, slice.Name);
+    private Task OpenSliceAsync(CategorySlice slice) => !CanRunCommands || !RowCurrent(Slices, slice, 0) ? Task.CompletedTask
+        : NavigateReportAsync(CreateDrill(KindFilter.Expenses, slice.CategoryIds, slice.Name), () => RowCurrent(Slices, slice, 0));
 
     [RelayCommand]
-    private Task OpenChangeAsync(ChangeRow row) => Drill(KindFilter.Expenses, row.CategoryIds, row.Name, _range?.From, _range?.To);
+    private Task OpenChangeAsync(ChangeRow row) => !CanRunCommands || !RowCurrent(Changes, row, 0) ? Task.CompletedTask
+        : NavigateReportAsync(CreateDrill(KindFilter.Expenses, row.CategoryIds, row.Name, _range?.From, _range?.To), () => RowCurrent(Changes, row, 0));
 
     [RelayCommand]
     private Task OpenExpensesAsync() => Drill(KindFilter.Expenses, null, null);
@@ -334,15 +337,15 @@ public sealed partial class ReportsViewModel
             new("− " + _translator["KindFilter_Expenses"], Money(s.Expense), false),
             new("+ " + _translator["Report_Refunds"], Money(s.Refunds), false),
             new("= " + _translator["Report_Surplus"], SurplusText ?? string.Empty, true),
-        ], () => Drill(KindFilter.All, null, null));
+        ], () => CreateDrill(KindFilter.All, null, null));
     }
 
     [RelayCommand]
     private Task ExplainRateAsync() => ExplainAsync("K06", RateText ?? string.Empty,
         [new(_translator["Report_Surplus"], SurplusText ?? string.Empty, false), new(_translator["KindFilter_Income"], Money(_surplus?.EligibleIncome ?? 0), false)],
-        () => Drill(KindFilter.All, null, null));
+        () => CreateDrill(KindFilter.All, null, null));
 
     [RelayCommand]
     private Task ExplainChangesAsync() => ExplainAsync("K11", ComparisonText ?? string.Empty, [.. Changes.Select(c => new AmountLine(c.Name, c.DeltaText, false))],
-        () => Drill(KindFilter.Expenses, null, null, _range?.From, _range?.To));
+        () => CreateDrill(KindFilter.Expenses, null, null, _range?.From, _range?.To));
 }

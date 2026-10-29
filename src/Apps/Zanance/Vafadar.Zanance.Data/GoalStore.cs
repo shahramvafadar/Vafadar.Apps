@@ -370,7 +370,7 @@ public sealed partial class GoalStore(IDbContextFactory<ZananceDbContext> contex
 
     /// <summary>Saves the contribution plan of a goal, replacing an earlier one; <see langword="null"/> removes it.</summary>
     public async Task SaveContributionPlanAsync(Guid goalId, ContributionPlan? plan, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null,
-        Commerce.ReportReadReview? reportReview = null, Func<bool>? isCurrent = null)
+        Commerce.ReportReadReview? reportReview = null, Func<bool>? isCurrent = null, Action? accepted = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null || reportReview is not null || isCurrent is not null);
@@ -388,7 +388,8 @@ public sealed partial class GoalStore(IDbContextFactory<ZananceDbContext> contex
         if (reportReview is not null) await reportReview.ValidateContributionWriterAsync(db, goalId, cancellationToken);
         if (isCurrent is not null && !isCurrent()) throw new InvalidOperationException("The original contribution draft changed.");
         await write.CommitAsync(cancellationToken);
-        if (reportReview is not null || isCurrent is not null) CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty), goalId);
+        if (reportReview is not null || isCurrent is not null || accepted is not null)
+            CommittedWriteNotification.Publish(() => { accepted?.Invoke(); Changed?.Invoke(this, EventArgs.Empty); }, goalId);
         else Changed?.Invoke(this, EventArgs.Empty);
     }
 

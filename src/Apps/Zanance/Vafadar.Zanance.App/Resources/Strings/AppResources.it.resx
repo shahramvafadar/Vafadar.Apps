@@ -8601,4 +8601,7 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Holding_PriceSavedDraftChanged" xml:space="preserve">
     <value>Il prezzo è stato salvato. I dati inseriti successivamente sono conservati separatamente. Aggiorna i prezzi e controlla il risultato salvato prima di salvare un’altra modifica.</value>
   </data>
+  <data name="Report_ExplanationStale" xml:space="preserve">
+    <value>Questo rapporto è cambiato. Torna indietro e aggiornalo prima di aprire i suoi movimenti.</value>
+  </data>
 </root>

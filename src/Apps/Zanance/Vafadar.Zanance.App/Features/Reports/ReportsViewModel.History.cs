@@ -121,5 +121,5 @@ public sealed partial class ReportsViewModel
     }
 
     [RelayCommand]
-    private Task ExplainChangeAsync() => ExplainAsync("K10H", _change is { } c ? Money(c.Change, c.CurrencyCode, showPlus: true) : string.Empty, [.. ChangeLines], () => Drill(KindFilter.All, null, null, _change?.From.AddDays(1), _change?.To));
+    private Task ExplainChangeAsync() => ExplainAsync("K10H", _change is { } c ? Money(c.Change, c.CurrencyCode, showPlus: true) : string.Empty, [.. ChangeLines], () => CreateDrill(KindFilter.All, null, null, _change?.From.AddDays(1), _change?.To));
 }

@@ -8646,4 +8646,7 @@ Original XML SHA-256: {5}</value>
   <data name="Holding_PriceSavedDraftChanged" xml:space="preserve">
     <value>The price was saved. Your later input is kept separately. Refresh to review the saved price before saving another change.</value>
   </data>
+  <data name="Report_ExplanationStale" xml:space="preserve">
+    <value>This report has changed. Go back and refresh it before opening its entries.</value>
+  </data>
 </root>

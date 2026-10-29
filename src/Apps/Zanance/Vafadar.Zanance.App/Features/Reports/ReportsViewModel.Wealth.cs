@@ -156,12 +156,12 @@ public sealed partial class ReportsViewModel
     }
 
     [RelayCommand]
-    private Task ExplainNetWorthAsync() => ExplainAsync("K10", NetWorthText ?? string.Empty, [.. WealthLines], () => Shell.Current.GoToAsync(AppShell.AccountsRoute));
+    private Task ExplainNetWorthAsync() => ExplainAsync("K10", NetWorthText ?? string.Empty, [.. WealthLines], () => new ReportNavigation(AppShell.AccountsRoute));
 
     [RelayCommand]
     private Task ExplainCompositionAsync() => ExplainAsync("K13", NetWorthConverted ?? string.Empty,
-        [.. CompositionRows.Select(r => new AmountLine($"{r.Label} · {r.ShareText}", r.ValueText, false))], () => Shell.Current.GoToAsync(AppShell.HoldingsRoute));
+        [.. CompositionRows.Select(r => new AmountLine($"{r.Label} · {r.ShareText}", r.ValueText, false))], () => new ReportNavigation(AppShell.HoldingsRoute));
 
     [RelayCommand]
-    private Task OpenHoldingsAsync() => Shell.Current.GoToAsync(AppShell.HoldingsRoute);
+    private Task OpenHoldingsAsync() => NavigateReportAsync(new(AppShell.HoldingsRoute));
 }

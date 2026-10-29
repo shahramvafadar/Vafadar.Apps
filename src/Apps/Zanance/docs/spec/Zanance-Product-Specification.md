@@ -11048,3 +11048,28 @@ with no retry/subset/alternate/move/escalation/reuse. Used APKs/evidence/pre-ref
 Phone/D-607/three deadlines/unread source are untouched. Physical adoption and broad DB/key/security/
 ANR/performance/A11Y/iOS/provider/Store/release gates stay open; overall delivery remains active.
 [Evidence](../quality/original-forecast-workspace-prompt-and-receipts.md).
+
+### D-647 - Complete original report workspace and KPI handoff (2026-10-29)
+
+Original report reads and native commands now share the actual pinned-file packet, covered
+publication, cancellable page/tab/root ownership and exact original row membership. All
+native destinations freeze their original route/query before awaits. Source-bound KPI
+explanations detach lines, retire replacement queries and validate their own normal-close
+handoff without breaking the expected original parent return. Stale source stays covered
+with explicit Retry; current captions and retained report choices refresh in place. An
+incoming original drill scope survives deferred display rebuild until ordinary departure.
+The actual contribution writer validates native ownership before/after SQL and records
+commit receipt before Changed; original financial calculations and schema are unchanged.
+
+Two original native failures and two original KPI host failures remain in the evidence.
+Twenty-two distinct new focused cases and28 affected existing reader/export/access cases
+pass. Actual API36/x64/4096 UID10216 boot1ffc2936-e728-4e88-b441-ba848600ef31 continues
+from original PID4749 to corrected5947 by one no-reset update. The single original zero-EUR
+unknown-opening account and all19 observed tables remain identical; no financial post,
+setup replay, PDF/native share or accepted contribution command is repeated. Pending-read
+cancellation, actual old issue refusal, read failure/Retry, valid frozen KPI navigation,
+stale display feedback and retained current package captions are verified in original UI.
+See [complete scope and limitations](../quality/original-report-workspace-and-kpi-handoff.md).
+Phone/D-607, all three deadlines and post-reboot unread source remain untouched. Later
+physical adoption, broader DB/key/security/performance/stability/accessibility, iOS/provider/
+Store/release gates remain separate. Overall delivery remains active; TalkBack stays last.

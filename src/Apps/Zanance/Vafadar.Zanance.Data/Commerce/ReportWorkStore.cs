@@ -142,17 +142,21 @@ public sealed class ReportWorkStore(IDbContextFactory<ZananceDbContext> factory,
         if (review.DatabasePath != DatabaseFileIdentity.ConfiguredPath(db)) throw new InvalidOperationException("The original report file changed.");
     }
     /// <summary>Captures all original report inputs and exact-file cached rights in one SQLite reader.</summary>
-    public async Task<ReportReadReview> ReadAsync(CancellationToken cancellationToken = default)
+    public async Task<ReportReadReview> ReadAsync(CancellationToken cancellationToken = default, Func<string, bool>? acceptFile = null)
     {
         var day = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         await using var db = await factory.CreateDbContextAsync(cancellationToken);
         var path = DatabaseFileIdentity.ConfiguredPath(db); var access = new CommercialFileAccess(source, path);
         access.EnsureSnapshotCurrent(); access.DemandFeature(CommercialFeature.BasicReports);
-        await db.Database.OpenConnectionAsync(cancellationToken);
-        await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
-        await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
-        var review = new ReportReadReview(path, access, time, day, await ReportInputs.ReadAsync(db, cancellationToken));
-        review.EnsureCurrent(); return review;
+        if (acceptFile?.Invoke(path) == false) throw new InvalidOperationException("The original report cannot follow another file.");
+        return await Task.Run(async () =>
+        {
+            await db.Database.OpenConnectionAsync(cancellationToken);
+            await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
+            await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
+            var review = new ReportReadReview(path, access, time, day, await ReportInputs.ReadAsync(db, cancellationToken));
+            review.EnsureCurrent(); return review;
+        }, cancellationToken);
     }
     /// <summary>Rejects retired actual-file data or access after native authentication, rendering and cache awaits.</summary>
     public async Task ValidateAsync(ReportReadReview review, CancellationToken cancellationToken = default)

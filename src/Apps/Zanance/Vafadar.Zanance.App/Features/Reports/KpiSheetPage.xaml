@@ -82,6 +82,9 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <Button Grid.Row="2" Margin="16" Style="{StaticResource PrimaryButton}" Text="{v:Translate Kpi_ShowEntries}" Command="{Binding ShowEntriesCommand}" IsVisible="{Binding CanShowEntries}" />
+        <VerticalStackLayout Grid.Row="2" Margin="16" Spacing="8">
+            <Label Text="{Binding Feedback}" Style="{StaticResource ErrorText}" IsVisible="{Binding Feedback, Converter={StaticResource IsNotNullConverter}}" />
+            <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Kpi_ShowEntries}" Command="{Binding ShowEntriesCommand}" IsVisible="{Binding HasEntries}" />
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

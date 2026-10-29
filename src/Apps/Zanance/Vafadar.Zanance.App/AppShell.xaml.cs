@@ -33,6 +33,8 @@ public partial class AppShell : Shell
     private readonly List<WeakReference<GoalEditorPage>> _publishedGoalEditors = [];
     private readonly List<WeakReference<BudgetEditorPage>> _publishedBudgetEditors = [];
     private readonly List<WeakReference<AssetTypeEditorPage>> _publishedAssetTypeEditors = [];
+    private readonly List<WeakReference<Features.Reports.ReportsPage>> _publishedReports = [];
+    private readonly List<WeakReference<Features.Reports.KpiSheetPage>> _publishedReportSheets = [];
     private readonly List<WeakReference<Features.Forecast.ForecastPage>> _publishedForecastWorkspaces = [];
     private readonly List<WeakReference<Features.Forecast.SnapshotPage>> _publishedSavedComparisons = [];
     private readonly List<WeakReference<HoldingDetailPage>> _publishedHoldingDetails = [];
@@ -50,6 +52,22 @@ public partial class AppShell : Shell
     internal bool OwnsAssetEventEditorPublication => !_navigationRetired;
     /// <summary>Gets whether this root still owns its original holding detail frames.</summary>
     internal bool OwnsHoldingDetailPublication => !_navigationRetired;
+    /// <summary>Gets whether this root still owns original report source and its explicit explanation handoffs.</summary>
+    internal bool OwnsReportPublication => !_navigationRetired;
+    /// <summary>Tracks only weak original report pages for terminal root retirement.</summary>
+    internal void RegisterReport(Features.Reports.ReportsPage page)
+    {
+        if (_navigationRetired) { page.RetireShellPublication(); return; }
+        _publishedReports.RemoveAll(reference => !reference.TryGetTarget(out _));
+        if (!_publishedReports.Any(reference => reference.TryGetTarget(out var existing) && ReferenceEquals(existing, page))) _publishedReports.Add(new(page));
+    }
+    /// <summary>Tracks only weak original report explanations, including their pending native close.</summary>
+    internal void RegisterReportSheet(Features.Reports.KpiSheetPage page)
+    {
+        if (_navigationRetired) { page.RetireShellPublication(); return; }
+        _publishedReportSheets.RemoveAll(reference => !reference.TryGetTarget(out _));
+        if (!_publishedReportSheets.Any(reference => reference.TryGetTarget(out var existing) && ReferenceEquals(existing, page))) _publishedReportSheets.Add(new(page));
+    }
     /// <summary>Gets whether this root still owns its original process-local forecast workspaces.</summary>
     internal bool OwnsForecastWorkspacePublication => !_navigationRetired;
     /// <summary>Tracks only weak native workspaces for terminal root retirement.</summary>
@@ -414,6 +432,7 @@ public partial class AppShell : Shell
         else if (CurrentPage is PlanDetailPage planDetail) await Presentation.Failures.GuardAsync(planDetail.RefreshForNavigationAsync);
         else if (CurrentPage is OccurrencePage occurrence) await Presentation.Failures.GuardAsync(occurrence.RefreshForNavigationAsync);
         // D-497: Insights can retain both the forecast and its saved comparison while another tab changes the ledger.
+        else if (CurrentPage is Features.Reports.ReportsPage report) await Presentation.Failures.GuardAsync(report.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Forecast.ForecastPage forecast) await Presentation.Failures.GuardAsync(forecast.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Forecast.SnapshotPage snapshot) await Presentation.Failures.GuardAsync(snapshot.RefreshForNavigationAsync);
     }
@@ -483,6 +502,9 @@ public partial class AppShell : Shell
         {
             if (CurrentPage is CategoriesPage categories) categories.RetirePublication();
             if (CurrentPage is AccountEditorPage accountEditor) accountEditor.RetirePublication();
+            if (CurrentPage is Features.Reports.ReportsPage report) report.RetirePublication();
+            if (CurrentPage is Features.Reports.KpiSheetPage reportSheet) reportSheet.RetirePublication();
+            if (Navigation.ModalStack.LastOrDefault() is Features.Reports.KpiSheetPage modalReportSheet) modalReportSheet.RetirePublication();
             if (CurrentPage is Features.Forecast.ForecastPage forecastWorkspace) forecastWorkspace.RetirePublication();
             if (CurrentPage is Features.Forecast.SnapshotPage savedComparison) savedComparison.RetirePublication();
             if (CurrentPage is HoldingDetailPage holdingDetail) holdingDetail.RetirePublication();
@@ -559,6 +581,12 @@ public partial class AppShell : Shell
         foreach (var reference in _publishedAssetTypeEditors)
             if (reference.TryGetTarget(out var editor)) editor.RetireShellPublication();
         _publishedAssetTypeEditors.Clear();
+        foreach (var reference in _publishedReports)
+            if (reference.TryGetTarget(out var report)) report.RetireShellPublication();
+        _publishedReports.Clear();
+        foreach (var reference in _publishedReportSheets)
+            if (reference.TryGetTarget(out var sheet)) sheet.RetireShellPublication();
+        _publishedReportSheets.Clear();
         foreach (var reference in _publishedForecastWorkspaces)
             if (reference.TryGetTarget(out var workspace)) workspace.RetireShellPublication();
         _publishedForecastWorkspaces.Clear();

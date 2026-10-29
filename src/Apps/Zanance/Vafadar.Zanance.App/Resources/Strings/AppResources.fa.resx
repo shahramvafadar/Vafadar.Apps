@@ -8612,4 +8612,7 @@
   <data name="Holding_PriceSavedDraftChanged" xml:space="preserve">
     <value>قیمت ذخیره شد. ورودی تازهٔ شما جداگانه حفظ شده است. پیش از ذخیرهٔ تغییر دیگری، قیمت‌ها را بازخوانی و نتیجهٔ ذخیره‌شده را بررسی کنید.</value>
   </data>
+  <data name="Report_ExplanationStale" xml:space="preserve">
+    <value>این گزارش تغییر کرده است. برگردید و پیش از باز کردن تراکنش‌های آن، گزارش را تازه‌سازی کنید.</value>
+  </data>
 </root>

@@ -511,10 +511,38 @@ public partial class App : Application
         }
     });
 
-    // D-646: a forecast tab can own an unsaved scenario/name or a known Save receipt just like a pushed editor.
-    // Rebuild only after leaving that live workspace; native theme/localization refreshes it in place.
-    private static bool IsOnTab(Shell shell) => shell.Navigation.NavigationStack.Count <= 1 && shell.Navigation.ModalStack.Count == 0
-        && shell.CurrentPage?.BindingContext is not Features.Forecast.ForecastViewModel { HasRetainedWork: true };
+    private int _reportScopeNavigations;
+    private WeakReference<Page>? _heldReportScopeTab;
+    /// <summary>Keeps a validated report's incoming tab scope intact across a deferred display rebuild.</summary>
+    internal ReportScopeNavigation HoldReportScopeNavigation()
+    { ++_reportScopeNavigations; return new(this); }
+    /// <summary>Owns only one normal source-bound navigation, never a data/authentication override.</summary>
+    internal sealed class ReportScopeNavigation(App owner) : IDisposable
+    {
+        private App? _owner = owner;
+        /// <summary>Retains the actual recipient tab until it is left normally, including its pushed details.</summary>
+        internal void Complete()
+        {
+            if (_owner is { } app && app.Windows.FirstOrDefault()?.Page is AppShell shell)
+            {
+                var root = shell.Navigation.NavigationStack.FirstOrDefault() ?? shell.CurrentPage;
+                if (root is not null) app._heldReportScopeTab = new(root);
+            }
+        }
+        /// <summary>Ends only this in-flight handoff, preserving the ordinary deferred rebuild policy.</summary>
+        public void Dispose() { if (_owner is not { } app) return; _owner = null; --app._reportScopeNavigations; }
+    }
+    private bool IsOnTab(Shell shell)
+    {
+        if (_reportScopeNavigations != 0 || shell.Navigation.NavigationStack.Count > 1 || shell.Navigation.ModalStack.Count != 0) return false;
+        var root = shell.Navigation.NavigationStack.FirstOrDefault() ?? shell.CurrentPage;
+        if (_heldReportScopeTab?.TryGetTarget(out var held) == true && ReferenceEquals(root, held)) return false;
+        _heldReportScopeTab = null;
+        // D-647: report scope and source-bound child callbacks refresh in place; rebuild on ordinary departure.
+        // D-646: original forecast drafts, pending prompts and known accepted work remain live like a pushed editor.
+        return shell.CurrentPage?.BindingContext is not Features.Reports.ReportsViewModel
+            && shell.CurrentPage?.BindingContext is not Features.Forecast.ForecastViewModel { HasRetainedWork: true };
+    }
 
     private void OnShellNavigated(object? sender, ShellNavigatedEventArgs e)
     {

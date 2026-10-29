@@ -244,22 +244,23 @@ public sealed partial class ReportsViewModel
             lines.Add(new AmountLine(_translator.Format("Report_ComesAfter", later.Name, _dates.Format(later.Date, DateFormatStyle.Short)), Money(later.Effect!.Value, showPlus: true), false));
         }
 
-        return ExplainAsync("K02", _translator.Format("Report_Around", Money(l.Headroom), _dates.Format(l.MinimumDate, DateFormatStyle.Short)), lines, () => Shell.Current.GoToAsync(AppShell.ForecastRoute));
+        return ExplainAsync("K02", _translator.Format("Report_Around", Money(l.Headroom), _dates.Format(l.MinimumDate, DateFormatStyle.Short)), lines, () => new ReportNavigation(AppShell.ForecastRoute));
     }
 
     [RelayCommand]
     private Task ExplainCommitmentsAsync() => ExplainAsync("K04", CommitmentsTotalText ?? string.Empty,
-        [.. CommitmentRows.Select(c => new AmountLine($"{c.Name} · {c.DateText}", c.AmountText, false, c.IsOverdue))], () => Shell.Current.GoToAsync("//plans"));
+        [.. CommitmentRows.Select(c => new AmountLine($"{c.Name} · {c.DateText}", c.AmountText, false, c.IsOverdue))], () => new ReportNavigation("//plans"));
 
     [RelayCommand]
-    private Task ExplainYearlyAsync() => ExplainAsync("K08", YearlyTotalText ?? string.Empty, [.. YearlyLines], () => Shell.Current.GoToAsync("//plans"));
+    private Task ExplainYearlyAsync() => ExplainAsync("K08", YearlyTotalText ?? string.Empty, [.. YearlyLines], () => new ReportNavigation("//plans"));
 
     [RelayCommand]
-    private Task ExplainDebtAsync() => ExplainAsync("K09", DebtRatioText ?? DebtText ?? string.Empty, [], () => Shell.Current.GoToAsync(AppShell.AccountsRoute));
+    private Task ExplainDebtAsync() => ExplainAsync("K09", DebtRatioText ?? DebtText ?? string.Empty, [], () => new ReportNavigation(AppShell.AccountsRoute));
 
     [RelayCommand]
-    private Task ExplainReceivablesAsync() => ExplainAsync("K12", ReceivablesText ?? string.Empty, [.. ReceivableLines], () => Shell.Current.GoToAsync(AppShell.ReimbursementsRoute));
+    private Task ExplainReceivablesAsync() => ExplainAsync("K12", ReceivablesText ?? string.Empty, [.. ReceivableLines], () => new ReportNavigation(AppShell.ReimbursementsRoute));
 
     [RelayCommand]
-    private Task OpenCommitmentAsync(CommitmentRow row) => Shell.Current.GoToAsync(AppShell.PlanDetailRoute, new Dictionary<string, object> { ["id"] = row.ScheduleId });
+    private Task OpenCommitmentAsync(CommitmentRow row) => !CanRunCommands || !RowCurrent(CommitmentRows, row, 1) ? Task.CompletedTask
+        : NavigateReportAsync(new(AppShell.PlanDetailRoute, new Dictionary<string, object> { ["id"] = row.ScheduleId }), () => RowCurrent(CommitmentRows, row, 1));
 }

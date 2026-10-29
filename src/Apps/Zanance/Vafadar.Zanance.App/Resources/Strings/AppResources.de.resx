@@ -8612,4 +8612,7 @@ Original-XML SHA-256: {5}</value>
   <data name="Holding_PriceSavedDraftChanged" xml:space="preserve">
     <value>Der Preis wurde gespeichert. Ihre spätere Eingabe bleibt separat erhalten. Aktualisieren Sie die Preise und prüfen Sie das gespeicherte Ergebnis, bevor Sie eine weitere Änderung speichern.</value>
   </data>
+  <data name="Report_ExplanationStale" xml:space="preserve">
+    <value>Dieser Bericht hat sich geändert. Gehe zurück und aktualisiere ihn, bevor du seine Buchungen öffnest.</value>
+  </data>
 </root>

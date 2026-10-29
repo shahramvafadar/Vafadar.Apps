@@ -55,6 +55,36 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     private const int TrendMonths = 6;
     private readonly ReportWorkStore _reportStore;
     private readonly ReportExportSession _export;
+    private readonly ReportWorkspace _workspace;
+    private bool _active = true, _rootRetired;
+    private Func<bool>? _rootOwner;
+    private PeriodCalendar? _scopeCalendar;
+    private bool OwnsPublication => !_detached && _active && !_rootRetired && (_rootOwner?.Invoke() ?? true);
+    /// <summary>Gets current original source/frame command availability independently of stale visual rows.</summary>
+    public bool CanRunCommands => OwnsPublication && !IsBusy && _workspace.CanInteract;
+    /// <summary>Gets explicit current-page Retry availability, including a covered source failure.</summary>
+    public bool CanReload => OwnsPublication && !IsBusy && !ReportLoading;
+    /// <summary>Binds original root ownership through a weak native-root check.</summary>
+    internal void BindRootOwner(Func<bool> owner) { _rootOwner = owner ?? throw new ArgumentNullException(nameof(owner)); _workspace.BindRootOwner(owner); UpdateWorkspaceState(); }
+    /// <summary>Retires original parent reads and row/native effects when the actual page or tab departs.</summary>
+    public void SetActive(bool active)
+    {
+        if (_active == active) return; _active = active;
+        _localization.Changed -= OnReportDisplayChanged; if (active && !_rootRetired) _localization.Changed += OnReportDisplayChanged;
+        _workspace.SetActive(active); UpdateWorkspaceState();
+    }
+    /// <summary>Permanently retires the old root and source-bound child handoffs.</summary>
+    internal void RetireRoot() { _rootRetired = true; SetActive(false); _workspace.RetireRoot(); UpdateWorkspaceState(); }
+    private void OnReportDisplayChanged(object? sender, EventArgs args) { if (OwnsPublication) Reload(); }
+    private void UpdateWorkspaceState()
+    {
+        if (_detached) return;
+        ReportLoading = OwnsPublication && _workspace.Loading.IsLoading; ReportReady = OwnsPublication && _workspace.CanInteract;
+        if (_workspace.Failure is { } failure) ReportFeedback = CommercialFailureMessage.OrFallback(failure, _translator, "Report_ReadFailed");
+        OnPropertyChanged(nameof(CanRunCommands)); OnPropertyChanged(nameof(CanReload)); RefreshReportsCommand.NotifyCanExecuteChanged();
+    }
+    private bool RowCurrent<T>(IEnumerable<T> rows, T? row, int? package = null) where T : class => row is not null
+        && (package is null || PackageIndex == package) && rows.Any(item => ReferenceEquals(item, row));
     private ReportReadReview? _review;
     private ReportInputs Inputs => _review?.Inputs ?? throw new InvalidOperationException("No report review is available.");
     /// <summary>Gets whether all original sources and the selected projection are ready for interaction.</summary>
@@ -123,7 +153,10 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         _translator = translator;
         _dates = dates;
         _localization = localization;
-        _time = time;
+        _time = time; _workspace = new(reportStore);
+        _workspace.PropertyChanged += (_, _) => UpdateWorkspaceState();
+        PropertyChanged += (_, args) => { if (args.PropertyName == nameof(IsBusy)) UpdateWorkspaceState(); };
+        localization.Changed += OnReportDisplayChanged;
         PeriodKindNames = [translator["Report_Month"], translator["Report_Year"]];
         PackageNames = [translator["Report_R1"], translator["Report_R2"], translator["Report_R3"], translator["Report_R4"], translator["Report_R5"], translator["Report_R6"]];
         AccountScopeNames = [translator["Report_ScopeInTotals"], translator["Report_ScopeUsable"], translator["Report_ScopeOneAccount"]];
@@ -131,11 +164,11 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         ScopeText = string.Empty;
     }
 
-    public IReadOnlyList<string> PeriodKindNames { get; }
+    [ObservableProperty] public partial IReadOnlyList<string> PeriodKindNames { get; private set; } = [];
 
-    public IReadOnlyList<string> PackageNames { get; }
+    [ObservableProperty] public partial IReadOnlyList<string> PackageNames { get; private set; } = [];
 
-    public IReadOnlyList<string> AccountScopeNames { get; }
+    [ObservableProperty] public partial IReadOnlyList<string> AccountScopeNames { get; private set; } = [];
 
     public ObservableCollection<IssueRow> Issues { get; } = [];
 
@@ -246,7 +279,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 
     private void Reload()
     {
-        if (_applying || _detached)
+        if (_applying || _detached || !OwnsPublication)
         {
             return;
         }
@@ -271,10 +304,10 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     }
 
     [RelayCommand]
-    private void ToggleScope() => IsScopeOpen = !IsScopeOpen;
+    private void ToggleScope() { if (CanRunCommands) IsScopeOpen = !IsScopeOpen; }
 
     [RelayCommand]
-    private Task AddEntryAsync() => Shell.Current.GoToAsync(AppShell.EntryEditorRoute);
+    private Task AddEntryAsync() => NavigateReportAsync(new(AppShell.EntryEditorRoute));
 
     /// <summary>Loads the shown package.</summary>
     /// <remarks>
@@ -286,33 +319,41 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 
     public async Task LoadAsync()
     {
+        if (!OwnsPublication) return;
         if (IsBusy) { _reloadRequested = true; return; }
         await _gate.WaitAsync();
-        ReportReady = false; ReportFeedback = null; StatusText = null; ReportLoading = true; _loading = true;
         try
         {
+            if (!OwnsPublication) return;
+            _loading = true; ReportFeedback = null; StatusText = null;
             do
             {
                 _reloadRequested = false;
-                await LoadCoreAsync();
+                await _workspace.PublishAsync(async (review, token) =>
+                { _review = review; await LoadCoreAsync(); token.ThrowIfCancellationRequested(); }, _ => { });
             }
-            while (_reloadRequested);
+            while (_reloadRequested && OwnsPublication);
         }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        { ReportFeedback = CommercialFailureMessage.OrFallback(exception, _translator, "Report_ReadFailed"); }
         finally
         {
-            _loading = false; ReportLoading = false;
+            _loading = false; UpdateWorkspaceState();
+            if (ReportReady && _lastAcceptedSuggestion is { } receipt)
+                ReportFeedback = _translator.Format("Report_Accepted", Money(receipt.Amount, receipt.Currency), receipt.Name)
+                    + (ReportFeedback is null ? string.Empty : "\n\n" + ReportFeedback);
             _gate.Release();
         }
     }
 
     private async Task LoadCoreAsync()
     {
-        if (_review is not null) await _reportStore.ValidateFileAsync(_review);
-        _review = await _reportStore.ReadAsync();
         _settings = Inputs.Settings ?? new();
-        CanUseAdvancedReports = _review.Permission(CommercialFeature.AdvancedReports) == FeaturePermission.Allowed;
+        // A deliberate financial-calendar/pay-cycle change keeps the original rebuilt-root current-period behavior.
+        if (_scopeCalendar is not null && (_scopeCalendar != Calendar || _startDay != _settings.MonthStartDay)) _year = 0;
+        _scopeCalendar = Calendar;
+        PeriodKindNames = [_translator["Report_Month"], _translator["Report_Year"]];
+        PackageNames = [_translator["Report_R1"], _translator["Report_R2"], _translator["Report_R3"], _translator["Report_R4"], _translator["Report_R5"], _translator["Report_R6"]];
+        AccountScopeNames = [_translator["Report_ScopeInTotals"], _translator["Report_ScopeUsable"], _translator["Report_ScopeOneAccount"]];
+        CanUseAdvancedReports = (_review ?? throw new InvalidOperationException("The original report is not loaded.")).Permission(CommercialFeature.AdvancedReports) == FeaturePermission.Allowed;
         _startDay = _settings.MonthStartDay;
         IsAdvanced = _settings.Shows(Feature.ReportDetails) && CanUseAdvancedReports;
         if (_year == 0)
@@ -343,7 +384,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         {
             ReportFeedback = CommercialFailureMessage.Describe(new CommercialWriteRejectedException(CommercialFeature.AdvancedReports,
                 _review.Permission(CommercialFeature.AdvancedReports)), _translator);
-            await _reportStore.ValidateAsync(_review); ReportReady = true; return;
+            return;
         }
         _review.Project(PackageIndex, _ => true);
         switch (PackageIndex)
@@ -367,12 +408,10 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
                 await BuildStatusAsync(entries, full: true);
                 break;
         }
-        await _reportStore.ValidateAsync(_review);
-        ReportReady = true;
     }
 
     /// <summary>Explicitly retries the original file and retains the selected package and scope.</summary>
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanReload))]
     private Task RefreshReportsAsync() => LoadAsync();
 
     // LoadScope sets the currency and the account itself; that must not start another load.
@@ -444,7 +483,9 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     private string Money(long minor, string? currency = null, bool showPlus = false) => MoneyText.Format(minor, currency ?? _currency, Culture, showPlus);
 
     // Opens the transactions with the same scope as the number, so the list shows the same total (AT36).
-    private Task Drill(KindFilter kind, IReadOnlyCollection<Guid>? categories, string? name, DateOnly? from = null, DateOnly? to = null)
+    private Task Drill(KindFilter kind, IReadOnlyCollection<Guid>? categories, string? name, DateOnly? from = null, DateOnly? to = null) =>
+        NavigateReportAsync(CreateDrill(kind, categories, name, from, to));
+    private ReportNavigation CreateDrill(KindFilter kind, IReadOnlyCollection<Guid>? categories, string? name, DateOnly? from = null, DateOnly? to = null)
     {
         var query = new Dictionary<string, object>
         {
@@ -467,7 +508,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
             query["categoryName"] = name ?? string.Empty;
         }
 
-        return Shell.Current.GoToAsync("//transactions", query);
+        return new("//transactions", query);
     }
 
     // The data status of the package (K14): the full list in R6, a one-line footer elsewhere.
@@ -508,27 +549,33 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 
     // Each item opens the list or screen that fixes it (K14).
     [RelayCommand]
-    private Task FixIssueAsync(IssueRow row) => row.Kind switch
+    private Task FixIssueAsync(IssueRow row)
     {
-        DataIssueKind.BackupOld => Shell.Current.GoToAsync(AppShell.BackupRoute),
-        DataIssueKind.Unreviewed => Shell.Current.GoToAsync("//transactions", new Dictionary<string, object> { ["unreviewed"] = true }),
-        DataIssueKind.UnknownAmounts => Shell.Current.GoToAsync("//plans"),
-        DataIssueKind.MissingRates or DataIssueKind.OutdatedRates => Shell.Current.GoToAsync(AppShell.RatesRoute),
-        DataIssueKind.HoldingsWithoutPrice => Shell.Current.GoToAsync(AppShell.HoldingsRoute),
-        DataIssueKind.OpeningUnknown or DataIssueKind.NotReconciled when row.Ids is [var id, ..] => Shell.Current.GoToAsync(AppShell.AccountDetailRoute, new Dictionary<string, object> { ["id"] = id }),
-        DataIssueKind.WithoutCategory => Drill(KindFilter.All, null, null),
-        _ => Drill(KindFilter.All, null, null),
-    };
+        if (!CanRunCommands || !RowCurrent(Issues, row)) return Task.CompletedTask;
+        var target = row.Kind switch
+    {
+        DataIssueKind.BackupOld => new ReportNavigation(AppShell.BackupRoute),
+        DataIssueKind.Unreviewed => new ReportNavigation("//transactions", new Dictionary<string, object> { ["unreviewed"] = true }),
+        DataIssueKind.UnknownAmounts => new ReportNavigation("//plans"),
+        DataIssueKind.MissingRates or DataIssueKind.OutdatedRates => new ReportNavigation(AppShell.RatesRoute),
+        DataIssueKind.HoldingsWithoutPrice => new ReportNavigation(AppShell.HoldingsRoute),
+        DataIssueKind.OpeningUnknown or DataIssueKind.NotReconciled when row.Ids is [var id, ..] => new ReportNavigation(AppShell.AccountDetailRoute, new Dictionary<string, object> { ["id"] = id }),
+        DataIssueKind.WithoutCategory => CreateDrill(KindFilter.All, null, null),
+        _ => CreateDrill(KindFilter.All, null, null),
+        };
+        return NavigateReportAsync(target, () => RowCurrent(Issues, row));
+    }
 
     [RelayCommand]
     private Task ExplainStatusAsync() => ExplainAsync("K14", string.Empty, [.. Issues.Select(i => new AmountLine(i.Text, string.Empty, false))]);
 
     [RelayCommand]
-    private Task OpenReviewAsync() => Shell.Current.GoToAsync(AppShell.ReviewRoute);
+    private Task OpenReviewAsync() => NavigateReportAsync(new(AppShell.ReviewRoute));
 
     [RelayCommand]
     private Task PreviousAsync()
     {
+        if (!CanRunCommands) return Task.CompletedTask;
         if (PeriodKind == 0)
         {
             (_year, _month) = PeriodMath.Previous(_year, _month);
@@ -544,6 +591,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     [RelayCommand]
     private Task NextAsync()
     {
+        if (!CanRunCommands) return Task.CompletedTask;
         if (PeriodKind == 0)
         {
             (_year, _month) = PeriodMath.Next(_year, _month);
@@ -557,17 +605,45 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     }
 
     // Opens the explanation of a KPI with the number, the scope it was computed with and its parts (ZEX-UI14).
-    private Task ExplainAsync(string id, string value, IReadOnlyList<AmountLine> lines, Func<Task>? showEntries = null) =>
-        Shell.Current.GoToAsync(AppShell.KpiSheetRoute, new Dictionary<string, object>
+    private async Task NavigateReportAsync(ReportNavigation target, Func<bool>? rowCurrent = null)
+    {
+        if (!CanRunCommands || _workspace.CaptureCommand(ScopeStamp, rowCurrent) is not { } command) return;
+        IsBusy = true;
+        try { await command.ValidateAsync(); await NavigateFrozenAsync(target); }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { if (command.IsCurrent) await _workspace.RefuseAsync(exception); }
+        finally { IsBusy = false; if (_reloadRequested && OwnsPublication) await LoadAsync(); }
+    }
+    private async Task NavigateFrozenAsync(ReportNavigation target)
+    {
+        // The app keeps a source-bound incoming tab scope until the recipient leaves it normally.
+        using var handoff = (Application.Current as App)?.HoldReportScopeNavigation();
+        await Shell.Current.GoToAsync(target.Route, target.CopyQuery()); handoff?.Complete();
+    }
+    private async Task ExplainAsync(string id, string value, IReadOnlyList<AmountLine> lines, Func<ReportNavigation>? showEntries = null)
+    {
+        if (!CanRunCommands || _workspace.CaptureCommand(ScopeStamp) is not { } command) return;
+        var target = showEntries?.Invoke(); var originalScope = ScopeText; var originalStatus = StatusText; var originalLines = lines.ToArray();
+        IsBusy = true;
+        try
         {
-            ["sheet"] = new KpiExplanation(id, value, ScopeText, lines, StatusText, showEntries),
-        });
+            await command.ValidateAsync(); var source = command.CaptureChildSource();
+            var sheet = new KpiExplanation(id, value, originalScope, originalLines, originalStatus,
+                target is null ? null : async () => { await source.ValidateAsync(); await NavigateFrozenAsync(target); },
+                source.ValidateAsync, () => source.IsCurrent,
+                () => !_rootRetired && (_rootOwner?.Invoke() ?? true) && ReferenceEquals(Shell.Current?.CurrentPage?.BindingContext, this));
+            await Shell.Current.GoToAsync(AppShell.KpiSheetRoute, new Dictionary<string, object> { ["sheet"] = sheet });
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { if (command.IsCurrent) await _workspace.RefuseAsync(exception); }
+        finally { IsBusy = false; if (_reloadRequested && OwnsPublication) await LoadAsync(); }
+    }
 
     // PDF of the scope (REP-07, ZEX-S0601): every package with its own scope line, clearly marked as not official.
     [RelayCommand]
     private async Task SharePdfAsync()
     {
-        if (IsBusy || !ReportReady || _review is null) return;
+        if (!CanRunCommands || _review is null || _workspace.CaptureCommand(ScopeStamp) is not { } command) return;
         IsBusy = true;
         try
         {
@@ -575,14 +651,15 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
             var advanced = review.Permission(CommercialFeature.AdvancedReports) == FeaturePermission.Allowed
                 && review.Permission(CommercialFeature.AdvancedPdf) == FeaturePermission.Allowed;
             await _export.ExportAsync(review, advanced, () =>
-            { if (scope != ScopeStamp() || !ReferenceEquals(review, _review)) throw new InvalidOperationException("The reviewed report scope changed."); },
-                () => CreatePdfAsync(advanced), new NativeExport(this));
+            { command.RequireCurrent(); if (scope != ScopeStamp() || !ReferenceEquals(review, _review)) throw new InvalidOperationException("The reviewed report scope changed."); },
+                () => CreatePdfAsync(advanced), new NativeExport(this), command.Token);
         }
-        catch (Exception ex) when (ex is not OutOfMemoryException) { await Failures.ShowAsync(ex); }
-        finally { IsBusy = false; if (_reloadRequested) await LoadAsync(); }
+        catch (Exception ex) when (ex is not OutOfMemoryException) { if (command.IsCurrent) await _workspace.RefuseAsync(ex); }
+        finally { IsBusy = false; if (_reloadRequested && OwnsPublication) await LoadAsync(); }
     }
 
-    private string ScopeStamp() => JsonSerializer.Serialize(new { PackageIndex, PeriodKind, _year, _month, AccountScopeIndex,
+    private string ScopeStamp() => JsonSerializer.Serialize(new { PackageIndex, PeriodKind, _year, _month, AccountScopeIndex, from = _from, to = _to, currency = _currency, scope = ScopeText,
+        theme = Application.Current?.RequestedTheme, userTheme = Application.Current?.UserAppTheme,
         account = ScopeAccount?.Id, CurrencyIndex, currencies = CurrencyNames, ConfirmedOnly, ChangeRangeIndex,
         language = _localization.CurrentLanguage.CultureName, culture = Culture.Name, calendar = _localization.CurrentCalendar,
         digits = _localization.CurrentDigits, region = _localization.CurrentRegion, week = _localization.FirstDayOfWeek });

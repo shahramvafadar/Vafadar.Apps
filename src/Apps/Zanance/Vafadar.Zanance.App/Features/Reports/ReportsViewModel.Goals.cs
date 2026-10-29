@@ -119,45 +119,54 @@ public sealed partial class ReportsViewModel
     [RelayCommand]
     private async Task AcceptSuggestionAsync(SuggestionRow row)
     {
-        if (IsBusy || !ReportReady || !row.CanAccept) return;
-        IsBusy = true; var accepted = false;
+        if (!CanRunCommands || !row.CanAccept || _acceptedSuggestions.Contains(row)
+            || _workspace.CaptureCommand(ScopeStamp, () => RowCurrent(Suggestions, row, 2)) is not { } command) return;
+        var name = row.Name; var amount = row.Suggested; var currency = _currency;
+        IsBusy = true;
         try
         {
-            if (!Suggestions.Contains(row) || _review is null) throw new InvalidOperationException("The contribution suggestion is no longer displayed.");
-            var review = _review; var scope = ScopeStamp();
-            review.Demand(Vafadar.Zanance.Core.Commerce.CommercialFeature.AdvancedReports);
-            await _reportStore.ValidateAsync(review);
-            if (scope != ScopeStamp() || !ReferenceEquals(review, _review)) throw new InvalidOperationException("The report suggestion scope changed.");
+            command.Review.Demand(Vafadar.Zanance.Core.Commerce.CommercialFeature.AdvancedReports);
+            await command.ValidateAsync();
             var current = PeriodMath.MonthOf(Today, Calendar, _startDay); var next = PeriodMath.Next(current.Year, current.Month);
             await _goals.SaveContributionPlanAsync(row.GoalId, new ContributionPlan
             {
-                Method = ContributionMethod.FixedAmount, Amount = row.Suggested,
+                Method = ContributionMethod.FixedAmount, Amount = amount,
                 Rule = new Core.Plans.RecurrenceRule { Frequency = Core.Plans.Frequency.Monthly, Calendar = Calendar, Start = PeriodMath.MonthRange(next.Year, next.Month, Calendar, _startDay).First },
-            }, reportReview: review);
-            accepted = true;
+            }, command.Token, reportReview: command.Review, isCurrent: () => command.IsCurrent,
+                accepted: () => { _acceptedSuggestions.Add(row); _lastAcceptedSuggestion = (name, amount, currency); });
         }
-        catch (Data.Commerce.CommittedWriteNotificationException<Guid>) { accepted = true; }
-        catch (Exception exception) when (exception is not OutOfMemoryException) { await Presentation.Failures.ShowAsync(exception); }
+        catch (Data.Commerce.CommittedWriteNotificationException<Guid>) { /* The original committed receipt was captured before Changed. */ }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { if (command.IsCurrent) await _workspace.RefuseAsync(exception); }
         finally
         {
-            IsBusy = false; await LoadAsync();
-            if (accepted) ReportFeedback = _translator.Format("Report_Accepted", row.SuggestedText, row.Name) + (ReportFeedback is null ? string.Empty : "\n\n" + ReportFeedback);
+            IsBusy = false;
+            if (OwnsPublication)
+            {
+                await LoadAsync();
+
+            }
         }
     }
 
-    [RelayCommand]
-    private Task OpenGoalAsync(Goals.GoalRow row) => Shell.Current.GoToAsync(AppShell.GoalDetailRoute, new Dictionary<string, object> { ["id"] = row.Id });
+    // Commit receipts precede notifications; a departed old row cannot repeat accepted contribution metadata.
+    private readonly HashSet<SuggestionRow> _acceptedSuggestions = new(ReferenceEqualityComparer.Instance);
+    private (string Name, long Amount, string Currency)? _lastAcceptedSuggestion;
 
     [RelayCommand]
-    private Task ExplainCapacityAsync() => ExplainAsync("Capacity", CapacityText ?? string.Empty, [.. CapacityLines], () => Drill(KindFilter.All, null, null, PreviousMonths().From, PreviousMonths().To));
+    private Task OpenGoalAsync(Goals.GoalRow row) => !CanRunCommands || !RowCurrent(GoalRows, row, 2) ? Task.CompletedTask
+        : NavigateReportAsync(new(AppShell.GoalDetailRoute, new Dictionary<string, object> { ["id"] = row.Id }), () => RowCurrent(GoalRows, row, 2));
+
+    [RelayCommand]
+    private Task ExplainCapacityAsync() => ExplainAsync("Capacity", CapacityText ?? string.Empty, [.. CapacityLines], () => CreateDrill(KindFilter.All, null, null, PreviousMonths().From, PreviousMonths().To));
 
     [RelayCommand]
     private Task ExplainCoverageAsync() => ExplainAsync("K07", CoverageText ?? string.Empty,
         _coverage is { } c ? [new(_translator["Report_UsableMoney"], Money(c.UsableMoney), false), new(_translator["Report_EssentialMonth"], Money(c.MonthlyEssential), false)] : [],
-        () => Drill(KindFilter.Expenses, null, null, PreviousMonths().From, PreviousMonths().To));
+        () => CreateDrill(KindFilter.Expenses, null, null, PreviousMonths().From, PreviousMonths().To));
 
     [RelayCommand]
-    private Task ExplainGoalsAsync() => ExplainAsync("K03", string.Empty, [.. GoalRows.Select(g => new AmountLine(g.Name, g.FundedText, false))], () => Shell.Current.GoToAsync(AppShell.GoalsRoute));
+    private Task ExplainGoalsAsync() => ExplainAsync("K03", string.Empty, [.. GoalRows.Select(g => new AmountLine(g.Name, g.FundedText, false))], () => new ReportNavigation(AppShell.GoalsRoute));
 
     // The three complete financial months capacity and coverage are based on.
     private (DateOnly From, DateOnly To) PreviousMonths()
