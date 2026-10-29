@@ -8557,4 +8557,7 @@ SHA-256 del XML original: {5}</value>
   <data name="Account_SavedDraftChanged" xml:space="preserve">
     <value>La cuenta se ha guardado, pero el texto actual incluye cambios sin guardar. Revísalos antes de cerrar.</value>
   </data>
+  <data name="Goal_SavedDraftChanged" xml:space="preserve">
+    <value>El objetivo se ha guardado. Los cambios más recientes siguen en esta página sin guardar. Cierra la página solo si quieres descartarlos.</value>
+  </data>
 </root>

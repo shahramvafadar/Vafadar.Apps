@@ -10838,3 +10838,33 @@ Used packages/evidence remain. Phone/D-607/all three deadlines/unread source are
 physical adoption and broader DB/key/security/ANR/performance/A11Y/iOS/provider/Store/release gates
 remain separate. Overall delivery stays active.
 [Complete source and native evidence](../quality/complete-original-account-editor-source.md).
+
+
+### D-640 - Complete original goal editor source and ownership (2026-10-29)
+
+Goal editing now reads complete original preferences, goals, contribution rules, allocations,
+accounts,32-field ledger, holdings, locations and categories under one file/worker transaction.
+Narrow parent origin, detached full-source guards and original day/access checks bind read,
+preview, retained raw draft, native consent and writer to the same page/tab/root. Original money,
+recurrence, quota and budget-cut rules remain. Accepted goal/plan receipts precede fallible
+notifications and cannot replay Save or discard newer text. Failed reads require explicit Retry;
+withdrawn cached rights disable stale Save until explicit Reload with the raw draft preserved.
+
+Twenty distinct new focused cases and eighteen affected existing cases pass in selected runs.
+Strict Windows and the complete offline384AOT/408ELF final APK pass. Original API36/x64/4096
+UI qualifies eighteen en/fa/de/both-theme/360-412-680dp ready contexts, three named error covers,
+pending-read cancellation/departed Save refusal and exactly one metadata Save with notification
+failure. Full observed seventeen-table comparison permits only goal name/update-time changes;
+the complete custom contribution plan and empty ledger remain unchanged. A separate final empty-
+source native rights delta preserves D640_RightsDraft/123.45 through one refused Save and visible
+Retry, then Cancel/Discard; no account/goal/plan/ledger is created for that delta. Earlier native
+coverage retains its pre-final-correction fingerprint instead of replaying accepted work.
+
+Both fresh UIDs/owned AVDs retire after exact restoration;69 hash-matched XMLs total2226073bytes.
+Final-wave four standard cleans remove28957files/1969805435logicalbytes. Seven-root supplemental
+removal is rejected before process creation, leaving3720files/579629922logicalbytes with no
+retry/subset/alternate/move/escalation/reuse. Used packages/failures/evidence remain. Counts are
+logical, not measured host free space. Phone/D-607/three original deadlines/unread source are
+untouched. Physical adoption, broader DB/key/security/stability/performance/accessibility,
+iOS/provider/Store/release gates remain separate; overall delivery stays active.
+[Complete evidence](../quality/complete-original-goal-editor-source.md).

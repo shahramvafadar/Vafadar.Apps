@@ -50,7 +50,23 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     private readonly Holdings.HoldingText _holdingText;
     private readonly IAppInteraction _interaction;
     private readonly IGoalEditorNotifications _notifications;
-    private readonly SemaphoreSlim _loadGate = new(1, 1);
+    private CancellationTokenSource _readLifetime = new();
+    private Task? _pendingRead;
+    private long _readRevision, _pendingView;
+    private GoalEditorSnapshot? _source;
+    private GoalEditorOrigin? _origin;
+    private string? _sourceFile;
+    private bool _routeRetired, _invalidRoute, _resumeRead;
+    private Func<bool>? _rootCurrent;
+
+    /// <summary>Binds only the native original root without retaining its full view graph.</summary>
+    internal void BindRootOwner(Func<bool> current) => _rootCurrent = current ?? throw new ArgumentNullException(nameof(current));
+    private bool OwnsRoot => _rootCurrent?.Invoke() != false;
+    private bool OwnsView(long revision) => !_departed && OwnsRoot && revision == _viewRevision;
+    private void RetireRead()
+    {
+        _readRevision++; var previous = _readLifetime; _readLifetime = new(); previous.Cancel(); previous.Dispose();
+    }
     private readonly Goal _newGoal = new() { Name = string.Empty, CurrencyCode = "EUR" };
     private List<AssetType> _types = [];
     private List<AssetEvent> _events = [];
@@ -87,7 +103,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
         _targetCulture = _contributionCulture = _percentCulture = localization.CurrentCulture;
         Title = translator["Goal_NewTitle"]; Name = AmountText = Note = string.Empty; CurrencyCode = "EUR";
         TargetDate = Today.AddYears(1); FirstDate = Today; PriorityIndex = (int)GoalPriority.Normal;
-        PropertyChanged += (_, args) => { if (args.PropertyName == nameof(IsBusy)) { UpdatePreview(); RefreshCapabilities(); } };
+        PropertyChanged += (_, args) => { if (args.PropertyName == nameof(IsBusy) && !_departed && OwnsRoot) { UpdatePreview(); RefreshCapabilities(); } };
         RefreshDisplay();
     }
 
@@ -303,11 +319,11 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     /// <summary>Gets whether the covered body is actively loading.</summary>
     public bool IsLoading => _loading;
     /// <summary>Gets whether an explicit reload is required; it never resubmits a previous action.</summary>
-    public bool CanReload => !IsBusy && !_loading && !_committed;
+    public bool CanReload => !_departed && OwnsRoot && !_routeRetired && !IsBusy && !_loading && !_committed;
     /// <summary>Gets whether this form may close or confirm discard.</summary>
-    public bool CanLeave => !IsBusy && !_loading;
+    public bool CanLeave => !IsBusy && !_departed && OwnsRoot;
     /// <summary>Gets whether published retained corrections may be edited.</summary>
-    public bool CanInteract => !_departed && IsReady && !IsBusy && !_loading && !_committed && _work.CanCorrect;
+    public bool CanInteract => !_departed && OwnsRoot && !_routeRetired && _source is not null && IsReady && !IsBusy && !_loading && !_committed && _work.CanCorrect;
     /// <summary>Gets whether a reloaded draft needs the explicit review action before financial configuration writes.</summary>
     public bool RequiresReview => _pendingReview;
     /// <summary>Gets the original method caption even when Simple mode hides the method chooser.</summary>
@@ -358,89 +374,128 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     public async Task ApplyQueryAsync(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
-        var id = query.TryGetValue("id", out var value) && value is Guid identity ? identity : (Guid?)null;
+        var requested = query.ContainsKey("id");
+        var id = query.TryGetValue("id", out var value) && value is Guid identity && identity != Guid.Empty ? identity : (Guid?)null;
+        var origin = query.TryGetValue("goalEditorOrigin", out var supplied) ? supplied as GoalEditorOrigin : null;
         if (_hasQuery)
         {
-            // Shell also publishes an empty query while attaching a native modal. It is not a new draft identity.
-            if (!query.ContainsKey("id")) return;
-            if (_id != id) throw new InvalidOperationException("A retained goal editor cannot be rebound to another identity.");
+            // Shell can repeat an empty query while attaching this already captured modal.
+            if (!requested && origin is null) return;
+            if (_id != id || requested && id is null || origin?.DatabasePath != _origin?.DatabasePath)
+            {
+                _routeRetired = true; RetireRead(); IsReady = false; _needsReload = true;
+                SaveError = _translator["Error_Unexpected"]; RefreshCapabilities();
+            }
             return;
         }
-        _hasQuery = true; _id = id; await LoadAsync(false);
+        _hasQuery = true; _id = id; _origin = origin; _sourceFile = origin?.DatabasePath;
+        _invalidRoute = requested && id is null || supplied is not null && origin is null;
+        if (requested) Title = _translator["Goal_EditTitle"];
+        await LoadAsync(false);
     }
 
-    /// <summary>Starts publication only when navigation supplied no query; construction never starts a read.</summary>
+    /// <summary>Shares the original pending acquisition; native appearance never retries a completed failure.</summary>
     public async Task EnsureLoadedAsync()
     {
         if (!_hasQuery) await ApplyQueryAsync(new Dictionary<string, object>());
-        else { await _loadGate.WaitAsync(); _loadGate.Release(); }
+        else if (_pendingRead is { IsCompleted: false } pending && _pendingView == _viewRevision) await pending;
     }
 
-    private async Task LoadAsync(bool keepDraft)
+    private Task LoadAsync(bool keepDraft)
     {
-        await _loadGate.WaitAsync();
+        if (_routeRetired || _departed || !OwnsRoot || _committed) return Task.CompletedTask;
+        if (_pendingRead is { IsCompleted: false } pending && _pendingView == _viewRevision) return pending;
+        _pendingView = _viewRevision;
+        return _pendingRead = LoadCoreAsync(keepDraft);
+    }
+
+    private async Task LoadCoreAsync(bool keepDraft)
+    {
+        RetireRead(); var revision = _readRevision; var owner = _viewRevision; var day = Today;
+        var token = _readLifetime.Token;
+        GoalEditorSnapshot? captured = null;
+        void Current()
+        {
+            token.ThrowIfCancellationRequested();
+            if (!OwnsView(owner) || _routeRetired || revision != _readRevision || day != Today)
+                throw new OperationCanceledException("The original goal editor read was retired.", token);
+            captured?.EnsureAccessCurrent();
+        }
         var draft = keepDraft ? CaptureDraft() : null; var baseline = _baseline; var prior = _review;
         var contexts = (_targetCulture, _contributionCulture, _percentCulture, _targetUnit, _contributionUnit, _targetMoney, _contributionMoney);
-        _loading = true; IsReady = false; SaveError = null; RefreshCapabilities();
+        Current(); _loading = true; IsReady = false; SaveError = null; RefreshCapabilities();
         try
         {
-            var review = await _goals.GetWorkSnapshotAsync();
+            if (_invalidRoute) throw new InvalidOperationException("The requested original goal route is invalid.");
+            _origin?.EnsureCurrent(); Current();
+            captured = await _goals.ReadEditorSnapshotAsync(_id, day, path =>
+            {
+                Current(); _sourceFile ??= path; return _sourceFile == path;
+            }, token);
+            Current(); await _goals.ValidateEditorSnapshotAsync(captured, token); Current();
+            var changedInputs = _source is { } previous
+                && !await Task.Run(() => captured.HasSameInputs(previous), token);
+            Current();
+            var review = captured.Goals;
             if (_openedScope is not null && _openedScope != review.ReminderScope)
                 throw new InvalidOperationException("This retained goal draft belongs to another opened profile file.");
-            var goal = _id is { } id ? review.Goals.FirstOrDefault(item => item.Id == id) : null;
-            if (_id is not null && goal is null) throw new InvalidOperationException("The original goal no longer exists.");
+            var goal = _id is { } id ? review.Goals.Single(item => item.Id == id) : null;
             var plan = goal is null ? null : review.ContributionPlans.FirstOrDefault(item => item.GoalId == goal.Id);
-            var settings = await _store.GetSettingsAsync(); var accounts = await _store.GetAccountsAsync();
-            var entries = await _store.GetEntriesAsync(); var types = await _holdings.GetTypesAsync();
-            var events = await _holdings.GetEventsAsync(); var locations = await _holdings.GetLocationsAsync();
-            var categories = await _store.GetCategoriesAsync();
-            await _goals.ValidateWorkSnapshotAsync(review);
+            var settings = captured.Settings; var accounts = captured.Inputs.Accounts; var entries = captured.Inputs.Entries;
+            var types = captured.Inputs.AssetTypes; var events = captured.Inputs.AssetEvents;
+            var locations = captured.Inputs.Locations; var categories = captured.Inputs.Categories;
+            Current();
 
-            // No await follows until the complete original references, captions and baseline are published.
+            // No await follows while the covered original fields publish; each native callback can retire this owner.
+            void Publish(Action action) { Current(); action(); Current(); }
             _openedScope ??= review.ReminderScope; _review = review; _work = review.Work; _existing = goal; _existingPlan = plan;
             _settings = settings; _accounts = accounts; _entries = entries; _types = types; _events = events; _categories = categories;
             if (prior is null) _calendarAtOpen = Calendars.ToPeriod(_localization.CurrentCalendar);
             _savedRule = goal is null ? null : ContributionSchedule.RuleFor(goal, plan, Today).Clone();
             _currentEarmarked = goal is null ? 0 : Math.Max(0, review.Allocations.Where(item => item.GoalId == goal.Id).Sum(item => item.Amount));
             var usedCategories = plan?.CategoryIds ?? [];
-            Accounts.Clear();
+            Publish(Accounts.Clear);
             foreach (var account in accounts.Where(item => (!item.IsArchived && item.Type is AccountType.Cash or AccountType.Checking or AccountType.Savings)
                 || item.Id == goal?.AccountId || item.Id == draft?.Account))
-                Accounts.Add(new(account.Id, account.Name, account.CurrencyCode));
-            HoldingTypes.Clear();
+                Publish(() => Accounts.Add(new(account.Id, account.Name, account.CurrencyCode)));
+            Publish(HoldingTypes.Clear);
             foreach (var type in types.Where(item => !item.IsArchived || item.Id == goal?.AssetTypeId || item.Id == draft?.Holding))
-                HoldingTypes.Add(new(type.Id, type.Name));
-            HoldingLocations.Clear(); HoldingLocations.Add(new(null, _translator["Goal_AllLocations"]));
+                Publish(() => HoldingTypes.Add(new(type.Id, type.Name)));
+            Publish(HoldingLocations.Clear); Publish(() => HoldingLocations.Add(new(null, _translator["Goal_AllLocations"])));
             foreach (var location in locations.Where(item => !item.IsArchived || item.Id == goal?.LocationId || item.Id == draft?.Location))
-                HoldingLocations.Add(new(location.Id, location.Name));
-            var lookup = new CategoryLookup(categories, _translator); CutCategories.Clear();
+                Publish(() => HoldingLocations.Add(new(location.Id, location.Name)));
+            var lookup = new CategoryLookup(categories, _translator); Publish(CutCategories.Clear);
             foreach (var category in lookup.All.Where(item => (item.Kind == CategoryKind.Expense && item.ParentId is null && !item.IsArchived)
                 || usedCategories.Contains(item.Id) || item.Id == draft?.Category).OrderBy(item => item.SortOrder))
-                CutCategories.Add(new(category.Id, lookup.Name(category.Id)));
+                Publish(() => CutCategories.Add(new(category.Id, lookup.Name(category.Id))));
 
-            IsAdvanced = settings.Shows(Feature.GoalOptions); CanChangeType = goal is null; ShowTypeChooser = CanChangeType && IsAdvanced;
-            TypeIndex = goal?.Type switch { GoalType.Earmark => 1, GoalType.HoldingQuantity => 2, _ => 0 };
-            HoldingType = HoldingTypes.FirstOrDefault(item => item.Id == goal?.AssetTypeId) ?? (goal is null ? HoldingTypes.FirstOrDefault() : null);
-            HoldingLocation = HoldingLocations.FirstOrDefault(item => item.Id == goal?.LocationId) ?? HoldingLocations[0];
-            QuantityUnitIndex = 0;
-            Account = goal is not null ? Accounts.FirstOrDefault(item => item.Id == goal.AccountId)
+            Publish(() => IsAdvanced = settings.Shows(Feature.GoalOptions));
+            Publish(() => CanChangeType = goal is null); Publish(() => ShowTypeChooser = CanChangeType && IsAdvanced);
+            Publish(() => TypeIndex = goal?.Type switch { GoalType.Earmark => 1, GoalType.HoldingQuantity => 2, _ => 0 });
+            Publish(() => HoldingType = HoldingTypes.FirstOrDefault(item => item.Id == goal?.AssetTypeId)
+                ?? (goal is null ? HoldingTypes.FirstOrDefault() : null));
+            Publish(() => HoldingLocation = HoldingLocations.FirstOrDefault(item => item.Id == goal?.LocationId) ?? HoldingLocations[0]);
+            Publish(() => QuantityUnitIndex = 0);
+            Publish(() => Account = goal is not null ? Accounts.FirstOrDefault(item => item.Id == goal.AccountId)
                 : Accounts.FirstOrDefault(item => item.Id == settings.DefaultAccountId && item.CurrencyCode == settings.DefaultCurrencyCode)
-                    ?? Accounts.FirstOrDefault(item => accounts.First(original => original.Id == item.Id).Type == AccountType.Savings) ?? Accounts.FirstOrDefault();
-            CurrencyCode = goal?.CurrencyCode ?? (TypeIndex == 0 ? Account?.CurrencyCode : null) ?? settings.DefaultCurrencyCode;
-            UpdateType(); UpdateUnits(false);
+                    ?? Accounts.FirstOrDefault(item => accounts.First(original => original.Id == item.Id).Type == AccountType.Savings) ?? Accounts.FirstOrDefault());
+            Publish(() => CurrencyCode = goal?.CurrencyCode ?? (TypeIndex == 0 ? Account?.CurrencyCode : null) ?? settings.DefaultCurrencyCode);
+            Publish(UpdateType); Publish(() => UpdateUnits(false));
             _targetMoney = _contributionMoney = CaptureMoney();
-            Name = goal?.Name ?? string.Empty; AmountText = goal is null ? string.Empty : FormatTarget(goal.TargetAmount);
-            HasTargetDate = goal?.TargetDate is not null; TargetDate = goal?.TargetDate ?? Today.AddYears(1);
-            ScheduleIndex = _savedRule is null ? 0 : Array.IndexOf(Schedules, (_savedRule.Frequency, _savedRule.Interval));
-            if (ScheduleIndex < 0) ScheduleIndex = 3;
-            FirstDate = _savedRule?.Start ?? Today; ReminderEnabled = plan?.ReminderEnabled ?? false;
-            MethodIndex = (int)(plan?.Method ?? ContributionMethod.FixedAmount);
-            ContributionText = plan?.Amount is { } amount ? FormatTarget(amount) : string.Empty;
-            PercentText = plan?.Percent?.ToString("0.##", _localization.CurrentCulture) ?? string.Empty;
-            CutCategory = CutCategories.FirstOrDefault(item => usedCategories.Contains(item.Id));
-            ShowOnHome = goal?.HomePin is not null; Protect = goal?.Protect ?? false;
-            PriorityIndex = (int)(goal?.Priority ?? GoalPriority.Normal); IconKey = goal?.Icon; Note = goal?.Note ?? string.Empty;
-            CurrencyLocked = goal is not null && review.Allocations.Any(item => item.GoalId == goal.Id);
+            Publish(() => Name = goal?.Name ?? string.Empty);
+            Publish(() => AmountText = goal is null ? string.Empty : FormatTarget(goal.TargetAmount));
+            Publish(() => HasTargetDate = goal?.TargetDate is not null); Publish(() => TargetDate = goal?.TargetDate ?? Today.AddYears(1));
+            Publish(() => ScheduleIndex = _savedRule is null ? 0 : Array.IndexOf(Schedules, (_savedRule.Frequency, _savedRule.Interval)));
+            if (ScheduleIndex < 0) Publish(() => ScheduleIndex = 3);
+            Publish(() => FirstDate = _savedRule?.Start ?? Today); Publish(() => ReminderEnabled = plan?.ReminderEnabled ?? false);
+            Publish(() => MethodIndex = (int)(plan?.Method ?? ContributionMethod.FixedAmount));
+            Publish(() => ContributionText = plan?.Amount is { } amount ? FormatTarget(amount) : string.Empty);
+            Publish(() => PercentText = plan?.Percent?.ToString("0.##", _localization.CurrentCulture) ?? string.Empty);
+            Publish(() => CutCategory = CutCategories.FirstOrDefault(item => usedCategories.Contains(item.Id)));
+            Publish(() => ShowOnHome = goal?.HomePin is not null); Publish(() => Protect = goal?.Protect ?? false);
+            Publish(() => PriorityIndex = (int)(goal?.Priority ?? GoalPriority.Normal));
+            Publish(() => IconKey = goal?.Icon); Publish(() => Note = goal?.Note ?? string.Empty);
+            Publish(() => CurrencyLocked = goal is not null && review.Allocations.Any(item => item.GoalId == goal.Id));
             _baseline = CaptureDraft();
             _targetCulture = _contributionCulture = _percentCulture = _localization.CurrentCulture;
             _targetUnit = _contributionUnit = UnitKey();
@@ -449,28 +504,46 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
                 var merged = MergeDraft(draft, baseline, _baseline);
                 if (draft.TargetContext != baseline.TargetContext) merged = merged with { Amount = draft.Amount };
                 if (draft.ContributionContext != baseline.ContributionContext) merged = merged with { Contribution = draft.Contribution };
-                RestoreDraft(merged);
+                Publish(() => RestoreDraft(merged));
                 var unitChanged = draft.Currency != baseline.Currency || draft.Unit != baseline.Unit || draft.Holding != baseline.Holding;
                 if (draft.Amount != baseline.Amount || draft.TargetContext != baseline.TargetContext || unitChanged) { _targetCulture = contexts._targetCulture; _targetUnit = contexts._targetUnit; _targetMoney = contexts._targetMoney; }
                 if (draft.Contribution != baseline.Contribution || draft.ContributionContext != baseline.ContributionContext || unitChanged) { _contributionCulture = contexts._contributionCulture; _contributionUnit = contexts._contributionUnit; _contributionMoney = contexts._contributionMoney; }
                 if (draft.Percent != baseline.Percent) _percentCulture = contexts._percentCulture;
-                _pendingReview = draft != baseline && prior is not null && !prior.HasSameOriginalInputs(review);
-                ReloadedSavedSummary = _pendingReview ? SavedSummary(goal, plan) : null;
+                _pendingReview = draft != baseline && prior is not null && changedInputs;
+                Publish(() => ReloadedSavedSummary = _pendingReview ? SavedSummary(goal, plan) : null);
             }
-            else { _pendingReview = false; ReloadedSavedSummary = null; }
-            _needsReload = false; IsReady = true;
+            else { _pendingReview = false; Publish(() => ReloadedSavedSummary = null); }
+            Current(); _source = captured; _needsReload = false; Publish(() => IsReady = true);
         }
-        catch { _needsReload = true; SaveError = _translator["Error_Unexpected"]; throw; }
-        finally { _loading = false; UpdateInputUnits(); RefreshDisplay(); _loadGate.Release(); }
+        catch (OperationCanceledException) when (!OwnsView(owner) || revision != _readRevision) { }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            if (OwnsView(owner) && revision == _readRevision)
+            { _needsReload = true; IsReady = false; SaveError = _translator["Error_Unexpected"]; }
+        }
+        finally
+        {
+            if (OwnsView(owner) && revision == _readRevision)
+            { _loading = false; UpdateInputUnits(); RefreshDisplayCore(); }
+        }
     }
 
     /// <summary>Refreshes only live display captions; language/theme changes retain every explicit draft and parse context.</summary>
     public void RefreshDisplay()
     {
+        if (_departed || !OwnsRoot) return;
+        var pending = _hasQuery && _loading && !IsReady;
+        _viewRevision++; if (pending) RetireRead();
+        RefreshDisplayCore();
+        if (pending && !_departed && !_routeRetired && !_committed) _ = LoadAsync(_baseline is not null);
+    }
+
+    private void RefreshDisplayCore()
+    {
         var publishing = _loading; _loading = true;
         try
         {
-            Title = _translator[_existing is null ? "Goal_NewTitle" : "Goal_EditTitle"];
+            Title = _translator[_existing is not null || _id is not null || _invalidRoute ? "Goal_EditTitle" : "Goal_NewTitle"];
             TypeNames = [_translator["GoalType_AccountBalance"], _translator["GoalType_Earmark"], _translator["GoalType_HoldingQuantity"]];
             ScheduleNames = [_translator["Goal_Monthly"], _translator["Goal_EveryTwoWeeks"], _translator["Goal_Weekly"]];
             if (_savedRule is not null && Array.IndexOf(Schedules, (_savedRule.Frequency, _savedRule.Interval)) < 0)
@@ -575,18 +648,27 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     {
         if (_loading) return; ChangedDraft(); RefreshReminderNote();
         if (!value || !CanInteract || !NewReminder || _existing is { State: not GoalState.Active }) return;
+        if (_source is not { } source) return;
+        var owner = _viewRevision; var revision = _draftRevision; var draft = CaptureDraft();
+        bool Current() => OwnsSource(source, owner) && revision == _draftRevision && draft == CaptureDraft();
         IsBusy = true;
         try
         {
             if (_notifications.IsSupported)
             {
+                await _goals.ValidateEditorSnapshotAsync(source);
+                if (!Current()) return;
                 var enabled = await _notifications.EnableAsync();
-                if (_review is { } review) await _goals.ValidateWorkSnapshotAsync(review);
-                ReminderNote = enabled ? null : _translator["Reminder_PermissionDenied"];
+                if (!Current()) return;
+                await _goals.ValidateEditorSnapshotAsync(source);
+                if (Current()) ReminderNote = enabled ? null : _translator["Reminder_PermissionDenied"];
             }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { _needsReload = true; SaveError = _translator["Error_Unexpected"]; await _interaction.ShowFailureAsync(exception); }
+        {
+            if (OwnsView(owner))
+            { _needsReload = true; SaveError = _translator["Error_Unexpected"]; await _interaction.ShowFailureAsync(exception); }
+        }
         finally { IsBusy = false; }
     }
 
@@ -639,7 +721,22 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     /// <summary>Exposes an actionable review/reload reason even for disabled retained contribution controls.</summary>
     public string? MoneyReviewText => _targetNeedsReview || _contributionNeedsReview ? _translator["Goal_DraftUnitChanged"] : null;
     /// <summary>Retires pending monetary callbacks when the original native frame departs.</summary>
-    public void SetViewActive(bool active) { _departed = !active; _viewRevision++; RefreshCapabilities(); }
+    public void SetViewActive(bool active)
+    {
+        if (_departed == !active) return;
+        if (!active)
+        {
+            _resumeRead = _loading || IsReady; _departed = true; _viewRevision++; RetireRead();
+            IsReady = false;
+        }
+        else
+        {
+            _departed = false; _viewRevision++;
+            if (_resumeRead && _hasQuery && !_committed && !_routeRetired)
+            { _resumeRead = false; _ = LoadAsync(_baseline is not null); }
+        }
+        RefreshCapabilities();
+    }
 
     private string UnitKey() => IsQuantityGoal
         ? $"quantity|{HoldingType?.Id}|{SelectedType?.Dimension}|{SelectedType?.Divisible}|{SelectedType?.CountUnitName}|{SelectedUnit}"
@@ -767,13 +864,21 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
         }
     }
 
+    private bool OwnsSource(GoalEditorSnapshot source, long owner)
+    {
+        if (!OwnsView(owner) || _routeRetired || !ReferenceEquals(source, _source) || source.Day != Today) return false;
+        try { source.EnsureAccessCurrent(); return true; }
+        catch (InvalidOperationException) { return false; }
+    }
+
     [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
+        if (!CanInteract) return;
         UpdateInputUnits();
-        if (!CanSave || _review is not { } review) return;
+        if (!CanSave || _review is not { } review || _source is not { } source) return;
         var draft = CaptureDraft(); var revision = _draftRevision; var owner = _viewRevision;
-        bool Current() => !_departed && owner == _viewRevision && revision == _draftRevision && draft == CaptureDraft()
+        bool Current() => OwnsSource(source, owner) && revision == _draftRevision && draft == CaptureDraft()
             && ReferenceEquals(review, _review) && MonetaryInputsCurrent;
         SaveError = null; NameError = string.IsNullOrWhiteSpace(Name) ? _translator["Goal_NameRequired"] : null;
         AmountError = TryAmount(AmountText, _targetCulture, out var amount) ? null : _translator[IsQuantityGoal ? "AssetEvent_QuantityInvalid" : "Amount_Invalid"];
@@ -786,7 +891,14 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
         var goal = BuildGoal(amount);
         if (IsBalanceGoal && Account is { } account && GoalProgressService.HasOtherBalanceGoal(review.Goals, account.Id, goal.Id))
             SaveError = _translator["Goal_AccountHasGoal"];
-        if (!Current()) { SaveError = _translator["Goal_DraftUnitChanged"]; return; }
+        if (!Current())
+        {
+            if (!OwnsView(owner)) return;
+            // D-640: retired source/day/rights require a fresh explicit read; a changed raw edit only needs a new Save.
+            if (!OwnsSource(source, owner)) { _needsReload = true; SaveError = _translator["Error_Unexpected"]; }
+            else SaveError = _translator["Goal_DraftUnitChanged"];
+            RefreshCapabilities(); return;
+        }
         if (NameError is not null || AmountError is not null || ContributionError is not null || PercentError is not null || RuleError is not null || SaveError is not null) return;
         IsBusy = true;
         try
@@ -796,21 +908,31 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
                 && (old.AssetTypeId != goal.AssetTypeId || old.CurrencyCode != goal.CurrencyCode))
             {
                 if (!await _interaction.ConfirmAsync(_translator["Goal_EditTitle"], _translator["Goal_ResetPriceForHolding"],
-                    _translator["Common_Save"], _translator["Common_Cancel"])) return;
+                    _translator["Common_Save"], _translator["Common_Cancel"]) || !Current()) return;
                 plan.AssumedPricePerUnitMilli = null;
             }
-            try { await _goals.SaveGoalWithContributionPlanAsync(goal, plan, review: review, inputCurrent: Current, accepted: () => _committed = true); }
-            catch (Exception exception) when (exception is not OutOfMemoryException)
-            { _needsReload = !_committed; SaveError = _committed ? _translator["Goal_SavedReturnFailed"] : CommercialFailureMessage.OrFallback(exception, _translator, "Goal_SaveFailed", draftKept: true); await _interaction.ShowFailureAsync(exception); return; }
-            // A committed draft is retired before navigation; a failed return can never duplicate or resubmit it.
-            _existing = goal; _baseline = CaptureDraft(); _committed = true; _pendingReview = false;
+            await _goals.SaveGoalWithContributionPlanAsync(goal, plan, review: review, inputCurrent: Current,
+                originalSource: source, accepted: () =>
+                {
+                    // D-640: preserve the writer's actual receipt before observers or later native text callbacks.
+                    _existing = goal; _baseline = draft; _committed = true; _pendingReview = false;
+                });
+            if (!OwnsView(owner)) return;
+            if (CaptureDraft() != draft) { SaveError = _translator["Goal_SavedDraftChanged"]; return; }
             try { await _interaction.NavigateAsync(".."); }
             catch (Exception exception) when (exception is not OutOfMemoryException)
-            { SaveError = _translator["Goal_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); }
+            { if (OwnsView(owner)) { SaveError = _translator["Goal_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); } }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Goal_SaveFailed", draftKept: true); await _interaction.ShowFailureAsync(exception); }
-        finally { IsBusy = false; RefreshCapabilities(); }
+        {
+            if (!OwnsView(owner)) return;
+            _needsReload = !_committed;
+            SaveError = _committed ? _translator["Goal_SavedReturnFailed"]
+                : CommercialFailureMessage.OrFallback(exception, _translator, "Goal_SaveFailed", draftKept: true);
+            if (_committed && CaptureDraft() != draft) SaveError += "\n\n" + _translator["Goal_SavedDraftChanged"];
+            await _interaction.ShowFailureAsync(exception);
+        }
+        finally { IsBusy = false; if (OwnsView(owner)) RefreshCapabilities(); }
     }
 
     private string CutFingerprint(long amount, Guid category) => DraftFingerprint.Create(_openedScope, _existing?.Id, amount, category, CurrencyCode);
@@ -819,16 +941,20 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     private async Task ApplyCutAsync()
     {
         UpdateInputUnits(); UpdatePreview();
-        if (!CanInteract || !CanApplyCut || _review is not { } review || CutCategory is not { } category
+        if (!CanInteract || !CanApplyCut || _review is not { } review || _source is not { } source || CutCategory is not { } category
             || !TryAmount(ContributionText, _contributionCulture, out var cut, contribution: true)) return;
         var draft = CaptureDraft(); var revision = _draftRevision; var owner = _viewRevision;
-        bool Current() => !_departed && owner == _viewRevision && revision == _draftRevision && draft == CaptureDraft()
+        bool Current() => OwnsSource(source, owner) && revision == _draftRevision && draft == CaptureDraft()
             && ReferenceEquals(review, _review) && MonetaryInputsCurrent;
         var submitted = CutFingerprint(cut, category.Id); var type = CurrentType; var currency = CurrencyCode;
+        if (!Current()) { SaveError = _translator["Error_Unexpected"]; return; }
         IsBusy = true;
         try
         {
+            await _goals.ValidateEditorSnapshotAsync(source);
+            if (!Current()) return;
             var budget = await _store.ReviewGoalBudgetCutAsync(review, _existing?.Id, type, category.Id, currency);
+            if (!Current()) return;
             if (budget is null || budget.OriginalLimit < 0)
             { await _interaction.AlertAsync(_translator["Contribution_SpendingCut"], _translator.Format("Goal_CutNoLimit", category.Name), _translator["Common_Ok"]); return; }
             if (!Current()) throw new InvalidOperationException("The original monetary cut draft changed.");
@@ -840,26 +966,30 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
             await _store.ApplyGoalBudgetCutAsync(budget, cut, inputCurrent: Current, accepted: () => _appliedCut = submitted);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { _needsReload = true; SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Goal_SaveFailed", draftKept: true); await _interaction.ShowFailureAsync(exception); }
+        { if (OwnsView(owner)) { _needsReload = true; SaveError = CommercialFailureMessage.OrFallback(exception, _translator, "Goal_SaveFailed", draftKept: true); await _interaction.ShowFailureAsync(exception); } }
         finally { IsBusy = false; UpdatePreview(); RefreshCapabilities(); }
     }
 
     [RelayCommand(CanExecute = nameof(CanLeave))]
     private async Task CancelAsync()
     {
-        if (!CanLeave) return; IsBusy = true;
+        if (!CanLeave || _departed || !OwnsRoot) return;
+        var owner = _viewRevision; var draft = CaptureDraft();
+        bool Current() => OwnsView(owner) && draft == CaptureDraft();
+        IsBusy = true;
         try
         {
-            if (IsDirty && !await _interaction.ConfirmAsync(_translator["Common_DiscardTitle"], _translator["Common_DiscardMessage"],
-                _translator["Common_Discard"], _translator["Common_KeepEditing"])) return;
-            await _interaction.NavigateAsync("..");
+            if (IsDirty && (!await _interaction.ConfirmAsync(_translator["Common_DiscardTitle"], _translator["Common_DiscardMessage"],
+                _translator["Common_Discard"], _translator["Common_KeepEditing"]) || !Current())) return;
+            if (Current()) await _interaction.NavigateAsync("..");
         }
-        catch (Exception exception) when (exception is not OutOfMemoryException) { await _interaction.ShowFailureAsync(exception); }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { if (OwnsView(owner)) await _interaction.ShowFailureAsync(exception); }
         finally { IsBusy = false; }
     }
 
     /// <inheritdoc />
-    public bool IsDirty => !_committed && _baseline is { } baseline && CaptureDraft() != baseline;
+    public bool IsDirty => _baseline is { } baseline && CaptureDraft() != baseline;
 
     private sealed record Draft(int Type, Guid? Holding, Guid? Location, int Unit, Guid? Account, string Name, string Amount,
         string Currency, bool HasDate, DateOnly Date, int Schedule, DateOnly First, bool Reminder, int Method, string Contribution,

@@ -122,8 +122,9 @@ public sealed class GoalEditorFlowTests
         s.Editor.Note = "Retained unsaved native draft"; var before = await RowsAsync(f);
         await s.Editor.ApplyQueryAsync(new Dictionary<string, object>()); Assert.True(s.Editor.IsDirty);
         Assert.Equal("Retained unsaved native draft", s.Editor.Note);
-        await Assert.ThrowsAsync<InvalidOperationException>(() => s.Editor.ApplyQueryAsync(new Dictionary<string, object> { ["id"] = Guid.NewGuid() }));
-        Assert.Equal(before, await RowsAsync(f)); Assert.True(s.Editor.CanSave); Assert.Equal(3, s.Editor.ScheduleIndex);
+        await s.Editor.ApplyQueryAsync(new Dictionary<string, object> { ["id"] = Guid.NewGuid() });
+        Assert.Equal(before, await RowsAsync(f)); Assert.False(s.Editor.CanSave); Assert.False(s.Editor.IsReady);
+        Assert.Equal("Retained unsaved native draft", s.Editor.Note); Assert.True(s.Editor.IsDirty); Assert.Equal(3, s.Editor.ScheduleIndex);
     }
 
     [Theory]
@@ -157,7 +158,9 @@ public sealed class GoalEditorFlowTests
             await db.SaveChangesAsync(Ct);
         }
         var before = await RowsAsync(f); await s.Editor.SaveCommand.ExecuteAsync(null);
-        Assert.Equal(before, await RowsAsync(f)); Assert.Single(f.Platform.Failures); Assert.False(s.Editor.CanSave);
+        Assert.Equal(before, await RowsAsync(f)); Assert.False(s.Editor.CanSave);
+        if (change == "rights") { Assert.Empty(f.Platform.Failures); Assert.NotNull(s.Editor.SaveError); Assert.True(s.Editor.CanReload); }
+        else Assert.Single(f.Platform.Failures);
         Assert.Equal(("Unsaved review", "444.25", "7.25", 3), (s.Editor.Note, s.Editor.AmountText, s.Editor.ContributionText, s.Editor.ScheduleIndex));
         Assert.True(s.Editor.IsDirty); Assert.Empty(f.Platform.Routes);
     }

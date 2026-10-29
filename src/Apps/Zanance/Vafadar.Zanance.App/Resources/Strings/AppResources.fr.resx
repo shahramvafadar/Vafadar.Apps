@@ -8565,4 +8565,7 @@ SHA-256 du XML original : {5}</value>
   <data name="Account_SavedDraftChanged" xml:space="preserve">
     <value>Le compte a été enregistré, mais le texte affiché contient des modifications non enregistrées. Vérifiez-les avant de fermer.</value>
   </data>
+  <data name="Goal_SavedDraftChanged" xml:space="preserve">
+    <value>L’objectif a été enregistré. Les modifications plus récentes restent sur cette page sans être enregistrées. Fermez la page uniquement si vous souhaitez les abandonner.</value>
+  </data>
 </root>

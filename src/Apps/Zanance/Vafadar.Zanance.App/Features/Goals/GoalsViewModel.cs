@@ -152,7 +152,8 @@ public sealed partial class GoalsViewModel : ViewModelBase, IThemeAware
                 || !Loading.IsReady || row is not null && !OwnsRow(row)) return;
             original.EnsureCurrent();
             await interaction.NavigateAsync(row is null ? AppRoutes.GoalEditorRoute : AppRoutes.GoalDetailRoute,
-                row is null ? null : new Dictionary<string, object> { ["id"] = row.Id });
+                row is null ? new Dictionary<string, object> { ["goalEditorOrigin"] = original.CreateEditorOrigin() }
+                    : new Dictionary<string, object> { ["id"] = row.Id });
         }
         catch (Exception error) when (error is not OutOfMemoryException)
         {

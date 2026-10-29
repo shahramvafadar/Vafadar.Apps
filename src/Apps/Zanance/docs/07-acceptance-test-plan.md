@@ -7845,3 +7845,8 @@ metadata/default deltas and keeps zero ledger entries. Same-UID correction follo
 fast-failure defect; no accepted seed/Save/archive is replayed. Exact restore and fresh-only
 retirement pass, with supplemental cleanup refusal recorded. Physical adoption and broad release
 gates remain separate; D-607 is untouched. [Full evidence](quality/complete-original-account-editor-source.md).
+
+
+## D-640 original goal editor
+
+Twenty new focused and eighteen affected existing cases pass. Eighteen original ready contexts and three error covers retain source identity; exactly one original metadata Save survives notification failure. A separate empty-source final rights delta refuses one Save, preserves the raw draft through explicit Retry and discards without a financial write. Full-source/restoration/fresh-only retirement proofs pass; physical adoption and broader release gates remain open. [Evidence](quality/complete-original-goal-editor-source.md).

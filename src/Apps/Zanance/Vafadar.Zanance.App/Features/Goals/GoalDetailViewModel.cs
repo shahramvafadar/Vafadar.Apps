@@ -662,7 +662,8 @@ public sealed partial class GoalDetailViewModel(
         {
             await goals.ValidateListSnapshotAsync(source, token);
             if (identity != _identityVersion || _retired || _refreshing || _needsReload || !CanView || !ReferenceEquals(_review, review)) return;
-            await interaction.NavigateAsync(AppRoutes.GoalEditorRoute, new Dictionary<string, object> { ["id"] = goal.Id });
+            await interaction.NavigateAsync(AppRoutes.GoalEditorRoute, new Dictionary<string, object>
+            { ["id"] = goal.Id, ["goalEditorOrigin"] = source.CreateEditorOrigin() });
         }
         catch (Exception error) when (error is not OutOfMemoryException)
         {

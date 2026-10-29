@@ -17,6 +17,10 @@ public sealed record GoalListSnapshot(GoalWorkSnapshot Goals, List<Account> Acco
     /// <summary>Gets the actual captured file, independently of later profile selection.</summary>
     public string DatabasePath => Goals.DatabasePath;
 
+    /// <summary>Creates narrow child authority without retaining the complete original financial graph.</summary>
+    public GoalEditorOrigin CreateEditorOrigin() => new(DatabasePath,
+        Goals.Access ?? throw new InvalidOperationException("Original goal access is unavailable."));
+
     /// <summary>Refuses retired original rights before or during native list publication.</summary>
     public void EnsureCurrent()
     {

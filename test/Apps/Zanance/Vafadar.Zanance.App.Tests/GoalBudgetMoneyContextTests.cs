@@ -168,7 +168,9 @@ public sealed class GoalBudgetMoneyContextTests
             };
             if (budget) await limit.SaveCommand.ExecuteAsync(null); else await goal.SaveCommand.ExecuteAsync(null);
             Assert.True(reached); Assert.Empty(await f.Store.GetBudgetsAsync(Ct));
-            Assert.Empty(await f.Services.GetRequiredService<GoalStore>().GetGoalsAsync(Ct)); Assert.Single(f.Platform.Failures);
+            Assert.Empty(await f.Services.GetRequiredService<GoalStore>().GetGoalsAsync(Ct));
+            if (!budget && mutation == "owner") Assert.Empty(f.Platform.Failures);
+            else Assert.Single(f.Platform.Failures);
             Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
         }
         finally { DisplayUnits.Set(units); }

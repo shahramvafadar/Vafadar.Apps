@@ -4714,3 +4714,8 @@ responses and retain accepted deletion through its following refresh. Nine focus
 cases and72changed native states pass; no old successful financial operation is replayed.
 [Full source, restoration and cleanup record](quality/complete-original-template-center.md).
 The canonical commercial backlog and broad release gates remain authoritative.
+
+
+## D-640 original goal editor
+
+Original goal editor source/lifetime/receipt engineering work is complete in the independent scope. Keep actual physical adoption and broad security/stability/performance/accessibility/platform/provider/release acceptance separate; D-607 and deferred TalkBack priority remain unchanged. [Evidence](quality/complete-original-goal-editor-source.md).

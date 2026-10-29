@@ -1882,3 +1882,8 @@ twelve-target removal is refused before process creation, leaving3720files/78479
 logicalbytes without retry/subset/alternate/move/escalation/reuse. These are engineering
 facts, not broad release acceptance. D-607/phone/three original deadlines remain untouched.
 [Evidence and remaining broad gates](quality/complete-original-template-center.md).
+
+
+## D-640 original goal editor
+
+The complete original goal editor implementation and independent native qualification are delivered, including coherent original source, page/root/consent ownership, accepted receipt and final cached-rights Reload boundary. Physical adoption waits for actual terminal D-607; no protected deadline or successful financial operation is replayed. [Evidence](quality/complete-original-goal-editor-source.md).

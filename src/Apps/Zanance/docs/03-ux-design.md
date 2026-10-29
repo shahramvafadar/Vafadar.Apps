@@ -2934,3 +2934,8 @@ Initial appearance must not hide a failed acquisition by retrying implicitly. Pr
 text and later unsaved text independently from accepted account/archive receipts; an old native
 consent or departed page cannot commit or close another owner. The original default-cleared
 dialog and explicit accepted Close remain. [Actual original verification](quality/complete-original-account-editor-source.md).
+
+
+## D-640 original goal editor
+
+Cover the original goal form during acquisition/failure, keep explicit Retry and raw draft, and retire old page/tab/root consent. A withdrawn original editing right disables Save until explicit Reload. Accepted Save and newer unsaved input have separate Close/discard behavior; never close another owner from a late response. [Evidence](quality/complete-original-goal-editor-source.md).

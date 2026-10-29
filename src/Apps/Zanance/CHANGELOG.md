@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-640: keep goal forms tied to their complete original source, preserve unsaved text through explicit Retry, disable stale Save after editing rights change, and retain known saved results without submitting them again.
+
 - D-639: keep account editors tied to one original source, save the account/default atomically, retain accepted results and newer drafts, and keep failed loading covered until explicit Retry.
 
 - D-638: load category lists and editors from their original file, preserve unsaved text and archived parents, and retain accepted ordering/merge results through read failures without submitting them again.

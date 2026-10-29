@@ -8577,4 +8577,7 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Account_SavedDraftChanged" xml:space="preserve">
     <value>Il conto è stato salvato, ma il testo attuale contiene modifiche non salvate. Controllale prima di chiudere.</value>
   </data>
+  <data name="Goal_SavedDraftChanged" xml:space="preserve">
+    <value>L’obiettivo è stato salvato. Le modifiche più recenti restano in questa pagina senza essere salvate. Chiudi la pagina solo se vuoi scartarle.</value>
+  </data>
 </root>

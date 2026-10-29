@@ -8588,4 +8588,7 @@ Original-XML SHA-256: {5}</value>
   <data name="Account_SavedDraftChanged" xml:space="preserve">
     <value>Das Konto wurde gespeichert. Der jetzt angezeigte Text enthält jedoch nicht gespeicherte Änderungen. Prüfen Sie diese vor dem Schließen.</value>
   </data>
+  <data name="Goal_SavedDraftChanged" xml:space="preserve">
+    <value>Das Ziel wurde gespeichert. Neuere Änderungen bleiben auf dieser Seite ungespeichert. Schließen Sie die Seite nur, wenn Sie diese Änderungen verwerfen möchten.</value>
+  </data>
 </root>

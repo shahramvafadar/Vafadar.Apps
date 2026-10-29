@@ -8588,4 +8588,7 @@
   <data name="Account_SavedDraftChanged" xml:space="preserve">
     <value>حساب ذخیره شد، اما متن فعلی شامل تغییراتی است که ذخیره نشده‌اند. پیش از بستن، آن‌ها را بررسی کنید.</value>
   </data>
+  <data name="Goal_SavedDraftChanged" xml:space="preserve">
+    <value>هدف ذخیره شد. تغییرهای تازه‌تر در این صفحه مانده‌اند و ذخیره نشده‌اند. فقط اگر می‌خواهید آن‌ها را کنار بگذارید، صفحه را ببندید.</value>
+  </data>
 </root>

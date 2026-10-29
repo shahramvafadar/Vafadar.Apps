@@ -201,12 +201,20 @@ public sealed partial class GoalStore(IDbContextFactory<ZananceDbContext> contex
     }
 
     /// <summary>Saves the complete goal editor draft and its contribution plan atomically; null removes the plan.</summary>
-    public async Task SaveGoalWithContributionPlanAsync(Goal goal, ContributionPlan? plan, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null, Func<bool>? inputCurrent = null, Action? accepted = null)
+    public async Task SaveGoalWithContributionPlanAsync(Goal goal, ContributionPlan? plan, CancellationToken cancellationToken = default, GoalWorkSnapshot? review = null, Func<bool>? inputCurrent = null, Action? accepted = null, GoalEditorSnapshot? originalSource = null)
     {
         ArgumentNullException.ThrowIfNull(goal);
         DemandOriginalInput();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        if (originalSource is not null)
+        {
+            // D-640: complete-source validation stays on a worker inside this original writer transaction.
+            if (originalSource.RequestedId is { } requested && requested != goal.Id)
+                throw new InvalidOperationException("The original goal editor identity changed.");
+            await Task.Run(() => ValidateOriginalEditorAsync(originalSource, db, cancellationToken), cancellationToken);
+            DemandOriginalInput();
+        }
         if (review is not null) await ValidateWorkSnapshotAsync(review, db, cancellationToken);
         var existing = await db.ContributionPlans.FirstOrDefaultAsync(p => p.GoalId == goal.Id, cancellationToken);
         var original = write.Enforced ? await db.Goals.AsNoTracking().FirstOrDefaultAsync(g => g.Id == goal.Id, cancellationToken) : null;

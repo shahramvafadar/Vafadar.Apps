@@ -6,6 +6,7 @@ using Vafadar.Zanance.App.Features.Categories;
 using Vafadar.Zanance.App.Features.Commerce;
 using Vafadar.Zanance.App.Features.DataFiles;
 using Vafadar.Zanance.App.Features.Entries;
+using Vafadar.Zanance.App.Features.Goals;
 using Vafadar.Zanance.App.Features.Plans;
 using Vafadar.Zanance.App.Features.Rates;
 using Vafadar.Zanance.App.Features.Settings;
@@ -28,9 +29,12 @@ public partial class AppShell : Shell
     private readonly HashSet<CategoryEditorPage> _publishedCategoryEditors = [];
     private readonly HashSet<CategoriesPage> _publishedCategoryCenters = [];
     private readonly List<WeakReference<AccountEditorPage>> _publishedAccountEditors = [];
+    private readonly List<WeakReference<GoalEditorPage>> _publishedGoalEditors = [];
     private bool _navigationRetired;
     /// <summary>Gets whether this actual native root can still own an original account editor or accepted return.</summary>
     internal bool OwnsAccountEditorPublication => !_navigationRetired;
+    /// <summary>Gets whether this actual root still owns an original goal editor.</summary>
+    internal bool OwnsGoalEditorPublication => !_navigationRetired;
 
     /// <summary>Records actual published Home instances; lazy ShellContent.Content may not expose its cached page.</summary>
     internal void RegisterHomePublication(Features.Home.HomePage home)
@@ -122,6 +126,15 @@ public partial class AppShell : Shell
         _publishedAccountEditors.RemoveAll(reference => !reference.TryGetTarget(out _));
         if (!_publishedAccountEditors.Any(reference => reference.TryGetTarget(out var existing) && ReferenceEquals(existing, page)))
             _publishedAccountEditors.Add(new(page));
+    }
+
+    /// <summary>Tracks weak original goal modal owners so completed forms are not retained by the root.</summary>
+    internal void RegisterGoalEditor(GoalEditorPage page)
+    {
+        if (_navigationRetired) { page.RetireShellPublication(); return; }
+        _publishedGoalEditors.RemoveAll(reference => !reference.TryGetTarget(out _));
+        if (!_publishedGoalEditors.Any(reference => reference.TryGetTarget(out var existing) && ReferenceEquals(existing, page)))
+            _publishedGoalEditors.Add(new(page));
     }
 
     /// <summary>Route of the account editor (query: <c>id</c> for an existing account).</summary>
@@ -400,6 +413,9 @@ public partial class AppShell : Shell
         {
             if (CurrentPage is CategoriesPage categories) categories.RetirePublication();
             if (CurrentPage is AccountEditorPage accountEditor) accountEditor.RetirePublication();
+            if (CurrentPage is GoalEditorPage goalEditor) goalEditor.RetirePublication();
+            if (Navigation.ModalStack.LastOrDefault() is GoalEditorPage modalGoal) modalGoal.RetirePublication();
+            if (Navigation.ModalStack.LastOrDefault() is NavigationPage goalNavigation && goalNavigation.CurrentPage is GoalEditorPage wrappedGoal) wrappedGoal.RetirePublication();
             if (Navigation.ModalStack.LastOrDefault() is AccountEditorPage modalAccount) modalAccount.RetirePublication();
             if (Navigation.ModalStack.LastOrDefault() is NavigationPage accountNavigation && accountNavigation.CurrentPage is AccountEditorPage wrappedAccount) wrappedAccount.RetirePublication();
             if (CurrentPage is CategoryEditorPage categoryEditor) categoryEditor.RetirePublication();
@@ -452,6 +468,9 @@ public partial class AppShell : Shell
         foreach (var reference in _publishedAccountEditors)
             if (reference.TryGetTarget(out var editor)) editor.RetireShellPublication();
         _publishedAccountEditors.Clear();
+        foreach (var reference in _publishedGoalEditors)
+            if (reference.TryGetTarget(out var editor)) editor.RetireShellPublication();
+        _publishedGoalEditors.Clear();
         Navigated -= OnRetainedDetailsTabActivated;
 #if ANDROID
         if (Handler is AccessibleShellRenderer renderer) renderer.RetireNavigation();

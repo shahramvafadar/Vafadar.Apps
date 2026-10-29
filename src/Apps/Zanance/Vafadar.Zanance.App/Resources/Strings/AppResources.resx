@@ -8622,4 +8622,7 @@ Original XML SHA-256: {5}</value>
   <data name="Account_SavedDraftChanged" xml:space="preserve">
     <value>The account was saved, but the text now shown includes changes that were not saved. Review them before closing.</value>
   </data>
+  <data name="Goal_SavedDraftChanged" xml:space="preserve">
+    <value>The goal was saved. Newer edits remain on this page and were not saved. Close this page only if you want to discard those edits.</value>
+  </data>
 </root>
