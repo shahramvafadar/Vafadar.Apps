@@ -7353,3 +7353,24 @@ trigger/import failures remain explicit. New source/plan/settings/OS return exac
 2588206899logicalbytes; two separate supplemental refusals leave698380075logicalbytes
 with no retry/subset/alternate/move/escalation. Goal remains active; protected D-607
 and physical/external/general release gates remain open.
+
+### D-633 - Complete original Plans center
+
+The original mixed-file review-count failure is corrected by one actual-file deferred
+worker snapshot, complete original work/reference/revision guards and original native
+permission continuations. Stage whole original results under cover; retire actual page/
+tab/root/display/segment and original row/Add/review commands. Appearance/navigation
+share one presence, so a second automatic read cannot erase failure before explicit Retry.
+Ten new distinct focused cases, corrected strict Windows/full offline signed Android
+builds and original native source/command/routes pass. All54changed ready/loading/error/
+Retry states at360/412/680dp, en/fa/de and both themes pass with actual native text/
+window checks. Exact complete original source/settings/OS restoration, one remaining
+Due route without payment and actual explicit native notification refusal pass; no old
+financial preparation or accepted command is replayed. Only the fresh UID/AVD and139
+hash-matched XMLs retire. Four standard cleans remove1946610288logicalbytes; supplemental
+six-root deletion is rejected before process creation with3710files/573530995logicalbytes
+remaining and no retry/subset/alternate/move/escalation/reuse. See
+[full evidence and preserved failures](../../quality/complete-original-plans-center.md).
+D-607/phone/three original deadlines/incomplete batch stay untouched. Physical adoption,
+whole database/key/security/stability/two-second/accessibility/iOS/provider/Store/
+publication remain separate; overall goal active, TalkBack last.

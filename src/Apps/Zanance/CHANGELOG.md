@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-633: load plan rows and the review badge together; cover read failures with explicit Retry and prevent retired page commands from opening another source.
+
 - D-632: keep complete plan details and lifecycle confirmations tied to the original file and page; retain resume drafts and known saved results without repeating accepted changes.
 
 - D-631: keep outstanding reimbursement amounts, currencies and rows tied to one current original file; cover failures with Retry and refuse retired row commands.

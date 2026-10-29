@@ -11394,3 +11394,20 @@ Additional fresh UID/AVD and179XMLs retire; total five standard cleans remove
 2588206899logicalbytes. Two supplemental refusals leave698380075logicalbytes with no
 retry/subset/alternate/move/escalation. See the full D-632 quality record; D-607/phone,
 physical adoption and broad release gates remain separate.
+
+## D-633 - Original Plans center snapshot and command ownership (2026-10-29)
+
+The original four independent reads can combine one file's plans and references with
+another file's review count. Keep the original complete work, references, ledger revision
+and aggregate count in one actual-file deferred worker transaction; bind initial failure
+Retry to that file. Stage original calculations privately, retain native permission queries,
+validate after their continuation and publish whole rows/flags under cover. Original row,
+Add and review routes require current source and row-object authority. Actual page/tab/root/
+display/segment retirement refuses old continuations. Share appearance/navigation for one
+presence so an automatic second load cannot erase a local failure before explicit Retry.
+Ten new distinct focused data cases and corrected strict Windows/offline signed Android
+builds pass. Original native source/retirement/permission-read/routes,54changed-layout states,
+exact source/settings/OS restoration and fresh retirement pass, as recorded in
+[the full quality record](quality/complete-original-plans-center.md). No old financial
+command replay, phone command, new permission, schema migration or formula change.
+D-607's three original deadlines and all broad release gates remain separate.

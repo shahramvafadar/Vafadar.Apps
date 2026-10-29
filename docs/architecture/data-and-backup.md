@@ -2796,3 +2796,15 @@ source revision/count and original writer checks remain independent. Do not repa
 schema in getters, catch arbitrary SQLite errors or normalize original data. Genuine
 IO/cancellation still aborts the original operation. See the bounded
 [regression and native evidence](../../src/Apps/Zanance/docs/quality/unsupported-derived-ledger-schema.md).
+
+### D-633 - Original Plans center read authority
+
+The center reads complete original plan work, ordered account/category references,
+aggregate review count and existing ledger revision from one original configured file
+and deferred worker SQLite transaction. It does not materialize financial history to
+count unreviewed rows. Fresh complete work/revision/metadata/access validation follows
+the actual platform permission query and precedes covered publication or original
+row/Add/review navigation. First-file Retry binding survives an initial read failure;
+page/tab/root/display/segment retirement invalidates old authority. No schema migration,
+formula, storage format, permission or credential change is introduced. See
+[actual focused/native evidence](../../src/Apps/Zanance/docs/quality/complete-original-plans-center.md).

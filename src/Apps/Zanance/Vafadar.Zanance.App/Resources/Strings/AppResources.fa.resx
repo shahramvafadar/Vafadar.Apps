@@ -8531,4 +8531,13 @@
   <data name="Plan_DetailRetryLoad" xml:space="preserve">
     <value>بارگذاری دوبارهٔ پلن</value>
   </data>
+  <data name="Plans_Loading" xml:space="preserve">
+    <value>در حال بارگذاری پلن‌ها…</value>
+  </data>
+  <data name="Plans_ReadFailed" xml:space="preserve">
+    <value>خواندن پلن‌ها ممکن نشد. برای بارگذاری جزئیات فعلی، دوباره تلاش کنید.</value>
+  </data>
+  <data name="Plans_RetryLoad" xml:space="preserve">
+    <value>بارگذاری دوبارهٔ پلن‌ها</value>
+  </data>
 </root>

@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
@@ -66,23 +65,35 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
 {
     private const int UpcomingDays = 60;
 
-    private readonly ZananceStore _store;
     private readonly PlanStore _plans;
     private readonly Translator _translator;
     private readonly ILocalizationService _localization;
     private readonly IDateFormatter _dates;
     private readonly TimeProvider _time;
     private readonly ReminderService _reminders;
-    private List<Schedule> _schedules = [];
-    private List<OccurrenceState> _states = [];
-    private Core.Commerce.PlanWorkPolicy _work = Core.Commerce.PlanWorkPolicy.Inactive;
-    private Dictionary<Guid, Account> _accounts = [];
-    private CategoryLookup? _categories;
+    private PlanCenterReadSnapshot? _published;
+    private PlanRow[] _publishedRows = [];
+    private string? _originalFile;
+    private bool _active = true;
+    private long _revision;
+    private CancellationTokenSource _lifetime = new();
+    private TaskCompletionSource? _permissionIdle;
+
+    /// <summary>Gets the original complete loading/error/Retry owner.</summary>
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(CanInteract))]
+    public partial SnapshotLoadState Loading { get; private set; } = new();
+    /// <summary>Gets translated original-source feedback without following a different file.</summary>
+    [ObservableProperty] public partial string? Feedback { get; private set; }
+    /// <summary>Gets whether the original explicit native notification interaction is pending.</summary>
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(CanInteract))]
+    public partial bool IsPermissionBusy { get; private set; }
+    /// <summary>Gets whether this current complete original publication admits native commands.</summary>
+    public bool CanInteract => _active && Loading.IsReady && !IsPermissionBusy;
 
     public PlansViewModel(ZananceStore store, PlanStore plans, Translator translator, ILocalizationService localization, IDateFormatter dates, TimeProvider time, ReminderService reminders)
     {
         _reminders = reminders;
-        _store = store;
+        ArgumentNullException.ThrowIfNull(store);
         _plans = plans;
         _translator = translator;
         _localization = localization;
@@ -117,84 +128,98 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
 
     private DateOnly Today => DateOnly.FromDateTime(_time.GetLocalNow().DateTime);
 
-    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
-    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
+    /// <summary>Retires original source, rows and pending platform continuations on actual page/tab/root departure.</summary>
+    public void SetActive(bool active)
+    {
+        if (_active != active) { _active = active; if (!active) RetireRead(); }
+        _localization.Changed -= OnDisplayChanged;
+        if (active) _localization.Changed += OnDisplayChanged;
+    }
+    private string DisplayIdentity() => $"{_localization.CurrentLanguage.CultureName}|{_localization.CurrentCulture.Name}|{_localization.CurrentCalendar}|{_localization.CurrentDigits}|{_localization.FormattingCultureName}";
+    private void OnDisplayChanged(object? sender, EventArgs args) { RetireRead(); if (_active) _ = LoadAsync(); }
+    async Task IThemeAware.RefreshThemeAsync() { RetireRead(); await LoadAsync(); }
+    private void RetireRead()
+    {
+        _revision++; _published = null; _publishedRows = [];
+        var retired = _lifetime; _lifetime = new(); Loading = new(); retired.Cancel(); retired.Dispose();
+    }
+    partial void OnSegmentIndexChanged(int value) { RetireRead(); if (_active) _ = LoadAsync(); }
 
+    private sealed record PreparedRow(Schedule Schedule, Occurrence? Occurrence = null, Occurrence? Next = null);
+    private sealed record PreparedCenter(PreparedRow[] Rows, string EmptyKey, bool HasNoPlans, bool WantsReminders);
+    private sealed record RenderContext(PlanCenterReadSnapshot Source, Dictionary<Guid, Account> Accounts, CategoryLookup Categories);
+
+    /// <summary>Reads/calculates privately and validates the complete original source after the native permission query.</summary>
     public async Task LoadAsync()
     {
-        var snapshot = await _plans.GetWorkSnapshotAsync();
-        _schedules = snapshot.Schedules;
-        _states = snapshot.States;
-        _work = snapshot.Work;
-        _accounts = (await _store.GetAccountsAsync()).ToDictionary(a => a.Id);
-        _categories = new CategoryLookup(await _store.GetCategoriesAsync(), _translator);
-        UnreviewedCount = await _store.CountUnreviewedAsync();
-        HasNoPlans = _schedules.Count == 0;
-
-        // Reminders were chosen but notifications are not allowed: say so, the plans themselves keep working (AT-34).
-        RemindersOff = _reminders.Scheduler.IsSupported
-            && _schedules.Any(s => s.ReminderEnabled && s.State == ScheduleState.Active)
-            && !await _reminders.Scheduler.AreEnabledAsync();
-        Refresh();
+        if (_permissionIdle is { } permission) await permission.Task;
+        if (!_active) return;
+        var owner = Loading; var revision = _revision; var segment = SegmentIndex; var day = Today;
+        var display = DisplayIdentity(); var token = _lifetime.Token;
+        bool Current() => _active && revision == _revision && segment == SegmentIndex && day == Today
+            && display == DisplayIdentity() && ReferenceEquals(owner, Loading);
+        void RequireCurrent() { token.ThrowIfCancellationRequested(); if (!Current()) throw new OperationCanceledException("The original plan-center publication retired.", token); }
+        PlanCenterReadSnapshot? source = null; PreparedCenter? prepared = null; PlanRow[] rows = []; var remindersOff = false;
+        try
+        {
+            var pending = owner.RunAsync(async () =>
+            {
+                RequireCurrent(); _published = null;
+                source = await _plans.ReadCenterSnapshotAsync(day, path =>
+                { RequireCurrent(); _originalFile ??= path; return _originalFile == path; }, token);
+                RequireCurrent(); prepared = await Task.Run(() => Prepare(source, segment, day), token); RequireCurrent();
+                // Keep the actual platform query, but its late result cannot publish another page/profile's flags.
+                remindersOff = _reminders.Scheduler.IsSupported && prepared.WantsReminders
+                    && !await _reminders.Scheduler.AreEnabledAsync();
+                RequireCurrent();
+                var context = new RenderContext(source, source.Accounts.ToDictionary(a => a.Id), new(source.Categories, _translator));
+                var text = new PlanText(_translator, _dates, _localization);
+                rows = prepared.Rows.Select(row => row.Occurrence is { } occurrence
+                    ? OccurrenceRow(occurrence, text, day, context) : ScheduleRow(row.Schedule, text, day, context, row.Next)).ToArray();
+                await _plans.ValidateCenterSnapshotAsync(source, token); RequireCurrent(); source.EnsureCurrent();
+            }, () =>
+            {
+                var result = prepared ?? throw new InvalidOperationException("The original plan center was not prepared.");
+                void Publish(Action action) { RequireCurrent(); source!.EnsureCurrent(); action(); RequireCurrent(); source.EnsureCurrent(); }
+                Publish(() => Rows = rows);
+                if (!ReferenceEquals(Rows, rows)) throw new InvalidOperationException("The original published plan rows changed during presentation.");
+                Publish(() => UnreviewedCount = source!.UnreviewedCount); Publish(() => HasNoPlans = result.HasNoPlans);
+                Publish(() => RemindersOff = remindersOff); Publish(() => EmptyText = _translator[result.EmptyKey]);
+                Publish(() => IsEmpty = rows.Length == 0); Publish(() => Feedback = null);
+                _publishedRows = rows; _published = source;
+            });
+            OnPropertyChanged(nameof(CanInteract)); await pending;
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { if (Current()) Feedback = CommercialFailureMessage.OrFallback(exception, _translator, "Plans_ReadFailed"); }
+        finally { OnPropertyChanged(nameof(CanInteract)); }
     }
-
-    partial void OnSegmentIndexChanged(int value) => Refresh();
-
-    private void Refresh()
+    private static PreparedCenter Prepare(PlanCenterReadSnapshot source, int segment, DateOnly today)
     {
-        if (_categories is null)
-        {
-            return;
-        }
-
-        var text = new PlanText(_translator, _dates, _localization);
-        var today = Today;
-        var rows = new List<PlanRow>();
-
-        switch (SegmentIndex)
-        {
-            case 0:
-                foreach (var occurrence in PlanActions.InForce(_schedules)
-                             .SelectMany(s => Occurrences.OpenUpTo(s, _states, today, s.ActiveFrom ?? s.Rule.Start))
-                             .Where(o => _work.AllowsOccurrence(o, today))
-                             .OrderBy(o => o.DueDate))
-                {
-                    rows.Add(OccurrenceRow(occurrence, text, today));
-                }
-
-                EmptyText = _translator[HasNoPlans ? "Plans_Empty" : "Plans_NothingDue"];
-                break;
-
-            case 1:
-                foreach (var occurrence in PlanActions.InForce(_schedules)
-                             .SelectMany(s => Occurrences.Between(s, _states, today.AddDays(1), today.AddDays(UpcomingDays), today))
-                             .Where(o => o.IsOpen && _work.AllowsOccurrence(o, today))
-                             .OrderBy(o => o.DueDate))
-                {
-                    rows.Add(OccurrenceRow(occurrence, text, today));
-                }
-
-                EmptyText = _translator[HasNoPlans ? "Plans_Empty" : "Plans_NothingUpcoming"];
-                break;
-
-            default:
-                foreach (var schedule in _schedules.Where(s => !_schedules.Any(n => n.PreviousScheduleId == s.Id)))
-                {
-                    rows.Add(ScheduleRow(schedule, text, today));
-                }
-
-                EmptyText = _translator["Plans_Empty"];
-                break;
-        }
-
-        Rows = rows;
-        IsEmpty = rows.Count == 0;
+        var schedules = source.Work.Schedules; var states = source.Work.States; var work = source.Work.Work;
+        IEnumerable<PreparedRow> rows; var none = schedules.Count == 0;
+        if (segment == 0)
+            rows = PlanActions.InForce(schedules).SelectMany(s => Occurrences.OpenUpTo(s, states, today, s.ActiveFrom ?? s.Rule.Start))
+                .Where(o => work.AllowsOccurrence(o, today)).OrderBy(o => o.DueDate).Select(o => new PreparedRow(o.Schedule, o));
+        else if (segment == 1)
+            rows = PlanActions.InForce(schedules).SelectMany(s => Occurrences.Between(s, states, today.AddDays(1), today.AddDays(UpcomingDays), today))
+                .Where(o => o.IsOpen && work.AllowsOccurrence(o, today)).OrderBy(o => o.DueDate).Select(o => new PreparedRow(o.Schedule, o));
+        else
+            rows = schedules.Where(s => !schedules.Any(n => n.PreviousScheduleId == s.Id)).Select(schedule =>
+            {
+                var next = schedule.State == ScheduleState.Active ? Occurrences.NextOpen(schedule, states, today, today) : null;
+                if (next is not null && !work.AllowsOccurrence(next, today)) next = null;
+                return new PreparedRow(schedule, Next: next);
+            });
+        return new(rows.ToArray(), segment == 0 ? none ? "Plans_Empty" : "Plans_NothingDue"
+            : segment == 1 ? none ? "Plans_Empty" : "Plans_NothingUpcoming" : "Plans_Empty", none,
+            schedules.Any(s => s.ReminderEnabled && s.State == ScheduleState.Active));
     }
 
-    private PlanRow OccurrenceRow(Occurrence occurrence, PlanText text, DateOnly today)
+    private PlanRow OccurrenceRow(Occurrence occurrence, PlanText text, DateOnly today, RenderContext context)
     {
         var schedule = occurrence.Schedule;
-        var (icon, color) = Look(schedule);
+        var (icon, color) = Look(schedule, context);
         var overdue = occurrence.Status == OccurrenceView.Overdue;
         var (badge, look) = occurrence.Status switch
         {
@@ -204,13 +229,13 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
         };
 
         // The tile shows the date, so the second line names the weekday and the account.
-        var subtitle = text.Weekday(occurrence.DueDate) + " · " + (_accounts.TryGetValue(schedule.AccountId, out var account) ? account.Name : string.Empty);
+        var subtitle = text.Weekday(occurrence.DueDate) + " · " + (context.Accounts.TryGetValue(schedule.AccountId, out var account) ? account.Name : string.Empty);
         return new PlanRow(
             schedule.Id,
             occurrence.OriginalDate,
             schedule.Name,
             subtitle,
-            text.Amount(occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount, occurrence.AmountMode, CurrencyOf(schedule.AccountId)),
+            text.Amount(occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount, occurrence.AmountMode, CurrencyOf(schedule.AccountId, context)),
             AmountColor(schedule.Kind),
             icon,
             color,
@@ -221,11 +246,9 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
             .WithDate(text, occurrence.DueDate, overdue, schedule.Kind);
     }
 
-    private PlanRow ScheduleRow(Schedule schedule, PlanText text, DateOnly today)
+    private PlanRow ScheduleRow(Schedule schedule, PlanText text, DateOnly today, RenderContext context, Occurrence? next)
     {
-        var (icon, color) = Look(schedule);
-        var next = schedule.State == ScheduleState.Active ? Occurrences.NextOpen(schedule, _states, today, today) : null;
-        if (next is not null && !_work.AllowsOccurrence(next, today)) next = null;
+        var (icon, color) = Look(schedule, context);
         var subtitle = text.Rule(schedule.Rule);
         if (next is not null)
         {
@@ -244,7 +267,7 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
             null,
             schedule.Name,
             subtitle,
-            text.Amount(schedule.Amount, schedule.AmountMode, CurrencyOf(schedule.AccountId)),
+            text.Amount(schedule.Amount, schedule.AmountMode, CurrencyOf(schedule.AccountId, context)),
             AmountColor(schedule.Kind),
             icon,
             color,
@@ -254,9 +277,9 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
             look.Background) { BadgeStroke = look.Line, TileStroke = color.WithAlpha(0.3f) };
     }
 
-    private (Symbol Icon, Color Color) Look(Schedule schedule) => schedule.Kind == EntryKind.Transfer
+    private static (Symbol Icon, Color Color) Look(Schedule schedule, RenderContext context) => schedule.Kind == EntryKind.Transfer
         ? (Symbol.ArrowSwap, EntryPresenter.NeutralColor)
-        : (Icons.Parse(schedule.Icon, _categories!.Icon(schedule.CategoryId)), _categories.Color(schedule.CategoryId));
+        : (Icons.Parse(schedule.Icon, context.Categories.Icon(schedule.CategoryId)), context.Categories.Color(schedule.CategoryId));
 
     private static Color AmountColor(EntryKind kind) => kind switch
     {
@@ -265,27 +288,88 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
         _ => EntryPresenter.NeutralColor,
     };
 
-    private string CurrencyOf(Guid accountId) => _accounts.TryGetValue(accountId, out var account) ? account.CurrencyCode : "EUR";
+    private static string CurrencyOf(Guid accountId, RenderContext context) => context.Accounts.TryGetValue(accountId, out var account) ? account.CurrencyCode : "EUR";
+
+    private bool Owns(PlanCenterReadSnapshot? source, SnapshotLoadState owner, long revision, int segment, DateOnly day,
+        string display, bool requireIdle = true) => _active && source is not null && ReferenceEquals(source, _published)
+        && ReferenceEquals(owner, Loading) && Loading.IsReady && revision == _revision && segment == SegmentIndex
+        && day == Today && display == DisplayIdentity() && (!requireIdle || !IsPermissionBusy);
+
+    private async Task FailCurrentAsync(Exception exception, SnapshotLoadState owner)
+    {
+        if (!_active || !ReferenceEquals(owner, Loading)) return;
+        _published = null; _publishedRows = []; Feedback = CommercialFailureMessage.OrFallback(exception, _translator, "Plans_ReadFailed");
+        try { await owner.RunAsync(() => Task.FromException(exception), () => { }); }
+        catch (Exception failure) when (failure is not OutOfMemoryException) { }
+        finally { OnPropertyChanged(nameof(CanInteract)); }
+    }
 
     [RelayCommand]
-    private Task OpenAsync(PlanRow row) => row.OriginalDate is { } date
-        ? Shell.Current.GoToAsync(AppShell.OccurrenceRoute, new Dictionary<string, object> { ["plan"] = row.ScheduleId, ["date"] = date })
-        : Shell.Current.GoToAsync(AppShell.PlanDetailRoute, new Dictionary<string, object> { ["id"] = row.ScheduleId });
+    private async Task OpenAsync(PlanRow row)
+    {
+        var source = _published; var owner = Loading; var revision = _revision; var segment = SegmentIndex;
+        var day = Today; var display = DisplayIdentity(); var token = _lifetime.Token;
+        bool Current() => Owns(source, owner, revision, segment, day, display)
+            && ReferenceEquals(Rows, _publishedRows) && _publishedRows.Any(item => ReferenceEquals(item, row));
+        if (!Current()) return;
+        try
+        {
+            await _plans.ValidateCenterSnapshotAsync(source!, token); if (!Current()) return; source!.EnsureCurrent();
+            if (row.OriginalDate is { } date)
+                await Shell.Current.GoToAsync(AppShell.OccurrenceRoute, new Dictionary<string, object> { ["plan"] = row.ScheduleId, ["date"] = date });
+            else await Shell.Current.GoToAsync(AppShell.PlanDetailRoute, new Dictionary<string, object> { ["id"] = row.ScheduleId });
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { if (Current()) await FailCurrentAsync(exception, owner); }
+    }
 
     [RelayCommand]
     private async Task AddAsync()
     {
-        var hasAccounts = (await _store.GetAccountsAsync(includeArchived: false)).Count > 0;
-        await Shell.Current.GoToAsync(hasAccounts ? AppShell.PlanEditorRoute : AppShell.AccountEditorRoute);
+        var source = _published; var owner = Loading; var revision = _revision; var segment = SegmentIndex; var day = Today; var display = DisplayIdentity();
+        bool Current() => Owns(source, owner, revision, segment, day, display);
+        if (!Current()) return;
+        try
+        {
+            await _plans.ValidateCenterSnapshotAsync(source!, _lifetime.Token); if (!Current()) return; source!.EnsureCurrent();
+            await Shell.Current.GoToAsync(source.Accounts.Any(a => !a.IsArchived) ? AppShell.PlanEditorRoute : AppShell.AccountEditorRoute);
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { if (Current()) await FailCurrentAsync(exception, owner); }
     }
 
     [RelayCommand]
     private async Task EnableRemindersAsync()
     {
-        // The system asks while it still can; otherwise its notification settings open (D-38).
-        RemindersOff = !await Presentation.PermissionPrompts.EnableNotificationsAsync(_reminders, _translator);
+        var source = _published; var owner = Loading; var revision = _revision; var segment = SegmentIndex; var day = Today; var display = DisplayIdentity();
+        bool Current() => Owns(source, owner, revision, segment, day, display, requireIdle: false);
+        if (!Current() || IsPermissionBusy || !RemindersOff) return;
+        var idle = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously); _permissionIdle = idle;
+        try
+        {
+            IsPermissionBusy = true; await _plans.ValidateCenterSnapshotAsync(source!, _lifetime.Token); if (!Current()) return;
+            // Keep the original explicit native permission/settings flow. Only its original current page may use its result.
+            var enabled = await PermissionPrompts.EnableNotificationsAsync(_reminders, _translator); if (!Current()) return;
+            await _plans.ValidateCenterSnapshotAsync(source!, _lifetime.Token); if (!Current()) return; source!.EnsureCurrent();
+            RemindersOff = !enabled;
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { if (Current()) await FailCurrentAsync(exception, owner); }
+        finally
+        {
+            try { IsPermissionBusy = false; }
+            finally { if (ReferenceEquals(_permissionIdle, idle)) _permissionIdle = null; idle.TrySetResult(); }
+        }
     }
 
     [RelayCommand]
-    private Task ReviewEntriesAsync() => Shell.Current.GoToAsync("//transactions", new Dictionary<string, object> { ["unreviewed"] = true });
+    private async Task ReviewEntriesAsync()
+    {
+        var source = _published; var owner = Loading; var revision = _revision; var segment = SegmentIndex; var day = Today; var display = DisplayIdentity();
+        bool Current() => Owns(source, owner, revision, segment, day, display);
+        if (!Current()) return;
+        try
+        {
+            await _plans.ValidateCenterSnapshotAsync(source!, _lifetime.Token); if (!Current()) return; source!.EnsureCurrent();
+            await Shell.Current.GoToAsync("//transactions", new Dictionary<string, object> { ["unreviewed"] = true });
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { if (Current()) await FailCurrentAsync(exception, owner); }
+    }
 }

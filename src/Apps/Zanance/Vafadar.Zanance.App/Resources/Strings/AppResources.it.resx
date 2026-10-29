@@ -8520,4 +8520,13 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Plan_DetailRetryLoad" xml:space="preserve">
     <value>Ricarica il piano</value>
   </data>
+  <data name="Plans_Loading" xml:space="preserve">
+    <value>Caricamento dei piani…</value>
+  </data>
+  <data name="Plans_ReadFailed" xml:space="preserve">
+    <value>Impossibile leggere i tuoi piani. Riprova per caricare i dettagli attuali.</value>
+  </data>
+  <data name="Plans_RetryLoad" xml:space="preserve">
+    <value>Ricarica i piani</value>
+  </data>
 </root>

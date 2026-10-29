@@ -50,3 +50,7 @@ This separates local prerequisites/manual sharing from unconfigured live models,
 
 Incremental Android manifest variants and retained binding/GC investigation:
 [packaged on/off correction and scoped Samsung continuation](quality/android-manifest-overlay-incremental.md) (D-359).
+
+Original Plans center source, publication and native command ownership (D-633):
+[focused data/native evidence and exact qualification limits](quality/complete-original-plans-center.md).
+Protected D-607 and broader release/platform acceptance remain separate.

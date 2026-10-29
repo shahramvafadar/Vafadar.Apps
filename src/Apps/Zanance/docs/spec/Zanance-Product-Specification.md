@@ -10664,3 +10664,15 @@ Additional fresh UID/AVD and179XMLs retire; total five standard cleans remove
 2588206899logicalbytes. Two supplemental refusals leave698380075logicalbytes with no
 retry/subset/alternate/move/escalation. See the full D-632 quality record; D-607/phone,
 physical adoption and broad release gates remain separate.
+
+### D-633 - Original Plans center source and local Retry
+
+One original file/worker transaction now supplies original work, account/category facts,
+review aggregate and ledger revision. Original calculations/order/sixty-day horizon remain;
+complete validation follows native permission reads and precedes covered publication or
+original navigation. Retired rows/owners cannot navigate. Appearance/navigation share one
+presence, preserving actual local failure until explicit Retry. Ten distinct new focused
+cases and corrected strict packages pass. Native54changed-layout states, exact restoration and fresh retirement pass. Broader
+acceptance remains separately tracked in
+[the quality record](../quality/complete-original-plans-center.md); no full-suite count,
+physical adoption or general release acceptance is inferred. D-607 remains untouched.

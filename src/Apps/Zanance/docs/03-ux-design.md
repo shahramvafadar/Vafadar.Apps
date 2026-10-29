@@ -2903,3 +2903,12 @@ Additional fresh UID/AVD and179XMLs retire; total five standard cleans remove
 2588206899logicalbytes. Two supplemental refusals leave698380075logicalbytes with no
 retry/subset/alternate/move/escalation. See the full D-632 quality record; D-607/phone,
 physical adoption and broad release gates remain separate.
+
+## D-633 - Covered original Plans center
+
+Keep the original title/right Add, native permission warning, review badge, three segments
+and original row routes. Render only a complete current original source, with plan-specific
+six-language loading/error/Retry text and disabled title action until Ready. On the same
+page presence, appearance and Shell navigation share their publication; a failed read
+waits for explicit Retry. Retire original row commands on actual tab/root/page/display/
+segment departure. See [native evidence and limits](quality/complete-original-plans-center.md).

@@ -5400,3 +5400,15 @@ and one exact-head CI. Loyan phone turn, D-607 and the full active goal stay sep
 
 All48 actual native drafts, image/native provenance, manual review, original-UI preservation, restoration and fresh retirement form one batch. Do not rerun successful builds/tests or old financial fixtures for documentation/assets. One image-only replacement and the actual ANR/recovery remain honest. No physical or D-607 command occurs; the latest explicit owner phone reservation is recorded. Final Store composition/edition/accounts/publication and all broader gates remain separate.
 [Evidence and exact limits](../../quality/android-store-drafts.md).
+
+### D-633 - Finish the complete original Plans center batch
+
+Use one original actual-file worker snapshot for work/references/review count and original
+permission continuations, current original routes and complete covered publication. Native
+duplicate appearance/navigation erased a failure; share each actual presence's task and
+retain explicit Retry. Do not repeat the ten passed data cases, unchanged strict builds,
+old native routes or financial setup. All54changed layout states, exact source/settings/OS restoration and fresh retirement
+pass. Four standard cleans remove1946610288logicalbytes; retain the supplemental
+six-root refusal without retry or reuse. Deliver the verified whole batch with one
+owner commit/push and one exact-head CI after sixteen minutes. [Evidence and preserved failures](../../quality/complete-original-plans-center.md).
+Keep D-607/phone/three deadlines and all broad release gates untouched.

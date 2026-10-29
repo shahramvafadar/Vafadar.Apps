@@ -4861,3 +4861,15 @@ Additional fresh UID/AVD and179XMLs retire; total five standard cleans remove
 2588206899logicalbytes. Two supplemental refusals leave698380075logicalbytes with no
 retry/subset/alternate/move/escalation. See the full D-632 quality record; D-607/phone,
 physical adoption and broad release gates remain separate.
+
+## D-633 - Coherent original Plans center
+
+Ten new focused data cases and corrected Windows/full signed offline Android builds pass.
+Actual original source and command/publication lifetime evidence is scoped in
+[the quality record](quality/complete-original-plans-center.md). All54changed layout states,
+exact source/settings/OS restoration and fresh retirement pass. Four standard cleans
+remove1946610288logicalbytes; supplemental six-root removal is refused before process
+creation with573530995logicalbytes remaining, without retry/subset/alternate/move/escalation.
+Do not count static alignment as hardware acceptance or a narrow native result as whole
+database/security/stability/speed/accessibility/iOS/provider/Store/publication acceptance.
+D-607's original three deadlines and the overall active goal remain separate.

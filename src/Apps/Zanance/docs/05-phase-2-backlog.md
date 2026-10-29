@@ -4697,3 +4697,11 @@ and the original native source/cover/error/Retry/tab-return/11-row/last-row/disp
 pass without a ledger post. See [full evidence](quality/complete-original-loan-schedule.md).
 Physical adoption after D-607 and general security/stability/performance/platform/release
 gates remain open; no previously accepted financial operation is replayed.
+
+## D-633 - Original Plans center engineering batch
+
+Keep original plan rows/review badge in one validated file snapshot and retire old native
+commands. Preserve original formulas/routes and actual permission flow; share appearance/
+navigation and retain explicit error/Retry. See
+[full current evidence](quality/complete-original-plans-center.md). This history does not
+replace the canonical commercial backlog or complete its broad parent release gates.

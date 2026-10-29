@@ -7803,3 +7803,15 @@ Additional fresh UID/AVD and179XMLs retire; total five standard cleans remove
 2588206899logicalbytes. Two supplemental refusals leave698380075logicalbytes with no
 retry/subset/alternate/move/escalation. See the full D-632 quality record; D-607/phone,
 physical adoption and broad release gates remain separate.
+
+## D-633 - Original Plans center admission
+
+Ten new selected cases cover the actual original mixed-file review-count boundary,
+source/work/metadata/detached mutation, first-file Retry and original SQLite WAL worker
+transaction. Native evidence covers original source acquisition cancellation, actual
+permission-read retirement, diagnostic retired original commands, valid original row/Add/
+Review routes and corrected failure retention/explicit Retry. No accepted financial setup
+or payment is replayed. All54changed ready/loading/error/Retry states, exact terminal source/settings/OS
+restoration and fresh retirement pass, with their actual scope tracked in
+[the quality record](quality/complete-original-plans-center.md); do not promote unfinished
+or indirect observations to acceptance. Phone/D-607 and broader release gates remain open.

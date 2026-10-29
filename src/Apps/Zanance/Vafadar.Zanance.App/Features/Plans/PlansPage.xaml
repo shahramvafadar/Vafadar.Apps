@@ -12,7 +12,7 @@
     Title="{v:Translate Plans_Title}">
 
     <!-- D-395: match Home's title action and give the list the former bottom action band. -->
-    <Grid RowDefinitions="Auto,Auto,*">
+    <Grid RowDefinitions="Auto,*">
         <Grid x:Name="PlansHeader" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8" Padding="16,8" FlowDirection="LeftToRight">
             <ImageButton x:Name="HeaderBack" IsVisible="False" WidthRequest="44" HeightRequest="44" Padding="11"
                          BackgroundColor="{DynamicResource PrimarySoft}" CornerRadius="22" VerticalOptions="Center"
@@ -21,9 +21,11 @@
                    LineBreakMode="WordWrap" VerticalOptions="Center" />
             <Button x:Name="AddAction" Grid.Column="2" Style="{StaticResource FloatingAddButton}" Text="+"
                     WidthRequest="48" HeightRequest="48" Margin="0" CornerRadius="16" VerticalOptions="Center"
-                    Command="{Binding AddCommand}" SemanticProperties.Description="{v:Translate Plans_Add}" />
+                    Command="{Binding AddCommand}" IsEnabled="{Binding CanInteract}" SemanticProperties.Description="{v:Translate Plans_Add}" />
         </Grid>
-        <VerticalStackLayout Grid.Row="1" Padding="16,8,16,4" Spacing="8">
+        <Grid Grid.Row="1">
+        <Grid RowDefinitions="Auto,*" IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding CanInteract}">
+        <VerticalStackLayout Grid.Row="0" Padding="16,8,16,4" Spacing="8">
             <v:ChoiceChips IsCompact="True" ItemsSource="{Binding SegmentNames}" SelectedIndex="{Binding SegmentIndex}" />
 
             <!-- Notifications not allowed (REM-02, AT-34) -->
@@ -47,7 +49,7 @@
             </Border>
         </VerticalStackLayout>
 
-        <CollectionView x:Name="ContentViewport" Grid.Row="2" ItemsSource="{Binding Rows}" SelectionMode="None">
+        <CollectionView x:Name="ContentViewport" Grid.Row="1" ItemsSource="{Binding Rows}" SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="local:PlanRow">
                     <Grid Padding="16,0,16,8">
@@ -67,7 +69,7 @@
         </CollectionView>
 
         <!-- D-318: keep empty feedback outside the Android adapter swap that can hide the first row. -->
-        <ScrollView x:Name="EmptyViewport" Grid.Row="2" IsVisible="{Binding IsEmpty}">
+        <ScrollView x:Name="EmptyViewport" Grid.Row="1" IsVisible="{Binding IsEmpty}">
             <VerticalStackLayout Padding="32,48" Spacing="16">
                 <fi:SymbolIcon Symbol="CalendarClock" FontSize="44" HorizontalOptions="Center" ForegroundColor="{DynamicResource PlanText}" />
                 <Label Text="{Binding EmptyText}" HorizontalTextAlignment="Center" />
@@ -75,5 +77,15 @@
             </VerticalStackLayout>
         </ScrollView>
 
+        </Grid>
+        <VerticalStackLayout Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
+            <Label Text="{v:Translate Plans_Loading}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+            <Label Text="{Binding Feedback}" HorizontalTextAlignment="Center" />
+            <Button Text="{v:Translate Plans_RetryLoad}" Style="{StaticResource SecondaryButton}" Clicked="OnReloadClicked" />
+        </VerticalStackLayout>
+        </Grid>
     </Grid>
 </ContentPage>
