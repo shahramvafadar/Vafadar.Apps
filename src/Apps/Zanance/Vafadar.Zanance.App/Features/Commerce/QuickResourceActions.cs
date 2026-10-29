@@ -55,6 +55,12 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
         ++_generation; _review = null; RefreshAvailability();
     }
 
+    /// <summary>Covers a complete Transactions refresh without losing an already accepted saved-query result.</summary>
+    public void CoverTransactionCenter() => CoverTemplateCenter();
+
+    /// <summary>Adopts a coherent Transactions resource packet while retaining known acceptance through its reload.</summary>
+    public void PublishTransactionCenter(QuickResourceReview review) => PublishTemplateCenter(review);
+
     /// <summary>Adopts a complete validated list packet while retaining a known accepted deletion through its reload.</summary>
     public void PublishTemplateCenter(QuickResourceReview review)
     {
@@ -157,9 +163,9 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
     }
 
     /// <summary>Captures the entire current query before the menu/name dialogs; retained filter use remains history-only.</summary>
-    public async Task FilterMenuAsync(SavedFilter draft, Func<Task> reload)
+    public async Task FilterMenuAsync(SavedFilter draft, Func<Task> reload, Func<bool>? isCurrent = null)
     {
-        if (IsBusy) return;
+        if (IsBusy || isCurrent?.Invoke() == false) return;
         if (_review is null)
         {
             // A rejected write retires its review. The next explicit menu invocation rereads it without reloading or clearing the query form.
@@ -169,7 +175,7 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
             { Feedback = Presentation.CommercialFailureMessage.OrFallback(exception, translator, "Error_Unexpected"); await interaction.ShowFailureAsync(exception); return; }
             finally { IsBusy = false; }
         }
-        if (!CanInteract || _review is not { } review) return;
+        if (isCurrent?.Invoke() == false || !CanInteract || _review is not { } review) return;
         // This detached fresh definition is owned by the operation. Later typing cannot alter the submitted query.
         var target = new SavedFilter { Name = string.Empty, Period = draft.Period, From = draft.From, To = draft.To,
             Kind = draft.Kind, AccountId = draft.AccountId, CategoryIds = [.. draft.CategoryIds], CategoryName = draft.CategoryName,
@@ -177,6 +183,7 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
         await RunAsync(async () =>
         {
             await ValidateAsync(review);
+            if (isCurrent?.Invoke() == false || !ReferenceEquals(review, _review)) return false;
             var save = translator["Filter_SaveCurrent"]; var remove = translator["Filter_Remove"];
             var actions = new List<string>();
             // A full quota still permits an explicitly confirmed replacement of a retained same-name query.
@@ -184,10 +191,13 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
             if (review.Work.CanDelete && review.Filters.Count > 0) actions.Add(remove);
             if (actions.Count == 0) return false;
             var choice = await interaction.ChooseAsync(translator["Filter_Title"], translator["Common_Cancel"], [.. actions]);
+            if (isCurrent?.Invoke() == false || !ReferenceEquals(review, _review)) return false;
             if (choice == save)
             {
                 var input = await interaction.PromptAsync(save, translator["Filter_NameMessage"],
                     translator["Common_Save"], translator["Common_Cancel"], initialValue: FilterNameDraft, maxLength: SavedFilter.MaxNameLength);
+                // A native response belongs only to the original publication, including its draft.
+                if (isCurrent?.Invoke() == false || !ReferenceEquals(review, _review)) return false;
                 var name = input?.Trim();
                 if (string.IsNullOrEmpty(name)) return false;
                 FilterNameDraft = input;
@@ -196,18 +206,21 @@ public sealed partial class QuickResourceActions(ZananceStore store, Translator 
                 if (review.Filters.Any(f => review.SameName(f.Name, name)) && !await interaction.ConfirmAsync(save,
                     translator.Format("Filter_Replace", name), translator["Common_Save"], translator["Common_Cancel"])) return false;
                 await ValidateAsync(review);
-                await store.SaveSavedFilterAsync(target, review: review); return true;
+            if (isCurrent?.Invoke() == false || !ReferenceEquals(review, _review)) return false;
+                await store.SaveSavedFilterAsync(target, review: review, isCurrent: () => isCurrent?.Invoke() != false && ReferenceEquals(review, _review)); return true;
             }
             if (choice != remove) return false;
             // Ordinals disambiguate duplicate retained user names without using the label as an entity identity.
             var originals = review.Filters.OrderBy(f => f.SortOrder).ThenBy(f => f.Id).ToArray();
             var names = originals.Select((f, i) => $"{Vafadar.Localization.Formatting.NativeDigits.Apply((i + 1).ToString(translator.Culture))}. {f.Name}").ToArray();
             var chosen = await interaction.ChooseAsync(remove, translator["Common_Cancel"], names);
+            if (isCurrent?.Invoke() == false || !ReferenceEquals(review, _review)) return false;
             var index = Array.IndexOf(names, chosen); if (index < 0) return false;
             var original = originals[index];
             if (!await interaction.ConfirmAsync(remove, original.Name, translator["Common_Delete"], translator["Common_Cancel"])) return false;
             await ValidateAsync(review);
-            await store.DeleteSavedFilterAsync(original.Id, review: review); return true;
+            if (isCurrent?.Invoke() == false || !ReferenceEquals(review, _review)) return false;
+            await store.DeleteSavedFilterAsync(original.Id, review: review, isCurrent: () => isCurrent?.Invoke() != false && ReferenceEquals(review, _review)); return true;
         }, reload);
     }
 

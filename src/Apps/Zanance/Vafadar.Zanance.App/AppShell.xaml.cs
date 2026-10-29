@@ -1,3 +1,4 @@
+using Vafadar.Zanance.App.Features.Transactions;
 using Vafadar.Zanance.App.Features.Accounts;
 using Vafadar.Zanance.App.Features.Backup;
 using Vafadar.Zanance.App.Features.Budget;
@@ -21,6 +22,7 @@ public partial class AppShell : Shell
     private readonly HashSet<PlanDetailPage> _publishedPlanDetails = [];
     private readonly HashSet<PlansPage> _publishedPlanCenters = [];
     private readonly HashSet<Features.Templates.TemplatesPage> _publishedTemplateCenters = [];
+    private readonly HashSet<TransactionsPage> _publishedTransactionCenters = [];
     private bool _navigationRetired;
 
     /// <summary>Records actual published Home instances; lazy ShellContent.Content may not expose its cached page.</summary>
@@ -72,6 +74,12 @@ public partial class AppShell : Shell
     {
         if (_navigationRetired) page.RetireShellPublication();
         else _publishedTemplateCenters.Add(page);
+    }
+    /// <summary>Registers original Transactions roots so retained rows and native consent retire with their Shell.</summary>
+    internal void RegisterTransactionCenter(TransactionsPage page)
+    {
+        if (_navigationRetired) page.RetireShellPublication();
+        else _publishedTransactionCenters.Add(page);
     }
     /// <summary>Route of the account list.</summary>
     public const string AccountsRoute = AppRoutes.AccountsRoute;
@@ -275,6 +283,7 @@ public partial class AppShell : Shell
         else if (CurrentPage is ReimbursementsPage reimbursements) await Presentation.Failures.GuardAsync(reimbursements.RefreshForNavigationAsync);
         else if (CurrentPage is PlansPage planCenter) await Presentation.Failures.GuardAsync(planCenter.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Templates.TemplatesPage templates) await Presentation.Failures.GuardAsync(templates.RefreshForNavigationAsync);
+        else if (CurrentPage is TransactionsPage transactions) await Presentation.Failures.GuardAsync(transactions.RefreshForNavigationAsync);
         else if (CurrentPage is PlanDetailPage planDetail) await Presentation.Failures.GuardAsync(planDetail.RefreshForNavigationAsync);
         else if (CurrentPage is OccurrencePage occurrence) await Presentation.Failures.GuardAsync(occurrence.RefreshForNavigationAsync);
         // D-497: Insights can retain both the forecast and its saved comparison while another tab changes the ledger.
@@ -326,6 +335,11 @@ public partial class AppShell : Shell
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
             && CurrentPage is Features.Templates.TemplatesPage templates)
             templates.RetirePublication();
+        // D-635: a retained transaction tab must retire the same source, selection and native consent.
+        if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
+                or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
+            && CurrentPage is TransactionsPage transactions)
+            transactions.RetirePublication();
         // D-406: Android can retain a routed More page across tabs without OnDisappearing.
         // Retire its original financial review only after navigation survives the existing leave guards.
         if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
@@ -359,6 +373,8 @@ public partial class AppShell : Shell
         _publishedPlanCenters.Clear();
         foreach (var templates in _publishedTemplateCenters) templates.RetireShellPublication();
         _publishedTemplateCenters.Clear();
+        foreach (var transactions in _publishedTransactionCenters) transactions.RetireShellPublication();
+        _publishedTransactionCenters.Clear();
         Navigated -= OnRetainedDetailsTabActivated;
 #if ANDROID
         if (Handler is AccessibleShellRenderer renderer) renderer.RetireNavigation();

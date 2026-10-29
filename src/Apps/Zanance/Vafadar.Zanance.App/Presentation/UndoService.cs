@@ -24,6 +24,9 @@ public sealed class UndoService(ZananceStore store, TimeProvider time)
     private long _offerVersion;
     private bool _undoing;
 
+    /// <summary>Gets known acceptance of the last original Undo, even when its following notification failed.</summary>
+    public bool LastAccepted { get; private set; }
+
     /// <summary>Raised when the undo offer appears or disappears.</summary>
     public event EventHandler? Changed;
     /// <summary>Gets the meaning captured before publishing this original offer.</summary>
@@ -82,10 +85,11 @@ public sealed class UndoService(ZananceStore store, TimeProvider time)
     }
 
     /// <summary>Restores the deleted entries.</summary>
-    public async Task UndoAsync()
+    public async Task UndoAsync(Func<bool>? isCurrent = null)
     {
         // D-127: one Undo at a time; failure preserves the original deadline, never a renewed offer.
-        if (_undoing) return;
+        if (_undoing || isCurrent?.Invoke() == false) return;
+        LastAccepted = false;
         if (!CanUndo) { Dismiss(); return; }
 
         var entries = _deleted;
@@ -94,17 +98,21 @@ public sealed class UndoService(ZananceStore store, TimeProvider time)
         _undoing = true;
         try
         {
-            Changed?.Invoke(this, EventArgs.Empty);
-            if (entries.Count > 0) await store.RestoreEntriesAsync(entries);
-            if (action is not null) await action();
-
-            // Completion of an older operation must not dismiss a replacement offer or revive a dismissed one.
-            if (version == _offerVersion)
+            void Current()
             {
-                _deleted = [];
-                _action = null;
-                _offerVersion++;
+                if (isCurrent?.Invoke() == false) throw new OperationCanceledException("The original Undo page retired.");
             }
+            void Accepted()
+            {
+                LastAccepted = true;
+                // Consume the exact offer before fallible postcommit notification, preserving any newer offer.
+                if (version == _offerVersion) { _deleted = []; _action = null; _offerVersion++; }
+            }
+            Current(); Changed?.Invoke(this, EventArgs.Empty); Current();
+            if (entries.Count > 0) await store.RestoreEntriesAsync(entries, isCurrent: isCurrent, accepted: Accepted);
+            Current();
+            if (action is not null) await action();
+            Accepted();
         }
         finally
         {

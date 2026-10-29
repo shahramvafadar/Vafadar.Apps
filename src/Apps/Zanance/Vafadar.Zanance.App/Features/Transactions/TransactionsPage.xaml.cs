@@ -3,6 +3,9 @@ namespace Vafadar.Zanance.App.Features.Transactions;
 public partial class TransactionsPage : ContentPage
 {
     private readonly TransactionsViewModel _viewModel;
+    private AppShell? _ownerShell;
+    private bool _shellRetired;
+    private bool _publicationActive;
 
     /// <summary>Exposes the original appearance read without racing a second native-review load.</summary>
     internal Task PendingPublication { get; private set; } = Task.CompletedTask;
@@ -48,6 +51,12 @@ public partial class TransactionsPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        if (_shellRetired) return;
+        if (Shell.Current is AppShell shell)
+        {
+            if (_ownerShell is not null && !ReferenceEquals(_ownerShell, shell)) { RetireShellPublication(); return; }
+            _ownerShell = shell; shell.RegisterTransactionCenter(this);
+        }
         HeaderBack.IsVisible = Navigation.NavigationStack.Count > 1;
         var backIcon = new FluentIcons.Maui.SymbolImageSource
         {
@@ -56,17 +65,35 @@ public partial class TransactionsPage : ContentPage
         };
         backIcon.SetDynamicResource(FontImageSource.ColorProperty, "Primary");
         HeaderBack.Source = backIcon;
-        _viewModel.Undo.Changed += OnUndoChanged;
-        _viewModel.UpdateUndo();
-        PendingPublication = _viewModel.LoadAsync();
-        await Presentation.Failures.GuardAsync(() => PendingPublication);
+        await Presentation.Failures.GuardAsync(RefreshForNavigationAsync);
     }
 
     protected override void OnDisappearing()
     {
-        _viewModel.Undo.Changed -= OnUndoChanged;
+        RetirePublication();
         base.OnDisappearing();
     }
+
+    /// <summary>Shares the actual appearance and retained-tab read, without automatically retrying a failed presence.</summary>
+    internal Task RefreshForNavigationAsync()
+    {
+        if (_shellRetired) return Task.CompletedTask;
+        if (_publicationActive) return PendingPublication;
+        _publicationActive = true; _viewModel.SetActive(true);
+        _viewModel.Undo.Changed -= OnUndoChanged;
+        _viewModel.Undo.Changed += OnUndoChanged;
+        _viewModel.UpdateUndo();
+        return PendingPublication = _viewModel.LoadAsync();
+    }
+    /// <summary>Retires complete reads, rows, original native consent and Undo commands on actual departure.</summary>
+    internal void RetirePublication()
+    {
+        // Retained Android tabs/root replacement may omit native OnDisappearing; the actual owner must release this singleton event.
+        _viewModel.Undo.Changed -= OnUndoChanged;
+        _publicationActive = false; _viewModel.SetActive(false);
+    }
+    /// <summary>Prevents an old Shell root from reactivating transaction commands.</summary>
+    internal void RetireShellPublication() { _shellRetired = true; RetirePublication(); }
 
     private void OnUndoChanged(object? sender, EventArgs e) => Dispatcher.Dispatch(_viewModel.UpdateUndo);
 

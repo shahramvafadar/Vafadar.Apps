@@ -785,12 +785,18 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Adds a filter at the end, or replaces the one with the same id or the same name.</summary>
-    public async Task SaveSavedFilterAsync(SavedFilter filter, CancellationToken cancellationToken = default, QuickResourceReview? review = null)
+    public async Task SaveSavedFilterAsync(SavedFilter filter, CancellationToken cancellationToken = default, QuickResourceReview? review = null,
+        Func<bool>? isCurrent = null)
     {
+        void Current()
+        {
+            if (isCurrent?.Invoke() == false) throw new InvalidOperationException("The original saved-query action retired.");
+        }
+        Current();
         ArgumentNullException.ThrowIfNull(filter);
         filter.Name = filter.Name.Trim();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null);
+        await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: review is not null || isCurrent is not null);
         if (review is not null) await ValidateQuickResourceReviewAsync(review, db, cancellationToken);
         var all = await db.SavedFilters.ToListAsync(cancellationToken);
         var sameId = all.FirstOrDefault(f => f.Id == filter.Id);
@@ -816,24 +822,39 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             db.SavedFilters.Add(filter);
         }
 
-        write.EnsureCurrent();
+        Current(); write.EnsureCurrent();
+        Current();
         await db.SaveChangesAsync(cancellationToken);
+        Current(); write.EnsureCurrent();
         await write.CommitAsync(cancellationToken);
-        OnChanged();
+        // D-635: a failed subscriber follows acceptance and must never invite a repeated write.
+        if (review is not null) CommittedWriteNotification.Publish(OnChanged);
+        else OnChanged();
     }
 
     /// <summary>Deletes a saved filter; entries are never affected.</summary>
-    public async Task DeleteSavedFilterAsync(Guid id, CancellationToken cancellationToken = default, QuickResourceReview? review = null)
+    public async Task DeleteSavedFilterAsync(Guid id, CancellationToken cancellationToken = default, QuickResourceReview? review = null,
+        Func<bool>? isCurrent = null)
     {
+        void Current()
+        {
+            if (isCurrent?.Invoke() == false) throw new InvalidOperationException("The original saved-query deletion retired.");
+        }
+        Current();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         if (review is not null) await ValidateQuickResourceReviewAsync(review, db, cancellationToken);
         write.DemandFeature(CommercialFeature.DeleteData);
         write.PrepareQuickResourceChange(QuotaKind.SavedFilters, await db.SavedFilters.Select(f => f.Id).ToListAsync(cancellationToken), id, deleting: true);
+        Current(); write.EnsureCurrent();
         await db.SavedFilters.Where(f => f.Id == id).ExecuteDeleteAsync(cancellationToken);
+        Current();
         await db.SaveChangesAsync(cancellationToken);
+        Current(); write.EnsureCurrent();
         await write.CommitAsync(cancellationToken);
-        OnChanged();
+        // D-635: a failed subscriber follows acceptance and must never invite a repeated write.
+        if (review is not null) CommittedWriteNotification.Publish(OnChanged);
+        else OnChanged();
     }
 
     /// <summary>Deletes a rate; recorded amounts are never affected (FX-04).</summary>
@@ -1397,9 +1418,15 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Re-inserts deleted entries unchanged (undo of <see cref="DeleteEntryAsync"/>).</summary>
-    public async Task RestoreEntriesAsync(IEnumerable<LedgerEntry> entries, CancellationToken cancellationToken = default)
+    public async Task RestoreEntriesAsync(IEnumerable<LedgerEntry> entries, CancellationToken cancellationToken = default,
+        Func<bool>? isCurrent = null, Action? accepted = null)
     {
         ArgumentNullException.ThrowIfNull(entries);
+        void Current()
+        {
+            if (isCurrent?.Invoke() == false) throw new OperationCanceledException("The original transaction Undo owner retired.");
+        }
+        Current();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         var file = DatabaseFileIdentity.ConfiguredPath(db);
         var deleted = entries as DeletedLedgerEntries;
@@ -1411,7 +1438,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         var ids = list.Select(e => e.Id).ToList();
         var existing = await db.Entries.AsNoTracking().Where(e => ids.Contains(e.Id)).ToDictionaryAsync(e => e.Id, cancellationToken);
         var missing = list.Where(e => !existing.ContainsKey(e.Id)).ToList();
-        if (missing.Count == 0) return;
+        if (missing.Count == 0) { Current(); return; }
         if (deleted is not null) await ValidateDeletionSnapshotAsync(db, deleted, list, existing, cancellationToken);
         var restoredIds = missing.Select(e => e.Id).ToHashSet();
         foreach (var entry in missing)
@@ -1440,12 +1467,15 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         }
 
         // Entries, occurrences, explicit refund links and paid amounts come back together; receipt rows stay intact.
-        write.EnsureCurrent();
+        Current(); write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
         await UpdatePaidAmountsAsync(db, list, cancellationToken);
+        Current(); write.EnsureCurrent();
         await write.CommitAsync(cancellationToken);
+        accepted?.Invoke();
 
-        OnChanged();
+        if (isCurrent is not null) CommittedWriteNotification.Publish(OnChanged);
+        else OnChanged();
     }
 
     /// <summary>Rejects an obsolete short Undo before inserting rows or reapplying its explicit refund relationships.</summary>

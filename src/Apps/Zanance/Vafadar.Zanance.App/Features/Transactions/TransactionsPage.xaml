@@ -53,7 +53,7 @@
                 <Button Grid.Row="1" Text="{v:Translate Tx_Unreviewed}" Clicked="OnUnreviewedClicked" CornerRadius="17" MinimumHeightRequest="44"
                         Padding="12,0" FontSize="13" BackgroundColor="{DynamicResource RefundBackground}" TextColor="{DynamicResource RefundText}"
                         BorderColor="{DynamicResource RefundLine}" BorderWidth="1"
-                        IsVisible="{Binding UnreviewedCount, Converter={StaticResource IsPositiveConverter}}">
+                        IsVisible="{Binding ShowReviewFilter}">
                     <Button.Triggers>
                         <DataTrigger TargetType="Button" Binding="{Binding UnreviewedOnly}" Value="True">
                             <Setter Property="BackgroundColor" Value="{DynamicResource RefundText}" />
@@ -205,7 +205,7 @@
             <Label Text="{v:Translate Tx_Loading}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" SemanticProperties.Description="{v:Translate Tx_Loading}" />
         </VerticalStackLayout>
         <VerticalStackLayout Grid.Row="2" Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
-            <Label Text="{v:Translate Error_Unexpected}" HorizontalTextAlignment="Center" />
+            <Label Text="{Binding ReadFeedback}" HorizontalTextAlignment="Center" />
             <Button x:Name="RetryLoadButton" Text="{v:Translate Tx_RetryLoad}" Style="{StaticResource SecondaryButton}" Clicked="OnReloadClicked" />
         </VerticalStackLayout>
 

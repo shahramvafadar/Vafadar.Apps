@@ -11436,3 +11436,26 @@ twelve-target removal is refused before process creation, leaving3720files/78479
 logicalbytes without retry/subset/alternate/move/escalation/reuse. These are engineering
 facts, not broad release acceptance. D-607/phone/three original deadlines remain untouched.
 [Full evidence and preserved failures](quality/complete-original-template-center.md).
+
+
+## D-635 - Complete original Transactions snapshot and accepted commands (2026-10-29)
+
+The original four-call reader can combine two actual files; original saved-query writers
+and retained native responses outlive their owner, and a reloaded bulk publication can
+still accept old consent. Preserve the observed failures. Read all32original ledger
+fields, references, settings and saved definitions in one first-file worker transaction;
+retain original query/group/money/selection and financial writer/refund policies. Validate
+complete original input/revision and retire actual page/tab/root/display/query/row owners.
+Keep current native consent and Undo guards through the actual atomic writer. Record
+acceptance before fallible notification and keep it through failed reload/explicit Retry.
+Detach caller query arrays; retain the active zero-count review filter. No model/schema/
+migration/financial formula/permission change. Twenty-two distinct new focused cases and
+23affected original cases pass; final strict Windows/full offline signed Android pass.
+Native54read states and18additional changed zero-filter layouts pass. One original review,
+one delete/Undo and one saved-query acceptance/failed-read/Retry pass without write replay;
+complete protected source comparisons allow only the declared review/audit/refund/definition
+deltas. Original settings/boot return; only fresh UID/252hash-matched XMLs retire and its
+AVD stops. Four standard cleans pass; six-root supplemental deletion is refused before
+process creation, leaving3775files/6437103903logicalbytes with no retry or alternate path.
+[Full evidence and preserved failures](quality/complete-original-transactions.md).
+D-607/phone/three deadlines and broad release gates remain separate; overall goal active.
