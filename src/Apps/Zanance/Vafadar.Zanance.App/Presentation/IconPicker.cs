@@ -17,14 +17,7 @@ namespace Vafadar.Zanance.App.Presentation;
 public sealed class IconPicker : ContentView
 {
     /// <summary>Icon keys offered for categories, accounts and entries.</summary>
-    public static readonly IReadOnlyList<string> Keys =
-    [
-        "Home", "Food", "FoodPizza", "Cart", "ShoppingBag", "Flash", "Drop", "Fire", "Phone", "Laptop", "Tv", "VehicleCar",
-        "Gas", "Airplane", "Beach", "Heart", "Pill", "Stethoscope", "Dumbbell", "Shield", "HatGraduation", "Book", "People",
-        "Person", "Games", "MusicNote1", "Sport", "ArrowRepeatAll", "Gift", "Money", "Savings", "BuildingBank", "Briefcase",
-        "Handshake", "Receipt", "Wrench", "PaintBrush", "Box", "Balloon", "Umbrella", "Star", "Tag", "Wallet", "Payment",
-        "MoreHorizontal", "QuestionCircle",
-    ];
+    public static readonly IReadOnlyList<string> Keys = IconCatalog.Keys;
 
     /// <summary>Identifies the two-way original icon selection.</summary>
     public static readonly BindableProperty SelectedKeyProperty = BindableProperty.Create(

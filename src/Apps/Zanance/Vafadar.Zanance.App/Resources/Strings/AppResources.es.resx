@@ -8533,4 +8533,19 @@ SHA-256 del XML original: {5}</value>
   <data name="Rules_RetryLoad" xml:space="preserve">
     <value>Volver a cargar las reglas</value>
   </data>
+  <data name="Categories_Loading" xml:space="preserve">
+    <value>Cargando categorías…</value>
+  </data>
+  <data name="Categories_RetryLoad" xml:space="preserve">
+    <value>Volver a cargar las categorías</value>
+  </data>
+  <data name="Category_Loading" xml:space="preserve">
+    <value>Cargando la categoría…</value>
+  </data>
+  <data name="Category_RetryLoad" xml:space="preserve">
+    <value>Volver a cargar la categoría</value>
+  </data>
+  <data name="Category_Unavailable" xml:space="preserve">
+    <value>La categoría original ya no está disponible en este formulario. Ciérralo y vuelve a abrir la categoría. Tu texto sin guardar sigue aquí.</value>
+  </data>
 </root>

@@ -16,9 +16,9 @@ Interface language, regional date/number formats, digit shapes and holiday rules
 ## Current documentation snapshot — 29 October 2026
 
 Recent completed batches qualify original account details (D-629), Plans (D-633), templates (D-634),
-Transactions (D-635), period review (D-636) and categorization rules (D-637), with each quality report retaining
-its actual source, native and package limits. Category management (D-638) is unfinished and is not included
-in completed delivery. D-607 remains a protected timed physical reboot/reminder cohort; no early source
+Transactions (D-635), period review (D-636), categorization rules (D-637) and category management (D-638),
+with each quality report retaining its actual source, native and package limits. Independent category
+verification is complete; physical adoption remains separate. D-607 remains a protected timed physical reboot/reminder cohort; no early source
 observation or candidate upgrade is implied by this documentation refresh.
 
 The API project provides optional identity, protected household synchronization and billing infrastructure.

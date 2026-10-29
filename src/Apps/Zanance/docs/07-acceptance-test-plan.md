@@ -7829,3 +7829,7 @@ other captured facts and the declared one-definition delta match exactly.
 Restoration/fresh retirement and supplemental refusal remain explicit in
 [the quality record](quality/complete-original-template-center.md). No broad security,
 stability, accessibility, phone/iOS/provider/Store or publication acceptance is inferred.
+
+## D-638 original category management acceptance
+
+Focused29new/four existing affected cases and48 original native read/layout states pass in the independent API36/x64/4096 scope. Six original metadata commands run once, including failed post-move read/Retry, archived-parent name Save, same-page draft display refresh and native parent-into-child merge. Ledger remains0; the actual departed editor Save is refused. Final source/restoration/UID/owned-AVD retirement proofs and cleanup refusal are retained. This does not accept physical Main adoption, whole private DB/keys or wider release gates.

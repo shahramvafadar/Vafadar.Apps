@@ -8564,4 +8564,19 @@
   <data name="Rules_RetryLoad" xml:space="preserve">
     <value>بارگذاری دوبارهٔ قوانین</value>
   </data>
+  <data name="Categories_Loading" xml:space="preserve">
+    <value>در حال بارگذاری دسته‌ها…</value>
+  </data>
+  <data name="Categories_RetryLoad" xml:space="preserve">
+    <value>بارگذاری دوبارهٔ دسته‌ها</value>
+  </data>
+  <data name="Category_Loading" xml:space="preserve">
+    <value>در حال بارگذاری دسته…</value>
+  </data>
+  <data name="Category_RetryLoad" xml:space="preserve">
+    <value>بارگذاری دوبارهٔ دسته</value>
+  </data>
+  <data name="Category_Unavailable" xml:space="preserve">
+    <value>دستهٔ اصلی دیگر در این فرم در دسترس نیست. فرم را ببندید و دسته را دوباره باز کنید. متن ذخیره‌نشدهٔ شما هنوز حفظ شده است.</value>
+  </data>
 </root>

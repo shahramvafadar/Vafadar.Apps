@@ -8564,4 +8564,19 @@ Original-XML SHA-256: {5}</value>
   <data name="Rules_RetryLoad" xml:space="preserve">
     <value>Regeln neu laden</value>
   </data>
+  <data name="Categories_Loading" xml:space="preserve">
+    <value>Kategorien werden geladen…</value>
+  </data>
+  <data name="Categories_RetryLoad" xml:space="preserve">
+    <value>Kategorien neu laden</value>
+  </data>
+  <data name="Category_Loading" xml:space="preserve">
+    <value>Kategorie wird geladen…</value>
+  </data>
+  <data name="Category_RetryLoad" xml:space="preserve">
+    <value>Kategorie neu laden</value>
+  </data>
+  <data name="Category_Unavailable" xml:space="preserve">
+    <value>Die ursprüngliche Kategorie ist in diesem Formular nicht mehr verfügbar. Schließe es und öffne die Kategorie erneut. Dein ungespeicherter Text bleibt hier erhalten.</value>
+  </data>
 </root>

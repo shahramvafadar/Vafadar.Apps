@@ -58,3 +58,6 @@ Protected D-607 and broader release/platform acceptance remain separate.
 Original template-list source, native command and deletion ownership (D-634):
 [nine focused cases,72native states, exact expected source delta and cleanup limits](quality/complete-original-template-center.md).
 Protected D-607 and broad release/platform acceptance remain separate.
+
+Original category overview/editor source and accepted metadata ownership (D-638):
+[focused and original native evidence](quality/complete-original-category-management.md), with physical adoption and broader release gates separate.

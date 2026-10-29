@@ -91,7 +91,8 @@ The optional ASP.NET Core service implements identity, protected household synch
 infrastructure; its existence does not imply a configured public service or live commercial activation.
 
 Recent completed source batches cover original account details, Plans, templates, Transactions, period review
-and categorization-rule ownership. Category-management work is still in progress and is not counted as complete.
+and categorization-rule/category-management ownership. Independent category verification is complete; physical
+adoption remains separate.
 The protected physical reboot/reminder qualification D-607 remains pending its original deadlines.
 Performance, general stability, remaining accessibility, provider/store and platform release gates remain open.
 

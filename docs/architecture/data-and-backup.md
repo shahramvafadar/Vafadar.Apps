@@ -2821,3 +2821,7 @@ DeleteTemplateAsync retains its original rights/selection/writer transaction and
 current-owner checks before/after awaited work and before commit. Reviewed notification
 failures preserve committed semantics. No model/migration, currency formula, key or
 permission change is introduced. [Focused and actual native evidence](../../src/Apps/Zanance/docs/quality/complete-original-template-center.md).
+
+## D-638 bounded category source and writer receipts
+
+Category overview/editor reads capture every category field from one actual file/access under a deferred worker transaction. A merge alone obtains the complete original reference graph and immutable streamed digest; ordinary category reads do not load the ledger. Validate fresh complete source and current page/draft/consent through the protected original writer commit. Same-writer post-write receipts carry accepted save/move/merge results before releasing that lease. Preserve original algorithms, unrestricted category policy and financial conflict behavior; no schema/model/migration change is introduced.

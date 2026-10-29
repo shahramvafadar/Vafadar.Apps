@@ -8553,4 +8553,19 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Rules_RetryLoad" xml:space="preserve">
     <value>Ricarica le regole</value>
   </data>
+  <data name="Categories_Loading" xml:space="preserve">
+    <value>Caricamento delle categorie…</value>
+  </data>
+  <data name="Categories_RetryLoad" xml:space="preserve">
+    <value>Ricarica le categorie</value>
+  </data>
+  <data name="Category_Loading" xml:space="preserve">
+    <value>Caricamento della categoria…</value>
+  </data>
+  <data name="Category_RetryLoad" xml:space="preserve">
+    <value>Ricarica la categoria</value>
+  </data>
+  <data name="Category_Unavailable" xml:space="preserve">
+    <value>La categoria originale non è più disponibile in questo modulo. Chiudilo e riapri la categoria. Il testo non salvato è ancora conservato qui.</value>
+  </data>
 </root>

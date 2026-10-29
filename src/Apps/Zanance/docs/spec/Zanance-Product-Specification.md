@@ -10766,3 +10766,46 @@ logicalbytes. Supplemental seven-root deletion is refused before process creatio
 schema/formula/permission change. D-607/phone/three deadlines/unread source remain untouched;
 physical adoption and all broad release gates stay separate. Overall goal active, TalkBack last.
 [Complete evidence](../quality/complete-original-categorization-rules.md).
+
+### D-638 - Complete original category management ownership (2026-10-29)
+
+Preserve six actual original writer/editor failures: audit-time save/move retirement,
+SQL-time merge retirement, a foreign post-move reader, missing requested edit identity and
+changed merge consent. Complete original category definitions now come from one file/access
+and deferred worker transaction; heavier complete merge graphs are read only for an actual
+merge. Retain all original metadata/financial algorithms, unrestricted category policy,
+original icon/color choices and Add placement. Original writers validate current complete
+source/page/draft/consent through commit and capture post-write receipts before releasing
+the same writer. No later profile reader supplies an accepted move result.
+
+Actual overview/editor pages cover loading/error with explicit read-only Retry, preserve raw
+drafts and archived-parent identity, and retire tab/root/display/route/row/confirmation owners.
+A submitted save baseline cannot mark later typing clean. Requested existing-category titles
+are captured before a refused read. The latter additional title regression is retained apart
+from the six published-original failures. No model/migration/formula/permission change.
+Twenty-nine distinct new focused cases and four affected existing cases pass; only relevant
+continuations run. Strict Windows and complete offline signed Android builds pass without
+warnings. Product57258fa8 has384ownAOT/408ELF/1608static aligned LOAD segments/CRC/ZIP16KiB/v2/v3;
+this is not hardware16KiB runtime or physical adoption.
+
+Original native24 overview states on V1/PID4879 remain accepted. One deliberate no-reset
+same-UID upgrade for the exact editor-title delta continues the same fixture on PID9564;
+24 final original editor states pass on API36/x64/4096, en/fa/de, both themes and360/412/680.
+One new-category Save, sibling MoveDown, native-confirmed archive, child-name Save with its
+archived parent, restore and native-confirmed parent-into-child merge pass exactly once.
+Failed post-move read/Retry preserves the raw draft and never moves again; same-page language/
+theme refresh preserves another draft; departed editor Save is refused. The complete observed
+source permits only declared category/reference changes and zero ledger rows. Preserve missing
+XML/dumpsys/keyboard-transition failures and the rejected two-row-swap observer assumption;
+the original writer renumbers all siblings, so only that original behavior is verified.
+
+Original en/System/five settings/size/density/boot and final installed APK return; only the
+fresh UID/255hash-matched XMLs/12371845bytes and the exact owned AVD retire. Seven standard
+cleans remove29710files/2200546591logicalbytes; official AVD deletion removes25files/
+5525943243logicalbytes. Seven-root supplemental deletion is rejected before process creation,
+leaving3417files/494366282logicalbytes; no retry/subset/alternate/move/escalation/reuse.
+Used APKs/private caller evidence remain. Logical counts are not host free-space measurements.
+D-607/phone/all three deadlines/post-reboot unread source stay untouched. Physical adoption,
+whole DB/key/security/ANR/crash/two-second performance/A11Y/iOS/provider/Store/release remain
+separate. The overall goal stays active and TalkBack remains last.
+[Complete evidence](../quality/complete-original-category-management.md).

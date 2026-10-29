@@ -327,10 +327,23 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     /// <summary>Inserts or updates a category.</summary>
-    public async Task SaveCategoryAsync(Category category, CancellationToken cancellationToken = default)
+    public async Task SaveCategoryAsync(Category category, CancellationToken cancellationToken = default) =>
+        _ = await SaveCategoryCoreAsync(category, cancellationToken);
+
+    private async Task<CategoryWriteReceipt?> SaveCategoryCoreAsync(Category category, CancellationToken cancellationToken,
+        CategoryReadSnapshot? original = null, Func<bool>? current = null, Action? accepted = null,
+        ZananceDbContext? capturedContext = null)
     {
         ArgumentNullException.ThrowIfNull(category);
-        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var owned = capturedContext is null ? await contextFactory.CreateDbContextAsync(cancellationToken) : null;
+        var db = capturedContext ?? owned!;
+        void Current() { if (original is not null) RequireCategoryOwner(original, db, current!); }
+        Current();
+        // The original category policy is unrestricted by tier; the reviewed operation still owns the actual
+        // household/access writer and rollback boundary rather than opting out of membership checks.
+        await using var write = original is null ? null
+            : await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        if (original is not null) await ValidateOriginalCategoriesAsync(original, db, cancellationToken);
         if (await db.Categories.AnyAsync(c => c.Id == category.Id, cancellationToken))
         {
             db.Categories.Update(category);
@@ -340,9 +353,17 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             db.Categories.Add(category);
         }
 
+        Current();
         await db.SaveChangesAsync(cancellationToken);
-
-        OnChanged();
+        Current();
+        var receipt = original is null ? null : new CategoryWriteReceipt(category.Id,
+            original.AfterOwnWrite(await ReadOriginalCategoriesAsync(db, cancellationToken)));
+        Current();
+        if (write is not null) await write.CommitAsync(cancellationToken);
+        accepted?.Invoke();
+        if (original is not null) _ = CommittedWriteNotification.Publish(OnChanged, receipt!);
+        else OnChanged();
+        return receipt;
     }
 
     /// <summary>Returns the budget of a month in a calendar and currency, if one exists.</summary>
@@ -895,14 +916,29 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     /// Merges <paramref name="sourceId"/> into <paramref name="targetId"/> (CAT-02): entries, plans, budget limits and
     /// sub-categories move to the target, then the source is archived. No entry is deleted.
     /// </summary>
-    public async Task MergeCategoryAsync(Guid sourceId, Guid targetId, CancellationToken cancellationToken = default)
+    public async Task MergeCategoryAsync(Guid sourceId, Guid targetId, CancellationToken cancellationToken = default) =>
+        _ = await MergeCategoryCoreAsync(sourceId, targetId, cancellationToken);
+
+    private async Task<CategoryWriteReceipt?> MergeCategoryCoreAsync(Guid sourceId, Guid targetId, CancellationToken cancellationToken,
+        CategoryMergeReview? review = null, Func<bool>? current = null, Action? accepted = null,
+        ZananceDbContext? capturedContext = null)
     {
         if (sourceId == targetId)
         {
-            return;
+            return null;
         }
 
-        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var owned = capturedContext is null ? await contextFactory.CreateDbContextAsync(cancellationToken) : null;
+        var db = capturedContext ?? owned!;
+        void Current()
+        {
+            if (review is null) return;
+            RequireCategoryOwner(review.Source, db, current!); review.RequireOriginal(db);
+        }
+        Current();
+        await using var write = review is null ? null
+            : await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        if (review is not null) await ValidateOriginalCategoryMergeAsync(review, db, cancellationToken);
         var source = await db.Categories.FirstAsync(c => c.Id == sourceId, cancellationToken);
         var target = await db.Categories.FirstAsync(c => c.Id == targetId, cancellationToken);
         if (source.Kind != target.Kind)
@@ -910,11 +946,16 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             throw new InvalidOperationException("Only categories of the same kind can be merged.");
         }
 
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var transaction = review is null ? await db.Database.BeginTransactionAsync(cancellationToken) : null;
+        Current();
         await db.Entries.Where(e => e.CategoryId == sourceId).ExecuteUpdateAsync(e => e.SetProperty(x => x.CategoryId, targetId), cancellationToken);
+        Current();
         await db.Schedules.Where(s => s.CategoryId == sourceId).ExecuteUpdateAsync(s => s.SetProperty(x => x.CategoryId, targetId), cancellationToken);
+        Current();
         await db.Templates.Where(t => t.CategoryId == sourceId).ExecuteUpdateAsync(t => t.SetProperty(x => x.CategoryId, targetId), cancellationToken);
+        Current();
         await db.CategoryRules.Where(r => r.CategoryId == sourceId).ExecuteUpdateAsync(r => r.SetProperty(x => x.CategoryId, targetId), cancellationToken);
+        Current();
 
         // Category lists move too: the spending cut of a goal plan and the categories of a saved filter.
         static List<Guid> Moved(List<Guid> ids, Guid from, Guid to) => [.. ids.Select(id => id == from ? to : id).Distinct()];
@@ -937,6 +978,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
 
         var newParent = target.ParentId ?? target.Id;
         await db.Categories.Where(c => c.ParentId == sourceId && c.Id != targetId).ExecuteUpdateAsync(c => c.SetProperty(x => x.ParentId, newParent), cancellationToken);
+        Current();
 
         foreach (var budget in await db.Budgets.ToListAsync(cancellationToken))
         {
@@ -959,15 +1001,35 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
 
         source.IsArchived = true;
         source.ParentId = null;
+        Current();
         await db.SaveChangesAsync(cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
-        OnChanged();
+        Current();
+        var receipt = review is null ? null : new CategoryWriteReceipt(sourceId,
+            review.Source.AfterOwnWrite(await ReadOriginalCategoriesAsync(db, cancellationToken)));
+        Current();
+        if (write is not null) await write.CommitAsync(cancellationToken);
+        else await transaction!.CommitAsync(cancellationToken);
+        accepted?.Invoke();
+        if (review is not null) _ = CommittedWriteNotification.Publish(OnChanged, receipt!);
+        else OnChanged();
+        return receipt;
     }
 
     /// <summary>Moves a category one place earlier (<paramref name="step"/> = -1) or later (+1) among its siblings.</summary>
-    public async Task MoveCategoryAsync(Guid id, int step, CancellationToken cancellationToken = default)
+    public async Task MoveCategoryAsync(Guid id, int step, CancellationToken cancellationToken = default) =>
+        _ = await MoveCategoryCoreAsync(id, step, cancellationToken);
+
+    private async Task<CategoryMoveReceipt?> MoveCategoryCoreAsync(Guid id, int step, CancellationToken cancellationToken,
+        CategoryReadSnapshot? original = null, Func<bool>? current = null, Action? accepted = null,
+        ZananceDbContext? capturedContext = null)
     {
-        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        await using var owned = capturedContext is null ? await contextFactory.CreateDbContextAsync(cancellationToken) : null;
+        var db = capturedContext ?? owned!;
+        void Current() { if (original is not null) RequireCategoryOwner(original, db, current!); }
+        Current();
+        await using var write = original is null ? null
+            : await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        if (original is not null) await ValidateOriginalCategoriesAsync(original, db, cancellationToken);
         var category = await db.Categories.FirstAsync(c => c.Id == id, cancellationToken);
         var siblings = await db.Categories
             .Where(c => c.Kind == category.Kind && c.ParentId == category.ParentId && !c.IsArchived)
@@ -976,7 +1038,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         var other = index + step;
         if (index < 0 || other < 0 || other >= siblings.Count)
         {
-            return;
+            return original is null ? null : new CategoryMoveReceipt(category.SortOrder, original, false);
         }
 
         // Renumber so that equal sort orders never make the move a no-op.
@@ -987,8 +1049,18 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
             siblings[i].SortOrder = first + i;
         }
 
+        Current();
         await db.SaveChangesAsync(cancellationToken);
-        OnChanged();
+        Current();
+        // Capture the move's actual result before releasing this writer, never with a subsequent profile factory.
+        var receipt = original is null ? null : new CategoryMoveReceipt(category.SortOrder,
+            original.AfterOwnWrite(await ReadOriginalCategoriesAsync(db, cancellationToken)), true);
+        Current();
+        if (write is not null) await write.CommitAsync(cancellationToken);
+        accepted?.Invoke();
+        if (original is not null) _ = CommittedWriteNotification.Publish(OnChanged, receipt!);
+        else OnChanged();
+        return receipt;
     }
 
     /// <summary>

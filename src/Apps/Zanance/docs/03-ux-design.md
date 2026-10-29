@@ -2922,3 +2922,7 @@ Retired rows cannot open confirmation over another tab. A committed deletion fol
 by a failed read is described as already deleted, never as a command to repeat.
 All72changed native caption/target states and18same-capture original RTL row checks pass.
 [Exact source and geometry scope](quality/complete-original-template-center.md).
+
+## D-638 original category overview and editor
+
+Cover category lists and the modal editor while their complete original source is loading or failed; expose explicit read-only Retry. Retain original Add placement, icon/color order, native merge/archive confirmations and unsaved fields. An unavailable requested edit keeps its edit title and never becomes a new category. Rebind selected identities after display changes, retain archived original parents, and retire old page/tab/root/consent commands. Acceptance and retry must not replay an earlier writer.

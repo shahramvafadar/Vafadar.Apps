@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-638: load category lists and editors from their original file, preserve unsaved text and archived parents, and retain accepted ordering/merge results through read failures without submitting them again.
+
 - D-634: keep template rows and delete confirmations tied to their original file and page; retain an accepted deletion when its following notification or refresh fails.
 
 - D-633: load plan rows and the review badge together; cover read failures with explicit Retry and prevent retired page commands from opening another source.

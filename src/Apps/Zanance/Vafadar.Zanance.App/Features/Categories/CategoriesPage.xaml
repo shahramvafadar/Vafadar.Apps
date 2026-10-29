@@ -31,7 +31,8 @@
     </ContentPage.Resources>
 
     <!-- D-78: reserve the Add action below the viewport so it never covers readable content. -->
-    <Grid RowDefinitions="*,Auto">
+    <Grid>
+    <Grid RowDefinitions="*,Auto" IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding CanInteract}">
         <ScrollView x:Name="ContentViewport">
             <VerticalStackLayout Padding="16,0,16,16" Spacing="4">
                 <Button Text="{v:Translate Rules_Open}" Command="{Binding OpenRulesCommand}" Style="{StaticResource TextButton}" HorizontalOptions="Start" Padding="0" Margin="0,8,0,0" />
@@ -55,5 +56,14 @@
 
         <Button x:Name="AddAction" Grid.Row="1" Style="{StaticResource FloatingAddButton}" Text="+" Command="{Binding AddCommand}"
                 SemanticProperties.Description="{v:Translate Categories_Add}" />
+    </Grid>
+    <VerticalStackLayout Padding="24" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+        <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" />
+        <Label Text="{v:Translate Categories_Loading}" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+    </VerticalStackLayout>
+    <VerticalStackLayout Padding="24" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+        <Label Text="{Binding Feedback}" TextColor="{DynamicResource DebtText}" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+        <Button Text="{v:Translate Categories_RetryLoad}" Style="{StaticResource PrimaryButton}" Command="{Binding ReloadCommand}" IsEnabled="{Binding CanReload}" />
+    </VerticalStackLayout>
     </Grid>
 </ContentPage>

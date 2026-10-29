@@ -19,7 +19,7 @@
             </FlexLayout>
         </Grid>
 
-        <ScrollView Grid.Row="1">
+        <ScrollView Grid.Row="1" IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding CanInteract}">
             <VerticalStackLayout Padding="16" Spacing="8">
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="0">
@@ -133,6 +133,14 @@
         </ScrollView>
 
         <Button Grid.Row="2" Margin="16" Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Save}"
-                Command="{Binding SaveCommand}" IsEnabled="{Binding IsNotBusy}" />
+                Command="{Binding SaveCommand}" IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding CanInteract}" />
+        <VerticalStackLayout Grid.Row="1" Padding="24" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" />
+            <Label Text="{v:Translate Category_Loading}" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="1" Padding="24" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
+            <Label Text="{Binding Feedback}" TextColor="{DynamicResource DebtText}" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+            <Button Text="{v:Translate Category_RetryLoad}" Style="{StaticResource PrimaryButton}" Command="{Binding ReloadCommand}" IsEnabled="{Binding CanReload}" />
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

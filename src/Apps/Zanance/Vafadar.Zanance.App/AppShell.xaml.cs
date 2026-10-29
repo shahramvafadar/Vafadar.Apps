@@ -25,6 +25,8 @@ public partial class AppShell : Shell
     private readonly HashSet<TransactionsPage> _publishedTransactionCenters = [];
     private readonly HashSet<Features.Reports.PeriodReviewPage> _publishedPeriodReviews = [];
     private readonly HashSet<RulesPage> _publishedRules = [];
+    private readonly HashSet<CategoryEditorPage> _publishedCategoryEditors = [];
+    private readonly HashSet<CategoriesPage> _publishedCategoryCenters = [];
     private bool _navigationRetired;
 
     /// <summary>Records actual published Home instances; lazy ShellContent.Content may not expose its cached page.</summary>
@@ -94,6 +96,18 @@ public partial class AppShell : Shell
     {
         if (_navigationRetired) page.RetireShellPublication();
         else _publishedRules.Add(page);
+    }
+    /// <summary>Tracks actual modal category editors so source/draft/native consent retire with their original root.</summary>
+    internal void RegisterCategoryEditor(CategoryEditorPage page)
+    {
+        if (_navigationRetired) page.RetireShellPublication();
+        else _publishedCategoryEditors.Add(page);
+    }
+    /// <summary>Tracks complete original category overview rows across lazy native roots.</summary>
+    internal void RegisterCategories(CategoriesPage page)
+    {
+        if (_navigationRetired) page.RetireShellPublication();
+        else _publishedCategoryCenters.Add(page);
     }
     /// <summary>Route of the account list.</summary>
     public const string AccountsRoute = AppRoutes.AccountsRoute;
@@ -298,6 +312,8 @@ public partial class AppShell : Shell
         else if (CurrentPage is PlansPage planCenter) await Presentation.Failures.GuardAsync(planCenter.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Templates.TemplatesPage templates) await Presentation.Failures.GuardAsync(templates.RefreshForNavigationAsync);
         else if (CurrentPage is TransactionsPage transactions) await Presentation.Failures.GuardAsync(transactions.RefreshForNavigationAsync);
+        else if (CurrentPage is CategoriesPage categories) await Presentation.Failures.GuardAsync(categories.RefreshForNavigationAsync);
+        else if (CurrentPage is CategoryEditorPage categoryEditor) await Presentation.Failures.GuardAsync(categoryEditor.RefreshForNavigationAsync);
         else if (CurrentPage is RulesPage rules) await Presentation.Failures.GuardAsync(rules.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Reports.PeriodReviewPage review) await Presentation.Failures.GuardAsync(review.RefreshForNavigationAsync);
         else if (CurrentPage is PlanDetailPage planDetail) await Presentation.Failures.GuardAsync(planDetail.RefreshForNavigationAsync);
@@ -366,6 +382,15 @@ public partial class AppShell : Shell
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
             && CurrentPage is RulesPage rules)
             rules.RetirePublication();
+        // D-638: a modal editor and its actual original consent cannot survive an accepted tab departure.
+        if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
+                or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged))
+        {
+            if (CurrentPage is CategoriesPage categories) categories.RetirePublication();
+            if (CurrentPage is CategoryEditorPage categoryEditor) categoryEditor.RetirePublication();
+            if (Navigation.ModalStack.LastOrDefault() is CategoryEditorPage modalCategory) modalCategory.RetirePublication();
+            if (Navigation.ModalStack.LastOrDefault() is NavigationPage modalNavigation && modalNavigation.CurrentPage is CategoryEditorPage wrappedCategory) wrappedCategory.RetirePublication();
+        }
         // D-406: Android can retain a routed More page across tabs without OnDisappearing.
         // Retire its original financial review only after navigation survives the existing leave guards.
         if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
@@ -405,6 +430,10 @@ public partial class AppShell : Shell
         _publishedPeriodReviews.Clear();
         foreach (var rules in _publishedRules) rules.RetireShellPublication();
         _publishedRules.Clear();
+        foreach (var editor in _publishedCategoryEditors) editor.RetireShellPublication();
+        _publishedCategoryEditors.Clear();
+        foreach (var categories in _publishedCategoryCenters) categories.RetireShellPublication();
+        _publishedCategoryCenters.Clear();
         Navigated -= OnRetainedDetailsTabActivated;
 #if ANDROID
         if (Handler is AccessibleShellRenderer renderer) renderer.RetireNavigation();
