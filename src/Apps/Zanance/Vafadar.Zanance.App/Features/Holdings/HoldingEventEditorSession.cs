@@ -21,20 +21,20 @@ public sealed class HoldingEventEditorSession(HoldingStore store, Func<string, b
     /// <summary>Retires pending continuations without changing raw editor fields.</summary>
     public void Retire() { Interlocked.Increment(ref _revision); Review = null; }
     /// <summary>Loads one original event/type, refusing publication into a retired or accepted form.</summary>
-    public async Task<HoldingEventReadReview?> LoadAsync(Guid typeId, Guid? eventId, string? defaultPlaceName = null, Func<bool>? isCurrent = null)
+    public async Task<HoldingEventReadReview?> LoadAsync(Guid typeId, Guid? eventId, string? defaultPlaceName = null, Func<bool>? isCurrent = null, CancellationToken ct = default)
     {
         Task? place;
         lock (_placeGate) place = _placeIdle;
         // A new explicit query retires the prompt owner and waits for its metadata boundary, without polling or replay.
-        if (place is not null) await place;
+        if (place is not null) await place.WaitAsync(ct);
         if (Committed || Volatile.Read(ref _busy) != 0) return null;
         Retire(); var revision = _revision;
         var result = _knownDefault is { } knownDefault
-            ? await store.ReadCreatedLocationReviewAsync(knownDefault)
-            : await store.ReadEventReviewAsync(typeId, eventId, acceptsFile: acceptsFile);
+            ? await store.ReadCreatedLocationReviewAsync(knownDefault, ct)
+            : await store.ReadEventReviewAsync(typeId, eventId, ct, acceptsFile: acceptsFile);
         if (revision != _revision) return null;
         result.EnsureCurrent(); Review = result;
-        bool Current() => revision == _revision && !Committed && (isCurrent?.Invoke() ?? true);
+        bool Current() => !ct.IsCancellationRequested && revision == _revision && !Committed && (isCurrent?.Invoke() ?? true);
         if (!Current()) return null;
         if (defaultPlaceName is not null && !result.Inputs.Locations.Any(l => !l.IsArchived))
         {
@@ -45,7 +45,7 @@ public sealed class HoldingEventEditorSession(HoldingStore store, Func<string, b
             _knownDefault = accepted;
             if (!Current()) return null;
             // Default metadata is already accepted. A failed following read must never recreate it on Retry.
-            result = await store.ReadCreatedLocationReviewAsync(accepted);
+            result = await store.ReadCreatedLocationReviewAsync(accepted, ct);
             if (!Current()) return null;
             Review = result;
         }
@@ -123,7 +123,7 @@ public sealed class HoldingEventEditorSession(HoldingStore store, Func<string, b
         idle.TrySetResult();
     }
     /// <summary>Accepts exact reviewed event/payment/fee/price once; failures before commit retain raw drafts.</summary>
-    public async Task<HoldingSaveResult?> SaveAsync(AssetEvent item, IReadOnlyList<LedgerEntry> entries, Func<bool> isCurrent)
+    public async Task<HoldingSaveResult?> SaveAsync(AssetEvent item, IReadOnlyList<LedgerEntry> entries, Func<bool> isCurrent, Action? accepted = null)
     {
         if (Interlocked.CompareExchange(ref _busy, 1, 0) != 0) return null;
         try
@@ -133,7 +133,7 @@ public sealed class HoldingEventEditorSession(HoldingStore store, Func<string, b
             bool Current() => revision == _revision && ReferenceEquals(review, Review) && isCurrent();
             try
             {
-                var result = await store.SaveReviewedEventAsync(review, item, entries, true, isCurrent: Current);
+                var result = await store.SaveReviewedEventAsync(review, item, entries, true, isCurrent: Current, accepted: () => { Committed = true; accepted?.Invoke(); });
                 Committed = result.Succeeded; return result;
             }
             catch (CommittedWriteNotificationException<HoldingSaveResult>) { Committed = true; throw; }

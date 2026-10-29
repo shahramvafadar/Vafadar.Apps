@@ -96,7 +96,7 @@ public sealed partial class AssetEventEditorViewModel
     }
     partial void OnSecondAmountTextChanged(string value) { SecondAmountError = null; ChangeMoney(_secondMoney, value, PriceCurrency); UpdateEffect(); }
     partial void OnBasisTextChanged(string value) { ChangeMoney(_basisMoney, value, PriceCurrency); UpdateEffect(); }
-    private void OnMoneyDisplayChanged(object? sender, EventArgs args) { RefreshMoneyTexts(); UpdateEffect(); }
+    private void OnMoneyDisplayChanged(object? sender, EventArgs args) => RefreshDisplay();
     /// <summary>Tracks display captions only while the original actual page is presented.</summary>
     public void SetMoneyPresentationActive(bool active)
     {

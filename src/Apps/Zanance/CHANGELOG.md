@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-643: bind holding-event Back, discard and Retry to their original frame; retain later unsaved input after a known saved change, and refresh original captions without changing physical units.
+
 - D-642: keep asset-type forms tied to their original file and complete settings/history, retain raw physical values through Retry, and separate known saved metadata from newer unsaved text.
 
 - D-641: keep budget forms and spending suggestions tied to their original source, retain raw edits through interrupted Reload/Retry, and preserve known saved limits when returning or notifying fails.

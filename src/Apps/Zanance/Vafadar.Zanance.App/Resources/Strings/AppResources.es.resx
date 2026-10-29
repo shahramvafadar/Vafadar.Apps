@@ -8575,4 +8575,7 @@ SHA-256 del XML original: {5}</value>
   <data name="AssetType_SavedDraftChanged" xml:space="preserve">
     <value>El tipo de activo se ha guardado. Tienes cambios posteriores sin guardar; revísalos antes de cerrar este formulario.</value>
   </data>
+  <data name="AssetEvent_SavedDraftChanged" xml:space="preserve">
+    <value>El cambio original se ha guardado. Los datos introducidos después no se han guardado. Al cerrar el formulario puedes decidir si quieres descartarlos.</value>
+  </data>
 </root>

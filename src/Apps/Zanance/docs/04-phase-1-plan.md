@@ -1897,3 +1897,8 @@ Complete original budget editor source/lifetime/draft/receipt implementation and
 ## D-642 complete original type forms
 
 Original type/history/preferences, cancellable covered publication, raw draft review and accepted-result ownership are locally/native qualified. No new financial setup or repeated prior successful suites; platform/adoption gates remain separate. [Evidence](quality/complete-original-asset-type-editor-source.md).
+
+
+## D-643 original event-frame continuation
+
+Complete original native frame, consent and accepted-draft lifetime while retaining the delivered coherent reader and financial writer. No financial rule/model change or successful-operation replay; wider platform/adoption gates remain separate. [Evidence](quality/original-asset-event-frame-and-receipts.md).

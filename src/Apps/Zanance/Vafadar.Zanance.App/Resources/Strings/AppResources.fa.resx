@@ -8606,4 +8606,7 @@
   <data name="AssetType_SavedDraftChanged" xml:space="preserve">
     <value>نوع دارایی ذخیره شد. تغییرهای تازه‌تری دارید که ذخیره نشده‌اند؛ پیش از بستن این فرم آن‌ها را بررسی کنید.</value>
   </data>
+  <data name="AssetEvent_SavedDraftChanged" xml:space="preserve">
+    <value>تغییر اصلی ذخیره شد. ورودی جدیدتر ذخیره نشده است. با بستن فرم می‌توانید دربارهٔ کنارگذاشتن آن تصمیم بگیرید.</value>
+  </data>
 </root>

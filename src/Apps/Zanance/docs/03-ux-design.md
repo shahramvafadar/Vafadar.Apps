@@ -2949,3 +2949,8 @@ Keep the original budget form covered through loading/failure with explicit visi
 ## D-642 original asset-type editor
 
 Cover incomplete source, keep explicit Retry and complete saved-value review. Preserve raw physical-value parse contexts and choices through display/reload changes. Retire native Back/discard/Save with the original frame; accepted metadata and a later draft require separate Close/discard ownership. [Evidence](quality/complete-original-asset-type-editor-source.md).
+
+
+## D-643 original asset-event consent and receipts
+
+Native Back/Close/Cancel share one original frame/draft guard. A pending discard disables Save and another prompt. Failed source keeps Close and explicit Retry; another pending Retry cannot replace its loading owner. Preserve live choice identities, independent raw units and later unsaved text after an accepted change. [Evidence](quality/original-asset-event-frame-and-receipts.md).

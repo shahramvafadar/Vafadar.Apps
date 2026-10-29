@@ -32,7 +32,7 @@ public sealed record LocationChoice(Guid Id, string Name)
 /// currency differs from the price currency, the value in the price currency is asked for separately (cost basis).
 /// Nothing is saved when the history would become negative on any date: "On 3 Oct only 20.000 g were held at Home safe."
 /// </summary>
-public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentation.IUnsavedChanges
+public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentation.IUnsavedChanges, Presentation.IThemeAware
 {
     private static readonly AssetEventKind[] AdvancedKinds =
     [
@@ -51,6 +51,17 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
     private long _loadEpoch;
     private bool _hasQuery, _hasPublishedForm, _formDeparted;
     private Guid _queryType;
+    private Func<bool>? _ownsRoot;
+    private long _frameRevision;
+    private bool _cancelPending, _resumeRead, _sourceFailed, _displayPublishing;
+    private string? _acceptedFeedbackKey;
+    private CancellationTokenSource _readLifetime = new();
+    private Task? _pendingRead;
+    private bool OwnsRoot => _ownsRoot?.Invoke() != false;
+    /// <summary>Binds the actual original event form to its weak native root owner.</summary>
+    public void BindRootOwner(Func<bool> ownsRoot) { ArgumentNullException.ThrowIfNull(ownsRoot); _ownsRoot = ownsRoot; }
+    /// <summary>Gets whether this original page may own its Cancel/Close consent.</summary>
+    public bool CanLeave => !_formDeparted && OwnsRoot && !_displayPublishing && !IsBusy && !_cancelPending;
     private Guid? _queryEvent;
     private AssetEventKind? _queryKind;
 
@@ -76,7 +87,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
     /// <summary>Gets whether one original new-place prompt may own the form.</summary>
     public bool CanAddLocation => CanEdit && _session.Review is not null && !HasSavedLocationPending;
     /// <summary>Gets whether this exact original form can read its accepted place again.</summary>
-    public bool CanUseSavedLocation => !_loading && !IsBusy && !_session.Committed && HasSavedLocationPending
+    public bool CanUseSavedLocation => !_formDeparted && OwnsRoot && !_cancelPending && !_loading && !IsBusy && !_session.Committed && HasSavedLocationPending
         && _createdLocationEpoch == _locationEpoch;
     /// <summary>Gets known metadata acceptance without reporting a committed place as a failed Save.</summary>
     [ObservableProperty] public partial string? LocationFeedback { get; set; }
@@ -202,7 +213,8 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
     [ObservableProperty]
     public partial bool IsCorrection { get; set; }
 
-    public IReadOnlyList<string> DirectionNames { get; }
+    /// <summary>Gets live original increase/decrease labels without changing the selected direction.</summary>
+    [ObservableProperty] public partial IReadOnlyList<string> DirectionNames { get; set; } = [];
 
     [ObservableProperty]
     public partial int DirectionIndex { get; set; }
@@ -266,12 +278,13 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
         if (!changed && _session.Committed) return;
         var previous = _session;
         _queryEvent = eventId; _queryType = typeId; _queryKind = requested; _hasQuery = true;
-        _locationEpoch++; _locationForm++; _loadEpoch++; _formDeparted = false; IsBusy = false;
+        var oldRead = _readLifetime; _readLifetime = new(); oldRead.Cancel(); oldRead.Dispose(); _pendingRead = null;
+        _frameRevision++; _displayPublishing = false; _locationEpoch++; _locationForm++; _loadEpoch++; _formDeparted = false; IsBusy = false;
         _pendingLocationId = null; _pendingLocationName = null; _createdLocation = null; _locationPending = false;
-        LocationFeedback = null; LocationError = null; LoadError = null;
+        LocationFeedback = null; LocationError = null; LoadError = null; _sourceFailed = false;
         if (changed)
         {
-            previous.Retire(); _session = new(_holdings, AcceptOriginalFile); _hasPublishedForm = false; _snapshot = null;
+            previous.Retire(); _session = new(_holdings, AcceptOriginalFile); _hasPublishedForm = false; _snapshot = null; _acceptedFeedbackKey = null;
         }
         Loading = new(); _loading = true; PublishState(); var epoch = _loadEpoch;
         await previous.WaitForPlaceAsync();
@@ -281,16 +294,31 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
 
     /// <summary>Reopens only the original failed query, preserving an already published raw draft.</summary>
     [RelayCommand(CanExecute = nameof(CanReload))]
-    private Task ReloadAsync() => LoadOriginalFormAsync();
+    private Task ReloadAsync()
+    {
+        if (!CanReload) return Task.CompletedTask;
+        if (_sourceFailed) { Loading = new(); Error = null; }
+        return LoadOriginalFormAsync();
+    }
     /// <summary>Gets whether this original failed form may perform an explicit read Retry.</summary>
-    public bool CanReload => _hasQuery && !_formDeparted && Loading.HasFailed && !IsBusy && !_session.Committed;
+    public bool CanReload => _hasQuery && !_formDeparted && OwnsRoot && !_loading && !_cancelPending && (Loading.HasFailed || _sourceFailed) && !IsBusy && !_session.Committed;
+    /// <summary>Offers an explicit reread after source refusal without retiring the original Close authority.</summary>
+    public bool ShowSourceRetry => _sourceFailed && !_session.Committed;
 
     /// <summary>Reads and validates on the worker; publishes every field before uncovering the original form.</summary>
-    private async Task LoadOriginalFormAsync()
+    private Task LoadOriginalFormAsync()
+    {
+        if (_pendingRead is { IsCompleted: false }) return _pendingRead;
+        var epoch = _loadEpoch; var frame = _frameRevision; var pending = LoadOriginalFormCoreAsync();
+        if (epoch == _loadEpoch && frame == _frameRevision) _pendingRead = pending; return pending;
+    }
+    /// <summary>Waits only for this frame's already issued publication, without retrying a completed failure.</summary>
+    public Task WaitForPublicationAsync() => _pendingRead ?? Task.CompletedTask;
+    private async Task LoadOriginalFormCoreAsync()
     {
         var epoch = _loadEpoch; var loading = Loading; var session = _session; var reset = !_hasPublishedForm;
-        var typeId = _queryType; var eventId = _queryEvent; var defaultName = _translator["Holding_DefaultLocation"];
-        bool Owner() => !_formDeparted && epoch == _loadEpoch && ReferenceEquals(loading, Loading) && ReferenceEquals(session, _session);
+        var typeId = _queryType; var eventId = _queryEvent; var defaultName = _translator["Holding_DefaultLocation"]; var frame = _frameRevision; var token = _readLifetime.Token;
+        bool Owner() => !_formDeparted && OwnsRoot && !token.IsCancellationRequested && frame == _frameRevision && epoch == _loadEpoch && ReferenceEquals(loading, Loading) && ReferenceEquals(session, _session);
         void Current() { if (!Owner()) throw new OperationCanceledException("Original holding form retired."); }
         HoldingEventReadReview? read = null; _loading = true; LoadError = null; PublishState();
         try
@@ -299,10 +327,10 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
             {
                 read = await Task.Run(async () =>
                 {
-                    Current(); var result = await session.LoadAsync(typeId, eventId, reset ? defaultName : null, Owner);
+                    Current(); var result = await session.LoadAsync(typeId, eventId, reset ? defaultName : null, Owner, token);
                     Current(); if (result is null) throw new OperationCanceledException("Original event read retired.");
-                    await _holdings.ValidateEventReadReviewAsync(result); Current(); return result;
-                });
+                    await _holdings.ValidateEventReadReviewAsync(result, token); Current(); return result;
+                }, token);
             }, () =>
             {
                 Current(); var review = read ?? throw new InvalidOperationException("Original complete event source missing.");
@@ -311,11 +339,11 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
                 try { PublishOriginalForm(review, reset); Current(); review.EnsureCurrent(); }
                 finally { PropertyChanged -= Guard; }
             });
-            Current(); _hasPublishedForm = true; session.CompletePublication(read!);
+            Current(); _sourceFailed = false; _hasPublishedForm = true; session.CompletePublication(read!);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            session.Retire();
+            if (Owner()) session.Retire();
             if (Owner()) LoadError = _translator[exception is HoldingEventReviewChangedException ? "AssetEvent_SourceChanged" : "Error_Unexpected"];
             System.Diagnostics.Debug.WriteLine(exception.GetType().FullName);
         }
@@ -566,7 +594,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
     {
         if (!CanAddLocation || _session.Review is not { } original) return;
         var epoch = _locationEpoch; var form = _locationForm; var draft = Snapshot(); var type = _type?.Id;
-        bool Owner() => epoch == _locationEpoch && form == _locationForm && !_session.Committed && _type?.Id == type;
+        bool Owner() => OwnsRoot && !_formDeparted && epoch == _locationEpoch && form == _locationForm && !_session.Committed && _type?.Id == type;
         bool Current() => Owner() && ReferenceEquals(original, _session.Review) && draft == Snapshot();
         IsBusy = true; LocationError = null; LocationFeedback = null; PublishState();
         try
@@ -623,7 +651,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
     /// <summary>Reads only the exact accepted place and unchanged original source; financial raw inputs never reset.</summary>
     private async Task AdoptCreatedLocationAsync(HoldingLocationCreation accepted, long epoch, string draft)
     {
-        bool Owner() => epoch == _locationEpoch && !_session.Committed && ReferenceEquals(accepted, _createdLocation);
+        bool Owner() => OwnsRoot && !_formDeparted && epoch == _locationEpoch && !_session.Committed && ReferenceEquals(accepted, _createdLocation);
         try
         {
             var review = await _session.RefreshCreatedLocationAsync(accepted, () => Owner() && draft == Snapshot());
@@ -751,15 +779,16 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
         assetEvent.BasisAmount = Kind is AssetEventKind.Purchase or AssetEventKind.Opening or AssetEventKind.GiftReceived ? priced : null;
         assetEvent.ProceedsAmount = Kind == AssetEventKind.Sale ? priced : null;
 
-        var ownerSession = _session; var ownerForm = _locationForm; var ownerEpoch = _locationEpoch;
+        var ownerSession = _session; var ownerForm = _locationForm; var ownerEpoch = _locationEpoch; var ownerFrame = _frameRevision;
         bool SameForm() => ReferenceEquals(ownerSession, _session) && ownerForm == _locationForm;
-        bool Owner() => SameForm() && ownerEpoch == _locationEpoch && !_formDeparted;
+        bool Owner() => SameForm() && ownerEpoch == _locationEpoch && !_formDeparted && OwnsRoot && ownerFrame == _frameRevision;
+        void Accepted() { if (SameForm()) _snapshot = originalDraft; }
         IsBusy = true; PublishState();
         try
         {
             // D-408: the exact raw draft and original source stay bound to the existing atomic quantity/payment/fee/price writer.
             var result = await ownerSession.SaveAsync(assetEvent, entries, () => Owner() && Snapshot() == originalDraft
-                && MoneyRevision == originalMoney && MoneyContextsReady);
+                && MoneyRevision == originalMoney && MoneyContextsReady, accepted: Accepted);
             if (!Owner() || result is null) return;
             if (result.Conflict is { } conflict)
             {
@@ -778,19 +807,20 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
                 return;
             }
 
-            _snapshot = Snapshot(); PublishState();
+            _snapshot = originalDraft; RefreshAcceptedFeedback(); PublishState();
         }
         catch (CommittedWriteNotificationException<HoldingSaveResult>)
-        { if (SameForm()) { _snapshot = Snapshot(); if (Owner()) Error = _translator["AssetEvent_SavedNeedsReview"]; } return; }
+        { if (SameForm()) { _snapshot = originalDraft; _acceptedFeedbackKey = "AssetEvent_SavedNeedsReview"; RefreshAcceptedFeedback(); } return; }
         catch (HoldingEventReviewChangedException)
-        { if (Owner()) { RetireReview(); Error = _translator["AssetEvent_SourceChanged"]; } return; }
+        { if (Owner()) { InvalidateSource(); Error = _translator["AssetEvent_SourceChanged"]; } return; }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { if (Owner()) { RetireReview(); Error = Presentation.CommercialFailureMessage.OrFallback(exception, _translator, "Common_SaveFailed", draftKept: true); } return; }
+        { if (Owner()) { InvalidateSource(); Error = Presentation.CommercialFailureMessage.OrFallback(exception, _translator, "Common_SaveFailed", draftKept: true); } return; }
         finally { if (SameForm()) { IsBusy = false; PublishState(); } }
         if (!Owner()) return;
+        if (Snapshot() != originalDraft) { RefreshAcceptedFeedback(); return; }
         try { await _interaction.NavigateAsync(".."); }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { if (Owner()) { Error = _translator["Editor_SavedReturnFailed"]; await _interaction.ShowFailureAsync(exception); } }
+        { if (Owner()) { _acceptedFeedbackKey = "Editor_SavedReturnFailed"; RefreshAcceptedFeedback(); await _interaction.ShowFailureAsync(exception); } }
     }
 
 #if (DEBUG && WINDOWS) || ZANANCE_INDEPENDENT_HOME_REVIEW
@@ -804,7 +834,7 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
 #endif
 
     /// <summary>Gets whether raw holding inputs are still editable.</summary>
-    public bool CanEdit => !_loading && Loading.IsReady && !IsBusy && !_session.Committed;
+    public bool CanEdit => !_formDeparted && OwnsRoot && !_displayPublishing && !_cancelPending && !_sourceFailed && !_loading && Loading.IsReady && !IsBusy && !_session.Committed;
     /// <summary>Gets whether the original coherent financial review still authorizes this form's Save.</summary>
     public bool CanSave => CanEdit && MoneyContextsReady && _session.Review is not null && !HasSavedLocationPending;
     /// <summary>Gets Cancel before acceptance and Close afterwards.</summary>
@@ -812,27 +842,92 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
     private void PublishState()
     {
         OnPropertyChanged(nameof(CanEdit)); OnPropertyChanged(nameof(CanSave)); OnPropertyChanged(nameof(CloseText));
+        OnPropertyChanged(nameof(CanLeave)); OnPropertyChanged(nameof(IsDirty)); OnPropertyChanged(nameof(ShowSourceRetry)); CancelCommand.NotifyCanExecuteChanged();
         OnPropertyChanged(nameof(SavedLocationId)); OnPropertyChanged(nameof(HasSavedLocationPending));
         OnPropertyChanged(nameof(CanAddLocation)); OnPropertyChanged(nameof(CanUseSavedLocation));
         OnPropertyChanged(nameof(CanReload)); ReloadCommand.NotifyCanExecuteChanged();
         SaveCommand.NotifyCanExecuteChanged(); AddLocationCommand.NotifyCanExecuteChanged(); UseSavedLocationCommand.NotifyCanExecuteChanged();
     }
+    /// <summary>Refreshes original live captions without changing selected identities, raw text or parser contexts.</summary>
+    public void RefreshDisplay()
+    {
+        if (_formDeparted || !OwnsRoot) return;
+        if (_loading) { RefreshMoneyTexts(); return; }
+        var frame = ++_frameRevision; var loading = _loading;
+        bool Current() => !_formDeparted && OwnsRoot && frame == _frameRevision;
+        void Publish(Action action)
+        { if (!Current()) throw new OperationCanceledException("Original event display retired."); action();
+          if (!Current()) throw new OperationCanceledException("Original event display retired."); }
+        var selected = (KindIndex, UnitIndex, PriceModeIndex, DirectionIndex);
+        _displayPublishing = true; _loading = true;
+        try
+        {
+            PublishState();
+            Publish(() => Title = _translator[_existing is null ? "AssetEvent_NewTitle" : "AssetEvent_EditTitle"]);
+            Publish(() => KindNames = [.. _kinds.Select(_text.EventKind)]);
+            Publish(() => UnitNames = [.. _units.Select(unit => unit == QuantityUnit.Piece && _type is { } type
+                ? _text.CountName(type) : _translator[unit == QuantityUnit.Kilogram ? "Unit_Kilogram" : "Unit_Gram"])]);
+            Publish(() => PriceModeNames = [_translator["AssetEvent_PriceTotal"], _type is { } type ? _text.PerUnit(type) : string.Empty]);
+            Publish(() => DirectionNames = [_translator["AssetEvent_Increase"], _translator["AssetEvent_Decrease"]]);
+            Publish(() => KindIndex = selected.KindIndex); Publish(() => UnitIndex = selected.UnitIndex);
+            Publish(() => PriceModeIndex = selected.PriceModeIndex); Publish(() => DirectionIndex = selected.DirectionIndex);
+            Publish(() => OnKindIndexChanged(KindIndex));
+            Publish(() => RefreshAcceptedFeedback());
+        }
+        catch (OperationCanceledException) when (!Current()) { }
+        finally
+        { if (frame == _frameRevision) { _loading = loading; _displayPublishing = false; PublishState(); } }
+    }
+    Task Presentation.IThemeAware.RefreshThemeAsync() { RefreshDisplay(); return Task.CompletedTask; }
+    /// <summary>Renders only this known accepted result and its separate newer draft in the actual live language.</summary>
+    private void RefreshAcceptedFeedback()
+    {
+        if (!_session.Committed || _formDeparted || !OwnsRoot) return;
+        var notice = IsDirty ? _translator["AssetEvent_SavedDraftChanged"] : null;
+        Error = _acceptedFeedbackKey is { } key ? _translator[key] + (notice is null ? string.Empty : "\n\n" + notice) : notice;
+    }
+    private void InvalidateSource() { _sourceFailed = true; _session.Retire(); PublishState(); }
     /// <summary>Retires a departed source without changing its raw draft or accepted result.</summary>
-    public void RetireReview() { _formDeparted = true; _loadEpoch++; _locationEpoch++; _session.Retire(); PublishState(); }
+    public void RetireReview()
+    {
+        _resumeRead |= _hasQuery && _loading; _displayPublishing = false; _formDeparted = true; _frameRevision++; _loadEpoch++; _locationEpoch++;
+        var old = _readLifetime; _readLifetime = new(); old.Cancel(); old.Dispose(); _pendingRead = null;
+        _session.Retire(); PublishState();
+    }
+    /// <summary>Resumes only an interrupted or previously published original source; a completed initial failure waits for Retry.</summary>
+    public void SetViewActive(bool active)
+    {
+        if (!active) { if (!_formDeparted) RetireReview(); return; }
+        if (!_formDeparted || !OwnsRoot) return;
+        _formDeparted = false; _frameRevision++;
+        if (_hasQuery && !_session.Committed && (_resumeRead || _hasPublishedForm))
+        { _resumeRead = false; Loading = new(); _ = LoadOriginalFormAsync(); }
+        PublishState();
+    }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanLeave))]
     private async Task CancelAsync()
     {
-        if (!_session.Committed && IsDirty && !await _interaction.ConfirmAsync(_translator["Common_DiscardTitle"],
-            _translator["Common_DiscardMessage"], _translator["Common_Discard"], _translator["Common_KeepEditing"])) return;
-        await _interaction.NavigateAsync("..");
+        if (!CanLeave) return;
+        var frame = _frameRevision; var session = _session; var form = _locationForm; var draft = Snapshot();
+        bool Current() => !_formDeparted && OwnsRoot && frame == _frameRevision && ReferenceEquals(session, _session)
+            && form == _locationForm && draft == Snapshot();
+        _cancelPending = true; PublishState();
+        try
+        {
+            if ((!IsDirty || await _interaction.ConfirmAsync(_translator["Common_DiscardTitle"], _translator["Common_DiscardMessage"],
+                _translator["Common_Discard"], _translator["Common_KeepEditing"])) && Current()) await _interaction.NavigateAsync("..");
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { if (Current()) Error = _translator["Error_Unexpected"]; }
+        finally { _cancelPending = false; PublishState(); }
     }
 
     // The input as it was loaded or saved; leaving with a change asks first (CR12).
     private string? _snapshot;
 
     /// <inheritdoc />
-    public bool IsDirty => !_session.Committed && _snapshot is not null && Snapshot() != _snapshot;
+    public bool IsDirty => _snapshot is not null && Snapshot() != _snapshot;
 
     private string Snapshot() => Presentation.DraftFingerprint.Create(
         KindIndex, Date, QuantityText, UnitIndex, Location?.Id, ToLocation?.Id, Account?.Id, PriceModeIndex,

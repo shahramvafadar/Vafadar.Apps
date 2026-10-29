@@ -69,3 +69,7 @@ Physical adoption awaits the protected D-607 terminal gate.
 
 Original asset-type editor source, Retry and accepted metadata ownership (D-642):
 [Focused and original native evidence](quality/complete-original-asset-type-editor-source.md); physical adoption and broader gates remain separate.
+
+
+Original asset-event native frame, pending Retry and accepted draft lifetime (D-643):
+[Focused and original native evidence](quality/original-asset-event-frame-and-receipts.md), preserving D-607 and separate physical/platform gates.

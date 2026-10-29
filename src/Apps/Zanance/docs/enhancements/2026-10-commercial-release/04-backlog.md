@@ -7628,3 +7628,35 @@ never retry/subset/alternate/move/escalate/reuse. Used packages/evidence/pre-ref
 archive remain. Phone/D-607/three deadlines/unread source untouched; physical adoption and broader
 security/DB/key/ANR/performance/A11Y/iOS/provider/Store/release gates stay open. Overall goal active.
 [Complete evidence](../../quality/complete-original-asset-type-editor-source.md).
+
+
+### D-643 - Original asset-event frame and accepted draft ownership (2026-10-29)
+
+The delivered coherent event/type/history/settings/account/location reader and atomic original
+quantity/payment/fee/price writer remain. Weak actual root/page/tab/query/display and raw-draft
+ownership now guard native Back/Cancel/Save. Pending reads cancel/share their current publication;
+completed initial failures wait for explicit Retry. Source refusal retains Close and read-only
+Retry instead of retiring the page. Live captions preserve selected identities and raw physical
+parse contexts. Actual receipt callbacks precede Changed; newer input remains dirty after known
+acceptance and cannot replay Save or navigate another owner. No model/migration/financial rule or
+permission change. A new pending-Retry implementation regression is preserved and fixed separately.
+
+Seventeen distinct new cases and35affected existing cases pass. Final strict Windows and complete
+offline384AOT/408ELF/1608staticLOAD shipping pass. Fresh API36/x64/4096 UID10216/PID4397 qualifies
+pending Back/departed Save refusal, failure/Retry and18normal-scale en/fa/de/theme/width contexts.
+All successes remain under their original APK. One no-reset corrected upgrade toPID7070 preserves
+boot, original file and complete17-table source via exact read-only adoption without preparation.
+Raw2.000/50.00 survive rights refusal and a held Retry; repeated invocation cannot replace the
+owner. Exactly one original noncash Opening2000/basis5000EUR is saved with notification failure and
+a newer dirty Note; every other observed source fact is equal and ledger0. Six new accepted-feedback
+contexts, original Close/discard and final Home/source pass without accepted-write replay.
+
+Original settings/boot/1080x1920/420/enSystem restore; fresh UID/data and44hash-matched XMLs1,606,733bytes
+retire, only fresh AVD stops and official deletion succeeds. Four standard cleans remove28,957files/
+1,974,011,348logicalbytes. Supplemental16-target deletion is blocked before process creation:
+3,730files1,202,795,913logicalbytes remain; never retry/subset/alternate/move/escalate/reuse. Host
+encoding/counter/private-compile failures remain with successful original evidence preserved. Used
+APKs/evidence/pre-refusal source archive stay. Phone/D-607/three deadlines/unread source untouched;
+physical adoption and broad DB/key/security/ANR/performance/A11Y/iOS/provider/Store/release gates stay
+open. Overall goal active and TalkBack last; whole PE/BCL equality is not claimed.
+[Complete evidence](../../quality/original-asset-event-frame-and-receipts.md).

@@ -182,7 +182,7 @@ public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> con
         SaveEventCoreAsync(assetEvent, entries, recordPurchasePrice, cancellationToken);
 
     private async Task<HoldingSaveResult> SaveEventCoreAsync(AssetEvent assetEvent, IReadOnlyList<LedgerEntry> entries,
-        bool recordPurchasePrice, CancellationToken cancellationToken, HoldingEventReadReview? review = null, Func<bool>? isCurrent = null)
+        bool recordPurchasePrice, CancellationToken cancellationToken, HoldingEventReadReview? review = null, Func<bool>? isCurrent = null, Action? accepted = null)
     {
         ArgumentNullException.ThrowIfNull(assetEvent);
         ArgumentNullException.ThrowIfNull(entries);
@@ -298,7 +298,9 @@ public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> con
         await db.SaveChangesAsync(cancellationToken);
         ValidatePending(); write.EnsureCurrent();
         await write.CommitAsync(cancellationToken);
-        return CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty), HoldingSaveResult.Success);
+        // D-643: retain the exact accepted original draft before a following notification can deliver newer text.
+        return CommittedWriteNotification.Publish(() =>
+        { accepted?.Invoke(); Changed?.Invoke(this, EventArgs.Empty); }, HoldingSaveResult.Success);
     }
 
     /// <summary>

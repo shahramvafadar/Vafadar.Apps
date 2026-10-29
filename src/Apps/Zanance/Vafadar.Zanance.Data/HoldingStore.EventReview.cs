@@ -78,7 +78,7 @@ public sealed partial class HoldingStore
 
     /// <summary>Saves one reviewed exact draft under the original atomic event/payment/fee/price writer.</summary>
     public async Task<HoldingSaveResult> SaveReviewedEventAsync(HoldingEventReadReview review, AssetEvent item,
-        IReadOnlyList<LedgerEntry> entries, bool recordPurchasePrice, CancellationToken ct = default, Func<bool>? isCurrent = null)
+        IReadOnlyList<LedgerEntry> entries, bool recordPurchasePrice, CancellationToken ct = default, Func<bool>? isCurrent = null, Action? accepted = null)
     {
         ArgumentNullException.ThrowIfNull(review); ArgumentNullException.ThrowIfNull(item); ArgumentNullException.ThrowIfNull(entries);
         review.BeginWrite(); var committed = false;
@@ -90,7 +90,7 @@ public sealed partial class HoldingStore
             var original = review.Inputs.Events.SingleOrDefault(e => e.Id == review.EventId);
             if (item.GroupId != original?.GroupId || original is not null && item.Kind != original.Kind)
                 throw new HoldingEventReviewChangedException("Original holding event kind or group changed.");
-            var result = await SaveEventCoreAsync(copy, copies, recordPurchasePrice, ct, review, isCurrent);
+            var result = await SaveEventCoreAsync(copy, copies, recordPurchasePrice, ct, review, isCurrent, accepted);
             committed = result.Succeeded; return result;
         }
         catch (CommittedWriteNotificationException<HoldingSaveResult>) { committed = true; throw; }

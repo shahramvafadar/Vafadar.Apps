@@ -4894,3 +4894,8 @@ iOS/provider/Store/publication acceptance separate; the overall goal stays activ
 ## D-642 bounded type-editor gate
 
 Original source and independent native form checks pass within the recorded scope. Keep later physical no-reset adoption after D-607, general security/performance/stability/accessibility/iOS/provider/store gates open; this is not full release acceptance. [Evidence](quality/complete-original-asset-type-editor-source.md).
+
+
+## D-643 bounded original event-frame gate
+
+Original frame/receipt behavior and the documented independent native cases pass. Later physical no-reset adoption after D-607, broader security/performance/stability/accessibility/iOS/provider/store and release gates remain; neither component packaging nor these bounded cases close them. [Evidence](quality/original-asset-event-frame-and-receipts.md).

@@ -8606,4 +8606,7 @@ Original-XML SHA-256: {5}</value>
   <data name="AssetType_SavedDraftChanged" xml:space="preserve">
     <value>Die Anlageart wurde gespeichert. Neuere Änderungen sind noch nicht gespeichert. Prüfe sie, bevor du dieses Formular schließt.</value>
   </data>
+  <data name="AssetEvent_SavedDraftChanged" xml:space="preserve">
+    <value>Die ursprüngliche Änderung wurde gespeichert. Neuere Eingaben sind nicht gespeichert. Beim Schließen kannst du entscheiden, ob du sie verwerfen möchtest.</value>
+  </data>
 </root>

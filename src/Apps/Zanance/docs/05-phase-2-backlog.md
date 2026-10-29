@@ -4729,3 +4729,8 @@ Original budget editor coherence, cancelled/retained publication, explicit retry
 ## D-642 implementation continuation
 
 Original type-editor source and ownership are delivered within their documented independent scope. Current remaining state remains in the canonical commercial backlog; this historical plan is not a second executable queue. [Evidence](quality/complete-original-asset-type-editor-source.md).
+
+
+## D-643 implementation continuation
+
+Original asset-event frame and accepted raw-draft behavior are delivered within the recorded independent scope. Remaining executable state stays in the canonical commercial backlog; this historical plan is not another task queue. [Evidence](quality/original-asset-event-frame-and-receipts.md).

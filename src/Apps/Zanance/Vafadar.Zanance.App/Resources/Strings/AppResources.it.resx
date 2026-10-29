@@ -8595,4 +8595,7 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="AssetType_SavedDraftChanged" xml:space="preserve">
     <value>Il tipo di bene è stato salvato. Hai modifiche più recenti non salvate: controllale prima di chiudere questo modulo.</value>
   </data>
+  <data name="AssetEvent_SavedDraftChanged" xml:space="preserve">
+    <value>La modifica originale è stata salvata. I dati inseriti dopo non sono stati salvati. Chiudendo il modulo puoi decidere se scartarli.</value>
+  </data>
 </root>

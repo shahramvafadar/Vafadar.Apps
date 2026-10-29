@@ -8640,4 +8640,7 @@ Original XML SHA-256: {5}</value>
   <data name="AssetType_SavedDraftChanged" xml:space="preserve">
     <value>The asset type was saved. You have newer unsaved changes; review them before closing this form.</value>
   </data>
+  <data name="AssetEvent_SavedDraftChanged" xml:space="preserve">
+    <value>The original change was saved. Newer input has not been saved. Close this form to review whether to discard it.</value>
+  </data>
 </root>

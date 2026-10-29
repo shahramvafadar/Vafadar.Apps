@@ -7860,3 +7860,8 @@ Twenty-one new and twenty affected existing focused cases pass. Independent nati
 ## D-642 original type-editor acceptance
 
 Seventeen new focused cases and22affected existing cases pass. Independent original native pending Cancel, departed Save refusal, explicit Retry,18normal-scale ready contexts, retained raw rights/refusal/Retry and one metadata acceptance with notification failure/newer draft pass. Complete source changes only type Name/UpdatedAt; no ledger write. Physical adoption remains separate. [Evidence](quality/complete-original-asset-type-editor-source.md).
+
+
+## D-643 original event-frame acceptance
+
+17new and35affected existing cases pass. Original pending Back/departed Save refusal, explicit Retry,18normal-scale ready contexts, retained-source no-reset adoption, held duplicate-Retry refusal and one noncash event acceptance are qualified. Six separate accepted-feedback contexts and actual Close/discard preserve exactly one event and ledger0; general platform/release acceptance remains open. [Evidence](quality/original-asset-event-frame-and-receipts.md).

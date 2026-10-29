@@ -30,7 +30,7 @@ public sealed class HoldingEventEditorFlowTests
     public async Task Changed_source_or_pending_draft_refuses_without_mutating_original_objects(bool source)
     {
         using var f = new FlowFixture(); var seed = await SeedAsync(f); var session = new HoldingEventEditorSession(seed.Store);
-        await session.LoadAsync(seed.Type.Id, null);
+        await session.LoadAsync(seed.Type.Id, null, ct: Ct);
         if (source) { seed.Type.Note = "Newer original type"; await seed.Store.SaveTypeAsync(seed.Type, Ct); }
         var before = await GoalChooserFlowTests.SnapshotAsync(f);
         await Assert.ThrowsAsync<HoldingEventReviewChangedException>(() => session.SaveAsync(seed.Event, [seed.Payment], () => source));
@@ -44,13 +44,13 @@ public sealed class HoldingEventEditorFlowTests
     public async Task A_known_committed_purchase_cannot_become_a_second_event_after_notification_failure()
     {
         using var f = new FlowFixture(); var seed = await SeedAsync(f); var session = new HoldingEventEditorSession(seed.Store);
-        await session.LoadAsync(seed.Type.Id, null);
+        await session.LoadAsync(seed.Type.Id, null, ct: Ct);
         seed.Store.Changed += (_, _) => throw new IOException("Deliberate original holding notification failure.");
         await Assert.ThrowsAsync<CommittedWriteNotificationException<HoldingSaveResult>>(() => session.SaveAsync(seed.Event, [seed.Payment], () => true));
         Assert.True(session.Committed); Assert.Null(session.Review);
         var before = await GoalChooserFlowTests.SnapshotAsync(f);
         Assert.Null(await session.SaveAsync(new AssetEvent { AssetTypeId = seed.Type.Id }, [], () => true));
-        Assert.Null(await session.LoadAsync(seed.Type.Id, null));
+        Assert.Null(await session.LoadAsync(seed.Type.Id, null, ct: Ct));
         Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
         Assert.Single(await seed.Store.GetEventsAsync(cancellationToken: Ct));
         Assert.Single(await f.Store.GetEntriesAsync(cancellationToken: Ct));

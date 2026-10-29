@@ -8583,4 +8583,7 @@ SHA-256 du XML original : {5}</value>
   <data name="AssetType_SavedDraftChanged" xml:space="preserve">
     <value>Le type d’actif a été enregistré. Des modifications plus récentes ne sont pas enregistrées ; vérifiez-les avant de fermer ce formulaire.</value>
   </data>
+  <data name="AssetEvent_SavedDraftChanged" xml:space="preserve">
+    <value>La modification initiale a été enregistrée. Les données saisies ensuite ne sont pas enregistrées. En fermant le formulaire, vous pourrez décider de les abandonner.</value>
+  </data>
 </root>

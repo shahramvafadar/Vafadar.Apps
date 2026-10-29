@@ -33,6 +33,7 @@ public partial class AppShell : Shell
     private readonly List<WeakReference<GoalEditorPage>> _publishedGoalEditors = [];
     private readonly List<WeakReference<BudgetEditorPage>> _publishedBudgetEditors = [];
     private readonly List<WeakReference<AssetTypeEditorPage>> _publishedAssetTypeEditors = [];
+    private readonly List<WeakReference<AssetEventEditorPage>> _publishedAssetEventEditors = [];
     private bool _navigationRetired;
     /// <summary>Gets whether this actual native root can still own an original account editor or accepted return.</summary>
     internal bool OwnsAccountEditorPublication => !_navigationRetired;
@@ -42,6 +43,8 @@ public partial class AppShell : Shell
     internal bool OwnsBudgetEditorPublication => !_navigationRetired;
     /// <summary>Gets whether this actual root still owns its original asset-type forms.</summary>
     internal bool OwnsAssetTypeEditorPublication => !_navigationRetired;
+    /// <summary>Gets whether this actual root still owns original event forms and their consent.</summary>
+    internal bool OwnsAssetEventEditorPublication => !_navigationRetired;
 
     /// <summary>Records actual published Home instances; lazy ShellContent.Content may not expose its cached page.</summary>
     internal void RegisterHomePublication(Features.Home.HomePage home)
@@ -160,6 +163,15 @@ public partial class AppShell : Shell
         _publishedAssetTypeEditors.RemoveAll(reference => !reference.TryGetTarget(out _));
         if (!_publishedAssetTypeEditors.Any(reference => reference.TryGetTarget(out var existing) && ReferenceEquals(existing, page)))
             _publishedAssetTypeEditors.Add(new(page));
+    }
+
+    /// <summary>Tracks only weak actual original event pages, including routed modal forms.</summary>
+    internal void RegisterAssetEventEditor(AssetEventEditorPage page)
+    {
+        if (_navigationRetired) { page.RetireShellPublication(); return; }
+        _publishedAssetEventEditors.RemoveAll(reference => !reference.TryGetTarget(out _));
+        if (!_publishedAssetEventEditors.Any(reference => reference.TryGetTarget(out var existing) && ReferenceEquals(existing, page)))
+            _publishedAssetEventEditors.Add(new(page));
     }
 
     /// <summary>Route of the account editor (query: <c>id</c> for an existing account).</summary>
@@ -438,6 +450,9 @@ public partial class AppShell : Shell
         {
             if (CurrentPage is CategoriesPage categories) categories.RetirePublication();
             if (CurrentPage is AccountEditorPage accountEditor) accountEditor.RetirePublication();
+            if (CurrentPage is AssetEventEditorPage eventEditor) eventEditor.RetirePublication();
+            if (Navigation.ModalStack.LastOrDefault() is AssetEventEditorPage modalEvent) modalEvent.RetirePublication();
+            if (Navigation.ModalStack.LastOrDefault() is NavigationPage eventNavigation && eventNavigation.CurrentPage is AssetEventEditorPage wrappedEvent) wrappedEvent.RetirePublication();
             if (CurrentPage is AssetTypeEditorPage typeEditor) typeEditor.RetirePublication();
             if (Navigation.ModalStack.LastOrDefault() is AssetTypeEditorPage modalType) modalType.RetirePublication();
             if (Navigation.ModalStack.LastOrDefault() is NavigationPage typeNavigation && typeNavigation.CurrentPage is AssetTypeEditorPage wrappedType) wrappedType.RetirePublication();
@@ -508,6 +523,9 @@ public partial class AppShell : Shell
         foreach (var reference in _publishedAssetTypeEditors)
             if (reference.TryGetTarget(out var editor)) editor.RetireShellPublication();
         _publishedAssetTypeEditors.Clear();
+        foreach (var reference in _publishedAssetEventEditors)
+            if (reference.TryGetTarget(out var editor)) editor.RetireShellPublication();
+        _publishedAssetEventEditors.Clear();
         Navigated -= OnRetainedDetailsTabActivated;
 #if ANDROID
         if (Handler is AccessibleShellRenderer renderer) renderer.RetireNavigation();

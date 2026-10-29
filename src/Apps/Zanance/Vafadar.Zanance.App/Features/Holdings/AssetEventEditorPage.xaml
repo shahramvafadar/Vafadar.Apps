@@ -127,11 +127,15 @@
 
                 <Label Text="{Binding EffectText}" TextColor="{DynamicResource PlanText}" FontAttributes="Bold" Margin="4,0"
                        IsVisible="{Binding EffectText, Converter={StaticResource IsNotNullConverter}}" />
-                <Label Text="{Binding FormError}" Style="{StaticResource ErrorText}" IsVisible="{Binding FormError, Converter={StaticResource IsNotNullConverter}}" />
+
             </VerticalStackLayout>
         </ScrollView>
 
-        <p:WrappingAction Grid.Row="2" Margin="16" Appearance="Primary" Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding CanSave}" />
+        <VerticalStackLayout Grid.Row="2" Margin="16" Spacing="8">
+            <Label Text="{Binding FormError}" Style="{StaticResource ErrorText}" IsVisible="{Binding FormError, Converter={StaticResource IsNotNullConverter}}" />
+            <p:WrappingAction Text="{v:Translate Holdings_RetryLoad}" Command="{Binding ReloadCommand}" IsVisible="{Binding ShowSourceRetry}" />
+            <p:WrappingAction Appearance="Primary" Text="{v:Translate Common_Save}" Command="{Binding SaveCommand}" IsEnabled="{Binding CanSave}" />
+        </VerticalStackLayout>
     </Grid>
         <VerticalStackLayout x:Name="LoadingSurface" Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.IsLoading}">
             <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center" />
