@@ -1737,16 +1737,22 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         DeleteForecastCoreAsync(id, null, cancellationToken);
 
     /// <summary>Deletes from the reviewed original file after native consent; no paid forecast capability is required.</summary>
-    public Task DeleteReviewedForecastSnapshotAsync(Guid id, ForecastReadSnapshot reviewed, CancellationToken cancellationToken = default) =>
-        DeleteForecastCoreAsync(id, reviewed ?? throw new ArgumentNullException(nameof(reviewed)), cancellationToken);
+    public Task DeleteReviewedForecastSnapshotAsync(Guid id, ForecastReadSnapshot reviewed, CancellationToken cancellationToken = default,
+        Func<bool>? isCurrent = null, Action? accepted = null) =>
+        DeleteForecastCoreAsync(id, reviewed ?? throw new ArgumentNullException(nameof(reviewed)), cancellationToken, isCurrent, accepted);
 
-    private async Task DeleteForecastCoreAsync(Guid id, ForecastReadSnapshot? reviewed, CancellationToken cancellationToken)
+    private async Task DeleteForecastCoreAsync(Guid id, ForecastReadSnapshot? reviewed, CancellationToken cancellationToken, Func<bool>? isCurrent = null, Action? accepted = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken);
         write.DemandFeature(CommercialFeature.DeleteData); reviewed?.DemandWriterFile(db, CommercialFeature.DeleteData);
+        if (reviewed is not null) await reviewed.ValidateDeletionAsync(db, id, cancellationToken);
+        if (isCurrent?.Invoke() == false) throw new InvalidOperationException("Original forecast delete consent retired.");
         await db.ForecastSnapshots.Where(item => item.Id == id).ExecuteDeleteAsync(cancellationToken);
-        reviewed?.DemandWriterFile(db, CommercialFeature.DeleteData); await write.CommitAsync(cancellationToken);
-        CommittedWriteNotification.Publish(OnChanged);
+        reviewed?.DemandWriterFile(db, CommercialFeature.DeleteData);
+        if (isCurrent?.Invoke() == false) throw new InvalidOperationException("Original forecast delete retired before commit.");
+        await write.CommitAsync(cancellationToken);
+        // D-645: a known deletion precedes fallible ordinary notifications and native follow-through.
+        CommittedWriteNotification.Publish(() => { accepted?.Invoke(); OnChanged(); });
     }
 }

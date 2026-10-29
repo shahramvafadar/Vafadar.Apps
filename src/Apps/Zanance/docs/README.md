@@ -77,3 +77,7 @@ Original asset-event native frame, pending Retry and accepted draft lifetime (D-
 
 Original holding-detail inline price drafts, retained tabs and accepted receipts (D-644):
 [Focused and original native evidence](quality/original-holding-price-draft-ownership.md), preserving D-607 and separate physical/platform gates.
+
+
+Original saved forecast comparison source, covered Retry and native delete receipts (D-645):
+[Focused and original native evidence](quality/original-saved-comparison-source-and-delete.md), preserving D-607 and separate physical/platform gates.

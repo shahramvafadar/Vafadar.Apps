@@ -52,12 +52,13 @@ public sealed partial class ForecastWorkspace(ForecastWorkStore reader, ZananceS
             await Loading.RunAsync(async () =>
             {
                 next = await reader.ReadAsync();
-                try { computed = next.Compute(horizon, Scenario, calendar, day); }
+                try { computed = await Task.Run(() => next.Compute(horizon, Scenario, calendar, day)); }
                 catch (CommercialWriteRejectedException rejected)
                 { error = CommercialFailureMessage.Describe(rejected, translator) + "\n" + translator["Forecast_DraftRetained"]; }
+                await reader.ValidateAsync(next);
             }, () =>
             {
-                next!.EnsureCurrent(); Review = next; Forecasts = computed; Error = error; _needsRefresh = false;
+                next!.EnsurePublicationAccess(); Review = next; Forecasts = computed; Error = error; _needsRefresh = false;
                 HorizonIndex = horizon; Calendar = calendar; BaseDate = day; NotifyState();
             });
         }

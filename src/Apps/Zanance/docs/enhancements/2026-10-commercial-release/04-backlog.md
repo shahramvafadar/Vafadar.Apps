@@ -7691,3 +7691,30 @@ escalation/reuse. Used APKs/evidence/pre-refusal source archive remain. Phone/D-
 unread source are untouched. Physical adoption and broader DB/key/security/ANR/performance/A11Y/
 iOS/provider/Store/release gates stay open; overall delivery active and TalkBack last.
 [Complete evidence](../../quality/original-holding-price-draft-ownership.md).
+
+
+### D-645 - Complete original saved comparison and reviewed deletion (2026-10-29)
+
+Saved forecast comparisons freeze and validate the complete original file/source, compute
+on a worker and publish under actual query/page/tab/root/display ownership. Covered failure
+and explicit Retry clear stale authority; missing identities clear former content. Native
+delete consent and the actual transactional writer bind exact original membership/content,
+and a post-commit receipt precedes fallible notification. Original forecast math, scope,
+currency, dates, commercial policy and saved values remain; no model/migration change occurs.
+
+Fourteen distinct new and31affected existing cases pass; six original failures and later
+implementation refusals remain with corrected continuations. Strict Windows and complete
+offline384AOT/408ELF/1608staticLOAD shipping pass. Fresh API36/x64/4096 native pending Back,
+departed Delete refusal, read failure/Retry, dialog Cancel,12ready contexts and6accepted-feedback
+contexts pass on the same retained source across necessary no-reset updates. Exactly one
+saved zero-scope definition is prepared and deleted; only that row changes, all other17observed
+tables remain equal and no financial posting or D-506 success is replayed.
+
+Original queried settings/boot/1080x1920/420/enSystem restore. Only fresh UID/data,48hash-matched
+XMLs1383581bytes and the owned AVD retire. Four standard cleans remove28955files1978474853logical
+bytes; official AVD deletion removes25files5549274098logicalbytes. Supplemental18-target cleanup
+is rejected before process creation:3723files1049863513logicalbytes remain with no retry/subset/
+alternate/move/escalation/reuse. Used packages/evidence/pre-refusal source archive remain.
+Phone/D-607/three deadlines/unread source are untouched. Physical adoption and broad DB/key/
+security/ANR/performance/A11Y/iOS/provider/Store/release gates stay open; overall delivery active.
+[Complete evidence](../../quality/original-saved-comparison-source-and-delete.md).

@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-645: validate complete saved-comparison sources, publish under current page/query ownership, cover read failures with Retry and preserve accepted deletion receipts without deleting again.
+
 - D-644: preserve newer inline price input after a saved valuation, protect original detail Back/archive consent, resume retained tabs and distinguish old receipts from later read/write failures.
 
 - D-643: bind holding-event Back, discard and Retry to their original frame; retain later unsaved input after a known saved change, and refresh original captions without changing physical units.

@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -25,16 +26,52 @@ public sealed record ComparisonRow(string DateText, string SavedText, string Act
 /// movements and residual changes to plans or earlier data. The parts add up; the snapshot itself never changes.
 /// </summary>
 public sealed partial class SnapshotViewModel(ZananceStore store, Translator translator, IDateFormatter dates, ILocalizationService localization, TimeProvider time, ForecastWorkStore work, IForecastInteraction? interaction = null)
-    : ViewModelBase, IQueryAttributable, Presentation.IThemeAware
+    : ViewModelBase, Presentation.IThemeAware
 {
     private readonly IForecastInteraction _interaction = interaction ?? new MauiForecastInteraction();
     private Guid _id;
-    private bool _deleted;
+    private Guid? _deletedId;
+    private Guid _publishedId;
+    private bool _active = true;
+    private int _revision;
+    private string? _originalFile;
+    private Func<bool>? _rootOwner;
+    private CancellationTokenSource _lifetime = new();
+    /// <summary>Gets the actual most recent accepted deletion, independently of another requested identity.</summary>
+    public Guid? DeletedSnapshotId => _deletedId;
+    /// <summary>Gets whether this actual frame can close outside an outstanding native deletion.</summary>
+    public bool CanLeave => _active && (_rootOwner?.Invoke() ?? true) && !IsBusy;
+    /// <summary>Gets whether an explicit source read is available for the current original frame.</summary>
+    public bool CanReload => _active && (_rootOwner?.Invoke() ?? true) && !IsBusy && !Loading.IsLoading;
+    /// <summary>Binds the weak native root without retaining a completed Shell.</summary>
+    internal void BindRootOwner(Func<bool> owner) => _rootOwner = owner;
+    /// <summary>Retires original reads, row authority and native consent on actual page/tab/root departure.</summary>
+    public void SetActive(bool active)
+    {
+        if (_active != active) { _active = active; RetireRead(); }
+        localization.Changed -= OnDisplayChanged;
+        if (active) localization.Changed += OnDisplayChanged;
+        PublishAvailability();
+    }
+    private void OnDisplayChanged(object? sender, EventArgs args)
+    { RetireRead(); if (_active) _ = LoadAsync(); }
+    private void RetireRead()
+    {
+        ++_revision; _review = null; _publishedId = Guid.Empty;
+        var old = _lifetime; _lifetime = new(); Loading = new(); old.Cancel(); old.Dispose(); PublishAvailability();
+    }
+    private void PublishAvailability()
+    {
+        OnPropertyChanged(nameof(CanLeave)); OnPropertyChanged(nameof(CanReload)); OnPropertyChanged(nameof(CanDelete));
+        OnPropertyChanged(nameof(DeletedSnapshotId)); DeleteCommand.NotifyCanExecuteChanged(); ReloadCommand.NotifyCanExecuteChanged();
+    }
     private ForecastReadSnapshot? _review;
     /// <summary>Gets covered current-file publication state.</summary>
-    public Presentation.SnapshotLoadState Loading { get; } = new();
+    [ObservableProperty] public partial Presentation.SnapshotLoadState Loading { get; private set; } = new();
+    /// <summary>Gets translated read feedback beside the original covered Retry.</summary>
+    [ObservableProperty] public partial string? LoadError { get; private set; }
     /// <summary>Gets retained saved points independently of paid new comparison.</summary>
-    public ObservableCollection<ComparisonRow> SavedRows { get; } = [];
+    public Presentation.SnapshotCollection<ComparisonRow> SavedRows { get; } = [];
     /// <summary>Gets full translated access or accepted-delete follow-through feedback.</summary>
     [ObservableProperty] public partial string? AccessError { get; set; }
     /// <summary>Gets whether a new analytical comparison was permitted by the original current facts.</summary>
@@ -42,14 +79,15 @@ public sealed partial class SnapshotViewModel(ZananceStore store, Translator tra
     /// <summary>Gets the original not-started comparison explanation only after an authorized comparison.</summary>
     public bool ShowNotStarted => CanCompare && NotStarted;
     /// <summary>Gets whether original saved data can still be explicitly deleted.</summary>
-    public bool CanDelete => Loading.IsReady && !IsBusy && !_deleted && !NotFound;
-    [RelayCommand] private Task ReloadAsync() => LoadAsync();
+    public bool CanDelete => _active && (_rootOwner?.Invoke() ?? true) && Loading.IsReady && !IsBusy
+        && _publishedId == _id && _deletedId != _id && !NotFound && _review is not null;
+    [RelayCommand(CanExecute = nameof(CanReload))] private Task ReloadAsync() => CanReload ? LoadAsync() : Task.CompletedTask;
 
-    public ObservableCollection<ComparisonPoint> Points { get; } = [];
+    public Presentation.SnapshotCollection<ComparisonPoint> Points { get; } = [];
 
-    public ObservableCollection<ComparisonRow> Rows { get; } = [];
+    public Presentation.SnapshotCollection<ComparisonRow> Rows { get; } = [];
 
-    public ObservableCollection<AmountLine> Parts { get; } = [];
+    public Presentation.SnapshotCollection<AmountLine> Parts { get; } = [];
 
     [ObservableProperty]
     public partial string? Name { get; set; }
@@ -75,88 +113,158 @@ public sealed partial class SnapshotViewModel(ZananceStore store, Translator tra
         ArgumentNullException.ThrowIfNull(query);
         if (query.TryGetValue("id", out var value) && value is Guid id)
         {
-            _id = id;
+            if (_id != id) { RetireRead(); _id = id; Name = null; AccessError = null; }
+            query.Clear();
         }
     }
 
-    // The page's colors are computed while loading; loading again keeps the filters and choices of the page.
-    Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
+    // Display changes retire the original frame before rebuilding detached text and semantic colors.
+    Task Presentation.IThemeAware.RefreshThemeAsync() { RetireRead(); return _active ? LoadAsync() : Task.CompletedTask; }
 
+    /// <summary>Reads, computes and validates complete original comparison input before any native publication.</summary>
     public async Task LoadAsync()
     {
-        ForecastReadSnapshot? reviewed = null;
-        await Loading.RunAsync(async () => reviewed = await work.ReadAsync(), () => Publish(reviewed!));
-        DeleteCommand.NotifyCanExecuteChanged();
+        if (!_active || _rootOwner?.Invoke() == false) return;
+        var owner = Loading; var revision = _revision; var id = _id; var token = _lifetime.Token;
+        bool Current() => _active && (_rootOwner?.Invoke() ?? true) && revision == _revision && id == _id
+            && ReferenceEquals(owner, Loading) && !token.IsCancellationRequested;
+        void RequireCurrent() { token.ThrowIfCancellationRequested(); if (!Current()) throw new OperationCanceledException("Original saved comparison retired.", token); }
+        ForecastReadSnapshot? reviewed = null; Prepared? prepared = null;
+        void Availability(object? sender, System.ComponentModel.PropertyChangedEventArgs args) => PublishAvailability();
+        owner.PropertyChanged += Availability;
+        try
+        {
+            await owner.RunAsync(async () =>
+            {
+                RequireCurrent(); _review = null; _publishedId = Guid.Empty; LoadError = null;
+                reviewed = await work.ReadAsync(token, path =>
+                {
+                    RequireCurrent(); _originalFile ??= path; return _originalFile == path;
+                });
+                RequireCurrent(); var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
+                var culture = CultureInfo.ReadOnly((CultureInfo)localization.CurrentCulture.Clone());
+                var secondary = Presentation.Palette.SecondaryText; var danger = Presentation.EntryPresenter.DangerColor;
+                prepared = await Task.Run(() => Prepare(reviewed, id, today, culture, secondary, danger), token); RequireCurrent();
+                await work.ValidateAsync(reviewed, token); RequireCurrent();
+            }, () =>
+            {
+                var result = prepared ?? throw new InvalidOperationException("Original complete comparison missing.");
+                var source = reviewed ?? throw new InvalidOperationException("Original comparison source missing.");
+                void Publish(Action action) { RequireCurrent(); source.EnsurePublicationAccess(); action(); RequireCurrent(); source.EnsurePublicationAccess(); }
+                Publish(() => Name = result.Name); Publish(() => NotFound = result.NotFound);
+                Publish(() => SavedText = result.SavedText); Publish(() => AssumptionsText = result.AssumptionsText);
+                Publish(() => ComparedText = result.ComparedText); Publish(() => CanCompare = result.CanCompare);
+                Publish(() => NotStarted = result.NotStarted); Publish(() => AccessError = _deletedId == id ? translator["Forecast_DeletedFollowUpFailed"] : result.AccessError);
+                Publish(() => SavedRows.ReplaceAll(result.SavedRows)); Publish(() => Points.ReplaceAll(result.Points));
+                Publish(() => Rows.ReplaceAll(result.Rows)); Publish(() => Parts.ReplaceAll(result.Parts));
+                _review = source; _publishedId = id;
+            });
+        }
+        catch (OperationCanceledException) when (!Current()) { }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { if (Current()) LoadError = Presentation.CommercialFailureMessage.OrFallback(exception, translator, "Forecast_LoadFailed"); }
+        finally { owner.PropertyChanged -= Availability; PublishAvailability(); }
     }
 
-    private void Publish(ForecastReadSnapshot reviewed)
+    private Prepared Prepare(ForecastReadSnapshot reviewed, Guid id, DateOnly today, CultureInfo culture, Color secondary, Color danger)
     {
-        reviewed.EnsureCurrent(); _review = reviewed;
-        var snapshot = reviewed.Snapshots.FirstOrDefault(s => s.Id == _id);
-        NotFound = snapshot is null;
+        reviewed.EnsureCurrent(); var result = new Prepared();
+        var snapshot = reviewed.Snapshots.FirstOrDefault(s => s.Id == id);
+        result.NotFound = snapshot is null;
         if (snapshot is null)
         {
-            return;
+            return result;
         }
 
-        var culture = localization.CurrentCulture;
-        var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         string Money(long minor, bool plus = false) => MoneyText.Format(minor, snapshot.CurrencyCode, culture, showPlus: plus);
-        Name = snapshot.Name;
-        SavedText = translator.Format("Snapshot_Detail", dates.Format(snapshot.BaseDate, DateFormatStyle.Long), dates.Format(snapshot.Horizon, DateFormatStyle.Long),
+        result.Name = snapshot.Name;
+        result.SavedText = translator.Format("Snapshot_Detail", dates.Format(snapshot.BaseDate, DateFormatStyle.Long), dates.Format(snapshot.Horizon, DateFormatStyle.Long),
             Money(snapshot.Minimum), dates.Format(snapshot.MinimumDate, DateFormatStyle.Short))
             + (snapshot.UnknownCount > 0 ? " · " + translator.Format("Forecast_Incomplete", snapshot.UnknownCount) : string.Empty);
-        AssumptionsText = snapshot.Assumptions is { } assumptions ? translator.Format("Snapshot_Assumptions", assumptions) : null;
+        result.AssumptionsText = snapshot.Assumptions is { } assumptions ? translator.Format("Snapshot_Assumptions", assumptions) : null;
 
-        Points.Clear(); Rows.Clear(); Parts.Clear(); SavedRows.Clear(); ComparedText = null;
+        result.Points.Clear(); result.Rows.Clear(); result.Parts.Clear(); result.SavedRows.Clear(); result.ComparedText = null;
         foreach (var point in snapshot.Points())
-            SavedRows.Add(new ComparisonRow(dates.Format(point.Date, DateFormatStyle.DayMonth), Money(point.Balance), string.Empty, string.Empty, Presentation.Palette.SecondaryText));
-        CanCompare = reviewed.Permission(CommercialFeature.AdvancedForecast) == FeaturePermission.Allowed;
-        AccessError = CanCompare ? null : Presentation.CommercialFailureMessage.Describe(
+            result.SavedRows.Add(new ComparisonRow(dates.Format(point.Date, DateFormatStyle.DayMonth), Money(point.Balance), string.Empty, string.Empty, secondary));
+        result.CanCompare = reviewed.Permission(CommercialFeature.AdvancedForecast) == FeaturePermission.Allowed;
+        result.AccessError = result.CanCompare ? null : Presentation.CommercialFailureMessage.Describe(
             new CommercialWriteRejectedException(CommercialFeature.AdvancedForecast, reviewed.Permission(CommercialFeature.AdvancedForecast)), translator);
-        if (!CanCompare) { NotStarted = true; return; }
+        if (!result.CanCompare) { result.NotStarted = true; return result; }
         var comparison = reviewed.Compare(snapshot, today);
         var currency = Currencies.TryGet(snapshot.CurrencyCode, out var known) ? known : Currencies.Euro;
-        Points.Clear();
-        Rows.Clear();
+        result.Points.Clear();
+        result.Rows.Clear();
         foreach (var day in comparison.Days)
         {
-            Points.Add(new ComparisonPoint(day.Date.ToDateTime(TimeOnly.MinValue), (double)MoneyText.ToDecimal(day.Saved, currency), (double)MoneyText.ToDecimal(day.Actual, currency)));
+            result.Points.Add(new ComparisonPoint(day.Date.ToDateTime(TimeOnly.MinValue), (double)MoneyText.ToDecimal(day.Saved, currency), (double)MoneyText.ToDecimal(day.Actual, currency)));
         }
 
         // The table shows every seventh day and the last one, so it stays readable at 90 days.
         foreach (var day in comparison.Days.Where((_, i) => i % 7 == 0 || i == comparison.Days.Count - 1))
         {
-            Rows.Add(new ComparisonRow(dates.Format(day.Date, DateFormatStyle.DayMonth), Money(day.Saved), Money(day.Actual), Money(day.Difference, plus: true),
-                day.Difference < 0 ? Presentation.EntryPresenter.DangerColor : Presentation.Palette.SecondaryText));
+            result.Rows.Add(new ComparisonRow(dates.Format(day.Date, DateFormatStyle.DayMonth), Money(day.Saved), Money(day.Actual), Money(day.Difference, plus: true),
+                day.Difference < 0 ? danger : secondary));
         }
 
-        NotStarted = comparison.Days.Count <= 1;
-        ComparedText = comparison.Days.Count == 0 ? null : translator.Format("Snapshot_Compared", dates.Format(comparison.Days[^1].Date, DateFormatStyle.Short));
-        Parts.Clear();
-        Parts.Add(new AmountLine(translator["Snapshot_RecordedLater"], Money(comparison.RecordedLater, true), false, comparison.RecordedLater < 0));
-        Parts.Add(new AmountLine(translator["Snapshot_UnplannedSpending"], Money(comparison.UnplannedSpending, true), false, comparison.UnplannedSpending < 0));
-        Parts.Add(new AmountLine(translator["Snapshot_UnplannedIncome"], Money(comparison.UnplannedIncome, true), false, comparison.UnplannedIncome < 0));
+        result.NotStarted = comparison.Days.Count <= 1;
+        result.ComparedText = comparison.Days.Count == 0 ? null : translator.Format("Snapshot_Compared", dates.Format(comparison.Days[^1].Date, DateFormatStyle.Short));
+        result.Parts.Clear();
+        result.Parts.Add(new AmountLine(translator["Snapshot_RecordedLater"], Money(comparison.RecordedLater, true), false, comparison.RecordedLater < 0));
+        result.Parts.Add(new AmountLine(translator["Snapshot_UnplannedSpending"], Money(comparison.UnplannedSpending, true), false, comparison.UnplannedSpending < 0));
+        result.Parts.Add(new AmountLine(translator["Snapshot_UnplannedIncome"], Money(comparison.UnplannedIncome, true), false, comparison.UnplannedIncome < 0));
         if (comparison.OtherMovements != 0)
-            Parts.Add(new AmountLine(translator["Snapshot_OtherMovements"], Money(comparison.OtherMovements, true), false));
-        Parts.Add(new AmountLine(translator["Snapshot_PlansChanged"], Money(comparison.PlansChanged, true), false, comparison.PlansChanged < 0));
-        Parts.Add(new AmountLine(translator["Snapshot_Difference"], Money(comparison.Difference, true), true, comparison.Difference < 0));
+            result.Parts.Add(new AmountLine(translator["Snapshot_OtherMovements"], Money(comparison.OtherMovements, true), false));
+        result.Parts.Add(new AmountLine(translator["Snapshot_PlansChanged"], Money(comparison.PlansChanged, true), false, comparison.PlansChanged < 0));
+        result.Parts.Add(new AmountLine(translator["Snapshot_Difference"], Money(comparison.Difference, true), true, comparison.Difference < 0));
+        reviewed.EnsureCurrent(); return result;
+    }
+
+    private sealed class Prepared
+    {
+        internal string? Name, SavedText, AssumptionsText, ComparedText, AccessError;
+        internal bool NotFound, CanCompare, NotStarted;
+        internal readonly List<ComparisonRow> SavedRows = [], Rows = [];
+        internal readonly List<ComparisonPoint> Points = [];
+        internal readonly List<AmountLine> Parts = [];
     }
 
     [RelayCommand(CanExecute = nameof(CanDelete))]
     private async Task DeleteAsync()
     {
         if (!CanDelete || _review is not { } reviewed) return;
-        IsBusy = true; DeleteCommand.NotifyCanExecuteChanged();
+        var id = _id; var revision = _revision; var token = _lifetime.Token;
+        bool Current() => _active && (_rootOwner?.Invoke() ?? true) && revision == _revision && id == _id
+            && _publishedId == id && ReferenceEquals(_review, reviewed) && !token.IsCancellationRequested;
+        IsBusy = true; PublishAvailability();
+        void Accept() { _deletedId = id; PublishAvailability(); }
         try
         {
-            if (!await _interaction.ConfirmAsync(translator["Snapshot_Delete"], translator["Snapshot_DeleteMessage"], translator["Common_Delete"], translator["Common_Cancel"])) return;
-            try { await work.ValidateAsync(reviewed); await store.DeleteReviewedForecastSnapshotAsync(_id, reviewed); }
-            catch (CommittedWriteNotificationException) { _deleted = true; AccessError = translator["Forecast_DeletedFollowUpFailed"]; }
-            _deleted = true; await _interaction.NavigateAsync("..");
+            if (!await _interaction.ConfirmAsync(translator["Snapshot_Delete"], translator["Snapshot_DeleteMessage"], translator["Common_Delete"], translator["Common_Cancel"]) || !Current()) return;
+            await work.ValidateAsync(reviewed, token);
+            if (!Current()) return;
+            await store.DeleteReviewedForecastSnapshotAsync(id, reviewed, token, Current, Accept);
+            if (Current()) await _interaction.NavigateAsync("..");
         }
+        catch (OperationCanceledException) when (!Current()) { }
+        catch (CommittedWriteNotificationException)
+        { Accept(); if (Current()) AccessError = translator["Forecast_DeletedFollowUpFailed"]; }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { AccessError = _deleted ? translator["Forecast_DeletedFollowUpFailed"] : Presentation.CommercialFailureMessage.OrFallback(exception, translator, "Forecast_DeleteFailed"); }
-        finally { IsBusy = false; DeleteCommand.NotifyCanExecuteChanged(); }
+        {
+            if (Current())
+            {
+                if (_deletedId == id) AccessError = translator["Forecast_DeletedFollowUpFailed"];
+                else await CoverSourceFailureAsync(exception);
+            }
+        }
+        finally { IsBusy = false; PublishAvailability(); }
+    }
+    /// <summary>Retires untrusted displayed authority after refusal while keeping explicit current-frame Retry available.</summary>
+    private async Task CoverSourceFailureAsync(Exception exception)
+    {
+        RetireRead(); AccessError = null; var failed = Loading;
+        LoadError = Presentation.CommercialFailureMessage.OrFallback(exception, translator, "Forecast_LoadFailed");
+        try { await failed.RunAsync(() => Task.FromException(exception), () => { }); }
+        catch (Exception observed) when (ReferenceEquals(observed, exception)) { }
+        PublishAvailability();
     }
 }

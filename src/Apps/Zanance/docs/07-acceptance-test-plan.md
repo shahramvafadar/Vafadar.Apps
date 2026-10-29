@@ -7870,3 +7870,8 @@ Seventeen new focused cases and22affected existing cases pass. Independent origi
 ## D-644 original holding-price acceptance
 
 20new and44affected existing cases pass. Native pending Back/departed Save refusal, actual corrected retained-tab return, failure/Retry,12normal-scale ready contexts and hardware Back/discard are qualified. One manual price acceptance retains newer raw input despite notification failure; six separate accepted-feedback contexts and final Home preserve one valuation and ledger/events0. No original accepted write is replayed. [Evidence](quality/original-holding-price-draft-ownership.md).
+
+
+## D-645 Bounded saved-comparison acceptance
+
+Complete source, current native frame, covered Retry and reviewed delete receipts are implemented. Fourteen new focused cases and31affected existing cases pass; original native pending/Retry/Cancel,12ready and6accepted-feedback contexts preserve the same source. One saved-definition deletion changes no financial rows. Physical adoption after D-607 and broad DB/key/security/performance/stability/accessibility/iOS/provider/Store/release gates remain separate. [Evidence](quality/original-saved-comparison-source-and-delete.md).

@@ -4904,3 +4904,8 @@ Original frame/receipt behavior and the documented independent native cases pass
 ## D-644 bounded original holding-price gate
 
 Original frame/draft/receipt behavior and the recorded independent native cases pass. Later physical no-reset adoption after D-607, wider DB/key/security/performance/stability/accessibility/iOS/provider/Store and release gates remain; packaging and bounded source equality do not close them. [Evidence](quality/original-holding-price-draft-ownership.md).
+
+
+## D-645 Bounded original comparison gate
+
+Complete source, current native frame, covered Retry and reviewed delete receipts are implemented. Fourteen new focused cases and31affected existing cases pass; original native pending/Retry/Cancel,12ready and6accepted-feedback contexts preserve the same source. One saved-definition deletion changes no financial rows. Physical adoption after D-607 and broad DB/key/security/performance/stability/accessibility/iOS/provider/Store/release gates remain separate. [Evidence](quality/original-saved-comparison-source-and-delete.md).

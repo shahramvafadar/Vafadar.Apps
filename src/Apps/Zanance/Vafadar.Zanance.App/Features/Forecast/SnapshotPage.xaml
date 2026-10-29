@@ -30,7 +30,7 @@
     </ContentPage.Resources>
 
 
-    <Grid>
+    <Grid RowDefinitions="*,Auto">
     <Grid IsVisible="{Binding Loading.IsReady}">
         <Label Text="{v:Translate Snapshot_NotFound}" Margin="32" HorizontalTextAlignment="Center" IsVisible="{Binding NotFound}" />
         <ScrollView IsVisible="{Binding NotFound, Converter={StaticResource InvertedBoolConverter}}">
@@ -44,7 +44,6 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <Label Text="{Binding AccessError}" Style="{StaticResource ErrorText}" IsVisible="{Binding AccessError, Converter={StaticResource IsNotNullConverter}}" />
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding SavedRows}" IsVisible="{Binding CanCompare, Converter={StaticResource InvertedBoolConverter}}" Spacing="8">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="local:ComparisonRow">
@@ -131,8 +130,11 @@
             <Label Text="{v:Translate Forecast_Loading}" HorizontalTextAlignment="Center" />
         </VerticalStackLayout>
         <VerticalStackLayout Padding="32" Spacing="12" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
-            <Label Text="{v:Translate Forecast_LoadFailed}" HorizontalTextAlignment="Center" />
+            <Label Text="{Binding LoadError}" HorizontalTextAlignment="Center" />
             <p:WrappingAction Text="{v:Translate Forecast_Refresh}" Command="{Binding ReloadCommand}" />
         </VerticalStackLayout>
+        <!-- Known deletion and read-only access feedback remain visible independently of a missing saved row. -->
+        <Label Grid.Row="1" Text="{Binding AccessError}" Style="{StaticResource ErrorText}" Margin="16"
+               IsVisible="{Binding AccessError, Converter={StaticResource IsNotNullConverter}}" />
     </Grid>
 </ContentPage>

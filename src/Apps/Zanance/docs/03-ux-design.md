@@ -2959,3 +2959,8 @@ Native Back/Close/Cancel share one original frame/draft guard. A pending discard
 ## D-644 original inline price ownership
 
 Keep exact raw/date/mode input separate from a known accepted manual price. Original toolbar/hardware Back and archive departure share current-frame/current-draft consent. A retained Android tab resumes the original covered loader; failed current source keeps explicit Retry and departed commands stay disabled. A historical receipt never labels a newer refused attempt as saved. [Evidence](quality/original-holding-price-draft-ownership.md).
+
+
+## D-645 Original comparison loading and delete feedback
+
+Complete source, current native frame, covered Retry and reviewed delete receipts are implemented. Fourteen new focused cases and31affected existing cases pass; original native pending/Retry/Cancel,12ready and6accepted-feedback contexts preserve the same source. One saved-definition deletion changes no financial rows. Physical adoption after D-607 and broad DB/key/security/performance/stability/accessibility/iOS/provider/Store/release gates remain separate. [Evidence](quality/original-saved-comparison-source-and-delete.md).
