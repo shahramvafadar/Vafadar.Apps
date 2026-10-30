@@ -29,10 +29,18 @@ internal static class DisplayUnitPublication
         DisplayUnitsReview accepted; var notificationFailed = false;
         try { accepted = await store.SaveDisplayUnitsAsync(original, serialized, Current, ct); }
         catch (CommittedWriteNotificationException<DisplayUnitsReview> saved) { accepted = saved.Result; notificationFailed = true; }
-        var publish = Current();
+        var publish = false;
+        try { publish = Current(); if (publish) accepted.EnsureCurrent(); }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            // The original writer already committed: a retired/failing source may stop publication, never erase its receipt.
+            notificationFailed = true; publish = false;
+        }
         if (publish) DisplayUnits.Set(submitted);
         return new(accepted, notificationFailed, publish);
     }
+    /// <summary>Captures only canonical current definitions so an old editor cannot borrow another profile's later publication.</summary>
+    internal static string CaptureCurrent() => Serialize(DisplayUnits.All);
     /// <summary>Applies only a successfully read original active-profile serialization, without database or device access.</summary>
     internal static void Apply(string serialized)
     {

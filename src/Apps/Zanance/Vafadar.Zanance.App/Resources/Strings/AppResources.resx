@@ -8658,4 +8658,13 @@ Original XML SHA-256: {5}</value>
   <data name="Settings_DataDeleted" xml:space="preserve">
     <value>The reviewed data in this profile was deleted. Other profiles were not changed.</value>
   </data>
+  <data name="Unit_LoadFailed" xml:space="preserve">
+    <value>The display units could not be read. Your input is kept. Refresh to try again.</value>
+  </data>
+  <data name="Unit_SourceChanged" xml:space="preserve">
+    <value>The original display units or their profile changed. Refresh the original profile and review your input before continuing.</value>
+  </data>
+  <data name="Unit_Refresh" xml:space="preserve">
+    <value>Refresh units</value>
+  </data>
 </root>

@@ -8593,4 +8593,13 @@ SHA-256 del XML original: {5}</value>
   <data name="Settings_DataDeleted" xml:space="preserve">
     <value>Se eliminaron los datos revisados de este perfil. No se modificaron otros perfiles.</value>
   </data>
+  <data name="Unit_LoadFailed" xml:space="preserve">
+    <value>No se pudieron leer las unidades de visualización. Se conserva lo que has escrito. Actualiza para intentarlo de nuevo.</value>
+  </data>
+  <data name="Unit_SourceChanged" xml:space="preserve">
+    <value>Las unidades de visualización originales o su perfil han cambiado. Actualiza el perfil original y revisa lo que has escrito antes de continuar.</value>
+  </data>
+  <data name="Unit_Refresh" xml:space="preserve">
+    <value>Actualizar unidades</value>
+  </data>
 </root>

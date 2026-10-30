@@ -8624,4 +8624,13 @@
   <data name="Settings_DataDeleted" xml:space="preserve">
     <value>داده‌های بررسی‌شدهٔ این پروفایل حذف شدند. پروفایل‌های دیگر تغییر نکرده‌اند.</value>
   </data>
+  <data name="Unit_LoadFailed" xml:space="preserve">
+    <value>خواندن واحدهای نمایشی ممکن نشد. ورودی شما حفظ شده است؛ برای تلاش دوباره بازخوانی کنید.</value>
+  </data>
+  <data name="Unit_SourceChanged" xml:space="preserve">
+    <value>واحدهای نمایشی اولیه یا پروفایل آن‌ها تغییر کرده است. پروفایل اولیه را بازخوانی و پیش از ادامه ورودی خود را بررسی کنید.</value>
+  </data>
+  <data name="Unit_Refresh" xml:space="preserve">
+    <value>بازخوانی واحدها</value>
+  </data>
 </root>

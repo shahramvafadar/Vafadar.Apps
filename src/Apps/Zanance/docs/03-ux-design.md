@@ -3055,3 +3055,35 @@ older refused scopes are not retried or reused. Phone/D-607/three deadlines/post
 source remain untouched. Physical adoption and broader DB/key/security/performance/stability/
 accessibility/iOS/provider/Store/release gates remain separate. Overall delivery stays active.
 [Complete evidence](quality/original-manual-rate-workspace.md).
+
+### D-650 - Complete original display-unit workspace (2026-10-30)
+
+Original unit reads now pin the actual first settings file, validate consumed definitions/
+default hints and retire page/tab/root readers and native commands. Explicit read-only
+Refresh keeps raw name/currency/exponent, full source cover and current captions. Submitted
+lists come from original captured definitions, with an ambient publication seal; a different
+profile’s later global definitions cannot be copied into the original selective writer.
+Remove requires exact original row identity. Unknown changed definitions require explicit
+reentry; known own receipts admit only their actual readback, consume only unchanged submitted
+input and preserve later typing. Post-commit source failure retains known saved/not-published
+feedback without a new authority capture or another write. Legacy-null preference migration,
+ISO money/export/FX semantics and unrelated newer preferences remain unchanged.
+
+Four original real-source failures and two native failures remain preserved. Fourteen distinct
+new,12 affected existing and21 changed-resource completeness cases pass. Strict Windows/full
+offline384AOT/408ELF/1608staticLOAD pass. Fresh API36/x64/4096 UID10216/4870to5782 continues
+once no-reset with exact original-source readonly adoption. Actual pending Back cancels,
+closed Load refuses, initial read error/Refresh is inline, same raw D650 crates/EUR/exponent3
+survives three ready and three failed display contexts and explicit Retry. Only one changed
+original unit Add metadata command commits; only DisplayUnits/UpdatedAt change, the other18
+observed tables stay equal, and native accounts/financial entries remain zero. Original
+baseline is preserved separately from that accepted delta; old D-436 matrices are not replayed.
+
+Original OS/display/boot restore; only fresh UID/data,34hash-matched XMLs1,214,444bytes and
+owned AVD retire. Six standard cleans remove42,933files2,737,807,575logicalbytes; official
+AVD deletion25files5,480,985,547bytes and one new16-target cleanup4,753files1,239,395,088bytes
+succeed. Actually installed signed packages/final shipping/evidence/source archives remain;
+older refused scopes are not retried or reused. Phone/D-607/three deadlines/post-reboot unread
+source remain untouched. Physical adoption and broader DB/key/security/performance/stability/
+accessibility/iOS/provider/Store/release gates remain separate. Overall delivery stays active.
+[Complete evidence](quality/original-display-unit-workspace.md).

@@ -8601,4 +8601,13 @@ SHA-256 du XML original : {5}</value>
   <data name="Settings_DataDeleted" xml:space="preserve">
     <value>Les données vérifiées de ce profil ont été supprimées. Les autres profils n’ont pas été modifiés.</value>
   </data>
+  <data name="Unit_LoadFailed" xml:space="preserve">
+    <value>Les unités d’affichage n’ont pas pu être lues. Votre saisie est conservée. Actualisez pour réessayer.</value>
+  </data>
+  <data name="Unit_SourceChanged" xml:space="preserve">
+    <value>Les unités d’affichage d’origine ou leur profil ont changé. Actualisez le profil d’origine et vérifiez votre saisie avant de continuer.</value>
+  </data>
+  <data name="Unit_Refresh" xml:space="preserve">
+    <value>Actualiser les unités</value>
+  </data>
 </root>

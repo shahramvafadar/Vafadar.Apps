@@ -91,3 +91,5 @@ Original report and KPI source/command handoff: [D-647 runtime evidence](quality
 Original Settings source and current-profile reset: [D-648 runtime evidence](quality/original-settings-source-and-profile-reset.md). Physical adoption and release gates remain separate.
 
 Original manual-rate workspace and reference navigation: [D-649 runtime evidence](quality/original-manual-rate-workspace.md). Physical adoption and release gates remain separate.
+
+Original display-unit workspace and publication authority: [D-650 runtime evidence](quality/original-display-unit-workspace.md). Physical adoption and release gates remain separate.

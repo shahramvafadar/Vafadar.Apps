@@ -8624,4 +8624,13 @@ Original-XML SHA-256: {5}</value>
   <data name="Settings_DataDeleted" xml:space="preserve">
     <value>Die geprüften Daten in diesem Profil wurden gelöscht. Andere Profile wurden nicht geändert.</value>
   </data>
+  <data name="Unit_LoadFailed" xml:space="preserve">
+    <value>Die Anzeigeeinheiten konnten nicht gelesen werden. Ihre Eingabe bleibt erhalten. Aktualisieren Sie die Ansicht, um es erneut zu versuchen.</value>
+  </data>
+  <data name="Unit_SourceChanged" xml:space="preserve">
+    <value>Die ursprünglichen Anzeigeeinheiten oder ihr Profil haben sich geändert. Aktualisieren Sie das ursprüngliche Profil und prüfen Sie Ihre Eingabe, bevor Sie fortfahren.</value>
+  </data>
+  <data name="Unit_Refresh" xml:space="preserve">
+    <value>Einheiten aktualisieren</value>
+  </data>
 </root>

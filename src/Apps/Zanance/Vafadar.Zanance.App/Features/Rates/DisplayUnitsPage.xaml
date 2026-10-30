@@ -10,7 +10,8 @@
     x:DataType="local:DisplayUnitsViewModel"
     Title="{v:Translate Unit_Title}">
 
-    <ScrollView>
+    <Grid>
+    <ScrollView IsVisible="{Binding Loading.IsReady}">
         <VerticalStackLayout Padding="16" Spacing="8">
             <Label Text="{v:Translate Unit_Intro}" Style="{StaticResource Secondary}" />
 
@@ -34,6 +35,8 @@
                 </VerticalStackLayout>
             </Border>
 
+            <p:WrappingAction Text="{v:Translate Unit_Refresh}" Command="{Binding ReloadCommand}" />
+
             <!-- Define a unit -->
             <Label Text="{v:Translate Unit_Add}" Style="{StaticResource SectionHeader}" />
             <Border Style="{StaticResource Card}">
@@ -48,11 +51,21 @@
                     <v:ChoiceChips IsEnabled="{Binding CanEdit}" ItemsSource="{Binding FactorNames}" SelectedIndex="{Binding FactorIndex}" />
                     <Label Text="{Binding PreviewText}" Margin="0,8,0,0" IsVisible="{Binding PreviewText, Converter={StaticResource IsNotNullConverter}}" />
                     <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
-                    <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Add}" Command="{Binding AddCommand}" IsEnabled="{Binding CanEdit}" Margin="0,12,0,0" />
+                    <Label Text="{Binding DraftContextError}" Style="{StaticResource ErrorText}" IsVisible="{Binding DraftContextError, Converter={StaticResource IsNotNullConverter}}" />
+                    <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Add}" Command="{Binding AddCommand}" IsEnabled="{Binding CanAdd}" Margin="0,12,0,0" />
                     <p:WrappingAction Text="{v:Translate Unit_UseToman}" Command="{Binding UseTomanCommand}" IsEnabled="{Binding CanEdit}" Appearance="Text" Margin="0,8,0,0" />
                 </VerticalStackLayout>
             </Border>
             <Label Text="{v:Translate Unit_Note}" Style="{StaticResource Secondary}" FontSize="12" />
         </VerticalStackLayout>
     </ScrollView>
+    <VerticalStackLayout IsVisible="{Binding Loading.IsLoading}" VerticalOptions="Center" HorizontalOptions="Center" Spacing="12" Padding="16">
+        <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Unit_Title}" />
+        <Label Text="{v:Translate Unit_Title}" Style="{StaticResource Secondary}" />
+    </VerticalStackLayout>
+    <VerticalStackLayout IsVisible="{Binding Loading.HasFailed}" VerticalOptions="Center" Spacing="12" Padding="16">
+        <Label Text="{Binding Error}" HorizontalTextAlignment="Center" />
+        <p:WrappingAction Text="{v:Translate Unit_Refresh}" Command="{Binding ReloadCommand}" />
+    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

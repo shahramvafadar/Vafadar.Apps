@@ -8613,4 +8613,13 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Settings_DataDeleted" xml:space="preserve">
     <value>I dati verificati di questo profilo sono stati eliminati. Gli altri profili non sono stati modificati.</value>
   </data>
+  <data name="Unit_LoadFailed" xml:space="preserve">
+    <value>Impossibile leggere le unità di visualizzazione. Il testo inserito è conservato. Aggiorna per riprovare.</value>
+  </data>
+  <data name="Unit_SourceChanged" xml:space="preserve">
+    <value>Le unità di visualizzazione originali o il loro profilo sono cambiati. Aggiorna il profilo originale e controlla ciò che hai inserito prima di continuare.</value>
+  </data>
+  <data name="Unit_Refresh" xml:space="preserve">
+    <value>Aggiorna unità</value>
+  </data>
 </root>
