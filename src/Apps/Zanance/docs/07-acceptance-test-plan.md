@@ -8280,3 +8280,9 @@ A11Y/iOS/genuine identity/provider/Store/release remain separate; overall goal a
 
 53distinct selected cases (14new/39existing), strict Windows/full offline APK,18same-process native error covers, retained comparison/readonly Retry, actual pending-source cancellation and Continue return pass with complete20source/settings equality. Genuine billing, provider, identity and physical acceptance remain separate.
 [Evidence and exact cleanup limits](quality/original-product-plans-workspace.md).
+
+
+### D-664 - Original optional identity evidence
+
+26 distinct selected checks (19 new, seven affected existing), strict Windows/offline Android and 18 same-PID native response/error contexts passed. One actual uniform anonymous recovery survived one follow-up fault; explicit session Retry and pending-read native Back passed with full original source equality and no replay. Genuine authentication and Store/provider acceptance remain open.
+[Evidence and exact cleanup limits](quality/original-billing-identity-workspace.md).

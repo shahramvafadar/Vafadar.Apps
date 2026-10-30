@@ -12188,3 +12188,9 @@ Retain complete original cash/account facts and independent page/native/writer o
 
 Keep original cached access, actual disclosure, native command and navigation ownership separate from mutable busy state and provider acceptance. No new ledger read, schema, permission, pricing or identity policy is introduced.
 [Evidence and exact cleanup limits](quality/original-product-plans-workspace.md).
+
+
+### Decision D-664 - Original optional identity ownership
+
+Keep actual private-session reads, native disclosure/input consent and request lifetimes on their original page/root. Record only returned acknowledgements before fallible follow-through, preserve newer drafts and keep Retry read-only. Original uniform responses and authentication/provider policy remain unchanged.
+[Evidence and exact cleanup limits](quality/original-billing-identity-workspace.md).

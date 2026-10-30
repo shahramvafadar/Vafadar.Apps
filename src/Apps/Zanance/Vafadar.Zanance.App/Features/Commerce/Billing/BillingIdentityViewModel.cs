@@ -14,6 +14,32 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
     private bool changing;
     private bool reviewing;
     private string? statusKey;
+    private bool operationActive, readingSession, sessionReady, readFailed;
+    private bool rootRetired;
+    private Func<bool>? ownsRoot;
+    private Task? pendingRead;
+    private long inputRevision;
+    private string? acceptedKey;
+    private long acceptedRevision;
+    private bool OwnsPresentation => visible is not null && !rootRetired && (ownsRoot?.Invoke() ?? true);
+    /// <summary>Only the original actual page/root may publish private-session observations or native consent.</summary>
+    internal void BindRootOwner(Func<bool> owner) => ownsRoot = owner;
+    /// <summary>A replaced native root permanently retires this form and request-only inputs.</summary>
+    internal void RetireRoot() { rootRetired = true; Deactivate(); }
+    /// <summary>Session presence is known only after its complete current read.</summary>
+    public bool IsReady => OwnsPresentation && sessionReady;
+    /// <summary>Command ownership is independent of mutable shared busy feedback.</summary>
+    public bool HasPendingOperation => operationActive || IsBusy;
+    /// <summary>Only explicit read-only session refresh may recover a covered failed follow-through.</summary>
+    public bool CanRead => OwnsPresentation && !HasPendingOperation && !reviewing;
+    /// <summary>A pending session read permits Back; native consent/submission retains its original owner.</summary>
+    public bool CanLeave => !reviewing && (!operationActive || readingSession);
+    /// <summary>Tracks input changes without hashing, logging or retaining secret values in a source token.</summary>
+    protected override void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs args)
+    {
+        if (args.PropertyName is nameof(ModeIndex) or nameof(Email) or nameof(Password) or nameof(Challenge) or nameof(Token)) inputRevision++;
+        base.OnPropertyChanged(args);
+    }
     /// <summary>Current explicit account action; changing it never sends a request.</summary>
     [ObservableProperty] public partial int ModeIndex { get; set; }
     /// <summary>Current request email draft.</summary>
@@ -46,7 +72,7 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
     /// <summary>One-use input is required only for explicit challenge completion.</summary>
     public bool ShowChallenge => ModeIndex >= 3;
     /// <summary>No request can run from an inactive form or an unsupported edition.</summary>
-    public bool CanSubmit => visible is not null && environment.Available && !reviewing && !IsBusy;
+    public bool CanSubmit => IsReady && environment.Available && !reviewing && !HasPendingOperation;
     /// <summary>Only this current actual session can be explicitly retired.</summary>
     public bool CanSignOut => CanSubmit && Connected;
     /// <summary>The main action always names the actual effect.</summary>
@@ -55,33 +81,63 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
     /// <summary>Captures only original session presence; opening the form never signs in or creates an account.</summary>
     public async Task ActivateAsync()
     {
-        epoch++; visible?.Cancel(); visible?.Dispose(); visible = new(); IsBusy = false; RefreshDisplay();
-        await RunAsync(async ct => (await environment.ConnectedAsync(ct), statusKey), false);
+        if (rootRetired || ownsRoot?.Invoke() == false) return;
+        if (visible is not null) { if (pendingRead is { } current) await current; return; }
+        var currentEpoch = ++epoch; visible = new(); sessionReady = false; RefreshDisplay();
+        if (pendingRead is { } previous) await previous;
+        if (!OwnsPresentation || currentEpoch != epoch) return;
+        await ReadSessionAsync();
     }
-    /// <summary>Retires observations and clears request-only secrets, preserving all purchases and local financial files.</summary>
+    /// <summary>Retires observations and clears request-only secrets, preserving all purchases and financial files.</summary>
     public void Deactivate()
-    { epoch++; visible?.Cancel(); visible?.Dispose(); visible = null; Password = ""; Token = ""; IsBusy = false; RefreshDisplay(); }
+    {
+        epoch++; visible?.Cancel(); visible?.Dispose(); visible = null;
+        Password = ""; Token = ""; operationActive = false; readingSession = false; IsBusy = false;
+        Connected = false; sessionReady = false; readFailed = false; acceptedKey = statusKey = null; Status = null; RefreshDisplay();
+    }
+    private Task ReadSessionAsync()
+    {
+        if (!OwnsPresentation) return Task.CompletedTask;
+        if (pendingRead is { } pending) return pending;
+        var completion = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        pendingRead = completion.Task;
+        _ = ReadOwnedAsync(completion);
+        return completion.Task;
+    }
+    private async Task ReadOwnedAsync(TaskCompletionSource completion)
+    {
+        try { await RunAsync(null); }
+        finally { if (ReferenceEquals(pendingRead, completion.Task)) pendingRead = null; completion.TrySetResult(); RefreshDisplay(); }
+    }
     /// <summary>Updates action captions without changing input values or mode.</summary>
     public void RefreshDisplay()
     {
-        if (statusKey is not null) Status = translator[statusKey];
+        var key = acceptedKey ?? statusKey;
+        Status = key is null ? null : translator[key];
+        if (acceptedKey is not null && acceptedRevision != inputRevision)
+            Status = translator["BillingIdentity_PreviousResult"] + Environment.NewLine + Status;
+        if (readFailed && acceptedKey is not null) Status += Environment.NewLine + translator["BillingIdentity_FollowUpFailed"];
         if (EmailError is not null) EmailError = translator["BillingIdentity_EmailError"];
         if (PasswordError is not null) PasswordError = translator["BillingIdentity_PasswordError"];
         if (ChallengeError is not null) ChallengeError = translator["BillingIdentity_ChallengeError"];
         if (TokenError is not null) TokenError = translator["BillingIdentity_TokenError"];
-        foreach (var name in new[] { nameof(Modes), nameof(ShowEmail), nameof(ShowPassword), nameof(ShowChallenge), nameof(CanSubmit), nameof(CanSignOut), nameof(SubmitText) }) OnPropertyChanged(name);
-        SubmitCommand.NotifyCanExecuteChanged(); SignOutCommand.NotifyCanExecuteChanged();
+        foreach (var name in new[] { nameof(Modes), nameof(ShowEmail), nameof(ShowPassword), nameof(ShowChallenge), nameof(CanSubmit), nameof(CanSignOut), nameof(SubmitText), nameof(IsReady), nameof(CanRead), nameof(CanLeave), nameof(HasPendingOperation) }) OnPropertyChanged(name);
+        SubmitCommand.NotifyCanExecuteChanged(); SignOutCommand.NotifyCanExecuteChanged(); RefreshSessionCommand.NotifyCanExecuteChanged();
     }
     partial void OnModeIndexChanged(int oldValue, int newValue)
     {
         if (changing) return;
         if (!CanSubmit || newValue is < 0 or > 4)
         { changing = true; try { ModeIndex = oldValue; } finally { changing = false; } return; }
-        Password = ""; Token = ""; EmailError = PasswordError = ChallengeError = TokenError = Status = null; statusKey = null; RefreshDisplay();
+        Password = ""; Token = ""; EmailError = PasswordError = ChallengeError = TokenError = Status = null; statusKey = acceptedKey = null; readFailed = false; RefreshDisplay();
     }
+    [RelayCommand(CanExecute = nameof(CanRead))]
+    private Task RefreshSessionAsync() => CanRead ? ReadSessionAsync() : Task.CompletedTask;
     [RelayCommand(CanExecute = nameof(CanSubmit))]
     private async Task SubmitAsync()
     {
+        if (!CanSubmit) return;
+        var revision = inputRevision; var disclosure = Disclosure();
         var captured = epoch; var mode = ModeIndex; var email = Email.Trim(); var challengeText = Challenge.Trim(); var token = Token.Trim(); var password = Password;
         EmailError = ShowEmail && (email.Length is < 4 or > 254 || !email.Contains('@', StringComparison.Ordinal)) ? translator["BillingIdentity_EmailError"] : null;
         PasswordError = ShowPassword && password.Length is < 12 or > 256 ? translator["BillingIdentity_PasswordError"] : null;
@@ -91,13 +147,10 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
         if (EmailError is not null || PasswordError is not null || ChallengeError is not null || TokenError is not null) return;
         if (mode == 1)
         {
-            reviewing = true; RefreshDisplay(); bool accepted;
-            try { accepted = await interaction.ConfirmAsync(translator["BillingIdentity_Register"], translator["BillingIdentity_Explanation"],
-                translator["BillingIdentity_Register"], translator["Common_Cancel"]); }
-            finally { reviewing = false; RefreshDisplay(); }
+            var accepted = await ConfirmOriginalAsync("BillingIdentity_Register", "BillingIdentity_Explanation");
             if (!accepted) return;
         }
-        if (captured != epoch || !CanSubmit || mode != ModeIndex) return;
+        if (captured != epoch || !CanSubmit || mode != ModeIndex || revision != inputRevision || disclosure != Disclosure()) return;
         Password = ""; Token = "";
         await RunAsync(async ct =>
         {
@@ -108,36 +161,67 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
                 case 2: await environment.RecoverAsync(email, ct); break;
                 default: await environment.CompleteAsync(challenge, token, mode == 4 ? password : null, ct); break;
             }
-            return (await environment.ConnectedAsync(ct), mode is 1 or 2 ? "BillingIdentity_Instructions"
-                : mode is 3 or 4 ? "BillingIdentity_Completed" : "BillingIdentity_SignedIn");
+            return mode is 1 or 2 ? "BillingIdentity_Instructions"
+                : mode is 3 or 4 ? "BillingIdentity_Completed" : "BillingIdentity_SignedIn";
         });
     }
     [RelayCommand(CanExecute = nameof(CanSignOut))]
     private async Task SignOutAsync()
     {
-        var captured = epoch; reviewing = true; RefreshDisplay(); bool accepted;
-        try { accepted = await interaction.ConfirmAsync(translator["BillingIdentity_SignOut"], translator["BillingIdentity_SignOutExplanation"],
-            translator["BillingIdentity_SignOut"], translator["Common_Cancel"]); }
-        finally { reviewing = false; RefreshDisplay(); }
-        if (!accepted || captured != epoch || !CanSignOut) return;
+        if (!CanSignOut) return;
+        var revision = inputRevision; var disclosure = Disclosure();
+        var captured = epoch;
+        var accepted = await ConfirmOriginalAsync("BillingIdentity_SignOut", "BillingIdentity_SignOutExplanation");
+        if (!accepted || captured != epoch || !CanSignOut || revision != inputRevision || disclosure != Disclosure()) return;
+        Password = ""; Token = "";
         await RunAsync(async ct =>
         {
             var confirmed = await environment.SignOutAsync(ct);
-            return (await environment.ConnectedAsync(ct), confirmed ? "BillingIdentity_SignedOut" : "BillingIdentity_LocalSignOut");
+            return confirmed ? "BillingIdentity_SignedOut" : "BillingIdentity_LocalSignOut";
         });
     }
-    private async Task RunAsync(Func<CancellationToken, Task<(bool Connected, string? Status)>> work, bool clearStatus = true)
+    private async Task<bool> ConfirmOriginalAsync(string titleKey, string explanationKey)
     {
-        if (visible is null || IsBusy) return;
-        var current = epoch; var ct = visible.Token; IsBusy = true; if (clearStatus) { Status = null; statusKey = null; } RefreshDisplay();
+        var original = epoch; reviewing = true; RefreshDisplay();
+        try { return await interaction.ConfirmAsync(translator[titleKey], translator[explanationKey], translator[titleKey], translator["Common_Cancel"]); }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        { if (original == epoch && OwnsPresentation) statusKey = "BillingIdentity_Unavailable"; return false; }
+        finally { reviewing = false; RefreshDisplay(); }
+    }
+    // Only nonsecret disclosure facts and an input revision are retained across native consent.
+    private string Disclosure() => translator.Culture.Name + "\n" + translator["BillingIdentity_Explanation"]
+        + "\n" + translator["BillingIdentity_SignOutExplanation"] + "\n" + SubmitText;
+    private async Task RunAsync(Func<CancellationToken, Task<string>>? primary)
+    {
+        if (!OwnsPresentation || HasPendingOperation || reviewing) return;
+        var current = epoch; var ct = visible!.Token; var submittedRevision = inputRevision;
+        bool Current() => OwnsPresentation && current == epoch && !ct.IsCancellationRequested;
+        operationActive = true; readingSession = primary is null; IsBusy = true;
+        sessionReady = false; readFailed = false;
+        if (primary is not null) { acceptedKey = statusKey = null; }
+        RefreshDisplay();
         try
         {
-            var result = await work(ct);
-            if (current != epoch || ct.IsCancellationRequested) return;
-            Connected = result.Connected; statusKey = result.Status; Status = statusKey is null ? null : translator[statusKey];
+            if (primary is not null)
+            {
+                var acknowledgement = await primary(ct);
+                if (!Current()) return;
+                // A returned original acknowledgement precedes fallible private-session refresh.
+                // It is neither a recipient-existence claim nor evidence about a newer draft.
+                acceptedKey = acknowledgement; acceptedRevision = submittedRevision; statusKey = null;
+            }
+            var connected = await environment.ConnectedAsync(ct);
+            if (!Current()) return;
+            Connected = connected; sessionReady = true; readFailed = false; statusKey = null;
         }
         catch (OperationCanceledException) when (ct.IsCancellationRequested) { }
-        catch (Exception) { if (current == epoch && !ct.IsCancellationRequested) { statusKey = "BillingIdentity_Unavailable"; Status = translator[statusKey]; } }
-        finally { if (current == epoch) { IsBusy = false; RefreshDisplay(); } }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            if (Current()) { readFailed = true; sessionReady = false; statusKey = "BillingIdentity_Unavailable"; }
+        }
+        finally
+        {
+            if (current == epoch) { operationActive = false; readingSession = false; IsBusy = false; RefreshDisplay(); }
+        }
     }
 }

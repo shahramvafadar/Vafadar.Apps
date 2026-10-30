@@ -8689,4 +8689,13 @@ Original XML SHA-256: {5}</value>
     <value>The requested change was accepted, but its follow-up could not finish. Reload the current state before choosing another action.</value>
     <comment>Known accepted synchronization work must not be presented as a failed primary action or replayed by Retry.</comment>
   </data>
+  <data name="BillingIdentity_ReadSession" xml:space="preserve">
+    <value>Read session status</value>
+  </data>
+  <data name="BillingIdentity_FollowUpFailed" xml:space="preserve">
+    <value>The request returned a result, but the session status could not be refreshed. Read the session status again; do not repeat the request.</value>
+  </data>
+  <data name="BillingIdentity_PreviousResult" xml:space="preserve">
+    <value>Result of the previous request:</value>
+  </data>
 </root>

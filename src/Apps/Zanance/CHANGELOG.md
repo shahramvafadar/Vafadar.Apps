@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-664: bind optional identity session/native consent and request lifetimes to their original page; retain known acknowledgements and newer drafts through session-read failure, clear request-only secrets and retry only the read.
+
 - D-663: retain original plan/access source, native disclosure and page ownership; require explicit source Retry and preserve original uncertain-work continuation without another payment or stale navigation.
 
 - D-662: bind original household cost/share/repayment reads, native consent and writers to their original source/frame; preserve complete cash facts, dirty drafts and known accepted results through follow-up failure without repeating financial saves.

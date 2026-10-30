@@ -1578,3 +1578,9 @@ No new permission, financial schema or cryptographic grant. Complete source/acco
 
 Original cached access still opens no SQLite connection and grants no entitlement. Qualification used a fresh zero-opening metadata account and no ledger, identity or Store/provider request. An independent network-enabled composition was rejected before installation and corrected with the original offline manifest; its controller is absent from shipping.
 [Evidence and exact cleanup limits](quality/original-product-plans-workspace.md).
+
+
+### D-664 - Optional identity request lifetime
+
+Password and one-use token remain request-only and clear before submission/deactivation; source tokens retain input revisions, never secret hashes. Uniform anonymous responses do not disclose recipient existence. The diagnostic used only a fixed fictitious anonymous recovery and absent protected session, with no real credentials, account creation, mail-delivery or authentication acceptance.
+[Evidence and exact cleanup limits](quality/original-billing-identity-workspace.md).

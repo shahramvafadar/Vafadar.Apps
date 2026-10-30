@@ -8654,4 +8654,13 @@
   <data name="Sync_AcceptedFollowUpFailed" xml:space="preserve">
     <value>تغییر درخواستی پذیرفته شد، اما مرحلهٔ بعدی کامل نشد. پیش از انتخاب اقدام دیگر، وضعیت فعلی را دوباره بخوانید.</value>
   </data>
+  <data name="BillingIdentity_ReadSession" xml:space="preserve">
+    <value>خواندن وضعیت نشست</value>
+  </data>
+  <data name="BillingIdentity_FollowUpFailed" xml:space="preserve">
+    <value>نتیجهٔ درخواست دریافت شد، اما وضعیت نشست تازه نشد. وضعیت نشست را دوباره بخوانید؛ درخواست را تکرار نکنید.</value>
+  </data>
+  <data name="BillingIdentity_PreviousResult" xml:space="preserve">
+    <value>نتیجهٔ درخواست قبلی:</value>
+  </data>
 </root>

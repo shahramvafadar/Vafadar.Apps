@@ -8643,4 +8643,13 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Sync_AcceptedFollowUpFailed" xml:space="preserve">
     <value>La modifica richiesta è stata accettata, ma i passaggi successivi non sono stati completati. Ricarica lo stato attuale prima di scegliere un’altra azione.</value>
   </data>
+  <data name="BillingIdentity_ReadSession" xml:space="preserve">
+    <value>Leggi lo stato della sessione</value>
+  </data>
+  <data name="BillingIdentity_FollowUpFailed" xml:space="preserve">
+    <value>La richiesta ha restituito un risultato, ma non è stato possibile aggiornare lo stato della sessione. Rileggi lo stato della sessione; non ripetere la richiesta.</value>
+  </data>
+  <data name="BillingIdentity_PreviousResult" xml:space="preserve">
+    <value>Risultato della richiesta precedente:</value>
+  </data>
 </root>

@@ -3978,3 +3978,15 @@ submitted uncertain native work retains original durable continuation, never a f
 receipt or another charge. Preserve original provider/client recovery and pricing policy.
 A shown IME invalidates an older app-caption coordinate; prove the accepted-operation
 checkpoint and actual keyboard absence before continuing an unsubmitted setup form.
+
+
+## Original optional identity source and native ownership (D-664)
+
+Keep original private-session reads and native disclosure/literal-input consent on their
+actual page/root/tab. Coalesce appearance reads; explicit read-only session refresh alone
+retries a visible failure. Track input revisions without secret hashes or copied credentials
+in source tokens. Clear request-only password/token before primary submission and departure;
+preserve a newer draft during an older request. Record only returned uniform acknowledgements
+before fallible follow-through; never turn an unknown outcome into an accepted receipt or
+replay accepted identity work on Retry. Refused cleanup scopes remain frozen without retry,
+subset, alternate method, move, escalation or reuse. Genuine authentication stays with the owner.

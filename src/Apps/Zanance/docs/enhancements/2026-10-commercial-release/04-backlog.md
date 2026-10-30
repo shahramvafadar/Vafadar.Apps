@@ -8178,3 +8178,24 @@ was rejected before process creation;3707files/593017755logicalbytes stay frozen
 retry/subset/alternate/move/escalation/reuse. Phone/D607 untouched; genuine billing/identity,
 physical/DB/key/security/stability/speed/A11Y/iOS/provider/Store/release remain separate.
 [Evidence](../../quality/original-product-plans-workspace.md)
+
+
+### D-664 - Original optional billing identity workspace
+
+Completed original private-session/page/root/tab/native disclosure and literal-input ownership,
+independent command lifetime, request-only secret clearing and known acknowledgement before
+fallible session refresh. Unknown results receive no invented acknowledgement; read-only
+Retry preserves raw nonsecret inputs and never replays an accepted primary request.
+26 distinct selected cases (19 new/seven affected existing), strict Windows/full offline
+384AOT/408ELF/1608staticLOAD pass. One original uniform anonymous recovery for a fictitious
+recipient, one following read fault, 18 same-PID native contexts, explicit session Retry
+and native Back cancellation passed with full 20-collection source equality, users0/
+challenges0 and ledger0. No real credentials, Store request, identity creation or financial
+replay. Original settings/source/Home restored; fresh UID/37hashXML/AVD/API/database/volume/
+two networks retired, original five containers exact. Five standard Cleans and six unused
+files retired; supplementary seven-root deletion was rejected before process creation,
+3782files/595533435logicalbytes remain frozen without retry/subset/alternate/move/escalation/
+reuse. Used signed APKs/evidence retained. Phone/D607/three deadlines/consumed reboot/unread
+source untouched. Genuine identity/provider/Store, physical adoption and broad DB/key/security/
+stability/speed/A11Y/iOS/release gates remain separate; overall delivery stays active.
+[Evidence](../../quality/original-billing-identity-workspace.md)

@@ -5295,3 +5295,9 @@ Original costs ownership/source/receipt batch is delivered with bounded native e
 
 Original cached-source/native-lifetime implementation and bounded offline native acceptance are delivered. No actual billing restore/purchase/management, provider or identity action was accepted by this cohort. Physical, DB/key/security/stability/speed/A11Y/iOS/Store/release gates and D607 remain open.
 [Evidence and exact cleanup limits](quality/original-product-plans-workspace.md).
+
+
+### D-664 - Optional identity engineering boundary
+
+Original identity ownership and known-result/read-only recovery are qualified in focused checks and a bounded independent native loopback fixture. Shipping remains offline. No phone adoption, genuine owner authentication, Store/provider/public release, full DB/key/security, general stability, speed or accessibility gate is closed by this work.
+[Evidence and exact cleanup limits](quality/original-billing-identity-workspace.md).

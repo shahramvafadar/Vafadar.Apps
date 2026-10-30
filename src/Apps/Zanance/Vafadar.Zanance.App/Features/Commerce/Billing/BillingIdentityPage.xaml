@@ -12,6 +12,7 @@
                     <v:HelpButton Grid.Column="1" Topic="BillingIdentity" VerticalOptions="Start" />
                 </Grid>
                 <Label Text="{v:Translate BillingIdentity_Explanation}" />
+                <VerticalStackLayout Spacing="12" IsVisible="{Binding IsReady}">
                 <v:ChoiceChips ItemsSource="{Binding Modes}" SelectedIndex="{Binding ModeIndex, Mode=TwoWay}" IsEnabled="{Binding CanSubmit}" />
                 <VerticalStackLayout Spacing="4" IsVisible="{Binding ShowEmail}">
                     <Label Text="{v:Translate BillingIdentity_Email}" />
@@ -35,12 +36,14 @@
                         IsTextPredictionEnabled="False" IsSpellCheckEnabled="False" SemanticProperties.Description="{v:Translate BillingIdentity_Token}" />
                     <Label Text="{Binding TokenError}" Style="{StaticResource ErrorText}" IsVisible="{Binding TokenError, Converter={StaticResource IsNotNullConverter}}" />
                 </VerticalStackLayout>
+                </VerticalStackLayout>
                 <Label Text="{Binding Status}" IsVisible="{Binding Status, Converter={StaticResource IsNotNullConverter}}" />
-                <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" WidthRequest="44" HeightRequest="44" Color="{DynamicResource Primary}" />
+                <ActivityIndicator IsVisible="{Binding HasPendingOperation}" IsRunning="{Binding HasPendingOperation}" WidthRequest="44" HeightRequest="44" Color="{DynamicResource Primary}" />
+                <p:WrappingAction Text="{v:Translate BillingIdentity_ReadSession}" Command="{Binding RefreshSessionCommand}" IsEnabled="{Binding CanRead}" />
                 <Label Text="{v:Translate BillingIdentity_Privacy}" Style="{StaticResource Secondary}" />
             </VerticalStackLayout>
         </ScrollView>
-        <VerticalStackLayout Grid.Row="1" Margin="16,8,16,16" Spacing="8">
+        <VerticalStackLayout Grid.Row="1" Margin="16,8,16,16" Spacing="8" IsVisible="{Binding IsReady}">
             <p:WrappingAction Text="{Binding SubmitText}" Command="{Binding SubmitCommand}" Appearance="Primary" />
             <p:WrappingAction Text="{v:Translate BillingIdentity_SignOut}" Command="{Binding SignOutCommand}" IsVisible="{Binding Connected}" />
         </VerticalStackLayout>

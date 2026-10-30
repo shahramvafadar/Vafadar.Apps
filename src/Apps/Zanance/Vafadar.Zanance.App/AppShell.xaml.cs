@@ -42,6 +42,17 @@ public partial class AppShell : Shell
     private bool _navigationRetired;
     private readonly List<WeakReference<Features.Sync.PersonalSyncPage>> _publishedPersonalSync = [];
     private readonly List<WeakReference<Features.Sharing.HouseholdPage>> _publishedHouseholds = [];
+    private readonly List<WeakReference<Features.Commerce.Billing.BillingIdentityPage>> _publishedBillingIdentities = [];
+    /// <summary>Registers only the weak actual original identity page, never credential values.</summary>
+    internal void RegisterBillingIdentity(Features.Commerce.Billing.BillingIdentityPage page)
+    {
+        if (_navigationRetired) { page.RetireShellPublication(); return; }
+        _publishedBillingIdentities.RemoveAll(reference => !reference.TryGetTarget(out _));
+        if (!_publishedBillingIdentities.Any(reference => reference.TryGetTarget(out var original) && ReferenceEquals(original, page)))
+            _publishedBillingIdentities.Add(new(page));
+    }
+    /// <summary>Only the current actual native root may own optional identity publication.</summary>
+    internal bool OwnsBillingIdentityPublication => !_navigationRetired;
     private readonly List<WeakReference<ProductPlansPage>> _publishedProductPlans = [];
     /// <summary>Registers only the weak actual original plan/access page, including covered native consent.</summary>
     internal void RegisterProductPlans(ProductPlansPage page)
@@ -554,6 +565,7 @@ public partial class AppShell : Shell
         // D-577: the list can be retained too; otherwise it keeps pre-transfer/refund balances until Back/reopen.
         if (CurrentPage is Features.Sync.PersonalSyncPage personalSync) await Presentation.Failures.GuardAsync(personalSync.RefreshForNavigationAsync);
         if (CurrentPage is Features.Sharing.HouseholdPage householdPage) await Presentation.Failures.GuardAsync(householdPage.RefreshForNavigationAsync);
+        if (CurrentPage is Features.Commerce.Billing.BillingIdentityPage identityPage) await Presentation.Failures.GuardAsync(identityPage.RefreshForNavigationAsync);
         if (CurrentPage is ProductPlansPage productPlansPage) await Presentation.Failures.GuardAsync(productPlansPage.RefreshForNavigationAsync);
         if (CurrentPage is Features.Sharing.HouseholdCostsPage householdCostsPage) await Presentation.Failures.GuardAsync(householdCostsPage.RefreshForNavigationAsync);
         else if (CurrentPage is ActiveItemsPage activeItems) await Presentation.Failures.GuardAsync(activeItems.RefreshForNavigationAsync);
@@ -607,6 +619,9 @@ public partial class AppShell : Shell
         var originalHouseholdPage = CurrentPage?.BindingContext is Features.Sharing.HouseholdViewModel ? CurrentPage : Security.NativeSensitivePresentation.Underlying(this);
         if (originalHouseholdPage?.BindingContext is Features.Sharing.HouseholdViewModel household && !household.CanLeave && args.CanCancel
             && !Security.NativeSensitivePresentation.Allows(this, originalHouseholdPage, args)) args.Cancel();
+        var originalIdentityPage = CurrentPage is Features.Commerce.Billing.BillingIdentityPage ? CurrentPage : Security.NativeSensitivePresentation.Underlying(this);
+        if (originalIdentityPage?.BindingContext is Features.Commerce.Billing.BillingIdentityViewModel identity && !identity.CanLeave && args.CanCancel
+            && !Security.NativeSensitivePresentation.Allows(this, originalIdentityPage, args)) args.Cancel();
         var originalProductPlansPage = CurrentPage is ProductPlansPage ? CurrentPage : Security.NativeSensitivePresentation.Underlying(this);
         if (originalProductPlansPage?.BindingContext is ProductPlansViewModel productPlans && !productPlans.CanLeave && args.CanCancel
             && !Security.NativeSensitivePresentation.Allows(this, originalProductPlansPage, args)) args.Cancel();
@@ -623,6 +638,9 @@ public partial class AppShell : Shell
             }
         }
         base.OnNavigating(args);
+        if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
+                or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
+            && CurrentPage is Features.Commerce.Billing.BillingIdentityPage departingIdentity) departingIdentity.RetirePublication();
         if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
             && CurrentPage is ProductPlansPage departingProductPlans) departingProductPlans.RetirePublication();
@@ -753,6 +771,9 @@ public partial class AppShell : Shell
         foreach (var reference in _publishedHouseholds)
             if (reference.TryGetTarget(out var household)) household.RetireShellPublication();
         _publishedHouseholds.Clear();
+        foreach (var reference in _publishedBillingIdentities)
+            if (reference.TryGetTarget(out var identity)) identity.RetireShellPublication();
+        _publishedBillingIdentities.Clear();
         foreach (var reference in _publishedProductPlans)
             if (reference.TryGetTarget(out var plans)) plans.RetireShellPublication();
         _publishedProductPlans.Clear();

@@ -3351,3 +3351,9 @@ Dirty Back/tab/toolbar departure uses Discard / Keep editing, and Delete uses De
 
 Visible source failures remain covered until explicit Reload; retain the comparison choice. Read-only Back cancels its original waiter, while native review/submitted work keeps its own owner. Translated disclosure changes retire the old consent; uncertain work offers original continuation without claiming payment acceptance.
 [Evidence and exact cleanup limits](quality/original-product-plans-workspace.md).
+
+
+### D-664 - Original optional identity form
+
+Cover the form until its current private-session read is ready. Expose an explicit read-only session action after failure. Preserve nonsecret raw inputs and known prior acknowledgement through follow-up failure; label older results against a newer draft. Pending read Back cancels its original waiter; native consent and primary submission retain ownership.
+[Evidence and exact cleanup limits](quality/original-billing-identity-workspace.md).

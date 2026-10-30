@@ -8654,4 +8654,13 @@ Original-XML SHA-256: {5}</value>
   <data name="Sync_AcceptedFollowUpFailed" xml:space="preserve">
     <value>Die angeforderte Änderung wurde übernommen, aber die Folgeschritte konnten nicht abgeschlossen werden. Lade den aktuellen Stand neu, bevor du eine weitere Aktion auswählst.</value>
   </data>
+  <data name="BillingIdentity_ReadSession" xml:space="preserve">
+    <value>Sitzungsstatus lesen</value>
+  </data>
+  <data name="BillingIdentity_FollowUpFailed" xml:space="preserve">
+    <value>Die Anfrage hat ein Ergebnis zurückgegeben, aber der Sitzungsstatus konnte nicht aktualisiert werden. Lesen Sie den Sitzungsstatus erneut; wiederholen Sie die Anfrage nicht.</value>
+  </data>
+  <data name="BillingIdentity_PreviousResult" xml:space="preserve">
+    <value>Ergebnis der vorherigen Anfrage:</value>
+  </data>
 </root>
