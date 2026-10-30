@@ -24,22 +24,16 @@ public sealed partial class PersonalSyncStore
         {
             await db.Database.OpenConnectionAsync(ct);
             await using var transaction = await db.Database.BeginTransactionAsync(ct);
-            var binding = await db.Set<SyncBindingRow>().AsNoTracking().SingleOrDefaultAsync(ct);
-            if (binding is null || !binding.Enabled || binding.GenerationPath != Generation(db)) return [];
-            var round = await db.Set<SyncClientRound>().AsNoTracking().SingleOrDefaultAsync(ct);
-            if (round is null) return [];
-            var connection = new PersonalSyncReview(Generation(db), binding.ProfileId, binding.IdentityId, binding.PeerKey, binding.DeviceId);
-            var rows = await db.Set<SyncConflictRow>().AsNoTracking().OrderBy(row => row.TableName).ThenBy(row => row.RecordKey).ToArrayAsync(ct);
-            var reviews = rows.Where(row => row.UseProposal is null).Select(row => new PersonalSyncConflictReview(connection, round.OperationId,
-                round.Phase, row.LocalSequence, ReviewDigest(row.Payload), JsonSerializer.Deserialize(row.Payload, PersonalSyncJsonContext.Default.SyncConflict)
-                    ?? throw new InvalidDataException("The retained personal review is unavailable."))).ToArray();
-            access.EnsureSnapshotCurrent(); await transaction.CommitAsync(ct); return AttachReviewGroups(reviews);
+            var result = await ReadConflictsInContextAsync(db, ct);
+            access.EnsureSnapshotCurrent(); await transaction.CommitAsync(ct); return result;
         }, ct);
     }
 
     /// <summary>Records only an explicit whole-row choice for the exact reviewed local change and received version.</summary>
-    public async Task ResolveAsync(PersonalSyncConflictReview review, bool keepLocalProposal, CancellationToken ct = default)
+    public async Task ResolveAsync(PersonalSyncConflictReview review, bool keepLocalProposal, CancellationToken ct = default,
+        Action? validateOriginal = null)
     {
+        validateOriginal?.Invoke();
         await using var db = await factory.CreateDbContextAsync(ct); var access = Access(db);
         await Task.Run(async () =>
         {
@@ -84,7 +78,8 @@ public sealed partial class PersonalSyncStore
                         throw new InvalidOperationException("A displayed personal review relationship changed.");
             row.UseProposal = keepLocalProposal;
             }
-            access.EnsureSnapshotCurrent(); await db.SaveChangesAsync(ct); await transaction.CommitAsync(ct);
+            access.EnsureSnapshotCurrent(); validateOriginal?.Invoke(); await db.SaveChangesAsync(ct);
+            validateOriginal?.Invoke(); await transaction.CommitAsync(ct);
         }, ct);
     }
 
@@ -103,4 +98,19 @@ public sealed partial class PersonalSyncStore
         reviews.Select(review => review with { GroupMembers = review.Conflict.LinkedGroup is { } group ?
             reviews.Where(member => member.Conflict.LinkedGroup == group && SyncConflictGrouping.Family(member.Conflict.Proposal.Record) == SyncConflictGrouping.Family(review.Conflict.Proposal.Record) && member.Conflict.Proposal.Record != review.Conflict.Proposal.Record)
                 .Select(member => member with { GroupMembers = null }).ToArray() : null }).ToArray();
+    /// <summary>Builds the existing complete grouped reviews under the caller's original transaction.</summary>
+    private static async Task<IReadOnlyList<PersonalSyncConflictReview>> ReadConflictsInContextAsync(ZananceDbContext db, CancellationToken ct)
+    {
+        var binding = await db.Set<SyncBindingRow>().AsNoTracking().SingleOrDefaultAsync(ct);
+        if (binding is null || !binding.Enabled || binding.GenerationPath != Generation(db)) return [];
+        var round = await db.Set<SyncClientRound>().AsNoTracking().SingleOrDefaultAsync(ct);
+        if (round is null) return [];
+        var connection = new PersonalSyncReview(Generation(db), binding.ProfileId, binding.IdentityId, binding.PeerKey, binding.DeviceId, binding.TransportKind);
+        var rows = await db.Set<SyncConflictRow>().AsNoTracking().OrderBy(row => row.TableName).ThenBy(row => row.RecordKey).ToArrayAsync(ct);
+        var reviews = rows.Where(row => row.UseProposal is null).Select(row => new PersonalSyncConflictReview(connection, round.OperationId,
+            round.Phase, row.LocalSequence, ReviewDigest(row.Payload), JsonSerializer.Deserialize(row.Payload, PersonalSyncJsonContext.Default.SyncConflict)
+                ?? throw new InvalidDataException("The retained personal review is unavailable."))).ToArray();
+        return AttachReviewGroups(reviews);
+    }
+
 }

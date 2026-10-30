@@ -28,6 +28,22 @@ public sealed class PersonalSyncReviewTests
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
     private sealed record ReviewFixture(Account Account, LedgerEntry Entry, PersonalSyncConflictReview Review, SyncRecord AccountRecord);
 
+    [Fact]
+    public async Task Original_workspace_retains_the_complete_actual_review_relationships_and_does_not_resolve_money()
+    {
+        using var f = new FlowFixture(); var seeded = await SeedAsync(f);
+        var store = f.Services.GetRequiredService<PersonalSyncStore>();
+        var connection = await store.ReviewAsync(Ct); var status = await store.StatusAsync(Ct);
+        var expected = await store.PrepareReviewsAsync(await store.ConflictsAsync(Ct), Ct);
+        var entry = JsonSerializer.Serialize(await f.Store.GetEntryAsync(seeded.Entry.Id, Ct));
+        var workspace = await store.ReadWorkspaceAsync(false, Ct);
+        Assert.Equal(connection, workspace.Connection); Assert.Equal(status, workspace.Status);
+        Assert.Equal(JsonSerializer.Serialize(expected), JsonSerializer.Serialize(workspace.Review));
+        Assert.False(workspace.CanCompleteOnboarding);
+        Assert.Equal(entry, JsonSerializer.Serialize(await f.Store.GetEntryAsync(seeded.Entry.Id, Ct)));
+        Assert.Equal(status, await store.StatusAsync(Ct));
+    }
+
     private static async Task<ReviewFixture> SeedAsync(FlowFixture f)
     {
         var account = new Account { Name = "Fictitious KWD cash", CurrencyCode = "KWD", OpeningDate = new(2026, 10, 15) };
@@ -729,6 +745,26 @@ public sealed class PersonalSyncReviewTests
         Assert.False(vm.HasAttachmentPreview); Assert.All(frame.Data, value => Assert.Equal(0, value));
         Assert.False(vm.CanInteract);
         Assert.Equal(seeded.Attachment.Data, (await f.Store.GetAttachmentAsync(seeded.Attachment.Id, Ct))!.Data);
+    }
+
+    [Theory, InlineData("close"), InlineData("root"), InlineData("display")]
+    public async Task Original_pending_attachment_cannot_reopen_a_closed_preview_or_publish_into_another_owner(string retirement)
+    {
+        using var f = new FlowFixture(); var seeded = await SeedAttachmentReviewAsync(f);
+        using var port = new PersonalSyncFlowTests.EnvironmentPort();
+        var entered = new TaskCompletionSource(); var deferred = new TaskCompletionSource<PersonalSyncRenderedPage>();
+        port.RenderPage = (_, _, _) => { entered.TrySetResult(); return deferred.Task; };
+        var vm = AttachmentFlow(f, port); var root = true; vm.BindRootOwner(() => root); await vm.ActivateAsync();
+        var rendering = vm.PreviewRemoteCommand.ExecuteAsync(Assert.Single(vm.Conflicts));
+        await entered.Task.WaitAsync(TimeSpan.FromSeconds(10), Ct);
+        if (retirement == "close") vm.CloseAttachmentPreviewCommand.Execute(null);
+        else if (retirement == "root") root = false;
+        else f.Localization.SetLanguage(f.Localization.SupportedLanguages.First(row => row.CultureName == "de"));
+        var frame = new PersonalSyncRenderedPage(1, [31, 32, 33], 400, 800); deferred.SetResult(frame); await rendering;
+        Assert.False(vm.HasAttachmentPreview); Assert.All(frame.Data, value => Assert.Equal(0, value));
+        Assert.Null(vm.Error); Assert.Single(vm.Conflicts);
+        Assert.Equal(seeded.Attachment.Data, (await f.Store.GetAttachmentAsync(seeded.Attachment.Id, Ct))!.Data);
+        vm.Deactivate();
     }
 
     [Fact]

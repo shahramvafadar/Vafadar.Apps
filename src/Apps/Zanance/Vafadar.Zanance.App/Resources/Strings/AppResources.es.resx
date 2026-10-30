@@ -8620,4 +8620,7 @@ SHA-256 del XML original: {5}</value>
   <data name="Cloud_Deleted" xml:space="preserve">
     <value>Se eliminó la copia de seguridad seleccionada.</value>
   </data>
+  <data name="Sync_AcceptedFollowUpFailed" xml:space="preserve">
+    <value>El cambio solicitado se ha aceptado, pero no se han podido completar los pasos posteriores. Vuelve a cargar el estado actual antes de elegir otra acción.</value>
+  </data>
 </root>

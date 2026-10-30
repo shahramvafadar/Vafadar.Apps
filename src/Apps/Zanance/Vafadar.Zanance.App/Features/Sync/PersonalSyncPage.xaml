@@ -21,7 +21,7 @@
                 </Grid>
                 <Label Text="{Binding IntroText}" Style="{StaticResource Secondary}" />
                 <Label Text="{v:Translate Sync_EditionUnavailable}" IsVisible="{Binding Available, Converter={StaticResource InvertedBoolConverter}}" />
-                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+                <ActivityIndicator IsRunning="{Binding HasPendingOperation}" IsVisible="{Binding HasPendingOperation}" />
                 <Label Text="{Binding Error}" Style="{StaticResource ErrorText}"
                        IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
                 <p:WrappingAction Text="{v:Translate Sync_Reload}" Command="{Binding ReloadCommand}"

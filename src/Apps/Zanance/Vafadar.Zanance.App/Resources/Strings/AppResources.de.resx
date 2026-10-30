@@ -8651,4 +8651,7 @@ Original-XML SHA-256: {5}</value>
   <data name="Cloud_Deleted" xml:space="preserve">
     <value>Die ausgewählte Sicherung wurde gelöscht.</value>
   </data>
+  <data name="Sync_AcceptedFollowUpFailed" xml:space="preserve">
+    <value>Die angeforderte Änderung wurde übernommen, aber die Folgeschritte konnten nicht abgeschlossen werden. Lade den aktuellen Stand neu, bevor du eine weitere Aktion auswählst.</value>
+  </data>
 </root>

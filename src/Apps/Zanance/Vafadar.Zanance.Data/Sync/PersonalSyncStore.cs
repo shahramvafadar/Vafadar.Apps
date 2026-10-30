@@ -29,10 +29,8 @@ public sealed partial class PersonalSyncStore(IDbContextFactory<ZananceDbContext
         var access = Access(db);
         return await Task.Run(async () =>
         {
-            var binding = await db.Set<SyncBindingRow>().AsNoTracking().SingleOrDefaultAsync(ct);
-            access.EnsureSnapshotCurrent();
-            return new PersonalSyncReview(Generation(db), binding?.ProfileId, binding?.IdentityId, binding?.PeerKey, binding?.DeviceId,
-                binding?.TransportKind ?? ProfileSynchronizationKind.Personal);
+            var result = await ReadConnectionInContextAsync(db, ct);
+            access.EnsureSnapshotCurrent(); return result;
         }, ct);
     }
 
@@ -43,27 +41,20 @@ public sealed partial class PersonalSyncStore(IDbContextFactory<ZananceDbContext
         var access = Access(db);
         return await Task.Run(async () =>
         {
-            var binding = await db.Set<SyncBindingRow>().AsNoTracking().SingleOrDefaultAsync(ct);
-            var changes = await db.Set<SyncOutboxRow>().LongCountAsync(ct);
-            var conflicts = await db.Set<SyncConflictRow>().CountAsync(ct);
-            access.EnsureSnapshotCurrent();
-            var restored = binding is not null && binding.GenerationPath != Generation(db);
-            if (binding?.Enabled == true && !restored)
-                changes += await db.MarketReferenceReceipts.LongCountAsync(row => !db.Set<SyncMarketSourceSend>().Any(sent => sent.DocumentId == row.Id && sent.Acknowledged), ct);
-            access.EnsureSnapshotCurrent();
-            return new PersonalSyncStatus(binding?.Enabled == true && !restored, restored, binding?.RemoteName,
-                changes, conflicts, binding?.LastSuccessAt, binding?.LastFailure);
+            var result = await ReadStatusInContextAsync(db, ct);
+            access.EnsureSnapshotCurrent(); return result;
         }, ct);
     }
 
     /// <summary>Starts an explicitly reviewed connection or resumes the same generation/owner without discarding offline deletions.</summary>
     public async Task ConnectAsync(PersonalSyncReview review, LocalSyncPeer peer, string identity, Guid device,
         SyncProfile remote, CancellationToken ct = default, bool restartInitialization = false, bool receiveFirstRun = false,
-        ProfileSynchronizationKind transportKind = ProfileSynchronizationKind.Personal)
+        ProfileSynchronizationKind transportKind = ProfileSynchronizationKind.Personal, Action? validateOriginal = null)
     {
         if (string.IsNullOrEmpty(identity) || identity.Length > 450 || device == Guid.Empty || remote.Id == Guid.Empty ||
             remote.SchemaHash != SyncSchema.HashForScope(transportKind == ProfileSynchronizationKind.Household) || string.IsNullOrWhiteSpace(remote.Name) || remote.Name.Length > 100 || !Enum.IsDefined(transportKind))
             throw new ArgumentException("A reviewed personal sync identity and compatible space are required.");
+        validateOriginal?.Invoke();
         await using var db = await factory.CreateDbContextAsync(ct);
         var access = Access(db);
         await Task.Run(async () =>
@@ -108,6 +99,7 @@ public sealed partial class PersonalSyncStore(IDbContextFactory<ZananceDbContext
                     await db.Categories.ExecuteDeleteAsync(ct);
                 }
             }
+            validateOriginal?.Invoke();
             if (!resume)
             {
                 foreach (var table in MetadataTables)
@@ -156,13 +148,15 @@ public sealed partial class PersonalSyncStore(IDbContextFactory<ZananceDbContext
             previous.Enabled = true;
             if (receiveFirstRun && !await db.Set<SyncClientRound>().AnyAsync(ct))
                 await db.Set<SyncOutboxRow>().Where(row => row.TableName == "Settings").ExecuteDeleteAsync(ct);
-            access.EnsureSnapshotCurrent(); await db.SaveChangesAsync(ct); await transaction.CommitAsync(ct);
+            access.EnsureSnapshotCurrent(); validateOriginal?.Invoke(); await db.SaveChangesAsync(ct);
+            validateOriginal?.Invoke(); await transaction.CommitAsync(ct);
         }, ct);
     }
 
     /// <summary>Stops new replay while retaining the owned queue, version history and local finances.</summary>
-    public async Task PauseAsync(PersonalSyncReview review, CancellationToken ct = default)
+    public async Task PauseAsync(PersonalSyncReview review, CancellationToken ct = default, Action? validateOriginal = null)
     {
+        validateOriginal?.Invoke();
         await using var db = await factory.CreateDbContextAsync(ct);
         var access = Access(db);
         await Task.Run(async () =>
@@ -174,9 +168,9 @@ public sealed partial class PersonalSyncStore(IDbContextFactory<ZananceDbContext
             {
                 if (binding.ProfileId != review.RemoteProfile || binding.IdentityId != review.IdentityId || binding.PeerKey != review.PeerKey || binding.DeviceId != review.DeviceId)
                     throw new InvalidOperationException("The reviewed connection changed.");
-                binding.Enabled = false; access.EnsureSnapshotCurrent(); await db.SaveChangesAsync(ct);
+                validateOriginal?.Invoke(); binding.Enabled = false; access.EnsureSnapshotCurrent(); await db.SaveChangesAsync(ct);
             }
-            access.EnsureSnapshotCurrent(); await transaction.CommitAsync(ct);
+            access.EnsureSnapshotCurrent(); validateOriginal?.Invoke(); await transaction.CommitAsync(ct);
         }, ct);
     }
 
@@ -187,4 +181,25 @@ public sealed partial class PersonalSyncStore(IDbContextFactory<ZananceDbContext
         access.DemandFeature(access.Context?.Scope.Kind == EntitlementScopeKind.SharedSpace
             ? CommercialFeature.SharedSpaceSync : CommercialFeature.PersonalSync); return access;
     }
+    /// <summary>Reads the original binding through the caller's one actual source transaction.</summary>
+    private static async Task<PersonalSyncReview> ReadConnectionInContextAsync(ZananceDbContext db, CancellationToken ct)
+    {
+        var binding = await db.Set<SyncBindingRow>().AsNoTracking().SingleOrDefaultAsync(ct);
+        return new PersonalSyncReview(Generation(db), binding?.ProfileId, binding?.IdentityId, binding?.PeerKey, binding?.DeviceId,
+            binding?.TransportKind ?? ProfileSynchronizationKind.Personal);
+    }
+
+    /// <summary>Reads status and all pending counts from the same original connection snapshot.</summary>
+    private static async Task<PersonalSyncStatus> ReadStatusInContextAsync(ZananceDbContext db, CancellationToken ct)
+    {
+        var binding = await db.Set<SyncBindingRow>().AsNoTracking().SingleOrDefaultAsync(ct);
+        var changes = await db.Set<SyncOutboxRow>().LongCountAsync(ct);
+        var conflicts = await db.Set<SyncConflictRow>().CountAsync(ct);
+        var restored = binding is not null && binding.GenerationPath != Generation(db);
+        if (binding?.Enabled == true && !restored)
+            changes += await db.MarketReferenceReceipts.LongCountAsync(row => !db.Set<SyncMarketSourceSend>().Any(sent => sent.DocumentId == row.Id && sent.Acknowledged), ct);
+        return new PersonalSyncStatus(binding?.Enabled == true && !restored, restored, binding?.RemoteName,
+            changes, conflicts, binding?.LastSuccessAt, binding?.LastFailure);
+    }
+
 }

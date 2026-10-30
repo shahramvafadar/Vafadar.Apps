@@ -8651,4 +8651,7 @@
   <data name="Cloud_Deleted" xml:space="preserve">
     <value>نسخهٔ پشتیبان انتخاب‌شده حذف شد.</value>
   </data>
+  <data name="Sync_AcceptedFollowUpFailed" xml:space="preserve">
+    <value>تغییر درخواستی پذیرفته شد، اما مرحلهٔ بعدی کامل نشد. پیش از انتخاب اقدام دیگر، وضعیت فعلی را دوباره بخوانید.</value>
+  </data>
 </root>

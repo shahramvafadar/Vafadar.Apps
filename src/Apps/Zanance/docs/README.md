@@ -111,3 +111,5 @@ Original backup workspace/destination ownership: [D-657 evidence](quality/origin
 Original profile catalogue and native command lifetime: [D-658 evidence](quality/original-profile-catalogue-lifetime.md), including real owned-emulator root retirement, one protected create/delete cycle and remaining acceptance gates.
 
 Original six-kind resource workspace and one-use native parent return: [D-659 evidence](quality/original-active-resource-workspace.md), including accepted-write preservation across no-reset adoption and precise remaining gates.
+
+Original personal synchronization workspace, current native consent/session boundaries and accepted-result feedback: [D-660 evidence](quality/original-personal-sync-workspace.md).

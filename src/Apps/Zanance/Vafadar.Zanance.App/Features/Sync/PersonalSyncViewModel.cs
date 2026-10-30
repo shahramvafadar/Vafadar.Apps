@@ -42,6 +42,15 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     private Func<Task>? closeOnboarding;
     private Func<Task>? finishOnboarding;
     private bool onboardingEligible;
+    private bool commandActive;
+    private bool readingLocal, rootRetired, closingOnboarding;
+    private long disclosureVersion;
+    private long activationVersion;
+    private Func<bool> ownsRoot = () => true;
+    private Action? operationOwner;
+    private TaskCompletionSource? commandCompletion;
+    private bool acceptedOperation;
+    private bool connectionDefaultsRead;
 
     /// <summary>Creates an empty in-memory screen; no secure state, database or network is read in construction.</summary>
     public PersonalSyncViewModel(PersonalSyncStore store, PersonalSyncCoordinator coordinator, IPersonalSyncEnvironment environment,
@@ -55,7 +64,9 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     /// <summary>Gets whether this original screen can start another reviewed operation.</summary>
     public bool CanInteract => CanRead && ready;
     /// <summary>Gets whether a covered initial read or explicit retry can start.</summary>
-    public bool CanRead => Available && visible is not null && !IsBusy;
+    public bool CanRead => Available && OwnsPresentation && !IsBusy && !commandActive && !closingOnboarding;
+    /// <summary>Gets actual operation ownership independently of shared status feedback.</summary>
+    public bool HasPendingOperation => commandActive;
     /// <summary>Gets whether the complete original local connection snapshot has been published.</summary>
     public bool IsReady => ready;
     /// <summary>Gets whether a current actual authenticated service device was resolved.</summary>
@@ -79,7 +90,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     /// <summary>Gets whether manual synchronization can run for the actual opted-in original.</summary>
     public bool CanSync => CanConnect && status?.Connected == true && SessionMatchesConnection;
     /// <summary>Gets whether native Back may leave outside a running action.</summary>
-    public bool CanLeave => !IsBusy;
+    public bool CanLeave => !closingOnboarding && (commandActive ? readingLocal : !IsBusy);
     /// <summary>Gets whether this page is an optional modal over the retained first-run wizard.</summary>
     public bool IsOnboardingRestore => finishOnboarding is not null;
     /// <summary>Gets whether fully applied received accounts can finish first run without another account.</summary>
@@ -87,7 +98,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     /// <summary>Gets whether the original wizard can be shown again without discarding its draft.</summary>
     public bool CanCloseOnboarding => CanLeave && visible is not null && IsOnboardingRestore;
     /// <summary>Gets whether cancellation or the explicit first-run actions need their fixed footer.</summary>
-    public bool ShowFooter => IsBusy || IsOnboardingRestore;
+    public bool ShowFooter => commandActive || IsBusy || IsOnboardingRestore;
     /// <summary>Attaches native window effects before the first visible read, without touching a profile.</summary>
     public void BeginOnboarding(Func<Task> close, Func<Task> finish)
     {
@@ -143,18 +154,33 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     /// <summary>Attaches only while the actual page is visible; drafts stay in memory across help dialogs.</summary>
     public async Task ActivateAsync()
     {
-        visible?.Cancel(); visible?.Dispose(); visible = new();
+        if (rootRetired || !ownsRoot()) return;
+        if (OwnsPresentation)
+        {
+            if (commandActive) { if (commandCompletion is { } pending) await pending.Task; return; }
+            if (!ready) await ReloadAsync();
+            return;
+        }
+        var activation = ++activationVersion;
+        operation?.Cancel();
+        if (commandCompletion is { } retiring) await retiring.Task;
+        if (activation != activationVersion || rootRetired || !ownsRoot()) return;
+        visible?.Dispose(); visible = new();
         translator.PropertyChanged -= OnTranslationChanged; translator.PropertyChanged += OnTranslationChanged;
         environment.StatusChanged -= OnStatusChanged; environment.StatusChanged += OnStatusChanged;
-        if (Address.Length == 0)
-        { var saved = environment.ReadConnection(); Address = saved.Address; Fingerprint = saved.Fingerprint; }
         if (DeviceName.Length == 0) DeviceName = translator["Sync_DefaultDevice"];
         ready = false;
         await ReloadAsync();
     }
+    /// <summary>Binds publication and native commands to the actual original window or first-run modal.</summary>
+    public void BindRootOwner(Func<bool> current) => ownsRoot = current ?? throw new ArgumentNullException(nameof(current));
+    /// <summary>Permanently retires an original window; a later appearance cannot revive its pending consent.</summary>
+    public void RetireRoot() { if (rootRetired) return; rootRetired = true; Deactivate(); }
+    private bool OwnsPresentation => !rootRetired && visible is not null && ownsRoot();
     /// <summary>Retires pending requests and password input; a later page cannot publish this page's old completion.</summary>
     public void Deactivate()
     {
+        activationVersion++;
         ClearAttachmentPreview();
         visible?.Cancel(); visible?.Dispose(); visible = null; operation?.Cancel();
         Password = ""; translator.PropertyChanged -= OnTranslationChanged;
@@ -164,7 +190,19 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     /// <summary>Cancels only this screen's pending work; already accepted server work remains durably recoverable.</summary>
     [RelayCommand] private void Cancel() => operation?.Cancel();
     [RelayCommand]
-    private Task CloseOnboardingAsync() => CanCloseOnboarding && closeOnboarding is { } close ? close() : Task.CompletedTask;
+    private async Task CloseOnboardingAsync()
+    {
+        if (!CanCloseOnboarding || !OwnsPresentation || closeOnboarding is not { } close) return;
+        closingOnboarding = true; Deactivate();
+        try { if (!rootRetired && ownsRoot()) await close(); }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            // If the actual modal remains, restore a covered read opportunity rather than replaying Close.
+            if (!rootRetired && ownsRoot())
+            { visible = new(); ready = false; failureKey = "Sync_ActionFailed"; }
+        }
+        finally { closingOnboarding = false; RefreshProperties(); }
+    }
     [RelayCommand]
     private Task FinishOnboardingAsync() => RunAsync(async (access, ct) =>
     {
@@ -172,14 +210,21 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
         var reviewed = review;
         if (!await ConfirmAsync("Sync_FirstRunConfirm", "")) return;
         access.Validate();
-        if (!await store.CompleteOnboardingAsync(reviewed, ct))
+        if (!await store.CompleteOnboardingAsync(reviewed, ct, access.Validate))
         { await RefreshLocalAsync(ct); failureKey = "Sync_FirstRunNotReady"; return; }
+        AcceptKnownOperation();
         access.Validate(); await finishOnboarding();
     });
 
     /// <summary>Retries only the covered local read; it never signs in or opts a profile in.</summary>
     [RelayCommand]
-    private Task ReloadAsync() => RunAsync(async (_, ct) => await RefreshLocalAsync(ct), allowCoveredRead: true);
+    private Task ReloadAsync() => RunAsync(async (_, ct) =>
+    {
+        if (!connectionDefaultsRead && Address.Length == 0 && Fingerprint.Length == 0)
+        { var saved = environment.ReadConnection(); Address = saved.Address; Fingerprint = saved.Fingerprint; }
+        connectionDefaultsRead = true;
+        await RefreshLocalAsync(ct);
+    }, allowCoveredRead: true);
     /// <summary>Opens the original encrypted household flow without changing or relabeling this profile binding.</summary>
     [RelayCommand]
     private Task OpenHouseholdAsync() => CanInteract && IsHouseholdConnection && !IsOnboardingRestore
@@ -190,10 +235,19 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     {
         RequirePersonalConnection();
         var peer = new LocalSyncPeer(Address, Fingerprint);
+        var address = Address; var fingerprint = Fingerprint;
+        var email = Email; var name = DeviceName;
         var password = Password; Password = "";
-        transport?.Dispose(); transport = environment.Open(peer, access.Validate);
-        identity = await transport.SignInAsync(Email, password, ct); access.Validate();
-        device = await transport.RegisterDeviceAsync(DeviceName, ct); access.Validate();
+        transport?.Dispose(); identity = null; device = null;
+        var client = environment.Open(peer, access.Validate); transport = client;
+        var signedIn = await client.SignInAsync(email, password, ct); access.Validate();
+        if (address != Address || fingerprint != Fingerprint || email != Email || name != DeviceName)
+            throw new OperationCanceledException("The original sign-in inputs changed.");
+        identity = signedIn;
+        var registered = await client.RegisterDeviceAsync(name, ct); access.Validate();
+        if (address != Address || fingerprint != Fingerprint || email != Email || name != DeviceName)
+            throw new OperationCanceledException("The original device-registration inputs changed.");
+        device = registered;
         environment.RememberPeer(peer); await DiscoverCoreAsync(access, ct); await RefreshLocalAsync(ct);
         if (status?.Connected == true) environment.ConnectionChanged();
     });
@@ -204,15 +258,22 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     {
         RequirePersonalConnection();
         var peer = new LocalSyncPeer(Address, Fingerprint);
-        transport?.Dispose(); transport = environment.Open(peer, access.Validate);
-        identity = await transport.IdentityAsync(ct); access.Validate();
-        try { device = await transport.CurrentDeviceAsync(ct); }
+        var inputs = (Address, Fingerprint, DeviceName);
+        transport?.Dispose(); identity = null; device = null;
+        var client = environment.Open(peer, access.Validate); transport = client;
+        var signedIn = await client.IdentityAsync(ct); access.Validate();
+        if (inputs != (Address, Fingerprint, DeviceName)) throw new OperationCanceledException("The original discovery inputs changed.");
+        identity = signedIn;
+        SyncDevice found;
+        try { found = await client.CurrentDeviceAsync(ct); access.Validate(); }
         catch (PersonalSyncHttpException error) when (error.Status == System.Net.HttpStatusCode.NotFound)
         {
             if (!await ConfirmAsync("Sync_RegisterDeviceConfirm", DeviceName)) return;
-            access.Validate(); device = await transport.RegisterDeviceAsync(DeviceName, ct);
+            access.Validate(); found = await client.RegisterDeviceAsync(DeviceName, ct); access.Validate();
         }
-        access.Validate(); DeviceName = device.Name;
+        access.Validate();
+        if (inputs != (Address, Fingerprint, DeviceName)) throw new OperationCanceledException("The original device discovery inputs changed.");
+        device = found; DeviceName = found.Name;
         await DiscoverCoreAsync(access, ct); await RefreshLocalAsync(ct);
     });
 
@@ -267,20 +328,25 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
             throw new InvalidOperationException("The reviewed initialization authority changed.");
         var claimed = await transport.ClaimInitializationAsync(profile.Id, new(selectedDevice, profile.BootstrapDeviceId), ct);
         access.Validate();
-        await store.ConnectAsync(connection, selectedPeer, identity!.Id, selectedDevice, claimed, ct, restartInitialization: true);
+        await store.ConnectAsync(connection, selectedPeer, identity!.Id, selectedDevice, claimed, ct,
+            restartInitialization: true, validateOriginal: access.Validate);
+        AcceptKnownOperation();
         access.Validate(); environment.ConnectionChanged(); await DiscoverCoreAsync(access, ct); await RefreshLocalAsync(ct);
     });
     private async Task ConnectCoreAsync(PersonalSyncReview connection, SyncProfile profile, PersonalSyncAccess access, CancellationToken ct)
     {
         access.Validate();
-        await store.ConnectAsync(connection, transport!.Peer, identity!.Id, device!.Id, profile, ct, receiveFirstRun: IsOnboardingRestore); access.Validate();
+        await store.ConnectAsync(connection, transport!.Peer, identity!.Id, device!.Id, profile, ct,
+            receiveFirstRun: IsOnboardingRestore, validateOriginal: access.Validate);
+        AcceptKnownOperation(); access.Validate();
         environment.ConnectionChanged(); await RefreshLocalAsync(ct);
     }
 
     [RelayCommand]
     private Task SynchronizeAsync() => RunAsync(async (access, ct) =>
     {
-        RequireSession(); access.Validate(); var outcome = await coordinator.SynchronizeAsync(transport!, ct); access.Validate();
+        RequireSession(); access.Validate(); var outcome = await coordinator.SynchronizeAsync(transport!, ct);
+        AcceptKnownOperation(); access.Validate();
         if (outcome.Applied) await environment.PublishAppliedAsync(ct);
         await RefreshLocalAsync(ct); environment.ConnectionChanged();
     });
@@ -291,7 +357,8 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
         RequirePersonalConnection();
         var connection = review ?? await store.ReviewAsync(ct);
         if (!await ConfirmAsync("Sync_PauseConfirm", "")) return;
-        access.Validate(); await store.PauseAsync(connection, ct); environment.ConnectionChanged(); await RefreshLocalAsync(ct);
+        access.Validate(); await store.PauseAsync(connection, ct, access.Validate);
+        AcceptKnownOperation(); environment.ConnectionChanged(); await RefreshLocalAsync(ct);
     });
 
     [RelayCommand]
@@ -301,7 +368,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
         var connection = await store.ReviewAsync(ct); access.Validate();
         var peer = transport?.Peer ?? new LocalSyncPeer(Address, Fingerprint);
         if (!await ConfirmAsync("Sync_SignOutConfirm", "")) return;
-        access.Validate(); await store.PauseAsync(connection, ct);
+        access.Validate(); await store.PauseAsync(connection, ct, access.Validate); AcceptKnownOperation();
         using var client = environment.Open(peer, access.Validate); await client.ForgetAsync(ct);
         transport?.Dispose(); transport = null; identity = null; device = null; Password = ""; Email = "";
         Profiles.Clear(); Devices.Clear(); DeviceItems.Clear(); environment.ConnectionChanged(); await RefreshLocalAsync(ct);
@@ -312,10 +379,12 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     {
         RequireSession(); if (target.Revoked || !Devices.Any(row => row == target)) return;
         if (!await ConfirmAsync("Sync_RevokeConfirm", target.Name)) return;
-        access.Validate(); await transport!.RevokeDeviceAsync(target.Id, ct);
+        access.Validate(); RequireSession();
+        if (!Devices.Contains(target)) throw new OperationCanceledException("The original device review changed.");
+        await transport!.RevokeDeviceAsync(target.Id, ct); AcceptKnownOperation(); access.Validate();
         if (device!.Id == target.Id)
         {
-            await transport.ForgetAsync(ct); await store.PauseAsync(await store.ReviewAsync(ct), ct);
+            await transport.ForgetAsync(ct); await store.PauseAsync(await store.ReviewAsync(ct), ct, access.Validate);
             identity = null; device = null; Profiles.Clear(); Devices.Clear(); DeviceItems.Clear(); environment.ConnectionChanged();
         }
         else await DiscoverCoreAsync(access, ct);
@@ -334,25 +403,29 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
             ? local ? "Sync_KeepLocalGroupConfirm" : "Sync_KeepRemoteGroupConfirm"
             : local ? "Sync_KeepLocalConfirm" : "Sync_KeepRemoteConfirm";
         if (!await ConfirmAsync(confirmation, "")) return;
-        access.Validate(); await store.ResolveAsync(conflict, local, ct); await RefreshLocalAsync(ct); environment.ConnectionChanged();
+        access.Validate();
+        if (!Conflicts.Contains(conflict)) throw new OperationCanceledException("The original conflict row retired.");
+        await store.ResolveAsync(conflict, local, ct, access.Validate); AcceptKnownOperation();
+        await RefreshLocalAsync(ct); environment.ConnectionChanged();
     });
 
     [RelayCommand]
     private Task RestartReviewAsync() => RunAsync(async (access, ct) =>
     {
         RequireSession(); if (!await ConfirmAsync("Sync_RestartConfirm", "")) return;
-        access.Validate(); await coordinator.RestartReviewAsync(transport!, ct); await RefreshLocalAsync(ct); environment.ConnectionChanged();
+        access.Validate(); await coordinator.RestartReviewAsync(transport!, ct); AcceptKnownOperation();
+        await RefreshLocalAsync(ct); environment.ConnectionChanged();
     });
 
     private async Task RefreshLocalAsync(CancellationToken ct)
     {
-        var nextReview = await store.ReviewAsync(ct); var nextStatus = await store.StatusAsync(ct); var conflicts = await store.ConflictsAsync(ct);
-        var prepared = await store.PrepareReviewsAsync(conflicts, ct);
-        var eligible = IsOnboardingRestore && await store.CanCompleteOnboardingAsync(nextReview, ct);
-        ct.ThrowIfCancellationRequested(); review = nextReview; status = nextStatus;
-        reviewRemote = prepared.RemoteRecords;
-        onboardingEligible = eligible;
-        Conflicts.Clear(); foreach (var conflict in prepared.Reviews) Conflicts.Add(conflict);
+        var validate = operationOwner ?? throw new OperationCanceledException("The original sync operation retired.");
+        validate(); ready = false; RefreshProperties();
+        var workspace = await store.ReadWorkspaceAsync(IsOnboardingRestore, ct);
+        ct.ThrowIfCancellationRequested(); validate(); review = workspace.Connection; status = workspace.Status;
+        reviewRemote = workspace.Review.RemoteRecords;
+        onboardingEligible = workspace.CanCompleteOnboarding;
+        Conflicts.Clear(); foreach (var conflict in workspace.Review.Reviews) Conflicts.Add(conflict);
         if (previewReview is { } previous && !Conflicts.Any(item => AttachmentReviewKey(item) == AttachmentReviewKey(previous))) ClearAttachmentPreview();
         RefreshReviewItems();
         ready = true;
@@ -360,28 +433,57 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     private async Task RunAsync(Func<PersonalSyncAccess, CancellationToken, Task> action, bool allowCoveredRead = false)
     {
         if (!(allowCoveredRead ? CanRead : CanInteract)) return;
+        var originalVisibility = visible!;
+        var originalDisclosure = disclosureVersion;
+        CancellationTokenSource? ownedOperation = null;
+        var completion = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        commandCompletion = completion; commandActive = true; readingLocal = allowCoveredRead; acceptedOperation = false;
+        bool IsCurrent() => !rootRetired && ownsRoot() && ReferenceEquals(visible, originalVisibility)
+            && (allowCoveredRead || originalDisclosure == disclosureVersion);
         IsBusy = true; failureKey = null; RefreshProperties();
         try
         {
-            var access = environment.Capture();
-            operation = CancellationTokenSource.CreateLinkedTokenSource(access.Cancellation, visible!.Token);
-            if (transport is { } previous)
+            var originalAccess = environment.Capture();
+            ownedOperation = CancellationTokenSource.CreateLinkedTokenSource(originalAccess.Cancellation, originalVisibility.Token);
+            operation = ownedOperation;
+            void ValidateOriginal()
+            {
+                originalAccess.Validate(); ownedOperation.Token.ThrowIfCancellationRequested();
+                if (!IsCurrent())
+                    throw new OperationCanceledException("The original personal sync command or disclosure retired.");
+            }
+            var access = new PersonalSyncAccess(ValidateOriginal, ownedOperation.Token, originalAccess.Scope);
+            operationOwner = access.Validate;
+            access.Validate();
+            if (!allowCoveredRead && transport is { } previous)
             {
                 transport = environment.Open(previous.Peer, access.Validate); previous.Dispose();
             }
             await action(access, operation.Token); access.Validate();
         }
-        catch (OperationCanceledException) { }
+        catch (OperationCanceledException)
+        { if (acceptedOperation && OwnsPresentation) RetainFailure("Sync_ActionFailed"); }
         catch (PersonalSyncHttpException error)
-        { failureKey = error.Status == System.Net.HttpStatusCode.Unauthorized ? "Sync_SignInRequired" : "Sync_ServiceUnavailable"; }
-        catch (ArgumentException) { failureKey = "Sync_CheckInputs"; }
-        catch (HttpRequestException) { failureKey = "Sync_ServiceUnavailable"; }
+        { if (IsCurrent()) RetainFailure(error.Status == System.Net.HttpStatusCode.Unauthorized ? "Sync_SignInRequired" : "Sync_ServiceUnavailable"); }
+        catch (ArgumentException) { if (IsCurrent()) RetainFailure("Sync_CheckInputs"); }
+        catch (HttpRequestException) { if (IsCurrent()) RetainFailure("Sync_ServiceUnavailable"); }
         catch (Exception error) when (error is not OutOfMemoryException)
-        { failureKey = "Sync_ActionFailed"; }
+        { if (IsCurrent()) RetainFailure("Sync_ActionFailed"); }
         finally
         {
-            Password = ""; operation?.Dispose(); operation = null; IsBusy = false; RefreshProperties();
+            Password = ""; ownedOperation?.Dispose();
+            if (ReferenceEquals(operation, ownedOperation)) operation = null;
+            operationOwner = null; commandActive = false; readingLocal = false; IsBusy = false;
+            completion.TrySetResult(); RefreshProperties();
         }
+    }
+    /// <summary>Retires the old editable review immediately after acknowledged original work, before fallible follow-through.</summary>
+    private void AcceptKnownOperation() { acceptedOperation = true; ready = false; RefreshProperties(); }
+    /// <summary>Keeps an acknowledged result distinct from a failed primary command; Retry only rereads the source.</summary>
+    private void RetainFailure(string key)
+    {
+        if (acceptedOperation) { ready = false; failureKey = "Sync_AcceptedFollowUpFailed"; }
+        else failureKey = key;
     }
     private void RequireSession()
     {
@@ -394,10 +496,20 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     { if (IsHouseholdConnection) throw new InvalidOperationException("The original encrypted household connection owns this operation."); }
     private bool SessionMatchesConnection => transport is not null && identity is not null && device is not null &&
         review?.DeviceId == device.Id && review.IdentityId == identity.Id && review.PeerKey == transport.Peer.BindingKey(identity.Id);
-    private Task<bool> ConfirmAsync(string key, string argument) => interaction.ConfirmAsync(translator["Sync_Title"],
-        translator.Format(key, argument), translator["Sync_Confirm"], translator["Common_Cancel"]);
+    private async Task<bool> ConfirmAsync(string key, string argument)
+    {
+        var validate = operationOwner ?? throw new OperationCanceledException("The original sync consent retired.");
+        validate();
+        var inputs = (Address, Fingerprint, Email, DeviceName, NewProfileName);
+        var answer = await interaction.ConfirmAsync(translator["Sync_Title"], translator.Format(key, argument),
+            translator["Sync_Confirm"], translator["Common_Cancel"]);
+        validate();
+        if (inputs != (Address, Fingerprint, Email, DeviceName, NewProfileName))
+            throw new OperationCanceledException("The original sync disclosure inputs changed.");
+        return answer;
+    }
     private void OnTranslationChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-    { RefreshDeviceItems(); RefreshReviewItems(); RefreshProperties(); }
+    { disclosureVersion++; RefreshDeviceItems(); RefreshReviewItems(); RefreshProperties(); }
     private void RefreshReviewItems()
     {
         var presenter = new PersonalSyncReviewPresenter(translator, dates, localization);
@@ -425,7 +537,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     {
         RefreshAttachmentProperties();
         foreach (var property in new[] { nameof(PageTitle), nameof(IntroText), nameof(HelpTopic), nameof(ShowPersonalConnection), nameof(ShowPersonalSignedIn), nameof(HouseholdReviewEmpty) }) OnPropertyChanged(property);
-        foreach (var property in new[] { nameof(Available), nameof(CanRead), nameof(IsReady), nameof(CanInteract), nameof(CanConnect), nameof(CanSync), nameof(IsHouseholdConnection), nameof(SignedIn), nameof(CanLeave),
+        foreach (var property in new[] { nameof(Available), nameof(CanRead), nameof(HasPendingOperation), nameof(IsReady), nameof(CanInteract), nameof(CanConnect), nameof(CanSync), nameof(IsHouseholdConnection), nameof(SignedIn), nameof(CanLeave),
             nameof(Error), nameof(AutomaticError), nameof(StatusText), nameof(DetailText), nameof(NoProfiles), nameof(HasConflicts) }) OnPropertyChanged(property);
         foreach (var property in new[] { nameof(IsOnboardingRestore), nameof(CanFinishOnboarding), nameof(CanCloseOnboarding), nameof(ShowFooter) }) OnPropertyChanged(property);
     }

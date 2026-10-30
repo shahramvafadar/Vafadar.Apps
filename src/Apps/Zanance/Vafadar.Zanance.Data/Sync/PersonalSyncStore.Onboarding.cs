@@ -14,15 +14,18 @@ public sealed partial class PersonalSyncStore
     }
 
     /// <summary>Completes only device-local first-run state after explicit consent, without creating accounts or replacing preferences.</summary>
-    public async Task<bool> CompleteOnboardingAsync(PersonalSyncReview review, CancellationToken ct = default)
+    public async Task<bool> CompleteOnboardingAsync(PersonalSyncReview review, CancellationToken ct = default,
+        Action? validateOriginal = null)
     {
+        validateOriginal?.Invoke();
         await using var db = await factory.CreateDbContextAsync(ct); var access = Access(db);
         await db.Database.OpenConnectionAsync(ct); await using var transaction = await db.Database.BeginTransactionAsync(ct);
         if (!await OnboardingEligibleAsync(db, review, ct)) return false;
         var settings = await db.Settings.OrderBy(row => row.CreatedAt).FirstOrDefaultAsync(ct)
             ?? throw new InvalidOperationException("The applied profile settings are unavailable.");
         settings.OnboardingCompleted = true;
-        access.EnsureSnapshotCurrent(); await db.SaveChangesAsync(ct); await transaction.CommitAsync(ct); return true;
+        access.EnsureSnapshotCurrent(); validateOriginal?.Invoke(); await db.SaveChangesAsync(ct);
+        validateOriginal?.Invoke(); await transaction.CommitAsync(ct); return true;
     }
 
     private static async Task<bool> OnboardingEligibleAsync(ZananceDbContext db, PersonalSyncReview review, CancellationToken ct)

@@ -8628,4 +8628,7 @@ SHA-256 du XML original : {5}</value>
   <data name="Cloud_Deleted" xml:space="preserve">
     <value>La sauvegarde sélectionnée a été supprimée.</value>
   </data>
+  <data name="Sync_AcceptedFollowUpFailed" xml:space="preserve">
+    <value>La modification demandée a été acceptée, mais les étapes suivantes n’ont pas pu être terminées. Rechargez l’état actuel avant de choisir une autre action.</value>
+  </data>
 </root>

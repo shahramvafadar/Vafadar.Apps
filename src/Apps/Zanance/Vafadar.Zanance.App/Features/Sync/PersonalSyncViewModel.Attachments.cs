@@ -13,11 +13,14 @@ public sealed partial class PersonalSyncViewModel
     private string previewName = "";
     private double previewViewportWidth = 360;
     private double previewZoom = 1;
+    private long previewVersion;
 
     /// <summary>Gets the one currently displayed bounded native image; never the original file bytes.</summary>
     [ObservableProperty] public partial PersonalSyncRenderedPage? AttachmentPreview { get; set; }
     /// <summary>Gets whether the original inline preview has a current image.</summary>
     public bool HasAttachmentPreview => AttachmentPreview is not null;
+    /// <summary>Allows native follow-through only for this exact original frame under its still-current page/root.</summary>
+    public bool OwnsPreview(PersonalSyncRenderedPage frame) => OwnsPresentation && ReferenceEquals(AttachmentPreview, frame);
     /// <summary>Gets the reviewed file name and version rather than a local path.</summary>
     public string AttachmentPreviewTitle => previewName + " · " + translator[previewLocal ? "Sync_ReviewSubmitted" : "Sync_Remote"];
     /// <summary>Gets the actual page/count with the configured display digits.</summary>
@@ -53,8 +56,12 @@ public sealed partial class PersonalSyncViewModel
     [RelayCommand] private void PreviewZoomIn() { if (CanPreviewZoomIn) { previewZoom = Math.Min(4, previewZoom + 0.5); RefreshAttachmentProperties(); } }
     [RelayCommand] private void PreviewZoomOut() { if (CanPreviewZoomOut) { previewZoom = Math.Max(1, previewZoom - 0.5); RefreshAttachmentProperties(); } }
 
-    private Task ShowAttachmentAsync(PersonalSyncConflictReview selected, bool local, int page) => RunAsync(async (access, ct) =>
+    private Task ShowAttachmentAsync(PersonalSyncConflictReview selected, bool local, int page)
     {
+        if (!CanInteract) return Task.CompletedTask;
+        var requested = ++previewVersion;
+        return RunAsync(async (access, ct) =>
+        {
         var current = Conflicts.SingleOrDefault(item => AttachmentReviewKey(item) == AttachmentReviewKey(selected))
             ?? throw new InvalidOperationException("The attachment review was retired.");
         using var content = await store.ReadAttachmentReviewAsync(current, local, ct);
@@ -62,11 +69,13 @@ public sealed partial class PersonalSyncViewModel
         try
         {
             ct.ThrowIfCancellationRequested(); access.Validate();
+            if (requested != previewVersion) throw new OperationCanceledException("The original attachment preview closed.");
             if (rendered.PageCount <= 0 || page < 0 || page >= rendered.PageCount || rendered.Data.Length == 0 || rendered.Width <= 0 || rendered.Height <= 0)
                 throw new InvalidDataException("The native attachment page is invalid.");
             // Recheck the exact journal and original data after native rendering, before publishing a preview or consent.
             using var rechecked = await store.ReadAttachmentReviewAsync(current, local, ct);
             access.Validate();
+            if (requested != previewVersion) throw new OperationCanceledException("The original attachment preview changed.");
             if (previewReview is { } oldReview && AttachmentReviewKey(oldReview) == AttachmentReviewKey(current) && previewLocal == local &&
                 AttachmentPreview is { } oldFrame && oldFrame.PageCount != rendered.PageCount)
                 throw new InvalidDataException("The immutable attachment page count changed.");
@@ -75,13 +84,15 @@ public sealed partial class PersonalSyncViewModel
             RefreshAttachmentProperties(); RefreshReviewItems();
         }
         finally { if (!published) rendered.Dispose(); }
-    });
+        });
+    }
 
     private static string AttachmentReviewKey(PersonalSyncConflictReview item) =>
         item.Connection.GenerationPath + "|" + item.Connection.RemoteProfile + "|" + item.Operation + "|" + item.Phase + "|" + item.Digest;
 
     private void ClearAttachmentPreview()
     {
+        previewVersion++;
         var old = AttachmentPreview; AttachmentPreview = null; previewReview = null; previewName = "";
         old?.Dispose(); RefreshAttachmentProperties();
     }

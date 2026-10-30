@@ -40,6 +40,16 @@ public partial class AppShell : Shell
     private readonly List<WeakReference<HoldingDetailPage>> _publishedHoldingDetails = [];
     private readonly List<WeakReference<AssetEventEditorPage>> _publishedAssetEventEditors = [];
     private bool _navigationRetired;
+    private readonly List<WeakReference<Features.Sync.PersonalSyncPage>> _publishedPersonalSync = [];
+    /// <summary>Gets whether this actual root can still own the original optional sync workspace.</summary>
+    internal bool OwnsPersonalSyncPublication => !_navigationRetired;
+    /// <summary>Registers weak original sync pages before their initial local read or native consent.</summary>
+    internal void RegisterPersonalSync(Features.Sync.PersonalSyncPage page)
+    {
+        if (_navigationRetired) { page.RetireShellPublication(); return; }
+        if (!_publishedPersonalSync.Any(reference => reference.TryGetTarget(out var original) && ReferenceEquals(original, page)))
+            _publishedPersonalSync.Add(new(page));
+    }
     private readonly List<WeakReference<ActiveItemsPage>> _publishedActiveItems = [];
     /// <summary>Gets whether this actual root can still own its original resource-choice drafts.</summary>
     internal bool OwnsActiveItemsPublication => !_navigationRetired;
@@ -514,7 +524,8 @@ public partial class AppShell : Shell
         if (_navigationRetired || args.Source is not (ShellNavigationSource.ShellItemChanged
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)) return;
         // D-577: the list can be retained too; otherwise it keeps pre-transfer/refund balances until Back/reopen.
-        if (CurrentPage is ActiveItemsPage activeItems) await Presentation.Failures.GuardAsync(activeItems.RefreshForNavigationAsync);
+        if (CurrentPage is Features.Sync.PersonalSyncPage personalSync) await Presentation.Failures.GuardAsync(personalSync.RefreshForNavigationAsync);
+        else if (CurrentPage is ActiveItemsPage activeItems) await Presentation.Failures.GuardAsync(activeItems.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Profiles.ProfilesPage profiles) await Presentation.Failures.GuardAsync(profiles.RefreshForNavigationAsync);
         else if (CurrentPage is AccountsPage accounts) await Presentation.Failures.GuardAsync(accounts.RefreshForNavigationAsync);
         else if (CurrentPage is AccountDetailPage account) await Presentation.Failures.GuardAsync(account.RefreshForNavigationAsync);
@@ -559,10 +570,15 @@ public partial class AppShell : Shell
         var originalProfilesPage = CurrentPage?.BindingContext is Features.Profiles.ProfilesViewModel ? CurrentPage : Security.NativeSensitivePresentation.Underlying(this);
         if (originalProfilesPage?.BindingContext is Features.Profiles.ProfilesViewModel profiles && !profiles.CanLeave && args.CanCancel
             && !ownCommandReturn && !Security.NativeSensitivePresentation.Allows(this, originalProfilesPage, args)) args.Cancel();
-        if (CurrentPage?.BindingContext is Features.Sync.PersonalSyncViewModel sync && !sync.CanLeave && args.CanCancel) args.Cancel();
+        var originalSyncPage = CurrentPage?.BindingContext is Features.Sync.PersonalSyncViewModel ? CurrentPage : Security.NativeSensitivePresentation.Underlying(this);
+        if (originalSyncPage?.BindingContext is Features.Sync.PersonalSyncViewModel sync && !sync.CanLeave && args.CanCancel
+            && !Security.NativeSensitivePresentation.Allows(this, originalSyncPage, args)) args.Cancel();
         if (CurrentPage?.BindingContext is Features.Sharing.HouseholdViewModel household && !household.CanLeave && args.CanCancel) args.Cancel();
         if (CurrentPage?.BindingContext is Features.Sharing.HouseholdCostsViewModel costs && !costs.CanLeave && args.CanCancel) args.Cancel();
         base.OnNavigating(args);
+        if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
+                or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
+            && CurrentPage is Features.Sync.PersonalSyncPage syncPage) syncPage.RetirePublication();
         if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
             && CurrentPage is ActiveItemsPage choicePage) choicePage.RetirePublication();
@@ -675,6 +691,9 @@ public partial class AppShell : Shell
     internal void RetireNavigationBindings()
     {
         _navigationRetired = true;
+        foreach (var reference in _publishedPersonalSync)
+            if (reference.TryGetTarget(out var sync)) sync.RetireShellPublication();
+        _publishedPersonalSync.Clear();
         foreach (var reference in _publishedActiveItems)
             if (reference.TryGetTarget(out var choices)) choices.RetireShellPublication();
         _publishedActiveItems.Clear();

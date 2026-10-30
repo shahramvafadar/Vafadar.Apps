@@ -7,6 +7,7 @@ using Vafadar.Zanance.App.Features.Sync;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Sync;
 using Vafadar.Zanance.Data.Sync;
+using Vafadar.Zanance.Data.Commerce;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Tests;
@@ -22,14 +23,21 @@ public sealed class PersonalSyncFlowTests
         internal bool FailCapture;
         internal int Reads, Captures, ConnectionsChanged, Opens;
         internal Exception? OpenError;
+        internal bool FailConnectionRead;
+        internal Action? AfterConnectionChanged;
+        internal Func<LocalSyncPeer, Action, PersonalSyncTransport>? OpenTransport;
+        internal bool AllowPeerMemory;
+        internal int RememberedPeers;
         internal Func<PersonalSyncAttachmentContent, int, CancellationToken, Task<PersonalSyncRenderedPage>>? RenderPage;
         internal string Fingerprint = new('1', 64);
         internal string Scope = "fictitious-current-profile";
         public event EventHandler? StatusChanged;
         public bool Available { get; set; } = true;
         internal void PublishStatus() => StatusChanged?.Invoke(this, EventArgs.Empty);
-        public PersonalSyncConnection ReadConnection() { Reads++; return new("https://127.0.0.1:5048/", Fingerprint); }
-        public void RememberPeer(LocalSyncPeer peer) => throw new InvalidOperationException("No peer may be remembered by a local read.");
+        public PersonalSyncConnection ReadConnection()
+        { Reads++; if (FailConnectionRead) throw new IOException("Fictitious local connection read failure."); return new("https://127.0.0.1:5048/", Fingerprint); }
+        public void RememberPeer(LocalSyncPeer peer)
+        { if (!AllowPeerMemory) throw new InvalidOperationException("No peer may be remembered by a local read."); RememberedPeers++; }
         public PersonalSyncAccess Capture()
         {
             Captures++;
@@ -37,9 +45,9 @@ public sealed class PersonalSyncFlowTests
             return new(() => Lifetime.Token.ThrowIfCancellationRequested(), Lifetime.Token, Scope);
         }
         public PersonalSyncTransport Open(LocalSyncPeer peer, Action verifyAccess)
-        { Opens++; throw OpenError ?? new InvalidOperationException("This local flow must not open HTTP or secure credentials."); }
+        { Opens++; return OpenTransport?.Invoke(peer, verifyAccess) ?? throw OpenError ?? new InvalidOperationException("This local flow must not open HTTP or secure credentials."); }
         public Task PublishAppliedAsync(CancellationToken ct) => throw new InvalidOperationException("No synchronization was performed.");
-        public void ConnectionChanged() => ConnectionsChanged++;
+        public void ConnectionChanged() { ConnectionsChanged++; AfterConnectionChanged?.Invoke(); }
         public Guid CreationOperation(string requestDigest) => throw new InvalidOperationException("No remote creation was requested.");
         public void CompleteCreation(string requestDigest, Guid operation) => throw new InvalidOperationException("No remote creation was requested.");
         public Task<PersonalSyncRenderedPage> RenderAttachmentPageAsync(PersonalSyncAttachmentContent content, int pageIndex, CancellationToken ct) =>
@@ -50,6 +58,224 @@ public sealed class PersonalSyncFlowTests
     private static PersonalSyncViewModel Create(FlowFixture fixture, EnvironmentPort environment) => new(
         fixture.Services.GetRequiredService<PersonalSyncStore>(), fixture.Services.GetRequiredService<PersonalSyncCoordinator>(),
         environment, fixture.Platform, fixture.Translator, new DateFormatter(fixture.Localization), fixture.Localization);
+
+    [Fact]
+    public async Task Original_sync_consent_retains_independent_command_ownership_when_busy_feedback_changes()
+    {
+        using var f = new FlowFixture(); using var environment = new EnvironmentPort();
+        var vm = Create(f, environment); await vm.ActivateAsync();
+        var entered = new TaskCompletionSource(); var consent = new TaskCompletionSource<bool>();
+        f.Platform.PendingConfirmation = () => { entered.TrySetResult(); return consent.Task; };
+        var pending = vm.PauseCommand.ExecuteAsync(null);
+        await entered.Task.WaitAsync(TimeSpan.FromSeconds(10), Ct);
+        vm.IsBusy = false;
+        var canLeave = vm.CanLeave; var canRead = vm.CanRead; var canInteract = vm.CanInteract;
+        consent.SetResult(false); await pending;
+        Assert.False(canLeave); Assert.False(canRead); Assert.False(canInteract);
+        Assert.Equal(0, environment.ConnectionsChanged); Assert.Equal(0, environment.Opens);
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+        vm.Deactivate();
+    }
+
+    [Fact]
+    public async Task Original_sync_pause_consent_cannot_change_the_connection_after_its_disclosure_changes()
+    {
+        using var f = new FlowFixture(); using var environment = new EnvironmentPort();
+        var store = f.Services.GetRequiredService<PersonalSyncStore>();
+        await store.ConnectAsync(await store.ReviewAsync(Ct), new("https://127.0.0.1:5048/", new('1', 64)),
+            "fictitious-owner", Guid.NewGuid(), new(Guid.NewGuid(), "Fictitious original", SyncSchema.Hash, 0, false), Ct);
+        var vm = Create(f, environment); await vm.ActivateAsync(); var before = await store.StatusAsync(Ct);
+        f.Platform.PendingConfirmation = () =>
+        {
+            f.Localization.SetLanguage(f.Localization.SupportedLanguages.First(row => row.CultureName == "de"));
+            return Task.FromResult(true);
+        };
+        await vm.PauseCommand.ExecuteAsync(null);
+        Assert.Equal(before, await store.StatusAsync(Ct));
+        Assert.Equal(0, environment.ConnectionsChanged); Assert.Equal(0, environment.Opens);
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+        vm.Deactivate();
+    }
+
+    [Theory, InlineData("root"), InlineData("root-retired"), InlineData("input"), InlineData("depart-return")]
+    public async Task Original_sync_pause_cannot_borrow_a_replaced_owner_or_changed_native_input(string retirement)
+    {
+        using var f = new FlowFixture(); using var environment = new EnvironmentPort();
+        var store = f.Services.GetRequiredService<PersonalSyncStore>();
+        await store.ConnectAsync(await store.ReviewAsync(Ct), new("https://127.0.0.1:5048/", new('1', 64)),
+            "fictitious-owner", Guid.NewGuid(), new(Guid.NewGuid(), "Fictitious original", SyncSchema.Hash, 0, false), Ct);
+        var vm = Create(f, environment); var root = true; vm.BindRootOwner(() => root);
+        await vm.ActivateAsync(); var before = await store.StatusAsync(Ct);
+        var entered = new TaskCompletionSource(); var consent = new TaskCompletionSource<bool>();
+        f.Platform.PendingConfirmation = () => { entered.TrySetResult(); return consent.Task; };
+        var pending = vm.PauseCommand.ExecuteAsync(null); await entered.Task.WaitAsync(TimeSpan.FromSeconds(10), Ct);
+        Task? returned = null;
+        if (retirement == "root") root = false;
+        else if (retirement == "root-retired") vm.RetireRoot();
+        else if (retirement == "input") vm.Address = "https://127.0.0.1:5099/";
+        else
+        {
+            vm.Deactivate(); returned = vm.ActivateAsync();
+            Assert.False(returned.IsCompleted);
+        }
+        consent.SetResult(true); await pending;
+        if (returned is not null) await returned.WaitAsync(TimeSpan.FromSeconds(10), Ct);
+        Assert.Equal(before, await store.StatusAsync(Ct));
+        Assert.Equal(0, environment.ConnectionsChanged); Assert.Equal(0, environment.Opens);
+        Assert.Null(vm.Error); Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+        if (retirement == "root-retired") { await vm.ActivateAsync(); Assert.False(vm.CanInteract); }
+        vm.Deactivate();
+    }
+
+    [Fact]
+    public async Task Original_initial_local_read_is_cancellable_and_cannot_publish_after_Back()
+    {
+        using var f = new FlowFixture(); using var environment = new EnvironmentPort();
+        var factory = new PendingOriginalFactory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+        var store = new PersonalSyncStore(factory, f.Services.GetRequiredService<ICommercialWriteAccessSource>());
+        var vm = new PersonalSyncViewModel(store, f.Services.GetRequiredService<PersonalSyncCoordinator>(), environment,
+            f.Platform, f.Translator, new DateFormatter(f.Localization), f.Localization);
+        var pending = vm.ActivateAsync(); await factory.Entered.Task.WaitAsync(TimeSpan.FromSeconds(10), Ct);
+        Assert.True(vm.CanLeave); Assert.False(vm.CanInteract); Assert.True(vm.HasPendingOperation);
+        vm.Deactivate(); factory.Release.TrySetResult(); await pending.WaitAsync(TimeSpan.FromSeconds(10), Ct);
+        Assert.False(vm.IsReady); Assert.False(vm.HasPendingOperation); Assert.Null(vm.Error);
+        Assert.Empty(vm.Conflicts); Assert.Equal(1, factory.Created);
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+    }
+
+    /// <summary>Pauses only an actual original context acquisition; it never substitutes financial data.</summary>
+    private sealed class PendingOriginalFactory(IDbContextFactory<ZananceDbContext> original) : IDbContextFactory<ZananceDbContext>
+    {
+        internal readonly TaskCompletionSource Entered = new();
+        internal readonly TaskCompletionSource Release = new();
+        internal int Created;
+        public ZananceDbContext CreateDbContext() => original.CreateDbContext();
+        public async Task<ZananceDbContext> CreateDbContextAsync(CancellationToken cancellationToken = default)
+        {
+            Created++; Entered.TrySetResult(); await Release.Task;
+            return await original.CreateDbContextAsync(cancellationToken);
+        }
+    }
+
+    [Fact]
+    public async Task Known_original_pause_is_not_replayed_after_its_connection_notification_fails()
+    {
+        using var f = new FlowFixture(); using var environment = new EnvironmentPort();
+        var store = f.Services.GetRequiredService<PersonalSyncStore>();
+        await store.ConnectAsync(await store.ReviewAsync(Ct), new("https://127.0.0.1:5048/", new('1', 64)),
+            "fictitious-owner", Guid.NewGuid(), new(Guid.NewGuid(), "Fictitious original", SyncSchema.Hash, 0, false), Ct);
+        var vm = Create(f, environment); await vm.ActivateAsync();
+        vm.NewProfileName = "Fictitious unsubmitted name";
+        f.Platform.Confirmations.Enqueue(true);
+        environment.AfterConnectionChanged = () => throw new IOException("Fictitious follow-up failure after original commit.");
+        await vm.PauseCommand.ExecuteAsync(null);
+        var accepted = await store.StatusAsync(Ct); Assert.False(accepted.Connected);
+        Assert.Equal(f.Translator["Sync_AcceptedFollowUpFailed"], vm.Error);
+        Assert.False(vm.IsReady); Assert.False(vm.CanInteract); Assert.True(vm.CanRead);
+        await vm.PauseCommand.ExecuteAsync(null);
+        Assert.Equal(1, environment.ConnectionsChanged); Assert.Equal(accepted, await store.StatusAsync(Ct));
+        environment.AfterConnectionChanged = null; await vm.ReloadCommand.ExecuteAsync(null);
+        Assert.True(vm.IsReady); Assert.Null(vm.Error); Assert.Equal(1, environment.ConnectionsChanged);
+        Assert.Equal("Fictitious unsubmitted name", vm.NewProfileName);
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct)); vm.Deactivate();
+    }
+
+    [Fact]
+    public async Task Original_pause_rolls_back_when_the_actual_SQLite_update_retires_its_native_owner()
+    {
+        using var f = new FlowFixture(); var source = f.Services.GetRequiredService<PersonalSyncStore>();
+        await source.ConnectAsync(await source.ReviewAsync(Ct), new("https://127.0.0.1:5048/", new('1', 64)),
+            "fictitious-owner", Guid.NewGuid(), new(Guid.NewGuid(), "Fictitious original", SyncSchema.Hash, 0, false), Ct);
+        var originalFactory = f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>();
+        await using (var db = await originalFactory.CreateDbContextAsync(Ct))
+            await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER D660RetireOriginalSyncPage AFTER UPDATE ON SyncBinding BEGIN SELECT RetireOriginalSyncPage(); END;", Ct);
+        var owner = true;
+        var store = new PersonalSyncStore(new OriginalSyncProbeFactory(originalFactory, null, () => owner = false),
+            f.Services.GetRequiredService<ICommercialWriteAccessSource>());
+        var before = await source.StatusAsync(Ct); var reviewed = await source.ReviewAsync(Ct);
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => store.PauseAsync(reviewed, Ct,
+            () => { if (!owner) throw new OperationCanceledException("Original page retired inside actual SQLite."); }));
+        Assert.False(owner); Assert.Equal(before, await source.StatusAsync(Ct));
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+    }
+
+    [Fact]
+    public async Task Complete_original_workspace_uses_one_factory_context_and_a_joined_worker_read_transaction()
+    {
+        using var f = new FlowFixture(); var access = new OriginalWorkspaceAccess();
+        var factory = new OriginalSyncProbeFactory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>(), access);
+        var store = new PersonalSyncStore(factory, access); var callerThread = 0;
+        var workspace = await Task.Factory.StartNew(() =>
+        {
+            callerThread = Environment.CurrentManagedThreadId;
+            return store.ReadWorkspaceAsync(false, Ct).GetAwaiter().GetResult();
+        }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+        Assert.Equal(1, factory.Created); Assert.True(access.JoinedTransaction);
+        Assert.NotEqual(callerThread, access.ReadThread); Assert.Empty(workspace.Review.Reviews);
+        Assert.False(workspace.Status.Connected); Assert.False(workspace.CanCompleteOnboarding);
+        Assert.Equal(await f.Services.GetRequiredService<PersonalSyncStore>().ReviewAsync(Ct), workspace.Connection);
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+    }
+
+    /// <summary>Observes the actual original context and optionally retires a fixture-only native owner from SQLite itself.</summary>
+    private sealed class OriginalSyncProbeFactory(IDbContextFactory<ZananceDbContext> original,
+        OriginalWorkspaceAccess? access, Action? retired = null) : IDbContextFactory<ZananceDbContext>
+    {
+        internal int Created;
+        public ZananceDbContext CreateDbContext()
+        {
+            var db = original.CreateDbContext(); Created++;
+            if (access is not null) access.Context = new(db);
+            ((SqliteConnection)db.Database.GetDbConnection()).CreateFunction("RetireOriginalSyncPage", () => { retired?.Invoke(); return 1; });
+            return db;
+        }
+    }
+
+    /// <summary>Records real transaction/thread facts during the original final source guard.</summary>
+    private sealed class OriginalWorkspaceAccess : ICommercialWriteAccessSource
+    {
+        internal WeakReference<ZananceDbContext>? Context;
+        internal bool JoinedTransaction;
+        internal int ReadThread;
+        public CommercialWriteAccess Capture(string databasePath)
+        {
+            if (Context?.TryGetTarget(out var db) == true && db.Database.CurrentTransaction is not null)
+            { JoinedTransaction = true; ReadThread = Environment.CurrentManagedThreadId; }
+            return CommercialWriteAccess.Inactive;
+        }
+    }
+
+    [Fact]
+    public async Task Covered_retry_preserves_literal_peer_inputs_after_the_original_local_default_read_fails()
+    {
+        using var f = new FlowFixture(); using var environment = new EnvironmentPort { FailConnectionRead = true };
+        var vm = Create(f, environment); await vm.ActivateAsync();
+        Assert.False(vm.IsReady); Assert.NotNull(vm.Error); Assert.Equal(1, environment.Reads);
+        vm.Address = ""; vm.Fingerprint = "  literal unsubmitted fingerprint  ";
+        vm.DeviceName = "  Fictitious original device  "; vm.NewProfileName = "  Fictitious draft  ";
+        environment.FailConnectionRead = false; await vm.ReloadCommand.ExecuteAsync(null);
+        Assert.True(vm.IsReady); Assert.Null(vm.Error); Assert.Equal(1, environment.Reads);
+        Assert.Equal("", vm.Address); Assert.Equal("  literal unsubmitted fingerprint  ", vm.Fingerprint);
+        Assert.Equal("  Fictitious original device  ", vm.DeviceName); Assert.Equal("  Fictitious draft  ", vm.NewProfileName);
+        Assert.Equal(0, environment.Opens); Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct)); vm.Deactivate();
+    }
+
+    [Fact]
+    public async Task Original_first_run_Close_owns_its_entire_transition_without_repeated_close_or_local_reads()
+    {
+        using var f = new FlowFixture(); using var environment = new EnvironmentPort();
+        var vm = Create(f, environment); var calls = 0; var entered = new TaskCompletionSource(); var close = new TaskCompletionSource();
+        vm.BeginOnboarding(() => { calls++; entered.TrySetResult(); return close.Task; }, () => Task.CompletedTask);
+        await vm.ActivateAsync(); var captures = environment.Captures;
+        var pending = vm.CloseOnboardingCommand.ExecuteAsync(null); await entered.Task.WaitAsync(TimeSpan.FromSeconds(10), Ct);
+        vm.IsBusy = false;
+        var leave = vm.CanLeave; var read = vm.CanRead; var closeAgain = vm.CanCloseOnboarding;
+        await vm.ReloadCommand.ExecuteAsync(null); await vm.CloseOnboardingCommand.ExecuteAsync(null);
+        close.TrySetResult(); await pending;
+        Assert.False(leave); Assert.False(read); Assert.False(closeAgain); Assert.Equal(1, calls);
+        Assert.Equal(captures, environment.Captures); Assert.Equal(0, environment.Opens);
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+    }
 
     [Fact]
     public void Construction_cannot_expose_a_default_connection_or_open_native_effects()

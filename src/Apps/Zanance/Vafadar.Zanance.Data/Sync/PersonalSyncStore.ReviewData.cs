@@ -15,56 +15,8 @@ public sealed partial class PersonalSyncStore
         return await Task.Run(async () =>
         {
             await db.Database.OpenConnectionAsync(ct); await using var transaction = await db.Database.BeginTransactionAsync(ct);
-            if (reviews.Any(review => review.Connection.GenerationPath != Generation(db)))
-                throw new InvalidOperationException("The personal review profile changed.");
-            var round = await db.Set<SyncClientRound>().AsNoTracking().SingleOrDefaultAsync(ct);
-            var binding = await db.Set<SyncBindingRow>().AsNoTracking().SingleOrDefaultAsync(ct);
-            if (round is null || binding is null || !binding.Enabled || binding.GenerationPath != Generation(db) || reviews.Any(review =>
-                review.Operation != round.OperationId || review.Phase != round.Phase || review.Connection.RemoteProfile != binding.ProfileId ||
-                review.Connection.IdentityId != binding.IdentityId || review.Connection.PeerKey != binding.PeerKey || review.Connection.DeviceId != binding.DeviceId))
-                throw new InvalidOperationException("The personal review authority changed.");
-            var conflicts = reviews.Select(review => review.Conflict).ToArray();
-            var remote = conflicts.SelectMany(conflict => new[] { conflict.Current, conflict.RelatedRecord }.OfType<SyncRecord>().Concat(conflict.Context ?? []))
-                .OfType<SyncRecord>().Where(record => record.Values is not null).ToList();
-            var sources = conflicts.Select(conflict => new SyncRecord(conflict.Proposal.Record, 0, conflict.Proposal.Values)).Concat(remote).ToArray();
-            var keys = sources.Select(row => row.Record).ToHashSet();
-            foreach (var source in sources.Where(source => source.Values is not null))
-                foreach (var key in ReferenceKeys(source.Record.Table, source.Values!.Value)) keys.Add(key);
-            if (keys.Count > 1024) throw new InvalidDataException("The personal review relationships exceed their bound.");
-            var local = new Dictionary<SyncRecordKey, SyncRecord>(); long bytes = 0;
-            var pendingKeys = new Queue<SyncRecordKey>(keys);
-            while (pendingKeys.TryDequeue(out var key))
-            {
-                var record = await ReadReviewRecordAsync(db, key, ct);
-                if (record.Values is { } value) bytes += System.Text.Encoding.UTF8.GetByteCount(value.GetRawText());
-                if (bytes > 1024 * 1024) throw new InvalidDataException("The personal review context exceeds its byte bound.");
-                local.Add(key, record);
-                if (record.Values is { } referenced)
-                    foreach (var dependency in ReferenceKeys(record.Record.Table, referenced))
-                        if (keys.Add(dependency))
-                        {
-                            if (keys.Count > 1024) throw new InvalidDataException("The personal review relationships exceed their bound.");
-                            pendingKeys.Enqueue(dependency);
-                        }
-                if (record.Values is null && remote.All(row => row.Record != key))
-                {
-                    // Read at most one relevant retained choice, not every resolved financial payload in a large round.
-                    await using var lookup = Command(db, "SELECT Payload FROM SyncConflicts WHERE UseProposal IS NOT NULL AND " +
-                        "((json_extract(Payload,'$.relatedRecord.record.table')=$table AND json_extract(Payload,'$.relatedRecord.record.key')=$key) OR " +
-                        "(json_extract(Payload,'$.current.record.table')=$table AND json_extract(Payload,'$.current.record.key')=$key)) LIMIT 1;");
-                    Parameter(lookup, "$table", key.Table); Parameter(lookup, "$key", key.Key);
-                    if (await lookup.ExecuteScalarAsync(ct) is string payload)
-                    {
-                        var retained = JsonSerializer.Deserialize(payload, PersonalSyncJsonContext.Default.SyncConflict)
-                            ?? throw new InvalidDataException("The retained review relationship is invalid.");
-                        var related = new[] { retained.Current, retained.RelatedRecord }.OfType<SyncRecord>().FirstOrDefault(row => row.Record == key);
-                        if (related is not null) remote.Add(related);
-                    }
-                }
-            }
-            if (local.Count > 1024) throw new InvalidDataException("The personal review relationships exceed their bound.");
-            var context = local.Values.ToArray(); access.EnsureSnapshotCurrent(); await transaction.CommitAsync(ct);
-            return new PersonalSyncReviewData(AttachReviewGroups(reviews.Select(review => review with { LocalContext = context, GroupMembers = null }).ToArray()), remote);
+            var result = await PrepareReviewsInContextAsync(db, reviews, ct);
+            access.EnsureSnapshotCurrent(); await transaction.CommitAsync(ct); return result;
         }, ct);
     }
 
@@ -89,4 +41,62 @@ public sealed partial class PersonalSyncStore
         if (await reader.ReadAsync(ct)) throw new InvalidDataException("The personal review singleton is ambiguous.");
         return row;
     }
+    /// <summary>Uses the original bounded relationship reader without opening another source.</summary>
+    private static async Task<PersonalSyncReviewData> PrepareReviewsInContextAsync(ZananceDbContext db,
+        IReadOnlyList<PersonalSyncConflictReview> reviews, CancellationToken ct)
+    {
+        if (reviews.Count > 100) throw new ArgumentException("The personal review batch exceeds its bound.");
+        if (reviews.Count == 0) return new([], []);
+        if (reviews.Any(review => review.Connection.GenerationPath != Generation(db)))
+            throw new InvalidOperationException("The personal review profile changed.");
+        var round = await db.Set<SyncClientRound>().AsNoTracking().SingleOrDefaultAsync(ct);
+        var binding = await db.Set<SyncBindingRow>().AsNoTracking().SingleOrDefaultAsync(ct);
+        if (round is null || binding is null || !binding.Enabled || binding.GenerationPath != Generation(db) || reviews.Any(review =>
+            review.Operation != round.OperationId || review.Phase != round.Phase || review.Connection.RemoteProfile != binding.ProfileId ||
+            review.Connection.IdentityId != binding.IdentityId || review.Connection.PeerKey != binding.PeerKey || review.Connection.DeviceId != binding.DeviceId))
+            throw new InvalidOperationException("The personal review authority changed.");
+        var conflicts = reviews.Select(review => review.Conflict).ToArray();
+        var remote = conflicts.SelectMany(conflict => new[] { conflict.Current, conflict.RelatedRecord }.OfType<SyncRecord>().Concat(conflict.Context ?? []))
+            .OfType<SyncRecord>().Where(record => record.Values is not null).ToList();
+        var sources = conflicts.Select(conflict => new SyncRecord(conflict.Proposal.Record, 0, conflict.Proposal.Values)).Concat(remote).ToArray();
+        var keys = sources.Select(row => row.Record).ToHashSet();
+        foreach (var source in sources.Where(source => source.Values is not null))
+            foreach (var key in ReferenceKeys(source.Record.Table, source.Values!.Value)) keys.Add(key);
+        if (keys.Count > 1024) throw new InvalidDataException("The personal review relationships exceed their bound.");
+        var local = new Dictionary<SyncRecordKey, SyncRecord>(); long bytes = 0;
+        var pendingKeys = new Queue<SyncRecordKey>(keys);
+        while (pendingKeys.TryDequeue(out var key))
+        {
+            var record = await ReadReviewRecordAsync(db, key, ct);
+            if (record.Values is { } value) bytes += System.Text.Encoding.UTF8.GetByteCount(value.GetRawText());
+            if (bytes > 1024 * 1024) throw new InvalidDataException("The personal review context exceeds its byte bound.");
+            local.Add(key, record);
+            if (record.Values is { } referenced)
+                foreach (var dependency in ReferenceKeys(record.Record.Table, referenced))
+                    if (keys.Add(dependency))
+                    {
+                        if (keys.Count > 1024) throw new InvalidDataException("The personal review relationships exceed their bound.");
+                        pendingKeys.Enqueue(dependency);
+                    }
+            if (record.Values is null && remote.All(row => row.Record != key))
+            {
+                // Read at most one relevant retained choice, not every resolved financial payload in a large round.
+                await using var lookup = Command(db, "SELECT Payload FROM SyncConflicts WHERE UseProposal IS NOT NULL AND " +
+                    "((json_extract(Payload,'$.relatedRecord.record.table')=$table AND json_extract(Payload,'$.relatedRecord.record.key')=$key) OR " +
+                    "(json_extract(Payload,'$.current.record.table')=$table AND json_extract(Payload,'$.current.record.key')=$key)) LIMIT 1;");
+                Parameter(lookup, "$table", key.Table); Parameter(lookup, "$key", key.Key);
+                if (await lookup.ExecuteScalarAsync(ct) is string payload)
+                {
+                    var retained = JsonSerializer.Deserialize(payload, PersonalSyncJsonContext.Default.SyncConflict)
+                        ?? throw new InvalidDataException("The retained review relationship is invalid.");
+                    var related = new[] { retained.Current, retained.RelatedRecord }.OfType<SyncRecord>().FirstOrDefault(row => row.Record == key);
+                    if (related is not null) remote.Add(related);
+                }
+            }
+        }
+        if (local.Count > 1024) throw new InvalidDataException("The personal review relationships exceed their bound.");
+        var context = local.Values.ToArray();
+        return new PersonalSyncReviewData(AttachReviewGroups(reviews.Select(review => review with { LocalContext = context, GroupMembers = null }).ToArray()), remote);
+    }
+
 }

@@ -8685,4 +8685,8 @@ Original XML SHA-256: {5}</value>
   <data name="Cloud_Deleted" xml:space="preserve">
     <value>Selected backup deleted.</value>
   </data>
+  <data name="Sync_AcceptedFollowUpFailed" xml:space="preserve">
+    <value>The requested change was accepted, but its follow-up could not finish. Reload the current state before choosing another action.</value>
+    <comment>Known accepted synchronization work must not be presented as a failed primary action or replayed by Retry.</comment>
+  </data>
 </root>

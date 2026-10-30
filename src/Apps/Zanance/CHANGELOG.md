@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-660: keep personal synchronization reads, native confirmations, session responses and attachment previews on their original file/page/root; preserve literal inputs and known accepted results through follow-up failures without repeating successful operations.
+
+- D-659: bind all six original active-resource kinds to coherent source reads and current native consent; preserve committed choices and guard their actual return to the parent page.
+
 - D-655: pin original portable creation/native input/destination and profile-specific history/retention; retain actual stored receipts through later metadata, cancellation or listing/share failure.
 
 - D-654: bind original restore selection, native consent/authentication, safety and protected replacement to their actual target/frame; preserve known primary receipts and only retry follow-through. Keep an exact owned PIN modal and refuse unrelated navigation.

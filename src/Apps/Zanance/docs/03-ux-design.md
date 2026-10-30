@@ -3303,3 +3303,27 @@ Physical adoption, real tier/provider/authentication, complete DB/key/security/s
 speed/A11Y/iOS/Store/release remain separate. D658 sole delayed CI and CodeQL green;
 its schedule deleted, no second query. D659 has its own single delayed pushed-head CI.
 [D-659 evidence](quality/original-active-resource-workspace.md)
+
+### D-660 - Original personal synchronization workspace
+
+Original connection/status/complete review relationships and first-run eligibility now use
+one original-file worker transaction. Independent page/root/disclosure/input/session/row/
+preview/Close ownership refuses retired continuations and retains literal nonsecret drafts.
+Original writers revalidate around commit; known accepted results precede fallible follow-up,
+with six-language explicit feedback and read-only Retry instead of successful-command replay.
+52 distinct selected cases (20 new,32 affected existing), strict Windows/full offline Android
+384AOT/408ELF/1608staticLOAD, original native consent/root/source/accepted receipt and all18
+normal-font en/fa/de/Light/Dark/360/412.190476/680dp feedback contexts passed. Two independent
+zero-account/ledger/plan local-binding cohorts each performed one distinct metadata Pause;
+the first accepted operation was never replayed. All display contexts shared the second
+accepted page/PID4720, exact20financial+9sync source and unchanged1notification/1failure/0remote.
+Initial consent/TLS fixture/observer/theme failures are preserved; only unfinished cases
+continued. Original OS/display/night/boot/Home restored; both fresh packages/AVDs and
+51hash-matchedXML1609941bytes retired. FiveCleans 33175files/2457780345logicalbytes and bounded
+supplementary15targets/14177files/1150915509logicalbytes completed; usedsigned/source/evidence kept,
+earlier refused scopes untouched. Phone turn explicitly returned, no phone command; D607
+three deadlines/consumed reboot/post-reboot unread source preserved. Real identity/provider,
+physical adoption, fullDB/key/security/stability/speed/A11Y/iOS/Store/release remain separate.
+D659 sole exact-head response was completed/success for all4workflows and its schedule
+deleted; no second query. D660 receives one delayed exact-head CI check after push.
+[D-660 evidence](quality/original-personal-sync-workspace.md)

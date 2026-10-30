@@ -1,5 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/BackupDestinationRequest.cs" Link="Application/BackupDestinationRequest.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/OriginalBackupDestinationStorage.cs" Link="Application/OriginalBackupDestinationStorage.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/PortableBackupCreation.cs" Link="Application/PortableBackupCreation.cs" />
