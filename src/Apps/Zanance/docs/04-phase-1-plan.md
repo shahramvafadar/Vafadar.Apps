@@ -1972,3 +1972,34 @@ not retried or reused. Phone/D-607/three deadlines/post-reboot unread source rem
 Physical adoption, broader DB/key/security/performance/stability/accessibility, iOS/provider/
 Store/release gates stay separate. Overall delivery remains active; TalkBack stays last.
 [Complete evidence](quality/original-settings-source-and-profile-reset.md).
+
+### D-649 - Complete original manual-rate workspace (2026-10-30)
+
+Original rates now pin the first actual settings file before initialization, read complete
+original rate facts and consumed currency hints in one worker transaction, validate before
+publication/navigation, and retire actual page/tab/root reads and reference commands. Failed
+source stays covered with explicit read-only Refresh; raw pair/culture/ratio and original
+writer/receipt semantics remain. Original rows require exact current instance identity for
+native Delete consent, even after identical visible republication. One complete row replacement
+keeps original formatting/order. The page consumes its owned failed cover rather than hiding
+Refresh behind another generic modal. No FX algorithm, financial entry, model/migration,
+provider, runtime or notification deadline changes.
+
+Thirteen distinct new and26 affected existing cases pass; original and intermediate failures
+remain. Strict Windows/full offline384AOT/408ELF/1608staticLOAD pass. Fresh API36/x64/4096
+UID10216 continues4387to5908to7117 through two necessary no-reset updates of the same source.
+Actual pending Back cancels, closed reference navigation refuses, current reference navigation
+works, raw1.2500 survives failure/one read-only Retry, and the remaining corrected inline-error
+boundary qualifies actual visible en/System/deDark/faLight captions and read-only Refresh.
+Two preliminary hidden-under-dialog caption observations are disqualified. Earlier successful
+native cases/raw/setup/rate and financial operations are not replayed for the final UI correction;
+all19 observed source tables remain equal and native rate/ledger writes are zero.
+
+Original OS/display/boot restore; only fresh UID/data,39hash-matched XMLs1,311,074bytes and
+owned AVD retire. Five standard cleans remove42,642files2,638,963,151logicalbytes; official
+AVD deletion25files5,491,864,523bytes and one new18-target cleanup4,694files1,492,565,393bytes
+succeed. Actually installed signed packages/final shipping/evidence/source archives remain;
+older refused scopes are not retried or reused. Phone/D-607/three deadlines/post-reboot unread
+source remain untouched. Physical adoption and broader DB/key/security/performance/stability/
+accessibility/iOS/provider/Store/release gates remain separate. Overall delivery stays active.
+[Complete evidence](quality/original-manual-rate-workspace.md).

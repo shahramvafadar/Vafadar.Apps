@@ -10,7 +10,8 @@
     x:DataType="local:RatesViewModel"
     Title="{v:Translate Rates_Title}">
 
-    <ScrollView>
+    <Grid>
+    <ScrollView IsVisible="{Binding Loading.IsReady}">
         <VerticalStackLayout Padding="16" Spacing="8">
             <Label Text="{v:Translate Rates_Intro}" Style="{StaticResource Secondary}" />
             <p:WrappingAction Text="{v:Translate Market_Title}" Command="{Binding OpenReferencesCommand}" />
@@ -79,4 +80,13 @@
             </Border>
         </VerticalStackLayout>
     </ScrollView>
+    <VerticalStackLayout IsVisible="{Binding Loading.IsLoading}" VerticalOptions="Center" HorizontalOptions="Center" Spacing="12" Padding="16">
+        <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" SemanticProperties.Description="{v:Translate Rates_Title}" />
+        <Label Text="{v:Translate Rates_Title}" Style="{StaticResource Secondary}" />
+    </VerticalStackLayout>
+    <VerticalStackLayout IsVisible="{Binding Loading.HasFailed}" VerticalOptions="Center" Spacing="12" Padding="16">
+        <Label Text="{Binding Error}" HorizontalTextAlignment="Center" />
+        <p:WrappingAction Text="{v:Translate Rates_Refresh}" Command="{Binding ReloadCommand}" />
+    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

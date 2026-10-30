@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-649: keep manual-rate reads, current-row consent and reference navigation on their original file/page; preserve raw ratios through covered read failures and expose Refresh without a duplicate error modal.
+
 - D-648: bind original Settings sources, drafts, native consent and independent preference changes to their current file/frame; validate atomic current-profile reset and preserve committed follow-through without another deletion.
 
 - D-647: keep report rows, source reads, contribution receipts and explanation navigation tied to their original frame; preserve incoming drill scope through display changes and refuse stale explanation targets.

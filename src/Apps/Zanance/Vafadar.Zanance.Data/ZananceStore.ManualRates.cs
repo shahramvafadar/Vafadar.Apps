@@ -15,13 +15,14 @@ public sealed class ManualRateReviewChangedException : InvalidOperationException
 public sealed class ManualRatesReview
 {
     private readonly string path;
+    private readonly CommercialFileAccess? _access;
     private readonly Fact[] facts;
     private sealed record Fact(Guid Id, DateOnly Date, string From, string To, decimal Rate, bool Estimate,
         DateTimeOffset Created, DateTimeOffset Updated);
     /// <summary>Detaches every original field from mutable caller rows and captures the original page defaults.</summary>
-    internal ManualRatesReview(string path, IEnumerable<ExchangeRate> rates, string reportCurrency, IEnumerable<string> accounts)
+    internal ManualRatesReview(string path, IEnumerable<ExchangeRate> rates, string reportCurrency, IEnumerable<string> accounts, CommercialFileAccess? access = null)
     {
-        this.path = path; facts = Capture(rates); ReportCurrencyCode = reportCurrency;
+        this.path = path; _access = access; facts = Capture(rates); ReportCurrencyCode = reportCurrency;
         AccountCurrencies = Array.AsReadOnly(accounts.Distinct(StringComparer.Ordinal).ToArray());
     }
     /// <summary>Original report currency is a default only; it never converts a stored rate or amount.</summary>
@@ -36,9 +37,15 @@ public sealed class ManualRatesReview
     public bool OwnsSameFile(ManualRatesReview other) => other is not null && path == other.path;
     /// <summary>Detects a refreshed rate version without exposing or renewing any private original facts.</summary>
     public bool OwnsSameVersion(ManualRatesReview other) => OwnsSameFile(other) && facts.SequenceEqual(other.facts);
+    /// <summary>Refuses retired original file authority without fetching a quote or renewing its consent.</summary>
+    public void EnsureCurrent() => _access?.EnsureSnapshotCurrent();
+    /// <summary>Includes the original consumed currency hints without renewing the immutable writer facts.</summary>
+    internal bool OwnsSamePublication(ManualRatesReview other) => OwnsSameVersion(other)
+        && ReportCurrencyCode == other.ReportCurrencyCode && AccountCurrencies.SequenceEqual(other.AccountCurrencies);
     /// <summary>Checks actual file and complete reviewed rate facts under the eventual writer.</summary>
     internal void Require(ZananceDbContext db, IEnumerable<ExchangeRate>? current = null)
     {
+        EnsureCurrent();
         if (path != DatabaseFileIdentity.ConfiguredPath(db) || current is not null && !facts.SequenceEqual(Capture(current)))
             throw new ManualRateReviewChangedException();
     }
@@ -54,15 +61,38 @@ public sealed record ManualRateReceipt(Guid Id, bool Deleted);
 public sealed partial class ZananceStore
 {
     /// <summary>Reads actual rates, settings and active currency hints consistently after ordinary app startup.</summary>
-    public async Task<ManualRatesReview> ReadManualRatesAsync(CancellationToken ct = default)
+    public Task<ManualRatesReview> ReadManualRatesAsync(CancellationToken ct = default) => ReadManualRatesCoreAsync(ct);
+    /// <summary>Pins the original settings file before any initialization and keeps the actual manual-rate workspace on it.</summary>
+    public async Task<ManualRatesReview> ReadOriginalManualRatesAsync(Func<string, bool>? acceptsFile = null, CancellationToken ct = default)
     {
-        await using var db = await contextFactory.CreateDbContextAsync(ct);
-        await using var read = await db.Database.BeginTransactionAsync(ct);
-        var settings = await SettingsRowReader.ReadAsync(db, ct) ?? throw new ManualRateReviewChangedException();
-        var rates = await db.ExchangeRates.AsNoTracking().ToListAsync(ct);
-        var accounts = await db.Accounts.AsNoTracking().Where(row => !row.IsArchived).Select(row => row.CurrencyCode).ToListAsync(ct);
-        var review = new ManualRatesReview(DatabaseFileIdentity.ConfiguredPath(db), rates, settings.ReportCurrencyCode, accounts);
-        await read.CommitAsync(ct); return review;
+        string? firstPath = null; Guid? firstSettings = null;
+        await GetSettingsCoreAsync(null, ct, (db, settings) => { firstPath = DatabaseFileIdentity.ConfiguredPath(db); firstSettings = settings.Id; }, acceptsFile);
+        if (firstPath is null || firstSettings is null) throw new ManualRateReviewChangedException();
+        return await ReadManualRatesCoreAsync(ct, path => path == firstPath && acceptsFile?.Invoke(path) != false, firstSettings);
+    }
+    private async Task<ManualRatesReview> ReadManualRatesCoreAsync(CancellationToken ct, Func<string, bool>? acceptsFile = null, Guid? firstSettings = null)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(ct); var path = DatabaseFileIdentity.ConfiguredPath(db);
+        if (acceptsFile?.Invoke(path) == false) throw new ManualRateReviewChangedException();
+        var access = new CommercialFileAccess(commercialAccess, path);
+        return await Task.Run(async () =>
+        {
+            access.EnsureSnapshotCurrent(); await using var read = await db.Database.BeginTransactionAsync(ct);
+            var settings = await SettingsRowReader.ReadAsync(db, ct) ?? throw new ManualRateReviewChangedException();
+            if (firstSettings is not null && settings.Id != firstSettings) throw new ManualRateReviewChangedException();
+            var rates = await db.ExchangeRates.AsNoTracking().ToListAsync(ct);
+            var accounts = await db.Accounts.AsNoTracking().Where(row => !row.IsArchived).Select(row => row.CurrencyCode).ToListAsync(ct);
+            var review = new ManualRatesReview(path, rates, settings.ReportCurrencyCode, accounts, access);
+            ct.ThrowIfCancellationRequested(); access.EnsureSnapshotCurrent(); await read.CommitAsync(ct); return review;
+        }, ct);
+    }
+    /// <summary>Rechecks only the original complete rate facts and original currency hints before native publication/navigation.</summary>
+    public async Task ValidateManualRatesAsync(ManualRatesReview original, CancellationToken ct = default)
+    {
+        ArgumentNullException.ThrowIfNull(original); original.EnsureCurrent();
+        var current = await ReadManualRatesCoreAsync(ct);
+        if (!original.OwnsSamePublication(current)) throw new ManualRateReviewChangedException();
+        ct.ThrowIfCancellationRequested(); original.EnsureCurrent();
     }
     /// <summary>Publishes only one frozen reviewed ratio; a same-date pair replaces its original reviewed identity.</summary>
     public Task<ManualRateReceipt> SaveManualRateAsync(ManualRatesReview original, ExchangeRate input, Func<bool> isCurrent,
