@@ -3964,3 +3964,17 @@ editing and clears nothing if the destination fails. Preserve InvalidOperationEx
 for a false original writer predicate and keep after-DML rollback diagnostics at the
 actual boundary when adding an earlier ownership check. Refused cleanup scopes remain
 frozen without retry, subset, alternate method, move, escalation or reuse.
+
+
+## Original plan/access source and native review ownership (D-663)
+
+Keep cached original access independent of ledger/SQLite reads and purchase claims.
+Coalesce actual appearance; explicit Reload alone retries a visible source failure.
+Bind all native offer/restore/continuation/manage/reference and navigation work to its
+current page/root/tab, cached original access and actual translated disclosure, even
+when a covered page misses a refresh callback. Direct commands must check the same
+owner predicates as native controls. Read-only Back cancels its actual source waiter;
+submitted uncertain native work retains original durable continuation, never a fabricated
+receipt or another charge. Preserve original provider/client recovery and pricing policy.
+A shown IME invalidates an older app-caption coordinate; prove the accepted-operation
+checkpoint and actual keyboard absence before continuing an unsubmitted setup form.

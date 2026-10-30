@@ -87,7 +87,7 @@ public sealed class ProductPlansFlowTests
         var vm = ViewModel(f, access); await vm.LoadAsync(); Assert.Equal(f.Translator["ProductPlans_ContinueFree"], vm.ContinueText);
         vm.PlanIndex = 2;
         access.Calls = 0; access.OnCapture = n => n == 1 ? free : plus;
-        await vm.LoadAsync(); Assert.True(vm.Loading.HasFailed); Assert.False(vm.CanInteract); Assert.False(vm.ContinueCommand.CanExecute(null));
+        await vm.ReloadCommand.ExecuteAsync(null); Assert.True(vm.Loading.HasFailed); Assert.False(vm.CanInteract); Assert.False(vm.ContinueCommand.CanExecute(null));
         vm.PlanIndex = 1; Assert.Equal(2, vm.PlanIndex); Assert.Empty(f.Platform.Routes);
         access.OnCapture = null; access.Current = plus; await vm.ReloadCommand.ExecuteAsync(null);
         Assert.True(vm.CanInteract); Assert.Equal(2, vm.PlanIndex); Assert.Equal(f.Translator.Format("ProductPlans_PersonalAccess", "Plus"), vm.AccessText);

@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-663: retain original plan/access source, native disclosure and page ownership; require explicit source Retry and preserve original uncertain-work continuation without another payment or stale navigation.
+
 - D-662: bind original household cost/share/repayment reads, native consent and writers to their original source/frame; preserve complete cash facts, dirty drafts and known accepted results through follow-up failure without repeating financial saves.
 
 - D-661: keep household sources, confirmations and file/profile continuations on their original page and file; retain known accepted changes through follow-up failures and finish first-run without repeating a committed save.

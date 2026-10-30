@@ -5289,3 +5289,9 @@ three deadlines. D660 CI status remains unknown and consumed; no retry is author
 
 Original costs ownership/source/receipt batch is delivered with bounded native evidence. Physical adoption, broad financial workflows, DB/key recovery, security, stability, speed, A11Y, iOS, genuine identity/provider, Store and release remain separate. D607 three deadlines and unread post-reboot source remain protected.
 [Evidence and cleanup limits](quality/original-household-costs-workspace.md).
+
+
+### D-663 plan/access workspace gate
+
+Original cached-source/native-lifetime implementation and bounded offline native acceptance are delivered. No actual billing restore/purchase/management, provider or identity action was accepted by this cohort. Physical, DB/key/security/stability/speed/A11Y/iOS/Store/release gates and D607 remain open.
+[Evidence and exact cleanup limits](quality/original-product-plans-workspace.md).

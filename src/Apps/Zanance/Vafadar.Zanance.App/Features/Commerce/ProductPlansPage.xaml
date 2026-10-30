@@ -5,7 +5,7 @@
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Commerce" x:DataType="local:ProductPlansViewModel"
     Title="{v:Translate ProductPlans_Title}">
     <Grid>
-        <Grid RowDefinitions="*,Auto" IsVisible="{Binding Loading.IsReady}">
+        <Grid RowDefinitions="*,Auto" IsVisible="{Binding IsReady}">
             <ScrollView>
                 <VerticalStackLayout Padding="16" Spacing="12">
                     <Label Text="{v:Translate Market_EcbFreeOriginal}" />

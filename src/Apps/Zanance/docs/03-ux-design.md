@@ -3345,3 +3345,9 @@ the Activity-decor probe is disqualified, not a full glyph/ellipsis measurement.
 
 Dirty Back/tab/toolbar departure uses Discard / Keep editing, and Delete uses Delete / Cancel. A failed destination retains the literal draft. Covered source errors require explicit Reload; known accepted changes never invite a duplicate Save.
 [Evidence and cleanup limits](quality/original-household-costs-workspace.md).
+
+
+### D-663 original plan/access lifetime
+
+Visible source failures remain covered until explicit Reload; retain the comparison choice. Read-only Back cancels its original waiter, while native review/submitted work keeps its own owner. Translated disclosure changes retire the old consent; uncertain work offers original continuation without claiming payment acceptance.
+[Evidence and exact cleanup limits](quality/original-product-plans-workspace.md).

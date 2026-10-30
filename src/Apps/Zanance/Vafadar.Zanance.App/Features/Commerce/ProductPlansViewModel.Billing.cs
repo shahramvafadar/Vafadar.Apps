@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Vafadar.Zanance.App.Features.Commerce.Billing;
 using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Money;
+using Vafadar.Zanance.App.Presentation;
 
 namespace Vafadar.Zanance.App.Features.Commerce;
 
@@ -16,6 +17,8 @@ public sealed partial class ProductPlansViewModel
     private CancellationTokenSource? _billingPage;
     private long _billingEpoch;
     private bool _billingReview;
+    private bool _billingOperation;
+    private bool _billingRead;
     /// <summary>Only the selected native mobile edition exposes payment controls.</summary>
     public bool ShowBilling => _billing?.Available == true;
     /// <summary>Store work has its own covered surface; the comparison remains readable.</summary>
@@ -27,13 +30,13 @@ public sealed partial class ProductPlansViewModel
     /// <summary>Original verified purchase facts, separately scoped to device and identity; never an entitlement grant.</summary>
     public IReadOnlyList<BillingOwnedPurchaseRow> BillingOwnedPurchases => OwnedPurchases();
     /// <summary>Only verified ready state can start a new native payment.</summary>
-    public bool CanBuyBilling => ShowBilling && _billingPage is not null && !_billingReview && !BillingBusy && _billingPresentation?.Status == ProductBillingStatus.Ready;
+    public bool CanBuyBilling => ShowBilling && IsReady && _billingPage is not null && !_billingReview && !_billingOperation && !BillingBusy && _billingPresentation?.Status == ProductBillingStatus.Ready;
     /// <summary>Actual owned-purchase restoration never launches payment.</summary>
-    public bool CanRestoreBilling => ShowBilling && _billingPage is not null && !_billingReview && !BillingBusy && _billingPresentation?.CanRestore == true;
+    public bool CanRestoreBilling => ShowBilling && IsReady && _billingPage is not null && !_billingReview && !_billingOperation && !BillingBusy && _billingPresentation?.CanRestore == true;
     /// <summary>Uncertain original work requires continuation.</summary>
-    public bool CanContinueBilling => ShowBilling && _billingPage is not null && !_billingReview && !BillingBusy && _billingPresentation?.Status == ProductBillingStatus.Pending;
+    public bool CanContinueBilling => ShowBilling && IsReady && _billingPage is not null && !_billingReview && !_billingOperation && !BillingBusy && _billingPresentation?.Status == ProductBillingStatus.Pending;
     /// <summary>Management does not depend on a verifier outage.</summary>
-    public bool CanManageBilling => ShowBilling && _billingPage is not null && !_billingReview && !BillingBusy;
+    public bool CanManageBilling => ShowBilling && IsReady && _billingPage is not null && !_billingReview && !_billingOperation && !BillingBusy;
     /// <summary>A retired or unavailable read can be retried without inventing an original payment.</summary>
     public bool CanRetryBilling => CanManageBilling && _billingPresentation?.Status is ProductBillingStatus.VerificationUnavailable or ProductBillingStatus.NotConfigured;
     /// <summary>Payment evidence remains separate from inactive commercial quotas.</summary>
@@ -45,11 +48,18 @@ public sealed partial class ProductPlansViewModel
     /// <summary>Retires observation without deleting original protected intent or an outstanding SDK task.</summary>
     public void DeactivateBilling()
     {
-        _billingEpoch++; _billingPage?.Cancel(); _billingPage?.Dispose(); _billingPage = null; BillingOffers = []; BillingBusy = false; _billingPresentation = null; OnPropertyChanged(nameof(BillingOwnedPurchases));
+        _visible = false; _frameEpoch++; _sourcePage?.Cancel(); _sourcePage?.Dispose(); _sourcePage = null;
+        _snapshot = null; Rows = [];
+        // The cached source transaction must finish before another frame reads. A retired
+        // SDK observation may outlive cancellation; its epoch cannot publish to a new frame.
+        if (!_sourceAccessPending) _sourceRead = null;
+        _billingEpoch++; _billingPage?.Cancel(); _billingPage?.Dispose(); _billingPage = null; BillingOffers = []; BillingBusy = false; _billingOperation = false; _billingRead = false;
+        _billingPresentation = null; OnPropertyChanged(nameof(BillingOwnedPurchases)); NotifyReadiness(); NotifyBillingCommands();
     }
     private async Task LoadBillingAsync()
     {
-        if (!ShowBilling) return;
+        if (!ShowBilling || !OwnsPresentation || !Loading.IsReady) return;
+        if (!await RequireOriginalSourceAsync()) return;
         _billingEpoch++; _billingPage?.Cancel(); _billingPage?.Dispose(); _billingPage = new(); BillingBusy = false;
         await RunBillingAsync(token => _billing!.LoadAsync(token));
     }
@@ -58,7 +68,7 @@ public sealed partial class ProductPlansViewModel
     {
         foreach (var name in new[] { nameof(CanBuyBilling), nameof(CanRestoreBilling), nameof(CanContinueBilling), nameof(CanManageBilling), nameof(CanRetryBilling) }) OnPropertyChanged(name);
         BuyBillingCommand.NotifyCanExecuteChanged(); RestoreBillingCommand.NotifyCanExecuteChanged(); ContinueBillingCommand.NotifyCanExecuteChanged(); ManageBillingCommand.NotifyCanExecuteChanged(); BillingIdentityCommand.NotifyCanExecuteChanged();
-        RetryBillingCommand.NotifyCanExecuteChanged();
+        RetryBillingCommand.NotifyCanExecuteChanged(); NotifyReadiness();
     }
     private void RefreshBillingDisplay()
     {
@@ -90,13 +100,14 @@ public sealed partial class ProductPlansViewModel
     }
     private async Task RunBillingAsync(Func<CancellationToken, Task<ProductBillingPresentation>> operation, bool retainedWork = false)
     {
-        if (!ShowBilling || BillingBusy || _billingPage is null) return;
+        if (!ShowBilling || !IsReady || _billingReview || _billingOperation || BillingBusy || _billingPage is null) return;
+        if (!await RequireOriginalSourceAsync()) return;
         var epoch = _billingEpoch; var token = _billingPage.Token;
-        BillingBusy = true; BillingOffers = []; BillingStatusText = _translator["Billing_Loading"];
+        _billingOperation = true; _billingRead = !retainedWork; BillingBusy = true; BillingOffers = []; BillingStatusText = _translator["Billing_Loading"];
         try
         {
             var result = await operation(token);
-            if (epoch == _billingEpoch && !token.IsCancellationRequested) _billingPresentation = result;
+            if (epoch == _billingEpoch && OwnsPresentation && !token.IsCancellationRequested && await RequireOriginalSourceAsync()) _billingPresentation = result;
         }
         catch (OperationCanceledException) when (!token.IsCancellationRequested)
         {
@@ -109,15 +120,22 @@ public sealed partial class ProductPlansViewModel
         catch (Exception) when (!token.IsCancellationRequested)
         {
             // Never pass provider bodies, signed receipts, SDK diagnostics or credentials to a general logger.
-            if (epoch == _billingEpoch) _billingPresentation = new(ProductBillingStatus.VerificationUnavailable, null, null, [], false, false);
+            if (epoch == _billingEpoch && OwnsPresentation) _billingPresentation = new(
+                retainedWork ? ProductBillingStatus.Pending : ProductBillingStatus.VerificationUnavailable,
+                null, null, [], retainedWork, false);
         }
-        finally { if (epoch == _billingEpoch) { BillingBusy = false; RefreshBillingDisplay(); } }
+        finally { if (epoch == _billingEpoch) { _billingOperation = false; _billingRead = false; BillingBusy = false; RefreshBillingDisplay(); } }
     }
+    /// <summary>Reads actual current captions/formatting even when a covered native page missed its refresh callback.</summary>
+    private string BillingDisclosure(BillingOfferRow? row = null) => DraftFingerprint.Create(_disclosure, _translator.Culture.Name, PlanIndex,
+        _translator["Billing_ReviewTitle"], _translator["Billing_ReviewTerms"], _translator["Billing_RestoreExplanation"],
+        _translator["Billing_ContinueStore"], _translator["Common_Cancel"], row?.Title, row is null ? null : Terms(row.Original));
     [RelayCommand(CanExecute = nameof(CanBuyBilling))]
     private async Task BuyBillingAsync(BillingOfferRow? row)
     {
-        if (row is null || !BillingOffers.Contains(row)) return;
-        var epoch = _billingEpoch;
+        if (!CanBuyBilling || row is null || !BillingOffers.Contains(row)) return;
+        var epoch = _billingEpoch; var disclosure = BillingDisclosure(row); var original = _snapshot;
+        if (!await RequireOriginalSourceAsync()) return;
         bool accepted; _billingReview = true; NotifyBillingCommands();
         try
         {
@@ -125,13 +143,16 @@ public sealed partial class ProductPlansViewModel
                 Environment.NewLine + _translator["Billing_ReviewTerms"], _translator["Billing_ContinueStore"], _translator["Common_Cancel"]);
         }
         finally { _billingReview = false; NotifyBillingCommands(); }
-        if (!accepted || epoch != _billingEpoch || !CanBuyBilling) return;
+        if (!accepted || epoch != _billingEpoch || disclosure != BillingDisclosure(row) || !ReferenceEquals(original, _snapshot) || !CanBuyBilling || !BillingOffers.Contains(row)) return;
+        if (!await RequireOriginalSourceAsync()) return;
         await RunBillingAsync(token => _billing!.PurchaseAsync(row.Original, token), retainedWork: true);
     }
     [RelayCommand(CanExecute = nameof(CanRestoreBilling))]
     private async Task RestoreBillingAsync()
     {
-        var epoch = _billingEpoch;
+        if (!CanRestoreBilling) return;
+        var epoch = _billingEpoch; var disclosure = BillingDisclosure(); var original = _snapshot;
+        if (!await RequireOriginalSourceAsync()) return;
         bool accepted; _billingReview = true; NotifyBillingCommands();
         try
         {
@@ -139,21 +160,25 @@ public sealed partial class ProductPlansViewModel
                 _translator["Billing_Restore"], _translator["Common_Cancel"]);
         }
         finally { _billingReview = false; NotifyBillingCommands(); }
-        if (!accepted || epoch != _billingEpoch || !CanRestoreBilling) return;
+        if (!accepted || epoch != _billingEpoch || disclosure != BillingDisclosure() || !ReferenceEquals(original, _snapshot) || !CanRestoreBilling) return;
+        if (!await RequireOriginalSourceAsync()) return;
         await RunBillingAsync(token => _billing!.RestoreAsync(token), retainedWork: true);
     }
     [RelayCommand(CanExecute = nameof(CanContinueBilling))]
-    private Task ContinueBillingAsync() => RunBillingAsync(token => _billing!.ContinueAsync(token), retainedWork: true);
+    private Task ContinueBillingAsync() => CanContinueBilling ? RunBillingAsync(token => _billing!.ContinueAsync(token), retainedWork: true) : Task.CompletedTask;
     [RelayCommand(CanExecute = nameof(CanRetryBilling))]
-    private Task RetryBillingAsync() => RunBillingAsync(token => _billing!.LoadAsync(token));
+    private Task RetryBillingAsync() => CanRetryBilling ? RunBillingAsync(token => _billing!.LoadAsync(token)) : Task.CompletedTask;
     [RelayCommand(CanExecute = nameof(CanManageBilling))]
-    private Task BillingIdentityAsync() => _interaction.NavigateAsync(AppRoutes.BillingIdentityRoute);
+    private Task BillingIdentityAsync() => NavigateOriginalAsync(AppRoutes.BillingIdentityRoute);
     [RelayCommand(CanExecute = nameof(CanManageBilling))]
     private async Task ManageBillingAsync()
     {
-        if (_billingPage is not { } page) return;
+        if (!CanManageBilling || _billingPage is not { } page) return;
+        var epoch = _billingEpoch; if (!await RequireOriginalSourceAsync()) return; _billingOperation = true; _billingRead = false; NotifyBillingCommands();
         try { await _billing!.ManageAsync(page.Token); }
         catch (OperationCanceledException) when (page.IsCancellationRequested) { }
-        catch (Exception) when (!page.IsCancellationRequested) { BillingStatusText = _translator["Billing_Status_VerificationUnavailable"]; }
+        catch (Exception error) when (error is not OutOfMemoryException && !page.IsCancellationRequested)
+        { if (epoch == _billingEpoch && OwnsPresentation) BillingStatusText = _translator["Billing_Status_VerificationUnavailable"]; }
+        finally { if (epoch == _billingEpoch) { _billingOperation = false; NotifyBillingCommands(); } }
     }
 }

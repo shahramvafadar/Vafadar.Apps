@@ -21,6 +21,26 @@ public sealed partial class ProductPlansViewModel : ViewModelBase
     private readonly IAppInteraction _interaction;
     private readonly IDateFormatter? _billingDates;
     private CommercialAccessSnapshot? _snapshot;
+    private CancellationTokenSource? _sourcePage;
+    private Task? _sourceRead;
+    private bool _sourceAccessPending;
+    private bool _visible;
+    private bool _rootRetired;
+    private Func<bool>? _ownsRoot;
+    private long _frameEpoch;
+    private long _disclosure;
+    private bool _navigationActive;
+    private bool OwnsPresentation => _visible && !_rootRetired && (_ownsRoot?.Invoke() ?? true);
+    /// <summary>Binds cached access and native confirmations to their original actual root/page.</summary>
+    internal void BindRootOwner(Func<bool> ownsOriginal) => _ownsRoot = ownsOriginal;
+    /// <summary>A replaced root cannot reactivate its original store or comparison continuations.</summary>
+    internal void RetireRoot() { _rootRetired = true; DeactivateBilling(); }
+    /// <summary>Read-only Back may cancel a pending read; submitted native work retains its owner.</summary>
+    public bool CanLeave => !_billingReview && (!_billingOperation || _billingRead);
+    /// <summary>Explicit source Retry cannot overlap another source or native command.</summary>
+    public bool CanRead => OwnsPresentation && _sourceRead is null && !_billingOperation && !_billingReview && !_navigationActive;
+    /// <summary>Original complete source is shown only by its current page.</summary>
+    public bool IsReady => OwnsPresentation && Loading.IsReady;
     // Comparison scope is fictitious and fixed: it never enters a provider, profile, writer or portable data.
     private static readonly EntitlementScope ComparisonScope = new(EntitlementScopeKind.PersonalProfile,
         Guid.Parse("98989898-4545-5656-6767-898989898989"));
@@ -35,7 +55,7 @@ public sealed partial class ProductPlansViewModel : ViewModelBase
     /// <summary>Gets covered publication and translated retry state.</summary>
     public SnapshotLoadState Loading { get; } = new();
     /// <summary>Gets whether native choices/navigation may be invoked.</summary>
-    public bool CanInteract => Loading.IsReady && !IsBusy;
+    public bool CanInteract => IsReady && !IsBusy && !_navigationActive;
     /// <summary>Gets the three approved tier names, independent of experience mode.</summary>
     public string[] PlanNames => ["Free", "Plus", "Pro"];
     /// <summary>Gets the comparison choice only; it never changes current access.</summary>
@@ -65,23 +85,54 @@ public sealed partial class ProductPlansViewModel : ViewModelBase
     public string ContinueText => _snapshot?.Context is { Scope.Kind: EntitlementScopeKind.PersonalProfile, PersonalPlan: ProductPlan.Free }
         ? _translator["ProductPlans_ContinueFree"] : _translator["ProductPlans_Continue"];
 
-    /// <summary>Refreshes original access on actual appearance, retaining the in-memory comparison choice.</summary>
+    /// <summary>Coalesces actual appearance and never retries a visible original failure implicitly.</summary>
     public async Task LoadAsync()
     {
-        CommercialAccessSnapshot? next = null;
+        if (_rootRetired || _ownsRoot?.Invoke() == false) return;
+        if (_visible) { if (_sourceRead is { } pending) await pending; return; }
+        _visible = true; var epoch = ++_frameEpoch;
+        _sourcePage = new(); var token = _sourcePage.Token;
+        if (_sourceRead is { } retired) await retired;
+        if (!OwnsPresentation || epoch != _frameEpoch || token.IsCancellationRequested) return;
+        await ReadOriginalAsync();
+    }
+    private Task ReadOriginalAsync()
+    {
+        if (!OwnsPresentation) return Task.CompletedTask;
+        if (_sourceRead is { } pending) return pending;
+        var completion = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        _sourceRead = completion.Task; _sourceAccessPending = true;
+        _ = ExecuteOriginalReadAsync(completion);
+        return completion.Task;
+    }
+    private async Task ExecuteOriginalReadAsync(TaskCompletionSource completion)
+    {
+        var epoch = _frameEpoch; var token = _sourcePage!.Token;
+        bool Current() => OwnsPresentation && epoch == _frameEpoch && !token.IsCancellationRequested;
+        CommercialAccessSnapshot? next = null; NotifyReadiness();
         try
         {
-            await Loading.RunAsync(async () => next = await _store.ReadAsync(), () =>
+            await Loading.RunAsync(async () => next = await _store.ReadAsync(token), () =>
             {
+                token.ThrowIfCancellationRequested();
+                if (!Current()) throw new OperationCanceledException("The original product comparison retired.");
                 next!.EnsureCurrent(); _snapshot = next; RefreshDisplay();
             });
+            if (Current()) _sourceAccessPending = false;
+            if (Current() && Loading.IsReady) await LoadBillingAsync();
         }
-        catch (Exception) { /* The translated covered retry surface owns read failures; no prior paid claim is published. */ }
-        if (Loading.IsReady) await LoadBillingAsync();
+        catch (Exception error) when (error is not OutOfMemoryException)
+        { /* Only the original covered source surface owns read failures; no payment or accepted result is inferred. */ }
+        finally
+        {
+            if (ReferenceEquals(_sourceRead, completion.Task)) { _sourceRead = null; _sourceAccessPending = false; }
+            completion.TrySetResult(); NotifyReadiness();
+        }
     }
     /// <summary>Refreshes translated captions without changing the selected tier or stored data.</summary>
     public void RefreshDisplay()
     {
+        _disclosure++;
         RefreshBillingDisplay();
         var context = new CapabilityContext((ProductPlan)PlanIndex, ComparisonScope);
         var rows = new List<ProductPlanRow>();
@@ -112,14 +163,38 @@ public sealed partial class ProductPlansViewModel : ViewModelBase
     }
     private void NotifyReadiness()
     {
-        OnPropertyChanged(nameof(CanInteract)); ContinueCommand.NotifyCanExecuteChanged(); ActiveItemsCommand.NotifyCanExecuteChanged();
+        foreach (var name in new[] { nameof(CanInteract), nameof(CanRead), nameof(CanLeave), nameof(IsReady) }) OnPropertyChanged(name);
+        ContinueCommand.NotifyCanExecuteChanged(); ActiveItemsCommand.NotifyCanExecuteChanged(); ReloadCommand.NotifyCanExecuteChanged();
     }
-    [RelayCommand]
-    private Task ReloadAsync() => LoadAsync();
+    [RelayCommand(CanExecute = nameof(CanRead))]
+    private Task ReloadAsync() => CanRead ? ReadOriginalAsync() : Task.CompletedTask;
     [RelayCommand(CanExecute = nameof(CanInteract))]
-    private Task ContinueAsync() => _interaction.NavigateAsync("..");
+    private Task ContinueAsync() => NavigateOriginalAsync("..");
     [RelayCommand(CanExecute = nameof(CanInteract))]
-    private Task ActiveItemsAsync() => _interaction.NavigateAsync(AppRoutes.ActiveItemsRoute);
+    private Task ActiveItemsAsync() => NavigateOriginalAsync(AppRoutes.ActiveItemsRoute);
+    /// <summary>Opens only the original approved external reference under current source/page ownership.</summary>
+    internal Task OpenReferenceAsync(Func<Task> open) => NavigateOriginalCoreAsync(open);
+    private Task NavigateOriginalAsync(string route) => NavigateOriginalCoreAsync(() => _interaction.NavigateAsync(route));
+    private async Task NavigateOriginalCoreAsync(Func<Task> navigate)
+    {
+        if (!CanInteract || !CanLeave || !await RequireOriginalSourceAsync()) return;
+        _navigationActive = true; NotifyReadiness();
+        try { if (OwnsPresentation) await navigate(); }
+        finally { _navigationActive = false; NotifyReadiness(); }
+    }
+    /// <summary>A changed original cached source covers stale claims without an implicit read or native request.</summary>
+    private async Task<bool> RequireOriginalSourceAsync()
+    {
+        if (!IsReady || _snapshot is null) return false;
+        try { _snapshot.EnsureCurrent(); return OwnsPresentation; }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            _billingPresentation = null; BillingOffers = [];
+            try { await Loading.RunAsync(() => Task.FromException(error), () => { }); }
+            catch (Exception failure) when (failure is not OutOfMemoryException) { }
+            NotifyBillingCommands(); return false;
+        }
+    }
 
     private static readonly (QuotaKind Kind, string Key)[] QuotaRows =
     [

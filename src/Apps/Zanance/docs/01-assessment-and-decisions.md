@@ -12182,3 +12182,9 @@ A11Y/iOS/genuine identity/provider/Store/release remain separate; overall goal a
 
 Retain complete original cash/account facts and independent page/native/writer ownership; record only returned commits before fallible follow-through. Keep source Retry read-only and original financial/crypto authority unchanged.
 [Evidence and cleanup limits](quality/original-household-costs-workspace.md).
+
+
+### Decision D-663 - Original plan/access source and native ownership
+
+Keep original cached access, actual disclosure, native command and navigation ownership separate from mutable busy state and provider acceptance. No new ledger read, schema, permission, pricing or identity policy is introduced.
+[Evidence and exact cleanup limits](quality/original-product-plans-workspace.md).

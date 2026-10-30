@@ -8157,3 +8157,24 @@ was rejected before process creation; 13449 files/815868513 logical bytes stay f
 without retry/subset/alternate/move/escalation/reuse. Phone/D607 unchanged; broad financial,
 physical, DB/key/security/stability/speed/A11Y/iOS/provider/Store/release gates remain open.
 [Evidence](../../quality/original-household-costs-workspace.md)
+
+
+### D-663 - Original product plan/access workspace
+
+Original cached access/file, page/root/tab, disclosure/offer/restore/continuation/manage
+and navigation ownership are complete; no SQLite/ledger read is added to cached access.
+Visible failures require explicit Reload, actual translated/native review stays current,
+retired/direct overlapping commands are refused, and uncertain submitted work retains
+original durable continuation without an invented accepted payment. Existing policy,
+prices, crypto, provider and account algorithms remain unchanged.
+53 distinct selected cases (14new/39existing), strict Windows/full offline384AOT/408ELF/
+1608staticLOAD pass. One required fresh zero-opening account, original comparison/retained
+Pro,18same-PID native error contexts, readonly Retry, actual pending-read Back cancellation,
+new ready read/Continue/More/Home and full20source/settings equality pass; no ledger or
+actual Store/identity/provider request. Private offline manifest/IME/wrong pending-target
+refusals remain preserved; accepted setup and old successful matrices were not replayed.
+Fresh UID/48hashXML/AVD retired, four standard Cleans passed. Supplementary six-root cleanup
+was rejected before process creation;3707files/593017755logicalbytes stay frozen without
+retry/subset/alternate/move/escalation/reuse. Phone/D607 untouched; genuine billing/identity,
+physical/DB/key/security/stability/speed/A11Y/iOS/provider/Store/release remain separate.
+[Evidence](../../quality/original-product-plans-workspace.md)

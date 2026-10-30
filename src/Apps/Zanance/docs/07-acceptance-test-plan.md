@@ -8274,3 +8274,9 @@ A11Y/iOS/genuine identity/provider/Store/release remain separate; overall goal a
 
 46 selected cases and strict Windows/full offline APK passed. Native one-cost acceptance, 18 original error contexts, read-only Retry, after-DML rollback and final V2 read-only adoption passed on their recorded versions. Native refunds/repayments/nonempty protected cash and all writer branches are not qualified.
 [Evidence and cleanup limits](quality/original-household-costs-workspace.md).
+
+
+### D-663 bounded plan/access acceptance
+
+53distinct selected cases (14new/39existing), strict Windows/full offline APK,18same-process native error covers, retained comparison/readonly Retry, actual pending-source cancellation and Continue return pass with complete20source/settings equality. Genuine billing, provider, identity and physical acceptance remain separate.
+[Evidence and exact cleanup limits](quality/original-product-plans-workspace.md).
