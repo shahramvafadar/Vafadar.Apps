@@ -25,6 +25,30 @@ public sealed class AccountantExportRequest
 /// <summary>Minimal account identity available for explicit selection; no balances or private service rows.</summary>
 public sealed record AccountantAccount(Guid Id, string Name, string Currency, bool Archived);
 
+/// <summary>Immutable original file and complete visible account identities for one disclosure workspace.</summary>
+public sealed class AccountantWorkspaceSnapshot
+{
+    private readonly string path;
+    private readonly Commerce.CommercialFileAccess access;
+    /// <summary>Captures only minimal original disclosure choices, not balances or service/private metadata.</summary>
+    internal AccountantWorkspaceSnapshot(string file, Commerce.CommercialFileAccess rights, IEnumerable<AccountantAccount> accounts)
+    { path = file; access = rights; Accounts = Array.AsReadOnly(accounts.ToArray()); }
+    /// <summary>Gets complete immutable original active and archived account captions.</summary>
+    public IReadOnlyList<AccountantAccount> Accounts { get; }
+    /// <summary>Refuses retired original cached file access without requesting any new permission.</summary>
+    public void EnsureCurrent() => access.EnsureSnapshotCurrent();
+    /// <summary>Requires the actual original SQLite file before reading another packet.</summary>
+    internal void RequireFile(string file)
+    { EnsureCurrent(); if (path != file) throw new InvalidOperationException("The original disclosure file changed."); }
+    /// <summary>Refuses changed disclosed account identities before reviewing a different packet under old captions.</summary>
+    internal void RequireAccounts(IEnumerable<AccountantAccount> current)
+    {
+        EnsureCurrent();
+        if (!Accounts.OrderBy(item => item.Id).SequenceEqual(current.OrderBy(item => item.Id)))
+            throw new InvalidOperationException("The original disclosure account choices changed; reload them.");
+    }
+}
+
 /// <summary>A reviewed immutable source digest and disclosure counts; never retains attachment blobs.</summary>
 public sealed class AccountantExportReview
 {

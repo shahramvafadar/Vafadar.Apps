@@ -2066,3 +2066,34 @@ evidence remain. Phone/D-607/three deadlines/consumed reboot/unread source remai
 Physical adoption and broad DB/key/security/performance/stability/accessibility/iOS/provider/
 Store/release gates stay separate; overall delivery stays active. Complete evidence:
 `quality/original-market-reference-workspace.md`.
+
+### D-652 - Complete original accountant disclosure workspace (2026-10-30)
+
+Original accountant choices now read minimal immutable active/archived account identities
+under one captured-file worker transaction. Original Review validates those actual captions,
+currencies/archive identities before scanning another packet. Page/tab/root retirement cancels
+source/review/unoffered output; old public Load cannot reactivate disclosure authority and
+old completion cannot clear newer busy state. Whole choices publish together. Literal year,
+notes/documents opt-ins and unchanged explicit account choices survive failure/Retry/return;
+changed identities require new disclosure and retired callbacks cannot erase current review.
+Original tax/data-only scope, ZIP contents/bounds/digest/day/rights, redaction, real native
+authentication/share and financial behavior remain unchanged. No model/schema/runtime change.
+
+Four actual original-source failures remain preserved.10distinct new and4affected original
+native-await refusal cases pass; successful earlier positive output/financial matrices are
+not replayed. Strict Windows/full offline384AOT/408ELF/1608staticLOAD pass. Fresh API36/x64/
+4096 UID10216/PID4765 has one zero-opening account metadata prepared once and ledger/rates0.
+Actual pending Back cancels, closed Load refuses, one raw2025/account/notes input remains
+through source failure/Retry with checked native binding and full feedback. One read-only
+Review produces only summary; ZIP/share/authentication/financial writes0 and complete original
+19-table source equal. Private read-only Entity.Id compile refusal and clipped-target input
+refusal remain; only the latter unaccepted checkbox continues after bounded normal scroll.
+
+Exact original OS/display/boot restore; fresh UID/data,25hash-matched XMLs1,001,492bytes and
+owned AVD retire. Four Clean operations remove28,955files1,990,843,079logicalbytes; official
+AVD deletion25files5,245,121,522bytes and one new10-target cleanup3,726files742,213,210bytes
+succeed. Used signed native/final shipping/source archives/evidence remain; earlier refused
+scopes are untouched. Phone/D-607/three deadlines/consumed reboot/unread source remain
+untouched. Physical and broad DB/key/security/performance/stability/accessibility/iOS/provider/
+Store/release gates remain separate; overall delivery stays active. Complete evidence:
+`quality/original-accountant-disclosure-workspace.md`.

@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-652: preserve original accountant year and disclosure choices through source Retry; refuse replaced files, changed captions and retired native sharing continuations.
+
 - D-651: allow original local reference data to load in the offline edition; retire departed source work and keep reviewed choices bound to their actual file and native page.
 
 - D-650: keep display-unit drafts, captured definitions, global publication and native consent on their original file/frame; expose read-only Refresh and retain known committed results through source/publication failure.

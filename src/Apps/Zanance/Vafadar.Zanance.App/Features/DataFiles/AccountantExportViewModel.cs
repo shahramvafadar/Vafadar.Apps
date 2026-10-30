@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+using Vafadar.Zanance.App.Presentation;
 using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -43,59 +43,95 @@ public sealed partial class AccountantExportViewModel(AccountantExportStore stor
     TimeProvider time, IAppInteraction interaction, IAccountantExportRuntime runtime) : ViewModelBase
 {
     private AccountantExportReview? _review;
-    private int _epoch;
-    private bool _active;
-    /// <summary>Gets actual account choices including archived accounts.</summary>
-    public ObservableCollection<AccountantAccountChoice> Accounts { get; } = [];
-    /// <summary>Gets or sets the Gregorian calendar year, independently of display calendar.</summary>
+    private AccountantWorkspaceSnapshot? _workspace;
+    private int _epoch, _readVersion, _operation;
+    private bool _active = true, _rootRetired;
+    private Func<bool>? _rootCurrent;
+    private string? _file;
+    private CancellationTokenSource _frame = new();
+    private bool Current => _active && !_rootRetired && !_frame.IsCancellationRequested && _rootCurrent?.Invoke() != false;
+    /// <summary>Gets complete current original account choices, published together under source cover.</summary>
+    public SnapshotCollection<AccountantAccountChoice> Accounts { get; } = [];
+    /// <summary>Gets or sets the literal Gregorian year independently of display calendar and source Retry.</summary>
     [ObservableProperty] public partial string Year { get; set; } = time.GetLocalNow().Year.ToString(CultureInfo.InvariantCulture);
-    /// <summary>Gets or sets optional disclosure of payees and notes.</summary>
+    /// <summary>Gets or sets explicit optional payee/note disclosure; never inferred by a source read.</summary>
     [ObservableProperty] public partial bool IncludeNotes { get; set; }
-    /// <summary>Gets or sets optional disclosure of stored copies, initially false.</summary>
+    /// <summary>Gets or sets explicit optional stored-copy disclosure, initially false.</summary>
     [ObservableProperty] public partial bool IncludeDocuments { get; set; }
-    /// <summary>Gets the complete translated reviewed disclosure summary.</summary>
+    /// <summary>Gets the translated summary of exactly the current reviewed packet.</summary>
     [ObservableProperty] public partial string? Summary { get; private set; }
-    /// <summary>Gets translated field and operation feedback without exposing private exception details.</summary>
+    /// <summary>Gets source/operation feedback without private exception details.</summary>
     [ObservableProperty] public partial string? Error { get; private set; }
-    /// <summary>Gets the year-specific validation error.</summary>
+    /// <summary>Gets the original year-specific validation feedback.</summary>
     [ObservableProperty] public partial string? YearError { get; private set; }
-    /// <summary>Gets the account-specific validation error.</summary>
+    /// <summary>Gets the original account-selection feedback.</summary>
     [ObservableProperty] public partial string? AccountsError { get; private set; }
-    /// <summary>Gets whether an original review may be explicitly shared.</summary>
-    public bool CanShare => _review is not null && !IsBusy && _active;
-    /// <summary>Gets whether the first read finished successfully.</summary>
+    /// <summary>Gets whether source input is fully published for this original native frame.</summary>
     [ObservableProperty] public partial bool Loaded { get; private set; }
+    /// <summary>Gets whether the actual frame may explicitly reload its original source.</summary>
+    public bool CanReload => Current && !IsBusy;
+    /// <summary>Gets whether original ready disclosure inputs may be reviewed or selected.</summary>
+    public bool CanReview => Current && Loaded && !IsBusy && _workspace is not null;
+    /// <summary>Gets whether the exact reviewed packet still has original native sharing authority.</summary>
+    public bool CanShare => CanReview && _review is not null;
+    partial void OnLoadedChanged(bool value) => Refresh();
     partial void OnYearChanged(string value) => Invalidate();
     partial void OnIncludeNotesChanged(bool value) => Invalidate();
     partial void OnIncludeDocumentsChanged(bool value) => Invalidate();
-    /// <summary>Retires pending continuations when the form leaves its original profile/window.</summary>
-    public void Retire() { _active = false; Invalidate(); }
-    /// <summary>Invalidates only transient disclosure review; never saves settings or money.</summary>
-    private void Invalidate() { Interlocked.Increment(ref _epoch); _review = null; Summary = null; OnPropertyChanged(nameof(CanShare)); }
-
-    /// <summary>Loads a covered form without retaining a previous profile's financial selection.</summary>
+    /// <summary>Binds only the actual original native application root.</summary>
+    public void BindRootOwner(Func<bool> current) => _rootCurrent = current;
+    /// <summary>Allows only actual page appearance/return to activate a departed frame.</summary>
+    public void SetPresentationActive(bool value)
+    {
+        if (!value) { Retire(); return; }
+        if (_rootRetired || _rootCurrent?.Invoke() == false) return;
+        if (!_active) { _frame.Dispose(); _frame = new(); _active = true; }
+        Refresh();
+    }
+    /// <summary>Permanently retires this original form when its actual root is replaced.</summary>
+    public void RetireRoot() { _rootRetired = true; Retire(); }
+    /// <summary>Cancels original source/output continuations while retaining unsubmitted raw disclosure choices.</summary>
+    public void Retire()
+    { _active = false; _readVersion++; _operation++; _frame.Cancel(); Invalidate(); Loaded = false; IsBusy = false; Refresh(); }
+    private void Refresh()
+    { OnPropertyChanged(nameof(CanReload)); OnPropertyChanged(nameof(CanReview)); OnPropertyChanged(nameof(CanShare)); }
+    private void Invalidate() { Interlocked.Increment(ref _epoch); _review = null; Summary = null; Refresh(); }
+    private void EnsureFrame()
+    { if (!Current) throw new OperationCanceledException("The original disclosure frame retired."); _frame.Token.ThrowIfCancellationRequested(); }
+    private bool AcceptFile(string file)
+    { EnsureFrame(); _file ??= file; return _file == file; }
+    /// <summary>Loads only the original actual file, preserving unchanged explicit account choices and raw year/options through Retry.</summary>
     [RelayCommand] public async Task LoadAsync()
     {
-        if (IsBusy) return;
-        _active = true; Invalidate(); var epoch = _epoch; IsBusy = true; Loaded = false; Error = null;
+        if (!CanReload) return;
+        Invalidate(); var readVersion = ++_readVersion; var operation = ++_operation; var ct = _frame.Token;
+        IsBusy = true; Loaded = false; Error = null; Refresh();
         try
         {
-            var accounts = await Task.Run(() => store.AccountsAsync());
-            if (!_active || epoch != _epoch) return;
-            Accounts.Clear(); foreach (var account in accounts) Accounts.Add(new(account, Invalidate)); Loaded = true;
+            var workspace = await store.ReadWorkspaceAsync(ct, AcceptFile);
+            EnsureFrame(); if (readVersion != _readVersion) return; workspace.EnsureCurrent();
+            var selected = _workspace is null ? [] : _workspace.Accounts.Where(old => Accounts.Any(row => row.Id == old.Id && row.Selected)).ToArray();
+            var rows = workspace.Accounts.Select(account =>
+            {
+                AccountantAccountChoice? row = null;
+                row = new(account, () => { if (Current && Accounts.Any(current => ReferenceEquals(current, row))) Invalidate(); });
+                // Selection follows unchanged original captions only; a changed/restored account requires explicit new disclosure.
+                row.Selected = selected.Contains(account); return row;
+            }).ToArray();
+            _workspace = workspace; Accounts.ReplaceAll(rows); Loaded = true;
         }
-        catch (Exception) { if (_active) Error = translator["Tax_Failed"]; }
-        finally { IsBusy = false; OnPropertyChanged(nameof(CanShare)); }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        { if (Current && readVersion == _readVersion) { Loaded = false; Error = translator["Tax_Failed"]; } }
+        finally { if (operation == _operation) { IsBusy = false; Refresh(); } }
     }
-    /// <summary>Explicitly selects all displayed account identities.</summary>
-    [RelayCommand] private void SelectAll() { if (!IsBusy) foreach (var account in Accounts) account.Selected = true; }
-    /// <summary>Removes all disclosure choices without changing accounts.</summary>
-    [RelayCommand] private void SelectNone() { if (!IsBusy) foreach (var account in Accounts) account.Selected = false; }
-
-    /// <summary>Reviews exactly this year's selected ledger packet on a worker before native effects.</summary>
+    /// <summary>Selects only actual current displayed account identities.</summary>
+    [RelayCommand] private void SelectAll() { if (CanReview) foreach (var account in Accounts) account.Selected = true; }
+    /// <summary>Removes current disclosure choices without changing stored accounts.</summary>
+    [RelayCommand] private void SelectNone() { if (CanReview) foreach (var account in Accounts) account.Selected = false; }
+    /// <summary>Reviews exactly the original current captions/year/opt-ins without a financial write or output file.</summary>
     [RelayCommand] public async Task ReviewAsync()
     {
-        if (IsBusy || !Loaded || !_active) return;
+        if (!CanReview || _workspace is not { } workspace) return;
         Invalidate(); Error = null;
         var validYear = int.TryParse(Digits.ToAscii(Year), NumberStyles.None, CultureInfo.InvariantCulture, out var year)
             && year >= 1900 && year <= time.GetLocalNow().Year;
@@ -103,23 +139,24 @@ public sealed partial class AccountantExportViewModel(AccountantExportStore stor
         var ids = Accounts.Where(a => a.Selected).Select(a => a.Id).ToArray();
         AccountsError = ids.Length > 0 ? null : translator["Tax_AccountsError"];
         if (!validYear || ids.Length == 0) return;
-        var epoch = _epoch; var request = new AccountantExportRequest(year, ids, IncludeNotes, IncludeDocuments); IsBusy = true;
+        var epoch = _epoch; var operation = ++_operation; var ct = _frame.Token;
+        var request = new AccountantExportRequest(year, ids, IncludeNotes, IncludeDocuments); IsBusy = true; Refresh();
         try
         {
-            var review = await Task.Run(() => store.ReviewAsync(request, () => Validate(epoch)));
+            var review = await Task.Run(() => store.ReviewAsync(request, () => Validate(epoch), ct, workspace), ct);
             Validate(epoch); _review = review;
             Summary = string.Format(CultureInfo.CurrentCulture, translator["Tax_Summary"], review.Entries, review.Documents,
                 review.DocumentBytes, review.LinkedAccounts);
         }
-        catch (Exception) { if (_active && epoch == _epoch) Error = translator["Tax_Failed"]; }
-        finally { IsBusy = false; OnPropertyChanged(nameof(CanShare)); }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        { if (Current && epoch == _epoch) Error = translator["Tax_Failed"]; }
+        finally { if (operation == _operation) { IsBusy = false; Refresh(); } }
     }
-
-    /// <summary>Rechecks original consent after confirmation, file preparation and before the native handoff.</summary>
+    /// <summary>Retains exact original disclosure and native authentication before bounded preparation and sharing.</summary>
     [RelayCommand] public async Task ShareAsync()
     {
         if (!CanShare || _review is not { } review) return;
-        var epoch = _epoch; IsBusy = true; Error = null; OnPropertyChanged(nameof(CanShare));
+        var epoch = _epoch; var operation = ++_operation; var ct = _frame.Token; IsBusy = true; Error = null; Refresh();
         string? path = null; var offered = false;
         try
         {
@@ -128,19 +165,22 @@ public sealed partial class AccountantExportViewModel(AccountantExportStore stor
             Validate(epoch);
             if (!await runtime.ConfirmAsync()) return;
             Validate(epoch); runtime.EnsureAvailable();
-            path = await runtime.WriteAsync(stream => Task.Run(() => store.BuildAsync(review, stream, () => Validate(epoch))));
-            await Task.Run(() => store.ValidateAsync(review, () => Validate(epoch)));
+            path = await runtime.WriteAsync(stream => Task.Run(() => store.BuildAsync(review, stream, () => Validate(epoch), ct), ct));
+            await Task.Run(() => store.ValidateAsync(review, () => Validate(epoch), ct), ct);
             Validate(epoch); runtime.EnsureAvailable(); offered = true; await runtime.ShareAsync(path);
         }
-        catch (Exception) { if (_active && epoch == _epoch) { Invalidate(); Error = translator["Tax_Failed"]; } }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        { if (Current && epoch == _epoch) { Invalidate(); Error = translator["Tax_Failed"]; } }
         finally
         {
             try { if (path is not null && !offered) runtime.Remove(path); }
-            finally { IsBusy = false; OnPropertyChanged(nameof(CanShare)); }
+            finally { if (operation == _operation) { IsBusy = false; Refresh(); } }
         }
     }
     private void Validate(int epoch)
     {
-        if (!_active || epoch != Volatile.Read(ref _epoch)) throw new InvalidOperationException("The disclosure review was retired.");
+        EnsureFrame();
+        if (epoch != Volatile.Read(ref _epoch)) throw new InvalidOperationException("The disclosure review was retired.");
+        _workspace?.EnsureCurrent();
     }
 }

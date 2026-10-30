@@ -30,20 +30,43 @@ public sealed class AccountantExportStore(IDbContextFactory<ZananceDbContext> fa
             .Select(a => new AccountantAccount(a.Id, a.Name, a.CurrencyCode, a.IsArchived)).ToListAsync(ct);
     }
 
+    /// <summary>Reads original disclosure choices under one file-bound worker transaction, before any review or native output.</summary>
+    public async Task<AccountantWorkspaceSnapshot> ReadWorkspaceAsync(CancellationToken ct = default, Func<string, bool>? acceptsFile = null)
+    {
+        await using var db = await factory.CreateDbContextAsync(ct); var path = DatabaseFileIdentity.ConfiguredPath(db);
+        if (acceptsFile?.Invoke(path) == false) throw new InvalidOperationException("The original disclosure file changed.");
+        var access = new CommercialFileAccess(source, path); access.EnsureSnapshotCurrent();
+        return await Task.Run(async () =>
+        {
+            await db.Database.OpenConnectionAsync(ct);
+            await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
+            await using var joined = await db.Database.UseTransactionAsync(transaction, ct);
+            var accounts = await ReadAccountsAsync(db, ct);
+            ct.ThrowIfCancellationRequested(); access.EnsureSnapshotCurrent();
+            if (acceptsFile?.Invoke(path) == false) throw new InvalidOperationException("The original disclosure file changed.");
+            return new AccountantWorkspaceSnapshot(path, access, accounts);
+        }, ct);
+    }
+    private static async Task<IReadOnlyList<AccountantAccount>> ReadAccountsAsync(ZananceDbContext db, CancellationToken ct) =>
+        await db.Accounts.AsNoTracking().OrderBy(a => a.Name).ThenBy(a => a.Id)
+            .Select(a => new AccountantAccount(a.Id, a.Name, a.CurrencyCode, a.IsArchived)).ToArrayAsync(ct);
+
     /// <summary>Reviews exact selected sources without writing a readable cache file.</summary>
     public async Task<AccountantExportReview> ReviewAsync(AccountantExportRequest request, Action validateScope,
-        CancellationToken ct = default)
+        CancellationToken ct = default, AccountantWorkspaceSnapshot? originalWorkspace = null)
     {
         ArgumentNullException.ThrowIfNull(request); ArgumentNullException.ThrowIfNull(validateScope);
         if (request.Year > time.GetLocalNow().Year) throw new ArgumentOutOfRangeException(nameof(request));
         await using var db = await factory.CreateDbContextAsync(ct);
         var path = DatabaseFileIdentity.ConfiguredPath(db);
+        originalWorkspace?.RequireFile(path);
         var access = new CommercialFileAccess(source, path);
         void Validate() { ct.ThrowIfCancellationRequested(); validateScope(); access.EnsureSnapshotCurrent(); access.DemandFeature(CommercialFeature.AccountantExport); }
         Validate();
         await db.Database.OpenConnectionAsync(ct);
         await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
         await using var joined = await db.Database.UseTransactionAsync(transaction, ct);
+        if (originalWorkspace is not null) originalWorkspace.RequireAccounts(await ReadAccountsAsync(db, ct));
         var day = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         var result = await ScanAsync(db, request, null, Validate, ct);
         Validate();

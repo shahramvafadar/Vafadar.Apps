@@ -95,3 +95,5 @@ Original manual-rate workspace and reference navigation: [D-649 runtime evidence
 Original display-unit workspace and publication authority: [D-650 runtime evidence](quality/original-display-unit-workspace.md). Physical adoption and release gates remain separate.
 
 Original reference workspace and offline access lifetime: [D-651 runtime evidence](quality/original-market-reference-workspace.md). Physical adoption and release gates remain separate.
+
+Original accountant disclosure workspace: [D-652 runtime evidence](quality/original-accountant-disclosure-workspace.md). Physical adoption and release gates remain separate.

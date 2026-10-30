@@ -57,8 +57,8 @@
         <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" BackgroundColor="{DynamicResource PageBackground}">
             <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{DynamicResource Primary}" HeightRequest="44" />
-            <p:WrappingAction Text="{v:Translate Tax_Reload}" Command="{Binding LoadCommand}" IsEnabled="{Binding IsNotBusy}" />
-            <p:WrappingAction Text="{v:Translate Tax_Review}" Command="{Binding ReviewCommand}" IsEnabled="{Binding IsNotBusy}" />
+            <p:WrappingAction Text="{v:Translate Tax_Reload}" Command="{Binding LoadCommand}" IsEnabled="{Binding CanReload}" />
+            <p:WrappingAction Text="{v:Translate Tax_Review}" Command="{Binding ReviewCommand}" IsEnabled="{Binding CanReview}" />
             <p:WrappingAction Text="{v:Translate Tax_Share}" Command="{Binding ShareCommand}" IsEnabled="{Binding CanShare}" Appearance="Primary" />
         </VerticalStackLayout>
     </Grid>
