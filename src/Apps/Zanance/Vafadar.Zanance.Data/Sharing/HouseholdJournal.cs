@@ -108,7 +108,14 @@ public sealed partial class HouseholdJournal(IDbContextFactory<ZananceDbContext>
     /// <summary>Captures only the actual protected peer/identity file; absent setup is not repaired or replaced automatically.</summary>
     public async Task<HouseholdJournalState?> CaptureAsync(LocalSyncPeer peer, string actualIdentity, CancellationToken ct = default)
     {
-        await using var context = await OpenAsync(ct); var row = await context.Db.Set<HouseholdLocalBinding>().AsNoTracking().SingleOrDefaultAsync(ct);
+        await using var context = await OpenAsync(ct);
+        return await CaptureInContextAsync(context, peer, actualIdentity, ct);
+    }
+
+    /// <summary>Uses the caller's original protected transaction while preserving this reader's complete validation.</summary>
+    private async Task<HouseholdJournalState?> CaptureInContextAsync(JournalContext context,LocalSyncPeer peer, string actualIdentity, CancellationToken ct = default)
+    {
+         var row = await context.Db.Set<HouseholdLocalBinding>().AsNoTracking().SingleOrDefaultAsync(ct);
         if (row is null) return null;
         if (row.GenerationPath != context.Path || row.IdentityId != actualIdentity || row.PeerKey != peer.BindingKey(actualIdentity)) throw Refusal();
         context.Check(); return State(row);
@@ -226,14 +233,14 @@ public sealed partial class HouseholdJournal(IDbContextFactory<ZananceDbContext>
     }
 
     /// <summary>Actual native factory/generation check surrounds persistence and transaction publication, without retaining a key-bearing global connection.</summary>
-    private sealed class JournalContext(ZananceDbContext db, IDbContextTransaction transaction, string path, SqliteConnection connection) : IAsyncDisposable
+    private sealed class JournalContext(ZananceDbContext db, IDbContextTransaction transaction, string path, SqliteConnection connection, bool ownsDb = true) : IAsyncDisposable
     {
         internal ZananceDbContext Db { get; } = db;
         internal string Path { get; } = path;
         internal void Check() => ProtectedSqliteAccess.Require(connection);
-        internal async Task CommitAsync(CancellationToken ct)
-        { Check(); await Db.SaveChangesAsync(ct); Check(); await transaction.CommitAsync(ct); }
-        public async ValueTask DisposeAsync() { await transaction.DisposeAsync(); await Db.DisposeAsync(); }
+        internal async Task CommitAsync(CancellationToken ct, Action? validateOriginal = null)
+        { Check(); validateOriginal?.Invoke(); await Db.SaveChangesAsync(ct); Check(); validateOriginal?.Invoke(); await transaction.CommitAsync(ct); }
+        public async ValueTask DisposeAsync() { await transaction.DisposeAsync(); if (ownsDb) await Db.DisposeAsync(); }
     }
 
     /// <summary>Captured setup/file/peer/identity are all rechecked inside the actual private transaction.</summary>

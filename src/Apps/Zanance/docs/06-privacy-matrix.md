@@ -1554,3 +1554,15 @@ unoffered file may be discarded. Offered files remain private cache for the asyn
 receiver under the existing policy, without a new retention or encryption claim. Read-only
 source Retry does not export/share or replay a financial operation. Actual recipient/provider
 and complete release-edition acceptance remain separate. See [D-653](quality/original-csv-workspace.md).
+
+
+### D-661 household source and Integration qualification
+
+No new production permission, SDK, financial schema or cloud policy is introduced.
+Original private household reads retain protected-factory/verified-membership checks.
+The original first-run writer updates one completion property with original-file/native
+validation around commit. Local qualification used one fictitious identity and the actual
+API in a fresh loopback database; no real credentials or private key frames were exported.
+Only public row counts leave private household storage. The fresh runtime/database is
+retired; original project services and D607 remain intact. Genuine provider/identity and
+whole-key/database acceptance stay open. [Evidence](quality/original-household-workspace.md).

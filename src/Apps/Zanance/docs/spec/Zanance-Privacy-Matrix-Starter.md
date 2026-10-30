@@ -1509,3 +1509,12 @@ Actual source bytes are bounded before image preparation; raw camera output stil
 retires in the original finally. Only fictitious emulator capture is used, with no
 image/credential/private Main export or new SDK/permission/Store declaration.
 [Evidence and exact limits](../quality/bounded-camera-source-read.md).
+
+
+### D-661 bounded original household workspace
+
+No new production permission/SDK/export or financial schema. Existing private household
+sources retain their original protected factory and cryptographic verification. A local
+fictitious Integration identity and isolated original API proved only the empty-source
+first-run branch; no genuine authentication or private key export is implied. Original
+services and D607 remain preserved. [Evidence](../quality/original-household-workspace.md).

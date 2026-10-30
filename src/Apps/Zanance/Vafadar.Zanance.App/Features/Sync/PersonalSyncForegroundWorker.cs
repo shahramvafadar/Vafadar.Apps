@@ -45,7 +45,7 @@ internal sealed class PersonalSyncForegroundWorker : IDisposable
             if (Application.Current?.Windows.FirstOrDefault()?.Page is not AppShell shell || shell.Navigation.ModalStack.Count != 0 ||
                 shell.CurrentPage is not (Features.Home.HomePage or Features.More.MorePage or PersonalSyncPage or Features.Sharing.HouseholdPage)) return;
             if (shell.CurrentPage.BindingContext is PersonalSyncViewModel { HasPendingOperation: true }) return;
-            if (shell.CurrentPage.BindingContext is Features.Sharing.HouseholdViewModel { IsBusy: true }) return;
+            if (shell.CurrentPage.BindingContext is Features.Sharing.HouseholdViewModel { HasPendingOperation: true }) return;
             PersonalSyncAccess captured;
             try { captured = environment.Capture(); }
             catch (OperationCanceledException) { return; }

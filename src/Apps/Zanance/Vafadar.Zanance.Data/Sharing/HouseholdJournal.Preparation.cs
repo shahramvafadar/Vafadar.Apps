@@ -93,7 +93,14 @@ public sealed partial class HouseholdJournal
     /// <summary>Returns exact retained original bytes after process loss, never fresh IVs/signatures for the same operation.</summary>
     public async Task<HouseholdPublishMembership?> ReadMembershipProposalAsync(HouseholdJournalAuthority authority, CancellationToken ct = default)
     {
-        await using var context = await OpenAsync(ct); var binding = await RequireBindingAsync(context, authority, ct);
+        await using var context = await OpenAsync(ct);
+        return await ReadMembershipProposalInContextAsync(context, authority, ct);
+    }
+
+    /// <summary>Uses the caller's original protected transaction while preserving this reader's complete validation.</summary>
+    private async Task<HouseholdPublishMembership?> ReadMembershipProposalInContextAsync(JournalContext context,HouseholdJournalAuthority authority, CancellationToken ct = default)
+    {
+         var binding = await RequireBindingAsync(context, authority, ct);
         var row = await context.Db.Set<HouseholdLocalMembershipProposal>().AsNoTracking().SingleOrDefaultAsync(ct);
         if (row is null) return null;
         if (Encoding.UTF8.GetByteCount(row.BodyJson) > 8 * 1024 * 1024 || Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(row.BodyJson))) != row.Hash) throw Refusal();

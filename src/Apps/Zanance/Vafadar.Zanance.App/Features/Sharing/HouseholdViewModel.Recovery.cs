@@ -38,11 +38,11 @@ public sealed partial class HouseholdViewModel
     [RelayCommand] private async Task PickRecoveryAsync()
     {
         if (!CanPickRecovery || visible is null) return;
-        IsBusy = true; errorKey = null; Refresh();
+        BeginManualCommand(); errorKey = null; Refresh();
         RecoveryPassword = RecoveryPasswordConfirm = "";
         try
         {
-            var access = environment.Capture(); var captured = await original.ReviewAsync(visible.Token); access.Validate();
+            var access = CaptureManualAccess(); var captured = await original.ReviewAsync(visible.Token); access.Validate();
             var peer = new LocalSyncPeer(Address, Fingerprint); var selectingIdentity = identity ?? throw new InvalidOperationException();
             // Native pickers may background/lock the app. Retain only encrypted bytes here;
             // importing them is a separate action with a fresh unlocked/profile capture.
@@ -54,7 +54,7 @@ public sealed partial class HouseholdViewModel
                 finally { CryptographicOperations.ZeroMemory(bytes); }
                 // A lock modal can retire this page while the native picker is open. The singleton
                 // keeps only encrypted bytes; fresh same-profile discovery can adopt them after unlock.
-                if (visible is not null && identity == selectingIdentity)
+                if (OwnsPresentation && visible is not null && identity == selectingIdentity)
                 {
                     var fresh = environment.Capture(); var current = await original.ReviewAsync(visible.Token); fresh.Validate();
                     if (current.GenerationPath == captured.GenerationPath)
@@ -66,19 +66,19 @@ public sealed partial class HouseholdViewModel
             }
         }
         catch (OperationCanceledException) { }
-        catch (Exception error) when (error is not OutOfMemoryException) { errorKey = "Household_ActionFailed"; }
-        finally { IsBusy = false; Refresh(); }
+        catch (Exception error) when (error is not OutOfMemoryException) { if (CanPublishManualFeedback) RetainFailure("Household_ActionFailed"); }
+        finally { EndManualCommand(); }
     }
 
     [RelayCommand] private async Task ExportRecoveryAsync()
     {
         if (!CanExportRecovery || visible is null || state is null) return;
         if (RecoveryPassword.Length < 8 || RecoveryPassword != RecoveryPasswordConfirm) { errorKey = "HouseholdRecovery_PasswordError"; Refresh(); return; }
-        IsBusy = true; errorKey = null; Refresh();
+        BeginManualCommand(); errorKey = null; Refresh();
         var password = RecoveryPassword; RecoveryPassword = RecoveryPasswordConfirm = "";
         try
         {
-            var access = environment.Capture(); using var linked = CancellationTokenSource.CreateLinkedTokenSource(access.Cancellation, visible.Token);
+            var access = CaptureManualAccess(); using var linked = CancellationTokenSource.CreateLinkedTokenSource(access.Cancellation, visible.Token);
             var captured = state.Authority; var peer = new LocalSyncPeer(Address, Fingerprint);
             transport?.Dispose(); transport = new(peer, tokens, time, access.Validate);
             using var export = await workspace.ExportRecoveryKitAsync(transport, captured, password, linked.Token);
@@ -89,22 +89,25 @@ public sealed partial class HouseholdViewModel
             var saved = await interaction.SaveHouseholdRecoveryAsync("zanance-household-recovery-" + export.Fingerprint[..12] + ".zhr", export.Content, nativeDeadline.Token);
             if (saved)
             {
+                RecordAcceptedOperation();
                 workspace.RememberSavedRecoveryFile(captured, export.Fingerprint);
-                if (visible is not null && state?.Authority == captured)
+                if (CanPublishManualFeedback && state?.Authority == captured)
                 { savedRecoveryFingerprint = export.Fingerprint; savedRecoveryAuthority = captured; }
             }
         }
         catch (OperationCanceledException) { }
-        catch (Exception error) when (error is not OutOfMemoryException) { errorKey = "Household_ActionFailed"; }
-        finally { password = ""; IsBusy = false; Refresh(); }
+        catch (Exception error) when (error is not OutOfMemoryException) { if (CanPublishManualFeedback) RetainFailure("Household_ActionFailed"); }
+        finally { password = ""; EndManualCommand(); }
     }
 
     [RelayCommand] private Task EnableRecoveryAsync() => RunAsync(async (access, ct) =>
     {
         var captured = state?.Authority;
         if (captured is null || savedRecoveryAuthority != captured || savedRecoveryFingerprint is null || !await ConfirmAsync("HouseholdRecovery_EnableConfirm")) return;
-        access.Validate(); await workspace.ConfirmRecoveryExportAsync(transport!, captured, savedRecoveryFingerprint, ct);
-        state = await workspace.CompleteRecoveryEnrollmentAsync(transport!, captured, ct); access.Validate();
+        access.Validate(); await AwaitPrimaryAsync(() => workspace.ConfirmRecoveryExportAsync(transport!, captured, savedRecoveryFingerprint, ct));
+        // The existing file receipt alone does not acknowledge the requested enrollment.
+        acceptedOperation = false;
+        state = await AwaitPrimaryAsync(() => workspace.CompleteRecoveryEnrollmentAsync(transport!, captured, ct)); access.Validate();
         savedRecoveryFingerprint = null; savedRecoveryAuthority = null; await ReadLocalAsync(ct);
     });
 
@@ -113,14 +116,14 @@ public sealed partial class HouseholdViewModel
         if (!CanSetUpWhileBusy() || pickedRecovery is null || RecoveryPassword.Length == 0 || !await ConfirmAsync("HouseholdRecovery_ImportConfirm")) return;
         var password = RecoveryPassword; RecoveryPassword = RecoveryPasswordConfirm = "";
         using var kit = HouseholdRecoveryKit.ImportEncrypted(pickedRecovery, password); password = "";
-        access.Validate(); state = await workspace.BeginOwnerRecoveryAsync(transport!, kit, ct);
+        access.Validate(); state = await AwaitPrimaryAsync(() => workspace.BeginOwnerRecoveryAsync(transport!, kit, ct));
         CryptographicOperations.ZeroMemory(pickedRecovery); pickedRecovery = null; await ReadLocalAsync(ct);
     });
 
     [RelayCommand] private Task CompleteRecoveryAsync() => RunAsync(async (access, ct) =>
     {
         if (!IsOwnerRecoveryDraft || !await ConfirmAsync("HouseholdRecovery_ImportConfirm")) return;
-        access.Validate(); state = await workspace.CompleteOwnerRecoveryAsync(transport!, state!.Authority, Name.Trim(), ct);
+        access.Validate(); state = await AwaitPrimaryAsync(() => workspace.CompleteOwnerRecoveryAsync(transport!, state!.Authority, Name.Trim(), ct));
         access.Validate(); environment.ConnectionChanged(); await environment.PublishAppliedAsync(ct); await ReadLocalAsync(ct);
     });
 
@@ -128,7 +131,7 @@ public sealed partial class HouseholdViewModel
     {
         var selected = enrolledRecovery; var version = membership?.Version;
         if (selected is null || version is null || !await ConfirmAsync("HouseholdRecovery_RevokeConfirm")) return;
-        access.Validate(); state = await workspace.RevokeRecoveryAsync(transport!, state!.Authority, selected.Value, version.Value, ct);
+        access.Validate(); state = await AwaitPrimaryAsync(() => workspace.RevokeRecoveryAsync(transport!, state!.Authority, selected.Value, version.Value, ct));
         await ReadLocalAsync(ct);
     });
 
@@ -146,7 +149,7 @@ public sealed partial class HouseholdViewModel
             try { selected = (await transport!.RecoveryAsync(next.SpaceId, ct)).EnrollmentId; }
             catch (PersonalSyncHttpException error) when (error.Status == System.Net.HttpStatusCode.NotFound) { }
         }
-        ct.ThrowIfCancellationRequested(); enrolledRecovery = selected;
+        ct.ThrowIfCancellationRequested(); operationOwner?.Invoke(); enrolledRecovery = selected;
         if (identity is not null && transport is not null)
         {
             var picked = workspace.TakePickedRecoveryFile(generationPath, transport.Peer, identity);

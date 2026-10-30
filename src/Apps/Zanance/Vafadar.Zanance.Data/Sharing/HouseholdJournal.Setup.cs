@@ -43,7 +43,14 @@ public sealed partial class HouseholdJournal
     /// <summary>Reviews only the exact pending original invitation so explicit local finishing does not require a retained clipboard/file.</summary>
     public async Task<HouseholdInvitationNotice?> ReadInvitationNoticeAsync(HouseholdJournalAuthority authority, CancellationToken ct = default)
     {
-        await using var context = await OpenAsync(ct); _ = await RequireBindingAsync(context, authority, ct);
+        await using var context = await OpenAsync(ct);
+        return await ReadInvitationNoticeInContextAsync(context, authority, ct);
+    }
+
+    /// <summary>Uses the caller's original protected transaction while preserving this reader's complete validation.</summary>
+    private async Task<HouseholdInvitationNotice?> ReadInvitationNoticeInContextAsync(JournalContext context,HouseholdJournalAuthority authority, CancellationToken ct = default)
+    {
+         _ = await RequireBindingAsync(context, authority, ct);
         var row = await context.Db.Set<HouseholdLocalSecret>().AsNoTracking().SingleOrDefaultAsync(row => row.Slot == "pending-owner-invitation", ct);
         if (row is null) return null;
         try

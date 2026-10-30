@@ -73,33 +73,36 @@ public sealed partial class HouseholdViewModel
     [RelayCommand] private async Task OpenSourceDestinationAsync()
     {
         if (!CanInteract || sourceReview is null || identity is null) return;
-        IsBusy = true; errorKey = null; SourceFailureKind = null; Refresh();
+        BeginManualCommand(); errorKey = null; SourceFailureKind = null; Refresh();
         var stage = "source-consent";
         HouseholdProjectionReview? retained = null;
+        string? intendedDestination = null;
         try
         {
-            var access = environment.Capture(); var sourceScope = access.Scope; var selected = sourceReview; var actualIdentity = identity;
+            var access = CaptureManualAccess(); var sourceScope = access.Scope; var selected = sourceReview; var actualIdentity = identity;
+            var current = CaptureProfileTransitionOwner();
             var peer = new Vafadar.Zanance.Data.Sync.LocalSyncPeer(Address, Fingerprint);
             var catalogue = profiles.ReadWorkReview(); var currentId = profiles.Current.Id;
-            if (!await interaction.ConfirmAsync(translator["HouseholdSource_Title"], DescribeSource(selected) + "\n\n" + translator["HouseholdSource_Consent"],
-                translator["Sync_Confirm"], translator["Common_Cancel"])) return;
+            if (!await AwaitNativeAsync(() => interaction.ConfirmAsync(translator["HouseholdSource_Title"], DescribeSource(selected) + "\n\n" + translator["HouseholdSource_Consent"],
+                translator["Sync_Confirm"], translator["Common_Cancel"]))) return;
             var targets = catalogue.Profiles.Where(profile => profile.Id != currentId).ToArray();
             var labels = targets.Select((profile, index) => "«" + profiles.NameOf(profile) + "» · " + NativeDigits.Apply((index + 1).ToString(System.Globalization.CultureInfo.InvariantCulture))).ToArray();
             stage = "destination-choice";
-            var choice = await interaction.ChooseAsync(translator["HouseholdSource_Destination"], translator["Common_Cancel"],
-                new[] { translator["Household_NewProfile"] }.Concat(labels).ToArray());
+            var choice = await AwaitNativeAsync(() => interaction.ChooseAsync(translator["HouseholdSource_Destination"], translator["Common_Cancel"],
+                new[] { translator["Household_NewProfile"] }.Concat(labels).ToArray()));
             if (choice is null || choice == translator["Common_Cancel"]) return;
             access.Validate(); visible!.Token.ThrowIfCancellationRequested();
             LocalProfile destination;
             if (choice == translator["Household_NewProfile"])
             {
                 stage = "destination-name";
-                var name = await interaction.PromptAsync(translator["Household_NewProfile"], translator["Profile_NamePrompt"], translator["Common_Save"],
+                var name = await AwaitNativeAsync(() => interaction.PromptAsync(translator["Household_NewProfile"], translator["Profile_NamePrompt"], translator["Common_Save"],
                     translator["Common_Cancel"], initialValue: Name.Trim() == profiles.NameOf(profiles.Current) ? null : Name.Trim(),
-                    maxLength: ProfileService.MaxNameLength);
+                    maxLength: ProfileService.MaxNameLength));
                 if (string.IsNullOrWhiteSpace(name)) return;
                 stage = "native-profile-create";
-                access.Validate(); destination = await profiles.CreateReviewedAsync(catalogue, name, visible!.Token);
+                access.Validate(); primarySubmitted = true;
+                destination = await profiles.CreateReviewedAsync(catalogue, name, visible!.Token, access.Validate); RecordAcceptedOperation();
                 // Catalogue publication deliberately retires the previous network lifetime. Capture
                 // fresh unlocked access, but only for the same source generation before switching.
                 access = environment.Capture();
@@ -111,23 +114,40 @@ public sealed partial class HouseholdViewModel
             }
             access.Validate();
             stage = "native-profile-switch";
+            intendedDestination = destination.Id; primarySubmitted = true;
             var opened = await profiles.SwitchHouseholdSourceAsync(profiles.ReadWorkReview(), destination, sourceProjection, selected, () =>
             {
                 access.Validate(); sourceHandoff.Retain(destination.Id, peer, actualIdentity, selected);
                 sourceReview = null; retained = selected;
-            });
+            }, current);
             if (!opened) { if (retained is not null) { sourceHandoff.Finish(retained); retained = null; } return; }
+            RecordAcceptedOperation();
             host.ShowCurrentProfile();
         }
-        catch (OperationCanceledException) { if (retained is not null) sourceHandoff.Finish(retained); }
+        catch (OperationCanceledException)
+        {
+            // A committed target can outlive a cancelled native publication. Discard the
+            // exact handoff only when the original profile service proves it did not open.
+            if (retained is not null)
+            {
+                var didNotOpen = false;
+                try { didNotOpen = intendedDestination is not null && profiles.Current.Id != intendedDestination; }
+                catch (Exception error) when (error is not OutOfMemoryException) { }
+                if (didNotOpen) sourceHandoff.Finish(retained);
+            }
+            if (primarySubmitted && CanPublishManualFeedback) RetainFailure("Household_ActionFailed");
+        }
         catch (Exception error) when (error is not OutOfMemoryException)
         {
             // An accepted profile transition may have retired this page. Retain its exact target
             // handoff for a fresh unlocked visit rather than replacing keys or silently publishing.
-            errorKey = "Household_ActionFailed";
-            SourceFailureKind = stage + ":" + error.GetType().Name + ":" + error.HResult.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            if (CanPublishManualFeedback)
+            {
+                RetainFailure("Household_ActionFailed");
+                SourceFailureKind = stage + ":" + error.GetType().Name + ":" + error.HResult.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            }
         }
-        finally { IsBusy = false; Refresh(); }
+        finally { EndManualCommand(); }
     }
 
     [RelayCommand] private Task CompleteSourceCopyAsync() => RunAsync(async (access, ct) =>
@@ -135,7 +155,10 @@ public sealed partial class HouseholdViewModel
         var selected = pendingSource ?? throw new InvalidOperationException();
         if (transport is null || identity is null || sourceHandoff.Read(profiles.Current.Id, transport.Peer, identity) != selected ||
             !await ConfirmAsync("HouseholdSource_Consent")) return;
-        access.Validate(); var draft = await workspace.BeginOwnerAsync(transport, ct, selected); access.Validate();
+        access.Validate(); var draft = await AwaitPrimaryAsync(() => workspace.BeginOwnerAsync(transport, ct, selected)); access.Validate();
+        // A retained destination draft is not acknowledgement of the requested source copy.
+        // Keep that composite operation unknown until its original atomic apply returns.
+        acceptedOperation = false;
         var prior = await journal.ReadProjectionReceiptAsync(draft.Authority, ct);
         if (prior is { Completed: false } && prior.ReviewId != selected.Id)
         {
@@ -143,7 +166,7 @@ public sealed partial class HouseholdViewModel
             access.Validate(); await journal.ReplacePendingProjectionAsync(draft.Authority, prior.ReviewId, selected, ct);
         }
         else await journal.StageProjectionReviewAsync(draft.Authority, selected, ct);
-        await journal.ApplyProjectionAsync(draft.Authority, selected, ct); access.Validate();
+        await journal.ApplyProjectionAsync(draft.Authority, selected, ct); RecordAcceptedOperation(); access.Validate();
         sourceHandoff.Finish(selected); pendingSource = null; await ReadLocalAsync(ct);
     });
 

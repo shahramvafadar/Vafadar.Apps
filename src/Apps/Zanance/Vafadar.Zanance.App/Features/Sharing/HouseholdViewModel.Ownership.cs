@@ -34,16 +34,19 @@ public sealed partial class HouseholdViewModel
         if (!ApprovedDevices.Contains(item) || !item.CanTransfer || membership is null || state is null || ownership is not null) return;
         var captured = state; var version = membership.Version;
         var leave = translator["HouseholdOwnership_Leave"];
-        var disposition = await interaction.ChooseAsync(translator["HouseholdOwnership_Title"], translator["Common_Cancel"], leave,
-            Role(HouseholdRole.Viewer), Role(HouseholdRole.Editor));
+        var disposition = await AwaitNativeAsync(() => interaction.ChooseAsync(translator["HouseholdOwnership_Title"], translator["Common_Cancel"], leave,
+            Role(HouseholdRole.Viewer), Role(HouseholdRole.Editor)));
         if (disposition is null || disposition == translator["Common_Cancel"]) return;
+        if (disposition != leave && disposition != Role(HouseholdRole.Editor) && disposition != Role(HouseholdRole.Viewer))
+            throw new OperationCanceledException("The original household ownership choice retired.");
         var former = disposition == leave ? HouseholdFormerOwnerRole.Leave : disposition == Role(HouseholdRole.Editor) ? HouseholdFormerOwnerRole.Editor : HouseholdFormerOwnerRole.Viewer;
-        var confirmed = await interaction.PromptAsync(translator["HouseholdOwnership_Title"], translator["Household_DeviceFingerprintPrompt"],
-            translator["Sync_Confirm"], translator["Common_Cancel"], maxLength: 64);
-        if (confirmed is null || !await interaction.ConfirmAsync(translator["HouseholdOwnership_Title"],
-            item.Caption + "\n\n" + disposition + "\n\n" + translator["HouseholdOwnership_Confirm"], translator["Sync_Confirm"], translator["Common_Cancel"])) return;
-        access.Validate(); ownership = await workspace.BeginOwnershipAsync(transport!, captured.Authority, version, item.IdentityId,
-            item.Source.Id, ConfirmedFingerprint(confirmed), former, ct); await ReadLocalAsync(ct);
+        var confirmed = await AwaitNativeAsync(() => interaction.PromptAsync(translator["HouseholdOwnership_Title"], translator["Household_DeviceFingerprintPrompt"],
+            translator["Sync_Confirm"], translator["Common_Cancel"], maxLength: 64));
+        if (confirmed is null || !await AwaitNativeAsync(() => interaction.ConfirmAsync(translator["HouseholdOwnership_Title"],
+            item.Caption + "\n\n" + disposition + "\n\n" + translator["HouseholdOwnership_Confirm"], translator["Sync_Confirm"], translator["Common_Cancel"]))) return;
+        if (!ApprovedDevices.Contains(item)) throw new OperationCanceledException("The original household ownership target retired.");
+        access.Validate(); ownership = await AwaitPrimaryAsync(() => workspace.BeginOwnershipAsync(transport!, captured.Authority, version, item.IdentityId,
+            item.Source.Id, ConfirmedFingerprint(confirmed), former, ct)); await ReadLocalAsync(ct);
     });
     [RelayCommand] private Task ReadOwnershipAsync() => RunAsync(async (access, ct) =>
     {
@@ -53,22 +56,22 @@ public sealed partial class HouseholdViewModel
     [RelayCommand] private Task AdvanceOwnershipAsync() => RunAsync(async (access, ct) =>
     {
         var captured = state ?? throw new InvalidOperationException(); var original = ownership ?? throw new InvalidOperationException();
-        if (!IsOriginalOwnershipActor() || !await interaction.ConfirmAsync(translator["HouseholdOwnership_Title"],
-            OwnershipStatus + "\n\n" + translator["HouseholdOwnership_Confirm"], translator["Sync_Confirm"], translator["Common_Cancel"])) return;
-        access.Validate(); ownership = await workspace.AdvanceOwnershipAsync(transport!, captured.Authority, original.OperationId!.Value, original.Stage, ct);
+        if (!IsOriginalOwnershipActor() || !await AwaitNativeAsync(() => interaction.ConfirmAsync(translator["HouseholdOwnership_Title"],
+            OwnershipStatus + "\n\n" + translator["HouseholdOwnership_Confirm"], translator["Sync_Confirm"], translator["Common_Cancel"]))) return;
+        access.Validate(); ownership = await AwaitPrimaryAsync(() => workspace.AdvanceOwnershipAsync(transport!, captured.Authority, original.OperationId!.Value, original.Stage, ct));
         await ReadLocalAsync(ct);
     });
     [RelayCommand] private Task CancelOwnershipAsync() => RunAsync(async (access, ct) =>
     {
         var original = ownership ?? throw new InvalidOperationException();
         if (!await ConfirmAsync("HouseholdOwnership_CancelConfirm")) return;
-        access.Validate(); ownership = await workspace.CancelOwnershipAsync(transport!, state!.Authority, original.OperationId!.Value, ct); await ReadLocalAsync(ct);
+        access.Validate(); ownership = await AwaitPrimaryAsync(() => workspace.CancelOwnershipAsync(transport!, state!.Authority, original.OperationId!.Value, ct)); await ReadLocalAsync(ct);
     });
     [RelayCommand] private Task FinishOwnershipAsync() => RunAsync(async (access, ct) =>
     {
         var original = ownership ?? throw new InvalidOperationException();
         if (!await ConfirmAsync("HouseholdOwnership_FinishConfirm")) return;
-        access.Validate(); await workspace.FinishOwnershipAsync(transport!, state!.Authority, original.OperationId!.Value, ct); await ReadLocalAsync(ct);
+        access.Validate(); await AwaitPrimaryAsync(() => workspace.FinishOwnershipAsync(transport!, state!.Authority, original.OperationId!.Value, ct)); await ReadLocalAsync(ct);
     });
 
     /// <summary>Uses only the protected previously verified offer; refresh never infers another participant/device's consent.</summary>

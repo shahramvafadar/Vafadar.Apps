@@ -46,7 +46,14 @@ public sealed partial class HouseholdJournal
     /// <summary>Returns an exact already verified historical checkpoint; a server-supplied version index never selects an untrusted root.</summary>
     public async Task<HouseholdVerifiedMembership> ReadMembershipVersionAsync(HouseholdJournalAuthority authority, long version, CancellationToken ct = default)
     {
-        await using var context = await OpenAsync(ct); var binding = await RequireBindingAsync(context, authority, ct);
+        await using var context = await OpenAsync(ct);
+        return await ReadMembershipVersionInContextAsync(context, authority, version, ct);
+    }
+
+    /// <summary>Uses the caller's original protected transaction while preserving this reader's complete validation.</summary>
+    private async Task<HouseholdVerifiedMembership> ReadMembershipVersionInContextAsync(JournalContext context,HouseholdJournalAuthority authority, long version, CancellationToken ct = default)
+    {
+         var binding = await RequireBindingAsync(context, authority, ct);
         using var device = await ReadIdentityAsync(context.Db, "device", ct); var membership = await ReadMembershipAsync(context.Db, binding, device, ct);
         if (!membership.ByVersion.TryGetValue(version, out var result)) throw Refusal(); context.Check(); return result;
     }
@@ -54,7 +61,14 @@ public sealed partial class HouseholdJournal
     /// <summary>Reads only the fixed original public pending handoff, never private root/epoch frames.</summary>
     public async Task<HouseholdOwnershipObservation?> ReadOwnershipAsync(HouseholdJournalAuthority authority, CancellationToken ct = default)
     {
-        await using var context = await OpenAsync(ct); _ = await RequireBindingAsync(context, authority, ct);
+        await using var context = await OpenAsync(ct);
+        return await ReadOwnershipInContextAsync(context, authority, ct);
+    }
+
+    /// <summary>Uses the caller's original protected transaction while preserving this reader's complete validation.</summary>
+    private async Task<HouseholdOwnershipObservation?> ReadOwnershipInContextAsync(JournalContext context,HouseholdJournalAuthority authority, CancellationToken ct = default)
+    {
+         _ = await RequireBindingAsync(context, authority, ct);
         var row = await context.Db.Set<HouseholdLocalOwnership>().AsNoTracking().SingleOrDefaultAsync(ct); if (row is null) return null;
         if (Encoding.UTF8.GetByteCount(row.BodyJson) > HouseholdOwnershipProtocol.MaximumBytes || Digest(row.BodyJson) != row.Digest) throw Refusal();
         var result = StrictJsonPayload.Deserialize(Encoding.UTF8.GetBytes(row.BodyJson), HouseholdMetadataJsonContext.Default.HouseholdOwnershipObservation, HouseholdOwnershipProtocol.MaximumBytes);

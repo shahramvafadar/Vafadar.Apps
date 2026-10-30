@@ -57,13 +57,13 @@ public sealed partial class HouseholdViewModel
         var reviewed = await workspace.ReviewDeletionCheckpointAsync(transport!, captured.Authority, ct);
         if (!await ConfirmAsync("HouseholdLifecycle_DeleteConfirm")) return;
         access.Validate();
-        try { deletion = await workspace.BeginDeletionAsync(transport!, captured.Authority, reviewed, ct); }
+        try { deletion = await AwaitPrimaryAsync(() => workspace.BeginDeletionAsync(transport!, captured.Authority, reviewed, ct)); }
         finally { deletion = await journal.ReadDeletionAsync(captured.Authority, ct); }
         await ReadLocalAsync(ct);
     });
 
     [RelayCommand] private Task ResumeRemoteDeletionAsync() => RunAsync(async (_, ct) =>
-    { deletion = await workspace.ResumeDeletionAsync(transport!, state!.Authority, ct); await ReadLocalAsync(ct); });
+    { deletion = await AwaitPrimaryAsync(() => workspace.ResumeDeletionAsync(transport!, state!.Authority, ct)); await ReadLocalAsync(ct); });
 
     [RelayCommand] private Task ReviewRemoteDeletionAsync() => RunAsync(async (_, ct) =>
     { deletion = await workspace.ReviewDeletionAsync(transport!, state!.Authority, ct); await ReadLocalAsync(ct); });
@@ -74,7 +74,7 @@ public sealed partial class HouseholdViewModel
         var anchor = await journal.ReadMembershipVersionAsync(state!.Authority, original.AnchorVersion, ct);
         var declaration = Vafadar.Cryptography.StandardJoseSignatures.VerifyJson(original.Request.SignedDeclaration, anchor.Root, HouseholdLifecycleProtocol.DeleteType,
             HouseholdLifecycleProtocol.DeclarationBytes, HouseholdMetadataJsonContext.Default.HouseholdDeleteStatement);
-        access.Validate(); await workspace.FinishRejectedDeletionAsync(transport!, state.Authority, declaration.OperationId, ct); await ReadLocalAsync(ct);
+        access.Validate(); await AwaitPrimaryAsync(() => workspace.FinishRejectedDeletionAsync(transport!, state.Authority, declaration.OperationId, ct)); await ReadLocalAsync(ct);
     });
 
     [RelayCommand] private Task ReadAuditAsync() => ReadAuditPageAsync(false);

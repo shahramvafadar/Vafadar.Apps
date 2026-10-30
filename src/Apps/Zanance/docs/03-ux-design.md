@@ -3327,3 +3327,15 @@ physical adoption, fullDB/key/security/stability/speed/A11Y/iOS/Store/release re
 D659 sole exact-head response was completed/success for all4workflows and its schedule
 deleted; no second query. D660 receives one delayed exact-head CI check after push.
 [D-660 evidence](quality/original-personal-sync-workspace.md)
+
+
+### D-661 household ownership and accepted first-run completion
+
+Keep a pending command independent of mutable busy feedback. Actual page/root and
+unchanged native disclosure/input tuples own prompts and follow-through. Covered errors
+retain literal drafts and expose read-only Retry; appearance must not silently retry a
+visible error. A known protected first-run commit is shown before fallible Changed/root
+publication. Reloading the committed fact enables root-only Finish without a second
+confirmation or Save. Eighteen original modal contexts passed XML/bounds/source guards;
+the Activity-decor probe is disqualified, not a full glyph/ellipsis measurement.
+[Evidence](quality/original-household-workspace.md).

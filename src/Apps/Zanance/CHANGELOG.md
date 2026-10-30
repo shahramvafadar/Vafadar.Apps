@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-661: keep household sources, confirmations and file/profile continuations on their original page and file; retain known accepted changes through follow-up failures and finish first-run without repeating a committed save.
+
 - D-660: keep personal synchronization reads, native confirmations, session responses and attachment previews on their original file/page/root; preserve literal inputs and known accepted results through follow-up failures without repeating successful operations.
 
 - D-659: bind all six original active-resource kinds to coherent source reads and current native consent; preserve committed choices and guard their actual return to the parent page.

@@ -8238,3 +8238,33 @@ physical adoption, fullDB/key/security/stability/speed/A11Y/iOS/Store/release re
 D659 sole exact-head response was completed/success for all4workflows and its schedule
 deleted; no second query. D660 receives one delayed exact-head CI check after push.
 [D-660 evidence](quality/original-personal-sync-workspace.md)
+
+
+### D-661 - Original household workspace
+
+Original household connection/status and verified local metadata now use one captured
+original-file worker transaction. Page/root/disclosure/literal-input/session/row/native
+and file continuations retain independent ownership; returned primary acknowledgements
+precede fallible follow-through, while unknown outcomes never receive a fabricated
+receipt. Covered Retry reads the current original source without replaying accepted work.
+Protected first-run completion changes only the oldest settings completion flag and its
+UpdatedAt; a committed flag makes later Finish root-only, with no second Save or consent.
+
+26 distinct selected cases (20 new, six affected existing), current strict Windows and
+full signed offline Android384AOT/408ELF/1608staticLOAD pass. Actual original API/protected
+Android owner setup and one accepted first-run commit with a subsequent Changed failure
+passed without financial preparation. Same PID3873 retained 18 en/fa/de/Light/Dark/
+360/412.190476/680dp error contexts, full source/metadata and one failure; XML text/native
+bounds qualify these contexts, not the disqualified Activity-decor probe or glyph metrics.
+Original Reload and root-only Finish reached actual Home with ledger/accounts empty;
+20 source collections remained exact, normal foreground sync changed only LastSuccessAt.
+OS/display/boot restored; fresh UID/41hash-matchedXML/AVD/API host/database/volume/two
+networks retired, five original containers exact. Five standard Cleans passed; eight
+supplementary scopes were rejected before process creation and remain frozen without
+retry/subset/alternate/move/escalation/reuse. Used packages/evidence remain. No phone or
+D607 command; three deadlines/consumed reboot/unread source protected. D660 sole CI result
+is unknown after a preserved host marker/persistence failure, consumed and never queried
+again. D661 receives one delayed exact-head check. WholeDB/key/security/stability/speed/
+A11Y/iOS/genuine identity/provider/Store/release remain separate; overall goal active.
+
+[Evidence](quality/original-household-workspace.md)

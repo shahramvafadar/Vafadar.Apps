@@ -5272,3 +5272,14 @@ physical adoption, fullDB/key/security/stability/speed/A11Y/iOS/Store/release re
 D659 sole exact-head response was completed/success for all4workflows and its schedule
 deleted; no second query. D660 receives one delayed exact-head CI check after push.
 [D-660 evidence](quality/original-personal-sync-workspace.md)
+
+
+### D-661 bounded household acceptance
+
+Original protected empty-source household first-run, accepted follow-through/Retry/root
+return, 26 selected cases, current strict Windows/full offline APK and 18 normal-font
+native XML/bounds contexts pass. This does not close full financial household workflows,
+physical adoption, database/key recovery, security, stability, speed, A11Y, iOS, genuine
+identity/provider, Store or release. D607 remains untouched and pending its original
+three deadlines. D660 CI status remains unknown and consumed; no retry is authorized.
+[Evidence and cleanup limits](quality/original-household-workspace.md).

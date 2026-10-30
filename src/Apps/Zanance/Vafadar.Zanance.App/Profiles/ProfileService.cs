@@ -184,12 +184,12 @@ public sealed partial class ProfileService(
     /// <summary>Rechecks a selected household source under drained ownership immediately before opening its separate target.</summary>
     public Task<bool> SwitchHouseholdSourceAsync(ProfileCatalogueReview review, LocalProfile profile,
         Vafadar.Zanance.Data.Sharing.HouseholdProjectionStore source,
-        Vafadar.Zanance.Data.Sharing.HouseholdProjectionReview selected, Action retainConfirmedSelection) =>
+        Vafadar.Zanance.Data.Sharing.HouseholdProjectionReview selected, Action retainConfirmedSelection, Action? validateOriginal = null) =>
         SwitchCoreAsync(review, profile, async owner =>
         {
             await source.RequireCurrentForMaintenanceAsync(selected, owner);
             retainConfirmedSelection();
-        });
+        }, validateOriginal);
 
     private async Task<bool> SwitchCoreAsync(ProfileCatalogueReview review, LocalProfile profile,
         Func<DatabaseAccessGate.ExclusiveLease, Task>? beforeOpen, Action? validateOriginal = null)

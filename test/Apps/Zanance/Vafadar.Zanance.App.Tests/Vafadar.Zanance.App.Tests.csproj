@@ -66,6 +66,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Rates/IMarketRuntime.cs" Link="Application/IMarketRuntime.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Rates/MarketReferenceViewModel.cs" Link="Application/MarketReferenceViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sharing/HouseholdViewModel.cs" Link="Application/HouseholdViewModel.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sharing/HouseholdViewModel.CommandLifetime.cs" Link="Application/HouseholdViewModel.CommandLifetime.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sharing/HouseholdViewModel.Ownership.cs" Link="Application/HouseholdViewModel.Ownership.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sharing/HouseholdViewModel.Lifecycle.cs" Link="Application/HouseholdViewModel.Lifecycle.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sharing/HouseholdViewModel.Recovery.cs" Link="Application/HouseholdViewModel.Recovery.cs" />

@@ -42,7 +42,14 @@ public sealed partial class HouseholdJournal
     /// <summary>Returns only the current locally independently verified original membership, never a service directory hint.</summary>
     public async Task<HouseholdVerifiedMembership> ReadCurrentMembershipAsync(HouseholdJournalAuthority authority, CancellationToken ct = default)
     {
-        await using var context = await OpenAsync(ct); var binding = await RequireBindingAsync(context, authority, ct);
+        await using var context = await OpenAsync(ct);
+        return await ReadCurrentMembershipInContextAsync(context, authority, ct);
+    }
+
+    /// <summary>Uses the caller's original protected transaction while preserving this reader's complete validation.</summary>
+    private async Task<HouseholdVerifiedMembership> ReadCurrentMembershipInContextAsync(JournalContext context,HouseholdJournalAuthority authority, CancellationToken ct = default)
+    {
+         var binding = await RequireBindingAsync(context, authority, ct);
         using var device = await ReadIdentityAsync(context.Db, "device", ct);
         var state = await ReadMembershipAsync(context.Db, binding, device, ct); context.Check(); return state.Current;
     }

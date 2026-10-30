@@ -96,7 +96,14 @@ public sealed partial class HouseholdJournal
     /// <summary>Returns only a durably committed original source-copy outcome during cold setup continuation; missing receipt never authorizes filling existing finance.</summary>
     public async Task<HouseholdProjectionReceipt?> ReadProjectionReceiptAsync(HouseholdJournalAuthority authority, CancellationToken ct = default)
     {
-        await using var context = await OpenAsync(ct); var binding = await RequireBindingAsync(context, authority, ct);
+        await using var context = await OpenAsync(ct);
+        return await ReadProjectionReceiptInContextAsync(context, authority, ct);
+    }
+
+    /// <summary>Uses the caller's original protected transaction while preserving this reader's complete validation.</summary>
+    private async Task<HouseholdProjectionReceipt?> ReadProjectionReceiptInContextAsync(JournalContext context,HouseholdJournalAuthority authority, CancellationToken ct = default)
+    {
+         var binding = await RequireBindingAsync(context, authority, ct);
         var result = ProjectionReceipt(binding);
         if (result is { Completed: true } && binding.MembershipVersion == 0 && binding.SpaceId == Guid.Empty)
         {

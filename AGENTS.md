@@ -3934,3 +3934,18 @@ D-581: build-source admission must use explicit rejection that survives Python `
 and `PYTHONOPTIMIZE`. Never rely on removable `assert` for manifest, license,
 archive, replacement, path or retained compilation-cache verification. Preserve
 refused inputs and verify the actual preparation entry point under optimization.
+
+
+## Original household workspace ownership (D-661)
+
+Capture the original local source before worker dispatch and retain one joined transaction.
+Anonymous connection/status reads do not grant private access; verified private reads still
+require the original protected factory, peer/identity and historical signature validation.
+Keep native page/root/disclosure/literal-input ownership independent of mutable busy state.
+Do not auto-retry a visible covered error on appearance. Record returned acknowledgements
+before fallible follow-through and never convert unknown outcomes into known acceptance.
+Protected first-run completion changes only the original oldest settings completion flag
+and UpdatedAt; after a read proves that commit, Finish returns the original root without
+another Save/consent. Preserve encrypted recovery-file handoffs and original financial
+writers. An Activity-decor probe cannot qualify another modal window: retain its failure
+and distinguish actual modal XML/bounds evidence from glyph/ellipsis or general A11Y proof.

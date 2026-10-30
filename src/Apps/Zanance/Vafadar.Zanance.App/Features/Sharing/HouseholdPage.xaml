@@ -15,9 +15,9 @@
                 </Grid>
                 <Label Text="{v:Translate Household_Intro}" Style="{StaticResource Secondary}" />
                 <Label Text="{v:Translate Sync_EditionUnavailable}" IsVisible="{Binding Available, Converter={StaticResource InvertedBoolConverter}}" />
-                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+                <ActivityIndicator IsRunning="{Binding HasPendingOperation}" IsVisible="{Binding HasPendingOperation}" />
                 <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
-                <p:WrappingAction Text="{v:Translate Sync_Reload}" Command="{Binding ReloadCommand}" IsVisible="{Binding Available}" IsEnabled="{Binding IsNotBusy}" />
+                <p:WrappingAction Text="{v:Translate Sync_Reload}" Command="{Binding ReloadCommand}" IsVisible="{Binding Available}" IsEnabled="{Binding CanRead}" />
                 <VerticalStackLayout Spacing="12" IsVisible="{Binding IsReady}" IsEnabled="{Binding CanInteract}">
                     <p:WrappingAction Text="{v:Translate HouseholdCost_Title}" Command="{Binding CostsCommand}" IsVisible="{Binding HasMembership}" />
                     <p:WrappingAction Text="{v:Translate Household_Review_Title}" Command="{Binding ReviewChangesCommand}" IsVisible="{Binding HasMembership}" />

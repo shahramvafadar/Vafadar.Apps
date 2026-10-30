@@ -62,7 +62,14 @@ public sealed partial class HouseholdJournal
     /// <summary>Reads a presentation hint without retaining a native connection, private key or reusable write permission.</summary>
     public async Task<HouseholdAccessSnapshot> ReadAccessAsync(HouseholdJournalAuthority authority, CancellationToken ct = default)
     {
-        await using var context = await OpenAsync(ct); var binding = await RequireBindingAsync(context, authority, ct);
+        await using var context = await OpenAsync(ct);
+        return await ReadAccessInContextAsync(context, authority, ct);
+    }
+
+    /// <summary>Uses the caller's original protected transaction while preserving this reader's complete validation.</summary>
+    private async Task<HouseholdAccessSnapshot> ReadAccessInContextAsync(JournalContext context,HouseholdJournalAuthority authority, CancellationToken ct = default)
+    {
+         var binding = await RequireBindingAsync(context, authority, ct);
         HouseholdRole? role = null;
         if (binding.MembershipVersion != 0)
         {

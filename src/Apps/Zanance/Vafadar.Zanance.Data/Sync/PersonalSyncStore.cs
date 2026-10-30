@@ -181,8 +181,10 @@ public sealed partial class PersonalSyncStore(IDbContextFactory<ZananceDbContext
         access.DemandFeature(access.Context?.Scope.Kind == EntitlementScopeKind.SharedSpace
             ? CommercialFeature.SharedSpaceSync : CommercialFeature.PersonalSync); return access;
     }
+    /// <summary>Preserves original connection-read authority when the household reader shares its actual source transaction.</summary>
+    internal CommercialFileAccess CaptureWorkspaceAccess(ZananceDbContext db) => Access(db);
     /// <summary>Reads the original binding through the caller's one actual source transaction.</summary>
-    private static async Task<PersonalSyncReview> ReadConnectionInContextAsync(ZananceDbContext db, CancellationToken ct)
+    internal static async Task<PersonalSyncReview> ReadConnectionInContextAsync(ZananceDbContext db, CancellationToken ct)
     {
         var binding = await db.Set<SyncBindingRow>().AsNoTracking().SingleOrDefaultAsync(ct);
         return new PersonalSyncReview(Generation(db), binding?.ProfileId, binding?.IdentityId, binding?.PeerKey, binding?.DeviceId,
@@ -190,7 +192,7 @@ public sealed partial class PersonalSyncStore(IDbContextFactory<ZananceDbContext
     }
 
     /// <summary>Reads status and all pending counts from the same original connection snapshot.</summary>
-    private static async Task<PersonalSyncStatus> ReadStatusInContextAsync(ZananceDbContext db, CancellationToken ct)
+    internal static async Task<PersonalSyncStatus> ReadStatusInContextAsync(ZananceDbContext db, CancellationToken ct)
     {
         var binding = await db.Set<SyncBindingRow>().AsNoTracking().SingleOrDefaultAsync(ct);
         var changes = await db.Set<SyncOutboxRow>().LongCountAsync(ct);
