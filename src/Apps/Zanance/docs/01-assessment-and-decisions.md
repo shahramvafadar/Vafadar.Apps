@@ -12026,3 +12026,24 @@ keeps failures, receipt and acceptance limits. General discovery/cloud-identity/
 other sensitive-page work remain separate. Phone/D607/three deadlines/consumed reboot/unread
 source are untouched; physical/provider/DBkey/security/ANR/speed/A11Y/iOS/Store/release gates
 remain open. Overall delivery remains active.
+
+### D-656 - Correct original CI readback and account recovery
+
+The actual failed test job was reproduced on current source: 26 failures in 52
+affected original cases. The correction retains the actual original committed CSV
+writer's opaque readonly receipt for batch publication, preserves interpretation
+feedback, and makes explicit stale-account review read the complete original source
+while retaining raw input and account/default/currency guards. Historical assertions
+now match original atomic account/default writes, owned route origins, quiet retired
+callbacks and inline read covers; no source comparison or writer conflict policy is weakened.
+The 53 distinct selected existing cases and eight new negative/receipt cases passed
+in focused continuations. Strict Windows and complete offline Android packages passed.
+Original native PID 4118 kept the rejected account draft through full explicit review,
+then one distinct CSV import changed only Entries/ImportLinks among 20 source sets,
+published one actual batch and produced no false follow-through failure. Fresh UID/AVD
+and 29 hash-matched XML files retired with exact OS preservation. Supplementary cleanup
+of 11 targets was rejected before process creation; 3715 files/947761224 logical bytes
+remain and must not be retried, subdivided, moved, escalated, reused or deleted by another method.
+Phone/D-607 and all three deadlines remain untouched. Physical adoption, general backup
+discovery, sensitive-page work and broader release gates remain separate; pushed-head CI
+has one delayed check, not an assumed pass. [D-656 evidence](quality/original-ci-readback-correction.md)

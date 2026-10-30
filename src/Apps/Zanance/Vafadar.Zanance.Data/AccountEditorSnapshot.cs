@@ -10,6 +10,9 @@ using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.Data;
 
+/// <summary>The unchanged original account input/source comparison refused; explicit work review is required.</summary>
+public sealed class AccountEditorSourceChangedException() : InvalidOperationException("The original account editor source changed; review it again.");
+
 /// <summary>Captures the actual parent publication's file before the first native account-editor read can await.</summary>
 public interface IAccountEditorOrigin
 {
@@ -92,7 +95,7 @@ public sealed class AccountEditorSnapshot
         RequireFile(db);
         if (_stamp != Capture(Inputs) || _defaultStamp is not null
             && _defaultStamp != JsonSerializer.Serialize(Settings, AccountEditorJson.Default.ZananceSettings))
-            throw new InvalidOperationException("The original account editor input was changed in memory.");
+            throw new AccountEditorSourceChangedException();
     }
 
     /// <summary>Checks original file/access without comparing metadata changed by this already accepted account write.</summary>
@@ -101,7 +104,7 @@ public sealed class AccountEditorSnapshot
     /// <summary>Requires every original persisted field and currency constraint to remain unchanged.</summary>
     internal void Compare(AccountEditorInputs fresh)
     {
-        if (_stamp != Capture(fresh)) throw new InvalidOperationException("The original account editor source changed.");
+        if (_stamp != Capture(fresh)) throw new AccountEditorSourceChangedException();
     }
 
     private static string Capture(AccountEditorInputs inputs) =>

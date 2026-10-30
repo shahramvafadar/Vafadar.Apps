@@ -6,6 +6,7 @@ using Vafadar.Zanance.Core.Holdings;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Settings;
 using Vafadar.Zanance.Data.Commerce;
+using Vafadar.Zanance.Data.Importing;
 
 namespace Vafadar.Zanance.Data;
 
@@ -39,6 +40,25 @@ public sealed class DataFileWorkSnapshot
     {
         EnsureCurrent(); if (!Batches.Any(item => item.BatchId == batch)) throw new InvalidOperationException("The original CSV batch retired.");
         return new(Path, access, batch, journals.GetValueOrDefault(batch));
+    }
+}
+
+/// <summary>Opaque readonly batch-publication receipt from one actual committed original import, never a write permission.</summary>
+public sealed class DataFileImportReceipt
+{
+    private readonly string _path;
+    private readonly CommercialFileAccess _access;
+    private readonly Action? _validateNative;
+    /// <summary>Gets the actual committed original batch identity.</summary>
+    internal Guid Batch { get; }
+    /// <summary>Captures actual writer facts before commit; only that writer can activate the surrounding receipt.</summary>
+    internal DataFileImportReceipt(string path, CommercialFileAccess access, Guid batch, Action? validateNative)
+    { _path = path; _access = access; Batch = batch; _validateNative = validateNative; }
+    /// <summary>Rechecks the exact original file, native owner and actual writer's still-current immutable rights.</summary>
+    internal CommercialFileAccess RequireOriginal(string path)
+    {
+        if (_path != path) throw new InvalidOperationException("The committed CSV readback belongs to another file.");
+        _validateNative?.Invoke(); _access.EnsureSnapshotCurrent(); return _access;
     }
 }
 
@@ -101,15 +121,19 @@ public sealed partial class ZananceStore
 {
     /// <summary>Captures original CSV metadata before optional initial preference creation, then reads its full workspace coherently.</summary>
     public async Task<DataFileWorkSnapshot> ReadDataFileWorkAsync(CancellationToken ct = default, Func<string, bool>? acceptsFile = null,
-        DataFileWorkSnapshot? previous = null)
+        DataFileWorkSnapshot? previous = null, DataFileImportReceipt? acceptedImport = null)
     {
-        string? initialPath = previous?.Path; Guid? settingsId = previous?.SettingsId; previous?.EnsureCurrent();
+        if (acceptedImport is not null && previous is null)
+            throw new InvalidOperationException("Committed CSV readback requires its original workspace identity.");
+        string? initialPath = previous?.Path; Guid? settingsId = previous?.SettingsId;
+        var acceptedAccess = acceptedImport?.RequireOriginal(previous!.Path);
+        if (acceptedImport is null) previous?.EnsureCurrent();
         if (previous is null)
             await GetSettingsCoreAsync(null, ct, (db, settings) => { initialPath = DatabaseFileIdentity.ConfiguredPath(db); settingsId = settings.Id; }, acceptsFile);
         if (initialPath is null || settingsId is null) throw new InvalidOperationException("The original CSV settings source was not captured.");
         await using var db = await contextFactory.CreateDbContextAsync(ct); var path = DatabaseFileIdentity.ConfiguredPath(db);
         if (path != initialPath || acceptsFile?.Invoke(path) == false) throw new InvalidOperationException("The original CSV source file changed.");
-        var access = new CommercialFileAccess(commercialAccess, path); access.EnsureSnapshotCurrent();
+        var access = acceptedAccess ?? new CommercialFileAccess(commercialAccess, path); access.EnsureSnapshotCurrent();
         return await Task.Run(async () =>
         {
             await db.Database.OpenConnectionAsync(ct);
@@ -121,6 +145,8 @@ public sealed partial class ZananceStore
                 .Select(item => new DataFileAccount(item.Id, item.Name, item.CurrencyCode)).ToArrayAsync(ct);
             var rows = await db.Entries.AsNoTracking().Where(item => item.ImportBatchId != null).ToListAsync(ct);
             var journals = await ReadImportLinksAsync(db, ct); var batches = ProjectImportBatches(rows, journals);
+            if (acceptedImport is not null && !batches.Any(item => item.BatchId == acceptedImport.Batch))
+                throw new InvalidOperationException("The actual committed CSV batch is no longer available for readback.");
             var holdings = settings.Shows(Feature.HoldingsExport) && await db.AssetTypes.AnyAsync(ct);
             ct.ThrowIfCancellationRequested(); access.EnsureSnapshotCurrent();
             if (acceptsFile?.Invoke(path) == false) throw new InvalidOperationException("The original CSV source retired.");

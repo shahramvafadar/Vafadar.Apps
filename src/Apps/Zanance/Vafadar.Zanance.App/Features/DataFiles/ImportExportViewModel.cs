@@ -321,6 +321,8 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         using var work = BeginWork(); var frame = work.Frame;
         try { if (_holdingsContent is not null) await PreviewHoldingsAsync(frame); else await ReadPreviewAsync(frame); }
         catch (Exception error) when (error is not OutOfMemoryException && !frame.IsCurrent) { }
+        catch (ImportReviewChangedException) when (frame.IsCurrent)
+        { _previewStale = true; CanImport = false; ImportError = _translator["Import_InterpretationChanged"]; }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
             _previewStale = true; CanImport = false; ImportError = _translator["Import_ReviewFailed"];
@@ -557,7 +559,7 @@ public sealed partial class ImportExportViewModel : ViewModelBase
 
             CompleteImport(result.Imported, result.Skipped);
             if (!frame.IsCurrent) return;
-            try { await RefreshBatchSourceAsync(frame); }
+            try { await RefreshBatchSourceAsync(frame, review.AcceptedWork); }
             catch (Exception ex) when (ex is not OutOfMemoryException) { publication ??= ex; }
             if (publication is not null)
             { ImportError = _translator["Import_SavedFollowUpFailed"]; await _interaction.ShowFailureAsync(publication); }

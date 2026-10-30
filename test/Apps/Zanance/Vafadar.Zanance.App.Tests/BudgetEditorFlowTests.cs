@@ -166,7 +166,7 @@ public sealed class BudgetEditorFlowTests
         var source = new Access { Fail = true }; var store = new ZananceStore(factory, f.Time, source);
         var vm = new BudgetEditorViewModel(store, f.Translator, f.Localization, f.Platform); var before = await RowsAsync(f);
         await vm.EnsureLoadedAsync(); Assert.True(vm.IsCovered); Assert.False(vm.CanSave); Assert.False(vm.IsLoading);
-        Assert.NotNull(vm.Error); Assert.Single(f.Platform.Failures); Assert.Equal(before, await RowsAsync(f));
+        Assert.NotNull(vm.Error); Assert.Empty(f.Platform.Failures); Assert.Equal(before, await RowsAsync(f));
         source.Fail = false; await vm.ReloadCommand.ExecuteAsync(null); Assert.True(vm.IsReady); Assert.True(vm.CanSave);
         Assert.Equal(before, await RowsAsync(f));
     }
@@ -346,7 +346,7 @@ public sealed class BudgetEditorFlowTests
     {
         using var f = new FlowFixture(); var s = await SeedAsync(f); var before = await RowsAsync(f);
         await s.Editor.ApplyQueryAsync(new Dictionary<string, object> { ["id"] = s.Budget.Id, ["scope"] = new string('a', 64) });
-        Assert.True(s.Editor.IsCovered); Assert.False(s.Editor.CanSave); Assert.Single(f.Platform.Failures);
+        Assert.True(s.Editor.IsCovered); Assert.False(s.Editor.CanSave); Assert.NotNull(s.Editor.Error); Assert.Empty(f.Platform.Failures);
         Assert.Equal(before, await RowsAsync(f));
     }
 

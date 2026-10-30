@@ -225,16 +225,21 @@ public sealed class AccountMoneyContextTests
         var vm = new AccountEditorViewModel(store, new PlanStore(factory, store, access), first.Translator, first.Localization, first.Time, first.Platform);
         await vm.ApplyQueryAsync(new Dictionary<string, object>());
         vm.Form.Name = "Original accepted account"; vm.Form.OpeningText = "12.34"; vm.IsDefault = true;
+        Guid? defaultAtOriginalNotification = null;
         store.Changed += (_, _) =>
         {
+            using var original = first.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContext();
+            defaultAtOriginalNotification = original.Settings.AsNoTracking().Single().DefaultAccountId;
             if (change == "file") factory.Current = other.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>();
             else vm.SetPresentationActive(false);
         };
         await vm.SaveCommand.ExecuteAsync(null);
-        Assert.Equal(1234, Assert.Single(await first.Store.GetAccountsAsync(cancellationToken: Ct)).OpeningBalance);
+        var saved = Assert.Single(await first.Store.GetAccountsAsync(cancellationToken: Ct)); Assert.Equal(1234, saved.OpeningBalance);
+        Assert.Equal(saved.Id, defaultAtOriginalNotification);
         Assert.Equal(otherBefore, await GoalChooserFlowTests.SnapshotAsync(other));
-        Assert.Null((await first.Store.GetSettingsAsync(Ct)).DefaultAccountId);
-        Assert.Equal(first.Translator["Account_SavedNeedsReview"], vm.SaveError); Assert.False(vm.CanSave);
+        Assert.Equal(saved.Id, (await first.Store.GetSettingsAsync(Ct)).DefaultAccountId);
+        Assert.Equal(change == "file" ? first.Translator["Account_SavedNeedsReview"] : null, vm.SaveError);
+        Assert.False(vm.CanSave); Assert.Equal(first.Translator["Common_Close"], vm.CloseText); Assert.Empty(first.Platform.Routes);
         Assert.Empty(await first.Store.GetEntriesAsync(cancellationToken: Ct));
     }
 

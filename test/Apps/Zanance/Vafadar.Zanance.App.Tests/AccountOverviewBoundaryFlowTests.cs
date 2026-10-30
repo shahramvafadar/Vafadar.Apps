@@ -139,7 +139,12 @@ public sealed class AccountOverviewBoundaryFlowTests
         using var f = new FlowFixture(); await AccountOverviewFlowTests.SeedAsync(f); var vm = AccountOverviewFlowTests.Create(f);
         await vm.LoadAsync(); await vm.AddCommand.ExecuteAsync(null); await vm.AddDebtCommand.ExecuteAsync(null); await vm.OpenHoldingsCommand.ExecuteAsync(null);
         Assert.Equal(["account", "account", "holdings"], f.Platform.Routes.Select(route => route.Route));
-        Assert.Null(f.Platform.Routes[0].Parameters); Assert.Equal(true, f.Platform.Routes[1].Parameters!["debt"]);
+        var original = Assert.IsType<AccountEditorOrigin>(f.Platform.Routes[0].Parameters!["accountEditorOrigin"]);
+        var debt = Assert.IsType<AccountEditorOrigin>(f.Platform.Routes[1].Parameters!["accountEditorOrigin"]);
+        Assert.Equal(f.Directory.Combine("zanance.db"), original.DatabasePath); Assert.Equal(original.DatabasePath, debt.DatabasePath);
+        original.EnsureCurrent(); debt.EnsureCurrent();
+        Assert.Single(f.Platform.Routes[0].Parameters!); Assert.Equal(2, f.Platform.Routes[1].Parameters!.Count);
+        Assert.Equal(true, f.Platform.Routes[1].Parameters!["debt"]);
         Assert.Null(f.Platform.Routes[2].Parameters); Assert.Single(await f.Store.GetEntriesAsync(cancellationToken: Ct));
     }
 

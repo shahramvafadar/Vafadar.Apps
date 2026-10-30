@@ -169,7 +169,8 @@ public sealed class GoalBudgetMoneyContextTests
             if (budget) await limit.SaveCommand.ExecuteAsync(null); else await goal.SaveCommand.ExecuteAsync(null);
             Assert.True(reached); Assert.Empty(await f.Store.GetBudgetsAsync(Ct));
             Assert.Empty(await f.Services.GetRequiredService<GoalStore>().GetGoalsAsync(Ct));
-            if (!budget && mutation == "owner") Assert.Empty(f.Platform.Failures);
+            if (mutation == "owner")
+            { Assert.Empty(f.Platform.Failures); Assert.False(budget ? limit.CanSave : goal.CanSave); }
             else Assert.Single(f.Platform.Failures);
             Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
         }
@@ -288,7 +289,9 @@ public sealed class GoalBudgetMoneyContextTests
             try { await vm.ApplyCutCommand.ExecuteAsync(null); }
             finally { f.Store.Changed -= failure; }
             Assert.Equal(change == "notification" ? 3766 : 5000, Assert.Single((await f.Store.GetBudgetsAsync(Ct)).Single().CategoryLimits).Limit);
-            Assert.Single(f.Platform.Failures); Assert.Empty(await f.Services.GetRequiredService<GoalStore>().GetGoalsAsync(Ct));
+            if (change == "owner") { Assert.Empty(f.Platform.Failures); Assert.False(vm.CanApplyCut); }
+            else Assert.Single(f.Platform.Failures);
+            Assert.Empty(await f.Services.GetRequiredService<GoalStore>().GetGoalsAsync(Ct));
             Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
             if (change == "notification")
             {

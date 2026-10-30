@@ -146,7 +146,10 @@ public sealed partial class ZananceStore
 
         // D-653: a native frame can retire during either SQL save; refuse before the atomic commit.
         review?.EnsureCurrent();
+        var acceptedRead = review?.PrepareAcceptedRead(db, write.OriginalReadAccess, batchId);
         await write.CommitAsync(cancellationToken);
+        // The original receipt carries only this actual writer's readonly batch publication. It cannot revive old rights.
+        if (acceptedRead is not null) review!.AcceptCommittedRead(acceptedRead);
         return CommittedWriteNotification.Publish(OnChanged, new ImportResult(batchId, imported.Count, skipped, errors));
     }
 

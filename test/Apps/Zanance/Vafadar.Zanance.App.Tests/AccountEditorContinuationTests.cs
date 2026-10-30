@@ -115,6 +115,39 @@ public sealed class AccountEditorContinuationTests
         Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
     }
 
+    /// <summary>A complete explicit refresh cannot silently rebase a draft over changed account/default facts.</summary>
+    [Theory]
+    [InlineData(false)] [InlineData(true)]
+    public async Task Stale_writer_review_preserves_raw_draft_but_refuses_changed_account_or_default(bool changedDefault)
+    {
+        using var f = new FlowFixture(); await f.Store.GetSettingsAsync(Ct);
+        var account = await AccountDetailOriginalBoundaryTests.AccountAsync(f);
+        var factory = AccountDetailOriginalBoundaryTests.Factory(f); var access = new Access();
+        var store = new ZananceStore(factory, f.Time, access); var vm = Editor(f, store, factory, access);
+        await vm.ApplyQueryAsync(new Dictionary<string, object> { ["id"] = account.Id });
+        Assert.True(vm.Loading.IsReady); Assert.True(vm.CanSave);
+        vm.Form.Name = "  D656 retained original draft  "; vm.Form.OpeningText = "123.45";
+        var raw = vm.Form.Snapshot(); var originalDefault = vm.IsDefault;
+        if (changedDefault)
+        {
+            var settings = await f.Store.GetSettingsAsync(Ct); settings.DefaultAccountId = account.Id;
+            await f.Store.SaveSettingsAsync(settings, Ct);
+        }
+        else
+        {
+            account.Name = "D656 independently changed stored account"; await f.Store.SaveAccountAsync(account, Ct);
+        }
+        var before = await GoalChooserFlowTests.SnapshotAsync(f);
+        await vm.SaveCommand.ExecuteAsync(null);
+        Assert.Null(vm.Form.NameError); Assert.Null(vm.Form.AmountError); Assert.Null(vm.Form.TermsError);
+        Assert.Equal(f.Translator["Editor_WorkRetired"], vm.SaveError); Assert.False(vm.CanSave);
+        await vm.ReviewWorkCommand.ExecuteAsync(null);
+        Assert.True(vm.Loading.HasFailed); Assert.False(vm.CanInteract); Assert.False(vm.CanSave);
+        Assert.Equal(f.Translator["Account_Unavailable"], vm.SaveError);
+        Assert.Equal(raw, vm.Form.Snapshot()); Assert.Equal(originalDefault, vm.IsDefault);
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.Empty(f.Platform.Routes);
+    }
+
     /// <summary>Explicit quota-read failure keeps the already displayed draft editable but cannot authorize Save.</summary>
     [Fact]
     public async Task Readiness_refusal_keeps_original_draft_and_next_explicit_review_rebinds_only_same_inputs()
@@ -137,7 +170,7 @@ public sealed class AccountEditorContinuationTests
         using var f = new FlowFixture(); var account = await AccountDetailOriginalBoundaryTests.AccountAsync(f);
         var source = await f.Store.ReadAccountEditorAsync(account.Id, cancellationToken: Ct); var before = await GoalChooserFlowTests.SnapshotAsync(f);
         source.Inputs.Accounts.Single(x => x.Id == account.Id).CountryCode = "DE";
-        await Assert.ThrowsAsync<InvalidOperationException>(() => f.Store.ValidateAccountEditorAsync(source, Ct));
+        await Assert.ThrowsAsync<AccountEditorSourceChangedException>(() => f.Store.ValidateAccountEditorAsync(source, Ct));
         Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
     }
 

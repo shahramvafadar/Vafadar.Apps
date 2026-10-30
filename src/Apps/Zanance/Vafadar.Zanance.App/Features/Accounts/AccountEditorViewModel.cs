@@ -137,7 +137,10 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
     public bool CanReviewWork => _route is not null && _presented && !_routeRetired && !IsBusy && !_committed && !_reviewingWork && !Loading.IsLoading;
     private async Task ReadWorkAsync()
     {
-        if (!_formInitialized) { await LoadAsync(); return; }
+        // A rejected stale writer requires an explicit complete source read, not a rights-only
+        // replacement of its old facts. LoadAsync preserves raw input and checks the edited
+        // account/default/currency lock before publishing the newly captured source.
+        if (!_formInitialized || _workRetired) { await LoadAsync(); return; }
         var presentation = _presentationRevision; var source = _editorSource; var workRead = ++_workReadRevision;
         _reviewingWork = true; RefreshAccess();
         try
@@ -394,6 +397,13 @@ public sealed partial class AccountEditorViewModel : ViewModelBase
             {
                 _account = acceptedAccount ?? target; _committed = true; _snapshot = raw; RefreshAccess();
             }
+            // A known atomic account/default receipt is kept, but its native return cannot borrow a newly selected file.
+            if (_originalAccountHandoff is null && _editorSource is { } originalSource && OwnsChild(presentation))
+                await _store.ValidateAccountEditorAccessAsync(originalSource);
+        }
+        catch (AccountEditorSourceChangedException) when (!_committed)
+        {
+            _workRetired = true; RefreshAccess(); SaveError = _translator["Editor_WorkRetired"]; return;
         }
         catch (CommittedWriteNotificationException)
         {

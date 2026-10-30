@@ -81,8 +81,11 @@ public sealed class EditorWriteFlowTests
             vm.Form.Name = "  Complete raw new account  "; vm.Form.OpeningText = " " + MoneyText.ForInput(45678, "EUR", f.Localization.CurrentCulture) + " ";
             vm.Form.OpeningDate = new(2026, 9, 20); vm.IsDefault = true; var raw = vm.Form.Snapshot();
             await SeedAccountAsync(f, "Fictitious racing final account"); var before = await GoalChooserFlowTests.SnapshotAsync(f);
-            await vm.SaveCommand.ExecuteAsync(null); Assert.Contains(f.Translator["Accounts_Title"], vm.SaveError!); Assert.Contains(f.Translator["Commercial_DraftKept"], vm.SaveError!);
+            await vm.SaveCommand.ExecuteAsync(null); Assert.Equal(f.Translator["Editor_WorkRetired"], vm.SaveError);
+            Assert.Equal(f.Translator["Editor_WorkRetired"], vm.WorkText);
             Assert.Equal(raw, vm.Form.Snapshot()); Assert.True(vm.IsDefault); Assert.False(vm.CanSave); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.Empty(f.Platform.Routes);
+            await vm.ReviewWorkCommand.ExecuteAsync(null); Assert.False(vm.CanSave);
+            Assert.Contains(f.Translator["Accounts_Title"], vm.WorkText!); Assert.Equal(raw, vm.Form.Snapshot());
             Enable(f, access, ProductPlan.Plus); await vm.ReviewWorkCommand.ExecuteAsync(null); await vm.SaveCommand.ExecuteAsync(null); Assert.Null(vm.SaveError); Assert.False(vm.CanSave); Assert.False(vm.CanInteract);
             var accepted = await GoalChooserFlowTests.SnapshotAsync(f); await vm.SaveCommand.ExecuteAsync(null); Assert.Equal(accepted, await GoalChooserFlowTests.SnapshotAsync(f));
             var saved = (await store.GetAccountsAsync(cancellationToken: Ct)).Single(row => row.Name == vm.Form.Name.Trim()); Assert.Equal(45678, saved.OpeningBalance);
@@ -120,27 +123,36 @@ public sealed class EditorWriteFlowTests
         Assert.Empty(f.Platform.ConfirmationDialogs); Assert.Empty(await store.GetEntriesAsync(cancellationToken: Ct));
     }
 
+    /// <summary>Account/default are one original transaction; later observer failure cannot turn its known receipt into a retry.</summary>
     [Theory]
     [InlineData(false)][InlineData(true)]
-    public async Task A_default_preference_failure_after_account_commit_retains_committed_semantics_even_if_that_preference_also_committed(bool afterSettings)
+    public async Task Atomic_default_rejection_rolls_back_account_and_preference_while_committed_notification_failure_retains_both(bool afterCommit)
     {
         using var f = new FlowFixture(); await f.Store.GetSettingsAsync(Ct); var access = new Access(); var (store, plans) = Stores(f, access);
-        if (afterSettings)
-        {
-            var notifications = 0; store.Changed += (_, _) => { if (++notifications == 2) throw new InvalidOperationException("Fictitious settings subscriber refusal."); };
-        }
+        if (afterCommit) store.Changed += (_, _) => throw new InvalidOperationException("Fictitious original atomic-write subscriber refusal.");
         else
         {
             await using var db = await f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
             await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER OwnedRejectDefault BEFORE UPDATE ON Settings BEGIN SELECT RAISE(ABORT, 'Owned default preference refusal'); END;", Ct);
         }
-        var vm = AccountEditor(f, store, plans); await vm.ApplyQueryAsync(new Dictionary<string, object>()); vm.Form.Name = "Fictitious committed preferred account";
-        vm.Form.OpeningText = "12"; vm.IsDefault = true; await vm.SaveCommand.ExecuteAsync(null);
-        Assert.Equal(f.Translator["Account_SavedNeedsReview"], vm.SaveError); Assert.False(vm.CanSave); Assert.Empty(f.Platform.Routes);
-        var saved = Assert.Single(await store.GetAccountsAsync(cancellationToken: Ct)); var current = await store.GetSettingsAsync(Ct);
-        Assert.Equal(afterSettings ? saved.Id : (Guid?)null, current.DefaultAccountId);
-        var accepted = await GoalChooserFlowTests.SnapshotAsync(f); await vm.SaveCommand.ExecuteAsync(null); Assert.Equal(accepted, await GoalChooserFlowTests.SnapshotAsync(f));
-        Assert.Empty(await store.GetEntriesAsync(cancellationToken: Ct));
+        var vm = AccountEditor(f, store, plans); await vm.ApplyQueryAsync(new Dictionary<string, object>()); vm.Form.Name = "Fictitious atomic preferred account";
+        vm.Form.OpeningText = "12"; vm.IsDefault = true; var raw = vm.Form.Snapshot(); var before = await GoalChooserFlowTests.SnapshotAsync(f);
+        await vm.SaveCommand.ExecuteAsync(null); Assert.Empty(f.Platform.Routes);
+        if (!afterCommit)
+        {
+            Assert.Equal(f.Translator["Common_SaveFailed"], vm.SaveError); Assert.True(vm.CanSave); Assert.Equal(raw, vm.Form.Snapshot());
+            Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.Empty(await store.GetAccountsAsync(cancellationToken: Ct));
+            Assert.Null((await store.GetSettingsAsync(Ct)).DefaultAccountId);
+            await using (var db = await f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct))
+                await db.Database.ExecuteSqlRawAsync("DROP TRIGGER OwnedRejectDefault;", Ct);
+            // Only the failed, wholly rolled-back original attempt is explicitly retried.
+            await vm.SaveCommand.ExecuteAsync(null); Assert.Null(vm.SaveError); Assert.Equal("..", Assert.Single(f.Platform.Routes).Route);
+        }
+        else { Assert.Equal(f.Translator["Account_SavedNeedsReview"], vm.SaveError); Assert.False(vm.CanSave); }
+        var saved = Assert.Single(await store.GetAccountsAsync(cancellationToken: Ct)); Assert.Equal(1200, saved.OpeningBalance);
+        Assert.Equal(saved.Id, (await store.GetSettingsAsync(Ct)).DefaultAccountId); Assert.False(vm.CanSave);
+        var accepted = await GoalChooserFlowTests.SnapshotAsync(f); await vm.SaveCommand.ExecuteAsync(null);
+        Assert.Equal(accepted, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.Empty(await store.GetEntriesAsync(cancellationToken: Ct));
     }
 
     [Theory]

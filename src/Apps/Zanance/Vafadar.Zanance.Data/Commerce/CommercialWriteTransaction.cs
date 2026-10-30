@@ -32,6 +32,9 @@ internal sealed class CommercialWriteTransaction : IAsyncDisposable
     /// <summary>Gets this writer's exact verified context, never a newly selected profile.</summary>
     internal CapabilityContext? Context => _access.Context;
 
+    /// <summary>Retains this actual writer's immutable access only for its known committed readback receipt.</summary>
+    internal CommercialFileAccess OriginalReadAccess => _access;
+
     private CommercialWriteTransaction(ZananceDbContext db, CommercialFileAccess access, IDbContextTransaction? transaction, HouseholdLocalWritePermission? household)
     {
         _access = access;

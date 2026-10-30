@@ -107,7 +107,9 @@ public sealed class BankCsvFlowTests
             }
             return true;
         };
-        await vm.ImportCommand.ExecuteAsync(null); Assert.False(vm.CanRunImport); Assert.NotNull(vm.ImportError);
+        await vm.ImportCommand.ExecuteAsync(null); Assert.False(vm.CanRunImport);
+        if (change == "retire") { Assert.Null(vm.ImportError); Assert.Empty(f.Platform.Failures); }
+        else Assert.NotNull(vm.ImportError);
         var entries = await f.Store.GetEntriesAsync(cancellationToken: Ct); Assert.Equal(change == "data" ? 1 : 0, entries.Count);
         Assert.DoesNotContain(entries, e => e.Source == EntrySource.Import);
     }

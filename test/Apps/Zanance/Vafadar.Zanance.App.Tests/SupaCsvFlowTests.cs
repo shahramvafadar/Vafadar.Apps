@@ -131,7 +131,9 @@ public sealed class SupaCsvFlowTests
             }
             return true;
         };
-        await model.ImportCommand.ExecuteAsync(null); Assert.NotNull(model.ImportError); Assert.False(model.CanRunImport);
+        await model.ImportCommand.ExecuteAsync(null); Assert.False(model.CanRunImport);
+        if (change == "retire") { Assert.Null(model.ImportError); Assert.Empty(fixture.Platform.Failures); }
+        else Assert.NotNull(model.ImportError);
         var entries = await fixture.Store.GetEntriesAsync(cancellationToken: Ct);
         Assert.Equal(change == "data" ? 1 : 0, entries.Count); Assert.DoesNotContain(entries, item => item.Source == EntrySource.Import);
     }

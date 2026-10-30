@@ -97,10 +97,10 @@ public sealed partial class ImportExportViewModel
             _translator.Format("Import_Batch", _dates.Format(batch.ImportedAt, Vafadar.Localization.Formatting.DateFormatStyle.Long), batch.Count))));
         UndoCommand.NotifyCanExecuteChanged();
     }
-    private async Task RefreshBatchSourceAsync(FrameOwner? original = null)
+    private async Task RefreshBatchSourceAsync(FrameOwner? original = null, DataFileImportReceipt? acceptedImport = null)
     {
         var owner = original ?? CaptureFrame(); owner.EnsureCurrent();
-        var source = await _store.ReadDataFileWorkAsync(owner.Token, file => AcceptFile(owner, file), _workspace);
+        var source = await _store.ReadDataFileWorkAsync(owner.Token, file => AcceptFile(owner, file), _workspace, acceptedImport);
         owner.EnsureCurrent(); source.EnsureCurrent(); _workspace = source; PublishBatches(source);
     }
     private async Task ExportOriginalAsync(bool holdings)

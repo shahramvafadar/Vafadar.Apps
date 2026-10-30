@@ -27,6 +27,17 @@ public sealed class ImportReadReview
     /// <summary>Gets rules read with this preview; later rule edits do not replace its accepted literal categories.</summary>
     public IReadOnlyList<CategoryRule> PreviewRules { get; }
     private Dictionary<Guid, string>? _entries;
+    /// <summary>Gets readonly publication evidence only after this actual original writer commits its batch.</summary>
+    public DataFileImportReceipt? AcceptedWork { get; private set; }
+    /// <summary>Prepares an opaque source receipt inside the unchanged financial transaction, without activating it.</summary>
+    internal DataFileImportReceipt PrepareAcceptedRead(ZananceDbContext db, CommercialFileAccess writer, Guid batch)
+    {
+        if (_path != DatabaseFileIdentity.ConfiguredPath(db) || batch == Guid.Empty || AcceptedWork is not null)
+            throw new ImportReviewChangedException("The original import receipt identity changed.");
+        return new(_path, writer, batch, _validateNative);
+    }
+    /// <summary>Publishes only the already committed receipt before any fallible Changed observer.</summary>
+    internal void AcceptCommittedRead(DataFileImportReceipt receipt) => AcceptedWork = receipt;
     /// <summary>Captures one actual opened file and coherent original read.</summary>
     internal ImportReadReview(string path, CommercialFileAccess access, ImportReviewInputs inputs, bool reviewAccess = true, Action? validateNative = null, IReadOnlyList<CategoryRule>? previewRules = null)
     {

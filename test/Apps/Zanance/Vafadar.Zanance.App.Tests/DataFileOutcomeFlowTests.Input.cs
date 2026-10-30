@@ -99,8 +99,8 @@ public sealed partial class DataFileOutcomeFlowTests
     }
 
     [Theory, Trait("AT", "AT-385")]
-    // D-405: one coherent financial snapshot replaces three separate reads; final file recheck is call4.
-    [InlineData(2)][InlineData(4)]
+    // D-653/D-656: hold the actual worker read or the final original-file recheck after the coherent packet.
+    [InlineData(2)][InlineData(3)]
     public async Task Mapping_changes_during_worker_reads_or_final_profile_revalidation_cannot_publish_an_obsolete_preview(int blockedCall)
     {
         using var f = new FlowFixture(); var files = new Files(); var (account, _) = await LedgerAsync(f, files);
