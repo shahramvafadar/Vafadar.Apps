@@ -54,6 +54,17 @@ public partial class AppShell : Shell
     internal bool OwnsHoldingDetailPublication => !_navigationRetired;
     /// <summary>Gets whether this root still owns original report source and its explicit explanation handoffs.</summary>
     internal bool OwnsReportPublication => !_navigationRetired;
+    /// <summary>Tracks weak original CSV pages without retaining replaced roots.</summary>
+    private readonly List<WeakReference<Features.DataFiles.ImportExportPage>> _dataFilePages = [];
+    /// <summary>Gets whether the actual root owns original CSV source and disclosure consent.</summary>
+    internal bool OwnsDataFilePublication => !_navigationRetired;
+    /// <summary>Registers only the original CSV page.</summary>
+    internal void RegisterDataFiles(Features.DataFiles.ImportExportPage page)
+    {
+        if (_navigationRetired) { page.RetireShellPublication(); return; }
+        _dataFilePages.RemoveAll(item => !item.TryGetTarget(out _));
+        if (!_dataFilePages.Any(item => item.TryGetTarget(out var old) && ReferenceEquals(old, page))) _dataFilePages.Add(new(page));
+    }
     /// <summary>Tracks only weak original accountant disclosure pages for terminal root retirement.</summary>
     private readonly List<WeakReference<Features.DataFiles.AccountantExportPage>> _accountantExportPages = [];
     /// <summary>Gets whether this actual root owns original accountant source and disclosure consent.</summary>
@@ -487,6 +498,7 @@ public partial class AppShell : Shell
         else if (CurrentPage is PlanDetailPage planDetail) await Presentation.Failures.GuardAsync(planDetail.RefreshForNavigationAsync);
         else if (CurrentPage is OccurrencePage occurrence) await Presentation.Failures.GuardAsync(occurrence.RefreshForNavigationAsync);
         // D-497: Insights can retain both the forecast and its saved comparison while another tab changes the ledger.
+        else if (CurrentPage is Features.DataFiles.ImportExportPage dataFiles) await Presentation.Failures.GuardAsync(dataFiles.RefreshForNavigationAsync);
         else if (CurrentPage is Features.DataFiles.AccountantExportPage accountantExport) await Presentation.Failures.GuardAsync(accountantExport.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Rates.MarketReferencePage marketReference) await Presentation.Failures.GuardAsync(marketReference.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Rates.DisplayUnitsPage units) await Presentation.Failures.GuardAsync(units.RefreshForNavigationAsync);
@@ -595,8 +607,8 @@ public partial class AppShell : Shell
         // Retire its original financial review only after navigation survives the existing leave guards.
         if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
-            && CurrentPage?.BindingContext is ImportExportViewModel import)
-            import.RetireBankReview();
+            && CurrentPage is ImportExportPage import)
+            import.RetirePublication();
         // D-413: a retained holding detail must retire the same original price authority on tab departure.
         if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
@@ -648,6 +660,8 @@ public partial class AppShell : Shell
         _publishedAssetTypeEditors.Clear();
         foreach (var reference in _accountantExportPages) if (reference.TryGetTarget(out var accountantExport)) accountantExport.RetireShellPublication();
         _accountantExportPages.Clear();
+        foreach (var reference in _dataFilePages) if (reference.TryGetTarget(out var dataFiles)) dataFiles.RetireShellPublication();
+        _dataFilePages.Clear();
         foreach (var reference in _marketReferencePages) if (reference.TryGetTarget(out var marketReference)) marketReference.RetireShellPublication();
         _marketReferencePages.Clear();
         foreach (var reference in _displayUnitPages) if (reference.TryGetTarget(out var units)) units.RetireShellPublication();

@@ -39,9 +39,12 @@ public sealed partial class ImportExportViewModel
     public string BankPageText => _translator.Format("BankCsv_Page", _bankPage + 1, Math.Max(1, (_bankLines.Count + 24) / 25), _bankLines.Count);
 
     partial void OnBankAcknowledgedChanged(bool value) { if (IsBankPreset) { UpdateOverlapChoices(); RefreshActions(); } }
-    partial void OnAccountChanged(Features.Entries.AccountChoice? value) { if (IsBankPreset) RetireBankReview(); }
+    partial void OnAccountChanged(Features.Entries.AccountChoice? value) { if (IsBankPreset) InvalidateBankReview(); }
     /// <summary>Retires continuations from a departed original native form; raw data is retained for a fresh review.</summary>
-    public void RetireBankReview()
+    public void RetireBankReview() => Deactivate();
+
+    // Internal account/permission changes retire their review without deactivating the still-current original page.
+    private void InvalidateBankReview()
     {
         Interlocked.Increment(ref _bankEpoch); _bankRead = null; BankAcknowledged = false;
         if (_ledgerRead is not null) { _ledgerRead = null; _previewStale = true; CanImport = false; }
@@ -50,25 +53,26 @@ public sealed partial class ImportExportViewModel
     }
 
     /// <summary>Chooses one original preset file without inventing a bank or treating CSV-CAMT as XML.</summary>
-    [RelayCommand(CanExecute = nameof(IsNotBusy))]
+    [RelayCommand(CanExecute = nameof(CanUseDataFiles))]
     private Task PickStarMoneyAsync() => PickOriginalBankCsvAsync(supa: false);
 
     /// <summary>Selects the original SUPA CSV contract with its prescribed UTF-8 encoding.</summary>
-    [RelayCommand(CanExecute = nameof(IsNotBusy))]
+    [RelayCommand(CanExecute = nameof(CanUseDataFiles))]
     private Task PickSupaAsync() => PickOriginalBankCsvAsync(supa: true);
 
     private async Task PickOriginalBankCsvAsync(bool supa)
     {
-        if (IsBusy) return;
-        IsBusy = true; var epoch = _bankEpoch;
+        if (!CanUseDataFiles) return;
+        using var work = BeginWork(); var frame = work.Frame; var epoch = _bankEpoch;
         try
         {
-            var originalFile = await _store.CaptureImportFileAsync();
+            var originalFile = await CaptureFileAsync(frame);
             var selected = await _files.PickBankCsvAsync(_translator[supa ? "SupaCsv_Pick" : "BankCsv_Pick"],
-                supa || BankEncodingIndex == 0 ? BankCsvEncoding.Utf8 : BankCsvEncoding.Windows1252);
+                supa || BankEncodingIndex == 0 ? BankCsvEncoding.Utf8 : BankCsvEncoding.Windows1252, frame.EnsureCurrent, frame.Token);
+            frame.EnsureCurrent();
             if (selected is null || epoch != _bankEpoch) return;
-            var rows = await Task.Run(() => supa ? SupaCsv.Read(selected.Text) : StarMoneyCsv.Read(selected.Text));
-            var currentFile = await _store.CaptureImportFileAsync();
+            var rows = await Task.Run(() => supa ? SupaCsv.Read(selected.Text) : StarMoneyCsv.Read(selected.Text), frame.Token);
+            var currentFile = await CaptureFileAsync(frame);
             if (epoch != _bankEpoch) return;
             if (originalFile != currentFile) throw new InvalidOperationException("The original bank-import profile changed.");
             _rows = rows; _bankOwner = originalFile; IsBankPreset = true; _bankRead = null; _holdingsContent = null; _ownFormat = false;
@@ -76,29 +80,38 @@ public sealed partial class ImportExportViewModel
             FileName = selected.Name; ShowMapping = false; _previewAccepted = false; _previewStale = true; _preview = [];
             HasPreview = false; CanImport = false; ImportError = null; ImportResult = null; UndoError = null;
             BankAcknowledged = false; Overlaps.Clear(); BankLines.Clear();
-            await ReadPreviewAsync();
+            await ReadPreviewAsync(frame);
         }
+        catch (Exception error) when (error is not OutOfMemoryException && !frame.IsCurrent) { }
         catch (Exception ex) when (ex is not OutOfMemoryException)
-        { ImportError = _translator["BankCsv_Failed"]; if (IsBankPreset) RetireBankReview(); }
-        finally { IsBusy = false; RefreshActions(); }
+        { ImportError = _translator["BankCsv_Failed"]; if (IsBankPreset) InvalidateBankReview(); }
     }
 
-    private async Task ReadBankPreviewAsync()
+    private async Task ReadBankPreviewAsync(FrameOwner frame)
     {
         if (_bankOwner is null || Account is null) throw new InvalidOperationException("Choose an original bank file and target account.");
-        var epoch = _bankEpoch; var owner = _bankOwner; var accountId = Account.Id; var source = _rows; var supa = _supaPreset;
+        var epoch = _bankEpoch; var owner = _bankOwner; var accountId = Account.Id; var source = _rows; var supa = _supaPreset; var selected = Account;
         // SQLite async reads and AOT serialization still perform synchronous native work (D-297).
         // Keep original input preparation off the UI thread while the native picker returns focus.
         var prepared = await Task.Run(async () =>
         {
-            var original = await _store.ReadImportReviewAsync(owner);
+            void CurrentReview()
+            {
+                frame.EnsureCurrent();
+                if (epoch != _bankEpoch || Account?.Id != accountId)
+                    throw new InvalidOperationException("The original bank form was retired.");
+            }
+            var original = await _store.ReadImportReviewAsync(owner, frame.Token, validateNative: CurrentReview);
             var target = original.Inputs.Accounts.SingleOrDefault(a => a.Id == accountId && !a.IsArchived)
                 ?? throw new InvalidOperationException("The reviewed target account changed.");
+            if (target.Name != selected.Name || target.CurrencyCode != selected.CurrencyCode)
+                throw new InvalidOperationException("Choose the current original bank account caption and currency again.");
             var proposed = supa ? SupaCsv.Preview(source, target, original.Inputs.Categories, original.Inputs.Entries, original.ConsumedIds)
                 : StarMoneyCsv.Preview(source, target, original.Inputs.Categories, original.Inputs.Entries, original.ConsumedIds);
             original.Bind(proposed.Where(r => r.Entry is not null).Select(r => r.Entry!)); original.EnsureCurrent();
             return (Read: original, Account: target, Preview: proposed);
-        });
+        }, frame.Token);
+        frame.EnsureCurrent();
         if (epoch != _bankEpoch || Account?.Id != accountId) throw new InvalidOperationException("The original bank form was retired.");
         var (read, account, preview) = prepared;
         OnPropertyChanged(nameof(BankPresetWarning)); OnPropertyChanged(nameof(BankPresetAcknowledgement));

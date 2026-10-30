@@ -8060,3 +8060,18 @@ scopes are untouched. Phone/D-607/three deadlines/consumed reboot/unread source 
 untouched. Physical and broad DB/key/security/performance/stability/accessibility/iOS/provider/
 Store/release gates remain separate; overall delivery stays active. Complete evidence:
 `quality/original-accountant-disclosure-workspace.md`.
+
+
+### D-653 - Complete original CSV workspace
+
+Original CSV import/export now pins one actual file, reads complete workspace/export sources
+on the worker, and binds picker/preview/native disclosure/Undo to the actual page/tab/root.
+Read-only source Retry preserves raw filename/mapping/calendar and known committed receipts.
+Original rules are read in the preview transaction; original financial writer/conflict policy,
+all32 fields, journal/CSV formats and explicit native authentication remain. Fresh private CSV
+copies preserve BOM/neutral names without overwriting earlier offered copies.16 new and10
+related focused host cases, actual fresh native cancellation/retained raw Retry/delayed export
+refusal with zero financial operations, strict builds and complete signed offline packages
+are recorded in [D-653 evidence](quality/original-csv-workspace.md). Physical adoption waits
+for actual D-607 completion; its three deadlines and unread post-reboot source are untouched.
+This is not general stability, speed, A11Y/security/DB/key/iOS/provider/Store/release acceptance.

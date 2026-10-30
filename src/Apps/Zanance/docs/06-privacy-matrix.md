@@ -1541,3 +1541,16 @@ The original raw source stays transient and its finally deletion remains. Indepe
 emulator diagnostics export only fixed phases/counts/digests/dimensions, no raw photo,
 Main data/key, credential, financial rows, new permission or network SDK.
 [Evidence and exact limits](quality/bounded-camera-source-read.md).
+
+
+### D-653 CSV private-cache clarification
+
+The original explicit CSV share remains plaintext and opt-in, with notes/payees controlled
+by the existing switch and genuine app-lock confirmation. Each offer now uses its original
+neutral filename inside a fresh opaque private `csv-export-v1` subdirectory, avoiding overwrite
+of an earlier same-minute offered file. Original UTF-8 BOM and formatter remain unchanged.
+A retired native owner is checked after actual write/flush and before handoff; only its fresh
+unoffered file may be discarded. Offered files remain private cache for the asynchronous
+receiver under the existing policy, without a new retention or encryption claim. Read-only
+source Retry does not export/share or replay a financial operation. Actual recipient/provider
+and complete release-edition acceptance remain separate. See [D-653](quality/original-csv-workspace.md).

@@ -15,8 +15,10 @@ public sealed partial class ZananceStore
         return DatabaseFileIdentity.ConfiguredPath(db);
     }
     /// <summary>Reads all original import sources in one snapshot and rejects a profile retired during the picker.</summary>
-    public async Task<ImportReadReview> ReadImportReviewAsync(string expectedPath, CancellationToken ct = default, bool reviewAccess = true)
+    public async Task<ImportReadReview> ReadImportReviewAsync(string expectedPath, CancellationToken ct = default, bool reviewAccess = true,
+        Action? validateNative = null, bool includeCategoryRules = false)
     {
+        ct.ThrowIfCancellationRequested(); validateNative?.Invoke();
         await using var db = await contextFactory.CreateDbContextAsync(ct);
         var path = DatabaseFileIdentity.ConfiguredPath(db);
         if (path != expectedPath) throw new InvalidOperationException("The original import profile changed.");
@@ -27,7 +29,11 @@ public sealed partial class ZananceStore
         await db.Database.OpenConnectionAsync(ct);
         await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
         await using var joined = await db.Database.UseTransactionAsync(transaction, ct);
-        var review = new ImportReadReview(path, access, await ImportReadReview.ReadInputsAsync(db, ct), reviewAccess);
+        var inputs = await ImportReadReview.ReadInputsAsync(db, ct);
+        var rules = includeCategoryRules ? (await db.CategoryRules.AsNoTracking().ToListAsync(ct))
+            .OrderBy(rule => rule.Match, StringComparer.CurrentCultureIgnoreCase).ToList() : [];
+        ct.ThrowIfCancellationRequested(); validateNative?.Invoke();
+        var review = new ImportReadReview(path, access, inputs, reviewAccess, validateNative, rules);
         review.EnsureCurrent(); return review;
     }
 }

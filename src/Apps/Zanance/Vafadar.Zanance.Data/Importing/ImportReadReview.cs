@@ -23,10 +23,14 @@ public sealed class ImportReadReview
     private readonly CommercialFileAccess _access;
     private readonly string _path, _packet;
     private readonly bool _reviewAccess;
+    private readonly Action? _validateNative;
+    /// <summary>Gets rules read with this preview; later rule edits do not replace its accepted literal categories.</summary>
+    public IReadOnlyList<CategoryRule> PreviewRules { get; }
     private Dictionary<Guid, string>? _entries;
     /// <summary>Captures one actual opened file and coherent original read.</summary>
-    internal ImportReadReview(string path, CommercialFileAccess access, ImportReviewInputs inputs, bool reviewAccess = true)
+    internal ImportReadReview(string path, CommercialFileAccess access, ImportReviewInputs inputs, bool reviewAccess = true, Action? validateNative = null, IReadOnlyList<CategoryRule>? previewRules = null)
     {
+        _validateNative = validateNative; PreviewRules = previewRules ?? [];
         _path = path; _access = access; _reviewAccess = reviewAccess; Inputs = inputs; _packet = JsonSerializer.Serialize(inputs, ImportReviewJson.Default.ImportReviewInputs);
         ConsumedIds = inputs.Journals.Select(j => JsonSerializer.Deserialize(j.StateJson, ImportLinkJson.Default.ImportLinkState)
             is { Version: 1 } state ? state : throw new InvalidOperationException("Unsupported import journal."))
@@ -45,6 +49,7 @@ public sealed class ImportReadReview
     /// <summary>Rejects retired rights or a changed in-memory original packet without HTTP.</summary>
     public void EnsureCurrent()
     {
+        _validateNative?.Invoke();
         if (_reviewAccess) { _access.EnsureSnapshotCurrent(); _access.DemandFeature(CommercialFeature.CsvImport); }
         if (_packet != JsonSerializer.Serialize(Inputs, ImportReviewJson.Default.ImportReviewInputs)) throw new ImportReviewChangedException("The original import review was changed.");
     }

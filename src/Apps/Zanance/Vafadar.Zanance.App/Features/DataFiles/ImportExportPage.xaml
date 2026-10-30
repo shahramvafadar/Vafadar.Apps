@@ -10,7 +10,7 @@
     Title="{v:Translate ImportExport_Title}">
 
     <Grid RowDefinitions="*,Auto">
-        <ScrollView x:Name="ImportViewport">
+        <ScrollView x:Name="ImportViewport" IsVisible="{Binding Loading.IsReady}">
 
             <VerticalStackLayout Padding="16" Spacing="8" IsEnabled="{Binding IsNotBusy}">
 
@@ -220,6 +220,13 @@
             </VerticalStackLayout>
         </ScrollView>
 
+        <VerticalStackLayout Grid.RowSpan="2" Padding="16" Spacing="12" VerticalOptions="Center">
+            <ActivityIndicator IsRunning="{Binding Loading.IsLoading}" IsVisible="{Binding Loading.IsLoading}" Color="{DynamicResource Primary}" />
+            <VerticalStackLayout Spacing="12" IsVisible="{Binding Loading.HasFailed}">
+                <Label Text="{v:Translate Import_SourceLoadFailed}" Style="{StaticResource ErrorText}" />
+                <p:WrappingAction Text="{v:Translate Import_RefreshSource}" Command="{Binding ReloadSourceCommand}" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
         <!-- Original reviewed actions/outcomes retain their own growing row outside the scroll viewport. -->
         <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" IsVisible="{Binding HasImportDock}">
             <Label Text="{Binding ImportResult}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding ImportResult, Converter={StaticResource IsNotNullConverter}}" />

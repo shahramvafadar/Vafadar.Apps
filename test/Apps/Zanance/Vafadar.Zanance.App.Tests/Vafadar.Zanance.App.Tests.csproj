@@ -105,6 +105,8 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/IBackupRestoreRuntime.cs" Link="Application/IBackupRestoreRuntime.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/DataFiles/ImportExportViewModel.Preview.cs" Link="Application/ImportExportViewModel.Preview.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/DataFiles/ImportExportViewModel.BankCsv.cs" Link="Application/ImportExportViewModel.BankCsv.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/DataFiles/ImportExportViewModel.Lifetime.cs" Link="Application/ImportExportViewModel.Lifetime.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/DataFiles/CsvSharePreparation.cs" Link="Application/CsvSharePreparation.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/DataFiles/ImportExportViewModel.cs" Link="Application/ImportExportViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/DataFiles/ImportOverlapRow.cs" Link="Application/ImportOverlapRow.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/DataFiles/IDataFileInteraction.cs" Link="Application/IDataFileInteraction.cs" />

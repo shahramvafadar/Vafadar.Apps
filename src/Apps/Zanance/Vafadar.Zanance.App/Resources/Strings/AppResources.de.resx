@@ -8633,4 +8633,10 @@ Original-XML SHA-256: {5}</value>
   <data name="Unit_Refresh" xml:space="preserve">
     <value>Einheiten aktualisieren</value>
   </data>
+  <data name="Import_SourceLoadFailed" xml:space="preserve">
+    <value>Die lokale Quelle für Import und Export konnte nicht geladen werden. Datei und Zuordnung bleiben erhalten.</value>
+  </data>
+  <data name="Import_RefreshSource" xml:space="preserve">
+    <value>Lokale Quelle neu laden</value>
+  </data>
 </root>

@@ -97,3 +97,5 @@ Original display-unit workspace and publication authority: [D-650 runtime eviden
 Original reference workspace and offline access lifetime: [D-651 runtime evidence](quality/original-market-reference-workspace.md). Physical adoption and release gates remain separate.
 
 Original accountant disclosure workspace: [D-652 runtime evidence](quality/original-accountant-disclosure-workspace.md). Physical adoption and release gates remain separate.
+
+Original CSV workspace: [D-653 actual runtime evidence](quality/original-csv-workspace.md). Physical adoption and release gates remain separate.

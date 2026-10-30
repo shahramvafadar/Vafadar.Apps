@@ -8633,4 +8633,10 @@
   <data name="Unit_Refresh" xml:space="preserve">
     <value>بازخوانی واحدها</value>
   </data>
+  <data name="Import_SourceLoadFailed" xml:space="preserve">
+    <value>منبع محلی ورود و خروج داده بارگذاری نشد. فایل و تنظیم ستون‌های شما حفظ شده‌اند.</value>
+  </data>
+  <data name="Import_RefreshSource" xml:space="preserve">
+    <value>بازخوانی منبع محلی</value>
+  </data>
 </root>

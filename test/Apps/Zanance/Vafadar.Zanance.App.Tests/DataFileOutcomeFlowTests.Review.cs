@@ -58,9 +58,10 @@ public sealed partial class DataFileOutcomeFlowTests
         var (store, _, _, vm) = Create(f, new(), files); await vm.LoadAsync(); await vm.PickCommand.ExecuteAsync(null);
         if (generic) { vm.CalendarIndex = 0; vm.SeparatorIndex = 0; await vm.PreviewCommand.ExecuteAsync(null); }
         var before = await GoalChooserFlowTests.SnapshotAsync(f); var draft = Draft(vm);
-        vm.RetireBankReview(); Assert.Equal(draft, Draft(vm)); Assert.False(vm.CanRunImport); Assert.True(vm.CanReviewPreview);
+        vm.RetireBankReview(); Assert.Equal(draft, Draft(vm)); Assert.False(vm.CanRunImport); Assert.False(vm.CanReviewPreview);
         await vm.ImportCommand.ExecuteAsync(null); Assert.Empty(await store.GetEntriesAsync(cancellationToken: Ct));
         Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        vm.SetPresentationActive(true); await vm.LoadAsync();
         await vm.RefreshPreviewCommand.ExecuteAsync(null); Assert.True(vm.CanRunImport); Assert.Equal(draft, Draft(vm));
     }
 

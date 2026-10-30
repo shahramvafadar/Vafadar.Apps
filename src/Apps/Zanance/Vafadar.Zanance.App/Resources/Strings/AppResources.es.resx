@@ -8602,4 +8602,10 @@ SHA-256 del XML original: {5}</value>
   <data name="Unit_Refresh" xml:space="preserve">
     <value>Actualizar unidades</value>
   </data>
+  <data name="Import_SourceLoadFailed" xml:space="preserve">
+    <value>No se pudo cargar la fuente local de importación y exportación. Se conservan tu archivo y la asignación.</value>
+  </data>
+  <data name="Import_RefreshSource" xml:space="preserve">
+    <value>Volver a cargar la fuente local</value>
+  </data>
 </root>

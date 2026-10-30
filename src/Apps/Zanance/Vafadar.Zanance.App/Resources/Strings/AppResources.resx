@@ -8667,4 +8667,10 @@ Original XML SHA-256: {5}</value>
   <data name="Unit_Refresh" xml:space="preserve">
     <value>Refresh units</value>
   </data>
+  <data name="Import_SourceLoadFailed" xml:space="preserve">
+    <value>The local import and export source could not be loaded. Your file and mapping are kept.</value>
+  </data>
+  <data name="Import_RefreshSource" xml:space="preserve">
+    <value>Reload local source</value>
+  </data>
 </root>

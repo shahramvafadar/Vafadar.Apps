@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-653: retain original CSV raw mapping through source Retry; refuse retired picker/export/Undo consent, pin coherent original-file reads and preserve known commit receipts. Keep distinct BOM-preserving private CSV copies before sharing.
+
 - D-652: preserve original accountant year and disclosure choices through source Retry; refuse replaced files, changed captions and retired native sharing continuations.
 
 - D-651: allow original local reference data to load in the offline edition; retire departed source work and keep reviewed choices bound to their actual file and native page.

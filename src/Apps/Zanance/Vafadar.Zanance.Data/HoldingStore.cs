@@ -360,10 +360,19 @@ public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> con
     /// transaction; existing ids are skipped, so importing twice creates nothing twice. Nothing is saved when an event
     /// refers to an unknown type or location, or the history of a type would become negative on any date.
     /// </summary>
-    public async Task<(int Imported, int Skipped, HoldingConflict? Conflict)> ImportAsync(HoldingsCsvContent content, CancellationToken cancellationToken = default)
+    public async Task<(int Imported, int Skipped, HoldingConflict? Conflict)> ImportAsync(HoldingsCsvContent content, CancellationToken cancellationToken = default,
+        string? expectedFile = null, Action? validateNative = null)
     {
         ArgumentNullException.ThrowIfNull(content);
+        cancellationToken.ThrowIfCancellationRequested(); validateNative?.Invoke();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        void Current()
+        {
+            cancellationToken.ThrowIfCancellationRequested(); validateNative?.Invoke();
+            if (expectedFile is not null && expectedFile != DatabaseFileIdentity.ConfiguredPath(db))
+                throw new InvalidOperationException("The original holdings import file changed.");
+        }
+        Current();
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
         // Import preserves owned data even after downgrade; selected read-only new-work classification is ENT-03.
         write.DemandFeature(CommercialFeature.BackupRestore);
@@ -385,13 +394,14 @@ public sealed partial class HoldingStore(IDbContextFactory<ZananceDbContext> con
             return (0, skipped, conflict);
         }
 
+        Current();
         db.AssetTypes.AddRange(types);
         db.AssetLocations.AddRange(locations);
         db.AssetEvents.AddRange(events);
         db.AssetValuations.AddRange(valuations);
-        write.EnsureCurrent();
+        Current(); write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
-        write.EnsureCurrent();
+        Current(); write.EnsureCurrent();
         await write.CommitAsync(cancellationToken);
         return CommittedWriteNotification.Publish(() => Changed?.Invoke(this, EventArgs.Empty),
             (types.Count + locations.Count + events.Count + valuations.Count, skipped, (HoldingConflict?)null));

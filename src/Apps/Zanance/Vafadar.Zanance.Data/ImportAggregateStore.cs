@@ -144,6 +144,8 @@ public sealed partial class ZananceStore
         db.ImportLinks.Add(new ImportLinkBatch(batchId) { StateJson = JsonSerializer.Serialize(state, ImportLinkJson.Default.ImportLinkState) });
         await db.SaveChangesAsync(cancellationToken);
 
+        // D-653: a native frame can retire during either SQL save; refuse before the atomic commit.
+        review?.EnsureCurrent();
         await write.CommitAsync(cancellationToken);
         return CommittedWriteNotification.Publish(OnChanged, new ImportResult(batchId, imported.Count, skipped, errors));
     }
@@ -161,6 +163,11 @@ public sealed partial class ZananceStore
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         var rows = await db.Entries.AsNoTracking().Where(e => e.ImportBatchId != null).ToListAsync(cancellationToken);
         var journals = await ReadImportLinksAsync(db, cancellationToken);
+        return ProjectImportBatches(rows, journals);
+    }
+    // The original complete journal projection is shared by ordinary history and a coherent CSV workspace read.
+    private static List<ImportBatchInfo> ProjectImportBatches(List<LedgerEntry> rows, IReadOnlyList<(ImportLinkBatch Batch, ImportLinkState State)> journals)
+    {
         rows.AddRange(journals.SelectMany(j => j.State.Imported));
         rows.AddRange(journals.SelectMany(j => j.State.Adjustments).Where(a => a.Before?.ImportBatchId is not null).Select(a => a.Before!));
         return [.. rows.Where(e => e.ImportBatchId is not null).DistinctBy(e => (e.ImportBatchId, e.Id)).GroupBy(e => e.ImportBatchId!.Value)
@@ -179,19 +186,26 @@ public sealed partial class ZananceStore
     /// Removes the imported details and restores original aggregates atomically, across restart. Rejects later edits,
     /// dependent refunds/imports or missing account/category identities rather than overwriting or unlinking data.
     /// </summary>
-    public Task<ImportUndoResult> TryUndoImportAsync(Guid batchId, CancellationToken cancellationToken = default) =>
-        TryUndoImportCoreAsync(batchId, cancellationToken);
+    public Task<ImportUndoResult> TryUndoImportAsync(Guid batchId, CancellationToken cancellationToken = default,
+        DataFileUndoReview? review = null, Action? validateNative = null) =>
+        TryUndoImportCoreAsync(batchId, cancellationToken, review: review, validateNative: validateNative);
 
     private async Task<ImportUndoResult> TryUndoImportCoreAsync(Guid batchId, CancellationToken cancellationToken,
-        EntryAggregateUndo? original = null)
+        EntryAggregateUndo? original = null, DataFileUndoReview? review = null, Action? validateNative = null)
     {
+        cancellationToken.ThrowIfCancellationRequested(); validateNative?.Invoke();
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        void Current()
+        { cancellationToken.ThrowIfCancellationRequested(); review?.RequireFile(db); validateNative?.Invoke(); }
+        Current();
         original?.Current(db, time.GetUtcNow());
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        Current();
         write.DemandFeature(CommercialFeature.Corrections);
         var stored = await db.Entries.AsNoTracking().ToDictionaryAsync(e => e.Id, cancellationToken);
         var journals = await ReadImportLinksAsync(db, cancellationToken);
         var own = journals.FirstOrDefault(j => j.Batch.Id == batchId);
+        review?.RequireBatch(batchId, own.State is null ? null : own.Batch.StateJson); Current();
         if (original is not null && own.State is null
             || original is null && own.State is { Imported.Count: 0, Adjustments.Count: > 0 })
             return new ImportUndoResult(0, true);
@@ -265,10 +279,12 @@ public sealed partial class ZananceStore
         }
 
         var count = importedIds.Count;
+        Current();
         original?.Current(db, time.GetUtcNow());
         write.EnsureCurrent();
         await db.Entries.Where(e => e.ImportBatchId == batchId).ExecuteDeleteAsync(cancellationToken);
         await db.SaveChangesAsync(cancellationToken);
+        Current();
         original?.Current(db, time.GetUtcNow());
         await write.CommitAsync(cancellationToken);
         original?.End(true);
