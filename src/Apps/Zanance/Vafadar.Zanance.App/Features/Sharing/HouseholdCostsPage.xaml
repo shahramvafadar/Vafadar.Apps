@@ -14,9 +14,9 @@
                     <v:HelpButton Grid.Column="1" Topic="HouseholdCosts" />
                 </Grid>
                 <Label Text="{v:Translate HouseholdCost_Intro}" Style="{StaticResource Secondary}" />
-                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+                <ActivityIndicator IsRunning="{Binding HasPendingOperation}" IsVisible="{Binding HasPendingOperation}" />
                 <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" />
-                <p:WrappingAction Text="{v:Translate Sync_Reload}" Command="{Binding ReloadCommand}" IsEnabled="{Binding IsNotBusy}" />
+                <p:WrappingAction Text="{v:Translate Sync_Reload}" Command="{Binding ReloadCommand}" IsEnabled="{Binding CanRead}" />
                 <VerticalStackLayout Spacing="12" IsVisible="{Binding IsReady}" IsEnabled="{Binding CanInteract}">
                     <Label Text="{v:Translate HouseholdCost_ReadOnly}" IsVisible="{Binding CanWrite, Converter={StaticResource InvertedBoolConverter}}" />
                     <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Summaries}">

@@ -11436,3 +11436,9 @@ again. D661 receives one delayed exact-head check. WholeDB/key/security/stabilit
 A11Y/iOS/genuine identity/provider/Store/release remain separate; overall goal active.
 
 [Evidence](../quality/original-household-workspace.md)
+
+
+### Section31 addendum - D-662
+
+Original costs/shares/repayment source and command lifetimes now preserve complete original cash facts, literal drafts and known commit receipts. 46 selected checks, strict builds and bounded actual native observations passed; this does not establish all household workflows or release readiness.
+[Evidence and cleanup limits](../quality/original-household-costs-workspace.md).

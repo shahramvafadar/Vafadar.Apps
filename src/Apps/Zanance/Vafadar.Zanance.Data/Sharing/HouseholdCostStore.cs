@@ -3,13 +3,18 @@ using Microsoft.EntityFrameworkCore;
 using Vafadar.Data;
 using Vafadar.Zanance.Core.Sharing;
 using Vafadar.Zanance.Core.Ledger;
+using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.Data.Sharing;
 
 /// <summary>One existing cash movement available for explicit linkage; no original counterpart identity is inferred.</summary>
 public sealed record HouseholdCashMovement(Guid Id, DateOnly Date, EntryKind Kind, long Amount, string CurrencyCode,
-    long? DestinationAmount, string? DestinationCurrencyCode, string? Title);
+    long? DestinationAmount, string? DestinationCurrencyCode, string? Title)
+{
+    /// <summary>Opaque complete original cash/account identity; it grants no private access or write authority.</summary>
+    internal string? OriginalCashToken { get; init; }
+}
 
 /// <summary>Captured cost review; its immutable private token is rechecked in the actual financial writer before any edit.</summary>
 public sealed class HouseholdCostReview
@@ -20,9 +25,8 @@ public sealed class HouseholdCostReview
         Costs = Array.AsReadOnly(state.Costs); Allocations = Array.AsReadOnly(state.Allocations);
         Settlements = Array.AsReadOnly(state.Settlements); Totals = HouseholdCostLedger.Totals(state.Costs);
         Members = HouseholdCostLedger.Members(state.Contacts, state.Costs, state.Allocations, state.Settlements);
-        LinkedMovements = state.Entries.Values.Select(row => new HouseholdCashMovement(row.Id, row.Date, row.Kind, row.Amount,
-            state.Accounts[row.AccountId].CurrencyCode, row.ToAmount, row.ToAccountId is { } destination && state.Accounts.TryGetValue(destination, out var account)
-                ? account.CurrencyCode : null, row.Title)).ToArray();
+        LinkedMovements = state.Entries.Values.Select(row => HouseholdCostStore.CaptureMovement(row, state.Accounts[row.AccountId],
+            row.ToAccountId is { } destination && state.Accounts.TryGetValue(destination, out var account) ? account : null)).ToArray();
     }
     internal string Path { get; }
     internal string Token { get; }
@@ -53,6 +57,7 @@ public sealed class HouseholdCostStore(IDbContextFactory<ZananceDbContext> facto
     public async Task<HouseholdCostReview> ReadAsync(CancellationToken ct = default)
     {
         await using var db = await factory.CreateDbContextAsync(ct);
+        var sourceAccess = new CommercialFileAccess(commercial, DatabaseFileIdentity.ConfiguredPath(db));
         return await Task.Run(async () =>
         {
             if (db.Database.GetDbConnection() is not SqliteConnection connection) throw new InvalidOperationException("Native household storage is required.");
@@ -62,36 +67,71 @@ public sealed class HouseholdCostStore(IDbContextFactory<ZananceDbContext> facto
             var state = HouseholdCostState.Read(db); state.DemandValid(); ProtectedSqliteAccess.Require(connection);
             var permission = await HouseholdJournal.CaptureLocalWritePermissionAsync(db, db.WorkClock, ct); var canWrite = false;
             try { permission?.Demand(); canWrite = permission is not null; } catch (HouseholdWriteRejectedException) { }
+            sourceAccess.RequireFile(DatabaseFileIdentity.ConfiguredPath(db)); ProtectedSqliteAccess.Require(connection); ct.ThrowIfCancellationRequested();
             return new HouseholdCostReview(DatabaseFileIdentity.ConfiguredPath(db), state, canWrite);
         }, ct);
     }
 
     /// <summary>Finds existing actual movements on the explicit draft date; an overfull result requires a narrower title search.</summary>
-    public async Task<IReadOnlyList<HouseholdCashMovement>> FindMovementsAsync(DateOnly date, EntryKind kind, string? search, CancellationToken ct = default)
+    public async Task<IReadOnlyList<HouseholdCashMovement>> FindMovementsAsync(DateOnly date, EntryKind kind, string? search, CancellationToken ct = default,
+        Action? validateOriginal = null)
     {
         if (kind is not (EntryKind.Expense or EntryKind.Refund or EntryKind.Transfer) || search?.Length > 200)
             throw new ArgumentException("An explicit bounded household movement search is required.");
+        validateOriginal?.Invoke();
         await using var db = await factory.CreateDbContextAsync(ct);
+        var sourceAccess = new CommercialFileAccess(commercial, DatabaseFileIdentity.ConfiguredPath(db));
         return await Task.Run(async () =>
         {
             if (db.Database.GetDbConnection() is not SqliteConnection connection) throw new InvalidOperationException("Native household storage is required.");
-            ProtectedSqliteAccess.Require(connection);
-            var query = db.Entries.AsNoTracking().Where(row => row.Date == date && row.Kind == kind);
-            if (!string.IsNullOrWhiteSpace(search)) query = query.Where(row => row.Title != null && row.Title.Contains(search));
-            var rows = await (from row in query
-                join account in db.Accounts.AsNoTracking() on row.AccountId equals account.Id
-                join destination in db.Accounts.AsNoTracking() on row.ToAccountId equals destination.Id into destinations
-                from destination in destinations.DefaultIfEmpty()
-                orderby row.Id
-                select new HouseholdCashMovement(row.Id, row.Date, row.Kind, row.Amount, account.CurrencyCode, row.ToAmount,
-                    destination == null ? null : destination.CurrencyCode, row.Title)).Take(101).ToArrayAsync(ct);
-            if (rows.Length > 100) throw new InvalidOperationException("Narrow the household movement title search.");
-            ProtectedSqliteAccess.Require(connection); return rows;
+            validateOriginal?.Invoke(); ProtectedSqliteAccess.Require(connection); await db.Database.OpenConnectionAsync(ct);
+            using var transaction = connection.BeginTransaction(deferred: true);
+            await using var joined = await db.Database.UseTransactionAsync(transaction, ct);
+            var rows = await ReadMovementsInContextAsync(db, date, kind, search, ct);
+            sourceAccess.RequireFile(DatabaseFileIdentity.ConfiguredPath(db)); validateOriginal?.Invoke();
+            ProtectedSqliteAccess.Require(connection); ct.ThrowIfCancellationRequested(); return rows;
         }, ct);
     }
 
+    /// <summary>Materializes complete original rows under the caller's single source transaction; no private grant is inferred.</summary>
+    internal static async Task<IReadOnlyList<HouseholdCashMovement>> ReadMovementsInContextAsync(ZananceDbContext db,
+        DateOnly date, EntryKind kind, string? search, CancellationToken ct)
+    {
+        if (kind is not (EntryKind.Expense or EntryKind.Refund or EntryKind.Transfer) || search?.Length > 200)
+            throw new ArgumentException("An explicit bounded household movement search is required.");
+        var query = db.Entries.AsNoTracking().Where(row => row.Date == date && row.Kind == kind);
+        if (!string.IsNullOrWhiteSpace(search)) query = query.Where(row => row.Title != null && row.Title.Contains(search));
+        var rows = await (from row in query
+            join account in db.Accounts.AsNoTracking() on row.AccountId equals account.Id
+            join destination in db.Accounts.AsNoTracking() on row.ToAccountId equals destination.Id into destinations
+            from destination in destinations.DefaultIfEmpty()
+            orderby row.Id
+            select new { Entry = row, Account = account, Destination = destination }).Take(101).ToArrayAsync(ct);
+        if (rows.Length > 100) throw new InvalidOperationException("Narrow the household movement title search.");
+        return Array.AsReadOnly(rows.Select(row => CaptureMovement(row.Entry, row.Account, row.Destination)).ToArray());
+    }
+
+    /// <summary>Retains the existing public movement caption with a complete immutable source token.</summary>
+    internal static HouseholdCashMovement CaptureMovement(LedgerEntry row, Account account, Account? destination) => new(row.Id, row.Date,
+        row.Kind, row.Amount, account.CurrencyCode, row.ToAmount, destination?.CurrencyCode, row.Title)
+        { OriginalCashToken = HouseholdCostState.CashFingerprint([row], destination is null ? [account] : [account, destination]) };
+
+    /// <summary>Rechecks the exact selected original cash facts inside the writer, independently of graph validity.</summary>
+    internal static async Task RequireMovementInContextAsync(ZananceDbContext db, HouseholdCashMovement selected, Guid? expectedId, CancellationToken ct)
+    {
+        if (expectedId != selected.Id || selected.OriginalCashToken is null)
+            throw new InvalidOperationException("The original household cash selection is unavailable.");
+        var row = await db.Entries.AsNoTracking().SingleOrDefaultAsync(row => row.Id == selected.Id, ct)
+            ?? throw new InvalidOperationException("The selected original cash movement is unavailable.");
+        var account = await db.Accounts.AsNoTracking().SingleAsync(account => account.Id == row.AccountId, ct);
+        var destination = row.ToAccountId is { } id ? await db.Accounts.AsNoTracking().SingleOrDefaultAsync(account => account.Id == id, ct) : null;
+        if (CaptureMovement(row, account, destination).OriginalCashToken != selected.OriginalCashToken)
+            throw new InvalidOperationException("The selected original cash facts changed after review.");
+    }
+
     /// <summary>Saves an explicit contact name/archive choice without changing household service access.</summary>
-    public Task SaveContactAsync(HouseholdCostReview review, HouseholdContact contact, CancellationToken ct = default)
+    public Task SaveContactAsync(HouseholdCostReview review, HouseholdContact contact, CancellationToken ct = default,
+        Func<bool>? isCurrent = null, Action? accepted = null)
     {
         ArgumentNullException.ThrowIfNull(contact);
         var draft = new HouseholdContact(contact.Id) { Name = contact.Name, IdentityId = contact.IdentityId, IsArchived = contact.IsArchived };
@@ -100,12 +140,12 @@ public sealed class HouseholdCostStore(IDbContextFactory<ZananceDbContext> facto
             var original = await db.HouseholdContacts.SingleOrDefaultAsync(row => row.Id == draft.Id, ct);
             if (original is null) db.HouseholdContacts.Add(draft);
             else { original.Name = draft.Name; original.IdentityId = draft.IdentityId; original.IsArchived = draft.IsArchived; }
-        }, ct);
+        }, ct, isCurrent, accepted);
     }
 
     /// <summary>Publishes the complete cost and exact allocations together; a stale review or invalid sum rolls everything back.</summary>
     public Task SaveCostAsync(HouseholdCostReview review, HouseholdCost cost, IReadOnlyList<HouseholdCostAllocation> allocations,
-        CancellationToken ct = default, Func<bool>? isCurrent = null)
+        CancellationToken ct = default, Func<bool>? isCurrent = null, Action? accepted = null, HouseholdCashMovement? reviewedMovement = null)
     {
         ArgumentNullException.ThrowIfNull(cost); ArgumentNullException.ThrowIfNull(allocations);
         var draft = new HouseholdCost(cost.Id) { Kind = cost.Kind, Date = cost.Date, Amount = cost.Amount, CurrencyCode = cost.CurrencyCode,
@@ -131,11 +171,12 @@ public sealed class HouseholdCostStore(IDbContextFactory<ZananceDbContext> facto
                 var old = oldShares.SingleOrDefault(item => item.ContactId == row.ContactId);
                 if (old is null) db.HouseholdAllocations.Add(row); else old.Amount = row.Amount;
             }
-        }, ct, isCurrent);
+        }, ct, isCurrent, accepted, reviewedMovement, draft.EntryId);
     }
 
     /// <summary>Records only a confirmed person-to-person repayment, optionally linked to one existing matching transfer side.</summary>
-    public Task SaveSettlementAsync(HouseholdCostReview review, HouseholdSettlement settlement, CancellationToken ct = default, Func<bool>? isCurrent = null)
+    public Task SaveSettlementAsync(HouseholdCostReview review, HouseholdSettlement settlement, CancellationToken ct = default,
+        Func<bool>? isCurrent = null, Action? accepted = null, HouseholdCashMovement? reviewedMovement = null)
     {
         ArgumentNullException.ThrowIfNull(settlement);
         var draft = new HouseholdSettlement(settlement.Id) { FromContactId = settlement.FromContactId, ToContactId = settlement.ToContactId,
@@ -151,37 +192,47 @@ public sealed class HouseholdCostStore(IDbContextFactory<ZananceDbContext> facto
                 original.Amount = draft.Amount; original.CurrencyCode = draft.CurrencyCode; original.EntryId = draft.EntryId;
                 original.UsesDestinationAmount = draft.UsesDestinationAmount; original.Note = draft.Note;
             }
-        }, ct, isCurrent);
+        }, ct, isCurrent, accepted, reviewedMovement, draft.EntryId);
     }
 
     /// <summary>Removes only the explicitly reviewed cost/shares; retained refunds prevent removing their original.</summary>
-    public Task DeleteCostAsync(HouseholdCostReview review, Guid id, CancellationToken ct = default) => WriteAsync(review, async db =>
+    public Task DeleteCostAsync(HouseholdCostReview review, Guid id, CancellationToken ct = default,
+        Func<bool>? isCurrent = null, Action? accepted = null) => WriteAsync(review, async db =>
     {
         var row = await db.HouseholdCosts.SingleAsync(row => row.Id == id, ct); db.HouseholdCosts.Remove(row);
-    }, ct);
+    }, ct, isCurrent, accepted);
 
     /// <summary>Removes the explicit repayment record without deleting or changing its linked cash movement.</summary>
-    public Task DeleteSettlementAsync(HouseholdCostReview review, Guid id, CancellationToken ct = default) => WriteAsync(review, async db =>
+    public Task DeleteSettlementAsync(HouseholdCostReview review, Guid id, CancellationToken ct = default,
+        Func<bool>? isCurrent = null, Action? accepted = null) => WriteAsync(review, async db =>
     {
         var row = await db.HouseholdSettlements.SingleAsync(row => row.Id == id, ct); db.HouseholdSettlements.Remove(row);
-    }, ct);
+    }, ct, isCurrent, accepted);
 
-    private async Task WriteAsync(HouseholdCostReview review, Func<ZananceDbContext, Task> edit, CancellationToken ct, Func<bool>? isCurrent = null)
+    private async Task WriteAsync(HouseholdCostReview review, Func<ZananceDbContext, Task> edit, CancellationToken ct,
+        Func<bool>? isCurrent = null, Action? accepted = null, HouseholdCashMovement? reviewedMovement = null, Guid? expectedEntryId = null)
     {
         ArgumentNullException.ThrowIfNull(review);
+        void Current()
+        { ct.ThrowIfCancellationRequested(); if (isCurrent?.Invoke() == false) throw new InvalidOperationException("The original household financial draft retired."); }
+        Current();
         await using var db = await factory.CreateDbContextAsync(ct);
         await Task.Run(async () =>
         {
-            void Current()
-            { if (isCurrent?.Invoke() == false) throw new InvalidOperationException("The original household financial draft retired."); }
             if (DatabaseFileIdentity.ConfiguredPath(db) != review.Path) throw new InvalidOperationException("The household profile changed after review.");
             Current();
             await using var writer = await CommercialWriteTransaction.OpenAsync(db, commercial, ct, requireTransaction: true);
             writer.DemandHousehold(); var current = HouseholdCostState.Read(db);
             if (current.Fingerprint() != review.Token) throw new InvalidOperationException("The household costs changed after review.");
-            Current(); await edit(db); await db.SaveChangesAsync(ct); Current();
+            Current();
+            if (reviewedMovement is not null) { await RequireMovementInContextAsync(db, reviewedMovement, expectedEntryId, ct); Current(); }
+            await edit(db); await db.SaveChangesAsync(ct); Current();
+            if (reviewedMovement is not null) { await RequireMovementInContextAsync(db, reviewedMovement, expectedEntryId, ct); Current(); }
             // Original context commit interceptor rechecks graph/link and exact member/clock authority after every compound write.
             await writer.CommitAsync(ct);
+            // Record only the returned original commit, before disposal or other fallible
+            // follow-through. This callback carries no key, role or reusable write grant.
+            accepted?.Invoke();
         }, ct);
     }
 }

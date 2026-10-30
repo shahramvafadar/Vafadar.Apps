@@ -12176,3 +12176,9 @@ again. D661 receives one delayed exact-head check. WholeDB/key/security/stabilit
 A11Y/iOS/genuine identity/provider/Store/release remain separate; overall goal active.
 
 [D-661 evidence](quality/original-household-workspace.md)
+
+
+### Decision D-662 - Original household costs ownership
+
+Retain complete original cash/account facts and independent page/native/writer ownership; record only returned commits before fallible follow-through. Keep source Retry read-only and original financial/crypto authority unchanged.
+[Evidence and cleanup limits](quality/original-household-costs-workspace.md).

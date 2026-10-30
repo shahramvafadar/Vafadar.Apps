@@ -91,6 +91,21 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
     private bool needsRefresh;
     private long editorRevision;
     private bool committedInAction;
+    private bool acceptedPending;
+    private bool primarySubmitted;
+    private bool commandActive;
+    private bool readingSource;
+    private TaskCompletionSource? commandCompletion;
+    private Func<bool>? ownsRoot;
+    private bool rootRetired;
+    private long disclosureVersion;
+    private Action? operationOwner;
+    private bool leaveApproved;
+    private bool OwnsPresentation => !rootRetired && visible is not null && (ownsRoot?.Invoke() ?? true);
+    /// <summary>Binds this original frame to its actual native page and application root.</summary>
+    internal void BindRootOwner(Func<bool> ownsOriginalRoot) => ownsRoot = ownsOriginalRoot;
+    /// <summary>A replaced root cannot reactivate its retired draft or native continuation.</summary>
+    internal void RetireRoot() { rootRetired = true; Deactivate(); }
     /// <summary>Gets the cost/repayment's original visible amount unit.</summary>
     public string AmountUnitName => _amountInput.UnitName(CurrencyCode);
     /// <summary>Explains the original cost/repayment factor.</summary>
@@ -124,27 +139,35 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
     {
         if (args.PropertyName is nameof(Title) or nameof(AmountText) or nameof(CurrencyCode) or nameof(Date) or nameof(IsRefund)
             or nameof(UsesSharedCash) or nameof(EditingCost) or nameof(EditingSettlement) or nameof(Payer) or nameof(Recipient)
-            or nameof(RefundOriginal) or nameof(Movement) or nameof(UsesDestinationAmount) or nameof(Note))
+            or nameof(RefundOriginal) or nameof(Movement) or nameof(MovementSearch) or nameof(UsesDestinationAmount) or nameof(Note))
             Interlocked.Increment(ref editorRevision);
         base.OnPropertyChanged(args);
     }
     private string EditorStamp() => DraftFingerprint.Create(Interlocked.Read(ref editorRevision), editingCost, editingSettlement,
         Title, _amountInput.Stamp, _amountInput.Revision, CurrencyCode, Date, IsRefund, UsesSharedCash, EditingCost, EditingSettlement,
-        Payer?.Source.Id, Recipient?.Source.Id, RefundOriginal?.Source.Id, Movement?.Source.Id, UsesDestinationAmount, Note,
+        Payer?.Source.Id, Recipient?.Source.Id, RefundOriginal?.Source.Id, Movement?.Source.Id, MovementSearch, UsesDestinationAmount, Note,
         string.Join(";", Shares.Select(row => DraftFingerprint.Create(row.Contact.Id, row.Stamp))));
     // Acceptance retires the original input before publishing service changes or reading another snapshot.
-    private void AcceptEditor()
-    { committedInAction = true; needsRefresh = true; ClearEditor(); Refresh(); }
+    private void AcceptEditor(string originalStamp)
+    { RecordAccepted(); needsRefresh = true; if (EditorStamp() == originalStamp) ClearEditor(); Refresh(); }
+    /// <summary>Records only the original returned commit before fallible disposal or publication.</summary>
+    private void RecordAccepted() { committedInAction = true; acceptedPending = true; }
     private void Failed(string key)
-    { errorKey = committedInAction ? "HouseholdCost_SavedFollowUpFailed" : key; if (committedInAction) needsRefresh = true; }
+    { errorKey = acceptedPending || committedInAction ? "HouseholdCost_SavedFollowUpFailed" : key; ready = false; needsRefresh = true; }
     /// <summary>Covered publication only after the complete coherent actual native read.</summary>
     public bool IsReady => ready;
     /// <summary>Current read-only hint; Save still rechecks actual role/file/clock under the writer.</summary>
-    public bool CanWrite => ready && !needsRefresh && visible is not null && !IsBusy && review?.CanWrite == true;
+    public bool CanWrite => ready && !needsRefresh && OwnsPresentation && !HasPendingOperation && review?.CanWrite == true;
     /// <summary>Read and explicit cancel remain available without financial write authority.</summary>
-    public bool CanInteract => ready && visible is not null && !IsBusy;
+    public bool CanInteract => ready && OwnsPresentation && !HasPendingOperation;
+    /// <summary>The original command remains owned even if shared busy feedback changes.</summary>
+    public bool HasPendingOperation => commandActive || IsBusy;
+    /// <summary>Only an explicit source retry may reopen a covered original workspace.</summary>
+    public bool CanRead => OwnsPresentation && !HasPendingOperation;
     /// <summary>Financial actions cannot be retired during their submitted save.</summary>
-    public bool CanLeave => !IsBusy;
+    public bool CanLeave => leaveApproved || (!HasPendingOperation && !HasEditor) || readingSource && !HasEditor;
+    /// <summary>An unsubmitted cost or repayment requires its original explicit discard consent before departure.</summary>
+    public bool NeedsLeaveConfirmation => HasEditor && !leaveApproved;
     /// <summary>Actual cost and repayment drafts share one explicit Save/Cancel surface.</summary>
     public bool HasEditor => EditingCost || EditingSettlement;
     /// <summary>A new unsaved draft has no durable cost/repayment record to remove.</summary>
@@ -209,7 +232,21 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
     /// <summary>Starts a covered local read only after native appearance.</summary>
     public async Task ActivateAsync()
     {
-        visible?.Cancel(); visible?.Dispose(); visible = new(); ready = false;
+        if (rootRetired || ownsRoot?.Invoke() == false) return;
+        if (visible is not null)
+        {
+            if (commandCompletion is { } pending) { await pending.Task; return; }
+            // A visible source failure needs explicit Retry, not another appearance read.
+            if (!ready && errorKey is null) await ReloadAsync();
+            return;
+        }
+        // A departing read can still be unwinding its original factory. Never overlap it
+        // with work belonging to a newly visible frame.
+        if (commandCompletion is { } retiring) await retiring.Task;
+        // A new native frame must read its own source; another frame's historical
+        // acknowledgement is never feedback about this initial source read.
+        acceptedPending = false; committedInAction = false; primarySubmitted = false;
+        visible = new(); ready = false;
         translator.PropertyChanged -= TranslationChanged; translator.PropertyChanged += TranslationChanged;
         await ReloadAsync();
     }
@@ -223,50 +260,74 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
     {
         if ((EditingCost || EditingSettlement) && !await Confirm("HouseholdCost_Discard")) return;
         await ReadAsync(access, ct); ClearEditor();
+    }, allowCovered: true, readOnly: true);
+    /// <summary>Allows only the confirmed original native destination; a failed/cancelled return retains the draft.</summary>
+    public Task RequestLeaveAsync(Func<Task> leave) => RunAsync(async (access, _) =>
+    {
+        ArgumentNullException.ThrowIfNull(leave);
+        if (HasEditor && !await Confirm("HouseholdCost_Discard")) return;
+        access.Validate(); leaveApproved = true; Refresh();
+        try { await leave(); }
+        finally { leaveApproved = false; Refresh(); }
     }, allowCovered: true);
     [RelayCommand] private Task NewCostAsync() => RunAsync(async (access, _) =>
     { if (review?.CanWrite == true && (!HasEditor || await Confirm("HouseholdCost_Discard"))) { access.Validate(); StartCost(null); } });
     [RelayCommand] private Task EditCostAsync(HouseholdCostItem item) => RunAsync(async (access, _) =>
-    { if (Costs.Contains(item) && (!HasEditor || await Confirm("HouseholdCost_Discard"))) { access.Validate(); StartCost(item.Source); } });
+    { if (Costs.Contains(item) && (!HasEditor || await Confirm("HouseholdCost_Discard"))) { access.Validate(); if (Costs.Contains(item)) StartCost(item.Source); } });
     [RelayCommand] private Task NewSettlementAsync() => RunAsync(async (access, _) =>
     { if (review?.CanWrite == true && (!HasEditor || await Confirm("HouseholdCost_Discard"))) { access.Validate(); StartSettlement(null); } });
     [RelayCommand] private Task EditSettlementAsync(HouseholdSettlementItem item) => RunAsync(async (access, _) =>
-    { if (Settlements.Contains(item) && (!HasEditor || await Confirm("HouseholdCost_Discard"))) { access.Validate(); StartSettlement(item.Source); } });
+    { if (Settlements.Contains(item) && (!HasEditor || await Confirm("HouseholdCost_Discard"))) { access.Validate(); if (Settlements.Contains(item)) StartSettlement(item.Source); } });
     [RelayCommand] private void CancelEdit() { if (CanInteract) { ClearEditor(); Refresh(); } }
     [RelayCommand] private Task AddContactAsync() => RunAsync(async (access, ct) =>
     {
         if (review?.CanWrite != true) return;
-        var name = await interaction.PromptAsync(translator["HouseholdCost_Contacts"], translator["HouseholdCost_ContactName"],
-            translator["Common_Save"], translator["Common_Cancel"], maxLength: 100);
+        var name = await AwaitNativeAsync(() => interaction.PromptAsync(translator["HouseholdCost_Contacts"], translator["HouseholdCost_ContactName"],
+            translator["Common_Save"], translator["Common_Cancel"], maxLength: 100));
         if (string.IsNullOrWhiteSpace(name)) return; access.Validate();
         if ((EditingCost || EditingSettlement) && !await Confirm("HouseholdCost_Discard")) return;
-        access.Validate(); await store.SaveContactAsync(review, new() { Name = name.Trim() }, ct); AcceptEditor(); await ReadAsync(access, ct);
+        access.Validate(); var original = review!; var stamp = EditorStamp();
+        primarySubmitted = true;
+        await store.SaveContactAsync(original, new() { Name = name.Trim() }, ct, CaptureWriterOwner(access, original, stamp), RecordAccepted);
+        AcceptEditor(stamp); await ReadAsync(access, ct);
     });
     [RelayCommand] private Task ManageContactAsync(HouseholdContactChoice item) => RunAsync(async (access, ct) =>
     {
         if (review?.CanWrite != true || !Contacts.Contains(item)) return;
-        var choice = await interaction.ChooseAsync(translator["HouseholdCost_Contacts"], translator["Common_Cancel"],
-            translator["HouseholdCost_Rename"], translator[item.Source.IsArchived ? "HouseholdCost_Reactivate" : "HouseholdCost_Archive"]);
+        var choice = await AwaitNativeAsync(() => interaction.ChooseAsync(translator["HouseholdCost_Contacts"], translator["Common_Cancel"],
+            translator["HouseholdCost_Rename"], translator[item.Source.IsArchived ? "HouseholdCost_Reactivate" : "HouseholdCost_Archive"]));
         if (choice is null || choice == translator["Common_Cancel"]) return; access.Validate();
+        if (!Contacts.Contains(item)) throw new OperationCanceledException("The original household contact retired.");
         var name = item.Source.Name; var archived = item.Source.IsArchived;
         if (choice == translator["HouseholdCost_Rename"])
         {
-            var text = await interaction.PromptAsync(translator["HouseholdCost_Contacts"], translator["HouseholdCost_ContactName"],
-                translator["Common_Save"], translator["Common_Cancel"], name, 100);
+            var text = await AwaitNativeAsync(() => interaction.PromptAsync(translator["HouseholdCost_Contacts"], translator["HouseholdCost_ContactName"],
+                translator["Common_Save"], translator["Common_Cancel"], name, 100));
             if (string.IsNullOrWhiteSpace(text)) return; name = text.Trim();
         }
-        else archived = !archived;
+        else if (choice == translator[item.Source.IsArchived ? "HouseholdCost_Reactivate" : "HouseholdCost_Archive"]) archived = !archived;
+        else throw new OperationCanceledException("The original household contact choice changed.");
         if ((EditingCost || EditingSettlement) && !await Confirm("HouseholdCost_Discard")) return;
-        access.Validate(); await store.SaveContactAsync(review, new(item.Source.Id) { Name = name, IdentityId = item.Source.IdentityId, IsArchived = archived }, ct);
-        AcceptEditor(); await ReadAsync(access, ct);
+        access.Validate(); var original = review!; var stamp = EditorStamp();
+        primarySubmitted = true;
+        await store.SaveContactAsync(original, new(item.Source.Id) { Name = name, IdentityId = item.Source.IdentityId, IsArchived = archived }, ct,
+            CaptureWriterOwner(access, original, stamp, () => Contacts.Contains(item)), RecordAccepted);
+        AcceptEditor(stamp); await ReadAsync(access, ct);
     });
     [RelayCommand] private Task FindMovementsAsync() => RunAsync(async (access, ct) =>
     {
         var selectedDate = Date; var kind = EditingSettlement ? EntryKind.Transfer : IsRefund ? EntryKind.Refund : EntryKind.Expense;
-        var rows = await store.FindMovementsAsync(selectedDate, kind, MovementSearch, ct); access.Validate();
+        var stamp = EditorStamp(); var search = MovementSearch; var original = review;
+        void Current()
+        {
+            access.Validate();
+            if (stamp != EditorStamp() || search != MovementSearch || !ReferenceEquals(original, review))
+                throw new OperationCanceledException("The original household movement query changed.");
+        }
+        var rows = await store.FindMovementsAsync(selectedDate, kind, search, ct, Current); Current();
         Movements.Clear(); Movement = null;
         foreach (var row in rows) Movements.Add(new(row, MovementCaption(row)));
-    });
+    }, readOnly: true);
     [RelayCommand] private Task SaveAsync() => RunAsync(async (access, ct) =>
     {
         if (review?.CanWrite != true || !EditingCost && !EditingSettlement) return;
@@ -294,6 +355,7 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
         }
         if (!valid) return;
         var reviewed = review; var stamp = EditorStamp(); var currencyCode = CurrencyCode; var isCost = EditingCost;
+        var selectedCash = UsesSharedCash ? Movement?.Source : null;
         var cost = isCost ? new HouseholdCost(costId) { Title = Title.Trim(), Date = Date, Amount = amount, CurrencyCode = currencyCode,
                 Kind = IsRefund ? HouseholdCostKind.Refund : HouseholdCostKind.Expense, PaymentKind = UsesSharedCash ? HouseholdPaymentKind.SharedAccount : HouseholdPaymentKind.Private,
                 PaidByContactId = UsesSharedCash ? null : Payer!.Source.Id, EntryId = UsesSharedCash ? Movement!.Source.Id : null,
@@ -301,23 +363,27 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
         var settlement = !isCost ? new HouseholdSettlement(editingSettlement ?? Guid.CreateVersion7()) { FromContactId = Payer!.Source.Id, ToContactId = Recipient!.Source.Id,
                 Date = Date, Amount = amount, CurrencyCode = currencyCode, EntryId = UsesSharedCash ? Movement?.Source.Id : null,
                 UsesDestinationAmount = UsesSharedCash && UsesDestinationAmount, Note = Empty(Note) } : null;
-        bool Current() => visible is not null && !ct.IsCancellationRequested && ReferenceEquals(review, reviewed)
-            && stamp == EditorStamp() && !_amountInput.NeedsReview(currencyCode) && Shares.All(row => row.IsCurrent(currencyCode));
+        var originalOwner = CaptureWriterOwner(access, reviewed, stamp);
+        bool Current() => originalOwner() && !_amountInput.NeedsReview(currencyCode) && Shares.All(row => row.IsCurrent(currencyCode));
         if (!await Confirm("HouseholdCost_SaveConfirm")) return; access.Validate();
         if (!Current()) throw new InvalidOperationException("The original household financial draft changed during consent.");
-        if (isCost) await store.SaveCostAsync(reviewed, cost!, allocations, ct, Current);
-        else await store.SaveSettlementAsync(reviewed, settlement!, ct, Current);
-        AcceptEditor();
-        access.Validate(); await environment.PublishAppliedAsync(ct); await ReadAsync(access, ct); ClearEditor();
+        primarySubmitted = true;
+        if (isCost) await store.SaveCostAsync(reviewed, cost!, allocations, ct, Current, RecordAccepted, selectedCash);
+        else await store.SaveSettlementAsync(reviewed, settlement!, ct, Current, RecordAccepted, selectedCash);
+        AcceptEditor(stamp);
+        access.Validate(); await environment.PublishAppliedAsync(ct); await ReadAsync(access, ct);
     });
     [RelayCommand] private Task DeleteAsync() => RunAsync(async (access, ct) =>
     {
-        if (review?.CanWrite != true || editingCost is null && editingSettlement is null || !await Confirm("HouseholdCost_DeleteConfirm")) return;
+        if (review?.CanWrite != true || editingCost is null && editingSettlement is null) return;
+        var original = review; var stamp = EditorStamp(); var cost = editingCost; var settlement = editingSettlement;
+        if (!await Confirm("HouseholdCost_DeleteConfirm")) return;
         access.Validate();
-        if (editingCost is { } cost) await store.DeleteCostAsync(review, cost, ct);
-        else await store.DeleteSettlementAsync(review, editingSettlement!.Value, ct);
-        AcceptEditor();
-        access.Validate(); await environment.PublishAppliedAsync(ct); await ReadAsync(access, ct); ClearEditor();
+        var current = CaptureWriterOwner(access, original, stamp); primarySubmitted = true;
+        if (cost is { } costId) await store.DeleteCostAsync(original, costId, ct, current, RecordAccepted);
+        else await store.DeleteSettlementAsync(original, settlement!.Value, ct, current, RecordAccepted);
+        AcceptEditor(stamp);
+        access.Validate(); await environment.PublishAppliedAsync(ct); await ReadAsync(access, ct);
     });
 
     private void StartCost(HouseholdCost? row)
@@ -345,7 +411,7 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
         SelectOriginalMovement(row?.EntryId); Refresh();
     }
     private async Task ReadAsync(PersonalSyncAccess access, CancellationToken ct)
-    { var next = await store.ReadAsync(ct); access.Validate(); ct.ThrowIfCancellationRequested(); review = next; ready = true; needsRefresh = false; Publish(); }
+    { var next = await store.ReadAsync(ct); access.Validate(); ct.ThrowIfCancellationRequested(); review = next; ready = true; needsRefresh = false; Publish(); acceptedPending = false; }
     private void SelectOriginalMovement(Guid? id)
     {
         if (id is null) return;
@@ -401,22 +467,56 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
         RefundOriginal = OriginalCosts.SingleOrDefault(item => item.Source.Id == originalId);
         string Name(Guid id) => review.Contacts.Single(item => item.Id == id).Name;
     }
-    private async Task RunAsync(Func<PersonalSyncAccess, CancellationToken, Task> action, bool allowCovered = false)
+    private async Task RunAsync(Func<PersonalSyncAccess, CancellationToken, Task> action, bool allowCovered = false, bool readOnly = false)
     {
-        if (visible is null || IsBusy || (!ready || needsRefresh) && !allowCovered) return;
-        IsBusy = true; errorKey = null; committedInAction = false; Refresh();
+        if (!OwnsPresentation || HasPendingOperation || (!ready || needsRefresh) && !allowCovered) return;
+        var originalVisible = visible!;
+        var originalDisclosure = disclosureVersion;
+        var completion = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        commandCompletion = completion; commandActive = true; readingSource = readOnly;
+        bool Current() => OwnsPresentation && ReferenceEquals(visible, originalVisible) && !originalVisible.IsCancellationRequested;
+        IsBusy = true; errorKey = null; committedInAction = false; primarySubmitted = false; Refresh();
         try
         {
-            var access = environment.Capture(); using var linked = CancellationTokenSource.CreateLinkedTokenSource(access.Cancellation, visible.Token);
+            var captured = environment.Capture(); using var linked = CancellationTokenSource.CreateLinkedTokenSource(captured.Cancellation, originalVisible.Token);
+            var access = new PersonalSyncAccess(() =>
+            {
+                captured.Validate(); linked.Token.ThrowIfCancellationRequested();
+                if (!Current() || originalDisclosure != disclosureVersion)
+                    throw new OperationCanceledException("The original household cost frame retired.");
+            }, linked.Token, captured.Scope);
+            operationOwner = access.Validate; access.Validate();
             await action(access, linked.Token); access.Validate();
         }
-        catch (OperationCanceledException) { if (committedInAction) Failed("HouseholdCost_ActionFailed"); }
-        catch (HouseholdCostRejectedException) { Failed("HouseholdCost_InvalidGraph"); }
-        catch (HouseholdWriteRejectedException) { Failed("HouseholdCost_ReadOnly"); }
-        catch (Exception error) when (error is not OutOfMemoryException) { Failed("HouseholdCost_ActionFailed"); }
-        finally { IsBusy = false; Refresh(); }
+        catch (OperationCanceledException) { if (Current() && (committedInAction || primarySubmitted)) Failed("HouseholdCost_ActionFailed"); }
+        catch (HouseholdCostRejectedException) { if (Current()) Failed("HouseholdCost_InvalidGraph"); }
+        catch (HouseholdWriteRejectedException) { if (Current()) Failed("HouseholdCost_ReadOnly"); }
+        catch (Exception error) when (error is not OutOfMemoryException) { if (Current()) Failed("HouseholdCost_ActionFailed"); }
+        finally
+        {
+            commandActive = false; readingSource = false; IsBusy = false;
+            operationOwner = null; commandCompletion = null; completion.TrySetResult(); Refresh();
+        }
     }
-    private Task<bool> Confirm(string key) => interaction.ConfirmAsync(translator["HouseholdCost_Title"], translator[key], translator["Common_Save"], translator["Common_Cancel"]);
+    /// <summary>Native consent belongs to its unchanged original disclosure, review and literal editor.</summary>
+    private async Task<T> AwaitNativeAsync<T>(Func<Task<T>> effect)
+    {
+        var validate = operationOwner ?? throw new OperationCanceledException("The original household cost operation retired.");
+        validate(); var stamp = EditorStamp(); var selected = review; var search = MovementSearch;
+        var result = await effect(); validate();
+        if (stamp != EditorStamp() || !ReferenceEquals(selected, review) || search != MovementSearch)
+            throw new OperationCanceledException("The original household cost consent changed.");
+        return result;
+    }
+    private Task<bool> Confirm(string key) => AwaitNativeAsync(() => interaction.ConfirmAsync(translator["HouseholdCost_Title"], translator[key],
+        translator[key switch { "HouseholdCost_Discard" => "Common_Discard", "HouseholdCost_DeleteConfirm" => "Common_Delete", _ => "Common_Save" }],
+        translator[key == "HouseholdCost_Discard" ? "Common_KeepEditing" : "Common_Cancel"]));
+    /// <summary>Rechecks native ownership and the complete original editor at the actual SQLite writer boundaries.</summary>
+    private Func<bool> CaptureWriterOwner(PersonalSyncAccess access, HouseholdCostReview original, string stamp, Func<bool>? target = null) => () =>
+    {
+        access.Validate();
+        return OwnsPresentation && ReferenceEquals(review, original) && EditorStamp() == stamp && (target?.Invoke() ?? true);
+    };
     private static string? Empty(string value) => string.IsNullOrWhiteSpace(value) ? null : value.Trim();
     private void ClearEditor()
     {
@@ -424,7 +524,7 @@ public sealed partial class HouseholdCostsViewModel(HouseholdCostStore store, IP
         Payer = Recipient = null; RefundOriginal = null; Movement = null; Shares.Clear(); Movements.Clear();
         TitleError = AmountError = ReferenceError = SharesError = null;
     }
-    private void TranslationChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs args) { Publish(); RefreshMoneyTexts(); Refresh(); }
+    private void TranslationChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs args) { disclosureVersion++; Publish(); RefreshMoneyTexts(); Refresh(); }
     private void Refresh()
-    { foreach (var property in new[] { nameof(IsReady), nameof(CanWrite), nameof(CanInteract), nameof(CanLeave), nameof(CanDelete), nameof(Error) }) OnPropertyChanged(property); }
+    { foreach (var property in new[] { nameof(IsReady), nameof(HasPendingOperation), nameof(CanRead), nameof(CanWrite), nameof(CanInteract), nameof(CanLeave), nameof(NeedsLeaveConfirmation), nameof(CanDelete), nameof(Error) }) OnPropertyChanged(property); }
 }

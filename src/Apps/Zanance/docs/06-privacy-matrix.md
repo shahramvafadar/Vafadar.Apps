@@ -1566,3 +1566,9 @@ API in a fresh loopback database; no real credentials or private key frames were
 Only public row counts leave private household storage. The fresh runtime/database is
 retired; original project services and D607 remain intact. Genuine provider/identity and
 whole-key/database acceptance stay open. [Evidence](quality/original-household-workspace.md).
+
+
+### D-662 original financial source boundaries
+
+No new permission, financial schema or cryptographic grant. Complete source/account tokens are memory-only, keep original protected membership, and grant no private access. Local fictitious API qualification exported typed financial observations and public private-storage counts, never private key frames or owner credentials.
+[Evidence and cleanup limits](quality/original-household-costs-workspace.md).

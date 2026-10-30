@@ -8268,3 +8268,9 @@ again. D661 receives one delayed exact-head check. WholeDB/key/security/stabilit
 A11Y/iOS/genuine identity/provider/Store/release remain separate; overall goal active.
 
 [Evidence](quality/original-household-workspace.md)
+
+
+### D-662 bounded costs acceptance
+
+46 selected cases and strict Windows/full offline APK passed. Native one-cost acceptance, 18 original error contexts, read-only Retry, after-DML rollback and final V2 read-only adoption passed on their recorded versions. Native refunds/repayments/nonempty protected cash and all writer branches are not qualified.
+[Evidence and cleanup limits](quality/original-household-costs-workspace.md).

@@ -5283,3 +5283,9 @@ physical adoption, database/key recovery, security, stability, speed, A11Y, iOS,
 identity/provider, Store or release. D607 remains untouched and pending its original
 three deadlines. D660 CI status remains unknown and consumed; no retry is authorized.
 [Evidence and cleanup limits](quality/original-household-workspace.md).
+
+
+### D-662 household costs gate
+
+Original costs ownership/source/receipt batch is delivered with bounded native evidence. Physical adoption, broad financial workflows, DB/key recovery, security, stability, speed, A11Y, iOS, genuine identity/provider, Store and release remain separate. D607 three deadlines and unread post-reboot source remain protected.
+[Evidence and cleanup limits](quality/original-household-costs-workspace.md).

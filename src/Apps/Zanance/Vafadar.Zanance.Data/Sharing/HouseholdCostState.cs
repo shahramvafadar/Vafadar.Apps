@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Ledger;
@@ -49,14 +50,14 @@ internal sealed record HouseholdCostState(HouseholdContact[] Contacts, Household
         if (issues.Count != 0) throw new HouseholdCostRejectedException(issues);
     }
 
-    /// <summary>Opaque optimistic review token over explicit cost facts, excluding operational timestamps and device state.</summary>
+    /// <summary>Opaque original cost facts and complete linked cash/account inputs; no native device state is included.</summary>
     internal string Fingerprint()
     {
         // BinaryWriter length-prefixes every string, so separate values cannot produce an ambiguous concatenation.
         // Incremental hashing keeps even a large retained graph out of a second serialized memory buffer.
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         using var stream = new HashStream(hash); using var writer = new BinaryWriter(stream, Encoding.UTF8, leaveOpen: true);
-        writer.Write(1); writer.Write(Contacts.Length);
+        writer.Write(2); writer.Write(Contacts.Length);
         foreach (var row in Contacts.OrderBy(row => row.Id))
         { writer.Write(row.Id.ToByteArray()); writer.Write(row.Name); Text(row.IdentityId); writer.Write(row.IsArchived); }
         writer.Write(Costs.Length);
@@ -76,9 +77,25 @@ internal sealed record HouseholdCostState(HouseholdContact[] Contacts, Household
             writer.Write(row.Date.DayNumber); writer.Write(row.Amount); writer.Write(row.CurrencyCode); Id(row.EntryId);
             writer.Write(row.UsesDestinationAmount); Text(row.Note);
         }
+        writer.Write(CashFingerprint(Entries.Values, Accounts.Values));
         writer.Flush(); return Convert.ToHexStringLower(hash.GetHashAndReset());
         void Id(Guid? value) { writer.Write(value.HasValue); if (value is { } id) writer.Write(id.ToByteArray()); }
         void Text(string? value) { writer.Write(value is not null); if (value is not null) writer.Write(value); }
+    }
+
+    /// <summary>Preserves all original ledger fields and account facts with the existing AOT source contracts.</summary>
+    internal static string CashFingerprint(IEnumerable<LedgerEntry> entries, IEnumerable<Account> accounts)
+    {
+        using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+        using var stream = new HashStream(hash);
+        // D-662: reuse the complete original transaction contract, including Tags and
+        // its independent list ownership. No second financial JSON buffer is retained.
+        JsonSerializer.Serialize(stream, entries.OrderBy(row => row.Id).ToList(), TransactionsReadJson.Default.ListLedgerEntry);
+        var ordered = accounts.OrderBy(row => row.Id).ToArray();
+        using var writer = new BinaryWriter(stream, Encoding.UTF8, leaveOpen: true);
+        writer.Write(ordered.Length); writer.Flush();
+        foreach (var account in ordered) JsonSerializer.Serialize(stream, account, AccountEditorJson.Default.Account);
+        return Convert.ToHexStringLower(hash.GetHashAndReset());
     }
 
     /// <summary>Write-only adapter for a standard incremental digest; it retains no financial buffer.</summary>

@@ -42,6 +42,14 @@ public partial class AppShell : Shell
     private bool _navigationRetired;
     private readonly List<WeakReference<Features.Sync.PersonalSyncPage>> _publishedPersonalSync = [];
     private readonly List<WeakReference<Features.Sharing.HouseholdPage>> _publishedHouseholds = [];
+    private readonly List<WeakReference<Features.Sharing.HouseholdCostsPage>> _publishedHouseholdCosts = [];
+    /// <summary>Registers the actual original cost page without retaining a departed native root.</summary>
+    internal void RegisterHouseholdCosts(Features.Sharing.HouseholdCostsPage page)
+    {
+        if (_navigationRetired) { page.RetireShellPublication(); return; }
+        if (!_publishedHouseholdCosts.Any(reference => reference.TryGetTarget(out var original) && ReferenceEquals(original, page)))
+            _publishedHouseholdCosts.Add(new(page));
+    }
     /// <summary>Only the current shell may retain original household publication.</summary>
     internal bool OwnsHouseholdPublication => !_navigationRetired;
     /// <summary>Retires actual household pages when this native root is replaced.</summary>
@@ -536,6 +544,7 @@ public partial class AppShell : Shell
         // D-577: the list can be retained too; otherwise it keeps pre-transfer/refund balances until Back/reopen.
         if (CurrentPage is Features.Sync.PersonalSyncPage personalSync) await Presentation.Failures.GuardAsync(personalSync.RefreshForNavigationAsync);
         if (CurrentPage is Features.Sharing.HouseholdPage householdPage) await Presentation.Failures.GuardAsync(householdPage.RefreshForNavigationAsync);
+        if (CurrentPage is Features.Sharing.HouseholdCostsPage householdCostsPage) await Presentation.Failures.GuardAsync(householdCostsPage.RefreshForNavigationAsync);
         else if (CurrentPage is ActiveItemsPage activeItems) await Presentation.Failures.GuardAsync(activeItems.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Profiles.ProfilesPage profiles) await Presentation.Failures.GuardAsync(profiles.RefreshForNavigationAsync);
         else if (CurrentPage is AccountsPage accounts) await Presentation.Failures.GuardAsync(accounts.RefreshForNavigationAsync);
@@ -587,7 +596,18 @@ public partial class AppShell : Shell
         var originalHouseholdPage = CurrentPage?.BindingContext is Features.Sharing.HouseholdViewModel ? CurrentPage : Security.NativeSensitivePresentation.Underlying(this);
         if (originalHouseholdPage?.BindingContext is Features.Sharing.HouseholdViewModel household && !household.CanLeave && args.CanCancel
             && !Security.NativeSensitivePresentation.Allows(this, originalHouseholdPage, args)) args.Cancel();
-        if (CurrentPage?.BindingContext is Features.Sharing.HouseholdCostsViewModel costs && !costs.CanLeave && args.CanCancel) args.Cancel();
+        var originalCostsPage = CurrentPage?.BindingContext is Features.Sharing.HouseholdCostsViewModel ? CurrentPage : Security.NativeSensitivePresentation.Underlying(this);
+        if (originalCostsPage?.BindingContext is Features.Sharing.HouseholdCostsViewModel costs && !costs.CanLeave && args.CanCancel
+            && !Security.NativeSensitivePresentation.Allows(this, originalCostsPage, args))
+        {
+            args.Cancel();
+            if (costs.NeedsLeaveConfirmation && !costs.HasPendingOperation)
+            {
+                var originalDestination = args.Target.Location;
+                Dispatcher.Dispatch(() => _ = Presentation.Failures.GuardAsync(() =>
+                    costs.RequestLeaveAsync(() => GoToAsync(originalDestination))));
+            }
+        }
         base.OnNavigating(args);
         if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
@@ -595,6 +615,9 @@ public partial class AppShell : Shell
         if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
             && CurrentPage is Features.Sharing.HouseholdPage departingHousehold) departingHousehold.RetirePublication();
+        if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
+                or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
+            && CurrentPage is Features.Sharing.HouseholdCostsPage departingCosts) departingCosts.RetirePublication();
         if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
             && CurrentPage is ActiveItemsPage choicePage) choicePage.RetirePublication();
@@ -713,6 +736,9 @@ public partial class AppShell : Shell
         foreach (var reference in _publishedHouseholds)
             if (reference.TryGetTarget(out var household)) household.RetireShellPublication();
         _publishedHouseholds.Clear();
+        foreach (var reference in _publishedHouseholdCosts)
+            if (reference.TryGetTarget(out var costs)) costs.RetireShellPublication();
+        _publishedHouseholdCosts.Clear();
         foreach (var reference in _publishedActiveItems)
             if (reference.TryGetTarget(out var choices)) choices.RetireShellPublication();
         _publishedActiveItems.Clear();

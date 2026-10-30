@@ -3949,3 +3949,18 @@ and UpdatedAt; after a read proves that commit, Finish returns the original root
 another Save/consent. Preserve encrypted recovery-file handoffs and original financial
 writers. An Activity-decor probe cannot qualify another modal window: retain its failure
 and distinguish actual modal XML/bounds evidence from glyph/ellipsis or general A11Y proof.
+
+
+## Original household costs source and command ownership (D-662)
+
+Retain one original-file worker transaction and complete original ledger/account facts,
+including all 32 ledger fields and independent Tags. A selected cash movement carries
+only an opaque source token, never a private role/key grant; recheck it inside the
+original writer before and after DML. Bind native consent, query, row and literal draft
+to their actual page/root/tab/disclosure, independently of mutable busy feedback.
+Record only returned commits before fallible disposal/publication; explicit read Retry
+must not replay accepted financial work. Dirty departure uses original Discard/Keep
+editing and clears nothing if the destination fails. Preserve InvalidOperationException
+for a false original writer predicate and keep after-DML rollback diagnostics at the
+actual boundary when adding an earlier ownership check. Refused cleanup scopes remain
+frozen without retry, subset, alternate method, move, escalation or reuse.

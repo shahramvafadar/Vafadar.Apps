@@ -110,14 +110,16 @@ internal static class CostMoneyQualification
         var repayment = JsonSerializer.Deserialize<HouseholdSettlement>(JsonSerializer.Serialize(original.Settlements.First()))!;
         repayment.Note = "Owned pending repayment edit that must roll back";
         var checks = 0;
-        try { await store.SaveCostAsync(original, cost, original.Allocations.Where(row => row.CostId == cost.Id).ToArray(), ct, () => ++checks < 3);
+        // D-662 adds the original owner check before opening a factory. Refuse at
+        // the fourth check so this still exercises actual DML before commit.
+        try { await store.SaveCostAsync(original, cost, original.Allocations.Where(row => row.CostId == cost.Id).ToArray(), ct, () => ++checks < 4);
             throw new InvalidDataException("Changed native cost accepted a retired owner."); }
-        catch (InvalidOperationException) when (checks == 3) { }
+        catch (InvalidOperationException) when (checks == 4) { }
         if (before != Facts(await store.ReadAsync(ct))) throw new InvalidDataException("Changed native cost did not roll back.");
         checks = 0;
-        try { await store.SaveSettlementAsync(original, repayment, ct, () => ++checks < 3);
+        try { await store.SaveSettlementAsync(original, repayment, ct, () => ++checks < 4);
             throw new InvalidDataException("Changed native repayment accepted a retired owner."); }
-        catch (InvalidOperationException) when (checks == 3) { }
+        catch (InvalidOperationException) when (checks == 4) { }
         if (before != Facts(await store.ReadAsync(ct))) throw new InvalidDataException("Changed native repayment did not roll back.");
         await File.WriteAllTextAsync(done, JsonSerializer.Serialize(new { ChangedRowRollbacks = 2, AcceptedWrites = 0, NoHttp = true }), ct);
         proof("changed-native-cost-title-and-repayment-note-roll-back-after-original-save-before-commit-without-accepted-action-replay");

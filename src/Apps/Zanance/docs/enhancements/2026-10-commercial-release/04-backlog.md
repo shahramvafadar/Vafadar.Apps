@@ -8138,3 +8138,22 @@ again. D661 receives one delayed exact-head check. WholeDB/key/security/stabilit
 A11Y/iOS/genuine identity/provider/Store/release remain separate; overall goal active.
 
 [Evidence](../../quality/original-household-workspace.md)
+
+
+### D-662 - Original household costs workspace
+
+Completed original-file worker reads and page/root/tab/disclosure/query/row/editor/native
+consent/writer ownership for actual costs, explicit shares and repayments. Complete
+32-field cash/account tokens and original selected-movement validation preserve source
+facts; known returned commits survive follow-up failure without Save replay. Dirty
+navigation uses actual Discard/Keep editing and retains input on failed return.
+46 distinct selected cases (32 new, 14 existing), strict Windows/full signed offline
+384AOT/408ELF/1608staticLOAD passed. One actual private cost/share1234 with a post-commit
+Changed failure, 18 same-process native contexts, read-only Retry, one after-DML rollback
+and final V2 read-only adoption/empty protected cash query passed in their recorded
+versions. No ledger posting, settlement, payment or accepted-cost replay. Fresh runtime
+and data fixture retired, prior five containers exact. Supplementary ten-root cleanup
+was rejected before process creation; 13449 files/815868513 logical bytes stay frozen
+without retry/subset/alternate/move/escalation/reuse. Phone/D607 unchanged; broad financial,
+physical, DB/key/security/stability/speed/A11Y/iOS/provider/Store/release gates remain open.
+[Evidence](../../quality/original-household-costs-workspace.md)

@@ -3339,3 +3339,9 @@ publication. Reloading the committed fact enables root-only Finish without a sec
 confirmation or Save. Eighteen original modal contexts passed XML/bounds/source guards;
 the Activity-decor probe is disqualified, not a full glyph/ellipsis measurement.
 [Evidence](quality/original-household-workspace.md).
+
+
+### D-662 actual household costs navigation
+
+Dirty Back/tab/toolbar departure uses Discard / Keep editing, and Delete uses Delete / Cancel. A failed destination retains the literal draft. Covered source errors require explicit Reload; known accepted changes never invite a duplicate Save.
+[Evidence and cleanup limits](quality/original-household-costs-workspace.md).
