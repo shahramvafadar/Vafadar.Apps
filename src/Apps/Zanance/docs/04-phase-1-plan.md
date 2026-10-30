@@ -2035,3 +2035,34 @@ older refused scopes are not retried or reused. Phone/D-607/three deadlines/post
 source remain untouched. Physical adoption and broader DB/key/security/performance/stability/
 accessibility/iOS/provider/Store/release gates remain separate. Overall delivery stays active.
 [Complete evidence](quality/original-display-unit-workspace.md).
+
+### D-651 - Complete original reference workspace and offline access lifetime (2026-10-30)
+
+Original market-reference reads now pin the actual captured file, read assets and bounded
+saved history in one deferred worker transaction, publish complete collections and retire
+page/tab/root cache/network work. Old public Load cannot activate a departed page; equal
+copied choices do not gain original review authority. Current native/source checks remain
+in the exact selective reference writer and typed committed receipt. Original free ECB
+provenance, precision, stale acknowledgment, asset mapping, manual fallback and explicit
+provider/financial consent remain unchanged. Offline startup/Sleep/Resume/navigation now
+maintain the same native access lifetime needed for local reference/analysis, without
+enabling network work or a new permission. No model/schema/runtime/provider policy changes.
+
+Three original actual-source failures, the actual offline native pre-read refusal and
+readiness/selector refusals remain preserved.11distinct new and11affected existing cases
+pass; host logs identify10.0.12, not a relabelled application servicing runtime. Final strict
+Windows and full offline384AOT/408ELF/1608staticLOAD pass. Same fresh API36/x64/4096 UID10216
+continues4422to5461 once no-reset with exact original source/consumed-marker adoption.
+Actual pending Back cancels, old closed Load refuses, full inline source error/one Retry
+recovers, and complete original19-table source stays equal. Accounts/rates/financial posts
+are zero; no provider, preparation or earlier positive monetary/ECB matrix is replayed.
+
+Exact original display/OS/boot restore; only fresh UID/data,18hash-matched XMLs442,981bytes
+and owned AVD retire. Four Clean operations remove28,955files1,990,429,171logicalbytes and
+official AVD deletion25files5,312,295,890bytes. Supplementary13-target cleanup is blocked
+before process creation;3,733files997,346,279bytes remain and no retry/subset/alternate/move/
+escalation/reuse is attempted. Used signed packages/final shipping/pre-refusal archives and
+evidence remain. Phone/D-607/three deadlines/consumed reboot/unread source remain untouched.
+Physical adoption and broad DB/key/security/performance/stability/accessibility/iOS/provider/
+Store/release gates stay separate; overall delivery stays active. Complete evidence:
+`quality/original-market-reference-workspace.md`.

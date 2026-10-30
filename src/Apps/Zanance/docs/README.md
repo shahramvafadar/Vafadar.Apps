@@ -93,3 +93,5 @@ Original Settings source and current-profile reset: [D-648 runtime evidence](qua
 Original manual-rate workspace and reference navigation: [D-649 runtime evidence](quality/original-manual-rate-workspace.md). Physical adoption and release gates remain separate.
 
 Original display-unit workspace and publication authority: [D-650 runtime evidence](quality/original-display-unit-workspace.md). Physical adoption and release gates remain separate.
+
+Original reference workspace and offline access lifetime: [D-651 runtime evidence](quality/original-market-reference-workspace.md). Physical adoption and release gates remain separate.

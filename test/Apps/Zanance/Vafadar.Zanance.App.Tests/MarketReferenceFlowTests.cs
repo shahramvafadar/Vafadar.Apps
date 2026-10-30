@@ -51,7 +51,7 @@ public sealed class MarketReferenceFlowTests
         var quote = new MarketQuote(1, new(catalog.Provider, catalog.Revision, symbol.Id, date), catalog, symbol,
             new("fictitious-quote", date, instant.AddHours(-1), 1.23456789m), instant, instant.AddMinutes(1), instant.AddHours(1));
         var runtime = new Runtime(f.Directory.Combine("zanance.db"), selectedQuote ?? quote);
-        var model = new MarketReferenceViewModel(f.Services.GetRequiredService<MarketReferenceStore>(), f.Services.GetRequiredService<HoldingStore>(),
+        var model = new MarketReferenceViewModel(f.Services.GetRequiredService<MarketReferenceStore>(),
             runtime, f.Translator, f.Localization, new DateFormatter(f.Localization), f.Time);
         return (model, runtime);
     }

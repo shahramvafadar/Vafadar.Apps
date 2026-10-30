@@ -54,6 +54,17 @@ public partial class AppShell : Shell
     internal bool OwnsHoldingDetailPublication => !_navigationRetired;
     /// <summary>Gets whether this root still owns original report source and its explicit explanation handoffs.</summary>
     internal bool OwnsReportPublication => !_navigationRetired;
+    /// <summary>Tracks only weak original reference pages for terminal root retirement.</summary>
+    private readonly List<WeakReference<Features.Rates.MarketReferencePage>> _marketReferencePages = [];
+    /// <summary>Gets whether this actual root owns original reference source and consent.</summary>
+    internal bool OwnsMarketReferencePublication => !_navigationRetired;
+    /// <summary>Registers the actual reference page without retaining a replacement application root.</summary>
+    internal void RegisterMarketReference(Features.Rates.MarketReferencePage page)
+    {
+        if (_navigationRetired) { page.RetireShellPublication(); return; }
+        _marketReferencePages.RemoveAll(item => !item.TryGetTarget(out _));
+        if (!_marketReferencePages.Any(item => item.TryGetTarget(out var old) && ReferenceEquals(old, page))) _marketReferencePages.Add(new(page));
+    }
     /// <summary>Tracks only weak original display-unit pages for terminal root retirement.</summary>
     private readonly List<WeakReference<Features.Rates.DisplayUnitsPage>> _displayUnitPages = [];
     /// <summary>Gets whether this actual root owns original display-unit publication.</summary>
@@ -465,6 +476,7 @@ public partial class AppShell : Shell
         else if (CurrentPage is PlanDetailPage planDetail) await Presentation.Failures.GuardAsync(planDetail.RefreshForNavigationAsync);
         else if (CurrentPage is OccurrencePage occurrence) await Presentation.Failures.GuardAsync(occurrence.RefreshForNavigationAsync);
         // D-497: Insights can retain both the forecast and its saved comparison while another tab changes the ledger.
+        else if (CurrentPage is Features.Rates.MarketReferencePage marketReference) await Presentation.Failures.GuardAsync(marketReference.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Rates.DisplayUnitsPage units) await Presentation.Failures.GuardAsync(units.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Rates.RatesPage rates) await Presentation.Failures.GuardAsync(rates.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Settings.SettingsPage settings) await Presentation.Failures.GuardAsync(settings.RefreshForNavigationAsync);
@@ -538,6 +550,7 @@ public partial class AppShell : Shell
         {
             if (CurrentPage is CategoriesPage categories) categories.RetirePublication();
             if (CurrentPage is AccountEditorPage accountEditor) accountEditor.RetirePublication();
+            if (CurrentPage is Features.Rates.MarketReferencePage marketReference) marketReference.RetirePublication();
             if (CurrentPage is Features.Rates.DisplayUnitsPage units) units.RetirePublication();
             if (CurrentPage is Features.Rates.RatesPage rates) rates.RetirePublication();
             if (CurrentPage is Features.Settings.SettingsPage settings) settings.RetirePublication();
@@ -620,6 +633,8 @@ public partial class AppShell : Shell
         foreach (var reference in _publishedAssetTypeEditors)
             if (reference.TryGetTarget(out var editor)) editor.RetireShellPublication();
         _publishedAssetTypeEditors.Clear();
+        foreach (var reference in _marketReferencePages) if (reference.TryGetTarget(out var marketReference)) marketReference.RetireShellPublication();
+        _marketReferencePages.Clear();
         foreach (var reference in _displayUnitPages) if (reference.TryGetTarget(out var units)) units.RetireShellPublication();
         _displayUnitPages.Clear();
         foreach (var reference in _ratesPages) if (reference.TryGetTarget(out var rates)) rates.RetireShellPublication();

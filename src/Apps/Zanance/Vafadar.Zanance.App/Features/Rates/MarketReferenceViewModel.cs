@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+using Vafadar.Zanance.App.Presentation;
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -22,7 +22,7 @@ public sealed record MarketCachedChoice(MarketQuote Quote, string Caption);
 public sealed record MarketHistoryChoice(Guid Id, string Caption, string Details);
 
 /// <summary>Explicit reference lookup, offline selection and exact original financial review; no automatic provider dispatch or price update.</summary>
-public sealed partial class MarketReferenceViewModel(MarketReferenceStore store, HoldingStore holdings, IMarketRuntime runtime,
+public sealed partial class MarketReferenceViewModel(MarketReferenceStore store, IMarketRuntime runtime,
     Translator text, ILocalizationService local, IDateFormatter dates, TimeProvider time) : ViewModelBase
 {
     private MarketUiAccess? access;
@@ -30,16 +30,33 @@ public sealed partial class MarketReferenceViewModel(MarketReferenceStore store,
     private MarketCatalog? catalog;
     private MarketValueReview? review;
     private int epoch;
-    private bool active;
+    private bool active = true;
+    private bool rootRetired;
+    private Func<bool>? rootCurrent;
+    private string? originalFile;
+    private CancellationTokenSource frame = new();
+    private CancellationTokenSource? accessLifetime;
+    /// <summary>Binds only actual original native root ownership, never a replacement Shell.</summary>
+    public void BindRootOwner(Func<bool> current) => rootCurrent = current;
+    /// <summary>Activates only an actual returning original page, without allowing Load to reactivate a closed one.</summary>
+    public void SetPresentationActive(bool value)
+    {
+        if (!value) { Retire(); return; }
+        if (rootRetired || rootCurrent?.Invoke() == false) return;
+        if (!active) { frame.Dispose(); frame = new(); active = true; }
+    }
+    /// <summary>Terminal original root retirement; future native activation cannot borrow a replacement root.</summary>
+    public void RetireRoot() { rootRetired = true; Retire(); }
+    private bool Current => active && !rootRetired && !frame.IsCancellationRequested && rootCurrent?.Invoke() != false;
     private int historyOffset;
     /// <summary>Explicit original public symbols, populated only after a deliberate metadata lookup.</summary>
-    public ObservableCollection<MarketSymbol> Symbols { get; } = [];
+    public SnapshotCollection<MarketSymbol> Symbols { get; } = [];
     /// <summary>Device-private retained references, readable without HTTP or sign-in.</summary>
-    public ObservableCollection<MarketCachedChoice> Cached { get; } = [];
+    public SnapshotCollection<MarketCachedChoice> Cached { get; } = [];
     /// <summary>Exact local asset definitions; no default asset selection or provider disclosure.</summary>
-    public ObservableCollection<MarketAssetChoice> Assets { get; } = [];
+    public SnapshotCollection<MarketAssetChoice> Assets { get; } = [];
     /// <summary>Bounded pages of original accepted sources, including values later changed or removed.</summary>
-    public ObservableCollection<MarketHistoryChoice> History { get; } = [];
+    public SnapshotCollection<MarketHistoryChoice> History { get; } = [];
     /// <summary>Explicit original history selection, separate from writable cached references.</summary>
     [ObservableProperty] public partial MarketHistoryChoice? SavedSource { get; set; }
     /// <summary>Whether another explicit saved-history page may be requested.</summary>
@@ -69,18 +86,20 @@ public sealed partial class MarketReferenceViewModel(MarketReferenceStore store,
     /// <summary>Known original committed result, distinct from any notification failure.</summary>
     [ObservableProperty] public partial string? Outcome { get; private set; }
     /// <summary>Whether an explicit metadata request is possible in this selected network edition.</summary>
-    public bool CanCheck => active && Loaded && !IsBusy && runtime.NetworkAvailable;
+    public bool CanCheck => Current && Loaded && !IsBusy && runtime.NetworkAvailable;
     /// <summary>Shows an explicit existing-account destination only in the selected network edition.</summary>
     public bool NetworkEnabled => runtime.NetworkAvailable;
     /// <summary>Owner-driven account navigation, separate from metadata/fetch and all native price consent.</summary>
-    [RelayCommand] private Task AccountAsync() => CanCheck ? runtime.OpenAccountAsync() : Task.CompletedTask;
+    [RelayCommand] private async Task AccountAsync()
+    { if (!CanCheck || access is null) return; Validate(epoch); await runtime.OpenAccountAsync(); }
     /// <summary>Whether the exact source/date/symbol may be deliberately fetched.</summary>
-    public bool CanFetch => CanCheck && remote is not null && catalog is not null && Symbol is not null;
+    public bool CanFetch => CanCheck && remote is not null && catalog is not null && Symbol is not null && Symbols.Any(item => ReferenceEquals(item, Symbol));
     /// <summary>Whether an explicitly selected retained reference has a supported target to review.</summary>
-    public bool CanReview => active && Loaded && !IsBusy && Selected is not null &&
-        (Selected.Quote.Symbol.Unit == MarketUnit.Currency || Asset is not null);
+    public bool CanReview => Current && Loaded && !IsBusy && Selected is not null &&
+        (Selected.Quote.Symbol.Unit == MarketUnit.Currency || Asset is not null && Assets.Any(item => ReferenceEquals(item, Asset))) &&
+        Cached.Any(item => ReferenceEquals(item, Selected));
     /// <summary>Only an unchanged literal review can reach native confirmation and the original transactional writer.</summary>
-    public bool CanApply => active && Loaded && !IsBusy && review is not null;
+    public bool CanApply => CanReview && review is not null;
     partial void OnSymbolChanged(MarketSymbol? value) { Invalidate(); Refresh(); }
     partial void OnDateChanged(DateOnly value) { Invalidate(); Refresh(); }
     partial void OnAssetChanged(MarketAssetChoice? value) { Invalidate(); Refresh(); }
@@ -91,22 +110,27 @@ public sealed partial class MarketReferenceViewModel(MarketReferenceStore store,
     private void Refresh()
     { OnPropertyChanged(nameof(CanCheck)); OnPropertyChanged(nameof(CanFetch)); OnPropertyChanged(nameof(CanReview)); OnPropertyChanged(nameof(CanApply)); }
     private void Validate(int originalEpoch)
-    { if (!active || originalEpoch != epoch || access is null) throw new OperationCanceledException("Original reference page retired."); access.Validate(); }
+    { if (!Current || originalEpoch != epoch || access is null) throw new OperationCanceledException("Original reference page retired."); access.Validate(); }
     /// <summary>Reads only the actual original file's cache/assets; never calls a provider on appearance.</summary>
     [RelayCommand] public async Task LoadAsync()
     {
-        if (IsBusy) return; active = true; var originalEpoch = ++epoch; Loaded = false; IsBusy = true; Error = null;
+        if (!Current || IsBusy) return; var originalEpoch = ++epoch; Loaded = false; IsBusy = true; Error = null;
         remote?.Dispose(); remote = null; catalog = null; access = null; Symbols.Clear(); Symbol = null; Selected = null; Asset = null;
         ExactItemAcknowledged = false; StaleAcknowledged = false; Invalidate(); Refresh();
         try
         {
-            var original = runtime.Capture(); access = original;
+            var captured = runtime.Capture(); captured.Validate();
+            originalFile ??= captured.File;
+            if (originalFile != captured.File) throw new InvalidOperationException("The original reference page changed profiles.");
+            accessLifetime?.Dispose();
+            var linked = accessLifetime = CancellationTokenSource.CreateLinkedTokenSource(frame.Token, captured.Cancellation);
+            var original = new MarketUiAccess(captured.File, captured.Validate, linked.Token); access = original;
             var cached = await runtime.ReadAsync(original, original.Cancellation); Validate(originalEpoch);
-            var types = await holdings.GetTypesAsync(original.Cancellation); Validate(originalEpoch);
-            var history = await store.HistoryAsync(ct: original.Cancellation); Validate(originalEpoch);
-            History.Clear(); SavedSource = null; historyOffset = history.Count; PublishHistory(history); HasMoreHistory = history.Count == 20;
-            Cached.Clear(); foreach (var quote in cached) Cached.Add(Choice(quote));
-            Assets.Clear(); foreach (var type in types.Where(t => !t.IsArchived)) Assets.Add(new(type.Id, type.Name + " · " + type.PriceCurrencyCode));
+            var workspace = await store.ReadWorkspaceAsync(original.File, original.Cancellation); Validate(originalEpoch);
+            var types = workspace.Assets; var history = workspace.History;
+            SavedSource = null; historyOffset = history.Count; History.ReplaceAll(DescribeHistory(history)); HasMoreHistory = history.Count == 20;
+            Cached.ReplaceAll(cached.Select(Choice));
+            Assets.ReplaceAll(types.Where(t => !t.IsArchived).Select(type => new MarketAssetChoice(type.Id, type.Name + " · " + type.PriceCurrencyCode)));
             Loaded = true; Availability = text[runtime.NetworkAvailable ? "Market_ExplicitCheck" : "Market_OfflineEdition"];
         }
         catch (Exception error) when (error is not OutOfMemoryException)
@@ -116,21 +140,21 @@ public sealed partial class MarketReferenceViewModel(MarketReferenceStore store,
     /// <summary>Reads only the next finite saved-source page; never refreshes a provider or changes a financial row.</summary>
     [RelayCommand] public async Task MoreHistoryAsync()
     {
-        if (!active || !Loaded || IsBusy || !HasMoreHistory || access is null) return;
+        if (!Current || !Loaded || IsBusy || !HasMoreHistory || access is null) return;
         var originalEpoch = epoch; IsBusy = true; Error = null;
         try
         {
-            var rows = await store.HistoryAsync(historyOffset, ct: access.Cancellation); Validate(originalEpoch);
-            historyOffset += rows.Count; PublishHistory(rows); HasMoreHistory = rows.Count == 20;
+            var rows = await store.HistoryAsync(historyOffset, ct: access.Cancellation, expectedFile: access.File); Validate(originalEpoch);
+            var additions = DescribeHistory(rows).Where(item => !History.Any(old => old.Id == item.Id)).ToArray();
+            historyOffset += rows.Count; History.ReplaceAll(History.Concat(additions)); HasMoreHistory = rows.Count == 20;
         }
         catch (Exception error) when (error is not OutOfMemoryException) { if (active && epoch == originalEpoch) Error = text["Market_ReadFailure"]; }
         finally { if (epoch == originalEpoch) { IsBusy = false; Refresh(); } }
     }
-    private void PublishHistory(IReadOnlyList<MarketSavedSource> rows)
+    private IEnumerable<MarketHistoryChoice> DescribeHistory(IReadOnlyList<MarketSavedSource> rows)
     {
         foreach (var item in rows)
         {
-            if (History.Any(existing => existing.Id == item.Document.Id)) continue;
             var quote = JsonSerializer.Deserialize(item.Document.QuoteJson, MarketJson.Default.MarketQuote)!;
             var mapping = JsonSerializer.Deserialize(item.Document.MappingJson, MarketMappingJson.Default.MarketAppliedMapping)!;
             var status = text[item.MatchesCurrent ? "Market_HistoryCurrent" : "Market_HistoryChanged"];
@@ -140,9 +164,9 @@ public sealed partial class MarketReferenceViewModel(MarketReferenceStore store,
                 : text.Format("Market_TargetAsset", mapping.Asset.Name, MoneyText.ReferencePrice(mapping.PricePerUnitMilli!.Value /
                     (1000m * Currencies.All.Single(currency => currency.Code == mapping.Currency).MinorFactor), mapping.Currency, local.CurrentCulture),
                     text[mapping.Asset.Dimension == AssetDimension.Mass ? "Market_Unit_Gram" : "Market_Unit_Piece"]);
-            History.Add(new(item.Document.Id, target + " · " + dates.Format(mapping.Date, DateFormatStyle.Long),
+            yield return new(item.Document.Id, target + " · " + dates.Format(mapping.Date, DateFormatStyle.Long),
                 status + "\n" + target + "\n" + text.Format("Market_TargetDate", dates.Format(mapping.Date, DateFormatStyle.Long)) +
-                "\n" + mapped + "\n" + Describe(quote) + "\n" + item.Document.AcceptedAt.ToString("u", local.CurrentCulture)));
+                "\n" + mapped + "\n" + Describe(quote) + "\n" + item.Document.AcceptedAt.ToString("u", local.CurrentCulture));
         }
     }
     /// <summary>Explicit source metadata only; no public symbol or local financial value is uploaded yet.</summary>
@@ -154,7 +178,7 @@ public sealed partial class MarketReferenceViewModel(MarketReferenceStore store,
             opened = await runtime.OpenAsync(access, access.Cancellation); var availability = await opened.AvailabilityAsync(access.Cancellation); Validate(originalEpoch);
             remote?.Dispose(); remote = opened; opened = null; catalog = availability.Catalog; Symbols.Clear(); Symbol = null;
             if (catalog is null) Availability = text["Market_Unconfigured"];
-            else { foreach (var symbol in catalog.Symbols) Symbols.Add(symbol); Availability = remote.Destination + "\n" + catalog.Name + "\n" + catalog.Attribution; }
+            else { Symbols.ReplaceAll(catalog.Symbols); Availability = remote.Destination + "\n" + catalog.Name + "\n" + catalog.Attribution; }
         }
         catch (Exception error) when (error is not OutOfMemoryException)
         { if (active && epoch == originalEpoch) { remote?.Dispose(); remote = null; catalog = null; Error = text["Market_NetworkFailure"]; } }
@@ -216,9 +240,9 @@ public sealed partial class MarketReferenceViewModel(MarketReferenceStore store,
             if (!await runtime.ConfirmAsync(text["Market_Title"], terms, text["Market_Apply"], text["Common_Cancel"])) return;
             Validate(originalEpoch);
             if (review != original || ReviewText != terms || StaleAcknowledged != stale) throw new InvalidOperationException("Original reference consent changed.");
-            await store.ApplyAsync(original, stale, native.Validate, native.Cancellation); committed = true; Validate(originalEpoch); Invalidate(); Outcome = text["Market_Applied"];
-            var history = await store.HistoryAsync(ct: native.Cancellation); Validate(originalEpoch);
-            History.Clear(); SavedSource = null; historyOffset = history.Count; PublishHistory(history); HasMoreHistory = history.Count == 20;
+            await store.ApplyAsync(original, stale, () => Validate(originalEpoch), native.Cancellation); committed = true; Validate(originalEpoch); Invalidate(); Outcome = text["Market_Applied"];
+            var history = await store.HistoryAsync(ct: native.Cancellation, expectedFile: native.File); Validate(originalEpoch);
+            SavedSource = null; historyOffset = history.Count; History.ReplaceAll(DescribeHistory(history)); HasMoreHistory = history.Count == 20;
         }
         catch (CommittedWriteNotificationException<MarketReferenceReceipt>)
         { if (active && epoch == originalEpoch) { Invalidate(); Outcome = text["Market_AppliedRefreshFailure"]; } }
@@ -239,5 +263,5 @@ public sealed partial class MarketReferenceViewModel(MarketReferenceStore store,
                 daily.BasePerEuro.ToString("G29", System.Globalization.CultureInfo.InvariantCulture), daily.Calculation,
                 daily.FetchedAt.ToString("u", local.CurrentCulture), daily.DocumentModifiedAt?.ToString("u", local.CurrentCulture) ?? text["Market_EcbDateOnly"], daily.SourceSha256));
     /// <summary>Retires this original form without erasing cache/history, canceling accepted writes or creating replacement consent.</summary>
-    public void Retire() { active = false; epoch++; remote?.Dispose(); remote = null; access = null; Loaded = false; IsBusy = false; Invalidate(); Refresh(); }
+    public void Retire() { active = false; epoch++; frame.Cancel(); accessLifetime?.Cancel(); remote?.Dispose(); remote = null; access = null; Loaded = false; IsBusy = false; Invalidate(); Refresh(); }
 }

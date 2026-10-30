@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.Sqlite;
 using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Holdings;
 using Vafadar.Zanance.Core.Rates;
@@ -160,16 +161,50 @@ public sealed class MarketReferenceStore(IDbContextFactory<ZananceDbContext> fac
         return result;
     }
     /// <summary>Reads a bounded page of immutable saved sources, including superseded/deleted targets; no provider/cache lookup or financial write occurs.</summary>
-    public async Task<IReadOnlyList<MarketSavedSource>> HistoryAsync(int offset = 0, int count = 20, CancellationToken ct = default)
+    public async Task<IReadOnlyList<MarketSavedSource>> HistoryAsync(int offset = 0, int count = 20, CancellationToken ct = default, string? expectedFile = null)
     {
         if (offset is < 0 or > 1000000 || count is < 1 or > 20) throw new ArgumentOutOfRangeException(nameof(offset));
         await using var db = await factory.CreateDbContextAsync(ct);
+        RequireFile(db, expectedFile);
         var rights = new CommercialFileAccess(access, DatabaseFileIdentity.ConfiguredPath(db)); rights.EnsureSnapshotCurrent();
+        return await Task.Run(async () =>
+        {
+            await db.Database.OpenConnectionAsync(ct);
+            await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
+            await using var joined = await db.Database.UseTransactionAsync(transaction, ct);
+            var result = await ReadHistoryAsync(db, offset, count, ct);
+            ct.ThrowIfCancellationRequested(); rights.EnsureSnapshotCurrent(); RequireFile(db, expectedFile); return result;
+        }, ct);
+    }
+    /// <summary>Reads complete original local asset definitions and bounded history from the captured actual file in one worker transaction.</summary>
+    public async Task<MarketWorkspaceSnapshot> ReadWorkspaceAsync(string expectedFile, CancellationToken ct = default)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(expectedFile);
+        await using var db = await factory.CreateDbContextAsync(ct); RequireFile(db, expectedFile);
+        var rights = new CommercialFileAccess(access, expectedFile); rights.EnsureSnapshotCurrent();
+        return await Task.Run(async () =>
+        {
+            await db.Database.OpenConnectionAsync(ct);
+            await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
+            await using var joined = await db.Database.UseTransactionAsync(transaction, ct);
+            var types = await db.AssetTypes.AsNoTracking().ToArrayAsync(ct);
+            var history = await ReadHistoryAsync(db, 0, 20, ct);
+            ct.ThrowIfCancellationRequested(); rights.EnsureSnapshotCurrent(); RequireFile(db, expectedFile);
+            return new MarketWorkspaceSnapshot(types, history);
+        }, ct);
+    }
+    private static void RequireFile(ZananceDbContext db, string? expectedFile)
+    {
+        if (expectedFile is not null && DatabaseFileIdentity.ConfiguredPath(db) != expectedFile)
+            throw new InvalidOperationException("The original reference workspace file changed.");
+    }
+    private async Task<IReadOnlyList<MarketSavedSource>> ReadHistoryAsync(ZananceDbContext db, int offset, int count, CancellationToken ct)
+    {
         var rows = await db.MarketReferenceReceipts.AsNoTracking().OrderByDescending(row => row.AcceptedAt).ThenByDescending(row => row.Id)
             .Skip(offset).Take(count).ToArrayAsync(ct);
         var result = new List<MarketSavedSource>(rows.Length);
         foreach (var row in rows) { ValidateDocument(row); result.Add(new(MarketReferenceDocument.From(row), await StillMatchesAsync(db, row, ct))); }
-        rights.EnsureSnapshotCurrent(); return result;
+        return result;
     }
     private MarketQuote Freeze(MarketQuote quote)
     {
@@ -207,3 +242,6 @@ public sealed record MarketSavedSource(MarketReferenceDocument Document, bool Ma
     /// <inheritdoc />
     public override string ToString() => nameof(MarketSavedSource);
 }
+
+/// <summary>One original local reference workspace read, independent of private cache/network delivery and financial write consent.</summary>
+public sealed record MarketWorkspaceSnapshot(IReadOnlyList<AssetType> Assets, IReadOnlyList<MarketSavedSource> History);

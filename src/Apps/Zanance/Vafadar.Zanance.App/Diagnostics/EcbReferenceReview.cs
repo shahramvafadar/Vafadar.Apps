@@ -67,7 +67,7 @@ internal static class EcbReferenceReview
 #endif
                 var context = language + "-" + theme + "-" + width;
                 var effects = new Effects(Path.Combine(folder, "ecb-synthetic.db"), quotes);
-                var vm = new MarketReferenceViewModel(store, fixture.GetRequiredService<HoldingStore>(), effects, text, local, new DateFormatter(local), TimeProvider.System);
+                var vm = new MarketReferenceViewModel(store, effects, text, local, new DateFormatter(local), TimeProvider.System);
                 await vm.LoadAsync(); var page = new MarketReferencePage(vm).WithFlowDirection(local);
                 var root = app.Windows[0].Page ?? throw new IOException();
                 await PushAsync(page);

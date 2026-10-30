@@ -53,7 +53,7 @@ internal static partial class DebugSnapshots
             var key = $"{language}-{theme}-{width}"; if (finished.Contains(key)) continue;
             themes.Set(theme); await SetLanguageAsync(app, local, language); window.Width = width; window.Height = 820;
             var effects = new MarketLayoutRuntime(path, quote, services.GetRequiredService<IAppInteraction>());
-            var model = new MarketReferenceViewModel(sourceStore, fixture.GetRequiredService<HoldingStore>(), effects, text, local,
+            var model = new MarketReferenceViewModel(sourceStore, effects, text, local,
                 services.GetRequiredService<IDateFormatter>(), TimeProvider.System);
             var page = new MarketReferencePage(model).WithFlowDirection(local); var root = window.Page ?? throw new IOException();
             PageHeader.Attach(page, local.IsRightToLeft);

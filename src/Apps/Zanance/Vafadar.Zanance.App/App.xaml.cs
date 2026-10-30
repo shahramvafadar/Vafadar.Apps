@@ -380,7 +380,8 @@ public partial class App : Application
                 return Task.FromResult(link);
             }));
         _databaseReady = true;
-        if ((Features.Sync.PersonalSyncBuild.IsAvailable || Features.Commerce.Billing.BillingBuild.IsAvailable) && _isInForeground)
+        // Local reference/cache and analysis review share this access boundary even in the offline edition (D-651).
+        if (_isInForeground)
             _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Resume();
         if (Features.Sync.PersonalSyncBuild.IsAvailable)
             _services.GetRequiredService<Features.Sync.PersonalSyncForegroundWorker>().Start();
@@ -394,7 +395,7 @@ public partial class App : Application
     {
         base.OnSleep();
         _isInForeground = false;
-        if (_databaseReady && (Features.Sync.PersonalSyncBuild.IsAvailable || Features.Commerce.Billing.BillingBuild.IsAvailable))
+        if (_databaseReady)
             _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Suspend();
         if (_databaseReady) Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().SleepAsync());
     }
@@ -403,7 +404,7 @@ public partial class App : Application
     {
         base.OnResume();
         _isInForeground = true;
-        if (_databaseReady && (Features.Sync.PersonalSyncBuild.IsAvailable || Features.Commerce.Billing.BillingBuild.IsAvailable))
+        if (_databaseReady)
             _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Resume();
         if (_databaseReady) Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().ResumeAsync());
         RunForegroundWork(starting: false);
@@ -675,7 +676,7 @@ public partial class App : Application
 
     private void RetireSyncNavigation()
     {
-        if (_databaseReady && (Features.Sync.PersonalSyncBuild.IsAvailable || Features.Commerce.Billing.BillingBuild.IsAvailable))
+        if (_databaseReady)
             _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().RetireNavigation();
     }
 }
