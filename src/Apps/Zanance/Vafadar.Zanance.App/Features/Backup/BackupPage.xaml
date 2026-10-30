@@ -11,7 +11,7 @@
     Title="{v:Translate Backup_Title}">
 
     <Grid RowDefinitions="*,Auto">
-        <ScrollView>
+        <ScrollView IsVisible="{Binding WorkspaceLoading.IsReady}">
             <VerticalStackLayout Padding="16" Spacing="8" IsEnabled="{Binding CanUseBackupTools}">
 
                 <!-- First-run restore uses this page directly, before a Shell or financial account exists (D-62). -->
@@ -230,14 +230,32 @@
             </VerticalStackLayout>
         </ScrollView>
 
+        <VerticalStackLayout Grid.Row="0" Padding="24" Spacing="12" VerticalOptions="Center" IsVisible="{Binding WorkspaceLoading.IsLoading}">
+            <ActivityIndicator IsRunning="{Binding WorkspaceLoading.IsLoading}" Color="{DynamicResource Primary}" />
+            <Label Text="{v:Translate Backup_Loading}" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="0" Padding="24" Spacing="12" VerticalOptions="Center" IsVisible="{Binding WorkspaceLoading.HasFailed}">
+            <Label Text="{v:Translate Backup_ReadFailed}" Style="{StaticResource ErrorText}" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+            <Button Text="{v:Translate Backup_RetryLoad}" Style="{StaticResource PrimaryButton}" Command="{Binding ReloadWorkspaceCommand}" IsEnabled="{Binding CanReloadWorkspace}" />
+        </VerticalStackLayout>
+
         <!-- Current review and accepted completion reserve a growing row outside the scroll viewport. -->
-        <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" IsVisible="{Binding Restore.HasFeedback}">
+        <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" IsVisible="{Binding HasBackupFeedback}">
+          <VerticalStackLayout Spacing="8" IsVisible="{Binding HasCoveredPortableFeedback}">
+            <Label Text="{Binding CreateResult}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding CreateResult, Converter={StaticResource IsNotNullConverter}}" />
+            <Label Text="{Binding CloudResult}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding CloudResult, Converter={StaticResource IsNotNullConverter}}" />
+            <Label Text="{v:Translate Cloud_Deleted}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding HasDeletedBackupReceipt}" />
+            <Label Text="{Binding CreateError}" Style="{StaticResource ErrorText}" IsVisible="{Binding CreateError, Converter={StaticResource IsNotNullConverter}}" />
+            <Label Text="{Binding CloudError}" Style="{StaticResource ErrorText}" IsVisible="{Binding CloudError, Converter={StaticResource IsNotNullConverter}}" />
+          </VerticalStackLayout>
+          <VerticalStackLayout Spacing="8" IsVisible="{Binding Restore.HasFeedback}">
             <Label Text="{Binding Restore.Result}" TextColor="{DynamicResource IncomeText}" IsVisible="{Binding Restore.Result, Converter={StaticResource IsNotNullConverter}}" />
             <Label Text="{Binding Restore.Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Restore.Error, Converter={StaticResource IsNotNullConverter}}" />
             <p:WrappingAction Text="{v:Translate Backup_Check}" Command="{Binding Restore.CheckCommand}" IsVisible="{Binding Restore.NeedsReview}" />
             <p:WrappingAction Text="{v:Translate Backup_Replace}" Appearance="Destructive" Command="{Binding Restore.RestoreCommand}" IsVisible="{Binding Restore.HasPreview}" />
             <p:WrappingAction Text="{v:Translate Common_Cancel}" Command="{Binding Restore.CancelCommand}" IsVisible="{Binding Restore.CanSelect}" />
             <p:WrappingAction Text="{v:Translate Backup_OpenRestored}" Appearance="Primary" Command="{Binding Restore.FinishCommand}" IsVisible="{Binding Restore.CanFinish}" />
+          </VerticalStackLayout>
         </VerticalStackLayout>
         <ActivityIndicator Grid.RowSpan="2" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{DynamicResource Primary}"
                            HorizontalOptions="Center" VerticalOptions="Center" />

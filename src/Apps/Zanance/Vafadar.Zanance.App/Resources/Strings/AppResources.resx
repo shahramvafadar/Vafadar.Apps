@@ -8673,4 +8673,16 @@ Original XML SHA-256: {5}</value>
   <data name="Import_RefreshSource" xml:space="preserve">
     <value>Reload local source</value>
   </data>
+  <data name="Backup_Loading" xml:space="preserve">
+    <value>Loading backups…</value>
+  </data>
+  <data name="Backup_ReadFailed" xml:space="preserve">
+    <value>Backups could not be read. Your input is retained. Retry to review the current files before continuing.</value>
+  </data>
+  <data name="Backup_RetryLoad" xml:space="preserve">
+    <value>Reload backups</value>
+  </data>
+  <data name="Cloud_Deleted" xml:space="preserve">
+    <value>Selected backup deleted.</value>
+  </data>
 </root>

@@ -25,6 +25,33 @@ public sealed class BackupServiceTests : IDisposable
 
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
+    /// <summary>A provider may finish after cancellation; cross-profile discovery must still refuse its old result.</summary>
+    [Theory]
+    [InlineData(false)] [InlineData(true)]
+    public async Task Original_listing_rechecks_cancellation_after_noncooperative_storage_returns(bool allProfiles)
+    {
+        using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(Ct);
+        var storage = new CancelledListingStorage(cancellation); var service = CreateService();
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => allProfiles
+            ? service.DiscoverBackupsAsync(storage, cancellation.Token)
+            : service.ListBackupsAsync(storage, cancellation.Token));
+        Assert.Equal(1, storage.Lists);
+    }
+
+    private sealed class CancelledListingStorage(CancellationTokenSource cancellation) : IBackupStorage
+    {
+        internal int Lists;
+        public string Id => "original-cancelled-listing";
+        public Task<IReadOnlyList<BackupFileInfo>> ListAsync(CancellationToken cancellationToken = default)
+        { Lists++; cancellation.Cancel(); return Task.FromResult<IReadOnlyList<BackupFileInfo>>([]); }
+        public Task<BackupFileInfo> UploadAsync(string fileName, Stream content, CancellationToken cancellationToken = default)
+            => throw new InvalidOperationException("No backup creation in this listing-only case.");
+        public Task<Stream> OpenReadAsync(string fileId, CancellationToken cancellationToken = default)
+            => throw new InvalidOperationException("No restore in this listing-only case.");
+        public Task DeleteAsync(string fileId, CancellationToken cancellationToken = default)
+            => throw new InvalidOperationException("No deletion in this listing-only case.");
+    }
+
     public void Dispose() => _directory.Dispose();
 
     [Fact]

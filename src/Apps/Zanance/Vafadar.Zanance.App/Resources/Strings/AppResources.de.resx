@@ -8639,4 +8639,16 @@ Original-XML SHA-256: {5}</value>
   <data name="Import_RefreshSource" xml:space="preserve">
     <value>Lokale Quelle neu laden</value>
   </data>
+  <data name="Backup_Loading" xml:space="preserve">
+    <value>Sicherungen werden geladen…</value>
+  </data>
+  <data name="Backup_ReadFailed" xml:space="preserve">
+    <value>Sicherungen konnten nicht gelesen werden. Ihre Eingaben bleiben erhalten. Laden Sie die aktuellen Dateien erneut, bevor Sie fortfahren.</value>
+  </data>
+  <data name="Backup_RetryLoad" xml:space="preserve">
+    <value>Sicherungen neu laden</value>
+  </data>
+  <data name="Cloud_Deleted" xml:space="preserve">
+    <value>Die ausgewählte Sicherung wurde gelöscht.</value>
+  </data>
 </root>

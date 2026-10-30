@@ -8628,4 +8628,16 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Import_RefreshSource" xml:space="preserve">
     <value>Ricarica la fonte locale</value>
   </data>
+  <data name="Backup_Loading" xml:space="preserve">
+    <value>Caricamento dei backup…</value>
+  </data>
+  <data name="Backup_ReadFailed" xml:space="preserve">
+    <value>Impossibile leggere i backup. I dati inseriti sono conservati. Riprova per controllare i file attuali prima di continuare.</value>
+  </data>
+  <data name="Backup_RetryLoad" xml:space="preserve">
+    <value>Ricarica i backup</value>
+  </data>
+  <data name="Cloud_Deleted" xml:space="preserve">
+    <value>Il backup selezionato è stato eliminato.</value>
+  </data>
 </root>

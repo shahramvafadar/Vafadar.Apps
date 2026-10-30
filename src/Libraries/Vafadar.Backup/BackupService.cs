@@ -216,6 +216,9 @@ public sealed partial class BackupService : IBackupService, IBackupPackageReader
 
         var fileAppId = FileAppId();
         var files = await storage.ListAsync(cancellationToken);
+        // A remote provider can complete after cancellation. Discovery spans profile sets,
+        // but that does not permit a retired native request to publish its late result.
+        cancellationToken.ThrowIfCancellationRequested();
         if (!allSets) RequireFileAppId(fileAppId, cancellationToken);
         return
         [

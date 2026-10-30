@@ -1,5 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/BackupDestinationRequest.cs" Link="Application/BackupDestinationRequest.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/OriginalBackupDestinationStorage.cs" Link="Application/OriginalBackupDestinationStorage.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/PortableBackupCreation.cs" Link="Application/PortableBackupCreation.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Forecast/ForecastViewModel.cs" Link="Application/ForecastViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Forecast/SnapshotViewModel.cs" Link="Application/SnapshotViewModel.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/IAppDatabaseStartup.cs" Link="Application/IAppDatabaseStartup.cs" />
     <ProjectReference Include="../../../../src/Apps/Zanance/Vafadar.Zanance.Data/Vafadar.Zanance.Data.csproj" />
     <ProjectReference Include="../../../../src/Libraries/Vafadar.Localization/Vafadar.Localization.csproj" />
+    <ProjectReference Include="../../../../src/Libraries/Vafadar.Authentication/Vafadar.Authentication.csproj" />
     <ProjectReference Include="../../../../src/Libraries/Vafadar.Documents/Vafadar.Documents.csproj" />
     <ProjectReference Include="../../../Shared/Vafadar.Testing/Vafadar.Testing.csproj" />
     <PackageReference Include="CommunityToolkit.Mvvm" />

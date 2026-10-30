@@ -105,3 +105,5 @@ Original restore lifecycle: [D-654 focused and actual runtime evidence](quality/
 Original portable backup creation: [D-655 evidence](quality/original-portable-backup-creation.md), separate from general discovery and real provider acceptance.
 
 Original CI readback and account recovery: [D-656 evidence](quality/original-ci-readback-correction.md); historical failures, focused fixes and native receipt/source proof remain distinct from pushed-head CI.
+
+Original backup workspace/destination ownership: [D-657 evidence](quality/original-backup-workspace.md), including fake-provider/native boundaries, exact restoration and remaining physical/provider gates.

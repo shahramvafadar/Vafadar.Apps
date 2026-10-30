@@ -8608,4 +8608,16 @@ SHA-256 del XML original: {5}</value>
   <data name="Import_RefreshSource" xml:space="preserve">
     <value>Volver a cargar la fuente local</value>
   </data>
+  <data name="Backup_Loading" xml:space="preserve">
+    <value>Cargando copias de seguridad…</value>
+  </data>
+  <data name="Backup_ReadFailed" xml:space="preserve">
+    <value>No se pudieron leer las copias de seguridad. Tus datos introducidos se conservan. Vuelve a cargar los archivos actuales antes de continuar.</value>
+  </data>
+  <data name="Backup_RetryLoad" xml:space="preserve">
+    <value>Volver a cargar copias</value>
+  </data>
+  <data name="Cloud_Deleted" xml:space="preserve">
+    <value>Se eliminó la copia de seguridad seleccionada.</value>
+  </data>
 </root>

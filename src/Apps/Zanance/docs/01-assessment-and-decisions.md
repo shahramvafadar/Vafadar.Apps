@@ -12047,3 +12047,26 @@ remain and must not be retried, subdivided, moved, escalated, reused or deleted 
 Phone/D-607 and all three deadlines remain untouched. Physical adoption, general backup
 discovery, sensitive-page work and broader release gates remain separate; pushed-head CI
 has one delayed check, not an assumed pass. [D-656 evidence](quality/original-ci-readback-correction.md)
+
+### D-657 - Original backup workspace and destination ownership
+
+Original local/automatic/safety/connected discovery now retains its file/page/root,
+cancellation and current row/account identity through native consent and publication.
+Sensitive commands have independent ownership; readonly Back cancels pending discovery.
+Loading/error covers require explicit Retry, preserve raw input and known actual deletion
+receipts, and reject retired source, disclosure and destination effects. Discovery still
+spans own-application profile sets independently of retention. Two new library cases,
+one related existing case and 32 new application cases passed in focused continuations;
+24 targeted resource checks and strict Windows/full offline Android builds passed.
+Original native qualification used fictitious identity/local storage, not genuine OAuth:
+12 narrow OS200 error contexts and six later receipt contexts, one native connection,
+one disconnection and one confirmed fake-file deletion. Full 20-collection source equality,
+zero accounts/ledger and exact original OS/preferences remained. Incomplete initial
+preparation and necessary no-reset observer/receipt upgrades are separately documented;
+successful operations were not replayed. Fresh UID/57 hash-matched XML/owned AVD retired.
+Five standard cleans removed 29196 files/2113039306 logical bytes; one bounded supplementary
+cleanup removed 3766 files/749948420 logical bytes. Earlier refused scopes were untouched.
+Phone/D-607/three deadlines/post-reboot unread source are preserved. Physical adoption,
+genuine providers, full DB/key/security/stability/speed/accessibility/iOS/Store/release
+remain separate. D-656's sole exact-head CI response was green for all four workflows;
+D-657 has its own single delayed pushed-head check. [D-657 evidence](quality/original-backup-workspace.md)

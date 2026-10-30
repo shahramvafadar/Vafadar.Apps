@@ -12,9 +12,13 @@ public sealed partial class BackupViewModel
     private void EndPortableCreation()
     { _portableCreationActive = false; IsBusy = false; NotifyPortableAvailability(); }
     private void NotifyPortableAvailability()
-    { OnPropertyChanged(nameof(CanUseBackupTools)); OnPropertyChanged(nameof(CanLeave)); }
+    {
+        OnPropertyChanged(nameof(CanUseBackupTools)); OnPropertyChanged(nameof(CanLeave));
+        OnPropertyChanged(nameof(CanReloadWorkspace)); ReloadWorkspaceCommand.NotifyCanExecuteChanged();
+        OnPropertyChanged(nameof(HasCoveredPortableFeedback)); OnPropertyChanged(nameof(HasBackupFeedback));
+    }
     /// <summary>Gets whether this exact original page owns a temporary native sensitive confirmation.</summary>
-    internal bool IsConfirmingSensitiveOperation => Restore.IsAuthenticating || _creationAuthenticating;
+    internal bool IsConfirmingSensitiveOperation => Restore.IsAuthenticating || _creationAuthenticating || _workspaceCommandActive;
     /// <summary>Captures literal submitted protection independently of later typing or a retired native dialog.</summary>
     private sealed record CreationInput(bool Protected, string Password, string Confirmation);
     private CreationInput CaptureCreationInput() => new(UsePassword, Password, PasswordConfirm);

@@ -33,6 +33,7 @@ public sealed partial class BackupViewModel : ViewModelBase
     private readonly ILocalizationService _localization;
     private readonly TimeProvider _time;
     private readonly LocalFolderBackupStorage _local;
+    private long _workspaceReadRevision;
     private readonly LocalFolderBackupStorage _safety;
     private Page? _page;
     private bool _presentationActive = true;
@@ -62,9 +63,10 @@ public sealed partial class BackupViewModel : ViewModelBase
     /// <summary>Gets the original non-UI restore flow used by local, picked and connected-cloud packages.</summary>
     public BackupRestoreSession Restore { get; }
     /// <summary>Gets whether backup inputs remain available before an accepted restore is opened.</summary>
-    public bool CanUseBackupTools => _presentationActive && !_portableCreationActive && !IsBusy && !Restore.HasCompleted;
+    public bool CanUseBackupTools => _presentationActive && WorkspaceLoading.IsReady && WorkspaceSourceCurrent
+        && !_portableCreationActive && !_workspaceCommandActive && !IsBusy && !Restore.HasCompleted;
     /// <summary>Gets whether native Back/tab navigation may leave the original restore flow.</summary>
-    public bool CanLeave => !_portableCreationActive && !IsBusy && Restore.CanLeave;
+    public bool CanLeave => !_portableCreationActive && !_workspaceCommandActive && !IsBusy && Restore.CanLeave;
     /// <summary>Forwards storage feedback from the original local/cloud adapters into the restore flow.</summary>
     public string? RestoreError { get => Restore.Error; set => Restore.Error = value; }
     private bool _restorePriorBusy;
@@ -113,10 +115,11 @@ public sealed partial class BackupViewModel : ViewModelBase
         Vafadar.Authentication.Maui.CloudSignIn cloud,
         IServiceProvider services,
         IBackupRestoreRuntime? restoreRuntime = null,
-        IBackupCreationRuntime? creationRuntime = null)
+        IBackupCreationRuntime? creationRuntime = null,
+        IBackupWorkspaceRuntime? workspaceRuntime = null)
     {
+        _workspaceRuntime = workspaceRuntime ?? new MauiBackupWorkspaceRuntime(services, cloud, () => DialogPage);
         _creationRuntime = creationRuntime ?? new MauiBackupCreationRuntime(appLock, translator);
-        _cloud = cloud;
         _lock = appLock;
         _services = services;
         _backup = backup;
@@ -140,6 +143,7 @@ public sealed partial class BackupViewModel : ViewModelBase
             if (e.PropertyName == nameof(BackupRestoreSession.HasCompleted))
             { OnPropertyChanged(nameof(CanCreateBackup)); OnPropertyChanged(nameof(CanChooseAutomatic)); }
             OnPropertyChanged(nameof(CanUseBackupTools)); OnPropertyChanged(nameof(CanLeave));
+            OnPropertyChanged(nameof(HasBackupFeedback));
         };
         PropertyChanged += (_, e) =>
         {
@@ -182,34 +186,76 @@ public sealed partial class BackupViewModel : ViewModelBase
     public partial string? CreateError { get; set; }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasCoveredPortableFeedback), nameof(HasBackupFeedback))]
     public partial string? CreateResult { get; set; }
 
     [ObservableProperty]
     public partial bool HasLocalBackups { get; set; }
 
-    public async Task LoadAsync()
+    public Task LoadAsync()
     {
+        if (_workspaceCommandActive) return Task.CompletedTask;
 #if DEBUG
-        if (IndependentRestoreReview) { LastBackupText = _translator["Backup_Never"]; return; }
-#endif
-        LastBackupText = _backup.LastBackupAt is { } last
-            ? _translator.Format("Backup_LastPortable", FormatTime(last))
-            : _translator["Backup_PortableNever"];
-
-        LocalBackups.Clear();
-        foreach (var file in await _backup.DiscoverBackupsAsync(_local))
+        if (IndependentRestoreReview)
         {
-            var created = BackupFileName.TryParse(file.FileName, out _, out var at) ? at : file.CreatedAt ?? _time.GetUtcNow();
-            LocalBackups.Add(new LocalBackup(file, FormatTime(created), file.Size is { } size ? FormatSize(size) : string.Empty));
+            _pendingWorkspaceOwner = Restore.CapturePreparationOwner();
+            LastBackupText = _translator["Backup_Never"];
+            return PublishIndependentWorkspaceAsync();
         }
-
-        HasLocalBackups = LocalBackups.Count > 0;
-        await RefreshAutomaticAsync();
-        await RefreshSafetyAsync();
-#if DEBUG
-        if (IndependentAutomaticReview) return;
 #endif
-        await LoadCloudAsync();
+        if (_pendingWorkspaceRead is { IsCompleted: false } pending && _pendingWorkspaceOwner is { } original
+            && IsOriginalBackupFrameCurrent(original)) return pending;
+        var owner = Restore.CapturePreparationOwner(); var revision = ++_workspaceReadRevision;
+        _pendingWorkspaceOwner = owner; WorkspaceLoading = new(); OnPropertyChanged(nameof(WorkspaceLoading));
+        return _pendingWorkspaceRead = LoadWorkspaceAsync(owner, revision);
+    }
+
+#if DEBUG
+    private async Task PublishIndependentWorkspaceAsync()
+    { await WorkspaceLoading.RunAsync(() => Task.CompletedTask, () => { }); NotifyWorkspaceAvailability(); }
+#endif
+
+    private async Task LoadWorkspaceAsync(BackupRestoreSession.PreparationOwner owner, long revision)
+    {
+        var state = WorkspaceLoading; WorkspaceError = null; NotifyWorkspaceAvailability();
+        void Current()
+        {
+            CheckCreationFrame(owner);
+            if (revision != _workspaceReadRevision)
+                throw new OperationCanceledException("The original backup workspace reader retired.", owner.Token);
+        }
+        try
+        {
+            await state.RunAsync(async () =>
+            {
+            Current();
+            // Keep the prior list until the actual original request has finished; a remote
+            // completion cannot clear/publish through a later appearance or profile.
+            var localFiles = await _workspaceRuntime.DiscoverAsync(_backup, _local, owner.Token); Current();
+            LastBackupText = _backup.LastBackupAt is { } last
+                ? _translator.Format("Backup_LastPortable", FormatTime(last))
+                : _translator["Backup_PortableNever"];
+
+            LocalBackups.Clear();
+            foreach (var file in localFiles)
+            {
+                var created = BackupFileName.TryParse(file.FileName, out _, out var at) ? at : file.CreatedAt ?? _time.GetUtcNow();
+                LocalBackups.Add(new LocalBackup(file, FormatTime(created), file.Size is { } size ? FormatSize(size) : string.Empty));
+            }
+
+            HasLocalBackups = LocalBackups.Count > 0;
+            await RefreshAutomaticAsync(); Current();
+            await RefreshSafetyAsync(); Current();
+#if DEBUG
+            if (IndependentAutomaticReview) return;
+#endif
+            await LoadCloudAsync(); Current();
+            }, Current);
+        }
+        catch (Exception error) when (error is not OutOfMemoryException
+            && (revision != _workspaceReadRevision || !IsOriginalBackupFrameCurrent(owner))) { }
+        catch (Exception error) when (error is not OutOfMemoryException) { WorkspaceError = _translator["Backup_ReadFailed"]; }
+        finally { if (revision == _workspaceReadRevision && IsOriginalBackupFrameCurrent(owner)) NotifyWorkspaceAvailability(); }
     }
 
     [RelayCommand]

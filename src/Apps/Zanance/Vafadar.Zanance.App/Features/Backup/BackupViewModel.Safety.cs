@@ -17,9 +17,12 @@ public sealed partial class BackupViewModel
 #if DEBUG
         if (IndependentAutomaticReview || IndependentRestoreReview) return;
 #endif
-        SafetyBackups.Clear();
+        var owner = Restore.CapturePreparationOwner(); CheckCreationFrame(owner);
+        IReadOnlyList<BackupFileInfo> files = [];
         if (_services.GetService<IBackupSafetyCopyDiscovery>() is { } discovery)
-            foreach (var file in await discovery.ListSafetyCopiesAsync())
+            files = await discovery.ListSafetyCopiesAsync(owner.Token);
+        CheckCreationFrame(owner); SafetyBackups.Clear();
+        foreach (var file in files)
                 SafetyBackups.Add(new(file, _translator.Format("Backup_SafetyFile", FormatTime(file.CreatedAt ?? _time.GetUtcNow())),
                     file.Size is { } size ? FormatSize(size) : string.Empty, DeviceOnly: true));
         HasSafetyBackups = SafetyBackups.Count != 0;

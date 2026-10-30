@@ -48,12 +48,16 @@ public sealed partial class BackupViewModel
     private async void OnAutomaticChanged(object? sender, EventArgs e)
     {
         if (_page is null || !CanUseBackupTools) return;
-        await Presentation.Failures.GuardAsync(async () => { await RefreshAutomaticAsync(); await RefreshSafetyAsync(); });
+        var owner = Restore.CapturePreparationOwner();
+        try { await RefreshAutomaticAsync(); CheckCreationFrame(owner); await RefreshSafetyAsync(); }
+        catch (Exception error) when (error is not OutOfMemoryException && !IsOriginalBackupFrameCurrent(owner)) { }
+        catch (Exception error) when (error is not OutOfMemoryException) { await Presentation.Failures.ShowAsync(error); }
     }
 
     private async Task RefreshAutomaticAsync()
     {
         if (Automatic is not { } automatic) return;
+        var owner = Restore.CapturePreparationOwner(); CheckCreationFrame(owner);
         var priorPublication = _publishingAutomatic;
         _publishingAutomatic = true;
         try
@@ -70,7 +74,7 @@ public sealed partial class BackupViewModel
         finally { _publishingAutomatic = priorPublication; }
         // Discovery is profile-specific. Authentication and confirmation still precede actual restoration.
         var set = Vafadar.Zanance.App.Profiles.ProfileService.CurrentBackupSet();
-        var files = await _safety.ListAsync();
+        var files = await _safety.ListAsync(owner.Token); CheckCreationFrame(owner);
         AutomaticBackups.Clear();
         foreach (var file in files.Where(file => AutomaticBackupFileName.Matches(file.FileName, set))
             .OrderByDescending(file => file.CreatedAt))
