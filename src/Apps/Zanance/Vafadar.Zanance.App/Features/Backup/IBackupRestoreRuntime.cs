@@ -3,6 +3,15 @@ namespace Vafadar.Zanance.App.Features.Backup;
 /// <summary>Original safety/recovery and native UI/security follow-through, without a second restore algorithm.</summary>
 public interface IBackupRestoreRuntime
 {
+    /// <summary>Captures a credential-free original target-publication guard before reading a selected package.</summary>
+    Action CaptureSourceValidation() => static () => { };
+    /// <summary>Checks original native consent before creating a safety copy; actual adapters also guard their queue.</summary>
+    async Task CreateSafetyCopyAsync(Action validateOwner, CancellationToken ct)
+    { ct.ThrowIfCancellationRequested(); validateOwner(); await CreateSafetyCopyAsync(); }
+    /// <summary>Starts only the original reviewed target; completion is a known receipt even if the native page departs.</summary>
+    async Task RestorePrimaryAsync(byte[] package, string? password, Action validateOwner, CancellationToken ct)
+    { ct.ThrowIfCancellationRequested(); validateOwner(); await RestorePrimaryAsync(package, password); }
+
     /// <summary>Requests the existing explicit replacement consent.</summary>
     Task<bool> ConfirmReplacementAsync();
     /// <summary>Requests the existing app/device authentication before replacement.</summary>

@@ -54,6 +54,17 @@ public partial class AppShell : Shell
     internal bool OwnsHoldingDetailPublication => !_navigationRetired;
     /// <summary>Gets whether this root still owns original report source and its explicit explanation handoffs.</summary>
     internal bool OwnsReportPublication => !_navigationRetired;
+    /// <summary>Tracks weak original restore pages without retaining replaced roots or selected packages.</summary>
+    private readonly List<WeakReference<Features.Backup.BackupPage>> _backupRestorePages = [];
+    /// <summary>Gets whether the actual original root still owns restore consent.</summary>
+    internal bool OwnsBackupRestorePublication => !_navigationRetired;
+    /// <summary>Registers the actual original backup/restore page.</summary>
+    internal void RegisterBackupRestore(Features.Backup.BackupPage page)
+    {
+        if (_navigationRetired) { page.RetireShellPublication(); return; }
+        _backupRestorePages.RemoveAll(item => !item.TryGetTarget(out _));
+        if (!_backupRestorePages.Any(item => item.TryGetTarget(out var old) && ReferenceEquals(old, page))) _backupRestorePages.Add(new(page));
+    }
     /// <summary>Tracks weak original CSV pages without retaining replaced roots.</summary>
     private readonly List<WeakReference<Features.DataFiles.ImportExportPage>> _dataFilePages = [];
     /// <summary>Gets whether the actual root owns original CSV source and disclosure consent.</summary>
@@ -498,6 +509,7 @@ public partial class AppShell : Shell
         else if (CurrentPage is PlanDetailPage planDetail) await Presentation.Failures.GuardAsync(planDetail.RefreshForNavigationAsync);
         else if (CurrentPage is OccurrencePage occurrence) await Presentation.Failures.GuardAsync(occurrence.RefreshForNavigationAsync);
         // D-497: Insights can retain both the forecast and its saved comparison while another tab changes the ledger.
+        else if (CurrentPage is Features.Backup.BackupPage backupRestore) await Presentation.Failures.GuardAsync(backupRestore.RefreshForNavigationAsync);
         else if (CurrentPage is Features.DataFiles.ImportExportPage dataFiles) await Presentation.Failures.GuardAsync(dataFiles.RefreshForNavigationAsync);
         else if (CurrentPage is Features.DataFiles.AccountantExportPage accountantExport) await Presentation.Failures.GuardAsync(accountantExport.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Rates.MarketReferencePage marketReference) await Presentation.Failures.GuardAsync(marketReference.RefreshForNavigationAsync);
@@ -512,7 +524,12 @@ public partial class AppShell : Shell
     /// <summary>Keeps the actual restore source/accepted follow-through attached through Back and tab navigation.</summary>
     protected override void OnNavigating(ShellNavigatingEventArgs args)
     {
-        if (CurrentPage?.BindingContext is BackupViewModel backup && !backup.CanLeave && args.CanCancel) args.Cancel();
+        // D-654: permit only the exact registered authentication modal, never a general busy Push.
+        var originalBackupPage = CurrentPage?.BindingContext is BackupViewModel ? CurrentPage : Security.NativeSensitivePresentation.Underlying(this);
+        var backup = originalBackupPage?.BindingContext as BackupViewModel;
+        var ownBackupAuthentication = backup?.Restore.IsAuthenticating == true && originalBackupPage is not null
+            && Security.NativeSensitivePresentation.Allows(this, originalBackupPage, args);
+        if (backup is not null && !backup.CanLeave && args.CanCancel && !ownBackupAuthentication) args.Cancel();
         if (CurrentPage?.BindingContext is Features.Sync.PersonalSyncViewModel sync && !sync.CanLeave && args.CanCancel) args.Cancel();
         if (CurrentPage?.BindingContext is Features.Sharing.HouseholdViewModel household && !household.CanLeave && args.CanCancel) args.Cancel();
         if (CurrentPage?.BindingContext is Features.Sharing.HouseholdCostsViewModel costs && !costs.CanLeave && args.CanCancel) args.Cancel();
@@ -574,6 +591,7 @@ public partial class AppShell : Shell
         {
             if (CurrentPage is CategoriesPage categories) categories.RetirePublication();
             if (CurrentPage is AccountEditorPage accountEditor) accountEditor.RetirePublication();
+            if (CurrentPage is Features.Backup.BackupPage backupRestore) backupRestore.RetirePublication();
             if (CurrentPage is Features.DataFiles.AccountantExportPage accountantExport) accountantExport.RetirePublication();
             if (CurrentPage is Features.Rates.MarketReferencePage marketReference) marketReference.RetirePublication();
             if (CurrentPage is Features.Rates.DisplayUnitsPage units) units.RetirePublication();
@@ -662,6 +680,8 @@ public partial class AppShell : Shell
         _accountantExportPages.Clear();
         foreach (var reference in _dataFilePages) if (reference.TryGetTarget(out var dataFiles)) dataFiles.RetireShellPublication();
         _dataFilePages.Clear();
+        foreach (var reference in _backupRestorePages) if (reference.TryGetTarget(out var backupRestore)) backupRestore.RetireShellPublication();
+        _backupRestorePages.Clear();
         foreach (var reference in _marketReferencePages) if (reference.TryGetTarget(out var marketReference)) marketReference.RetireShellPublication();
         _marketReferencePages.Clear();
         foreach (var reference in _displayUnitPages) if (reference.TryGetTarget(out var units)) units.RetireShellPublication();

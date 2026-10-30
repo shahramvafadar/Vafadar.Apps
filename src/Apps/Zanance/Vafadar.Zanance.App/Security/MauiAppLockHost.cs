@@ -19,7 +19,11 @@ internal sealed class MauiAppLockHost(Translator translator) : IAppLockHost
     {
         if (Root is not { } root) { return false; }
         var completion = new TaskCompletionSource<bool>();
-        await root.Navigation.PushModalAsync(new LockPage(service, translator, false, completion, reason), animated: false);
+        var prompt = new LockPage(service, translator, false, completion, reason);
+        // D-654: MAUI sends these owned modal pushes/pops through the existing Shell leave guard.
+        using var presentation = NativeSensitivePresentation.Bind(root, prompt);
+        await root.Navigation.PushModalAsync(prompt, animated: false);
+        presentation.RequireShown();
         return await completion.Task;
     }
 

@@ -57,8 +57,8 @@ public sealed class BackupRestoreFlowTests
         if (last is not null) sources.Add(last);
         return new(sources, f.Services.GetServices<IBackupSummaryProvider>(), new StaticAppEnvironment("pro.vafadar.zanance", "Zanance", new(0, 1, 0), "Fictitious device", "Tests"), f.Preferences, f.Time, new());
     }
-    private static BackupRestoreSession Session(FlowFixture f, IBackupService backup, Runtime runtime, Func<bool>? available = null) =>
-        new(backup, runtime, f.Translator, new DateFormatter(f.Localization), f.Localization, f.Time, available);
+    private static BackupRestoreSession Session(FlowFixture f, IBackupService backup, Runtime runtime, Func<bool>? available = null, Func<bool>? nativeOwnerCurrent = null) =>
+        new(backup, runtime, f.Translator, new DateFormatter(f.Localization), f.Localization, f.Time, available, nativeOwnerCurrent);
     private static async Task<(byte[] Package, string Expected)> PackageAsync(FlowFixture f, IBackupService backup)
     {
         await f.Store.GetSettingsAsync(Ct); await f.Store.UpdateSettingsAsync(row => row.OnboardingCompleted = true, Ct);
@@ -129,7 +129,7 @@ public sealed class BackupRestoreFlowTests
     public async Task Outer_native_read_availability_disables_replacement_without_clearing_the_successful_original_preview()
     {
         using var f = new FlowFixture(); var backup = Service(f); var (package, _) = await PackageAsync(f, backup); var runtime = new Runtime(f, backup); var available = false;
-        var session = Session(f, backup, runtime, () => available); await PrepareAsync(session, package); Assert.False(session.CanRestore); Assert.False(session.CanLeave);
+        var session = Session(f, backup, runtime, () => available, nativeOwnerCurrent: () => true); await PrepareAsync(session, package); Assert.False(session.CanRestore); Assert.False(session.CanLeave);
         available = true; session.OwnerStateChanged(); Assert.True(session.CanRestore); var before = await GoalChooserFlowTests.SnapshotAsync(f);
         using var failed = new RefusedReadStream(); await session.PrepareAsync(failed, "Failed new selection.zanbak");
         Assert.Equal("fictitious-original.zanbak", session.PickedName); Assert.True(session.HasPreview); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));

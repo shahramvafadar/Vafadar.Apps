@@ -243,10 +243,12 @@ public sealed partial class BackupViewModel
     private async Task OpenCloudAsync(CloudBackup backup)
     {
         if (!CanUseBackupTools) return;
+        var owner = Restore.CapturePreparationOwner();
         CloudError = null;
         var restore = _translator["Backup_Restore"];
         var delete = _translator["Common_Delete"];
         var choice = IsRestoreOnly ? restore : await DialogPage.DisplayActionSheetAsync(backup.Title, _translator["Common_Cancel"], null, restore, delete);
+        if (!owner.IsCurrent) return;
         if (choice == delete)
         {
             await DeleteCloudAsync(backup);
@@ -261,9 +263,10 @@ public sealed partial class BackupViewModel
         IsBusy = true;
         try
         {
-            await using var stream = await Storage(backup.Provider).OpenReadAsync(backup.File.Id);
-            await PrepareRestoreAsync(stream, backup.Title);
+            await using var stream = await Storage(backup.Provider).OpenReadAsync(backup.File.Id, owner.Token);
+            owner.EnsureCurrent(); await Restore.PrepareAsync(stream, backup.Title, owner);
         }
+        catch (Exception ex) when (ex is not OutOfMemoryException && !owner.IsCurrent) { }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
             CloudError = CloudProblem(CloudAccounts.First(a => a.Provider == backup.Provider), ex);

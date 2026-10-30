@@ -78,6 +78,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/IRetainedKeyAliases.cs" Link="Application/IRetainedKeyAliases.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedSafetyRetention.cs" Link="Application/ProtectedSafetyRetention.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/ProtectedBackupRestoreReceiver.cs" Link="ProtectedBackupRestoreReceiver.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/BackupRestorePublication.cs" Link="BackupRestorePublication.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedProfileStorage.cs" Link="ProtectedProfileStorage.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedProfileRecovery.cs" Link="ProtectedProfileRecovery.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedDatabaseStartup.cs" Link="Application/ProtectedDatabaseStartup.cs" />
@@ -102,6 +103,8 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Receipts/ReceiptReadingSession.cs" Link="Application/ReceiptReadingSession.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Forecast/ForecastWorkspace.cs" Link="Application/ForecastWorkspace.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/BackupRestoreSession.cs" Link="Application/BackupRestoreSession.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/BackupRestoreSession.Lifetime.cs" Link="Application/BackupRestoreSession.Lifetime.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Security/NativeSensitivePresentation.Route.cs" Link="Application/NativeSensitivePresentation.Route.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/IBackupRestoreRuntime.cs" Link="Application/IBackupRestoreRuntime.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/DataFiles/ImportExportViewModel.Preview.cs" Link="Application/ImportExportViewModel.Preview.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/DataFiles/ImportExportViewModel.BankCsv.cs" Link="Application/ImportExportViewModel.BankCsv.cs" />

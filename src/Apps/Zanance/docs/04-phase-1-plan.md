@@ -2112,3 +2112,25 @@ refusal with zero financial operations, strict builds and complete signed offlin
 are recorded in [D-653 evidence](quality/original-csv-workspace.md). Physical adoption waits
 for actual D-607 completion; its three deadlines and unread post-reboot source are untouched.
 This is not general stability, speed, A11Y/security/DB/key/iOS/provider/Store/release acceptance.
+
+
+### D-654 - Complete original backup restore lifecycle
+
+Original local/cloud restore selection pins its native frame and actual target publication
+before selection. Stream/inspection, consent, authentication, safety, exclusive primary queue
+and protected receiver refuse retired/replaced owners. Original accepted primary receipts
+remain known before fallible follow-through and cannot replay replacement; actual return
+retries only follow-through. Current raw review/error behavior and original restore/encryption/
+recovery algorithms remain unchanged. Actual PIN modal authority is exact weak root/page/modal;
+its owned cover survives until Cancel while an unrelated route is refused. No credential,
+permission, schema, format or financial policy changed.
+
+Twenty distinct new and4 affected host cases, original native root-retirement and actual
+LockPage cancellation with full19-table source equality and zero financial/primary/requested
+safety operations pass. Strict Windows, complete offline384AOT/408ELF/1608staticLOAD shipping
+and independent signed native packages pass. Intermediate host/observer/presentation failures
+remain preserved. General backup creation/cloud discovery and other sensitive-page lifetime
+work are separate; this is not genuine authentication or full backup release acceptance.
+[D-654 evidence](quality/original-backup-restore-lifecycle.md) records the exact boundaries.
+Phone/D-607/three deadlines/consumed reboot and unread source are untouched; physical adoption
+and broader DB/key/security/stability/speed/A11Y/iOS/provider/Store/release gates stay open.

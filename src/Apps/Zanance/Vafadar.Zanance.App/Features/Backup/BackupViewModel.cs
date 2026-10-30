@@ -35,6 +35,18 @@ public sealed partial class BackupViewModel : ViewModelBase
     private readonly LocalFolderBackupStorage _local;
     private readonly LocalFolderBackupStorage _safety;
     private Page? _page;
+    private bool _presentationActive = true;
+    /// <summary>Activates only actual original appearance and invalidates pending restore continuations on departure.</summary>
+    public void SetPresentationActive(bool value)
+    {
+        _presentationActive = value; Restore.SetPresentationActive(value);
+        OnPropertyChanged(nameof(CanUseBackupTools)); OnPropertyChanged(nameof(CanLeave));
+    }
+    /// <summary>Binds the actual native root for restore consent independently of busy lifetime.</summary>
+    public void BindRootOwner(Func<bool> current) => Restore.BindRootOwner(current);
+    /// <summary>Terminal native root retirement preserves only an already committed restore receipt.</summary>
+    public void RetireRoot() { _presentationActive = false; Restore.RetireRoot(); WatchAutomatic(false); }
+
     private Func<Task>? _returnToOnboarding;
 
     private Page DialogPage => _page ?? throw new InvalidOperationException("The backup page has not been attached.");
@@ -50,7 +62,7 @@ public sealed partial class BackupViewModel : ViewModelBase
     /// <summary>Gets the original non-UI restore flow used by local, picked and connected-cloud packages.</summary>
     public BackupRestoreSession Restore { get; }
     /// <summary>Gets whether backup inputs remain available before an accepted restore is opened.</summary>
-    public bool CanUseBackupTools => !IsBusy && !Restore.HasCompleted;
+    public bool CanUseBackupTools => _presentationActive && !IsBusy && !Restore.HasCompleted;
     /// <summary>Gets whether native Back/tab navigation may leave the original restore flow.</summary>
     public bool CanLeave => !IsBusy && Restore.CanLeave;
     /// <summary>Forwards storage feedback from the original local/cloud adapters into the restore flow.</summary>
@@ -114,8 +126,8 @@ public sealed partial class BackupViewModel : ViewModelBase
         _safety = new LocalFolderBackupStorage(Path.Combine(FileSystem.AppDataDirectory, "backups-safety"));
         Restore = new BackupRestoreSession(backup, restoreRuntime ?? new MauiBackupRestoreRuntime(backup, autoPost, reminders, appLock, localization,
             services.GetRequiredService<ZananceStore>(), _safety, () => DialogPage, () => _returnToOnboarding?.Invoke() ?? Task.CompletedTask,
-                services.GetService<IBackupSafetyCopyMaintenance>()),
-            translator, dates, localization, time, () => !IsBusy);
+                services.GetService<IBackupSafetyCopyMaintenance>(), services.GetRequiredService<Vafadar.Data.LocalDatabaseLocation<ZananceDbContext>>()),
+            translator, dates, localization, time, () => !IsBusy, nativeOwnerCurrent: () => _presentationActive);
         Restore.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(BackupRestoreSession.IsBusy))
@@ -244,9 +256,11 @@ public sealed partial class BackupViewModel : ViewModelBase
     private async Task OpenLocalAsync(LocalBackup backup)
     {
         if (!CanUseBackupTools) return;
+        var owner = Restore.CapturePreparationOwner();
         var share = _translator["Backup_Share"];
         var restore = _translator["Backup_Restore"];
         var choice = IsRestoreOnly || backup.DeviceOnly ? restore : await DialogPage.DisplayActionSheetAsync(backup.Title, _translator["Common_Cancel"], null, share, restore);
+        if (!owner.IsCurrent) return;
         if (choice == share)
         {
             await ShareAsync(backup.File);
@@ -255,10 +269,11 @@ public sealed partial class BackupViewModel : ViewModelBase
         {
             try
             {
-                await using var stream = await (backup.DeviceOnly ? _safety : _local).OpenReadAsync(backup.File.Id);
-                await PrepareRestoreAsync(stream, backup.Title);
+                await using var stream = await (backup.DeviceOnly ? _safety : _local).OpenReadAsync(backup.File.Id, owner.Token);
+                owner.EnsureCurrent(); await Restore.PrepareAsync(stream, backup.Title, owner);
             }
-            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or BackupException)
+            catch (Exception ex) when (ex is not OutOfMemoryException && !owner.IsCurrent) { }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or BackupException or InvalidOperationException)
             {
                 RestoreError = _translator["Backup_Error_Storage"];
             }
@@ -269,25 +284,25 @@ public sealed partial class BackupViewModel : ViewModelBase
     private async Task PickFileAsync()
     {
         if (!CanUseBackupTools) return;
+        var owner = Restore.CapturePreparationOwner();
         try
         {
             var result = await FilePicker.Default.PickAsync(new PickOptions { PickerTitle = _translator["Backup_PickFile"] });
+            owner.EnsureCurrent();
             if (result is null)
             {
                 return;
             }
 
             await using var stream = await result.OpenReadAsync();
-            await PrepareRestoreAsync(stream, result.FileName);
+            owner.EnsureCurrent(); await Restore.PrepareAsync(stream, result.FileName, owner);
         }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or PermissionException)
+        catch (Exception ex) when (ex is not OutOfMemoryException && !owner.IsCurrent) { }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or PermissionException or InvalidOperationException)
         {
             RestoreError = _translator["Backup_Error_Storage"];
         }
     }
-
-    // All local, picked and cloud streams share the one actual non-UI restore flow.
-    private Task PrepareRestoreAsync(Stream stream, string name) => Restore.PrepareAsync(stream, name);
 
     private async Task ShareAsync(BackupFileInfo file)
     {

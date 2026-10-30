@@ -99,3 +99,5 @@ Original reference workspace and offline access lifetime: [D-651 runtime evidenc
 Original accountant disclosure workspace: [D-652 runtime evidence](quality/original-accountant-disclosure-workspace.md). Physical adoption and release gates remain separate.
 
 Original CSV workspace: [D-653 actual runtime evidence](quality/original-csv-workspace.md). Physical adoption and release gates remain separate.
+
+Original restore lifecycle: [D-654 focused and actual runtime evidence](quality/original-backup-restore-lifecycle.md). General backup/provider and physical release gates remain separate.

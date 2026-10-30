@@ -24,12 +24,15 @@ public sealed partial class BackupRestoreSession : ViewModelBase
 
     /// <summary>Uses original backup services and explicit effects; no native control or global window is required.</summary>
     public BackupRestoreSession(IBackupService backup, IBackupRestoreRuntime runtime, Translator translator,
-        IDateFormatter dates, ILocalizationService localization, TimeProvider time, Func<bool>? ownerAvailable = null)
+        IDateFormatter dates, ILocalizationService localization, TimeProvider time, Func<bool>? ownerAvailable = null, Func<bool>? nativeOwnerCurrent = null)
     {
         _backup = backup; _runtime = runtime; _translator = translator; _dates = dates; _localization = localization; _time = time;
         _ownerAvailable = ownerAvailable ?? (() => true);
+        _nativeOwnerCurrent = nativeOwnerCurrent ?? ownerAvailable ?? (() => true);
         PropertyChanged += (_, e) => { if (e.PropertyName is nameof(IsBusy) or nameof(HasPreview) or nameof(HasCompleted) or nameof(Error) or nameof(Result)) RefreshActions(); };
     }
+    /// <summary>Gets whether this original request is awaiting its own native authentication presentation.</summary>
+    [ObservableProperty] public partial bool IsAuthenticating { get; private set; }
     /// <summary>Gets whether the selected uncommitted package requires a user-entered password.</summary>
     [ObservableProperty] public partial bool NeedsPassword { get; set; }
     /// <summary>Gets or sets only the in-memory user input, never persisted or logged.</summary>
@@ -47,13 +50,13 @@ public sealed partial class BackupRestoreSession : ViewModelBase
     /// <summary>Gets the completed restore result without implying device/provider acceptance.</summary>
     [ObservableProperty] public partial string? Result { get; set; }
     /// <summary>Gets whether selection/cancellation can change an uncommitted review.</summary>
-    public bool CanSelect => !IsBusy && !HasCompleted && _ownerAvailable();
+    public bool CanSelect => Current && !IsBusy && !HasCompleted && _ownerAvailable();
     /// <summary>Gets whether the existing in-memory package can be explicitly inspected or re-inspected.</summary>
     public bool CanCheck => CanSelect && _package is not null;
     /// <summary>Gets whether replacement may be explicitly attempted from a current successful preview.</summary>
     public bool CanRestore => CanCheck && HasPreview;
     /// <summary>Gets whether accepted follow-through may retry without rereading/replacing data.</summary>
-    public bool CanFinish => !IsBusy && HasCompleted && !_opened && _ownerAvailable();
+    public bool CanFinish => Current && !IsBusy && HasCompleted && !_opened && _ownerAvailable();
     /// <summary>Gets whether navigation may leave an uncommitted, idle flow.</summary>
     public bool CanLeave => !IsBusy && (!HasCompleted || _opened) && _ownerAvailable();
     /// <summary>Gets whether a fresh explicit preview is required before replacement is enabled.</summary>
@@ -63,7 +66,7 @@ public sealed partial class BackupRestoreSession : ViewModelBase
     /// <summary>Gets or sets the first-run context without creating an extra account.</summary>
     public bool IsOnboarding { get; set; }
 
-    partial void OnPasswordChanged(string value) { HasPreview = false; PreviewText = null; RefreshActions(); }
+    partial void OnPasswordChanged(string value) { Interlocked.Increment(ref _selectionVersion); HasPreview = false; PreviewText = null; RefreshActions(); }
     /// <summary>Refreshes only affordances after the original parent busy state changes.</summary>
     public void OwnerStateChanged() => RefreshActions();
     private void RefreshActions()
@@ -73,56 +76,83 @@ public sealed partial class BackupRestoreSession : ViewModelBase
         CheckCommand.NotifyCanExecuteChanged(); RestoreCommand.NotifyCanExecuteChanged(); FinishCommand.NotifyCanExecuteChanged(); CancelCommand.NotifyCanExecuteChanged();
     }
     /// <summary>Publishes a new package only after its entire stream was read; failed reads retain the old review.</summary>
-    public async Task PrepareAsync(Stream stream, string name)
+    public async Task PrepareAsync(Stream stream, string name, PreparationOwner? originalOwner = null)
     {
-        if (IsBusy || HasCompleted) return;
+        if (IsBusy || HasCompleted || !Current) return;
+        var owner = originalOwner ?? CapturePreparationOwner(); owner.EnsureCurrent();
+        var source = owner.SourceValidation; source();
         IsBusy = true;
         try
         {
-            using var buffer = new MemoryStream(); await stream.CopyToAsync(buffer);
-            ClearSelection(); _package = buffer.ToArray(); PickedName = name; NeedsPassword = BackupEncryption.IsEncrypted(_package);
-            if (!NeedsPassword) await InspectAsync();
+            using var buffer = new MemoryStream(); await stream.CopyToAsync(buffer, owner.Token);
+            owner.EnsureCurrent(); source();
+            ClearSelection(); _sourceValidation = source; _package = buffer.ToArray(); PickedName = name; NeedsPassword = BackupEncryption.IsEncrypted(_package);
+            if (!NeedsPassword) await InspectAsync(owner);
         }
-        catch (Exception exception) when (exception is not OutOfMemoryException) { Error = _translator["Backup_Error_Storage"]; }
-        finally { IsBusy = false; RefreshActions(); }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { if (owner.IsCurrent) Error = _translator["Backup_Error_Storage"]; }
+        finally { EndOriginalOperation(); }
     }
     [RelayCommand(CanExecute = nameof(CanCheck))]
     private async Task CheckAsync()
     {
         if (!CanCheck) return;
-        IsBusy = true;
-        try { await InspectAsync(); }
-        finally { IsBusy = false; }
+        var owner = CapturePreparationOwner(); IsBusy = true;
+        try { await InspectAsync(owner); }
+        finally { EndOriginalOperation(); }
     }
-    private async Task InspectAsync()
+    private async Task InspectAsync(PreparationOwner owner)
     {
         Error = null; HasPreview = false;
         try
         {
-            var manifest = await _backup.InspectPackageAsync(_package!, NeedsPassword ? Password : null);
+            owner.EnsureCurrent(); _sourceValidation?.Invoke();
+            var package = _package!; var password = NeedsPassword ? Password : null; var revision = Volatile.Read(ref _selectionVersion);
+            var manifest = await _backup.InspectPackageAsync(package, password, owner.Token);
+            owner.EnsureCurrent(); _sourceValidation?.Invoke();
+            if (revision != Volatile.Read(ref _selectionVersion) || !ReferenceEquals(package, _package))
+                throw new InvalidOperationException("The original restore input changed during inspection.");
             PreviewText = Describe(manifest); HasPreview = true;
         }
-        catch (BackupException exception) { Error = _translator[$"Backup_Error_{exception.Error}"]; }
-        catch (Exception exception) when (exception is not OutOfMemoryException) { Error = _translator["Backup_ReviewFailed"]; }
+        catch (BackupException exception) { if (owner.IsCurrent) Error = _translator[$"Backup_Error_{exception.Error}"]; }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { if (owner.IsCurrent) Error = _translator["Backup_ReviewFailed"]; }
     }
     [RelayCommand(CanExecute = nameof(CanRestore))]
     private async Task RestoreAsync()
     {
         if (!CanRestore) return;
+        var owner = CapturePreparationOwner(); var package = _package!; var password = NeedsPassword ? Password : null;
+        var revision = Volatile.Read(ref _selectionVersion);
+        void OriginalRequest()
+        {
+            owner.EnsureCurrent(); _sourceValidation?.Invoke();
+            if (revision != Volatile.Read(ref _selectionVersion) || !ReferenceEquals(package, _package))
+                throw new InvalidOperationException("The original restore input or consent changed.");
+        }
         IsBusy = true; var replacing = false; var safetyStarted = false;
         try
         {
-            if (!await _runtime.ConfirmReplacementAsync() || !await _runtime.AuthenticateAsync()) return;
+            OriginalRequest(); if (!await _runtime.ConfirmReplacementAsync()) return;
+            OriginalRequest(); bool authenticated;
+            IsAuthenticating = true;
+            try { authenticated = await _runtime.AuthenticateAsync(); }
+            finally { IsAuthenticating = false; }
+            if (!authenticated) return;
+            OriginalRequest();
             Error = null;
-            safetyStarted = true; await _runtime.CreateSafetyCopyAsync();
+            safetyStarted = true; await _runtime.CreateSafetyCopyAsync(OriginalRequest, owner.Token);
+            OriginalRequest();
             replacing = true;
-            await _runtime.RestorePrimaryAsync(_package!, NeedsPassword ? Password : null);
+            await _runtime.RestorePrimaryAsync(package, password, OriginalRequest, owner.Token);
             // Every original source has returned. Never leave this accepted payload available to a fallible follow-up.
             HasCompleted = true; ClearSelection(); Result = _translator["Backup_RestoredMessage"];
-            await FinishCoreAsync();
+            if (owner.IsCurrent) await FinishCoreAsync(owner);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
+            // A possibly changed source never regains an old preview when its native page returns.
+            if (replacing && !HasCompleted)
+            { HasPreview = false; Error = _translator["Backup_Error_RestoreFailed"]; }
+            if (!owner.IsCurrent) return;
             if (HasCompleted) Error = _translator["Backup_RestoredFollowUpFailed"];
             else if (replacing)
             {
@@ -131,24 +161,24 @@ public sealed partial class BackupRestoreSession : ViewModelBase
             }
             else Error = _translator[safetyStarted ? "Backup_Error_SafetyCopyFailed" : "Backup_ConsentFailed"];
         }
-        finally { IsBusy = false; RefreshActions(); }
+        finally { EndOriginalOperation(); }
     }
     [RelayCommand(CanExecute = nameof(CanFinish))]
     private async Task FinishAsync()
     {
         if (!CanFinish) return;
-        IsBusy = true; Error = null;
-        try { await FinishCoreAsync(); }
+        var owner = CapturePreparationOwner(); IsBusy = true; Error = null;
+        try { await FinishCoreAsync(owner); }
         catch (Exception exception) when (exception is not OutOfMemoryException) { Error = _translator["Backup_RestoredFollowUpFailed"]; }
-        finally { IsBusy = false; RefreshActions(); }
+        finally { EndOriginalOperation(); }
     }
-    private async Task FinishCoreAsync()
+    private async Task FinishCoreAsync(PreparationOwner owner)
     {
-        await _runtime.ApplyDisplayAsync();
+        owner.EnsureCurrent(); await _runtime.ApplyDisplayAsync(); owner.EnsureCurrent();
         Result = _translator["Backup_RestoredMessage"];
-        if (IsOnboarding) await _runtime.CompleteOnboardingAsync();
-        await _runtime.ReloadLockAsync();
-        await _runtime.RefreshFinancialWorkAsync(DateOnly.FromDateTime(_time.GetLocalNow().DateTime));
+        if (IsOnboarding) { await _runtime.CompleteOnboardingAsync(); owner.EnsureCurrent(); }
+        await _runtime.ReloadLockAsync(); owner.EnsureCurrent();
+        await _runtime.RefreshFinancialWorkAsync(DateOnly.FromDateTime(_time.GetLocalNow().DateTime)); owner.EnsureCurrent();
         await _runtime.OpenRestoredProfileAsync(IsOnboarding);
         _opened = true;
     }
@@ -156,6 +186,7 @@ public sealed partial class BackupRestoreSession : ViewModelBase
     private void Cancel() { if (CanSelect) { ClearSelection(); Error = null; Result = null; RefreshActions(); } }
     private void ClearSelection()
     {
+        Interlocked.Increment(ref _selectionVersion); _sourceValidation = null;
         _package = null; PickedName = null; Password = string.Empty; NeedsPassword = false; HasPreview = false; PreviewText = null;
     }
     private string Describe(BackupManifest manifest)

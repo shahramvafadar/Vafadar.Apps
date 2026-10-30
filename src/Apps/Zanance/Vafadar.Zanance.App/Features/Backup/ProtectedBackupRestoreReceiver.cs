@@ -16,7 +16,10 @@ public sealed class ProtectedBackupRestoreReceiver(LocalDatabaseLocation<Zanance
     public async Task RestoreAsync(BackupManifest manifest, IReadOnlyDictionary<string, ReadOnlyMemory<byte>> entries,
         CancellationToken cancellationToken)
     {
+        BackupRestorePublication.EnsureCurrent();
         using var owner = await location.Access.AcquireExclusiveAsync(cancellationToken).ConfigureAwait(false);
+        // D-654: a profile/root can retire while waiting for the original drain; never borrow its replacement.
+        BackupRestorePublication.EnsureCurrent();
         await storage.RestorePackageAsync(manifest, entries, owner, cancellationToken).ConfigureAwait(false);
     }
 }
