@@ -87,9 +87,11 @@ public sealed partial class BackupService : IBackupService, IBackupPackageReader
         && (LastBackupAt is not { } last || _time.GetUtcNow() - last >= interval);
 
     // The app id in file names, with the backup set when one is used (BackupOptions.FileSet).
-    private string FileAppId()
+    private string FileAppId() => FileAppId(_options.FileSet?.Invoke());
+
+    // One call captures its original profile before waiting; filenames and history must not borrow a later profile.
+    private string FileAppId(string? set)
     {
-        var set = _options.FileSet?.Invoke();
         if (string.IsNullOrEmpty(set))
         {
             return _app.AppId;
@@ -103,7 +105,14 @@ public sealed partial class BackupService : IBackupService, IBackupPackageReader
         return $"{_app.AppId}~{set}";
     }
 
-    private string LastKey() => _options.FileSet?.Invoke() is { Length: > 0 } set ? $"{LastBackupKey}.{set}" : LastBackupKey;
+    private string LastKey() => LastKey(_options.FileSet?.Invoke());
+    private static string LastKey(string? set) => set is { Length: > 0 } ? $"{LastBackupKey}.{set}" : LastBackupKey;
+    private void RequireFileAppId(string original, CancellationToken ct)
+    {
+        ct.ThrowIfCancellationRequested();
+        if (!string.Equals(original, FileAppId(), StringComparison.Ordinal))
+            throw new InvalidOperationException("The original backup profile changed.");
+    }
 
     /// <inheritdoc />
     public Task<BackupFileInfo> CreateBackupAsync(IBackupStorage storage, string? password = null, CancellationToken cancellationToken = default) =>
@@ -116,10 +125,14 @@ public sealed partial class BackupService : IBackupService, IBackupPackageReader
     private async Task<BackupFileInfo> CreateCoreAsync(IBackupStorage storage, string? password, bool recordAsBackup, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(storage);
+        var set = _options.FileSet?.Invoke();
+        var originalAppId = FileAppId(set);
+        var originalLastKey = LastKey(set);
 
         await _gate.WaitAsync(cancellationToken);
         try
         {
+            RequireFileAppId(originalAppId, cancellationToken);
             var createdAt = _time.GetUtcNow();
             var protectedSafety = !recordAsBackup && _safetyProtection is not null;
             var package = await CreatePackageCoreAsync(createdAt, password, cancellationToken,
@@ -127,6 +140,7 @@ public sealed partial class BackupService : IBackupService, IBackupPackageReader
             BackupFileInfo file;
             try
             {
+                RequireFileAppId(originalAppId, cancellationToken);
                 if (protectedSafety)
                 {
                     var plaintext = package;
@@ -136,24 +150,32 @@ public sealed partial class BackupService : IBackupService, IBackupPackageReader
                 using var content = new MemoryStream(package, writable: false);
                 // Separate opaque safety identities cannot overwrite another copy in the same second,
                 // and cannot enter portable discovery or its timestamp-based retention.
-                var name = protectedSafety ? $"safety-{Guid.NewGuid():N}.vbs" : BackupFileName.Create(FileAppId(), createdAt);
+                RequireFileAppId(originalAppId, cancellationToken);
+                var name = protectedSafety ? $"safety-{Guid.NewGuid():N}.vbs" : BackupFileName.Create(originalAppId, createdAt);
                 file = await storage.UploadAsync(name, content, cancellationToken);
             }
             finally { CryptographicOperations.ZeroMemory(package); }
 
             if (recordAsBackup)
             {
-                _settings.Set(LastKey(), createdAt.ToString("O", CultureInfo.InvariantCulture));
+                try { _settings.Set(originalLastKey, createdAt.ToString("O", CultureInfo.InvariantCulture)); }
+                catch (Exception ex) when (ex is not OutOfMemoryException)
+                {
+                    // The original upload receipt is already known; a preference-store failure must not invite
+                    // another export/upload. The visible discovered file remains the authority for that copy.
+                    System.Diagnostics.Debug.WriteLine($"Stored backup timestamp not recorded: {ex.GetType().Name}");
+                }
             }
 
             try
             {
                 // Internal key/file references require their own recovery-aware retention, never portable pruning.
-                if (!protectedSafety) await ApplyRetentionCoreAsync(storage, cancellationToken);
+                if (!protectedSafety) await ApplyRetentionCoreAsync(storage, cancellationToken, originalAppId);
             }
-            catch (Exception ex) when (ex is not OperationCanceledException and not OutOfMemoryException)
+            catch (Exception ex) when (ex is not OutOfMemoryException)
             {
-                // The backup itself is stored; old files are pruned again after the next backup.
+                // Upload has returned its durable receipt. Cancelled/retired retention cannot turn that stored copy
+                // into an unknown failure and encourage a second upload; later explicit work may retry pruning.
                 System.Diagnostics.Debug.WriteLine($"Backup retention failed: {ex.GetType().Name}");
             }
 
@@ -192,8 +214,9 @@ public sealed partial class BackupService : IBackupService, IBackupPackageReader
     {
         ArgumentNullException.ThrowIfNull(storage);
 
-        var files = await storage.ListAsync(cancellationToken);
         var fileAppId = FileAppId();
+        var files = await storage.ListAsync(cancellationToken);
+        if (!allSets) RequireFileAppId(fileAppId, cancellationToken);
         return
         [
             .. files
@@ -306,11 +329,13 @@ public sealed partial class BackupService : IBackupService, IBackupPackageReader
     public async Task<int> ApplyRetentionAsync(IBackupStorage storage, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(storage);
+        var originalAppId = FileAppId();
 
         await _gate.WaitAsync(cancellationToken);
         try
         {
-            return await ApplyRetentionCoreAsync(storage, cancellationToken);
+            RequireFileAppId(originalAppId, cancellationToken);
+            return await ApplyRetentionCoreAsync(storage, cancellationToken, originalAppId);
         }
         finally
         {
@@ -398,16 +423,23 @@ public sealed partial class BackupService : IBackupService, IBackupPackageReader
         finally { CryptographicOperations.ZeroMemory(package); }
     }
 
-    private async Task<int> ApplyRetentionCoreAsync(IBackupStorage storage, CancellationToken cancellationToken)
+    private async Task<int> ApplyRetentionCoreAsync(IBackupStorage storage, CancellationToken cancellationToken, string originalAppId)
     {
         if (_options.MaxBackupsToKeep <= 0)
         {
             return 0;
         }
 
-        var obsolete = (await ListBackupsAsync(storage, cancellationToken)).Skip(_options.MaxBackupsToKeep).ToList();
+        RequireFileAppId(originalAppId, cancellationToken);
+        var files = await storage.ListAsync(cancellationToken);
+        RequireFileAppId(originalAppId, cancellationToken);
+        var obsolete = files.Select(file => (File: file,
+                Parsed: BackupFileName.TryParse(file.FileName, out var appId, out var createdAt), AppId: appId, CreatedAt: createdAt))
+            .Where(item => item.Parsed && string.Equals(item.AppId, originalAppId, StringComparison.Ordinal))
+            .OrderByDescending(item => item.CreatedAt).Skip(_options.MaxBackupsToKeep).Select(item => item.File).ToList();
         foreach (var file in obsolete)
         {
+            RequireFileAppId(originalAppId, cancellationToken);
             await storage.DeleteAsync(file.Id, cancellationToken);
         }
 

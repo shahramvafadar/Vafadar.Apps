@@ -61,7 +61,7 @@ public partial class BackupPage : ContentPage
         else if (_originalWindowRoot is { } firstRunRoot && firstRunRoot.TryGetTarget(out var original))
             sameRoute = ReferenceEquals(Application.Current?.Windows.FirstOrDefault()?.Page, original)
                 && original.Navigation.ModalStack.Contains(this);
-        if (!_viewModel.Restore.IsAuthenticating || !(sameRoute || Security.NativeSensitivePresentation.CoversOriginalPage(this))) RetirePublication();
+        if (!_viewModel.IsConfirmingSensitiveOperation || !(sameRoute || Security.NativeSensitivePresentation.CoversOriginalPage(this))) RetirePublication();
         base.OnDisappearing();
     }
 

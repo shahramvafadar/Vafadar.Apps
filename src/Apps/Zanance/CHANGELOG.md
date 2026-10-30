@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-655: pin original portable creation/native input/destination and profile-specific history/retention; retain actual stored receipts through later metadata, cancellation or listing/share failure.
+
 - D-654: bind original restore selection, native consent/authentication, safety and protected replacement to their actual target/frame; preserve known primary receipts and only retry follow-through. Keep an exact owned PIN modal and refuse unrelated navigation.
 
 - D-653: retain original CSV raw mapping through source Retry; refuse retired picker/export/Undo consent, pin coherent original-file reads and preserve known commit receipts. Keep distinct BOM-preserving private CSV copies before sharing.

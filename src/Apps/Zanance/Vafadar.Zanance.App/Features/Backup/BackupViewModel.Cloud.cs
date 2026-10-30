@@ -181,41 +181,35 @@ public sealed partial class BackupViewModel
     [RelayCommand]
     private async Task BackupToCloudAsync(CloudAccountRow row)
     {
-        CloudError = null;
-        CloudResult = null;
-
-        // D-62: the same optional file protection applies to local and connected cloud destinations.
-        if (UsePassword && PasswordProblem() is { } problem)
+        if (!CanUseBackupTools || !CanCreateBackup || !CloudAccounts.Any(item => ReferenceEquals(item, row)) || !row.IsConnected) return;
+        CloudError = null; CloudResult = null;
+        if (UsePassword && PasswordProblem() is { } problem) { CloudError = problem; return; }
+        var owner = Restore.CapturePreparationOwner(); var input = CaptureCreationInput();
+        var account = row.Account; var originalLastKey = LastCloudKey(row.Provider);
+        void CheckDestination()
         {
-            CloudError = problem;
-            return;
+            if (!CloudAccounts.Any(item => ReferenceEquals(item, row)) || row.Account != account || !row.IsConnected)
+                throw new OperationCanceledException("The original portable destination changed.", owner.Token);
         }
-
-        if (!await _lock.ConfirmAsync(_translator["Lock_ConfirmBackup"]))
-        {
-            return;
-        }
-
-        IsBusy = true;
+        var request = CreationRequest(Storage(row.Provider), input, owner, CheckDestination);
+        BeginPortableCreation();
         try
         {
-            await _backup.CreateBackupAsync(Storage(row.Provider), UsePassword ? Password : null);
-            Password = string.Empty;
-            PasswordConfirm = string.Empty;
+            var file = await request.RunAsync(ConfirmCreationAsync);
+            if (file is null) return;
+            ConsumeOnlyOriginalCreationInput(input);
             CloudResult = _translator.Format("Cloud_Uploaded", row.Title);
-            Preferences.Default.Set(LastCloudKey(row.Provider), _time.GetUtcNow().ToUnixTimeSeconds());
-            ShowLastCloudBackup(row);
+            // Original profile metadata cannot borrow a different profile after an accepted upload.
+            Preferences.Default.Set(originalLastKey, _time.GetUtcNow().ToUnixTimeSeconds());
+            if (!owner.IsCurrent) return;
+            CheckCreationFrame(owner); CheckDestination(); ShowLastCloudBackup(row);
             LastBackupText = _backup.LastBackupAt is { } last ? _translator.Format("Backup_LastBackup", FormatTime(last)) : LastBackupText;
             await ListCloudAsync(row);
         }
-        catch (Exception ex) when (ex is not OutOfMemoryException)
-        {
-            CloudError = CloudProblem(row, ex);
-        }
-        finally
-        {
-            IsBusy = false;
-        }
+        catch (OperationCanceledException) { }
+        catch (Exception ex) when (ex is not OutOfMemoryException && !owner.IsCurrent) { }
+        catch (Exception ex) when (ex is not OutOfMemoryException) { CloudError = CloudProblem(row, ex); }
+        finally { EndPortableCreation(); }
     }
 
     [RelayCommand]

@@ -5131,3 +5131,24 @@ work are separate; this is not genuine authentication or full backup release acc
 [D-654 evidence](quality/original-backup-restore-lifecycle.md) records the exact boundaries.
 Phone/D-607/three deadlines/consumed reboot and unread source are untouched; physical adoption
 and broader DB/key/security/stability/speed/A11Y/iOS/provider/Store/release gates stay open.
+
+
+### D-655 - Complete original portable backup creation
+
+Original local/cloud creation captures actual native/source/input/destination before sensitive
+confirmation and keeps an independent portable busy lifetime through the original operation. Exact owned PIN cover
+survives Cancel; an unrelated route refuses. One-shot original creation guards every storage
+effect, consumes only unchanged submitted input and accepts the actual stored receipt before
+fallible listing/share. Original service filename/history/retention pins its first profile;
+changed profiles cannot relabel/prune another set, and later timestamp/retention failure or
+cancellation cannot erase a known upload receipt. Original format/encryption/defaults/source/
+financial/permission/provider policy remain unchanged.
+
+Six original-service failures,12 distinct new and3 affected cases, strict Windows/full offline
+384AOT/408ELF/1608staticLOAD and original native LockPageCancel/busyBack/root-retired-confirmation
+pass. Full19-table source equal; manual portable/share/financial0. Fresh UID/11hash-matched XMLs/
+owned AVD retire with exact original OS. [D-655 evidence](quality/original-portable-backup-creation.md)
+keeps failures, receipt and acceptance limits. General discovery/cloud-identity/deletion and
+other sensitive-page work remain separate. Phone/D607/three deadlines/consumed reboot/unread
+source are untouched; physical/provider/DBkey/security/ANR/speed/A11Y/iOS/Store/release gates
+remain open. Overall delivery remains active.

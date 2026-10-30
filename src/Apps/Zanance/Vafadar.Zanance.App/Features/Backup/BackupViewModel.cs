@@ -62,9 +62,9 @@ public sealed partial class BackupViewModel : ViewModelBase
     /// <summary>Gets the original non-UI restore flow used by local, picked and connected-cloud packages.</summary>
     public BackupRestoreSession Restore { get; }
     /// <summary>Gets whether backup inputs remain available before an accepted restore is opened.</summary>
-    public bool CanUseBackupTools => _presentationActive && !IsBusy && !Restore.HasCompleted;
+    public bool CanUseBackupTools => _presentationActive && !_portableCreationActive && !IsBusy && !Restore.HasCompleted;
     /// <summary>Gets whether native Back/tab navigation may leave the original restore flow.</summary>
-    public bool CanLeave => !IsBusy && Restore.CanLeave;
+    public bool CanLeave => !_portableCreationActive && !IsBusy && Restore.CanLeave;
     /// <summary>Forwards storage feedback from the original local/cloud adapters into the restore flow.</summary>
     public string? RestoreError { get => Restore.Error; set => Restore.Error = value; }
     private bool _restorePriorBusy;
@@ -112,8 +112,10 @@ public sealed partial class BackupViewModel : ViewModelBase
         TimeProvider time,
         Vafadar.Authentication.Maui.CloudSignIn cloud,
         IServiceProvider services,
-        IBackupRestoreRuntime? restoreRuntime = null)
+        IBackupRestoreRuntime? restoreRuntime = null,
+        IBackupCreationRuntime? creationRuntime = null)
     {
+        _creationRuntime = creationRuntime ?? new MauiBackupCreationRuntime(appLock, translator);
         _cloud = cloud;
         _lock = appLock;
         _services = services;
@@ -222,29 +224,24 @@ public sealed partial class BackupViewModel : ViewModelBase
             return;
         }
 
-        if (!await _lock.ConfirmAsync(_translator["Lock_ConfirmBackup"]))
-        {
-            return;
-        }
-
-        IsBusy = true;
+        var owner = Restore.CapturePreparationOwner(); var input = CaptureCreationInput();
+        var request = CreationRequest(_local, input, owner);
+        BeginPortableCreation();
         try
         {
-            var file = await _backup.CreateBackupAsync(_local, UsePassword ? Password : null);
-            Password = string.Empty;
-            PasswordConfirm = string.Empty;
-            CreateResult = _translator["Backup_Created"];
-            await LoadAsync();
-            await ShareAsync(file);
+            var file = await request.RunAsync(ConfirmCreationAsync);
+            if (file is null) return;
+            // This original file is already stored. Discovery/share errors retain its known successful receipt.
+            ConsumeOnlyOriginalCreationInput(input); CreateResult = _translator["Backup_Created"];
+            if (!owner.IsCurrent) return;
+            CheckCreationFrame(owner); await LoadAsync();
+            CheckCreationFrame(owner); await _creationRuntime.ShareAsync(file);
         }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or BackupException)
-        {
-            CreateError = _translator["Backup_Error_Storage"];
-        }
-        finally
-        {
-            IsBusy = false;
-        }
+        catch (OperationCanceledException) { }
+        catch (Exception ex) when (ex is not OutOfMemoryException && !owner.IsCurrent) { }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or BackupException or InvalidOperationException)
+        { CreateError = _translator["Backup_Error_Storage"]; }
+        finally { EndPortableCreation(); }
     }
 
     private string? PasswordProblem() =>

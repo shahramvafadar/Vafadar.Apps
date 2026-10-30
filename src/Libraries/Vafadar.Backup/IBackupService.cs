@@ -12,6 +12,8 @@ public interface IBackupService
     bool IsAutomaticBackupDue();
 
     /// <summary>Creates a backup package, uploads it and applies the retention policy.</summary>
+    /// <remarks>A successful upload returns its original stored receipt even if later timestamp recording or optional
+    /// retention fails or is cancelled. Discovery remains authoritative for the stored copy; do not replay creation.</remarks>
     /// <param name="storage">Where to store the backup.</param>
     /// <param name="password">Encrypts the backup when given. The password is not stored anywhere.</param>
     /// <param name="cancellationToken">Cancels the operation.</param>

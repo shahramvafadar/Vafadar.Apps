@@ -527,7 +527,7 @@ public partial class AppShell : Shell
         // D-654: permit only the exact registered authentication modal, never a general busy Push.
         var originalBackupPage = CurrentPage?.BindingContext is BackupViewModel ? CurrentPage : Security.NativeSensitivePresentation.Underlying(this);
         var backup = originalBackupPage?.BindingContext as BackupViewModel;
-        var ownBackupAuthentication = backup?.Restore.IsAuthenticating == true && originalBackupPage is not null
+        var ownBackupAuthentication = backup?.IsConfirmingSensitiveOperation == true && originalBackupPage is not null
             && Security.NativeSensitivePresentation.Allows(this, originalBackupPage, args);
         if (backup is not null && !backup.CanLeave && args.CanCancel && !ownBackupAuthentication) args.Cancel();
         if (CurrentPage?.BindingContext is Features.Sync.PersonalSyncViewModel sync && !sync.CanLeave && args.CanCancel) args.Cancel();

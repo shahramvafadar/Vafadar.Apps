@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/PortableBackupCreation.cs" Link="Application/PortableBackupCreation.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Forecast/ForecastViewModel.cs" Link="Application/ForecastViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Forecast/SnapshotViewModel.cs" Link="Application/SnapshotViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Forecast/IForecastInteraction.cs" Link="Application/IForecastInteraction.cs" />

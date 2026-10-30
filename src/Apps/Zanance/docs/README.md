@@ -101,3 +101,5 @@ Original accountant disclosure workspace: [D-652 runtime evidence](quality/origi
 Original CSV workspace: [D-653 actual runtime evidence](quality/original-csv-workspace.md). Physical adoption and release gates remain separate.
 
 Original restore lifecycle: [D-654 focused and actual runtime evidence](quality/original-backup-restore-lifecycle.md). General backup/provider and physical release gates remain separate.
+
+Original portable backup creation: [D-655 evidence](quality/original-portable-backup-creation.md), separate from general discovery and real provider acceptance.
