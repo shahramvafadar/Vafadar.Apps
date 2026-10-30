@@ -7,6 +7,23 @@ public partial class ActiveItemsPage : ContentPage, IQueryAttributable
 {
     private readonly ActiveItemsViewModel _viewModel;
     private readonly ILocalizationService _localization;
+    private AppShell? _ownerShell;
+    private bool _rootRetired;
+    /// <summary>Retires the original root and all outstanding read/consent continuations.</summary>
+    internal void RetireShellPublication() { _rootRetired = true; _viewModel.RetireRoot(); }
+    /// <summary>Retires only an accepted original route departure, keeping its unsaved identity choices.</summary>
+    internal void RetirePublication() => _viewModel.SetActive(false);
+    /// <summary>Shares original appearance/tab return; a retained draft is revalidated rather than recreated.</summary>
+    internal Task RefreshForNavigationAsync()
+    {
+        if (_rootRetired || Shell.Current is not AppShell shell) return Task.CompletedTask;
+        if (_ownerShell is not null && !ReferenceEquals(_ownerShell, shell)) { RetireShellPublication(); return Task.CompletedTask; }
+        _ownerShell = shell; shell.RegisterActiveItems(this); var root = new WeakReference<AppShell>(shell);
+        _viewModel.BindRootOwner(() => root.TryGetTarget(out var original) && original.OwnsActiveItemsPublication
+            && ReferenceEquals(Application.Current?.Windows.FirstOrDefault()?.Page, original)
+            && (ReferenceEquals(original.CurrentPage, this) || Security.NativeSensitivePresentation.CoversOriginalPage(this)));
+        _viewModel.SetActive(true); return _viewModel.EnsureLoadedAsync();
+    }
 
     /// <summary>Creates the page without starting database work in construction.</summary>
     public ActiveItemsPage(ActiveItemsViewModel viewModel, ILocalizationService localization)
@@ -28,13 +45,15 @@ public partial class ActiveItemsPage : ContentPage, IQueryAttributable
     protected override async void OnAppearing()
     {
         base.OnAppearing(); _localization.Changed -= OnDisplayChanged; _localization.Changed += OnDisplayChanged;
-        await Presentation.Failures.GuardAsync(_viewModel.EnsureLoadedAsync);
+        await Presentation.Failures.GuardAsync(RefreshForNavigationAsync);
     }
 
     /// <inheritdoc />
     protected override void OnDisappearing()
     {
-        _localization.Changed -= OnDisplayChanged; base.OnDisappearing();
+        _localization.Changed -= OnDisplayChanged;
+        if (!Security.NativeSensitivePresentation.CoversOriginalPage(this)) RetirePublication();
+        base.OnDisappearing();
     }
 
     private void OnDisplayChanged(object? sender, EventArgs e) => _viewModel.RefreshDisplay();

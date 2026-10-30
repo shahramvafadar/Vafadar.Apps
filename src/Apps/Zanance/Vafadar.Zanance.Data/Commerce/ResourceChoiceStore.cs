@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.Sqlite;
 using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Plans;
 
@@ -16,9 +17,16 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
     {
         DemandKind(kind);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        // SQLite async open is synchronous; keep this operation's keyed native handle across its guarded queries.
-        await db.Database.OpenConnectionAsync(cancellationToken);
-        return await ReadAsync(kind, db, cancellationToken);
+        // Capture the original context before dispatch; SQLite async open/queries can run synchronously.
+        return await Task.Run(async () =>
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            await db.Database.OpenConnectionAsync(cancellationToken);
+            await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
+            await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
+            var result = await ReadAsync(kind, db, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested(); return result;
+        }, cancellationToken);
     }
 
     /// <summary>Reads and rechecks the complete choice in an existing original operation's context.</summary>
@@ -58,11 +66,12 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
     /// <summary>Saves only a current explicit reviewed subset; history, entity states and money are never rewritten.</summary>
     /// <returns>Whether the canonical choice changed and was committed.</returns>
     public async Task<bool> SaveAsync(ResourceChoiceSnapshot reviewed, IEnumerable<Guid> selectedIds,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default, SelectionWriteReceipt? receipt = null, Action? validateOriginal = null)
     {
         ArgumentNullException.ThrowIfNull(reviewed);
         ArgumentNullException.ThrowIfNull(selectedIds);
         if (!reviewed.CanChoose) throw new InvalidOperationException("No bounded active-item choice is required.");
+        validateOriginal?.Invoke(); receipt?.Begin();
         var choice = new ResourceSelection(reviewed.Kind, StoredResourceSelection.Scope(reviewed.Access.Context!), selectedIds);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         var path = DatabaseFileIdentity.ConfiguredPath(db);
@@ -83,6 +92,7 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
         if (row is not null && row.HasValidValue() && row.IdentitySet == encoded)
         {
             reviewed.Access.EnsureSnapshotCurrent();
+            validateOriginal?.Invoke(); receipt?.Accept(false);
             return false;
         }
         if (row is null)
@@ -93,9 +103,12 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
         row.IdentitySet = encoded;
         row.Revision = Guid.NewGuid();
         reviewed.Access.EnsureSnapshotCurrent();
+        validateOriginal?.Invoke();
         await db.SaveChangesAsync(cancellationToken);
         reviewed.Access.EnsureSnapshotCurrent();
+        validateOriginal?.Invoke();
         await transaction.CommitAsync(cancellationToken);
+        receipt?.Accept(true);
         Changed?.Invoke(this, EventArgs.Empty);
         return true;
     }
@@ -104,7 +117,15 @@ public sealed class ResourceChoiceStore(IDbContextFactory<ZananceDbContext> cont
     public async Task ValidateAsync(ResourceChoiceSnapshot reviewed, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await ValidateAsync(reviewed, db, cancellationToken);
+        await Task.Run(async () =>
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            await db.Database.OpenConnectionAsync(cancellationToken);
+            await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
+            await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
+            await ValidateAsync(reviewed, db, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+        }, cancellationToken);
     }
 
     /// <summary>Shares validation with the actual writer, never an unrelated read connection.</summary>

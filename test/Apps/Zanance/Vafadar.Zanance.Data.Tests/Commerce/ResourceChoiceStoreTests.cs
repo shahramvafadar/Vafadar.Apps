@@ -22,6 +22,56 @@ public sealed class ResourceChoiceStoreTests : IDisposable
     private static readonly Guid ScopeId = Guid.Parse("11111111-2222-3333-4444-555555555555");
     private static readonly DateOnly Day = new(2026, 10, 12);
 
+    [Fact]
+    public async Task An_already_matching_original_selection_has_an_accepted_unchanged_receipt_without_SQL_or_notification_replay()
+    {
+        var f = await CreateAsync(); f.Enable();
+        await f.Choices.SaveAsync(await f.Choices.ReadAsync(QuotaKind.FinancialAccounts, Ct), [], Ct);
+        var original = await f.Choices.ReadAsync(QuotaKind.FinancialAccounts, Ct); var before = await SnapshotAsync(f.Provider);
+        var receipt = new SelectionWriteReceipt(); var events = 0; f.Choices.Changed += (_, _) => events++;
+        Assert.False(await f.Choices.SaveAsync(original, [], Ct, receipt));
+        Assert.True(receipt.Accepted); Assert.False(receipt.Changed); Assert.Equal(0, events); Assert.Equal(before, await SnapshotAsync(f.Provider));
+    }
+
+    [Theory, InlineData(QuotaKind.FinancialAccounts), InlineData(QuotaKind.RecurringPlans)]
+    public async Task Actual_selection_commit_receipt_survives_notification_failure_and_cannot_authorize_another_request(QuotaKind kind)
+    {
+        var f = await CreateAsync(); f.Enable(); var original = await f.Choices.ReadAsync(kind, Ct);
+        var before = await SnapshotAsync(f.Provider, false); var receipt = new SelectionWriteReceipt();
+        f.Choices.Changed += (_, _) => throw new IOException("Fictitious failure after actual selection commit.");
+        await Assert.ThrowsAsync<IOException>(() => f.Choices.SaveAsync(original, [f.Id(kind, 0)], Ct, receipt));
+        Assert.True(receipt.Accepted); Assert.True(receipt.Changed); var committed = await SnapshotAsync(f.Provider);
+        await Assert.ThrowsAsync<InvalidOperationException>(() => f.Choices.SaveAsync(original, [], Ct, receipt));
+        Assert.Equal(committed, await SnapshotAsync(f.Provider)); Assert.Equal(before, await SnapshotAsync(f.Provider, false));
+        Assert.Equal([f.Id(kind, 0)], (await f.Choices.ReadAsync(kind, Ct)).SelectedIds);
+    }
+
+    [Theory, InlineData(QuotaKind.FinancialAccounts), InlineData(QuotaKind.RecurringPlans)]
+    public async Task Retired_original_native_owner_after_actual_selection_SQL_rolls_back_before_commit(QuotaKind kind)
+    {
+        var f = await CreateAsync(); f.Enable(); var original = await f.Choices.ReadAsync(kind, Ct);
+        await using (var db = await f.Provider.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct))
+            await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER RetireNativeChoice AFTER INSERT ON ResourceSelections BEGIN SELECT RetireChoiceAccess(); END;", Ct);
+        var before = await SnapshotAsync(f.Provider); var current = true; var receipt = new SelectionWriteReceipt();
+        f.Source.AfterSql = () => current = false;
+        await Assert.ThrowsAsync<OperationCanceledException>(() => f.Choices.SaveAsync(original, [], Ct, receipt,
+            () => { if (!current) throw new OperationCanceledException("Fictitious original native owner retired after SQL."); }));
+        Assert.False(receipt.Accepted); Assert.False(receipt.Changed); Assert.Equal(before, await SnapshotAsync(f.Provider));
+    }
+
+    [Theory, InlineData(QuotaKind.FinancialAccounts), InlineData(QuotaKind.RecurringPlans)]
+    public async Task Original_public_selection_read_uses_a_worker_and_one_joined_SQLite_read_transaction(QuotaKind kind)
+    {
+        var f = await CreateAsync(); f.Enable(); f.Source.ProbeRead = true;
+        var caller = await Task.Factory.StartNew(() =>
+        {
+            var thread = Environment.CurrentManagedThreadId;
+            _ = f.Choices.ReadAsync(kind, Ct).GetAwaiter().GetResult(); return thread;
+        }, Ct, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+        f.Source.ProbeRead = false;
+        Assert.NotEqual(caller, f.Source.ReadThread); Assert.True(f.Source.ReadTransaction);
+    }
+
     private ServiceProvider Provider(string path, AccessSource source)
     {
         var services = new ServiceCollection().AddSingleton<TimeProvider>(TimeProvider.System)
@@ -433,7 +483,15 @@ public sealed class ResourceChoiceStoreTests : IDisposable
     {
         internal CommercialWriteAccess Current = CommercialWriteAccess.Inactive;
         internal Action? AfterSql;
-        public CommercialWriteAccess Capture(string databasePath) => Current;
+        internal bool ProbeRead, ReadTransaction;
+        internal int ReadThread;
+        internal WeakReference<ZananceDbContext>? ReadContext;
+        public CommercialWriteAccess Capture(string databasePath)
+        {
+            if (ProbeRead && ReadContext?.TryGetTarget(out var db) == true)
+            { ReadThread = Environment.CurrentManagedThreadId; ReadTransaction = db.Database.CurrentTransaction is not null; }
+            return Current;
+        }
     }
 
     /// <summary>Retires cached rights from the actual fixture-only SQLite insert without replacing application logic.</summary>
@@ -442,6 +500,7 @@ public sealed class ResourceChoiceStoreTests : IDisposable
         public ZananceDbContext CreateDbContext()
         {
             var db = inner.CreateDbContext();
+            source.ReadContext = new(db);
             ((SqliteConnection)db.Database.GetDbConnection()).CreateFunction("RetireChoiceAccess", () => { source.AfterSql?.Invoke(); return 1; });
             return db;
         }

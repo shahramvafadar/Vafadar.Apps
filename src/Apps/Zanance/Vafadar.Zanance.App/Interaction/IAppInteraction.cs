@@ -24,6 +24,11 @@ public interface IAppInteraction
     /// <summary>Opens a registered application route without posting financial data.</summary>
     Task NavigateAsync(string route, IDictionary<string, object>? parameters = null);
 
+    /// <summary>Returns one original command to its immediate parent while competing navigation remains blocked.</summary>
+    /// <remarks>The native host binds the actual page/root/parent and consumes one Pop; non-native ports retain original validation.</remarks>
+    Task ReturnFromCommandAsync(object originalOwner, Action validateOriginal)
+    { ArgumentNullException.ThrowIfNull(originalOwner); validateOriginal(); return NavigateAsync(".."); }
+
     /// <summary>Reports a failed operation while preserving its form.</summary>
     Task ShowFailureAsync(Exception exception);
 }

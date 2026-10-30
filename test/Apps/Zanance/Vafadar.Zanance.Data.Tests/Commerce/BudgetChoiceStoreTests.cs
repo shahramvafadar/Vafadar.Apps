@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Data;
 using Vafadar.Testing;
@@ -19,13 +20,64 @@ public sealed class BudgetChoiceStoreTests : IDisposable
     private static readonly Guid ScopeId = Guid.Parse("11111111-2222-3333-4444-555555555555");
     private static readonly QuotaScope Scope = new(QuotaScopeKind.PersonalProfile, ScopeId);
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
+
+    [Fact]
+    public async Task Matching_original_budget_definition_choice_is_known_unchanged_without_another_SQL_write_or_event()
+    {
+        var f = await CreateAsync(Current()); f.Enable(); await f.Choices.SaveAsync(await f.Choices.ReadAsync(Ct), [], Ct);
+        var original = await f.Choices.ReadAsync(Ct); var before = await SnapshotAsync(f);
+        var receipt = new SelectionWriteReceipt(); var events = 0; f.Choices.Changed += (_, _) => events++;
+        Assert.False(await f.Choices.SaveAsync(original, [], Ct, receipt));
+        Assert.True(receipt.Accepted); Assert.False(receipt.Changed); Assert.Equal(0, events); Assert.Equal(before, await SnapshotAsync(f));
+    }
+
+    [Fact]
+    public async Task Actual_budget_choice_receipt_is_retained_before_fallible_notification_and_is_one_request_only()
+    {
+        var f = await CreateAsync(Current()); f.Enable(); var original = await f.Choices.ReadAsync(Ct);
+        var before = await SnapshotAsync(f, false); var receipt = new SelectionWriteReceipt();
+        f.Choices.Changed += (_, _) => throw new IOException("Fictitious notification failure after actual budget choice commit.");
+        await Assert.ThrowsAsync<IOException>(() => f.Choices.SaveAsync(original, [], Ct, receipt));
+        Assert.True(receipt.Accepted); Assert.True(receipt.Changed); var committed = await SnapshotAsync(f);
+        await Assert.ThrowsAsync<InvalidOperationException>(() => f.Choices.SaveAsync(original, [], Ct, receipt));
+        Assert.Equal(committed, await SnapshotAsync(f)); Assert.Equal(before, await SnapshotAsync(f, false));
+    }
+
+    [Fact]
+    public async Task Native_budget_owner_retired_by_actual_selection_SQL_cannot_commit_or_claim_an_accepted_receipt()
+    {
+        var f = await CreateAsync(Current()); f.Enable(); var original = await f.Choices.ReadAsync(Ct);
+        await SqlAsync(f, "CREATE TRIGGER RetireNativeBudgetChoice AFTER INSERT ON ResourceSelections BEGIN SELECT RetireBudgetNativeOwner(); END;");
+        var before = await SnapshotAsync(f); var current = true; var receipt = new SelectionWriteReceipt();
+        f.Source.AfterSql = () => current = false;
+        await Assert.ThrowsAsync<OperationCanceledException>(() => f.Choices.SaveAsync(original, [], Ct, receipt,
+            () => { if (!current) throw new OperationCanceledException("Fictitious original budget owner retired after SQL."); }));
+        Assert.False(receipt.Accepted); Assert.False(receipt.Changed); Assert.Equal(before, await SnapshotAsync(f));
+    }
+
+    [Fact]
+    public async Task Original_public_budget_choice_read_runs_off_its_caller_inside_one_joined_read_transaction()
+    {
+        var f = await CreateAsync(Current()); f.Enable(); f.Source.ProbeRead = true;
+        var caller = await Task.Factory.StartNew(() =>
+        {
+            var thread = Environment.CurrentManagedThreadId; _ = f.Choices.ReadAsync(Ct).GetAwaiter().GetResult(); return thread;
+        }, Ct, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+        f.Source.ProbeRead = false;
+        Assert.NotEqual(caller, f.Source.ReadThread); Assert.True(f.Source.ReadTransaction);
+    }
     private static Budget Current(string currency = "EUR") => new() { CurrencyCode = currency, Year = 2026, Month = 10,
         TotalLimit = 12345, AccountIds = [Guid.Parse("11111111-1111-1111-1111-111111111111")],
         CategoryLimits = [new() { CategoryId = Guid.Parse("22222222-2222-2222-2222-222222222222"), Limit = 2345 }] };
     private ServiceProvider Provider(string path, AccessSource source)
     {
-        var provider = new ServiceCollection().AddSingleton<TimeProvider>(_time)
-            .AddSingleton<ICommercialWriteAccessSource>(source).AddZananceData(path).BuildServiceProvider();
+        var services = new ServiceCollection().AddSingleton<TimeProvider>(_time)
+            .AddSingleton<ICommercialWriteAccessSource>(source).AddZananceData(path);
+        var registration = services.Single(item => item.ServiceType == typeof(IDbContextFactory<ZananceDbContext>));
+        services.Remove(registration);
+        services.AddSingleton<IDbContextFactory<ZananceDbContext>>(p => new ObservedBudgetContexts(
+            (IDbContextFactory<ZananceDbContext>)ActivatorUtilities.CreateInstance(p, registration.ImplementationType!), source));
+        var provider = services.BuildServiceProvider();
         _providers.Add(provider); provider.MigrateLocalDatabase<ZananceDbContext>(); return provider;
     }
     private async Task<Fixture> CreateAsync(params Budget[] budgets)
@@ -300,12 +352,28 @@ public sealed class BudgetChoiceStoreTests : IDisposable
         public CommercialWriteAccess Current = CommercialWriteAccess.Inactive;
         public Barrier? Barrier;
         public int Captures;
+        internal bool ProbeRead, ReadTransaction;
+        internal int ReadThread;
+        internal Action? AfterSql;
+        internal WeakReference<ZananceDbContext>? ReadContext;
         public CommercialWriteAccess Capture(string databasePath)
         {
+            if (ProbeRead && ReadContext?.TryGetTarget(out var db) == true)
+            { ReadThread = Environment.CurrentManagedThreadId; ReadTransaction = db.Database.CurrentTransaction is not null; }
             if (Barrier is not null && Interlocked.Increment(ref Captures) <= 2
                 && !Barrier.SignalAndWait(TimeSpan.FromSeconds(15), Ct))
                 throw new TimeoutException("The independent owned writers did not rendezvous.");
             return Current;
+        }
+    }
+    /// <summary>Observes the actual fixture context/SQLite writer without substituting choice reads or commits.</summary>
+    private sealed class ObservedBudgetContexts(IDbContextFactory<ZananceDbContext> inner, AccessSource source) : IDbContextFactory<ZananceDbContext>
+    {
+        public ZananceDbContext CreateDbContext()
+        {
+            var db = inner.CreateDbContext(); source.ReadContext = new(db);
+            ((SqliteConnection)db.Database.GetDbConnection()).CreateFunction("RetireBudgetNativeOwner", () => { source.AfterSql?.Invoke(); return 1; });
+            return db;
         }
     }
     private sealed class FixedTime : TimeProvider

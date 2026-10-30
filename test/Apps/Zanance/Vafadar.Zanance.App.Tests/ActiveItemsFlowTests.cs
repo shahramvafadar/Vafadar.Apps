@@ -15,7 +15,105 @@ namespace Vafadar.Zanance.App.Tests;
 public sealed class ActiveItemsFlowTests
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
+
+    [Fact]
+    public async Task Native_resource_kind_consent_retains_ownership_when_shared_busy_feedback_changes()
+    {
+        var r = await CreateAsync(); using var f = r.Fixture; var vm = r.ViewModel;
+        await vm.LoadAsync(); var original = await SnapshotAsync(f);
+        vm.ToggleCommand.Execute(vm.Items.First(row => row.IsEligible)); Assert.True(vm.IsDirty);
+        var consent = new TaskCompletionSource<bool>(); f.Platform.PendingConfirmation = () => consent.Task;
+        vm.KindIndex = 1; var pending = vm.PendingKindChange;
+        Assert.True(vm.IsBusy); vm.IsBusy = false;
+        var canLeave = vm.CanLeave; var canInteract = vm.CanInteract;
+        consent.SetResult(false); await pending;
+        Assert.False(canLeave); Assert.False(canInteract); Assert.Equal(0, vm.KindIndex);
+        Assert.True(vm.IsDirty); Assert.Equal(original, await SnapshotAsync(f));
+    }
     private static readonly Guid Scope = Guid.Parse("21212121-3434-4545-6767-898989898989");
+
+    [Fact]
+    public async Task Initial_typed_destination_cannot_relabel_a_started_original_read_even_if_shared_busy_changes()
+    {
+        var r = await CreateAsync(); using var f = r.Fixture; var before = await SnapshotAsync(f);
+        var delayed = new DelayedContexts(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+        var vm = new ActiveItemsViewModel(new(delayed, r.Source), f.Translator, f.Platform);
+        var pending = vm.LoadAsync(); vm.IsBusy = false;
+        Assert.Throws<InvalidOperationException>(() => vm.SetInitialKind(QuotaKind.RecurringPlans));
+        delayed.Ready.SetResult(); await pending;
+        Assert.Equal(0, vm.KindIndex); Assert.True(vm.CanInteract); Assert.Equal(5, vm.Items.Count);
+        Assert.Equal(before, await SnapshotAsync(f));
+    }
+
+    [Theory, InlineData("root"), InlineData("return"), InlineData("display")]
+    public async Task Original_kind_consent_cannot_publish_after_its_native_frame_or_disclosure_retires(string retirement)
+    {
+        var r = await CreateAsync(); using var f = r.Fixture; var vm = r.ViewModel;
+        var current = true; vm.BindRootOwner(() => current); await vm.LoadAsync();
+        vm.ToggleCommand.Execute(vm.Items.First(row => row.IsEligible));
+        var rows = vm.Items.ToArray(); var ids = rows.Where(row => row.IsSelected).Select(row => row.Id).ToArray();
+        var before = await SnapshotAsync(f); var consent = new TaskCompletionSource<bool>();
+        f.Platform.PendingConfirmation = () => consent.Task;
+        vm.KindIndex = 1; var pending = vm.PendingKindChange;
+        if (retirement == "root") current = false;
+        else if (retirement == "return") { vm.SetActive(false); vm.SetActive(true); }
+        else vm.RefreshDisplay();
+        consent.SetResult(true); await pending;
+        Assert.Equal(0, vm.KindIndex); Assert.Equal(rows, vm.Items); Assert.True(vm.IsDirty); Assert.Null(vm.Feedback);
+        Assert.Equal(ids, vm.Items.Where(row => row.IsSelected).Select(row => row.Id));
+        if (retirement == "return") { await vm.EnsureLoadedAsync(); Assert.True(vm.CanInteract); Assert.True(vm.IsDirty); Assert.Equal(rows, vm.Items); }
+        Assert.Equal(before, await SnapshotAsync(f));
+    }
+
+    [Fact]
+    public async Task Retired_pending_original_read_cancels_without_publishing_and_a_real_return_reads_only_the_unfinished_source()
+    {
+        var r = await CreateAsync(); using var f = r.Fixture; var before = await SnapshotAsync(f);
+        var delayed = new DelayedContexts(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+        var vm = new ActiveItemsViewModel(new(delayed, r.Source), f.Translator, f.Platform);
+        var pending = vm.LoadAsync(); Assert.Equal(1, delayed.Reads);
+        vm.SetActive(false); vm.SetActive(true); await pending;
+        Assert.Empty(vm.Items); Assert.False(vm.CanInteract); Assert.Null(vm.Feedback);
+        delayed.Ready.SetResult(); await vm.EnsureLoadedAsync();
+        Assert.Equal(2, delayed.Reads); Assert.True(vm.CanInteract); Assert.Equal(5, vm.Items.Count);
+        Assert.Equal(before, await SnapshotAsync(f));
+    }
+
+    [Theory, InlineData(false), InlineData(true)]
+    public async Task Actual_committed_choice_survives_notification_failure_without_another_save_or_foreign_return(bool retire)
+    {
+        var r = await CreateAsync(); using var f = r.Fixture; var vm = r.ViewModel;
+        var current = true; vm.BindRootOwner(() => current); await vm.LoadAsync();
+        vm.ToggleCommand.Execute(vm.Items.First(row => row.IsEligible)); Assert.True(vm.CanSave);
+        var before = await SnapshotAsync(f, false); var selected = vm.Items.Where(row => row.IsSelected).Select(row => row.Id).Order().ToArray();
+        var events = 0;
+        r.Store.Changed += (_, _) => { events++; if (retire) current = false; throw new IOException("Fictitious notification failure after real choice commit."); };
+        await vm.SaveCommand.ExecuteAsync(null); var committed = await SnapshotAsync(f);
+        Assert.Equal(1, events); Assert.False(vm.CanSave); Assert.False(vm.IsDirty); Assert.Empty(f.Platform.Routes);
+        Assert.Equal(retire ? null : f.Translator["ActiveItems_SavedReturnFailed"], vm.Feedback);
+        await vm.SaveCommand.ExecuteAsync(null); Assert.Equal(1, events); Assert.Equal(committed, await SnapshotAsync(f));
+        Assert.Equal(selected, (await r.Store.ReadAsync(QuotaKind.FinancialAccounts, Ct)).SelectedIds.Order());
+        Assert.Equal(before, await SnapshotAsync(f, false));
+    }
+
+    [Fact]
+    public async Task Changed_retained_source_stays_covered_with_exact_draft_until_explicit_discard_and_reload()
+    {
+        var r = await CreateAsync(); using var f = r.Fixture; var vm = r.ViewModel; await vm.LoadAsync();
+        var original = vm.Items.First(row => row.IsEligible); vm.ToggleCommand.Execute(original);
+        var rows = vm.Items.ToArray(); var ids = rows.Where(row => row.IsSelected).Select(row => row.Id).ToArray();
+        vm.SetActive(false);
+        var account = (await f.Store.GetAccountsAsync(cancellationToken: Ct)).Single(row => row.Id == original.Id);
+        account.Name = "Fictitious externally corrected source"; await f.Store.SaveAccountAsync(account, Ct);
+        var before = await SnapshotAsync(f); vm.SetActive(true); await vm.EnsureLoadedAsync();
+        Assert.True(vm.Loading.HasFailed); Assert.False(vm.CanInteract); Assert.True(vm.IsDirty); Assert.Equal(rows, vm.Items);
+        Assert.Equal(ids, vm.Items.Where(row => row.IsSelected).Select(row => row.Id));
+        f.Platform.PendingConfirmation = () => Task.FromResult(false); await vm.ReloadCommand.ExecuteAsync(null);
+        Assert.True(vm.Loading.HasFailed); Assert.True(vm.IsDirty);
+        f.Platform.PendingConfirmation = () => Task.FromResult(true); await vm.ReloadCommand.ExecuteAsync(null);
+        Assert.True(vm.CanInteract); Assert.False(vm.IsDirty); Assert.Contains(vm.Items, row => row.Name == account.Name);
+        Assert.Equal(before, await SnapshotAsync(f));
+    }
 
     private sealed class AccessSource : ICommercialWriteAccessSource
     {

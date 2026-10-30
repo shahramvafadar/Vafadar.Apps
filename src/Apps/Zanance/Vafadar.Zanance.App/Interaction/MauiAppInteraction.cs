@@ -92,6 +92,16 @@ internal sealed class MauiAppInteraction : IAppInteraction, IAppFlowHost
     public Task ShowFailureAsync(Exception exception) => Failures.ShowAsync(exception);
 
     /// <inheritdoc />
+    public async Task ReturnFromCommandAsync(object originalOwner, Action validateOriginal)
+    {
+        validateOriginal(); var page = Page;
+        if (Shell.Current is not AppShell root || !ReferenceEquals(page.BindingContext, originalOwner))
+            throw new OperationCanceledException("The original native command owner changed.");
+        using var scope = OwnedCommandReturn.Begin(root, page, originalOwner, validateOriginal);
+        await root.GoToAsync(".."); scope.RequireReturned();
+    }
+
+    /// <inheritdoc />
     public Task RestoreOnboardingAsync() => Application.Current is App app ? app.ShowOnboardingRestoreAsync() : Task.CompletedTask;
     /// <inheritdoc />
     public bool PersonalSyncAvailable => Features.Sync.PersonalSyncBuild.IsAvailable;

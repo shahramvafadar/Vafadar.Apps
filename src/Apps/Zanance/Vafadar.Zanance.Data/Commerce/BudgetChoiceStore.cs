@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.Sqlite;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Commerce;
 
@@ -15,8 +16,15 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
     public async Task<BudgetChoiceSnapshot> ReadAsync(CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await db.Database.OpenConnectionAsync(cancellationToken);
-        return await ReadAsync(db, cancellationToken);
+        return await Task.Run(async () =>
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            await db.Database.OpenConnectionAsync(cancellationToken);
+            await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
+            await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
+            var result = await ReadAsync(db, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested(); return result;
+        }, cancellationToken);
     }
 
     /// <summary>Reads and rechecks complete original budget choices in the caller's captured context.</summary>
@@ -57,8 +65,15 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
     public async Task ValidateAsync(BudgetChoiceSnapshot reviewed, CancellationToken cancellationToken = default)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        await db.Database.OpenConnectionAsync(cancellationToken);
-        await ValidateAsync(reviewed, db, cancellationToken);
+        await Task.Run(async () =>
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            await db.Database.OpenConnectionAsync(cancellationToken);
+            await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
+            await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
+            await ValidateAsync(reviewed, db, cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
+        }, cancellationToken);
     }
 
     /// <summary>Rechecks original choices and metadata inside the caller's exact SQLite writer.</summary>
@@ -84,10 +99,11 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
 
     /// <summary>Saves only the reviewed current definitions; no financial row or paid capability is rewritten.</summary>
     public async Task<bool> SaveAsync(BudgetChoiceSnapshot reviewed, IEnumerable<BudgetDefinitionKey> selected,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default, SelectionWriteReceipt? receipt = null, Action? validateOriginal = null)
     {
         ArgumentNullException.ThrowIfNull(reviewed);
         if (!reviewed.CanChoose) throw new InvalidOperationException("No bounded budget choice is required.");
+        validateOriginal?.Invoke(); receipt?.Begin();
         var scope = StoredResourceSelection.Scope(reviewed.Access.Context!);
         var choice = new BudgetSelection(scope, selected);
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
@@ -105,7 +121,7 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
         if (availability.RequiresSelection || choice.Definitions.Count != availability.SelectedDefinitions.Count)
             throw new ArgumentException("Choose only current definitions within capacity.", nameof(selected));
         if (stored is not null && StoredBudgetSelection.IsValid(stored) && stored.IdentitySet == choice.Value)
-        { reviewed.Access.EnsureSnapshotCurrent(); return false; }
+        { reviewed.Access.EnsureSnapshotCurrent(); validateOriginal?.Invoke(); receipt?.Accept(false); return false; }
         if (stored is null)
         {
             stored = new() { Kind = QuotaKind.BudgetDefinitions, ScopeKind = scope.Kind, ScopeId = scope.Id };
@@ -113,16 +129,19 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
         }
         StoredBudgetSelection.Replace(stored, choice);
         reviewed.Access.EnsureSnapshotCurrent();
+        validateOriginal?.Invoke();
         await db.SaveChangesAsync(cancellationToken);
         reviewed.Access.EnsureSnapshotCurrent();
+        validateOriginal?.Invoke();
         await transaction.CommitAsync(cancellationToken);
+        receipt?.Accept(true);
         Changed?.Invoke(this, EventArgs.Empty);
         return true;
     }
 
     /// <summary>Relays explicit native row choices to their reviewed definitions; row ids never become stored definition identity.</summary>
     public Task<bool> SaveGroupsAsync(BudgetChoiceSnapshot reviewed, IEnumerable<Guid> selectedGroupIds,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default, SelectionWriteReceipt? receipt = null, Action? validateOriginal = null)
     {
         ArgumentNullException.ThrowIfNull(reviewed);
         ArgumentNullException.ThrowIfNull(selectedGroupIds);
@@ -131,7 +150,7 @@ public sealed class BudgetChoiceStore(IDbContextFactory<ZananceDbContext> contex
         var groups = reviewed.Groups.ToDictionary(group => group.RepresentativeId);
         if (ids.Any(id => !groups.ContainsKey(id))) throw new ArgumentException("A choice is not in the reviewed definition list.", nameof(selectedGroupIds));
         var scope = StoredResourceSelection.Scope(reviewed.Access.Context!);
-        return SaveAsync(reviewed, ids.Select(id => groups[id].Definition(scope)), cancellationToken);
+        return SaveAsync(reviewed, ids.Select(id => groups[id].Definition(scope)), cancellationToken, receipt, validateOriginal);
     }
 
     private static async Task<List<BudgetChoiceAccount>> ReadAccountsAsync(ZananceDbContext db, CancellationToken cancellationToken) =>

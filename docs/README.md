@@ -51,3 +51,5 @@ App-specific documentation lives with each app, e.g. [`src/Apps/Zanance`](../src
 [Cold protected snoozes](../src/Apps/Zanance/docs/quality/cold-protected-reminder-startup.md) records the
 source regression, original native receiver action, separate persisted metadata, package and remaining
 startup/device boundaries. The independent maintained caller is under eng/benchmarks/Zanance.AndroidReminders.
+
+The original six-kind resource workspace now includes source-bound read/revalidation, accepted receipts and exact native parent returns: [D-659 evidence](../src/Apps/Zanance/docs/quality/original-active-resource-workspace.md). This source/native qualification does not close physical adoption or release gates.

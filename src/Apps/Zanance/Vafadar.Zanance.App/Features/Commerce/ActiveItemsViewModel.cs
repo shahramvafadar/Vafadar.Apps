@@ -88,6 +88,45 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     private bool _publishing;
     private bool _reviewRetired;
     private bool _discardApproved;
+    // Native consent/write ownership must outlive unrelated shared status feedback (D-659).
+    private bool _commandActive;
+    private bool _readStarted;
+    private void BeginCommand() { _commandActive = true; IsBusy = true; RefreshCapabilities(); }
+    private void EndCommand() { _commandActive = false; IsBusy = false; RefreshCapabilities(); }
+    private bool _active = true, _rootRetired;
+    private int _frameVersion, _displayVersion;
+    private CancellationTokenSource _frame = new();
+    private Func<bool>? _rootCurrent;
+    private Action? _publishedOwner;
+    private bool OwnsPresentation => _active && !_rootRetired && !_frame.IsCancellationRequested && _rootCurrent?.Invoke() != false;
+    /// <summary>Binds original native root ownership independently of shared busy feedback.</summary>
+    public void BindRootOwner(Func<bool> current) => _rootCurrent = current;
+    /// <summary>Retires outstanding reads/consent on departure while preserving unsaved identity choices.</summary>
+    public void SetActive(bool value)
+    {
+        if (!value) { _active = false; _frameVersion++; _frame.Cancel(); }
+        else if (!_rootRetired && _rootCurrent?.Invoke() != false)
+        {
+            if (!_active) { _frame.Dispose(); _frame = new(); }
+            _active = true;
+        }
+        RefreshCapabilities();
+    }
+    /// <summary>Permanently retires only this actual root, keeping known accepted choice outcomes.</summary>
+    public void RetireRoot() { _rootRetired = true; SetActive(false); }
+    private readonly record struct PublicationOwner(Action Check, CancellationToken Token);
+    private PublicationOwner CaptureOwner(bool disclosure = true)
+    {
+        var version = _frameVersion; var display = _displayVersion; var token = _frame.Token;
+        void Check()
+        {
+            if (!OwnsPresentation || token.IsCancellationRequested || version != _frameVersion || disclosure && display != _displayVersion)
+                throw new OperationCanceledException("The original active-resource presentation retired.", token);
+        }
+        Check(); return new(Check, token);
+    }
+    private static bool IsCurrent(Action check)
+    { try { check(); return true; } catch (OperationCanceledException) { return false; } }
 
     /// <summary>Gets the pending native kind transition for same-page application coordination and review.</summary>
     internal Task PendingKindChange { get; private set; } = Task.CompletedTask;
@@ -106,7 +145,7 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     /// <summary>Sets only a valid initial destination before reading; this never writes a choice or discards a draft.</summary>
     public void SetInitialKind(QuotaKind kind)
     {
-        if (IsBusy || Loading.HasLoaded || _snapshot is not null || _budgetSnapshot is not null)
+        if (_rootRetired || _readStarted || _commandActive || IsBusy || Loading.HasLoaded || _snapshot is not null || _budgetSnapshot is not null)
             throw new InvalidOperationException("The resource destination was already opened.");
         var index = kind switch
         { QuotaKind.FinancialAccounts => 0, QuotaKind.RecurringPlans => 1, QuotaKind.Goals => 2,
@@ -131,7 +170,8 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     [ObservableProperty]
     public partial string? Feedback { get; private set; }
     /// <summary>Gets whether one published review is currently interactive.</summary>
-    public bool CanInteract => Loading.IsReady && !IsBusy;
+    public bool CanInteract => OwnsPresentation && Loading.IsReady && _publishedOwner is not null
+        && IsCurrent(_publishedOwner) && !IsBusy && !_commandActive;
     /// <summary>Gets whether the current review allows a bounded explicit choice.</summary>
     public bool CanChoose => (_budgetSnapshot?.CanChoose ?? _snapshot?.CanChoose) == true && !_reviewRetired;
     /// <summary>Gets whether an eligible subset exceeds its current maximum.</summary>
@@ -141,7 +181,7 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     /// <summary>Gets whether the complete explicit draft can be submitted; empty is a valid explicit choice.</summary>
     public bool CanSave => CanInteract && CanChoose && !OverCapacity;
     /// <summary>Gets whether the covered state or a pending consent/write blocks leaving the form.</summary>
-    public bool CanLeave => !IsBusy && !Loading.IsLoading;
+    public bool CanLeave => !_commandActive && !IsBusy && !Loading.IsLoading;
     /// <summary>Gets whether the original list is empty.</summary>
     public bool IsEmpty => Items.Count == 0;
     /// <summary>Gets a complete translated counter with the user's current display digits.</summary>
@@ -162,18 +202,41 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     public string? CapacityError => OverCapacity ? NativeDigits.Apply(_translator.Format("ActiveItems_Limit", Maximum)) : null;
 
     /// <summary>Reads and publishes once on first appearance; returning from help keeps the exact unsaved draft.</summary>
-    public Task EnsureLoadedAsync() => Loading.HasLoaded ? Task.CompletedTask : LoadAsync();
+    public Task EnsureLoadedAsync()
+    {
+        if (!OwnsPresentation || _commandActive) return Task.CompletedTask;
+        if (_publishedOwner is not null && IsCurrent(_publishedOwner)) return Task.CompletedTask;
+        return _snapshot is null && _budgetSnapshot is null ? LoadAsync() : RevalidateRetainedAsync();
+    }
+
+    private async Task RevalidateRetainedAsync()
+    {
+        var owner = CaptureOwner(disclosure: false); BeginCommand();
+        try
+        {
+            await Loading.RunAsync(async () =>
+            {
+                if (_budgetSnapshot is not null) await _budgetStore!.ValidateAsync(_budgetSnapshot, owner.Token);
+                else await _store.ValidateAsync(_snapshot!, owner.Token);
+                owner.Check();
+            }, () => { owner.Check(); _publishedOwner = owner.Check; SetFeedback(null); RefreshCapabilities(); });
+        }
+        catch (Exception) { if (IsCurrent(owner.Check)) SetFeedback("ActiveItems_LoadFailed"); }
+        finally { EndCommand(); }
+    }
 
     /// <summary>Retries a covered read; user-requested reload/switch has already resolved any discard consent.</summary>
     public async Task LoadAsync()
     {
-        if (IsBusy) return;
-        IsBusy = true;
-        try { await LoadCoreAsync(KindIndex); }
-        finally { IsBusy = false; }
+        if (!OwnsPresentation || IsBusy || _commandActive) return;
+        var owner = CaptureOwner(disclosure: false);
+        _readStarted = true;
+        BeginCommand();
+        try { await LoadCoreAsync(KindIndex, owner); }
+        finally { EndCommand(); }
     }
 
-    private async Task LoadCoreAsync(int index)
+    private async Task LoadCoreAsync(int index, PublicationOwner owner)
     {
         ResourceChoiceSnapshot? next = null;
         BudgetChoiceSnapshot? nextBudget = null;
@@ -181,10 +244,12 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
         {
             await Loading.RunAsync(async () =>
             {
-                if (index == 3) nextBudget = await (_budgetStore ?? throw new InvalidOperationException("The budget choice store is unavailable.")).ReadAsync();
-                else next = await _store.ReadAsync(Kind(index));
+                if (index == 3) nextBudget = await (_budgetStore ?? throw new InvalidOperationException("The budget choice store is unavailable.")).ReadAsync(owner.Token);
+                else next = await _store.ReadAsync(Kind(index), owner.Token);
+                owner.Check();
             }, () =>
             {
+                owner.Check(); _publishedOwner = CaptureOwner(disclosure: false).Check;
                 _snapshot = next; _budgetSnapshot = nextBudget; _reviewRetired = false; _discardApproved = false; _publishedKindIndex = index;
                 Items.Clear();
                 if (nextBudget is not null)
@@ -206,7 +271,7 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
                 SetFeedback(null); RefreshCapabilities();
             });
         }
-        catch (Exception) { SetFeedback("ActiveItems_LoadFailed"); }
+        catch (Exception) { if (IsCurrent(owner.Check)) SetFeedback("ActiveItems_LoadFailed"); }
     }
 
     partial void OnKindIndexChanged(int value)
@@ -218,14 +283,15 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
 
     private async Task SwitchAsync(int requested)
     {
-        IsBusy = true;
+        var owner = CaptureOwner();
+        BeginCommand();
         try
         {
-            if (!await ConfirmDiscardCoreAsync()) { RestoreIndex(); return; }
-            await LoadCoreAsync(requested);
+            if (!await ConfirmDiscardCoreAsync(owner.Check)) { RestoreIndex(); return; }
+            owner.Check(); await LoadCoreAsync(requested, owner);
         }
-        catch (Exception) { RestoreIndex(); SetFeedback("ActiveItems_LoadFailed"); }
-        finally { IsBusy = false; }
+        catch (Exception) { RestoreIndex(); if (IsCurrent(owner.Check)) SetFeedback("ActiveItems_LoadFailed"); }
+        finally { EndCommand(); }
     }
 
     private void RestoreIndex()
@@ -238,31 +304,33 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     /// <summary>Requests discard through the existing native dialog; it never saves or clears financial data.</summary>
     public async Task<bool> ConfirmDiscardAsync()
     {
-        if (!CanLeave) return false;
-        IsBusy = true;
-        try { return await ConfirmDiscardCoreAsync(); }
-        catch (Exception) { SetFeedback("ActiveItems_LoadFailed"); return false; }
-        finally { IsBusy = false; }
+        if (!OwnsPresentation || !CanLeave) return false;
+        var owner = CaptureOwner();
+        BeginCommand();
+        try { return await ConfirmDiscardCoreAsync(owner.Check); }
+        catch (Exception) { if (IsCurrent(owner.Check)) SetFeedback("ActiveItems_LoadFailed"); return false; }
+        finally { EndCommand(); }
     }
 
-    private async Task<bool> ConfirmDiscardCoreAsync()
+    private async Task<bool> ConfirmDiscardCoreAsync(Action current)
     {
         if (!IsDirty) return true;
         var accepted = await _interaction.ConfirmAsync(_translator["ActiveItems_Title"], _translator["ActiveItems_DiscardMessage"],
             _translator["ActiveItems_Discard"], _translator["Common_Cancel"]);
         // A failed read/navigation does not revoke the already explicit discard decision or require it again.
-        if (accepted) _discardApproved = true;
+        current(); if (accepted) _discardApproved = true;
         return accepted;
     }
 
     [RelayCommand]
     private async Task LeaveAsync()
     {
-        if (!CanLeave) return;
-        IsBusy = true;
-        try { if (await ConfirmDiscardCoreAsync()) await _interaction.NavigateAsync(".."); }
-        catch (Exception) { SetFeedback("Error_Unexpected"); }
-        finally { IsBusy = false; }
+        if (!OwnsPresentation || !CanLeave) return;
+        var owner = CaptureOwner();
+        BeginCommand();
+        try { if (await ConfirmDiscardCoreAsync(owner.Check)) { owner.Check(); await _interaction.ReturnFromCommandAsync(this, owner.Check); } }
+        catch (Exception) { if (IsCurrent(owner.Check)) SetFeedback("Error_Unexpected"); }
+        finally { EndCommand(); }
     }
 
     /// <summary>Gets the current in-memory identity choice for a retained row.</summary>
@@ -282,37 +350,55 @@ public sealed partial class ActiveItemsViewModel : ViewModelBase
     {
         if (!CanSave || _snapshot is null && _budgetSnapshot is null) return;
         var reviewed = _snapshot; var reviewedBudget = _budgetSnapshot;
-        IsBusy = true;
+        var owner = CaptureOwner(); var receipt = new SelectionWriteReceipt();
+        BeginCommand();
         var submitted = _selected.ToArray();
+        void Current()
+        {
+            owner.Check();
+            if (!ReferenceEquals(reviewed, _snapshot) || !ReferenceEquals(reviewedBudget, _budgetSnapshot)
+                || !_selected.SetEquals(submitted)) throw new OperationCanceledException("The original choice submission changed.", owner.Token);
+        }
         try
         {
             try
             {
-                if (reviewedBudget is not null) await _budgetStore!.SaveGroupsAsync(reviewedBudget, submitted);
-                else await _store.SaveAsync(reviewed!, submitted);
+                if (reviewedBudget is not null) await _budgetStore!.SaveGroupsAsync(reviewedBudget, submitted, owner.Token, receipt, Current);
+                else await _store.SaveAsync(reviewed!, submitted, owner.Token, receipt, Current);
             }
-            catch (Exception) { SetFeedback("ActiveItems_SaveFailed"); return; }
+            catch (Exception)
+            {
+                if (receipt.Accepted)
+                {
+                    _baseline = submitted.ToHashSet(); _discardApproved = false; _reviewRetired = true;
+                    if (IsCurrent(owner.Check)) SetFeedback("ActiveItems_SavedReturnFailed");
+                }
+                else if (IsCurrent(owner.Check)) SetFeedback("ActiveItems_SaveFailed");
+                return;
+            }
             // D-142: a committed review must not authorize another Save if post-commit navigation fails.
             _baseline = submitted.ToHashSet(); _discardApproved = false; _reviewRetired = true; SetFeedback(null); RefreshCapabilities();
-            try { await _interaction.NavigateAsync(".."); }
-            catch (Exception) { SetFeedback("ActiveItems_SavedReturnFailed"); }
+            try { owner.Check(); await _interaction.ReturnFromCommandAsync(this, owner.Check); }
+            catch (Exception) { if (IsCurrent(owner.Check)) SetFeedback("ActiveItems_SavedReturnFailed"); }
         }
-        finally { IsBusy = false; }
+        finally { EndCommand(); }
     }
 
     [RelayCommand]
     private async Task ReloadAsync()
     {
-        if (IsBusy) return;
-        IsBusy = true;
-        try { if (await ConfirmDiscardCoreAsync()) await LoadCoreAsync(KindIndex); }
-        catch (Exception) { SetFeedback("ActiveItems_LoadFailed"); }
-        finally { IsBusy = false; }
+        if (!OwnsPresentation || IsBusy || _commandActive) return;
+        var owner = CaptureOwner();
+        BeginCommand();
+        try { if (await ConfirmDiscardCoreAsync(owner.Check)) { owner.Check(); await LoadCoreAsync(KindIndex, owner); } }
+        catch (Exception) { if (IsCurrent(owner.Check)) SetFeedback("ActiveItems_LoadFailed"); }
+        finally { EndCommand(); }
     }
 
     /// <summary>Refreshes live text/digits without reloading, replacing identities or discarding any selected draft.</summary>
     public void RefreshDisplay()
     {
+        _displayVersion++;
         _publishing = true;
         try { KindNames = [_translator["Accounts_Title"], _translator["Tab_Plans"], _translator["Goals_Title"], _translator["Budget_Title"],
             _translator["Templates_Title"], _translator["Filter_Title"]]; }

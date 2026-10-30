@@ -171,7 +171,7 @@ public sealed partial class ProfilesViewModel(ProfileService profiles, Translato
     private async Task LeaveAsync()
     {
         if (!OwnsPresentation || !CanLeave) return; var current = CapturePresentation(); BeginCommand();
-        try { if (await ConfirmDiscardCoreAsync(current)) { current(); await interaction.NavigateAsync(".."); } }
+        try { if (await ConfirmDiscardCoreAsync(current)) { current(); await interaction.ReturnFromCommandAsync(this, current); } }
         catch (Exception) { if (IsCurrent(current)) SetError("Profile_SourceChanged"); }
         finally { EndCommand(); }
     }

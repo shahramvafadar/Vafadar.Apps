@@ -5218,3 +5218,33 @@ Phone/D607/three deadlines/post-reboot unread source untouched; physical adoptio
 authentication/providers and broader DB/key/security/stability/speed/A11Y/iOS/Store/release
 gates remain separate. D657 sole delayed CI response was pending and its schedule deleted;
 no second query. D658 gets its own single delayed pushed-head check. [D-658 evidence](quality/original-profile-catalogue-lifetime.md)
+
+### D-659 - Original active-resource workspace and owned parent return
+
+All six original resource kinds retain their existing limits and writers. Original
+read/revalidation uses one deferred SQLite transaction on a worker; page/root/frame/
+disclosure and independent command ownership retain raw selections through native
+consent, Retry and commit. One-use accepted receipts precede fallible Changed handlers.
+An exact one-use native parent-return scope keeps the command lock held and corrects
+the Shell guard blocking its own Pop; profile Leave uses the same scope, without a
+new claim of native profile dirty-return acceptance. 20 new plus86 existing distinct
+selected cases passed in focused continuations, with original failures preserved.
+Final strict Windows and full offline APK384AOT/408ELF/1608staticLOAD/ZIP/signature pass.
+Fresh API36/x64/4096 UID10216/PID4200 first proved old-root kind-consent refusal, one
+account-empty commit with controlled Changed failure and six-kind reads. One budget-
+empty commit exposed the actual blocked return; neither successful Save was replayed.
+One necessary no-reset upgrade to7389 preserved all21 observed source parts; read-only
+adoption did not reprepare. One different selected-budget payload changed only its
+choice IdentitySet/Revision and reached ProductPlansPage with actual Pop/CanLeavefalse/
+Cancelledfalse. A dirty original Back/Discard also returned with exact21source and no
+Save. All20 financial/settings collections, account choice and ledger0 remained exact.
+Original OS/boot/Home restored; freshUID/46XML2248787bytes hash-clean/AVD retired.
+Six standardCleans43012files2831119963logicalbytes and12 supplementary targets4770files
+881288496logicalbytes removed; used signed packages/source/evidence remain. The initial
+shutdown console subcommand failed under adb shell; only that unfinished step was
+corrected, without repeating completed retirement. All earlier refused scopes untouched.
+Phone/D607/three deadlines/consumed reboot/post-reboot unread source remain protected.
+Physical adoption, real tier/provider/authentication, complete DB/key/security/stability/
+speed/A11Y/iOS/Store/release remain separate. D658 sole delayed CI and CodeQL green;
+its schedule deleted, no second query. D659 has its own single delayed pushed-head CI.
+[D-659 evidence](quality/original-active-resource-workspace.md)

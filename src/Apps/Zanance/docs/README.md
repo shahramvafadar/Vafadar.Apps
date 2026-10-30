@@ -109,3 +109,5 @@ Original CI readback and account recovery: [D-656 evidence](quality/original-ci-
 Original backup workspace/destination ownership: [D-657 evidence](quality/original-backup-workspace.md), including fake-provider/native boundaries, exact restoration and remaining physical/provider gates.
 
 Original profile catalogue and native command lifetime: [D-658 evidence](quality/original-profile-catalogue-lifetime.md), including real owned-emulator root retirement, one protected create/delete cycle and remaining acceptance gates.
+
+Original six-kind resource workspace and one-use native parent return: [D-659 evidence](quality/original-active-resource-workspace.md), including accepted-write preservation across no-reset adoption and precise remaining gates.

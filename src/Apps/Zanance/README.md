@@ -528,3 +528,5 @@ evidence, negative observations and remaining gates are in [the qualification re
 The known staging-space refusal now explains safe retry without offering key/backup
 recovery while space is insufficient. [Focused evidence and remaining boundaries](docs/quality/startup-storage-guidance.md)
 separates real SQLite guard tests, synthetic native layouts and signed no-reset adoption.
+
+The original six-kind resource workspace now includes source-bound read/revalidation, accepted receipts and exact native parent returns: [D-659 evidence](docs/quality/original-active-resource-workspace.md). This source/native qualification does not close physical adoption or release gates.

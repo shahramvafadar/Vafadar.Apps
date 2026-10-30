@@ -1,5 +1,19 @@
 # AGENTS.md – working rules for this repository
 
+## Limited Samsung turn for Loyan with explicit return (owner, 2026-10-30)
+
+The owner explicitly approves a fresh limited phone turn for the Windows coordinator
+to install Loyan Consumer175 and Business147 and perform only their remaining checks,
+with complete Zanance/D-607 preservation and explicit return afterward. This temporarily
+supersedes the exclusive Zanance reservation until that return. No Zanance phone command
+may compete with this turn. The coordinator was given the original D-607 package/UID/run
+and all three deadlines; its consumed reboot and unread post-reboot source remain protected.
+No Zanance/D-607 launch, provider query, install, upgrade, reset, force-stop, uninstall,
+rearm, reboot or clock/battery/idle/permission change is authorized by this handoff.
+Preserve data and original settings, continue independent work, and resume phone work
+only after explicit return. Genuine authentication remains with the owner.
+
+
 ## Keep Samsung with Zanance for now (owner,2026-10-28)
 
 The owner's latest direct reply keeps Samsung with Zanance for now. This supersedes
