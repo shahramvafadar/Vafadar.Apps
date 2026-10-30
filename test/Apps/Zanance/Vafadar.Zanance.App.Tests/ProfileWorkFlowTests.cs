@@ -267,6 +267,125 @@ public sealed class ProfileWorkFlowTests
         Assert.Equal(raw, f.Preferences.Get(PacketKey)); Assert.True(f.Service.Current.IsMain);
     }
 
+    [Fact, Trait("AT", "AT-158")]
+    public async Task Original_native_profile_prompt_keeps_command_ownership_when_shared_busy_feedback_changes()
+    {
+        using var f = new Fixture();
+        var vm = new Vafadar.Zanance.App.Features.Profiles.ProfilesViewModel(f.Service, f.Flow.Translator, f.Flow.Platform, f.Flow.Platform);
+        await vm.LoadAsync(); var original = f.Preferences.Get(PacketKey);
+        var prompt = new TaskCompletionSource<string?>(); var entered = new TaskCompletionSource();
+        f.Flow.Platform.PendingInput = () => { entered.TrySetResult(); return prompt.Task; };
+        var pending = vm.AddCommand.ExecuteAsync(null);
+        await entered.Task.WaitAsync(TimeSpan.FromSeconds(10), Ct);
+        // A shared status update is not authority to depart from the original native command.
+        vm.IsBusy = false;
+        var canLeave = vm.CanLeave; var canInteract = vm.CanInteract; var canAdd = vm.CanAdd;
+        prompt.SetResult(null); await pending;
+        Assert.False(canLeave); Assert.False(canInteract); Assert.False(canAdd);
+        Assert.Equal(original, f.Preferences.Get(PacketKey)); Assert.Single(f.Service.All);
+        Assert.Empty(await f.Flow.Store.GetEntriesAsync(cancellationToken: Ct));
+    }
+
+    [Theory, InlineData("root"), InlineData("depart-return"), InlineData("display"), Trait("AT", "AT-158")]
+    public async Task Original_Add_prompt_cannot_publish_after_native_owner_or_disclosure_retires(string retirement)
+    {
+        using var f = new Fixture();
+        var vm = new Vafadar.Zanance.App.Features.Profiles.ProfilesViewModel(f.Service, f.Flow.Translator, f.Flow.Platform, f.Flow.Platform);
+        var root = true; vm.BindRootOwner(() => root); await vm.LoadAsync();
+        var original = f.Preferences.Get(PacketKey); var prompt = new TaskCompletionSource<string?>(); var entered = new TaskCompletionSource();
+        f.Flow.Platform.PendingInput = () => { entered.TrySetResult(); return prompt.Task; };
+        var pending = vm.AddCommand.ExecuteAsync(null); await entered.Task.WaitAsync(TimeSpan.FromSeconds(10), Ct);
+        if (retirement == "root") root = false;
+        else if (retirement == "depart-return") { vm.SetActive(false); vm.SetActive(true); }
+        else vm.RefreshDisplay();
+        prompt.SetResult("Fictitious refused original"); await pending;
+        Assert.Equal(original, f.Preferences.Get(PacketKey)); Assert.Single(f.Service.All);
+        Assert.Equal(0, f.Runtime.ExclusiveRuns); Assert.Null(vm.Error);
+    }
+
+    [Theory, InlineData("root"), InlineData("display"), Trait("AT", "AT-158")]
+    public async Task Original_second_delete_consent_cannot_retire_a_profile_after_native_owner_changes(string retirement)
+    {
+        using var f = new Fixture(); f.AddOthers(1);
+        var vm = new Vafadar.Zanance.App.Features.Profiles.ProfilesViewModel(f.Service, f.Flow.Translator, f.Flow.Platform, f.Flow.Platform);
+        var root = true; vm.BindRootOwner(() => root); await vm.LoadAsync();
+        var row = vm.Profiles[1]; var raw = f.Preferences.Get(PacketKey);
+        f.Flow.Platform.Choices.Enqueue(f.Flow.Translator["Common_Delete"]);
+        var second = new TaskCompletionSource<bool>(); var entered = new TaskCompletionSource(); var count = 0;
+        f.Flow.Platform.PendingConfirmation = () => { if (++count == 1) return Task.FromResult(true); entered.TrySetResult(); return second.Task; };
+        var pending = vm.ChooseCommand.ExecuteAsync(row); await entered.Task.WaitAsync(TimeSpan.FromSeconds(10), Ct);
+        if (retirement == "root") root = false; else vm.RefreshDisplay();
+        second.SetResult(true); await pending;
+        Assert.Equal(raw, f.Preferences.Get(PacketKey)); Assert.Equal(2, f.Service.All.Count); Assert.Null(vm.Error);
+    }
+
+    [Fact, Trait("AT", "AT-158")]
+    public async Task Original_switch_rechecks_native_ownership_after_real_authentication_boundary_before_current_publication()
+    {
+        using var f = new Fixture(); f.AddOthers(1); var target = f.Service.All[1];
+        await f.Service.SwitchToAsync(target);
+        await f.Flow.Store.UpdateSettingsAsync(s => s.AppLockEnabled = true, Ct);
+        await f.Service.SwitchToAsync(f.Service.All[0]);
+        var originalPath = f.Location.Path; var review = f.Service.ReadWorkReview(); var current = true;
+        f.Runtime.DuringAuthentication = () => current = false;
+        await Assert.ThrowsAsync<OperationCanceledException>(() => f.Service.SwitchReviewedAsync(review, target,
+            () => { if (!current) throw new OperationCanceledException("Fictitious original root retired."); }));
+        Assert.True(f.Service.Current.IsMain); Assert.Equal(originalPath, f.Location.Path);
+    }
+
+    [Theory, InlineData("exclusive"), InlineData("preparation"), Trait("AT", "AT-158")]
+    public async Task Original_creation_rechecks_native_owner_after_wait_and_preparation_before_catalogue_publication(string phase)
+    {
+        using var f = new Fixture(); var review = f.Service.ReadWorkReview(); var original = f.Preferences.Get(PacketKey); var current = true;
+        if (phase == "exclusive") f.Runtime.DuringExclusive = () => current = false;
+        else f.Runtime.DuringPreparation = () => current = false;
+        await Assert.ThrowsAsync<OperationCanceledException>(() => f.Service.CreateReviewedAsync(review, "Fictitious refused prepared profile", Ct,
+            () => { if (!current) throw new OperationCanceledException("Fictitious original root retired."); }));
+        Assert.Single(f.Service.All); Assert.Equal(original, f.Preferences.Get(PacketKey)); Assert.True(f.Service.Current.IsMain);
+        Assert.Empty(await f.Flow.Store.GetEntriesAsync(cancellationToken: Ct));
+    }
+
+    [Fact, Trait("AT", "AT-158")]
+    public async Task Known_original_rename_does_not_reload_or_publish_feedback_into_a_retired_root()
+    {
+        using var f = new Fixture(); f.AddOthers(1);
+        var vm = new Vafadar.Zanance.App.Features.Profiles.ProfilesViewModel(f.Service, f.Flow.Translator, f.Flow.Platform, f.Flow.Platform);
+        var current = true; vm.BindRootOwner(() => current); await vm.LoadAsync(); var original = vm.Profiles[1];
+        f.Flow.Platform.Choices.Enqueue(f.Flow.Translator["Profile_Rename"]);
+        f.Flow.Platform.PendingInput = () => Task.FromResult<string?>("Fictitious known corrected name");
+        f.Service.Changed += (_, _) => current = false;
+        await vm.ChooseCommand.ExecuteAsync(original);
+        Assert.Equal("Fictitious known corrected name", f.Service.All[1].Name);
+        Assert.Same(original, vm.Profiles[1]); Assert.Equal("Fictitious original 0", original.Name);
+        Assert.Null(vm.Error); Assert.False(vm.CanInteract);
+    }
+
+    [Fact, Trait("AT", "AT-158")]
+    public async Task Catalogue_read_whose_native_owner_retires_before_publication_cannot_enable_original_controls()
+    {
+        using var f = new Fixture();
+        var vm = new Vafadar.Zanance.App.Features.Profiles.ProfilesViewModel(f.Service, f.Flow.Translator, f.Flow.Platform, f.Flow.Platform);
+        var current = true; vm.BindRootOwner(() => current); f.Source.DuringCapture = () => current = false;
+        await vm.LoadAsync();
+        Assert.True(vm.Loading.HasFailed); Assert.Empty(vm.Profiles); Assert.False(vm.CanInteract); Assert.Null(vm.Error);
+        Assert.True(f.Service.Current.IsMain);
+    }
+
+    [Theory, InlineData("exclusive"), InlineData("open"), Trait("AT", "AT-158")]
+    public async Task Retired_original_switch_does_not_start_authentication_after_exclusive_wait_or_destination_open(string phase)
+    {
+        using var f = new Fixture(); f.AddOthers(1); var target = f.Service.All[1];
+        await f.Service.SwitchToAsync(target); await f.Flow.Store.UpdateSettingsAsync(s => s.AppLockEnabled = true, Ct);
+        await f.Service.SwitchToAsync(f.Service.All[0]);
+        var original = f.Location.Path; var review = f.Service.ReadWorkReview(); var current = true;
+        if (phase == "exclusive") f.Runtime.DuringExclusive = () => current = false;
+        else f.Runtime.DuringMigration = () => current = false;
+        f.Runtime.AuthenticationCalls = 0;
+        await Assert.ThrowsAsync<OperationCanceledException>(() => f.Service.SwitchReviewedAsync(review, target,
+            () => { if (!current) throw new OperationCanceledException("Fictitious original native owner retired."); }));
+        Assert.Equal(0, f.Runtime.AuthenticationCalls); Assert.True(f.Service.Current.IsMain); Assert.Equal(original, f.Location.Path);
+    }
+
     private sealed class Fixture : IDisposable
     {
         internal readonly FlowFixture Flow = new();
@@ -294,15 +413,22 @@ public sealed class ProfileWorkFlowTests
         internal readonly QuotaScope Device = new(QuotaScopeKind.Device, Guid.NewGuid());
         internal readonly EntitlementScope Personal = new(EntitlementScopeKind.PersonalProfile, Guid.NewGuid());
         internal bool FailCapture;
-        public ProfileWorkAccess Capture(string cataloguePath) => FailCapture ? throw new IOException("Fictitious cached access failure.") : Access;
+        internal Action? DuringCapture;
+        public ProfileWorkAccess Capture(string cataloguePath)
+        { DuringCapture?.Invoke(); return FailCapture ? throw new IOException("Fictitious cached access failure.") : Access; }
     }
     private sealed class Runtime(FlowFixture flow) : IProfileRuntime
     {
-        internal int ExclusiveRuns;
+        internal int ExclusiveRuns, AuthenticationCalls;
         internal Action? DuringAuthentication;
-        public async Task RunExclusiveAsync(Func<Task> action) { ExclusiveRuns++; await action(); }
-        public Task MigrateAsync(Vafadar.Data.DatabaseAccessGate.ExclusiveLease owner) => flow.Services.MigrateLocalDatabaseForMaintenanceAsync<ZananceDbContext>(owner, Ct);
-        public Task<bool> AuthenticateAsync(string reason) { DuringAuthentication?.Invoke(); return Task.FromResult(true); }
+        internal Action? DuringExclusive, DuringPreparation, DuringMigration;
+        public async Task RunExclusiveAsync(Func<Task> action) { ExclusiveRuns++; DuringExclusive?.Invoke(); await action(); }
+        public Task PrepareNewDatabaseAsync(LocalDatabaseLocation<ZananceDbContext> location, string profileId, string originalPath,
+            DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct)
+        { ct.ThrowIfCancellationRequested(); _ = location.CapturePublication(owner); DuringPreparation?.Invoke(); return Task.CompletedTask; }
+        public async Task MigrateAsync(Vafadar.Data.DatabaseAccessGate.ExclusiveLease owner)
+        { await flow.Services.MigrateLocalDatabaseForMaintenanceAsync<ZananceDbContext>(owner, Ct); DuringMigration?.Invoke(); }
+        public Task<bool> AuthenticateAsync(string reason) { AuthenticationCalls++; DuringAuthentication?.Invoke(); return Task.FromResult(true); }
         public Task ReloadLockAsync() => Task.CompletedTask;
         public void DismissUndo() { }
     }

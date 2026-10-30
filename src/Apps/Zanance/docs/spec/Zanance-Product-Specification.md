@@ -11330,3 +11330,25 @@ Phone/D-607/three deadlines/post-reboot unread source are preserved. Physical ad
 genuine providers, full DB/key/security/stability/speed/accessibility/iOS/Store/release
 remain separate. D-656's sole exact-head CI response was green for all four workflows;
 D-657 has its own single delayed pushed-head check. [D-657 evidence](../quality/original-backup-workspace.md)
+
+### D-658 - Original profile catalogue and native command lifetime
+
+Original profile commands retain independent busy/page/root/frame/disclosure ownership
+through prompts, exclusive waits, destination opening, authentication and publication.
+Protected deletion rechecks after identity inventory before accepting its durable request;
+accepted request recovery remains unchanged. Retired reads/known mutations cannot publish
+into another root. One baseline shared-busy regression failed; 14 distinct new and 73
+existing affected cases passed in focused continuations. Final strict Windows and complete
+offline Android384AOT/408ELF/1608staticLOAD packages passed. A necessary no-reset private
+upgrade preserved UID/full20source before preparation; PID5224 then refused a real old Add
+prompt after actual root replacement with exact source/catalogue equality, and accepted
+one fresh original profile creation plus both native deletion consents. New profile never
+opened, Main/source20/account0/ledger0 preserved; envelope revision changes are expected.
+Original OS/boot remained exact; freshUID/24hash-matchedXML/ownedAVD retired, fourCleans
+28955files/2015040253logicalbytes and supplementary3711files/750087771logicalbytes removed.
+A separate two-file D657 publication cleanup was blocked before process creation; no retry,
+subset/alternate/move/escalation/reuse is allowed. Used signed packages/evidence remain.
+Phone/D607/three deadlines/post-reboot unread source untouched; physical adoption, genuine
+authentication/providers and broader DB/key/security/stability/speed/A11Y/iOS/Store/release
+gates remain separate. D657 sole delayed CI response was pending and its schedule deleted;
+no second query. D658 gets its own single delayed pushed-head check. [D-658 evidence](../quality/original-profile-catalogue-lifetime.md)

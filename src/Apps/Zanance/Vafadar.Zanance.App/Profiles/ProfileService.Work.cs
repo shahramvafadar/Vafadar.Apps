@@ -82,7 +82,7 @@ public sealed partial class ProfileService
     }
 
     /// <summary>Prepares a new database under drained maintenance, then rechecks the reviewed catalogue before publication.</summary>
-    public async Task<LocalProfile> CreateReviewedAsync(ProfileCatalogueReview review, string name, CancellationToken ct = default)
+    public async Task<LocalProfile> CreateReviewedAsync(ProfileCatalogueReview review, string name, CancellationToken ct = default, Action? validateOriginal = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(name); ValidateWorkReview(review);
         if (!review.CanCreate) throw new CommercialWriteRejectedException(CommercialFeature.LocalProfiles, QuotaKind.LocalProfiles,
@@ -91,14 +91,14 @@ public sealed partial class ProfileService
         await runtime.RunExclusiveAsync(async () =>
         {
             using var owner = await location.Access.AcquireExclusiveAsync(ct);
-            ValidateWorkReview(review); ct.ThrowIfCancellationRequested();
+            ValidateWorkReview(review); ct.ThrowIfCancellationRequested(); validateOriginal?.Invoke();
             if (profileCreation is not null)
             {
                 await profileCreation.CreateReviewedAsync(this, review, profile, owner, ct);
                 return;
             }
             await runtime.PrepareNewDatabaseAsync(location, profile.Id, PathOf(MainPath(), profile.Id), owner, ct);
-            ct.ThrowIfCancellationRequested();
+            ct.ThrowIfCancellationRequested(); validateOriginal?.Invoke();
             lock (CatalogueGate) PublishNewProfile(review, profile);
         });
         return profile;

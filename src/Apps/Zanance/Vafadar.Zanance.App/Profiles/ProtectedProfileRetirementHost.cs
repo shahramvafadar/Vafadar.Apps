@@ -19,7 +19,7 @@ public sealed class ProtectedProfileRetirementHost(
 
     /// <inheritdoc />
     public async Task DeleteReviewedAsync(ProfileService profiles, ProfileCatalogueReview review, LocalProfile profile,
-        LocalDatabaseLocation<ZananceDbContext> location, DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct)
+        LocalDatabaseLocation<ZananceDbContext> location, DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct, Action? validateOriginal = null)
     {
         void Check() { ct.ThrowIfCancellationRequested(); location.Access.RequireDrainedOwner(owner); }
         Check(); profiles.ValidateWorkReview(review);
@@ -37,6 +37,9 @@ public sealed class ProtectedProfileRetirementHost(
             if ((await saved.SynchronizeAndReadAsync(durability, ct)).Phase != ProfileRetirementPhase.Completed) pending.Add((prior, saved));
         }
         if (pending.Count > 1) throw new IOException("Multiple pending requests require exact retirement reconciliation.");
+        // Native inventory reads may outlive the original consent. Once its exact durable
+        // request is accepted, recovery continues that request independently of this page.
+        validateOriginal?.Invoke();
         if (pending.Count == 1)
         {
             await ResumeAsync(profiles, location, owner, pending[0].Request, pending[0].Journal, ct);

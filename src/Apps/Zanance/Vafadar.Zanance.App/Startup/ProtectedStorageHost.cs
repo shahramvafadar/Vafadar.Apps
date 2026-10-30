@@ -116,8 +116,8 @@ internal abstract partial class ProtectedStorageHost(IServiceProvider services,
 
     /// <inheritdoc />
     public Task DeleteReviewedAsync(ProfileService profiles, ProfileCatalogueReview review, LocalProfile profile,
-        LocalDatabaseLocation<ZananceDbContext> location, DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct) =>
-        (retirement ?? throw new InvalidOperationException("Protected startup is unavailable.")).DeleteReviewedAsync(profiles, review, profile, location, owner, ct);
+        LocalDatabaseLocation<ZananceDbContext> location, DatabaseAccessGate.ExclusiveLease owner, CancellationToken ct, Action? validateOriginal = null) =>
+        (retirement ?? throw new InvalidOperationException("Protected startup is unavailable.")).DeleteReviewedAsync(profiles, review, profile, location, owner, ct, validateOriginal);
 
     /// <inheritdoc />
     public Task ResumePendingAsync(ProfileService profiles, LocalDatabaseLocation<ZananceDbContext> location,

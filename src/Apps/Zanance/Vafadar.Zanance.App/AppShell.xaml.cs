@@ -40,6 +40,16 @@ public partial class AppShell : Shell
     private readonly List<WeakReference<HoldingDetailPage>> _publishedHoldingDetails = [];
     private readonly List<WeakReference<AssetEventEditorPage>> _publishedAssetEventEditors = [];
     private bool _navigationRetired;
+    private readonly List<WeakReference<Features.Profiles.ProfilesPage>> _publishedProfiles = [];
+    /// <summary>Gets whether this native root still owns its original profile catalogue.</summary>
+    internal bool OwnsProfilesPublication => !_navigationRetired;
+    /// <summary>Registers a weak original catalogue for explicit root retirement.</summary>
+    internal void RegisterProfiles(Features.Profiles.ProfilesPage page)
+    {
+        if (_navigationRetired) { page.RetireShellPublication(); return; }
+        if (!_publishedProfiles.Any(reference => reference.TryGetTarget(out var original) && ReferenceEquals(original, page)))
+            _publishedProfiles.Add(new(page));
+    }
     /// <summary>Gets whether this actual native root can still own an original account editor or accepted return.</summary>
     internal bool OwnsAccountEditorPublication => !_navigationRetired;
     /// <summary>Gets whether this actual root still owns an original goal editor.</summary>
@@ -494,7 +504,8 @@ public partial class AppShell : Shell
         if (_navigationRetired || args.Source is not (ShellNavigationSource.ShellItemChanged
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)) return;
         // D-577: the list can be retained too; otherwise it keeps pre-transfer/refund balances until Back/reopen.
-        if (CurrentPage is AccountsPage accounts) await Presentation.Failures.GuardAsync(accounts.RefreshForNavigationAsync);
+        if (CurrentPage is Features.Profiles.ProfilesPage profiles) await Presentation.Failures.GuardAsync(profiles.RefreshForNavigationAsync);
+        else if (CurrentPage is AccountsPage accounts) await Presentation.Failures.GuardAsync(accounts.RefreshForNavigationAsync);
         else if (CurrentPage is AccountDetailPage account) await Presentation.Failures.GuardAsync(account.RefreshForNavigationAsync);
         else if (CurrentPage is HoldingDetailPage holdingDetail) await Presentation.Failures.GuardAsync(holdingDetail.RefreshForNavigationAsync);
         else if (CurrentPage is LoanSchedulePage schedule) await Presentation.Failures.GuardAsync(schedule.RefreshForNavigationAsync);
@@ -530,10 +541,16 @@ public partial class AppShell : Shell
         var ownBackupAuthentication = backup?.IsConfirmingSensitiveOperation == true && originalBackupPage is not null
             && Security.NativeSensitivePresentation.Allows(this, originalBackupPage, args);
         if (backup is not null && !backup.CanLeave && args.CanCancel && !ownBackupAuthentication) args.Cancel();
+        var originalProfilesPage = CurrentPage?.BindingContext is Features.Profiles.ProfilesViewModel ? CurrentPage : Security.NativeSensitivePresentation.Underlying(this);
+        if (originalProfilesPage?.BindingContext is Features.Profiles.ProfilesViewModel profiles && !profiles.CanLeave && args.CanCancel
+            && !Security.NativeSensitivePresentation.Allows(this, originalProfilesPage, args)) args.Cancel();
         if (CurrentPage?.BindingContext is Features.Sync.PersonalSyncViewModel sync && !sync.CanLeave && args.CanCancel) args.Cancel();
         if (CurrentPage?.BindingContext is Features.Sharing.HouseholdViewModel household && !household.CanLeave && args.CanCancel) args.Cancel();
         if (CurrentPage?.BindingContext is Features.Sharing.HouseholdCostsViewModel costs && !costs.CanLeave && args.CanCancel) args.Cancel();
         base.OnNavigating(args);
+        if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
+                or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)
+            && CurrentPage is Features.Profiles.ProfilesPage profilePage) profilePage.RetirePublication();
         // D-627: a routed Accounts page can remain cached across tabs without OnDisappearing.
         // Retire only after the original leave guards accept this actual tab departure.
         if (!args.Cancelled && args.Source is (ShellNavigationSource.ShellItemChanged
@@ -640,6 +657,9 @@ public partial class AppShell : Shell
     internal void RetireNavigationBindings()
     {
         _navigationRetired = true;
+        foreach (var reference in _publishedProfiles)
+            if (reference.TryGetTarget(out var profiles)) profiles.RetireShellPublication();
+        _publishedProfiles.Clear();
         foreach (var accounts in _publishedAccountOverviews) accounts.RetireShellPublication();
         _publishedAccountOverviews.Clear();
         foreach (var account in _publishedAccountDetails) account.RetireShellCommands();

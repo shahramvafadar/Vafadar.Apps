@@ -98,7 +98,7 @@ public sealed partial class ProfileService(
         DeleteReviewedAsync(ReadWorkReview(), profile, cancellationToken);
 
     /// <summary>Waits without blocking UI, then deletes only the still-reviewed inactive original under maintenance ownership.</summary>
-    public async Task DeleteReviewedAsync(ProfileCatalogueReview review, LocalProfile profile, CancellationToken cancellationToken = default)
+    public async Task DeleteReviewedAsync(ProfileCatalogueReview review, LocalProfile profile, CancellationToken cancellationToken = default, Action? validateOriginal = null)
     {
         ValidateWorkReview(review); RequireReviewedProfile(review, profile);
         if (profileRetirement is not null && (location.IsProtected || HasProtectedProfileState(PathOf(MainPath(), profile.Id))))
@@ -106,12 +106,13 @@ public sealed partial class ProfileService(
             await runtime.RunExclusiveAsync(async () =>
             {
                 using var nativeOwner = await location.Access.AcquireExclusiveAsync(cancellationToken);
-                await profileRetirement.DeleteReviewedAsync(this, review, profile, location, nativeOwner, cancellationToken);
+                cancellationToken.ThrowIfCancellationRequested(); validateOriginal?.Invoke();
+                await profileRetirement.DeleteReviewedAsync(this, review, profile, location, nativeOwner, cancellationToken, validateOriginal);
             });
             return;
         }
         using var owner = await location.Access.AcquireExclusiveAsync(cancellationToken);
-        cancellationToken.ThrowIfCancellationRequested(); DeleteCore(review, profile, owner);
+        cancellationToken.ThrowIfCancellationRequested(); validateOriginal?.Invoke(); DeleteCore(review, profile, owner);
     }
 
     private void DeleteCore(ProfileCatalogueReview review, LocalProfile profile, DatabaseAccessGate.ExclusiveLease owner)
@@ -178,7 +179,7 @@ public sealed partial class ProfileService(
     public Task<bool> SwitchToAsync(LocalProfile profile) => SwitchReviewedAsync(ReadWorkReview(), profile);
 
     /// <summary>Opens any reviewed original for retained work; rechecks catalogue and rights before committing after authentication.</summary>
-    public Task<bool> SwitchReviewedAsync(ProfileCatalogueReview review, LocalProfile profile) => SwitchCoreAsync(review, profile, null);
+    public Task<bool> SwitchReviewedAsync(ProfileCatalogueReview review, LocalProfile profile, Action? validateOriginal = null) => SwitchCoreAsync(review, profile, null, validateOriginal);
 
     /// <summary>Rechecks a selected household source under drained ownership immediately before opening its separate target.</summary>
     public Task<bool> SwitchHouseholdSourceAsync(ProfileCatalogueReview review, LocalProfile profile,
@@ -191,9 +192,9 @@ public sealed partial class ProfileService(
         });
 
     private async Task<bool> SwitchCoreAsync(ProfileCatalogueReview review, LocalProfile profile,
-        Func<DatabaseAccessGate.ExclusiveLease, Task>? beforeOpen)
+        Func<DatabaseAccessGate.ExclusiveLease, Task>? beforeOpen, Action? validateOriginal = null)
     {
-        ValidateWorkReview(review); RequireReviewedProfile(review, profile);
+        ValidateWorkReview(review); RequireReviewedProfile(review, profile); validateOriginal?.Invoke();
         if (profile.Id == Current.Id)
         {
             if (beforeOpen is not null) throw new InvalidOperationException("Household copying requires a separate destination profile.");
@@ -207,13 +208,16 @@ public sealed partial class ProfileService(
         await runtime.RunExclusiveAsync(async () =>
         {
             using var owner = await location.Access.AcquireExclusiveAsync();
-            ValidateWorkReview(review);
+            ValidateWorkReview(review); validateOriginal?.Invoke();
             var previous = location.CapturePublication(owner);
             try
             {
                 if (beforeOpen is not null) await beforeOpen(owner);
+                validateOriginal?.Invoke();
                 await runtime.OpenDatabaseAsync(location, PathOf(MainPath(), profile.Id), owner);
+                validateOriginal?.Invoke();
                 var settings = await store.GetSettingsForMaintenanceAsync(owner);
+                validateOriginal?.Invoke();
                 var authenticated = !settings.AppLockEnabled
                     || await runtime.AuthenticateAsync(translator["Profile_UnlockReason"]);
                 if (authenticated)
@@ -222,6 +226,7 @@ public sealed partial class ProfileService(
                     lock (CatalogueGate)
                     {
                         ValidateWorkCore(review, checkCurrentPath: false);
+                        validateOriginal?.Invoke();
                         preferences.Set(CurrentKey, profile.Id);
                         // Successful authentication alone is not a committed switch. A retired catalogue must
                         // restore the previous path even when the device authentication itself succeeded.

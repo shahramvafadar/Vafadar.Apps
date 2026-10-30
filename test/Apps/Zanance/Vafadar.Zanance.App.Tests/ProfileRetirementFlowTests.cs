@@ -12,6 +12,21 @@ public sealed class ProfileRetirementFlowTests
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
     [Fact, Trait("AT", "AT-236")]
+    public async Task Original_native_consent_is_rechecked_after_identity_inventory_before_a_new_durable_retirement_request()
+    {
+        if (!OperatingSystem.IsWindows()) return;
+        using var fixture = new Fixture(); await fixture.InitializeAsync();
+        var review = fixture.Profiles.ReadWorkReview(); var checks = 0;
+        using (var owner = await fixture.Location.Access.AcquireExclusiveAsync(Ct))
+            await Assert.ThrowsAsync<OperationCanceledException>(() => fixture.Host.DeleteReviewedAsync(fixture.Profiles,
+                review, fixture.Work, fixture.Location, owner, Ct,
+                () => { checks++; throw new OperationCanceledException("Fictitious original consent retired during inventory."); }));
+        Assert.Equal(1, checks); Assert.Equal(2, fixture.Profiles.All.Count); Assert.True(fixture.Profiles.Current.IsMain);
+        Assert.Equal(0, fixture.Persistence.Writes); Assert.True(File.Exists(fixture.Candidate)); Assert.True(File.Exists(fixture.TargetKey));
+        Assert.Contains(await fixture.Identities.ReadAsync(Ct), row => row.ProfileId == fixture.Identity.ProfileId);
+    }
+
+    [Fact, Trait("AT", "AT-236")]
     public async Task Reviewed_inactive_target_uses_real_native_host_and_preserves_main_profile()
     {
         if (!OperatingSystem.IsWindows()) return;
