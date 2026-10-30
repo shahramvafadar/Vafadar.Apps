@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-648: bind original Settings sources, drafts, native consent and independent preference changes to their current file/frame; validate atomic current-profile reset and preserve committed follow-through without another deletion.
+
 - D-647: keep report rows, source reads, contribution receipts and explanation navigation tied to their original frame; preserve incoming drill scope through display changes and refuse stale explanation targets.
 
 - D-646: bind forecast rows, scenario/name prompts and saved paths to their original source; preserve drafts and accepted receipts through display changes, with current translated feedback and no automatic re-save.

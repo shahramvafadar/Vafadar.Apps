@@ -8615,4 +8615,13 @@ Original-XML SHA-256: {5}</value>
   <data name="Report_ExplanationStale" xml:space="preserve">
     <value>Dieser Bericht hat sich geändert. Gehe zurück und aktualisiere ihn, bevor du seine Buchungen öffnest.</value>
   </data>
+  <data name="Settings_SourceChanged" xml:space="preserve">
+    <value>Die Einstellungen oder die Daten dieses Profils haben sich geändert. Lade diese Seite erneut, bevor du fortfährst. Deine ungespeicherte Schätzung bleibt erhalten.</value>
+  </data>
+  <data name="Settings_SavedFollowUpFailed" xml:space="preserve">
+    <value>Die Einstellung wurde gespeichert, aber ein Folgeschritt wurde nicht abgeschlossen. Lade die Seite zur Prüfung erneut; wiederhole die Änderung nicht.</value>
+  </data>
+  <data name="Settings_DataDeleted" xml:space="preserve">
+    <value>Die geprüften Daten in diesem Profil wurden gelöscht. Andere Profile wurden nicht geändert.</value>
+  </data>
 </root>

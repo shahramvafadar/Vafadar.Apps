@@ -8604,4 +8604,13 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Report_ExplanationStale" xml:space="preserve">
     <value>Questo rapporto è cambiato. Torna indietro e aggiornalo prima di aprire i suoi movimenti.</value>
   </data>
+  <data name="Settings_SourceChanged" xml:space="preserve">
+    <value>Le impostazioni o i dati di questo profilo sono cambiati. Ricarica questa pagina prima di continuare. La tua stima non salvata viene conservata.</value>
+  </data>
+  <data name="Settings_SavedFollowUpFailed" xml:space="preserve">
+    <value>L’impostazione è stata salvata, ma un passaggio successivo non è terminato. Ricarica per verificare; non ripetere la modifica.</value>
+  </data>
+  <data name="Settings_DataDeleted" xml:space="preserve">
+    <value>I dati verificati di questo profilo sono stati eliminati. Gli altri profili non sono stati modificati.</value>
+  </data>
 </root>

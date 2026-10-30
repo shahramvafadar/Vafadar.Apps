@@ -8649,4 +8649,13 @@ Original XML SHA-256: {5}</value>
   <data name="Report_ExplanationStale" xml:space="preserve">
     <value>This report has changed. Go back and refresh it before opening its entries.</value>
   </data>
+  <data name="Settings_SourceChanged" xml:space="preserve">
+    <value>Settings or this profile’s data changed. Reload this page before continuing. Your unsaved estimate is kept.</value>
+  </data>
+  <data name="Settings_SavedFollowUpFailed" xml:space="preserve">
+    <value>The setting was saved, but a follow-up did not finish. Reload to check it; do not repeat the change.</value>
+  </data>
+  <data name="Settings_DataDeleted" xml:space="preserve">
+    <value>The reviewed data in this profile was deleted. Other profiles were not changed.</value>
+  </data>
 </root>

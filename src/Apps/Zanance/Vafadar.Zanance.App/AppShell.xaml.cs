@@ -54,6 +54,17 @@ public partial class AppShell : Shell
     internal bool OwnsHoldingDetailPublication => !_navigationRetired;
     /// <summary>Gets whether this root still owns original report source and its explicit explanation handoffs.</summary>
     internal bool OwnsReportPublication => !_navigationRetired;
+    /// <summary>Tracks only weak original settings pages for terminal root retirement.</summary>
+    private readonly List<WeakReference<Features.Settings.SettingsPage>> _settingsPages = [];
+    /// <summary>Gets whether this actual root still owns original settings publication.</summary>
+    internal bool OwnsSettingsPublication => !_navigationRetired;
+    /// <summary>Retains only weak original settings roots for terminal native retirement.</summary>
+    internal void RegisterSettings(Features.Settings.SettingsPage page)
+    {
+        if (_navigationRetired) { page.RetireShellPublication(); return; }
+        _settingsPages.RemoveAll(item => !item.TryGetTarget(out _));
+        if (!_settingsPages.Any(item => item.TryGetTarget(out var old) && ReferenceEquals(old, page))) _settingsPages.Add(new(page));
+    }
     /// <summary>Tracks only weak original report pages for terminal root retirement.</summary>
     internal void RegisterReport(Features.Reports.ReportsPage page)
     {
@@ -432,6 +443,7 @@ public partial class AppShell : Shell
         else if (CurrentPage is PlanDetailPage planDetail) await Presentation.Failures.GuardAsync(planDetail.RefreshForNavigationAsync);
         else if (CurrentPage is OccurrencePage occurrence) await Presentation.Failures.GuardAsync(occurrence.RefreshForNavigationAsync);
         // D-497: Insights can retain both the forecast and its saved comparison while another tab changes the ledger.
+        else if (CurrentPage is Features.Settings.SettingsPage settings) await Presentation.Failures.GuardAsync(settings.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Reports.ReportsPage report) await Presentation.Failures.GuardAsync(report.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Forecast.ForecastPage forecast) await Presentation.Failures.GuardAsync(forecast.RefreshForNavigationAsync);
         else if (CurrentPage is Features.Forecast.SnapshotPage snapshot) await Presentation.Failures.GuardAsync(snapshot.RefreshForNavigationAsync);
@@ -502,6 +514,7 @@ public partial class AppShell : Shell
         {
             if (CurrentPage is CategoriesPage categories) categories.RetirePublication();
             if (CurrentPage is AccountEditorPage accountEditor) accountEditor.RetirePublication();
+            if (CurrentPage is Features.Settings.SettingsPage settings) settings.RetirePublication();
             if (CurrentPage is Features.Reports.ReportsPage report) report.RetirePublication();
             if (CurrentPage is Features.Reports.KpiSheetPage reportSheet) reportSheet.RetirePublication();
             if (Navigation.ModalStack.LastOrDefault() is Features.Reports.KpiSheetPage modalReportSheet) modalReportSheet.RetirePublication();
@@ -581,6 +594,8 @@ public partial class AppShell : Shell
         foreach (var reference in _publishedAssetTypeEditors)
             if (reference.TryGetTarget(out var editor)) editor.RetireShellPublication();
         _publishedAssetTypeEditors.Clear();
+        foreach (var reference in _settingsPages) if (reference.TryGetTarget(out var settings)) settings.RetireShellPublication();
+        _settingsPages.Clear();
         foreach (var reference in _publishedReports)
             if (reference.TryGetTarget(out var report)) report.RetireShellPublication();
         _publishedReports.Clear();

@@ -87,3 +87,5 @@ Original forecast workspace, native prompts, tab display retention and Save rece
 [Focused and original native evidence](quality/original-forecast-workspace-prompt-and-receipts.md), preserving D-607 and separate physical/platform gates.
 
 Original report and KPI source/command handoff: [D-647 runtime evidence](quality/original-report-workspace-and-kpi-handoff.md). Physical adoption and release gates remain separate.
+
+Original Settings source and current-profile reset: [D-648 runtime evidence](quality/original-settings-source-and-profile-reset.md). Physical adoption and release gates remain separate.

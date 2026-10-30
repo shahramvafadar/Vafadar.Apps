@@ -8615,4 +8615,13 @@
   <data name="Report_ExplanationStale" xml:space="preserve">
     <value>این گزارش تغییر کرده است. برگردید و پیش از باز کردن تراکنش‌های آن، گزارش را تازه‌سازی کنید.</value>
   </data>
+  <data name="Settings_SourceChanged" xml:space="preserve">
+    <value>تنظیمات یا داده‌های این پروفایل تغییر کرده‌اند. پیش از ادامه، صفحه را دوباره بارگیری کنید. برآورد ذخیره‌نشدهٔ شما حفظ می‌شود.</value>
+  </data>
+  <data name="Settings_SavedFollowUpFailed" xml:space="preserve">
+    <value>تنظیم ذخیره شد، اما ادامهٔ کار کامل نشد. برای بررسی، صفحه را دوباره بارگیری کنید؛ تغییر را تکرار نکنید.</value>
+  </data>
+  <data name="Settings_DataDeleted" xml:space="preserve">
+    <value>داده‌های بررسی‌شدهٔ این پروفایل حذف شدند. پروفایل‌های دیگر تغییر نکرده‌اند.</value>
+  </data>
 </root>

@@ -31,7 +31,8 @@ public sealed partial class SettingsViewModel : ViewModelBase
     private SettingsSnapshot? _snapshot;
 
     /// <summary>Gets the first-frame/reload cover and retry state for the whole settings form.</summary>
-    public Presentation.SnapshotLoadState Loading { get; } = new();
+    [ObservableProperty]
+    public partial Presentation.SnapshotLoadState Loading { get; private set; } = new();
 
     public SettingsViewModel(
         ILocalizationService localization,
@@ -58,7 +59,8 @@ public sealed partial class SettingsViewModel : ViewModelBase
         _time = time;
         _store = store;
         _essentialEditor = new(store, translator, localization);
-        Regional = new(localization, translator, time);
+        Regional = new(localization, translator, time); Regional.BindOwner(() => CanInteract);
+        PropertyChanged += (_, args) => { if (args.PropertyName == nameof(IsBusy)) PublishWorkState(); };
 
         Languages = [.. localization.SupportedLanguages];
         ReportCurrency = string.Empty;
@@ -183,7 +185,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
     // Every setting is saved through one serialized update (no change can overwrite another), and a failure is shown
     // instead of ending the app from a property-changed handler.
     private void Update(Action<Core.Settings.ZananceSettings> change) =>
-        _ = Presentation.Failures.GuardAsync(() => _store.UpdateSettingsAsync(change));
+        _ = ChangeOriginalAsync(change);
 
     // Theme (UX-08): follow the device, light or dark.
     [ObservableProperty]
@@ -194,7 +196,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
 
     partial void OnThemeIndexChanged(int value)
     {
-        if (!_refreshing && Enum.IsDefined((Presentation.ThemeChoice)value) && (Presentation.ThemeChoice)value != _theme.Choice)
+        if (!_refreshing && CanInteract && Enum.IsDefined((Presentation.ThemeChoice)value) && (Presentation.ThemeChoice)value != _theme.Choice)
         {
             _theme.Set((Presentation.ThemeChoice)value);
         }
@@ -216,17 +218,17 @@ public sealed partial class SettingsViewModel : ViewModelBase
 
     partial void OnBlockScreenshotsChanged(bool value)
     {
-        if (!_refreshing) { ScreenProtection.Set(value); }
+        if (!_refreshing && CanInteract) { ScreenProtection.Set(value); }
     }
 
     [RelayCommand]
     private async Task ManagePinAsync()
     {
-        if (Application.Current?.Windows.FirstOrDefault()?.Page is { } root)
-        {
-            var page = new PinSettingsPage(_lock, _translator);
-            await root.Navigation.PushModalAsync(page);
-        }
+        if (CaptureCommand() is not { } command || Application.Current?.Windows.FirstOrDefault()?.Page is not { } root) return;
+        IsBusy = true;
+        try { await ValidateCommandAsync(command); await root.Navigation.PushModalAsync(new PinSettingsPage(_lock, _translator)); }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { if (command.IsCurrent) await RefuseOriginalSourceAsync(exception); }
+        finally { IsBusy = false; PublishWorkState(); }
     }
 
     [ObservableProperty]
@@ -249,13 +251,21 @@ public sealed partial class SettingsViewModel : ViewModelBase
 
     private async Task SaveReviewReminderAsync(bool enabled)
     {
-        // Persist the choice first, so a later off toggle cannot be overwritten by a slow permission answer.
-        await _store.UpdateSettingsAsync(settings => settings.ReviewReminderEnabled = enabled);
-        if (enabled && ReviewReminderEnabled && NotificationsSupported)
+        if (CaptureCommand() is not { } command) return; ++_pendingChanges; var accepted = false;
+        try
         {
-            NotificationsEnabled = await Presentation.PermissionPrompts.EnableNotificationsAsync(_reminders, _translator);
+            // Persist each explicit choice first; a later off choice cannot be overwritten by a slow native answer.
+            await _store.UpdateSettingsWorkAsync(command.Review, settings => settings.ReviewReminderEnabled = enabled, () => command.IsCurrent, command.Token); accepted = true;
+            if (command.IsCurrent && enabled && ReviewReminderEnabled && NotificationsSupported)
+            {
+                var allowed = await Presentation.PermissionPrompts.EnableNotificationsAsync(_reminders, _translator);
+                if (command.IsCurrent && ReviewReminderEnabled) NotificationsEnabled = allowed;
+            }
+            await _reminders.RefreshAsync();
         }
-        await _reminders.RefreshAsync();
+        catch (Data.Commerce.CommittedWriteNotificationException<Guid>) { if (command.IsCurrent) Feedback("Settings_SavedFollowUpFailed"); }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { if (command.IsCurrent) { if (accepted) Feedback("Settings_SavedFollowUpFailed"); else await RefuseOriginalSourceAsync(exception); } }
+        finally { if (--_pendingChanges == 0 && OwnsPage && !_needsExplicitReload) await LoadAsync(); }
     }
 
     [ObservableProperty]
@@ -265,9 +275,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
     public partial TimeSpan? ReminderTime { get; set; }
 
     /// <summary>Shares a complete pending read and publishes before the form becomes interactive.</summary>
-    public Task LoadAsync() => Loading.RunAsync(async () =>
-        _snapshot = await SettingsSnapshot.ReadAsync(_store, _localization, _time,
-            _lock.Authenticator.IsAvailableAsync, NotificationsSupported, _reminders.Scheduler.AreEnabledAsync), PresentSnapshot);
+    public Task LoadAsync() => ReadOriginalAsync();
 
     private void PresentSnapshot()
     {
@@ -304,7 +312,9 @@ public sealed partial class SettingsViewModel : ViewModelBase
             LockAvailable = snapshot.LockAvailable;
             PinEnabled = _lock.PinEnabled;
             BlockScreenshots = ScreenProtection.BlockScreenshots;
-            ReminderDaysText = settings.ReminderDaysBefore.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            var incomingDays = settings.ReminderDaysBefore.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            if (_publishedReminderDays is null || ReminderDaysText == _publishedReminderDays) ReminderDaysText = incomingDays;
+            _publishedReminderDays = incomingDays;
             ReminderTime = settings.ReminderTime.ToTimeSpan();
             NotificationsEnabled = snapshot.NotificationsEnabled;
             RefreshDisplay();
@@ -356,31 +366,40 @@ public sealed partial class SettingsViewModel : ViewModelBase
 
     /// <summary>Opens reviewed resource choices without changing preferences or creating financial data.</summary>
     [RelayCommand]
-    private Task OpenActiveItemsAsync() => _interaction.NavigateAsync(AppRoutes.ActiveItemsRoute);
+    private Task OpenActiveItemsAsync() => NavigateOriginalAsync(AppRoutes.ActiveItemsRoute);
 
     [RelayCommand]
-    private void UseEssentialSuggestion()
+    private async Task UseEssentialSuggestionAsync()
     {
-        if (_essentialSuggestion is { } suggested)
+        if (_essentialSuggestion is not { } suggested || CaptureCommand() is not { } command) return;
+        var currency = _essentialCurrency; IsBusy = true;
+        try
         {
-            _essentialEditor.UseSuggestion(suggested);
-            EssentialText = _essentialEditor.Text;
-            EssentialPeriodIndex = _essentialEditor.PeriodIndex;
+            await ValidateCommandAsync(command);
+            if (currency != _essentialCurrency || suggested != _essentialSuggestion) throw new InvalidOperationException("The original estimate suggestion changed.");
+            _essentialEditor.UseSuggestion(suggested); EssentialText = _essentialEditor.Text; EssentialPeriodIndex = _essentialEditor.PeriodIndex;
             RefreshEssentialCaptions();
         }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { if (command.IsCurrent) await RefuseOriginalSourceAsync(exception); }
+        finally { IsBusy = false; PublishWorkState(); }
     }
 
     [RelayCommand]
     private async Task SaveEssentialAsync()
     {
-        if (!Loading.IsReady || _refreshing) return;
-        var profileId = _profiles.Current.Id;
-        if (!_essentialEditor.IsForProfile(profileId)) return;
-        var original = _snapshot;
-        await _essentialEditor.SaveAsync(() => _profiles.Current.Id == profileId && _essentialEditor.IsForProfile(profileId)
-            && ReferenceEquals(_snapshot, original) && !_refreshing);
-        EssentialSavedText = _essentialEditor.Result;
-        RefreshEssentialCaptions();
+        if (!CanInteract || _refreshing || CaptureCommand() is not { } command) return;
+        var profileId = _profiles.Current.Id; if (!_essentialEditor.IsForProfile(profileId)) return;
+        var original = _snapshot; IsBusy = true;
+        try
+        {
+            await ValidateCommandAsync(command);
+            await _essentialEditor.SaveAsync(() => _profiles.Current.Id == profileId && _essentialEditor.IsForProfile(profileId)
+                && ReferenceEquals(_snapshot, original) && !_refreshing && command.IsCurrent, command.Token);
+            if (!command.IsCurrent) return;
+            EssentialSavedText = _essentialEditor.Result; RefreshEssentialCaptions();
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { if (command.IsCurrent) await RefuseOriginalSourceAsync(exception); }
+        finally { IsBusy = false; PublishWorkState(); }
     }
 
     partial void OnFreshnessIndexChanged(int value)
@@ -408,15 +427,17 @@ public sealed partial class SettingsViewModel : ViewModelBase
     /// <summary>Turns the app lock on or off after the device owner confirmed it (SEC-01).</summary>
     public async Task SetLockAsync(bool enabled)
     {
-        if (_refreshing || enabled == _lock.DeviceLockEnabled)
+        if (_refreshing || enabled == _lock.DeviceLockEnabled || CaptureCommand() is not { } command) return;
+        IsBusy = true;
+        try
         {
-            return;
+            await ValidateCommandAsync(command);
+            var result = await _lock.SetEnabledAsync(enabled, command.Review, () => command.IsCurrent, command.Token);
+            if (!command.IsCurrent) return;
+            _refreshing = true; try { LockEnabled = result; } finally { _refreshing = false; }
         }
-
-        var result = await _lock.SetEnabledAsync(enabled);
-        _refreshing = true;
-        LockEnabled = result;
-        _refreshing = false;
+        catch (Exception exception) when (exception is not OutOfMemoryException) { if (command.IsCurrent) await RefuseOriginalSourceAsync(exception); }
+        finally { IsBusy = false; PublishWorkState(); }
     }
 
     partial void OnShowDetailsChanged(bool value) => _ = Presentation.Failures.GuardAsync(SaveNotificationSettingsAsync);
@@ -428,15 +449,12 @@ public sealed partial class SettingsViewModel : ViewModelBase
     // Reminder defaults apply to new plans; the lock-screen choice applies to all notifications (REM-01, REM-05).
     private async Task SaveNotificationSettingsAsync()
     {
-        if (_refreshing)
-        {
-            return;
-        }
+        if (_refreshing || !CanInteract) return;
 
         var showDetails = ShowDetails;
         int? days = int.TryParse(Vafadar.Core.Text.Digits.ToAscii(ReminderDaysText), System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var parsed) ? Math.Clamp(parsed, 0, 60) : null;
         var time = ReminderTime;
-        await _store.UpdateSettingsAsync(settings =>
+        await ChangeOriginalAsync(settings =>
         {
             settings.NotificationsShowDetails = showDetails;
             if (days is { } value)
@@ -451,29 +469,41 @@ public sealed partial class SettingsViewModel : ViewModelBase
         });
     }
 
-    // SEC: deletes every record on this device after two confirmations; onboarding starts again.
-    [CommunityToolkit.Mvvm.Input.RelayCommand]
+    // SEC: deletes only the explicitly reviewed current profile after original confirmation/authentication; other profiles remain unchanged.
+    [CommunityToolkit.Mvvm.Input.RelayCommand(CanExecute = nameof(CanInteract))]
     private async Task DeleteAllDataAsync()
     {
-        if (Shell.Current is null
-            || !await Shell.Current.DisplayAlertAsync(_translator["Settings_DeleteAllTitle"], _translator["Settings_DeleteAllMessage"], _translator["Settings_DeleteAll"], _translator["Common_Cancel"])
-            || !await _lock.ConfirmAsync(_translator["Lock_ConfirmDeleteAll"]))
+        if (CaptureCommand() is not { } command) return; IsBusy = true;
+        try
         {
-            return;
+            await ValidateCommandAsync(command);
+            var reviewed = await _store.ReadProfileResetReviewAsync(command.Review, command.Token); command.RequireCurrent();
+            if (!await _interaction.ConfirmAsync(_translator["Settings_DeleteAllTitle"], _translator["Settings_DeleteAllMessage"],
+                _translator["Settings_DeleteAll"], _translator["Common_Cancel"])) return;
+            command.RequireCurrent(); await _store.ValidateSettingsWorkSnapshotAsync(command.Review, command.Token); command.RequireCurrent();
+            if (!await _lock.ConfirmAsync(_translator["Lock_ConfirmDeleteAll"])) return;
+            command.RequireCurrent();
+            _profilesAtReset = _profiles.Current.Id;
+            try { await _store.DeleteAllDataAsync(command.Token, reviewed, () => command.IsCurrent,
+                () => { _acceptedReset = reviewed; Feedback("Settings_DataDeleted"); }); }
+            catch (Data.Commerce.CommittedWriteNotificationException<Guid> accepted) when (accepted.Result == reviewed.Id) { }
+            if (_acceptedReset is not null) await FinishAcceptedResetAsync();
         }
-
-        await _store.DeleteAllDataAsync();
-        Presentation.AttachmentFiles.ClearCache();
-        await Presentation.DisplayUnitPreferences.ClearAsync(_store);
-        await Presentation.HomeLayoutPreferences.ClearAsync(_store);
-        await _lock.SetEnabledAsync(false);
-        await _reminders.RefreshAsync();
-        (Application.Current as App)?.ShowOnboarding();
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { if (OwnsPage && _acceptedReset is null) await RefuseOriginalSourceAsync(exception); }
+        finally { IsBusy = false; PublishWorkState(); }
     }
+    private string? _profilesAtReset;
 
     [CommunityToolkit.Mvvm.Input.RelayCommand]
-    private async Task EnableNotificationsAsync() =>
-        NotificationsEnabled = await Presentation.PermissionPrompts.EnableNotificationsAsync(_reminders, _translator);
+    private async Task EnableNotificationsAsync()
+    {
+        if (CaptureCommand() is not { } command) return; IsBusy = true;
+        try { await ValidateCommandAsync(command); var enabled = await Presentation.PermissionPrompts.EnableNotificationsAsync(_reminders, _translator);
+            if (command.IsCurrent) NotificationsEnabled = enabled; }
+        catch (Exception exception) when (exception is not OutOfMemoryException) { if (command.IsCurrent) await RefuseOriginalSourceAsync(exception); }
+        finally { IsBusy = false; PublishWorkState(); }
+    }
 
     [ObservableProperty]
     public partial AppLanguage? SelectedLanguage { get; set; }
@@ -489,7 +519,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
 
     partial void OnSelectedLanguageChanged(AppLanguage? value)
     {
-        if (_refreshing || value is null || value == _localization.CurrentLanguage)
+        if (_refreshing || !CanInteract || value is null || value == _localization.CurrentLanguage)
         {
             return;
         }
@@ -500,7 +530,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
 
     partial void OnSelectedCalendarChanged(CalendarOption? value)
     {
-        if (_refreshing || value is null || value.Calendar == _localization.CurrentCalendar)
+        if (_refreshing || !CanInteract || value is null || value.Calendar == _localization.CurrentCalendar)
         {
             return;
         }
@@ -532,6 +562,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
                 DefaultAccount = DefaultAccounts.FirstOrDefault(a => a.Id == selected) ?? DefaultAccounts[0];
             }
             RefreshEssentialCaptions();
+            if (_feedbackKey is not null) ActionFeedback = _translator[_feedbackKey];
             EssentialSuggestionText = _essentialSuggestion is { } suggested and > 0
                 ? _translator.Format("Settings_EssentialSuggestion", MoneyText.Format(suggested, _essentialCurrency, _localization.CurrentCulture)) : null;
             Calendars =
@@ -550,6 +581,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
         {
             _refreshing = wasRefreshing;
         }
+        RequestCalendarSourceRefresh();
     }
 }
 

@@ -12,28 +12,25 @@ namespace Vafadar.Zanance.App.Features.Settings;
 /// <param name="LockAvailable">Whether the existing device-authentication choice can be shown.</param>
 /// <param name="NotificationsEnabled">Whether notifications are currently allowed, without asking permission.</param>
 internal sealed record SettingsSnapshot(ZananceSettings Settings, IReadOnlyList<Account> DefaultAccounts,
-    long? EssentialSuggestion, bool LockAvailable, bool NotificationsEnabled, EssentialEstimateReview EstimateReview)
+    long? EssentialSuggestion, bool LockAvailable, bool NotificationsEnabled, EssentialEstimateReview EstimateReview, SettingsWorkSnapshot WorkReview)
 {
     /// <summary>Completes all asynchronous reads before any editable field is published (D-79).</summary>
     internal static async Task<SettingsSnapshot> ReadAsync(ZananceStore store, ILocalizationService localization,
         TimeProvider time, Func<Task<bool>> lockAvailable, bool notificationsSupported, Func<Task<bool>> notificationsEnabled,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default, Func<string, bool>? acceptsFile = null)
     {
-        var estimate = await store.ReadEssentialEstimateAsync(cancellationToken);
-        var settings = estimate.Settings;
-        var accounts = await store.GetAccountsAsync(cancellationToken: cancellationToken);
-        var currency = settings.EssentialEstimateCurrency ?? settings.DefaultCurrencyCode;
-        var today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         var calendar = Presentation.Calendars.ToPeriod(localization.CurrentCalendar);
-        // Read every entry that can affect the unchanged three-month suggestion, without materializing other history.
-        var range = Core.Reports.LiquidityCalculator.SuggestionRange(today, calendar, settings.MonthStartDay);
-        var entries = await store.GetEntriesAsync(range.From, range.To, cancellationToken);
-        var suggestion = Core.Reports.LiquidityCalculator.SuggestPerDay(accounts, entries, currency, today,
-            calendar, settings.MonthStartDay);
-        var available = settings.AppLockEnabled || await lockAvailable();
-        var enabled = notificationsSupported && await notificationsEnabled();
+        var work = await store.ReadSettingsWorkSnapshotAsync(calendar, acceptsFile, cancellationToken);
+        var settings = work.Settings; var accounts = work.Accounts;
+        var currency = settings.EssentialEstimateCurrency ?? settings.DefaultCurrencyCode;
+        var suggestion = await Task.Run(() => Core.Reports.LiquidityCalculator.SuggestPerDay(accounts, work.Entries, currency,
+            work.Day, calendar, settings.MonthStartDay), cancellationToken);
+        var available = settings.AppLockEnabled || await lockAvailable().WaitAsync(cancellationToken);
+        var enabled = notificationsSupported && await notificationsEnabled().WaitAsync(cancellationToken);
         cancellationToken.ThrowIfCancellationRequested();
+        if (work.Day != DateOnly.FromDateTime(time.GetLocalNow().DateTime) || calendar != Presentation.Calendars.ToPeriod(localization.CurrentCalendar)) throw new InvalidOperationException("The original settings calendar changed.");
+        await store.ValidateSettingsWorkSnapshotAsync(work, cancellationToken);
         return new(settings, [.. accounts.Where(a => !a.IsArchived && EntryAccountContract.IsValidDefault(a))],
-            suggestion, available, enabled, estimate);
+            suggestion, available, enabled, work.EstimateReview, work);
     }
 }

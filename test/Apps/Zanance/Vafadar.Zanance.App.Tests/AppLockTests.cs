@@ -160,7 +160,7 @@ public sealed class AppLockTests
     public async Task Refused_device_authentication_cannot_enable_a_setting_or_confirm_a_sensitive_operation(AuthenticationOutcome outcome)
     {
         using var f = new FlowFixture(); var setup = Create(f); setup.Auth.Outcome = outcome;
-        await setup.Lock.StartAsync(); Assert.False(await setup.Lock.SetEnabledAsync(true));
+        await setup.Lock.StartAsync(); Assert.False(await setup.Lock.SetEnabledAsync(true, cancellationToken: TestContext.Current.CancellationToken));
         Assert.False((await f.Store.GetSettingsAsync(TestContext.Current.CancellationToken)).AppLockEnabled);
         await EnableDeviceAsync(f); await setup.Lock.ReloadAsync();
         Assert.False(await setup.Lock.ConfirmAsync("Fictitious backup"));
@@ -195,8 +195,8 @@ public sealed class AppLockTests
     public async Task Successful_device_setting_changes_are_persisted_and_do_not_create_ledger_entries()
     {
         using var f = new FlowFixture(); var setup = Create(f); await setup.Lock.StartAsync();
-        Assert.True(await setup.Lock.SetEnabledAsync(true)); Assert.True((await f.Store.GetSettingsAsync(TestContext.Current.CancellationToken)).AppLockEnabled);
-        Assert.False(await setup.Lock.SetEnabledAsync(false)); Assert.False((await f.Store.GetSettingsAsync(TestContext.Current.CancellationToken)).AppLockEnabled);
+        Assert.True(await setup.Lock.SetEnabledAsync(true, cancellationToken: TestContext.Current.CancellationToken)); Assert.True((await f.Store.GetSettingsAsync(TestContext.Current.CancellationToken)).AppLockEnabled);
+        Assert.False(await setup.Lock.SetEnabledAsync(false, cancellationToken: TestContext.Current.CancellationToken)); Assert.False((await f.Store.GetSettingsAsync(TestContext.Current.CancellationToken)).AppLockEnabled);
         Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: TestContext.Current.CancellationToken));
     }
 

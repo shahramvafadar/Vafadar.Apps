@@ -8592,4 +8592,13 @@ SHA-256 du XML original : {5}</value>
   <data name="Report_ExplanationStale" xml:space="preserve">
     <value>Ce rapport a changé. Revenez en arrière et actualisez-le avant d’ouvrir ses opérations.</value>
   </data>
+  <data name="Settings_SourceChanged" xml:space="preserve">
+    <value>Les réglages ou les données de ce profil ont changé. Rechargez cette page avant de continuer. Votre estimation non enregistrée est conservée.</value>
+  </data>
+  <data name="Settings_SavedFollowUpFailed" xml:space="preserve">
+    <value>Le réglage a été enregistré, mais une étape suivante ne s’est pas terminée. Rechargez la page pour vérifier ; ne répétez pas la modification.</value>
+  </data>
+  <data name="Settings_DataDeleted" xml:space="preserve">
+    <value>Les données vérifiées de ce profil ont été supprimées. Les autres profils n’ont pas été modifiés.</value>
+  </data>
 </root>

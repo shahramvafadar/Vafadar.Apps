@@ -117,10 +117,12 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     }
 
     private async Task<ZananceSettings> GetSettingsCoreAsync(Vafadar.Data.DatabaseAccessGate.ExclusiveLease? owner,
-        CancellationToken cancellationToken, Action<ZananceDbContext, ZananceSettings>? captured = null)
+        CancellationToken cancellationToken, Action<ZananceDbContext, ZananceSettings>? captured = null, Func<string, bool>? acceptsFile = null)
     {
         await using var db = owner is null ? await contextFactory.CreateDbContextAsync(cancellationToken)
             : await ((Vafadar.Data.ILocalDbContextFactory<ZananceDbContext>)contextFactory).CreateDbContextAsync(owner, cancellationToken);
+        if (acceptsFile?.Invoke(DatabaseFileIdentity.ConfiguredPath(db)) == false)
+            throw new InvalidOperationException("The original settings file changed before reading or initialization.");
         var settings = await SettingsRowReader.ReadAsync(db, cancellationToken);
         if (settings is not null)
         {
@@ -1085,10 +1087,28 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     /// Deletes all Zanance data on this device (SEC-05, BAK-15): entries, plans, budgets, rates, categories, accounts
     /// and settings. Backup files and copies outside the database are not touched.
     /// </summary>
-    public async Task DeleteAllDataAsync(CancellationToken cancellationToken = default)
+    public async Task DeleteAllDataAsync(CancellationToken cancellationToken = default, ProfileResetReview? original = null,
+        Func<bool>? isCurrent = null, Action? accepted = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        void Current()
+        {
+            original?.RequireFile(db);
+            if (isCurrent?.Invoke() == false) throw new InvalidOperationException("The original profile reset consent retired.");
+            cancellationToken.ThrowIfCancellationRequested();
+        }
+        Current();
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        if (original is not null) await Task.Run(() => original.ValidateAsync(db, cancellationToken), cancellationToken); Current();
+        // Original profile-owned auxiliary records are data too; no remote leave, entitlement or security state is changed.
+        // Keep existing shared-file trigger authority intact; this path never arms a bypass scope.
+        await db.HouseholdAllocations.ExecuteDeleteAsync(cancellationToken);
+        await db.HouseholdSettlements.ExecuteDeleteAsync(cancellationToken);
+        await db.HouseholdCosts.Where(cost => cost.RefundOfCostId != null).ExecuteDeleteAsync(cancellationToken);
+        await db.HouseholdCosts.ExecuteDeleteAsync(cancellationToken);
+        await db.HouseholdContacts.ExecuteDeleteAsync(cancellationToken);
+        await db.MarketReferenceReceipts.ExecuteDeleteAsync(cancellationToken);
+        await db.ResourceSelections.ExecuteDeleteAsync(cancellationToken);
         await db.ImportLinks.ExecuteDeleteAsync(cancellationToken);
         await db.AssetEvents.ExecuteDeleteAsync(cancellationToken);
         await db.AssetValuations.ExecuteDeleteAsync(cancellationToken);
@@ -1112,8 +1132,10 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         await db.Categories.ExecuteDeleteAsync(cancellationToken);
         await db.Accounts.ExecuteDeleteAsync(cancellationToken);
         await db.Settings.ExecuteDeleteAsync(cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
-        OnChanged();
+        Current(); await transaction.CommitAsync(cancellationToken);
+        if (original is not null || isCurrent is not null || accepted is not null)
+            CommittedWriteNotification.Publish(() => { accepted?.Invoke(); OnChanged(); }, original?.Id ?? Guid.Empty);
+        else OnChanged();
     }
 
     /// <summary>Returns entries between two dates (inclusive), newest first.</summary>

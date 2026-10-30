@@ -176,18 +176,32 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     }
 
     /// <summary>Turns the lock on or off after the device owner confirmed it; returns the new state.</summary>
-    public async Task<bool> SetEnabledAsync(bool enabled)
+    public async Task<bool> SetEnabledAsync(bool enabled, SettingsWorkSnapshot? original = null, Func<bool>? isCurrent = null, CancellationToken cancellationToken = default)
     {
+        void Current() { cancellationToken.ThrowIfCancellationRequested(); if (isCurrent?.Invoke() == false) throw new InvalidOperationException("The original app-lock setting retired."); }
+        Current();
         var reason = translator[enabled ? "Lock_EnableReason" : "Lock_DisableReason"];
         if (await authenticator.AuthenticateAsync(reason) != AuthenticationOutcome.Success)
         {
             return DeviceLockEnabled;
         }
 
-        var settings = await store.GetSettingsAsync();
-        settings.AppLockEnabled = enabled;
-        await store.SaveSettingsAsync(settings);
-        DeviceLockEnabled = enabled;
+        Current();
+        if (original is null)
+        {
+            var settings = await store.GetSettingsAsync(cancellationToken);
+            settings.AppLockEnabled = enabled; Current(); await store.SaveSettingsAsync(settings, cancellationToken);
+            DeviceLockEnabled = enabled;
+        }
+        else
+        {
+            await store.ValidateSettingsWorkSnapshotAsync(original, cancellationToken); Current();
+            try { await store.UpdateSettingsWorkAsync(original, settings => settings.AppLockEnabled = enabled,
+                () => isCurrent?.Invoke() != false, cancellationToken); }
+            catch (Data.Commerce.CommittedWriteNotificationException<Guid>) { /* The preference was committed; never authenticate/write again for notification. */ }
+            if (isCurrent?.Invoke() != false) DeviceLockEnabled = enabled;
+            else await ReloadAsync();
+        }
         host.ApplyProtection();
         return DeviceLockEnabled;
     }

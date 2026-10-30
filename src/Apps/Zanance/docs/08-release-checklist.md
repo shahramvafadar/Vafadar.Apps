@@ -4939,3 +4939,33 @@ See [complete scope and limitations](quality/original-report-workspace-and-kpi-h
 Phone/D-607, all three deadlines and post-reboot unread source remain untouched. Later
 physical adoption, broader DB/key/security/performance/stability/accessibility, iOS/provider/
 Store/release gates remain separate. Overall delivery remains active; TalkBack stays last.
+
+### D-648 - Complete original Settings source and current-profile reset (2026-10-30)
+
+Original Settings now reads complete preferences/accounts and the unchanged three-month
+suggestion history from one actual-file worker transaction, validates after native availability,
+and retires page/tab/root reads and sensitive continuations. Independent field edits compose
+while original reference/account/history identity stays guarded. Raw estimate/reminder drafts
+survive failure/Retry; current calendar/display choices retain their original form meaning.
+Original device authentication remains genuine. Rare explicit current-profile reset validates
+opaque original typed source/schema and native ownership in the original writer transaction,
+records commit before Changed and resumes follow-through without deleting again. The old
+reset also removes omitted local contacts/cost graph/reference receipts/resource selections;
+shared-file guards, device PIN, other profiles and external backups remain protected.
+
+Twenty distinct new and35 affected existing focused cases pass; published and intermediate
+failures remain documented. Strict Windows and full offline384AOT/408ELF/1608staticLOAD pass.
+Fresh API36/x64/4096 UID10216 continues4304to6302 by one no-reset update and exact read-only
+source adoption. Actual pending Back cancels, departed Delete and old native consent refuse,
+raw123.4500 survives failure/Retry/display/calendar, one Day2 metadata choice changes only
+that field/UpdatedAt, and one legitimate current fake-profile reset reaches empty onboarding.
+No financial post/estimate Save/setup replay or genuine native authentication is claimed.
+
+Original OS/display/boot restore; only fresh UID/data,48hash-matched XMLs1,705,935bytes and
+owned AVD retire. Six standard cleans remove43,012files2,791,927,695logicalbytes; official
+AVD deletion25files5,336,085,476bytes and one new17-target cleanup4,784files1,352,420,443bytes
+succeed. Used signed packages/evidence/source archives remain; older refused scopes are
+not retried or reused. Phone/D-607/three deadlines/post-reboot unread source remain untouched.
+Physical adoption, broader DB/key/security/performance/stability/accessibility, iOS/provider/
+Store/release gates stay separate. Overall delivery remains active; TalkBack stays last.
+[Complete evidence](quality/original-settings-source-and-profile-reset.md).

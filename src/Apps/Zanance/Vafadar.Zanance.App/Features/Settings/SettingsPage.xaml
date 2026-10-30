@@ -11,8 +11,9 @@
     Title="{v:Translate Settings_Title}">
 
     <Grid>
-    <ScrollView x:Name="SettingsContent" IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding Loading.IsReady}">
+    <ScrollView x:Name="SettingsContent" IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding CanInteract}">
         <VerticalStackLayout Padding="16" Spacing="8">
+            <Label Text="{Binding ActionFeedback}" TextColor="{DynamicResource ErrorText}" IsVisible="{Binding ActionFeedback, Converter={StaticResource IsNotNullConverter}}" />
 
             <!-- Language and region: how dates, numbers and weeks are shown -->
             <Label Text="{v:Translate Settings_LanguageRegion}" Style="{StaticResource SectionHeader}" />
@@ -217,7 +218,7 @@
             <Label Text="{v:Translate Settings_Loading}" Style="{StaticResource Secondary}" HorizontalTextAlignment="Center" />
         </VerticalStackLayout>
         <VerticalStackLayout Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
-            <Label Text="{v:Translate Error_Unexpected}" HorizontalTextAlignment="Center" />
+            <Label Text="{Binding ActionFeedback}" HorizontalTextAlignment="Center" />
             <Button x:Name="RetrySettingsButton" Text="{v:Translate Settings_RetryLoad}" Style="{StaticResource SecondaryButton}" HeightRequest="-1" MinimumHeightRequest="44" Clicked="OnReloadClicked" />
         </VerticalStackLayout>
     </Grid>

@@ -12,6 +12,9 @@ public sealed partial class RegionalPreferencesViewModel(ILocalizationService lo
 {
     private bool _refreshing;
     private string? _labelsLanguage;
+    private Func<bool>? _owner;
+    /// <summary>Scopes native Settings choices without changing independent onboarding behavior.</summary>
+    internal void BindOwner(Func<bool> owner) => _owner = owner ?? throw new ArgumentNullException(nameof(owner));
 
     /// <summary>Gets the available formatting cultures, named independently of the UI language.</summary>
     [ObservableProperty]
@@ -55,7 +58,7 @@ public sealed partial class RegionalPreferencesViewModel(ILocalizationService lo
 
     partial void OnSelectedFormatChanged(FormattingOption? value)
     {
-        if (!_refreshing && value is not null && value.Name != localization.FormattingCultureName)
+        if (!_refreshing && (_owner?.Invoke() ?? true) && value is not null && value.Name != localization.FormattingCultureName)
         {
             localization.SetFormattingCulture(value.Name);
             Refresh();
@@ -64,7 +67,7 @@ public sealed partial class RegionalPreferencesViewModel(ILocalizationService lo
 
     partial void OnDigitIndexChanged(int value)
     {
-        if (!_refreshing && Enum.IsDefined((DigitStyle)value) && (DigitStyle)value != localization.CurrentDigits)
+        if (!_refreshing && (_owner?.Invoke() ?? true) && Enum.IsDefined((DigitStyle)value) && (DigitStyle)value != localization.CurrentDigits)
         {
             localization.SetDigits((DigitStyle)value);
             Presentation.DigitPreferences.Apply(localization);
@@ -74,7 +77,7 @@ public sealed partial class RegionalPreferencesViewModel(ILocalizationService lo
 
     partial void OnSelectedHolidayRegionChanged(RegionOption? value)
     {
-        if (!_refreshing && value is not null && value.Code != localization.CurrentRegion)
+        if (!_refreshing && (_owner?.Invoke() ?? true) && value is not null && value.Code != localization.CurrentRegion)
         {
             localization.SetRegion(value.Code);
             Refresh();
@@ -83,7 +86,7 @@ public sealed partial class RegionalPreferencesViewModel(ILocalizationService lo
 
     partial void OnSelectedWeekStartChanged(WeekStartOption? value)
     {
-        if (!_refreshing && value is not null && (value.Day is null ? !localization.IsFirstDayOfWeekAutomatic
+        if (!_refreshing && (_owner?.Invoke() ?? true) && value is not null && (value.Day is null ? !localization.IsFirstDayOfWeekAutomatic
                 : localization.IsFirstDayOfWeekAutomatic || value.Day != localization.FirstDayOfWeek))
         {
             localization.SetFirstDayOfWeek(value.Day);

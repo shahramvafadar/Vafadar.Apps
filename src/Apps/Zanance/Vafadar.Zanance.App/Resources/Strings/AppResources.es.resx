@@ -8584,4 +8584,13 @@ SHA-256 del XML original: {5}</value>
   <data name="Report_ExplanationStale" xml:space="preserve">
     <value>Este informe ha cambiado. Vuelve y actualízalo antes de abrir sus movimientos.</value>
   </data>
+  <data name="Settings_SourceChanged" xml:space="preserve">
+    <value>Los ajustes o los datos de este perfil han cambiado. Vuelve a cargar esta página antes de continuar. Tu estimación sin guardar se conserva.</value>
+  </data>
+  <data name="Settings_SavedFollowUpFailed" xml:space="preserve">
+    <value>El ajuste se guardó, pero no terminó un paso posterior. Vuelve a cargar la página para comprobarlo; no repitas el cambio.</value>
+  </data>
+  <data name="Settings_DataDeleted" xml:space="preserve">
+    <value>Se eliminaron los datos revisados de este perfil. No se modificaron otros perfiles.</value>
+  </data>
 </root>
