@@ -2794,3 +2794,9 @@ D-294 local household delivery is complete at the recorded Windows/emulator/loca
 - The shipping app and APK are unchanged. General stability, accessibility and release gates remain open.
 
 - D-574 qualification: completed original retained10k/100k Samsung loaded-cold observations with full source equality; the two-second target and general stability remain unaccepted. This observer-only work changes no shipping financial behavior.
+
+
+### D-666 - Original Android CSV file handoff
+
+D-666: qualified original Android CSV picker Cancel/selection/readonly preview and one real empty-ledger URI handoff to an owned offline recipient; source/settings exact, no financial writes or product changes. External recipients remain unqualified.
+[Evidence and exact limits](docs/quality/original-csv-native-file-handoff.md).

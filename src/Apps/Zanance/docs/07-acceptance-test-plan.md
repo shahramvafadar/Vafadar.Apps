@@ -8292,3 +8292,9 @@ A11Y/iOS/genuine identity/provider/Store/release remain separate; overall goal a
 
 43distinct selected checks (18new/25affected existing), strict Windows/full offline Android and bounded actual native source/review/Cancel/error/Retry/pending Back pass in their recorded versions. One original zero-opening account/ledger0 survived necessary no-reset continuations with exact20source equality. Host-caption and private-provider failures remain recorded; only two corrected language contexts continued, without repeating the old matrix or financial setup.
 [Evidence, failures and exact cleanup limits](quality/original-analysis-workspace.md).
+
+
+### D-666 - Original Android CSV file handoff
+
+D666 closes D653's missing actual Android picker and owned-recipient boundary: one Cancel, one selected fake CSV/readonly preview and one empty-ledger export; full20source unchanged, no Import/Undo/financial Save. External recipient and real provider acceptance remain separate.
+[Evidence and exact limits](quality/original-csv-native-file-handoff.md).

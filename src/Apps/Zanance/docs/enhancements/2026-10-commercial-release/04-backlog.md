@@ -8223,3 +8223,21 @@ Five used signed packages/evidence remain. Phone/D607/three deadlines/consumed r
 source untouched; real provider/authentication, physical adoption and broad DB/key/security/
 stability/speed/A11Y/iOS/Store/release gates remain open. Overall delivery goal stays active.
 [Evidence, failures and exact limits](../../quality/original-analysis-workspace.md)
+
+
+### D-666 - Original Android CSV file and URI handoff (completed bounded scope)
+
+Actual DocumentsUI Cancel and exact115byte BOM CSV selection/readonly preview passed on a
+fresh API36/x64/4096 original caller, without Import/Undo/financial Save. One original
+empty-ledger export reached a separate owned offline recipient through the actual chooser:
+283bytes/BOM/neutral name/payloadSHA exactly match original formatter content and temporary
+read-only URI grant; SEND text/csv and actual provider text/comma-separated-values are both
+preserved. Full20source/settings/OS/Home remained equal, ledger0. No product source changed;
+D665 shipping evidence was reused rather than rebuilding/repeating old checks. Both necessary
+independent strict native packages passed; initial build/observer failures remain documented.
+Fresh packages and31hashfiles/1104298bytes retired; emulator exited. Official AVD deletion
+reported errors and two standard Cleans passed. Five supplementary roots were rejected before
+process creation, leaving1082files/5187453467logicalbytes frozen without retry/subset/alternate/
+move/escalation/reuse. Used signed packages/evidence retained. Phone/D607/three deadlines and
+all other refused scopes untouched; external recipient/provider and broad release gates remain.
+[Evidence, actual MIME/grant/bytes and cleanup limits](../../quality/original-csv-native-file-handoff.md)

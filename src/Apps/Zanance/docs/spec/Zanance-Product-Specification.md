@@ -11460,3 +11460,9 @@ Original optional identity page/session/native disclosure/input/request ownershi
 
 Original analysis source/frame/native disclosure, row and independent request ownership now preserve minimal source policy, explicit read Retry, known historical results and newer drafts. Current translated feedback does not replay reads. 43distinct selected checks, strict builds and bounded native source/continuation evidence pass; real provider and broad release gates remain open.
 [Evidence, failures and exact cleanup limits](../quality/original-analysis-workspace.md).
+
+
+### D-666 - Original Android CSV file handoff
+
+Section31 addendum D666: original Android picker Cancel, exact fake-file selection/readonly preview and one empty-ledger native URI handoff now have actual integration evidence. Complete20source and original settings stayed equal. No product behavior, financial write or broader provider/release acceptance changed.
+[Evidence and exact limits](../quality/original-csv-native-file-handoff.md).

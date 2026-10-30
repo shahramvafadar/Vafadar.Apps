@@ -5307,3 +5307,9 @@ Original identity ownership and known-result/read-only recovery are qualified in
 
 Original analysis ownership, minimal source worker, translated feedback and returned historical result preservation are qualified within the recorded source/native scope. Shipping is complete/offline; no real model/provider/credit sale/authentication, physical adoption, full DB/key/security, general stability/speed/A11Y/iOS/Store/release gate is closed. Refused cleanup residuals remain explicitly frozen.
 [Evidence, failures and exact cleanup limits](quality/original-analysis-workspace.md).
+
+
+### D-666 - Original Android CSV file handoff
+
+D666 actual Android picker and owned offline URI receiver passed within the documented scope, with exact payload/BOM/name/grant and source preservation. This does not close real recipient/provider, physical adoption or general release gates. Refused residual cleanup remains explicitly recorded.
+[Evidence and exact limits](quality/original-csv-native-file-handoff.md).

@@ -12200,3 +12200,9 @@ Keep actual private-session reads, native disclosure/input consent and request l
 
 Keep original minimal analysis source/aggregation on its protected worker, with independent page/root/native/row ownership. Preserve returned historical results before fallible follow-through and newer drafts; changed actual language requires fresh review, while visible feedback refreshes without a read. Existing wallet/provider/financial policy remains unchanged.
 [Evidence, failures and exact cleanup limits](quality/original-analysis-workspace.md).
+
+
+### D-666 - Original Android CSV file handoff
+
+Keep native picker and actual URI recipient delivery separate from private effect-port evidence. Preserve original confirmation, neutral name, BOM/bytes and temporary read-only grant. D666 qualifies the owned recipient only; provider MIME and SEND MIME are recorded independently.
+[Evidence and exact limits](quality/original-csv-native-file-handoff.md).
