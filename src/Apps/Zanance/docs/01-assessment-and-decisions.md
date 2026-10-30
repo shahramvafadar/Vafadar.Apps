@@ -12194,3 +12194,9 @@ Keep original cached access, actual disclosure, native command and navigation ow
 
 Keep actual private-session reads, native disclosure/input consent and request lifetimes on their original page/root. Record only returned acknowledgements before fallible follow-through, preserve newer drafts and keep Retry read-only. Original uniform responses and authentication/provider policy remain unchanged.
 [Evidence and exact cleanup limits](quality/original-billing-identity-workspace.md).
+
+
+### Decision D-665 - Original analysis disclosure ownership
+
+Keep original minimal analysis source/aggregation on its protected worker, with independent page/root/native/row ownership. Preserve returned historical results before fallible follow-through and newer drafts; changed actual language requires fresh review, while visible feedback refreshes without a read. Existing wallet/provider/financial policy remains unchanged.
+[Evidence, failures and exact cleanup limits](quality/original-analysis-workspace.md).

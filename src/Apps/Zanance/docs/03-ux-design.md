@@ -3357,3 +3357,9 @@ Visible source failures remain covered until explicit Reload; retain the compari
 
 Cover the form until its current private-session read is ready. Expose an explicit read-only session action after failure. Preserve nonsecret raw inputs and known prior acknowledgement through follow-up failure; label older results against a newer draft. Pending read Back cancels its original waiter; native consent and primary submission retain ownership.
 [Evidence and exact cleanup limits](quality/original-billing-identity-workspace.md).
+
+
+### D-665 - Original analysis lifetime and feedback
+
+Visible source failure requires explicit Reload and preserves date/scope choices. Current language updates error/validation feedback without another source/provider read; a changed disclosure retires old review consent. Retired rows and pages cannot act on current review. Original native Cancel and pending-read Back preserve source; known results stay attached to their historical packet.
+[Evidence, failures and exact cleanup limits](quality/original-analysis-workspace.md).

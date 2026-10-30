@@ -74,7 +74,7 @@
         </ScrollView>
         <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" BackgroundColor="{DynamicResource PageBackground}">
             <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{DynamicResource Primary}" HeightRequest="44" />
+            <ActivityIndicator IsRunning="{Binding HasPendingOperation}" IsVisible="{Binding HasPendingOperation}" Color="{DynamicResource Primary}" HeightRequest="44" />
             <p:WrappingAction Text="{v:Translate Ai_Reload}" Command="{Binding LoadCommand}" IsEnabled="{Binding IsNotBusy}" IsVisible="{Binding Loaded, Converter={StaticResource InvertedBoolConverter}}" />
             <p:WrappingAction Text="{v:Translate Ai_Review}" Command="{Binding ReviewCommand}" IsEnabled="{Binding IsNotBusy}" Appearance="Primary" />
         </VerticalStackLayout>

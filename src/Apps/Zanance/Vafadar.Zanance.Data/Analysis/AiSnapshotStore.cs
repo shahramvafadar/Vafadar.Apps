@@ -42,34 +42,34 @@ public sealed class AiReview
 public sealed class AiSnapshotStore(IDbContextFactory<ZananceDbContext> factory, ICommercialWriteAccessSource access)
 {
     /// <summary>Lists original account choices off the UI thread; all selections remain explicit.</summary>
-    public async Task<AiAccountScope> AccountsAsync(CancellationToken ct = default)
+    public Task<AiAccountScope> AccountsAsync(CancellationToken ct = default) => Task.Run(async () =>
     {
         await using var db = await factory.CreateDbContextAsync(ct); var path = DatabaseFileIdentity.ConfiguredPath(db);
-        return await Task.Run(async () =>
-        {
-            var rows = await db.Accounts.AsNoTracking().OrderBy(a => a.Name).ThenBy(a => a.Id)
-                .Select(a => new AiAccount(a.Id, a.Name, a.CurrencyCode, a.IsArchived)).Take(10001).ToListAsync(ct);
-            if (rows.Count > 10000) throw new InvalidOperationException("Analysis account scope exceeds its technical bound.");
-            return new AiAccountScope(path, rows);
-        }, ct);
-    }
-    /// <summary>Captures only selected original financial fields and produces the exact preview before any native consent.</summary>
-    public async Task<AiReview> ReviewAsync(AiSelection selection, CancellationToken ct = default)
+        var rows = await db.Accounts.AsNoTracking().OrderBy(a => a.Name).ThenBy(a => a.Id)
+            .Select(a => new AiAccount(a.Id, a.Name, a.CurrencyCode, a.IsArchived)).Take(10001).ToListAsync(ct);
+        if (rows.Count > 10000) throw new InvalidOperationException("Analysis account scope exceeds its technical bound.");
+        return new AiAccountScope(path, rows);
+    }, ct);
+    /// <summary>Captures only selected original financial fields and produces the exact preview on the protected source worker.</summary>
+    public Task<AiReview> ReviewAsync(AiSelection selection, CancellationToken ct = default)
     {
-        var frozen = Freeze(selection); await using var db = await factory.CreateDbContextAsync(ct);
-        var rights = new CommercialFileAccess(access, DatabaseFileIdentity.ConfiguredPath(db)); rights.EnsureSnapshotCurrent(); rights.DemandFeature(CommercialFeature.BasicExport);
-        return await Task.Run(async () =>
+        var frozen = Freeze(selection);
+        return Task.Run(async () =>
         {
+            await using var db = await factory.CreateDbContextAsync(ct);
+            var rights = new CommercialFileAccess(access, DatabaseFileIdentity.ConfiguredPath(db));
+            rights.EnsureSnapshotCurrent(); rights.DemandFeature(CommercialFeature.BasicExport);
             var frame = await ReadAsync(db, frozen, ct); var payload = Build(frozen, frame); rights.EnsureSnapshotCurrent();
             return new AiReview(frozen, rights, SourceDigest(frame), payload);
         }, ct);
     }
-    /// <summary>Rechecks the exact original file/minimal source/rights after native awaits, without disclosing another profile.</summary>
-    public async Task CheckAsync(AiReview review, CancellationToken ct = default)
+    /// <summary>Rechecks the exact original file/minimal source/rights on the worker after native awaits.</summary>
+    public Task CheckAsync(AiReview review, CancellationToken ct = default)
     {
-        ArgumentNullException.ThrowIfNull(review); review.EnsureCurrent(); await using var db = await factory.CreateDbContextAsync(ct);
-        await Task.Run(async () =>
+        ArgumentNullException.ThrowIfNull(review);
+        return Task.Run(async () =>
         {
+            review.EnsureCurrent(); await using var db = await factory.CreateDbContextAsync(ct);
             var frame = await ReadAsync(db, review.Selection, ct);
             if (SourceDigest(frame) != review.SourceDigest || AiProtocol.Digest(Build(review.Selection, frame)) != review.Digest)
                 throw new InvalidOperationException("The original analysis source changed.");

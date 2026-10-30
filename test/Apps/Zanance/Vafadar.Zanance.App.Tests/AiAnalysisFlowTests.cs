@@ -13,20 +13,22 @@ namespace Vafadar.Zanance.App.Tests;
 
 /// <summary>AT-298: actual application source and SQLite, with explicit native/service effects, never copied financial algorithms.</summary>
 [Trait("AT", "AT-298")]
-public sealed class AiAnalysisFlowTests
+public sealed partial class AiAnalysisFlowTests
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
     private sealed class Remote : IAiRemote
     {
         internal AiClientRecord? Record;
         internal AiBalance Balance = new(100, 0, 0, 0);
-        internal bool LoseSubmissionResponse;
-        internal int Submissions, Continues, Closes;
+        internal bool LoseSubmissionResponse, FailRecordRead;
+        internal Action? AfterSubmission;
+        internal int Submissions, Continues, Closes, RecordReads;
         internal Func<Task>? DuringAvailability;
         public string Destination => "https://localhost/fictional-ai-fixture";
         public async Task<AiAvailability> AvailabilityAsync(CancellationToken ct)
         { if (DuringAvailability is not null) await DuringAvailability(); return new(true, "fictitious-local", "fixture-v1", Balance); }
-        public Task<AiClientRecord?> ReadAsync(CancellationToken ct) => Task.FromResult(Record);
+        public Task<AiClientRecord?> ReadAsync(CancellationToken ct)
+        { RecordReads++; return FailRecordRead ? Task.FromException<AiClientRecord?>(new IOException("Controlled original private record read failure.")) : Task.FromResult(Record); }
         public Task<AiOffer> OfferAsync(AiPurpose purpose, CancellationToken ct) => Task.FromResult(new AiOffer(Guid.NewGuid(), "fictitious-local", "fixture-v1", purpose, 8, new(2026, 10, 9, 10, 0, 0, TimeSpan.Zero)));
         public async Task<AiRequestResult> SubmitAsync(AiOffer offer, AiPayload payload, Func<Task> recheck, CancellationToken ct)
         {
@@ -36,7 +38,7 @@ public sealed class AiAnalysisFlowTests
             if (LoseSubmissionResponse) throw new TimeoutException("Fictitious lost native response.");
             var result = new AiRequestResult(request.RequestId, AiProtocol.Digest(payload), AiRequestState.Completed, 3,
                 "<script>change money</script> is untrusted text, never a command.", Balance);
-            Record = Record with { Result = result }; return result;
+            Record = Record with { Result = result }; AfterSubmission?.Invoke(); return result;
         }
         public Task<AiRequestResult> ContinueAsync(CancellationToken ct)
         {

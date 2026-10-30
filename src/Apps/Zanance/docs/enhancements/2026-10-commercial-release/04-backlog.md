@@ -8199,3 +8199,27 @@ reuse. Used signed APKs/evidence retained. Phone/D607/three deadlines/consumed r
 source untouched. Genuine identity/provider/Store, physical adoption and broad DB/key/security/
 stability/speed/A11Y/iOS/release gates remain separate; overall delivery stays active.
 [Evidence](../../quality/original-billing-identity-workspace.md)
+
+
+### D-665 - Original analysis workspace
+
+Completed original minimal-source worker, page/root/tab/row and translated native literal
+consent ownership, independent command lifetime, returned historical results before fallible
+private-read follow-through and newer draft preservation. Visible translated errors require
+no new read; changed language retires old review. Existing aggregate, wallet/provider and
+private continuation policy stay unchanged.43distinct selected checks=18new/25affected existing;
+strict Windows/full offline384AOT/408ELF/1608staticLOAD and final independent192/204/804 pass.
+One original Checking opening0EUR/ledger0 was created once. Actual More/Analysis review,
+native share Cancel, source error, explicit readonly Retry and pending native Back passed
+with full20source equality in recorded versions. Host-caption and translated-error failures
+were corrected with no-reset continuations; two private managed-binder APP_CRASH exits are
+preserved, and safe refusal now leaves the consumed marker/source unchanged. Only two
+corrected de/fa native contexts ran; old matrix, accepted setup/review/financial work were
+not replayed. Final PID7137/Home/source/OS/display/absent keys restored; fresh UID/45hashXML/
+AVD retired and four standard Cleans passed. Two independent supplementary deletions were
+rejected before process creation:10publishfiles329302768logicalbytes and6roots3710files/
+594327410logicalbytes remain frozen without retry/subset/alternate/move/escalation/reuse.
+Five used signed packages/evidence remain. Phone/D607/three deadlines/consumed reboot/unread
+source untouched; real provider/authentication, physical adoption and broad DB/key/security/
+stability/speed/A11Y/iOS/Store/release gates remain open. Overall delivery goal stays active.
+[Evidence, failures and exact limits](../../quality/original-analysis-workspace.md)

@@ -11454,3 +11454,9 @@ Original plan/access cached-source, native disclosure and command lifetimes now 
 
 Original optional identity page/session/native disclosure/input/request ownership, secret lifetime and known acknowledgement before failed follow-through are complete within the recorded source/native scope. 26 selected checks and strict builds pass; real identity/provider and broad release acceptance remain separate.
 [Evidence and exact cleanup limits](../quality/original-billing-identity-workspace.md).
+
+
+### Section31 addendum - D-665
+
+Original analysis source/frame/native disclosure, row and independent request ownership now preserve minimal source policy, explicit read Retry, known historical results and newer drafts. Current translated feedback does not replay reads. 43distinct selected checks, strict builds and bounded native source/continuation evidence pass; real provider and broad release gates remain open.
+[Evidence, failures and exact cleanup limits](../quality/original-analysis-workspace.md).

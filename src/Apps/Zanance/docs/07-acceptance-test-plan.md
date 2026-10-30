@@ -8286,3 +8286,9 @@ A11Y/iOS/genuine identity/provider/Store/release remain separate; overall goal a
 
 26 distinct selected checks (19 new, seven affected existing), strict Windows/offline Android and 18 same-PID native response/error contexts passed. One actual uniform anonymous recovery survived one follow-up fault; explicit session Retry and pending-read native Back passed with full original source equality and no replay. Genuine authentication and Store/provider acceptance remain open.
 [Evidence and exact cleanup limits](quality/original-billing-identity-workspace.md).
+
+
+### D-665 - Original analysis engineering evidence
+
+43distinct selected checks (18new/25affected existing), strict Windows/full offline Android and bounded actual native source/review/Cancel/error/Retry/pending Back pass in their recorded versions. One original zero-opening account/ledger0 survived necessary no-reset continuations with exact20source equality. Host-caption and private-provider failures remain recorded; only two corrected language contexts continued, without repeating the old matrix or financial setup.
+[Evidence, failures and exact cleanup limits](quality/original-analysis-workspace.md).

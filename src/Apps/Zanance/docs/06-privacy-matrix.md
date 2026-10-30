@@ -1584,3 +1584,9 @@ Original cached access still opens no SQLite connection and grants no entitlemen
 
 Password and one-use token remain request-only and clear before submission/deactivation; source tokens retain input revisions, never secret hashes. Uniform anonymous responses do not disclose recipient existence. The diagnostic used only a fixed fictitious anonymous recovery and absent protected session, with no real credentials, account creation, mail-delivery or authentication acceptance.
 [Evidence and exact cleanup limits](quality/original-billing-identity-workspace.md).
+
+
+### D-665 - Minimal analysis source and deliberate disclosure
+
+Original minimal aggregate fields and refusal of unsupported shared sources are unchanged. No new names/notes/documents enter outgoing data, and no model/provider or identity request occurred in native qualification. Original Cancel showed no share chooser; full joined typed-source comparison is separate from null/unread diagnostic packets. Native diagnostics remain absent from shipping.
+[Evidence, failures and exact cleanup limits](quality/original-analysis-workspace.md).

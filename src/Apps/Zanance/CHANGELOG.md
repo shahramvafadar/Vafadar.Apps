@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-665: retain original analysis source/native disclosure and independent request ownership; refresh translated feedback without reading again, preserve known historical results and newer drafts, and cancel pending source reads on Back.
+
 - D-664: bind optional identity session/native consent and request lifetimes to their original page; retain known acknowledgements and newer drafts through session-read failure, clear request-only secrets and retry only the read.
 
 - D-663: retain original plan/access source, native disclosure and page ownership; require explicit source Retry and preserve original uncertain-work continuation without another payment or stale navigation.

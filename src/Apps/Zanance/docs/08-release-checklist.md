@@ -5301,3 +5301,9 @@ Original cached-source/native-lifetime implementation and bounded offline native
 
 Original identity ownership and known-result/read-only recovery are qualified in focused checks and a bounded independent native loopback fixture. Shipping remains offline. No phone adoption, genuine owner authentication, Store/provider/public release, full DB/key/security, general stability, speed or accessibility gate is closed by this work.
 [Evidence and exact cleanup limits](quality/original-billing-identity-workspace.md).
+
+
+### D-665 - Analysis source/native scope
+
+Original analysis ownership, minimal source worker, translated feedback and returned historical result preservation are qualified within the recorded source/native scope. Shipping is complete/offline; no real model/provider/credit sale/authentication, physical adoption, full DB/key/security, general stability/speed/A11Y/iOS/Store/release gate is closed. Refused cleanup residuals remain explicitly frozen.
+[Evidence, failures and exact cleanup limits](quality/original-analysis-workspace.md).

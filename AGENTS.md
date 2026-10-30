@@ -3990,3 +3990,17 @@ preserve a newer draft during an older request. Record only returned uniform ack
 before fallible follow-through; never turn an unknown outcome into an accepted receipt or
 replay accepted identity work on Retry. Refused cleanup scopes remain frozen without retry,
 subset, alternate method, move, escalation or reuse. Genuine authentication stays with the owner.
+
+
+## Original analysis disclosure and result ownership (D-665)
+
+Keep original minimal analysis sources and aggregation on their protected worker; do not
+expand outgoing names, notes or documents. Bind source, row, native literal disclosure and
+commands to the actual original page/root independently of mutable busy feedback. A changed
+language requires fresh review, while visible translated errors refresh without a source or
+provider request. Retain only returned historical results before fallible follow-through,
+separate from newer editable drafts; never fabricate outcomes or replay accepted requests.
+Pending source reads must cancel on actual Back. Private diagnostic refusal must not escape
+as a managed binder crash, and consumed markers stay consumed. A corrected distinct test
+branch must preserve earlier accepted setup and source; no marker deletion or financial replay.
+Refused cleanup scopes remain frozen without retry/subset/alternate/move/escalation/reuse.
