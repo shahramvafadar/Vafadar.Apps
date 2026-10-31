@@ -201,6 +201,22 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
         }
     }
 
+    /// <summary>Retains an unfinished read-only destination if access closed during its asynchronous resolution.</summary>
+    /// <remarks>Only the current drain may defer itself; its fresh resolver stays ahead of later arrivals, without replaying navigation or writes.</remarks>
+    internal bool RetainCurrentDestinationIfLocked(Func<Task> resolveAgain)
+    {
+        ArgumentNullException.ThrowIfNull(resolveAgain);
+        lock (_pending)
+        {
+            if (!IsLocked) return false;
+            if (!_drainingPending) throw new InvalidOperationException("No current destination owns the access drain.");
+            // D-673: this destination has not navigated. Re-read its original metadata after unlock,
+            // ahead of later input; enqueueing through the public entry again would move it to the tail.
+            _pending.Insert(0, resolveAgain);
+            return true;
+        }
+    }
+
     /// <summary>Turns the lock on or off after the device owner confirmed it; returns the new state.</summary>
     public async Task<bool> SetEnabledAsync(bool enabled, SettingsWorkSnapshot? original = null, Func<bool>? isCurrent = null, CancellationToken cancellationToken = default)
     {

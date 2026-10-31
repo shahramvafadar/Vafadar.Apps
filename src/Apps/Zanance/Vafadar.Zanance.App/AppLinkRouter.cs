@@ -25,16 +25,22 @@ public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction intera
     public Task OpenAsync(string link)
     {
         if (BudgetReminderLink.Parse(link) is { } budgetReminder)
-            return appLock.RunWhenUnlockedAsync(async () =>
+        {
+            return appLock.RunWhenUnlockedAsync(ResolveAsync);
+            async Task ResolveAsync()
             {
                 // An alert opens its original period without selecting a new Home currency or changing account data.
                 if (await store.ResolveBudgetReminderAsync(budgetReminder) is null) return;
+                if (appLock.RetainCurrentDestinationIfLocked(ResolveAsync)) return;
                 await interaction.NavigateAsync(AppRoutes.BudgetRoute,
                     new Dictionary<string, object> { ["budgetReminder"] = budgetReminder });
-            });
+            }
+        }
 
         if (GoalReminderLink.Parse(link) is { } goalReminder)
-            return appLock.RunWhenUnlockedAsync(async () =>
+        {
+            return appLock.RunWhenUnlockedAsync(ResolveAsync);
+            async Task ResolveAsync()
             {
                 // Resolve after unlocking; a restored goal Guid alone cannot identify the original notification file.
                 var snapshot = await goals.GetWorkSnapshotAsync();
@@ -42,13 +48,17 @@ public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction intera
                 var existing = goalReminder.Targets.Where(target => snapshot.Goals.Any(goal => goal.Id == target.GoalId)).ToList();
                 if (existing.Count == 0) return;
                 await goals.ValidateWorkSnapshotAsync(snapshot);
+                if (appLock.RetainCurrentDestinationIfLocked(ResolveAsync)) return;
                 if (goalReminder.Targets.Count == 1)
                     await interaction.NavigateAsync(AppRoutes.GoalDetailRoute, new Dictionary<string, object> { ["id"] = existing[0].GoalId });
                 else await interaction.NavigateAsync(AppRoutes.GoalsRoute);
-            });
+            }
+        }
 
         if (PlanReminderLink.Parse(link) is { } reminder)
-            return appLock.RunWhenUnlockedAsync(async () =>
+        {
+            return appLock.RunWhenUnlockedAsync(ResolveAsync);
+            async Task ResolveAsync()
             {
                 // Resolve the active file after unlocking; a restored Guid is not proof of the same profile.
                 var snapshot = await plans.GetWorkSnapshotAsync();
@@ -56,13 +66,15 @@ public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction intera
                 var existing = reminder.Targets.Where(t => snapshot.Schedules.Any(s => s.Id == t.PlanId)).ToList();
                 if (existing.Count == 0) return;
                 await plans.ValidateWorkSnapshotAsync(snapshot);
+                if (appLock.RetainCurrentDestinationIfLocked(ResolveAsync)) return;
                 if (reminder.IsContract)
                     await interaction.NavigateAsync(AppRoutes.PlanDetailRoute, new Dictionary<string, object> { ["id"] = existing[0].PlanId });
                 else if (reminder.Targets.Count == 1)
                     await interaction.NavigateAsync(AppRoutes.OccurrenceRoute,
                         new Dictionary<string, object> { ["plan"] = existing[0].PlanId, ["date"] = existing[0].OriginalDate!.Value });
                 else await interaction.NavigateAsync("//plans");
-            });
+            }
+        }
 
         var parts = link.Split('|');
         string? route = null;

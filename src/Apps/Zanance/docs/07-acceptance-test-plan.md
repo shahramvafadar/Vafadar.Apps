@@ -8336,3 +8336,9 @@ Retain actual startup window/root/model through original protected work, access 
 
 The first already-unlocked destination now owns the same queue drain as pending work, so a later arrival cannot overtake its asynchronous navigation. Preserve direct errors, reentrant followups, failed queued-item isolation and unstarted work behind a new cover. Two original regressions fail;4new+23affected existing cases, strict Windows/full offline APK and actual original-router/native modal ordering pass with full20source unchanged. Original4478Second/First becomes5532First/Second on the sameUID/boot/source after necessary no-reset upgrades; the first corrected observer's preserved-marker refusal is retained without callback replay. No account/authentication/key/financial input; phone/D607 remain untouched. Broader device/security/stability/speed/platform/provider/release gates remain separate.
 [Actual original failure, corrected ordering and limits](quality/original-unlocked-destination-order.md).
+
+
+### D-673 - Original reminder access continuation
+
+Scoped budget/goal/plan resolution now retains its original read-only resolver ahead of later arrivals when access closes during the actual source read, then resolves and validates again after unlock without replaying navigation or writers. Three original failures,9new+13affected cases and strict Windows/full offline Android pass. Original native5282displayed GoalDetailPage above LockPage while still locked; corrected5989kept only the PIN cover, then opened the original goal exactly once after fixture-PIN unlock on the sameUID/boot/full20source. One fictitious goal and fixture PIN were created once; accounts/ledger/financial/owner credentials0. Observe-only failures and exact limits remain recorded; phone/D607 untouched and broader gates open.
+[Original failure, native access continuation and limits](quality/original-reminder-access-continuation.md).
