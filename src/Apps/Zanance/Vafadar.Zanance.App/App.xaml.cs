@@ -540,8 +540,22 @@ public partial class App : Application
 
     private Task OpenLinkAsync(string link) => _services.GetRequiredService<AppLinkRouter>().OpenAsync(link);
 
-    // Set while a theme change waits for the user to leave the open pages.
-    private bool _rebuildWhenBackOnTab;
+    // D-705: queued work and incoming report scopes belong to their original navigation graph. Weak keys
+    // let a retired graph go without lending its pending/held state to the replacement shell.
+    private readonly System.Runtime.CompilerServices.ConditionalWeakTable<AppShell, ShellDisplayState> _shellDisplays = new();
+    /// <summary>Presentation-thread state for one navigation graph, without retaining that graph as a value.</summary>
+    private sealed class ShellDisplayState
+    {
+        /// <summary>Remembers a display request waiting for this graph's protected page to leave.</summary>
+        internal bool Deferred;
+        /// <summary>Coalesces only this graph's queued display requests.</summary>
+        internal bool Queued;
+        /// <summary>Counts source-bound handoffs that originated in this graph.</summary>
+        internal int ReportNavigations;
+        /// <summary>Retains only a weak reference to this graph's incoming scoped tab.</summary>
+        internal WeakReference<Page>? ReportTab;
+    }
+    private ShellDisplayState DisplayState(AppShell shell) => _shellDisplays.GetValue(shell, _ => new());
 
     // On a tab's first page nothing can be lost, so the shell is rebuilt as for a language change: that also renews
     // colors that a trigger or visual state took over. With a detail page or an editor open, the open pages recompute
@@ -550,14 +564,16 @@ public partial class App : Application
     private void OnThemeChanged(object? sender, EventArgs e) => Dispatcher.Dispatch(async () =>
     {
         if (!_databaseReady) return;
-        if (Windows.FirstOrDefault()?.Page is not AppShell shell || IsOnTab(shell))
+        if (Windows.FirstOrDefault()?.Page is not AppShell shell) return;
+        var display = DisplayState(shell);
+        if (IsOnTab(shell))
         {
-            _rebuildWhenBackOnTab = false;
-            QueueRebuild();
+            display.Deferred = false;
+            QueueRebuild(shell);
             return;
         }
 
-        _rebuildWhenBackOnTab = true;
+        display.Deferred = true;
         foreach (var page in OpenPages())
         {
             if (page.BindingContext is Presentation.IThemeAware aware)
@@ -567,33 +583,50 @@ public partial class App : Application
         }
     });
 
-    private int _reportScopeNavigations;
-    private WeakReference<Page>? _heldReportScopeTab;
     /// <summary>Keeps a validated report's incoming tab scope intact across a deferred display rebuild.</summary>
     internal ReportScopeNavigation HoldReportScopeNavigation()
-    { ++_reportScopeNavigations; return new(this); }
-    /// <summary>Owns only one normal source-bound navigation, never a data/authentication override.</summary>
-    internal sealed class ReportScopeNavigation(App owner) : IDisposable
     {
-        private App? _owner = owner;
+        if (Windows.FirstOrDefault() is not { Page: AppShell shell } window)
+            throw new OperationCanceledException("The original report navigation root retired.");
+        return new(this, window, shell);
+    }
+    /// <summary>Owns only one normal source-bound navigation, never a data/authentication override.</summary>
+    internal sealed class ReportScopeNavigation : IDisposable
+    {
+        private App? _owner;
+        private Window? _window;
+        private AppShell? _shell;
+        private ShellDisplayState? _display;
+        /// <summary>Captures the creating window/graph before original navigation can await.</summary>
+        internal ReportScopeNavigation(App owner, Window window, AppShell shell)
+        {
+            _owner = owner; _window = window; _shell = shell; _display = owner.DisplayState(shell);
+            ++_display.ReportNavigations;
+        }
         /// <summary>Retains the actual recipient tab until it is left normally, including its pushed details.</summary>
         internal void Complete()
         {
-            if (_owner is { } app && app.Windows.FirstOrDefault()?.Page is AppShell shell)
+            if (_owner is { } app && _window is { } window && _shell is { } shell && _display is { } display
+                && ReferenceEquals(app.Windows.FirstOrDefault(), window) && ReferenceEquals(window.Page, shell))
             {
                 var root = shell.Navigation.NavigationStack.FirstOrDefault() ?? shell.CurrentPage;
-                if (root is not null) app._heldReportScopeTab = new(root);
+                if (root is not null) display.ReportTab = new(root);
             }
         }
         /// <summary>Ends only this in-flight handoff, preserving the ordinary deferred rebuild policy.</summary>
-        public void Dispose() { if (_owner is not { } app) return; _owner = null; --app._reportScopeNavigations; }
+        public void Dispose()
+        {
+            if (_display is not { } display) return;
+            --display.ReportNavigations; _display = null; _owner = null; _window = null; _shell = null;
+        }
     }
-    private bool IsOnTab(Shell shell)
+    private bool IsOnTab(AppShell shell)
     {
-        if (_reportScopeNavigations != 0 || shell.Navigation.NavigationStack.Count > 1 || shell.Navigation.ModalStack.Count != 0) return false;
+        var display = DisplayState(shell);
+        if (display.ReportNavigations != 0 || shell.Navigation.NavigationStack.Count > 1 || shell.Navigation.ModalStack.Count != 0) return false;
         var root = shell.Navigation.NavigationStack.FirstOrDefault() ?? shell.CurrentPage;
-        if (_heldReportScopeTab?.TryGetTarget(out var held) == true && ReferenceEquals(root, held)) return false;
-        _heldReportScopeTab = null;
+        if (display.ReportTab?.TryGetTarget(out var held) == true && ReferenceEquals(root, held)) return false;
+        display.ReportTab = null;
         // D-647: report scope and source-bound child callbacks refresh in place; rebuild on ordinary departure.
         // D-646: original forecast drafts, pending prompts and known accepted work remain live like a pushed editor.
         return shell.CurrentPage?.BindingContext is not Features.Reports.ReportsViewModel
@@ -602,10 +635,11 @@ public partial class App : Application
 
     private void OnShellNavigated(object? sender, ShellNavigatedEventArgs e)
     {
-        if (_rebuildWhenBackOnTab && sender is Shell shell && IsOnTab(shell))
+        if (sender is AppShell shell && ReferenceEquals(Windows.FirstOrDefault()?.Page, shell)
+            && DisplayState(shell) is { Deferred: true } display && IsOnTab(shell))
         {
-            _rebuildWhenBackOnTab = false;
-            Dispatcher.Dispatch(QueueRebuild);
+            display.Deferred = false;
+            Dispatcher.Dispatch(() => QueueRebuild(shell));
         }
     }
 
@@ -622,8 +656,6 @@ public partial class App : Application
         return pages.Select(p => p is NavigationPage navigation ? navigation.CurrentPage : p).OfType<Page>().Distinct();
     }
 
-    private bool _rebuildQueued;
-
     // Pages cache formatted numbers, dates and icons, and flipping the flow direction of a live visual tree is not
     // reliable on every platform. Rebuilding the shell gives a clean result. While the app is locked the rebuild waits,
     // so the lock cover is never lost with the old window content.
@@ -633,48 +665,42 @@ public partial class App : Application
         // Reminder texts are translated when they are scheduled (REM-07).
         _services.GetRequiredService<ReminderService>().RefreshSoon();
         // Keep open forms and the live regional preview intact; rebuild cached tab content after returning (D-67).
-        if (Windows.FirstOrDefault()?.Page is AppShell shell && !IsOnTab(shell))
+        if (Windows.FirstOrDefault()?.Page is not AppShell shell) return;
+        if (!IsOnTab(shell))
         {
-            _rebuildWhenBackOnTab = true;
+            DisplayState(shell).Deferred = true;
             return;
         }
 
-        QueueRebuild();
+        QueueRebuild(shell);
     });
 
-    private void QueueRebuild()
+    private void QueueRebuild(AppShell shell)
     {
-        if (!_databaseReady) return;
-        if (_rebuildQueued)
-        {
-            return;
-        }
-
-        _rebuildQueued = true;
-        _ = _services.GetRequiredService<AppLockService>().RunWhenUnlockedAsync(RebuildShellAsync);
+        if (!_databaseReady || Windows.FirstOrDefault() is not { } window || !ReferenceEquals(window.Page, shell)) return;
+        var display = DisplayState(shell);
+        if (display.Queued) return;
+        display.Queued = true;
+        _ = _services.GetRequiredService<AppLockService>().RunWhenUnlockedAsync(() => RebuildShellAsync(window, shell));
     }
 
     /// <summary>Raised when a rebuilt shell is shown on its tab (after a language, calendar, digit or theme change).</summary>
     internal event EventHandler? ShellRebuilt;
 
-    private async Task RebuildShellAsync()
+    private async Task RebuildShellAsync(Window window, AppShell shell)
     {
-        try
-        {
-            await RebuildShellCoreAsync();
-        }
-        finally
-        {
-            ShellRebuilt?.Invoke(this, EventArgs.Empty);
-        }
+        if (await RebuildShellCoreAsync(window, shell)) ShellRebuilt?.Invoke(this, EventArgs.Empty);
     }
 
-    private async Task RebuildShellCoreAsync()
+    private async Task<bool> RebuildShellCoreAsync(Window window, AppShell shell)
     {
-        _rebuildQueued = false;
-        if (Windows.FirstOrDefault() is not { Page: AppShell shell } window)
+        var display = DisplayState(shell); display.Queued = false;
+        if (!ReferenceEquals(Windows.FirstOrDefault(), window) || !ReferenceEquals(window.Page, shell)) return false;
+        // A queued display request may resume after navigation or a native access wait. Recheck the actual graph
+        // immediately before replacement; a newly opened editor keeps its instance and raw draft until departure.
+        if (!IsOnTab(shell))
         {
-            return;
+            display.Deferred = true; return false;
         }
 
         // Back to the current tab only: a detail or editor page cannot be rebuilt without its query (an editor would
@@ -682,17 +708,19 @@ public partial class App : Application
         var tab = TabRoute(shell);
         var replacement = CreateShell();
         ReplaceRoot(window, replacement);
-        if (tab is not null && Shell.Current is { } current)
+        if (!ReferenceEquals(Windows.FirstOrDefault(), window) || !ReferenceEquals(window.Page, replacement)) return false;
+        if (tab is not null)
         {
             try
             {
-                await current.GoToAsync(tab, animate: false);
+                await replacement.GoToAsync(tab, animate: false);
             }
             catch (ArgumentException)
             {
                 // The route no longer resolves; staying on the first tab is fine.
             }
         }
+        return ReferenceEquals(Windows.FirstOrDefault(), window) && ReferenceEquals(window.Page, replacement);
     }
 
     /// <summary>Retires the old native navigation graph before replacing an already published root.</summary>

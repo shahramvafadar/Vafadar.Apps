@@ -137,3 +137,7 @@ The exact-head single response shows [CI in_progress/no conclusion](https://gith
 and [CodeQL completed/success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41239801703).
 Its consumed marker/raw response/receipt are retained and only its schedule is deleted.
 No second request or inferred later main-CI pass occurs.
+
+## Sole delayed D704 CI response
+
+Actual22.9745minutes after scheduling, the one exact-head response reports [CI completed/success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41242034758) and [CodeQL completed/success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41242034740). Its exclusive consumed marker/raw response/receipt are retained and its schedule is deleted. No second GET occurs.
