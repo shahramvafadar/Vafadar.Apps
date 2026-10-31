@@ -2814,3 +2814,9 @@ Bind optional recovery setup to its original page/window/catalogue across protec
 [Evidence and exact limits](docs/quality/original-recovery-setup-lifetime.md).
 
 Final D668 Window.Page replacement cancels the original queued work with generated0 and full20source equal. Final strict packages pass; actual enrollment/owner authentication remain separate. Phone/D607 and all deadlines stay untouched.
+
+
+### D-669 - Original startup backup lifetime
+
+Bind original picker/read/confirmation/staging and terminal navigation to the actual startup recovery owner. Nine actual-stream cases, final strict packages and the actual native late-picker/current-consent/pop continuations pass with full20source equal and no valid restore or financial write. Preserve genuine authentication and the original durable activation protocol; phone/D607 remain untouched.
+[Actual original failures, version lineage and limits](docs/quality/original-startup-backup-lifetime.md).

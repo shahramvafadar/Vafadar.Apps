@@ -49,20 +49,40 @@ internal abstract class ProtectedBackupRecovery(IServiceProvider services) : IPr
         return Path.Combine(Path.GetFullPath(baseRoot), Prefix + id);
     }
 
-    /// <summary>Validates the borrowed package first, stages its original application restore and records explicit activation intent.</summary>
-    internal async Task StageAsync(byte[] package, string? password, CancellationToken ct)
+    /// <summary>Captures original unpublished storage and activation settings before native input or protected waiting.</summary>
+    internal RecoverySetupAuthority CaptureStartupBackupAuthority(CancellationToken ct = default)
     {
-        await operations.WaitAsync(ct).ConfigureAwait(false);
+        var capture = services.GetRequiredService<ProfileService>().CaptureStorage();
+        var settings = services.GetRequiredService<ISettingsStore>();
+        var active = settings.Get(ActiveRootKey); var pending = settings.Get(PendingRootKey);
+        void Validate()
+        {
+            capture.Validate();
+            if (active != settings.Get(ActiveRootKey) || pending != settings.Get(PendingRootKey))
+                throw new IOException("The original startup recovery selection changed.");
+        }
+        Validate(); return new(Validate, ct);
+    }
+
+    /// <summary>Validates the borrowed package first, stages its original application restore and records explicit activation intent.</summary>
+    internal async Task StageAsync(byte[] package, string? password, CancellationToken ct, RecoverySetupAuthority? authority = null)
+    {
+        // D-669: never borrow a catalogue first captured after another request or exclusive wait finishes.
+        using var ownedAuthority = authority is null ? CaptureStartupBackupAuthority(ct) : null;
+        var original = authority ?? ownedAuthority!;
+        original.RequireCurrent();
+        await operations.WaitAsync(original.Token).ConfigureAwait(false);
         try
         {
             var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
-            using var owner = await location.Access.AcquireExclusiveAsync(ct).ConfigureAwait(false);
+            using var owner = await original.AcquireAsync(location.Access).ConfigureAwait(false);
+            original.RequireCurrent();
             if (location.IsProtected) throw new InvalidOperationException("Backup key-loss recovery requires covered unpublished startup.");
             var profiles = services.GetRequiredService<ProfileService>(); var capture = profiles.CaptureStorage();
             var settings = services.GetRequiredService<ISettingsStore>(); var persistence = services.GetRequiredService<ISettingsPersistence>();
             if (settings.Get(PendingRootKey) is not null) throw new IOException("A recorded recovery selection requires continuation before another backup.");
             var oldRoot = settings.Get(ActiveRootKey); var oldCatalogue = profiles.CaptureRecoveryCatalogue(); var name = profiles.Current.Name;
-            void Check() { ct.ThrowIfCancellationRequested(); location.Access.RequireDrainedOwner(owner); capture.Validate(); }
+            void Check() { ct.ThrowIfCancellationRequested(); original.RequireCurrent(); location.Access.RequireDrainedOwner(owner); capture.Validate(); }
             await services.GetRequiredService<IBackupPackageReader>().ReadValidatedPortableAsync(package, password,
                 Vafadar.Backup.Security.DeviceSafetyEncryption.MaximumPackageBytes, async (manifest, entries, token) =>
             {

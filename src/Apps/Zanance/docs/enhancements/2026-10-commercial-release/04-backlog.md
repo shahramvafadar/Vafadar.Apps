@@ -8294,3 +8294,28 @@ retired;11standard Cleans total. A third supplemental deletion (5fresh final roo
 8667files/1761209907logicalbytes) was blocked before process creation; it and all earlier
 refused scopes remain frozen without retry/subset/alternate/move/escalation/reuse. The
 whole bounded D668 batch is complete; genuine enrollment and broad delivery gates remain.
+
+
+### D-669 - Original startup backup lifetime (completed bounded scope)
+
+Original startup recovery now binds native picker/read/consent/staging/close to the actual
+window/root, pre-await storage/activation capture and original protected owner. Native
+confirmation owns its primary action; known returned staging retries closing only and
+unknown outcomes retain the original durable activation protocol. Borrowed package bytes
+survive only their actual in-flight operation, with bounded cancellable temporary reads.
+Actual baseline5134retained5bytes/completionfalse after root retirement. Intermediate5931
+native root IllegalStateException departed the modal without lifecycle completion; the same
+picker continued, package0but completionfalse, preserving that separate real failure. Final
+6425/sameUID10216/boot/full20source accepted actual Window.Page replacement and real late
+picker result with package0/completiontrue/stage0. Only the uncovered current consent branch
+continued: real confirmation entered original Stage once, existing protected-startup policy
+refused before staging0, selection/error/source retained; original Back plus after-pop fault
+ended completion and cleared bytes. No real authentication, valid restore, account or money.
+9new actual-stream cases and final strictWindows/fullOffline384AOT/408ELF/1608LOAD pass;
+shippinga824a2bc and native21890b6c are final, earlier versions/refusals are historical.
+FreshUID/25XML470249capturedbytes/five-bytecontrol/officialAVD retired and8Cleans pass.
+Two supplemental deletions blocked before process creation:15publishfiles647721306bytes
+and16roots10492files2530550198logicalbytes remain frozen, without retry/subset/alternate/
+move/escalation/reuse. Usedsigned/source/evidence retained; D607/phone/three deadlines/lease/
+consumed reboot/unread source untouched. Genuine valid recovery and broader delivery gates remain.
+[Original failure, actual continuation lineage and limits](../../quality/original-startup-backup-lifetime.md)
