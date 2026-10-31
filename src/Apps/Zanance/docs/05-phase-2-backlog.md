@@ -5365,3 +5365,9 @@ D688 closes the named managed-other-writer inventory, with16900original method b
 
 D689 completes the named original Plans/Templates OS200 source-cover batch. Only63unfinished/changed states follow9retained successes; one changed native Retry reachesReady with source21exact. Strict packages, restoration, fresh retirement and threeCleans pass; supplemental cleanup refusal and broader gates remain explicit.
 [Actual failure, native continuation and limits](quality/original-plan-template-source-cover-os-text.md).
+
+
+### D-690 - Original resource and product-plan source covers
+
+D690 completes the named original resource/product-plan OS200 loading/error scope:36contexts/72states with5retained successes and31onlyunfinished/changed contexts. No nativeRetry, account setup, financial or provider command runs. Wider gates stay open.
+[Actual original failure, native continuation and limits](quality/original-access-source-cover-os-text.md).

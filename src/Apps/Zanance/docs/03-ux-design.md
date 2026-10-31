@@ -3431,3 +3431,9 @@ Plans uses existing WrappingAction for its original Retry: the native caption gr
 its real command button retains the original guarded read, and the selected font is
 not reduced. Root title Add and original Templates Back remain unchanged.
 [Actual German two-line failure and complete source-cover scope](quality/original-plan-template-source-cover-os-text.md).
+
+
+### D-690 - Complete resource-page heading at large system text
+
+Use ActiveItems_PageTitle only for the original resource page heading. German Elemente fits without reducing the selected font; all other languages preserve their existing title, and full menu/body/confirmation copy stays unchanged. Original pushed Back and source-cover captions remain complete at OS200.
+[Native evidence](quality/original-access-source-cover-os-text.md).

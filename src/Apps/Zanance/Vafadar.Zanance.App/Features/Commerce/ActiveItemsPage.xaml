@@ -8,7 +8,7 @@
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Commerce"
     x:DataType="local:ActiveItemsViewModel"
-    Title="{v:Translate ActiveItems_Title}">
+    Title="{v:Translate ActiveItems_PageTitle}">
     <Grid>
         <Grid RowDefinitions="*,Auto" IsVisible="{Binding Loading.IsReady}">
             <ScrollView>

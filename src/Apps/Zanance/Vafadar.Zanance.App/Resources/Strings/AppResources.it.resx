@@ -8661,4 +8661,7 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Rules_PageTitle" xml:space="preserve">
     <value>Regole</value>
   </data>
+  <data name="ActiveItems_PageTitle" xml:space="preserve">
+    <value>Elementi disponibili</value>
+  </data>
 </root>

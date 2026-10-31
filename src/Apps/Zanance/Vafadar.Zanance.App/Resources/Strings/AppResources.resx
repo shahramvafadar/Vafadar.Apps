@@ -8710,4 +8710,8 @@ Original XML SHA-256: {5}</value>
     <value>Rules</value>
     <comment>Compact native rules page title; complete categorization menu labels and explanatory text remain unchanged.</comment>
   </data>
+  <data name="ActiveItems_PageTitle" xml:space="preserve">
+    <value>Available items</value>
+    <comment>Compact page heading; keep the complete original menu and explanatory copy.</comment>
+  </data>
 </root>

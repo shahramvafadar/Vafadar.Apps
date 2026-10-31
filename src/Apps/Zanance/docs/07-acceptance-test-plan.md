@@ -8558,3 +8558,9 @@ D688 checks exact original PE identity, six field assignments, shared constructo
 
 D689 accepts36original OS200 contexts/72loading-error states across en/fa/de, both themes and360/412/680. Nine unchanged states are retained; only63remaining/affected states and one new relay tap run. Source21 stays exact with no financial/setup replay. Noncanonical push and ambient-culture observer failures are preserved, without changing final native-caption/route criteria.
 [Actual failure, native continuation and limits](quality/original-plan-template-source-cover-os-text.md).
+
+
+### D-690 - Original resource and product-plan source covers
+
+D690 accepts36contexts/72original loading/error states, en/fa/de and two themes at360/412/680dp and OSfont2.0. Exact source21, native captions/lastlines/RTLBack and restoration pass;23 existing resource contracts pass, with no new unit-test count or broad accessibility claim.
+[Actual original failure, native continuation and limits](quality/original-access-source-cover-os-text.md).

@@ -5585,3 +5585,9 @@ D688 changes no product/runtime/APK. Original managed cache writers are protecte
 
 D689 fixes the observed German Plans Retry clipping; strictWindows/fullOffline384AOT/408ELF/1608staticLOAD passes. Shipping3b7a4507 is ready locally but Samsung adoption still waits for D607. Source/OS restoration and fresh retirement pass; supplemental840file/125406053byte refusal is frozen. Broader release gates remain open.
 [Actual failure, native continuation and limits](quality/original-plan-template-source-cover-os-text.md).
+
+
+### D-690 - Original resource and product-plan source covers
+
+D690 strictWindows/fullOffline384AOT/408ELF/1608staticLOAD packages pass; shippingefa020db awaits actual D607 completion/cleanup before physical adoption. Fresh fixture/AVD retirement and4Cleans finish; supplementary deletion refusal remains explicit. No release gate is waived.
+[Actual original failure, native continuation and limits](quality/original-access-source-cover-os-text.md).

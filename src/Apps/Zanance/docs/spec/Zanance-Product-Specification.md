@@ -11738,3 +11738,9 @@ D688 leaves product behavior, test count and runtime selection unchanged. The or
 
 D689 preserves original source/read/financial behavior while making the Plans Retry grow with its caption. Native36contexts/72states pass with9retained and one new relay tap; no new unit-test count or broad device/A11Y acceptance. Shipping3b7a4507 awaits the protected D607 adoption gate.
 [Actual failure, native continuation and limits](../quality/original-plan-template-source-cover-os-text.md).
+
+
+### D-690 - Original resource and product-plan source covers
+
+D690 preserves original source and financial behavior while keeping the German resource-page heading complete at large native text.36contexts/72states pass with5retained; no new unit-test count, financial write or physical adoption is claimed.
+[Actual original failure, native continuation and limits](../quality/original-access-source-cover-os-text.md).

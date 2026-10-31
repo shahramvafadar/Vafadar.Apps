@@ -12466,3 +12466,9 @@ D688 extends exact original managed resource evidence to cache writers and const
 
 Keep original Plans Retry text/read ownership while using existing growing WrappingAction and the original guarded VM relay. D689 fixes a real German native139px/224px mismatch and qualifies36contexts/72states, retaining9unchanged states. No new financial policy or product test count.
 [Actual failure, native continuation and limits](quality/original-plan-template-source-cover-os-text.md).
+
+
+### D-690 - Original resource and product-plan source covers
+
+Keep the complete original menu and explanatory copy; only the German page heading becomes Elemente through a six-language page-only key. Actual original ellipsis5 is corrected at unchanged89px native text. No source, command or financial policy changes.
+[Actual original failure, native continuation and limits](quality/original-access-source-cover-os-text.md).
