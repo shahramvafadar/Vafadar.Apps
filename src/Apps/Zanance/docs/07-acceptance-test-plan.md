@@ -8622,3 +8622,8 @@ Verify original module/debug SHA256, GNU BuildID/debug-link CRC, positive-size e
 
 Retain two original oversize failures. Check absent/empty policies with oversized/fitting packets, explicit large-private-journal omission, nonempty-policy oversize and cancellation on each real Windows/Android engine. Oversize preparation0/output0 and portable I/O details pass; fitting12288byte/3page images preserve signed/Unicode/payload values and two header identifiers. Verify selected source records and released aliases, not wholeDB/key equality. Android native button/UID10216/PID4934/boot are actual, with no profile/financial setup or old UI replay; fourteen observations are not new unit tests or general crash acceptance.
 [Exact source and native bounds](quality/portable-image-native-page-budget.md).
+
+### D-702 - One original Profiles OS200 context without financial replay
+
+Spanish/Dark360dp/actualOSfont2.0: original profile-source failure paragraph and full accessible Reload caption fit native lines and viewport; one native Retry reaches ready Add/Reload captions. Match all21 typed source collections and four catalogue values without preparation/profile/financial writes. Preserve the initial same-process StartupPage/title-only and failed route precondition; private startup observation's necessary no-reset/source equality and successful configuration continuation do not establish its exclusive cause or a production fix. Two states in one context are not a six-language matrix or new unit tests.
+[Actual source, event and retirement limits](quality/original-profile-covers-and-native-startup-observation.md).

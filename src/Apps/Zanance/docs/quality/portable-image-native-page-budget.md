@@ -118,3 +118,7 @@ a prepared candidate. Old successful financial, PDF/CSV, widget, restore, UI and
 unrelated unit/native suites are not replayed. General crash/ANR, security/DB/key,
 Home speed, accessibility/iOS/provider/Store/release gates remain independent;
 the overall delivery goal stays active.
+
+## Sole delayed CI observation
+
+D701's exact-head response shows [CI in_progress/no conclusion](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41236627405), with [Local identity backend](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41236627438), [Self-hosted service qualification](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41236627477) and [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41236627471) completed/success. Its exclusive marker/raw response/receipt are retained and only its schedule is deleted. No secondGET or later main-CI/native-Windows-host pass is inferred.

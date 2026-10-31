@@ -11802,3 +11802,8 @@ Preserve the original native failure and separate managed resource-cache excepti
 
 Every original memory-only portable export, including absent/empty omission policies, receives the existing destination page ceiling before native growth. Preserve complete permitted rows, explicit omissions, headers/access/transaction, original cancellation, serialized byte guard and clearing/detach. Seven actual Windows and seven Android component cases qualify this boundary without financial commands. No total process-memory cap, wholeDB/key, phone adoption or demonstrated native-crash cause is inferred.
 [Original failures and bounded native correction](../quality/portable-image-native-page-budget.md).
+
+### D-702 status qualification - original Profiles covers
+
+One original Spanish/Dark360dp context at actual Android OSfont2.0 qualifies the source-error paragraph and complete Reload, then ready Add/Reload after one native Retry. No new unit tests, financial/profile writes or production change; complete21source/fourcatalogue values remain equal. Preserve the original4231 title-only StartupPage/configuration failure; private observation-only no-reset to5319 and successful event continuation leave exclusive cause unresolved, not fixed. Original OS/Home and owned-output retirement verified; six supplementary scopes rejected before process creation remain frozen without retry or reuse. Wider device/A11Y/stability/adoption and protected D607 remain open.
+[Bounded original evidence and exclusions](../quality/original-profile-covers-and-native-startup-observation.md).
