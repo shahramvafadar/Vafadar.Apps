@@ -114,3 +114,12 @@ The exact-head D701 response is consumed once after its scheduled delay. CI rema
 and [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41236627471)
 are completed/success in that same response. Only its schedule is deleted. There is
 no second query or inferred later CI/native-Windows-host success.
+
+## Subsequent entry-boundary correction
+
+D703 separately reproduces a queued old StartupViewModel adopting a new real window before its own initialization is released, then corrects that request binding. It preserves this document's initial title-only observation and does not establish its exclusive cause. The successful Profiles captions/Retry and their data are not replayed.
+[Actual new callback regression and correction](startup-window-bound-callbacks.md).
+
+## Sole D702 CI response
+
+The single scheduled exact-head response shows [CI in_progress/no conclusion](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41238340564) and [CodeQL completed/success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41238340507). Its exclusive consumed marker, raw response and receipt are retained and only that schedule is deleted. No second query or later CI success is inferred.

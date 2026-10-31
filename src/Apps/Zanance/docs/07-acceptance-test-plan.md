@@ -8627,3 +8627,8 @@ Retain two original oversize failures. Check absent/empty policies with oversize
 
 Spanish/Dark360dp/actualOSfont2.0: original profile-source failure paragraph and full accessible Reload caption fit native lines and viewport; one native Retry reaches ready Add/Reload captions. Match all21 typed source collections and four catalogue values without preparation/profile/financial writes. Preserve the initial same-process StartupPage/title-only and failed route precondition; private startup observation's necessary no-reset/source equality and successful configuration continuation do not establish its exclusive cause or a production fix. Two states in one context are not a six-language matrix or new unit tests.
 [Actual source, event and retirement limits](quality/original-profile-covers-and-native-startup-observation.md).
+
+### D-703 - Original stale startup entry refuses a recreated window
+
+Hold only original startup callback entry, recreate the actual Android Activity/window and release the old model before the new one. Baseline4278 wrongly publishes new onboarding and leaves its own model failed when released. Corrected5301 after sameUID/boot/fullsource no-reset refuses old preparation and old Recover/RestoreBackup before protected host capture, retaining the new cover; only current callback prepares once. Compare all21 typed source collections/fourcatalogue values and empty account/ledger sets. Six existing startup/publication/recovery guards pass, not six new unit tests. StrictWindows/full signed offline384AOT408ELF1608staticLOAD and actual private native regression pass; preserve D702's unresolved initial title-only observation separately.
+[Actual callback/model/window evidence and exclusions](quality/startup-window-bound-callbacks.md).

@@ -251,14 +251,19 @@ public partial class App : Application
         // Android builds the app in Application.onCreate, including notification-only process starts (D-46).
         // Window construction must not migrate or open a financial context on that thread.
         // D-222: the first window contains no financial page. Native key/migration work is deferred to a worker.
+        var window = new Window { Title = Translator.Instance["App_Name"] };
+        Startup.StartupViewModel startup = null!;
+        // D-703: Android can recreate the window before its queued startup callback runs. Bind all three
+        // requests to their creating window/model; a retired callback must never adopt the new global startup.
 #if ANDROID || WINDOWS
-        _startup = new Startup.StartupViewModel(PrepareStartupAsync, RecoverStartupKeysAsync, RecoverStartupBackupAsync);
+        startup = new Startup.StartupViewModel(() => PrepareStartupAsync(window, startup),
+            () => RecoverStartupKeysAsync(window, startup), () => RecoverStartupBackupAsync(window, startup));
 #else
-        _startup = new Startup.StartupViewModel(PrepareStartupAsync);
+        startup = new Startup.StartupViewModel(() => PrepareStartupAsync(window, startup));
 #endif
-        var cover = new Startup.StartupPage(_startup).WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
-        var window = new Window(cover) { Title = Translator.Instance["App_Name"] };
-        var startup = _startup;
+        _startup = startup;
+        var cover = new Startup.StartupPage(startup).WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
+        window.Page = cover;
         // Use the actual window dispatcher after native creation, including Android activity recreation.
         // The view model excludes duplicate preparation from the compatibility OnStart callback.
         window.Created += (_, _) => window.Dispatcher.Dispatch(async () => await startup.InitializeAsync());
@@ -283,7 +288,17 @@ public partial class App : Application
     protected override void OnStart()
     {
         base.OnStart();
-        Dispatcher.Dispatch(async () => { if (_startup is not null) await _startup.InitializeAsync(); });
+        var startup = _startup;
+        Dispatcher.Dispatch(async () => { if (startup is not null) await startup.InitializeAsync(); });
+    }
+
+    /// <summary>Refuses a queued request from a different window/model before resolving protected storage or access.</summary>
+    private Startup.StartupPage RequireOriginalStartupCover(Window window, Startup.StartupViewModel original)
+    {
+        if (!Windows.Contains(window) || !ReferenceEquals(_startup, original)
+            || window.Page is not Startup.StartupPage cover || !ReferenceEquals(cover.BindingContext, original))
+            throw new OperationCanceledException("The original startup cover retired.");
+        return cover;
     }
 
 #if ANDROID || WINDOWS
@@ -296,12 +311,9 @@ public partial class App : Application
     }
 
     /// <summary>Captures the actual covered startup and original storage before any native confirmation begins.</summary>
-    private StartupRecoveryPresentation CaptureStartupRecoveryPresentation()
+    private StartupRecoveryPresentation CaptureStartupRecoveryPresentation(Window window, Startup.StartupViewModel original)
     {
-        var window = Windows.FirstOrDefault() ?? throw new InvalidOperationException("Startup window is unavailable.");
-        var original = _startup;
-        if (window.Page is not Startup.StartupPage root || original is null || !ReferenceEquals(root.BindingContext, original))
-            throw new InvalidOperationException("The original startup cover retired.");
+        var root = RequireOriginalStartupCover(window, original);
         var source = _services.GetRequiredService<ProtectedStorageHost>().CaptureRecoverySetupAuthority();
         try { return new(window, root, source, () => Windows.Contains(window)
             && ReferenceEquals(_startup, original) && ReferenceEquals(root.BindingContext, original)); }
@@ -309,9 +321,9 @@ public partial class App : Application
     }
 
     /// <summary>Restores an explicitly chosen portable backup without removing unreadable original data or the device PIN.</summary>
-    private async Task<bool> RecoverStartupBackupAsync()
+    private async Task<bool> RecoverStartupBackupAsync(Window window, Startup.StartupViewModel original)
     {
-        using var request = CaptureStartupRecoveryPresentation();
+        using var request = CaptureStartupRecoveryPresentation(window, original);
         var text = Translator.Instance; var reason = text["Lock_ConfirmRestore"]; var restored = false;
         try
         {
@@ -338,9 +350,9 @@ public partial class App : Application
     }
 
     /// <summary>Accepts the user's recorded code only in the covered startup surface; app access remains a separate gate.</summary>
-    private async Task<bool> RecoverStartupKeysAsync()
+    private async Task<bool> RecoverStartupKeysAsync(Window window, Startup.StartupViewModel original)
     {
-        using var request = CaptureStartupRecoveryPresentation();
+        using var request = CaptureStartupRecoveryPresentation(window, original);
         var text = Translator.Instance; var reason = text["Lock_ConfirmRestore"]; string? code = null;
         try
         {
@@ -374,12 +386,9 @@ public partial class App : Application
 
 #endif
 
-    private async Task PrepareStartupAsync()
+    private async Task PrepareStartupAsync(Window window, Startup.StartupViewModel original)
     {
-        var window = Windows.FirstOrDefault() ?? throw new InvalidOperationException("Startup window is unavailable.");
-        var original = _startup;
-        if (window.Page is not Startup.StartupPage cover || original is null || !ReferenceEquals(cover.BindingContext, original))
-            throw new InvalidOperationException("Original startup cover is unavailable.");
+        var cover = RequireOriginalStartupCover(window, original);
         var presentation = new Startup.StartupPreparationPresentation(window, cover, () => Windows.Contains(window)
             && ReferenceEquals(_startup, original)
             && (!ReferenceEquals(window.Page, cover) || ReferenceEquals(cover.BindingContext, original)));
