@@ -2806,3 +2806,11 @@ D-666: qualified original Android CSV picker Cancel/selection/readonly preview a
 
 Bind original PIN configuration to its actual modal/root through exclusive waiting and protected reads; preserve newer drafts, clear submitted editable secrets and retry known accepted closing without another write. Independent closing and truthful saved-return feedback now handle native follow-through failures.39distinct selected checks, strict builds and bounded native branches pass; general security/authentication acceptance stays separate.
 [Evidence, actual failures and limits](docs/quality/original-pin-settings-lifetime.md).
+
+
+### D-668 - Original recovery setup lifetime
+
+Bind optional recovery setup to its original page/window/catalogue across protected waits; preserve in-flight material and known accepted closing without repeating publication.5new actual-gate cases, strict builds and bounded same-source native correction/disposal checks pass. Genuine owner-code acknowledgment and native enrollment acceptance remain separate.
+[Evidence and exact limits](docs/quality/original-recovery-setup-lifetime.md).
+
+Final D668 Window.Page replacement cancels the original queued work with generated0 and full20source equal. Final strict packages pass; actual enrollment/owner authentication remain separate. Phone/D607 and all deadlines stay untouched.

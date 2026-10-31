@@ -8304,3 +8304,11 @@ D666 closes D653's missing actual Android picker and owned-recipient boundary: o
 
 D667:39distinct selected cases (16new/23affected existing) and three native version-bound continuations cover original PIN queue/read ownership, secret clearing/newer drafts, pending Back, competing Save during close and saved-return receipt without a second write. Full20source and OS restoration pass; two PIN configurations are distinct changed branches, ledger0. Native failure injection and logical authentication ports do not establish genuine owner/biometric acceptance.
 [Evidence, actual failures and limits](quality/original-pin-settings-lifetime.md).
+
+
+### D-668 - Original recovery setup lifetime
+
+D668 preserves one actual original unowned-generation failure, fixes it on the same UID/source without reset, and adds one distinct created-but-not-returned material-disposal case.5actual gate/source cases pass, including one preserved intermediate cancellation failure. No account/ledger/code/acknowledgment/Save/authentication input or crypto corpus replay. Genuine owner-code resume/enrollment and native saved-close acceptance stay open.
+[Evidence and exact limits](quality/original-recovery-setup-lifetime.md).
+
+Final D668 Window.Page replacement cancels the original queued work with generated0 and full20source equal. Final strict packages pass; actual enrollment/owner authentication remain separate. Phone/D607 and all deadlines stay untouched.

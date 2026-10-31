@@ -1596,3 +1596,11 @@ Original minimal aggregate fields and refusal of unsupported shared sources are 
 
 Original PIN settings retain only request-lifetime input and an opaque input-version acceptance marker; no secret text/hash is added to settings, backup, provider requests or receipts. Native diagnostics export only lengths, bounded feedback and write counts in fresh fictitious packages, never real credentials/verifiers. This does not claim managed-memory erasure or complete security acceptance.
 [Evidence, actual failures and limits](quality/original-pin-settings-lifetime.md).
+
+
+### D-668 - Original recovery setup lifetime
+
+Recovery setup authority contains cancellation and original catalogue validation only, never code/key/hash/material. Display/resume input remains original request-local; unpublished drafts are disposed after their actual operations end. D668 diagnostics observe entry counts and opaque lifecycle completion only, never code/key contents or genuine authentication. No complete memory-erasure or owner enrollment acceptance is claimed.
+[Evidence and exact limits](quality/original-recovery-setup-lifetime.md).
+
+Final D668 Window.Page replacement cancels the original queued work with generated0 and full20source equal. Final strict packages pass; actual enrollment/owner authentication remain separate. Phone/D607 and all deadlines stay untouched.

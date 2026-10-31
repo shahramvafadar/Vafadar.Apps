@@ -8262,3 +8262,35 @@ frozen without retry/subset/alternate/move/escalation/reuse. Used signed/evidenc
 candidate retained; initial offline-flag omission and early observer refusals preserved.
 Phone/D607/three deadlines/lease/unread source untouched; broad release gates remain open.
 [Original failures, actual version lineage and exact limits](../../quality/original-pin-settings-lifetime.md)
+
+
+### D-668 - Original recovery setup lifetime (completed bounded scope)
+
+Original page/window/root and pre-await catalogue authority now bind create/resume/publish
+through actual exclusive waiting, protected reads and original file/key publication. Owned
+in-flight material is not disposed underneath its operation; late unpublished material is
+cleared on actual completion. Known returned enrollment retries closing only; uncertain
+outcomes keep the original durable continuation, never another fabricated acknowledgment.
+Original cryptography/protocol/real authentication stay unchanged. One original native failure
+entered generation after retirement (1expected0); after sameUID10216/source no-reset3929to5538
+it is0. Only the remaining material-lifetime assertion continued in5816, with opaque reference/
+completed-disposal observation, no code/key content or acknowledgment. Full20source/OS/root
+exact and no account/ledger/enrollment setup; no successful old case replay.5new actual gate
+cases and strictWindows/fullOffline384AOT/408ELF/1608staticLOAD pass; one intermediate source-
+validation cancellation failure preserved. Genuine recorded-code/resume/enrollment acceptance
+is not performed or replaced by counters. FreshUID/2hashXML26678bytes/ownedAVD retired;
+7standard Cleans pass. Two disjoint supplemental deletions rejected before process creation:
+12publishfiles535082581logicalbytes and10roots9504files1645022916logicalbytes remain frozen
+without retry/subset/alternate/move/escalation/reuse. Used signed/evidence retained; phone/
+D607/three deadlines/lease/consumed reboot/unread source untouched. Broad delivery gates remain.
+[Original failure, bounded native source/lifecycle proof and exact limits](../../quality/original-recovery-setup-lifetime.md)
+
+Final detached-window subscription cleanup and retired-translation guard are verified by
+actual Window.Page replacement in a distinct fresh PID4685/UID10216/API36/x64/4096 fixture:
+parent lease validated, queued1/generated0/work ended/full20source equal/enrollmentfalse.
+Earlier successes were not replayed. Final strictWindows and offline384AOT/408ELF/1608LOAD
+shipping98f67055 pass; independent2658458e passes192/204/804. Fresh fixture/2XML9976bytes/AVD
+retired;11standard Cleans total. A third supplemental deletion (5fresh final roots,
+8667files/1761209907logicalbytes) was blocked before process creation; it and all earlier
+refused scopes remain frozen without retry/subset/alternate/move/escalation/reuse. The
+whole bounded D668 batch is complete; genuine enrollment and broad delivery gates remain.

@@ -11472,3 +11472,11 @@ Section31 addendum D666: original Android picker Cancel, exact fake-file selecti
 
 Section31 addendum D667: original PIN settings now own actual modal/root, independent primary/closing work and protected writes across waits. Request-only clearing, newer input and known accepted-write follow-through are preserved.39distinct selected checks and scoped native evidence pass; no financial, PIN verifier/attempt/recovery or provider policy changed. Genuine authentication and broad delivery gates remain separate.
 [Evidence, actual failures and limits](../quality/original-pin-settings-lifetime.md).
+
+
+### D-668 - Original recovery setup lifetime
+
+Section31 addendum D668: optional recovery setup now binds actual presentation and original catalogue to protected create/resume/publish work, preserving in-flight material and known accepted closing.5new actual-gate cases and bounded same-source native correction pass with no financial/authentication input. Cryptography and durable recovery protocol are unchanged; genuine owner enrollment, physical adoption and broad release gates remain separate.
+[Evidence and exact limits](../quality/original-recovery-setup-lifetime.md).
+
+Final D668 Window.Page replacement cancels the original queued work with generated0 and full20source equal. Final strict packages pass; actual enrollment/owner authentication remain separate. Phone/D607 and all deadlines stay untouched.

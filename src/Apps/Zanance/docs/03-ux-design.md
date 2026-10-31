@@ -3369,3 +3369,11 @@ Visible source failure requires explicit Reload and preserves date/scope choices
 
 The original PIN form clears submitted text before protected waiting, preserves a newer draft and keeps actual Back/Save ownership while primary or closing work awaits. A known saved result followed by failed closing says it was saved; retrying Save only returns. Original fields/layout and existing six-language feedback are retained.
 [Evidence, actual failures and limits](quality/original-pin-settings-lifetime.md).
+
+
+### D-668 - Original recovery setup lifetime
+
+Original recovery setup prepares only on its actual modal/root. Departure removes visible code and cancels original pending preparation; a returned appearance waits for the old operation rather than borrowing it. Only genuine recorded-code acknowledgment authorizes original Save. Known saved-return feedback and Close do not republish. Current translated acknowledgment resets while idle; no new strings/layout are introduced.
+[Evidence and exact limits](quality/original-recovery-setup-lifetime.md).
+
+Final D668 Window.Page replacement cancels the original queued work with generated0 and full20source equal. Final strict packages pass; actual enrollment/owner authentication remain separate. Phone/D607 and all deadlines stay untouched.

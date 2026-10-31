@@ -93,13 +93,20 @@ internal abstract partial class ProtectedStorageHost
         finally { CryptographicOperations.ZeroMemory(secret); }
     }
 
+    /// <summary>Captures original non-secret storage facts before a recovery page starts asynchronous work.</summary>
+    internal RecoverySetupAuthority CaptureRecoverySetupAuthority(CancellationToken ct = default) =>
+        new(services.GetRequiredService<ProfileService>().CaptureStorage().Validate, ct);
+
     /// <summary>Creates only an in-memory optional recovery draft; the user records its code before native publication.</summary>
-    internal async Task<ProtectedRecoveryDraft> CreateRecoveryDraftAsync(CancellationToken ct)
+    internal async Task<ProtectedRecoveryDraft> CreateRecoveryDraftAsync(CancellationToken ct, RecoverySetupAuthority? authority = null)
     {
         var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
-        using var owner = await location.Access.AcquireExclusiveAsync(ct).ConfigureAwait(false);
-        Session.RequireStable(owner);
-        var identities = await new SqliteDatabaseIdentityCatalogue(identityPath!, owner.Validate).ReadAsync(ct).ConfigureAwait(false);
+        using var owner = authority is null
+            ? await location.Access.AcquireExclusiveAsync(ct).ConfigureAwait(false)
+            : await authority.AcquireAsync(location.Access).ConfigureAwait(false);
+        void Validate() { ct.ThrowIfCancellationRequested(); authority?.RequireCurrent(); owner.Validate(); Session.RequireStable(owner); }
+        Validate();
+        var identities = await new SqliteDatabaseIdentityCatalogue(identityPath!, Validate).ReadAsync(ct).ConfigureAwait(false);
         if (recoveryCatalogue is not null)
             throw new InvalidOperationException("Recovery is already enrolled; its existing code remains authoritative.");
         var installation = identities.Select(row => row.InstallationId).Distinct().Single();
@@ -108,12 +115,16 @@ internal abstract partial class ProtectedStorageHost
             || File.Exists(Path.Combine(root, "recovery-private.cipher.db.creating"))
             || File.Exists(Path.Combine(root, "recovery-public.sqlite")))
             throw new RecoveryEnrollmentIncompleteException();
-        return new(DatabaseRecoveryMaterial.Create(installation), RandomNumberGenerator.GetBytes(32));
+        Validate();
+        var prepared = new ProtectedRecoveryDraft(DatabaseRecoveryMaterial.Create(installation), RandomNumberGenerator.GetBytes(32));
+        try { Validate(); return prepared; }
+        catch { prepared.Dispose(); throw; }
     }
 
     /// <summary>Resumes the user's acknowledged setup draft from its exact encrypted vault after process interruption.</summary>
-    internal async Task<ProtectedRecoveryDraft> ResumeRecoveryDraftAsync(string code, CancellationToken ct)
+    internal async Task<ProtectedRecoveryDraft> ResumeRecoveryDraftAsync(string code, CancellationToken ct, RecoverySetupAuthority? authority = null)
     {
+        ct.ThrowIfCancellationRequested(); authority?.RequireCurrent();
         if (!code.StartsWith("ZRK1-", StringComparison.Ordinal)) throw new CryptographicException("Recovery code format differs.");
         byte[] secret;
         try { secret = Convert.FromBase64String(code[5..]); }
@@ -122,31 +133,43 @@ internal abstract partial class ProtectedStorageHost
         {
             if (secret.Length != 32) throw new CryptographicException("Recovery code length differs.");
             var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
-            using var owner = await location.Access.AcquireExclusiveAsync(ct).ConfigureAwait(false);
-            Session.RequireStable(owner);
-            var identities = await new SqliteDatabaseIdentityCatalogue(identityPath!, owner.Validate).ReadAsync(ct).ConfigureAwait(false);
+            using var owner = authority is null
+                ? await location.Access.AcquireExclusiveAsync(ct).ConfigureAwait(false)
+                : await authority.AcquireAsync(location.Access).ConfigureAwait(false);
+            void Validate() { ct.ThrowIfCancellationRequested(); authority?.RequireCurrent(); owner.Validate(); Session.RequireStable(owner); }
+            Validate();
+            var identities = await new SqliteDatabaseIdentityCatalogue(identityPath!, Validate).ReadAsync(ct).ConfigureAwait(false);
             var installation = identities.Select(row => row.InstallationId).Distinct().Single();
             var root = Path.GetDirectoryName(location.Path)!;
             var vaultPath = Path.Combine(root, "recovery-private.cipher.db");
             if (!File.Exists(vaultPath)) vaultPath += ".creating";
             var material = await SqlCipherRecoveryVault.OpenExistingAsync(vaultPath, installation, secret, "4.19.0",
-                durability!, owner.Validate, ct).ConfigureAwait(false);
-            var draft = new ProtectedRecoveryDraft(material, secret) { RecordedByUser = true };
-            secret = []; return draft;
+                durability!, Validate, ct).ConfigureAwait(false);
+            try
+            {
+                Validate();
+                var draft = new ProtectedRecoveryDraft(material, secret) { RecordedByUser = true };
+                secret = []; return draft;
+            }
+            catch { material.Dispose(); throw; }
         }
         finally { CryptographicOperations.ZeroMemory(secret); }
     }
 
     /// <summary>Publishes acknowledged private/public material and wraps every existing recorded device key before enablement.</summary>
-    internal async Task SaveRecoveryDraftAsync(ProtectedRecoveryDraft draft, CancellationToken ct)
+    internal async Task SaveRecoveryDraftAsync(ProtectedRecoveryDraft draft, CancellationToken ct, RecoverySetupAuthority? authority = null)
     {
         ArgumentNullException.ThrowIfNull(draft);
         if (!draft.RecordedByUser) throw new InvalidOperationException("Recovery code must be recorded before publishing private material.");
         var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
-        using var owner = await location.Access.AcquireExclusiveAsync(ct).ConfigureAwait(false);
-        Session.RequireStable(owner);
+        // D-668: capture before exclusive waiting, never authorize a replacement catalogue on return.
         var capture = services.GetRequiredService<ProfileService>().CaptureStorage();
-        void Validate() { location.Access.RequireDrainedOwner(owner); Session.RequireStable(owner); capture.Validate(); }
+        using var owner = authority is null
+            ? await location.Access.AcquireExclusiveAsync(ct).ConfigureAwait(false)
+            : await authority.AcquireAsync(location.Access).ConfigureAwait(false);
+        void Validate()
+        { ct.ThrowIfCancellationRequested(); authority?.RequireCurrent(); location.Access.RequireDrainedOwner(owner); Session.RequireStable(owner); capture.Validate(); }
+        Validate();
         var identities = await new SqliteDatabaseIdentityCatalogue(identityPath!, Validate).ReadAsync(ct).ConfigureAwait(false);
         if (identities.Any(row => row.InstallationId != draft.Material.Identity.InstallationId))
             throw new IOException("Recovery draft belongs to another installation.");
@@ -173,14 +196,18 @@ internal abstract partial class ProtectedStorageHost
         foreach (var binding in bindings)
         {
             Validate(); var existingKey = await native.ReadAsync(binding, ct).ConfigureAwait(false);
-            CryptographicOperations.ZeroMemory(existingKey);
+            try { Validate(); }
+            finally { CryptographicOperations.ZeroMemory(existingKey); }
         }
         var vaultPath = Path.Combine(root, "recovery-private.cipher.db");
         var publicPath = Path.Combine(root, "recovery-public.sqlite");
         var vault = new SqlCipherRecoveryVault(vaultPath, draft.Material.Identity, "4.19.0", sync, Validate);
         if (!File.Exists(vaultPath)) await vault.CreateNewAsync(draft.Material, draft.Secret, ct).ConfigureAwait(false);
         using (var verified = await vault.OpenAsync(draft.Secret, ct).ConfigureAwait(false))
+        {
+            Validate();
             if (verified.Identity.RecoveryId != draft.Material.Identity.RecoveryId) throw new CryptographicException("Published recovery draft differs.");
+        }
         var validateNative = nativeValidation ?? throw new InvalidOperationException("Native validation is unavailable.");
         var catalogue = new SqliteRecoveryEnvelopeCatalogue(publicPath, draft.Material.Identity, sync, validateNative);
         if (!File.Exists(publicPath)) await catalogue.CreateNewAsync(ct).ConfigureAwait(false);
@@ -189,9 +216,10 @@ internal abstract partial class ProtectedStorageHost
         foreach (var binding in bindings)
         {
             Validate(); var key = await native.ReadAsync(binding, ct).ConfigureAwait(false);
-            try { await catalogue.CaptureAsync(binding, key, ct).ConfigureAwait(false); }
+            try { Validate(); await catalogue.CaptureAsync(binding, key, ct).ConfigureAwait(false); }
             finally { CryptographicOperations.ZeroMemory(key); }
         }
+        Validate();
         native.Attach(catalogue); recoveryCatalogue = catalogue;
         // Retirement must now remove public mappings only after its durable catalogue-removal barrier.
         var roots = new Dictionary<string, string>

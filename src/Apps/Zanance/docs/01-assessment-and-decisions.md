@@ -12212,3 +12212,11 @@ Keep native picker and actual URI recipient delivery separate from private effec
 
 D667 retains original PIN verification/attempt/recovery/storage policy while binding configuration and native continuations to their actual page/root. Independent primary/closing ownership cannot be released by feedback. Store only a returned-write input-version receipt, not secret hashes; distinguish saved-return feedback from storage failure and never replay an accepted write for navigation.
 [Evidence, actual failures and limits](quality/original-pin-settings-lifetime.md).
+
+
+### D-668 - Original recovery setup lifetime
+
+D668 captures non-secret original recovery catalogue facts before asynchronous preparation and retires them with the actual page/window root. Check the same source after exclusive acquisition and before protected operations. Preserve original cryptography/durable unknown continuation; return known publication before fallible closing and never dispose material underneath its real operation.
+[Evidence and exact limits](quality/original-recovery-setup-lifetime.md).
+
+Final D668 Window.Page replacement cancels the original queued work with generated0 and full20source equal. Final strict packages pass; actual enrollment/owner authentication remain separate. Phone/D607 and all deadlines stay untouched.

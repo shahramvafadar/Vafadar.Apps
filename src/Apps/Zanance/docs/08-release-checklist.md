@@ -5319,3 +5319,11 @@ D666 actual Android picker and owned offline URI receiver passed within the docu
 
 Original PIN configuration ownership and truthful accepted-result closing are locally qualified in D667, with final strict offline packages and exact bounded native/source/OS evidence. Earlier runtime versions are not relabelled final. Three fresh fixtures retired; two refused residual cleanup scopes remain explicit. D607/phone and broad security/platform/provider/release gates stay open.
 [Evidence, actual failures and limits](quality/original-pin-settings-lifetime.md).
+
+
+### D-668 - Original recovery setup lifetime
+
+Original recovery setup ownership is boundedly qualified in D668 with final strict offline packages and exact native source/OS restoration. Root cancellation and material-lifetime ordering are verified; real recorded-code/resume/enrollment acceptance is not inferred. The fresh fixture/AVD retired; two refused residual cleanup scopes stay explicit. Phone/D607 and broad delivery gates remain open.
+[Evidence and exact limits](quality/original-recovery-setup-lifetime.md).
+
+Final D668 Window.Page replacement cancels the original queued work with generated0 and full20source equal. Final strict packages pass; actual enrollment/owner authentication remain separate. Phone/D607 and all deadlines stay untouched.
