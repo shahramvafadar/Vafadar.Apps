@@ -5280,3 +5280,21 @@ escalation/reuse. Used signed packages and evidence remain; D-607's three deadli
 consumed reboot and unread source stay protected. Physical adoption and broader
 DB/key/security/stability/performance/A11Y/iOS/provider/Store/release gates remain open.
 [Original changed source covers and actual preservation evidence](quality/original-export-source-cover-os-text.md).
+
+
+### D-683 - Qualified new hosted Windows producer and original source closure
+
+The isolated actual new-installer producer run41190613268 completes successfully after
+linking original BackupRestorePublication in both compatibility callers and refusing
+wrong requested-host metadata before native compilation. The first older-host run and
+source-closure failure remain preserved. Two fresh new-host DLLs equal pinned candidate9;
+all five package entries match, with only the exported candidate10 nuspec version field
+restored for exact comparison. Candidate10 is not published/selected; candidate9's version
+and entry hashes remain unchanged, with only reviewed installer18.11.12328.437 added to
+its provenance. Actual original53-migration/key/tamper/portable/full typed-source gates
+pass;17 request fixtures,27 intermediate and29 final impacted compiler/producer cases
+are recorded as overlapping scopes, not summed new tests. Strict local Windows caller
+compile-only and Android caller build pass with existing exact native inputs. No app,
+financial/device, old native/Android success or performance cohort is replayed. Ordinary
+complete Main CI is still separate; D-607 and wider release gates remain protected.
+[Actual new host, exact immutable package identity and limits](quality/qualified-hosted-windows-producer.md).

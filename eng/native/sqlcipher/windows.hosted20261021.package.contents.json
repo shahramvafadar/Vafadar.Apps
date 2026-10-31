@@ -11,6 +11,7 @@
   },
   "compilerExecutableSha256": "b0a1818ebae6da7f18230a84e76ce839212584ac4c2ab55b97a0d5268085da57",
   "hostedInstallationVersions": [
-    "18.11.12315.225"
+    "18.11.12315.225",
+    "18.11.12328.437"
   ]
 }

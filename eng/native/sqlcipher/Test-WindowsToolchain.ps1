@@ -73,7 +73,8 @@ try {
     foreach ($row in @(
         @('18.10.12201.205',$baseline.compilerExecutableSha256,'baseline'),
         @('18.11.12306.390',$servicing.compilerExecutableSha256,'servicing'),
-        @('18.11.12315.225',$current.compilerExecutableSha256,'hosted20261021')
+        @('18.11.12315.225',$current.compilerExecutableSha256,'hosted20261021'),
+        @('18.11.12328.437',$current.compilerExecutableSha256,'hosted20261021')
     )) {
         if ((Resolve-ReviewedWindowsProducer -InstallationVersion $row[0] -CompilerSha256 $row[1]) -cne $row[2]) {
             throw 'Hosted compiler metadata selected a different immutable producer.'
@@ -83,6 +84,7 @@ try {
     Require-Refused 'producer-unknown-installation' { Resolve-ReviewedWindowsProducer -InstallationVersion '99.0.0.0' -CompilerSha256 $current.compilerExecutableSha256 } '*Unsupported Windows producer host*'
     Require-Refused 'producer-unknown-compiler' { Resolve-ReviewedWindowsProducer -InstallationVersion '18.11.12315.225' -CompilerSha256 ('0' * 64) } '*Unsupported Windows producer host*'
     Require-Refused 'producer-wrong-reviewed-compiler' { Resolve-ReviewedWindowsProducer -InstallationVersion '18.11.12315.225' -CompilerSha256 $baseline.compilerExecutableSha256 } '*Unsupported Windows producer host*'
+    Require-Refused 'producer-new-host-wrong-reviewed-compiler' { Resolve-ReviewedWindowsProducer -InstallationVersion '18.11.12328.437' -CompilerSha256 $baseline.compilerExecutableSha256 } '*Unsupported Windows producer host*'
     $env:VafadarWindowsCipherVariant = 'unknown-fixture'
     Require-Refused 'unknown-package-variant' { Get-ReviewedWindowsPackageContents } '*Unsupported Windows cipher package variant*'
 } finally { $env:VafadarWindowsCipherVariant = $originalVariant }

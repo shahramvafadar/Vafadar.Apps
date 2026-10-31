@@ -87,4 +87,32 @@ function Resolve-ReviewedWindowsProducer {
     throw 'Unsupported Windows producer host.'
 }
 
-Export-ModuleMember -Function Resolve-ReviewedWindowsToolchain,Get-ReviewedWindowsToolchain,Get-ReviewedWindowsPackageContents,Resolve-ReviewedWindowsProducer
+function Assert-RequestedWindowsProducer {
+    <# .SYNOPSIS Refuses a different rolling image before repeating native work for a specific producer request. #>
+    param([Parameter(Mandatory)]$Observation, [Parameter(Mandatory)]$Request,
+        [Parameter(Mandatory)]$Policy, [Parameter(Mandatory)][string]$CandidateVersion)
+    if ($Request.schemaVersion -ne 1 -or $Policy.schemaVersion -ne 2 -or
+        $Request.candidateVersion -cne $CandidateVersion -or
+        $CandidateVersion -cnotmatch '^\d+\.\d+\.\d+-candidate\.[1-9][0-9]*$' -or
+        $Request.installationVersion -notin $Policy.installationVersions -or
+        $Request.toolsVersion -cne $Policy.toolsVersion -or $Request.sdkVersion -cne $Policy.sdkVersion -or
+        @($Policy.compilers | Where-Object { $_.sha256 -ceq $Request.compilerSha256 -and $_.fileVersion -ceq $Request.compilerFileVersion }).Count -ne 1) {
+        throw 'Unsupported requested Windows producer identity.'
+    }
+    if ($Observation.InstallationVersion -cne $Request.installationVersion) {
+        throw ('The requested producer image is not available on this runner. Required={0}; Observed={1}; no native build is admitted.' -f
+            $Request.installationVersion, $Observation.InstallationVersion)
+    }
+    if ($Observation.ToolsVersion -cne $Request.toolsVersion -or $Observation.SdkVersion -cne $Request.sdkVersion -or
+        -not $Observation.CompilerPresent -or -not $Observation.SdkPresent -or
+        $Observation.CompilerSha256 -cne $Request.compilerSha256 -or $Observation.CompilerFileVersion -cne $Request.compilerFileVersion -or
+        $Observation.SignatureStatus -cne 'Valid' -or
+        $Observation.SignerSubject -cne 'CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US' -or
+        $Observation.CompilerExecuted -ne $false -or $Observation.ReviewedAdmissionGranted -ne $false) {
+        throw 'Observed compiler evidence differs from the requested Windows producer.'
+    }
+    # This admits only the requested observation to the existing compiler/native/source gates.
+    # It does not qualify native outputs or select a new consumer package identity.
+}
+
+Export-ModuleMember -Function Resolve-ReviewedWindowsToolchain,Get-ReviewedWindowsToolchain,Get-ReviewedWindowsPackageContents,Resolve-ReviewedWindowsProducer,Assert-RequestedWindowsProducer
