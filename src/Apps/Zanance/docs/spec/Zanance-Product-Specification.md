@@ -11772,3 +11772,8 @@ Preserve the account name/font and financial behavior while allowing its actuall
 
 Preserve the original asset-event reader/writer, resource and selected font while allowing the clipped error Retry caption to grow.18 OS200 contexts combine7 retained Loading states with29 new states. One actual Retry accepts the original default-location metadata, with20 other source collections exact and no financial/event row; that delta and the original equality failure remain explicit. No new unit count, all-new-APK, shipping accountless onboarding, wholeDB/key, general stability or release acceptance is inferred.
 [Actual clipping, source delta and restoration limits](../quality/original-asset-event-covers-and-growing-retry.md).
+
+### D-696 - Complete original holding-detail read Retry
+
+Preserve the holding-detail source/financial behavior and guarded original Refresh while allowing its clipped error Retry caption to grow at the selected font.18 OS200 contexts combine one historical Loading success and35 new states; one native Retry reaches the original missing-type state with source21 exact and zero metadata/financial preparation. No new unit count, populated holding/history, shipping accountless onboarding, wholeDB/key, general stability or release acceptance is inferred.
+[Actual native failure and bounded continuation](../quality/original-holding-detail-covers-and-growing-retry.md).

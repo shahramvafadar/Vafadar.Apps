@@ -33,9 +33,6 @@ public partial class HoldingDetailPage : ContentPage
         await LoadCoveredAsync();
         if (_moneyPresented) _viewModel.PriceEditor.SetMoneyPresentationActive(true);
     }
-    private async void OnReloadClicked(object? sender, EventArgs e) =>
-        await Presentation.Failures.GuardAsync(() => _viewModel.PriceEditor.RefreshCommand.ExecuteAsync(null));
-
     /// <summary>Keeps read failures on the original translated cover without a duplicate generic dialog.</summary>
     private async Task LoadCoveredAsync()
     {

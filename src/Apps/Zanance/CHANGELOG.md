@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-696: keep the complete holding-detail Retry caption readable with large system text and preserve its original guarded Refresh command.
+
 - D-695: keep the full asset-event read Retry caption visible at large system text, preserving its original font and command.
 
 - D-694: keep a scaled Android account title complete by wrapping its original name instead of replacing the end with an ellipsis.

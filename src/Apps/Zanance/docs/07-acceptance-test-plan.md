@@ -8592,3 +8592,8 @@ D693 original en/fa/de, both themes,360/412/680dp OS200 modal loading/error capt
 
 The18 en/fa/de, Light/Dark,360/412/680dp OSfont2.0 contexts cover36 states:7 historical unchanged Loading states plus29 new states, including all18 final Error states. Check actual native lines, last-line height, ellipsis, visible bounds and44dp targets. The changed Persian Retry executes once to Ready. Preserve the failed original full-source assertion: only the original default-location row is added;20 other collections are exact. Remaining17 contexts compare all21 collections to that accepted checkpoint. This is bounded component-cover evidence, not all-new-package observations, shipping accountless onboarding, wholeDB/key, general stability or full accessibility acceptance.
 [Actual metadata delta and restoration correction](quality/original-asset-event-covers-and-growing-retry.md).
+
+### D-696 - Original pushed holding-detail source covers
+
+18 en/fa/de, Light/Dark,360/412/680dp OSfont2.0 contexts cover36 loading/error states: one historical unchanged Loading plus35 new states. Check actual native lines/last-line height/ellipsis/bounds and44dp Retry/Back. The changed Persian Retry executes once to the visible original missing-type state with complete source21 equal; normal-scale price/financial successes are retained without replay. No36-new-unit-test, populated price/history, shipping accountless onboarding, general stability or full accessibility claim follows.
+[Actual native command and source boundary](quality/original-holding-detail-covers-and-growing-retry.md).

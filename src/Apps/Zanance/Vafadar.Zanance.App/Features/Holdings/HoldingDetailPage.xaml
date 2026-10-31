@@ -157,7 +157,8 @@
         </VerticalStackLayout>
         <VerticalStackLayout x:Name="ErrorSurface" Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
             <Label x:Name="ErrorCaption" Text="{v:Translate Error_Unexpected}" HorizontalTextAlignment="Center" />
-            <Button x:Name="RetryLoadButton" Text="{v:Translate Holdings_RetryLoad}" Style="{StaticResource SecondaryButton}" Clicked="OnReloadClicked" />
+            <!-- D-696: retain the original scaled caption and guarded Refresh while allowing its native target to grow. -->
+            <p:WrappingAction x:Name="RetryLoadButton" Text="{v:Translate Holdings_RetryLoad}" Appearance="Secondary" Command="{Binding PriceEditor.RefreshCommand}" />
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

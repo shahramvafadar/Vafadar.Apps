@@ -5399,3 +5399,8 @@ D694 completes35 missing original account-detail OS200 states across18 contexts 
 
 Complete18 OS200 loading/error contexts with7 retained unchanged Loading observations and29 changed/missing states. Six old English Error successes remain historical for the replaced control. One original type metadata Save and one changed native Retry are accepted once; the latter creates the original default location, with20 other typed collections exact and no event/valuation/account/ledger row. No D643 accepted financial command or new unit-test count is replayed or inferred.
 [Preserved failures and exact acceptance boundary](quality/original-asset-event-covers-and-growing-retry.md).
+
+### D-696 - Missing pushed holding-detail covers
+
+Complete18 OS200 contexts/36states using one retained unchanged Loading success and35 changed/missing states. One changed native Retry reaches the original missing-type state with source21 exact. No account/type/location/event/valuation/ledger preparation or accepted D419/D644 price/financial replay occurs. This is bounded missing-type read-cover evidence, not populated holding or whole-platform acceptance.
+[Original control failure and continuation](quality/original-holding-detail-covers-and-growing-retry.md).

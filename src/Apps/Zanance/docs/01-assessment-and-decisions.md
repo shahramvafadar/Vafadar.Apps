@@ -12500,3 +12500,8 @@ Allow an actually ellipsized native title to wrap at its existing font, then let
 
 Replace only the clipped ErrorSurface Retry with the existing Secondary WrappingAction. Preserve Holdings_RetryLoad, RetryLoadButton, ReloadCommand and AppFont/15-point text. The actual Persian two-line caption needs280px including the old padding but receives169px; the replacement retains70.875px native text and displays its complete226px label. Original readers/writers and financial behavior are unchanged. One actual Retry's existing default-location metadata delta is validated separately, never disguised as unchanged source.
 [Original failure, source boundary and restoration](quality/original-asset-event-covers-and-growing-retry.md).
+
+### D-696 - Growing original holding-detail read Retry
+
+The pushed detail's separate native Retry also clips its Persian last line:280px required versus169px arranged. Use the existing Secondary WrappingAction at the original font and bind the same guarded PriceEditor.RefreshCommand directly, removing only its obsolete click adapter. Actual unchanged70.875px text, native Retry-to-missing-type publication and exact source21 qualify the correction without changing readers/writers.
+[Actual failure and finite original scope](quality/original-holding-detail-covers-and-growing-retry.md).

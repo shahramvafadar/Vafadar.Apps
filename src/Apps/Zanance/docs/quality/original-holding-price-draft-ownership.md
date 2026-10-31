@@ -143,3 +143,7 @@ counts, not a causal host free-space claim.
 D-607's physical package, all three deadlines, consumed reboot and post-reboot unread source remain
 untouched. Physical adoption, broad DB/key/security/stability/performance/accessibility, iOS/provider/
 Store/release gates remain separate. Overall delivery stays active and further TalkBack stays last.
+
+## D-696 follow-through - original pushed read covers
+
+[D696](original-holding-detail-covers-and-growing-retry.md) qualifies the independent OS200 Loading/Error boundary and fixes actual Persian Retry clipping. It preserves the original PriceEditor.RefreshCommand and this model/writer.18 contexts combine one unchanged historical Loading observation with35 new states; one actual Retry reaches the original missing-type result with all21 collections exact. No account/type/price/event/financial setup or accepted D64412.34 price is replayed. Populated detail/financial, phone and wider release acceptance do not expand.
