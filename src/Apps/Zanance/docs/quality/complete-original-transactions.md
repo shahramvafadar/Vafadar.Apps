@@ -229,3 +229,7 @@ host free space or complete residual cleanup.
 No broad acceptance of database/keys, security, stability, Home speed, accessibility,
 iOS, providers, Store or publication is established by this batch. D-607's three original
 physical deadlines, packages, unread post-reboot source and other work remain untouched.
+
+## D-698 follow-through - independent source-cover text
+
+[D698](original-transaction-covers-and-growing-retry.md) corrects actual Spanish Retry clipping at OS200 while preserving this original model/reader/writer and compact title/Add/viewport. Its two-page40-context scope retains4 unchanged Loading observations and checks76 changed/missing states; one original transaction Retry reaches Ready with source21 exact. No accepted Review/Delete/Undo, saved-query or financial preparation repeats. Earlier title/ready/financial acceptance remains scoped to its original evidence.

@@ -12510,3 +12510,8 @@ The pushed detail's separate native Retry also clips its Persian last line:280px
 
 The original overview Retry also clips its280px two-line requirement into169px. Use existing Secondary WrappingAction at the original font and a real AsyncRelayCommand through the original Failures.GuardAsync/LoadCoveredAsync path. Actual native execution and unchanged source21 qualify the correction without model/reader/writer changes.
 [Original failure and precise scope](quality/original-holdings-covers-and-growing-retry.md).
+
+### D-698 - Complete transaction and reimbursement read actions
+
+Keep the original Persian successes; actual Spanish Retry needs224px but receives139px in both original pages. Replace only those error controls with existing Secondary WrappingAction and real AsyncRelayCommand through the original guarded LoadAsync. Preserve font, title/Add/viewport, cancellation and source ownership; no model/reader/writer/resource change. One native Retry per page reaches Ready with source21 exact.
+[Original failures and finite six-language scope](quality/original-transaction-covers-and-growing-retry.md).

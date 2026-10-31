@@ -1,3 +1,5 @@
+using CommunityToolkit.Mvvm.Input;
+
 namespace Vafadar.Zanance.App.Features.Entries;
 
 public partial class ReimbursementsPage : ContentPage
@@ -10,9 +12,9 @@ public partial class ReimbursementsPage : ContentPage
     {
         InitializeComponent();
         BindingContext = _viewModel = viewModel;
+        // D-698: keep the existing source-read and failure boundary on the growing action's native command.
+        RetryLoadButton.Command = new AsyncRelayCommand(() => Presentation.Failures.GuardAsync(_viewModel.LoadAsync));
     }
-
-    private async void OnReloadClicked(object? sender, EventArgs e) => await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
 
     protected override async void OnAppearing()
     {

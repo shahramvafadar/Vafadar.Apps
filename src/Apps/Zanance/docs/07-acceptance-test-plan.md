@@ -8602,3 +8602,8 @@ The18 en/fa/de, Light/Dark,360/412/680dp OSfont2.0 contexts cover36 states:7 his
 
 18 en/fa/de, Light/Dark,360/412/680dp OSfont2.0 contexts pass full toolbar/loading/error lines, last-line height, ellipsis/bounds and44dp Back/Retry. One historical unchanged Loading plus35 new states form36 observations; one changed native Retry reaches the actual empty list with source21 equal. No new unit count, populated holding/financial, shipping accountless onboarding or full accessibility/stability acceptance follows.
 [Original failure and retained continuation](quality/original-holdings-covers-and-growing-retry.md).
+
+### D-698 - Original transaction/reimbursement source covers
+
+At actual OSfont2.0, both pages pass six languages/both themes at360dp and representative longest Spanish/RTL Persian at412/680dp:40contexts/80states comprise4 retained Loading and76 new states. Check native full title/captions, lines/last-line/ellipsis/bounds and44dp targets with source-covered Add disabled. Each changed Retry executes once to Ready; original Home/Back and source21 remain exact. No new unit count, financial replay, all-language/all-width, shipping accountless onboarding, general stability or full accessibility claim follows.
+[Actual failures and exact scope](quality/original-transaction-covers-and-growing-retry.md).

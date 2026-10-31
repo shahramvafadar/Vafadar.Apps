@@ -147,3 +147,7 @@ early D-607 observation occurs. Physical adoption waits for its actual terminal
 delivery/source/cleanup. Full database/key/security, general ANR/crash/stability,
 whole-Home two-second performance, all accessibility/device/platform, iOS/provider/
 Store/publication acceptance remain separate. Goal stays active and TalkBack last.
+
+## D-698 follow-through - independent read-error captions
+
+[D698](original-transaction-covers-and-growing-retry.md) corrects actual Spanish Retry clipping at the selected native font. The two-page40-context scope retains4 unchanged Loading observations and adds76 changed/missing states; one original reimbursement Retry reaches Ready with source21 exact. Existing rows, accepted receive-money/financial actions and original source setup are not replayed. This expands only the named accountless cover boundary, not populated finance, phone or release acceptance.

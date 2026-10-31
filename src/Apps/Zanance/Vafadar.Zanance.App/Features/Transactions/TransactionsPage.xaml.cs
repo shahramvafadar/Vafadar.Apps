@@ -1,3 +1,5 @@
+using CommunityToolkit.Mvvm.Input;
+
 namespace Vafadar.Zanance.App.Features.Transactions;
 
 public partial class TransactionsPage : ContentPage
@@ -14,6 +16,8 @@ public partial class TransactionsPage : ContentPage
     {
         InitializeComponent();
         BindingContext = _viewModel = viewModel;
+        // D-698: preserve the original guarded read on the growing action's real native command.
+        RetryLoadButton.Command = new AsyncRelayCommand(() => Presentation.Failures.GuardAsync(_viewModel.LoadAsync));
         TransactionsLayout.SizeChanged += OnFilterLayoutChanged;
         TransactionsHeader.SizeChanged += OnFilterLayoutChanged;
         TransactionsHeader.PropertyChanged += OnHeaderLayoutPropertyChanged;
@@ -102,6 +106,4 @@ public partial class TransactionsPage : ContentPage
     /// <summary>Preserves original Shell Back for a pushed Transactions page with its own title row.</summary>
     private void OnHeaderBackClicked(object? sender, EventArgs e) => Shell.Current?.SendBackButtonPressed();
 
-    // The gate coalesces repeated taps; the normal failure dialog and the inline retry remain available.
-    private async void OnReloadClicked(object? sender, EventArgs e) => await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
 }

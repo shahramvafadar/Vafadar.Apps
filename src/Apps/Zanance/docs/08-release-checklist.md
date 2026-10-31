@@ -5629,3 +5629,8 @@ Strict Windows has0 warnings/errors. Full offline shipping caa0a7f5a79db6159710e
 
 Strict Windows0warnings/errors and full offline shipping c1e54c810cd1476e6a81dcbca42249816dcaa9b8d3c315cbeb5adc1dd47e7453 pass384ownAOT/408ELF/1608static16KiBLOAD/v2v3/CRC/ZIP16KiB. Phone adoption still waits for actual D607 completion/cleanup. Source21/OS/Home restore,41XML883404bytes hash-clean, freshUID/host/officialAVD retirement and3Cleans pass. Supplementary deletion is rejected before process creation:837files125327678logicalbytes remain frozen without retry/subset/alternate/move/escalation/reuse. Used artifacts/evidence and broader gates remain.
 [Native source, package and restoration limits](quality/original-holdings-covers-and-growing-retry.md).
+
+### D-698 - Complete transaction/reimbursement Retry qualification
+
+Strict Windows0warnings/errors and full offline shipping692f7c936949cedd721a2fc653091a4c72dcc8268ef854cbb3a63deb2489af50 pass384ownAOT/408ELF/1608static16KiBLOAD/v2v3/CRC/ZIP16KiB; actual manifest has no private review provider/authority. Samsung adoption still waits for actual D607 completion/cleanup. Source21/OS/Home restore,94XML3465279bytes hash-clean, freshUID/host/officialAVD retirement and3Cleans pass. Supplementary deletion is refused before process creation:837files125328008logicalbytes frozen without retry/subset/alternate/move/escalation/reuse. Used artifacts/evidence and wider gates remain.
+[Package, original native commands and restoration](quality/original-transaction-covers-and-growing-retry.md).

@@ -63,7 +63,8 @@
         </VerticalStackLayout>
         <VerticalStackLayout Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
             <Label Text="{v:Translate Error_Unexpected}" HorizontalTextAlignment="Center" />
-            <Button x:Name="RetryLoadButton" Text="{v:Translate Tx_RetryLoad}" Style="{StaticResource SecondaryButton}" Clicked="OnReloadClicked" />
+            <!-- D-698: grow the native Retry around its complete caption without changing the original source reader. -->
+            <p:WrappingAction x:Name="RetryLoadButton" Text="{v:Translate Tx_RetryLoad}" Appearance="Secondary" />
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

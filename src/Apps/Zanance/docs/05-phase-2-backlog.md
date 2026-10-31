@@ -5409,3 +5409,8 @@ Complete18 OS200 contexts/36states using one retained unchanged Loading success 
 
 18 contexts/36states combine one unchanged historical Loading success and35 new states. One original native Retry reaches the real empty list with source21 exact and no account/type/location/event/valuation/ledger setup. D449's accepted goal OS200 cases and old holding financial scenarios remain retained without replay.
 [Finite original native result](quality/original-holdings-covers-and-growing-retry.md).
+
+### D-698 - Missing transaction/reimbursement read covers
+
+40 contexts/80states cover both pages: six languages/both themes at360dp, plus Spanish/Persian at412/680dp. Retain4 unchanged Loading observations and qualify76 changed/missing states. Two original native Retry actions reach Ready with source21 exact; old Review/Delete/Undo/saved-query/receive-money/financial successes are not replayed. This is accountless cover evidence, not populated finance or every language/width combination.
+[Precise source and retained boundary](quality/original-transaction-covers-and-growing-retry.md).

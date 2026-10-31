@@ -206,7 +206,8 @@
         </VerticalStackLayout>
         <VerticalStackLayout Grid.Row="2" Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
             <Label Text="{Binding ReadFeedback}" HorizontalTextAlignment="Center" />
-            <Button x:Name="RetryLoadButton" Text="{v:Translate Tx_RetryLoad}" Style="{StaticResource SecondaryButton}" Clicked="OnReloadClicked" />
+            <!-- D-698: retain the selected font and original read while allowing a complete translated Retry caption. -->
+            <p:WrappingAction x:Name="RetryLoadButton" Text="{v:Translate Tx_RetryLoad}" Appearance="Secondary" />
         </VerticalStackLayout>
 
         <!-- Bulk actions (F2-TX-04) -->

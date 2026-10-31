@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-698: keep long Retry captions complete in Transactions and Reimbursements at large system text, preserving the original read guards and right-of-title Add layout.
+
 - D-697: keep the complete holdings-list Retry caption readable at large system text while retaining the original covered read and error handling.
 
 - D-696: keep the complete holding-detail Retry caption readable with large system text and preserve its original guarded Refresh command.

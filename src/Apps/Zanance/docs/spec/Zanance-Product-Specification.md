@@ -11782,3 +11782,8 @@ Preserve the holding-detail source/financial behavior and guarded original Refre
 
 Preserve original overview/source/financial behavior while allowing its clipped error action to grow at the selected font.18 OS200 contexts combine one retained Loading and35 new states; one native Retry reaches the real empty list with complete source21 equal and no metadata/financial setup. No new unit count, populated holdings, wholeDB/key, general stability or release acceptance is inferred.
 [Actual failure and finite scope](../quality/original-holdings-covers-and-growing-retry.md).
+
+### D-698 - Complete transaction/reimbursement read Retry
+
+Preserve original source/financial/navigation behavior and compact Transactions Add while allowing long Retry captions to grow at the selected font.40 OS200 contexts cover six languages at360dp and Spanish/Persian at412/680dp in both themes;4 historical Loading states plus76 new states and one real Retry per page pass with source21 exact. No new unit count, financial replay, full language/width Cartesian, populated finance, wholeDB/key or broad release acceptance is inferred.
+[Actual original failures and acceptance limits](../quality/original-transaction-covers-and-growing-retry.md).

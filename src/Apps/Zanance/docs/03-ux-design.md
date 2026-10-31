@@ -3475,3 +3475,8 @@ The pushed detail's source-error action must grow around the complete translatio
 
 Allow the original overview Retry caption to grow at the selected font. Keep full original toolbar/loading/error text, native Back,44dp targets and covered-read failure handling. Full outer bounds and ellipsis0 do not excuse a clipped last line.
 [Actual geometry and original command](quality/original-holdings-covers-and-growing-retry.md).
+
+### D-698 - Complete transaction read-error captions
+
+Transactions/Reimbursements Retry grows around the full translation at the original font; no shortening or font reduction. Keep native semantics/44dp action, original read cover and disabled covered Add. Transactions retains its compact physical right-of-title Add, header and result viewport. A complete native rectangle and ellipsis0 do not excuse a clipped last line.
+[Actual original commands and geometry](quality/original-transaction-covers-and-growing-retry.md).
