@@ -5634,3 +5634,8 @@ Strict Windows0warnings/errors and full offline shipping c1e54c810cd1476e6a81dcb
 
 Strict Windows0warnings/errors and full offline shipping692f7c936949cedd721a2fc653091a4c72dcc8268ef854cbb3a63deb2489af50 pass384ownAOT/408ELF/1608static16KiBLOAD/v2v3/CRC/ZIP16KiB; actual manifest has no private review provider/authority. Samsung adoption still waits for actual D607 completion/cleanup. Source21/OS/Home restore,94XML3465279bytes hash-clean, freshUID/host/officialAVD retirement and3Cleans pass. Supplementary deletion is refused before process creation:837files125328008logicalbytes frozen without retry/subset/alternate/move/escalation/reuse. Used artifacts/evidence and wider gates remain.
 [Package, original native commands and restoration](quality/original-transaction-covers-and-growing-retry.md).
+
+### D-699 - Bounded PDF recipient acceptance
+
+Original native render/cache/chooser/recipient read and two-page visual inspection pass with producer/receiver/host byte identity, temporary READ revocation and source21 exact. Only necessary independent producer192AOT/204ELF/804staticLOAD and recipient18AOT/28ELF/102staticLOAD are built strict/offline/nondebug; no unchanged shipping/Windows or financial test is repeated. Original OS/Home restore, two fresh UIDs/21hash-matched XML/officialAVD retire and two standardCleans pass. Supplementary deletion is rejected before process creation:923files130474673logicalbytes frozen without retry/subset/alternate/move/escalation/reuse. Used APKs/source/PDF/evidence remain outside those scopes. Phone/D607 and broader release gates remain unchanged.
+[Original output, local recipient and precise limits](quality/original-report-pdf-recipient-handoff.md).

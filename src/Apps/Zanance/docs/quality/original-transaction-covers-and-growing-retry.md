@@ -114,3 +114,7 @@ protected. Main adoption waits for actual D607 completion/cleanup. TalkBack stay
 deferred. Broader DB/key/security, general stability/ANR/crash, two-second Home,
 accessibility/iOS, genuine providers/Store and release remain independent gates.
 The overall delivery goal stays active.
+
+## Sole exact-head CI follow-through - 31 October 2026
+
+The one consumed exact-head response for28de115d14c5b947cfd0c7304fafcc28327b2d1b reports [CI completed/success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41230055515) and [CodeQL completed/success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41230055523). The actual delayed observation is retained in its ISO receipt; it is not claimed to have happened exactly16minutes after push. Only its own automation is deleted; no second GET or successful job replay occurs.

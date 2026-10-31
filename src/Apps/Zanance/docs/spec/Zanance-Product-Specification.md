@@ -11787,3 +11787,8 @@ Preserve original overview/source/financial behavior while allowing its clipped 
 
 Preserve original source/financial/navigation behavior and compact Transactions Add while allowing long Retry captions to grow at the selected font.40 OS200 contexts cover six languages at360dp and Spanish/Persian at412/680dp in both themes;4 historical Loading states plus76 new states and one real Retry per page pass with source21 exact. No new unit count, financial replay, full language/width Cartesian, populated finance, wholeDB/key or broad release acceptance is inferred.
 [Actual original failures and acceptance limits](../quality/original-transaction-covers-and-growing-retry.md).
+
+### D-699 - Original report PDF recipient boundary
+
+The original report's native render/cache/Share as PDF route delivers an identical17032byte/two-page English overview through Android chooser to an isolated offline recipient. Actual producer-UID ownership, temporary READ grant/revocation, visual page inspection and full21 typed source equality pass. One necessary fresh original opening0/income12.34 cohort is accepted once; no old financial scenario repeats. Production is unchanged. This does not establish all report packages/languages/consumers, wholeDB/key, phone adoption or general release acceptance.
+[Original document, preserved failures and scope](../quality/original-report-pdf-recipient-handoff.md).

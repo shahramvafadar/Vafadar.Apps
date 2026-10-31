@@ -5414,3 +5414,8 @@ Complete18 OS200 contexts/36states using one retained unchanged Loading success 
 
 40 contexts/80states cover both pages: six languages/both themes at360dp, plus Spanish/Persian at412/680dp. Retain4 unchanged Loading observations and qualify76 changed/missing states. Two original native Retry actions reach Ready with source21 exact; old Review/Delete/Undo/saved-query/receive-money/financial successes are not replayed. This is accountless cover evidence, not populated finance or every language/width combination.
 [Precise source and retained boundary](quality/original-transaction-covers-and-growing-retry.md).
+
+### D-699 - Missing original PDF recipient-read boundary
+
+Complete one real original report Share as PDF through Android chooser to an owned offline local recipient. A necessary new account opening0 and one original income12.34 are accepted once with exclusive markers/exact guards; no historical financial or export scenario repeats. The original17032byte/two-page PDF matches producer/receiver/host SHA, both rendered pages are inspected and temporary READ access is revoked after normal return. Full21 source remains equal before/after share. No product change, new unit-test count, broad report corpus or phone acceptance is inferred.
+[Original recipient and document evidence](quality/original-report-pdf-recipient-handoff.md).

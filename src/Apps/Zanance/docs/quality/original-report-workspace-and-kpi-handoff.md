@@ -1,5 +1,10 @@
 # Original report workspace and source-bound KPI navigation
 
+## Separate D-699 follow-through - 31 October 2026
+
+The missing actual PDF recipient-read boundary is qualified in a fresh original report cohort without repeating D647's accepted ownership/KPI/contribution scenarios. Actual renderer/cache/Android chooser/local offline recipient, identical original PDF bytes, both rendered pages, READ revocation and full21 source equality pass. This is not physical delivery or broad report corpus acceptance.
+[Original document and recipient boundary](original-report-pdf-recipient-handoff.md).
+
 ## Scope and published failures (D-647, 29 October 2026)
 
 This batch completes original report read, page/tab/root, row/native command, export and

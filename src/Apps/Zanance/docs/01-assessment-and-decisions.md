@@ -12515,3 +12515,8 @@ The original overview Retry also clips its280px two-line requirement into169px. 
 
 Keep the original Persian successes; actual Spanish Retry needs224px but receives139px in both original pages. Replace only those error controls with existing Secondary WrappingAction and real AsyncRelayCommand through the original guarded LoadAsync. Preserve font, title/Add/viewport, cancellation and source ownership; no model/reader/writer/resource change. One native Retry per page reaches Ready with source21 exact.
 [Original failures and finite six-language scope](quality/original-transaction-covers-and-growing-retry.md).
+
+### D-699 - Original PDF recipient delivery without external sending
+
+Complete the previously missing native report recipient-read boundary using one original Share as PDF and an isolated offline local recipient. Preserve original renderer/cache/URI grant behavior; the receiver verifies actual authority/UID/MIME and temporary READ-only access, reads once and exposes only its accepted owned copy. One necessary new original opening0/income12.34 cohort makes the report nonempty without replaying earlier financial successes. Exact producer/recipient/host PDF bytes, visual inspection of both original pages, grant revocation and full21 source equality qualify this finite scope without a production change.
+[Original document, preserved failures and acceptance limits](quality/original-report-pdf-recipient-handoff.md).

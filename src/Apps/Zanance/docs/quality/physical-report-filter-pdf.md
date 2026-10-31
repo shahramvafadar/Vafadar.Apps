@@ -1,5 +1,10 @@
 # Physical report, saved-filter and PDF handoff (D-323)
 
+## Separate D-699 follow-through - 31 October 2026
+
+The bounded recipient-read gap is now qualified separately on a fresh owned emulator: one original PDF share, actual local offline recipient, identical producer/receiver/host bytes, two rendered pages, temporary READ revocation and source21 equality. D323's physical chooser-only boundary remains unchanged; no old phone/financial/filter scenario is replayed or reclassified.
+[Original document and precise recipient scope](original-report-pdf-recipient-handoff.md).
+
 ## Scope and unchanged binary
 
 This is an actual Samsung SM-A176B ARM64/API36/4KiB acceptance batch on the retained fictitious

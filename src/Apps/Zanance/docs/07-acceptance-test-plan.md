@@ -8607,3 +8607,8 @@ The18 en/fa/de, Light/Dark,360/412/680dp OSfont2.0 contexts cover36 states:7 his
 
 At actual OSfont2.0, both pages pass six languages/both themes at360dp and representative longest Spanish/RTL Persian at412/680dp:40contexts/80states comprise4 retained Loading and76 new states. Check native full title/captions, lines/last-line/ellipsis/bounds and44dp targets with source-covered Add disabled. Each changed Retry executes once to Ready; original Home/Back and source21 remain exact. No new unit count, financial replay, all-language/all-width, shipping accountless onboarding, general stability or full accessibility claim follows.
 [Actual failures and exact scope](quality/original-transaction-covers-and-growing-retry.md).
+
+### D-699 - Actual original PDF and granted-URI recipient
+
+On a fresh API36/x64/4096 cohort, check original report12.34EUR after exactly one guarded necessary income. Invoke original Share as PDF once, choose only the independent offline local recipient in the actual Android chooser and verify provider ownership/UID/MIME/temporary READ-only grant. Producer cache/receiver/host must have identical17032bytes/SHA; inspect both actual rendered pages, full text, table continuation and disclaimer without a substitute PDF. Normal return must revoke READ and preserve all21 typed source collections. This qualifies one English overview, not all report packages/languages/recipients or physical delivery; old successful finance/KPI tests remain retained.
+[Exact original output and preserved failures](quality/original-report-pdf-recipient-handoff.md).
