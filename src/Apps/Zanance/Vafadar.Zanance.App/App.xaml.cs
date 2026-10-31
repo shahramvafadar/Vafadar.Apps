@@ -136,7 +136,7 @@ public partial class App : Application
             ShowOnboarding();
         }
 
-        RunForegroundWork(starting: false);
+        RunForegroundWork();
     }
 
     /// <summary>Shows onboarding again, e.g. after all data was deleted.</summary>
@@ -397,12 +397,30 @@ public partial class App : Application
         {
             var store = _services.GetRequiredService<ZananceStore>();
             var legacyUnits = Preferences.Default.Get("display_units", string.Empty);
+            // D-704: only the first process publication has no live UI Undo. A recreated activity retains
+            // in-memory offers, so its startup must not purge their receipts as if the process restarted.
+            var cleanStartupAttachments = !_databaseReady;
             var settings = await Task.Run(async () =>
             {
 #if DEBUG
                 _startupStorageThread = Environment.CurrentManagedThreadId;
 #endif
                 await _services.GetRequiredService<Startup.IAppDatabaseStartup>().PrepareAsync(presentation.Token);
+                if (cleanStartupAttachments)
+                {
+                    try
+                    {
+                        // Complete before the first interactive page. A delayed foreground purge could otherwise
+                        // remove a receipt belonging to an entry deleted after that page was already published.
+                        await store.PurgeOrphanAttachmentsAsync(presentation.Token);
+                    }
+                    catch (OperationCanceledException) when (presentation.Token.IsCancellationRequested) { throw; }
+                    catch (Exception ex) when (ex is not OutOfMemoryException)
+                    {
+                        // Preserve the existing non-fatal cleanup policy; a current process never retries over live Undo.
+                        System.Diagnostics.Debug.WriteLine($"Attachment cleanup failed: {ex}");
+                    }
+                }
                 var prepared = await store.GetSettingsAsync(presentation.Token);
                 if (prepared.DisplayUnits is null)
                 {
@@ -439,7 +457,7 @@ public partial class App : Application
             if (Features.Sync.PersonalSyncBuild.IsAvailable)
                 _services.GetRequiredService<Features.Sync.PersonalSyncForegroundWorker>().Start();
             _services.GetRequiredService<ReminderService>().WatchChanges(_services.GetRequiredService<Profiles.ProfileService>());
-            _startupReady.TrySetResult(); RunForegroundWork(starting: true); succeeded = true;
+            _startupReady.TrySetResult(); RunForegroundWork(); succeeded = true;
         }
         finally { presentation.EndPreparation(succeeded); }
     }
@@ -460,17 +478,16 @@ public partial class App : Application
         if (_databaseReady)
             _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Resume();
         if (_databaseReady) Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().ResumeAsync());
-        RunForegroundWork(starting: false);
+        RunForegroundWork();
     }
 
     // Due plan occurrences are recorded whenever the app comes to the foreground, then reminders are rebuilt;
     // correctness never depends on background execution (REC-22). Failures are not fatal: occurrences stay open.
-    private void RunForegroundWork(bool starting)
+    private void RunForegroundWork()
     {
         if (!_databaseReady) return;
         var processor = _services.GetRequiredService<AutoPostProcessor>();
         var reminders = _services.GetRequiredService<ReminderService>();
-        var store = _services.GetRequiredService<ZananceStore>();
         var today = DateOnly.FromDateTime(_services.GetRequiredService<TimeProvider>().GetLocalNow().DateTime);
         _ = Task.Run(async () =>
         {
@@ -486,21 +503,6 @@ public partial class App : Application
             await reminders.RefreshAsync();
             await RunAutomaticBackupAsync();
 
-            // Receipts of deleted entries are removed at start only: undo is kept in memory, so after a restart no
-            // deleted entry can come back, while on resume an undo may still be pending (F2-TX-04).
-            if (!starting)
-            {
-                return;
-            }
-
-            try
-            {
-                await store.PurgeOrphanAttachmentsAsync();
-            }
-            catch (Exception ex) when (ex is not OutOfMemoryException)
-            {
-                System.Diagnostics.Debug.WriteLine($"Attachment cleanup failed: {ex}");
-            }
         });
     }
 

@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-704: run deleted-entry receipt cleanup under startup cover, before pages can create a new Undo offer.
+
 - D-703: keep startup and recovery attached to their original window, so a delayed request cannot prepare a newly recreated window.
 
 - D-701: enforce the portable SQLCipher image page budget before native export for callers without an omitted-table policy, retaining complete permitted output and cancellable I/O failure handling.

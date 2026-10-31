@@ -136,3 +136,7 @@ accessibility/iOS/provider/Store/release gates remain open and the delivery goal
 ## Sole D702 CI response
 
 The single scheduled exact-head response shows [CI in_progress/no conclusion](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41238340564) and [CodeQL completed/success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41238340507). Its exclusive consumed marker, raw response and receipt are retained and only that schedule is deleted. No second query or later CI success is inferred.
+
+## Sole delayed pushed-head CI response
+
+The consumed exact-head response shows [CI in_progress/no conclusion](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41239801653) and [CodeQL completed/success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41239801703). The exclusive marker/raw response/receipt remain and only that schedule is deleted. No secondGET or later CI success is inferred.
