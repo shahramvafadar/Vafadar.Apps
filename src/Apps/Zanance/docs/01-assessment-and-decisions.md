@@ -12303,3 +12303,19 @@ no general stability fix is claimed. Exact OS/source restoration, fresh UID/XML/
 and standard/supplementary cleanup are complete. Phone/D-607 remain untouched; Main adoption
 retains its original timed-cohort conditions and broader release gates remain open.
 [Finite original native evidence, real failures and limits](quality/original-editor-cover-native-text-scale.md).
+
+
+### D-679 - Exact symbols for the retained original native fault
+
+The existing D-678 PID 10110/UID 10216 native fault is mapped without another native run:
+the local runtime equals the used APK module, and the official debug file's BuildID and
+GNU debug-link CRC match. All 13 PCs are inside exact function ranges; existing LLVM
+resolves16 inline/location entries across seven actual package-repository source files.
+Fault ordinal 0 is in SGen pointer scanning/copy-or-mark during major collection/card scanning
+triggered by array allocation; its inner line 0 remains unavailable. Reference origin,
+exclusive cause and a repair remain unproved. No source/runtime/GC/build/test/financial or
+device change occurs. The temporary downloader is uninstalled; supplemental deletion of
+two new cache/tool roots is rejected before execution and frozen, with one 15762568-byte
+duplicate remaining. Used debug/source/evidence are retained. QA-06 and the delivery goal
+remain active; D-607/phone and all broader acceptance gates remain untouched.
+[Exact symbol/source binding, actual limits and cleanup refusal](quality/exact-original-native-fault-symbols.md).

@@ -163,3 +163,12 @@ provider/public hosting/Store and publication remain separate open gates.
 ## Supplementary owned-output cleanup
 
 The single bounded supplementary cleanup removes 2117 files/375181264 logical bytes from only the newly owned D-678 residuals and redundant unsigned publish files. The used signed APK/evidence/archive are retained. No historical rejected scope is retried or reused.
+
+
+## Later exact-symbol diagnosis
+
+D-679 retrieves the original matching debug symbols and maps the retained fault to exact
+functions/source without another native run or product change. The packaged stripped symbol
+table limitation above remains historical fact; the later matching debug file supplies new
+evidence. The origin and repair of the failure are still open.
+[Exact symbols and limits](exact-original-native-fault-symbols.md).
