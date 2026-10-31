@@ -7,6 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/ProtectedBackupRestoreReceiver.cs" Link="ProtectedBackupRestoreReceiver.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/BackupRestorePublication.cs" Link="BackupRestorePublication.cs" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedProfileStorage.cs" Link="ProtectedProfileStorage.cs" />
     <ProjectReference Include="$(RepoRoot)src/Libraries/Vafadar.Localization/Vafadar.Localization.csproj" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Startup/IAppDatabaseStartup.cs" Link="IAppDatabaseStartup.cs" />
@@ -24,7 +25,7 @@
     <Content Include="$(NativeSqlCipherPath)" Link="sqlcipher.dll" CopyToOutputDirectory="Always"
              Condition="'$(NativeSqlCipherPath)' != ''" />
   </ItemGroup>
-  <Target Name="RequireCandidate" BeforeTargets="Build">
+  <Target Name="RequireCandidate" BeforeTargets="PrepareForBuild">
     <Error Condition="'$(NativeSqlCipherPath)' == '' Or !Exists('$(NativeSqlCipherPath)')"
            Text="Provide NativeSqlCipherPath pointing to the source-built candidate, not an app database." />
   </Target>

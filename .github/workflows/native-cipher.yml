@@ -51,11 +51,27 @@ jobs:
           global-json-file: global.json
       - name: Refuse immutable producer identity reuse
         shell: pwsh
-        run: ./eng/native/sqlcipher/Test-ProducerVersion.ps1
+        run: |
+          ./eng/native/sqlcipher/Test-ProducerVersion.ps1
+          ./eng/native/sqlcipher/Test-WindowsProducerRequest.ps1
       - name: Qualify exact installed Windows compiler
         shell: pwsh
+        env:
+          PRODUCER_ONLY: ${{ inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-') }}
+          CANDIDATE_VERSION: ${{ inputs.candidate_version }}
+          PRODUCER_BRANCH: ${{ github.ref_name }}
         run: |
-          ./eng/native/sqlcipher/Observe-WindowsToolchain.ps1
+          $observed = ./eng/native/sqlcipher/Observe-WindowsToolchain.ps1 | Out-String | ConvertFrom-Json
+          $observed | ConvertTo-Json
+          if ($env:PRODUCER_ONLY -eq 'true') {
+            if (-not $env:CANDIDATE_VERSION -and $env:PRODUCER_BRANCH -cmatch '^shahram/native-producer-(?<version>[0-9]+\.[0-9]+\.[0-9]+-candidate\.[1-9][0-9]*)$') {
+              $env:CANDIDATE_VERSION = $Matches.version
+            }
+            Import-Module ./eng/native/sqlcipher/WindowsToolchain.psm1 -Force
+            $request = Get-Content ./eng/native/sqlcipher/windows.producer.request.json -Raw | ConvertFrom-Json
+            $policy = Get-Content ./eng/native/sqlcipher/windows.compiler.acceptance.json -Raw | ConvertFrom-Json
+            Assert-RequestedWindowsProducer -Observation $observed -Request $request -Policy $policy -CandidateVersion $env:CANDIDATE_VERSION
+          }
           ./eng/native/sqlcipher/Select-HostedWindowsProducer.ps1 -EnvironmentFile $env:GITHUB_ENV
           ./eng/native/sqlcipher/Test-WindowsToolchain.ps1
       # No candidate cache: this lane proves two fresh outputs, not a reused local artifact.
@@ -115,6 +131,8 @@ jobs:
             artifacts/native-sqlcipher/build/windows-ci-*/exports.txt
             artifacts/native-sqlcipher/build/windows-ci-*/dependents.txt
             artifacts/native-sqlcipher/build/windows-ci-*/compiler-host-proof.json
+            ${{ (inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-')) && 'artifacts/native-sqlcipher/build/windows-ci-*/candidate/runtimes/win-x64/native/sqlcipher.dll' || '' }}
+            ${{ (inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-')) && 'artifacts/native-sqlcipher/build/windows-ci-*/candidate/licenses/*.txt' || '' }}
             artifacts/native-sqlcipher/build/windows-ci-*/candidate/manifest.json
             artifacts/native-sqlcipher/build/windows-ci-*/compatibility-proof.json
             artifacts/native-sqlcipher/build/windows-ci-*/compatibility-*/ef-proof.json

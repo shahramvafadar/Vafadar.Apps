@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "candidateVersion": "4.19.0-candidate.10",
+  "installationVersion": "18.11.12328.437",
+  "compilerSha256": "b0a1818ebae6da7f18230a84e76ce839212584ac4c2ab55b97a0d5268085da57",
+  "compilerFileVersion": "19.51.36260.0",
+  "toolsVersion": "14.51.36231",
+  "sdkVersion": "10.0.26100.0"
+}

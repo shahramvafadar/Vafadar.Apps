@@ -15,6 +15,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/ProtectedBackupRestoreReceiver.cs" Link="ProtectedBackupRestoreReceiver.cs" />
+    <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Features/Backup/BackupRestorePublication.cs" Link="BackupRestorePublication.cs" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedProfileStorage.cs" Link="ProtectedProfileStorage.cs" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Startup/IAppDatabaseStartup.cs" Link="IAppDatabaseStartup.cs" />
     <Compile Include="$(RepoRoot)src/Apps/Zanance/Vafadar.Zanance.App/Startup/ProtectedProfileRecovery.cs" Link="ProtectedProfileRecovery.cs" />
@@ -50,7 +51,7 @@
     <AndroidNativeLibrary Include="$(NativeCandidateDirectory)/arm64-v8a/libsqlcipher.so" Abi="arm64-v8a" />
     <AndroidNativeLibrary Include="$(NativeCandidateDirectory)/x86_64/libsqlcipher.so" Abi="x86_64" />
   </ItemGroup>
-  <Target Name="RequireCandidate" BeforeTargets="Build">
+  <Target Name="RequireCandidate" BeforeTargets="PrepareForBuild">
     <Error Condition="'$(NativeCandidateDirectory)' == '' Or !Exists('$(NativeCandidateDirectory)/x86_64/libsqlcipher.so') Or !Exists('$(NativeCandidateDirectory)/arm64-v8a/libsqlcipher.so')"
            Text="Provide NativeCandidateDirectory pointing to independently source-built Android slices." />
   </Target>

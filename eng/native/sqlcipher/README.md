@@ -25,6 +25,29 @@ equal native outputs, original source/diagnostic/schema gates and actual archive
 review before deciding whether this host can reuse an already identical consumer or
 requires a new immutable package version. Never merge the installer-only policy as
 completed consumer recovery, change existing package-entry pins or rerun Android here.
+
+The first producer run41186798703 actually receives the older image20261021.278.1/
+installer18.11.12315.225. Its two fresh native outputs both equal the existing candidate9
+DLL, but they do not qualify the requested newer host. Original schema execution then
+stops at a real current source-closure compile error: both independent compatibility
+projects omit `BackupRestorePublication`, now required by the original protected receiver.
+Link that actual production helper rather than removing its publication checks or
+introducing a stub. Strict Windows compile-only closure passes with the unchanged,
+exact reviewed local candidate7 DLL; no original native-schema run is claimed from that build.
+The complete Android compatibility build also passes with the two unchanged reviewed
+candidate5 native slices. An initial invocation omitted their required directory and
+failed packaging after C# compilation; the corrected build supplies both exact slices.
+Both projects now refuse missing native inputs during `PrepareForBuild`, before compiling
+their compatibility callers. These local checks do not execute schema or device acceptance.
+
+Producer-only requests now bind the actual observed image/compiler to
+`windows.producer.request.json` before fresh native compilation. Seventeen public-metadata
+fixture cases preserve wrong-image/signature/compiler/SDK/candidate refusals; fixtures
+are not actual hosted output acceptance. An older rolling image must stop before
+repeating its already successful native work. The ordinary reviewed compiler and package
+gates remain separate. Future producer artifacts also retain the exact fresh DLLs and
+their required notices, so a later failed step does not erase completed native evidence.
+These artifacts are diagnostic outputs, not consumer-admitted packages or release approval.
 An approved compiler executable is insufficient to reuse an existing native package identity.
 `Pack-Windows.ps1` refuses changed DLL or package-entry bytes under a pinned consumer version.
 Keep baseline and serviced producers separate; never allow alternative bytes for one version.
