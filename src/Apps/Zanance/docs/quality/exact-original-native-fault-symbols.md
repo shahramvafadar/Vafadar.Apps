@@ -115,3 +115,8 @@ One unchanged-original-SGen/default-concurrent-collector native input performs53
 
 Current original Home reader growth and exact runtime library source admit a separate bulk-copy-family question. A single unchanged-SGen/default-GC runtime-only input completes1467cohorts/146700000nodes and bounded identity checks with actual collection increases, without observed failure. It doesnot identify the original failing managed array or bad-reference origin, prove every native branch, reproduce/refute/fix the crash or justify another configuration switch. Product/financial/UI cases remain unchanged.
 [Source admission, actual counters and remaining causal boundary](original-list-growth-runtime-origin.md).
+
+## D-712 - Exact original top-frame instruction
+
+The original1001byte function is now decoded completely into283byte-matched instructions with an existing signed static utility, without a new package or application/native run. OriginalPC0x2edd7d/488b3b is mov rdi,qword ptr[rbx], an eight-byte read of the expected referenced object's first word on the decoded normal path; the prior field load/zero test are separate. Actual pointer/header/register values and origin remain unknown, and optimized inner DWARF line0 still does not identify a unique C statement. This narrows the operation without claiming cause or repair; the one1061byte temporary container is removed, original artifacts/textual proof retained.
+[Exact original byte mapping, method and limits](exact-original-fault-word-load.md).
