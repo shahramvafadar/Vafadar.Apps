@@ -12472,3 +12472,9 @@ Keep original Plans Retry text/read ownership while using existing growing Wrapp
 
 Keep the complete original menu and explanatory copy; only the German page heading becomes Elemente through a six-language page-only key. Actual original ellipsis5 is corrected at unchanged89px native text. No source, command or financial policy changes.
 [Actual original failure, native continuation and limits](quality/original-access-source-cover-os-text.md).
+
+
+### D-691 - Original retained Android title and Insights source covers
+
+Reapply a previously requested native toolbar height when AppCompat replaced its current layout parameters. Preserve the greatest owned height, scaled font, native arrow/commands and original content. The real retained Persian127px/151px failure is corrected at89px font; general GC/stability is not claimed fixed.
+[Actual original failure, native continuation and limits](quality/original-insights-source-cover-os-text.md).

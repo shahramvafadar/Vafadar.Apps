@@ -8564,3 +8564,9 @@ D689 accepts36original OS200 contexts/72loading-error states across en/fa/de, bo
 
 D690 accepts36contexts/72original loading/error states, en/fa/de and two themes at360/412/680dp and OSfont2.0. Exact source21, native captions/lastlines/RTLBack and restoration pass;23 existing resource contracts pass, with no new unit-test count or broad accessibility claim.
 [Actual original failure, native continuation and limits](quality/original-access-source-cover-os-text.md).
+
+
+### D-691 - Original retained Android title and Insights source covers
+
+D691 final en/fa/de, Light/Dark,360/412/680dp OS200 covers and retained360to412 Persian title regression pass native final-line/ellipsis/bounds/44dp targets with source21equal. Two corrected successes are retained;34affected/unfinished contexts continue. No new unit-test count or broad accessibility/stability proof.
+[Actual original failure, native continuation and limits](quality/original-insights-source-cover-os-text.md).

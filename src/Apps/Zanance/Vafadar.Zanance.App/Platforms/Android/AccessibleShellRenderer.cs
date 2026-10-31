@@ -116,10 +116,13 @@ internal sealed class AccessibleShellRenderer : ShellRenderer
             // height. Grow only the owned native toolbar; keep its arrow, title font and handlers.
             var required = layout.GetLineBottom(layout.LineCount - 1)
                 + title.CompoundPaddingTop + title.CompoundPaddingBottom + _titleVerticalChrome;
-            var height = Math.Max(_ordinaryToolbarHeight, required);
+            var height = Math.Max(_requestedToolbarHeight, Math.Max(_ordinaryToolbarHeight, required));
             // Never fight a framework remeasurement or shrink inside its global-layout pass.
             // A fresh toolbar owns a fresh baseline; this toolbar only grows for taller text.
-            if (height <= toolbar.Height || height <= _requestedToolbarHeight) return;
+            // D-691: AppCompat can replace the retained toolbar's layout parameters on a width
+            // change. A previous request is not proof that its current measured title still fits.
+            if (height <= toolbar.Height
+                || (height == _requestedToolbarHeight && parameters.Height == height)) return;
             _requestedToolbarHeight = height;
             parameters.Height = height;
             toolbar.LayoutParameters = parameters;

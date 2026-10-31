@@ -11744,3 +11744,9 @@ D689 preserves original source/read/financial behavior while making the Plans Re
 
 D690 preserves original source and financial behavior while keeping the German resource-page heading complete at large native text.36contexts/72states pass with5retained; no new unit-test count, financial write or physical adoption is claimed.
 [Actual original failure, native continuation and limits](../quality/original-access-source-cover-os-text.md).
+
+
+### D-691 - Original retained Android title and Insights source covers
+
+D691 preserves original source/financial behavior while keeping a retained Android title complete after width remeasurement. Actual151px text remains at89px font; final36contexts/72states pass with2retained target successes. No resource/model/runtime change or general stability/physical/release acceptance is claimed.
+[Actual original failure, native continuation and limits](../quality/original-insights-source-cover-os-text.md).

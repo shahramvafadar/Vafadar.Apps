@@ -5371,3 +5371,9 @@ D689 completes the named original Plans/Templates OS200 source-cover batch. Only
 
 D690 completes the named original resource/product-plan OS200 loading/error scope:36contexts/72states with5retained successes and31onlyunfinished/changed contexts. No nativeRetry, account setup, financial or provider command runs. Wider gates stay open.
 [Actual original failure, native continuation and limits](quality/original-access-source-cover-os-text.md).
+
+
+### D-691 - Original retained Android title and Insights source covers
+
+D691 completes the original Insights source-cover batch with36contexts/72states on the corrected renderer, retaining2target successes and checking only34affected/unfinished contexts. Original14pre-fix successes and all observer/GREF failures remain historical; no financial command is replayed.
+[Actual original failure, native continuation and limits](quality/original-insights-source-cover-os-text.md).

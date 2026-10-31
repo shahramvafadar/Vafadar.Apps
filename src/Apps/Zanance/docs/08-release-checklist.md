@@ -5591,3 +5591,9 @@ D689 fixes the observed German Plans Retry clipping; strictWindows/fullOffline38
 
 D690 strictWindows/fullOffline384AOT/408ELF/1608staticLOAD packages pass; shippingefa020db awaits actual D607 completion/cleanup before physical adoption. Fresh fixture/AVD retirement and4Cleans finish; supplementary deletion refusal remains explicit. No release gate is waived.
 [Actual original failure, native continuation and limits](quality/original-access-source-cover-os-text.md).
+
+
+### D-691 - Original retained Android title and Insights source covers
+
+D691 strictWindows/fullOffline384AOT/408ELF/1608staticLOAD/signature/CRC/ZIP16KiB pass. Shipping0765da44 awaits actual D607 completion/cleanup before Samsung adoption. Fresh restoration/retirement and3Cleans finish; supplementary cleanup result and diagnostic/native failures stay explicit. Wider release gates remain open.
+[Actual original failure, native continuation and limits](quality/original-insights-source-cover-os-text.md).

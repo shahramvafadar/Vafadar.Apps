@@ -3437,3 +3437,9 @@ not reduced. Root title Add and original Templates Back remain unchanged.
 
 Use ActiveItems_PageTitle only for the original resource page heading. German Elemente fits without reducing the selected font; all other languages preserve their existing title, and full menu/body/confirmation copy stays unchanged. Original pushed Back and source-cover captions remain complete at OS200.
 [Native evidence](quality/original-access-source-cover-os-text.md).
+
+
+### D-691 - Retained native title after viewport remeasurement
+
+A prior native height request must not hide a later clipped script line after AppCompat resets layout parameters. Reapply the greatest owned height when needed, preserving the selected font, full caption and native arrow/commands. Original Persian151px text at89px font remains complete across360to412dp; body/source covers and separate44dp exit/Retry targets stay reachable.
+[Original native proof](quality/original-insights-source-cover-os-text.md).

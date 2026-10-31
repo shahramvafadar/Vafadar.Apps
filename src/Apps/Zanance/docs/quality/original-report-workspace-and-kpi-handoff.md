@@ -123,3 +123,9 @@ are neither retried, subsetted, moved, escalated nor reused.
 Phone/D-607, all three deadlines, consumed reboot and post-reboot unread source remain
 untouched. Broader DB/key/security, performance/stability/accessibility, iOS/provider/Store/
 publication gates remain separate. Overall delivery remains active; TalkBack stays last.
+
+
+## D-691 follow-through - 31 October 2026
+
+The separate OS200 loading/error scope exposes and corrects an actual retained native toolbar height-cache defect. Final36contexts/72states pass with2corrected target successes retained and34affected/unfinished contexts continued; no successful scenario, account, payment, PDF/KPI or nativeRetry command is replayed. Diagnostic root/gate failures and live-process GREF/UI failure remain explicit; general stability is not claimed repaired.
+[Original native title and source-cover evidence](original-insights-source-cover-os-text.md).
