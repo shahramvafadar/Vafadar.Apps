@@ -116,7 +116,7 @@ public sealed class ReceiptWorkFlowTests
     {
         using var f = new FlowFixture(); var original = await SeedAsync(f); var access = new Access(); using var p = Provider(f, access); var native = new Native { Document = new(null) };
         var before = await GoalChooserFlowTests.SnapshotAsync(f); var session = Session(f, p, native); await session.ReadAttachmentAsync(original.Entry.Id, original.Attachment.Id);
-        Assert.Null(session.Error); Assert.Empty(native.Drafts); Assert.Equal(0, native.Picked); Assert.Equal(0, native.Unlocked); Assert.Equal(original.Attachment.Data, native.Recognition);
+        Assert.Null(session.Error); Assert.Empty(native.Drafts); Assert.Equal(0, native.Picked); Assert.Equal(1, native.Unlocked); Assert.Equal(original.Attachment.Data, native.Recognition);
         Assert.Equal(f.Translator["Receipt_Nothing"], Assert.Single(native.Alerts)); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
         Assert.Equal(9876, (await f.Store.GetEntryAsync(original.Entry.Id, Ct))!.Amount);
     }

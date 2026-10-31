@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-709: keep completed receipt recognition and safe feedback behind app unlock, retain busy ownership until actual completion, and reject results whose original page has retired.
+
 - D-705: preserve open forms when a queued display refresh resumes, and keep delayed refresh/report handoffs attached to their original navigation graph.
 
 - D-704: run deleted-entry receipt cleanup under startup cover, before pages can create a new Undo offer.

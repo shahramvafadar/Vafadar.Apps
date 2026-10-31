@@ -846,9 +846,15 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     [RelayCommand]
     private async Task ReadReceiptAsync()
     {
+        var shell = Shell.Current;
+        if (shell is null) return;
+        var owner = shell.CurrentPage;
+        bool Current() => !_publicationRetired && ReferenceEquals(Shell.Current, shell) && ReferenceEquals(shell.CurrentPage, owner)
+            && ReferenceEquals(owner?.BindingContext, this);
+        if (!Current()) return;
         if (!HasAccounts)
         {
-            await Shell.Current.GoToAsync(AppShell.AccountEditorRoute);
+            await shell.GoToAsync(AppShell.AccountEditorRoute);
             return;
         }
 
@@ -858,7 +864,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         }
 
         IsBusy = true;
-        try { await _receipts.PickAsync(); }
+        try { await _receipts.PickAsync(() => !_publicationRetired); }
         finally { IsBusy = false; }
     }
 
