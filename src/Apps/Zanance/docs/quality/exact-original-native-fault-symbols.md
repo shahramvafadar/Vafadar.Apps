@@ -110,3 +110,8 @@ Official SGen PR125116/release10 backport125213 changes non-array LOS card-start
 
 One unchanged-original-SGen/default-concurrent-collector native input performs53,891,361 generated old-to-young array stores/checks with2257 major-counter increments during120seconds, without observed failure. This does not reproduce, refute or fix the original fault. The missing-Delegate-barrier issue title was withdrawn and its actual non-array correction is the already excluded D700 path. No product/runtime/GC/financial change or original UI replay occurs.
 [Exact input, counters, original-source qualification and exclusions](bounded-reference-array-runtime-origin.md).
+
+## D-711 - Distinct growing reference-list input
+
+Current original Home reader growth and exact runtime library source admit a separate bulk-copy-family question. A single unchanged-SGen/default-GC runtime-only input completes1467cohorts/146700000nodes and bounded identity checks with actual collection increases, without observed failure. It doesnot identify the original failing managed array or bad-reference origin, prove every native branch, reproduce/refute/fix the crash or justify another configuration switch. Product/financial/UI cases remain unchanged.
+[Source admission, actual counters and remaining causal boundary](original-list-growth-runtime-origin.md).
