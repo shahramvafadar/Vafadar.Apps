@@ -18,7 +18,7 @@ Do not count an estimate or an unspecified broader-device statement as a ready t
 
 | Parent gate | Already qualified; do not repeat unchanged | Actual remaining boundary / next admission |
 |---|---|---|
-| A11Y-03 | D-566 original receipt-source dialogs and D-618 changed independent onboarding viewports:18 distinct actual OS200% contexts each,360/412/680dp, en/fa/de, both themes. See [receipt-source evidence](../../quality/receipt-source-os-text-and-covered-startup.md) and [onboarding evidence](../../quality/onboarding-independent-scroll-os-text.md). | Other changed controls need a named missing layout assertion before another matrix. Physical-device acceptance is separate; this does not reopen the completed emulator cohort. |
+| A11Y-03 | D-566 original receipt-source dialogs and D-618 changed independent onboarding viewports:18 distinct actual OS200% contexts each,360/412/680dp, en/fa/de, both themes. D-674 adds 18 original account covers; D-678 adds 54 goal/budget/asset-type loading/error contexts with three actual Retry actions. These bounded changed-cover cases are complete; retain their real process failures and do not replay accepted contexts. See [receipt-source evidence](../../quality/receipt-source-os-text-and-covered-startup.md) and [onboarding evidence](../../quality/onboarding-independent-scroll-os-text.md). | Other changed controls need a named missing layout assertion before another matrix. Physical-device acceptance is separate; this does not reopen the completed emulator cohort. |
 | QA-07 / QA-01 notifications | D-580 original broadcast-flag correction and paired queued delivery after reboot/idle; D-553 PIN-covered cold routes on the emulator. See [paired-delivery diagnosis](../../quality/reboot-paired-delivery-diagnosis.md) and [covered cold routes](../../quality/pin-covered-cold-notification-routes.md). | Punctual physical reboot/idle delivery and genuine owner authentication remain separate. Do not repeat the defective baseline, late-delivery cohort, financial setup or old taps to manufacture punctuality. |
 | QA-05 receipts | D-613 bounded camera source, D-615 merchant boundary, D-616 complete primary scene text and D-617 original complete/empty-payee receipt drafts. | Named complete-source and original editor assertions pass; retain secondary OCR and historical imagefile failures. Broader physical/corpus and no-reset adoption remain separate, without financial replay. |
 | SEC-03/04/06/07 | Existing isolated key, recovery, migration and covered-route proofs remain valid only within their recorded scope. | Real owner/biometric transitions and OEM backup acceptance require their actual platform inputs; do not read Main private keys/database or replace authentication with a synthetic pass. |
@@ -8423,3 +8423,22 @@ entries have cached importance400, not a proved foreground native fault. Existin
 all D607deadlines/consumed reboot/unread source remain protected; Main adoption keeps its
 original D607conditions. No test/build/financial or completed cohort is repeated.
 [Actual return, bounded OS evidence and remaining admission](../../quality/returned-phone-protected-delivery-admission.md).
+
+
+### D-678 - Original goal, budget and asset-type covers at native text scale
+
+The three changed original editor loading/error footers from D-640/D-641/D-642 are qualified
+at actual OS font scale 2.0: 54 contexts/108 states, en/fa/de, both themes and 360/412/680 dp,
+with complete native captions/last lines, visible progress indicators and 44 dp Retry targets.
+Three original visible Retry actions and equality across 20 source collections pass without
+account/goal/budget/asset/ledger seed, Save, PIN, TalkBack or successful-command replay.
+Product source/shipping remain unchanged; only private original-app callers are built,
+with zero new product unit tests. Actual PID 4527's managed exception, 6432/12247's EXIT_SELF
+status 255 and 10110's native status 11 remain recorded. Thirteen SDK frames match the
+original packaged Mono BuildID/executable segments, without raw memory or a fresh signal.
+Accepted contexts survive actual deaths; only unfinished contexts continue after proved
+absence/read-only adoption and one necessary private reader upgrade. Causes remain unproved;
+no general stability fix is claimed. Exact OS/source restoration, fresh UID/XML/AVD retirement
+and standard/supplementary cleanup are complete. Phone/D-607 remain untouched; Main adoption
+retains its original timed-cohort conditions and broader release gates remain open.
+[Finite original native evidence, real failures and limits](../../quality/original-editor-cover-native-text-scale.md).

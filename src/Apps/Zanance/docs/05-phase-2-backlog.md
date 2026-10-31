@@ -5183,3 +5183,22 @@ Exact OS/source restoration, two fixture removals, device XML/AVD retirement and
 Cleans complete;32target supplemental deletion is refused and frozen. Product code/shipping and
 phone/D607 remain unchanged; broad release gates stay open.
 [Actual reader failure, filtered native evidence and limits](quality/owned-native-exit-library-frames.md).
+
+
+### D-678 - Original goal, budget and asset-type covers at native text scale
+
+The three changed original editor loading/error footers from D-640/D-641/D-642 are qualified
+at actual OS font scale 2.0: 54 contexts/108 states, en/fa/de, both themes and 360/412/680 dp,
+with complete native captions/last lines, visible progress indicators and 44 dp Retry targets.
+Three original visible Retry actions and equality across 20 source collections pass without
+account/goal/budget/asset/ledger seed, Save, PIN, TalkBack or successful-command replay.
+Product source/shipping remain unchanged; only private original-app callers are built,
+with zero new product unit tests. Actual PID 4527's managed exception, 6432/12247's EXIT_SELF
+status 255 and 10110's native status 11 remain recorded. Thirteen SDK frames match the
+original packaged Mono BuildID/executable segments, without raw memory or a fresh signal.
+Accepted contexts survive actual deaths; only unfinished contexts continue after proved
+absence/read-only adoption and one necessary private reader upgrade. Causes remain unproved;
+no general stability fix is claimed. Exact OS/source restoration, fresh UID/XML/AVD retirement
+and standard/supplementary cleanup are complete. Phone/D-607 remain untouched; Main adoption
+retains its original timed-cohort conditions and broader release gates remain open.
+[Finite original native evidence, real failures and limits](quality/original-editor-cover-native-text-scale.md).
