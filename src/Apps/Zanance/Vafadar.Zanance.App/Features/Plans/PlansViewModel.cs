@@ -149,6 +149,10 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
     private sealed record PreparedCenter(PreparedRow[] Rows, string EmptyKey, bool HasNoPlans, bool WantsReminders);
     private sealed record RenderContext(PlanCenterReadSnapshot Source, Dictionary<Guid, Account> Accounts, CategoryLookup Categories);
 
+    /// <summary>Retries the same guarded original read from the growing native action caption (D-689).</summary>
+    [RelayCommand]
+    private Task RetryLoadAsync() => Presentation.Failures.GuardAsync(LoadAsync);
+
     /// <summary>Reads/calculates privately and validates the complete original source after the native permission query.</summary>
     public async Task LoadAsync()
     {

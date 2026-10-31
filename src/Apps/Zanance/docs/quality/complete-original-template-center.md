@@ -144,3 +144,12 @@ these are logical counts, not a measured host free-space gain.
 Physical adoption, whole database/key/security/stability/two-second/accessibility/iOS/
 provider/Store/publication gates remain separate. The phone, D-607's three original
 deadlines and unfinished batch are untouched; the overall goal stays active.
+
+
+## D-689 - Separate changed-cover OS200 admission
+
+Original normal-scale logical/metadata successes remain accepted and are not replayed.
+The finite new Plans/Templates source-cover batch completes36contexts/72states with
+9unchanged states retained and one changed original Retry path. Only the real German
+Plans fixed-height caption needs a product correction; source21 remains exact.
+[Actual failure, canonical native routes and restoration limits](original-plan-template-source-cover-os-text.md).

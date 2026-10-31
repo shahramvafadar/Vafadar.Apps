@@ -74,3 +74,14 @@ separate.
 
 Evidence is retained under the local D-687 pointer: pre-build plan/source hashes,
 exact source copies, strict-build log, separate role outputs and final result JSON.
+
+
+## D-687 sole CI follow-through
+
+At2026-10-31T11:59:43.4310469+00:00, the single exact-head run-list response records:
+
+- [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41197985016): completed/success.
+
+- [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41197976481): completed/cancelled.
+
+Its own consumed monitor is deleted. No second workflow-runs request or overall-green inference follows.

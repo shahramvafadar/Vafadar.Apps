@@ -84,7 +84,7 @@
         </VerticalStackLayout>
         <VerticalStackLayout Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
             <Label Text="{Binding Feedback}" HorizontalTextAlignment="Center" />
-            <Button Text="{v:Translate Plans_RetryLoad}" Style="{StaticResource SecondaryButton}" Clicked="OnReloadClicked" />
+            <p:WrappingAction Text="{v:Translate Plans_RetryLoad}" Appearance="Secondary" Command="{Binding RetryLoadCommand}" />
         </VerticalStackLayout>
         </Grid>
     </Grid>

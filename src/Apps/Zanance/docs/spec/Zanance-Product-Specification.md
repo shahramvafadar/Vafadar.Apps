@@ -11732,3 +11732,9 @@ D687 does not change product requirements, financial representation, shipping ca
 
 D688 leaves product behavior, test count and runtime selection unchanged. The original managed writer/alias inventory is complete within its available-IL scope; general stability and actual fault origin remain open. D607 and wider platform/release gates are preserved.
 [Actual inventory and limits](../quality/original-managed-resource-cache-writer-inventory.md).
+
+
+### D-689 - Original Plans and Templates source covers
+
+D689 preserves original source/read/financial behavior while making the Plans Retry grow with its caption. Native36contexts/72states pass with9retained and one new relay tap; no new unit-test count or broad device/A11Y acceptance. Shipping3b7a4507 awaits the protected D607 adoption gate.
+[Actual failure, native continuation and limits](../quality/original-plan-template-source-cover-os-text.md).

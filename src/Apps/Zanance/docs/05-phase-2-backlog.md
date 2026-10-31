@@ -5359,3 +5359,9 @@ D687 completes one private format-feasibility screen. Four exact-value shapes in
 
 D688 closes the named managed-other-writer inventory, with16900original method bodies and ten selected methods. This is read-only causal admission evidence, not a repaired crash or repeated native cohort; the actual origin and wider stability gate remain open.
 [Actual inventory and limits](quality/original-managed-resource-cache-writer-inventory.md).
+
+
+### D-689 - Original Plans and Templates source covers
+
+D689 completes the named original Plans/Templates OS200 source-cover batch. Only63unfinished/changed states follow9retained successes; one changed native Retry reachesReady with source21exact. Strict packages, restoration, fresh retirement and threeCleans pass; supplemental cleanup refusal and broader gates remain explicit.
+[Actual failure, native continuation and limits](quality/original-plan-template-source-cover-os-text.md).

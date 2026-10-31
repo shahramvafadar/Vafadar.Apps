@@ -8619,3 +8619,23 @@ test replay follows. Two small strict inspector builds and one standardClean pas
 used evidence remains without supplemental deletion or refused-scope reuse. D607's
 three deadlines/consumed reboot/unread source and the full active goal remain intact.
 [Original managed inventory and exact limits](../../quality/original-managed-resource-cache-writer-inventory.md).
+
+
+### D-689 - Original Plans and Templates source covers at native OS200
+
+Complete36contexts/72loading-error states with9unchanged original states retained and
+only63unfinished/changed observed. Actual GermanPlans Retry has139px for224px needed;
+existingWrappingAction plus the same guarded LoadAsync relay fixes it without shrinking
+70.875px text. One changed original Retry reachesReady/source21exact; zero account/
+plan/template/financial setup or old accepted writer replay. StrictWindows/fullOffline
+384AOT/408ELF/1608staticLOAD and three usedprivate192/204/804 packages pass. Initial
+boot/readiness, noncanonical private push/Back admission and ambient-culture restoration
+observer failures remain preserved; canonicalrootPlans/TemplatesBack/nativecaptions pass.
+UID10216/boot/source21 survive4531to5708to7192 no-reset; fiveOSvalues/geometry/locale/
+Systemtheme/actualEnglishcaptions restore,123XML2889252bytes hash-clean and freshUID/
+officialAVD23files5771834168logicalbytes retire. Three standardCleans pass; supplemental
+2root deletion is rejected before process creation,840files125406053logicalbytes frozen
+withoutretry/subset/alternate/move/escalation/reuse. Finalshipping3b7a4507/source/evidence
+remain outside denied scopes. Phone/D607/three deadlines/consumed reboot/unreadsource
+and wider gates stay protected;72observations are not new product tests and the goal stays active.
+[Actual original failure, canonical native scope and exact limits](../../quality/original-plan-template-source-cover-os-text.md).

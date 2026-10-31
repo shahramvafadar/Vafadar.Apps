@@ -5579,3 +5579,9 @@ D687 changes no shipping code/package. The rejected private text-table format do
 
 D688 changes no product/runtime/APK. Original managed cache writers are protected within inspected IL, without proving the executed native path or exclusive fault cause. One standardClean passes; no supplemental deletion or protected D607/phone action occurs.
 [Actual inventory and limits](quality/original-managed-resource-cache-writer-inventory.md).
+
+
+### D-689 - Original Plans and Templates source covers
+
+D689 fixes the observed German Plans Retry clipping; strictWindows/fullOffline384AOT/408ELF/1608staticLOAD passes. Shipping3b7a4507 is ready locally but Samsung adoption still waits for D607. Source/OS restoration and fresh retirement pass; supplemental840file/125406053byte refusal is frozen. Broader release gates remain open.
+[Actual failure, native continuation and limits](quality/original-plan-template-source-cover-os-text.md).

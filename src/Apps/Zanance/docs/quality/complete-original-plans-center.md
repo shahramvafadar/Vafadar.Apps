@@ -131,3 +131,12 @@ This work does not establish whole-device/database/key security, general ANR/cra
 stability, two-second Home performance, complete accessibility, physical adoption,
 iOS, provider/Store or publication acceptance. D-607's packages/data/settings and
 three original deadlines remain unchanged; the overall goal stays active.
+
+
+## D-689 - Separate changed-cover OS200 admission
+
+Original normal-scale logical/metadata successes remain accepted and are not replayed.
+The finite new Plans/Templates source-cover batch completes36contexts/72states with
+9unchanged states retained and one changed original Retry path. Only the real German
+Plans fixed-height caption needs a product correction; source21 remains exact.
+[Actual failure, canonical native routes and restoration limits](original-plan-template-source-cover-os-text.md).

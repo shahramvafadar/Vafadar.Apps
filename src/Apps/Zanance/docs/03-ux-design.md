@@ -3423,3 +3423,11 @@ Appearance still coalesces; only explicit Reload reads changed store facts. Real
 dialog evidence uses a private original-lifecycle diagnostic and a non-provider port,
 with no claim of purchase/restoration, user-navigation or release acceptance.
 [Review ownership and current CI boundary](quality/retired-billing-review-and-hosted-compiler-drift.md).
+
+
+### D-689 - Keep source Retry captions complete at the chosen OS scale
+
+Plans uses existing WrappingAction for its original Retry: the native caption grows,
+its real command button retains the original guarded read, and the selected font is
+not reduced. Root title Add and original Templates Back remain unchanged.
+[Actual German two-line failure and complete source-cover scope](quality/original-plan-template-source-cover-os-text.md).

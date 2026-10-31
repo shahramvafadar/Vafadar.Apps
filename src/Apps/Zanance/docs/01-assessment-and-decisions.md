@@ -12460,3 +12460,9 @@ Close the private version2 per-block text-table candidate at its frozen host gat
 
 D688 extends exact original managed resource evidence to cache writers and constructor aliases. All three direct dictionary writes are protected; no ordinary direct unguarded writer is found in the available managed scope. Do not infer executed AOT correctness or add a speculative product lock.
 [Actual inventory and limits](quality/original-managed-resource-cache-writer-inventory.md).
+
+
+### D-689 - Original Plans and Templates source covers
+
+Keep original Plans Retry text/read ownership while using existing growing WrappingAction and the original guarded VM relay. D689 fixes a real German native139px/224px mismatch and qualifies36contexts/72states, retaining9unchanged states. No new financial policy or product test count.
+[Actual failure, native continuation and limits](quality/original-plan-template-source-cover-os-text.md).

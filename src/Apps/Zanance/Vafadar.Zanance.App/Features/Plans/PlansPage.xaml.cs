@@ -52,8 +52,6 @@ public partial class PlansPage : ContentPage
     /// <summary>Prevents a replaced native root from publishing or navigating through old row objects.</summary>
     internal void RetireShellPublication() { _shellRetired = true; RetirePublication(); }
     protected override void OnDisappearing() { RetirePublication(); base.OnDisappearing(); }
-    private async void OnReloadClicked(object? sender, EventArgs args) => await Presentation.Failures.GuardAsync(_viewModel.LoadAsync);
-
     /// <summary>Retains original Shell Back when this same titled page is pushed.</summary>
     private void OnHeaderBackClicked(object? sender, EventArgs e) => Shell.Current?.SendBackButtonPressed();
 }

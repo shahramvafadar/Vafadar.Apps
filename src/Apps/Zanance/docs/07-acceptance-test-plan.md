@@ -8552,3 +8552,9 @@ D687 preserves all32 original values/order and independent mutable Tags across f
 
 D688 checks exact original PE identity, six field assignments, shared constructor alias and three protected direct dictionary writes. Two strict metadata-inspector builds are not new product tests; original native failure/reproduction and executed AOT acceptance remain unresolved.
 [Actual inventory and limits](quality/original-managed-resource-cache-writer-inventory.md).
+
+
+### D-689 - Original Plans and Templates source covers
+
+D689 accepts36original OS200 contexts/72loading-error states across en/fa/de, both themes and360/412/680. Nine unchanged states are retained; only63remaining/affected states and one new relay tap run. Source21 stays exact with no financial/setup replay. Noncanonical push and ambient-culture observer failures are preserved, without changing final native-caption/route criteria.
+[Actual failure, native continuation and limits](quality/original-plan-template-source-cover-os-text.md).

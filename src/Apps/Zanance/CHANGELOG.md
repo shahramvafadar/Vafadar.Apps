@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-689: keep the full Plans retry caption readable with large system text, including the two-line German action.
+
 - D-680: keep German display-unit and reference-data headings readable at large native text sizes without reducing the selected font or removing detailed source information.
 - D-681: prevent an old purchase-review dialog from blocking or clearing a newer page's review; retain explicit Reload for changed store facts.
 
