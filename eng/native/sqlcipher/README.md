@@ -7,6 +7,24 @@ the existing qualification in CI. It neither executes nor admits an unreviewed c
 The31October host18.11.12328.437 remains unqualified until its actual signed executable
 and native producer evidence are reviewed; local baseline evidence is not hosted proof.
 [Current observed drift and unchanged gates](../../../src/Apps/Zanance/docs/quality/retired-billing-review-and-hosted-compiler-drift.md).
+
+## Pending 31 October hosted producer qualification (D-683)
+
+Original native run41185441600/job124491318973 on e1cbb1be observes installer
+18.11.12328.437 with actual compiler19.51.36260.0/SHA256
+`b0a1818ebae6da7f18230a84e76ce839212584ac4c2ab55b97a0d5268085da57`, valid Microsoft
+signature, pinned tools14.51.36231 and SDK10.0.26100.0 present. These executable bytes
+already belong to the reviewed compiler policy; this is actual hosted evidence, not
+a substituted local installer fixture. The exact official runner inventory is linked
+from the policy. Neither compiler hashes nor signature/tools/SDK predicates change.
+
+The separate `shahram/native-producer-4.19.0-candidate.10` branch admits only this
+observed installer metadata to the existing producer-only lane. Candidate.10 is an
+unpublished export identity; it is not a consumer or Main adoption. Require two fresh
+equal native outputs, original source/diagnostic/schema gates and actual archive-entry
+review before deciding whether this host can reuse an already identical consumer or
+requires a new immutable package version. Never merge the installer-only policy as
+completed consumer recovery, change existing package-entry pins or rerun Android here.
 An approved compiler executable is insufficient to reuse an existing native package identity.
 `Pack-Windows.ps1` refuses changed DLL or package-entry bytes under a pinned consumer version.
 Keep baseline and serviced producers separate; never allow alternative bytes for one version.

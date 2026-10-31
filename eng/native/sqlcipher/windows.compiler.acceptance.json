@@ -5,12 +5,13 @@
     "18.10.12217.157",
     "18.10.12224.181",
     "18.11.12306.390",
-    "18.11.12315.225"
+    "18.11.12315.225",
+    "18.11.12328.437"
   ],
   "toolsVersion": "14.51.36231",
   "sdkVersion": "10.0.26100.0",
   "hostedImage": "windows-2025-vs2026",
-  "hostedInventorySource": "https://github.com/actions/runner-images/blob/win25-vs2026/20261021.278/images/windows/Windows2025-VS2026-Readme.md",
+  "hostedInventorySource": "https://github.com/actions/runner-images/blob/win25-vs2026/20261030.294/images/windows/Windows2025-VS2026-Readme.md",
   "qualification": "Exact Microsoft-signed executable hash and file version, pinned MSVC/SDK, two fresh native outputs and immutable package entry verification. Actual producer provenance stays outside the portable package manifest.",
   "compilers": [
     {
