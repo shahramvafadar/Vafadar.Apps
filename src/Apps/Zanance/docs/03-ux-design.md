@@ -3460,3 +3460,8 @@ Original modal Cancel, full title/loading/error captions and separate44dp Retry 
 
 An original native title that no longer fits horizontally may wrap; preserve its exact name, selected font, native Back and measured height. A full semantic string is not proof that visible glyphs are unellipsized. Original loading/error covers keep complete text and separate44dp Back/Refresh targets.
 [Actual native failure and limits](quality/original-account-detail-covers-and-wrapped-native-title.md).
+
+### D-695 - Complete asset-event source-error action
+
+Let the original Retry action grow around its complete translated caption at the selected font. Complete outer bounds and ellipsis0 do not prove that its last line fits. Keep separate44dp Retry/Cancel targets, original semantics, native command and semantic colors; do not shorten copy or shrink text.
+[Actual original cover geometry](quality/original-asset-event-covers-and-growing-retry.md).

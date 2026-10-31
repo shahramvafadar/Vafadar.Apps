@@ -5614,3 +5614,8 @@ D693 strict Windows/full offline384AOT/408ELF/1608staticLOAD/signature/CRC/ZIP16
 
 Strict Windows/full offline384AOT/408ELF/1608staticLOAD/v2v3/CRC/ZIP16KiB pass. Shipping94d6d1da awaits actual D607 completion/cleanup before phone adoption. Exact source/OS/Home restoration, freshUID/officialAVD retirement and3Cleans pass; supplementary deletion is refused and frozen. Wider gates remain open.
 [Actual package, restoration and limits](quality/original-account-detail-covers-and-wrapped-native-title.md).
+
+### D-695 - Growing asset-event Retry qualification
+
+Strict Windows has0 warnings/errors. Full offline shipping b3ff3229199913fced20b2764e0c982356d129186fc81f668ca3b097adf13622 passes384ownAOT/408ELF/1608static16KiBLOAD, v2/v3, CRC/ZIP16KiB and nondebug checks. Samsung adoption still requires actual D607 completion/cleanup. Original OS/display/Home route and accepted source21 restore; the mislabeled pending-modal image is not claimed equal to Home.58XML801118bytes are hash-cleaned, freshUID/host/officialAVD retired and3Cleans pass. Supplementary cleanup is rejected before process creation:837files125345982logicalbytes remain frozen without retry, subset, alternate method, move, escalation or reuse. Used packages/evidence remain; wider delivery gates stay open.
+[Package, retained failures and exact limits](quality/original-asset-event-covers-and-growing-retry.md).

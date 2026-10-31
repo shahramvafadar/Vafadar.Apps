@@ -5394,3 +5394,8 @@ D693 completes18 original Plan modal OS200 contexts/36states, retaining3 initial
 
 D694 completes35 missing original account-detail OS200 states across18 contexts and retains D629's accepted German error without replay. One distinct original Checking/EUR/opening0 setup is accepted once with ledger0; no D629 financial command repeats. Actual title ellipsis is corrected and necessary no-reset source21 adoption passes.
 [Native continuation and limits](quality/original-account-detail-covers-and-wrapped-native-title.md).
+
+### D-695 - Missing original asset-event source covers
+
+Complete18 OS200 loading/error contexts with7 retained unchanged Loading observations and29 changed/missing states. Six old English Error successes remain historical for the replaced control. One original type metadata Save and one changed native Retry are accepted once; the latter creates the original default location, with20 other typed collections exact and no event/valuation/account/ledger row. No D643 accepted financial command or new unit-test count is replayed or inferred.
+[Preserved failures and exact acceptance boundary](quality/original-asset-event-covers-and-growing-retry.md).

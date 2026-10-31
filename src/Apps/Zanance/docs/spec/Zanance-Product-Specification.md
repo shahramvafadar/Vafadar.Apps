@@ -11767,3 +11767,8 @@ D693 preserves original Plan/source/financial behavior while detaching prior And
 
 Preserve the account name/font and financial behavior while allowing its actually ellipsized Android title to wrap and grow.35 new native states pass across18 contexts; one D629 German error is retained without replay. No new unit count, financial history/loan/authentication/wholeDB/key, broad stability or release acceptance is inferred.
 [Actual native failure and limits](../quality/original-account-detail-covers-and-wrapped-native-title.md).
+
+### D-695 - Complete original asset-event read Retry
+
+Preserve the original asset-event reader/writer, resource and selected font while allowing the clipped error Retry caption to grow.18 OS200 contexts combine7 retained Loading states with29 new states. One actual Retry accepts the original default-location metadata, with20 other source collections exact and no financial/event row; that delta and the original equality failure remain explicit. No new unit count, all-new-APK, shipping accountless onboarding, wholeDB/key, general stability or release acceptance is inferred.
+[Actual clipping, source delta and restoration limits](../quality/original-asset-event-covers-and-growing-retry.md).

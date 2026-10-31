@@ -8587,3 +8587,8 @@ D693 original en/fa/de, both themes,360/412/680dp OS200 modal loading/error capt
 
 35 new en/fa/de, Light/Dark,360/412/680dp OS200 account loading/error states pass; retain one historical D629 error. Actual title glyphs, lines/ellipsis/bounds, RTL/native Back and44dp Refresh pass on the same zero-opening source21. This is not36 new tests, all names/history/loans, full accessibility or general stability acceptance.
 [Actual original failure and exact scope](quality/original-account-detail-covers-and-wrapped-native-title.md).
+
+### D-695 - Original asset-event loading/error covers
+
+The18 en/fa/de, Light/Dark,360/412/680dp OSfont2.0 contexts cover36 states:7 historical unchanged Loading states plus29 new states, including all18 final Error states. Check actual native lines, last-line height, ellipsis, visible bounds and44dp targets. The changed Persian Retry executes once to Ready. Preserve the failed original full-source assertion: only the original default-location row is added;20 other collections are exact. Remaining17 contexts compare all21 collections to that accepted checkpoint. This is bounded component-cover evidence, not all-new-package observations, shipping accountless onboarding, wholeDB/key, general stability or full accessibility acceptance.
+[Actual metadata delta and restoration correction](quality/original-asset-event-covers-and-growing-retry.md).

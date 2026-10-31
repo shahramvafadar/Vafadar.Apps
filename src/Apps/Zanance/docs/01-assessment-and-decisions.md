@@ -12495,3 +12495,8 @@ Detach only the previous owned flyout from its captured Shell before Android ren
 
 Allow an actually ellipsized native title to wrap at its existing font, then let the owned toolbar measure its final line and grow. Preserve the exact account name and native Back. Actual ellipsis3 becomes two complete224px lines at unchanged89px font/736px width, with financial source unchanged.
 [Actual native failure, retained evidence and limits](quality/original-account-detail-covers-and-wrapped-native-title.md).
+
+### D-695 - Growing original asset-event read Retry
+
+Replace only the clipped ErrorSurface Retry with the existing Secondary WrappingAction. Preserve Holdings_RetryLoad, RetryLoadButton, ReloadCommand and AppFont/15-point text. The actual Persian two-line caption needs280px including the old padding but receives169px; the replacement retains70.875px native text and displays its complete226px label. Original readers/writers and financial behavior are unchanged. One actual Retry's existing default-location metadata delta is validated separately, never disguised as unchanged source.
+[Original failure, source boundary and restoration](quality/original-asset-event-covers-and-growing-retry.md).

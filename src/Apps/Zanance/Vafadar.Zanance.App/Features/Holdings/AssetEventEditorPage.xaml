@@ -143,7 +143,8 @@
         </VerticalStackLayout>
         <VerticalStackLayout x:Name="ErrorSurface" Padding="32" Spacing="16" VerticalOptions="Center" IsVisible="{Binding Loading.HasFailed}">
             <Label x:Name="ErrorCaption" Text="{Binding LoadError}" HorizontalTextAlignment="Center" />
-            <Button x:Name="RetryLoadButton" Text="{v:Translate Holdings_RetryLoad}" Style="{StaticResource SecondaryButton}" Command="{Binding ReloadCommand}" />
+            <!-- D-695: the native button clips a two-line scaled caption; retain the original font and read command. -->
+            <p:WrappingAction x:Name="RetryLoadButton" Text="{v:Translate Holdings_RetryLoad}" Appearance="Secondary" Command="{Binding ReloadCommand}" />
             <p:WrappingAction Text="{Binding CloseText}" Command="{Binding CancelCommand}" Appearance="Text" />
         </VerticalStackLayout>
     </Grid>
