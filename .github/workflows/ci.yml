@@ -168,6 +168,11 @@ jobs:
         shell: pwsh
         run: ./eng/native/sqlcipher/Ensure-WindowsPackage.ps1
 
+      - name: Verify native portable snapshot budgets
+        run: >
+          dotnet run --project eng/tests/SqlCipherPortableBounds --configuration Release
+          -p:ContinuousIntegrationBuild=true -- artifacts/portable-snapshot-budget-results
+
       - name: Build (Release)
         run: dotnet build Vafadar.Apps.slnx --configuration Release -p:VafadarMauiTargetFrameworks=net10.0-windows10.0.19041.0
 

@@ -8617,3 +8617,8 @@ On a fresh API36/x64/4096 cohort, check original report12.34EUR after exactly on
 
 Verify original module/debug SHA256, GNU BuildID/debug-link CRC, positive-size executable symbol ranges and full instruction decoding before interpreting an official correction. The original binary already has the512-byte non-array card-start alignment at0x2d5957; original client0x2c667b remains inside its reference-array indirect pointer call. Five host address-arithmetic examples are not product tests or original crash reproduction. No runtime/GC change or general security/stability acceptance follows.
 [Actual source/backport and native instruction evidence](quality/original-sgen-card-scan-correction-admission.md).
+
+### D-701 - Actual native portable image budget
+
+Retain two original oversize failures. Check absent/empty policies with oversized/fitting packets, explicit large-private-journal omission, nonempty-policy oversize and cancellation on each real Windows/Android engine. Oversize preparation0/output0 and portable I/O details pass; fitting12288byte/3page images preserve signed/Unicode/payload values and two header identifiers. Verify selected source records and released aliases, not wholeDB/key equality. Android native button/UID10216/PID4934/boot are actual, with no profile/financial setup or old UI replay; fourteen observations are not new unit tests or general crash acceptance.
+[Exact source and native bounds](quality/portable-image-native-page-budget.md).

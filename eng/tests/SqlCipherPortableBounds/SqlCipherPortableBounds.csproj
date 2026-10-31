@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../../src/Libraries/Vafadar.Data/Vafadar.Data.csproj" />
+    <PackageReference Include="Vafadar.Native.SqlCipher.Windows" />
+    <AppSecret Remove="@(AppSecret)" />
+  </ItemGroup>
+</Project>

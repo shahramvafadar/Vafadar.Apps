@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-701: enforce the portable SQLCipher image page budget before native export for callers without an omitted-table policy, retaining complete permitted output and cancellable I/O failure handling.
+
 - D-698: keep long Retry captions complete in Transactions and Reimbursements at large system text, preserving the original read guards and right-of-title Add layout.
 
 - D-697: keep the complete holdings-list Retry caption readable at large system text while retaining the original covered read and error handling.

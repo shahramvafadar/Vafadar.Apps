@@ -12525,3 +12525,8 @@ Qualify the current post-D647 original report command with full21 source equalit
 
 Do not replace runtime/GC merely because an official issue resembles the old native fault. Exact original module/debug identity, source/backport diff and complete native function decoding show that SGen PR125116/125213's non-array card alignment is already present. The recorded reference-array pointer-call frame is preserved separately. This rejects that missing-fix proposal, not every runtime/application cause; source-reference origin remains unresolved and no product or device change follows.
 [Exact original correction admission and limits](quality/original-sgen-card-scan-correction-admission.md).
+
+### D-701 - Uniform original portable image bounds
+
+Actual SQLCipher proves absent/empty omission policies built34pages before a32768byte refusal. Apply the existing fresh-destination page ceiling to every original caller before export, preserve complete permitted rows and explicit omissions, and retain cancellation/native details in the portable I/O boundary. No model, financial, runtime or GC change; this is not an established SGen cause or process-memory cap.
+[Original failures and complete native correction](quality/portable-image-native-page-budget.md).

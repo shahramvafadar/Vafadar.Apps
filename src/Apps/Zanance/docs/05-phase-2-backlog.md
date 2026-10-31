@@ -5424,3 +5424,8 @@ Qualify current post-D647 native share/return with exact producer/receiver/host 
 
 Complete one named diagnostic question from D679 without replaying its successful native cohort. Official SGen non-array card-scan correction125116/125213 already appears in the exact original runtime14 executable at0x2d5957; current source and original reference-array call frame agree with that boundary. Do not reapply it, switch collectors or count this as repaired stability. No app build/test, financial write or device command occurs; the next cause-specific input remains necessary.
 [Exact binary/source result and next admission](quality/original-sgen-card-scan-correction-admission.md).
+
+### D-701 - Complete portable native page bounds
+
+Correct two actual oversize failures without omitted-table policies. Seven finite real Windows and seven Android component cases pass early refusal, fitting output, explicit large-journal omission and cancellation, preserving selected source records/headers and releasing aliases. They are not new xUnit cases or replayed financial/UI cohorts. Strict Windows/full signed offline APK pass; the native host is added to Windows CI. Phone adoption still waits for actual D607 completion/cleanup.
+[Native result and precise remaining gates](quality/portable-image-native-page-budget.md).

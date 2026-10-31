@@ -11797,3 +11797,8 @@ The original report's native render/cache/Share as PDF route delivers an identic
 
 Preserve the original native failure and separate managed resource-cache exception. Official SGen non-array card-scan alignment already exists in the original runtime14 executable, proved against matching module/debug identity and native instructions; do not propose it as an absent fix or infer general stability. Source-reference origin and all broader release gates remain unfinished. No product, financial or device behavior changes.
 [Exact original source/binary correction boundary](../quality/original-sgen-card-scan-correction-admission.md).
+
+### D-701 - Native portable-image budget for every caller
+
+Every original memory-only portable export, including absent/empty omission policies, receives the existing destination page ceiling before native growth. Preserve complete permitted rows, explicit omissions, headers/access/transaction, original cancellation, serialized byte guard and clearing/detach. Seven actual Windows and seven Android component cases qualify this boundary without financial commands. No total process-memory cap, wholeDB/key, phone adoption or demonstrated native-crash cause is inferred.
+[Original failures and bounded native correction](../quality/portable-image-native-page-budget.md).

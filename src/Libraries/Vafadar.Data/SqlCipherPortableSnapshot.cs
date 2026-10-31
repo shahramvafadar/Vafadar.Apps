@@ -48,15 +48,18 @@ public static class SqlCipherPortableSnapshot
                 await attach.ExecuteNonQueryAsync(cancellationToken); attached = true;
                 verifyAccess?.Invoke();
             }
-            if (omitted.Count != 0)
+            // D-701: every portable image owns the same native page budget, including
+            // callers with no private-row policy. Reject growth before serialization.
+            await using (var bound = source.CreateCommand())
             {
-                // This is a fresh memory schema. Enforce the existing output budget before native
-                // allocation, rather than first materializing an arbitrarily large private journal.
-                await using var bound = source.CreateCommand(); bound.CommandText = $"PRAGMA {alias}.page_size;";
+                bound.CommandText = $"PRAGMA {alias}.page_size;";
                 var pageSize = Convert.ToInt64(await bound.ExecuteScalarAsync(cancellationToken));
                 if (pageSize is < 512 or > 65536) throw new InvalidDataException("Portable page size was refused.");
                 bound.CommandText = FormattableString.Invariant($"PRAGMA {alias}.max_page_count={Math.Max(1, maximumBytes / pageSize)};");
                 await bound.ExecuteNonQueryAsync(cancellationToken);
+            }
+            if (omitted.Count != 0)
+            {
                 strdelegate_authorizer authorize = (_, action, table, _, database, _) =>
                     action == raw.SQLITE_INSERT && database == alias && table is not null && omitted.Contains(table) ? raw.SQLITE_IGNORE : raw.SQLITE_OK;
                 // SQLite IGNORE on this exact destination INSERT suppresses only its row copy.
@@ -80,7 +83,14 @@ public static class SqlCipherPortableSnapshot
                 verifyAccess?.Invoke();
                 await using var export = source.CreateCommand(); export.Transaction = transaction;
                 export.CommandText = FormattableString.Invariant($"SELECT sqlcipher_export('{alias}'); PRAGMA {alias}.user_version={userVersion}; PRAGMA {alias}.application_id={applicationId};");
-                await export.ExecuteNonQueryAsync(cancellationToken);
+                try { await export.ExecuteNonQueryAsync(cancellationToken); }
+                catch (SqliteException failure) when (!cancellationToken.IsCancellationRequested
+                    && failure.SqliteErrorCode is raw.SQLITE_ERROR or raw.SQLITE_FULL)
+                {
+                    // SQLCipher reports destination SQLITE_FULL through its export scalar as
+                    // SQLITE_ERROR. Keep native details without escaping the portable I/O boundary.
+                    throw new InvalidDataException("Portable database image could not be exported.", failure);
+                }
                 verifyAccess?.Invoke();
                 await transaction.CommitAsync(cancellationToken);
             }
