@@ -103,7 +103,8 @@ Supplementary deletion of32new targets is rejected before process creation with 
 fourteen local XMLs. No retry, subset, alternate method, move, escalation or reuse of that entire
 rejected scope is allowed. Earlier refused scopes remain untouched.
 
-Phone/D-607/three deadlines/consumed reboot/unread post-reboot source and the explicit other-project
-phone turn remain protected. General stability, two-second performance, whole database/keys,
+No phone/D-607 command occurred in this batch. D-677 reconciles the explicit return of the
+finished other-project turn; its previously assumed active reservation is stale. D-607's three
+deadlines, consumed reboot and unread post-reboot source remain protected. General stability, two-second performance, whole database/keys,
 accessibility, iOS, provider, Store and release gates stay open. Unchanged product Windows/full
 shipping builds and old financial/successful suites are not repeated.

@@ -8411,3 +8411,15 @@ Exact OS/source restoration, two fixture removals, device XML/AVD retirement and
 Cleans complete;32target supplemental deletion is refused and frozen. Product code/shipping and
 phone/D607 remain unchanged; broad release gates stay open.
 [Actual reader failure, filtered native evidence and limits](../../quality/owned-native-exit-library-frames.md).
+
+
+### D-677 - Reconcile the explicit phone return (completed bounded scope)
+
+The owner-authorized limited phone turn was explicitly returned30October15:19:30UTC; its
+lease is inactive. Correct the stale D675/D676 pending-reservation wording and current authority.
+Read-only Samsung identity/OS checks preserve the D607boot and issue no app/provider/package
+mutation or D607query. Main's bounded16exit records contain no native reason5; six LOW_MEMORY
+entries have cached importance400, not a proved foreground native fault. Existing failures and
+all D607deadlines/consumed reboot/unread source remain protected; Main adoption keeps its
+original D607conditions. No test/build/financial or completed cohort is repeated.
+[Actual return, bounded OS evidence and remaining admission](../../quality/returned-phone-protected-delivery-admission.md).

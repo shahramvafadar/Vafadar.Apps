@@ -84,5 +84,6 @@ archives and the four used/final signed APKs are separate retained evidence.
 Only category-modal collection and live category-root retirement are native-qualified here; other
 page kinds retain their focused/shared mechanism evidence. No general memory, crash/ANR, two-second
 performance, device/database/key, accessibility, iOS, provider, Store or release acceptance follows.
-Samsung remains with its explicitly authorized other-project turn pending explicit return; no
-phone/D-607 command occurs and all three original deadlines/unread post-reboot source remain protected.
+No phone/D-607 command occurred in this batch. D-677 later reconciles the coordinator's explicit
+30October15:19:30UTC return; the earlier pending-turn assumption was stale. All three original
+D-607 deadlines and unread post-reboot source remain protected.

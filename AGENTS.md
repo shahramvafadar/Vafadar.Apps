@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## Samsung limited turn explicitly returned (coordination receipt, 2026-10-30; reconciled D-677)
+
+The owner-authorized limited Consumer175/Business147 phone turn was explicitly returned by
+the Windows coordinator at30October2026 15:19:30UTC, with its lease marked inactive and no
+further phone command planned. The condition on the limited-turn rule below is satisfied;
+do not continue treating that finished turn as an active reservation. Existing necessary
+low-risk phone authority under D-597/D-560 resumes, without a new grant or authentication exception.
+Revalidate ownership before actual device work and honor any later owner instruction.
+
+D-607 remains a separate protected pending cohort: preserve all three deadlines, consumed reboot
+and unread post-reboot source. Return of the phone does not authorize an early D-607 provider or
+Activity, preparation, rearm, clock/battery/idle change or another reboot. Current Main adoption
+still waits for the existing D-607 completion/cleanup conditions; do not use return alone to
+install or upgrade it. D-677 performed only read-only OS/hardware observations, with no app launch.
+
 ## Limited Samsung turn for Loyan with explicit return (owner, 2026-10-30)
 
 The owner explicitly approves a fresh limited phone turn for the Windows coordinator
