@@ -7,11 +7,15 @@ namespace Vafadar.Zanance.Performance;
 /// <summary>Reads only an owned Android tombstone's crashed-thread code frames; never retains its memory or registers.</summary>
 internal static partial class NativeExitFrames
 {
-    /// <summary>A relative code location, with no absolute stack address or application data.</summary>
-    internal sealed record Frame(ulong RelativePc, string Module, string BuildId);
+    /// <summary>A relative code location and original frame ordinal, with no absolute address or application data.</summary>
+    internal sealed record Frame(ulong RelativePc, string Module, string BuildId, int OriginalFrameIndex = 0);
 
-    /// <summary>Only the explicitly requested process and crashed thread are returned.</summary>
-    internal sealed record Result(uint ProcessId, uint UserId, uint ThreadId, IReadOnlyList<Frame> Frames);
+    /// <summary>Only the requested crashed thread's allowed library locations and an omitted-frame count are returned.</summary>
+    internal sealed record Result(uint ProcessId, uint UserId, uint ThreadId, IReadOnlyList<Frame> Frames,
+        int DiscardedNonModuleFrames = 0);
+
+    /// <summary>Keeps a selected thread's allowed locations separate from discarded non-library frames.</summary>
+    private sealed record ThreadFrames(IReadOnlyList<Frame> Frames, int DiscardedNonModuleFrames);
 
     /// <summary>Consumes the AOSP tombstone protobuf through a bounded, non-seeking allowlist reader.</summary>
     internal static Result Read(Stream stream, uint expectedPid, uint expectedUid)
@@ -19,7 +23,7 @@ internal static partial class NativeExitFrames
         var reader = new Reader(stream, new Budget(), int.MaxValue, root: true);
         uint pid = 0, uid = 0, tid = 0;
         var identities = new HashSet<int>();
-        var threads = new Dictionary<uint, IReadOnlyList<Frame>>();
+        var threads = new Dictionary<uint, ThreadFrames>();
         while (reader.Tag(out var field, out var wire))
         {
             if (field is 5 or 6 or 7)
@@ -36,7 +40,7 @@ internal static partial class NativeExitFrames
                 if (threads.Count >= 256) throw new InvalidDataException("Native thread bound exceeded.");
                 var entry = reader.Child();
                 uint key = 0;
-                IReadOnlyList<Frame>? frames = null;
+                ThreadFrames? frames = null;
                 var seen = new HashSet<int>();
                 while (entry.Tag(out var childField, out var childWire))
                 {
@@ -46,7 +50,7 @@ internal static partial class NativeExitFrames
                     {
                         if (key == 0) throw new InvalidDataException("Native thread key must precede its value.");
                         if (key == tid) frames = ReadThread(entry.Child());
-                        else { entry.Skip(childWire); frames = Array.Empty<Frame>(); }
+                        else { entry.Skip(childWire); frames = new([], 0); }
                     }
                     else entry.Skip(childWire);
                 }
@@ -54,19 +58,23 @@ internal static partial class NativeExitFrames
             }
             else reader.Skip(wire);
         }
-        if (pid != expectedPid || uid != expectedUid || tid == 0 || !threads.TryGetValue(tid, out var selected) || selected.Count == 0)
+        if (pid != expectedPid || uid != expectedUid || tid == 0 || !threads.TryGetValue(tid, out var selected) || selected.Frames.Count == 0)
             throw new InvalidDataException("Requested owned native exit frames are unavailable.");
-        return new Result(pid, uid, tid, selected);
+        return new Result(pid, uid, tid, selected.Frames, selected.DiscardedNonModuleFrames);
     }
 
-    private static IReadOnlyList<Frame> ReadThread(Reader reader)
+    private static ThreadFrames ReadThread(Reader reader)
     {
         var frames = new List<Frame>();
+        var seenFrames = 0;
+        var discarded = 0;
         while (reader.Tag(out var field, out var wire))
         {
             // Thread registers, names, memory, notes and all extension fields are discarded.
             if (field != 4 || wire != 2) { reader.Skip(wire); continue; }
-            if (frames.Count >= 128) throw new InvalidDataException("Native frame bound exceeded.");
+            // D-676: ignored pseudo/mapped frames still consume the original bound. They must
+            // neither hide later valid library frames nor become an unlimited discarded prefix.
+            if (++seenFrames > 128) throw new InvalidDataException("Native frame bound exceeded.");
             var frame = reader.Child();
             ulong pc = 0;
             string module = "", build = "";
@@ -83,11 +91,18 @@ internal static partial class NativeExitFrames
                 else if (f == 8 && w == 2) build = frame.Text();
                 else frame.Skip(w); // Absolute PC/SP, function strings and memory never enter the result.
             }
-            if (!ModuleName().IsMatch(module) || !BuildId().IsMatch(build))
+            if (!ModuleName().IsMatch(module))
+            {
+                // Export no rejected name, path or build text; only its count survives.
+                discarded++;
+                continue;
+            }
+            if (!BuildId().IsMatch(build))
                 throw new InvalidDataException("Native module identity is not a bounded code location.");
-            frames.Add(new Frame(pc, module, build));
+            // Keep its original ordinal: a filtered caller frame must not become a guessed fault frame.
+            frames.Add(new Frame(pc, module, build, seenFrames - 1));
         }
-        return frames;
+        return new(frames, discarded);
     }
 
     [GeneratedRegex("^lib[A-Za-z0-9_.-]{1,160}\\.so$", RegexOptions.CultureInvariant)]

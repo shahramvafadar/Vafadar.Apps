@@ -11529,3 +11529,18 @@ failures remain recorded. Fresh fixture/device-XML/AVD retirement and five stand
 20target deletion is rejected before execution and frozen. This does not fix or explain D-674's native
 crash or close broader device/performance/security/platform gates. Phone/D607 remain untouched.
 [Actual lifetime comparison, candidate and exact limits](../quality/original-shell-page-lifetimes.md).
+
+
+### D-676 - Bounded owned native-exit library frames
+
+An actual separate empty-UID native control exposes a diagnostic reader defect: a non-library
+frame discards the whole trace. Preserve allowed library locations, omitted count and original
+ordinals under unchanged identity/privacy/128-frame/8MiB bounds. Two original regression failures,
+five new+nine affected cases and the same actual5526/10217SDK record pass after correction, with
+one intentional signal only. Dumpsys trace=null does not preclude that actual SDK tombstone.
+Twelve finite original-app read-failure/native-Cancel cycles in6071retain full20source without
+a native crash; D674's random failure remains unresolved and this input is not repeated.
+Exact OS/source restoration, two fixture removals, device XML/AVD retirement and three standard
+Cleans complete;32target supplemental deletion is refused and frozen. Product code/shipping and
+phone/D607 remain unchanged; broad release gates stay open.
+[Actual reader failure, filtered native evidence and limits](../quality/owned-native-exit-library-frames.md).
