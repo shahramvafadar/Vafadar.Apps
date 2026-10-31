@@ -65,3 +65,12 @@ successful-test replay, runtime/GC/package replacement or product change. Samsun
 D-607's three original deadlines, consumed reboot and unread source remain protected.
 Managed/native stability and all broader device, performance, accessibility, iOS,
 provider, Store and release gates remain open.
+
+
+## D-688 follow-through - direct managed writers and shared aliases
+
+The exact original image now has a complete available-IL cache-field/concrete-call inventory.
+Three direct dictionary writes are protected, the constructor shares the same primary cache,
+and EnumeratorEntry only reads it. This does not prove executed AOT behavior or an exclusive
+cause; no speculative fix or original native success is replayed.
+[Actual inventory and scope](original-managed-resource-cache-writer-inventory.md).

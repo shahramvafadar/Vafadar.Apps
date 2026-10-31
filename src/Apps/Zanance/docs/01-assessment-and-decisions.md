@@ -12454,3 +12454,9 @@ in_progress; its consumed monitor is deleted, without another workflow-runs requ
 
 Close the private version2 per-block text-table candidate at its frozen host gate: combined latency worsens19.6150%, allocation falls only4.3694%, and unique/long shapes fail worst-shape limits. Original product sources remain exact; no rescue, native run or product change follows.
 [Fixed scope and actual results](quality/rejected-ledger-text-table-format.md).
+
+
+### D-688 - Original managed resource-cache writer inventory
+
+D688 extends exact original managed resource evidence to cache writers and constructor aliases. All three direct dictionary writes are protected; no ordinary direct unguarded writer is found in the available managed scope. Do not infer executed AOT correctness or add a speculative product lock.
+[Actual inventory and limits](quality/original-managed-resource-cache-writer-inventory.md).

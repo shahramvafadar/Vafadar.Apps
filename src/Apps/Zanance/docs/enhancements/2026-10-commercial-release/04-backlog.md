@@ -8602,3 +8602,20 @@ speed claim. One standard privateClean passes; evidence/source remains, no suppl
 or refused-scope deletion occurs. Phone/D607/three deadlines/consumed reboot/unreadsource
 stay protected; the goal and broader acceptance gates remain open.
 [Exact private representation, fixed gates and actual results](../../quality/rejected-ledger-text-table-format.md).
+
+
+### D-688 - Exact packaged managed resource-cache writers and aliases
+
+Read-only inspection of the original D678 runtime14 CoreLib decodes16900available
+managed bodies and resolves concrete cache generic calls/signatures. Ten scoped
+methods expose six exact field assignments and one constructor-shared dictionary;
+all three direct dictionary writes have matching managed lock/finally regions.
+Original EnumeratorEntry has one locked lookup and no direct cache write. Initial
+seven-assignment observer arithmetic is preserved and corrected to the exact six
+method/offset pairs from unchanged evidence. This excludes no native/reflection/
+reference corruption and proves neither executed AOT locks nor an exclusive cause.
+No speculative product lock/runtime change, app/native/device/financial or successful
+test replay follows. Two small strict inspector builds and one standardClean pass;
+used evidence remains without supplemental deletion or refused-scope reuse. D607's
+three deadlines/consumed reboot/unread source and the full active goal remain intact.
+[Original managed inventory and exact limits](../../quality/original-managed-resource-cache-writer-inventory.md).

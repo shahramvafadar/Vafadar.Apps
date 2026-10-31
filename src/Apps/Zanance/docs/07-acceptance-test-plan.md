@@ -8546,3 +8546,9 @@ in_progress; its consumed monitor is deleted, without another workflow-runs requ
 
 D687 preserves all32 original values/order and independent mutable Tags across four host shapes, plus finite malformed/cancel/bucket controls. These are private feasibility controls, not new product tests or Home/two-second acceptance. Latency/allocation gates fail; no native replay follows.
 [Fixed scope and actual results](quality/rejected-ledger-text-table-format.md).
+
+
+### D-688 - Original managed resource-cache writer inventory
+
+D688 checks exact original PE identity, six field assignments, shared constructor alias and three protected direct dictionary writes. Two strict metadata-inspector builds are not new product tests; original native failure/reproduction and executed AOT acceptance remain unresolved.
+[Actual inventory and limits](quality/original-managed-resource-cache-writer-inventory.md).

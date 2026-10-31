@@ -5353,3 +5353,9 @@ in_progress; its consumed monitor is deleted, without another workflow-runs requ
 
 D687 completes one private format-feasibility screen. Four exact-value shapes in separate10.0.14/X64 processes fail fixed host admission, so no product implementation or native comparison is scheduled for this candidate. QA06 and the full goal remain open.
 [Fixed scope and actual results](quality/rejected-ledger-text-table-format.md).
+
+
+### D-688 - Original managed resource-cache writer inventory
+
+D688 closes the named managed-other-writer inventory, with16900original method bodies and ten selected methods. This is read-only causal admission evidence, not a repaired crash or repeated native cohort; the actual origin and wider stability gate remain open.
+[Actual inventory and limits](quality/original-managed-resource-cache-writer-inventory.md).

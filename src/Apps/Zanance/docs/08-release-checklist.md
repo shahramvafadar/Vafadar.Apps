@@ -5573,3 +5573,9 @@ in_progress; its consumed monitor is deleted, without another workflow-runs requ
 
 D687 changes no shipping code/package. The rejected private text-table format does not advance performance or physical adoption; D607 deadlines, consumed reboot and unread source remain protected. Used private evidence remains after one standard Clean; no supplemental deletion occurs.
 [Fixed scope and actual results](quality/rejected-ledger-text-table-format.md).
+
+
+### D-688 - Original managed resource-cache writer inventory
+
+D688 changes no product/runtime/APK. Original managed cache writers are protected within inspected IL, without proving the executed native path or exclusive fault cause. One standardClean passes; no supplemental deletion or protected D607/phone action occurs.
+[Actual inventory and limits](quality/original-managed-resource-cache-writer-inventory.md).
