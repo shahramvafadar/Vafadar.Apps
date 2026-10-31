@@ -1,5 +1,10 @@
 # Complete original account-detail publication and ownership (D-629)
 
+## Subsequent missing OS200 covers and native title correction (D-694)
+
+D694 retains this record's de/Dark360 error without replay. Current XAML and German error/Refresh/Back values equal d142a433.35 missing states across18 contexts use one distinct original Checking/EUR/opening0 account and ledger0. Actual title ellipsis3 at89px/736px becomes two complete224px lines at unchanged font/width. Necessary no-reset adoption preserves source21; no D629 account/loan/goal/financial command repeats. The old financial source is not relabeled as evidence for the new package.
+[Native continuation and limits](original-account-detail-covers-and-wrapped-native-title.md).
+
 ## Original failures and scope
 
 Four actual original account-detail regressions fail before the correction. An

@@ -5389,3 +5389,8 @@ D692 completes original saved-comparison no-query loading/error OS200 covers,18c
 
 D693 completes18 original Plan modal OS200 contexts/36states, retaining3 initial and3 corrected successes and continuing only12 unfinished states after a private initial-read completion correction. No account/plan/financial setup, accepted operation replay or new unit-test count.
 [Actual native failure, continuation and exact limits](quality/original-plan-editor-covers-and-flyout-rebinding.md).
+
+### D-694 - Missing account-detail cover states
+
+D694 completes35 missing original account-detail OS200 states across18 contexts and retains D629's accepted German error without replay. One distinct original Checking/EUR/opening0 setup is accepted once with ledger0; no D629 financial command repeats. Actual title ellipsis is corrected and necessary no-reset source21 adoption passes.
+[Native continuation and limits](quality/original-account-detail-covers-and-wrapped-native-title.md).

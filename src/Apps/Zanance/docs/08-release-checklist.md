@@ -5609,3 +5609,8 @@ D692 strictWindows/fullOffline384AOT/408ELF/1608staticLOAD/signature/CRC/ZIP16Ki
 
 D693 strict Windows/full offline384AOT/408ELF/1608staticLOAD/signature/CRC/ZIP16KiB pass. Shipping ecc1f5b0 waits for actual D607 completion/cleanup before Main adoption. Fresh source/OS restoration, UID/officialAVD retirement and3Cleans pass; the sole supplementary deletion is refused and frozen. Wider gates remain open.
 [Actual native failure, continuation and exact limits](quality/original-plan-editor-covers-and-flyout-rebinding.md).
+
+### D-694 - Original account title and cover qualification
+
+Strict Windows/full offline384AOT/408ELF/1608staticLOAD/v2v3/CRC/ZIP16KiB pass. Shipping94d6d1da awaits actual D607 completion/cleanup before phone adoption. Exact source/OS/Home restoration, freshUID/officialAVD retirement and3Cleans pass; supplementary deletion is refused and frozen. Wider gates remain open.
+[Actual package, restoration and limits](quality/original-account-detail-covers-and-wrapped-native-title.md).

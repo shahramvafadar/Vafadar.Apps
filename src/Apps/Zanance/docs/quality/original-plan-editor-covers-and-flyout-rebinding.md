@@ -1,5 +1,9 @@
 # D-693 - Original Plan editor covers and Android flyout rebinding
 
+## Sole exact-head CI observation
+
+At31October2026 15:50:17UTC, the sole exact-head response reports [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41215418523) in_progress with no conclusion and [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41215418621) completed/success. Preserve the original response/consumed marker and delete only that automation. No second workflow-run request or broader CI-success claim is made.
+
 ## Missing assertion and original source boundary
 
 D429 qualifies the original Plan editor's source, ownership, draft and accepted writers at

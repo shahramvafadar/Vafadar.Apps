@@ -147,6 +147,16 @@ internal sealed class AccessibleShellRenderer : ShellRenderer
                 { title = candidate; break; }
             if (title?.Layout is not { LineCount: > 0 } layout || title.Height <= 0
                 || toolbar.LayoutParameters is not { } parameters) return;
+            for (var line = 0; line < layout.LineCount; line++)
+            {
+                if (layout.GetEllipsisCount(line) == 0) continue;
+                // D-694: AppCompat's single-line title ellipsizes ordinary account names at large text.
+                // Keep the exact caption/font and let its next layout wrap before measuring toolbar height.
+                title.SetSingleLine(false);
+                title.SetMaxLines(int.MaxValue);
+                title.Ellipsize = null;
+                return;
+            }
             if (_titleVerticalChrome < 0)
             {
                 _ordinaryToolbarHeight = toolbar.Height;

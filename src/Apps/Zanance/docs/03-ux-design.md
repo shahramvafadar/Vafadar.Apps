@@ -3455,3 +3455,8 @@ A retired Android drawer must not receive a later live theme notification throug
 
 Original modal Cancel, full title/loading/error captions and separate44dp Retry remain readable at OS200 without shrinking text. Returning from a modal must not leave a disposed drawer observing later theme changes. Preserve original commands and financial source.
 [Actual native failure, continuation and exact limits](quality/original-plan-editor-covers-and-flyout-rebinding.md).
+
+### D-694 - Complete original native account title
+
+An original native title that no longer fits horizontally may wrap; preserve its exact name, selected font, native Back and measured height. A full semantic string is not proof that visible glyphs are unellipsized. Original loading/error covers keep complete text and separate44dp Back/Refresh targets.
+[Actual native failure and limits](quality/original-account-detail-covers-and-wrapped-native-title.md).

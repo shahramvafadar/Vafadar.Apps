@@ -8582,3 +8582,8 @@ D692 native en/fa/de, two themes,360/412/680dp and OS200 covers pass actual capt
 
 D693 original en/fa/de, both themes,360/412/680dp OS200 modal loading/error captions, complete native lines/ellipsis/bounds and44dp Cancel/Retry pass with source21equal. The actual post-modal original theme transition passes; the original disposed failure and diagnostic refusals remain preserved. This is not general stability or full accessibility acceptance.
 [Actual native failure, continuation and exact limits](quality/original-plan-editor-covers-and-flyout-rebinding.md).
+
+### D-694 - Original account covers and wrapped title
+
+35 new en/fa/de, Light/Dark,360/412/680dp OS200 account loading/error states pass; retain one historical D629 error. Actual title glyphs, lines/ellipsis/bounds, RTL/native Back and44dp Refresh pass on the same zero-opening source21. This is not36 new tests, all names/history/loans, full accessibility or general stability acceptance.
+[Actual original failure and exact scope](quality/original-account-detail-covers-and-wrapped-native-title.md).

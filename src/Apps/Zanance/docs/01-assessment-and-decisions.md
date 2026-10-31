@@ -12490,3 +12490,8 @@ Retire only the current renderer's own flyout appearance/behavior registrations 
 
 Detach only the previous owned flyout from its captured Shell before Android renderer rebinding; preserve terminal root retirement and current-root appearance. Actual modal-return/theme failure and exact source/native continuation qualify the correction without global observer clearing or early native disposal.
 [Actual native failure, continuation and exact limits](quality/original-plan-editor-covers-and-flyout-rebinding.md).
+
+### D-694 - Original account covers and complete wrapped native title
+
+Allow an actually ellipsized native title to wrap at its existing font, then let the owned toolbar measure its final line and grow. Preserve the exact account name and native Back. Actual ellipsis3 becomes two complete224px lines at unchanged89px font/736px width, with financial source unchanged.
+[Actual native failure, retained evidence and limits](quality/original-account-detail-covers-and-wrapped-native-title.md).

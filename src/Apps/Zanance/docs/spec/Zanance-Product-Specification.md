@@ -11762,3 +11762,8 @@ D692 preserves original comparison/source/financial behavior while detaching ret
 
 D693 preserves original Plan/source/financial behavior while detaching prior Android flyout observers before renderer rebinding.18 contexts/36loading-error states and the actual modal/theme regression pass, with six earlier successes retained. No new unit-test count, populated plan/financial, wholeDB/key, broad stability or release acceptance is claimed.
 [Actual native evidence and limits](../quality/original-plan-editor-covers-and-flyout-rebinding.md).
+
+### D-694 - Original account covers and wrapped native title
+
+Preserve the account name/font and financial behavior while allowing its actually ellipsized Android title to wrap and grow.35 new native states pass across18 contexts; one D629 German error is retained without replay. No new unit count, financial history/loan/authentication/wholeDB/key, broad stability or release acceptance is inferred.
+[Actual native failure and limits](../quality/original-account-detail-covers-and-wrapped-native-title.md).

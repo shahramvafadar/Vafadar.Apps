@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-694: keep a scaled Android account title complete by wrapping its original name instead of replacing the end with an ellipsis.
+
 - D-693: prevent a replaced Android drawer from interrupting theme changes after returning from a Plan form.
 
 - D-692: prevent an old Android drawer from interrupting theme changes after its page root has been replaced.
