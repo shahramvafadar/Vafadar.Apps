@@ -12238,3 +12238,9 @@ Capture the actual covered startup and original source before native confirmatio
 
 Retain actual startup window/root/model through original protected work, access setup and deferred publication; a retired callback cannot overwrite a replacement or consume its pending link.13new+4affected cases, final strict packages and original native counterfactual/current Retry pass with source20equal and no financial/authentication input. Preserve genuine access policy and all D607/phone state.
 [Original failure, native current retry and limits](quality/original-startup-publication-lifetime.md).
+
+
+### D-672 - Original unlocked destination order
+
+The first already-unlocked destination now owns the same queue drain as pending work, so a later arrival cannot overtake its asynchronous navigation. Preserve direct errors, reentrant followups, failed queued-item isolation and unstarted work behind a new cover. Two original regressions fail;4new+23affected existing cases, strict Windows/full offline APK and actual original-router/native modal ordering pass with full20source unchanged. Original4478Second/First becomes5532First/Second on the sameUID/boot/source after necessary no-reset upgrades; the first corrected observer's preserved-marker refusal is retained without callback replay. No account/authentication/key/financial input; phone/D607 remain untouched. Broader device/security/stability/speed/platform/provider/release gates remain separate.
+[Actual original failure, corrected ordering and limits](quality/original-unlocked-destination-order.md).

@@ -181,9 +181,24 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
                 _pending.Add(action);
                 return Task.CompletedTask;
             }
+
+            // D-672: the first already-unlocked destination owns the same drain as queued work.
+            // Otherwise a second tap overtakes its asynchronous native navigation or source read.
+            _drainingPending = true;
         }
 
-        return action();
+        return RunImmediateAndPendingAsync(action);
+    }
+
+    /// <summary>Preserves the immediate caller's result while retaining arrival order for later destinations.</summary>
+    private async Task RunImmediateAndPendingAsync(Func<Task> action)
+    {
+        try { await action(); }
+        finally
+        {
+            // Keep ownership across this handoff; no later arrival may jump ahead of queued input.
+            await RunPendingAsync(ownsDrain: true);
+        }
     }
 
     /// <summary>Turns the lock on or off after the device owner confirmed it; returns the new state.</summary>
@@ -233,14 +248,18 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     }
 
     // Links and rebuilds that waited for the unlock, in the order they came.
-    private async Task RunPendingAsync(Action? validateStartup = null)
+    private async Task RunPendingAsync(Action? validateStartup = null, bool ownsDrain = false)
     {
-        lock (_pending)
+        if (!ownsDrain)
         {
-            if (_drainingPending) return;
-            _drainingPending = true;
+            lock (_pending)
+            {
+                if (_drainingPending) return;
+                _drainingPending = true;
+            }
         }
 
+        var released = false;
         try
         {
             while (true)
@@ -251,7 +270,14 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
                 {
                     // Native navigation can background/re-cover the app. Retain every unstarted destination
                     // ahead of later input until the next successful unlock, even if the window is missing.
-                    if (IsLocked || _pending.Count == 0) return;
+                    if (IsLocked || _pending.Count == 0)
+                    {
+                        // Release atomically with the empty/covered observation. A new immediate caller
+                        // can then own the drain without an older finally clearing its ownership.
+                        _drainingPending = false;
+                        released = true;
+                        return;
+                    }
                     action = _pending[0];
                     _pending.RemoveAt(0);
                 }
@@ -266,7 +292,7 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
         }
         finally
         {
-            lock (_pending) { _drainingPending = false; }
+            if (!released) { lock (_pending) { _drainingPending = false; } }
         }
     }
 

@@ -8362,3 +8362,10 @@ retry/subset/alternate/move/escalation/reuse. Usedsigned/source/evidence retaine
 three deadlines/consumedreboot/unreadsource/lease untouched. Genuine PIN/unlock, broad DB/key/
 security/stability/speed/platform/provider/Store/release remain separate.
 [Original failure, actual current retry and exact limits](../../quality/original-startup-publication-lifetime.md)
+
+
+### D-672 - Original unlocked destination order (completed bounded scope)
+
+The first already-unlocked destination now owns the same queue drain as pending work, so a later arrival cannot overtake its asynchronous navigation. Preserve direct errors, reentrant followups, failed queued-item isolation and unstarted work behind a new cover. Two original regressions fail;4new+23affected existing cases, strict Windows/full offline APK and actual original-router/native modal ordering pass with full20source unchanged. Original4478Second/First becomes5532First/Second on the sameUID/boot/source after necessary no-reset upgrades; the first corrected observer's preserved-marker refusal is retained without callback replay. No account/authentication/key/financial input; phone/D607 remain untouched. Broader device/security/stability/speed/platform/provider/release gates remain separate.
+Six standard Cleans removed38780files/2154088112logicalbytes; freshUID/5XML35608capturebytes/officialAVD retired. Supplemental8publishfiles271957717bytes and8roots8535files1212535513bytes were blocked before process creation and remain frozen without retry/subset/alternate/move/escalation/reuse. Four usedsignedAPKs/source/evidence preserved.
+[Original failures, native continuation and limits](../../quality/original-unlocked-destination-order.md)

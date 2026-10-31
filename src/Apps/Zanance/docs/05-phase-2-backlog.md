@@ -5137,3 +5137,9 @@ again. D661 receives one delayed exact-head check. WholeDB/key/security/stabilit
 A11Y/iOS/genuine identity/provider/Store/release remain separate; overall goal active.
 
 [Evidence](quality/original-household-workspace.md)
+
+
+### D-672 - Original unlocked destination order
+
+The first already-unlocked destination now owns the same queue drain as pending work, so a later arrival cannot overtake its asynchronous navigation. Preserve direct errors, reentrant followups, failed queued-item isolation and unstarted work behind a new cover. Two original regressions fail;4new+23affected existing cases, strict Windows/full offline APK and actual original-router/native modal ordering pass with full20source unchanged. Original4478Second/First becomes5532First/Second on the sameUID/boot/source after necessary no-reset upgrades; the first corrected observer's preserved-marker refusal is retained without callback replay. No account/authentication/key/financial input; phone/D607 remain untouched. Broader device/security/stability/speed/platform/provider/release gates remain separate.
+[Actual original failure, corrected ordering and limits](quality/original-unlocked-destination-order.md).
