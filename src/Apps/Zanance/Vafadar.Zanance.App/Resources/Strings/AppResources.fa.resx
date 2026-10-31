@@ -8666,4 +8666,7 @@
   <data name="Tax_SourceLoadFailed" xml:space="preserve">
     <value>فهرست حساب‌ها بارگیری نشد. برای تلاش دوباره، آن را بازخوانی کنید.</value>
   </data>
+  <data name="Backup_PageTitle" xml:space="preserve">
+    <value>پشتیبان‌گیری</value>
+  </data>
 </root>

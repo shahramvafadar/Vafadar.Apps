@@ -8643,4 +8643,7 @@ SHA-256 du XML original : {5}</value>
   <data name="Tax_SourceLoadFailed" xml:space="preserve">
     <value>Les comptes n’ont pas pu être chargés. Rechargez les données pour réessayer.</value>
   </data>
+  <data name="Backup_PageTitle" xml:space="preserve">
+    <value>Sauvegarde</value>
+  </data>
 </root>

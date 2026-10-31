@@ -8666,4 +8666,7 @@ Original-XML SHA-256: {5}</value>
   <data name="Tax_SourceLoadFailed" xml:space="preserve">
     <value>Die Kontenauswahl konnte nicht geladen werden. Laden Sie die Daten erneut.</value>
   </data>
+  <data name="Backup_PageTitle" xml:space="preserve">
+    <value>Datensicherung</value>
+  </data>
 </root>

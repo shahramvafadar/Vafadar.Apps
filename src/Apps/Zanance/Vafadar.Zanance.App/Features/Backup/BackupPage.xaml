@@ -8,7 +8,7 @@
     xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Backup"
     x:DataType="local:BackupViewModel"
-    Title="{v:Translate Backup_Title}">
+    Title="{v:Translate Backup_PageTitle}">
 
     <Grid RowDefinitions="*,Auto">
         <ScrollView IsVisible="{Binding WorkspaceLoading.IsReady}">
@@ -236,7 +236,7 @@
         </VerticalStackLayout>
         <VerticalStackLayout Grid.Row="0" Padding="24" Spacing="12" VerticalOptions="Center" IsVisible="{Binding WorkspaceLoading.HasFailed}">
             <Label Text="{v:Translate Backup_ReadFailed}" Style="{StaticResource ErrorText}" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
-            <Button Text="{v:Translate Backup_RetryLoad}" Style="{StaticResource PrimaryButton}" Command="{Binding ReloadWorkspaceCommand}" IsEnabled="{Binding CanReloadWorkspace}" />
+            <p:WrappingAction Text="{v:Translate Backup_RetryLoad}" Appearance="Primary" Command="{Binding ReloadWorkspaceCommand}" IsEnabled="{Binding CanReloadWorkspace}" />
         </VerticalStackLayout>
 
         <!-- Current review and accepted completion reserve a growing row outside the scroll viewport. -->

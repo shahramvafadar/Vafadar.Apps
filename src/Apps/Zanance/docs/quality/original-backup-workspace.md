@@ -107,3 +107,14 @@ D-657 pushed-head CI is a separate single delayed check, not assumed successful 
 Five standard cleans removed 29196 registered files/2113039306 logical bytes. The sole
 bounded supplementary cleanup removed 3766 files/749948420 logical bytes in nine existing
 targets, preserving used signed packages and all earlier refused scopes.
+
+
+## D-685 dated source-cover follow-up
+
+The original360dp error-footer evidence remains in its recorded scope. A distinct
+native412dp observation later exposes clipped Persian Retry final lines despite full
+visible bounds, and Spanish360 exposes Toolbar ellipsis. Only the source Retry control
+and page-specific compact title change. Current changed-control geometry and previously
+uncovered loading/native Toolbar assertions are qualified without repeating destination,
+backup, financial or actual Retry operations. [D-685 evidence](original-backup-source-cover-os-text.md)
+records both original defects, retained successes and exact continuation/restoration.

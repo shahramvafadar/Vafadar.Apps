@@ -8702,4 +8702,8 @@ Original XML SHA-256: {5}</value>
     <value>Account choices could not be loaded. Reload to try again.</value>
     <comment>Original account-choice source read failed; no accountant packet operation is implied.</comment>
   </data>
+  <data name="Backup_PageTitle" xml:space="preserve">
+    <value>Backup</value>
+    <comment>Compact original native backup page title; complete shared menu labels and detailed body disclosures remain unchanged.</comment>
+  </data>
 </root>

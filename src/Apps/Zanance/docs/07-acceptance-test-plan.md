@@ -8491,3 +8491,27 @@ compile-only and Android caller build pass with existing exact native inputs. No
 financial/device, old native/Android success or performance cohort is replayed. Ordinary
 complete Main CI is still separate; D-607 and wider release gates remain protected.
 [Actual new host, exact immutable package identity and limits](quality/qualified-hosted-windows-producer.md).
+
+
+### D-685 - Original backup source covers and growing Retry action
+
+Two actual native presentation defects are preserved and corrected: Persian412 source
+Retry clips its final line in a fixed native Button, and Spanish360 Toolbar title loses
+three characters. Existing WrappingAction retains the original Retry command/key/enablement;
+new page-only Backup_PageTitle keeps all shared menus/body text and every non-Spanish
+native title exact. Eighteen loading and24 changed-Retry error observations pass, preserving
+eight loading packets and18 corrected error results while continuing only unfinished cases.
+No native Retry/file/backup/account/financial/authentication command or old successful logical
+suite is replayed. Twenty-three existing resource contracts and strict Windows/full offline
+Android384AOT/408ELF/1608staticLOAD/v2v3/CRC/ZIP16KiB pass; these are not42 new unit tests.
+Same UID/boot/source21 survives necessary4395to6883to10825 upgrades. Original startup,
+readiness, theme-disposed-renderer and clipping failures remain preserved, without claiming
+a general crash fix. Exact OS/source restoration,80 hash-matched owned XML removals,
+fresh fixture/official AVD retirement and four standard Clean scopes complete. Supplemental
+three-target removal is rejected before process creation, leaving841files/224707169logical
+bytes frozen without retry/subset/alternate/move/escalation/reuse. Final APKc4235bbb and
+used packages/evidence remain; phone/D-607/three deadlines/consumed reboot/unread source
+stay protected. General DB/key/security/stability/performance/A11Y/iOS/provider/Store and
+release acceptance remain separate. D-683's ordinary Main Native cipher and CodeQL checks
+complete successfully at20ed349a; general CI is still in progress at its sole observation.
+[Actual clipping, retained native cases and exact restoration](quality/original-backup-source-cover-os-text.md).

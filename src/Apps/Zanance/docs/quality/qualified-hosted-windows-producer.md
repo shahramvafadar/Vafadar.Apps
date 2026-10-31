@@ -61,3 +61,16 @@ No successful Android job, financial operation or native build is rerun locally 
 binding. Original failed logs, old/new host receipts, source-closure proof and exact artifacts
 remain retained. D-607's three deadlines, consumed reboot and unread post-reboot source are
 untouched. The one producer-head workflow-runs GET is consumed; its automation is deleted.
+
+## Ordinary Main native result observed on31October
+
+The separate one-shot response for20ed349a records
+[Native cipher candidates41192020270](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41192020270)
+completed/success and CodeQL completed/success. Actual Windows job124510565217 completes
+original schema/immutable entries, diagnostic refusals, production fresh-process reopening
+and protected reference/tenfold measurements; Android job124510565342 completes its normal
+official slices and stock cipher suite. Producer export is skipped in this ordinary lane.
+These are current hosted gate results, not another local execution or phone Home-speed proof.
+General CI41192020298 is still in progress at that sole response, so overall CI green is
+not claimed. The exact-head marker is consumed and its monitor deleted without a second
+workflow-runs request. D-685's later presentation work retains this completed native result.
