@@ -2,7 +2,7 @@
 
 ## Separate D-699 follow-through - 31 October 2026
 
-The missing actual PDF recipient-read boundary is qualified in a fresh original report cohort without repeating D647's accepted ownership/KPI/contribution scenarios. Actual renderer/cache/Android chooser/local offline recipient, identical original PDF bytes, both rendered pages, READ revocation and full21 source equality pass. This is not physical delivery or broad report corpus acceptance.
+The current report command's full21 source equality across actual share/return, identical producer/cache/receiver/host PDF bytes and explicit temporary READ revocation pass separately. D329 already qualified physical recipient delivery and en/fa/de document contents; D699's repeated English page inspection is corroboration, not a newly missing capability. The initial history lookup omitted D329 and is corrected in the linked record. D647's accepted ownership/KPI/contribution actions are not replayed; this adds no phone or broad corpus result.
 [Original document and recipient boundary](original-report-pdf-recipient-handoff.md).
 
 ## Scope and published failures (D-647, 29 October 2026)

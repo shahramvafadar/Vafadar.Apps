@@ -1,14 +1,24 @@
 # D-699 - Original report PDF to a local Android recipient
 
-## Missing scope and admission
+## Current-path scope and admission correction
 
-Retain [D-323](physical-report-filter-pdf.md), which reached the real Samsung
-chooser without selecting a recipient, and [D-647](original-report-workspace-and-kpi-handoff.md),
-which qualified original report/KPI ownership without native PDF recipient delivery.
-Neither proves that a recipient can read the original granted URI or that the
-received PDF renders correctly. This batch closes that bounded missing scope on
-one fresh API36/x64/4096 owned emulator. It does not repeat the old financial,
-filter, KPI, contribution, export-cancellation or phone scenarios.
+The initial admission considered [D-323](physical-report-filter-pdf.md), which
+reached the Samsung chooser without selecting a recipient, and
+[D-647](original-report-workspace-and-kpi-handoff.md), which qualified changed
+report/KPI ownership without repeating native PDF delivery. That history lookup
+was incomplete: [D-329](physical-report-pagination.md) already delivered original
+English/Persian/German PDFs to a local recipient and inspected their actual pages
+on Samsung. Preserve its successful content and continued-table acceptance; do
+not describe recipient delivery, visual inspection or repeated headers as newly
+implemented or previously unqualified product capabilities.
+
+D699's additional assertions are the current post-D647 original report command
+path's full21 typed-source equality across render/share/return, actual producer
+cache/recipient/host byte identity, and explicit temporary READ-grant revocation
+after the receiver Activity finishes. The repeated English content/raster
+inspection is retained as observed corroboration, not a newly closed historical
+gap or justification for another report/recipient/language cohort. No old
+financial, filter, KPI, contribution, cancellation or phone scenario is replayed.
 
 The producer links the original app, startup, protected factory, report model,
 renderer, cache writer and native share implementation. Its diagnostic provider

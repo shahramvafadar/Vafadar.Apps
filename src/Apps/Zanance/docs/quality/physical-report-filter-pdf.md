@@ -2,7 +2,7 @@
 
 ## Separate D-699 follow-through - 31 October 2026
 
-The bounded recipient-read gap is now qualified separately on a fresh owned emulator: one original PDF share, actual local offline recipient, identical producer/receiver/host bytes, two rendered pages, temporary READ revocation and source21 equality. D323's physical chooser-only boundary remains unchanged; no old phone/financial/filter scenario is replayed or reclassified.
+D329 already closed the physical recipient/content gap, including en/fa/de pages; retain that evidence. D699 separately checks the current post-D647 command's source21 equality across native share/return, exact producer/receiver/host bytes and explicit READ-grant revocation. Its repeated English page inspection is corroboration, not newly missing acceptance. D323's chooser-only boundary remains unchanged; no old phone/financial/filter action is replayed or reclassified.
 [Original document and precise recipient scope](original-report-pdf-recipient-handoff.md).
 
 ## Scope and unchanged binary
