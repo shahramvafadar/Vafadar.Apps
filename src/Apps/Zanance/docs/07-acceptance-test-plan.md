@@ -8434,3 +8434,21 @@ compiler remains unqualified: new public metadata observation preserves the exac
 signature/hash/SDK/native-package gates. No hosted-green or release claim is made.
 Phone/D-607 deadlines, consumed reboot and unread source remain untouched; the goal is active.
 [Actual CI failures, original review repair and hosted boundary](quality/retired-billing-review-and-hosted-compiler-drift.md).
+
+
+### D-682 - Exact original managed resource-cache synchronization evidence
+
+The exact retained D-678 PID4527 APK supplies its actual runtime14 CoreLib image,
+version/MVID and394-byte original GetObject IL. Both dictionary lookups follow
+Monitor.Enter inside protected regions and have matching finally/Exit. This contradicts
+an absent lock in that packaged managed method; executed AOT instructions, reference
+origin and exclusive managed/native cause remain unproved. The original AOT exposes no
+matching function symbols. A trimmed parameter-table assumption is corrected from the
+actual three-parameter method signature, preserving the initial observation. No product,
+runtime/GC, device, native run, financial work or successful test/build is repeated; only
+two small strict metadata-inspector builds occur, without executing the target CoreLib.
+One standard Clean passes. Automatic review rejects three supplemental fresh targets
+before process creation, leaving11files/3013350logical bytes frozen without retry,
+subset, alternate method, move, escalation or reuse. Original APK/used CoreLib/proofs
+remain; D-607 and the goal stay active and wider release gates remain open.
+[Actual packaged IL, exact code identity and limits](quality/original-managed-resource-cache-lock-evidence.md).

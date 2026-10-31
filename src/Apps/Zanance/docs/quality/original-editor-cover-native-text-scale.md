@@ -75,6 +75,13 @@ does not prove an application-level race, native/GC cause or exclusive defect in
 no speculative synchronization, swallowed exception or fallback translation is added.
 The actual failure remains open under stability diagnosis.
 
+Subsequent D-682 inspects the exact original packaged CoreLib managed image, including
+its actual runtime14 informational version and394-byte GetObject body. Both lookup
+paths have Monitor.Enter and matching finally/Exit in that actual IL. This strengthens
+the earlier upstream-only observation without proving executed AOT instructions or
+reference origin; no speculative Translator/runtime repair follows.
+[Exact original managed-byte evidence and limits](original-managed-resource-cache-lock-evidence.md).
+
 After process absence and the actual OS exit record are proved, normal launch alone starts
 PID6432 with the same UID, boot, installed APK and typed source across 20 collections. No reinstall, reset,
 force-stop, setup or accepted command is repeated. Only the failed/unobserved context and
