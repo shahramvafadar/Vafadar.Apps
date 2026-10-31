@@ -12250,3 +12250,9 @@ The first already-unlocked destination now owns the same queue drain as pending 
 
 Scoped budget/goal/plan resolution now retains its original read-only resolver ahead of later arrivals when access closes during the actual source read, then resolves and validates again after unlock without replaying navigation or writers. Three original failures,9new+13affected cases and strict Windows/full offline Android pass. Original native5282displayed GoalDetailPage above LockPage while still locked; corrected5989kept only the PIN cover, then opened the original goal exactly once after fixture-PIN unlock on the sameUID/boot/full20source. One fictitious goal and fixture PIN were created once; accounts/ledger/financial/owner credentials0. Observe-only failures and exact limits remain recorded; phone/D607 untouched and broader gates open.
 [Original failure, native access continuation and limits](quality/original-reminder-access-continuation.md).
+
+
+### D-674 - Original account covers at native text scale
+
+Qualified the original account-editor loading/read-failure covers in18real OS200contexts (en/fa/de, Light/Dark,360/412/680dp),36native text/target observations and one original visible Retry. Captions match original app/shared resources; actual line/ellipsis/visible bounds and viewport measurements pass with full20source unchanged and account/ledger/Save0.17contexts completed in5055before actual native crash/status11; only the last continued in9364on the sameUID/boot/APK/source. Cause/repair is unproven. Exact original display/source restored, freshUID/57XML699507capturebytes/officialAVD retired and one private Clean passed. Product code/full shipping/tests unchanged; phone/D607 and broader gates remain open.
+[Native geometry, actual exit and limits](quality/original-account-cover-native-text-scale.md).
