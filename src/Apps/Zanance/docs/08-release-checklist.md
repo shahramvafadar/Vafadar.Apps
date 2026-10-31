@@ -5313,3 +5313,9 @@ Original analysis ownership, minimal source worker, translated feedback and retu
 
 D666 actual Android picker and owned offline URI receiver passed within the documented scope, with exact payload/BOM/name/grant and source preservation. This does not close real recipient/provider, physical adoption or general release gates. Refused residual cleanup remains explicitly recorded.
 [Evidence and exact limits](quality/original-csv-native-file-handoff.md).
+
+
+### D-667 - Original PIN settings lifetime
+
+Original PIN configuration ownership and truthful accepted-result closing are locally qualified in D667, with final strict offline packages and exact bounded native/source/OS evidence. Earlier runtime versions are not relabelled final. Three fresh fixtures retired; two refused residual cleanup scopes remain explicit. D607/phone and broad security/platform/provider/release gates stay open.
+[Evidence, actual failures and limits](quality/original-pin-settings-lifetime.md).

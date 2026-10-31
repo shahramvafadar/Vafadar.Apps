@@ -8298,3 +8298,9 @@ A11Y/iOS/genuine identity/provider/Store/release remain separate; overall goal a
 
 D666 closes D653's missing actual Android picker and owned-recipient boundary: one Cancel, one selected fake CSV/readonly preview and one empty-ledger export; full20source unchanged, no Import/Undo/financial Save. External recipient and real provider acceptance remain separate.
 [Evidence and exact limits](quality/original-csv-native-file-handoff.md).
+
+
+### D-667 - Original PIN settings lifetime
+
+D667:39distinct selected cases (16new/23affected existing) and three native version-bound continuations cover original PIN queue/read ownership, secret clearing/newer drafts, pending Back, competing Save during close and saved-return receipt without a second write. Full20source and OS restoration pass; two PIN configurations are distinct changed branches, ledger0. Native failure injection and logical authentication ports do not establish genuine owner/biometric acceptance.
+[Evidence, actual failures and limits](quality/original-pin-settings-lifetime.md).

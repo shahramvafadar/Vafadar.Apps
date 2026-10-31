@@ -11466,3 +11466,9 @@ Original analysis source/frame/native disclosure, row and independent request ow
 
 Section31 addendum D666: original Android picker Cancel, exact fake-file selection/readonly preview and one empty-ledger native URI handoff now have actual integration evidence. Complete20source and original settings stayed equal. No product behavior, financial write or broader provider/release acceptance changed.
 [Evidence and exact limits](../quality/original-csv-native-file-handoff.md).
+
+
+### D-667 - Original PIN settings lifetime
+
+Section31 addendum D667: original PIN settings now own actual modal/root, independent primary/closing work and protected writes across waits. Request-only clearing, newer input and known accepted-write follow-through are preserved.39distinct selected checks and scoped native evidence pass; no financial, PIN verifier/attempt/recovery or provider policy changed. Genuine authentication and broad delivery gates remain separate.
+[Evidence, actual failures and limits](../quality/original-pin-settings-lifetime.md).

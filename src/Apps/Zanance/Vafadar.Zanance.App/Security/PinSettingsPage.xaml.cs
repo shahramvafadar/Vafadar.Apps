@@ -13,7 +13,21 @@ public partial class PinSettingsPage : ContentPage
         InitializeComponent();
         FlowDirection = Application.Current?.Windows.FirstOrDefault()?.Page?.FlowDirection ?? FlowDirection.MatchParent;
         BindingContext = _viewModel = new(appLock, translator);
-        _viewModel.CloseAsync = () => Navigation.PopModalAsync();
+        var root = Application.Current?.Windows.FirstOrDefault()?.Page;
+        _viewModel.IsCurrent = () => root is not null
+            && ReferenceEquals(Application.Current?.Windows.FirstOrDefault()?.Page, root)
+            && ReferenceEquals(root.Navigation.ModalStack.LastOrDefault(), this);
+        _viewModel.CloseAsync = async () =>
+        {
+            if (!_viewModel.IsCurrent()) return;
+            await Navigation.PopModalAsync();
+        };
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _viewModel.Activate();
     }
 
     protected override bool OnBackButtonPressed()
@@ -24,7 +38,7 @@ public partial class PinSettingsPage : ContentPage
 
     protected override void OnDisappearing()
     {
-        _viewModel.Clear();
+        _viewModel.Deactivate();
         base.OnDisappearing();
     }
 }

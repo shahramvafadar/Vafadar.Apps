@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Security/PinSettingsViewModel.cs" Link="Application/PinSettingsViewModel.cs" />
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>

@@ -12206,3 +12206,9 @@ Keep original minimal analysis source/aggregation on its protected worker, with 
 
 Keep native picker and actual URI recipient delivery separate from private effect-port evidence. Preserve original confirmation, neutral name, BOM/bytes and temporary read-only grant. D666 qualifies the owned recipient only; provider MIME and SEND MIME are recorded independently.
 [Evidence and exact limits](quality/original-csv-native-file-handoff.md).
+
+
+### D-667 - Original PIN settings lifetime
+
+D667 retains original PIN verification/attempt/recovery/storage policy while binding configuration and native continuations to their actual page/root. Independent primary/closing ownership cannot be released by feedback. Store only a returned-write input-version receipt, not secret hashes; distinguish saved-return feedback from storage failure and never replay an accepted write for navigation.
+[Evidence, actual failures and limits](quality/original-pin-settings-lifetime.md).

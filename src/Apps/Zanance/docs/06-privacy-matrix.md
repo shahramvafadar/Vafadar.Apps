@@ -1590,3 +1590,9 @@ Password and one-use token remain request-only and clear before submission/deact
 
 Original minimal aggregate fields and refusal of unsupported shared sources are unchanged. No new names/notes/documents enter outgoing data, and no model/provider or identity request occurred in native qualification. Original Cancel showed no share chooser; full joined typed-source comparison is separate from null/unread diagnostic packets. Native diagnostics remain absent from shipping.
 [Evidence, failures and exact cleanup limits](quality/original-analysis-workspace.md).
+
+
+### D-667 - Original PIN settings lifetime
+
+Original PIN settings retain only request-lifetime input and an opaque input-version acceptance marker; no secret text/hash is added to settings, backup, provider requests or receipts. Native diagnostics export only lengths, bounded feedback and write counts in fresh fictitious packages, never real credentials/verifiers. This does not claim managed-memory erasure or complete security acceptance.
+[Evidence, actual failures and limits](quality/original-pin-settings-lifetime.md).

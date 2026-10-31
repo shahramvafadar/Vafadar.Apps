@@ -9,6 +9,26 @@ namespace Vafadar.Zanance.App.Security;
 /// <summary>Sets, changes or removes the device-wide app PIN; never persists entered text (D-63).</summary>
 public sealed partial class PinSettingsViewModel(AppLockService appLock, Translator translator) : ObservableObject
 {
+    private bool _working;
+    private bool _closing;
+    private bool _active = true;
+    private long _lifetime;
+    private long _inputVersion;
+    private long? _acceptedVersion;
+
+    /// <summary>Checks the actual original modal and window root, independently of feedback.</summary>
+    public Func<bool> IsCurrent { get; set; } = () => true;
+
+    /// <summary>Activates a newly shown original form without reviving an older continuation.</summary>
+    public void Activate() { _active = true; _lifetime++; OnPropertyChanged(nameof(HasPin)); }
+
+    /// <summary>Retires outstanding original ownership and removes editable secret text.</summary>
+    public void Deactivate() { _active = false; _lifetime++; Clear(); }
+
+    partial void OnCurrentPinChanged(string value) => _inputVersion++;
+    partial void OnNewPinChanged(string value) => _inputVersion++;
+    partial void OnConfirmPinChanged(string value) => _inputVersion++;
+
     /// <summary>Gets whether a current PIN must be supplied.</summary>
     public bool HasPin => appLock.PinEnabled;
     /// <summary>Gets or sets the current PIN, held only while this form is open.</summary>
@@ -35,7 +55,9 @@ public sealed partial class PinSettingsViewModel(AppLockService appLock, Transla
 
     private async Task SubmitAsync(bool remove)
     {
-        if (IsBusy) { return; }
+        if (_working || _closing || !_active || !IsCurrent()) { return; }
+        // D-667: a known returned write is never retried because modal follow-through failed.
+        if (_acceptedVersion == _inputVersion) { await CloseAcceptedAsync(_lifetime); return; }
         CurrentError = NewError = ConfirmError = PageError = null;
         var current = Digits.ToAscii(CurrentPin);
         var next = Digits.ToAscii(NewPin);
@@ -48,34 +70,59 @@ public sealed partial class PinSettingsViewModel(AppLockService appLock, Transla
         }
 
         if (CurrentError is not null || NewError is not null || ConfirmError is not null) { return; }
+        var lifetime = _lifetime;
+        Clear();
+        var submittedVersion = _inputVersion;
+        _working = true;
         IsBusy = true;
+        void Current()
+        {
+            if (!_active || lifetime != _lifetime || !IsCurrent())
+                throw new InvalidOperationException("The original PIN settings form retired.");
+        }
         try
         {
-            var result = remove ? await appLock.Pin.RemoveAsync(current) : await appLock.Pin.SetAsync(current, next);
+            var result = remove ? await appLock.Pin.RemoveAsync(current, Current) : await appLock.Pin.SetAsync(current, next, Current);
             if (result.Outcome == PinOutcome.Success)
             {
-                Clear();
-                await CloseAsync();
+                // Record only the original returned commit, before fallible navigation.
+                _acceptedVersion = submittedVersion;
+                OnPropertyChanged(nameof(HasPin));
+                if (_active && lifetime == _lifetime && IsCurrent() && submittedVersion == _inputVersion)
+                    await CloseAcceptedAsync(lifetime);
             }
             else
             {
-                CurrentPin = string.Empty;
+                if (!_active || lifetime != _lifetime || !IsCurrent() || submittedVersion != _inputVersion) return;
                 CurrentError = result.Outcome == PinOutcome.Delayed
                     ? translator.Format("Pin_Wait", (int)Math.Ceiling(result.Wait.TotalSeconds)) : translator["Pin_Incorrect"];
             }
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
-            Clear();
-            PageError = translator["Pin_Unavailable"];
+            if (_active && lifetime == _lifetime && IsCurrent()) PageError = translator["Pin_Unavailable"];
         }
-        finally { IsBusy = false; }
+        finally { _working = false; IsBusy = false; }
     }
 
     [RelayCommand]
     private async Task BackAsync()
     {
-        if (!IsBusy) { Clear(); await CloseAsync(); }
+        if (!_working && !_closing && _active && IsCurrent()) { Clear(); await CloseAcceptedAsync(_lifetime); }
+    }
+
+    private async Task CloseAcceptedAsync(long lifetime)
+    {
+        if (_closing || !_active || lifetime != _lifetime || !IsCurrent()) return;
+        // Navigation remains owned even when this is only a known accepted-result follow-through.
+        _closing = true;
+        try { await CloseAsync(); }
+        catch (Exception ex) when (ex is not OutOfMemoryException)
+        {
+            if (_active && lifetime == _lifetime && IsCurrent())
+                PageError = translator[_acceptedVersion == _inputVersion ? "ActiveItems_SavedReturnFailed" : "Error_Unexpected"];
+        }
+        finally { _closing = false; }
     }
 
     /// <summary>Removes all entered PIN text when the page closes.</summary>

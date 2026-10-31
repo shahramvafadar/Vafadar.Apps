@@ -8241,3 +8241,24 @@ process creation, leaving1082files/5187453467logicalbytes frozen without retry/s
 move/escalation/reuse. Used signed packages/evidence retained. Phone/D607/three deadlines and
 all other refused scopes untouched; external recipient/provider and broad release gates remain.
 [Evidence, actual MIME/grant/bytes and cleanup limits](../../quality/original-csv-native-file-handoff.md)
+
+
+### D-667 - Original PIN settings ownership (completed bounded scope)
+
+Original PIN modal/root/lifetime, independent primary/closing ownership and protected
+configuration guards now survive actual queue/read waits. Submitted editable secrets clear
+before waiting, newer drafts survive and known returned writes retry closing only. Known
+accepted close errors and unsubmitted navigation failures have truthful existing translated
+feedback. Four published failures and three intermediate closing/feedback failures remain.
+39distinct selected checks (16new/23affected existing), final strictWindows/fullOffline384AOT/
+408ELF/1608staticLOAD and original native continuations pass within their recorded versions.
+First Settings-routed cohort accepted1local PIN/held-read/Back with one zero account; changed
+closing-only cohort used0account/PIN/ledger setup and0writes; final actual saved-return failure
+branch used1distinct local PIN write, then actual Save only closed without replay. Full20source/
+OS/root exact, ledger0; no real authentication. All3fresh packages/AVDs and30hashXML/937088bytes
+retired;10standard Cleans pass. Two distinct supplementary deletions were refused before process
+creation:12publishfiles534166392logicalbytes and13roots9599files1643905805logicalbytes remain
+frozen without retry/subset/alternate/move/escalation/reuse. Used signed/evidence/rejected
+candidate retained; initial offline-flag omission and early observer refusals preserved.
+Phone/D607/three deadlines/lease/unread source untouched; broad release gates remain open.
+[Original failures, actual version lineage and exact limits](../../quality/original-pin-settings-lifetime.md)

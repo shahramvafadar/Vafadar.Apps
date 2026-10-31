@@ -34,21 +34,26 @@ public sealed class PinLock(IPinStorage storage, TimeProvider time)
     }
 
     /// <summary>Sets or changes a PIN. An existing PIN must match and respect the same attempt limit.</summary>
-    public async Task<PinResult> SetAsync(string currentPin, string newPin)
+    public async Task<PinResult> SetAsync(string currentPin, string newPin, Action? validateOwner = null)
     {
         if (!IsValid(newPin)) { return new(PinOutcome.Incorrect, TimeSpan.Zero); }
         await _gate.WaitAsync();
         try
         {
+            // D-667: configuration consent cannot survive an exclusive wait or protected read.
+            validateOwner?.Invoke();
             var state = await ReadAsync();
+            validateOwner?.Invoke();
             if (state is not null)
             {
-                var check = await VerifyAsync(state, currentPin);
+                var check = await VerifyAsync(state, currentPin, validateOwner);
                 if (check.Outcome != PinOutcome.Success) { return check; }
             }
 
+            validateOwner?.Invoke();
             var salt = RandomNumberGenerator.GetBytes(16);
             var hash = Derive(newPin, salt, Iterations);
+            validateOwner?.Invoke();
             await storage.WriteAsync(new(1, Iterations, salt, hash, 0, null));
             IsEnabled = true;
             return new(PinOutcome.Success, TimeSpan.Zero);
@@ -57,16 +62,20 @@ public sealed class PinLock(IPinStorage storage, TimeProvider time)
     }
 
     /// <summary>Removes a PIN only after a successful check; cancelling or guessing never disables it.</summary>
-    public async Task<PinResult> RemoveAsync(string currentPin)
+    public async Task<PinResult> RemoveAsync(string currentPin, Action? validateOwner = null)
     {
         await _gate.WaitAsync();
         try
         {
+            // D-667: configuration consent cannot survive an exclusive wait or protected read.
+            validateOwner?.Invoke();
             var state = await ReadAsync();
+            validateOwner?.Invoke();
             if (state is null) { return new(PinOutcome.NotConfigured, TimeSpan.Zero); }
-            var check = await VerifyAsync(state, currentPin);
+            var check = await VerifyAsync(state, currentPin, validateOwner);
             if (check.Outcome == PinOutcome.Success)
             {
+                validateOwner?.Invoke();
                 await storage.WriteAsync(null);
                 IsEnabled = false;
             }
@@ -104,7 +113,7 @@ public sealed class PinLock(IPinStorage storage, TimeProvider time)
         return state;
     }
 
-    private async Task<PinResult> VerifyAsync(PinState? state, string pin)
+    private async Task<PinResult> VerifyAsync(PinState? state, string pin, Action? validateOwner = null)
     {
         if (state is null) { return new(PinOutcome.NotConfigured, TimeSpan.Zero); }
         var now = time.GetUtcNow();
@@ -119,6 +128,7 @@ public sealed class PinLock(IPinStorage storage, TimeProvider time)
 
         if (matches)
         {
+            validateOwner?.Invoke();
             await storage.WriteAsync(state with { Failures = 0, RetryAt = null });
             return new(PinOutcome.Success, TimeSpan.Zero);
         }
@@ -127,6 +137,7 @@ public sealed class PinLock(IPinStorage storage, TimeProvider time)
         // deadline with the verifier prevents an app restart from resetting the limit (D-63).
         var failures = Math.Min(state.Failures + 1, 20);
         var delay = failures < 5 ? TimeSpan.Zero : TimeSpan.FromSeconds(Math.Min(60 * (1 << Math.Min(failures - 5, 4)), 900));
+        validateOwner?.Invoke();
         await storage.WriteAsync(state with { Failures = failures, RetryAt = delay > TimeSpan.Zero ? now + delay : null });
         return new(delay > TimeSpan.Zero ? PinOutcome.Delayed : PinOutcome.Incorrect, delay);
     }

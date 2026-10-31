@@ -2800,3 +2800,9 @@ D-294 local household delivery is complete at the recorded Windows/emulator/loca
 
 D-666: qualified original Android CSV picker Cancel/selection/readonly preview and one real empty-ledger URI handoff to an owned offline recipient; source/settings exact, no financial writes or product changes. External recipients remain unqualified.
 [Evidence and exact limits](docs/quality/original-csv-native-file-handoff.md).
+
+
+### D-667 - Original PIN settings lifetime
+
+Bind original PIN configuration to its actual modal/root through exclusive waiting and protected reads; preserve newer drafts, clear submitted editable secrets and retry known accepted closing without another write. Independent closing and truthful saved-return feedback now handle native follow-through failures.39distinct selected checks, strict builds and bounded native branches pass; general security/authentication acceptance stays separate.
+[Evidence, actual failures and limits](docs/quality/original-pin-settings-lifetime.md).

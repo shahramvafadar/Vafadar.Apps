@@ -3363,3 +3363,9 @@ Cover the form until its current private-session read is ready. Expose an explic
 
 Visible source failure requires explicit Reload and preserves date/scope choices. Current language updates error/validation feedback without another source/provider read; a changed disclosure retires old review consent. Retired rows and pages cannot act on current review. Original native Cancel and pending-read Back preserve source; known results stay attached to their historical packet.
 [Evidence, failures and exact cleanup limits](quality/original-analysis-workspace.md).
+
+
+### D-667 - Original PIN settings lifetime
+
+The original PIN form clears submitted text before protected waiting, preserves a newer draft and keeps actual Back/Save ownership while primary or closing work awaits. A known saved result followed by failed closing says it was saved; retrying Save only returns. Original fields/layout and existing six-language feedback are retained.
+[Evidence, actual failures and limits](quality/original-pin-settings-lifetime.md).
