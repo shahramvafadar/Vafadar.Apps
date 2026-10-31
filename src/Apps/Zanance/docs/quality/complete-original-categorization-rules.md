@@ -113,3 +113,14 @@ and all three deadlines remain untouched. Physical no-reset adoption waits for i
 terminal delivery/source/cleanup. No model/schema/financial formula/permission change.
 Whole database/private keys, general security/stability, two-second Home, accessibility,
 iOS, provider/Store and release remain separate gates; the overall goal stays active.
+
+
+## D-686 dated native source-cover follow-up
+
+The original metadata, ready-state and explicit Retry successes remain preserved. A
+separate OS200 source-cover admission qualifies Rules/Categories/Category Editor without
+repeating their account/category/rule setup or writes. Two clipped native Rules titles
+are fixed with a page-only compact key; shared menus and source/commands remain exact.
+[D-686 evidence](original-category-source-cover-os-text.md) records all54 contexts,
+seven retained initial successes, complete bounds/last-line/leave targets, genuine modal
+header/Cancel handling and exact restoration/cleanup limits.

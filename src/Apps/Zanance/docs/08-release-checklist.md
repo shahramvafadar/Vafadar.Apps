@@ -5542,3 +5542,28 @@ stay protected. General DB/key/security/stability/performance/A11Y/iOS/provider/
 release acceptance remain separate. D-683's ordinary Main Native cipher and CodeQL checks
 complete successfully at20ed349a; general CI is still in progress at its sole observation.
 [Actual clipping, retained native cases and exact restoration](quality/original-backup-source-cover-os-text.md).
+
+
+### D-686 - Original category and rules source covers at native OS200
+
+One fresh empty protected app qualifies54 contexts/108 loading-error states across Rules,
+Categories and Category Editor, en/fa/de/both themes/360/412/680. Initial9narrow observations
+find only clipped Rules titles: English4/German7 ellipsized characters. One page-only
+Rules_PageTitle binding and six real translations fix them while shared menus/body/all
+existing values stay exact; Persian retains its actual prior title. Unvisited original
+caption rows are audited from captured packets, not another UI run; no further clipping
+is found. Seven unchanged initial successes remain accepted and only47 unfinished/changed
+contexts continue. Zero account/category/rule/financial/file/authentication setup, native
+Retry or old metadata command is replayed. Scope uses the original Store/read/worker and
+VM ownership; only three store acquisition factories are held/failed, with no global factory
+replacement or write grant. Same UID/boot/source21 survives4848to7221 once.23existing resource
+contracts and strict Windows/full offline384AOT/408ELF/1608staticLOAD/signature/CRC/ZIP16KiB
+pass;54observations are not new unit tests. Original OS/source restore,169hash-matched XML
+removals, fresh fixture/official AVD retirement and4standardCleans complete. Supplemental
+2root deletion is rejected before process creation;839files/125402900logical bytes remain
+frozen without retry/subset/alternate/move/escalation/reuse. FinalAPK5f566ecb/usedpackages/
+canonicalevidence remain outside those scopes. Phone/D-607/three deadlines/consumed reboot/
+unread source stay protected; broader DB/key/security/stability/performance/A11Y/iOS/provider/
+Store/release gates remain open. D685soleCIresponse records CodeQLsuccess and generalCI
+in_progress; its consumed monitor is deleted, without another workflow-runs request.
+[Original titles, retained native cases and exact source/OS preservation](quality/original-category-source-cover-os-text.md).

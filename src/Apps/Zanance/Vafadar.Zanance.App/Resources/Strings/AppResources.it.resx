@@ -8658,4 +8658,7 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Backup_PageTitle" xml:space="preserve">
     <value>Backup</value>
   </data>
+  <data name="Rules_PageTitle" xml:space="preserve">
+    <value>Regole</value>
+  </data>
 </root>

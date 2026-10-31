@@ -8706,4 +8706,8 @@ Original XML SHA-256: {5}</value>
     <value>Backup</value>
     <comment>Compact original native backup page title; complete shared menu labels and detailed body disclosures remain unchanged.</comment>
   </data>
+  <data name="Rules_PageTitle" xml:space="preserve">
+    <value>Rules</value>
+    <comment>Compact native rules page title; complete categorization menu labels and explanatory text remain unchanged.</comment>
+  </data>
 </root>

@@ -6,7 +6,7 @@
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Categories"
     x:DataType="local:RulesViewModel"
-    Title="{v:Translate Rules_Title}">
+    Title="{v:Translate Rules_PageTitle}">
 
     <Grid>
     <ScrollView IsVisible="{Binding Loading.IsReady}" IsEnabled="{Binding CanInteract}">

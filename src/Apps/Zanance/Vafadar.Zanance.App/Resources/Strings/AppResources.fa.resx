@@ -8669,4 +8669,7 @@
   <data name="Backup_PageTitle" xml:space="preserve">
     <value>پشتیبان‌گیری</value>
   </data>
+  <data name="Rules_PageTitle" xml:space="preserve">
+    <value>قوانین دسته‌بندی</value>
+  </data>
 </root>
