@@ -16,19 +16,19 @@ namespace Vafadar.Zanance.App;
 
 public partial class AppShell : Shell
 {
-    private readonly HashSet<Features.Home.HomePage> _publishedHomes = [];
-    private readonly HashSet<AccountsPage> _publishedAccountOverviews = [];
-    private readonly HashSet<AccountDetailPage> _publishedAccountDetails = [];
-    private readonly HashSet<LoanSchedulePage> _publishedLoanSchedules = [];
-    private readonly HashSet<ReimbursementsPage> _publishedReimbursements = [];
-    private readonly HashSet<PlanDetailPage> _publishedPlanDetails = [];
-    private readonly HashSet<PlansPage> _publishedPlanCenters = [];
-    private readonly HashSet<Features.Templates.TemplatesPage> _publishedTemplateCenters = [];
-    private readonly HashSet<TransactionsPage> _publishedTransactionCenters = [];
-    private readonly HashSet<Features.Reports.PeriodReviewPage> _publishedPeriodReviews = [];
-    private readonly HashSet<RulesPage> _publishedRules = [];
-    private readonly HashSet<CategoryEditorPage> _publishedCategoryEditors = [];
-    private readonly HashSet<CategoriesPage> _publishedCategoryCenters = [];
+    private readonly Presentation.WeakPublicationSet<Features.Home.HomePage> _publishedHomes = new();
+    private readonly Presentation.WeakPublicationSet<AccountsPage> _publishedAccountOverviews = new();
+    private readonly Presentation.WeakPublicationSet<AccountDetailPage> _publishedAccountDetails = new();
+    private readonly Presentation.WeakPublicationSet<LoanSchedulePage> _publishedLoanSchedules = new();
+    private readonly Presentation.WeakPublicationSet<ReimbursementsPage> _publishedReimbursements = new();
+    private readonly Presentation.WeakPublicationSet<PlanDetailPage> _publishedPlanDetails = new();
+    private readonly Presentation.WeakPublicationSet<PlansPage> _publishedPlanCenters = new();
+    private readonly Presentation.WeakPublicationSet<Features.Templates.TemplatesPage> _publishedTemplateCenters = new();
+    private readonly Presentation.WeakPublicationSet<TransactionsPage> _publishedTransactionCenters = new();
+    private readonly Presentation.WeakPublicationSet<Features.Reports.PeriodReviewPage> _publishedPeriodReviews = new();
+    private readonly Presentation.WeakPublicationSet<RulesPage> _publishedRules = new();
+    private readonly Presentation.WeakPublicationSet<CategoryEditorPage> _publishedCategoryEditors = new();
+    private readonly Presentation.WeakPublicationSet<CategoriesPage> _publishedCategoryCenters = new();
     private readonly List<WeakReference<AccountEditorPage>> _publishedAccountEditors = [];
     private readonly List<WeakReference<GoalEditorPage>> _publishedGoalEditors = [];
     private readonly List<WeakReference<BudgetEditorPage>> _publishedBudgetEditors = [];
@@ -880,6 +880,7 @@ public partial class AppShell : Shell
         if (Handler is AccessibleShellRenderer renderer) renderer.RetireNavigation();
 #endif
         foreach (var home in _publishedHomes) home.RetirePublication();
+        _publishedHomes.Clear();
         // D-82: Android's retired ShellItemRenderer can retain section events after its Shell handler is cleared.
         // A later translated title then reads a missing MauiContext and aborts the entire language notification.
         // Unsubscribe only this retired navigation graph; keep current titles and every active form unchanged.

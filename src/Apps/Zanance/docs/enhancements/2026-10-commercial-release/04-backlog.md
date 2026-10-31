@@ -8383,3 +8383,16 @@ FreshUID/16XML274462capturebytes/officialAVD retired;6Clean38780files2154376559l
 Qualified the original account-editor loading/read-failure covers in18real OS200contexts (en/fa/de, Light/Dark,360/412/680dp),36native text/target observations and one original visible Retry. Captions match original app/shared resources; actual line/ellipsis/visible bounds and viewport measurements pass with full20source unchanged and account/ledger/Save0.17contexts completed in5055before actual native crash/status11; only the last continued in9364on the sameUID/boot/APK/source. Cause/repair is unproven. Exact original display/source restored, freshUID/57XML699507capturebytes/officialAVD retired and one private Clean passed. Product code/full shipping/tests unchanged; phone/D607 and broader gates remain open.
 Supplemental2publishfiles57397120bytes and3roots976files128982255bytes were blocked before process creation; frozen without retry/subset/alternate/move/escalation/reuse. Used signed/source/evidence preserved.
 [Actual native geometry, process exit and exact limits](../../quality/original-account-cover-native-text-scale.md)
+
+
+### D-675 - Original Shell page lifetimes (completed bounded scope)
+
+Thirteen original strong page-registration sets now track weak reference-identity owners while preserving
+all original retirement guards/callbacks. Four new lifetime cases and14affected existing cases, strict
+Windows/full offline Android and actual original category-modal collection/live-root retirement pass:
+baseline3883retains the closed page; corrected5424collects it and still retires a live modal, with the same
+UID/boot/full20source and no metadata/financial Save. The private adoption omission and observer/cleanup
+failures remain recorded. Fresh fixture/device-XML/AVD retirement and five standard Cleans are complete; local XML deletion and supplementary
+20target deletion is rejected before execution and frozen. This does not fix or explain D-674's native
+crash or close broader device/performance/security/platform gates. Phone/D607 remain untouched.
+[Actual lifetime comparison, candidate and exact limits](../../quality/original-shell-page-lifetimes.md).
