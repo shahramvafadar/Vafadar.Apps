@@ -8540,3 +8540,9 @@ unread source stay protected; broader DB/key/security/stability/performance/A11Y
 Store/release gates remain open. D685soleCIresponse records CodeQLsuccess and generalCI
 in_progress; its consumed monitor is deleted, without another workflow-runs request.
 [Original titles, retained native cases and exact source/OS preservation](quality/original-category-source-cover-os-text.md).
+
+
+### D-687 - Rejected private ledger text-table format
+
+D687 preserves all32 original values/order and independent mutable Tags across four host shapes, plus finite malformed/cancel/bucket controls. These are private feasibility controls, not new product tests or Home/two-second acceptance. Latency/allocation gates fail; no native replay follows.
+[Fixed scope and actual results](quality/rejected-ledger-text-table-format.md).

@@ -8586,3 +8586,19 @@ unread source stay protected; broader DB/key/security/stability/performance/A11Y
 Store/release gates remain open. D685soleCIresponse records CodeQLsuccess and generalCI
 in_progress; its consumed monitor is deleted, without another workflow-runs request.
 [Original titles, retained native cases and exact source/OS preservation](../../quality/original-category-source-cover-os-text.md).
+
+
+### D-687 - Private per-block text-table format rejected before native admission
+
+A new version2 block-local text-reference representation is tested separately from
+withdrawn D601's unchanged-format two-column reuse. Exact original32field/order/null/
+Unicode/independent mutableTags parity and finite prefix/bucket/cancel/version/trailing/
+UTF8 refusals pass in two separate actual10.0.14/X64 host processes; one private strict
+build has0warnings/errors. Four shapes retain fixed5%combined latency/allocation and
+1.05/1.01worst-shape limits. Unique short and long text fail latency; unique short also
+fails allocation. The candidate closes without tuning/reverse/native/APK/product/model/
+migration/runtime/GC or financial change. This is not a new product test count or Home
+speed claim. One standard privateClean passes; evidence/source remains, no supplemental
+or refused-scope deletion occurs. Phone/D607/three deadlines/consumed reboot/unreadsource
+stay protected; the goal and broader acceptance gates remain open.
+[Exact private representation, fixed gates and actual results](../../quality/rejected-ledger-text-table-format.md).
