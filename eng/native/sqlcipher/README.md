@@ -4,11 +4,12 @@ Source, compiler, diagnostic, compatibility and immutable package checks are ind
 
 `Observe-WindowsToolchain.ps1` records only public installed compiler metadata before
 the existing qualification in CI. It neither executes nor admits an unreviewed compiler.
-The31October host18.11.12328.437 remains unqualified until its actual signed executable
-and native producer evidence are reviewed; local baseline evidence is not hosted proof.
+The31October host18.11.12328.437 is now bound to the existing candidate9 producer only
+after its actual signed executable, two fresh outputs and complete package entries are
+reviewed below; local baseline evidence alone is not hosted proof.
 [Current observed drift and unchanged gates](../../../src/Apps/Zanance/docs/quality/retired-billing-review-and-hosted-compiler-drift.md).
 
-## Pending 31 October hosted producer qualification (D-683)
+## Qualified 31 October hosted producer identity (D-683)
 
 Original native run41185441600/job124491318973 on e1cbb1be observes installer
 18.11.12328.437 with actual compiler19.51.36260.0/SHA256
@@ -25,6 +26,28 @@ equal native outputs, original source/diagnostic/schema gates and actual archive
 review before deciding whether this host can reuse an already identical consumer or
 requires a new immutable package version. Never merge the installer-only policy as
 completed consumer recovery, change existing package-entry pins or rerun Android here.
+
+The corrected producer [run41190613268](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41190613268)
+actually uses the requested installer18.11.12328.437 and completes successfully on
+commitc465169fd6032ca74753da8c917a0fb15d05c954. Both fresh DLLs have SHA256
+`b02ca2545492b8584b2c15010ac24f6fc5a2b5e6e45a11c6c4ba825ccf277744`, exactly the
+existing immutable candidate9. The actual53 migrations, compiled model, key/tamper,
+encrypted portable restore and complete staging schema/typed-row checks pass. These
+are the original Windows compatibility checks, not phone/key-recovery acceptance.
+
+The archived producer ZIP digest is
+`d8889d8115d8e6046350e040e1189d14f31f92cd868864138e56193289f037c7`.
+Its exported candidate10 package digest is
+`2726d8f274d4a4cb055a7b92867b677c15c74d3ab93ddfe78ba62a538a9d8a75`.
+All five entry names match candidate9: native DLL, targets, notices and manifest are
+byte-identical; the nuspec is byte-identical after restoring only its one version field
+from candidate10 to candidate9 for comparison. Candidate10 is not published or selected.
+Only the newly qualified installer is added to candidate9's hosted provenance list;
+its version and every immutable entry hash remain unchanged. Twenty-nine compiler and
+producer-selection checks pass, including rejection of the wrong reviewed compiler on
+the new installer. No local native/schema execution or Android success is replayed.
+The ordinary Main lane must still demonstrate its complete current-head result after
+this exact producer binding; producer-only green is not overall CI or release acceptance.
 
 The first producer run41186798703 actually receives the older image20261021.278.1/
 installer18.11.12315.225. Its two fresh native outputs both equal the existing candidate9
