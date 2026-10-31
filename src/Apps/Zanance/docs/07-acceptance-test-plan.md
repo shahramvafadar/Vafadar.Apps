@@ -8570,3 +8570,9 @@ D690 accepts36contexts/72original loading/error states, en/fa/de and two themes 
 
 D691 final en/fa/de, Light/Dark,360/412/680dp OS200 covers and retained360to412 Persian title regression pass native final-line/ellipsis/bounds/44dp targets with source21equal. Two corrected successes are retained;34affected/unfinished contexts continue. No new unit-test count or broad accessibility/stability proof.
 [Actual original failure, native continuation and limits](quality/original-insights-source-cover-os-text.md).
+
+
+### D-692 - Original saved-comparison covers and retired native flyout
+
+D692 native en/fa/de, two themes,360/412/680dp and OS200 covers pass actual caption/final-line/ellipsis, pushed stack2, RTL/native Back and44dp Retry targets with source21equal. Three real managed-root transitions plus theme/width changes qualify the disposed-observer regression. No new unit-test count, populated saved-name, general stability or full accessibility claim.
+[Original native failure, retained scope and exact limits](quality/original-saved-comparison-covers-and-retired-flyout.md).

@@ -5377,3 +5377,9 @@ D690 completes the named original resource/product-plan OS200 loading/error scop
 
 D691 completes the original Insights source-cover batch with36contexts/72states on the corrected renderer, retaining2target successes and checking only34affected/unfinished contexts. Original14pre-fix successes and all observer/GREF failures remain historical; no financial command is replayed.
 [Actual original failure, native continuation and limits](quality/original-insights-source-cover-os-text.md).
+
+
+### D-692 - Original saved-comparison covers and retired native flyout
+
+D692 completes original saved-comparison no-query loading/error OS200 covers,18contexts/36states. Five unaffected successes plus one corrected Dark context are retained; only12unfinished continue. The actual native theme failure is corrected without account/snapshot/financial setup or replay of D645/D506 accepted operations.
+[Original native failure, retained scope and exact limits](quality/original-saved-comparison-covers-and-retired-flyout.md).

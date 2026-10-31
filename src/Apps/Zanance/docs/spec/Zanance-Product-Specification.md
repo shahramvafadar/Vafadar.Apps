@@ -11750,3 +11750,9 @@ D690 preserves original source and financial behavior while keeping the German r
 
 D691 preserves original source/financial behavior while keeping a retained Android title complete after width remeasurement. Actual151px text remains at89px font; final36contexts/72states pass with2retained target successes. No resource/model/runtime change or general stability/physical/release acceptance is claimed.
 [Actual original failure, native continuation and limits](../quality/original-insights-source-cover-os-text.md).
+
+
+### D-692 - Original saved-comparison covers and retired native flyout
+
+D692 preserves original comparison/source/financial behavior while detaching retired Android flyout observers before later theme notifications. Final18contexts/36loading-error states and the actual root-retirement/theme regression pass; stored names/rows, broad stability, physical/platform and release acceptance remain separate.
+[Original native failure, retained scope and exact limits](../quality/original-saved-comparison-covers-and-retired-flyout.md).

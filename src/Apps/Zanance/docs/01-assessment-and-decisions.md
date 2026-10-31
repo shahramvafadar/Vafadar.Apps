@@ -12478,3 +12478,9 @@ Keep the complete original menu and explanatory copy; only the German page headi
 
 Reapply a previously requested native toolbar height when AppCompat replaced its current layout parameters. Preserve the greatest owned height, scaled font, native arrow/commands and original content. The real retained Persian127px/151px failure is corrected at89px font; general GC/stability is not claimed fixed.
 [Actual original failure, native continuation and limits](quality/original-insights-source-cover-os-text.md).
+
+
+### D-692 - Original saved-comparison covers and retired native flyout
+
+Retire only the current renderer's own flyout appearance/behavior registrations from its original Shell before native-root replacement. The original disposed UpdateScrim callback is preserved and its specific theme-after-retirement sequence passes; no global observer clearing, premature view disposal or exception swallowing is introduced.
+[Original native failure, retained scope and exact limits](quality/original-saved-comparison-covers-and-retired-flyout.md).

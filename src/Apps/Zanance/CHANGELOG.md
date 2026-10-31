@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-692: prevent an old Android drawer from interrupting theme changes after its page root has been replaced.
+
 - D-691: keep the complete scaled Android page title visible after changing the viewport width, preserving the selected font and native navigation.
 
 - D-690: keep the German available-items page heading complete at large system text while retaining full menu and explanatory copy.

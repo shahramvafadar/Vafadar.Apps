@@ -5,6 +5,7 @@ using AndroidX.DrawerLayout.Widget;
 using AndroidX.Fragment.App;
 using Microsoft.Maui.Controls.Handlers.Compatibility;
 using Microsoft.Maui.Controls.Platform.Compatibility;
+using Microsoft.Maui.Controls.Internals;
 using Vafadar.Localization;
 
 namespace Vafadar.Zanance.App;
@@ -14,6 +15,15 @@ internal sealed class AccessibleShellRenderer : ShellRenderer
 {
     private readonly List<WeakReference<Fragment>> _ownedItemFragments = [];
     private bool _navigationRetired;
+    private IShellFlyoutRenderer? _ownedFlyout;
+
+    /// <inheritdoc />
+    protected override IShellFlyoutRenderer CreateShellFlyoutRenderer()
+    {
+        var flyout = base.CreateShellFlyoutRenderer();
+        _ownedFlyout = flyout;
+        return flyout;
+    }
 
     /// <summary>Creates the platform renderer through the existing Shell handler factory.</summary>
     public AccessibleShellRenderer() { }
@@ -38,6 +48,15 @@ internal sealed class AccessibleShellRenderer : ShellRenderer
     {
         if (_navigationRetired) return;
         _navigationRetired = true;
+        // D-692: a detached Android drawer can remain an observer after losing its native peer.
+        // Retire only this root's observers before a later theme notification reaches that peer.
+        if (((IShellContext)this).Shell is IShellController controller)
+        {
+            controller.RemoveAppearanceObserver(this);
+            if (_ownedFlyout is IAppearanceObserver appearance) controller.RemoveAppearanceObserver(appearance);
+            if (_ownedFlyout is IFlyoutBehaviorObserver behavior) controller.RemoveFlyoutBehaviorObserver(behavior);
+        }
+        _ownedFlyout = null;
         // D-360: ShellRenderer disconnects its current item but does not remove that root
         // fragment from the Activity manager. Detached containers otherwise accumulate whole
         // navigation trees. Never enumerate/remove another renderer's active fragments.

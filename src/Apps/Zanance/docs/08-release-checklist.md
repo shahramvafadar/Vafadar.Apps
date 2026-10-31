@@ -5597,3 +5597,9 @@ D690 strictWindows/fullOffline384AOT/408ELF/1608staticLOAD packages pass; shippi
 
 D691 strictWindows/fullOffline384AOT/408ELF/1608staticLOAD/signature/CRC/ZIP16KiB pass. Shipping0765da44 awaits actual D607 completion/cleanup before Samsung adoption. Fresh restoration/retirement and3Cleans finish; supplementary cleanup result and diagnostic/native failures stay explicit. Wider release gates remain open.
 [Actual original failure, native continuation and limits](quality/original-insights-source-cover-os-text.md).
+
+
+### D-692 - Original saved-comparison covers and retired native flyout
+
+D692 strictWindows/fullOffline384AOT/408ELF/1608staticLOAD/signature/CRC/ZIP16KiB pass; shipping4bd51c60 awaits actual D607 completion/cleanup before phone adoption. Fresh source/OS restoration, UID/officialAVD retirement and3Cleans complete; supplementary refusal remains explicit. Wider release gates remain open.
+[Original native failure, retained scope and exact limits](quality/original-saved-comparison-covers-and-retired-flyout.md).
