@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-697: keep the complete holdings-list Retry caption readable at large system text while retaining the original covered read and error handling.
+
 - D-696: keep the complete holding-detail Retry caption readable with large system text and preserve its original guarded Refresh command.
 
 - D-695: keep the full asset-event read Retry caption visible at large system text, preserving its original font and command.

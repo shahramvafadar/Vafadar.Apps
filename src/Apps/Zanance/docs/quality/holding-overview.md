@@ -78,3 +78,7 @@ No schema/model/migration, new data/permission/SDK/export/provider or commercial
 No speed objective, general ANR/crash fix, OS scaling/TalkBack, physical-device, iOS, store or release
 acceptance is inferred. D-386 development-first priorities and remaining external gates stand.
 Exact-head hosted CI is a separate one-shot check after push; local success is not hosted success.
+
+## D-697 follow-through - missing original OS200 read covers
+
+[D697](original-holdings-covers-and-growing-retry.md) qualifies only the separate original overview read-cover boundary and corrects actual Persian Retry clipping at the original font.18 contexts retain one unchanged Loading success and add35 changed/missing states; one original native Retry reaches the actual empty list with source21 exact. No original populated holding fixture, opening event, price or financial command is replayed. This does not broaden financial, phone or release acceptance.

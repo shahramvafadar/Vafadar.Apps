@@ -5624,3 +5624,8 @@ Strict Windows has0 warnings/errors. Full offline shipping b3ff3229199913fced20b
 
 Strict Windows has0 warnings/errors. Full offline shipping caa0a7f5a79db6159710e02057a40e5458b6dd884fc9942178878302216bc365 passes384ownAOT/408ELF/1608static16KiBLOAD, v2/v3, CRC/ZIP16KiB and nondebug checks. It awaits actual D607 completion/cleanup before Samsung adoption. Source21/OS/Home restoration,41XML882243bytes hash-clean, freshUID/host/officialAVD retirement and3Cleans pass. Supplementary deletion is rejected before process creation:837files125329986logicalbytes remain frozen without retry/subset/alternate/move/escalation/reuse. Used artifacts/evidence remain and broader gates stay open.
 [Actual package and restoration limits](quality/original-holding-detail-covers-and-growing-retry.md).
+
+### D-697 - Original holdings-list Retry qualification
+
+Strict Windows0warnings/errors and full offline shipping c1e54c810cd1476e6a81dcbca42249816dcaa9b8d3c315cbeb5adc1dd47e7453 pass384ownAOT/408ELF/1608static16KiBLOAD/v2v3/CRC/ZIP16KiB. Phone adoption still waits for actual D607 completion/cleanup. Source21/OS/Home restore,41XML883404bytes hash-clean, freshUID/host/officialAVD retirement and3Cleans pass. Supplementary deletion is rejected before process creation:837files125327678logicalbytes remain frozen without retry/subset/alternate/move/escalation/reuse. Used artifacts/evidence and broader gates remain.
+[Native source, package and restoration limits](quality/original-holdings-covers-and-growing-retry.md).

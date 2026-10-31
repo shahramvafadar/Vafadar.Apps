@@ -130,3 +130,14 @@ host free-space. Phone/D607's three deadlines, consumed reboot and unread source
 remain protected. Main adoption waits for actual D607 completion/cleanup.
 General security/stability/ANR/crash, two-second Home, wider accessibility/iOS,
 genuine provider/Store and release gates remain open. Overall delivery is active.
+
+## Sole exact-head CI follow-through
+
+At2026-10-31T17:29:41.9893925UTC,16.377minutes after the schedule was created,
+the single response for e99647d9f1a91fd45f74cad7e82be8dafab445dd reports
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41223443702)
+completed/success and [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41223443786)
+completed/cancelled. The response does not prove a cancellation cause or a passing
+CI run. Preserve the consumed marker/receipt and original response. Its automation
+is deleted; no second request or rerun follows. D696's separate exact-head check
+and all wider acceptance gates remain independent.

@@ -1,3 +1,5 @@
+using CommunityToolkit.Mvvm.Input;
+
 namespace Vafadar.Zanance.App.Features.Holdings;
 
 public partial class HoldingsPage : ContentPage
@@ -8,9 +10,9 @@ public partial class HoldingsPage : ContentPage
     {
         InitializeComponent();
         BindingContext = _viewModel = viewModel;
+        // D-697: keep the original covered-read/failure boundary on the growing action's real native command.
+        RetryLoadButton.Command = new AsyncRelayCommand(() => Presentation.Failures.GuardAsync(LoadCoveredAsync));
     }
-
-    private async void OnReloadClicked(object? sender, EventArgs e) => await Presentation.Failures.GuardAsync(LoadCoveredAsync);
 
     protected override async void OnAppearing()
     {

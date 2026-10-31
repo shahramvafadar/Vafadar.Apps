@@ -8597,3 +8597,8 @@ The18 en/fa/de, Light/Dark,360/412/680dp OSfont2.0 contexts cover36 states:7 his
 
 18 en/fa/de, Light/Dark,360/412/680dp OSfont2.0 contexts cover36 loading/error states: one historical unchanged Loading plus35 new states. Check actual native lines/last-line height/ellipsis/bounds and44dp Retry/Back. The changed Persian Retry executes once to the visible original missing-type state with complete source21 equal; normal-scale price/financial successes are retained without replay. No36-new-unit-test, populated price/history, shipping accountless onboarding, general stability or full accessibility claim follows.
 [Actual native command and source boundary](quality/original-holding-detail-covers-and-growing-retry.md).
+
+### D-697 - Original holdings-list read covers
+
+18 en/fa/de, Light/Dark,360/412/680dp OSfont2.0 contexts pass full toolbar/loading/error lines, last-line height, ellipsis/bounds and44dp Back/Retry. One historical unchanged Loading plus35 new states form36 observations; one changed native Retry reaches the actual empty list with source21 equal. No new unit count, populated holding/financial, shipping accountless onboarding or full accessibility/stability acceptance follows.
+[Original failure and retained continuation](quality/original-holdings-covers-and-growing-retry.md).

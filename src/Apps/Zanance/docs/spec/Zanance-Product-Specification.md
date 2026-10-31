@@ -11777,3 +11777,8 @@ Preserve the original asset-event reader/writer, resource and selected font whil
 
 Preserve the holding-detail source/financial behavior and guarded original Refresh while allowing its clipped error Retry caption to grow at the selected font.18 OS200 contexts combine one historical Loading success and35 new states; one native Retry reaches the original missing-type state with source21 exact and zero metadata/financial preparation. No new unit count, populated holding/history, shipping accountless onboarding, wholeDB/key, general stability or release acceptance is inferred.
 [Actual native failure and bounded continuation](../quality/original-holding-detail-covers-and-growing-retry.md).
+
+### D-697 - Complete original holdings-list Retry
+
+Preserve original overview/source/financial behavior while allowing its clipped error action to grow at the selected font.18 OS200 contexts combine one retained Loading and35 new states; one native Retry reaches the real empty list with complete source21 equal and no metadata/financial setup. No new unit count, populated holdings, wholeDB/key, general stability or release acceptance is inferred.
+[Actual failure and finite scope](../quality/original-holdings-covers-and-growing-retry.md).

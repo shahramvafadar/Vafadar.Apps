@@ -5404,3 +5404,8 @@ Complete18 OS200 loading/error contexts with7 retained unchanged Loading observa
 
 Complete18 OS200 contexts/36states using one retained unchanged Loading success and35 changed/missing states. One changed native Retry reaches the original missing-type state with source21 exact. No account/type/location/event/valuation/ledger preparation or accepted D419/D644 price/financial replay occurs. This is bounded missing-type read-cover evidence, not populated holding or whole-platform acceptance.
 [Original control failure and continuation](quality/original-holding-detail-covers-and-growing-retry.md).
+
+### D-697 - Missing holdings-list OS200 read covers
+
+18 contexts/36states combine one unchanged historical Loading success and35 new states. One original native Retry reaches the real empty list with source21 exact and no account/type/location/event/valuation/ledger setup. D449's accepted goal OS200 cases and old holding financial scenarios remain retained without replay.
+[Finite original native result](quality/original-holdings-covers-and-growing-retry.md).

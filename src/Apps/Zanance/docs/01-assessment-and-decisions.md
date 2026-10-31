@@ -12505,3 +12505,8 @@ Replace only the clipped ErrorSurface Retry with the existing Secondary Wrapping
 
 The pushed detail's separate native Retry also clips its Persian last line:280px required versus169px arranged. Use the existing Secondary WrappingAction at the original font and bind the same guarded PriceEditor.RefreshCommand directly, removing only its obsolete click adapter. Actual unchanged70.875px text, native Retry-to-missing-type publication and exact source21 qualify the correction without changing readers/writers.
 [Actual failure and finite original scope](quality/original-holding-detail-covers-and-growing-retry.md).
+
+### D-697 - Growing original holdings-list Retry
+
+The original overview Retry also clips its280px two-line requirement into169px. Use existing Secondary WrappingAction at the original font and a real AsyncRelayCommand through the original Failures.GuardAsync/LoadCoveredAsync path. Actual native execution and unchanged source21 qualify the correction without model/reader/writer changes.
+[Original failure and precise scope](quality/original-holdings-covers-and-growing-retry.md).
