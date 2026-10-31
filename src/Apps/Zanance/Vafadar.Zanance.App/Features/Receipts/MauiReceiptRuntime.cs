@@ -16,21 +16,17 @@ public sealed class MauiReceiptRuntime(Translator translator, AppLockService app
     {
         try
         {
-            PreparedAttachment? picked;
-            var choice = await ReceiptSourceChooser.ChooseAsync(translator, interaction, PermissionPrompts.CanTakePhoto,
+            using var origin = CaptureOrigin();
+            return await ReceiptSourceChooser.RunAsync<ReceiptPickedFile?>(translator, interaction, PermissionPrompts.CanTakePhoto,
 #if ANDROID
-                showLatinImageHelp: true);
+                showLatinImageHelp: true,
 #else
-                showLatinImageHelp: false);
+                showLatinImageHelp: false,
 #endif
-            if (choice == ReceiptSourceChoice.Cancelled) return null;
-            if (choice == ReceiptSourceChoice.Photo)
-            {
-                picked = await PermissionPrompts.TakePhotoAsync(translator) is { } photo
-                    ? await AttachmentFiles.FromCameraAsync(translator["Camera_PhotoName"], photo) : null;
-                return Convert(picked);
-            }
-            return Convert(await AttachmentFiles.PickAsync(translator["Attachment_Pick"], forRecognition: true));
+                origin, appLock.RunWhenUnlockedAsync, appLock.RetainCurrentDestinationIfLocked,
+                async () => Convert(await PermissionPrompts.TakePhotoAsync(translator) is { } photo
+                    ? await AttachmentFiles.FromCameraAsync(translator["Camera_PhotoName"], photo) : null),
+                async () => Convert(await AttachmentFiles.PickAsync(translator["Attachment_Pick"], forRecognition: true)), null);
         }
         catch (InvalidDataException exception) { throw new ReceiptPreparationException("Attachment_PhotoFailed", exception); }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException or PermissionException)

@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-710: keep receipt source choices and help attached to their creating page; wait for unlock before opening the chosen camera/file source, without asking again.
+
 - D-709: keep completed receipt recognition and safe feedback behind app unlock, retain busy ownership until actual completion, and reject results whose original page has retired.
 
 - D-705: preserve open forms when a queued display refresh resumes, and keep delayed refresh/report handoffs attached to their original navigation graph.
